@@ -7,17 +7,13 @@ const getFormattedPools = (pools) => {
     const formattedPools = [];
 
     for (let key in pools) {
-        formattedPools.push({
-            id: key,
-            logo: pools[key].logo,
-            name: pools[key].name,
-            tokenDescription: pools[key].tokenDescription,
-            balance:Math.random(),
-            deposited:2,
-            apy:3,
-            daily:4,
-            tvl:5
-        });
+        pools[key].deposited = 0;
+        pools[key].balance = 0;
+        pools[key].daily = 1;
+        pools[key].apy = 2;
+        pools[key].tvl = 3;
+
+        formattedPools.push(pools[key]);
     }
 
     return formattedPools;
@@ -26,6 +22,7 @@ const getFormattedPools = (pools) => {
 const setNetwork = (netObj) => {
     return dispatch => {
         getPoolsForNetwork(netObj).then(function(data) {
+            localStorage.setItem('network', netObj)
             dispatch({
                 type: "SET_NETWORK",
                 payload: {network: netObj, pools: data, poolsFormatted: getFormattedPools(data)}

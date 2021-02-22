@@ -15,12 +15,17 @@ const PageNotFound = () => {
 }
 
 export default function App() {
-    const [isNightMode, setNightMode] = React.useState(false);
+    const storage = localStorage.getItem('nightMode');
+    const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
     const theme = createMuiTheme({
         palette: {
             type: (isNightMode ? "dark" : "light"),
         },
     });
+
+    React.useEffect(() => {
+        localStorage.setItem('nightMode', JSON.stringify(isNightMode));
+    }, [isNightMode]);
 
     return (
         <ThemeProvider theme={theme}>

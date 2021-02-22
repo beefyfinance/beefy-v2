@@ -4,15 +4,20 @@ import { useSelector } from "react-redux";
 import {BigNumber} from 'bignumber.js';
 import {formatDecimals, formatApy, calcDaily} from '../../helpers/format'
 
-import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography} from "@material-ui/core"
+import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography, Switch, FormControlLabel, TextField} from "@material-ui/core"
 import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import styles from "./styles"
 
 const useStyles = makeStyles(styles);
 
-const useSortableData = (items, config = null) => {
-    const [sortConfig, setSortConfig] = React.useState(config);
+const UseSortableData = (items, config = null) => {
+    const storage = localStorage.getItem('homeSortConfig');
+    const [sortConfig, setSortConfig] = React.useState(storage === null ? config : JSON.parse(storage));
+
+    React.useEffect(() => {
+        localStorage.setItem('homeSortConfig', JSON.stringify(sortConfig));
+    }, [sortConfig]);
 
     const sortedItems = React.useMemo(() => {
         let sortableItems = [...items];
@@ -35,17 +40,26 @@ const useSortableData = (items, config = null) => {
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'descending') {
             direction = 'ascending';
         }
-        setSortConfig({ key, direction });
+        setSortConfig({ ...sortConfig, key, direction });
     };
 
-    return { items: sortedItems, requestSort, sortConfig };
+    const setRetired = () => {
+        const val = !sortConfig.retired;
+        setSortConfig({ ...sortConfig, retired: val});
+    }
+
+    const setKeyword = (keyword) => {
+        setSortConfig({ ...sortConfig, keyword: keyword});
+    }
+
+    return { items: sortedItems, requestSort, sortConfig, setRetired, setKeyword};
 };
 
 const Vault = () => {
     const history = useHistory();
     const classes = useStyles();
     const wallet = useSelector(state => state.wallet);
-    const {items, requestSort, sortConfig} = useSortableData(wallet.poolsFormatted);
+    const {items, requestSort, sortConfig, setRetired, setKeyword} = UseSortableData(wallet.poolsFormatted, {retired: false, key: 'tvl', direction: 'descending'});
 
     const ListHeaderBtn = (prop) => {
         let obj = [classes.listHeaderBtnArrow]
@@ -59,13 +73,51 @@ const Vault = () => {
                     <Box className={obj.join(' ')} />
                 </Button>
         )
+    }
+
+    const filter = () => {
+        return items.filter((item) => {
+            return item.status === (sortConfig.retired ? 'eol' : 'active') && item.name.toLowerCase().includes(sortConfig.keyword) ? item : false;
+        });
     };
+
+    const processItem = (get, item) => {
+        let obj = [classes.item]
+        let msg = '';
+
+        if(item.status === 'active' && item.depositsPaused) {
+            obj.push(classes.itemPaused);
+            msg = item.statusMessage ? item.statusMessage : 'Deposit Paused';
+        }
+
+        if(item.status === 'eol') {
+            obj.push(classes.itemRetired);
+            msg = item.statusMessage ? item.statusMessage : 'Vault Retired';
+        }
+
+        switch(get) {
+            case 'classes':
+                return obj.join(' ');
+            case 'message':
+                return msg ? <Grid className={classes.itemMessage}>{msg}</Grid> : '';
+            default:
+                return;
+        }
+    }
 
     return (
         <Container maxWidth="lg">
             <Box p={{ xs: 2, sm: 3, md: 4, xl: 6 }} align="center">
                 <Alert severity="warning">Using Smart Contracts, Tokens, and Crypto is always a risk. DYOR before investing.</Alert>
             </Box>
+            <Grid container className={classes.listFilter}>
+                <Grid item xs={6}>
+                    <TextField size="small" label="Search by name" variant="outlined" value={sortConfig.keyword} onChange={(e) => setKeyword(e.target.value)} /><FormControlLabel checked={sortConfig.retired} className={classes.retiredLabel} name="retired" control={<Switch onChange={setRetired} color="secondary" />} label="Show retired vaults"/>
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography className={classes.tvl} align={'right'}>TVL: $250.48M</Typography>
+                </Grid>
+            </Grid>
             <Box>
                 <Grid container className={classes.listHeader}>
                     <Box flexGrow={1} textAlign={"left"}>
@@ -89,10 +141,11 @@ const Vault = () => {
                         <ListHeaderBtn name="TVL" sort="tvl" />
                     </Box>
                 </Grid>
-                {items.map((item) => (
+                {filter().map(item => (
                 <Grid container key={item.id}>
-                    <Button className={classes.item} onClick={() => {history.push('/vault/' + wallet.network + '/' + (item.id))}}>
+                    <Button className={processItem('classes', item)} onClick={() => {history.push('/vault/' + wallet.network + '/' + (item.id))}}>
                         <Box flexGrow={1} textAlign={"left"}>
+                            {processItem('message', item)}
                             <Grid container>
                                 <Hidden smDown>
                                     <Grid>
@@ -100,7 +153,7 @@ const Vault = () => {
                                     </Grid>
                                 </Hidden>
                                 <Grid>
-                                    <Box textAlign={"left"} style={{paddingLeft:"8px"}}>
+                                    <Box textAlign={"left"} style={{paddingLeft:"16px"}}>
                                         <Typography className={classes.h2}>{item.name}</Typography>
                                         <Typography className={classes.h3}>{item.tokenDescription}</Typography>
                                     </Box>

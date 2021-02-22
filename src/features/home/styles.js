@@ -2,6 +2,17 @@ const styles = (theme) => ({
     listHeader: {
         marginBottom: '12px',
     },
+    listFilter: {
+        marginBottom: '12px',
+        '& .MuiInputBase-root': {
+            marginRight: '20px',
+        },
+    },
+    retiredLabel: {
+        '& .MuiTypography-root': {
+            fontSize: '12px',
+        },
+    },
     listHeaderBtn: {
         fontSize: '10px',
         textAlign: 'right',
@@ -47,7 +58,7 @@ const styles = (theme) => ({
         borderWidth: '1px',
         borderColor: theme.palette.type === 'dark' ? '#1a1a43' : '#DED9D5',
         marginBottom: '12px',
-        padding: '12px',
+        padding: '20px 12px',
     },
     h2: {
         fontSize: '10px',
@@ -83,6 +94,31 @@ const styles = (theme) => ({
         [theme.breakpoints.up('lg')]: {
             minWidth: '170px',
         },
+    },
+    tvl: {
+        fontSize: '14px',
+        fontWeight: 'bold',
+        [theme.breakpoints.up('sm')]: {
+            fontSize: '18px',
+        },
+        [theme.breakpoints.up('md')]: {
+            fontSize: '24px',
+        },
+    },
+    itemPaused: {
+        backgroundColor: theme.palette.type === 'dark' ? '#8e7800' : '#f5d000',
+    },
+    itemRetired: {
+        backgroundColor: theme.palette.type === 'dark' ? '#751818' : '#e57373',
+    },
+    itemMessage: {
+        fontWeight: 'bold',
+        fontSize: '11px',
+        position: 'absolute',
+        top: '0px',
+        left: '0px',
+        padding: '1px 12px',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)'
     }
 });
 

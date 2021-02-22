@@ -1,5 +1,10 @@
+const initialNetwork = () => {
+    const storage = localStorage.getItem('network');
+    return storage === null ? 'bsc' : storage;
+}
+
 const initialState = {
-    network: 'bsc',
+    network: initialNetwork(),
     pools: {},
     poolsFormatted: {},
 }
