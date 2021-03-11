@@ -1,9 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/header";
-
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 import './App.css'
 
 const Home = React.lazy(() => import(`./features/home`));

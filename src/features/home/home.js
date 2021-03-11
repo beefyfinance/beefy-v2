@@ -4,9 +4,11 @@ import { useSelector } from "react-redux";
 import {BigNumber} from 'bignumber.js';
 import {formatDecimals, formatApy, calcDaily} from '../../helpers/format'
 
-import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography, Switch, FormControlLabel, TextField} from "@material-ui/core"
+import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography} from "@material-ui/core"
 import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
+import Filter from './components/Filter';
+import ListHeaderBtn from './components/ListHeaderBtn';
 import styles from "./styles"
 
 const useStyles = makeStyles(styles);
@@ -59,21 +61,12 @@ const Vault = () => {
     const history = useHistory();
     const classes = useStyles();
     const wallet = useSelector(state => state.wallet);
-    const {items, requestSort, sortConfig, setRetired, setKeyword} = UseSortableData(wallet.poolsFormatted, {retired: false, key: 'tvl', direction: 'descending'});
-
-    const ListHeaderBtn = (prop) => {
-        let obj = [classes.listHeaderBtnArrow]
-
-        if(sortConfig && sortConfig.key === prop.sort) {
-            obj.push(sortConfig.direction === 'descending' ? classes.listHeaderBtnDesc : classes.listHeaderBtnAsc)
-        }
-
-        return (<Button className={classes.listHeaderBtn} disableRipple onClick={() => requestSort(prop.sort)}>
-                    {prop.name}
-                    <Box className={obj.join(' ')} />
-                </Button>
-        )
-    }
+    const {items, requestSort, sortConfig, setRetired, setKeyword} = UseSortableData(wallet.poolsFormatted, {
+        retired: false,
+        key: 'tvl',
+        direction: 'descending',
+        keyword: ''
+    });
 
     const filter = () => {
         return items.filter((item) => {
@@ -110,35 +103,28 @@ const Vault = () => {
             <Box p={{ xs: 2, sm: 3, md: 4, xl: 6 }} align="center">
                 <Alert severity="warning">Using Smart Contracts, Tokens, and Crypto is always a risk. DYOR before investing.</Alert>
             </Box>
-            <Grid container className={classes.listFilter}>
-                <Grid item xs={6}>
-                    <TextField size="small" label="Search by name" variant="outlined" value={sortConfig.keyword} onChange={(e) => setKeyword(e.target.value)} /><FormControlLabel checked={sortConfig.retired} className={classes.retiredLabel} name="retired" control={<Switch onChange={setRetired} color="secondary" />} label="Show retired vaults"/>
-                </Grid>
-                <Grid item xs={6}>
-                    <Typography className={classes.tvl} align={'right'}>TVL: $250.48M</Typography>
-                </Grid>
-            </Grid>
+            <Filter sortConfig={sortConfig} setKeyword={setKeyword} setRetired={setRetired} />
             <Box>
                 <Grid container className={classes.listHeader}>
                     <Box flexGrow={1} textAlign={"left"}>
-                        <ListHeaderBtn name="Name" sort="name" />
+                        <ListHeaderBtn name="Name" sort="name" sortConfig={sortConfig} requestSort={requestSort} />
                     </Box>
                     <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="Balance" sort="balance" />
+                        <ListHeaderBtn name="Balance" sort="balance" sortConfig={sortConfig} requestSort={requestSort} />
                     </Box>
                     <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="Deposited" sort="deposited" />
+                        <ListHeaderBtn name="Deposited" sort="deposited" sortConfig={sortConfig} requestSort={requestSort} />
                     </Box>
                     <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="APY%" sort="apy" />
+                        <ListHeaderBtn name="APY%" sort="apy" sortConfig={sortConfig} requestSort={requestSort} />
                     </Box>
                     <Hidden mdDown>
                         <Box className={classes.rWidth} textAlign={"right"}>
-                            <ListHeaderBtn name="Daily APY%" sort="daily" />
+                            <ListHeaderBtn name="Daily APY%" sort="daily" sortConfig={sortConfig} requestSort={requestSort} />
                         </Box>
                     </Hidden>
                     <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="TVL" sort="tvl" />
+                        <ListHeaderBtn name="TVL" sort="tvl" sortConfig={sortConfig} requestSort={requestSort} />
                     </Box>
                 </Grid>
                 {filter().map(item => (
