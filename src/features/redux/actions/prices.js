@@ -13,7 +13,7 @@ const fetchPrices = () => {
             console.log('redux fetchPrices called.');
             try {
                 const request = await axios.get('https://api.beefy.finance/prices?_=' + new Date().getTime(), {timeout: 500});
-                return request.data;
+                return request.status === 200 ? request.data : {}
             } catch(err) {
                 console.log('error fetchPrices()', err);
                 setTimeout(async () => {
@@ -26,7 +26,7 @@ const fetchPrices = () => {
             console.log('redux fetchLps called.');
             try {
                 const request = await axios.get('https://api.beefy.finance/lps?_=' + new Date().getTime(), {timeout: 500});
-                return request.data;
+                return request.status === 200 ? request.data : {}
             } catch(err) {
                 console.log('error fetchLps()', err);
                 setTimeout(async () => {
@@ -40,7 +40,7 @@ const fetchPrices = () => {
 
             try {
                 const request = await axios.get('https://api.beefy.finance/apy?_=' + new Date().getTime(), {timeout: 500});
-                return request.data;
+                return request.status === 200 ? request.data : {};
             } catch(err) {
                 console.log('error fetchApy()', err)
                 setTimeout(async () => {
