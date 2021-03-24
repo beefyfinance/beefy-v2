@@ -5,9 +5,19 @@ import {config} from '../../../config/config';
 
 const vaultAbi = require('../../../config/abi/vault.json');
 
-const getPoolsForNetwork = async (network) => {
-    const p = await import('../../../config/vault/' + network);
-    return getFormattedPools(p.pools);
+const getPoolsForNetwork = async (state) => {
+    const network = state.walletReducer.network;
+    
+    try {
+        const p = await import('../../../config/vault/' + network);
+
+        if(Object.keys(state.vaultReducer.pools).length === p.pools.length) {
+            return state.vaultReducer.pools;
+        }
+        return getFormattedPools(p.pools);
+    } catch(err) {
+        console.log('error reading vaults', err);
+    }
 }
 
 const getFormattedPools = (pools) => {
@@ -52,7 +62,7 @@ const getPoolData = async (state, dispatch) => {
         const balance = new BigNumber(response[0][key].balance);
         const price = (pools[key].oracleId in prices) ? prices[pools[key].oracleId] : 0;
         pools[key].tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[key].tokenDecimals));
-        pools[key].apy = apy[pools[key].id];
+        pools[key].apy = (pools[key].id in apy) ? apy[pools[key].id] : 0;
         totalTvl = new BigNumber(totalTvl).plus(pools[key].tvl);
     }
 
@@ -70,7 +80,7 @@ const getPoolData = async (state, dispatch) => {
     return true;
 }
 
-const fetchPools = () => {
+const fetchPools = (isPoolsLoading = true) => {
     console.log('redux fetchPools() called.');
     return async (dispatch, getState) => {
         dispatch({
@@ -78,11 +88,11 @@ const fetchPools = () => {
         });
 
         const state = getState();
-        let pools = await getPoolsForNetwork(state.walletReducer.network);
+        let pools = await getPoolsForNetwork(state);
 
         dispatch({
             type: HOME_FETCH_POOLS_SUCCESS,
-            payload: {pools: pools, isDataLoading: false}
+            payload: {pools: pools, isPoolsLoading: isPoolsLoading, isDataLoading: false}
         });
     };
 }

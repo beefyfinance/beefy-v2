@@ -21,7 +21,7 @@ const vaultReducer = (state = initialState, action) => {
                 pools: action.payload.pools,
                 lastUpdated: action.payload.lastUpdated,
                 isDataLoading: action.payload.isDataLoading,
-                isPoolsLoading: true,
+                isPoolsLoading: action.payload.isPoolsLoading,
             }
         case HOME_FETCH_POOLS_SUCCESS_WDATA:
             return {

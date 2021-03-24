@@ -63,7 +63,7 @@ const Vault = () => {
     const vaultReducer = useSelector(state => state.vaultReducer);
 
     React.useEffect(() => {
-        dispatch(reduxActions.vault.fetchPools());
+        dispatch(reduxActions.vault.fetchPools(false));
     }, [dispatch]);
 
     vault = getVault(vaultReducer.pools, id);
