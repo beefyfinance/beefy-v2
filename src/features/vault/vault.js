@@ -1,7 +1,10 @@
 import * as React from "react";
 import {useParams} from "react-router";
 import {useHistory} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import reduxActions from "../redux/actions";
+import Loader from "../../components/loader";
+
 import {
     LineChart,
     Line,
@@ -30,6 +33,7 @@ import {
 import styles from "./styles"
 
 const useStyles = makeStyles(styles);
+let isLoading = true;
 
 const chartData = [
     { name: "28 Jan", apy: 45.00 },
@@ -38,17 +42,43 @@ const chartData = [
     { name: "18 Feb", apy: 41.37 }
 ];
 
+const getVault = (pools, id) => {
+    if(pools.length === 0) {
+        return false;
+    }
+    for(let key in pools) {
+        if(pools[key].id === id) {
+            return pools[key];
+        }
+    }
+}
+
 const Vault = () => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
+
     let { id } = useParams();
+    let vault = {};
+    const vaultReducer = useSelector(state => state.vaultReducer);
 
-    const wallet = useSelector(state => state.wallet);
+    React.useEffect(() => {
+        dispatch(reduxActions.vault.fetchPools());
+    }, [dispatch]);
 
-    const vault = wallet.pools[id];
+    vault = getVault(vaultReducer.pools, id);
+
+    if(vault) {
+        isLoading = false;
+    }
 
     return (
         <div className="App">
+            {isLoading ? (
+            <Container maxWidth="lg">
+                <Loader message="Getting vault data..." />
+            </Container>
+            ) : (
             <Container maxWidth="lg">
                 <Box textAlign={'right'} style={{marginTop: "40px"}}>
                     <Button variant="contained" onClick={() => {history.goBack()}}>Go back</Button>
@@ -149,6 +179,7 @@ const Vault = () => {
                     </Grid>
                 </Grid>
             </Container>
+            )}
         </div>
     )
 };
