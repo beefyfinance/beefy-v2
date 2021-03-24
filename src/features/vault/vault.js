@@ -31,6 +31,7 @@ import {
     Button
 } from "@material-ui/core"
 import styles from "./styles"
+import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
 
 const useStyles = makeStyles(styles);
 let isLoading = true;
@@ -64,6 +65,8 @@ const Vault = () => {
 
     React.useEffect(() => {
         dispatch(reduxActions.vault.fetchPools(false));
+        dispatch(reduxActions.wallet.fetchRpc());
+        dispatch(reduxActions.vault.fetchPoolsData());
     }, [dispatch]);
 
     vault = getVault(vaultReducer.pools, id);
@@ -98,21 +101,21 @@ const Vault = () => {
                         <Paper>
                             <Typography className={classes.cardTitle}>Daily APY</Typography>
                             <Divider />
-                            <Typography className={classes.cardBody}>0.03%</Typography>
+                            <Typography className={classes.cardBody}>{calcDaily(vault.apy)}</Typography>
                         </Paper>
                     </Grid>
                     <Grid item xs={6} sm={4} md={3}>
                         <Paper>
                             <Typography className={classes.cardTitle}>APY</Typography>
                             <Divider />
-                            <Typography className={classes.cardBody}>41.37%</Typography>
+                            <Typography className={classes.cardBody}>{formatApy(vault.apy)}</Typography>
                         </Paper>
                     </Grid>
                     <Grid item xs={12} sm={4} md={3}>
                         <Paper>
                             <Typography className={classes.cardTitle}>TVL</Typography>
                             <Divider />
-                            <Typography className={classes.cardBody}>$54.78M</Typography>
+                            <Typography className={classes.cardBody}>{formatTvl(vault.tvl)}</Typography>
                         </Paper>
                     </Grid>
                 </Grid>
