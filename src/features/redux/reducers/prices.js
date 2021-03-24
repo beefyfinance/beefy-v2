@@ -1,6 +1,6 @@
 const initialState = {
     prices: [],
-    apy: {},
+    apy: [],
     lastUpdated: 0,
 }
 
