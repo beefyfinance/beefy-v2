@@ -1,7 +1,11 @@
 import wallet from './wallet'
+import vault from './vault'
+import prices from './prices'
 
-const rdx = {
+const reduxActions = {
     wallet,
+    vault,
+    prices,
 }
 
-export default rdx
+export default reduxActions;

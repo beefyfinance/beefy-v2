@@ -9,7 +9,7 @@ const ListHeaderBtn = ({name, sort, sortConfig, requestSort}) => {
     let obj = [classes.listHeaderBtnArrow]
 
     if(sortConfig && sortConfig.key === sort) {
-        obj.push(sortConfig.direction === 'descending' ? classes.listHeaderBtnDesc : classes.listHeaderBtnAsc)
+        obj.push(sortConfig.direction === 'desc' ? classes.listHeaderBtnDesc : classes.listHeaderBtnAsc)
     }
 
     return (<Button className={classes.listHeaderBtn} disableRipple onClick={() => requestSort(sort)}>

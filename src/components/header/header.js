@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useHistory } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import rdx from '../../features/redux/actions';
+import reduxActions from "../../features/redux/actions";
 import {
     makeStyles,
     AppBar,
@@ -44,22 +44,20 @@ const Header = ({isNightMode, setNightMode}) => {
         setMobileOpen(!mobileOpen);
     };
 
-    const dispatch = useDispatch()
-    const currentNetwork = useSelector(state => state.wallet.network);
+    const dispatch = useDispatch();
+    const currentNetwork = useSelector(state => state.walletReducer.network);
 
     const handleNetworkSwitch = (event) => {
-        dispatch(rdx.wallet.setNetwork(event.target.value))
+        dispatch(reduxActions.wallet.setNetwork(event.target.value))
         history.push('/');
     }
-
-    dispatch(rdx.wallet.setNetwork(currentNetwork))
 
     return (
         <AppBar className={classes.navHeader} position="static">
             <Toolbar>
                 <Container maxWidth="xl" className={classes.navDisplayFlex}>
                     <Box className={classes.beefy}>
-                        <img alt="BIFI" src={require('../../images/BIFI.svg').default} height={'36px'}/>
+                        <img alt="BIFI" src={require('../../images/BIFI.svg').default} />
                         <Button onClick={() => {history.push('/')}}>beefy.finance</Button>
                     </Box>
                     <Hidden smDown>
@@ -72,8 +70,8 @@ const Header = ({isNightMode, setNightMode}) => {
                             <IconButton onClick={setNightMode}>
                                 {isNightMode ? <WbSunny /> : <NightsStay />}
                             </IconButton>
-                            <Box style={{marginTop: '4px'}}>
-                                <FormControl variant="outlined" className={classes.netControl}>
+                            <Box className={classes.network}>
+                                <FormControl variant="outlined">
                                     <InputLabel id="switch-network-label">Switch Network</InputLabel>
                                     <Select labelId="switch-network-label" value={currentNetwork} onChange={handleNetworkSwitch} label="Switch Network">
                                         <MenuItem value={'bsc'}>Binance Smart Chain</MenuItem>
@@ -81,10 +79,10 @@ const Header = ({isNightMode, setNightMode}) => {
                                     </Select>
                                 </FormControl>
                             </Box>
-                            <Box style={{marginTop: '4px'}}>
-                                <FormControl noValidate autoComplete="off" className={classes.walletControl}>
+                            <Box className={classes.wallet} style={{marginTop: '4px'}}>
+                                <FormControl noValidate autoComplete="off">
                                     <Box style={{position: 'absolute', left:0, top: 0}}>
-                                        <Avatar className={classes.walletStatus}><Lens /></Avatar>
+                                        <Avatar><Lens /></Avatar>
                                     </Box>
                                     <TextField label="Wallet" value="0x6833...BCdA" InputProps={{readOnly: true}} variant="outlined" />
                                 </FormControl>

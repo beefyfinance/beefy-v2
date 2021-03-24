@@ -5,16 +5,19 @@ export const formatApy = apy => {
 
   apy *= 100;
 
+  const units = ['', 'k', 'M', 'B', 'T', 'Q', 'Q', 'S', 'S'];
   const order = apy < 1 ? 0 : Math.floor(Math.log10(apy) / 3);
-  const units = ['', 'k', 'M', 'B', 'T', 'Q', 'Q','S','S'];
-  const num = apy / 1000 ** order;
+  if (order >= units.length - 1) return `🔥`;
 
+  const num = apy / 1000 ** order;
   return `${num.toFixed(2)}${units[order]}%`;
 };
 
 export const formatTvl = (tvl, oraclePrice) => {
   // TODO: bignum?
-  tvl *= oraclePrice;
+  if (oraclePrice) {
+    tvl *= oraclePrice;
+  }
 
   const order = Math.floor(Math.log10(tvl) / 3);
   if (order < 0) {
@@ -23,7 +26,7 @@ export const formatTvl = (tvl, oraclePrice) => {
 
   const units = ['', 'k', 'M', 'B', 'T'];
   const num = tvl / 1000 ** order;
-  const prefix = oraclePrice === 0 ? '~$' : '$';
+  const prefix = '$';
 
   return prefix + num.toFixed(2) + units[order];
 };
@@ -49,4 +52,23 @@ export function byDecimals(number, tokenDecimals = 18) {
   const decimals = new BigNumber(10).exponentiatedBy(tokenDecimals);
   return new BigNumber(number).dividedBy(decimals);
 }
+
+export const formatCountdown = deadline => {
+  const time = deadline - new Date().getTime();
+
+  const day = Math.floor(time / (1000 * 60 * 60 * 24))
+      .toString()
+      .padStart(2, '0');
+  const hours = Math.floor((time / (1000 * 60 * 60)) % 24)
+      .toString()
+      .padStart(2, '0');
+  const minutes = Math.floor((time / (1000 * 60)) % 60)
+      .toString()
+      .padStart(2, '0');
+  const seconds = Math.floor((time / 1000) % 60)
+      .toString()
+      .padStart(2, '0');
+
+  return `${day}day ${hours}:${minutes}:${seconds}`;
+};
 

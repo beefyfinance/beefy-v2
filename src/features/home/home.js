@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useHistory } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {BigNumber} from 'bignumber.js';
-import {formatDecimals, formatApy, calcDaily} from '../../helpers/format'
+import {formatDecimals, formatApy, calcDaily, formatTvl} from '../../helpers/format'
+import reduxActions from "../redux/actions";
 
 import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography} from "@material-ui/core"
 import Alert from '@material-ui/lab/Alert';
@@ -10,7 +11,9 @@ import Box from '@material-ui/core/Box';
 import Filter from './components/Filter';
 import ListHeaderBtn from './components/ListHeaderBtn';
 import styles from "./styles"
+import Loader from "../../components/loader";
 
+let currentNetwork;
 const useStyles = makeStyles(styles);
 
 const UseSortableData = (items, config = null) => {
@@ -22,26 +25,30 @@ const UseSortableData = (items, config = null) => {
     }, [sortConfig]);
 
     const sortedItems = React.useMemo(() => {
-        let sortableItems = [...items];
+        let sortableItems = Object.keys(items).length === 0 ? [] : [...items];
         if (sortConfig !== null) {
             sortableItems.sort((a, b) => {
-                if (a[sortConfig.key] < b[sortConfig.key]) {
-                    return sortConfig.direction === 'ascending' ? -1 : 1;
+                if(sortConfig.key === 'name') {
+                    if (a[sortConfig.key].toUpperCase() < b[sortConfig.key].toUpperCase()) {
+                        return sortConfig.direction === 'asc' ? -1 : 1;
+                    }
+                    if (a[sortConfig.key].toUpperCase() > b[sortConfig.key].toUpperCase()) {
+                        return sortConfig.direction === 'asc' ? 1 : -1;
+                    }
+                    return 0;
+                } else {
+                    return sortConfig.direction === 'asc' ? (a[sortConfig.key] - b[sortConfig.key]) : (b[sortConfig.key] - a[sortConfig.key]);
                 }
-                if (a[sortConfig.key] > b[sortConfig.key]) {
-                    return sortConfig.direction === 'ascending' ? 1 : -1;
-                }
-                return 0;
             });
         }
         return sortableItems;
     }, [items, sortConfig]);
 
-    const requestSort = (key) => {
-        let direction = 'descending';
-        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'descending') {
-            direction = 'ascending';
-        }
+    const requestSort = (key, d = false) => {
+        const direction = d ? d : (
+            (sortConfig && sortConfig.key === key && sortConfig.direction === 'desc') ? 'asc' : 'desc'
+        );
+
         setSortConfig({ ...sortConfig, key, direction });
     };
 
@@ -58,20 +65,47 @@ const UseSortableData = (items, config = null) => {
 };
 
 const Vault = () => {
+    const dispatch = useDispatch();
+    const {vault, wallet} = useSelector(state => ({
+        vault: state.vaultReducer,
+        wallet: state.walletReducer,
+    }));
+
     const history = useHistory();
     const classes = useStyles();
-    const wallet = useSelector(state => state.wallet);
-    const {items, requestSort, sortConfig, setRetired, setKeyword} = UseSortableData(wallet.poolsFormatted, {
+    const {items, requestSort, sortConfig, setRetired, setKeyword} = UseSortableData(vault.pools, {
         retired: false,
         key: 'tvl',
-        direction: 'descending',
+        direction: 'desc',
         keyword: ''
     });
 
+    React.useEffect(() => {
+        requestSort(sortConfig.key, sortConfig.direction);
+    }, [vault.lastUpdated]);
+
+    React.useEffect(() => {
+        if(currentNetwork !== wallet.network) {
+            dispatch(reduxActions.vault.fetchPools());
+            dispatch(reduxActions.wallet.fetchRpc());
+            dispatch(reduxActions.vault.fetchPoolsData());
+            currentNetwork = wallet.network;
+        }
+    }, [dispatch, wallet.network]);
+
+    React.useEffect(() => {
+        setInterval(() => {
+            dispatch(reduxActions.vault.fetchPoolsData());
+        }, 60000);
+    }, [dispatch]);
+
     const filter = () => {
-        return items.filter((item) => {
-            return item.status === (sortConfig.retired ? 'eol' : 'active') && item.name.toLowerCase().includes(sortConfig.keyword) ? item : false;
-        });
+        if(items.length > 0) {
+            return items.filter((item) => {
+                return item.status === (sortConfig.retired ? 'eol' : 'active') && item.name.toLowerCase().includes(sortConfig.keyword) ? item : false;
+            });
+        }
+        return false;
     };
 
     const processItem = (get, item) => {
@@ -103,8 +137,11 @@ const Vault = () => {
             <Box p={{ xs: 2, sm: 3, md: 4, xl: 6 }} align="center">
                 <Alert severity="warning">Using Smart Contracts, Tokens, and Crypto is always a risk. DYOR before investing.</Alert>
             </Box>
-            <Filter sortConfig={sortConfig} setKeyword={setKeyword} setRetired={setRetired} />
+            {vault.isPoolsLoading ? (
+                <Loader message={('Loading data from ' + (wallet.network).toUpperCase() + ' network...')} />
+            ) : (
             <Box>
+                <Filter sortConfig={sortConfig} setKeyword={setKeyword} setRetired={setRetired} tvl={vault.totalTvl} />
                 <Grid container className={classes.listHeader}>
                     <Box flexGrow={1} textAlign={"left"}>
                         <ListHeaderBtn name="Name" sort="name" sortConfig={sortConfig} requestSort={requestSort} />
@@ -116,57 +153,61 @@ const Vault = () => {
                         <ListHeaderBtn name="Deposited" sort="deposited" sortConfig={sortConfig} requestSort={requestSort} />
                     </Box>
                     <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="APY%" sort="apy" sortConfig={sortConfig} requestSort={requestSort} />
+                        <ListHeaderBtn name="APY" sort="apy" sortConfig={sortConfig} requestSort={requestSort} />
                     </Box>
                     <Hidden mdDown>
                         <Box className={classes.rWidth} textAlign={"right"}>
-                            <ListHeaderBtn name="Daily APY%" sort="daily" sortConfig={sortConfig} requestSort={requestSort} />
+                            <ListHeaderBtn name="Daily APY" sort="daily" sortConfig={sortConfig} requestSort={requestSort} />
                         </Box>
                     </Hidden>
                     <Box className={classes.rWidth} textAlign={"right"}>
                         <ListHeaderBtn name="TVL" sort="tvl" sortConfig={sortConfig} requestSort={requestSort} />
                     </Box>
                 </Grid>
-                {filter().map(item => (
-                <Grid container key={item.id}>
-                    <Button className={processItem('classes', item)} onClick={() => {history.push('/vault/' + wallet.network + '/' + (item.id))}}>
-                        <Box flexGrow={1} textAlign={"left"}>
-                            {processItem('message', item)}
-                            <Grid container>
-                                <Hidden smDown>
-                                    <Grid>
-                                        <Avatar alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                {items.length === 0 ? '' : (
+                    filter().map(item => (
+                        <Grid container key={item.id}>
+                            <Button className={processItem('classes', item)} onClick={() => {history.push('/vault/' + wallet.network + '/' + (item.id))}}>
+                                <Box flexGrow={1} textAlign={"left"}>
+                                    {processItem('message', item)}
+                                    <Grid container>
+                                        <Hidden smDown>
+                                            <Grid>
+                                                <Avatar alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                                            </Grid>
+                                        </Hidden>
+                                        <Grid>
+                                            <Box textAlign={"left"} style={{paddingLeft:"16px"}}>
+                                                <Typography className={classes.h2}>{item.name}</Typography>
+                                                <Typography className={classes.h3}>{item.tokenDescription}</Typography>
+                                            </Box>
+                                        </Grid>
                                     </Grid>
-                                </Hidden>
-                                <Grid>
-                                    <Box textAlign={"left"} style={{paddingLeft:"16px"}}>
-                                        <Typography className={classes.h2}>{item.name}</Typography>
-                                        <Typography className={classes.h3}>{item.tokenDescription}</Typography>
+                                </Box>
+                                <Box className={classes.rWidth} textAlign={"right"}>
+                                    <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.balance))}</Typography>
+                                </Box>
+                                <Box className={classes.rWidth} textAlign={"right"}>
+                                    <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.deposited))}</Typography>
+                                </Box>
+                                <Box className={classes.rWidth} textAlign={"right"}>
+                                    <Typography className={classes.h2}>{formatApy(item.apy)}</Typography>
+                                </Box>
+                                <Hidden mdDown>
+                                    <Box className={classes.rWidth} textAlign={"right"}>
+                                        <Typography className={classes.h2}>{calcDaily(item.apy)}</Typography>
                                     </Box>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                        <Box className={classes.rWidth} textAlign={"right"}>
-                            <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.balance))}</Typography>
-                        </Box>
-                        <Box className={classes.rWidth} textAlign={"right"}>
-                            <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.deposited))}</Typography>
-                        </Box>
-                        <Box className={classes.rWidth} textAlign={"right"}>
-                            <Typography className={classes.h2}>{formatApy(item.apy)}</Typography>
-                        </Box>
-                        <Hidden mdDown>
-                            <Box className={classes.rWidth} textAlign={"right"}>
-                                <Typography className={classes.h2}>{calcDaily(item.daily)}</Typography>
-                            </Box>
-                        </Hidden>
-                        <Box className={classes.rWidth} textAlign={"right"}>
-                            <Typography className={classes.h2}>${(item.tvl)}</Typography>
-                        </Box>
-                    </Button>
-                </Grid>
-                ))}
+                                </Hidden>
+                                <Box className={classes.rWidth} textAlign={"right"}>
+                                    <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
+                                </Box>
+                            </Button>
+                        </Grid>
+                    ))
+                )}
+
             </Box>
+            )}
         </Container>
     );
 };

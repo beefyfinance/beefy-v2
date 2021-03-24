@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/header";
 import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 import './App.css'
+import {useDispatch} from "react-redux";
+import reduxActions from "./features/redux/actions";
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
@@ -20,6 +22,12 @@ export default function App() {
             type: (isNightMode ? "dark" : "light"),
         },
     });
+
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        dispatch(reduxActions.prices.fetchPrices());
+    }, [dispatch]);
 
     React.useEffect(() => {
         localStorage.setItem('nightMode', JSON.stringify(isNightMode));

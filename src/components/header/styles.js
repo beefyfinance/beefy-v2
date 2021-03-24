@@ -39,23 +39,20 @@ const styles = (theme) => ({
         '& a': {
             marginLeft: '10px',
         },
+        '& img': {
+            height: '36px',
+        }
     },
-    netControl: {
-        minWidth: 160,
-        '& .MuiFormLabel-root': {
-            minWidth: '100px',
+    wallet: {
+        marginTop: '4px',
+        '& .MuiAvatar-root': {
+            color: theme.palette.success.main,
+            backgroundColor: 'transparent',
         },
-        '& .MuiSelect-select': {
-            fontSize: '12px',
-            fontWeight: 'bold',
+        '& .MuiFormControl-root': {
+            width: '140px',
+            marginLeft: '5px',
         },
-        '& .MuiOutlinedInput-input': {
-            padding: '12px',
-        },
-    },
-    walletControl: {
-        width: '140px',
-        marginLeft: '5px',
         '& .MuiOutlinedInput-input': {
             padding: '14px',
             paddingLeft: '40px',
@@ -66,9 +63,22 @@ const styles = (theme) => ({
             cursor: 'default',
         }
     },
-    walletStatus: {
-        color: theme.palette.success.main,
-        backgroundColor: 'transparent',
+    network: {
+        marginTop: '4px',
+        marginLeft: '4px',
+        '& .MuiFormControl-root': {
+            minWidth: 160,
+            '& .MuiFormLabel-root': {
+                minWidth: '100px',
+            },
+            '& .MuiSelect-select': {
+                fontSize: '12px',
+                fontWeight: 'bold',
+            },
+            '& .MuiOutlinedInput-input': {
+                padding: '12px',
+            },
+        }
     }
 })
 
