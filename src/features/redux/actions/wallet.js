@@ -25,15 +25,25 @@ const fetchRpc = () => {
 
         const state = getState();
         const clients = await getClientsForNetwork(state.walletReducer.network);
-        // todo: create func and check if connected, if not retry 5 times or show error.
-        const connection = await new Web3(clients[~~(clients.length * Math.random())]);
+        const connect = async () => {
+            console.log('redux fetchRpc called. (' + state.walletReducer.network + ')');
+            const web3 = await new Web3(clients[~~(clients.length * Math.random())]);
 
-        console.log('redux fetchRpc called. (' + state.walletReducer.network + ')');
+            try {
+                await web3.eth.net.isListening();
+                return dispatch({
+                    type: WALLET_RPC_SUCCESS,
+                    payload: {rpc: web3}
+                });
+            } catch(err) {
+                console.log('redux fetchRpc failed, retrying... (' + state.walletReducer.network + ')');
+                setTimeout(async () => {
+                    return await connect();
+                }, 1000);
+            }
+        }
 
-        dispatch({
-            type: WALLET_RPC_SUCCESS,
-            payload: {rpc: connection}
-        });
+        return connect();
     };
 }
 
