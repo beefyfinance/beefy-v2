@@ -167,7 +167,7 @@ const Vault = () => {
                 {items.length === 0 ? '' : (
                     filter().map(item => (
                         <Grid container key={item.id}>
-                            <Button className={processItem('classes', item)} onClick={() => {history.push('/vault/' + wallet.network + '/' + (item.id))}}>
+                            <Button className={processItem('classes', item)} onClick={() => {history.push('/' + wallet.network + '/vault/' + (item.id))}}>
                                 <Box flexGrow={1} textAlign={"left"}>
                                     {processItem('message', item)}
                                     <Grid container>

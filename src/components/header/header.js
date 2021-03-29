@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useHistory } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
+import {config} from '../../config/config';
 import reduxActions from "../../features/redux/actions";
 import {
     makeStyles,
@@ -24,6 +25,7 @@ import {
 } from "@material-ui/core";
 import {Menu, WbSunny, NightsStay, Lens} from "@material-ui/icons";
 import styles from "./styles"
+import {useLocation} from "react-router";
 
 const useStyles = makeStyles(styles);
 
@@ -36,8 +38,15 @@ const navLinks = [
     { title: 'buy', path: 'https://classic.openocean.finance/exchange/BNB' },
 ];
 
+const checkNetwork = (path) => {
+    const params = path.substring(1).split('/');
+    const match = params[0].replace(/[^0-9a-z]/gi, '');
+    return match && (match in config) ? match : false;
+}
+
 const Header = ({isNightMode, setNightMode}) => {
     const history = useHistory();
+    const location = useLocation();
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const handleDrawerToggle = () => {
@@ -46,6 +55,11 @@ const Header = ({isNightMode, setNightMode}) => {
 
     const dispatch = useDispatch();
     const currentNetwork = useSelector(state => state.walletReducer.network);
+    const urlParamNetwork = checkNetwork(location.pathname);
+
+    if(urlParamNetwork) {
+        dispatch(reduxActions.wallet.setNetwork(urlParamNetwork));
+    }
 
     const handleNetworkSwitch = (event) => {
         dispatch(reduxActions.wallet.setNetwork(event.target.value))

@@ -4,6 +4,7 @@ import Header from "./components/header";
 import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 import './App.css'
 import {useDispatch} from "react-redux";
+import {config} from './config/config';
 import reduxActions from "./features/redux/actions";
 
 const Home = React.lazy(() => import(`./features/home`));
@@ -12,6 +13,16 @@ const Stats = React.lazy(() => import(`./features/stats`));
 
 const PageNotFound = () => {
     return <div>Page not found.</div>;
+}
+
+const getNetworks = () => {
+    const paths = [];
+
+    for(let networks in config) {
+        paths.push(networks);
+    }
+
+    return '/(|' + paths.join('|') + ')';
 }
 
 export default function App() {
@@ -23,6 +34,7 @@ export default function App() {
         },
     });
 
+    const homePath = getNetworks();
     const dispatch = useDispatch();
 
     React.useEffect(() => {
@@ -40,13 +52,13 @@ export default function App() {
                 <Header isNightMode={isNightMode} setNightMode={() => setNightMode(!isNightMode)} />
                 <React.Suspense fallback={<div className="loader"/>}>
                     <Switch>
-                        <Route exact path="/" key={Date.now()}>
+                        <Route exact path={homePath} key={Date.now()}>
                             <Home />
                         </Route>
                         <Route strict sensitive exact path="/stats">
                             <Stats />
                         </Route>
-                        <Route strict sensitive exact path="/vault/:network/:id">
+                        <Route strict sensitive exact path="/:network/vault/:id">
                             <Vault />
                         </Route>
                         <Route>
