@@ -73,6 +73,10 @@ const Vault = () => {
 
     if(vault) {
         isLoading = false;
+    } else {
+        if(vaultReducer.lastUpdated > 0) {
+            history.push('/error');
+        }
     }
 
     return (
