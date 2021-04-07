@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/header";
 import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
-import './App.css'
 import {useDispatch} from "react-redux";
 import {config} from './config/config';
 import reduxActions from "./features/redux/actions";
@@ -38,6 +37,7 @@ export default function App() {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
+        dispatch(reduxActions.wallet.createWeb3Modal());
         dispatch(reduxActions.prices.fetchPrices());
     }, [dispatch]);
 

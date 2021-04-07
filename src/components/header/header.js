@@ -20,12 +20,12 @@ import {
     FormControl,
     Select,
     InputLabel,
-    TextField,
-    Avatar, Button
+    Button
 } from "@material-ui/core";
-import {Menu, WbSunny, NightsStay, Lens} from "@material-ui/icons";
+import {Menu, WbSunny, NightsStay} from "@material-ui/icons";
 import styles from "./styles"
 import {useLocation} from "react-router";
+import WalletContainer from "./components/WalletContainer";
 
 const useStyles = makeStyles(styles);
 
@@ -47,14 +47,14 @@ const checkNetwork = (path) => {
 const Header = ({isNightMode, setNightMode}) => {
     const history = useHistory();
     const location = useLocation();
+    const dispatch = useDispatch();
+    const walletReducer = useSelector(state => state.walletReducer);
     const classes = useStyles();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    const dispatch = useDispatch();
-    const currentNetwork = useSelector(state => state.walletReducer.network);
     const urlParamNetwork = checkNetwork(location.pathname);
 
     if(urlParamNetwork) {
@@ -62,7 +62,7 @@ const Header = ({isNightMode, setNightMode}) => {
     }
 
     const handleNetworkSwitch = (event) => {
-        dispatch(reduxActions.wallet.setNetwork(event.target.value))
+        dispatch(reduxActions.wallet.setNetwork(event.target.value));
         history.push('/');
     }
 
@@ -87,20 +87,13 @@ const Header = ({isNightMode, setNightMode}) => {
                             <Box className={classes.network}>
                                 <FormControl variant="outlined">
                                     <InputLabel id="switch-network-label">Switch Network</InputLabel>
-                                    <Select labelId="switch-network-label" value={currentNetwork} onChange={handleNetworkSwitch} label="Switch Network">
+                                    <Select labelId="switch-network-label" value={walletReducer.network} onChange={handleNetworkSwitch} label="Switch Network">
                                         <MenuItem value={'bsc'}>Binance Smart Chain</MenuItem>
                                         <MenuItem value={'heco'}>Heco</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
-                            <Box className={classes.wallet} style={{marginTop: '4px'}}>
-                                <FormControl noValidate autoComplete="off">
-                                    <Box style={{position: 'absolute', left:0, top: 0}}>
-                                        <Avatar><Lens /></Avatar>
-                                    </Box>
-                                    <TextField label="Wallet" value="0x6833...BCdA" InputProps={{readOnly: true}} variant="outlined" />
-                                </FormControl>
-                            </Box>
+                            <WalletContainer />
                         </List>
                     </Hidden>
                     <Hidden mdUp>

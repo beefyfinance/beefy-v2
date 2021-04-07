@@ -43,31 +43,11 @@ const styles = (theme) => ({
             height: '36px',
         }
     },
-    wallet: {
-        marginTop: '4px',
-        '& .MuiAvatar-root': {
-            color: theme.palette.success.main,
-            backgroundColor: 'transparent',
-        },
-        '& .MuiFormControl-root': {
-            width: '140px',
-            marginLeft: '5px',
-        },
-        '& .MuiOutlinedInput-input': {
-            padding: '14px',
-            paddingLeft: '40px',
-        },
-        '& .MuiInputBase-input': {
-            fontSize: '12px',
-            fontWeight: 'bold',
-            cursor: 'default',
-        }
-    },
     network: {
         marginTop: '4px',
         marginLeft: '4px',
         '& .MuiFormControl-root': {
-            minWidth: 160,
+            minWidth: '160px',
             '& .MuiFormLabel-root': {
                 minWidth: '100px',
             },
