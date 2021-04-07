@@ -11,7 +11,7 @@ const styles = (theme) => ({
             backgroundColor: 'transparent',
         },
         '& .MuiFormControl-root': {
-            width: '138px',
+            width: '135px',
             marginLeft: '5px',
         },
         '& .MuiOutlinedInput-input': {

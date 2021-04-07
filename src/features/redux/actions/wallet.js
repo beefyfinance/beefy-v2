@@ -31,14 +31,17 @@ const getNetworkAbbr = (networkId) => {
 }
 
 const setNetwork = (net) => {
-    console.log('redux setNetwork called.')
+    console.log('redux setNetwork called.');
 
     return async (dispatch, getState) => {
-        const clients = await getClientsForNetwork(net);
-        localStorage.setItem('network', net);
+        const state = getState();
+        if(state.walletReducer.network !== net) {
+            const clients = await getClientsForNetwork(net);
+            localStorage.setItem('network', net);
 
-        dispatch({type: "SET_NETWORK", payload: {network: net, clients: clients}});
-        dispatch(createWeb3Modal());
+            dispatch({type: "SET_NETWORK", payload: {network: net, clients: clients}});
+            dispatch(createWeb3Modal());
+        }
     };
 }
 
@@ -62,7 +65,9 @@ const fetchRpc = () => {
             }
         }
 
-        return connect();
+        if(!state.walletReducer.rpc) {
+            connect();
+        }
     };
 }
 
@@ -166,8 +171,11 @@ const createWeb3Modal = () => {
 
         dispatch({type: WALLET_CREATE_MODAL, payload: {data: web3Modal}});
 
-        if (web3Modal.cachedProvider) {
+        if (web3Modal.cachedProvider && web3Modal.cachedProvider === 'injected') {
             dispatch(connect());
+        } else {
+            await web3Modal.clearCachedProvider();
+            dispatch({type: WALLET_CONNECT_DONE, payload: {address: null}});
         }
     }
 }
@@ -244,7 +252,7 @@ const generateProviderOptions = (wallet, clients) => {
     }
 
     return {
-        network: wallet.network,
+        network: config[wallet.network].providerName,
         cacheProvider: true,
         providerOptions: generateCustomConnectors(),
     }

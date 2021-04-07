@@ -9,6 +9,7 @@ export const config = {
         ],
         multicallAddress: '0xB94858b0bB5437498F5453A16039337e5Fdc269C',
         supportedWallets: ['injected', 'walletconnect', 'custom-binance', 'custom-math', 'custom-twt', 'custom-safepal'],
+        providerName: 'binance',
     },
     "heco": {
         name: 'Huobi ECO Chain',
@@ -18,5 +19,6 @@ export const config = {
         ],
         multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
         supportedWallets: ['injected', 'walletconnect', 'custom-math'],
+        providerName: 'heco',
     }
 }

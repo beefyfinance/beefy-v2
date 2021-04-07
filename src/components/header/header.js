@@ -57,7 +57,7 @@ const Header = ({isNightMode, setNightMode}) => {
 
     const urlParamNetwork = checkNetwork(location.pathname);
 
-    if(urlParamNetwork) {
+    if(urlParamNetwork && urlParamNetwork !== walletReducer.network) {
         dispatch(reduxActions.wallet.setNetwork(urlParamNetwork));
     }
 

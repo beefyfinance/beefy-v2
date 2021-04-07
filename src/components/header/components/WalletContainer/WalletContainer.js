@@ -9,7 +9,7 @@ import Loader from "../../../loader";
 const useStyles = makeStyles(styles);
 
 const formatAddress = (addr) => {
-    return addr.substring(0,5) + '...' + addr.substring(addr.length - 5, 5);
+    return addr.substr(0,5) + '...' + addr.substr(addr.length - 5, 5);
 }
 
 const WalletContainer = () => {
