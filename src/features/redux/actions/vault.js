@@ -113,7 +113,7 @@ const fetchPoolsData = () => {
             if(!done) {
                 setTimeout(async () => {
                     await start();
-                }, 500);
+                }, 1000);
             }
         }
 
