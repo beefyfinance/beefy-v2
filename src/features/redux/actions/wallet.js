@@ -66,7 +66,7 @@ const fetchRpc = () => {
         }
 
         if(!state.walletReducer.rpc) {
-            connect();
+            await connect();
         }
     };
 }
@@ -135,10 +135,9 @@ const connect = () => {
                 dispatch({type: WALLET_CONNECT_DONE, payload: {address: accounts[0]}});
             } else {
                 await close();
-                if(checkNetworkSupport(networkId)) {
-                    // todo: tell user to switch networks on wallet.
-                    alert('show nice modal: User wallet network is not ' + state.walletReducer.network);
-                    throw Error('User wallet network is not ' + state.walletReducer.network);
+                if(checkNetworkSupport(networkId) && provider) {
+                    await provider.request({method: 'wallet_addEthereumChain', params: [config[state.walletReducer.network].walletSettings]});
+                    dispatch(connect())
                 } else {
                     // todo: show error to user for unsupported network
                     alert('show nice modal: Wallet network not supported: ' + networkId);
