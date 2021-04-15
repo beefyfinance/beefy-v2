@@ -8,6 +8,9 @@ import axios from 'axios';
 */
 
 const fetchPrices = (reducer) => {
+    const cache = new Date();
+    cache.setMinutes(0, 0, 0)
+
     return async (dispatch, getState) => {
         const updatePrices = async () => {
             console.log('redux fetchPrices called.');
@@ -18,7 +21,7 @@ const fetchPrices = (reducer) => {
             }
 
             try {
-                const request = await axios.get('https://api.beefy.finance/prices?_=' + new Date().getTime(), {timeout: 1000});
+                const request = await axios.get('https://api.beefy.finance/prices?_=' + cache.getTime(), {timeout: 1000});
                 return request.status === 200 ? request.data : retry();
             } catch(err) {
                 console.log('error fetchPrices()', err);
@@ -34,7 +37,7 @@ const fetchPrices = (reducer) => {
                 }, 1000);
             }
             try {
-                const request = await axios.get('https://api.beefy.finance/lps?_=' + new Date().getTime(), {timeout: 1000});
+                const request = await axios.get('https://api.beefy.finance/lps?_=' + cache.getTime(), {timeout: 1000});
                 return request.status === 200 ? request.data : retry();
             } catch(err) {
                 console.log('error fetchLps()', err);
@@ -50,7 +53,7 @@ const fetchPrices = (reducer) => {
                 }, 1000);
             }
             try {
-                const request = await axios.get('https://api.beefy.finance/apy?_=' + new Date().getTime(), {timeout: 1000});
+                const request = await axios.get('https://api.beefy.finance/apy?_=' + cache.getTime(), {timeout: 1000});
                 return request.status === 200 ? request.data : retry();
             } catch(err) {
                 console.log('error fetchApy()', err)
