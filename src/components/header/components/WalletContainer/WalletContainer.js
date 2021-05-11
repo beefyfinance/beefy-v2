@@ -1,7 +1,8 @@
 import React from "react";
-import {makeStyles, Box, Avatar, TextField, FormControl} from "@material-ui/core";
+import {makeStyles, Box, Avatar, FormControl, Typography, Grid} from "@material-ui/core";
+import {renderIcon} from '@download/blockies';
+import { createCanvas } from 'canvas';
 import styles from "./styles"
-import {Lens} from "@material-ui/icons";
 import reduxActions from "../../../../features/redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../../loader";
@@ -16,6 +17,8 @@ const WalletContainer = () => {
     const classes = useStyles();
     const walletReducer = useSelector(state => state.walletReducer);
     const dispatch = useDispatch();
+    const [dataUrl, setDataUrl] = React.useState(null);
+    const canvas = createCanvas(24, 24);
 
     const handleWalletConnect = () => {
         if(!walletReducer.address) {
@@ -29,26 +32,27 @@ const WalletContainer = () => {
 
     React.useEffect(() => {
         console.log('address', walletReducer.address);
-    }, [walletReducer.address]);
+        if(walletReducer.address) {
+            renderIcon({ seed: walletReducer.address.toLowerCase() }, canvas);
+            setDataUrl(canvas.toDataURL());
+        }
+    }, [walletReducer.address, canvas]);
 
     return (
-        <Box className={classes.wallet}>
+        <Box className={walletReducer.address ? classes.connected : classes.wallet}>
             <FormControl noValidate autoComplete="off" onClick={handleWalletConnect}>
+                <Grid container direction="row" alignItems="center">
                 {walletReducer.pending ? (
-                    <React.Fragment>
-                        <Box style={{position: 'absolute', left:50, top: 14}}>
-                            <Loader line={true} />
-                        </Box>
-                        <TextField label="Wallet" value=' ' InputProps={{readOnly: true}} variant="outlined" />
-                    </React.Fragment>
+                    <Box className={classes.loading}>
+                        <Loader line={true} />
+                    </Box>
                 ) : (
                     <React.Fragment>
-                        <Box style={{position: 'absolute', left:0, top: 0}}>
-                            <Avatar className={walletReducer.address ? 'on' : 'off'}><Lens /></Avatar>
-                        </Box>
-                        <TextField label="Wallet" value={walletReducer.address ? formatAddress(walletReducer.address) : 'Connect Wallet'} InputProps={{readOnly: true}} variant="outlined" />
+                        {walletReducer.address ? (<Avatar src={dataUrl} />) : ''}
+                        <Typography noWrap={true}>{walletReducer.address ? formatAddress(walletReducer.address) : 'Connect Wallet'}</Typography>
                     </React.Fragment>
                 )}
+                </Grid>
             </FormControl>
         </Box>
     )

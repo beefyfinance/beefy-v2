@@ -1,18 +1,30 @@
 const styles = (theme) => ({
     navHeader: {
-        backgroundColor: theme.palette.type === 'dark' ? '#505067' : '#faf6f1',
+        backgroundColor: 'transparent',
+        border: 'none',
+        boxShadow: 'none',
+        paddingTop: '20px',
         '& .MuiListItem-button': {
-            color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
-        }
+            color: theme.palette.type === 'dark' ? '#6B7199' : '#000000',
+            '& .MuiTypography-root': {
+                fontWeight: 'bold',
+                textTransform: 'capitalize',
+                borderBottom: '2px solid transparent',
+                '&:hover': {
+                    color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
+                    borderColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+                }
+            }
+        },
+        '&:hover .MuiListItem-button': {
+            background: 'transparent',
+        },
     },
     navDisplayFlex: {
         display: 'flex',
         justifyContent: 'space-between',
-    },
-    linkText: {
-        textDecoration: 'none',
-        textTransform: 'capitalize',
-        color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
+        paddingTop: 0,
+        paddingBottom: 0,
     },
     list: {
         width: 250,
@@ -24,7 +36,7 @@ const styles = (theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
         '&,& .MuiButton-root': {
-            fontSize: '24px',
+            fontSize: '20px',
             fontWeight: '700',
             borderRadius: '3px',
             textTransform: 'none',
@@ -40,26 +52,9 @@ const styles = (theme) => ({
             marginLeft: '10px',
         },
         '& img': {
-            height: '36px',
+            height: '24px',
         }
     },
-    network: {
-        marginTop: '4px',
-        marginLeft: '4px',
-        '& .MuiFormControl-root': {
-            minWidth: '160px',
-            '& .MuiFormLabel-root': {
-                minWidth: '100px',
-            },
-            '& .MuiSelect-select': {
-                fontSize: '12px',
-                fontWeight: 'bold',
-            },
-            '& .MuiOutlinedInput-input': {
-                padding: '12px',
-            },
-        }
-    }
 })
 
 export default styles;

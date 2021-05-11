@@ -31,6 +31,15 @@ export default function App() {
         palette: {
             type: (isNightMode ? "dark" : "light"),
         },
+        overrides: {
+            MuiCssBaseline: {
+                '@global': {
+                    body: {
+                        backgroundColor: (isNightMode ? '#1B203A' : '#fff'),
+                    },
+                },
+            },
+        },
     });
 
     const homePath = getNetworks();

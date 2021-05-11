@@ -1,4 +1,15 @@
 const styles = (theme) => ({
+    h1: {
+        fontSize: '48px',
+        fontWeight: '600',
+        lineHeight: '54px',
+        color:   theme.palette.type === 'dark' ? '#ffffff' : '#000000',
+        padding: '60px 0',
+    },
+
+
+
+
     listHeader: {
         marginBottom: '12px',
     },

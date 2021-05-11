@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@download/blockies": "^1.0.3",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/system": "^4.11.3",
     "@testing-library/jest-dom": "^5.11.4",
@@ -52,6 +53,7 @@
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
+    "canvas": "^2.7.0",
     "eth-multicall": "^1.3.13",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0"

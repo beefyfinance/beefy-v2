@@ -62,7 +62,7 @@ const getPoolData = async (state, dispatch) => {
         const balance = new BigNumber(response[0][key].balance);
         const price = (pools[key].oracleId in prices) ? prices[pools[key].oracleId] : 0;
         pools[key].tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[key].tokenDecimals));
-        pools[key].apy = (pools[key].id in apy) ? apy[pools[key].id] : 0;
+        pools[key].apy = (apy !== undefined && pools[key].id in apy) ? apy[pools[key].id] : 0;
         totalTvl = new BigNumber(totalTvl).plus(pools[key].tvl);
     }
 

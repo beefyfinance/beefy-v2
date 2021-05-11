@@ -6,15 +6,29 @@ import {formatDecimals, formatApy, calcDaily, formatTvl} from '../../helpers/for
 import reduxActions from "../redux/actions";
 
 import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography} from "@material-ui/core"
-import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import Filter from './components/Filter';
 import ListHeaderBtn from './components/ListHeaderBtn';
+import Portfolio from './components/Portfolio';
 import styles from "./styles"
 import Loader from "../../components/loader";
 
 let currentNetwork;
 const useStyles = makeStyles(styles);
+const defaultFilter = {
+    key: 'tvl',
+    direction: 'desc',
+    keyword: '',
+    retired: false,
+    zero: false,
+    deposited: false,
+    boost: false,
+    experimental: false,
+    platform: 'all',
+    vault: 'all',
+    blockchain: 'all',
+    category: 'all',
+}
 
 const UseSortableData = (items, config = null) => {
     const storage = localStorage.getItem('homeSortConfig');
@@ -52,16 +66,11 @@ const UseSortableData = (items, config = null) => {
         setSortConfig({ ...sortConfig, key, direction });
     };
 
-    const setRetired = () => {
-        const val = !sortConfig.retired;
-        setSortConfig({ ...sortConfig, retired: val});
+    const setFilter = (obj) => {
+        setSortConfig({ ...sortConfig, ...obj});
     }
 
-    const setKeyword = (keyword) => {
-        setSortConfig({ ...sortConfig, keyword: keyword});
-    }
-
-    return { items: sortedItems, requestSort, sortConfig, setRetired, setKeyword};
+    return { items: sortedItems, requestSort, sortConfig, setFilter};
 };
 
 const Vault = () => {
@@ -73,12 +82,7 @@ const Vault = () => {
 
     const history = useHistory();
     const classes = useStyles();
-    const {items, requestSort, sortConfig, setRetired, setKeyword} = UseSortableData(vault.pools, {
-        retired: false,
-        key: 'tvl',
-        direction: 'desc',
-        keyword: ''
-    });
+    const {items, requestSort, sortConfig, setFilter} = UseSortableData(vault.pools, defaultFilter);
 
     React.useEffect(() => {
         requestSort(sortConfig.key, sortConfig.direction);
@@ -133,82 +137,65 @@ const Vault = () => {
     }
 
     return (
-        <Container maxWidth="lg">
-            <Box p={{ xs: 2, sm: 3, md: 4, xl: 6 }} align="center">
-                <Alert severity="warning">Using Smart Contracts, Tokens, and Crypto is always a risk. DYOR before investing.</Alert>
-            </Box>
-            {vault.isPoolsLoading ? (
-                <Loader message={('Loading data from ' + (wallet.network).toUpperCase() + ' network...')} />
-            ) : (
-            <Box>
-                <Filter sortConfig={sortConfig} setKeyword={setKeyword} setRetired={setRetired} tvl={vault.totalTvl} />
-                <Grid container className={classes.listHeader}>
-                    <Box flexGrow={1} textAlign={"left"}>
-                        <ListHeaderBtn name="Name" sort="name" sortConfig={sortConfig} requestSort={requestSort} />
+        <React.Fragment>
+            <Portfolio />
+            <Container maxWidth="xl">
+                <Typography className={classes.tvl} align={'right'} style={{float: 'right'}}>TVL: {formatTvl(vault.totalTvl)}</Typography>
+                <Typography className={classes.h1}>Vaults</Typography>
+                {vault.isPoolsLoading ? (
+                    <Loader message={('Loading data from ' + (wallet.network).toUpperCase() + ' network...')} />
+                ) : (
+                <Box>
+                    <Filter sortConfig={sortConfig} setFilter={setFilter} defaultFilter={defaultFilter} />
+                    <Box>
+                        Showing 125 vaults
                     </Box>
-                    <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="Balance" sort="balance" sortConfig={sortConfig} requestSort={requestSort} />
-                    </Box>
-                    <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="Deposited" sort="deposited" sortConfig={sortConfig} requestSort={requestSort} />
-                    </Box>
-                    <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="APY" sort="apy" sortConfig={sortConfig} requestSort={requestSort} />
-                    </Box>
-                    <Hidden mdDown>
-                        <Box className={classes.rWidth} textAlign={"right"}>
-                            <ListHeaderBtn name="Daily APY" sort="daily" sortConfig={sortConfig} requestSort={requestSort} />
-                        </Box>
-                    </Hidden>
-                    <Box className={classes.rWidth} textAlign={"right"}>
-                        <ListHeaderBtn name="TVL" sort="tvl" sortConfig={sortConfig} requestSort={requestSort} />
-                    </Box>
-                </Grid>
-                {items.length === 0 ? '' : (
-                    filter().map(item => (
-                        <Grid container key={item.id}>
-                            <Button className={processItem('classes', item)} onClick={() => {history.push('/' + wallet.network + '/vault/' + (item.id))}}>
-                                <Box flexGrow={1} textAlign={"left"}>
-                                    {processItem('message', item)}
-                                    <Grid container>
-                                        <Hidden smDown>
+                    {items.length === 0 ? '' : (
+                        filter().map(item => (
+                            <Grid container key={item.id}>
+                                <Button className={processItem('classes', item)} onClick={() => {history.push('/' + wallet.network + '/vault/' + (item.id))}}>
+                                    <Box flexGrow={1} textAlign={"left"}>
+                                        {processItem('message', item)}
+                                        <Grid container>
+                                            <Hidden smDown>
+                                                <Grid>
+                                                    <Avatar alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                                                </Grid>
+                                            </Hidden>
                                             <Grid>
-                                                <Avatar alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                                                <Box textAlign={"left"} style={{paddingLeft:"16px"}}>
+                                                    <Typography className={classes.h2}>{item.name}</Typography>
+                                                    <Typography className={classes.h3}>{item.tokenDescription}</Typography>
+                                                </Box>
                                             </Grid>
-                                        </Hidden>
-                                        <Grid>
-                                            <Box textAlign={"left"} style={{paddingLeft:"16px"}}>
-                                                <Typography className={classes.h2}>{item.name}</Typography>
-                                                <Typography className={classes.h3}>{item.tokenDescription}</Typography>
-                                            </Box>
                                         </Grid>
-                                    </Grid>
-                                </Box>
-                                <Box className={classes.rWidth} textAlign={"right"}>
-                                    <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.balance))}</Typography>
-                                </Box>
-                                <Box className={classes.rWidth} textAlign={"right"}>
-                                    <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.deposited))}</Typography>
-                                </Box>
-                                <Box className={classes.rWidth} textAlign={"right"}>
-                                    <Typography className={classes.h2}>{formatApy(item.apy)}</Typography>
-                                </Box>
-                                <Hidden mdDown>
-                                    <Box className={classes.rWidth} textAlign={"right"}>
-                                        <Typography className={classes.h2}>{calcDaily(item.apy)}</Typography>
                                     </Box>
-                                </Hidden>
-                                <Box className={classes.rWidth} textAlign={"right"}>
-                                    <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
-                                </Box>
-                            </Button>
-                        </Grid>
-                    ))
-                )}
+                                    <Box className={classes.rWidth} textAlign={"right"}>
+                                        <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.balance))}</Typography>
+                                    </Box>
+                                    <Box className={classes.rWidth} textAlign={"right"}>
+                                        <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.deposited))}</Typography>
+                                    </Box>
+                                    <Box className={classes.rWidth} textAlign={"right"}>
+                                        <Typography className={classes.h2}>{formatApy(item.apy)}</Typography>
+                                    </Box>
+                                    <Hidden mdDown>
+                                        <Box className={classes.rWidth} textAlign={"right"}>
+                                            <Typography className={classes.h2}>{calcDaily(item.apy)}</Typography>
+                                        </Box>
+                                    </Hidden>
+                                    <Box className={classes.rWidth} textAlign={"right"}>
+                                        <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
+                                    </Box>
+                                </Button>
+                            </Grid>
+                        ))
+                    )}
 
-            </Box>
-            )}
-        </Container>
+                </Box>
+                )}
+            </Container>
+        </React.Fragment>
     );
 };
 

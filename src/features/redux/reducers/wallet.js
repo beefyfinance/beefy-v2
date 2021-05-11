@@ -17,6 +17,7 @@ const initialClients = () => {
 
 const initialState = {
     network: initialNetwork(),
+    language: 'en',
     clients: initialClients(),
     rpc: false,
     web3modal: null,

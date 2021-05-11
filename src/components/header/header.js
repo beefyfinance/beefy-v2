@@ -16,26 +16,20 @@ import {
     Drawer,
     Link,
     Box,
-    MenuItem,
-    FormControl,
-    Select,
-    InputLabel,
     Button
 } from "@material-ui/core";
 import {Menu, WbSunny, NightsStay} from "@material-ui/icons";
 import styles from "./styles"
 import {useLocation} from "react-router";
 import WalletContainer from "./components/WalletContainer";
+import CustomDropdown from "../customDropdown/CustomDropdown";
 
 const useStyles = makeStyles(styles);
 
 const navLinks = [
-    { title: 'barn', path: 'https://barn.beefy.finance' },
-    { title: 'vote', path: 'https://vote.beefy.finance' },
-    { title: 'gov', path: 'https://gov.beefy.finance' },
-    { title: 'stats', path: '/stats' },
+    { title: 'home', path: '/' },
+    { title: 'explore', path: '/explore' },
     { title: 'docs', path: 'https://docs.beefy.finance' },
-    { title: 'buy', path: 'https://classic.openocean.finance/exchange/BNB' },
 ];
 
 const checkNetwork = (path) => {
@@ -66,6 +60,11 @@ const Header = ({isNightMode, setNightMode}) => {
         history.push('/');
     }
 
+    const handleLanguageSwitch = (event) => {
+        //dispatch(reduxActions.wallet.setNetwork(event.target.value));
+        //history.push('/');
+    }
+
     return (
         <AppBar className={classes.navHeader} position="static">
             <Toolbar>
@@ -84,15 +83,8 @@ const Header = ({isNightMode, setNightMode}) => {
                             <IconButton onClick={setNightMode}>
                                 {isNightMode ? <WbSunny /> : <NightsStay />}
                             </IconButton>
-                            <Box className={classes.network}>
-                                <FormControl variant="outlined">
-                                    <InputLabel id="switch-network-label">Switch Network</InputLabel>
-                                    <Select labelId="switch-network-label" value={walletReducer.network} onChange={handleNetworkSwitch} label="Switch Network">
-                                        <MenuItem value={'bsc'}>Binance Smart Chain</MenuItem>
-                                        <MenuItem value={'heco'}>Heco</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Box>
+                            <CustomDropdown list={{'en': 'EN', 'fr': 'FR'}} selected={walletReducer.language} handler={handleLanguageSwitch} css={{marginLeft: 10}} />
+                            <CustomDropdown list={{'bsc': 'BSC', 'heco': 'Heco'}} selected={walletReducer.network} handler={handleNetworkSwitch} css={{marginLeft: 10}} />
                             <WalletContainer />
                         </List>
                     </Hidden>
@@ -104,7 +96,7 @@ const Header = ({isNightMode, setNightMode}) => {
                             <div className={classes.list} role="presentation" onClick={handleDrawerToggle} onKeyDown={handleDrawerToggle}>
                                 <List component="nav">
                                     {navLinks.map(({ title, path }) => (
-                                        <Link  onClick={() => {history.push(path)}} key={title} className={classes.linkText}>
+                                        <Link  onClick={() => {history.push(path)}} key={title}>
                                             <ListItem button className={classes.black}>
                                                 <ListItemText primary={title} />
                                             </ListItem>
