@@ -11,7 +11,7 @@ export const config = {
         supportedWallets: ['injected', 'walletconnect', 'custom-binance', 'custom-math', 'custom-twt', 'custom-safepal'],
         providerName: 'binance',
         walletSettings: {
-            chainId: '0x38',
+            chainId: `0x${parseInt(56, 10).toString(16)}`,
             chainName: 'BSC Mainnet',
             nativeCurrency: {
                 name: 'Binance Coin',
@@ -32,7 +32,7 @@ export const config = {
         supportedWallets: ['injected', 'walletconnect', 'custom-math'],
         providerName: 'heco',
         walletSettings: {
-            chainId: '0x80',
+            chainId: `0x${parseInt(128, 10).toString(16)}`,
             chainName: 'HECO Mainnet',
             nativeCurrency: {
                 name: 'Huobi Token',
@@ -42,5 +42,68 @@ export const config = {
             rpcUrls: ['https://http-mainnet.hecochain.com'],
             blockExplorerUrls: ['https://scan.hecochain.com/'],
         },
-    }
+    },
+    "avax": {
+        name: 'Avalanche Chain',
+        chainId: 43114,
+        rpc: [
+            'https://http-mainnet.hecochain.com',
+        ],
+        multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
+        supportedWallets: ['injected', 'walletconnect'],
+        providerName: 'avalanche',
+        walletSettings: {
+            chainId: `0x${parseInt(43114, 10).toString(16)}`,
+            chainName: 'Avalanche C-Chain',
+            nativeCurrency: {
+                name: 'AVAX',
+                symbol: 'AVAX',
+                decimals: 18,
+            },
+            rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+            blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
+        },
+    },
+    "matic": {
+        name: 'Polygon Chain',
+        chainId: 137,
+        rpc: [
+            'https://rpc-mainnet.maticvigil.com',
+        ],
+        multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
+        supportedWallets: ['injected', 'walletconnect'],
+        providerName: 'avalanche',
+        walletSettings: {
+            chainId: `0x${parseInt(137, 10).toString(16)}`,
+            chainName: 'Polygon Mainnet',
+            nativeCurrency: {
+                name: 'MATIC',
+                symbol: 'MATIC',
+                decimals: 18,
+            },
+            rpcUrls: ['https://rpc-mainnet.maticvigil.com'],
+            blockExplorerUrls: ['https://explorer-mainnet.maticvigil.com/'],
+        },
+    },
+    "ftm": {
+        name: 'Fantom',
+        chainId: 250,
+        rpc: [
+            'https://rpcapi.fantom.network',
+        ],
+        multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
+        supportedWallets: ['injected', 'walletconnect'],
+        providerName: 'avalanche',
+        walletSettings: {
+            chainId: `0x${parseInt(250, 10).toString(16)}`,
+            chainName: 'Polygon Mainnet',
+            nativeCurrency: {
+                name: 'MATIC',
+                symbol: 'MATIC',
+                decimals: 18,
+            },
+            rpcUrls: ['https://rpcapi.fantom.network'],
+            blockExplorerUrls: ['https://ftmscan.com/'],
+        },
+    },
 }

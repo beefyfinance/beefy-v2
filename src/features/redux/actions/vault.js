@@ -6,18 +6,37 @@ import {config} from '../../../config/config';
 const vaultAbi = require('../../../config/abi/vault.json');
 
 const getPoolsForNetwork = async (state) => {
-    const network = state.walletReducer.network;
-    
-    try {
-        const p = await import('../../../config/vault/' + network);
 
-        if(Object.keys(state.vaultReducer.pools).length === p.pools.length) {
-            return state.vaultReducer.pools;
-        }
-        return getFormattedPools(p.pools);
-    } catch(err) {
-        console.log('error reading vaults', err);
+    //const network = state.walletReducer.network;
+    let promise = []
+    let pools = []
+    let networks = []
+
+    if(Object.keys(state.vaultReducer.pools).length > 0) {
+        return state.vaultReducer.pools;
     }
+
+    for(let net in config) {
+        networks.push(net);
+        promise.push(await import('../../../config/vault/' + net));
+    }
+
+    const data = await Promise.all(promise);
+
+    data.forEach((arr, key) => {
+        arr.pools.forEach((pool) => {
+            pool['network'] = networks[key];
+            pool['deposited'] = 0;
+            pool['balance'] = 0;
+            pool['daily'] = 0;
+            pool['apy'] = 0;
+            pool['tvl'] = 0;
+            pool['lastUpdated'] = 0;
+            pools.push(pool);
+        });
+    });
+
+    return pools;
 }
 
 const getFormattedPools = (pools) => {
