@@ -82,10 +82,10 @@ const Filter = ({sortConfig, setFilter, defaultFilter}) => {
             </Grid>
             <Box display="flex">
                 <Box flexGrow={1}>
-                    <TextField className={classes.searchInput} size="small" variant="outlined" label="Search by name" name="keyword" value={sortConfig.keyword} onChange={handleChange} InputProps={{className: classes.input}} />
+                    <TextField className={classes.searchInput} size="small" variant="outlined" label="Search by name" value={sortConfig.keyword} onChange={(e) => handleChange('keyword', e.target.value)} InputProps={{className: classes.input}} />
                 </Box>
                 <Box>
-                    <CustomDropdown list={{'default': 'Default', 'apy': 'APY', 'tvl': 'TVL'}} selected={state.key} name={"key"} handler={handleChange} label={'Sort by:'} css={{marginRight: 10}} />
+                    <CustomDropdown list={{'default': 'Default', 'apy': 'APY', 'tvl': 'TVL'}} selected={state.key} handler={(e) => handleChange('key', e.target.value)} label={'Sort by:'} css={{marginRight: 10}} />
                 </Box>
                 <Box>
                     <Button variant={"contained"}>Filter</Button>

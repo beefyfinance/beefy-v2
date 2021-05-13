@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/header";
 import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 import {useDispatch} from "react-redux";
-import {config} from './config/config';
 import reduxActions from "./features/redux/actions";
 
 const Home = React.lazy(() => import(`./features/home`));
