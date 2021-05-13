@@ -47,7 +47,7 @@ export const config = {
         name: 'Avalanche Chain',
         chainId: 43114,
         rpc: [
-            'https://http-mainnet.hecochain.com',
+            'https://api.avax.network/ext/bc/C/rpc',
         ],
         multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
         supportedWallets: ['injected', 'walletconnect'],

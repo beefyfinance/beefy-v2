@@ -7,7 +7,6 @@ const vaultAbi = require('../../../config/abi/vault.json');
 
 const getPoolsForNetwork = async (state) => {
 
-    //const network = state.walletReducer.network;
     let promise = []
     let pools = []
     let networks = []
@@ -32,23 +31,10 @@ const getPoolsForNetwork = async (state) => {
             pool['apy'] = 0;
             pool['tvl'] = 0;
             pool['lastUpdated'] = 0;
+
             pools.push(pool);
         });
     });
-
-    return pools;
-}
-
-const getFormattedPools = (pools) => {
-    for (let key in pools) {
-
-        pools[key].deposited = 0;
-        pools[key].balance = 0;
-        pools[key].daily = 0;
-        pools[key].apy = 0;
-        pools[key].tvl = 0;
-        pools[key].lastUpdated = 0;
-    }
 
     return pools;
 }
@@ -66,23 +52,38 @@ const getPoolData = async (state, dispatch) => {
 
     console.log('redux getPoolData() processing...');
 
-    const multicall = new MultiCall(web3, config[state.walletReducer.network].multicallAddress);
+    const multicall = [];
     const calls = [];
 
-    for (let key in pools) {
-        const tokenContract = new web3.eth.Contract(vaultAbi, pools[key].earnedTokenAddress);
-        calls.push({id: pools[key].id, balance: tokenContract.methods.balance()});
+    for(let key in web3) {
+        multicall[key] = new MultiCall(web3[key], config[key].multicallAddress);
+        calls[key] = [];
     }
 
-    const response = await multicall.all([calls]);
+    for (let key in pools) {
+        const tokenContract = new web3[pools[key].network].eth.Contract(vaultAbi, pools[key].earnedTokenAddress);
+        calls[pools[key].network].push({id: pools[key].id, balance: tokenContract.methods.balance()});
+    }
+
+    let response = [];
     let totalTvl = 0;
 
+    for(let key in multicall) {
+        const resp = await multicall[key].all([calls[key]]);
+        response = [...response, ...resp[0]]
+    }
+
     for (let key in pools) {
-        const balance = new BigNumber(response[0][key].balance);
-        const price = (pools[key].oracleId in prices) ? prices[pools[key].oracleId] : 0;
-        pools[key].tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[key].tokenDecimals));
-        pools[key].apy = (apy !== undefined && pools[key].id in apy) ? apy[pools[key].id] : 0;
-        totalTvl = new BigNumber(totalTvl).plus(pools[key].tvl);
+        for(let index in response) {
+            if(pools[key].id === response[index].id) {
+                const balance = new BigNumber(response[index].balance);
+                const price = (pools[key].oracleId in prices) ? prices[pools[key].oracleId] : 0;
+                pools[key].tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[key].tokenDecimals));
+                pools[key].apy = (apy !== undefined && pools[key].id in apy) ? apy[pools[key].id] : 0;
+                totalTvl = new BigNumber(totalTvl).plus(pools[key].tvl);
+                break;
+            }
+        }
     }
 
     dispatch({
@@ -121,7 +122,7 @@ const fetchPoolsData = () => {
         const fetch = async () => {
             console.log('redux getPoolData() called.');
             const state = getState();
-            return state.walletReducer.rpc ? await getPoolData(state, dispatch) : false;
+            return state.walletReducer.rpc['bsc'] ? await getPoolData(state, dispatch) : false;
         }
 
         const start = async () => {

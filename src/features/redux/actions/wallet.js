@@ -49,25 +49,17 @@ const fetchRpc = () => {
     return async (dispatch, getState) => {
 
         const state = getState();
-        const clients = await getClientsForNetwork(state.walletReducer.network);
-        const connect = async () => {
-            console.log('redux fetchRpc called. (' + state.walletReducer.network + ')');
-            const web3 = await new Web3(clients[~~(clients.length * Math.random())]);
+        const rpcs = [];
 
-            try {
-                await web3.eth.net.isListening();
-                return dispatch({type: WALLET_RPC, payload: {rpc: web3}});
-            } catch(err) {
-                console.log('redux fetchRpc failed, retrying... (' + state.walletReducer.network + ')');
-                setTimeout(async () => {
-                    return await connect();
-                }, 1000);
+        for (const [network, status] of Object.entries(state.walletReducer.rpc)) {
+            if(status === null) {
+                const c = await getClientsForNetwork(network);
+                const w = await new Web3(c[~~(c.length * Math.random())]);
+                rpcs[network] = w;
             }
         }
 
-        if(!state.walletReducer.rpc) {
-            await connect();
-        }
+        return dispatch({type: WALLET_RPC, payload: {rpcs: rpcs}});
     };
 }
 
@@ -131,7 +123,7 @@ const connect = () => {
 
             if(networkId === config[state.walletReducer.network].chainId) {
                 const accounts = await web3.eth.getAccounts();
-                dispatch({type: WALLET_RPC, payload: {rpc: web3}});
+                //dispatch({type: WALLET_RPC, payload: {rpc: web3}}); => TODO: set same rpc as connected wallet to rpc[network] for consistency
                 dispatch({type: WALLET_CONNECT_DONE, payload: {address: accounts[0]}});
             } else {
                 await close();

@@ -5,21 +5,20 @@ const initialNetwork = () => {
     return storage === null ? 'bsc' : storage;
 }
 
-const initialClients = () => {
-    const net = initialNetwork();
+const initialRpc = () => {
+    const rpcs = []
 
-    if(config[net].rpc.length) {
-        console.log('no public rpc available, throw error.');
+    for(let key in config) {
+        rpcs[key] = null
     }
 
-    return config[net].rpc;
+    return rpcs;
 }
 
 const initialState = {
     network: initialNetwork(),
     language: 'en',
-    clients: initialClients(),
-    rpc: false,
+    rpc: initialRpc(),
     web3modal: null,
     address: null,
     pending: false,
@@ -58,7 +57,7 @@ const walletReducer = (state = initialState, action) => {
         case "WALLET_RPC":
             return {
                 ...state,
-                rpc: action.payload.rpc,
+                rpc: action.payload.rpcs,
             }
         default:
             return state

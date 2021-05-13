@@ -8,7 +8,6 @@ import reduxActions from "../redux/actions";
 import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography} from "@material-ui/core"
 import Box from '@material-ui/core/Box';
 import Filter from './components/Filter';
-import ListHeaderBtn from './components/ListHeaderBtn';
 import Portfolio from './components/Portfolio';
 import styles from "./styles"
 import Loader from "../../components/loader";
@@ -143,7 +142,7 @@ const Vault = () => {
                 <Typography className={classes.tvl} align={'right'} style={{float: 'right'}}>TVL: {formatTvl(vault.totalTvl)}</Typography>
                 <Typography className={classes.h1}>Vaults</Typography>
                 {vault.isPoolsLoading ? (
-                    <Loader message={('Loading data from ' + (wallet.network).toUpperCase() + ' network...')} />
+                    <Loader message={('Loading data from blockchain...')} />
                 ) : (
                 <Box>
                     <Filter sortConfig={sortConfig} setFilter={setFilter} defaultFilter={defaultFilter} />
