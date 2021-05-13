@@ -14,18 +14,9 @@ const PageNotFound = () => {
     return <div>Page not found.</div>;
 }
 
-const getNetworks = () => {
-    const paths = [];
-
-    for(let networks in config) {
-        paths.push(networks);
-    }
-
-    return '/(|' + paths.join('|') + ')';
-}
-
 export default function App() {
     const storage = localStorage.getItem('nightMode');
+    const dispatch = useDispatch();
     const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
     const theme = createMuiTheme({
         palette: {
@@ -41,9 +32,6 @@ export default function App() {
             },
         },
     });
-
-    const homePath = getNetworks();
-    const dispatch = useDispatch();
 
     React.useEffect(() => {
         dispatch(reduxActions.wallet.createWeb3Modal());
@@ -61,7 +49,7 @@ export default function App() {
                 <Header isNightMode={isNightMode} setNightMode={() => setNightMode(!isNightMode)} />
                 <React.Suspense fallback={<div className="loader"/>}>
                     <Switch>
-                        <Route exact path={homePath} key={Date.now()}>
+                        <Route exact path="/" key={Date.now()}>
                             <Home />
                         </Route>
                         <Route strict sensitive exact path="/stats">

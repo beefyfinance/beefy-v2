@@ -20,6 +20,9 @@ const styles = (theme) => ({
             background: 'transparent',
         },
     },
+    hasPortfolio: {
+      backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
+    },
     navDisplayFlex: {
         display: 'flex',
         justifyContent: 'space-between',

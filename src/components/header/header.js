@@ -66,7 +66,7 @@ const Header = ({isNightMode, setNightMode}) => {
     }
 
     return (
-        <AppBar className={classes.navHeader} position="static">
+        <AppBar className={[classes.navHeader, location.pathname === '/' ? classes.hasPortfolio : ''].join(' ')} position="static">
             <Toolbar>
                 <Container maxWidth="xl" className={classes.navDisplayFlex}>
                     <Box className={classes.beefy}>
