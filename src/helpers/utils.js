@@ -1,4 +1,4 @@
-import { byDecimals } from './bignumber';
+import {config} from "../config/config";
 
 let trimReg = /(^\s*)|(\s*$)/g;
 
@@ -21,31 +21,15 @@ export function isEmpty(key) {
   }
 }
 
-let inputReg = /[a-z]/i;
-export function inputLimitPass(value, tokenDecimals) {
-  let valueArr = value.split('.');
-  return !(inputReg.test(value) || (valueArr.length === 2 && valueArr[1].length > tokenDecimals));
+export const getAvailableNetworks = () => {
+  const networks = [];
+  for(let key in config) {
+    networks[key] = config[key].name;
+  }
+
+  return networks;
 }
 
-export function inputFinalVal(value, total, tokenDecimals) {
-  let inputVal = Number(value.replace(',', ''));
-  return inputVal > total ? byDecimals(total, 0).toFormat(tokenDecimals) : value;
+export const getStablesForNetwork = (net) => {
+  return config[net].stableCoins;
 }
-
-export const shouldHideFromHarvest = vaultName => {
-  return HarvestBlacklistVaultIds.includes(vaultName);
-};
-
-const HarvestBlacklistVaultIds = [
-  'bifi-maxi',
-  'fortube-fil',
-  'fortube-atom',
-  'fortube-xtz',
-  'fortube-busd',
-  'fortube-link',
-  'fortube-dot',
-  'fortube-usdt',
-  'fortube-eth',
-  'fortube-btcb',
-  'fry-burger-v2',
-];

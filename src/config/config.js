@@ -21,6 +21,7 @@ export const config = {
             rpcUrls: ['https://bsc-dataseed.binance.org'],
             blockExplorerUrls: ['https://bscscan.com/'],
         },
+        stableCoins: ['BUSD', 'USDT', 'USDC', 'DAI', 'VAI', 'QUSD', 'UST', 'VENUS BLP', '3EPS', 'fUSDT', '4BELT'],
     },
     "heco": {
         name: 'Huobi ECO Chain',
@@ -42,6 +43,7 @@ export const config = {
             rpcUrls: ['https://http-mainnet.hecochain.com'],
             blockExplorerUrls: ['https://scan.hecochain.com/'],
         },
+        stableCoins: ['USDT', 'HUSD'],
     },
     "avax": {
         name: 'Avalanche Chain',
@@ -63,6 +65,7 @@ export const config = {
             rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
             blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
         },
+        stableCoins: ['USDT', 'DAI', 'BUSD'],
     },
     "matic": {
         name: 'Polygon Chain',
@@ -84,6 +87,7 @@ export const config = {
             rpcUrls: ['https://rpc-mainnet.maticvigil.com'],
             blockExplorerUrls: ['https://explorer-mainnet.maticvigil.com/'],
         },
+        stableCoins: ['USDC', 'USDT', 'maUSDC'],
     },
     "ftm": {
         name: 'Fantom',
@@ -105,5 +109,6 @@ export const config = {
             rpcUrls: ['https://rpcapi.fantom.network'],
             blockExplorerUrls: ['https://ftmscan.com/'],
         },
+        stableCoins: ['USDC', 'USDT', 'DAI', 'fUSDT'],
     },
 }

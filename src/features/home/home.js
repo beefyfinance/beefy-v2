@@ -11,6 +11,7 @@ import Filter from './components/Filter';
 import Portfolio from './components/Portfolio';
 import styles from "./styles"
 import Loader from "../../components/loader";
+import {getStablesForNetwork, isEmpty} from "../../helpers/utils";
 
 let currentNetwork;
 const useStyles = makeStyles(styles);
@@ -105,7 +106,52 @@ const Vault = () => {
     const filter = () => {
         if(items.length > 0) {
             return items.filter((item) => {
-                return item.status === (sortConfig.retired ? 'eol' : 'active') && item.name.toLowerCase().includes(sortConfig.keyword) ? item : false;
+                if(item.status !== (sortConfig.retired ? 'eol' : 'active')) {
+                    return false;
+                }
+
+                if(!item.name.toLowerCase().includes(sortConfig.keyword)) {
+                    return false;
+                }
+
+                if(sortConfig.zero && item.balance === 0) {
+                    return false;
+                }
+
+                if(sortConfig.deposited && item.deposited === 0) {
+                    return false;
+                }
+
+                if(sortConfig.boost && !item.boost) {
+                    return false;
+                }
+
+                if(sortConfig.experimental && !item.experimental) {
+                    return false;
+                }
+
+                if(sortConfig.platform !== 'all' && (isEmpty(item.platform) || sortConfig.platform !== (item.platform).toLowerCase())) {
+                    return false;
+                }
+
+                let stables = getStablesForNetwork(item.network);
+                const isStable = type => stables.includes(type);
+
+                if(sortConfig.vault !== 'all') {
+                    if(sortConfig.vault === 'single' && item.assets.length !== 1) {
+                        return false;
+                    } else if(sortConfig.vault === 'stable' && !item.assets.every(isStable)) {
+                        return false;
+                    } else if(sortConfig.vault === 'stables' && !item.assets.some(isStable)) {
+                        return false;
+                    }
+                }
+
+                if(sortConfig.blockchain !== 'all' && item.network !== sortConfig.blockchain) {
+                    return false;
+                }
+
+                return item;
             });
         }
         return false;
@@ -145,7 +191,7 @@ const Vault = () => {
                     <Loader message={('Loading data from blockchain...')} />
                 ) : (
                 <Box>
-                    <Filter sortConfig={sortConfig} setFilter={setFilter} defaultFilter={defaultFilter} />
+                    <Filter sortConfig={sortConfig} setFilter={setFilter} defaultFilter={defaultFilter} platforms={vault.platforms} />
                     <Box>
                         Showing 125 vaults
                     </Box>

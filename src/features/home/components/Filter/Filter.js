@@ -10,10 +10,11 @@ import {
 import styles from "./styles"
 import CustomDropdown from "../../../../components/customDropdown";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import {getAvailableNetworks} from "../../../../helpers/utils";
 
 const useStyles = makeStyles(styles);
 
-const Filter = ({sortConfig, setFilter, defaultFilter}) => {
+const Filter = ({sortConfig, setFilter, defaultFilter, platforms}) => {
 
     const classes = useStyles();
 
@@ -42,6 +43,29 @@ const Filter = ({sortConfig, setFilter, defaultFilter}) => {
     React.useEffect(() => {
         setFilter(state);
     }, [state]);
+
+    const getPlatformTypes = () => {
+        return {
+            'all': 'All',
+            ...platforms
+        }
+    }
+
+    const getVaultTypes = () => {
+        return {
+            'all': 'All',
+            'single': 'Single assets',
+            'stable': 'Stable LPs',
+            'stables': 'Stables'
+        }
+    }
+
+    const getNetworkTypes = () => {
+        return {
+            'all': 'All',
+            ...getAvailableNetworks()
+        };
+    }
 
     return (
         <React.Fragment>
@@ -117,9 +141,9 @@ const Filter = ({sortConfig, setFilter, defaultFilter}) => {
 
                 <Box display="flex">
                     <Box p={3} flexGrow={1} display={"flex"}>
-                        <CustomDropdown list={{'all': 'All', '1inch': '1Inch', 'alpaca': 'Alpaca'}} selected={state.platform} handler={handleChange} name={"platform"} label={'Platform:'} />
-                        <CustomDropdown list={{'all': 'All', 'single': 'Single assets', 'stable': 'Stable LPs', 'stables': 'Stables'}} selected={state.vault} handler={handleChange} name={"vault"} label={'Vault type:'} css={{marginLeft: 10}} />
-                        <CustomDropdown list={{'all': 'All', 'bsc': 'BSC', 'heco': 'Heco', 'avax': 'Avalanche'}} selected={state.blockchain} handler={handleChange} name={"blockchain"} label={'Blockchain:'} css={{marginLeft: 10}} />
+                        <CustomDropdown list={getPlatformTypes()} selected={state.platform} handler={(e) => handleChange('platform', e.target.value)} label={'Platform:'} />
+                        <CustomDropdown list={getVaultTypes()} selected={state.vault} handler={(e) => handleChange('vault', e.target.value)} label={'Vault type:'} css={{marginLeft: 10}} />
+                        <CustomDropdown list={getNetworkTypes()} selected={state.blockchain} handler={(e) => handleChange('blockchain', e.target.value)} label={'Blockchain:'} css={{marginLeft: 10}} />
                     </Box>
                     <Box p={3}>
                         <Button variant={"contained"} onClick={() => {setState(defaultFilter)}}>Reset</Button>

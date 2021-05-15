@@ -1,7 +1,13 @@
 import {MultiCall} from 'eth-multicall';
-import {HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_SUCCESS, HOME_FETCH_POOLS_SUCCESS_WDATA} from "../constants";
+import {
+    HOME_FETCH_PLATFORMS,
+    HOME_FETCH_POOLS_BEGIN,
+    HOME_FETCH_POOLS_SUCCESS,
+    HOME_FETCH_POOLS_SUCCESS_WDATA
+} from "../constants";
 import BigNumber from "bignumber.js";
 import {config} from '../../../config/config';
+import {isEmpty} from "../../../helpers/utils";
 
 const vaultAbi = require('../../../config/abi/vault.json');
 
@@ -21,6 +27,7 @@ const getPoolsForNetwork = async (state) => {
     }
 
     const data = await Promise.all(promise);
+    const platforms = [];
 
     data.forEach((arr, key) => {
         arr.pools.forEach((pool) => {
@@ -32,11 +39,17 @@ const getPoolsForNetwork = async (state) => {
             pool['tvl'] = 0;
             pool['lastUpdated'] = 0;
 
+            if(!isEmpty(pool.platform)) {
+                if(!platforms.includes(pool.platform)) {
+                    platforms[(pool.platform).toLowerCase()] = pool.platform;
+                }
+            }
+
             pools.push(pool);
         });
     });
 
-    return pools;
+    return {pools, platforms};
 }
 
 const getPoolData = async (state, dispatch) => {
@@ -108,7 +121,9 @@ const fetchPools = (isPoolsLoading = true) => {
         });
 
         const state = getState();
-        let pools = await getPoolsForNetwork(state);
+        let {pools, platforms} = await getPoolsForNetwork(state);
+
+        dispatch({type: HOME_FETCH_PLATFORMS, payload: {platforms: platforms}})
 
         dispatch({
             type: HOME_FETCH_POOLS_SUCCESS,
