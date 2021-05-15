@@ -22,6 +22,8 @@ export const pools = [
         assets: ['BIFI'],
         callFee: 0.5,
         buyTokenUrl: 'https://app.1inch.io/#/56/swap/BNB/BIFI',
+        createdAt: 1620991027,
+        riskScore: 1.7,
     },
     {
         id: 'belt-beltbtc',

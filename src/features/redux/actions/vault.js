@@ -7,7 +7,7 @@ import {
 } from "../constants";
 import BigNumber from "bignumber.js";
 import {config} from '../../../config/config';
-import {isEmpty} from "../../../helpers/utils";
+import {getStablesForNetwork, isEmpty} from "../../../helpers/utils";
 
 const vaultAbi = require('../../../config/abi/vault.json');
 
@@ -30,6 +30,8 @@ const getPoolsForNetwork = async (state) => {
     const platforms = [];
 
     data.forEach((arr, key) => {
+        const stables = getStablesForNetwork(networks[key]);
+        const isStable = type => stables.includes(type);
         arr.pools.forEach((pool) => {
             pool['network'] = networks[key];
             pool['deposited'] = 0;
@@ -38,10 +40,34 @@ const getPoolsForNetwork = async (state) => {
             pool['apy'] = 0;
             pool['tvl'] = 0;
             pool['lastUpdated'] = 0;
+            pool['tags'] = [];
 
             if(!isEmpty(pool.platform)) {
                 if(!platforms.includes(pool.platform)) {
                     platforms[(pool.platform).toLowerCase()] = pool.platform;
+                }
+            }
+
+            if(pool.assets.length === 1) {
+                pool['vaultType'] = 'single';
+            } else {
+                pool['vaultType'] = pool.assets.every(isStable) ? 'stable' : (pool.assets.some(isStable) ? 'stables' : false);
+                if(pool.assets.every(isStable)) {
+                    pool.tags.push('stable');
+                }
+            }
+
+            if(!isEmpty(pool.createdAt)) {
+                const created = new Date(pool.createdAt * 1000);
+                const days = 3; // number of days to be considered "recent"
+                if(created > new Date(new Date().getTime() - (days * 24 * 60 * 60 * 1000))) {
+                    pool.tags.push('recent');
+                }
+            }
+
+            if(!isEmpty(pool.riskScore)) {
+                if(pool.riskScore < 2.5) {
+                    pool.tags.push('low');
                 }
             }
 

@@ -11,7 +11,7 @@ import Filter from './components/Filter';
 import Portfolio from './components/Portfolio';
 import styles from "./styles"
 import Loader from "../../components/loader";
-import {getStablesForNetwork, isEmpty} from "../../helpers/utils";
+import {isEmpty} from "../../helpers/utils";
 
 let currentNetwork;
 const useStyles = makeStyles(styles);
@@ -39,7 +39,7 @@ const UseSortableData = (items, config = null) => {
     }, [sortConfig]);
 
     const sortedItems = React.useMemo(() => {
-        let sortableItems = Object.keys(items).length === 0 ? [] : [...items];
+        let sortableItems = isEmpty(items) ? [] : [...items];
         if (sortConfig !== null) {
             sortableItems.sort((a, b) => {
                 if(sortConfig.key === 'name') {
@@ -58,19 +58,11 @@ const UseSortableData = (items, config = null) => {
         return sortableItems;
     }, [items, sortConfig]);
 
-    const requestSort = (key, d = false) => {
-        const direction = d ? d : (
-            (sortConfig && sortConfig.key === key && sortConfig.direction === 'desc') ? 'asc' : 'desc'
-        );
-
-        setSortConfig({ ...sortConfig, key, direction });
-    };
-
     const setFilter = (obj) => {
         setSortConfig({ ...sortConfig, ...obj});
     }
 
-    return { items: sortedItems, requestSort, sortConfig, setFilter};
+    return { items: sortedItems, sortConfig, setFilter};
 };
 
 const Vault = () => {
@@ -82,11 +74,8 @@ const Vault = () => {
 
     const history = useHistory();
     const classes = useStyles();
-    const {items, requestSort, sortConfig, setFilter} = UseSortableData(vault.pools, defaultFilter);
-
-    React.useEffect(() => {
-        requestSort(sortConfig.key, sortConfig.direction);
-    }, [vault.lastUpdated]);
+    const {items, sortConfig, setFilter} = UseSortableData(vault.pools, defaultFilter);
+    const [vaultCount, setVaultCount] = React.useState({showing: 0, total: 0});
 
     React.useEffect(() => {
         if(currentNetwork !== wallet.network) {
@@ -105,8 +94,16 @@ const Vault = () => {
 
     const filter = () => {
         if(items.length > 0) {
-            return items.filter((item) => {
+            if(vaultCount.total !== items.length) {
+                setVaultCount({ ...vaultCount, ['total']: items.length });
+            }
+
+            const filtered = items.filter((item) => {
                 if(item.status !== (sortConfig.retired ? 'eol' : 'active')) {
+                    return false;
+                }
+
+                if(sortConfig.category !== 'all' && !item.tags.includes(sortConfig.category)) {
                     return false;
                 }
 
@@ -134,17 +131,8 @@ const Vault = () => {
                     return false;
                 }
 
-                let stables = getStablesForNetwork(item.network);
-                const isStable = type => stables.includes(type);
-
-                if(sortConfig.vault !== 'all') {
-                    if(sortConfig.vault === 'single' && item.assets.length !== 1) {
-                        return false;
-                    } else if(sortConfig.vault === 'stable' && !item.assets.every(isStable)) {
-                        return false;
-                    } else if(sortConfig.vault === 'stables' && !item.assets.some(isStable)) {
-                        return false;
-                    }
+                if(sortConfig.vault !== 'all' && sortConfig.vault !== item.vaultType) {
+                    return false;
                 }
 
                 if(sortConfig.blockchain !== 'all' && item.network !== sortConfig.blockchain) {
@@ -153,6 +141,12 @@ const Vault = () => {
 
                 return item;
             });
+
+            if(vaultCount.showing !== filtered.length) {
+                setVaultCount({ ...vaultCount, ['showing']: filtered.length });
+            }
+
+            return filtered;
         }
         return false;
     };
@@ -191,9 +185,9 @@ const Vault = () => {
                     <Loader message={('Loading data from blockchain...')} />
                 ) : (
                 <Box>
-                    <Filter sortConfig={sortConfig} setFilter={setFilter} defaultFilter={defaultFilter} platforms={vault.platforms} />
+                    <Filter sortConfig={sortConfig} setFilter={setFilter} defaultFilter={defaultFilter} platforms={vault.platforms} vaultCount={vaultCount} />
                     <Box>
-                        Showing 125 vaults
+                        Showing {vaultCount.showing} vaults
                     </Box>
                     {items.length === 0 ? '' : (
                         filter().map(item => (

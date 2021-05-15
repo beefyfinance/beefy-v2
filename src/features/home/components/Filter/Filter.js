@@ -14,7 +14,7 @@ import {getAvailableNetworks} from "../../../../helpers/utils";
 
 const useStyles = makeStyles(styles);
 
-const Filter = ({sortConfig, setFilter, defaultFilter, platforms}) => {
+const Filter = ({sortConfig, setFilter, defaultFilter, platforms, vaultCount}) => {
 
     const classes = useStyles();
 
@@ -136,7 +136,7 @@ const Filter = ({sortConfig, setFilter, defaultFilter, platforms}) => {
                             />
                         </FormGroup>
                     </Box>
-                    <Box p={3} flexGrow={1} style={{textAlign: 'right'}}>Showing 125/125</Box>
+                    <Box p={3} flexGrow={1} style={{textAlign: 'right'}}>Showing {vaultCount.showing}/{vaultCount.total}</Box>
                 </Box>
 
                 <Box display="flex">
