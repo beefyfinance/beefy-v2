@@ -95,7 +95,7 @@ const Vault = () => {
     const filter = () => {
         if(items.length > 0) {
             if(vaultCount.total !== items.length) {
-                setVaultCount({ ...vaultCount, ['total']: items.length });
+                setVaultCount({ ...vaultCount, total: items.length });
             }
 
             const filtered = items.filter((item) => {
@@ -143,37 +143,13 @@ const Vault = () => {
             });
 
             if(vaultCount.showing !== filtered.length) {
-                setVaultCount({ ...vaultCount, ['showing']: filtered.length });
+                setVaultCount({ ...vaultCount, showing: filtered.length });
             }
 
             return filtered;
         }
         return false;
     };
-
-    const processItem = (get, item) => {
-        let obj = [classes.item]
-        let msg = '';
-
-        if(item.status === 'active' && item.depositsPaused) {
-            obj.push(classes.itemPaused);
-            msg = item.statusMessage ? item.statusMessage : 'Deposit Paused';
-        }
-
-        if(item.status === 'eol') {
-            obj.push(classes.itemRetired);
-            msg = item.statusMessage ? item.statusMessage : 'Vault Retired';
-        }
-
-        switch(get) {
-            case 'classes':
-                return obj.join(' ');
-            case 'message':
-                return msg ? <Grid className={classes.itemMessage}>{msg}</Grid> : '';
-            default:
-                return;
-        }
-    }
 
     return (
         <React.Fragment>
@@ -186,15 +162,14 @@ const Vault = () => {
                 ) : (
                 <Box>
                     <Filter sortConfig={sortConfig} setFilter={setFilter} defaultFilter={defaultFilter} platforms={vault.platforms} vaultCount={vaultCount} />
-                    <Box>
+                    <Box className={classes.numberOfVaults}>
                         Showing {vaultCount.showing} vaults
                     </Box>
                     {items.length === 0 ? '' : (
                         filter().map(item => (
                             <Grid container key={item.id}>
-                                <Button className={processItem('classes', item)} onClick={() => {history.push('/' + wallet.network + '/vault/' + (item.id))}}>
+                                <Button className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')} onClick={() => {history.push('/' + wallet.network + '/vault/' + (item.id))}}>
                                     <Box flexGrow={1} textAlign={"left"}>
-                                        {processItem('message', item)}
                                         <Grid container>
                                             <Hidden smDown>
                                                 <Grid>
@@ -202,9 +177,8 @@ const Vault = () => {
                                                 </Grid>
                                             </Hidden>
                                             <Grid>
-                                                <Box textAlign={"left"} style={{paddingLeft:"16px"}}>
+                                                <Box textAlign={"left"}>
                                                     <Typography className={classes.h2}>{item.name}</Typography>
-                                                    <Typography className={classes.h3}>{item.tokenDescription}</Typography>
                                                 </Box>
                                             </Grid>
                                         </Grid>
@@ -223,7 +197,7 @@ const Vault = () => {
                                             <Typography className={classes.h2}>{calcDaily(item.apy)}</Typography>
                                         </Box>
                                     </Hidden>
-                                    <Box className={classes.rWidth} textAlign={"right"}>
+                                    <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight].join(' ')} textAlign={"right"}>
                                         <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
                                     </Box>
                                 </Button>

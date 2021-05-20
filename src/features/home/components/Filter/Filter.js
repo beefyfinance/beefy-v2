@@ -1,4 +1,5 @@
 import React from "react";
+import AnimateHeight from 'react-animate-height';
 import {
     Box,
     Button, Checkbox,
@@ -11,6 +12,7 @@ import styles from "./styles"
 import CustomDropdown from "../../../../components/customDropdown";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import {getAvailableNetworks} from "../../../../helpers/utils";
+import {ToggleButton} from "@material-ui/lab";
 
 const useStyles = makeStyles(styles);
 
@@ -31,6 +33,8 @@ const Filter = ({sortConfig, setFilter, defaultFilter, platforms, vaultCount}) =
         blockchain: sortConfig.blockchain,
         category: sortConfig.category,
     });
+
+    const [filterOpen, setFilterOpen] = React.useState(false);
 
     const handleCheckbox = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
@@ -111,45 +115,47 @@ const Filter = ({sortConfig, setFilter, defaultFilter, platforms, vaultCount}) =
                 <Box>
                     <CustomDropdown list={{'default': 'Default', 'apy': 'APY', 'tvl': 'TVL'}} selected={state.key} handler={(e) => handleChange('key', e.target.value)} label={'Sort by:'} css={{marginRight: 10}} />
                 </Box>
-                <Box>
-                    <Button variant={"contained"}>Filter</Button>
+                <Box className={classes.btnFilter}>
+                    <ToggleButton value={filterOpen} selected={filterOpen} onChange={() => {setFilterOpen(!filterOpen)}}>Filter {filterOpen ? (<ArrowDropDownIcon />) : ''}</ToggleButton>
                 </Box>
             </Box>
-            <Box className={classes.filters}>
-                <Box display="flex">
-                    <Box p={3}>
-                        <FormGroup row>
-                            <FormControlLabel label="Hide Zero balances"
-                              control={<Checkbox checked={state.zero} onChange={handleCheckbox} name="zero" color="primary" />}
-                            />
-                            <FormControlLabel label="Retired vaults"
-                              control={<Checkbox checked={state.retired} onChange={handleCheckbox} name="retired" color="primary" />}
-                            />
-                            <FormControlLabel label="Deposited vaults"
-                              control={<Checkbox checked={state.deposited} onChange={handleCheckbox} name="deposited" color="primary" />}
-                            />
-                            <FormControlLabel label="Boost"
-                              control={<Checkbox checked={state.boost} onChange={handleCheckbox} name="boost" color="primary" />}
-                            />
-                            <FormControlLabel label="Experimental"
-                              control={<Checkbox checked={state.experimental} onChange={handleCheckbox} name="experimental" color="primary" />}
-                            />
-                        </FormGroup>
+            <AnimateHeight duration={ 500 } height={ filterOpen ? 'auto' : 0 }>
+                <Box className={classes.filters}>
+                    <Box display="flex">
+                        <Box p={3}>
+                            <FormGroup row>
+                                <FormControlLabel label="Hide Zero balances"
+                                                  control={<Checkbox checked={state.zero} onChange={handleCheckbox} name="zero" color="primary" />}
+                                />
+                                <FormControlLabel label="Retired vaults"
+                                                  control={<Checkbox checked={state.retired} onChange={handleCheckbox} name="retired" color="primary" />}
+                                />
+                                <FormControlLabel label="Deposited vaults"
+                                                  control={<Checkbox checked={state.deposited} onChange={handleCheckbox} name="deposited" color="primary" />}
+                                />
+                                <FormControlLabel label="Boost"
+                                                  control={<Checkbox checked={state.boost} onChange={handleCheckbox} name="boost" color="primary" />}
+                                />
+                                <FormControlLabel label="Experimental"
+                                                  control={<Checkbox checked={state.experimental} onChange={handleCheckbox} name="experimental" color="primary" />}
+                                />
+                            </FormGroup>
+                        </Box>
+                        <Box p={3} flexGrow={1} style={{textAlign: 'right'}}>Showing {vaultCount.showing}/{vaultCount.total}</Box>
                     </Box>
-                    <Box p={3} flexGrow={1} style={{textAlign: 'right'}}>Showing {vaultCount.showing}/{vaultCount.total}</Box>
-                </Box>
 
-                <Box display="flex">
-                    <Box p={3} flexGrow={1} display={"flex"}>
-                        <CustomDropdown list={getPlatformTypes()} selected={state.platform} handler={(e) => handleChange('platform', e.target.value)} label={'Platform:'} />
-                        <CustomDropdown list={getVaultTypes()} selected={state.vault} handler={(e) => handleChange('vault', e.target.value)} label={'Vault type:'} css={{marginLeft: 10}} />
-                        <CustomDropdown list={getNetworkTypes()} selected={state.blockchain} handler={(e) => handleChange('blockchain', e.target.value)} label={'Blockchain:'} css={{marginLeft: 10}} />
-                    </Box>
-                    <Box p={3}>
-                        <Button variant={"contained"} onClick={() => {setState(defaultFilter)}}>Reset</Button>
+                    <Box display="flex">
+                        <Box p={3} flexGrow={1} display={"flex"}>
+                            <CustomDropdown list={getPlatformTypes()} selected={state.platform} handler={(e) => handleChange('platform', e.target.value)} label={'Platform:'} />
+                            <CustomDropdown list={getVaultTypes()} selected={state.vault} handler={(e) => handleChange('vault', e.target.value)} label={'Vault type:'} css={{marginLeft: 10}} />
+                            <CustomDropdown list={getNetworkTypes()} selected={state.blockchain} handler={(e) => handleChange('blockchain', e.target.value)} label={'Blockchain:'} css={{marginLeft: 10}} />
+                        </Box>
+                        <Box p={3}>
+                            <Button className={classes.btnReset} variant={"contained"} onClick={() => {setState(defaultFilter)}}>Reset</Button>
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
+            </AnimateHeight>
         </React.Fragment>
     )
 }

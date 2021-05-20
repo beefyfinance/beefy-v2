@@ -81,22 +81,6 @@ const styles = (theme) => ({
             backgroundColor: '#3eabc2',
         },
     },
-    listFilter: {
-        marginBottom: '12px',
-        '& .MuiTextField-root .MuiInputBase-input': {
-            width: 150,
-            [theme.breakpoints.up('sm')]: {
-                width: 375,
-            },
-        },
-        '& .MuiOutlinedInput-notchedOutline': {
-            fontSize: '18px',
-            fontWeight: '600',
-            borderColor: theme.palette.type === 'dark' ? '#484F7F' : '#ff0000',
-            borderWidth: '2px',
-            borderRadius: '30px',
-        }
-    },
     input: {
         fontSize: '18px',
         fontWeight: '600',
@@ -112,7 +96,51 @@ const styles = (theme) => ({
         borderWidth: '2px',
         borderRadius: '30px',
         borderStyle: 'solid',
-        backgroundColor: '#14182B'
+        backgroundColor: '#14182B',
+        marginTop: 20,
+    },
+    btnFilter: {
+        '& .MuiToggleButton-root': {
+            color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
+            fontWeight: '600',
+            borderWidth: '2px',
+            borderRadius: '30px',
+            borderStyle: 'solid',
+            borderColor: theme.palette.type === 'dark' ? '#313759' : '#ff0000',
+            backgroundColor: theme.palette.type === 'dark' ? '#313759' : '#ff0000',
+            height: 43,
+            '& .MuiSvgIcon-root': {
+                fontSize: '70px',
+                position: 'absolute',
+                bottom: -40,
+                color: '#6B7199',
+            },
+            '&:hover': {
+                borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
+                backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
+                '& .MuiSvgIcon-root': {
+                    color: '#3F466D',
+                },
+            },
+        },
+        '& .Mui-selected': {
+            borderColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+            backgroundColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+        }
+    },
+    btnReset: {
+        color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
+        fontWeight: '600',
+        borderWidth: '2px',
+        borderRadius: '30px',
+        borderStyle: 'solid',
+        borderColor: theme.palette.type === 'dark' ? '#313759' : '#ff0000',
+        backgroundColor: theme.palette.type === 'dark' ? '#313759' : '#ff0000',
+        height: 43,
+        '&:hover': {
+            borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
+            backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
+        }
     }
 });
 

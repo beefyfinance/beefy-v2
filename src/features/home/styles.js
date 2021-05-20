@@ -6,44 +6,46 @@ const styles = (theme) => ({
         color:   theme.palette.type === 'dark' ? '#ffffff' : '#000000',
         padding: '60px 0',
     },
-
-
-
-
-    listHeader: {
-        marginBottom: '12px',
+    numberOfVaults: {
+        marginTop: 20,
+        textTransform: 'uppercase',
+        fontSize: '14px',
+        fontWeight: 600,
+        lineHeight: '18px',
+        letterSpacing: '1px',
     },
     item: {
+        margin: '20px 0 0 0',
+        padding: 0,
         width: '100%',
-        textTransform: 'capitalize',
-        background: theme.palette.type === 'dark' ? '#505067' : '#faf6f1',
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        borderColor: theme.palette.type === 'dark' ? '#1a1a43' : '#DED9D5',
-        marginBottom: '12px',
-        padding: '20px 12px',
+        background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
+        '&:hover': {
+            background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
+        }
+
+    },
+    apyBg: {
+        background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
+    },
+    roundedLeft: {
+        borderTopLeftRadius: '20px',
+        borderBottomLeftRadius: '20px',
+    },
+    roundedRight: {
+        borderTopRightRadius: '20px',
+        borderBottomRightRadius: '20px',
     },
     h2: {
-        fontSize: '10px',
-        fontWeight: 'bold',
-        lineHeight: '18px',
+        fontWeight: 600,
+        fontSize: '12px',
+        lineHeight: '36px',
         margin: 0,
         padding: 0,
         [theme.breakpoints.up('sm')]: {
-            fontSize: '12px',
-        },
-        [theme.breakpoints.up('md')]: {
             fontSize: '16px',
         },
-    },
-    h3: {
-        fontSize: '10px',
-        fontWeight: 'normal',
-        margin: 0,
-        padding: 0,
-        color: theme.palette.type === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.4)',
-        [theme.breakpoints.up('sm')]: {
-            fontSize: '12px',
+        [theme.breakpoints.up('lg')]: {
+            fontSize: '27px',
         },
     },
     rWidth: {
@@ -58,6 +60,14 @@ const styles = (theme) => ({
             minWidth: '170px',
         },
     },
+
+
+
+
+    listHeader: {
+        marginBottom: '12px',
+    },
+
     itemPaused: {
         backgroundColor: theme.palette.type === 'dark' ? '#8e7800' : '#f5d000',
     },
