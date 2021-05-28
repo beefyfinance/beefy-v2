@@ -197,7 +197,7 @@ const Vault = () => {
                                             <Typography className={classes.h2}>{calcDaily(item.apy)}</Typography>
                                         </Box>
                                     </Hidden>
-                                    <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight].join(' ')} textAlign={"right"}>
+                                    <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight].join(' ')} textAlign={"center"}>
                                         <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
                                     </Box>
                                 </Button>
