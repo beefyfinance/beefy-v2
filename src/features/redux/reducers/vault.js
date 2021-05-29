@@ -9,7 +9,6 @@ const initialState = {
     pools: {},
     totalTvl: 0,
     isPoolsLoading: false,
-    isDataLoading: false,
     lastUpdated: 0,
     platforms: {},
 }
@@ -25,8 +24,6 @@ const vaultReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pools: action.payload.pools,
-                lastUpdated: action.payload.lastUpdated,
-                isDataLoading: action.payload.isDataLoading,
                 isPoolsLoading: action.payload.isPoolsLoading,
             }
         case HOME_FETCH_POOLS_SUCCESS_WDATA:
@@ -35,7 +32,6 @@ const vaultReducer = (state = initialState, action) => {
                 pools: action.payload.pools,
                 totalTvl: action.payload.totalTvl,
                 lastUpdated: action.payload.lastUpdated,
-                isDataLoading: action.payload.isDataLoading,
                 isPoolsLoading: action.payload.isPoolsLoading,
             }
         case HOME_FETCH_PLATFORMS:

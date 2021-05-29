@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useHistory } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {BigNumber} from 'bignumber.js';
-import {formatDecimals, formatApy, calcDaily, formatTvl} from '../../helpers/format'
+import {formatApy, calcDaily, formatTvl} from '../../helpers/format'
 import reduxActions from "../redux/actions";
 
 import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography} from "@material-ui/core"
@@ -13,10 +12,9 @@ import styles from "./styles"
 import Loader from "../../components/loader";
 import {isEmpty} from "../../helpers/utils";
 
-let currentNetwork;
 const useStyles = makeStyles(styles);
 const defaultFilter = {
-    key: 'tvl',
+    key: 'default',
     direction: 'desc',
     keyword: '',
     retired: false,
@@ -78,13 +76,9 @@ const Vault = () => {
     const [vaultCount, setVaultCount] = React.useState({showing: 0, total: 0});
 
     React.useEffect(() => {
-        if(currentNetwork !== wallet.network) {
-            dispatch(reduxActions.vault.fetchPools());
-            dispatch(reduxActions.wallet.fetchRpc());
-            dispatch(reduxActions.vault.fetchPoolsData());
-            currentNetwork = wallet.network;
-        }
-    }, [dispatch, wallet.network]);
+        dispatch(reduxActions.wallet.fetchRpc());
+        dispatch(reduxActions.vault.fetchPools());
+    }, [dispatch]);
 
     React.useEffect(() => {
         setInterval(() => {

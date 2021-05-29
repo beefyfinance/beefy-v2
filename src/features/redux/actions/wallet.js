@@ -51,12 +51,10 @@ const fetchRpc = () => {
         const state = getState();
         const rpcs = [];
 
-        for (const [network, status] of Object.entries(state.walletReducer.rpc)) {
-            if(status === null) {
-                const c = await getClientsForNetwork(network);
-                const w = await new Web3(c[~~(c.length * Math.random())]);
-                rpcs[network] = w;
-            }
+        for(let network in config) {
+            const c = await getClientsForNetwork(network);
+            const w = await new Web3(c[~~(c.length * Math.random())]);
+            rpcs[network] = w;
         }
 
         return dispatch({type: WALLET_RPC, payload: {rpcs: rpcs}});

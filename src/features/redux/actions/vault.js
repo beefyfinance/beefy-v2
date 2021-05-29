@@ -8,6 +8,7 @@ import {
 import BigNumber from "bignumber.js";
 import {config} from '../../../config/config';
 import {getStablesForNetwork, isEmpty} from "../../../helpers/utils";
+import reduxActions from "./index";
 
 const vaultAbi = require('../../../config/abi/vault.json');
 
@@ -17,7 +18,7 @@ const getPoolsForNetwork = async (state) => {
     let pools = []
     let networks = []
 
-    if(Object.keys(state.vaultReducer.pools).length > 0) {
+    if(!isEmpty(state.vaultReducer.pools)) {
         return state.vaultReducer.pools;
     }
 
@@ -83,9 +84,8 @@ const getPoolData = async (state, dispatch) => {
     const pools = state.vaultReducer.pools;
     const prices = state.pricesReducer.prices;
     const apy = state.pricesReducer.apy;
-    const isDataLoading = state.vaultReducer.isDataLoading;
 
-    if(Object.keys(prices).length === 0 || isDataLoading) {
+    if(isEmpty(prices)) {
         return false;
     }
 
@@ -131,7 +131,6 @@ const getPoolData = async (state, dispatch) => {
             pools: pools,
             totalTvl: totalTvl,
             isPoolsLoading: false,
-            isDataLoading: false,
             lastUpdated: new Date().getTime()
         }
     });
@@ -153,8 +152,10 @@ const fetchPools = (isPoolsLoading = true) => {
 
         dispatch({
             type: HOME_FETCH_POOLS_SUCCESS,
-            payload: {pools: pools, isPoolsLoading: isPoolsLoading, isDataLoading: false}
+            payload: {pools: pools, isPoolsLoading: isPoolsLoading}
         });
+
+        dispatch(fetchPoolsData());
     };
 }
 
@@ -168,6 +169,13 @@ const fetchPoolsData = () => {
 
         const start = async () => {
             const state = getState();
+            const currentTime = new Date().getTime();
+
+            if(state.vaultReducer.lastUpdated > 0 && (currentTime - state.vaultReducer.lastUpdated) < 60000) {
+                console.log('redux getPoolData() too soon.')
+                return false;
+            }
+
             const done = await fetch();
             console.log('done', done, Object.keys(state.pricesReducer.prices).length);
 

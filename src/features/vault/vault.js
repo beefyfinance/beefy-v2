@@ -32,10 +32,9 @@ import {
 } from "@material-ui/core"
 import styles from "./styles"
 import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
+import {isEmpty} from "../../helpers/utils";
 
 const useStyles = makeStyles(styles);
-let isLoading = true;
-
 const chartData = [
     { name: "28 Jan", apy: 45.00 },
     { name: "4 Feb", apy: 57.15 },
@@ -44,14 +43,15 @@ const chartData = [
 ];
 
 const getVault = (pools, id) => {
-    if(pools.length === 0) {
+    if(isEmpty(pools)) {
         return false;
     }
     for(let key in pools) {
         if(pools[key].id === id) {
-            return pools[key];
+            return {match: true, pool: pools[key]};
         }
     }
+    return {match: false, pool: null};
 }
 
 const Vault = () => {
@@ -60,8 +60,10 @@ const Vault = () => {
     const classes = useStyles();
 
     let { id } = useParams();
-    let vault = {};
     const vaultReducer = useSelector(state => state.vaultReducer);
+    const walletReducer = useSelector(state => state.walletReducer);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [vault, setVaultData] = React.useState(null);
 
     React.useEffect(() => {
         dispatch(reduxActions.vault.fetchPools(false));
@@ -69,15 +71,18 @@ const Vault = () => {
         dispatch(reduxActions.vault.fetchPoolsData());
     }, [dispatch]);
 
-    vault = getVault(vaultReducer.pools, id);
-
-    if(vault) {
-        isLoading = false;
-    } else {
-        if(vaultReducer.lastUpdated > 0) {
-            history.push('/error');
+    React.useEffect(() => {
+        const resp = getVault(vaultReducer.pools, id);
+        if(resp) {
+            resp.match ? setVaultData(resp.pool) : history.push('/error');
         }
-    }
+    }, [vaultReducer.pools]);
+
+    React.useEffect(() => {
+        if(vault) {
+            setIsLoading(false);
+        }
+    }, [vault]);
 
     return (
         <div className="App">
