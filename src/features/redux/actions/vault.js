@@ -8,7 +8,6 @@ import {
 import BigNumber from "bignumber.js";
 import {config} from '../../../config/config';
 import {getStablesForNetwork, isEmpty} from "../../../helpers/utils";
-import reduxActions from "./index";
 
 const vaultAbi = require('../../../config/abi/vault.json');
 
