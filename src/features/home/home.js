@@ -151,6 +151,25 @@ const Vault = () => {
         return false;
     };
 
+    const DisplayTags = ({tags}) => {
+        const getText = (name) => {
+            switch(name) {
+                case 'low':
+                    return 'Low Risk';
+                case 'recent':
+                    return 'New';
+                default:
+                    return name;
+            }
+        }
+
+        return (
+            tags.map(item => (
+                <Typography className={[classes.tags, classes[item + 'Tag']].join(' ')} display={'inline'} key={item}>{getText(item)}</Typography>
+            ))
+        );
+    }
+
     return (
         <React.Fragment>
             <Portfolio />
@@ -170,35 +189,47 @@ const Vault = () => {
                             <Grid container key={item.id}>
                                 <Button className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')} onClick={() => {history.push('/' + wallet.network + '/vault/' + (item.id))}}>
                                     <Box flexGrow={1} textAlign={"left"}>
-                                        <Grid container>
+                                        <Grid className={classes.infoContainer} container>
                                             <Hidden smDown>
                                                 <Grid>
                                                     <Avatar alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
                                                 </Grid>
                                             </Hidden>
                                             <Grid>
-                                                <Box textAlign={"left"}>
+                                                <Box className={classes.title} textAlign={"left"}>
                                                     <Typography className={classes.h2}>{item.name}</Typography>
+                                                    <Box>
+                                                        <Typography display={"inline"}><img alt={item.network} src={require('../../images/networks/' + item.network + '.svg').default} /></Typography>
+                                                        <DisplayTags tags={item.tags} />
+                                                    </Box>
                                                 </Box>
                                             </Grid>
                                         </Grid>
                                     </Box>
-                                    <Box className={classes.rWidth} textAlign={"right"}>
-                                        <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.balance))}</Typography>
+                                    <Box className={classes.rWidth} textAlign={"left"}>
+                                        <Typography className={classes.h2}>{item.riskScore}</Typography>
+                                        <Typography className={classes.h3}>Beefy risk score</Typography>
                                     </Box>
-                                    <Box className={classes.rWidth} textAlign={"right"}>
-                                        <Typography className={classes.h2}>{formatDecimals(new BigNumber(item.deposited))}</Typography>
-                                    </Box>
-                                    <Box className={classes.rWidth} textAlign={"right"}>
-                                        <Typography className={classes.h2}>{formatApy(item.apy)}</Typography>
+                                    <Box className={classes.rWidth} textAlign={"left"}>
+                                        <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
+                                        <Typography className={classes.h3}>TVL</Typography>
                                     </Box>
                                     <Hidden mdDown>
-                                        <Box className={classes.rWidth} textAlign={"right"}>
+                                        <Box className={classes.rWidth} textAlign={"left"}>
                                             <Typography className={classes.h2}>{calcDaily(item.apy)}</Typography>
+                                            <Typography className={classes.h3}>Daily</Typography>
                                         </Box>
                                     </Hidden>
-                                    <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight].join(' ')} textAlign={"center"}>
-                                        <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
+                                    <Hidden mdDown>
+                                        <Box className={classes.rWidth} textAlign={"left"}>
+                                            <Typography className={classes.h2}>[chart]</Typography>
+                                            <Typography className={classes.h3}>Daily historical rate</Typography>
+                                        </Box>
+                                    </Hidden>
+                                    <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight, classes.apyContainer].join(' ')} textAlign={"center"}>
+                                        <Typography variant={"h1"}>{formatApy(item.apy)}</Typography>
+                                        <Typography variant={"h2"}>APY</Typography>
+                                        <Typography variant={"button"}>Deposit</Typography>
                                     </Box>
                                 </Button>
                             </Grid>
