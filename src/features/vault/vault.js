@@ -1,8 +1,7 @@
 import * as React from "react";
 import {useParams} from "react-router";
 import {useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import reduxActions from "../redux/actions";
+import {useSelector} from "react-redux";
 import Loader from "../../components/loader";
 
 import {
@@ -55,28 +54,20 @@ const getVault = (pools, id) => {
 }
 
 const Vault = () => {
-    const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
 
     let { id } = useParams();
     const vaultReducer = useSelector(state => state.vaultReducer);
-    const walletReducer = useSelector(state => state.walletReducer);
     const [isLoading, setIsLoading] = React.useState(true);
     const [vault, setVaultData] = React.useState(null);
-
-    React.useEffect(() => {
-        dispatch(reduxActions.vault.fetchPools(false));
-        dispatch(reduxActions.wallet.fetchRpc());
-        dispatch(reduxActions.vault.fetchPoolsData());
-    }, [dispatch]);
 
     React.useEffect(() => {
         const resp = getVault(vaultReducer.pools, id);
         if(resp) {
             resp.match ? setVaultData(resp.pool) : history.push('/error');
         }
-    }, [vaultReducer.pools]);
+    }, [vaultReducer.pools, id, history]);
 
     React.useEffect(() => {
         if(vault) {

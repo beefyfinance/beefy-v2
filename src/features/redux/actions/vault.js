@@ -170,11 +170,6 @@ const fetchPoolsData = () => {
             const state = getState();
             const currentTime = new Date().getTime();
 
-            if(state.vaultReducer.lastUpdated > 0 && (currentTime - state.vaultReducer.lastUpdated) < 60000) {
-                console.log('redux getPoolData() too soon.')
-                return false;
-            }
-
             const done = await fetch();
             console.log('done', done, Object.keys(state.pricesReducer.prices).length);
 

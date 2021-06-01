@@ -36,6 +36,14 @@ export default function App() {
     React.useEffect(() => {
         dispatch(reduxActions.wallet.createWeb3Modal());
         dispatch(reduxActions.prices.fetchPrices());
+        dispatch(reduxActions.wallet.fetchRpc());
+        dispatch(reduxActions.vault.fetchPools());
+    }, [dispatch]);
+
+    React.useEffect(() => {
+        setInterval(() => {
+            dispatch(reduxActions.vault.fetchPoolsData());
+        }, 60000);
     }, [dispatch]);
 
     React.useEffect(() => {

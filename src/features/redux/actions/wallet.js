@@ -46,9 +46,7 @@ const setNetwork = (net) => {
 }
 
 const fetchRpc = () => {
-    return async (dispatch, getState) => {
-
-        const state = getState();
+    return async (dispatch) => {
         const rpcs = [];
 
         for(let network in config) {
