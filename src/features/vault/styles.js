@@ -1,37 +1,44 @@
 const styles = (theme) => ({
-    cardTitle: {
-        textAlign: 'center',
-        fontSize: '16px',
-        padding: '10px 0',
-        backgroundColor: theme.palette.type === 'dark' ? '#505067' : '#faf6f1',
+    vaultContainer: {
+        marginTop: '40px',
     },
-    cardBody: {
-        textAlign: 'center',
-        fontSize: '18px',
-        fontWeight: 'bold',
-        padding: '20px 0',
-    },
-    logo: {
-        height: '64px',
-        width: '64px',
-        marginTop: '5px',
-    },
-    logoTitle: {
-        textAlign: 'center',
-        fontSize: '18px',
-        fontWeight: 'bold',
-        padding: '4px 0 12px 0',
-    },
-    cardLeftStrong: {
-        textAlign: 'left',
-        paddingLeft: '10px',
-        fontWeight: 'bold',
-        '& span': {
-            fontWeight: 'normal',
+    title: {
+        marginTop: '40px',
+        '& .MuiTypography-h1': {
+            fontSize: '48px',
+            lineHeight: '54px',
+            fontWeight: 600,
+            paddingLeft: '10px',
+        },
+        '& .MuiAvatar-root': {
+            width: 54,
+            height: 54,
         }
     },
-    height: {
-        height: '250px'
+    network: {
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 600,
+        letterSpacing: '0.5px',
+    },
+    paper: {
+        backgroundColor: '#272B4A',
+        marginTop: '20px',
+        padding: '20px',
+        borderRadius: '20px',
+    },
+    dw: {
+        backgroundColor: '#272B4A',
+        borderRadius: '20px',
+    },
+    customOrder: {
+        order: 0,
+        [theme.breakpoints.up('md')]: {
+            order: 1,
+            width: '100%',
+            position: 'absolute',
+            right: 0,
+        },
     }
 });
 

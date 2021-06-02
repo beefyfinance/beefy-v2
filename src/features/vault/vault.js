@@ -17,21 +17,15 @@ import {
     makeStyles,
     Grid,
     Paper,
-    Divider,
     Typography,
     Box,
     Avatar,
-    Link,
-    Table,
-    TableContainer,
-    TableBody,
-    TableCell,
-    TableRow,
     Button
 } from "@material-ui/core"
 import styles from "./styles"
 import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
 import {isEmpty} from "../../helpers/utils";
+import DisplayTags from "../../components/vaultTags";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -76,71 +70,54 @@ const Vault = () => {
     }, [vault]);
 
     return (
-        <div className="App">
+        <Container className={classes.vaultContainer} maxWidth="xl">
             {isLoading ? (
-            <Container maxWidth="lg">
                 <Loader message="Getting vault data..." />
-            </Container>
             ) : (
-            <Container maxWidth="lg">
-                <Box textAlign={'right'} style={{marginTop: "40px"}}>
-                    <Button variant="contained" onClick={() => {history.goBack()}}>Go back</Button>
-                </Box>
-                <Grid container spacing={2} style={{marginTop: "20px"}}>
-                    <Grid item xs={12} md={3}>
-                        <Paper>
-                            <Grid style={{textAlign: 'center'}}>
-                                <Box style={{justifyContent: 'center', display: 'flex'}}>
-                                    <Avatar className={classes.logo} alt={vault.name} src={require('../../images/' + vault.logo).default} />
-                                </Box>
-                                <Typography className={classes.logoTitle}>{vault.name}</Typography>
+                <Grid container style={{position: 'relative'}}>
+                    <Grid item xs={12} md={8} lg={9}>
+                        <Button variant="outlined" onClick={() => {history.goBack()}}>Back to Explore</Button>
+                        <Grid className={classes.title} container>
+                            <Grid>
+                                <Avatar className={classes.large} alt={vault.name} src={require('../../images/' + vault.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
                             </Grid>
-                        </Paper>
+                            <Grid>
+                                <Typography variant={"h1"}>{vault.name} vault</Typography>
+                            </Grid>
+                        </Grid>
+                        <Box display="flex" alignItems="center" p={1} m={1}>
+                            <Box>
+                                <img alt={vault.network} src={require('../../images/networks/' + vault.network + '.svg').default} />
+                            </Box>
+                            <Box pl={1}>
+                                <Typography className={classes.network} display={"inline"}>{vault.network} network</Typography>
+                            </Box>
+                            <Box pl={1}>
+                                <DisplayTags tags={vault.tags} />
+                            </Box>
+                            <Box pl={1}>
+                                <Typography>{formatTvl(vault.tvl)}</Typography>
+                                <Typography>TVL</Typography>
+                            </Box>
+                            <Box pl={1}>
+                                <Typography>{calcDaily(vault.apy)}</Typography>
+                                <Typography>Daily</Typography>
+                            </Box>
+                            <Box pl={1}>
+                                <Typography>{formatApy(vault.apy)}</Typography>
+                                <Typography>APY</Typography>
+                            </Box>
+                        </Box>
                     </Grid>
-                    <Grid item xs={6} sm={4} md={3}>
-                        <Paper>
-                            <Typography className={classes.cardTitle}>Daily APY</Typography>
-                            <Divider />
-                            <Typography className={classes.cardBody}>{calcDaily(vault.apy)}</Typography>
-                        </Paper>
+                    <Grid item xs={12} md={4} lg={3} className={classes.customOrder}>
+                        <Box className={classes.dw}>
+                            <Button>Deposit</Button> <Button>Withdraw</Button>
+                        </Box>
                     </Grid>
-                    <Grid item xs={6} sm={4} md={3}>
-                        <Paper>
-                            <Typography className={classes.cardTitle}>APY</Typography>
-                            <Divider />
-                            <Typography className={classes.cardBody}>{formatApy(vault.apy)}</Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} sm={4} md={3}>
-                        <Paper>
-                            <Typography className={classes.cardTitle}>TVL</Typography>
-                            <Divider />
-                            <Typography className={classes.cardBody}>{formatTvl(vault.tvl)}</Typography>
-                        </Paper>
-                    </Grid>
-                </Grid>
-                <Grid container spacing={2} style={{marginTop: "20px"}}>
-                    <Grid item xs={12} md={6}>
-                        <Paper>
-                            <Typography className={[classes.cardTitle, classes.cardLeftStrong].join(' ')}>Wallet Balance: <span>17998</span></Typography>
-                            <Divider />
-                            <Typography className={classes.cardBody}>deposit form</Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Paper>
-                            <Typography className={[classes.cardTitle, classes.cardLeftStrong].join(' ')}>Deposited: <span>0</span></Typography>
-                            <Divider />
-                            <Typography className={classes.cardBody}>withdraw form</Typography>
-                        </Paper>
-                    </Grid>
-                </Grid>
-                <Grid container spacing={2} style={{marginTop: "20px"}}>
-                    <Grid item xs={12} md={8}>
-                        <Paper>
-                            <Typography className={classes.cardTitle}>Last 30 days</Typography>
-                            <Divider />
-                            <Box className={classes.height}>
+                    <Grid item xs={12} md={8} lg={9}>
+                        <Paper className={classes.paper}>
+                            <Typography>Historical rate</Typography>
+                            <Box style={{height: 250}}>
                                 <ResponsiveContainer>
                                     <LineChart data={chartData} margin={{top: 10, right: 30, left: 0, bottom: 5}}>
                                         <XAxis dataKey="name" />
@@ -150,40 +127,21 @@ const Vault = () => {
                                     </LineChart>
                                 </ResponsiveContainer>
                             </Box>
+
                         </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Paper>
-                            <Typography className={classes.cardTitle}>Vault Information</Typography>
-                            <Divider />
-                            <TableContainer className={classes.height}>
-                                <Table>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell component="th" scope="row">Created on</TableCell>
-                                            <TableCell align="right">18 Feb 2021</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell component="th" scope="row">Contract Address</TableCell>
-                                            <TableCell align="right"><Link href="#">0x00000000000</Link></TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell component="th" scope="row">Strategy Address</TableCell>
-                                            <TableCell align="right"><Link href="#">0x00000000000</Link></TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell component="th" scope="row">Last Harvest</TableCell>
-                                            <TableCell align="right">1 hour 23 mins ago</TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
+                        <Paper className={classes.paper}>
+                            <Typography>Projected yield</Typography>
+                        </Paper>
+                        <Paper className={classes.paper}>
+                            <Typography>Risk</Typography>
+                        </Paper>
+                        <Paper className={classes.paper}>
+                            <Typography>Strategy</Typography>
                         </Paper>
                     </Grid>
                 </Grid>
-            </Container>
             )}
-        </div>
+        </Container>
     )
 };
 

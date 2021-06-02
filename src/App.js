@@ -31,6 +31,12 @@ export default function App() {
                 },
             },
         },
+        typography: {
+            fontFamily: [
+                'Proxima Nova',
+                'sans-serif',
+            ].join(','),
+        },
     });
 
     React.useEffect(() => {

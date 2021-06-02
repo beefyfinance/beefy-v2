@@ -67,7 +67,7 @@ const Header = ({isNightMode, setNightMode}) => {
 
     return (
         <AppBar className={[classes.navHeader, location.pathname === '/' ? classes.hasPortfolio : ''].join(' ')} position="static">
-            <Toolbar>
+            <Toolbar disableGutters={true}>
                 <Container maxWidth="xl" className={classes.navDisplayFlex}>
                     <Box className={classes.beefy}>
                         <img alt="BIFI" src={require('../../images/BIFI.svg').default} />

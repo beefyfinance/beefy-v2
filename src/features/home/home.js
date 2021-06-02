@@ -10,6 +10,7 @@ import Portfolio from './components/Portfolio';
 import styles from "./styles"
 import Loader from "../../components/loader";
 import {isEmpty} from "../../helpers/utils";
+import DisplayTags from "../../components/vaultTags";
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
@@ -131,25 +132,6 @@ const Vault = () => {
         }
         return false;
     };
-
-    const DisplayTags = ({tags}) => {
-        const getText = (name) => {
-            switch(name) {
-                case 'low':
-                    return 'Low Risk';
-                case 'recent':
-                    return 'New';
-                default:
-                    return name;
-            }
-        }
-
-        return (
-            tags.map(item => (
-                <Typography className={[classes.tags, classes[item + 'Tag']].join(' ')} display={'inline'} key={item}>{getText(item)}</Typography>
-            ))
-        );
-    }
 
     return (
         <React.Fragment>
