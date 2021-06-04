@@ -181,8 +181,26 @@ const Vault = () => {
                                     </Box>
                                     <Box p={1}>
                                         <Box p={3} className={classes.boostContainer}>
-                                            Boost
+                                            <Box display="flex" alignItems="center">
+                                                <Box lineHeight={0}>
+                                                    <img alt={vault.name} src={require('../../images/fire.png').default} />
+                                                </Box>
+                                                <Box>
+                                                    <Typography variant={"h1"}>Boost</Typography>
+                                                </Box>
+                                                <Box>
+                                                    <IconButton><HelpOutline /></IconButton>
+                                                </Box>
+                                                <Box flexGrow={1}>
+                                                    <Typography variant={"h2"} align={"right"}>0</Typography>
+                                                </Box>
+                                            </Box>
+                                            <Typography align={"right"}>Receipt Token balance</Typography>
+                                            <Box pt={4}>
+                                                <Button disabled={true} className={classes.btnPurchaseDeposit} fullWidth={true}>Stake Receipt Token</Button>
+                                            </Box>
                                         </Box>
+
                                     </Box>
                                 </React.Fragment>
                             ) : (

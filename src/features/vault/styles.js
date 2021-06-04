@@ -206,10 +206,40 @@ const styles = (theme) => ({
         color: '#ffffff',
         borderRadius: '40px',
         border: 'solid 2px #54995C',
+        '&:disabled': {
+            backgroundColor: '#434864',
+            border: 'solid 2px #434864',
+        }
     },
     boostContainer: {
         backgroundColor: '#313759',
         borderRadius: '16px',
+        '& .MuiTypography-h1': {
+            fontSize: '24px',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            color: '#E88225'
+        },
+        '& .MuiTypography-h2': {
+            fontSize: '24px',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            color: '#ffffff'
+        },
+        '& .MuiTypography-body1': {
+            fontSize: '14px',
+            lineHeight: '18px',
+            color: '#8585A6',
+            letterSpacing: '0.2px',
+        },
+        '& img': {
+            width: 30,
+            height: 30,
+        },
+        '& .MuiIconButton-root': {
+            margin: '0 0 0 5px',
+            padding: 0,
+        }
     }
 });
 
