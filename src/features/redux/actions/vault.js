@@ -168,8 +168,6 @@ const fetchPoolsData = () => {
 
         const start = async () => {
             const state = getState();
-            const currentTime = new Date().getTime();
-
             const done = await fetch();
             console.log('done', done, Object.keys(state.pricesReducer.prices).length);
 

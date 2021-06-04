@@ -20,12 +20,13 @@ import {
     Typography,
     Box,
     Avatar,
-    Button
+    Button, IconButton, InputBase, Divider
 } from "@material-ui/core"
 import styles from "./styles"
 import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
 import {isEmpty} from "../../helpers/utils";
 import DisplayTags from "../../components/vaultTags";
+import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -55,6 +56,7 @@ const Vault = () => {
     const vaultReducer = useSelector(state => state.vaultReducer);
     const [isLoading, setIsLoading] = React.useState(true);
     const [vault, setVaultData] = React.useState(null);
+    const [dw, setDw] = React.useState('deposit');
 
     React.useEffect(() => {
         const resp = getVault(vaultReducer.pools, id);
@@ -111,7 +113,83 @@ const Vault = () => {
                     </Grid>
                     <Grid item xs={12} md={4} lg={3} className={classes.customOrder}>
                         <Box className={classes.dw}>
-                            <Button>Deposit</Button> <Button>Withdraw</Button>
+                            <Box className={classes.tabs}>
+                                <Button onClick={() => setDw('deposit')} className={dw === 'deposit' ? classes.selected : ''}>Deposit</Button>
+                                <Button onClick={() => setDw('withdraw')} className={dw === 'withdraw' ? classes.selected : ''}>Withdraw</Button>
+                            </Box>
+                            {dw === 'deposit' ? (
+                                <React.Fragment>
+                                    <Box p={3}>
+                                        <Typography className={classes.balanceText}>Balance:</Typography>
+                                        <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                                            <Box lineHeight={0}>
+                                                <img alt={vault.name} src={require('../../images/' + vault.logo).default} />
+                                            </Box>
+                                            <Box flexGrow={1} pl={1}>
+                                                <Typography variant={"body1"}>{vault.balance} {vault.token}</Typography>
+                                            </Box>
+                                            <Box>
+                                                <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
+                                            </Box>
+                                        </Box>
+                                        <Box className={classes.inputContainer}>
+                                            <Paper component="form" className={classes.root}>
+                                                <Box className={classes.inputLogo}>
+                                                    <img alt={vault.name} src={require('../../images/' + vault.logo).default} />
+                                                </Box>
+                                                <InputBase className={classes.input} placeholder="0.00" />
+                                                <Button>Max</Button>
+                                            </Paper>
+                                        </Box>
+                                        <Box mt={2} p={2} className={classes.feeContainer}>
+                                            <Grid container>
+                                                <Grid item xs={12}>
+                                                    <IconButton style={{float: 'right'}}><HelpOutline /></IconButton>
+                                                    <Typography variant={"h1"}>Beefy Fee:</Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <Typography variant={"h2"}>0.7% (0.07)</Typography>
+                                                    <Typography>Deposit fee</Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <Typography variant={"h2"}>0%</Typography>
+                                                    <Typography>Withdrawal fee</Typography>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Box pt={1}>
+                                                        <Typography>Performance fees are already subtracted from the displayed APY.</Typography>
+                                                    </Box>
+                                                    <Divider />
+                                                    <Typography variant={"h1"}>Est. Transaction Costs:</Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
+                                                    <Typography>Deposit</Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
+                                                    <Typography>Withdrawal</Typography>
+                                                </Grid>
+                                            </Grid>
+                                        </Box>
+                                        <Box mt={2}>
+                                            <Button className={classes.btnDeposit} fullWidth={true}>Deposit</Button>
+                                        </Box>
+                                        <Box mt={2}>
+                                            <Button className={classes.btnPurchaseDeposit} fullWidth={true}>Purchase and Deposit</Button>
+                                        </Box>
+                                    </Box>
+                                    <Box p={1}>
+                                        <Box p={3} className={classes.boostContainer}>
+                                            Boost
+                                        </Box>
+                                    </Box>
+                                </React.Fragment>
+                            ) : (
+                                <Box>
+                                    Withdraw section
+                                </Box>
+                            )}
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={8} lg={9}>
