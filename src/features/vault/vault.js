@@ -20,13 +20,13 @@ import {
     Typography,
     Box,
     Avatar,
-    Button, IconButton, InputBase, Divider
+    Button, IconButton, InputBase, Divider, Hidden
 } from "@material-ui/core"
 import styles from "./styles"
 import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
 import {isEmpty} from "../../helpers/utils";
 import DisplayTags from "../../components/vaultTags";
-import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import {ArrowLeft, HelpOutline, ShoppingBasket} from "@material-ui/icons";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -78,7 +78,7 @@ const Vault = () => {
             ) : (
                 <Grid container style={{position: 'relative'}}>
                     <Grid item xs={12} md={8} lg={9}>
-                        <Button variant="outlined" onClick={() => {history.goBack()}}>Back to Explore</Button>
+                        <Button className={classes.btnGoBack} onClick={() => {history.goBack()}}><ArrowLeft /> Back to Explore</Button>
                         <Grid className={classes.title} container>
                             <Grid>
                                 <Avatar className={classes.large} alt={vault.name} src={require('../../images/' + vault.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
@@ -87,27 +87,42 @@ const Vault = () => {
                                 <Typography variant={"h1"}>{vault.name} vault</Typography>
                             </Grid>
                         </Grid>
-                        <Box display="flex" alignItems="center" p={1} m={1}>
-                            <Box>
-                                <img alt={vault.network} src={require('../../images/networks/' + vault.network + '.svg').default} />
+                        <Box className={classes.mobileFix} display="flex" alignItems="center">
+                            <Box display={"flex"} alignItems="center">
+                                <Box lineHeight={0}>
+                                    <img alt={vault.network} src={require('../../images/networks/' + vault.network + '.svg').default} />
+                                </Box>
+                                <Box pl={1}>
+                                    <Typography className={classes.network} display={"inline"}>{vault.network} network</Typography>
+                                </Box>
+                                <Box pl={1}>
+                                    <DisplayTags tags={vault.tags} />
+                                </Box>
                             </Box>
-                            <Box pl={1}>
-                                <Typography className={classes.network} display={"inline"}>{vault.network} network</Typography>
-                            </Box>
-                            <Box pl={1}>
-                                <DisplayTags tags={vault.tags} />
-                            </Box>
-                            <Box pl={1}>
-                                <Typography>{formatTvl(vault.tvl)}</Typography>
-                                <Typography>TVL</Typography>
-                            </Box>
-                            <Box pl={1}>
-                                <Typography>{calcDaily(vault.apy)}</Typography>
-                                <Typography>Daily</Typography>
-                            </Box>
-                            <Box pl={1}>
-                                <Typography>{formatApy(vault.apy)}</Typography>
-                                <Typography>APY</Typography>
+                            <Box className={classes.summaryContainer} display={"flex"} alignItems="center">
+                                <Hidden xsDown>
+                                    <Box>
+                                        <Divider />
+                                    </Box>
+                                </Hidden>
+                                <Box>
+                                    <Typography variant={"h1"}>{formatTvl(vault.tvl)}</Typography>
+                                    <Typography variant={"body2"}>TVL</Typography>
+                                </Box>
+                                <Box>
+                                    <Divider />
+                                </Box>
+                                <Box>
+                                    <Typography variant={"h1"}>{calcDaily(vault.apy)}</Typography>
+                                    <Typography variant={"body2"}>Daily</Typography>
+                                </Box>
+                                <Box>
+                                    <Divider />
+                                </Box>
+                                <Box>
+                                    <Typography variant={"h1"}>{formatApy(vault.apy)}</Typography>
+                                    <Typography variant={"body2"}>APY</Typography>
+                                </Box>
                             </Box>
                         </Box>
                     </Grid>
