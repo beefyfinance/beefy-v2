@@ -27,8 +27,8 @@ import CustomDropdown from "../customDropdown/CustomDropdown";
 const useStyles = makeStyles(styles);
 
 const navLinks = [
-    { title: 'home', path: '/' },
-    { title: 'explore', path: '/explore' },
+    { title: 'home', path: 'https://beefy.finance' },
+    { title: 'explore', path: '/' },
     { title: 'docs', path: 'https://docs.beefy.finance' },
 ];
 
@@ -57,7 +57,6 @@ const Header = ({isNightMode, setNightMode}) => {
 
     const handleNetworkSwitch = (event) => {
         dispatch(reduxActions.wallet.setNetwork(event.target.value));
-        history.push('/');
     }
 
     const handleLanguageSwitch = (event) => {
@@ -76,7 +75,7 @@ const Header = ({isNightMode, setNightMode}) => {
                     <Hidden smDown>
                         <List component="nav" aria-labelledby="main navigation" className={classes.navDisplayFlex}>
                             {navLinks.map(({ title, path }) => (
-                                    <ListItem key={title} button onClick={() => {history.push(path)}}>
+                                    <ListItem key={title} button onClick={() => {window.location.href = path}}>
                                         <ListItemText primary={title} />
                                     </ListItem>
                             ))}
