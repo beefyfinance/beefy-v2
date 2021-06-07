@@ -2,23 +2,56 @@ const styles = (theme) => ({
     portfolio: {
         backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
         padding: '60px 0 0 0',
-        '& h1': {
+        '& .MuiTypography-h1': {
             fontSize: '36px',
+            fontWeight: 600,
             lineHeight: '42px',
             paddingBottom: '20px',
         },
-        '& h2': {
-            fontSize: '42px',
+        '& .MuiTypography-h2': {
+            fontSize: '24px',
             fontWeight: '600',
-            lineHeight: '54px',
-            color: theme.palette.type === 'dark' ? '#424866' : '#ff0000',
+            lineHeight: '30px',
+            color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
         },
-        '& h3': {
+        '& .MuiTypography-body1': {
             fontSize: '18px',
             fontWeight: '600',
             lineHeight: '24px',
-            color: theme.palette.type === 'dark' ? '#424866' : '#ff0000',
+            display: 'inline-flex',
+            color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
+        },
+        '& .MuiTypography-body2': {
+            fontSize: '18px',
+            fontWeight: '600',
+            lineHeight: '24px',
+            verticalAlign: 'middle',
+            display: 'inline-flex',
+            color: theme.palette.type === 'dark' ? '#509658' : '#ff0000',
         }
+    },
+    mobileFix: {
+        position: 'relative',
+        display: 'block',
+        padding: '20px 0',
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+            padding: 0,
+        },
+    },
+    opened: {
+        '& .MuiTypography-h2': {
+            fontSize: '42px',
+            fontWeight: 600,
+            lineHeight: '54px',
+            paddingBottom: '20px',
+        },
+        '& .MuiTypography-body1': {
+            display: 'block',
+        },
+    },
+    blurred: {
+        filter: 'blur(.5rem)',
     },
     toggler: {
         backgroundColor: theme.palette.type === 'dark' ? '#1B203A' : '#ff0000',
@@ -34,6 +67,9 @@ const styles = (theme) => ({
     },
     balance: {
         textAlign: 'right',
+        position: 'absolute',
+        top: 0,
+        right: 0,
         '& .MuiButton-root': {
             textTransform: 'capitalize',
             color: theme.palette.type === 'dark' ? '#484F7F' : '#ff0000',
