@@ -14,7 +14,7 @@ const Portfolio = () => {
 
     const BlurredText = ({value}) => {
         return (
-            <Typography variant={"h2"} className={hideBalance ? classes.blurred : ''}>{value}</Typography>
+            <span className={hideBalance ? classes.blurred : ''}>{value}</span>
         );
     }
 
@@ -31,17 +31,17 @@ const Portfolio = () => {
                     <Box>
                         <Box display={"flex"}>
                             <Box pt={1} pb={1} pl={5}>
-                                <BlurredText value={"$1.123"} />
+                                <Typography variant={"h2"}><BlurredText value={"$1.123"} /></Typography>
                                 <Typography>Deposited</Typography>
-                                <Typography variant={"body2"}> <ArrowDropUp /> 0.59% 1w</Typography>
+                                <Typography variant={"body2"}><ArrowDropUp /> <BlurredText value={"0.59% 1w"} /></Typography>
                             </Box>
                             <Box pt={1} pb={1} pl={5}>
-                                <BlurredText value={"$0"} />
+                                <Typography variant={"h2"}><BlurredText value={"$0"} /></Typography>
                                 <Typography>Total yield</Typography>
-                                <Typography variant={"body2"}> <ArrowDropUp /> 0.59% 1w</Typography>
+                                <Typography variant={"body2"}> <ArrowDropUp /> <BlurredText value={"0.59% 1w"} /></Typography>
                             </Box>
                             <Box pt={1} pb={1} pl={5}>
-                                <BlurredText value={"$0"} />
+                                <Typography variant={"h2"}><BlurredText value={"0"} /></Typography>
                                 <Typography>Daily yield</Typography>
                             </Box>
                         </Box>
