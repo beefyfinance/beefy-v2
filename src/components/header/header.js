@@ -23,6 +23,7 @@ import styles from "./styles"
 import {useLocation} from "react-router";
 import WalletContainer from "./components/WalletContainer";
 import CustomDropdown from "../customDropdown/CustomDropdown";
+import {getAvailableNetworks} from "../../helpers/utils";
 
 const useStyles = makeStyles(styles);
 
@@ -83,7 +84,7 @@ const Header = ({isNightMode, setNightMode}) => {
                                 {isNightMode ? <WbSunny /> : <NightsStay />}
                             </IconButton>
                             <CustomDropdown list={{'en': 'EN', 'fr': 'FR'}} selected={walletReducer.language} handler={handleLanguageSwitch} css={{marginLeft: 10}} />
-                            <CustomDropdown list={{'bsc': 'BSC', 'heco': 'Heco'}} selected={walletReducer.network} handler={handleNetworkSwitch} css={{marginLeft: 10}} />
+                            <CustomDropdown list={getAvailableNetworks(true)} selected={walletReducer.network} handler={handleNetworkSwitch} css={{marginLeft: 10}} />
                             <WalletContainer />
                         </List>
                     </Hidden>

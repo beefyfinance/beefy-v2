@@ -21,10 +21,10 @@ export function isEmpty(key) {
   }
 }
 
-export const getAvailableNetworks = () => {
+export const getAvailableNetworks = (abbrOnly = false) => {
   const networks = [];
   for(let key in config) {
-    networks[key] = config[key].name;
+    networks[key] = abbrOnly ? key.toUpperCase() : config[key].name;
   }
 
   return networks;
