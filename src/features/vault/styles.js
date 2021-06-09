@@ -235,7 +235,7 @@ const styles = (theme) => ({
             color: '#8585A6',
         }
     },
-    btnDeposit: {
+    btnSubmit: {
         fontSize: '21px',
         fontWeight: 700,
         letterSpacing: '0.2px',
@@ -245,19 +245,6 @@ const styles = (theme) => ({
         borderRadius: '40px',
         '&:hover': {
             backgroundColor: '#389D44'
-        }
-    },
-    btnPurchaseDeposit: {
-        fontSize: '21px',
-        fontWeight: 700,
-        letterSpacing: '0.2px',
-        textTransform: 'capitalize',
-        color: '#ffffff',
-        borderRadius: '40px',
-        border: 'solid 2px #54995C',
-        '&:disabled': {
-            backgroundColor: '#434864',
-            border: 'solid 2px #434864',
         }
     },
     boostContainer: {
