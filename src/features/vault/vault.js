@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useParams} from "react-router";
 import {useHistory} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../components/loader";
 
 import {
@@ -27,6 +27,7 @@ import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
 import {isEmpty} from "../../helpers/utils";
 import DisplayTags from "../../components/vaultTags";
 import {ArrowLeft, HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import reduxActions from "../redux/actions";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -53,23 +54,33 @@ const Vault = () => {
     const classes = useStyles();
 
     let { id } = useParams();
-    const vaultReducer = useSelector(state => state.vaultReducer);
+    const {vault, wallet} = useSelector(state => ({
+        vault: state.vaultReducer,
+        wallet: state.walletReducer,
+    }));
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = React.useState(true);
-    const [vault, setVaultData] = React.useState(null);
+    const [item, setVaultData] = React.useState(null);
     const [dw, setDw] = React.useState('deposit');
 
+    const handleWalletConnect = () => {
+        if(!wallet.address) {
+            dispatch(reduxActions.wallet.connect());
+        }
+    }
+
     React.useEffect(() => {
-        const resp = getVault(vaultReducer.pools, id);
+        const resp = getVault(vault.pools, id);
         if(resp) {
             resp.match ? setVaultData(resp.pool) : history.push('/error');
         }
-    }, [vaultReducer.pools, id, history]);
+    }, [vault.pools, id, history]);
 
     React.useEffect(() => {
-        if(vault) {
+        if(item) {
             setIsLoading(false);
         }
-    }, [vault]);
+    }, [item]);
 
     return (
         <Container className={classes.vaultContainer} maxWidth="xl">
@@ -81,22 +92,22 @@ const Vault = () => {
                         <Button className={classes.btnGoBack} onClick={() => {history.goBack()}}><ArrowLeft /> Back to Explore</Button>
                         <Grid className={classes.title} container>
                             <Grid>
-                                <Avatar className={classes.large} alt={vault.name} src={require('../../images/' + vault.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                                <Avatar className={classes.large} alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
                             </Grid>
                             <Grid>
-                                <Typography variant={"h1"}>{vault.name} vault</Typography>
+                                <Typography variant={"h1"}>{item.name} vault</Typography>
                             </Grid>
                         </Grid>
                         <Box className={classes.mobileFix} display="flex" alignItems="center">
                             <Box display={"flex"} alignItems="center">
                                 <Box lineHeight={0}>
-                                    <img alt={vault.network} src={require('../../images/networks/' + vault.network + '.svg').default} />
+                                    <img alt={item.network} src={require('../../images/networks/' + item.network + '.svg').default} />
                                 </Box>
                                 <Box pl={1}>
-                                    <Typography className={classes.network} display={"inline"}>{vault.network} network</Typography>
+                                    <Typography className={classes.network} display={"inline"}>{item.network} network</Typography>
                                 </Box>
                                 <Box pl={1}>
-                                    <DisplayTags tags={vault.tags} />
+                                    <DisplayTags tags={item.tags} />
                                 </Box>
                             </Box>
                             <Box className={classes.summaryContainer} display={"flex"} alignItems="center">
@@ -106,21 +117,21 @@ const Vault = () => {
                                     </Box>
                                 </Hidden>
                                 <Box>
-                                    <Typography variant={"h1"}>{formatTvl(vault.tvl)}</Typography>
+                                    <Typography variant={"h1"}>{formatTvl(item.tvl)}</Typography>
                                     <Typography variant={"body2"}>TVL</Typography>
                                 </Box>
                                 <Box>
                                     <Divider />
                                 </Box>
                                 <Box>
-                                    <Typography variant={"h1"}>{calcDaily(vault.apy)}</Typography>
+                                    <Typography variant={"h1"}>{calcDaily(item.apy)}</Typography>
                                     <Typography variant={"body2"}>Daily</Typography>
                                 </Box>
                                 <Box>
                                     <Divider />
                                 </Box>
                                 <Box>
-                                    <Typography variant={"h1"}>{formatApy(vault.apy)}</Typography>
+                                    <Typography variant={"h1"}>{formatApy(item.apy)}</Typography>
                                     <Typography variant={"body2"}>APY</Typography>
                                 </Box>
                             </Box>
@@ -138,10 +149,10 @@ const Vault = () => {
                                         <Typography className={classes.balanceText}>Balance:</Typography>
                                         <Box className={classes.balanceContainer} display="flex" alignItems="center">
                                             <Box lineHeight={0}>
-                                                <img alt={vault.name} src={require('../../images/' + vault.logo).default} />
+                                                <img alt={item.name} src={require('../../images/' + item.logo).default} />
                                             </Box>
                                             <Box flexGrow={1} pl={1}>
-                                                <Typography variant={"body1"}>{vault.balance} {vault.token}</Typography>
+                                                <Typography variant={"body1"}>{item.balance} {item.token}</Typography>
                                             </Box>
                                             <Box>
                                                 <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
@@ -150,7 +161,7 @@ const Vault = () => {
                                         <Box className={classes.inputContainer}>
                                             <Paper component="form" className={classes.root}>
                                                 <Box className={classes.inputLogo}>
-                                                    <img alt={vault.name} src={require('../../images/' + vault.logo).default} />
+                                                    <img alt={item.name} src={require('../../images/' + item.logo).default} />
                                                 </Box>
                                                 <InputBase className={classes.input} placeholder="0.00" />
                                                 <Button>Max</Button>
@@ -188,14 +199,18 @@ const Vault = () => {
                                             </Grid>
                                         </Box>
                                         <Box mt={2}>
-                                            <Button className={classes.btnSubmit} fullWidth={true}>Deposit</Button>
+                                            {wallet.address ? (
+                                                <Button className={classes.btnSubmit} fullWidth={true}>Deposit</Button>
+                                            ) : (
+                                                <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
+                                            )}
                                         </Box>
                                     </Box>
                                     <Box p={1}>
                                         <Box p={3} className={classes.boostContainer}>
                                             <Box display="flex" alignItems="center">
                                                 <Box lineHeight={0}>
-                                                    <img alt={vault.name} src={require('../../images/fire.png').default} />
+                                                    <img alt={item.name} src={require('../../images/fire.png').default} />
                                                 </Box>
                                                 <Box>
                                                     <Typography variant={"h1"}>Boost</Typography>
@@ -222,10 +237,10 @@ const Vault = () => {
                                             <Typography className={classes.balanceText}>Deposited:</Typography>
                                             <Box className={classes.balanceContainer} display="flex" alignItems="center">
                                                 <Box lineHeight={0}>
-                                                    <img alt={vault.name} src={require('../../images/' + vault.logo).default} />
+                                                    <img alt={item.name} src={require('../../images/' + item.logo).default} />
                                                 </Box>
                                                 <Box flexGrow={1} pl={1}>
-                                                    <Typography variant={"body1"}>{vault.balance} {vault.token}</Typography>
+                                                    <Typography variant={"body1"}>{item.balance} {item.token}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
@@ -234,7 +249,7 @@ const Vault = () => {
                                             <Box className={classes.inputContainer}>
                                                 <Paper component="form" className={classes.root}>
                                                     <Box className={classes.inputLogo}>
-                                                        <img alt={vault.name} src={require('../../images/' + vault.logo).default} />
+                                                        <img alt={item.name} src={require('../../images/' + item.logo).default} />
                                                     </Box>
                                                     <InputBase className={classes.input} placeholder="0.00" />
                                                     <Button>Max</Button>
@@ -272,14 +287,18 @@ const Vault = () => {
                                                 </Grid>
                                             </Box>
                                             <Box mt={2}>
-                                                <Button className={classes.btnSubmit} fullWidth={true}>Withdraw</Button>
+                                                {wallet.address ? (
+                                                    <Button className={classes.btnSubmit} fullWidth={true}>Withdraw</Button>
+                                                ) : (
+                                                    <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
+                                                )}
                                             </Box>
                                         </Box>
                                         <Box p={1}>
                                             <Box p={3} className={classes.boostContainer}>
                                                 <Box display="flex" alignItems="center">
                                                     <Box lineHeight={0}>
-                                                        <img alt={vault.name} src={require('../../images/fire.png').default} />
+                                                        <img alt={item.name} src={require('../../images/fire.png').default} />
                                                     </Box>
                                                     <Box>
                                                         <Typography variant={"h1"}>Boost</Typography>

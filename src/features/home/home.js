@@ -150,7 +150,7 @@ const Vault = () => {
                     {items.length === 0 ? '' : (
                         filter().map(item => (
                             <Grid container key={item.id}>
-                                <Button className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')} onClick={() => {history.push('/' + wallet.network + '/vault/' + (item.id))}}>
+                                <Button className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')} onClick={() => {history.push('/' + item.network + '/vault/' + (item.id))}}>
                                     <Box flexGrow={1} textAlign={"left"}>
                                         <Grid className={classes.infoContainer} container>
                                             <Hidden smDown>

@@ -97,13 +97,13 @@ export const config = {
         ],
         multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
         supportedWallets: ['injected', 'walletconnect'],
-        providerName: 'avalanche',
+        providerName: 'fantom',
         walletSettings: {
             chainId: `0x${parseInt(250, 10).toString(16)}`,
-            chainName: 'Polygon Mainnet',
+            chainName: 'Fantom Opera',
             nativeCurrency: {
-                name: 'MATIC',
-                symbol: 'MATIC',
+                name: 'FTM',
+                symbol: 'FTM',
                 decimals: 18,
             },
             rpcUrls: ['https://rpcapi.fantom.network'],
