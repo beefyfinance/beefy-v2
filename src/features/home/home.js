@@ -63,10 +63,9 @@ const UseSortableData = (items, config = null) => {
     return { items: sortedItems, sortConfig, setFilter};
 };
 
-const Vault = () => {
-    const {vault, wallet} = useSelector(state => ({
+const Home = () => {
+    const {vault} = useSelector(state => ({
         vault: state.vaultReducer,
-        wallet: state.walletReducer,
     }));
 
     const history = useHistory();
@@ -206,4 +205,4 @@ const Vault = () => {
     );
 };
 
-export default Vault;
+export default Home;

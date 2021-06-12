@@ -3,31 +3,16 @@ import {useParams} from "react-router";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../components/loader";
-
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    Tooltip,
-    ResponsiveContainer,
-} from "recharts";
-import {
-    Container,
-    makeStyles,
-    Grid,
-    Paper,
-    Typography,
-    Box,
-    Avatar,
-    Button, IconButton, InputBase, Divider, Hidden
-} from "@material-ui/core"
+import {LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,} from "recharts";
+import {Container, makeStyles, Grid, Paper, Typography, Box, Avatar, Button, Divider, Hidden} from "@material-ui/core"
 import styles from "./styles"
 import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
 import {isEmpty} from "../../helpers/utils";
 import DisplayTags from "../../components/vaultTags";
-import {ArrowLeft, HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import {ArrowLeft} from "@material-ui/icons";
 import reduxActions from "../redux/actions";
+import Deposit from "./components/Deposit";
+import Withdraw from "./components/Withdraw";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -62,6 +47,7 @@ const Vault = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [item, setVaultData] = React.useState(null);
     const [dw, setDw] = React.useState('deposit');
+    const [formData, setFormData] = React.useState({deposit: {amount: '', max: false}, withdraw: {amount: '', max: false}});
 
     const handleWalletConnect = () => {
         if(!wallet.address) {
@@ -81,6 +67,13 @@ const Vault = () => {
             setIsLoading(false);
         }
     }, [item]);
+
+    React.useEffect(() => {
+        if(wallet.address && item) {
+            dispatch(reduxActions.balance.fetchBalances(item));
+            dispatch(reduxActions.balance.fetchDeposited(item));
+        }
+    }, [wallet.address, dispatch, item]);
 
     return (
         <Container className={classes.vaultContainer} maxWidth="xl">
@@ -144,181 +137,19 @@ const Vault = () => {
                                 <Button onClick={() => setDw('withdraw')} className={dw === 'withdraw' ? classes.selected : ''}>Withdraw</Button>
                             </Box>
                             {dw === 'deposit' ? (
-                                <React.Fragment>
-                                    <Box p={3}>
-                                        <Typography className={classes.balanceText}>Balance:</Typography>
-                                        <Box className={classes.balanceContainer} display="flex" alignItems="center">
-                                            <Box lineHeight={0}>
-                                                <img alt={item.name} src={require('../../images/' + item.logo).default} />
-                                            </Box>
-                                            <Box flexGrow={1} pl={1}>
-                                                <Typography variant={"body1"}>{item.balance} {item.token}</Typography>
-                                            </Box>
-                                            <Box>
-                                                <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
-                                            </Box>
-                                        </Box>
-                                        <Box className={classes.inputContainer}>
-                                            <Paper component="form" className={classes.root}>
-                                                <Box className={classes.inputLogo}>
-                                                    <img alt={item.name} src={require('../../images/' + item.logo).default} />
-                                                </Box>
-                                                <InputBase className={classes.input} placeholder="0.00" />
-                                                <Button>Max</Button>
-                                            </Paper>
-                                        </Box>
-                                        <Box mt={2} p={2} className={classes.feeContainer}>
-                                            <Grid container>
-                                                <Grid item xs={12}>
-                                                    <IconButton style={{float: 'right'}}><HelpOutline /></IconButton>
-                                                    <Typography variant={"h1"}>Beefy Fee:</Typography>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <Typography variant={"h2"}>0.7% (0.07)</Typography>
-                                                    <Typography>Deposit fee</Typography>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <Typography variant={"h2"}>0%</Typography>
-                                                    <Typography>Withdrawal fee</Typography>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <Box pt={1}>
-                                                        <Typography>Performance fees are already subtracted from the displayed APY.</Typography>
-                                                    </Box>
-                                                    <Divider />
-                                                    <Typography variant={"h1"}>Est. Transaction Costs:</Typography>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
-                                                    <Typography>Deposit</Typography>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                    <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
-                                                    <Typography>Withdrawal</Typography>
-                                                </Grid>
-                                            </Grid>
-                                        </Box>
-                                        <Box mt={2}>
-                                            {wallet.address ? (
-                                                <Button className={classes.btnSubmit} fullWidth={true}>Deposit</Button>
-                                            ) : (
-                                                <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
-                                            )}
-                                        </Box>
-                                    </Box>
-                                    <Box p={1}>
-                                        <Box p={3} className={classes.boostContainer}>
-                                            <Box display="flex" alignItems="center">
-                                                <Box lineHeight={0}>
-                                                    <img alt={item.name} src={require('../../images/fire.png').default} />
-                                                </Box>
-                                                <Box>
-                                                    <Typography variant={"h1"}>Boost</Typography>
-                                                </Box>
-                                                <Box>
-                                                    <IconButton><HelpOutline /></IconButton>
-                                                </Box>
-                                                <Box flexGrow={1}>
-                                                    <Typography variant={"h2"} align={"right"}>0</Typography>
-                                                </Box>
-                                            </Box>
-                                            <Typography align={"right"}>Receipt Token balance</Typography>
-                                            <Box pt={4}>
-                                                <Button disabled={true} className={classes.btnSubmit} fullWidth={true}>Stake Receipt Token</Button>
-                                            </Box>
-                                        </Box>
-
-                                    </Box>
-                                </React.Fragment>
+                                <Deposit
+                                    item={item}
+                                    handleWalletConnect={handleWalletConnect}
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
                             ) : (
-                                <Box>
-                                    <React.Fragment>
-                                        <Box p={3}>
-                                            <Typography className={classes.balanceText}>Deposited:</Typography>
-                                            <Box className={classes.balanceContainer} display="flex" alignItems="center">
-                                                <Box lineHeight={0}>
-                                                    <img alt={item.name} src={require('../../images/' + item.logo).default} />
-                                                </Box>
-                                                <Box flexGrow={1} pl={1}>
-                                                    <Typography variant={"body1"}>{item.balance} {item.token}</Typography>
-                                                </Box>
-                                                <Box>
-                                                    <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
-                                                </Box>
-                                            </Box>
-                                            <Box className={classes.inputContainer}>
-                                                <Paper component="form" className={classes.root}>
-                                                    <Box className={classes.inputLogo}>
-                                                        <img alt={item.name} src={require('../../images/' + item.logo).default} />
-                                                    </Box>
-                                                    <InputBase className={classes.input} placeholder="0.00" />
-                                                    <Button>Max</Button>
-                                                </Paper>
-                                            </Box>
-                                            <Box mt={2} p={2} className={classes.feeContainer}>
-                                                <Grid container>
-                                                    <Grid item xs={12}>
-                                                        <IconButton style={{float: 'right'}}><HelpOutline /></IconButton>
-                                                        <Typography variant={"h1"}>Beefy Fee:</Typography>
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant={"h2"}>0.7% (0.07)</Typography>
-                                                        <Typography>Deposit fee</Typography>
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant={"h2"}>0%</Typography>
-                                                        <Typography>Withdrawal fee</Typography>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <Box pt={1}>
-                                                            <Typography>Performance fees are already subtracted from the displayed APY.</Typography>
-                                                        </Box>
-                                                        <Divider />
-                                                        <Typography variant={"h1"}>Est. Transaction Costs:</Typography>
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
-                                                        <Typography>Deposit</Typography>
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
-                                                        <Typography>Withdrawal</Typography>
-                                                    </Grid>
-                                                </Grid>
-                                            </Box>
-                                            <Box mt={2}>
-                                                {wallet.address ? (
-                                                    <Button className={classes.btnSubmit} fullWidth={true}>Withdraw</Button>
-                                                ) : (
-                                                    <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
-                                                )}
-                                            </Box>
-                                        </Box>
-                                        <Box p={1}>
-                                            <Box p={3} className={classes.boostContainer}>
-                                                <Box display="flex" alignItems="center">
-                                                    <Box lineHeight={0}>
-                                                        <img alt={item.name} src={require('../../images/fire.png').default} />
-                                                    </Box>
-                                                    <Box>
-                                                        <Typography variant={"h1"}>Boost</Typography>
-                                                    </Box>
-                                                    <Box>
-                                                        <IconButton><HelpOutline /></IconButton>
-                                                    </Box>
-                                                    <Box flexGrow={1}>
-                                                        <Typography variant={"h2"} align={"right"}>0</Typography>
-                                                    </Box>
-                                                </Box>
-                                                <Typography align={"right"}>Receipt Token balance</Typography>
-                                                <Box pt={4}>
-                                                    <Button disabled={true} className={classes.btnSubmit} fullWidth={true}>Unstake Receipt Token</Button>
-                                                </Box>
-                                            </Box>
-
-                                        </Box>
-                                    </React.Fragment>
-                                </Box>
+                                <Withdraw
+                                    item={item}
+                                    handleWalletConnect={handleWalletConnect}
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
                             )}
                         </Box>
                     </Grid>

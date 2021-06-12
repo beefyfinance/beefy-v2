@@ -31,7 +31,6 @@ const WalletContainer = () => {
     }
 
     React.useEffect(() => {
-        console.log('address', walletReducer.address);
         if(walletReducer.address) {
             renderIcon({ seed: walletReducer.address.toLowerCase() }, canvas);
             setDataUrl(canvas.toDataURL());

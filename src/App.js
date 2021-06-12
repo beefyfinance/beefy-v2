@@ -2,12 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/header";
 import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import reduxActions from "./features/redux/actions";
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
-const Stats = React.lazy(() => import(`./features/stats`));
 
 const PageNotFound = () => {
     return <div>Page not found.</div>;
@@ -16,6 +15,9 @@ const PageNotFound = () => {
 export default function App() {
     const storage = localStorage.getItem('nightMode');
     const dispatch = useDispatch();
+    const {vault} = useSelector(state => ({
+        vault: state.vaultReducer,
+    }));
     //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
     const [isNightMode, setNightMode] = React.useState(true);
     const theme = createMuiTheme({
@@ -40,17 +42,24 @@ export default function App() {
     });
 
     React.useEffect(() => {
-        dispatch(reduxActions.wallet.createWeb3Modal());
-        dispatch(reduxActions.prices.fetchPrices());
-        dispatch(reduxActions.wallet.fetchRpc());
-        dispatch(reduxActions.vault.fetchPools());
+        const initiate = async () => {
+            await dispatch(reduxActions.prices.fetchPrices());
+            await dispatch(reduxActions.wallet.fetchRpc());
+            await dispatch(reduxActions.vault.fetchPools());
+
+            setInterval(() => {
+                dispatch(reduxActions.vault.fetchPoolsData());
+            }, 60000);
+        }
+        return initiate();
     }, [dispatch]);
 
     React.useEffect(() => {
-        setInterval(() => {
-            dispatch(reduxActions.vault.fetchPoolsData());
-        }, 60000);
-    }, [dispatch]);
+        if(vault.lastUpdated > 0) {
+            //dispatch(reduxActions.balance.fetchDeposited());
+            //dispatch(reduxActions.balance.fetchBalances());
+        }
+    }, [dispatch, vault.lastUpdated]);
 
     React.useEffect(() => {
         localStorage.setItem('nightMode', JSON.stringify(isNightMode));
@@ -65,9 +74,6 @@ export default function App() {
                     <Switch>
                         <Route exact path="/" key={Date.now()}>
                             <Home />
-                        </Route>
-                        <Route strict sensitive exact path="/stats">
-                            <Stats />
                         </Route>
                         <Route strict sensitive exact path="/:network/vault/:id">
                             <Vault />

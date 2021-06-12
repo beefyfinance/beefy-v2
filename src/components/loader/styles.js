@@ -11,7 +11,7 @@ const styles = (theme) => ({
     line: {
         width: '48px',
         height: '12px',
-        margin: '0 auto',
+        margin: '0',
         backgroundImage: 'url(' + require('../../images/loader2.gif').default +')',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

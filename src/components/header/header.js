@@ -65,6 +65,12 @@ const Header = ({isNightMode, setNightMode}) => {
         //history.push('/');
     }
 
+    React.useEffect(() => {
+        if(!walletReducer.web3modal) {
+            dispatch(reduxActions.wallet.createWeb3Modal());
+        }
+    }, [dispatch, walletReducer.web3modal]);
+
     return (
         <AppBar className={[classes.navHeader, location.pathname === '/' ? classes.hasPortfolio : ''].join(' ')} position="static">
             <Toolbar disableGutters={true}>
