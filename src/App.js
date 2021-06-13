@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/header";
 import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import reduxActions from "./features/redux/actions";
 
 const Home = React.lazy(() => import(`./features/home`));
@@ -15,9 +15,6 @@ const PageNotFound = () => {
 export default function App() {
     const storage = localStorage.getItem('nightMode');
     const dispatch = useDispatch();
-    const {vault} = useSelector(state => ({
-        vault: state.vaultReducer,
-    }));
     //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
     const [isNightMode, setNightMode] = React.useState(true);
     const theme = createMuiTheme({
@@ -53,13 +50,6 @@ export default function App() {
         }
         return initiate();
     }, [dispatch]);
-
-    React.useEffect(() => {
-        if(vault.lastUpdated > 0) {
-            //dispatch(reduxActions.balance.fetchDeposited());
-            //dispatch(reduxActions.balance.fetchBalances());
-        }
-    }, [dispatch, vault.lastUpdated]);
 
     React.useEffect(() => {
         localStorage.setItem('nightMode', JSON.stringify(isNightMode));

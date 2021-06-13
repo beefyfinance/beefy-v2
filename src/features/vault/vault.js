@@ -71,7 +71,6 @@ const Vault = () => {
     React.useEffect(() => {
         if(wallet.address && item) {
             dispatch(reduxActions.balance.fetchBalances(item));
-            dispatch(reduxActions.balance.fetchDeposited(item));
         }
     }, [wallet.address, dispatch, item]);
 
@@ -149,6 +148,7 @@ const Vault = () => {
                                     handleWalletConnect={handleWalletConnect}
                                     formData={formData}
                                     setFormData={setFormData}
+                                    isPoolsLoading={vault.isPoolsLoading}
                                 />
                             )}
                         </Box>

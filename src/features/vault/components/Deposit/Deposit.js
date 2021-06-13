@@ -2,41 +2,51 @@ import {Box, Button, Divider, Grid, IconButton, InputBase, makeStyles, Paper, Ty
 import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
 import * as React from "react";
 import styles from "../styles"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import BigNumber from "bignumber.js";
-import {isEmpty} from "../../../../helpers/utils";
 import Loader from "../../../../components/loader";
+import {byDecimals, stripExtraDecimals} from "../../../../helpers/format";
+import {isEmpty} from "../../../../helpers/utils";
+import reduxActions from "../../../redux/actions";
 
 const useStyles = makeStyles(styles);
 
 const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const {wallet, balance} = useSelector(state => ({
         wallet: state.walletReducer,
         balance: state.balanceReducer,
     }));
 
-    const [balanceAmount, setBalanceAmount] = React.useState(0);
+    const [state, setState] = React.useState({balance: 0, allowance: 0});
     const [isLoading, setIsLoading] = React.useState(true);
 
     const handleInput = (val) => {
-        const stripExtraDecimals = (value) => {
-            const f = value;
-            return (f.indexOf(".") >= 0) ? (f.substr(0, f.indexOf(".")) + f.substr(f.indexOf("."), 9)) : f;
-        }
-
-        const value = (parseFloat(val) > balanceAmount) ? balanceAmount : (parseFloat(val) < 0) ? 0 : stripExtraDecimals(val);
-        setFormData({...formData, deposit: {amount: value, max: new BigNumber(value).minus(balanceAmount).toNumber() === 0}});
+        const value = (parseFloat(val) > state.balance) ? state.balance : (parseFloat(val) < 0) ? 0 : stripExtraDecimals(val);
+        setFormData({...formData, deposit: {amount: value, max: new BigNumber(value).minus(state.balance).toNumber() === 0}});
     }
 
     const handleMax = () => {
-        if(balanceAmount > 0) {
-            setFormData({...formData, deposit: {amount: balanceAmount, max: true}});
+        if(state.balance > 0) {
+            setFormData({...formData, deposit: {amount: state.balance, max: true}});
+        }
+    }
+
+    const handleApproval = () => {
+        if(wallet.address) {
+            alert('soon')
         }
     }
 
     React.useEffect(() => {
-        setBalanceAmount((wallet.address && !isEmpty(balance.balances[item.token])) ? balance.balances[item.token].total : 0)
+        if(wallet.address && !isEmpty(balance.tokens[item.token])) {
+            const amount = byDecimals(new BigNumber(balance.tokens[item.token].balance), item.tokenDecimals).toFixed(8);
+            const approved = balance.tokens[item.token].allowance[item.earnContractAddress];
+            setState({balance: amount, allowance: approved});
+        } else {
+            setState({balance: 0, allowance: 0});
+        }
     }, [wallet.address, item, balance]);
 
     React.useEffect(() => {
@@ -55,7 +65,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
                         {isLoading ? (
                             <Loader line={true} />
                         ) : (
-                            <Typography variant={"body1"}>{balanceAmount} {item.token}</Typography>
+                            <Typography variant={"body1"}>{state.balance} {item.token}</Typography>
                         )}
                     </Box>
                     <Box>
@@ -104,7 +114,11 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
                 </Box>
                 <Box mt={2}>
                     {wallet.address ? (
-                        <Button className={classes.btnSubmit} fullWidth={true} disabled={formData.deposit.amount <= 0}>Deposit {formData.deposit.max ? ('All') : ''}</Button>
+                        state.allowance ? (
+                            <Button className={classes.btnSubmit} fullWidth={true} disabled={formData.deposit.amount <= 0}>Deposit {formData.deposit.max ? ('All') : ''}</Button>
+                        ) : (
+                            <Button className={classes.btnSubmit} fullWidth={true} onClick={handleApproval}>Approve</Button>
+                        )
                     ) : (
                         <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
                     )}

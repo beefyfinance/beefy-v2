@@ -1,35 +1,42 @@
 import {
     BALANCE_FETCH_BALANCES_BEGIN,
     BALANCE_FETCH_BALANCES_DONE,
-    BALANCE_FETCH_DEPOSITED_BEGIN,
-    BALANCE_FETCH_DEPOSITED_DONE
 } from "../constants";
+import {config} from "../../../config/config";
+
+const initialTokens = () => {
+    const tokens = [];
+    for(let net in config) {
+        const data = require('../../../config/vault/' + net + '.js');
+        for(const key in data.pools) {
+            tokens[data.pools[key].token] = {
+                balance: 0,
+                allowance: {[data.pools[key].earnContractAddress]: 0}
+            }
+
+            if(data.pools[key].tokenAddress) {
+                tokens[data.pools[key].token]['address'] = data.pools[key].tokenAddress;
+            }
+
+            tokens[data.pools[key].earnedToken] = {
+                balance: 0,
+                address: data.pools[key].earnedTokenAddress,
+            }
+        }
+    }
+
+    return tokens;
+}
 
 const initialState = {
-    deposited: [],
-    balances: [],
+    tokens: initialTokens(),
     lastUpdated: 0,
-    isDepositedLoading: false,
-    isBalancesLoading: true,
-    isDepositedFirstTime: true,
+    isBalancesLoading: false,
     isBalancesFirstTime: true,
 }
 
 const balanceReducer = (state = initialState, action) => {
     switch(action.type){
-        case BALANCE_FETCH_DEPOSITED_BEGIN:
-            return {
-                ...state,
-                isDepositedLoading: state.isDepositedFirstTime,
-            }
-        case BALANCE_FETCH_DEPOSITED_DONE:
-            return {
-                ...state,
-                deposited: action.payload.deposited,
-                lastUpdated: action.payload.lastUpdated,
-                isDepositedLoading: false,
-                isDepositedFirstTime: false,
-            }
         case BALANCE_FETCH_BALANCES_BEGIN:
             return {
                 ...state,
@@ -38,7 +45,7 @@ const balanceReducer = (state = initialState, action) => {
         case BALANCE_FETCH_BALANCES_DONE:
             return {
                 ...state,
-                balances: action.payload.balances,
+                tokens: action.payload.tokens,
                 lastUpdated: action.payload.lastUpdated,
                 isBalancesLoading: false,
                 isBalancesFirstTime: false,

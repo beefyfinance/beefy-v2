@@ -5,11 +5,11 @@ import * as React from "react";
 import styles from "../styles"
 import {useSelector} from "react-redux";
 import Loader from "../../../../components/loader";
-import {isEmpty} from "../../../../helpers/utils";
+import {byDecimals, stripExtraDecimals} from "../../../../helpers/format";
 
 const useStyles = makeStyles(styles);
 
-const Withdraw = ({item, handleWalletConnect, formData, setFormData}) => {
+const Withdraw = ({item, handleWalletConnect, formData, setFormData, isPoolsLoading}) => {
     const classes = useStyles();
     const {wallet, balance} = useSelector(state => ({
         wallet: state.walletReducer,
@@ -19,11 +19,6 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData}) => {
     const [isLoading, setIsLoading] = React.useState(true);
 
     const handleInput = (val) => {
-        const stripExtraDecimals = (value) => {
-            const f = value;
-            return (f.indexOf(".") >= 0) ? (f.substr(0, f.indexOf(".")) + f.substr(f.indexOf("."), 9)) : f;
-        }
-
         const value = (parseFloat(val) > depositedAmount) ? depositedAmount : (parseFloat(val) < 0) ? 0 : stripExtraDecimals(val);
         setFormData({...formData, withdraw: {amount: value, max: new BigNumber(value).minus(depositedAmount).toNumber() === 0}});
     }
@@ -35,12 +30,14 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData}) => {
     }
 
     React.useEffect(() => {
-        setDepositedAmount((wallet.address && !isEmpty(balance.deposited)) ? balance.deposited[item.id].total : 0)
-    }, [wallet.address, item, balance]);
+        setDepositedAmount(wallet.address ? byDecimals(new BigNumber(balance.tokens[item.earnedToken].balance).multipliedBy(byDecimals(item.pricePerShare)), item.tokenDecimals).toFixed(8) : 0);
+    }, [wallet.address, item.pricePerShare, item.earnedToken, item.tokenDecimals, balance]);
 
     React.useEffect(() => {
-        setIsLoading(balance.isDepositedLoading);
-    }, [balance.isDepositedLoading]);
+        if(!isPoolsLoading) {
+            setIsLoading(balance.isBalancesLoading);
+        }
+    }, [balance.isBalancesLoading, isPoolsLoading]);
 
     return (
         <React.Fragment>

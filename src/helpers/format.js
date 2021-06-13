@@ -72,3 +72,6 @@ export const formatCountdown = deadline => {
   return `${day}day ${hours}:${minutes}:${seconds}`;
 };
 
+export const stripExtraDecimals = (f, decimals = 8) => {
+  return (f.indexOf(".") >= 0) ? (f.substr(0, f.indexOf(".")) + f.substr(f.indexOf("."), decimals + 1)) : f;
+}

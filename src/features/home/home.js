@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useHistory } from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {formatApy, calcDaily, formatTvl} from '../../helpers/format'
 
 import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography} from "@material-ui/core"
@@ -11,6 +11,7 @@ import styles from "./styles"
 import Loader from "../../components/loader";
 import {isEmpty} from "../../helpers/utils";
 import DisplayTags from "../../components/vaultTags";
+import reduxActions from "../redux/actions";
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
@@ -64,11 +65,13 @@ const UseSortableData = (items, config = null) => {
 };
 
 const Home = () => {
-    const {vault} = useSelector(state => ({
+    const {vault, wallet} = useSelector(state => ({
         vault: state.vaultReducer,
+        wallet: state.walletReducer,
     }));
 
     const history = useHistory();
+    const dispatch = useDispatch();
     const classes = useStyles();
     const {items, sortConfig, setFilter} = UseSortableData(vault.pools, defaultFilter);
     const [vaultCount, setVaultCount] = React.useState({showing: 0, total: 0});
@@ -131,6 +134,12 @@ const Home = () => {
         }
         return false;
     };
+
+    React.useEffect(() => {
+        if(wallet.address && vault.lastUpdated > 0) {
+            dispatch(reduxActions.balance.fetchBalances());
+        }
+    }, [dispatch, wallet.address, vault.lastUpdated]);
 
     return (
         <React.Fragment>
