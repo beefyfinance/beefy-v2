@@ -55,6 +55,16 @@ const Vault = () => {
         }
     }
 
+    const updateItemData = () => {
+        if(wallet.address && item) {
+            dispatch(reduxActions.balance.fetchBalances(item));
+        }
+    }
+
+    const resetFormData = () => {
+        setFormData({deposit: {amount: '', max: false}, withdraw: {amount: '', max: false}});
+    }
+
     React.useEffect(() => {
         const resp = getVault(vault.pools, id);
         if(resp) {
@@ -141,6 +151,8 @@ const Vault = () => {
                                     handleWalletConnect={handleWalletConnect}
                                     formData={formData}
                                     setFormData={setFormData}
+                                    updateItemData={updateItemData}
+                                    resetFormData={resetFormData}
                                 />
                             ) : (
                                 <Withdraw

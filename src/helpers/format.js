@@ -75,3 +75,10 @@ export const formatCountdown = deadline => {
 export const stripExtraDecimals = (f, decimals = 8) => {
   return (f.indexOf(".") >= 0) ? (f.substr(0, f.indexOf(".")) + f.substr(f.indexOf("."), decimals + 1)) : f;
 }
+
+export function convertAmountToRawNumber(value, decimals = 18) {
+  return new BigNumber(value)
+      .times(new BigNumber('10').pow(decimals))
+      .decimalPlaces(0, BigNumber.ROUND_DOWN)
+      .toString(10);
+}

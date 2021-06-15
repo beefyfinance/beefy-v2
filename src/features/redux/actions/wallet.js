@@ -1,8 +1,17 @@
 import {config} from '../../../config/config';
-import {WALLET_CONNECT_BEGIN, WALLET_CONNECT_DONE, WALLET_CREATE_MODAL, WALLET_RPC} from "../constants";
+import {
+    WALLET_ACTION,
+    WALLET_ACTION_RESET,
+    WALLET_CONNECT_BEGIN,
+    WALLET_CONNECT_DONE,
+    WALLET_CREATE_MODAL,
+    WALLET_RPC
+} from "../constants";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal, {connectors} from "web3modal";
 const Web3 = require('web3');
+const erc20Abi = require('../../../config/abi/erc20.json');
+const vaultAbi = require('../../../config/abi/vault.json');
 
 const getClientsForNetwork = async (net) => {
     return config[net].rpc;
@@ -150,6 +159,85 @@ const disconnect = () => {
     }
 }
 
+const approval = (network, tokenAddr, contractAddr) => {
+    return async (dispatch, getState) => {
+        dispatch({type: WALLET_ACTION_RESET});
+        const state = getState();
+        const address = state.walletReducer.address;
+        const provider = await state.walletReducer.web3modal.connect();
+
+        if(address && provider) {
+            const web3 = await new Web3(provider);
+            const contract = new web3.eth.Contract(erc20Abi, tokenAddr);
+            const maxAmount = Web3.utils.toWei('8000000000', 'ether');
+
+            contract.methods
+                .approve(contractAddr, maxAmount)
+                .send({ from: address })
+                .on('transactionHash', function (hash) {
+                    dispatch({type: WALLET_ACTION, payload: {result: 'success_pending', data: {spender: contractAddr, maxAmount: maxAmount, hash: hash}}});
+                })
+                .on('receipt', function (receipt) {
+                    dispatch({type: WALLET_ACTION, payload: {result: 'success', data: {spender: contractAddr, maxAmount: maxAmount, receipt: receipt}}});
+                })
+                .on('error', function (error) {
+                    dispatch({type: WALLET_ACTION, payload: {result: 'error', data: {spender: contractAddr, error: error.message}}});
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }
+}
+
+const deposit = (network, contractAddr, amount, max) => {
+    return async (dispatch, getState) => {
+        dispatch({type: WALLET_ACTION_RESET});
+        const state = getState();
+        const address = state.walletReducer.address;
+        const provider = await state.walletReducer.web3modal.connect();
+
+        if(address && provider) {
+            const web3 = await new Web3(provider);
+            const contract = new web3.eth.Contract(vaultAbi, contractAddr);
+
+            if(max) {
+                contract.methods
+                    .depositAll()
+                    .send({ from: address })
+                    .on('transactionHash', function (hash) {
+                        dispatch({type: WALLET_ACTION, payload: {result: 'success_pending', data: {spender: contractAddr, amount: amount, hash: hash}}});
+                    })
+                    .on('receipt', function (receipt) {
+                        dispatch({type: WALLET_ACTION, payload: {result: 'success', data: {spender: contractAddr, amount: amount, receipt: receipt}}});
+                    })
+                    .on('error', function (error) {
+                        dispatch({type: WALLET_ACTION, payload: {result: 'error', data: {spender: contractAddr, error: error.message}}});
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            } else {
+                contract.methods
+                    .deposit(amount)
+                    .send({ from: address })
+                    .on('transactionHash', function (hash) {
+                        dispatch({type: WALLET_ACTION, payload: {result: 'success_pending', data: {spender: contractAddr, amount: amount, hash: hash}}});
+                    })
+                    .on('receipt', function (receipt) {
+                        dispatch({type: WALLET_ACTION, payload: {result: 'success', data: {spender: contractAddr, amount: amount, receipt: receipt}}});
+                    })
+                    .on('error', function (error) {
+                        dispatch({type: WALLET_ACTION, payload: {result: 'error', data: {spender: contractAddr, error: error.message}}});
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        }
+    }
+}
+
 const createWeb3Modal = () => {
     return async (dispatch, getState) => {
         const state = getState();
@@ -251,6 +339,8 @@ const obj = {
     createWeb3Modal,
     connect,
     disconnect,
+    approval,
+    deposit,
 }
 
 export default obj

@@ -15,6 +15,20 @@ const initialRpc = () => {
     return rpcs;
 }
 
+const initialAction = () => {
+    return {result: null, data: null};
+}
+
+const initialExplorer = () => {
+    const explorers = [];
+
+    for(let key in config) {
+        explorers[key] = config[key].explorerUrl;
+    }
+
+    return explorers;
+}
+
 const initialState = {
     network: initialNetwork(),
     language: 'en',
@@ -22,6 +36,8 @@ const initialState = {
     web3modal: null,
     address: null,
     pending: false,
+    explorer: initialExplorer(),
+    action: initialAction()
 }
 
 const walletReducer = (state = initialState, action) => {
@@ -58,6 +74,16 @@ const walletReducer = (state = initialState, action) => {
             return {
                 ...state,
                 rpc: action.payload.rpcs,
+            }
+        case "WALLET_ACTION":
+            return {
+                ...state,
+                action: {result: action.payload.result, data: action.payload.data},
+            }
+        case "WALLET_ACTION_RESET":
+            return {
+                ...state,
+                action: initialAction(),
             }
         default:
             return state

@@ -1,17 +1,30 @@
-import {Box, Button, Divider, Grid, IconButton, InputBase, makeStyles, Paper, Typography} from "@material-ui/core";
-import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import {
+    Backdrop,
+    Box,
+    Button,
+    Divider, Fade,
+    Grid,
+    IconButton,
+    InputBase,
+    makeStyles,
+    Modal,
+    Paper,
+    Typography
+} from "@material-ui/core";
+import {ArrowRight, HelpOutline, ShoppingBasket} from "@material-ui/icons";
 import * as React from "react";
 import styles from "../styles"
 import {useDispatch, useSelector} from "react-redux";
 import BigNumber from "bignumber.js";
 import Loader from "../../../../components/loader";
-import {byDecimals, stripExtraDecimals} from "../../../../helpers/format";
+import {byDecimals, convertAmountToRawNumber, stripExtraDecimals} from "../../../../helpers/format";
 import {isEmpty} from "../../../../helpers/utils";
 import reduxActions from "../../../redux/actions";
+import {Alert, AlertTitle} from "@material-ui/lab";
 
 const useStyles = makeStyles(styles);
 
-const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
+const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemData, resetFormData}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {wallet, balance} = useSelector(state => ({
@@ -20,6 +33,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
     }));
 
     const [state, setState] = React.useState({balance: 0, allowance: 0});
+    const [steps, setSteps] = React.useState({modal: false, currentStep: -1, items: [], finished: false});
     const [isLoading, setIsLoading] = React.useState(true);
 
     const handleInput = (val) => {
@@ -33,10 +47,42 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
         }
     }
 
-    const handleApproval = () => {
+    const handleDeposit = () => {
+        const steps = [];
         if(wallet.address) {
-            alert('soon')
+            if(!state.allowance) {
+                steps.push({
+                    step: "approve",
+                    message: "Approval transaction happens once per vault.",
+                    action: () => dispatch(reduxActions.wallet.approval(
+                        item.network,
+                        item.tokenAddress,
+                        item.earnContractAddress
+                    )),
+                    pending: false,
+                });
+            }
+
+            steps.push({
+                step: "deposit",
+                message: "Confirm deposit transaction on wallet to complete.",
+                action: () => dispatch(reduxActions.wallet.deposit(
+                    item.network,
+                    item.earnContractAddress,
+                    convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals),
+                    formData.deposit.max
+                )),
+                pending: false,
+            });
+
+            setSteps({modal: true, currentStep: 0, items: steps, finished: false});
         }
+    }
+
+    const handleClose = () => {
+        updateItemData();
+        resetFormData();
+        setSteps({modal: false, currentStep: -1, items: [], finished: false});
     }
 
     React.useEffect(() => {
@@ -52,6 +98,27 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
     React.useEffect(() => {
         setIsLoading(balance.isBalancesLoading);
     }, [balance.isBalancesLoading]);
+
+    React.useEffect(() => {
+        const index = steps.currentStep;
+        if(!isEmpty(steps.items[index]) && steps.modal) {
+            const items = steps.items;
+            if(!items[index].pending) {
+                items[index].pending = true;
+                items[index].action();
+                setSteps({...steps, items: items});
+            } else {
+                if(wallet.action.result === 'success' && !steps.finished) {
+                    const nextStep = index + 1;
+                    if(!isEmpty(items[nextStep])) {
+                        setSteps({...steps, currentStep: nextStep});
+                    } else {
+                        setSteps({...steps, finished: true});
+                    }
+                }
+            }
+        }
+    }, [steps, wallet.action]);
 
     return (
         <React.Fragment>
@@ -114,11 +181,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
                 </Box>
                 <Box mt={2}>
                     {wallet.address ? (
-                        state.allowance ? (
-                            <Button className={classes.btnSubmit} fullWidth={true} disabled={formData.deposit.amount <= 0}>Deposit {formData.deposit.max ? ('All') : ''}</Button>
-                        ) : (
-                            <Button className={classes.btnSubmit} fullWidth={true} onClick={handleApproval}>Approve</Button>
-                        )
+                        <Button onClick={handleDeposit} className={classes.btnSubmit} fullWidth={true} disabled={formData.deposit.amount <= 0}>Deposit {formData.deposit.max ? ('All') : ''}</Button>
                     ) : (
                         <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
                     )}
@@ -145,8 +208,63 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect}) => {
                         <Button disabled={true} className={classes.btnSubmit} fullWidth={true}>Stake Receipt Token</Button>
                     </Box>
                 </Box>
-
             </Box>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={steps.modal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={steps.modal}>
+                    {steps.finished ? (
+                        <React.Fragment>
+                            <Box>
+                                <Box p={8} className={classes.finishedCard}>
+                                    <Typography variant={"h2"}>{byDecimals(new BigNumber(wallet.action.data.amount), item.tokenDecimals).toFixed(8)} {item.token}</Typography>
+                                    <Typography variant={"h2"}>deposit confirmed</Typography>
+                                    <Typography>Funds are on the way</Typography>
+                                    <Box mt={1} textAlign={"center"}>
+                                        <Button className={classes.finishedBtn} href={wallet.explorer[item.network] + '/tx/' + wallet.action.data.receipt.transactionHash} target="_blank">View on Explorer</Button> <Button className={classes.finishedBtn} onClick={handleClose}>Close Dialog</Button>
+                                    </Box>
+                                </Box>
+                                <Box mt={2} textAlign={"center"}>
+                                    <Button className={classes.finishedBtn}>Go to my portfolio <ArrowRight /></Button>
+                                </Box>
+                            </Box>
+
+                        </React.Fragment>
+                    ) : (
+                        <Box className={classes.paper}>
+                            <Typography id="transition-modal-title" variant={"h2"}>{steps.currentStep} / {steps.items.length} transactions<br />confirmed</Typography>
+                            <Typography id="transition-modal-description" variant={"body2"}>{!isEmpty(steps.items[steps.currentStep]) ? steps.items[steps.currentStep].message : ''}</Typography>
+                            {wallet.action && wallet.action.result === 'error' ? (
+                                <Alert severity={"error"}>
+                                    <AlertTitle>Error</AlertTitle>
+                                    <Typography>{wallet.action.data.error}</Typography>
+                                    <Box textAlign={"center"} mt={2}>
+                                        <Button variant={"outlined"} onClick={handleClose}>Close</Button>
+                                    </Box>
+                                </Alert>
+                            ) : ''}
+                            {wallet.action && wallet.action.result === 'success_pending' ? (
+                                <Alert severity={"info"}>
+                                    <AlertTitle>Confirmation Pending</AlertTitle>
+                                    <Typography>Waiting for network to confirm transaction...</Typography>
+                                    <Box textAlign={"center"}><Loader /></Box>
+                                    <Box textAlign={"center"} mt={2}>
+                                        <Button variant={"outlined"} href={wallet.explorer[item.network] + '/tx/' + wallet.action.data.hash} target="_blank">View on Explorer</Button>
+                                    </Box>
+                                </Alert>
+                            ) : ''}
+                        </Box>
+                    )}
+                </Fade>
+            </Modal>
         </React.Fragment>
     )
 }

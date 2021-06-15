@@ -48,16 +48,13 @@ const getBalancesSingle = async (item, state, dispatch) => {
 
     for(let index in response[0]) {
         const item = response[0][index];
-
-        tokens[item.token] = {
-            balance: item.amount,
-            address: item.address,
-        };
+        tokens[item.token].balance = item.amount;
+        tokens[item.token].address = item.address;
     }
 
     for(let index in allow[0]) {
         const item = allow[0][index];
-        tokens[item.token]['allowance'] = {[item.spender]: parseInt(item.allowance)}
+        tokens[item.token].allowance = {[item.spender]: parseInt(item.allowance)}
     }
 
     dispatch({

@@ -7,6 +7,7 @@ export const config = {
             'https://bsc-dataseed1.defibit.io',
             'https://bsc-dataseed1.ninicoin.io',
         ],
+        explorerUrl: 'https://bscscan.com',
         multicallAddress: '0xB94858b0bB5437498F5453A16039337e5Fdc269C',
         supportedWallets: ['injected', 'walletconnect', 'custom-binance', 'custom-math', 'custom-twt', 'custom-safepal'],
         providerName: 'binance',
@@ -29,6 +30,7 @@ export const config = {
         rpc: [
             'https://http-mainnet.hecochain.com',
         ],
+        explorerUrl: 'https://hecoinfo.com',
         multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
         supportedWallets: ['injected', 'walletconnect', 'custom-math'],
         providerName: 'heco',
@@ -51,6 +53,7 @@ export const config = {
         rpc: [
             'https://api.avax.network/ext/bc/C/rpc',
         ],
+        explorerUrl: 'https://cchain.explorer.avax.network',
         multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
         supportedWallets: ['injected', 'walletconnect'],
         providerName: 'avalanche',
@@ -73,6 +76,7 @@ export const config = {
         rpc: [
             'https://rpc-mainnet.maticvigil.com',
         ],
+        explorerUrl: 'https://explorer-mainnet.maticvigil.com',
         multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
         supportedWallets: ['injected', 'walletconnect'],
         providerName: 'avalanche',
@@ -95,6 +99,7 @@ export const config = {
         rpc: [
             'https://rpcapi.fantom.network',
         ],
+        explorerUrl: 'https://ftmscan.com',
         multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
         supportedWallets: ['injected', 'walletconnect'],
         providerName: 'fantom',
