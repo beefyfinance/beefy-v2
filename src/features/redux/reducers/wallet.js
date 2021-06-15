@@ -1,4 +1,5 @@
 import {config} from '../../../config/config';
+import Web3 from "web3";
 
 const initialNetwork = () => {
     const storage = localStorage.getItem('network');
@@ -6,13 +7,15 @@ const initialNetwork = () => {
 }
 
 const initialRpc = () => {
-    const rpcs = []
+    const rpc = [];
 
-    for(let key in config) {
-        rpcs[key] = null
+    for(let network in config) {
+        const c = config[network].rpc;
+        const w = new Web3(c[~~(c.length * Math.random())]);
+        rpc[network] = w;
     }
 
-    return rpcs;
+    return rpc;
 }
 
 const initialAction = () => {
@@ -70,11 +73,6 @@ const walletReducer = (state = initialState, action) => {
                     clients: action.payload.clients,
                     rpc: false,
                 }
-        case "WALLET_RPC":
-            return {
-                ...state,
-                rpc: action.payload.rpcs,
-            }
         case "WALLET_ACTION":
             return {
                 ...state,

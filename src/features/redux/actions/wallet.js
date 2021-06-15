@@ -5,7 +5,6 @@ import {
     WALLET_CONNECT_BEGIN,
     WALLET_CONNECT_DONE,
     WALLET_CREATE_MODAL,
-    WALLET_RPC
 } from "../constants";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal, {connectors} from "web3modal";
@@ -51,20 +50,6 @@ const setNetwork = (net) => {
             dispatch({type: "SET_NETWORK", payload: {network: net, clients: clients}});
             dispatch(createWeb3Modal());
         }
-    };
-}
-
-const fetchRpc = () => {
-    return async (dispatch) => {
-        const rpcs = [];
-
-        for(let network in config) {
-            const c = await getClientsForNetwork(network);
-            const w = await new Web3(c[~~(c.length * Math.random())]);
-            rpcs[network] = w;
-        }
-
-        return dispatch({type: WALLET_RPC, payload: {rpcs: rpcs}});
     };
 }
 
@@ -335,7 +320,6 @@ const generateProviderOptions = (wallet, clients) => {
 
 const obj = {
     setNetwork,
-    fetchRpc,
     createWeb3Modal,
     connect,
     disconnect,

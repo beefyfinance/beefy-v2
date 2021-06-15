@@ -41,12 +41,6 @@ export default function App() {
     React.useEffect(() => {
         const initiate = async () => {
             await dispatch(reduxActions.prices.fetchPrices());
-            await dispatch(reduxActions.wallet.fetchRpc());
-            await dispatch(reduxActions.vault.fetchPools());
-
-            setInterval(() => {
-                dispatch(reduxActions.vault.fetchPoolsData());
-            }, 60000);
         }
         return initiate();
     }, [dispatch]);

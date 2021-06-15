@@ -22,18 +22,6 @@ const chartData = [
     { name: "18 Feb", apy: 41.37 }
 ];
 
-const getVault = (pools, id) => {
-    if(isEmpty(pools)) {
-        return false;
-    }
-    for(let key in pools) {
-        if(pools[key].id === id) {
-            return {match: true, pool: pools[key]};
-        }
-    }
-    return {match: false, pool: null};
-}
-
 const Vault = () => {
     const history = useHistory();
     const classes = useStyles();
@@ -57,6 +45,7 @@ const Vault = () => {
 
     const updateItemData = () => {
         if(wallet.address && item) {
+            dispatch(reduxActions.vault.fetchPools(item));
             dispatch(reduxActions.balance.fetchBalances(item));
         }
     }
@@ -66,9 +55,10 @@ const Vault = () => {
     }
 
     React.useEffect(() => {
-        const resp = getVault(vault.pools, id);
-        if(resp) {
-            resp.match ? setVaultData(resp.pool) : history.push('/error');
+        if(!isEmpty(vault.pools) && vault.pools[id]) {
+            setVaultData(vault.pools[id]);
+        } else {
+            history.push('/error');
         }
     }, [vault.pools, id, history]);
 
@@ -80,7 +70,13 @@ const Vault = () => {
 
     React.useEffect(() => {
         if(wallet.address && item) {
+            dispatch(reduxActions.vault.fetchPools(item));
             dispatch(reduxActions.balance.fetchBalances(item));
+
+            setInterval(() => {
+                dispatch(reduxActions.vault.fetchPools(item));
+                dispatch(reduxActions.balance.fetchBalances(item));
+            }, 60000);
         }
     }, [wallet.address, dispatch, item]);
 
@@ -160,7 +156,6 @@ const Vault = () => {
                                     handleWalletConnect={handleWalletConnect}
                                     formData={formData}
                                     setFormData={setFormData}
-                                    isPoolsLoading={vault.isPoolsLoading}
                                 />
                             )}
                         </Box>

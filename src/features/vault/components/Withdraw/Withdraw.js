@@ -9,7 +9,7 @@ import {byDecimals, stripExtraDecimals} from "../../../../helpers/format";
 
 const useStyles = makeStyles(styles);
 
-const Withdraw = ({item, handleWalletConnect, formData, setFormData, isPoolsLoading}) => {
+const Withdraw = ({item, handleWalletConnect, formData, setFormData}) => {
     const classes = useStyles();
     const {wallet, balance} = useSelector(state => ({
         wallet: state.walletReducer,
@@ -34,10 +34,8 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, isPoolsLoad
     }, [wallet.address, item.pricePerShare, item.earnedToken, item.tokenDecimals, balance]);
 
     React.useEffect(() => {
-        if(!isPoolsLoading) {
-            setIsLoading(balance.isBalancesLoading);
-        }
-    }, [balance.isBalancesLoading, isPoolsLoading]);
+        setIsLoading(balance.isBalancesLoading);
+    }, [balance.isBalancesLoading]);
 
     return (
         <React.Fragment>

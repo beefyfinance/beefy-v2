@@ -1,85 +1,55 @@
 import {MultiCall} from 'eth-multicall';
-import {
-    HOME_FETCH_PLATFORMS,
-    HOME_FETCH_POOLS_BEGIN,
-    HOME_FETCH_POOLS_SUCCESS,
-    HOME_FETCH_POOLS_SUCCESS_WDATA
-} from "../constants";
+import {HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_DONE} from "../constants";
 import BigNumber from "bignumber.js";
 import {config} from '../../../config/config';
-import {getStablesForNetwork, isEmpty} from "../../../helpers/utils";
+import {isEmpty} from "../../../helpers/utils";
 
 const vaultAbi = require('../../../config/abi/vault.json');
 
-const getPoolsForNetwork = async (state) => {
+const getPoolsSingle = async (item, state, dispatch) => {
+    console.log('redux getPoolsSingle() processing...');
+    const web3 = state.walletReducer.rpc;
+    const pools = state.vaultReducer.pools;
+    const prices = state.pricesReducer.prices;
+    const apy = state.pricesReducer.apy;
 
-    let promise = []
-    let pools = []
-    let networks = []
+    const multicall = new MultiCall(web3[item.network], config[item.network].multicallAddress);
+    const calls = [];
 
-    if(!isEmpty(state.vaultReducer.pools)) {
-        return state.vaultReducer.pools;
-    }
-
-    for(let net in config) {
-        networks.push(net);
-        promise.push(await import('../../../config/vault/' + net));
-    }
-
-    const data = await Promise.all(promise);
-    const platforms = [];
-
-    data.forEach((arr, key) => {
-        const stables = getStablesForNetwork(networks[key]);
-        const isStable = type => stables.includes(type);
-        arr.pools.forEach((pool) => {
-            pool['network'] = networks[key];
-            pool['pricePerShare'] = 0;
-            pool['balance'] = 0;
-            pool['daily'] = 0;
-            pool['apy'] = 0;
-            pool['tvl'] = 0;
-            pool['lastUpdated'] = 0;
-            pool['tags'] = [];
-
-            if(!isEmpty(pool.platform)) {
-                if(!platforms.includes(pool.platform)) {
-                    platforms[(pool.platform).toLowerCase()] = pool.platform;
-                }
-            }
-
-            if(pool.assets.length === 1) {
-                pool['vaultType'] = 'single';
-            } else {
-                pool['vaultType'] = pool.assets.every(isStable) ? 'stable' : (pool.assets.some(isStable) ? 'stables' : false);
-                if(pool.assets.every(isStable)) {
-                    pool.tags.push('stable');
-                }
-            }
-
-            if(!isEmpty(pool.createdAt)) {
-                const created = new Date(pool.createdAt * 1000);
-                const days = 3; // number of days to be considered "recent"
-                if(created > new Date(new Date().getTime() - (days * 24 * 60 * 60 * 1000))) {
-                    pool.tags.push('recent');
-                }
-            }
-
-            if(!isEmpty(pool.riskScore)) {
-                if(pool.riskScore < 2.5) {
-                    pool.tags.push('low');
-                }
-            }
-
-            pools.push(pool);
-        });
+    const tokenContract = new web3[item.network].eth.Contract(vaultAbi, item.earnedTokenAddress);
+    calls.push({
+        id: item.id,
+        balance: tokenContract.methods.balance(),
+        pricePerShare: tokenContract.methods.getPricePerFullShare(),
     });
 
-    return {pools, platforms};
+    const response = await multicall.all([calls]);
+
+    for(let index in response[0]) {
+        const item = response[0][index];
+        const balance = new BigNumber(item.balance);
+        const price = (pools[item.id].oracleId in prices) ? prices[pools[item.id].oracleId] : 0;
+
+        pools[item.id].tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
+        pools[item.id].apy = (!isEmpty(apy) && item.id in apy) ? apy[item.id] : 0;
+        pools[item.id].pricePerShare = item.pricePerShare;
+    }
+
+    dispatch({
+        type: HOME_FETCH_POOLS_DONE,
+        payload: {
+            pools: pools,
+            totalTvl: state.vaultReducer.totalTvl,
+            isPoolsLoading: false,
+            lastUpdated: new Date().getTime()
+        }
+    });
+
+    return true;
 }
 
-const getPoolData = async (state, dispatch) => {
-    dispatch({type: HOME_FETCH_POOLS_BEGIN});
+const getPoolsAll = async (state, dispatch) => {
+    console.log('redux getPoolsAll() processing...');
     const web3 = state.walletReducer.rpc;
     const pools = state.vaultReducer.pools;
     const prices = state.pricesReducer.prices;
@@ -89,8 +59,6 @@ const getPoolData = async (state, dispatch) => {
         console.log('empty prices :D')
         return false;
     }
-
-    console.log('redux getPoolData() processing...');
 
     const multicall = [];
     const calls = [];
@@ -117,22 +85,20 @@ const getPoolData = async (state, dispatch) => {
         response = [...response, ...resp[0]];
     }
 
-    for (let key in pools) {
-        for(let index in response) {
-            if(pools[key].id === response[index].id) {
-                const balance = new BigNumber(response[index].balance);
-                const price = (pools[key].oracleId in prices) ? prices[pools[key].oracleId] : 0;
-                pools[key].tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[key].tokenDecimals));
-                pools[key].apy = (!isEmpty(apy) && pools[key].id in apy) ? apy[pools[key].id] : 0;
-                pools[key].pricePerShare = response[index].pricePerShare;
-                totalTvl = new BigNumber(totalTvl).plus(pools[key].tvl);
-                break;
-            }
-        }
+    for(let index in response) {
+        const item = response[index];
+        const balance = new BigNumber(item.balance);
+        const price = (pools[item.id].oracleId in prices) ? prices[pools[item.id].oracleId] : 0;
+        const tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
+
+        pools[item.id].tvl = tvl;
+        pools[item.id].apy = (!isEmpty(apy) && item.id in apy) ? apy[item.id] : 0;
+        pools[item.id].pricePerShare = item.pricePerShare;
+        totalTvl = new BigNumber(totalTvl).plus(tvl);
     }
 
     dispatch({
-        type: HOME_FETCH_POOLS_SUCCESS_WDATA,
+        type: HOME_FETCH_POOLS_DONE,
         payload: {
             pools: pools,
             totalTvl: totalTvl,
@@ -144,56 +110,16 @@ const getPoolData = async (state, dispatch) => {
     return true;
 }
 
-const fetchPools = () => {
-    console.log('redux fetchPools() called.');
+const fetchPools = (item = false) => {
     return async (dispatch, getState) => {
-        dispatch({
-            type: HOME_FETCH_POOLS_BEGIN,
-        });
-
         const state = getState();
-        let {pools, platforms} = await getPoolsForNetwork(state);
-
-        dispatch({type: HOME_FETCH_PLATFORMS, payload: {platforms: platforms}})
-
-        dispatch({
-            type: HOME_FETCH_POOLS_SUCCESS,
-            payload: {pools: pools, isPoolsLoading: false}
-        });
-
-        dispatch(fetchPoolsData());
-    };
-}
-
-const fetchPoolsData = () => {
-    return async (dispatch, getState) => {
-        const fetch = async () => {
-            console.log('redux getPoolData() called.');
-            const state = getState();
-            return state.walletReducer.rpc['bsc'] ? await getPoolData(state, dispatch) : false;
-        }
-
-        const start = async () => {
-            const state = getState();
-            if(!state.vaultReducer.isPoolsLoading) {
-                const done = await fetch();
-                console.log('done', done, Object.keys(state.pricesReducer.prices).length);
-
-                if(!done) {
-                    setTimeout(async () => {
-                        await start();
-                    }, 1000);
-                }
-            }
-        }
-
-        return await start();
+        dispatch({type: HOME_FETCH_POOLS_BEGIN});
+        return item ? await getPoolsSingle(item, state, dispatch) : await getPoolsAll(state, dispatch);
     };
 }
 
 const obj = {
     fetchPools,
-    fetchPoolsData,
 }
 
 export default obj

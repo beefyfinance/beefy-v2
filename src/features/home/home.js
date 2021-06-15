@@ -1,17 +1,16 @@
 import * as React from "react";
-import { useHistory } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {formatApy, calcDaily, formatTvl} from '../../helpers/format'
+import {formatTvl} from '../../helpers/format'
 
-import {Button, Container, Hidden, Avatar, Grid, makeStyles, Typography} from "@material-ui/core"
+import {Container, makeStyles, Typography} from "@material-ui/core"
 import Box from '@material-ui/core/Box';
 import Filter from './components/Filter';
 import Portfolio from './components/Portfolio';
 import styles from "./styles"
 import Loader from "../../components/loader";
 import {isEmpty} from "../../helpers/utils";
-import DisplayTags from "../../components/vaultTags";
 import reduxActions from "../redux/actions";
+import Item from "./components/Item";
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
@@ -29,18 +28,30 @@ const defaultFilter = {
     category: 'all',
 }
 
-const UseSortableData = (items, config = null) => {
+const Home = () => {
+    const {vault, wallet} = useSelector(state => ({
+        vault: state.vaultReducer,
+        wallet: state.walletReducer,
+    }));
+
+    const dispatch = useDispatch();
+    const classes = useStyles();
+    const [vaultCount, setVaultCount] = React.useState({showing: 0, total: 0});
     const storage = localStorage.getItem('homeSortConfig');
-    const [sortConfig, setSortConfig] = React.useState(storage === null ? config : JSON.parse(storage));
+    const [sortConfig, setSortConfig] = React.useState(storage === null ? defaultFilter : JSON.parse(storage));
 
     React.useEffect(() => {
         localStorage.setItem('homeSortConfig', JSON.stringify(sortConfig));
     }, [sortConfig]);
 
-    const sortedItems = React.useMemo(() => {
-        let sortableItems = isEmpty(items) ? [] : [...items];
-        if (sortConfig !== null) {
-            sortableItems.sort((a, b) => {
+    const setFilter = (obj) => {
+        setSortConfig({ ...sortConfig, ...obj});
+    }
+
+    const filter = () => {
+        let filtered = [];
+        const sorted = (items) => {
+            return items.sort((a, b) => {
                 if(sortConfig.key === 'name') {
                     if (a[sortConfig.key].toUpperCase() < b[sortConfig.key].toUpperCase()) {
                         return sortConfig.direction === 'asc' ? -1 : 1;
@@ -54,85 +65,69 @@ const UseSortableData = (items, config = null) => {
                 }
             });
         }
-        return sortableItems;
-    }, [items, sortConfig]);
-
-    const setFilter = (obj) => {
-        setSortConfig({ ...sortConfig, ...obj});
-    }
-
-    return { items: sortedItems, sortConfig, setFilter};
-};
-
-const Home = () => {
-    const {vault, wallet} = useSelector(state => ({
-        vault: state.vaultReducer,
-        wallet: state.walletReducer,
-    }));
-
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const classes = useStyles();
-    const {items, sortConfig, setFilter} = UseSortableData(vault.pools, defaultFilter);
-    const [vaultCount, setVaultCount] = React.useState({showing: 0, total: 0});
-
-    const filter = () => {
-        if(items.length > 0) {
-            if(vaultCount.total !== items.length) {
-                setVaultCount({ ...vaultCount, total: items.length });
+        const check = (item) => {
+            if(item.status !== (sortConfig.retired ? 'eol' : 'active')) {
+                return false;
             }
 
-            const filtered = items.filter((item) => {
-                if(item.status !== (sortConfig.retired ? 'eol' : 'active')) {
-                    return false;
-                }
-
-                if(sortConfig.category !== 'all' && !item.tags.includes(sortConfig.category)) {
-                    return false;
-                }
-
-                if(!item.name.toLowerCase().includes(sortConfig.keyword)) {
-                    return false;
-                }
-
-                if(sortConfig.zero && item.balance === 0) {
-                    return false;
-                }
-
-                if(sortConfig.deposited && item.deposited === 0) {
-                    return false;
-                }
-
-                if(sortConfig.boost && !item.boost) {
-                    return false;
-                }
-
-                if(sortConfig.experimental && !item.experimental) {
-                    return false;
-                }
-
-                if(sortConfig.platform !== 'all' && (isEmpty(item.platform) || sortConfig.platform !== (item.platform).toLowerCase())) {
-                    return false;
-                }
-
-                if(sortConfig.vault !== 'all' && sortConfig.vault !== item.vaultType) {
-                    return false;
-                }
-
-                if(sortConfig.blockchain !== 'all' && item.network !== sortConfig.blockchain) {
-                    return false;
-                }
-
-                return item;
-            });
-
-            if(vaultCount.showing !== filtered.length) {
-                setVaultCount({ ...vaultCount, showing: filtered.length });
+            if(sortConfig.category !== 'all' && !item.tags.includes(sortConfig.category)) {
+                return false;
             }
 
-            return filtered;
+            if(!item.name.toLowerCase().includes(sortConfig.keyword)) {
+                return false;
+            }
+
+            if(sortConfig.zero && item.balance === 0) {
+                return false;
+            }
+
+            if(sortConfig.deposited && item.deposited === 0) {
+                return false;
+            }
+
+            if(sortConfig.boost && !item.boost) {
+                return false;
+            }
+
+            if(sortConfig.experimental && !item.experimental) {
+                return false;
+            }
+
+            if(sortConfig.platform !== 'all' && (isEmpty(item.platform) || sortConfig.platform !== (item.platform).toLowerCase())) {
+                return false;
+            }
+
+            if(sortConfig.vault !== 'all' && sortConfig.vault !== item.vaultType) {
+                return false;
+            }
+
+            if(sortConfig.blockchain !== 'all' && item.network !== sortConfig.blockchain) {
+                return false;
+            }
+
+            return item;
         }
-        return false;
+
+        for (const [, item] of Object.entries(vault.pools)) {
+            if(check(item)) {
+                filtered.push(item);
+            }
+        }
+
+        if (sortConfig !== null) {
+            filtered = sorted(filtered);
+        }
+
+        if(vaultCount.showing !== filtered.length) {
+            setVaultCount({ ...vaultCount, showing: filtered.length });
+        }
+
+        if(vaultCount.total !== Object.entries(vault.pools).length) {
+            setVaultCount({ ...vaultCount, total: Object.entries(vault.pools).length });
+        }
+
+        return filtered;
     };
 
     React.useEffect(() => {
@@ -140,6 +135,13 @@ const Home = () => {
             dispatch(reduxActions.balance.fetchBalances());
         }
     }, [dispatch, wallet.address, vault.lastUpdated]);
+
+    React.useEffect(() => {
+        dispatch(reduxActions.vault.fetchPools());
+        setInterval(() => {
+            dispatch(reduxActions.vault.fetchPools());
+        }, 60000);
+    }, [dispatch]);
 
     return (
         <React.Fragment>
@@ -155,58 +157,11 @@ const Home = () => {
                     <Box className={classes.numberOfVaults}>
                         Showing {vaultCount.showing} vaults
                     </Box>
-                    {items.length === 0 ? '' : (
+                    {isEmpty(vault.pools) ? '' : (
                         filter().map(item => (
-                            <Grid container key={item.id}>
-                                <Button className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')} onClick={() => {history.push('/' + item.network + '/vault/' + (item.id))}}>
-                                    <Box flexGrow={1} textAlign={"left"}>
-                                        <Grid className={classes.infoContainer} container>
-                                            <Hidden smDown>
-                                                <Grid>
-                                                    <Avatar alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
-                                                </Grid>
-                                            </Hidden>
-                                            <Grid>
-                                                <Box className={classes.title} textAlign={"left"}>
-                                                    <Typography className={classes.h2}>{item.name}</Typography>
-                                                    <Box>
-                                                        <Typography display={"inline"}><img alt={item.network} src={require('../../images/networks/' + item.network + '.svg').default} /></Typography>
-                                                        <DisplayTags tags={item.tags} />
-                                                    </Box>
-                                                </Box>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
-                                    <Box className={classes.rWidth} textAlign={"left"}>
-                                        <Typography className={classes.h2}>{item.riskScore}</Typography>
-                                        <Typography className={classes.h3}>Beefy risk score</Typography>
-                                    </Box>
-                                    <Box className={classes.rWidth} textAlign={"left"}>
-                                        <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
-                                        <Typography className={classes.h3}>TVL</Typography>
-                                    </Box>
-                                    <Hidden mdDown>
-                                        <Box className={classes.rWidth} textAlign={"left"}>
-                                            <Typography className={classes.h2}>{calcDaily(item.apy)}</Typography>
-                                            <Typography className={classes.h3}>Daily</Typography>
-                                        </Box>
-                                    </Hidden>
-                                    <Hidden mdDown>
-                                        <Box className={classes.rWidth} textAlign={"left"}>
-                                            <Typography className={classes.h2}>[chart]</Typography>
-                                            <Typography className={classes.h3}>Daily historical rate</Typography>
-                                        </Box>
-                                    </Hidden>
-                                    <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight, classes.apyContainer].join(' ')} textAlign={"center"}>
-                                        <Typography variant={"h1"}>{formatApy(item.apy)}</Typography>
-                                        <Typography variant={"h2"}>APY</Typography>
-                                        <Typography variant={"button"}>Deposit</Typography>
-                                    </Box>
-                                </Button>
-                            </Grid>
+                            <Item key={item.id} item={item} />
                         ))
                     )}
-
                 </Box>
                 )}
             </Container>
