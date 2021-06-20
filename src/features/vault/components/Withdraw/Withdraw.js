@@ -1,41 +1,108 @@
-import {Box, Button, Divider, Grid, IconButton, InputBase, makeStyles, Paper, Typography} from "@material-ui/core";
+import {
+    Backdrop,
+    Box,
+    Button,
+    Divider, Fade,
+    Grid,
+    IconButton,
+    InputBase,
+    makeStyles, Modal,
+    Paper,
+    Typography
+} from "@material-ui/core";
 import BigNumber from "bignumber.js";
-import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import {ArrowRight, HelpOutline, ShoppingBasket} from "@material-ui/icons";
 import * as React from "react";
 import styles from "../styles"
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../../../components/loader";
-import {byDecimals, stripExtraDecimals} from "../../../../helpers/format";
+import {byDecimals, convertAmountToRawNumber, stripExtraDecimals} from "../../../../helpers/format";
+import {isEmpty} from "../../../../helpers/utils";
+import reduxActions from "../../../redux/actions";
+import {Alert, AlertTitle} from "@material-ui/lab";
 
 const useStyles = makeStyles(styles);
 
-const Withdraw = ({item, handleWalletConnect, formData, setFormData}) => {
+const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemData, resetFormData}) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const {wallet, balance} = useSelector(state => ({
         wallet: state.walletReducer,
         balance: state.balanceReducer,
     }));
-    const [depositedAmount, setDepositedAmount] = React.useState(0);
+    const [state, setState] = React.useState({balance: 0});
+    const [steps, setSteps] = React.useState({modal: false, currentStep: -1, items: [], finished: false});
     const [isLoading, setIsLoading] = React.useState(true);
 
     const handleInput = (val) => {
-        const value = (parseFloat(val) > depositedAmount) ? depositedAmount : (parseFloat(val) < 0) ? 0 : stripExtraDecimals(val);
-        setFormData({...formData, withdraw: {amount: value, max: new BigNumber(value).minus(depositedAmount).toNumber() === 0}});
+        const value = (parseFloat(val) > state.balance) ? state.balance : (parseFloat(val) < 0) ? 0 : stripExtraDecimals(val);
+        setFormData({...formData, withdraw: {amount: value, max: new BigNumber(value).minus(state.balance).toNumber() === 0}});
     }
 
     const handleMax = () => {
-        if(depositedAmount > 0) {
-            setFormData({...formData, withdraw: {amount: depositedAmount, max: true}});
+        if(state.balance > 0) {
+            setFormData({...formData, withdraw: {amount: state.balance, max: true}});
         }
     }
 
+    const handleWithdraw = () => {
+        const steps = [];
+        if(wallet.address) {
+            const amount = new BigNumber(formData.withdraw.amount).dividedBy(byDecimals(item.pricePerShare, item.tokenDecimals)).toFixed(8);
+            steps.push({
+                step: "withdraw",
+                message: "Confirm withdraw transaction on wallet to complete.",
+                action: () => dispatch(reduxActions.wallet.withdraw(
+                    item.network,
+                    item.earnContractAddress,
+                    convertAmountToRawNumber(amount, item.tokenDecimals),
+                    formData.withdraw.max
+                )),
+                pending: false,
+            });
+
+            setSteps({modal: true, currentStep: 0, items: steps, finished: false});
+        }
+    }
+
+    const handleClose = () => {
+        updateItemData();
+        resetFormData();
+        setSteps({modal: false, currentStep: -1, items: [], finished: false});
+    }
+
     React.useEffect(() => {
-        setDepositedAmount(wallet.address ? byDecimals(new BigNumber(balance.tokens[item.earnedToken].balance).multipliedBy(byDecimals(item.pricePerShare)), item.tokenDecimals).toFixed(8) : 0);
-    }, [wallet.address, item.pricePerShare, item.earnedToken, item.tokenDecimals, balance]);
+        let amount = 0;
+        if(wallet.address && !isEmpty(balance.tokens[item.earnedToken])) {
+            amount = byDecimals(new BigNumber(balance.tokens[item.earnedToken].balance).multipliedBy(byDecimals(item.pricePerShare)), item.tokenDecimals).toFixed(8);
+        }
+        setState({balance: amount});
+    }, [wallet.address, item, balance]);
 
     React.useEffect(() => {
         setIsLoading(balance.isBalancesLoading);
     }, [balance.isBalancesLoading]);
+
+    React.useEffect(() => {
+        const index = steps.currentStep;
+        if(!isEmpty(steps.items[index]) && steps.modal) {
+            const items = steps.items;
+            if(!items[index].pending) {
+                items[index].pending = true;
+                items[index].action();
+                setSteps({...steps, items: items});
+            } else {
+                if(wallet.action.result === 'success' && !steps.finished) {
+                    const nextStep = index + 1;
+                    if(!isEmpty(items[nextStep])) {
+                        setSteps({...steps, currentStep: nextStep});
+                    } else {
+                        setSteps({...steps, finished: true});
+                    }
+                }
+            }
+        }
+    }, [steps, wallet.action]);
 
     return (
         <React.Fragment>
@@ -49,7 +116,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData}) => {
                         {isLoading ? (
                             <Loader line={true} />
                         ) : (
-                            <Typography variant={"body1"}>{depositedAmount} {item.token}</Typography>
+                            <Typography variant={"body1"}>{state.balance} {item.token}</Typography>
                         )}
                     </Box>
                     <Box>
@@ -98,7 +165,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData}) => {
                 </Box>
                 <Box mt={2}>
                     {wallet.address ? (
-                        <Button className={classes.btnSubmit} fullWidth={true} disabled={formData.withdraw.amount <= 0}>Withdraw {formData.withdraw.max ? ('All') : ''}</Button>
+                        <Button onClick={handleWithdraw} className={classes.btnSubmit} fullWidth={true} disabled={formData.withdraw.amount <= 0}>Withdraw {formData.withdraw.max ? ('All') : ''}</Button>
                     ) : (
                         <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
                     )}
@@ -125,8 +192,63 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData}) => {
                         <Button disabled={true} className={classes.btnSubmit} fullWidth={true}>Unstake Receipt Token</Button>
                     </Box>
                 </Box>
-
             </Box>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={steps.modal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={steps.modal}>
+                    {steps.finished ? (
+                        <React.Fragment>
+                            <Box>
+                                <Box p={8} className={classes.finishedCard}>
+                                    <Typography variant={"h2"}>{byDecimals(new BigNumber(wallet.action.data.amount).multipliedBy(byDecimals(item.pricePerShare)), item.tokenDecimals).toFixed(8)}</Typography>
+                                    <Typography variant={"h2"}>withdraw confirmed</Typography>
+                                    <Typography>Funds are on the way</Typography>
+                                    <Box mt={1} textAlign={"center"}>
+                                        <Button className={classes.finishedBtn} href={wallet.explorer[item.network] + '/tx/' + wallet.action.data.receipt.transactionHash} target="_blank">View on Explorer</Button> <Button className={classes.finishedBtn} onClick={handleClose}>Close Dialog</Button>
+                                    </Box>
+                                </Box>
+                                <Box mt={2} textAlign={"center"}>
+                                    <Button className={classes.finishedBtn}>Go to my portfolio <ArrowRight /></Button>
+                                </Box>
+                            </Box>
+
+                        </React.Fragment>
+                    ) : (
+                        <Box className={classes.paper}>
+                            <Typography id="transition-modal-title" variant={"h2"}>{steps.currentStep} / {steps.items.length} transactions<br />confirmed</Typography>
+                            <Typography id="transition-modal-description" variant={"body2"}>{!isEmpty(steps.items[steps.currentStep]) ? steps.items[steps.currentStep].message : ''}</Typography>
+                            {wallet.action && wallet.action.result === 'error' ? (
+                                <Alert severity={"error"}>
+                                    <AlertTitle>Error</AlertTitle>
+                                    <Typography>{wallet.action.data.error}</Typography>
+                                    <Box textAlign={"center"} mt={2}>
+                                        <Button variant={"outlined"} onClick={handleClose}>Close</Button>
+                                    </Box>
+                                </Alert>
+                            ) : ''}
+                            {wallet.action && wallet.action.result === 'success_pending' ? (
+                                <Alert severity={"info"}>
+                                    <AlertTitle>Confirmation Pending</AlertTitle>
+                                    <Typography>Waiting for network to confirm transaction...</Typography>
+                                    <Box textAlign={"center"}><Loader /></Box>
+                                    <Box textAlign={"center"} mt={2}>
+                                        <Button variant={"outlined"} href={wallet.explorer[item.network] + '/tx/' + wallet.action.data.hash} target="_blank">View on Explorer</Button>
+                                    </Box>
+                                </Alert>
+                            ) : ''}
+                        </Box>
+                    )}
+                </Fade>
+            </Modal>
         </React.Fragment>
     )
 }

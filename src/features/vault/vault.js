@@ -156,6 +156,8 @@ const Vault = () => {
                                     handleWalletConnect={handleWalletConnect}
                                     formData={formData}
                                     setFormData={setFormData}
+                                    updateItemData={updateItemData}
+                                    resetFormData={resetFormData}
                                 />
                             )}
                         </Box>

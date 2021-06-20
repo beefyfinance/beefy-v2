@@ -86,13 +86,13 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
     }
 
     React.useEffect(() => {
+        let amount = 0;
+        let approved = 0;
         if(wallet.address && !isEmpty(balance.tokens[item.token])) {
-            const amount = byDecimals(new BigNumber(balance.tokens[item.token].balance), item.tokenDecimals).toFixed(8);
-            const approved = balance.tokens[item.token].allowance[item.earnContractAddress];
-            setState({balance: amount, allowance: approved});
-        } else {
-            setState({balance: 0, allowance: 0});
+            amount = byDecimals(new BigNumber(balance.tokens[item.token].balance), item.tokenDecimals).toFixed(8);
+            approved = balance.tokens[item.token].allowance[item.earnContractAddress];
         }
+        setState({balance: amount, allowance: approved});
     }, [wallet.address, item, balance]);
 
     React.useEffect(() => {
