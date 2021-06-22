@@ -27,9 +27,10 @@ const Vault = () => {
     const classes = useStyles();
 
     let { id } = useParams();
-    const {vault, wallet} = useSelector(state => ({
+    const {vault, wallet, prices} = useSelector(state => ({
         vault: state.vaultReducer,
         wallet: state.walletReducer,
+        prices: state.pricesReducer,
     }));
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = React.useState(true);
@@ -69,16 +70,25 @@ const Vault = () => {
     }, [item]);
 
     React.useEffect(() => {
-        if(wallet.address && item) {
+        if(item && prices.lastUpdated > 0) {
             dispatch(reduxActions.vault.fetchPools(item));
-            dispatch(reduxActions.balance.fetchBalances(item));
+        }
+    }, [dispatch, item, prices.lastUpdated]);
 
+    React.useEffect(() => {
+        if(item && wallet.address) {
+            dispatch(reduxActions.balance.fetchBalances(item));
+        }
+    }, [dispatch, item, wallet.address]);
+
+    React.useEffect(() => {
+        if(item) {
             setInterval(() => {
                 dispatch(reduxActions.vault.fetchPools(item));
                 dispatch(reduxActions.balance.fetchBalances(item));
             }, 60000);
         }
-    }, [wallet.address, dispatch, item]);
+    }, [item, dispatch]);
 
     return (
         <Container className={classes.vaultContainer} maxWidth="xl">
