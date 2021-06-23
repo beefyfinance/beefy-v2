@@ -5,6 +5,14 @@ import {calcDaily, formatApy, formatTvl} from "../../../../helpers/format";
 import * as React from "react";
 import styles from "../../styles"
 import {useHistory} from "react-router-dom";
+import HistoricalRateChart from "../HistoricalRateChart/HistoricalRateChart";
+
+const historicalRateChartData = [
+    { name: "28 Jan", apy: 45.00 },
+    { name: "4 Feb", apy: 57.15 },
+    { name: "11 Feb", apy: 38.50 },
+    { name: "18 Feb", apy: 41.37 }
+];
 
 const useStyles = makeStyles(styles);
 
@@ -48,8 +56,8 @@ const Item = ({item}) => {
                     </Box>
                 </Hidden>
                 <Hidden mdDown>
-                    <Box className={classes.rWidth} textAlign={"left"}>
-                        <Typography className={classes.h2}>[chart]</Typography>
+                    <Box className={classes.rWidth} textAlign={"center"}>
+                        <HistoricalRateChart chartData={historicalRateChartData}/>
                         <Typography className={classes.h3}>Daily historical rate</Typography>
                     </Box>
                 </Hidden>
