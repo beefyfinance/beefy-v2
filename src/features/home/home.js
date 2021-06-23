@@ -11,6 +11,7 @@ import Loader from "../../components/loader";
 import {isEmpty} from "../../helpers/utils";
 import reduxActions from "../redux/actions";
 import Item from "./components/Item";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
@@ -29,9 +30,10 @@ const defaultFilter = {
 }
 
 const Home = () => {
-    const {vault, wallet} = useSelector(state => ({
+    const {vault, wallet, prices} = useSelector(state => ({
         vault: state.vaultReducer,
         wallet: state.walletReducer,
+        prices: state.pricesReducer,
     }));
 
     const dispatch = useDispatch();
@@ -39,17 +41,14 @@ const Home = () => {
     const [vaultCount, setVaultCount] = React.useState({showing: 0, total: 0});
     const storage = localStorage.getItem('homeSortConfig');
     const [sortConfig, setSortConfig] = React.useState(storage === null ? defaultFilter : JSON.parse(storage));
+    const [filtered, setFiltered] = React.useState([]);
+    const [scrollable, setScrollable] = React.useState({items: [], hasMore: true, chunk: 20});
 
     React.useEffect(() => {
         localStorage.setItem('homeSortConfig', JSON.stringify(sortConfig));
-    }, [sortConfig]);
 
-    const setFilter = (obj) => {
-        setSortConfig({ ...sortConfig, ...obj});
-    }
+        let data = [];
 
-    const filter = () => {
-        let filtered = [];
         const sorted = (items) => {
             return items.sort((a, b) => {
                 if(sortConfig.key === 'name') {
@@ -111,23 +110,33 @@ const Home = () => {
 
         for (const [, item] of Object.entries(vault.pools)) {
             if(check(item)) {
-                filtered.push(item);
+                data.push(item);
             }
         }
 
         if (sortConfig !== null) {
-            filtered = sorted(filtered);
+            data = sorted(data);
         }
 
-        if(vaultCount.showing !== filtered.length) {
-            setVaultCount({ ...vaultCount, showing: filtered.length });
+        setVaultCount({ showing: data.length, total: Object.entries(vault.pools).length });
+        setFiltered(data);
+        setScrollable(scrollable => {
+            return {...scrollable, ...{items: data.slice(0, scrollable.chunk), hasMore: data.length > scrollable.chunk}}
+        });
+
+    }, [sortConfig, vault.pools]);
+
+    const fetchScrollable = () => {
+        if (scrollable.items.length >= filtered.length) {
+            setScrollable({ ...scrollable, hasMore: false });
+            return;
         }
 
-        if(vaultCount.total !== Object.entries(vault.pools).length) {
-            setVaultCount({ ...vaultCount, total: Object.entries(vault.pools).length });
-        }
-
-        return filtered;
+        const visible = scrollable.items.length;
+        setScrollable({
+            ...scrollable,
+            items: scrollable.items.concat(filtered.slice(visible, visible + scrollable.chunk)),
+        });
     };
 
     React.useEffect(() => {
@@ -137,7 +146,12 @@ const Home = () => {
     }, [dispatch, wallet.address, vault.lastUpdated]);
 
     React.useEffect(() => {
-        dispatch(reduxActions.vault.fetchPools());
+        if(prices.lastUpdated > 0) {
+            dispatch(reduxActions.vault.fetchPools());
+        }
+    }, [dispatch, prices.lastUpdated]);
+
+    React.useEffect(() => {
         setInterval(() => {
             dispatch(reduxActions.vault.fetchPools());
         }, 60000);
@@ -153,14 +167,16 @@ const Home = () => {
                     <Loader message={('Loading data from blockchain...')} />
                 ) : (
                 <Box>
-                    <Filter sortConfig={sortConfig} setFilter={setFilter} defaultFilter={defaultFilter} platforms={vault.platforms} vaultCount={vaultCount} />
+                    <Filter sortConfig={sortConfig} setSortConfig={setSortConfig} defaultFilter={defaultFilter} platforms={vault.platforms} vaultCount={vaultCount} />
                     <Box className={classes.numberOfVaults}>
                         Showing {vaultCount.showing} vaults
                     </Box>
-                    {isEmpty(vault.pools) ? '' : (
-                        filter().map(item => (
+                    {isEmpty(filtered) ? '' : (
+                        <InfiniteScroll dataLength={scrollable.items.length} hasMore={scrollable.hasMore} next={fetchScrollable} loader={"loading..."}>
+                            {scrollable.items.map(item => (
                             <Item key={item.id} item={item} />
-                        ))
+                            ))}
+                        </InfiniteScroll>
                     )}
                 </Box>
                 )}
