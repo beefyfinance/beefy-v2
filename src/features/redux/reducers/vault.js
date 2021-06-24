@@ -65,7 +65,7 @@ const initialData = () => {
 const initialState = {
     pools: initialData(),
     totalTvl: 0,
-    isPoolsLoading: false,
+    isPoolsLoading: true,
     isFirstTime: true,
     lastUpdated: 0,
     platforms: initPlatforms,
