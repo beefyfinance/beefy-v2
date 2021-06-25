@@ -12,12 +12,18 @@ const HistoricalRateChart = ({chartData}) => {
     const { index, x, y } = props;
     const { apy } = chartData[index];
     const labelValue = `${apy}%`
-    const labelPosWithOffsetX = x
-    const labelPosWithOffsetY = y - 10
-    const firstOrLast = index === 0 || index === chartData.length - 1;
-    if (firstOrLast) {
+    const first = index === 0;
+    const last = index === chartData.length - 1;
+    if (first) {
+      const labelPosWithOffsetX = x - 25
+      const labelPosWithOffsetY = y - 5
       return <text className={classes.paragraph} style={{color: 'white'}} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
-    } else {
+    } else if (last) {
+      const labelPosWithOffsetX = x
+      const labelPosWithOffsetY = y - 10
+      return <text className={classes.paragraph} style={{color: 'white'}} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+    }
+    else {
       return null
     }
   };
@@ -35,7 +41,7 @@ const HistoricalRateChart = ({chartData}) => {
       <ResponsiveContainer>
         <AreaChart
           data={chartData}
-          margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
+          margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
         >
           <XAxis hide dataKey="name" />
           <YAxis hide />
