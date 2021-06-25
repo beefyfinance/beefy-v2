@@ -23,8 +23,8 @@ const HistoricalRateChart = ({chartData}) => {
   };
   const renderDot = (props) => {
     const { index } = props;
-    const firstOrLast = index === 0 || index === chartData.length - 1;
-    if (firstOrLast) {
+    const last = index === chartData.length - 1;
+    if (last) {
       return <Dot {...props} className="recharts-area-dot" />
     } else {
       return null
