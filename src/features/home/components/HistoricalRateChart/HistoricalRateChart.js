@@ -14,8 +14,12 @@ const HistoricalRateChart = ({chartData}) => {
     const labelValue = `${apy}%`
     const labelPosWithOffsetX = x
     const labelPosWithOffsetY = y - 10
-  
-    return <text className={classes.paragraph} style={{color: 'white'}} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+    const firstOrLast = index === 0 || index === chartData.length - 1;
+    if (firstOrLast) {
+      return <text className={classes.paragraph} style={{color: 'white'}} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+    } else {
+      return null
+    }
   };
   const renderDot = (props) => {
     const { index } = props;
@@ -23,15 +27,15 @@ const HistoricalRateChart = ({chartData}) => {
     if (firstOrLast) {
       return <Dot {...props} className="recharts-area-dot" />
     } else {
-      return undefined
+      return null
     }
   }
   return (
-    <Box style={{ height: 100, width: 200, paddingTop: 20 }}>
+    <Box style={{ height: 75, width: 150, paddingTop: 20 }}>
       <ResponsiveContainer>
         <AreaChart
           data={chartData}
-          margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+          margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
         >
           <XAxis hide dataKey="name" />
           <YAxis hide />
