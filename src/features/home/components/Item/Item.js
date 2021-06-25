@@ -10,6 +10,12 @@ import HistoricalRateChart from "../HistoricalRateChart/HistoricalRateChart";
 const historicalRateChartData = [
     { name: "28 Jan", apy: 45.00 },
     { name: "4 Feb", apy: 57.15 },
+    { name: "11 Feb", apy: 38.50 },
+    { name: "18 Feb", apy: 41.37 },
+    { name: "28 March", apy: 95.00 },
+    { name: "4 April", apy: 147.15 },
+    { name: "11 April", apy: 115.50 },
+    { name: "18 April", apy: 179.37 }
 ];
 
 const useStyles = makeStyles(styles);
