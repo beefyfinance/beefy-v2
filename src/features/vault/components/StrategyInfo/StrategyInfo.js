@@ -44,14 +44,14 @@ const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, community
                     </div>
                 </div>
                 <div className={classes.audits}>
-                    <div className={classes.audit}>
+                    <a href="#" target="_blank" rel="noopener noreferrer" className={classes.audit}>
                         <img src={shield} className={classes.auditIcon} />
                         <Typography className={classes.auditLabel} >Audited</Typography>
-                    </div>
-                    <div className={classes.audit}>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer"  className={classes.audit}>
                         <img src={shield} className={classes.auditIcon} />
                         <Typography className={classes.auditLabel} >Community Audited</Typography>
-                    </div>
+                    </a>
                 </div>
             </div>
         </Paper>

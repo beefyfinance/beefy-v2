@@ -8,7 +8,7 @@ const useStyles = makeStyles(styles);
 const LinkButton = ({href, text}) => {
     const classes = useStyles();
     return (
-        <a className={classes.container} href={href}>
+        <a className={classes.container} href={href} target="_blank" rel="noopener noreferrer">
             <Typography className={classes.text}>{text}</Typography>
             <svg
                 width="5"
