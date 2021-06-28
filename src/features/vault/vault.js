@@ -13,6 +13,7 @@ import {ArrowLeft} from "@material-ui/icons";
 import reduxActions from "../redux/actions";
 import Deposit from "./components/Deposit";
 import Withdraw from "./components/Withdraw";
+import TokenInfo from "./components/TokenInfo";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -196,6 +197,24 @@ const Vault = () => {
                         <Paper className={classes.paper}>
                             <Typography>Strategy</Typography>
                         </Paper>
+                        <TokenInfo token={{
+                              symbol: "BUSD",
+                              website: "#",
+                              tokenAddress: "#",
+                              description: `Binance USD (BUSD) is a 1:1 USD-backed stable coin issued by Binance (in
+                                partnership with Paxos), Approved and regulated by the New York State Department
+                                of Financial Services (NYDFS), The BUSD Monthly Audit Report can be viewed from
+                                the official website.`
+                        }}/>
+                        <TokenInfo token={{
+                              symbol: "BADGER",
+                              website: "#",
+                              tokenAddress: "#",
+                              description: `Badger DAO is an open-source, decentralized automated organization that is 
+                                dedicated to building products and infrastructure of simplifying the use of Bitcoin (BTC) 
+                                as collateral across many smart contract platforms.`
+                        }}/>
+
                     </Grid>
                 </Grid>
             )}
