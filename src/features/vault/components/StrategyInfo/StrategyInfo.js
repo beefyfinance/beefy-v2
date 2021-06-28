@@ -16,15 +16,17 @@ const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, community
                     <Typography className={classes.cardTitle}>Strategy</Typography>
                 </div>
                 <div className={classes.cardActions}>
-                    <LinkButton href={stratAddr} text="Strategy address" />
-                    <LinkButton href={vaultAddr} text="Vault address" />
+                    <div className={classes.cardAction}>
+                        <LinkButton href={stratAddr} text="Strategy address" />
+                    </div>
+                    <div className={classes.cardAction}>
+                        <LinkButton href={vaultAddr} text="Vault address" />
+                    </div>                           
                 </div>
             </div>
             <div className={classes.cardContent}>
-                <div>
-                    <Typography>{description}</Typography>
-                </div>
-                <div className={classes.apyContainer}>
+                <Typography className={classes.text}>{description}</Typography>
+                <div className={classes.apysContainer}>
                     <Typography className={classes.apyTitle}>APY breakdown</Typography>
                     <div className={classes.apys}>
                         <div className={classes.apy}>
@@ -32,12 +34,12 @@ const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, community
                             <Typography className={classes.apyLabel}>Yield Farming</Typography>
                         </div>
                         <div className={classes.apy}>
-                            <Typography className={classes.apyValue}>128%</Typography>
-                            <Typography className={classes.apyLabel}>Yield Farming</Typography>
+                            <Typography className={classes.apyValue}>50%</Typography>
+                            <Typography className={classes.apyLabel}>Trading Fees</Typography>
                         </div>
                         <div className={classes.apy}>
-                            <Typography className={classes.apyValue}>128%</Typography>
-                            <Typography className={classes.apyLabel}>Yield Farming</Typography>
+                            <Typography className={classes.apyValue}>201%</Typography>
+                            <Typography className={classes.apyLabel}>Boost Rewards</Typography>
                         </div>
                     </div>
                 </div>

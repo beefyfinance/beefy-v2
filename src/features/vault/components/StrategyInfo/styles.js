@@ -1,6 +1,10 @@
-const bold = {
+const defaultFont = {
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
+}
+
+const bold = {
+    ...defaultFont,
     fontWeight: 600,
 }
 
@@ -15,54 +19,73 @@ const styles = (theme) => ({
         alignItems: 'center',
         backgroundColor: '#272B4A',
         borderRadius: '20px 20px 0 0',
-        padding: '20px'
+        padding: '30px 32px 36px 32px'
     },
     cardActions: {
-        margin: '10px'
+        display: 'flex'
+    },
+    cardAction: {
+        marginLeft: '15px'
     },
     cardContent: {
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#313759',
         borderRadius: '0 0 20px 20px',
-        padding: '20px'
+        padding: '30px 32px 36px 32px'
     },
     cardTitle: {
-        fontFamily: 'Proxima Nova',
-        fontStyle: 'normal',
-        fontWeight: 600,
+        ...bold,
         fontSize: '30px',
         lineHeight: '42px'
     },
-    apyContainer: {},
+    apysContainer: {
+        marginBottom: '32px'
+    },
     apys: {
         display: 'flex',
     },
     apyTitle: {
         ...bold,
         fontSize: "18px",
-        lineHeight: "30px"
+        lineHeight: "30px",
+        marginBottom: "12px"
     },
-    apy: {},
+    apy: {
+        marginRight: "24px"
+    },
     apyValue: {
         ...bold,
-        fontSize: "18px",
+        fontSize: "24px",
         lineHeight: "30px"
     },
     apyLabel: {
-        fontFamily: 'Proxima Nova',
-        fontStyle: 'normal',
-        fontWeight: 'normal',
+        ...defaultFont,
         fontSize: '15px',
         lineHeight: '24px',
         letterSpacing: '0.2px',
         color: '#8585A6'
     },
     audits: {
-        display: 'flex'
+        display: 'flex',
     },
     audit: {
-        display: 'flex'
+        display: 'flex',
+        marginRight: '50px'
+    },
+    auditIcon: {
+        marginRight: '10px'
+    },
+    auditLabel: {
+        ...bold
+    },
+    text: {
+        fontFamily: 'Proxima Nova',
+        fontStyle: 'normal',
+        fontWeight: 'normal',
+        fontSize: '18px',
+        lineHeight: '32px',
+        marginBottom: '28px'
     }
 });
 
