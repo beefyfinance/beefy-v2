@@ -190,9 +190,6 @@ const Vault = () => {
                             </Box>
 
                         </Paper>
-                        <Paper className={classes.paper}>
-                            <Typography>Projected yield</Typography>
-                        </Paper>
                         <RiskInfo />
                         <StrategyInfo 
                             description={`The strategy deposits the LP token on Pancake Swap and farms CAKE. The CAKE
