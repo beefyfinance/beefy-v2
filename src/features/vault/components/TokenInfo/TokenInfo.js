@@ -31,7 +31,7 @@ const TokenInfo = ({ token }) => {
                 </div>
             </div>
             <div className={classes.cardContent}>
-                <Typography>{description}</Typography>
+                <Typography className={classes.text}>{description}</Typography>
             </div>
         </Paper>
     );
