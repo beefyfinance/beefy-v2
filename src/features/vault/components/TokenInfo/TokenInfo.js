@@ -5,7 +5,7 @@ import LinkButton from '../../../../components/LinkButton/LinkButton';
 
 const useStyles = makeStyles(styles);
 
-const VaultItem = ({ token }) => {
+const TokenInfo = ({ token }) => {
     const classes = useStyles();
 
     const { symbol, website, tokenAddress, description} = token;
@@ -33,4 +33,4 @@ const VaultItem = ({ token }) => {
     );
 };
 
-export default VaultItem;
+export default TokenInfo;

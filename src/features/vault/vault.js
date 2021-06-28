@@ -14,6 +14,7 @@ import reduxActions from "../redux/actions";
 import Deposit from "./components/Deposit";
 import Withdraw from "./components/Withdraw";
 import TokenInfo from "./components/TokenInfo";
+import StrategyInfo from "./components/StrategyInfo";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -194,9 +195,11 @@ const Vault = () => {
                         <Paper className={classes.paper}>
                             <Typography>Risk</Typography>
                         </Paper>
-                        <Paper className={classes.paper}>
-                            <Typography>Strategy</Typography>
-                        </Paper>
+                        <StrategyInfo 
+                            description={`The strategy deposits the LP token on Pancake Swap and farms CAKE. The CAKE
+                             is sold to buy more Badger-BUSD LP and redeposited in the vault. The gas price is socialized 
+                             between all vault users and the compound happens automatically. APY breakdown`}
+                        />
                         <TokenInfo token={{
                               symbol: "BUSD",
                               website: "#",
