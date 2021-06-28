@@ -1,6 +1,10 @@
-const bold = {
+const defaultFont = {
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
+}
+
+const boldFont = {
+    ...defaultFont,
     fontWeight: 600,
 }
 
@@ -15,7 +19,7 @@ const styles = (theme) => ({
         alignItems: 'center',
         backgroundColor: '#272B4A',
         borderRadius: '20px 20px 0 0',
-        padding: '20px'
+        padding: '30px 32px 36px 32px'
     },
     cardActions: {
         margin: '10px'
@@ -25,12 +29,10 @@ const styles = (theme) => ({
         flexDirection: 'column',
         backgroundColor: '#313759',
         borderRadius: '0 0 20px 20px',
-        padding: '20px'
+        padding: '30px 32px 36px 32px'
     },
     cardTitle: {
-        fontFamily: 'Proxima Nova',
-        fontStyle: 'normal',
-        fontWeight: 600,
+        ...boldFont,
         fontSize: '36px',
         lineHeight: '42px',
         letterSpacing: "-0.1px",
@@ -38,32 +40,29 @@ const styles = (theme) => ({
         
     },
     cardSubtitle: {
-        fontFamily: 'Proxima Nova',
-        fontStyle: 'normal',
-        fontWeight: 600,
+        ...boldFont,
         fontSize: '18px',
         lineHeight: '24px',
         color: '#8585A6',
         letterSpacing: '0.2px'
     },
-    riskList: {},
+    riskList: {
+        marginBottom: '12px'
+    },
     riskRow: {
         display: 'flex',
         flexDirection: "row",
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: '18px'
     },
     risk: {
-        fontFamily: "Proxima Nova",
-        fontStyle: "normal",
-        fontWeight: 600,
+        ...boldFont,
         fontSize: "24px",
         lineHeight: "30px",
         color: "#FFFFFF",
     },
     riskCategory: {
-        fontFamily: "Proxima Nova",
-        fontStyle: "normal",
-        fontWeight: "normal",
+        ...defaultFont,
         fontSize: "15px",
         lineHeight: "24px",
         letterSpacing: "0.2px",
@@ -78,10 +77,8 @@ const styles = (theme) => ({
         alignItems: "center"
     },
     moreInfoLabel: {
+        ...boldFont,
         marginRight: "5px",
-        fontFamily: "Proxima Nova",
-        fontStyle: "normal",
-        fontWeight: 600,
         fontSize: "14px",
         lineHeight: "24px",
         letterSpacing: "0.2px",
@@ -90,7 +87,17 @@ const styles = (theme) => ({
     moreInfoIcon: {
         
     },
-    notes: {},
+    notes: {
+        "& p": {
+            ...defaultFont,
+            fontSize: '14px',
+            lineHeight: '20px',
+            letterSpacing: '0.2px'
+        },
+        "& p:first-child": {
+            marginBottom: '12px'
+        }
+    },
     arrow: {
         marginTop: "5px",
         marginRight: "8px"
