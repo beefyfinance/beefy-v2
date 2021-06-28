@@ -15,6 +15,7 @@ import Deposit from "./components/Deposit";
 import Withdraw from "./components/Withdraw";
 import TokenInfo from "./components/TokenInfo";
 import StrategyInfo from "./components/StrategyInfo";
+import RiskInfo from "./components/RiskInfo";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -192,9 +193,7 @@ const Vault = () => {
                         <Paper className={classes.paper}>
                             <Typography>Projected yield</Typography>
                         </Paper>
-                        <Paper className={classes.paper}>
-                            <Typography>Risk</Typography>
-                        </Paper>
+                        <RiskInfo />
                         <StrategyInfo 
                             description={`The strategy deposits the LP token on Pancake Swap and farms CAKE. The CAKE
                              is sold to buy more Badger-BUSD LP and redeposited in the vault. The gas price is socialized 
