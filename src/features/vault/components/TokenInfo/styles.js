@@ -1,7 +1,7 @@
 const styles = (theme) => ({
     cardContainer: {
         backgroundColor: 'transparent',
-        marginTop: '20px'
+        margin: '20px auto'
     },
     cardHeader: {
         display: 'flex',
@@ -9,15 +9,18 @@ const styles = (theme) => ({
         alignItems: 'center',
         backgroundColor: '#272B4A',
         borderRadius: '20px 20px 0 0',
-        padding: '20px'
+        padding: '30px 32px 36px 32px'
     },
     cardActions: {
-        margin: '10px'
+        display: 'flex',
+    },
+    cardAction: {
+        marginLeft: '15px'
     },
     cardContent: {
         backgroundColor: '#313759',
         borderRadius: '0 0 20px 20px',
-        padding: '20px'
+        padding: '30px 32px 36px 32px'
     },
     cardTitle: {
         fontFamily: 'Proxima Nova',

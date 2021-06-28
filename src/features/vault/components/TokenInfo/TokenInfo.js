@@ -22,8 +22,12 @@ const TokenInfo = ({ token }) => {
                     </div>
                 </div>
                 <div className={classes.cardActions}>
-                    <LinkButton href={website} text="Website" />
-                    <LinkButton href={tokenAddress} text="Token Contract" />
+                    <div className={classes.cardAction}>
+                        <LinkButton href={website} text="Website" />
+                    </div>
+                    <div className={classes.cardAction}>
+                        <LinkButton href={tokenAddress}  className={classes.cardAction} text="Token Contract" />
+                    </div>
                 </div>
             </div>
             <div className={classes.cardContent}>
