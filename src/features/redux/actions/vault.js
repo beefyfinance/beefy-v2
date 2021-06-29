@@ -21,6 +21,7 @@ const getPoolsSingle = async (item, state, dispatch) => {
         id: item.id,
         balance: tokenContract.methods.balance(),
         pricePerShare: tokenContract.methods.getPricePerFullShare(),
+        strategy: tokenContract.methods.strategy()
     });
 
     const response = await multicall.all([calls]);
@@ -33,6 +34,7 @@ const getPoolsSingle = async (item, state, dispatch) => {
         pools[item.id].tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
         pools[item.id].apy = (!isEmpty(apy) && item.id in apy) ? apy[item.id] : 0;
         pools[item.id].pricePerShare = item.pricePerShare;
+        pools[item.id].strategy = item.strategy;
     }
 
     dispatch({
@@ -74,6 +76,7 @@ const getPoolsAll = async (state, dispatch) => {
             id: pools[key].id,
             balance: tokenContract.methods.balance(),
             pricePerShare: tokenContract.methods.getPricePerFullShare(),
+            strategy: tokenContract.methods.strategy(),
         });
     }
 
@@ -94,6 +97,7 @@ const getPoolsAll = async (state, dispatch) => {
         pools[item.id].tvl = tvl;
         pools[item.id].apy = (!isEmpty(apy) && item.id in apy) ? apy[item.id] : 0;
         pools[item.id].pricePerShare = item.pricePerShare;
+        pools[item.id].strategy = item.strategy;
         totalTvl = new BigNumber(totalTvl).plus(tvl);
     }
 
