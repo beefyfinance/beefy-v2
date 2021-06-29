@@ -100,7 +100,7 @@ const Vault = () => {
             ) : (
                 <Grid container style={{position: 'relative'}}>
                     <Grid item xs={12} md={8} lg={9}>
-                        <Button className={classes.btnGoBack} onClick={() => {history.goBack()}}><ArrowLeft /> Back to Explore</Button>
+                        <Button className={classes.btnGoBack} onClick={() => {history.push('/')}}><ArrowLeft /> Back to Explore</Button>
                         <Grid className={classes.title} container>
                             <Grid>
                                 <Avatar className={classes.large} alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
