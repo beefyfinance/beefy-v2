@@ -43,7 +43,7 @@ const Item = ({item}) => {
                 </Box>
                 <Hidden mdDown>
                     <Box className={classes.rWidth} textAlign={"left"}>
-                        <Typography className={classes.h2}>{calcDaily(item.apy)}</Typography>
+                        <Typography className={classes.h2}>{calcDaily(item.apy.totalApy)}</Typography>
                         <Typography className={classes.h3}>Daily</Typography>
                     </Box>
                 </Hidden>
@@ -54,7 +54,7 @@ const Item = ({item}) => {
                     </Box>
                 </Hidden>
                 <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight, classes.apyContainer].join(' ')} textAlign={"center"}>
-                    <Typography variant={"h1"}>{formatApy(item.apy)}</Typography>
+                    <Typography variant={"h1"}>{formatApy(item.apy.totalApy)}</Typography>
                     <Typography variant={"h2"}>APY</Typography>
                     <Typography variant={"button"}>Deposit</Typography>
                 </Box>

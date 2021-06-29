@@ -199,6 +199,7 @@ const Vault = () => {
                             stratAddr={item.strategy}
                             vaultAddr={item.earnContractAddress}
                             network={item.network}
+                            apy={item.apy}
                         />
                         {renderTokens(item)}
                     </Grid>

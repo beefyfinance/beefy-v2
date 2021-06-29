@@ -1,5 +1,6 @@
 import React from 'react';
-import { config } from "../../../../config/config";
+import {config} from "../../../../config/config";
+import {formatApy} from "../../../../helpers/format"
 import {makeStyles, Paper, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
@@ -7,7 +8,7 @@ import shield from "./shield.svg"
 
 const useStyles = makeStyles(styles);
 
-const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, communityAudit, network }) => {
+const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, network }) => {
     const classes = useStyles();
 
     return (
@@ -30,25 +31,32 @@ const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, community
                 <div className={classes.apysContainer}>
                     <Typography className={classes.apyTitle}>APY breakdown</Typography>
                     <div className={classes.apys}>
-                        <div className={classes.apy}>
-                            <Typography className={classes.apyValue}>128%</Typography>
-                            <Typography className={classes.apyLabel}>Yield Farming</Typography>
+                         <div className={classes.apy}>
+                            <Typography className={classes.apyValue}>{formatApy(apy.totalApy, '-')}</Typography>
+                            <Typography className={classes.apyLabel}>Total APY</Typography>
                         </div>
                         <div className={classes.apy}>
-                            <Typography className={classes.apyValue}>50%</Typography>
-                            <Typography className={classes.apyLabel}>Trading Fees</Typography>
+                            <Typography className={classes.apyValue}>{formatApy(apy.vaultApr, '-')}</Typography>
+                            <Typography className={classes.apyLabel}>Farm APR</Typography>
                         </div>
                         <div className={classes.apy}>
-                            <Typography className={classes.apyValue}>201%</Typography>
-                            <Typography className={classes.apyLabel}>Boost Rewards</Typography>
+                            <Typography className={classes.apyValue}>{formatApy(apy.tradingApr, '-')}</Typography>
+                            <Typography className={classes.apyLabel}>Trading APR</Typography>
+                        </div>
+                        <div className={classes.apy}>
+                            <Typography className={classes.apyValue}>{formatApy(apy.boostApr, '-')}</Typography>
+                            <Typography className={classes.apyLabel}>Boost APR</Typography>
                         </div>
                     </div>
                 </div>
                 <div className={classes.audits}>
-                    <a href="#" target="_blank" rel="noopener noreferrer" className={classes.audit}>
-                        <img src={shield} className={classes.auditIcon} />
-                        <Typography className={classes.auditLabel} >Audited</Typography>
-                    </a>
+                    {audit ? (
+                        <a href="#" target="_blank" rel="noopener noreferrer" className={classes.audit}>
+                            <img src={shield} className={classes.auditIcon} />
+                            <Typography className={classes.auditLabel} >Audited</Typography>
+                        </a>
+                    ) : null}
+
                     <a href="#" target="_blank" rel="noopener noreferrer"  className={classes.audit}>
                         <img src={shield} className={classes.auditIcon} />
                         <Typography className={classes.auditLabel} >Community Audited</Typography>
