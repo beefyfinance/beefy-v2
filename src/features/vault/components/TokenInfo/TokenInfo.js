@@ -1,14 +1,15 @@
 import React from 'react';
+import {config} from '../../../../config/config'
 import {makeStyles, Paper, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
 
 const useStyles = makeStyles(styles);
 
-const TokenInfo = ({ token }) => {
+const TokenInfo = ({ token, network }) => {
     const classes = useStyles();
 
-    const { symbol, website, address, network, description} = token;
+    const { symbol, website, address, description} = token;
 
     return (
         <Paper className={classes.cardContainer}>
@@ -28,7 +29,7 @@ const TokenInfo = ({ token }) => {
                         </div>
                     ) : null}
                     <div className={classes.cardAction}>
-                        <LinkButton href={address}  className={classes.cardAction} text="Token Contract" />
+                        <LinkButton href={`${config[network].explorerUrl}/token/${address}`}  className={classes.cardAction} text="Token Contract" />
                     </div>
                 </div>
             </div>
