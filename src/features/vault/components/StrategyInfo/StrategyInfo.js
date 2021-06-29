@@ -1,4 +1,5 @@
 import React from 'react';
+import { config } from "../../../../config/config";
 import {makeStyles, Paper, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
@@ -6,7 +7,7 @@ import shield from "./shield.svg"
 
 const useStyles = makeStyles(styles);
 
-const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, communityAudit }) => {
+const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, communityAudit, network }) => {
     const classes = useStyles();
 
     return (
@@ -17,10 +18,10 @@ const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, community
                 </div>
                 <div className={classes.cardActions}>
                     <div className={classes.cardAction}>
-                        <LinkButton href={stratAddr} text="Strategy address" />
+                        <LinkButton href={`${config[network].explorerUrl}/address/${stratAddr}`} text="Strategy address" />
                     </div>
                     <div className={classes.cardAction}>
-                        <LinkButton href={vaultAddr} text="Vault address" />
+                        <LinkButton href={`${config[network].explorerUrl}/address/${vaultAddr}`} text="Vault address" />
                     </div>                           
                 </div>
             </div>

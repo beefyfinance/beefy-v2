@@ -196,8 +196,9 @@ const Vault = () => {
                             description={`The strategy deposits the LP token on Pancake Swap and farms CAKE. The CAKE
                              is sold to buy more Badger-BUSD LP and redeposited in the vault. The gas price is socialized 
                              between all vault users and the compound happens automatically. APY breakdown`}
-                            stratAddr="#"
-                            vaultAddr="#"
+                            stratAddr={item.strategy}
+                            vaultAddr={item.earnContractAddress}
+                            network={item.network}
                         />
                         {renderTokens(item)}
                     </Grid>
