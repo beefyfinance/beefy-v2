@@ -25,7 +25,8 @@ export const pools = [
             'https://app.sushi.com/#/add/0xD6DF932A45C0f255f85145f286eA0b292B21C90B/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
         buyTokenUrl:
             'https://app.sushi.com/#/swap?inputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
-    },
+        network: 'polygon'
+        },
     {
         id: 'sushi-eth-dai',
         logo: 'polygon/ETH-DAI.png',
@@ -52,7 +53,8 @@ export const pools = [
             'https://app.sushi.com/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
         buyTokenUrl:
             'https://app.sushi.com/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
-    },
+        network: 'polygon'
+        },
     {
         id: 'sushi-btc-eth',
         logo: 'polygon/ETH-BTC.png',
@@ -79,7 +81,8 @@ export const pools = [
             'https://app.sushi.com/#/add/0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
         buyTokenUrl:
             'https://app.sushi.com/#/swap?inputCurrency=0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
-    },
+        network: 'polygon'
+        },
     {
         id: 'sushi-eth-usdt',
         logo: 'polygon/ETH-USDT.png',
@@ -106,7 +109,8 @@ export const pools = [
             'https://app.sushi.com/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
         buyTokenUrl:
             'https://app.sushi.com/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
-    },
+        network: 'polygon'
+        },
     {
         id: 'sushi-usdc-eth',
         logo: 'polygon/USDC-ETH.png',
@@ -133,7 +137,8 @@ export const pools = [
             'https://app.sushi.com/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
         buyTokenUrl:
             'https://app.sushi.com/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
-    },
+        network: 'polygon'
+        },
     {
         id: 'sushi-matic-eth',
         logo: 'polygon/ETH-MATIC.png',
@@ -160,7 +165,8 @@ export const pools = [
             'https://app.sushi.com/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
         buyTokenUrl:
             'https://app.sushi.com/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
-    },
+        network: 'polygon'
+        },
     {
         id: 'cometh-azuki-eth',
         logo: 'polygon/AZUKI-ETH.png',
@@ -187,7 +193,8 @@ export const pools = [
             'https://swap.cometh.io/#/add/0x7CdC0421469398e0F3aA8890693d86c840Ac8931/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
         buyTokenUrl:
             'https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x7CdC0421469398e0F3aA8890693d86c840Ac8931',
-    },
+        network: 'polygon'
+        },
     {
         id: 'cometh-doki-eth',
         logo: 'polygon/DOKI-ETH.png',
@@ -214,7 +221,8 @@ export const pools = [
             'https://swap.cometh.io/#/add/0x5C7F7Fe4766fE8f0fa9b41E2E4194d939488ff1C/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
         buyTokenUrl:
             'https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x5C7F7Fe4766fE8f0fa9b41E2E4194d939488ff1C',
-    },
+        network: 'polygon'
+        },
     {
         id: 'aave-eth',
         logo: 'single-assets/ETH.png',
@@ -239,7 +247,8 @@ export const pools = [
         callFee: 0.5,
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-usdc-usdt',
         logo: 'polygon/USDC-USDT.png',
@@ -266,7 +275,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
-    },
+        network: 'polygon'
+        },
     {
         id: 'cometh-must-eth',
         logo: 'polygon/MUST-ETH.png',
@@ -293,7 +303,8 @@ export const pools = [
             'https://swap.cometh.io/#/add/0x9C78EE466D6Cb57A4d01Fd887D2b5dFb2D46288f/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
         buyTokenUrl:
             'https://swap.cometh.io/#/swap?inputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&outputCurrency=0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-eth-btc',
         logo: 'polygon/ETH-BTC.png',
@@ -320,7 +331,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-ubt-eth',
         logo: 'polygon/UBT-ETH.png',
@@ -347,7 +359,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x7FBc10850caE055B27039aF31bD258430e714c62',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x7FBc10850caE055B27039aF31bD258430e714c62',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-defi5-eth',
         logo: 'polygon/DEFI5-ETH.png',
@@ -374,7 +387,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x42435F467D33e5C4146a4E8893976ef12BBCE762',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x42435F467D33e5C4146a4E8893976ef12BBCE762',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-wise-eth',
         logo: 'polygon/WISE-ETH.png',
@@ -401,7 +415,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xB77e62709e39aD1cbeEBE77cF493745AeC0F453a',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xB77e62709e39aD1cbeEBE77cF493745AeC0F453a',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-cel-eth',
         logo: 'polygon/CEL-ETH.png',
@@ -428,7 +443,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xD85d1e945766Fea5Eda9103F918Bd915FbCa63E6',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xD85d1e945766Fea5Eda9103F918Bd915FbCa63E6',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-quick-eth',
         logo: 'polygon/QUICK-ETH.png',
@@ -455,7 +471,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x831753dd7087cac61ab5644b308642cc1c33dc13',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-mausdc-usdc',
         logo: 'polygon/maUSDC-USDC.png',
@@ -482,7 +499,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x9719d867A500Ef117cC201206B8ab51e794d3F82/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x9719d867a500ef117cc201206b8ab51e794d3f82',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-aave-eth',
         logo: 'polygon/AAVE-ETH.png',
@@ -509,7 +527,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0xD6DF932A45C0f255f85145f286eA0b292B21C90B/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-link-eth',
         logo: 'polygon/LINK-ETH.png',
@@ -536,7 +555,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
-    },
+        network: 'polygon'
+        },
     {
         id: 'krill-krill-usdc',
         logo: 'polygon/KRILL-USDC.png',
@@ -563,7 +583,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x05089C9EBFFa4F0AcA269e32056b1b36B37ED71b',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x05089c9ebffa4f0aca269e32056b1b36b37ed71b&outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-eth-usdt',
         logo: 'polygon/ETH-USDT.png',
@@ -590,7 +611,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/ETH/0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=ETH&outputCurrency=0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-eth-matic',
         logo: 'polygon/ETH-MATIC.png',
@@ -617,7 +639,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/ETH/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=ETH',
-    },
+        network: 'polygon'
+        },
     {
         id: 'quick-quick-matic',
         logo: 'polygon/QUICK-MATIC.png',
@@ -644,7 +667,8 @@ export const pools = [
             'https://quickswap.exchange/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x831753dd7087cac61ab5644b308642cc1c33dc13',
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13',
-    },
+        network: 'polygon'
+        },
     {
         id: 'cometh-eth-matic',
         logo: 'polygon/ETH-MATIC.png',
@@ -671,7 +695,8 @@ export const pools = [
             'https://swap.cometh.io/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
         buyTokenUrl:
             'https://swap.cometh.io/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
-    },
+        network: 'polygon'
+        },
     {
         id: 'cometh-matic-must',
         logo: 'polygon/MUST-MATIC.png',
@@ -698,7 +723,8 @@ export const pools = [
             'https://swap.cometh.io/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f',
         buyTokenUrl:
             'https://swap.cometh.io/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f',
-    },
+        network: 'polygon'
+        },
     {
         id: 'cometh-usdc-must',
         logo: 'polygon/USDC-MUST.png',

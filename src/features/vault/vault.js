@@ -16,6 +16,7 @@ import Withdraw from "./components/Withdraw";
 import TokenInfo from "./components/TokenInfo";
 import StrategyInfo from "./components/StrategyInfo";
 import RiskInfo from "./components/RiskInfo";
+import {addressBook} from "blockchain-addressbook"
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -198,29 +199,20 @@ const Vault = () => {
                             stratAddr="#"
                             vaultAddr="#"
                         />
-                        <TokenInfo token={{
-                              symbol: "BUSD",
-                              website: "#",
-                              tokenAddress: "#",
-                              description: `Binance USD (BUSD) is a 1:1 USD-backed stable coin issued by Binance (in
-                                partnership with Paxos), Approved and regulated by the New York State Department
-                                of Financial Services (NYDFS), The BUSD Monthly Audit Report can be viewed from
-                                the official website.`
-                        }}/>
-                        <TokenInfo token={{
-                              symbol: "BADGER",
-                              website: "#",
-                              tokenAddress: "#",
-                              description: `Badger DAO is an open-source, decentralized automated organization that is 
-                                dedicated to building products and infrastructure of simplifying the use of Bitcoin (BTC) 
-                                as collateral across many smart contract platforms.`
-                        }}/>
-
+                        {renderTokens(item)}
                     </Grid>
                 </Grid>
             )}
         </Container>
     )
 };
+
+const renderTokens = item => {
+    return item.assets.map(asset => {
+        if (asset in addressBook[item.network].tokens) {
+            return <TokenInfo token={addressBook[item.network].tokens[asset]} />
+        } else return null
+    })
+}
 
 export default Vault;

@@ -8,7 +8,7 @@ const useStyles = makeStyles(styles);
 const TokenInfo = ({ token }) => {
     const classes = useStyles();
 
-    const { symbol, website, tokenAddress, description} = token;
+    const { symbol, website, address, network, description} = token;
 
     return (
         <Paper className={classes.cardContainer}>
@@ -22,16 +22,20 @@ const TokenInfo = ({ token }) => {
                     </div>
                 </div>
                 <div className={classes.cardActions}>
+                    {website ? (
+                        <div className={classes.cardAction}>
+                            <LinkButton href={website} text="Website" />
+                        </div>
+                    ) : null}
                     <div className={classes.cardAction}>
-                        <LinkButton href={website} text="Website" />
-                    </div>
-                    <div className={classes.cardAction}>
-                        <LinkButton href={tokenAddress}  className={classes.cardAction} text="Token Contract" />
+                        <LinkButton href={address}  className={classes.cardAction} text="Token Contract" />
                     </div>
                 </div>
             </div>
             <div className={classes.cardContent}>
-                <Typography className={classes.text}>{description}</Typography>
+                <Typography className={classes.text}>
+                    {description ? description : 'No token description available.'}
+                </Typography>
             </div>
         </Paper>
     );

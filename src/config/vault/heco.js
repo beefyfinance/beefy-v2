@@ -23,6 +23,7 @@ export const pools = [
         callFee: 0.25,
         buyTokenUrl: 'https://ht.mdex.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x98fc3b60ed4a504f588342a53746405e355f9347',
         addLiquidityUrl: 'https://ht.mdex.com/#/add/0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f/0x98fc3b60ed4a504f588342a53746405e355f9347',
+        network: 'heco'
     },
     {
         id: 'hfi-hfi-husd',
@@ -48,6 +49,7 @@ export const pools = [
         callFee: 0.25,
         buyTokenUrl: 'https://ht.mdex.com/#/swap?inputCurrency=0x0298c2b32eae4da002a15f36fdf7615bea3da047&outputCurrency=0x98fc3b60ed4a504f588342a53746405e355f9347',
         addLiquidityUrl: 'https://ht.mdex.com/#/add/0x0298c2b32eae4da002a15f36fdf7615bea3da047/0x98fc3b60ed4a504f588342a53746405e355f9347',
+        network: 'heco'
     },
     {
         id: 'lava-lava',
@@ -72,6 +74,7 @@ export const pools = [
         assets: ['LAVA'],
         callFee: 0.25,
         buyTokenUrl: 'https://exchange.lavaswap.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x56f95662e71f30b333b456439248c6de589082a4',
+        network: 'heco'
     },
     {
         id: 'lava-lava-usdt',
@@ -97,6 +100,7 @@ export const pools = [
         callFee: 0.25,
         buyTokenUrl: 'https://exchange.lavaswap.com/#/swap?inputCurrency=0x56f95662e71f30b333b456439248c6de589082a4&outputCurrency=0xa71edc38d189767582c38a3145b5873052c3e47a',
         addLiquidityUrl: 'https://exchange.lavaswap.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x56f95662E71f30b333b456439248c6dE589082a4',
+        network: 'heco'
     },
     {
         id: 'lava-lava-wht',
