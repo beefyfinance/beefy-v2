@@ -16,7 +16,6 @@ const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
         <Paper className={classes.cardContainer}>
             <div className={classes.cardHeader}>
                 <div>
-                    <h1>{stratType} Sup</h1>
                     <Typography className={classes.cardTitle}>Strategy</Typography>
                 </div>
                 <div className={classes.cardActions}>
