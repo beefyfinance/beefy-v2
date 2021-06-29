@@ -8,7 +8,7 @@ const initialTokens = () => {
     const tokens = [];
     for(let net in config) {
         const data = require('../../../config/vault/' + net + '.js');
-        for(const key in data.pools) {
+        for (const key in data.pools) {
             tokens[data.pools[key].token] = {
                 balance: 0,
                 allowance: {[data.pools[key].earnContractAddress]: 0}
