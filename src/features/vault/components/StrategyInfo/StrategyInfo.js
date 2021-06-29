@@ -5,16 +5,18 @@ import {makeStyles, Paper, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
 import shield from "./shield.svg"
+import stratText from "./stratText"
 
 const useStyles = makeStyles(styles);
 
-const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, network }) => {
+const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, platform, assets, want }) => {
     const classes = useStyles();
 
     return (
         <Paper className={classes.cardContainer}>
             <div className={classes.cardHeader}>
                 <div>
+                    <h1>{stratType} Sup</h1>
                     <Typography className={classes.cardTitle}>Strategy</Typography>
                 </div>
                 <div className={classes.cardActions}>
@@ -27,7 +29,7 @@ const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, network }
                 </div>
             </div>
             <div className={classes.cardContent}>
-                <Typography className={classes.text}>{description}</Typography>
+                <Typography className={classes.text}>{stratText(stratType, platform, assets, want)}</Typography>
                 <div className={classes.apysContainer}>
                     <Typography className={classes.apyTitle}>APY breakdown</Typography>
                     <div className={classes.apys}>
@@ -35,18 +37,25 @@ const StrategyInfo = ({ description, stratAddr, vaultAddr, apy, audit, network }
                             <Typography className={classes.apyValue}>{formatApy(apy.totalApy, '-')}</Typography>
                             <Typography className={classes.apyLabel}>Total APY</Typography>
                         </div>
-                        <div className={classes.apy}>
-                            <Typography className={classes.apyValue}>{formatApy(apy.vaultApr, '-')}</Typography>
-                            <Typography className={classes.apyLabel}>Farm APR</Typography>
-                        </div>
-                        <div className={classes.apy}>
-                            <Typography className={classes.apyValue}>{formatApy(apy.tradingApr, '-')}</Typography>
-                            <Typography className={classes.apyLabel}>Trading APR</Typography>
-                        </div>
-                        <div className={classes.apy}>
-                            <Typography className={classes.apyValue}>{formatApy(apy.boostApr, '-')}</Typography>
-                            <Typography className={classes.apyLabel}>Boost APR</Typography>
-                        </div>
+                        {apy.vaultApr && (
+                            <div className={classes.apy}>
+                                <Typography className={classes.apyValue}>{formatApy(apy.vaultApr, '-')}</Typography>
+                                <Typography className={classes.apyLabel}>Farm APR</Typography>
+                            </div>
+                        )}
+                        {apy.tradingApr && (
+                            <div className={classes.apy}>
+                                <Typography className={classes.apyValue}>{formatApy(apy.tradingApr, '-')}</Typography>
+                                <Typography className={classes.apyLabel}>Trading APR</Typography>
+                            </div>
+                        )}
+                        {apy.boostApr && (
+                            <div className={classes.apy}>
+                                <Typography className={classes.apyValue}>{formatApy(apy.boostApr, '-')}</Typography>
+                                <Typography className={classes.apyLabel}>Boost APR</Typography>
+                            </div>
+                        )}
+
                     </div>
                 </div>
                 <div className={classes.audits}>

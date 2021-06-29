@@ -4590,6 +4590,7 @@ export const pools = [
         earnedToken: 'mooCakeV2CAKE-BNB',
         earnedTokenAddress: '0xb26642B6690E4c4c9A6dAd6115ac149c700C7dfE',
         earnContractAddress: '0xb26642B6690E4c4c9A6dAd6115ac149c700C7dfE',
+        stratType:'StratLP',
         pricePerFullShare: 1,
         tvl: 0,
         oracle: 'lps',
