@@ -1,97 +1,145 @@
 {
     "IL_NONE": {
         "name": "Very low or no projected IL",
-        "category": "Impermanent loss",
+        "category": "Asset risk",
         "value": 0.50,
         "description": "TODO"
     },
     "IL_LOW": {
         "name": "Low projected IL",
-        "category": "Impermanent loss",
+        "category": "Asset risk",
         "value": 0.25,
         "description": "TODO"
     },
     "IL_HIGH": {
         "name": "High projected IL",
-        "category": "Impermanent loss",
+        "category": "Asset risk",
         "value": -0.5,
         "description": "TODO"
     }, 
     "ALGO_STABLE": {
         "name": "Algorithmic stable, experimental peg",
-        "category": "Impermanent loss",
-        "value": -0.25,
+        "category": "Asset risk",
+        "value": -0.5,
         "description": "TODO"
+    },
+    "INFLATIONARY": {
+
+    },
+    "LARGE_UNLOCKS": {
+
     },
     "MCAP_LARGE": {
         "name": "High market cap, low volitility asset",
-        "category": "Asset",
+        "category": "Asset risk",
         "value": 0.25,
         "description": "TODO"
     },
     "MCAP_SMALL": {
         "name": "Small market cap, high volitility asset",
-        "category": "Asset",
+        "category": "Asset risk",
         "value": -0.25,
         "description": "TODO"
     },
     "OWNER_MINT": {
         "name": "Owner can mint tokens causing inflation",
-        "category": "Smart contract",
+        "category": "Platform risks",
         "value": -0.5,
         "description": "TODO"
     },
-    "OWNER_UPGRADE": {
+    "FARM_OWNER_UPGRADE": {
         "name": "Owner can upgrade implementation",
-        "category": "Smart contract",
+        "category": "Platform risks",
         "value": -0.5,
         "description": "TODO"        
     },
+    "FARM_OWNER_MS_UPGRADE": {
+        "name": "Owner can upgrade implementation through a multisig",
+        "category": "Platform risks",
+        "value": -0.2,
+        "description": "TODO"     
+    },
+    "FARM_OWNER_TL_UPGRADE": {
+        "name": "Owner can upgrade implementation through a timelock",
+        "category": "Platform risks",
+        "value": -0.2,
+        "description": "TODO"     
+    },
+    "FARM_OWNER_MS_AND_TL_UPGRADE": {
+        "name": "Owner can upgrade implementation through timelock and/or multisig",
+        "category": "Platform risks",
+        "value": -0.1,
+        "description": "TODO"     
+    },
     "PLATFORM_NEW": {
         "name": "Platform is new and without track record",
-        "category": "Platform",
+        "category": "Platform risks",
         "value": -0.25,
         "description": "TODO" 
     },
-    "PLATFORM_STABLISHED": {
-        "name": "Platform is has known track record",
-        "category": "Platform",
+    "PLATFORM_ESTABLISHED": {
+        "name": "Platform has known track record",
+        "category": "Platform risks",
         "value": 0.25,
         "description": "TODO" 
     },
     "AUDIT": {
         "name": "The platform has at least one audit from trusted auditor",
-        "category": "Platform",
+        "category": "Platform risks",
         "value": 0.25,
         "description": "TODO" 
     },
-    "ANON_TEAM": {
-        "name": "The team is pseudonymous",
-        "category": "Platform",
+    "TIMELOCK_PRESENT": {
+        "name": "Timelock present for risky actions",
+        "category": "Platform risks",
+        "value": 0.25,
+        "description": "TODO"  
+    },
+    "MULTISIG_PRESENT": {
+        "name": "Multisig present for risky actions",
+        "category": "Platform risks",
+        "value": 0.25,
+        "description": "TODO"  
+    },
+    "HACKS_PREVIOUS": {
+        "name": "The platform has suffered previous hacks.",
+        "category": "Platform risks",
         "value": -0.25,
-        "description": "TODO"        
+        "description": "TODO"  
+    },
+    "UNVERIFIED": {
+        "name": "Some contracts are not verified.",
+        "category": "Platform risks",
+        "value": -0.25,
+        "description": "TODO"     
     },
     "STRAT_BATTLETESTED": {
-        "name": "Strat has been running for months",
-        "category": "Beefy",
+        "name": "Strat has been running for at least a month",
+        "category": "Beefy risk",
         "value": 0.25,
         "description": "TODO"   
     },
     "STRAT_NEW": {
-        "name": "Beefy strat is new",
-        "category": "Beefy",
+        "name": "Strat is new",
+        "category": "Beefy risk",
         "value": 0.25,
         "description": "TODO"  
     },
     "COMPLEXITY_LOW": {
         "name": "Beefy strat is simple",
-        "category": "Beefy",
+        "category": "Beefy risk",
+        "value": 0.5,
+        "description": "TODO"  
+    },
+    "COMPLEXITY_MID": {
+        "name": "Beefy strat is of middling complexity",
+        "category": "Beefy risk",
         "value": 0.25,
         "description": "TODO"  
     },
     "COMPLEXITY_HIGH": {
         "name": "Beefy strat is complex",
-        "category": "Beefy",
+        "category": "Beefy risk",
         "value": 0.25,
         "description": "TODO"  
     }

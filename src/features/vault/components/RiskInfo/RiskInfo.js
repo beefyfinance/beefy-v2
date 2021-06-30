@@ -5,10 +5,11 @@ import LinkButton from '../../../../components/LinkButton/LinkButton';
 import question from "./question.svg";
 import up from "./up.svg";
 import down from "./down.svg";
+import risks from "../../../../config/risk.json"
 
 const useStyles = makeStyles(styles);
 
-const RiskInfo = () => {
+const RiskInfo = ({ vaultRisks }) => {
     const classes = useStyles();
 
     return (
@@ -28,45 +29,25 @@ const RiskInfo = () => {
             </div>
             <div className={classes.cardContent}>
                 <div className={classes.riskList}>
-                    <div className={classes.riskRow}>
-                        <div className={classes.infoContainer}>
-                            <img src={up} className={classes.arrow} />
-                            <div>
-                                <Typography className={classes.risk}>Low Projected IL</Typography>
-                                <Typography className={classes.riskCategory}>Impermanent loss</Typography>
+                    {vaultRisks.map(risk => (
+                        <div className={classes.riskRow}>
+                            <div className={classes.infoContainer}>
+                                {risks[risk].value > 0 ? (
+                                    <img src={up} className={classes.arrow} />
+                                ) : (
+                                    <img src={down} className={classes.arrow} />
+                                )}
+                                <div>
+                                    <Typography className={classes.risk}>{risks[risk].name}</Typography>
+                                    <Typography className={classes.riskCategory}>{risks[risk].category}</Typography>
+                                </div>
+                            </div>
+                            <div className={classes.moreInfoContainer}>
+                                <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
+                                <img src={question} className={classes.moreInfoIcon}/>
                             </div>
                         </div>
-                        <div className={classes.moreInfoContainer}>
-                            <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
-                            <img src={question} className={classes.moreInfoIcon} />
-                        </div>
-                    </div>
-                    <div className={classes.riskRow}>
-                        <div className={classes.infoContainer}>
-                            <img src={down} className={classes.arrow} />
-                            <div>
-                                <Typography className={classes.risk}>High market cap, low volitility asset</Typography>
-                                <Typography className={classes.riskCategory}>Asset</Typography>
-                            </div>
-                        </div>
-                        <div className={classes.moreInfoContainer}>
-                            <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
-                            <img src={question} className={classes.moreInfoIcon}/>
-                        </div>
-                    </div>
-                    <div className={classes.riskRow}>
-                        <div className={classes.infoContainer}>
-                            <img src={down} className={classes.arrow} />
-                            <div>
-                                <Typography className={classes.risk}>Owner can mint tokens causing inflation</Typography>
-                                <Typography className={classes.riskCategory}>Smart contract</Typography>
-                            </div>
-                        </div>
-                        <div className={classes.moreInfoContainer}>
-                            <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
-                            <img src={question}  className={classes.moreInfoIcon}/>
-                        </div>
-                    </div>
+                    ))}
                 </div>
                 <div className={classes.notes}>
                     <Typography>The lower the Beefy Risk Score the safer your investment.</Typography>

@@ -20,6 +20,7 @@ export const pools = [
         status: 'active',
         platform: 'Beefy.Finance',
         assets: ['BIFI'],
+        risks: [],
         callFee: 0.5,
         withdrawalFee: '0.05%',
         buyTokenUrl: 'https://app.1inch.io/#/56/swap/BNB/BIFI',
@@ -48,6 +49,7 @@ export const pools = [
         status: 'active',
         platform: '1Inch',
         assets: ['1INCH'],
+        risks: ['IL_NONE', 'MCAP_LARGE', 'PLATFORM_ESTABLISHED', 'AUDIT', 'STRAT_BATTLETESTED', 'COMPLEXITY_LOW'],
         callFee: 0.5,
         buyTokenUrl:
             'https://1inch.exchange/#/r/0xF4cb25a1FF50E319c267b3E51CBeC2699FB2A43B/BNB/1INCH/?network=56',
@@ -73,6 +75,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['CAKE'],
+        risks: ['IL_NONE', 'MCAP_LARGE', 'PLATFORM_ESTABLISHED'],
         callFee: 0.5,
         withdrawalFee: '0.0%',
         buyTokenUrl:
@@ -100,6 +103,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['AMPL-BSC-mp', 'BUSD'],
+        risks: [],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xDB021b1B247fe2F1fa57e0A87C748Cc1E321F07F/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -128,6 +132,7 @@ export const pools = [
         status: 'active',
         platform: 'Mdex',
         assets: ['MDX'],
+        risks: [],
         callFee: 0.5,
         buyTokenUrl:
             'https://bsc.mdex.com/#/swap?inputCurrency=WBNB&outputCurrency=0x9c65ab58d8d978db963e63f2bfb7121627e3a739',
