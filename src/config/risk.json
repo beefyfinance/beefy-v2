@@ -1,21 +1,99 @@
 {
-    "1": {
-        "name": "Low Projected IL",
+    "IL_NONE": {
+        "name": "Very low or no projected IL",
+        "category": "Impermanent loss",
+        "value": 0.50,
+        "description": "TODO"
+    },
+    "IL_LOW": {
+        "name": "Low projected IL",
         "category": "Impermanent loss",
         "value": 0.25,
         "description": "TODO"
     },
-    "2": {
+    "IL_HIGH": {
+        "name": "High projected IL",
+        "category": "Impermanent loss",
+        "value": -0.5,
+        "description": "TODO"
+    }, 
+    "ALGO_STABLE": {
+        "name": "Algorithmic stable, experimental peg",
+        "category": "Impermanent loss",
+        "value": -0.25,
+        "description": "TODO"
+    },
+    "MCAP_LARGE": {
         "name": "High market cap, low volitility asset",
         "category": "Asset",
         "value": 0.25,
         "description": "TODO"
     },
-    "3": {
+    "MCAP_SMALL": {
+        "name": "Small market cap, high volitility asset",
+        "category": "Asset",
+        "value": -0.25,
+        "description": "TODO"
+    },
+    "OWNER_MINT": {
         "name": "Owner can mint tokens causing inflation",
         "category": "Smart contract",
         "value": -0.5,
         "description": "TODO"
+    },
+    "OWNER_UPGRADE": {
+        "name": "Owner can upgrade implementation",
+        "category": "Smart contract",
+        "value": -0.5,
+        "description": "TODO"        
+    },
+    "PLATFORM_NEW": {
+        "name": "Platform is new and without track record",
+        "category": "Platform",
+        "value": -0.25,
+        "description": "TODO" 
+    },
+    "PLATFORM_STABLISHED": {
+        "name": "Platform is has known track record",
+        "category": "Platform",
+        "value": 0.25,
+        "description": "TODO" 
+    },
+    "AUDIT": {
+        "name": "The platform has at least one audit from trusted auditor",
+        "category": "Platform",
+        "value": 0.25,
+        "description": "TODO" 
+    },
+    "ANON_TEAM": {
+        "name": "The team is pseudonymous",
+        "category": "Platform",
+        "value": -0.25,
+        "description": "TODO"        
+    },
+    "STRAT_BATTLETESTED": {
+        "name": "Strat has been running for months",
+        "category": "Beefy",
+        "value": 0.25,
+        "description": "TODO"   
+    },
+    "STRAT_NEW": {
+        "name": "Beefy strat is new",
+        "category": "Beefy",
+        "value": 0.25,
+        "description": "TODO"  
+    },
+    "COMPLEXITY_LOW": {
+        "name": "Beefy strat is simple",
+        "category": "Beefy",
+        "value": 0.25,
+        "description": "TODO"  
+    },
+    "COMPLEXITY_HIGH": {
+        "name": "Beefy strat is complex",
+        "category": "Beefy",
+        "value": 0.25,
+        "description": "TODO"  
     }
 }
 
