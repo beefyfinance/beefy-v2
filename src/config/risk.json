@@ -1,0 +1,22 @@
+{
+    "1": {
+        "name": "Low Projected IL",
+        "category": "Impermanent loss",
+        "value": 0.25,
+        "description": "TODO"
+    },
+    "2": {
+        "name": "High market cap, low volitility asset",
+        "category": "Asset",
+        "value": 0.25,
+        "description": "TODO"
+    },
+    "3": {
+        "name": "Owner can mint tokens causing inflation",
+        "category": "Smart contract",
+        "value": -0.5,
+        "description": "TODO"
+    }
+}
+
+

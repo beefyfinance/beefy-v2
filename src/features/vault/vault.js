@@ -136,14 +136,14 @@ const Vault = () => {
                                     <Divider />
                                 </Box>
                                 <Box>
-                                    <Typography variant={"h1"}>{calcDaily(item.apy)}</Typography>
+                                    <Typography variant={"h1"}>{calcDaily(item.apy.totalApy)}</Typography>
                                     <Typography variant={"body2"}>Daily</Typography>
                                 </Box>
                                 <Box>
                                     <Divider />
                                 </Box>
                                 <Box>
-                                    <Typography variant={"h1"}>{formatApy(item.apy)}</Typography>
+                                    <Typography variant={"h1"}>{formatApy(item.apy.totalApy)}</Typography>
                                     <Typography variant={"body2"}>APY</Typography>
                                 </Box>
                             </Box>

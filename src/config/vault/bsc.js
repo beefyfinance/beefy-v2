@@ -24,7 +24,7 @@ export const pools = [
         withdrawalFee: '0.05%',
         buyTokenUrl: 'https://app.1inch.io/#/56/swap/BNB/BIFI',
         createdAt: 1623706144,
-        riskScore: 1.7,
+        risks: 1.7,
         network: 'bsc'
     },
     {
