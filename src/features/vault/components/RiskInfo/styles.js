@@ -74,7 +74,8 @@ const styles = (theme) => ({
     },
     moreInfoContainer: {
         display: 'flex',
-        alignItems: "center"
+        alignItems: "center",
+        position: 'relative'
     },
     moreInfoLabel: {
         ...boldFont,
