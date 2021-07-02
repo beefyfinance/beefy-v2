@@ -1,4 +1,5 @@
 import * as React from "react";
+import {addressBook} from "blockchain-addressbook";
 import {useParams} from "react-router";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,10 +14,9 @@ import {ArrowLeft} from "@material-ui/icons";
 import reduxActions from "../redux/actions";
 import Deposit from "./components/Deposit";
 import Withdraw from "./components/Withdraw";
-import TokenInfo from "./components/TokenInfo";
-import StrategyInfo from "./components/StrategyInfo";
-import RiskInfo from "./components/RiskInfo";
-import {addressBook} from "blockchain-addressbook"
+import TokenCard from "./components/TokenCard";
+import StrategyCard from "./components/StrategyCard";
+import SafetyCard from "./components/SafetyCard";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -191,8 +191,8 @@ const Vault = () => {
                             </Box>
 
                         </Paper>
-                        <RiskInfo vaultRisks={item.risks}/>
-                        <StrategyInfo 
+                        <SafetyCard vaultRisks={item.risks}/>
+                        <StrategyCard 
                             stratType={item.stratType}
                             stratAddr={item.strategy}
                             vaultAddr={item.earnContractAddress}
@@ -213,7 +213,7 @@ const Vault = () => {
 const renderTokens = item => {
     return item.assets.map(asset => {
         if (asset in addressBook[item.network].tokens) {
-            return <TokenInfo token={addressBook[item.network].tokens[asset]} network={item.network} />
+            return <TokenCard token={addressBook[item.network].tokens[asset]} network={item.network} />
         } else return null
     })
 }

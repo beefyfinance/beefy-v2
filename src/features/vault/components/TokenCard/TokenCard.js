@@ -2,14 +2,15 @@ import React from 'react';
 import {config} from '../../../../config/config'
 import {makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
-import LinkButton from '../../../../components/LinkButton/LinkButton';
-import Card from "../Card";
-import CardHeader from "../CardHeader";
-import CardContent from "../CardContent";
+import LinkButton from '../../../../components/LinkButton';
+import Card from "../Card/Card";
+import CardHeader from "../Card/CardHeader";
+import CardContent from "../Card/CardContent";
+import CardTitle from "../Card/CardTitle/CardTitle"
 
 const useStyles = makeStyles(styles);
 
-const TokenInfo = ({ token, network }) => {
+const TokenCard = ({ token, network }) => {
     const classes = useStyles();
 
     const { symbol, website, address, description} = token;
@@ -17,14 +18,7 @@ const TokenInfo = ({ token, network }) => {
     return (
         <Card>
             <CardHeader>
-                <div>
-                    <div>
-                        <Typography className={classes.cardTitle}>{symbol}</Typography>
-                    </div>
-                    <div>
-                        <Typography className={classes.cardSubtitle}>Asset details</Typography>
-                    </div>
-                </div>
+                <CardTitle title={symbol} subtitle="Asset details" />
                 <div className={classes.cardActions}>
                     {website ? (
                         <div className={classes.cardAction}>
@@ -45,4 +39,4 @@ const TokenInfo = ({ token, network }) => {
     );
 };
 
-export default TokenInfo;
+export default TokenCard;

@@ -9,13 +9,14 @@ import down from "./down.svg";
 import { RISKS } from "../../../../config/risk";
 import safetyScore from "../../../../helpers/safetyScore";
 import SafetyScore from "../SafetyScore";
-import Card from "../Card";
-import CardHeader from "../CardHeader";
-import CardContent from "../CardContent";
+import Card from "../Card/Card";
+import CardHeader from "../Card/CardHeader";
+import CardContent from "../Card/CardContent";
+import CardTitle from "../Card/CardTitle";
 
 const useStyles = makeStyles(styles);
 
-const RiskInfo = ({ vaultRisks }) => {
+const SafetyCard = ({ vaultRisks }) => {
     const classes = useStyles();
 
     const categoryText = c => `${c.charAt(0).toUpperCase()}${c.slice(1)} Risk`
@@ -23,12 +24,7 @@ const RiskInfo = ({ vaultRisks }) => {
     return (
         <Card>
             <CardHeader className={classes.cardHeader}>
-                <div>
-                    <SafetyScore score={safetyScore(vaultRisks)}/>
-                    <div>
-                        <Typography className={classes.cardSubtitle}>Safety Score</Typography>
-                    </div>
-                </div>
+                <CardTitle title={<SafetyScore score={safetyScore(vaultRisks)}/>} subtitle="Safety Score" />
                 <div className={classes.cardActions}>
                     <LinkButton href="#" text="How is it calculated?" />
                 </div>
@@ -76,4 +72,4 @@ const RiskInfo = ({ vaultRisks }) => {
 
 
 
-export default RiskInfo;
+export default SafetyCard;

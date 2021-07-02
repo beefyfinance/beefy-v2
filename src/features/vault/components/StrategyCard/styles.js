@@ -15,11 +15,6 @@ const styles = (theme) => ({
     cardAction: {
         marginLeft: '15px'
     },
-    cardTitle: {
-        ...bold,
-        fontSize: '30px',
-        lineHeight: '42px'
-    },
     apysContainer: {
         marginBottom: '32px'
     },

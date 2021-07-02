@@ -3,24 +3,23 @@ import {config} from "../../../../config/config";
 import {formatApy} from "../../../../helpers/format"
 import {makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
-import LinkButton from '../../../../components/LinkButton/LinkButton';
-import Card from "../Card";
-import CardHeader from "../CardHeader";
-import CardContent from "../CardContent";
+import LinkButton from '../../../../components/LinkButton';
+import Card from "../Card/Card";
+import CardHeader from "../Card/CardHeader";
+import CardContent from "../Card/CardContent";
+import CardTitle from "../Card/CardTitle";
 import shield from "./shield.svg";
 import stratText from "./stratText";
 
 const useStyles = makeStyles(styles);
 
-const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, platform, assets, want }) => {
+const StrategyCard = ({ stratType, stratAddr, vaultAddr, apy, audit, network, platform, assets, want }) => {
     const classes = useStyles();
 
     return (
         <Card>
             <CardHeader>
-                <div>
-                    <Typography className={classes.cardTitle}>Strategy</Typography>
-                </div>
+                <CardTitle title="Strategy" />
                 <div className={classes.cardActions}>
                     <div className={classes.cardAction}>
                         <LinkButton href={`${config[network].explorerUrl}/address/${stratAddr}`} text="Strategy address" />
@@ -78,4 +77,4 @@ const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
     );
 };
 
-export default StrategyInfo;
+export default StrategyCard;
