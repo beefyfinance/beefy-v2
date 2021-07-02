@@ -13,14 +13,6 @@ const styles = (theme) => ({
         backgroundColor: 'transparent',
         marginTop: '20px'
     },
-    cardHeader: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#272B4A',
-        borderRadius: '20px 20px 0 0',
-        padding: '30px 32px 36px 32px'
-    },
     cardActions: {
         display: 'flex'
     },

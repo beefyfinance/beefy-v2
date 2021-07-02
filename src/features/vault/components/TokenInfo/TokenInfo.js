@@ -3,6 +3,7 @@ import {config} from '../../../../config/config'
 import {makeStyles, Paper, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
+import CardHeader from "../CardHeader"
 
 const useStyles = makeStyles(styles);
 
@@ -13,7 +14,7 @@ const TokenInfo = ({ token, network }) => {
 
     return (
         <Paper className={classes.cardContainer}>
-            <div className={classes.cardHeader}>
+            <CardHeader>
                 <div>
                     <div>
                         <Typography className={classes.cardTitle}>{symbol}</Typography>
@@ -32,7 +33,7 @@ const TokenInfo = ({ token, network }) => {
                         <LinkButton href={`${config[network].explorerUrl}/token/${address}`}  className={classes.cardAction} text="Token Contract" />
                     </div>
                 </div>
-            </div>
+            </CardHeader>
             <div className={classes.cardContent}>
                 <Typography className={classes.text}>
                     {description ? description : 'No token description available.'}

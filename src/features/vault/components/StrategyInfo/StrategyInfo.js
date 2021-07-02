@@ -4,6 +4,7 @@ import {formatApy} from "../../../../helpers/format"
 import {makeStyles, Paper, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
+import CardHeader from "../CardHeader"
 import shield from "./shield.svg"
 import stratText from "./stratText"
 
@@ -14,7 +15,7 @@ const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
 
     return (
         <Paper className={classes.cardContainer}>
-            <div className={classes.cardHeader}>
+            <CardHeader>
                 <div>
                     <Typography className={classes.cardTitle}>Strategy</Typography>
                 </div>
@@ -26,7 +27,7 @@ const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
                         <LinkButton href={`${config[network].explorerUrl}/address/${vaultAddr}`} text="Vault address" />
                     </div>                           
                 </div>
-            </div>
+            </CardHeader>
             <div className={classes.cardContent}>
                 <Typography className={classes.text}>{stratText(stratType, platform, assets, want)}</Typography>
                 <div className={classes.apysContainer}>

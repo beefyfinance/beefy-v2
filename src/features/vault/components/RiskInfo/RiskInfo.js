@@ -9,6 +9,7 @@ import down from "./down.svg";
 import { RISKS } from "../../../../config/risk";
 import safetyScore from "../../../../helpers/safetyScore";
 import SafetyScore from "../SafetyScore";
+import CardHeader from "../CardHeader";
 
 const useStyles = makeStyles(styles);
 
@@ -19,7 +20,7 @@ const RiskInfo = ({ vaultRisks }) => {
     
     return (
         <Paper className={classes.cardContainer}>
-            <div className={classes.cardHeader}>
+            <CardHeader className={classes.cardHeader}>
                 <div>
                     <SafetyScore score={safetyScore(vaultRisks)}/>
                     <div>
@@ -29,7 +30,7 @@ const RiskInfo = ({ vaultRisks }) => {
                 <div className={classes.cardActions}>
                     <LinkButton href="#" text="How is it calculated?" />
                 </div>
-            </div>
+            </CardHeader>
             <div className={classes.cardContent}>
                 <div className={classes.riskList}>
                     {vaultRisks.map(risk => (
