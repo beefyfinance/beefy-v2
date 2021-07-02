@@ -9,22 +9,11 @@ const bold = {
 }
 
 const styles = (theme) => ({
-    cardContainer: {
-        backgroundColor: 'transparent',
-        marginTop: '20px'
-    },
     cardActions: {
         display: 'flex'
     },
     cardAction: {
         marginLeft: '15px'
-    },
-    cardContent: {
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#313759',
-        borderRadius: '0 0 20px 20px',
-        padding: '30px 32px 36px 32px'
     },
     cardTitle: {
         ...bold,

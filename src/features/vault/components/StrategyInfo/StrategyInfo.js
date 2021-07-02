@@ -1,12 +1,14 @@
 import React from 'react';
 import {config} from "../../../../config/config";
 import {formatApy} from "../../../../helpers/format"
-import {makeStyles, Paper, Typography} from '@material-ui/core';
+import {makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
-import CardHeader from "../CardHeader"
-import shield from "./shield.svg"
-import stratText from "./stratText"
+import Card from "../Card";
+import CardHeader from "../CardHeader";
+import CardContent from "../CardContent";
+import shield from "./shield.svg";
+import stratText from "./stratText";
 
 const useStyles = makeStyles(styles);
 
@@ -14,7 +16,7 @@ const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
     const classes = useStyles();
 
     return (
-        <Paper className={classes.cardContainer}>
+        <Card>
             <CardHeader>
                 <div>
                     <Typography className={classes.cardTitle}>Strategy</Typography>
@@ -28,7 +30,7 @@ const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
                     </div>                           
                 </div>
             </CardHeader>
-            <div className={classes.cardContent}>
+            <CardContent>
                 <Typography className={classes.text}>{stratText(stratType, platform, assets, want)}</Typography>
                 <div className={classes.apysContainer}>
                     <Typography className={classes.apyTitle}>APY breakdown</Typography>
@@ -71,8 +73,8 @@ const StrategyInfo = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
                         <Typography className={classes.auditLabel} >Community Audited</Typography>
                     </a>
                 </div>
-            </div>
-        </Paper>
+            </CardContent>
+        </Card>
     );
 };
 

@@ -1,18 +1,9 @@
 const styles = (theme) => ({
-    cardContainer: {
-        backgroundColor: 'transparent',
-        margin: '20px auto'
-    },
     cardActions: {
         display: 'flex',
     },
     cardAction: {
         marginLeft: '15px'
-    },
-    cardContent: {
-        backgroundColor: '#313759',
-        borderRadius: '0 0 20px 20px',
-        padding: '30px 32px 36px 32px'
     },
     cardTitle: {
         fontFamily: 'Proxima Nova',

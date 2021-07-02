@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles, Paper, Typography} from '@material-ui/core';
+import {makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton';
 import Tooltip from '../../../../components/Tooltip';
@@ -9,7 +9,9 @@ import down from "./down.svg";
 import { RISKS } from "../../../../config/risk";
 import safetyScore from "../../../../helpers/safetyScore";
 import SafetyScore from "../SafetyScore";
+import Card from "../Card";
 import CardHeader from "../CardHeader";
+import CardContent from "../CardContent";
 
 const useStyles = makeStyles(styles);
 
@@ -19,7 +21,7 @@ const RiskInfo = ({ vaultRisks }) => {
     const categoryText = c => `${c.charAt(0).toUpperCase()}${c.slice(1)} Risk`
     
     return (
-        <Paper className={classes.cardContainer}>
+        <Card>
             <CardHeader className={classes.cardHeader}>
                 <div>
                     <SafetyScore score={safetyScore(vaultRisks)}/>
@@ -31,7 +33,7 @@ const RiskInfo = ({ vaultRisks }) => {
                     <LinkButton href="#" text="How is it calculated?" />
                 </div>
             </CardHeader>
-            <div className={classes.cardContent}>
+            <CardContent>
                 <div className={classes.riskList}>
                     {vaultRisks.map(risk => (
                         <>
@@ -67,8 +69,8 @@ const RiskInfo = ({ vaultRisks }) => {
                         notice if there is any suspicious activity.
                     </Typography>
                 </div>
-            </div>
-        </Paper>
+            </CardContent>
+        </Card>
     );
 };
 

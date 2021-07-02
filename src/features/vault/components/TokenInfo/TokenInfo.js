@@ -1,9 +1,11 @@
 import React from 'react';
 import {config} from '../../../../config/config'
-import {makeStyles, Paper, Typography} from '@material-ui/core';
+import {makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
-import CardHeader from "../CardHeader"
+import Card from "../Card";
+import CardHeader from "../CardHeader";
+import CardContent from "../CardContent";
 
 const useStyles = makeStyles(styles);
 
@@ -13,7 +15,7 @@ const TokenInfo = ({ token, network }) => {
     const { symbol, website, address, description} = token;
 
     return (
-        <Paper className={classes.cardContainer}>
+        <Card>
             <CardHeader>
                 <div>
                     <div>
@@ -34,12 +36,12 @@ const TokenInfo = ({ token, network }) => {
                     </div>
                 </div>
             </CardHeader>
-            <div className={classes.cardContent}>
+            <CardContent>
                 <Typography className={classes.text}>
                     {description ? description : 'No token description available.'}
                 </Typography>
-            </div>
-        </Paper>
+            </CardContent>
+        </Card>
     );
 };
 
