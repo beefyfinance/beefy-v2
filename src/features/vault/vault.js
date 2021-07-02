@@ -191,7 +191,7 @@ const Vault = () => {
                             </Box>
 
                         </Paper>
-                        <SafetyCard vaultRisks={item.risks}/>
+                        {item.risks && item.risks.length > 0 && <SafetyCard vaultRisks={item.risks}/>}
                         <StrategyCard 
                             stratType={item.stratType}
                             stratAddr={item.strategy}

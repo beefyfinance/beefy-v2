@@ -20,6 +20,7 @@ export const pools = [
         status: 'active',
         platform: 'Lydia',
         assets: ['LYD', 'USDT'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl: 'https://www.lydia.finance/#/add/0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084/0xde3a24028580884448a5397872046a019649b084',
         buyTokenUrl: 'https://exchange.lydia.finance/#/swap?inputCurrency=0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084&outputCurrency=0xde3a24028580884448a5397872046a019649b084',
@@ -46,6 +47,7 @@ export const pools = [
         status: 'active',
         platform: 'Lydia',
         assets: ['LYD', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl: 'https://www.lydia.finance/#/add/0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
         buyTokenUrl: 'https://exchange.lydia.finance/#/swap?inputCurrency=0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084&outputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
@@ -72,6 +74,7 @@ export const pools = [
         status: 'active',
         platform: 'OliveSwap',
         assets: ['OLIVE', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl: 'https://swap.olive.cash/#/add/AVAX/0x617724974218A18769020A70162165A539c07E8a',
         buyTokenUrl: 'https://swap.olive.cash/#/swap?outputCurrency=0x617724974218A18769020A70162165A539c07E8a',
@@ -98,6 +101,7 @@ export const pools = [
         status: 'active',
         platform: 'OliveSwap',
         assets: ['OLIVE', 'USDT'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl: 'https://swap.olive.cash/#/add/0xde3A24028580884448a5397872046a019649b084/0x617724974218A18769020A70162165A539c07E8a',
         buyTokenUrl: 'https://swap.olive.cash/#/swap?outputCurrency=0x617724974218A18769020A70162165A539c07E8a',
@@ -125,6 +129,7 @@ export const pools = [
         status: 'active',
         platform: 'Snowball',
         assets: ['USDT', 'BUSD', 'DAI'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl: 'https://snowball.network/stablevault/',
         network: 'avax'
@@ -151,6 +156,7 @@ export const pools = [
         status: 'active',
         platform: 'Complus',
         assets: ['USDT', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0xde3A24028580884448a5397872046a019649b084',
@@ -178,6 +184,7 @@ export const pools = [
         status: 'active',
         platform: 'Complus',
         assets: ['ETH', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
@@ -205,6 +212,7 @@ export const pools = [
         status: 'eol',
         platform: 'Complus',
         assets: ['PNG', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982',
@@ -233,6 +241,7 @@ export const pools = [
         status: 'active',
         platform: 'Snowball',
         assets: ['SNOB', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xC38f41A296A4493Ff429F1238e030924A1542e50',
@@ -261,6 +270,7 @@ export const pools = [
         status: 'active',
         platform: 'Complus',
         assets: ['COM', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0x3711c397B6c8F7173391361e27e67d72F252cAad',
@@ -289,6 +299,7 @@ export const pools = [
         status: 'active',
         platform: 'Complus',
         assets: ['DAI', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
@@ -317,6 +328,7 @@ export const pools = [
         status: 'active',
         platform: 'Pangolin',
         assets: ['SUSHI', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc',
@@ -345,6 +357,7 @@ export const pools = [
         status: 'active',
         platform: 'Pangolin',
         assets: ['WBTC', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB',
@@ -373,6 +386,7 @@ export const pools = [
         status: 'active',
         platform: 'Pangolin',
         assets: ['LINK', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651',
@@ -401,6 +415,7 @@ export const pools = [
         status: 'active',
         platform: 'Pangolin',
         assets: ['UNI', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xf39f9671906d8630812f9d9863bBEf5D523c84Ab',
@@ -429,6 +444,7 @@ export const pools = [
         status: 'active',
         platform: 'Pangolin',
         assets: ['USDT', 'PNG'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0xde3A24028580884448a5397872046a019649b084',
@@ -457,6 +473,7 @@ export const pools = [
         status: 'active',
         platform: 'Pangolin',
         assets: ['ETH', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
@@ -485,6 +502,7 @@ export const pools = [
         status: 'active',
         platform: 'Pangolin',
         assets: ['USDT', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xde3A24028580884448a5397872046a019649b084',
@@ -513,6 +531,7 @@ export const pools = [
         status: 'active',
         platform: 'Pangolin',
         assets: ['PNG', 'AVAX'],
+        risks: [],
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982',

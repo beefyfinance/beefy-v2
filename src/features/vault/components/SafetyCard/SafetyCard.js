@@ -8,7 +8,7 @@ import up from "./up.svg";
 import down from "./down.svg";
 import { RISKS } from "../../../../config/risk";
 import safetyScore from "../../../../helpers/safetyScore";
-import SafetyScore from "../SafetyScore";
+import SafetyScore from "./SafetyScore/";
 import Card from "../Card/Card";
 import CardHeader from "../Card/CardHeader";
 import CardContent from "../Card/CardContent";
