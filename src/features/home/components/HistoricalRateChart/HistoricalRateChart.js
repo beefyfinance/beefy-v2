@@ -37,9 +37,10 @@ const HistoricalRateChart = ({chartData}) => {
     }
   }
   return (
-    <Box style={{ height: 75, width: 150, paddingTop: 20 }}>
+    <Box style={{ height: 60, width: 150 }}>
       <ResponsiveContainer>
         <AreaChart
+          defaultShowTooltip={false}
           data={chartData}
           margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
         >
@@ -53,6 +54,8 @@ const HistoricalRateChart = ({chartData}) => {
             fill={areaColor}
             label={renderLabel}
             dot={renderDot}
+            tooltipType="none"
+            legendType="none"
             />
         </AreaChart>
       </ResponsiveContainer>
