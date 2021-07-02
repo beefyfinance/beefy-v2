@@ -23,7 +23,7 @@ const RiskInfo = ({ vaultRisks }) => {
                 <div>
                     <SafetyScore score={safetyScore(vaultRisks)}/>
                     <div>
-                        <Typography className={classes.cardSubtitle}>Beefy risk profile</Typography>
+                        <Typography className={classes.cardSubtitle}>Beefy Safety Score</Typography>
                     </div>
                 </div>
                 <div className={classes.cardActions}>

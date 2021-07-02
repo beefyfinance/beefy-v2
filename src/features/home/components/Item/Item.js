@@ -35,7 +35,7 @@ const Item = ({item}) => {
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>
                     <Typography className={classes.h2}>{item.riskScore}</Typography>
-                    <Typography className={classes.h3}>Beefy risk score</Typography>
+                    <Typography className={classes.h3}>Beefy safety score</Typography>
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>
                     <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
