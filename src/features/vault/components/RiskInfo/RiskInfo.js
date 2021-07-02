@@ -6,7 +6,8 @@ import Tooltip from '../../../../components/Tooltip';
 import question from "./question.svg";
 import up from "./up.svg";
 import down from "./down.svg";
-import risks from "../../../../config/risk.json"
+import { RISKS } from "../../../../config/risk";
+import safetyScore from "../../../../helpers/safetyScore";
 
 const useStyles = makeStyles(styles);
 
@@ -18,7 +19,7 @@ const RiskInfo = ({ vaultRisks }) => {
             <div className={classes.cardHeader}>
                 <div>
                     <div>
-                        <Typography className={classes.cardTitle}>3.1</Typography>
+                        <Typography className={classes.cardTitle}>{safetyScore(vaultRisks)}</Typography>
                     </div>
                     <div>
                         <Typography className={classes.cardSubtitle}>Beefy risk profile</Typography>
@@ -33,17 +34,17 @@ const RiskInfo = ({ vaultRisks }) => {
                     {vaultRisks.map(risk => (
                         <div className={classes.riskRow}>
                             <div className={classes.infoContainer}>
-                                {risks[risk].value > 0 ? (
+                                {RISKS[risk].score <= 0 ? (
                                     <img src={up} className={classes.arrow} />
                                 ) : (
                                     <img src={down} className={classes.arrow} />
                                 )}
                                 <div>
-                                    <Typography className={classes.risk}>{risks[risk].name}</Typography>
-                                    <Typography className={classes.riskCategory}>{risks[risk].category}</Typography>
+                                    <Typography className={classes.risk}>{RISKS[risk].title}</Typography>
+                                    <Typography className={classes.riskCategory}>{RISKS[risk].category}</Typography>
                                 </div>
                             </div>
-                            <Tooltip>
+                            <Tooltip title={RISKS[risk].title} description={RISKS[risk].explanation}>
                                 <div className={classes.moreInfoContainer}>
                                     <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
                                     <img src={question} className={classes.moreInfoIcon}/>

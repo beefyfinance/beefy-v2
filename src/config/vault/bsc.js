@@ -49,7 +49,7 @@ export const pools = [
         status: 'active',
         platform: '1Inch',
         assets: ['1INCH'],
-        risks: ['IL_NONE', 'MCAP_LARGE', 'PLATFORM_ESTABLISHED', 'AUDIT', 'STRAT_BATTLETESTED', 'COMPLEXITY_LOW'],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://1inch.exchange/#/r/0xF4cb25a1FF50E319c267b3E51CBeC2699FB2A43B/BNB/1INCH/?network=56',

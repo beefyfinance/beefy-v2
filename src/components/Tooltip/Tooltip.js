@@ -18,9 +18,9 @@ const Tooltip = ({ title, description, children}) => {
             {isOpen && (
                 <ClickAwayListener onClickAway={() => setIsOpen(false)}>
                     <div className={classes.tooltip}>
-                        <Typography className={classes.title}>What does this mean?</Typography>
+                        <Typography className={classes.title}>{title}</Typography>
                         <Divider className={classes.divider}/>
-                        <Typography>Low complexity strategies have few, if any, moving parts and their code is easy to read and debug. There is a direct correlation between code complexity and implicit risk. A simple strategy effectively mitigates implementation risks.</Typography>
+                        <Typography>{description}</Typography>
                     </div>
                 </ClickAwayListener>
             )}
