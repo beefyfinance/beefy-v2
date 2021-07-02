@@ -31,14 +31,6 @@ const styles = (theme) => ({
         borderRadius: '0 0 20px 20px',
         padding: '30px 32px 36px 32px'
     },
-    cardTitle: {
-        ...boldFont,
-        fontSize: '36px',
-        lineHeight: '42px',
-        letterSpacing: "-0.1px",
-        color: "#E88225"
-        
-    },
     cardSubtitle: {
         ...boldFont,
         fontSize: '18px',

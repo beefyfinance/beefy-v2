@@ -1,4 +1,4 @@
-export const MAX_SCORE = 5;
+export const MAX_SCORE = 10;
 
 export const RISKS = {
   COMPLEXITY_LOW: {

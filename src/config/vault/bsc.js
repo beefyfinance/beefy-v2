@@ -20,12 +20,11 @@ export const pools = [
         status: 'active',
         platform: 'Beefy.Finance',
         assets: ['BIFI'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         withdrawalFee: '0.05%',
         buyTokenUrl: 'https://app.1inch.io/#/56/swap/BNB/BIFI',
         createdAt: 1623706144,
-        risks: 1.7,
         network: 'bsc'
     },
     {
@@ -49,7 +48,7 @@ export const pools = [
         status: 'active',
         platform: '1Inch',
         assets: ['1INCH'],
-        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        risks: [],
         callFee: 0.5,
         buyTokenUrl:
             'https://1inch.exchange/#/r/0xF4cb25a1FF50E319c267b3E51CBeC2699FB2A43B/BNB/1INCH/?network=56',

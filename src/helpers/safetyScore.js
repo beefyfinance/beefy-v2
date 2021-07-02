@@ -33,7 +33,7 @@ const calcRisk = (arr) => {
   }
   
   const safetyScore = (arr) => {
-    return (MAX_SCORE * (1 - calcRisk(arr))).toFixed(2); 
+    return (MAX_SCORE * (1 - calcRisk(arr))).toFixed(1); 
   }
 
   export default safetyScore

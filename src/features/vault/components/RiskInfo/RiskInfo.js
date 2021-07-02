@@ -8,6 +8,7 @@ import up from "./up.svg";
 import down from "./down.svg";
 import { RISKS } from "../../../../config/risk";
 import safetyScore from "../../../../helpers/safetyScore";
+import SafetyScore from "../SafetyScore";
 
 const useStyles = makeStyles(styles);
 
@@ -15,14 +16,12 @@ const RiskInfo = ({ vaultRisks }) => {
     const classes = useStyles();
 
     const categoryText = c => `${c.charAt(0).toUpperCase()}${c.slice(1)} Risk`
-
+    
     return (
         <Paper className={classes.cardContainer}>
             <div className={classes.cardHeader}>
                 <div>
-                    <div>
-                        <Typography className={classes.cardTitle}>{safetyScore(vaultRisks)}</Typography>
-                    </div>
+                    <SafetyScore score={safetyScore(vaultRisks)}/>
                     <div>
                         <Typography className={classes.cardSubtitle}>Beefy risk profile</Typography>
                     </div>
