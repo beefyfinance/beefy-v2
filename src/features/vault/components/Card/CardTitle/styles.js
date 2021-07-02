@@ -1,7 +1,4 @@
 const styles = theme => ({
-    container: {
-        
-    },
     title: {
         fontFamily: 'Proxima Nova',
         fontStyle: 'normal',
@@ -17,7 +14,7 @@ const styles = theme => ({
         lineHeight: '24px',
         color: '#8585A6',
         letterSpacing: '0.2px'
-    }
+    },
 });
 
 export default styles;

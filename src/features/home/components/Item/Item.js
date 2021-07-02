@@ -5,6 +5,7 @@ import {calcDaily, formatApy, formatTvl} from "../../../../helpers/format";
 import * as React from "react";
 import styles from "../../styles"
 import {useHistory} from "react-router-dom";
+import SafetyScore from "../../../../components/SafetyScore"
 
 const useStyles = makeStyles(styles);
 
@@ -34,7 +35,7 @@ const Item = ({item}) => {
                     </Grid>
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>
-                    <Typography className={classes.h2}>{item.riskScore}</Typography>
+                    <SafetyScore score={4.15} whiteLabel size='sm' />
                     <Typography className={classes.h3}>safety score</Typography>
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>

@@ -8,8 +8,6 @@ const useStyles = makeStyles(styles);
 const CardTitle = ({ title, subtitle }) => {
     const classes = useStyles();
 
-    console.log(typeof title, "MMM");
-
     return (
         <div className={classes.container}>
             {typeof title === 'object' ? <>{title}</> : (

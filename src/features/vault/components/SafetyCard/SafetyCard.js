@@ -8,7 +8,7 @@ import up from "./up.svg";
 import down from "./down.svg";
 import { RISKS } from "../../../../config/risk";
 import safetyScore from "../../../../helpers/safetyScore";
-import SafetyScore from "./SafetyScore/";
+import SafetyScore from "../../../../components/SafetyScore";
 import Card from "../Card/Card";
 import CardHeader from "../Card/CardHeader";
 import CardContent from "../Card/CardContent";
@@ -24,7 +24,7 @@ const SafetyCard = ({ vaultRisks }) => {
     return (
         <Card>
             <CardHeader className={classes.cardHeader}>
-                <CardTitle title={<SafetyScore score={safetyScore(vaultRisks)}/>} subtitle="Safety Score" />
+                <CardTitle title={<SafetyScore score={safetyScore(vaultRisks)} />} subtitle="Safety Score" />
                 <div className={classes.cardActions}>
                     <LinkButton href="#" text="How is it calculated?" />
                 </div>
