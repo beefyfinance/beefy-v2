@@ -14,6 +14,8 @@ const useStyles = makeStyles(styles);
 const RiskInfo = ({ vaultRisks }) => {
     const classes = useStyles();
 
+    const categoryText = c => `${c.charAt(0).toUpperCase()}${c.slice(1)} Risk`
+
     return (
         <Paper className={classes.cardContainer}>
             <div className={classes.cardHeader}>
@@ -43,7 +45,7 @@ const RiskInfo = ({ vaultRisks }) => {
                                     )}
                                     <div>
                                         <Typography className={classes.risk}>{RISKS[risk].title}</Typography>
-                                        <Typography className={classes.riskCategory}>{RISKS[risk].category}</Typography>
+                                        <Typography className={classes.riskCategory}>{categoryText(RISKS[risk].category)}</Typography>
                                     </div>
                                 </div>
                                 <Tooltip title={RISKS[risk].title} description={RISKS[risk].explanation}>
