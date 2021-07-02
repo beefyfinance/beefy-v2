@@ -32,25 +32,29 @@ const RiskInfo = ({ vaultRisks }) => {
             <div className={classes.cardContent}>
                 <div className={classes.riskList}>
                     {vaultRisks.map(risk => (
-                        <div className={classes.riskRow}>
-                            <div className={classes.infoContainer}>
-                                {RISKS[risk].score <= 0 ? (
-                                    <img src={up} className={classes.arrow} />
-                                ) : (
-                                    <img src={down} className={classes.arrow} />
-                                )}
-                                <div>
-                                    <Typography className={classes.risk}>{RISKS[risk].title}</Typography>
-                                    <Typography className={classes.riskCategory}>{RISKS[risk].category}</Typography>
+                        <>
+                            {RISKS[risk] && (
+                                <div className={classes.riskRow}>
+                                <div className={classes.infoContainer}>
+                                    {RISKS[risk].score <= 0 ? (
+                                        <img src={up} className={classes.arrow} />
+                                    ) : (
+                                        <img src={down} className={classes.arrow} />
+                                    )}
+                                    <div>
+                                        <Typography className={classes.risk}>{RISKS[risk].title}</Typography>
+                                        <Typography className={classes.riskCategory}>{RISKS[risk].category}</Typography>
+                                    </div>
                                 </div>
+                                <Tooltip title={RISKS[risk].title} description={RISKS[risk].explanation}>
+                                    <div className={classes.moreInfoContainer}>
+                                        <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
+                                        <img src={question} className={classes.moreInfoIcon}/>
+                                    </div>
+                                </Tooltip>
                             </div>
-                            <Tooltip title={RISKS[risk].title} description={RISKS[risk].explanation}>
-                                <div className={classes.moreInfoContainer}>
-                                    <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
-                                    <img src={question} className={classes.moreInfoIcon}/>
-                                </div>
-                            </Tooltip>
-                        </div>
+                            )}
+                        </>
                     ))}
                 </div>
                 <div className={classes.notes}>
