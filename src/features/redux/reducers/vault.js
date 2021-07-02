@@ -1,4 +1,4 @@
-import {HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_DONE,} from "../constants";
+import {HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_DONE} from "../constants";
 import {config} from "../../../config/config";
 import {getStablesForNetwork, isEmpty} from "../../../helpers/utils";
 

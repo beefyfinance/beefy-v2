@@ -22,6 +22,7 @@ export const pools = [
         assets: ['USDT', 'DAI', 'USDC'],
         callFee: 0.5,
         addLiquidityUrl: 'https://frozenyogurt.finance/pool',
+        network: 'fantom'
     },
     {
         id: 'froyo-froyo-ftm',
@@ -49,7 +50,8 @@ export const pools = [
             'https://app.sushi.com/add/ETH/0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA',
         buyTokenUrl:
             'https://app.sushi.com/swap?outputCurrency=0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-link-ftm',
         logo: 'fantom/LINK-FTM.png',
@@ -76,7 +78,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-cover-ftm',
         logo: 'fantom/COVER-FTM.png',
@@ -103,7 +106,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-cream-ftm',
         logo: 'fantom/CREAM-FTM.png',
@@ -130,7 +134,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-snx-ftm',
         logo: 'fantom/SNX-FTM.png',
@@ -157,7 +162,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-yfi-ftm',
         logo: 'fantom/YFI-FTM.png',
@@ -184,7 +190,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-usdt-ftm',
         logo: 'fantom/USDT-FTM.png',
@@ -211,7 +218,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-btc-ftm',
         logo: 'fantom/BTC-FTM.png',
@@ -238,7 +246,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-eth-ftm',
         logo: 'fantom/ETH-FTM.png',
@@ -265,7 +274,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-aave-ftm',
         logo: 'fantom/AAVE-FTM.png',
@@ -292,7 +302,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-crv-ftm',
         logo: 'fantom/CRV-FTM.png',
@@ -319,7 +330,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-boo-ftm',
         logo: 'fantom/BOO-FTM.png',
@@ -346,7 +358,8 @@ export const pools = [
             'https://spookyswap.finance/add',
         buyTokenUrl:
             'https://spookyswap.finance/swap',
-    },
+        network: 'fantom'
+        },
     {
         id: 'boo-ftm-usdc',
         logo: 'fantom/USDC-FTM.png',

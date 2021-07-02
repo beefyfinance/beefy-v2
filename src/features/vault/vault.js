@@ -13,6 +13,10 @@ import {ArrowLeft} from "@material-ui/icons";
 import reduxActions from "../redux/actions";
 import Deposit from "./components/Deposit";
 import Withdraw from "./components/Withdraw";
+import TokenInfo from "./components/TokenInfo";
+import StrategyInfo from "./components/StrategyInfo";
+import RiskInfo from "./components/RiskInfo";
+import {addressBook} from "blockchain-addressbook"
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -97,7 +101,7 @@ const Vault = () => {
             ) : (
                 <Grid container style={{position: 'relative'}}>
                     <Grid item xs={12} md={8} lg={9}>
-                        <Button className={classes.btnGoBack} onClick={() => {history.goBack()}}><ArrowLeft /> Back to Explore</Button>
+                        <Button className={classes.btnGoBack} onClick={() => {history.push('/')}}><ArrowLeft /> Back to Explore</Button>
                         <Grid className={classes.title} container>
                             <Grid>
                                 <Avatar className={classes.large} alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
@@ -187,20 +191,28 @@ const Vault = () => {
                             </Box>
 
                         </Paper>
-                        <Paper className={classes.paper}>
-                            <Typography>Projected yield</Typography>
-                        </Paper>
-                        <Paper className={classes.paper}>
-                            <Typography>Risk</Typography>
-                        </Paper>
-                        <Paper className={classes.paper}>
-                            <Typography>Strategy</Typography>
-                        </Paper>
+                        <RiskInfo />
+                        <StrategyInfo 
+                            description={`The strategy deposits the LP token on Pancake Swap and farms CAKE. The CAKE
+                             is sold to buy more Badger-BUSD LP and redeposited in the vault. The gas price is socialized 
+                             between all vault users and the compound happens automatically. APY breakdown`}
+                            stratAddr="#"
+                            vaultAddr="#"
+                        />
+                        {renderTokens(item)}
                     </Grid>
                 </Grid>
             )}
         </Container>
     )
 };
+
+const renderTokens = item => {
+    return item.assets.map(asset => {
+        if (asset in addressBook[item.network].tokens) {
+            return <TokenInfo token={addressBook[item.network].tokens[asset]} network={item.network} />
+        } else return null
+    })
+}
 
 export default Vault;

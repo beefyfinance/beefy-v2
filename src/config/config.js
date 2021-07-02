@@ -1,4 +1,4 @@
-export const config = {
+export const config = {   
     "bsc": {
         name: 'Binance Smart Chain',
         chainId: 56,
@@ -70,7 +70,7 @@ export const config = {
         },
         stableCoins: ['USDT', 'DAI', 'BUSD'],
     },
-    "matic": {
+    "polygon": {
         name: 'Polygon Chain',
         chainId: 137,
         rpc: [
@@ -93,7 +93,7 @@ export const config = {
         },
         stableCoins: ['USDC', 'USDT', 'maUSDC'],
     },
-    "ftm": {
+    "fantom": {
         name: 'Fantom',
         chainId: 250,
         rpc: [
