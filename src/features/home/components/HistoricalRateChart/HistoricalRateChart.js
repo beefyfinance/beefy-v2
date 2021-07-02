@@ -15,13 +15,13 @@ const HistoricalRateChart = ({chartData}) => {
     const first = index === 0;
     const last = index === chartData.length - 1;
     if (first) {
-      const labelPosWithOffsetX = x - 30
-      const labelPosWithOffsetY = y + 3
-      return <text className={classes.paragraph} fill={"#8585A6"} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+      const labelPosWithOffsetX = x - 20
+      const labelPosWithOffsetY = y
+      return <text style={{fontSize:"12px"}} fill={"#8585A6"} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
     } else if (last) {
-      const labelPosWithOffsetX = x
-      const labelPosWithOffsetY = y - 10
-      return <text className={classes.paragraph} fill={'white'} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+      const labelPosWithOffsetX = x + 5
+      const labelPosWithOffsetY = y
+      return <text style={{fontSize:"12px"}} fill={'white'} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
     }
     else {
       return null
@@ -37,23 +37,26 @@ const HistoricalRateChart = ({chartData}) => {
     }
   }
   return (
-      <ResponsiveContainer height={50} width={180} paddingRight={10}>
         <AreaChart
           data={chartData}
-          margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
+          margin={{ top: 10, right: 30, left: 30, bottom: 0 }}
+          height={35} 
+          width={200}
         >
           <XAxis hide dataKey="name" />
           <YAxis hide />
+          {/* Area needs some kind of padding */}
           <Area 
+            className={classes.chart}
             type="monotone" 
             dataKey="apy" 
             stroke={lineColor}
             fill={areaColor}
             label={renderLabel}
             dot={renderDot}
+            layout={"horizontal"}
             />
         </AreaChart>
-      </ResponsiveContainer>
   );
 };
 
