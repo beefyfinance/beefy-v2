@@ -15,13 +15,13 @@ const HistoricalRateChart = ({chartData}) => {
     const first = index === 0;
     const last = index === chartData.length - 1;
     if (first) {
-      const labelPosWithOffsetX = x - 25
-      const labelPosWithOffsetY = y - 5
-      return <text className={classes.paragraph} style={{color: 'white'}} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+      const labelPosWithOffsetX = x - 30
+      const labelPosWithOffsetY = y + 3
+      return <text className={classes.paragraph} fill={"#8585A6"} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
     } else if (last) {
       const labelPosWithOffsetX = x
       const labelPosWithOffsetY = y - 10
-      return <text className={classes.paragraph} style={{color: 'white'}} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+      return <text className={classes.paragraph} fill={'white'} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
     }
     else {
       return null
@@ -31,22 +31,19 @@ const HistoricalRateChart = ({chartData}) => {
     const { index } = props;
     const last = index === chartData.length - 1;
     if (last) {
-      return <Dot {...props} className="recharts-area-dot" />
+      return <Dot {...props} fill={'white'} className="recharts-area-dot" />
     } else {
       return null
     }
   }
   return (
-    <Box style={{ height: 60, width: 150 }}>
-      <ResponsiveContainer>
+      <ResponsiveContainer height={50} width={180} paddingRight={10}>
         <AreaChart
-          defaultShowTooltip={false}
           data={chartData}
           margin={{ top: 20, right: 30, left: 30, bottom: 5 }}
         >
           <XAxis hide dataKey="name" />
           <YAxis hide />
-          <Tooltip /> 
           <Area 
             type="monotone" 
             dataKey="apy" 
@@ -54,12 +51,9 @@ const HistoricalRateChart = ({chartData}) => {
             fill={areaColor}
             label={renderLabel}
             dot={renderDot}
-            tooltipType="none"
-            legendType="none"
             />
         </AreaChart>
       </ResponsiveContainer>
-    </Box>
   );
 };
 
