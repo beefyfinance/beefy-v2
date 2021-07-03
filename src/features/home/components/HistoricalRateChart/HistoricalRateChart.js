@@ -39,7 +39,7 @@ const HistoricalRateChart = ({chartData}) => {
   return (
         <AreaChart
           data={chartData}
-          margin={{ top: 10, right: 30, left: 30, bottom: 0 }}
+          margin={{ top: 10, right: 55, left: 55, bottom: 0 }}
           height={35} 
           width={200}
         >
@@ -52,6 +52,7 @@ const HistoricalRateChart = ({chartData}) => {
             dataKey="apy" 
             stroke={lineColor}
             fill={areaColor}
+            fillOpacity={100}
             label={renderLabel}
             dot={renderDot}
             layout={"horizontal"}
