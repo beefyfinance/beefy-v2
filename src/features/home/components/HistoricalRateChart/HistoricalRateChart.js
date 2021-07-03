@@ -1,13 +1,15 @@
 import * as React from "react";
-import {AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, Dot} from "recharts";
-import {Box, Typography, makeStyles} from "@material-ui/core"
+import {AreaChart, Area, XAxis, YAxis, Dot} from "recharts";
+import {makeStyles} from "@material-ui/core"
 import styles from "../../styles"
 
 const HistoricalRateChart = ({chartData}) => {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
+
   const areaColor = "#313759";
   const lineColor = "#7b809e";
+
   const renderLabel = (props) => {
     const { index, x, y } = props;
     const { apy } = chartData[index];
@@ -27,6 +29,7 @@ const HistoricalRateChart = ({chartData}) => {
       return null
     }
   };
+
   const renderDot = (props) => {
     const { index } = props;
     const last = index === chartData.length - 1;
@@ -36,6 +39,7 @@ const HistoricalRateChart = ({chartData}) => {
       return null
     }
   }
+
   return (
         <AreaChart
           data={chartData}
@@ -45,7 +49,6 @@ const HistoricalRateChart = ({chartData}) => {
         >
           <XAxis hide dataKey="name" />
           <YAxis hide />
-          {/* Area needs some kind of padding */}
           <Area 
             className={classes.chart}
             type="monotone" 
