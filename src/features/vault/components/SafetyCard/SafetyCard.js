@@ -18,7 +18,7 @@ const useStyles = makeStyles(styles);
 const SafetyCard = ({ vaultRisks, score }) => {
     const classes = useStyles();
 
-    const categoryText = c => `${c.charAt(0).toUpperCase()}${c.slice(1)} Risk`
+    const categoryText = c => `${c.charAt(0).toUpperCase()}${c.slice(1)}`
     
     return (
         <Card>
