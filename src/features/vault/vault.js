@@ -213,7 +213,7 @@ const Vault = () => {
 const renderTokens = item => {
     return item.assets.map(asset => {
         if (asset in addressBook[item.network].tokens) {
-            return <TokenCard token={addressBook[item.network].tokens[asset]} network={item.network} />
+            return <TokenCard key={asset} token={addressBook[item.network].tokens[asset]} network={item.network} />
         } else return null
     })
 }

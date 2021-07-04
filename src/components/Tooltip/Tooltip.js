@@ -1,7 +1,6 @@
 import {makeStyles, Typography, Divider} from "@material-ui/core";
 import React, {useState} from "react";
 import styles from "./styles"
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const useStyles = makeStyles(styles);

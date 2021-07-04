@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles, Typography} from '@material-ui/core';
+import {Box, makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton';
 import Tooltip from '../../../../components/Tooltip';
@@ -31,14 +31,14 @@ const SafetyCard = ({ vaultRisks, score }) => {
             <CardContent>
                 <div className={classes.riskList}>
                     {vaultRisks.map(risk => (
-                        <>
+                        <Box key={risk}>
                             {RISKS[risk] && (
                                 <div className={classes.riskRow}>
                                 <div className={classes.infoContainer}>
                                     {RISKS[risk].score <= 0 ? (
-                                        <img src={up} className={classes.arrow} />
+                                        <img alt="Positive score" src={up} className={classes.arrow} />
                                     ) : (
-                                        <img src={down} className={classes.arrow} />
+                                        <img alt="Negative score" src={down} className={classes.arrow} />
                                     )}
                                     <div>
                                         <Typography className={classes.risk}>{RISKS[risk].title}</Typography>
@@ -48,12 +48,12 @@ const SafetyCard = ({ vaultRisks, score }) => {
                                 <Tooltip title={RISKS[risk].title} description={RISKS[risk].explanation}>
                                     <div className={classes.moreInfoContainer}>
                                         <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
-                                        <img src={question} className={classes.moreInfoIcon}/>
+                                        <img alt="More info" src={question} className={classes.moreInfoIcon}/>
                                     </div>
                                 </Tooltip>
                             </div>
                             )}
-                        </>
+                        </Box>
                     ))}
                 </div>
                 <div className={classes.notes}>
