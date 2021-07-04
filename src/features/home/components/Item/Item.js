@@ -6,7 +6,6 @@ import * as React from "react";
 import styles from "../../styles"
 import {useHistory} from "react-router-dom";
 import SafetyScore from "../../../../components/SafetyScore";
-import safetyScore from "../../../../helpers/safetyScore";
 
 const useStyles = makeStyles(styles);
 
@@ -36,7 +35,7 @@ const Item = ({item}) => {
                     </Grid>
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>
-                    <SafetyScore score={safetyScore(item.risks)} whiteLabel size='sm' />
+                    <SafetyScore score={item.safetyScore} whiteLabel size='sm' />
                     <Typography className={classes.h3}>safety score</Typography>
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>

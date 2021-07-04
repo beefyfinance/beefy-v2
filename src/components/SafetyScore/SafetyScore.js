@@ -5,7 +5,7 @@ import styles from './styles';
 const styleProps = (score, whiteLabel, size) => {
     let props = { labelColor: "#4A9252", smColor: "#4A9252", mdColor: "#4A9252", lgColor: "#4A9252", size }
     
-    if (score === null) {
+    if (score === 0) {
         props = { labelColor: "#424866", smColor: "#424866", mdColor: "#424866", lgColor: "#424866" }
     } else if (score <= 4) {
         props = { labelColor: "#E84525", smColor: "#E84525", mdColor: "#424866", lgColor: "#424866" }
@@ -25,7 +25,7 @@ const SafetyScore = ({ score, whiteLabel, size = 'lg' }) => {
 
     return (
         <div className={classes.container}>
-            {score === null ? (
+            {score === 0 ? (
                 <Typography className={classes.label}>-</Typography>
             ) : (
                 <Typography className={classes.label}>{score}</Typography>
