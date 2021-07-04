@@ -48,7 +48,7 @@ export const pools = [
         status: 'active',
         platform: '1Inch',
         assets: ['1INCH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://1inch.exchange/#/r/0xF4cb25a1FF50E319c267b3E51CBeC2699FB2A43B/BNB/1INCH/?network=56',
@@ -216,7 +216,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['USDT', 'MATIC'],
-        risks: [],
+        risks: ['IL_LOW'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0x55d398326f99059ff775485246999027b3197955/0xcc42724c6683b7e57334c4e856f4c9965ed682bd',
@@ -477,7 +477,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['TYPH', 'BNB'],
-        risks: [],
+        risks: ['IL_HIGH'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x4090e535f2e251f5f88518998b18b54d26b3b07c',

@@ -3,7 +3,6 @@ const styles = {
         display: 'flex',
         alignItems: 'flex-end',
         marginBottom: props => props.size === 'lg' ? '10px' : '5px'
-
     },
     barsContainer: {
         display: 'flex',

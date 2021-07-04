@@ -33,6 +33,8 @@ const calcRisk = (arr) => {
   }
   
   const safetyScore = (arr) => {
+    if (arr.length === 0) return null;
+    
     return (MAX_SCORE * (1 - calcRisk(arr))).toFixed(1); 
   }
 
