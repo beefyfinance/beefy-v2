@@ -2,9 +2,9 @@ import * as React from "react";
 import {useHistory} from "react-router-dom";
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Box, Button, Container, Grid, makeStyles, Typography} from "@material-ui/core";
+import {Avatar, Box, Button, Container, Grid, Link, makeStyles, Paper, Typography} from "@material-ui/core";
 import Loader from "../../components/loader";
-import {ArrowLeft} from "@material-ui/icons";
+import {ArrowLeft, Language, Telegram, Twitter} from "@material-ui/icons";
 import styles from "./styles"
 import {isEmpty} from "../../helpers/utils";
 
@@ -44,9 +44,9 @@ const Boost = () => {
             {isLoading ? (
                 <Loader message="Getting boost data..."/>
             ) : (
-                <Grid container style={{position: 'relative'}}>
+                <Grid container spacing={4}>
                     <Grid item xs={12}>
-                        <Button className={classes.btnGoBack} onClick={() => {history.push('/')}}><ArrowLeft /> Back to Explore</Button>
+                        <Button className={classes.btnGoBack} onClick={() => {history.push('/' + item.network + '/vault/' + item.poolId)}}><ArrowLeft /> Back to Vault</Button>
                         <Box className={classes.title} display="flex" alignItems="center">
                             <Box>
                                 <Avatar alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
@@ -61,6 +61,59 @@ const Boost = () => {
                                 <Typography variant={"h2"}>BOOST</Typography>
                             </Box>
                         </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Box className={classes.summary} display="flex" alignItems="center">
+                            <Box flexGrow={1} p={2}>
+                                <Typography variant={"h1"}>100</Typography>
+                                <Typography>Receipt balance</Typography>
+                            </Box>
+                            <Box p={2} textAlign={"right"}>
+                                <Typography variant={"h1"}>99999</Typography>
+                                <Typography>Total value locked</Typography>
+                            </Box>
+                            <Box p={2} textAlign={"right"}>
+                                <Typography variant={"h1"}>999%</Typography>
+                                <Typography>APY</Typography>
+                            </Box>
+                            <Box p={2} textAlign={"right"}>
+                                <Typography variant={"h1"}>0%</Typography>
+                                <Typography>Your pool %</Typography>
+                            </Box>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper className={classes.splitPaper}>
+                            <Box display={'flex'}>
+                                <Box className={classes.splitA}>
+                                    <Typography>0 {item.token}</Typography>
+                                    <Button>Stake</Button>
+                                </Box>
+                                <Box className={classes.splitB}>
+                                    <Typography>0 {item.earnedToken}</Typography>
+                                    <Button>Claim rewards</Button>
+                                </Box>
+                            </Box>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        {item.partners.map(partner => (
+                            <Paper className={classes.partner} key={partner}>
+                                <Grid container>
+                                    <Grid item xs={12} md={6}>
+                                        <img alt={partner.name} src={require('../../images/' + partner.logo).default} height="60" />
+                                    </Grid>
+                                    <Grid item xs={12} md={6} className={classes.social}>
+                                        {partner.social.telegram ? (<Link href={partner.social.telegram}><Telegram /> Telegram</Link>) : ''}
+                                        {partner.social.twitter ? (<Link href={partner.social.twitter}><Twitter /> Twitter</Link>) : ''}
+                                        {partner.website ? (<Link href={partner.website}><Language /> {partner.website}</Link>) : ''}
+                                    </Grid>
+                                    <Grid item xs={12} className={classes.partnerBody}>
+                                        {partner.text}
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        ))}
                     </Grid>
                 </Grid>
             )}
