@@ -4,8 +4,41 @@ import {getStablesForNetwork, isEmpty} from "../../../helpers/utils";
 import safetyScore from "../../../helpers/safetyScore";
 
 let initPlatforms = {}
-const initialData = () => {
-    const pools = [];
+let pools = [];
+
+const initialBoosts = () => {
+    const boosts = [];
+
+    for(let net in config) {
+        const data = require('../../../config/boost/' + net + '.js');
+        for (const key in data.pools) {
+            const boost = data.pools[key];
+
+            if(!isEmpty(pools[boost.poolId])) {
+                const pool = pools[boost.poolId];
+
+                boost['network'] = net;
+                boost['balance'] = 0;
+                boost['apy'] = 0;
+                boost['tvl'] = 0;
+                boost['periodFinish'] = 0;
+                boost['name'] = pool.name;
+                boost['logo'] = pool.logo;
+                boost['token'] = pool.earnedToken;
+                boost['tokenDecimals'] = pool.tokenDecimals;
+                boost['tokenAddress'] = pool.earnedTokenAddress;
+                boost['tokenOracle'] = pool.oracle;
+                boost['tokenOracleId'] = pool.oracleId;
+
+                boosts[boost.id] = boost;
+            }
+        }
+    }
+
+    return boosts;
+}
+
+const initialPools = () => {
     const platforms = [];
 
     for(let net in config) {
@@ -66,7 +99,8 @@ const initialData = () => {
 }
 
 const initialState = {
-    pools: initialData(),
+    pools: initialPools(),
+    boosts: initialBoosts(),
     totalTvl: 0,
     isPoolsLoading: true,
     isFirstTime: true,

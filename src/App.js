@@ -7,6 +7,7 @@ import reduxActions from "./features/redux/actions";
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
+const Boost = React.lazy(() => import(`./features/boost`));
 
 const PageNotFound = () => {
     return <div>Page not found.</div>;
@@ -67,6 +68,9 @@ export default function App() {
                         </Route>
                         <Route strict sensitive exact path="/:network/vault/:id">
                             <Vault />
+                        </Route>
+                        <Route strict sensitive exact path="/:network/boost/:id">
+                            <Boost />
                         </Route>
                         <Route>
                             <PageNotFound />
