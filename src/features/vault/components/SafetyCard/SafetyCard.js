@@ -16,7 +16,7 @@ import CardTitle from "../Card/CardTitle";
 
 const useStyles = makeStyles(styles);
 
-const SafetyCard = ({ vaultRisks }) => {
+const SafetyCard = ({ vaultRisks, score }) => {
     const classes = useStyles();
 
     const categoryText = c => `${c.charAt(0).toUpperCase()}${c.slice(1)} Risk`
@@ -24,7 +24,7 @@ const SafetyCard = ({ vaultRisks }) => {
     return (
         <Card>
             <CardHeader className={classes.cardHeader}>
-                <CardTitle title={<SafetyScore score={safetyScore(vaultRisks)} />} subtitle="Safety Score" />
+                <CardTitle title={<SafetyScore score={score} />} subtitle="Safety Score" />
                 <div className={classes.cardActions}>
                     <LinkButton href="#" text="How is it calculated?" />
                 </div>

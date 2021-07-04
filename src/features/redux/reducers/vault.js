@@ -1,6 +1,7 @@
 import {HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_DONE} from "../constants";
 import {config} from "../../../config/config";
 import {getStablesForNetwork, isEmpty} from "../../../helpers/utils";
+import safetyScore from "../../../helpers/safetyScore";
 
 let initPlatforms = {}
 const initialData = () => {
@@ -22,6 +23,7 @@ const initialData = () => {
             pool['tvl'] = 0;
             pool['lastUpdated'] = 0;
             pool['tags'] = [];
+            pool['safetyScore'] = 0;
 
             if(!isEmpty(pool.platform)) {
                 if(!platforms.includes(pool.platform)) {
@@ -46,14 +48,15 @@ const initialData = () => {
                 }
             }
 
-            if(!isEmpty(pool.riskScore)) {
-                if(pool.riskScore < 2.5) {
+            if(!isEmpty(pool.risks)) {
+                const riskScore = safetyScore(pool.risks);
+                pool['safetyScore'] = riskScore;
+                if(riskScore >= 7.5) {
                     pool.tags.push('low');
                 }
             }
 
             pools[pool.id] = pool;
-            //pools.push(pool);
         }
     }
 

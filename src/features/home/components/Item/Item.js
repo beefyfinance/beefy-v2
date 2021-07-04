@@ -35,7 +35,7 @@ const Item = ({item}) => {
                     </Grid>
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>
-                    <SafetyScore score={4.15} whiteLabel size='sm' />
+                    <SafetyScore score={item.safetyScore} whiteLabel size='sm' />
                     <Typography className={classes.h3}>safety score</Typography>
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>
