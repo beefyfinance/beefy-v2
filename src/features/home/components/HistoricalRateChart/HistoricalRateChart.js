@@ -7,8 +7,13 @@ const HistoricalRateChart = ({chartData}) => {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
+  const xAxisDataKey = "name";
+  const yAxisDataKey = "apy";
+
   const areaColor = "#313759";
-  const lineColor = "#7b809e";
+  const lineColor = "#8585A6";
+  const firstColor = lineColor;
+  const lastColor = "white";
 
   const renderLabel = (props) => {
     const { index, x, y } = props;
@@ -16,14 +21,15 @@ const HistoricalRateChart = ({chartData}) => {
     const labelValue = `${apy}%`
     const first = index === 0;
     const last = index === chartData.length - 1;
+    const textStyle = {fontSize:"12px"};
     if (first) {
       const labelPosWithOffsetX = x - 20
       const labelPosWithOffsetY = y
-      return <text style={{fontSize:"12px"}} fill={"#8585A6"} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+      return <text style={textStyle} fill={firstColor} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
     } else if (last) {
       const labelPosWithOffsetX = x + 5
       const labelPosWithOffsetY = y
-      return <text style={{fontSize:"12px"}} fill={'white'} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
+      return <text style={textStyle} fill={lastColor} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>{labelValue}</text>;
     }
     else {
       return null
@@ -34,7 +40,7 @@ const HistoricalRateChart = ({chartData}) => {
     const { index } = props;
     const last = index === chartData.length - 1;
     if (last) {
-      return <Dot {...props} fill={'white'} className="recharts-area-dot" />
+      return <Dot {...props} fill={lastColor} />
     } else {
       return null
     }
@@ -47,18 +53,17 @@ const HistoricalRateChart = ({chartData}) => {
           height={35} 
           width={200}
         >
-          <XAxis hide dataKey="name" />
+          <XAxis hide dataKey={xAxisDataKey} />
           <YAxis hide />
           <Area 
             className={classes.chart}
             type="monotone" 
-            dataKey="apy" 
+            dataKey={yAxisDataKey}
             stroke={lineColor}
             fill={areaColor}
             fillOpacity={100}
             label={renderLabel}
             dot={renderDot}
-            layout={"horizontal"}
             />
         </AreaChart>
   );
