@@ -7,6 +7,7 @@ import reduxActions from "./features/redux/actions";
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
+const Boost = React.lazy(() => import(`./features/boost`));
 
 const PageNotFound = () => {
     return <div>Page not found.</div>;
@@ -20,6 +21,12 @@ export default function App() {
     const theme = createMuiTheme({
         palette: {
             type: (isNightMode ? "dark" : "light"),
+            background: {
+                dark: "#1B203A",
+                default: "#232743", 
+                paper: "#272B4A",
+                light: "#313759"
+            }
         },
         overrides: {
             MuiCssBaseline: {
@@ -61,6 +68,9 @@ export default function App() {
                         </Route>
                         <Route strict sensitive exact path="/:network/vault/:id">
                             <Vault />
+                        </Route>
+                        <Route strict sensitive exact path="/:network/boost/:id">
+                            <Boost />
                         </Route>
                         <Route>
                             <PageNotFound />

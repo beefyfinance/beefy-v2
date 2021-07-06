@@ -1,6 +1,5 @@
 import React from 'react';
-import {Box, Typography, makeStyles} from '@material-ui/core';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import {Typography, makeStyles} from '@material-ui/core';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
@@ -20,9 +19,9 @@ const LinkButton = ({href, text}) => {
                 <path
                     d="M1 1.97485L4 5.00006L1 8.02527"
                     stroke="#6B7199"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                 />
             </svg>
         </a>

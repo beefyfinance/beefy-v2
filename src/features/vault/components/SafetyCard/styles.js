@@ -9,35 +9,8 @@ const boldFont = {
 }
 
 const styles = (theme) => ({
-    cardContainer: {
-        backgroundColor: 'transparent',
-        marginTop: '20px'
-    },
-    cardHeader: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#272B4A',
-        borderRadius: '20px 20px 0 0',
-        padding: '30px 32px 36px 32px'
-    },
     cardActions: {
         margin: '10px'
-    },
-    cardContent: {
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#313759',
-        borderRadius: '0 0 20px 20px',
-        padding: '30px 32px 36px 32px'
-    },
-    cardTitle: {
-        ...boldFont,
-        fontSize: '36px',
-        lineHeight: '42px',
-        letterSpacing: "-0.1px",
-        color: "#E88225"
-        
     },
     cardSubtitle: {
         ...boldFont,
@@ -74,7 +47,8 @@ const styles = (theme) => ({
     },
     moreInfoContainer: {
         display: 'flex',
-        alignItems: "center"
+        alignItems: "center",
+        position: 'relative'
     },
     moreInfoLabel: {
         ...boldFont,

@@ -1,7 +1,7 @@
 import {BigNumber} from 'bignumber.js';
 
-export const formatApy = apy => {
-  if (!apy) return `???`;
+export const formatApy = (apy, placeholder = '???') => {
+  if (!apy) return placeholder;
 
   apy *= 100;
 

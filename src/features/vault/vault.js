@@ -1,4 +1,5 @@
 import * as React from "react";
+import {addressBook} from "blockchain-addressbook";
 import {useParams} from "react-router";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,10 +14,9 @@ import {ArrowLeft} from "@material-ui/icons";
 import reduxActions from "../redux/actions";
 import Deposit from "./components/Deposit";
 import Withdraw from "./components/Withdraw";
-import TokenInfo from "./components/TokenInfo";
-import StrategyInfo from "./components/StrategyInfo";
-import RiskInfo from "./components/RiskInfo";
-import {addressBook} from "blockchain-addressbook"
+import TokenCard from "./components/TokenCard";
+import StrategyCard from "./components/StrategyCard";
+import SafetyCard from "./components/SafetyCard";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -136,14 +136,14 @@ const Vault = () => {
                                     <Divider />
                                 </Box>
                                 <Box>
-                                    <Typography variant={"h1"}>{calcDaily(item.apy)}</Typography>
+                                    <Typography variant={"h1"}>{calcDaily(item.apy.totalApy)}</Typography>
                                     <Typography variant={"body2"}>Daily</Typography>
                                 </Box>
                                 <Box>
                                     <Divider />
                                 </Box>
                                 <Box>
-                                    <Typography variant={"h1"}>{formatApy(item.apy)}</Typography>
+                                    <Typography variant={"h1"}>{formatApy(item.apy.totalApy)}</Typography>
                                     <Typography variant={"body2"}>APY</Typography>
                                 </Box>
                             </Box>
@@ -191,13 +191,16 @@ const Vault = () => {
                             </Box>
 
                         </Paper>
-                        <RiskInfo />
-                        <StrategyInfo 
-                            description={`The strategy deposits the LP token on Pancake Swap and farms CAKE. The CAKE
-                             is sold to buy more Badger-BUSD LP and redeposited in the vault. The gas price is socialized 
-                             between all vault users and the compound happens automatically. APY breakdown`}
-                            stratAddr="#"
-                            vaultAddr="#"
+                        {item.risks && item.risks.length > 0 && <SafetyCard vaultRisks={item.risks} score={item.safetyScore}/>}
+                        <StrategyCard 
+                            stratType={item.stratType}
+                            stratAddr={item.strategy}
+                            vaultAddr={item.earnContractAddress}
+                            network={item.network}
+                            apy={item.apy}
+                            platform={item.platform}
+                            assets={item.assets}
+                            want={item.name}
                         />
                         {renderTokens(item)}
                     </Grid>
@@ -210,7 +213,7 @@ const Vault = () => {
 const renderTokens = item => {
     return item.assets.map(asset => {
         if (asset in addressBook[item.network].tokens) {
-            return <TokenInfo token={addressBook[item.network].tokens[asset]} network={item.network} />
+            return <TokenCard key={asset} token={addressBook[item.network].tokens[asset]} network={item.network} />
         } else return null
     })
 }

@@ -1,27 +1,24 @@
 import React from 'react';
 import {config} from '../../../../config/config'
-import {makeStyles, Paper, Typography} from '@material-ui/core';
+import {makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
-import LinkButton from '../../../../components/LinkButton/LinkButton';
+import LinkButton from '../../../../components/LinkButton';
+import Card from "../Card/Card";
+import CardHeader from "../Card/CardHeader";
+import CardContent from "../Card/CardContent";
+import CardTitle from "../Card/CardTitle/CardTitle"
 
 const useStyles = makeStyles(styles);
 
-const TokenInfo = ({ token, network }) => {
+const TokenCard = ({ token, network }) => {
     const classes = useStyles();
 
     const { symbol, website, address, description} = token;
 
     return (
-        <Paper className={classes.cardContainer}>
-            <div className={classes.cardHeader}>
-                <div>
-                    <div>
-                        <Typography className={classes.cardTitle}>{symbol}</Typography>
-                    </div>
-                    <div>
-                        <Typography className={classes.cardSubtitle}>Asset details</Typography>
-                    </div>
-                </div>
+        <Card>
+            <CardHeader>
+                <CardTitle title={symbol} subtitle="Asset details" />
                 <div className={classes.cardActions}>
                     {website ? (
                         <div className={classes.cardAction}>
@@ -32,14 +29,14 @@ const TokenInfo = ({ token, network }) => {
                         <LinkButton href={`${config[network].explorerUrl}/token/${address}`}  className={classes.cardAction} text="Token Contract" />
                     </div>
                 </div>
-            </div>
-            <div className={classes.cardContent}>
+            </CardHeader>
+            <CardContent>
                 <Typography className={classes.text}>
                     {description ? description : 'No token description available.'}
                 </Typography>
-            </div>
-        </Paper>
+            </CardContent>
+        </Card>
     );
 };
 
-export default TokenInfo;
+export default TokenCard;
