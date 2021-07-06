@@ -6,6 +6,18 @@ import * as React from "react";
 import styles from "../../styles"
 import {useHistory} from "react-router-dom";
 import SafetyScore from "../../../../components/SafetyScore";
+import HistoricalRateChart from "../HistoricalRateChart/HistoricalRateChart";
+
+const historicalRateChartData = [
+    { date: "28 Jan", apy: 5.00 },
+    { date: "4 Feb", apy: 57.15 },
+    { date: "11 Feb", apy: 38.50 },
+    { date: "18 Feb", apy: 41.37 },
+    { date: "28 March", apy: 95.00 },
+    { date: "4 April", apy: 147.15 },
+    { date: "11 April", apy: 115.50 },
+    { date: "18 April", apy: 179.37 }
+];
 
 const useStyles = makeStyles(styles);
 
@@ -49,8 +61,8 @@ const Item = ({item}) => {
                     </Box>
                 </Hidden>
                 <Hidden mdDown>
-                    <Box className={classes.rWidth} textAlign={"left"}>
-                        <Typography className={classes.h2}>[chart]</Typography>
+                    <Box className={classes.rWidth} textAlign={"center"}>
+                        <HistoricalRateChart chartData={historicalRateChartData}/>
                         <Typography className={classes.h3}>Daily historical rate</Typography>
                     </Box>
                 </Hidden>
