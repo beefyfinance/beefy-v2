@@ -7,7 +7,7 @@ const HistoricalRateChart = ({chartData}) => {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
 
-  const xAxisDataKey = "name";
+  const xAxisDataKey = "date";
   const yAxisDataKey = "apy";
 
   const areaColor = "#313759";
