@@ -7,10 +7,12 @@ import Loader from "../../components/loader";
 import {ArrowLeft, Language, Telegram, Twitter} from "@material-ui/icons";
 import styles from "./styles"
 import {isEmpty} from "../../helpers/utils";
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
 const Boost = () => {
+    const {t} = useTranslation();
     const history = useHistory();
     const classes = useStyles();
     let { id } = useParams();
@@ -58,7 +60,7 @@ const Boost = () => {
                                 <Avatar alt="Fire" src={require('../../images/fire.png').default} imgProps={{ style: {objectFit: 'contain' } }} />
                             </Box>
                             <Box>
-                                <Typography variant={"h2"}>BOOST</Typography>
+                                <Typography variant={"h2"}>{t("Boost")}</Typography>
                             </Box>
                         </Box>
                     </Grid>
@@ -66,19 +68,19 @@ const Boost = () => {
                         <Box className={classes.summary} display="flex" alignItems="center">
                             <Box flexGrow={1} p={2}>
                                 <Typography variant={"h1"}>100</Typography>
-                                <Typography>Receipt balance</Typography>
+                                <Typography>{t("Receipt-Balance")}</Typography>
                             </Box>
                             <Box p={2} textAlign={"right"}>
                                 <Typography variant={"h1"}>99999</Typography>
-                                <Typography>Total value locked</Typography>
+                                <Typography>{t("Total-Value-Locked")}</Typography>
                             </Box>
                             <Box p={2} textAlign={"right"}>
                                 <Typography variant={"h1"}>999%</Typography>
-                                <Typography>APY</Typography>
+                                <Typography>{t("Vault-APY")}</Typography>
                             </Box>
                             <Box p={2} textAlign={"right"}>
                                 <Typography variant={"h1"}>0%</Typography>
-                                <Typography>Your pool %</Typography>
+                                <Typography>{t("Your pool %")}</Typography>
                             </Box>
                         </Box>
                     </Grid>
@@ -87,11 +89,11 @@ const Boost = () => {
                             <Box display={'flex'}>
                                 <Box className={classes.splitA}>
                                     <Typography>0 {item.token}</Typography>
-                                    <Button>Stake</Button>
+                                    <Button>{t("Stake-Button-Stake")}</Button>
                                 </Box>
                                 <Box className={classes.splitB}>
                                     <Typography>0 {item.earnedToken}</Typography>
-                                    <Button>Claim rewards</Button>
+                                    <Button>{t("Stake-Button-Claim-Rewards")}</Button>
                                 </Box>
                             </Box>
                         </Paper>

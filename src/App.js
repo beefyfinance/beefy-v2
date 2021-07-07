@@ -4,13 +4,16 @@ import Header from "./components/header";
 import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
 import {useDispatch} from "react-redux";
 import reduxActions from "./features/redux/actions";
+import { useTranslation } from 'react-i18next';
+
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
 
 const PageNotFound = () => {
-    return <div>Page not found.</div>;
+    const {t} = useTranslation();
+    return <div>{t("Page-Not-Found")}</div>;
 }
 
 export default function App() {
