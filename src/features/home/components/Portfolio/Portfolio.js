@@ -1,9 +1,11 @@
 import React from "react";
-import {Box, Button, Container, makeStyles, Typography} from "@material-ui/core";
-import {ArrowDropUp, ExpandLess, ExpandMore, Visibility, VisibilityOff} from "@material-ui/icons";
+import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
+import { ArrowDropUp, ExpandLess, ExpandMore, Visibility, VisibilityOff } from "@material-ui/icons";
 import AnimateHeight from 'react-animate-height';
-import {Alert} from "@material-ui/lab";
-import styles from "./styles"
+import { Alert } from "@material-ui/lab";
+
+import PortfolioItem from "./PortfolioItem";
+import styles from "./styles";
 
 const useStyles = makeStyles(styles);
 
@@ -48,6 +50,9 @@ const Portfolio = () => {
                     </Box>
                 </Box>
                 <AnimateHeight duration={ 500 } height={ portfolioOpen ? 'auto' : 0 }>
+                    <Box>
+                        <PortfolioItem />
+                    </Box>
                     <Box>
                         <Alert severity="info" >No vaults found for this portfolio.</Alert>
                     </Box>
