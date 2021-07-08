@@ -11,8 +11,7 @@ const initialRpc = () => {
 
     for(let network in config) {
         const c = config[network].rpc;
-        const w = new Web3(c[~~(c.length * Math.random())]);
-        rpc[network] = w;
+        rpc[network] = new Web3(c[~~(c.length * Math.random())]);
     }
 
     return rpc;

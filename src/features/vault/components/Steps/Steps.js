@@ -8,10 +8,12 @@ import {Alert, AlertTitle} from "@material-ui/lab";
 import Loader from "../../../../components/loader";
 import styles from "../styles";
 import {useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
 const Steps = ({item, steps, handleClose}) => {
+    const history = useHistory();
     const classes = useStyles();
     const wallet = useSelector(state => state.walletReducer);
 
@@ -32,15 +34,24 @@ const Steps = ({item, steps, handleClose}) => {
                     <React.Fragment>
                         <Box>
                             <Box p={8} className={classes.finishedCard}>
-                                <Typography variant={"h2"}>{byDecimals(new BigNumber(wallet.action.data.amount).multipliedBy(byDecimals(item.pricePerShare)), item.tokenDecimals).toFixed(8)}</Typography>
-                                <Typography variant={"h2"}>withdraw confirmed</Typography>
+                                {steps.items[steps.currentStep].step === 'deposit' ? (
+                                    <React.Fragment>
+                                        <Typography variant={"h2"}>{byDecimals(new BigNumber(wallet.action.data.amount), item.tokenDecimals).toFixed(8)} {item.token}</Typography>
+                                        <Typography variant={"h2"}>deposit confirmed</Typography>
+                                    </React.Fragment>
+                                ) : (
+                                    <React.Fragment>
+                                        <Typography variant={"h2"}>{byDecimals(new BigNumber(wallet.action.data.amount).multipliedBy(byDecimals(item.pricePerShare)), item.tokenDecimals).toFixed(8)} {item.token}</Typography>
+                                        <Typography variant={"h2"}>withdraw confirmed</Typography>
+                                    </React.Fragment>
+                                )}
                                 <Typography>Funds are on the way</Typography>
                                 <Box mt={1} textAlign={"center"}>
                                     <Button className={classes.finishedBtn} href={wallet.explorer[item.network] + '/tx/' + wallet.action.data.receipt.transactionHash} target="_blank">View on Explorer</Button> <Button className={classes.finishedBtn} onClick={handleClose}>Close Dialog</Button>
                                 </Box>
                             </Box>
                             <Box mt={2} textAlign={"center"}>
-                                <Button className={classes.finishedBtn}>Go to my portfolio <ArrowRight /></Button>
+                                <Button onClick={() => {history.push({pathname: '/', portfolioOpen: true})}} className={classes.finishedBtn}>Go to my portfolio <ArrowRight /></Button>
                             </Box>
                         </Box>
 

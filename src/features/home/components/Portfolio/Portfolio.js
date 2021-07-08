@@ -4,12 +4,14 @@ import {ArrowDropUp, ExpandLess, ExpandMore, Visibility, VisibilityOff} from "@m
 import AnimateHeight from 'react-animate-height';
 import {Alert} from "@material-ui/lab";
 import styles from "./styles"
+import {useLocation} from "react-router";
 
 const useStyles = makeStyles(styles);
 
 const Portfolio = () => {
+    const location = useLocation();
     const classes = useStyles();
-    const [portfolioOpen, setPortfolioOpen] = React.useState(false);
+    const [portfolioOpen, setPortfolioOpen] = React.useState(location.portfolioOpen);
     const [hideBalance, setHideBalance] = React.useState(false);
 
     const BlurredText = ({value}) => {
