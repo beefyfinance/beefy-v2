@@ -57,7 +57,8 @@ const Home = () => {
             const key = sortConfig.key;
             const direction = sortConfig.direction === 'desc' ? -1 : 1;
             
-            let fn = () => -1;
+            let fn = () => 0;
+
             if(key === 'name') {
                 fn = (a, b) => a[key].localeCompare(b[key]);
 
