@@ -175,7 +175,7 @@ const Home = () => {
     return (
         <React.Fragment>
             <Portfolio />
-            <Container fixed>
+            <Container maxWidth="xl">
                 <Box className={classes.header}>
                     <Box className={classes.h1}>Vaults</Box>
                     <Box className={classes.tvl}>

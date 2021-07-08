@@ -20,7 +20,7 @@ const Portfolio = () => {
 
     return (
         <Box className={classes.portfolio}>
-            <Container fixed>
+            <Container maxWidth="xl">
                 <Box display={"flex"} className={[portfolioOpen ? classes.opened : '', classes.mobileFix].join(' ')}>
                     <Box className={classes.balance}>
                         <Button onClick={() => {setHideBalance(!hideBalance)}}>{hideBalance ? (<React.Fragment><VisibilityOff /> Show</React.Fragment>) : (<React.Fragment><Visibility /> Hide</React.Fragment>)} balance</Button>
