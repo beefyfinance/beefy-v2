@@ -57,7 +57,7 @@ const Home = () => {
             const key = sortConfig.key;
             const direction = sortConfig.direction === 'desc' ? -1 : 1;
             
-            let fn = () => 0;
+            let fn;
 
             if(key === 'name') {
                 fn = (a, b) => a[key].localeCompare(b[key]);
@@ -72,7 +72,7 @@ const Home = () => {
                 fn = (a, b) => a[key] - b[key];
 
             } else {
-                console.warn('unknown sort method:', key);    
+                fn = () => 0;
             }
 
             return items.sort((a,b) => fn(a,b) * direction);
