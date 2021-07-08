@@ -74,10 +74,10 @@ const Header = ({isNightMode, setNightMode}) => {
     return (
         <AppBar className={[classes.navHeader, location.pathname === '/' ? classes.hasPortfolio : ''].join(' ')} position="static">
             <Toolbar disableGutters={true}>
-                <Container maxWidth="xl" className={classes.navDisplayFlex}>
+                <Container fixed className={classes.navDisplayFlex}>
                     <Box className={classes.beefy}>
                         <img alt="BIFI" src={require('../../images/BIFI.svg').default} />
-                        <Button onClick={() => {history.push('/')}}>beefy.finance</Button>
+                        <Button onClick={() => {history.push('/')}}>Beefy.Finance</Button>
                     </Box>
                     <Hidden smDown>
                         <List component="nav" aria-labelledby="main navigation" className={classes.navDisplayFlex}>
