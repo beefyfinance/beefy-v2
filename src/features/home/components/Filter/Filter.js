@@ -94,7 +94,7 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
                     <TextField className={classes.searchInput} size="small" variant="outlined" label="Search by name" value={sortConfig.keyword} onChange={(e) => handleChange('keyword', e.target.value)} InputProps={{className: classes.input}} />
                 </Box>
                 <Box>
-                    <CustomDropdown list={{'default': 'Default', 'apy': 'APY', 'tvl': 'TVL'}} selected={sortConfig.key} handler={(e) => handleChange('key', e.target.value)} label={'Sort by:'} css={{marginRight: 10}} />
+                    <CustomDropdown list={{'default': 'Default', 'apy': 'APY', 'tvl': 'TVL', 'safetyScore': 'SAFETY'}} selected={sortConfig.key} handler={(e) => handleChange('key', e.target.value)} label={'Sort by:'} css={{marginRight: 10}} />
                 </Box>
                 <Box className={classes.btnFilter}>
                     <ToggleButton value={filterOpen} selected={filterOpen} onChange={() => {setFilterOpen(!filterOpen)}}>Filter {filterOpen ? (<ArrowDropDownIcon />) : ''}</ToggleButton>
