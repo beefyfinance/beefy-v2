@@ -2,7 +2,7 @@ import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {formatTvl} from '../../helpers/format'
 
-import {Container, makeStyles, Typography} from "@material-ui/core"
+import {Container, makeStyles} from "@material-ui/core"
 import Box from '@material-ui/core/Box';
 import Filter from './components/Filter';
 import Portfolio from './components/Portfolio';
@@ -160,9 +160,14 @@ const Home = () => {
     return (
         <React.Fragment>
             <Portfolio />
-            <Container maxWidth="xl">
-                <Typography className={classes.tvl} align={'right'} style={{float: 'right'}}>TVL: {formatTvl(vault.totalTvl)}</Typography>
-                <Typography className={classes.h1}>Vaults</Typography>
+            <Container fixed>
+                <Box className={classes.header}>
+                    <Box className={classes.h1}>Vaults</Box>
+                    <Box className={classes.tvl}>
+                        <Box className={classes.tvlLabel}>TVL: </Box>
+                        <Box className={classes.tvlValue}>{formatTvl(vault.totalTvl)}</Box>
+                    </Box>
+                </Box>
                 {vault.isPoolsLoading ? (
                     <Loader message={('Loading data from blockchain...')} />
                 ) : (
