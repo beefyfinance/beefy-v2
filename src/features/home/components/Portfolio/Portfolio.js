@@ -2,16 +2,16 @@ import React from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
 import { ArrowDropUp, ExpandLess, ExpandMore, Visibility, VisibilityOff } from "@material-ui/icons";
 import AnimateHeight from 'react-animate-height';
-import { Alert } from "@material-ui/lab";
-
-import PortfolioItem from "./PortfolioItem";
-import styles from "./styles";
+import {Alert} from "@material-ui/lab";
+import styles from "./styles"
+import {useLocation} from "react-router";
 
 const useStyles = makeStyles(styles);
 
 const Portfolio = () => {
+    const location = useLocation();
     const classes = useStyles();
-    const [portfolioOpen, setPortfolioOpen] = React.useState(false);
+    const [portfolioOpen, setPortfolioOpen] = React.useState(location.portfolioOpen);
     const [hideBalance, setHideBalance] = React.useState(false);
 
     const BlurredText = ({value}) => {

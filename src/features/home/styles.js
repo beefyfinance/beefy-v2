@@ -1,10 +1,27 @@
 const styles = (theme) => ({
+    header: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '4rem 0 2rem',
+    },
     h1: {
-        fontSize: '48px',
+        fontSize: '3rem',
         fontWeight: '600',
         lineHeight: '54px',
         color:   theme.palette.type === 'dark' ? '#ffffff' : '#000000',
-        padding: '60px 0',
+    },
+    tvl: {
+        fontSize: '2rem',
+        fontWeight: '600',  
+    },
+    tvlLabel: {
+        display: 'inline',
+        color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
+    },
+    tvlValue: {
+        display: 'inline',
+        color:   theme.palette.type === 'dark' ? '#ffffff' : '#000000',
     },
     numberOfVaults: {
         marginTop: 20,
@@ -112,7 +129,7 @@ const styles = (theme) => ({
                 float: 'left',
             }
         },
-    }
+    },
 });
 
 export default styles;

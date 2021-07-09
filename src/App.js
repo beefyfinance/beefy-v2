@@ -1,7 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/header";
-import { createMuiTheme, ThemeProvider, CssBaseline } from "@material-ui/core";
+import { ThemeProvider, CssBaseline } from "@material-ui/core";
+import { createTheme } from '@material-ui/core/styles';
+
 import {useDispatch} from "react-redux";
 import reduxActions from "./features/redux/actions";
 import { useTranslation } from 'react-i18next';
@@ -21,7 +23,7 @@ export default function App() {
     // const storage = localStorage.getItem('nightMode');
     //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
     const [isNightMode, setNightMode] = React.useState(true);
-    const theme = createMuiTheme({
+    const theme = createTheme({
         palette: {
             type: (isNightMode ? "dark" : "light"),
             background: {

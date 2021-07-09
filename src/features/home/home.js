@@ -1,17 +1,20 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {formatTvl} from '../../helpers/format'
+import InfiniteScroll from "react-infinite-scroll-component";
+import {BigNumber} from 'bignumber.js';
 
-import {Container, makeStyles, Typography} from "@material-ui/core"
+import {Container, makeStyles} from "@material-ui/core"
 import Box from '@material-ui/core/Box';
+import styles from "./styles"
+
+import reduxActions from "../redux/actions";
+
 import Filter from './components/Filter';
 import Portfolio from './components/Portfolio';
-import styles from "./styles"
-import Loader from "../../components/loader";
-import {isEmpty} from "../../helpers/utils";
-import reduxActions from "../redux/actions";
 import Item from "./components/Item";
-import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "../../components/loader";
+import {formatTvl} from '../../helpers/format'
+import {isEmpty} from "../../helpers/utils";
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
@@ -49,21 +52,33 @@ const Home = () => {
 
         let data = [];
 
+        // TODO: extract helper fn?
         const sorted = (items) => {
-            return items.sort((a, b) => {
-                if(sortConfig.key === 'name') {
-                    if (a[sortConfig.key].toUpperCase() < b[sortConfig.key].toUpperCase()) {
-                        return sortConfig.direction === 'asc' ? -1 : 1;
-                    }
-                    if (a[sortConfig.key].toUpperCase() > b[sortConfig.key].toUpperCase()) {
-                        return sortConfig.direction === 'asc' ? 1 : -1;
-                    }
-                    return 0;
-                } else {
-                    return sortConfig.direction === 'asc' ? (a[sortConfig.key] - b[sortConfig.key]) : (b[sortConfig.key] - a[sortConfig.key]);
-                }
-            });
+            const key = sortConfig.key;
+            const direction = sortConfig.direction === 'desc' ? -1 : 1;
+            
+            let fn;
+
+            if(key === 'name') {
+                fn = (a, b) => a[key].localeCompare(b[key]);
+
+            } else if(key === 'apy') {
+                fn = (a, b) => a[key].totalApy - b[key].totalApy;
+
+            } else if(key === 'tvl') {
+                fn = (a, b) => new BigNumber(a[key]).comparedTo(b[key]);
+            
+            } else if(key === 'safetyScore') {
+                fn = (a, b) => a[key] - b[key];
+
+            } else {
+                fn = () => 0;
+            }
+
+            return items.sort((a,b) => fn(a,b) * direction);
         }
+        
+        // TODO: extract helper fn?
         const check = (item) => {
             if(item.status !== (sortConfig.retired ? 'eol' : 'active')) {
                 return false;
@@ -161,8 +176,13 @@ const Home = () => {
         <React.Fragment>
             <Portfolio />
             <Container maxWidth="xl">
-                <Typography className={classes.tvl} align={'right'} style={{float: 'right'}}>TVL: {formatTvl(vault.totalTvl)}</Typography>
-                <Typography className={classes.h1}>Vaults</Typography>
+                <Box className={classes.header}>
+                    <Box className={classes.h1}>Vaults</Box>
+                    <Box className={classes.tvl}>
+                        <Box className={classes.tvlLabel}>TVL: </Box>
+                        <Box className={classes.tvlValue}>{formatTvl(vault.totalTvl)}</Box>
+                    </Box>
+                </Box>
                 {vault.isPoolsLoading ? (
                     <Loader message={('Loading data from blockchain...')} />
                 ) : (

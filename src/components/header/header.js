@@ -102,7 +102,7 @@ const Header = ({isNightMode, setNightMode}) => {
                 <Container maxWidth="xl" className={classes.navDisplayFlex}>
                     <Box className={classes.beefy}>
                         <img alt="BIFI" src={require('../../images/BIFI.svg').default} />
-                        <Button onClick={() => {history.push('/')}}>beefy.finance</Button>
+                        <Button onClick={() => {history.push('/')}}>Beefy.Finance</Button>
                     </Box>
                     <Hidden smDown>
                         <List component="nav" aria-labelledby="main navigation" className={classes.navDisplayFlex}>
