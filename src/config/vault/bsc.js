@@ -74,7 +74,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['CAKE'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         withdrawalFee: '0.0%',
         buyTokenUrl:
@@ -102,7 +102,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['AMPL-BSC-mp', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', ' MCAP_MEDIUM','ALGO_STABLE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xDB021b1B247fe2F1fa57e0A87C748Cc1E321F07F/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -131,7 +131,7 @@ export const pools = [
         status: 'active',
         platform: 'Mdex',
         assets: ['MDX'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://bsc.mdex.com/#/swap?inputCurrency=WBNB&outputCurrency=0x9c65ab58d8d978db963e63f2bfb7121627e3a739',
@@ -158,7 +158,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['ETH', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'IL_LOW', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0x2170ed0880ac9a755fd29b2688956bd959f933f8',
@@ -187,7 +187,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['USDT', 'ALPACA'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0x55d398326f99059ff775485246999027b3197955/0x8f0528ce5ef7b51152a59745befdd91d97091d2f',
@@ -216,7 +216,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['USDT', 'MATIC'],
-        risks: ['IL_LOW'],
+        risks: ['COMPLEXITY_LOW', 'IL_LOW', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0x55d398326f99059ff775485246999027b3197955/0xcc42724c6683b7e57334c4e856f4c9965ed682bd',
@@ -245,7 +245,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['LTC', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'IL_LOW', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x4338665cbb7b2485a8855a139b75d5e34ab0db94',
@@ -274,7 +274,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['ADA', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'IL_LOW', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x3ee2200efb3400fabb9aacf31297cbdd1d435d47',
@@ -303,7 +303,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['XRP', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'IL_LOW', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe',
@@ -332,7 +332,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['ALPACA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/BNB/0x8f0528ce5ef7b51152a59745befdd91d97091d2f',
@@ -361,7 +361,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['USDT', 'WEX'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0x55d398326f99059ff775485246999027b3197955/0xa9c41a46a6b3531d28d5c32f6633dd2ff05dfb90',
@@ -390,7 +390,7 @@ export const pools = [
         status: 'active',
         platform: 'WaultFinance',
         assets: ['WEX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.wault.finance/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0xa9c41a46a6b3531d28d5c32f6633dd2ff05dfb90',
@@ -419,7 +419,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ETH', 'BTCB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x2170Ed0880ac9A755fd29B2688956BD959F933F8/0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
@@ -448,7 +448,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ETH', 'USDC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x2170Ed0880ac9A755fd29B2688956BD959F933F8/0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
@@ -477,7 +477,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['TYPH', 'BNB'],
-        risks: ['IL_HIGH'],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x4090e535f2e251f5f88518998b18b54d26b3b07c',
@@ -506,7 +506,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['TENFI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO','CONTRACTS_VERIFIED', 'AUDIT', 'PLATFORM_NEW'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xd15c444f1199ae72795eba15e8c1db44e47abf62',
@@ -535,7 +535,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['TENFI', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'CONTRACTS_VERIFIED', 'AUDIT', 'PLATFORM_NEW'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xd15c444f1199ae72795eba15e8c1db44e47abf62',
@@ -564,7 +564,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['MBOX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x3203c9e46ca618c8c1ce5dc67e7e9d75f5da2377',
@@ -593,7 +593,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['CELR', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x1f9f6a696C6Fd109cD3956F45dC709d2b3902163',
@@ -622,7 +622,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['SHIB', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x2859e4544C4bB03966803b044A93563Bd2D0DD4D',
@@ -651,7 +651,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ATA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xa2120b9e674d3fc3875f415a7df52e382f141225',
@@ -680,7 +680,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['PANTHER', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'CONTRACTS_VERIFIED', 'AUDIT', 'PLATFORM_NEW'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.pantherswap.com/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x1f546aD641B56b86fD9dCEAc473d1C7a357276B7',
@@ -709,7 +709,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['PANTHER', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'CONTRACTS_VERIFIED', 'AUDIT', 'PLATFORM_NEW'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.pantherswap.com/#/add/ETH/0x1f546aD641B56b86fD9dCEAc473d1C7a357276B7',
@@ -734,8 +734,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'garuda-garuda-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['GARUDA', 'BNB'],
         risks: [],
@@ -767,7 +767,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['MTRG', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xBd2949F67DcdC549c6Ebe98696449Fa79D988A9F/0xe9e7cea3dedca5984780bafc599bd69add087d56',
@@ -796,7 +796,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['QKC', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xa1434f1fc3f437fa33f7a781e041961c0205b5da/0xe9e7cea3dedca5984780bafc599bd69add087d56',
@@ -825,7 +825,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['MX', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x9f882567a62a5560d147d64871776eea72df41d3/0xe9e7cea3dedca5984780bafc599bd69add087d56',
@@ -854,7 +854,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BCFX', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x045c4324039dA91c52C55DF5D785385Aab073DcF/0xe9e7cea3dedca5984780bafc599bd69add087d56',
@@ -883,7 +883,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['KTN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xDAe6c2A48BFAA66b43815c5548b10800919c993E',
@@ -912,7 +912,7 @@ export const pools = [
         status: 'active',
         platform: 'Ellipsis',
         assets: ['EPS'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xA7f552078dcC247C2684336020c03648500C6d9F',
@@ -939,7 +939,7 @@ export const pools = [
         status: 'active',
         assets: ['BUSD', 'USDT', 'USDC', 'DAI'],
         platform: 'Dopple',
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://dopple.finance/Deposit/dop-lps',
         network: 'bsc'
@@ -965,7 +965,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TUSD', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x14016e85a25aeb13065688cafb43044c2ef86784',
@@ -994,7 +994,7 @@ export const pools = [
         status: 'active',
         platform: 'Mdex',
         assets: ['BNB', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://bsc.mdex.com/#/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955',
@@ -1022,7 +1022,7 @@ export const pools = [
         status: 'active',
         platform: 'Mdex',
         assets: ['FIL', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://bsc.mdex.com/#/swap?inputCurrency=0x55d398326f99059ff775485246999027b3197955&outputCurrency=0x0d8ce2a99bb6e3b7db580ed848240e4a0f9ae153',
@@ -1051,7 +1051,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['VRT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x5f84ce30dc3cf7909101c69086c50de191895883',
@@ -1080,7 +1080,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['EZ', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x5512014efa6cd57764fa743756f7a6ce3358cc83',
@@ -1109,7 +1109,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['KALM', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4ba0057f784858a48fe351445c672ff2a3d43515',
@@ -1138,7 +1138,7 @@ export const pools = [
         status: 'active',
         platform: 'JetSwap',
         assets: ['WINGS'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED','ADMIN_WITHOUT_TIMELOCK'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.jetswap.finance/#/swap?outputCurrency=0x0487b824c8261462f88940f97053e65bdb498446',
@@ -1165,7 +1165,7 @@ export const pools = [
         status: 'active',
         assets: ['BUSD', 'USDT', 'UST'],
         platform: 'Dopple',
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://dopple.finance/Deposit/ust-pools-lps',
         network: 'bsc'
@@ -1191,7 +1191,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BIFI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xCa3F508B8e4Dd382eE878A314789373D80A5190A',
@@ -1220,7 +1220,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['SUSHI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x947950bcc74888a40ffa2593c5798f11fc9124c4',
@@ -1249,7 +1249,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['DOT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x7083609fce4d1d8dc0c979aab8c869ea2c873402',
@@ -1278,7 +1278,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['XRP', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe',
@@ -1307,7 +1307,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['SNX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0x9Ac983826058b8a9C7Aa1C9171441191232E8404/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -1336,7 +1336,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['BLZ', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0x935a544bf5816e3a7c13db2efe3009ffda0acda2/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -1365,7 +1365,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['pOPEN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xaBaE871B7E3b67aEeC6B46AE9FE1A91660AadAC5',
@@ -1394,7 +1394,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['WELL', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xf07a32eb035b786898c00bb1c64d8c6f8e7a46d5/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -1423,7 +1423,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['LTC', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x4338665cbb7b2485a8855a139b75d5e34ab0db94',
@@ -1452,7 +1452,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['CAKE', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -1481,7 +1481,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['CHR', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xf9CeC8d50f6c8ad3Fb6dcCEC577e05aA32B224FE',
@@ -1510,7 +1510,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DERI', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe60eaf5A997DFAe83739e035b005A33AfdCc6df5/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -1539,7 +1539,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['HPS'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://julswap.com/#/swap?inputCurrency=BNB&outputCurrency=0xeDa21B525Ac789EaB1a08ef2404dd8505FfB973D',
@@ -1566,7 +1566,7 @@ export const pools = [
         status: 'active',
         assets: ['DOLLY', 'USDT', 'BUSD'],
         platform: 'Dopple',
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MICRO', 'LIQ_LOW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://dopple.finance/Deposit/dolly-lps',
         network: 'bsc'
@@ -1593,7 +1593,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['XEND', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4a080377f83D669D7bB83B3184a8A5E61B500608',
@@ -1623,7 +1623,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['CYC', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x810EE35443639348aDbbC467b33310d2AB43c168',
@@ -1652,7 +1652,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['NEAR', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0x1fa4a73a3f0133f0025378af00236f3abdee5d63/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -1682,7 +1682,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['COTI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0xAdBAF88B39D37Dc68775eD1541F1bf83A5A45feB/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -1712,7 +1712,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['ETC', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0x3d6545b08693daE087E957cb1180ee38B9e3c25E/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -1742,7 +1742,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['ZEC', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0x1Ba42e5193dfA8B03D15dd1B86a3113bbBEF8Eeb/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -1772,7 +1772,7 @@ export const pools = [
         status: 'active',
         platform: 'Belt',
         assets: ['BTCB'],
-        risks: [],
+        risks: ['COMPLEXITY_HIGH', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         withdrawalFee: '0.1%',
@@ -1796,8 +1796,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'garuda-garuda-usdc',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['GARUDA', 'USDC'],
         risks: [],
@@ -1830,7 +1830,7 @@ export const pools = [
         status: 'active',
         platform: 'JetSwap',
         assets: ['WINGS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED','ADMIN_WITHOUT_TIMELOCK'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.jetswap.finance/#/add/BNB/0x0487b824c8261462f88940f97053e65bdb498446',
@@ -1859,7 +1859,7 @@ export const pools = [
         status: 'active',
         platform: 'JetSwap',
         assets: ['WINGS', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED','ADMIN_WITHOUT_TIMELOCK'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.jetswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x0487b824c8261462f88940f97053e65bdb498446',
@@ -1888,7 +1888,7 @@ export const pools = [
         status: 'active',
         platform: 'JetSwap',
         assets: ['BUSD', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED','ADMIN_WITHOUT_TIMELOCK'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.jetswap.finance/#/add/BNB/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -1916,7 +1916,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['GRAND'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'CONTRACTS_VERIFIED', 'AUDIT', 'PLATFORM_NEW'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xeE814F5B2bF700D2e843Dc56835D28d095161dd9',
@@ -1943,7 +1943,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['GRAND', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'CONTRACTS_VERIFIED', 'AUDIT', 'PLATFORM_NEW'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xeE814F5B2bF700D2e843Dc56835D28d095161dd9',
@@ -1972,7 +1972,7 @@ export const pools = [
         status: 'active',
         platform: 'Belt',
         assets: ['USDT', 'BUSD', 'USDC', 'DAI', '4BELT'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         withdrawalFee: '0.1%',
@@ -1997,8 +1997,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'dumpling-sdump-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['SDUMP', 'BNB'],
         risks: [],
@@ -2026,8 +2026,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'dumpling-sdump-busd',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['SDUMP', 'BUSD'],
         risks: [],
@@ -2060,7 +2060,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['SAT', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'CONTRACTS_VERIFIED', 'AUDIT', 'PLATFORM_NEW', 'LIQ_LOW'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x8fda94079913CB921D065Ed9c004Afb43e1f900e',
@@ -2089,7 +2089,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['SAT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'CONTRACTS_VERIFIED', 'AUDIT', 'PLATFORM_NEW', 'LIQ_LOW'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x8fda94079913CB921D065Ed9c004Afb43e1f900e',
@@ -2115,8 +2115,8 @@ export const pools = [
         oracle: 'tokens',
         oracleId: 'DND',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'IronFinance',
         assets: ['DND'],
         risks: [],
@@ -2142,8 +2142,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'iron-dnd-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'IronFinance',
         assets: ['DND', 'BNB'],
         risks: [],
@@ -2175,7 +2175,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['HOTCROSS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4FA7163E153419E0E1064e418dd7A99314Ed27b6',
@@ -2204,7 +2204,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['RFOX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x0a3a21356793b49154fd3bbe91cbc2a16c0457f5',
@@ -2233,7 +2233,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['WMASS', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x7e396bfc8a2f84748701167c2d622f041a1d7a17',
@@ -2262,7 +2262,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['UBXT', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xbbeb90cfb6fafa1f69aa130b7341089abeef5811',
@@ -2291,7 +2291,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BTR', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x5a16e8ce8ca316407c6e6307095dc9540a8d62b3',
@@ -2320,7 +2320,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['PMON', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x1796ae0b0fa4862485106a0de9b654efe301d0b2',
@@ -2349,7 +2349,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ONE', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x04baf95fd4c52fd09a56d840baee0ab8d7357bf0',
@@ -2378,7 +2378,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['OIN', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x658e64ffcf40d240a43d52ca9342140316ae44fa',
@@ -2408,7 +2408,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['tDOGE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xe550a593d09fbc8dcd557b5c88cea6946a8b404a',
@@ -2437,7 +2437,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['FINE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4e6415a5727ea08aae4580057187923aec331227',
@@ -2466,7 +2466,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DOGE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xba2ae424d960c26247dd6c32edc70b295c744c43',
@@ -2495,7 +2495,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['HYFI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x9a319b959e33369C5eaA494a770117eE3e585318',
@@ -2525,7 +2525,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['AVAX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x1ce0c2827e2ef14d5c4f29a091d735a204794041',
@@ -2550,8 +2550,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'garuda-garuda-usdt',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['GARUDA', 'USDT'],
         risks: [],
@@ -2583,7 +2583,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['FTM', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0xad29abb318791d579433d831ed122afeaf29dcfe',
@@ -2612,7 +2612,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['COMP', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x52ce071bd9b1c4b00a0b92d298c512478cad67e8',
@@ -2641,7 +2641,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['AAVE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0xfb6115445bff7b52feb98650c87f44907e58f802',
@@ -2670,7 +2670,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['LINK', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd',
@@ -2699,7 +2699,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['ADA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x3EE2200Efb3400fAbB9AacF31297cBdD1d435D47',
@@ -2724,8 +2724,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'iron-iron-busd',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'IronFinance',
         assets: ['BUSD', 'IRON'],
         risks: [],
@@ -2753,8 +2753,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'iron-steel-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'IronFinance',
         assets: ['STEEL', 'BNB'],
         risks: [],
@@ -2782,8 +2782,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'iron-steel-iron',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'IronFinance',
         assets: ['STEEL', 'IRON'],
         risks: [],
@@ -2815,7 +2815,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['BHC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x6fd7c98458a943f469E1Cf4eA85B173f5Cd342F4',
@@ -2842,7 +2842,7 @@ export const pools = [
         status: 'active',
         platform: 'Belt',
         assets: ['ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_HIGH', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         withdrawalFee: '0.1%',
@@ -2870,7 +2870,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['MATIC', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0xcc42724c6683b7e57334c4e856f4c9965ed682bd',
@@ -2899,7 +2899,7 @@ export const pools = [
         status: 'active',
         platform: 'Pancakebunny',
         assets: ['BUNNY'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl: 'https://app.1inch.io/#/56/swap/BNB/BUNNY',
         network: 'bsc'
@@ -2926,7 +2926,7 @@ export const pools = [
         status: 'active',
         platform: 'Mdex',
         assets: ['BIFI', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.25,
         buyTokenUrl:
             'https://bsc.mdex.com/#/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0xCa3F508B8e4Dd382eE878A314789373D80A5190A',
@@ -2952,8 +2952,8 @@ export const pools = [
         oracle: 'tokens',
         oracleId: 'TOFY',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['TOFY'],
         risks: [],
@@ -2979,8 +2979,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'tofy-tofy-mash',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['TOFY', 'MASH'],
         risks: [],
@@ -3008,8 +3008,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'tofy-tofy-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['TOFY', 'BNB'],
         risks: [],
@@ -3041,7 +3041,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['GOAL', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xE5b57E6e1b945B91FEE368aC108d2ebCcA78Aa8F/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -3070,7 +3070,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['KUN', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x1a2fb0af670d0234c2857fad35b789f8cb725584/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -3099,7 +3099,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['MATH', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xf218184af829cf2b0019f8e6f0b2423498a36983/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -3129,7 +3129,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['mCOIN', 'UST'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x49022089e78a8D46Ec87A3AF86a1Db6c189aFA6f/0x23396cF899Ca06c4472205fC903bDB4de249D6fC',
@@ -3158,7 +3158,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['WATCH', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x7A9f28EB62C791422Aa23CeAE1dA9C847cBeC9b0',
@@ -3246,7 +3246,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['BXBTC', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0xab111D5948470Ba73d98D66BBdf2798FBE093546',
@@ -3276,7 +3276,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BTT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x8595f9da7b868b1822194faed312235e43007b49',
@@ -3305,7 +3305,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TRX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x85eac5ac2f758618dfa09bdbe0cf174e7d574d5b',
@@ -3334,7 +3334,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['WIN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xaef0d72a118ce24fee3cd1d43d383897d05b4e99',
@@ -3364,7 +3364,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['NAUT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x05B339B0A346bF01f851ddE47a5d485c34FE220c',
@@ -3393,7 +3393,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['PNT', 'pBTC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xeD28A457A5A76596ac48d87C0f577020F6Ea1c4C/0xdaacB0Ab6Fb34d24E8a67BfA14BF4D95D4C7aF92',
@@ -3480,7 +3480,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['ZEFI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x0288D3E353fE2299F11eA2c2e1696b4A648eCC07',
@@ -3509,7 +3509,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['ZEFI', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x0288D3E353fE2299F11eA2c2e1696b4A648eCC07',
@@ -3594,7 +3594,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['BUSD', 'USDC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d/0xe9e7cea3dedca5984780bafc599bd69add087d56',
@@ -3624,7 +3624,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['DOGE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0xbA2aE424d960c26247Dd6c32edC70B295c744C43',
@@ -3653,7 +3653,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BTCB', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -3680,7 +3680,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['ONT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c/0xfd7b3a77848f1c2d67e05e54d78d174a0c850335',
@@ -3710,7 +3710,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['KEYFI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0x4b6000f9163de2e3f0a01ec37e06e1469dbbce9d/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -3768,7 +3768,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['LMT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x9617857e191354dbea0b714d78bc59e57c411087',
@@ -3798,7 +3798,7 @@ export const pools = [
         status: 'active',
         platform: 'Swamp',
         assets: ['CAKE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         addLiquidityUrl:
@@ -3829,7 +3829,7 @@ export const pools = [
         status: 'active',
         platform: 'Belt',
         assets: ['BELT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xE0e514c71282b6f4e823703a39374Cf58dc3eA4f',
@@ -3858,7 +3858,7 @@ export const pools = [
         status: 'active',
         platform: 'Belt',
         assets: ['BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_HIGH', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         withdrawalFee: '0.1%',
@@ -3886,7 +3886,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DFD', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'ALGO_STABLE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x9899a98b222fcb2f3dbee7df45d943093a4ff9ff',
@@ -3915,7 +3915,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ALPACA', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x8f0528ce5ef7b51152a59745befdd91d97091d2f',
@@ -3944,7 +3944,7 @@ export const pools = [
         status: 'active',
         platform: 'Swamp',
         assets: ['SWAMP', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         addLiquidityUrl:
@@ -3975,7 +3975,7 @@ export const pools = [
         status: 'active',
         platform: 'Swamp',
         assets: ['SWAMP', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         addLiquidityUrl:
@@ -4006,7 +4006,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BUNNY', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xc9849e6fdb743d08faee3e34dd2d1bc69ea11a51',
@@ -4035,7 +4035,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['EOS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x56b6fB708fC5732DEC1Afc8D8556423A2EDcCbD6',
@@ -4064,7 +4064,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['XRP', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x1D2F0da169ceB9fC7B3144628dB156f3F6c60dBE',
@@ -4093,7 +4093,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['UNI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xBf5140A22578168FD562DCcF235E5D43A02ce9B1',
@@ -4122,7 +4122,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SXP', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x47BEAd2563dCBf3bF2c9407fEa4dC236fAbA485A',
@@ -4151,7 +4151,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BLK', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x63870A18B6e42b01Ef1Ad8A2302ef50B7132054F',
@@ -4180,7 +4180,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['Helmet', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
@@ -4209,7 +4209,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['JGN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xC13B7a43223BB9Bf4B69BD68Ab20ca1B79d81C75',
@@ -4238,7 +4238,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['EPS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xA7f552078dcC247C2684336020c03648500C6d9F',
@@ -4267,7 +4267,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['NRV', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x42F6f551ae042cBe50C739158b4f0CAC0Edb9096',
@@ -4296,7 +4296,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BUX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x211FfbE424b90e25a15531ca322adF1559779E45',
@@ -4325,7 +4325,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BFI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x81859801b01764D4f0Fa5E64729f5a6C3b91435b',
@@ -4354,7 +4354,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BDO', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x190b589cf9fb8ddeabbfeae36a813ffb2a702454',
@@ -4383,7 +4383,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['FOR', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x658A109C5900BC6d2357c87549B651670E5b0539/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -4412,7 +4412,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['VAI', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x4bd17003473389a42daf6a0a729f6fdb328bbbd7/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -4441,7 +4441,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['USDT', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x55d398326f99059ff775485246999027b3197955',
@@ -4471,7 +4471,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ALPHA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xa1faa113cbe53436df28ff0aee54275c13b40975',
@@ -4501,7 +4501,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['INJ', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xa2B726B1145A4773F68593CF171187d8EBe4d495',
@@ -4531,7 +4531,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TWT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4b0f1812e5df2a09796481ff14017e6005508003',
@@ -4561,7 +4561,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['XVS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63',
@@ -4618,7 +4618,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['REEF', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xf21768ccbc73ea5b6fd3c687208a7c2def2d966e',
@@ -4703,7 +4703,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BAND', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18',
@@ -4733,7 +4733,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ATOM', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x0eb3a705fc54725037cc9e008bdede697f62f335',
@@ -4763,7 +4763,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['CAKE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/BNB',
@@ -4791,7 +4791,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['HGET', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xc7d8d35eba58a0935ff2d5a33df105dd9f071731',
@@ -4819,7 +4819,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['CGG', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x1613957159e9b0ac6c80e824f7eea748a32a0ae2',
@@ -4848,7 +4848,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['XED', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x5621b5a3f4a8008c4ccdd1b942b121c8b1944f1f',
@@ -4877,7 +4877,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['LINK', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd',
@@ -4906,7 +4906,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['USDT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x55d398326f99059ff775485246999027b3197955',
@@ -4935,7 +4935,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BUSD', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -4964,7 +4964,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ETH', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x2170ed0880ac9a755fd29b2688956bd959f933f8',
@@ -4993,7 +4993,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BTCB', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
@@ -5023,7 +5023,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['HAKKA', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x1d1eb8e8293222e1a29d2c0e4ce6c0acfd89aaac',
@@ -5053,7 +5053,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['HOO', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xE1d1F66215998786110Ba0102ef558b22224C016',
@@ -5083,7 +5083,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TXL', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x1ffd0b47127fdd4097e54521c9e2c7f0d66aafc5',
@@ -5113,7 +5113,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['UST', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x23396cF899Ca06c4472205fC903bDB4de249D6fC/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -5143,7 +5143,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['NULS', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x8CD6e29d3686d24d3C2018CEe54621eA0f89313B/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -5285,7 +5285,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['MIR', 'UST'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x23396cF899Ca06c4472205fC903bDB4de249D6fC/0x5B6DcF557E2aBE2323c48445E8CC948910d8c2c9',
@@ -5314,7 +5314,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['tBTC', 'BTCB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c/0x2cD1075682b0FCCaADd0Ca629e138E64015Ba11c',
@@ -5343,7 +5343,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['bBADGER', 'BTCB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c/0x1f7216fdb338247512ec99715587bb97bbf96eae',
@@ -5373,7 +5373,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['bDIGG', 'BTCB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_SMALL', 'ALGO_STABLE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x5986D5c77c65e5801a5cAa4fAE80089f870A71dA/0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
@@ -5402,7 +5402,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['RAMP', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x8519ea49c997f50ceffa444d240fb655e89248aa',
@@ -5431,7 +5431,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DEXE', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x039cb485212f996a9dbb85a9a75d898f94d38da6',
@@ -5460,7 +5460,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TPT', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0xeca41281c24451168a37211f0bc2b8645af45092',
@@ -5489,7 +5489,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['XMARK', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'ALGO_STABLE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x26a5dfab467d4f58fb266648cae769503cec9580',
@@ -5518,7 +5518,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['IOTX', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x9678e42cebeb63f23197d726b29b1cb20d0064e5',
@@ -5548,7 +5548,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['LINA', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x762539b45a1dcce3d36d080f74d1aed37844b878',
@@ -5578,7 +5578,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['USDC', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
@@ -5607,7 +5607,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DAI', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3',
@@ -5636,7 +5636,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['COMP', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x52CE071Bd9b1C4B00A0b92D298c512478CaD67e8/0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
@@ -5666,7 +5666,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SUSHI', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0x2170ed0880ac9a755fd29b2688956bd959f933f8/0x947950bcc74888a40ffa2593c5798f11fc9124c4',
@@ -5696,7 +5696,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DEGO', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x3FdA9383A84C05eC8f7630Fe10AdF1fAC13241CC',
@@ -5726,7 +5726,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['GUM', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xc53708664b99DF348dd27C3Ac0759d2DA9c40462',
@@ -5756,7 +5756,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['pBTC', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xeD28A457A5A76596ac48d87C0f577020F6Ea1c4C',
@@ -5785,7 +5785,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BELT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/ETH/0xE0e514c71282b6f4e823703a39374Cf58dc3eA4f',
@@ -5814,7 +5814,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BEL', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x8443f091997f06a61670b735ed92734f5628692f',
@@ -5843,7 +5843,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BMXX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4131b87f74415190425ccd873048c708f8005823',
@@ -5873,6 +5873,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BOR', 'BNB'],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x92d7756c60dcfd4c689290e8a9f4d263b3b32241',
         buyTokenUrl:
@@ -5901,7 +5902,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BOPEN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xf35262a9d427f96d2437379ef090db986eae5d42',
@@ -5930,7 +5931,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SWGB', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xe40255c5d7fa7ceec5120408c78c787cecb4cfdb',
@@ -5960,7 +5961,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['LIT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xb59490aB09A0f526Cc7305822aC65f2Ab12f9723',
@@ -6017,7 +6018,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DITTO', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x233d91a0713155003fc4dce0afa871b508b3b715',
@@ -6046,7 +6047,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SFP', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xd41fdb03ba84762dd66a0af1a6c8540ff1ba5dfb',
@@ -6102,7 +6103,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['WSOTE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x541e619858737031a1244a5d0cd47e5ef480342c',
@@ -6132,7 +6133,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['FRONT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x928e55dab735aa8260af3cedada18b5f70c72f1b',
@@ -6162,7 +6163,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BTCST', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x78650b139471520656b9e7aa7a5e9276814a38e9',
@@ -6191,7 +6192,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['LTC', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4338665cbb7b2485a8855a139b75d5e34ab0db94',
@@ -6221,7 +6222,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ADA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4338665cbb7b2485a8855a139b75d5e34ab0db94',
@@ -6251,7 +6252,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DOT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x7083609fce4d1d8dc0c979aab8c869ea2c873402',
@@ -6280,7 +6281,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ZIL', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xb86abcb37c3a4b64f74f59301aff131a1becc787',
@@ -6310,7 +6311,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['LTO', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x857b222fc79e1cbbf8ca5f78cb133d1b7cf34bbd',
@@ -6340,7 +6341,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['pCWS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xbcf39f0edda668c58371e519af37ca705f2bfcbd',
@@ -6370,7 +6371,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TRADE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x7af173f350d916358af3e218bdf2178494beb748',
@@ -6400,7 +6401,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DUSK', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c',
@@ -6430,7 +6431,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['COS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0x96Dd399F9c3AFda1F194182F71600F1B65946501',
@@ -6460,7 +6461,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['WATCH', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x7A9f28EB62C791422Aa23CeAE1dA9C847cBeC9b0',
@@ -6490,7 +6491,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BRY', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xf859Bf77cBe8699013d6Dbc7C2b926Aaf307F830',
@@ -6520,7 +6521,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ZEE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x44754455564474a89358b2c2265883df993b12f0',
@@ -6550,7 +6551,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DODO', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2',
@@ -6580,7 +6581,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SWINGBY', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x71de20e0c4616e7fcbfdd3f875d568492cbe4739',
@@ -6610,7 +6611,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['APYS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x37dfACfaeDA801437Ff648A1559d73f4C40aAcb7',
@@ -6668,7 +6669,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ODDZ', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xCD40F2670CF58720b694968698A5514e924F742d',
@@ -6698,7 +6699,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BONDLY', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x96058f8C3e16576D9BD68766f3836d9A33158f89',
@@ -6728,7 +6729,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ITAM', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x04C747b40Be4D535fC83D09939fb0f626F32800B',
@@ -6758,7 +6759,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ARPA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x6F769E65c14Ebd1f68817F5f1DcDb61Cfa2D6f7e',
@@ -6788,7 +6789,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['DFT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x42712dF5009c20fee340B245b510c0395896cF6e',
@@ -6818,7 +6819,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SWTH', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x250b211EE44459dAd5Cd3bCa803dD6a7EcB5d46C',
@@ -6848,7 +6849,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['LIEN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x5d684adaf3fcfe9cfb5cede3abf02f0cdd1012e3',
@@ -6878,7 +6879,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['bROOBEE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xE64F5Cb844946C1F102Bd25bBD87a5aB4aE89Fbe',
@@ -6908,7 +6909,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TKO', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x9f589e3eabe42ebC94A44727b3f3531C0c877809',
@@ -6938,7 +6939,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TLM', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x2222227E22102Fe3322098e4CBfE18cFebD57c95',
@@ -6968,7 +6969,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['PERL', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x0F9E4D49f25de22c2202aF916B681FBB3790497B',
@@ -6998,7 +6999,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ALPA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xc5E6689C9c8B02be7C49912Ef19e79cF24977f03',
@@ -7028,7 +7029,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['HZN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xC0eFf7749b125444953ef89682201Fb8c6A917CD',
@@ -7058,7 +7059,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SUTER', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x4cfbbdfbd5bf0814472ff35c72717bd095ada055',
@@ -7088,7 +7089,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['TEN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xdff8cb622790b7f92686c722b02cab55592f152c',
@@ -7118,7 +7119,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['bALBT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x72faa679e1008ad8382959ff48e392042a8b06f7',
@@ -7148,7 +7149,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['BSCX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x5ac52ee5b2a633895292ff6d8a89bb9190451587',
@@ -7177,7 +7178,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['CTK', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xA8c2B8eec3d368C0253ad3dae65a5F2BBB89c929',
@@ -7232,7 +7233,7 @@ export const pools = [
         oracleId: 'ETH',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Autofarm',
         assets: ['ETH'],
         risks: [],
@@ -7261,7 +7262,7 @@ export const pools = [
         status: 'active',
         platform: 'Belt',
         assets: ['USDT', 'BUSD', 'USDC', 'DAI', 'VENUS BLP'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'ALGO_STABLE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://belt.fi/',
         buyTokenUrl:
@@ -7289,7 +7290,7 @@ export const pools = [
         status: 'active',
         platform: 'Mdex',
         assets: ['MDX', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://bsc.mdex.com/#/add/BNB/0x9C65AB58d8d978DB963e63f2bfB7121627e3a739',
         buyTokenUrl:
@@ -7314,7 +7315,7 @@ export const pools = [
         oracleId: 'BTCB',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Autofarm',
         assets: ['BTCB'],
         risks: [],
@@ -7371,7 +7372,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['ADA', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0x3EE2200Efb3400fAbB9AacF31297cBdD1d435D47/0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
@@ -7401,7 +7402,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['IOTA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0xd944f1D1e9d5f9Bb90b62f9D45e447D989580782',
@@ -7431,7 +7432,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['BAT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x101d82428437127bF1608F699CD651e6Abf9766E',
@@ -7461,7 +7462,7 @@ export const pools = [
         status: 'active',
         platform: 'Ellipsis',
         assets: ['renBTC', 'BTCB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://ellipsis.finance/ren/deposit',
         network: 'bsc'
@@ -7487,7 +7488,7 @@ export const pools = [
         status: 'active',
         platform: 'Ellipsis',
         assets: ['fUSDT', 'USDT', 'BUSD', 'USDC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://ellipsis.finance/fusdt/deposit',
         network: 'bsc'
@@ -7542,7 +7543,7 @@ export const pools = [
         status: 'active',
         platform: 'Autofarm',
         assets: ['BETH', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         addLiquidityUrl:
@@ -7573,7 +7574,7 @@ export const pools = [
         status: 'active',
         platform: 'Autofarm',
         assets: ['ETH', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         addLiquidityUrl:
@@ -7604,7 +7605,7 @@ export const pools = [
         status: 'active',
         platform: 'Autofarm',
         assets: ['BTCB', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         addLiquidityUrl:
@@ -7635,7 +7636,7 @@ export const pools = [
         status: 'active',
         platform: 'Autofarm',
         assets: ['BTCB', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         addLiquidityUrl:
@@ -7666,7 +7667,7 @@ export const pools = [
         status: 'active',
         platform: 'Autofarm',
         assets: ['USDT', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         addLiquidityUrl:
@@ -7693,8 +7694,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'mash-mash-busd',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['MASH', 'BUSD'],
         risks: [],
@@ -7722,8 +7723,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'mash-mash-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['MASH', 'BNB'],
         risks: [],
@@ -7751,8 +7752,8 @@ export const pools = [
         oracle: 'tokens',
         oracleId: 'MASH',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['MASH'],
         risks: [],
@@ -7783,7 +7784,7 @@ export const pools = [
         status: 'active',
         platform: 'Mdex',
         assets: ['MDX', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://bsc.mdex.com/#/add/0x9C65AB58d8d978DB963e63f2bfB7121627e3a739/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -7813,7 +7814,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['PALM'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.yieldbay.finance/#/swap?outputCurrency=0x9768e5b2d8e761905bc81dfc554f9437a46cdcc6',
@@ -7841,7 +7842,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['BIFI', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0xCa3F508B8e4Dd382eE878A314789373D80A5190A',
@@ -8000,7 +8001,7 @@ export const pools = [
         oracleId: 'SXP',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Autofarm',
         assets: ['SXP'],
         risks: [],
@@ -8025,7 +8026,7 @@ export const pools = [
         oracleId: 'ADA',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Autofarm',
         assets: ['ADA'],
         risks: [],
@@ -8053,7 +8054,7 @@ export const pools = [
         status: 'active',
         platform: 'Autofarm',
         assets: ['BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
@@ -8077,7 +8078,7 @@ export const pools = [
         oracleId: 'BUSD',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Autofarm',
         assets: ['BUSD'],
         risks: [],
@@ -8102,7 +8103,7 @@ export const pools = [
         oracleId: 'USDT',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Autofarm',
         assets: ['USDT'],
         risks: [],
@@ -8127,7 +8128,7 @@ export const pools = [
         oracleId: 'USDC',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Autofarm',
         assets: ['USDC'],
         risks: [],
@@ -8182,7 +8183,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['xBLZD', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 1,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x9a946c3Cb16c08334b69aE249690C236Ebd5583E',
@@ -8212,7 +8213,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['xBLZD', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 1,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x9a946c3Cb16c08334b69aE249690C236Ebd5583E',
@@ -8298,7 +8299,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['xBLZD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x9a946c3Cb16c08334b69aE249690C236Ebd5583E',
@@ -8438,7 +8439,7 @@ export const pools = [
         status: 'active',
         platform: 'Mdex',
         assets: ['ETH', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://bsc.mdex.com/#/add/0x2170Ed0880ac9A755fd29B2688956BD959F933F8/0x55d398326f99059fF775485246999027B3197955',
@@ -8466,7 +8467,7 @@ export const pools = [
         status: 'active',
         platform: 'Autofarm',
         assets: ['AUTO', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xa184088a740c695E156F91f5cC086a06bb78b827',
@@ -8550,7 +8551,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['PALM', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.yieldbay.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x9768E5b2d8e761905BC81Dfc554f9437A46CdCC6',
@@ -8579,7 +8580,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['PALM', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.yieldbay.finance/#/add/ETH/0x9768E5b2d8e761905BC81Dfc554f9437A46CdCC6',
@@ -8606,7 +8607,7 @@ export const pools = [
         oracleId: 'Cake',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Swamp',
         assets: ['CAKE'],
         risks: [],
@@ -8639,7 +8640,7 @@ export const pools = [
         status: 'active',
         platform: 'Swamp',
         assets: ['SWAMP'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         depositFee: '<0.1%',
         buyTokenUrl:
@@ -8665,7 +8666,7 @@ export const pools = [
         oracleId: 'Cake',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Autofarm',
         assets: ['CAKE'],
         risks: [],
@@ -8809,7 +8810,7 @@ export const pools = [
         status: 'active',
         platform: 'Ellipsis',
         assets: ['USDT', 'BUSD', 'USDC', '3EPS'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://ellipsis.finance/3pool/deposit',
         buyTokenUrl:
@@ -8838,7 +8839,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['TNDR', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.thunderswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x7Cc46141AB1057b1928de5Ad5Ee78Bb37eFC4868',
@@ -8867,7 +8868,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['TNDR', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.thunderswap.finance/#/add/ETH/0x7Cc46141AB1057b1928de5Ad5Ee78Bb37eFC4868',
@@ -9118,7 +9119,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['HPS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://julswap.com/#/add/BNB/0xeDa21B525Ac789EaB1a08ef2404dd8505FfB973D',
         buyTokenUrl:
@@ -9147,7 +9148,7 @@ export const pools = [
         status: 'active',
         platform: 'Ellipsis',
         assets: ['EPS', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://pancake.ellipsis.finance/#/add/BNB/0xA7f552078dcC247C2684336020c03648500C6d9F',
@@ -9177,7 +9178,7 @@ export const pools = [
         status: 'active',
         platform: 'Alpaca',
         assets: ['sALPACA'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?inputCurrency=0x8f0528ce5ef7b51152a59745befdd91d97091d2f&outputCurrency=0x6F695Bd5FFD25149176629f8491A5099426Ce7a7',
@@ -9373,7 +9374,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SPACE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x0abd3E3502c15ec252f90F64341cbA74a24fba06',
@@ -9400,7 +9401,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['SPACE', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?inputCurrency=0x0abd3E3502c15ec252f90F64341cbA74a24fba06&outputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56',
@@ -9456,7 +9457,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['PMP', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'PLATFORM_NEW', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0x8d4FBB3AC63bf33851dCE80D63613Df1A515BC00',
@@ -9539,7 +9540,7 @@ export const pools = [
         oracleId: 'ETH',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['ETH'],
         risks: [],
@@ -9570,7 +9571,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['COM', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://bscdex.complus.exchange/#/add/BNB/0x7fa892544D49598460B821De4D99E8c28b1Decaa',
@@ -9684,7 +9685,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['NUTS'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x8893D5fA71389673C5c4b9b3cb4EE1ba71207556',
@@ -9712,7 +9713,7 @@ export const pools = [
         status: 'active',
         platform: 'Bakery',
         assets: ['BAT', 'BAKE'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://www.bakeryswap.org/#/add/0x101d82428437127bf1608f699cd651e6abf9766e/0xe02df9e3e622debdd69fb838bb799e3f168902c5',
@@ -9856,7 +9857,7 @@ export const pools = [
         status: 'active',
         platform: 'PancakeSwap',
         assets: ['ALICE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.pancakeswap.finance/#/add/BNB/0xAC51066d7bEC65Dc4589368da368b212745d63E8',
@@ -9969,7 +9970,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['BANANA'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://dex.apeswap.finance/#/swap?inputCurrency=0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95&outputCurrency=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -10191,7 +10192,7 @@ export const pools = [
         oracleId: 'BTCB',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['BTCB'],
         risks: [],
@@ -10247,7 +10248,7 @@ export const pools = [
         oracleId: 'jul-bifi-bnb',
         oraclePrice: 0,
         depositsPaused: false,
-        status: 'active',
+        status: 'eol',
         platform: 'JulSwap',
         assets: ['BIFI', 'BNB'],
         risks: [],
@@ -10279,7 +10280,7 @@ export const pools = [
         status: 'active',
         platform: 'JulSwap',
         assets: ['JulD', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://julswap.com/#/add/0x5a41f637c3f7553dba6ddc2d3ca92641096577ea/BNB',
         buyTokenUrl:
@@ -10305,7 +10306,7 @@ export const pools = [
         oracleId: 'ADA',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['ADA'],
         risks: [],
@@ -10445,7 +10446,7 @@ export const pools = [
         oracleId: 'soup-soup-bnb',
         oraclePrice: 0,
         depositsPaused: false,
-        status: 'active',
+        status: 'eol',
         platform: 'Other',
         assets: ['SOUP', 'BNB'],
         risks: [],
@@ -10472,7 +10473,7 @@ export const pools = [
         oracleId: 'soup-soups-bnb',
         oraclePrice: 0,
         depositsPaused: false,
-        status: 'active',
+        status: 'eol',
         platform: 'Other',
         assets: ['SOUPS', 'BNB'],
         risks: [],
@@ -10503,7 +10504,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['BANANA', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/ETH/0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95',
@@ -10533,7 +10534,7 @@ export const pools = [
         status: 'active',
         platform: 'ApeSwap',
         assets: ['BANANA', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://dex.apeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95',
@@ -10728,8 +10729,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'sponge-steam-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['STEAM', 'BNB'],
         risks: [],
@@ -10760,7 +10761,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['SALT', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.saltswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x2849b1ae7e04a3d9bc288673a92477cf63f28af4',
@@ -10789,7 +10790,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['SALT', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.saltswap.finance/#/add/BNB/0x2849b1ae7e04a3d9bc288673a92477cf63f28af4',
@@ -10903,7 +10904,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['RAMEN', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.ramenswap.finance/#/add/ETH/0x4F47A0d15c1E53F3d94c069C7D16977c29F9CB6B',
@@ -10933,7 +10934,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['RAMEN', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://exchange.ramenswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x4F47A0d15c1E53F3d94c069C7D16977c29F9CB6B',
@@ -11159,7 +11160,7 @@ export const pools = [
         status: 'active',
         platform: 'Kebab',
         assets: ['USDT', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.kebabfinance.com/#/add/0x55d398326f99059ff775485246999027b3197955/0xe9e7cea3dedca5984780bafc599bd69add087d56',
@@ -11189,7 +11190,7 @@ export const pools = [
         status: 'active',
         platform: 'Kebab',
         assets: ['ETH', 'BTCB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.kebabfinance.com/#/add/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c/0x2170ed0880ac9a755fd29b2688956bd959f933f8',
@@ -11275,7 +11276,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['BTS', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?inputCurrency=0xc2e1acef50ae55661855e8dcb72adb182a3cc259&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -11302,7 +11303,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['BTD', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MICRO', 'ALGO_STABLE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?inputCurrency=0xD1102332a213E21faF78B69C03572031F3552c33&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -11470,7 +11471,7 @@ export const pools = [
         status: 'active',
         platform: 'Kebab',
         assets: ['KEBAB', 'BTCB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.kebabfinance.com/#/add/0x7979f6c54eba05e18ded44c4f986f49a5de551c2/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
@@ -11556,7 +11557,7 @@ export const pools = [
         status: 'active',
         platform: 'Kebab',
         assets: ['BIFI', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.kebabfinance.com/#/add/0xCa3F508B8e4Dd382eE878A314789373D80A5190A/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
@@ -11692,8 +11693,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'sponge-sponge-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['SPG', 'BNB'],
         risks: [],
@@ -11722,8 +11723,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'sponge-soak-bnb',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Other',
         assets: ['SOAK', 'BNB'],
         risks: [],
@@ -11894,7 +11895,7 @@ export const pools = [
         status: 'active',
         platform: 'Kebab',
         assets: ['KEBAB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://swap.kebabfinance.com/#/swap?outputCurrency=0x7979f6c54eba05e18ded44c4f986f49a5de551c2',
@@ -11922,7 +11923,7 @@ export const pools = [
         status: 'active',
         platform: 'Kebab',
         assets: ['KEBAB', 'BUSD'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.kebabfinance.com/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x7979f6c54eba05e18ded44c4f986f49a5de551c2',
@@ -11952,7 +11953,7 @@ export const pools = [
         status: 'active',
         platform: 'Kebab',
         assets: ['KEBAB', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.kebabfinance.com/#/add/BNB/0x7979f6c54eba05e18ded44c4f986f49a5de551c2',
@@ -12287,6 +12288,7 @@ export const pools = [
         status: 'active',
         platform: 'Bakery',
         assets: ['BAKE', 'BUSD'],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         addLiquidityUrl:
             'https://www.bakeryswap.org/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
         buyTokenUrl:
@@ -12340,7 +12342,7 @@ export const pools = [
         oracleId: 'cake-bdo-bnb-sbdo',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Other',
         assets: ['BDO', 'BNB'],
         risks: [],
@@ -12398,7 +12400,7 @@ export const pools = [
         oracleId: 'cake-sbdo-busd',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Other',
         assets: ['SBDO', 'BUSD'],
         risks: [],
@@ -12426,7 +12428,7 @@ export const pools = [
         oracleId: 'cake-bdo-busd',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Other',
         assets: ['BDO', 'BUSD'],
         risks: [],
@@ -12454,7 +12456,7 @@ export const pools = [
         oracleId: 'BETH',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['BETH'],
         risks: [],
@@ -12482,7 +12484,7 @@ export const pools = [
         oracleId: 'DAI',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['DAI'],
         risks: [],
@@ -12510,7 +12512,7 @@ export const pools = [
         oracleId: 'FIL',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['FIL'],
         risks: [],
@@ -12567,7 +12569,7 @@ export const pools = [
         status: 'active',
         platform: 'Bakery',
         assets: ['BTCB', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://www.bakeryswap.org/#/add/ETH/0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
@@ -13059,7 +13061,7 @@ export const pools = [
         oracleId: 'Cake',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'PancakeSwap',
         assets: ['CAKE'],
         risks: [],
@@ -13087,7 +13089,7 @@ export const pools = [
         oracleId: 'BCH',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['BCH'],
         risks: [],
@@ -13115,7 +13117,7 @@ export const pools = [
         oracleId: 'DOT',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['DOT'],
         risks: [],
@@ -13143,7 +13145,7 @@ export const pools = [
         oracleId: 'LINK',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['LINK'],
         risks: [],
@@ -13312,7 +13314,7 @@ export const pools = [
         status: 'active',
         platform: 'Venus',
         assets: ['BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 1,
         withdrawalFee: '0.05%',
         network: 'bsc'
@@ -13339,7 +13341,7 @@ export const pools = [
         status: 'active',
         platform: 'Venus',
         assets: ['BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 1,
         withdrawalFee: '0.05%',
         buyTokenUrl:
@@ -13365,7 +13367,7 @@ export const pools = [
         oracleId: 'SXP',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['SXP'],
         risks: [],
@@ -13393,7 +13395,7 @@ export const pools = [
         oracleId: 'USDC',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['USDC'],
         risks: [],
@@ -13421,7 +13423,7 @@ export const pools = [
         oracleId: 'USDT',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['USDT'],
         risks: [],
@@ -13449,7 +13451,7 @@ export const pools = [
         oracleId: 'BUSD',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['BUSD'],
         risks: [],
@@ -13477,7 +13479,7 @@ export const pools = [
         oracleId: 'LTC',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['LTC'],
         risks: [],
@@ -13505,7 +13507,7 @@ export const pools = [
         oracleId: 'XRP',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'Venus',
         assets: ['XRP'],
         risks: [],
@@ -13622,7 +13624,7 @@ export const pools = [
         status: 'active',
         platform: 'Other',
         assets: ['GOLD', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 1,
         addLiquidityUrl:
             'https://narwhalswap.org/#/page/add/0x8f4087cb09e0f378f4278a314c94a636665de24b/BNB',
@@ -13652,7 +13654,7 @@ export const pools = [
         status: 'active',
         platform: 'Bakery',
         assets: ['BAKE'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://bakeryswap.org/#/swap?outputCurrency=0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
@@ -13680,7 +13682,7 @@ export const pools = [
         status: 'active',
         platform: 'Bakery',
         assets: ['BAKE', 'BNB'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://www.bakeryswap.org/#/add/ETH/0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5',
@@ -14028,7 +14030,7 @@ export const pools = [
         oracleId: 'Cake',
         oraclePrice: 0,
         depositsPaused: true,
-        status: 'active',
+        status: 'eol',
         platform: 'PancakeSwap',
         assets: ['CAKE'],
         risks: [],

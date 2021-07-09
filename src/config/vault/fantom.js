@@ -20,7 +20,7 @@ export const pools = [
         status: 'active',
         platform: 'Froyo',
         assets: ['USDT', 'DAI', 'USDC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl: 'https://frozenyogurt.finance/pool',
         network: 'fantom'
@@ -46,7 +46,7 @@ export const pools = [
         status: 'active',
         platform: 'Froyo',
         assets: ['FROYO', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'NO-AUDIT', 'PLATFORM_NEW', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://app.sushi.com/add/ETH/0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA',
@@ -75,7 +75,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['LINK', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -104,7 +104,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['COVER', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -133,7 +133,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['CREAM', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -162,7 +162,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['SNX', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -187,11 +187,11 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'boo-yfi-ftm',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'SpookySwap',
         assets: ['YFI', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -220,7 +220,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['fUSDT', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -249,7 +249,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['BTC', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -278,7 +278,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['ETH', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -307,7 +307,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['AAVE', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -336,7 +336,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['CRV', 'FTM'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -365,7 +365,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['FTM', 'BOO'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -394,7 +394,7 @@ export const pools = [
         status: 'active',
         platform: 'SpookySwap',
         assets: ['FTM', 'USDC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',

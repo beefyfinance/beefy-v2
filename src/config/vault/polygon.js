@@ -20,7 +20,7 @@ export const pools = [
         status: 'active',
         platform: 'SushiSwap',
         assets: ['AAVE', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://app.sushi.com/#/add/0xD6DF932A45C0f255f85145f286eA0b292B21C90B/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -49,7 +49,7 @@ export const pools = [
         status: 'active',
         platform: 'SushiSwap',
         assets: ['ETH', 'DAI'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://app.sushi.com/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
@@ -78,7 +78,7 @@ export const pools = [
         status: 'active',
         platform: 'SushiSwap',
         assets: ['BTC', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://app.sushi.com/#/add/0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -107,7 +107,7 @@ export const pools = [
         status: 'active',
         platform: 'SushiSwap',
         assets: ['ETH', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://app.sushi.com/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
@@ -136,7 +136,7 @@ export const pools = [
         status: 'active',
         platform: 'SushiSwap',
         assets: ['USDC', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://app.sushi.com/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -165,7 +165,7 @@ export const pools = [
         status: 'active',
         platform: 'SushiSwap',
         assets: ['MATIC', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://app.sushi.com/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -194,7 +194,7 @@ export const pools = [
         status: 'active',
         platform: 'Cometh',
         assets: ['AZUKI', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.cometh.io/#/add/0x7CdC0421469398e0F3aA8890693d86c840Ac8931/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
@@ -223,7 +223,7 @@ export const pools = [
         status: 'active',
         platform: 'Cometh',
         assets: ['DOKI', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.cometh.io/#/add/0x5C7F7Fe4766fE8f0fa9b41E2E4194d939488ff1C/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
@@ -252,7 +252,7 @@ export const pools = [
         status: 'active',
         platform: 'Aave',
         assets: ['ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_MID', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         buyTokenUrl:
             'https://quickswap.exchange/#/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -279,7 +279,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['USDC', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
@@ -308,7 +308,7 @@ export const pools = [
         status: 'active',
         platform: 'Cometh',
         assets: ['MUST', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.cometh.io/#/add/0x9C78EE466D6Cb57A4d01Fd887D2b5dFb2D46288f/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
@@ -337,7 +337,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['wBTC', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -366,7 +366,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['UBT', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x7FBc10850caE055B27039aF31bD258430e714c62',
@@ -395,7 +395,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['DEFI5', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x42435F467D33e5C4146a4E8893976ef12BBCE762',
@@ -424,7 +424,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['WISE', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xB77e62709e39aD1cbeEBE77cF493745AeC0F453a',
@@ -453,7 +453,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['CEL', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xD85d1e945766Fea5Eda9103F918Bd915FbCa63E6',
@@ -482,7 +482,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['QUICK', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x831753dd7087cac61ab5644b308642cc1c33dc13',
@@ -507,8 +507,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'quick-mausdc-usdc',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'QuickSwap',
         assets: ['maUSDC', 'USDC'],
         risks: [],
@@ -540,7 +540,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['AAVE', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0xD6DF932A45C0f255f85145f286eA0b292B21C90B/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -569,7 +569,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['LINK', 'ETH'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -594,8 +594,8 @@ export const pools = [
         oracle: 'lps',
         oracleId: 'krill-krill-usdc',
         oraclePrice: 0,
-        depositsPaused: false,
-        status: 'active',
+        depositsPaused: true,
+        status: 'eol',
         platform: 'Polywhale',
         assets: ['KRILL', 'USDC'],
         risks: [],
@@ -627,7 +627,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['ETH', 'USDT'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/ETH/0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
@@ -656,7 +656,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['ETH', 'MATIC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/ETH/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -685,7 +685,7 @@ export const pools = [
         status: 'active',
         platform: 'QuickSwap',
         assets: ['QUICK', 'MATIC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://quickswap.exchange/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x831753dd7087cac61ab5644b308642cc1c33dc13',
@@ -714,7 +714,7 @@ export const pools = [
         status: 'active',
         platform: 'Cometh',
         assets: ['ETH', 'MATIC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.cometh.io/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
@@ -743,7 +743,7 @@ export const pools = [
         status: 'active',
         platform: 'Cometh',
         assets: ['MUST', 'MATIC'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.cometh.io/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f',
@@ -772,7 +772,7 @@ export const pools = [
         status: 'active',
         platform: 'Cometh',
         assets: ['USDC', 'MUST'],
-        risks: [],
+        risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
         callFee: 0.5,
         addLiquidityUrl:
             'https://swap.cometh.io/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x9c78ee466d6cb57a4d01fd887d2b5dfb2d46288f',
