@@ -51,7 +51,14 @@ const Portfolio = () => {
                 </Box>
                 <AnimateHeight duration={ 500 } height={ portfolioOpen ? 'auto' : 0 }>
                     <Box>
-                        <PortfolioItem />
+                        <PortfolioItem 
+                            item={{
+                                id: "bifi",
+                                name: "BIFI",
+                                logo: "single-assets/BIFI.png",
+                                apy: { totalApy: '100'}
+                            }}
+                        />
                     </Box>
                     <Box>
                         <Alert severity="info" >No vaults found for this portfolio.</Alert>
