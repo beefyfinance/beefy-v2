@@ -1,7 +1,11 @@
 import React from "react";
 import { makeStyles, Grid, Avatar, Button, Hidden, Typography, Box } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import styles from "./styles"
 import HistoricalRateChart from "../../HistoricalRateChart/HistoricalRateChart";
+import DisplayTags from "../../../../../components/vaultTags";
+import Tooltip from "../../../../../components/Tooltip/Tooltip";
+import question from "../../../../../images/question.svg";
 
 const historicalRateChartData = [
     { date: "28 Jan", apy: 5.00 },
@@ -18,10 +22,10 @@ const useStyles = makeStyles(styles);
 
 const PortfolioItem = ({ item }) => {
     const classes = useStyles();
+    const history = useHistory();
 
     return (
-        <Grid container key={item.id}>
-            <Button className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')} >
+        <Grid container key={item.id} className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')}>
             <Box flexGrow={1} textAlign="left">
                 <Grid container className={classes.infoContainer}>
                     <Hidden smDown>
@@ -29,47 +33,52 @@ const PortfolioItem = ({ item }) => {
                             <Avatar src={require('../../../../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
                         </Grid>
                     </Hidden>
-                    <h1 className={classes.assetName}>BADGER-BUSD</h1>
-                    <div>
-                        <p>Chain logo</p>
-                        <p>Inactive</p>
-                        <p>?</p>
-                    </div>
+                    <Grid>
+                        <Box className={classes.title} textAlign={"left"}>
+                            <Typography className={classes.h2}>{item.name}</Typography>
+                            <Box display="flex" alignItems="center">
+                                <Typography display={"inline"}><img alt={item.network} src={require('../../../../../images/networks/' + item.network + '.svg').default} /></Typography>
+                                <DisplayTags tags={item.tags} />
+                                <Tooltip title="Vault state" description="This is a state.">
+                                    <img alt="More info" src={question} className={classes.moreInfoIcon}/>
+                                </Tooltip>
+                            </Box>
+                        </Box>
+                    </Grid>
                 </Grid>
 
             </Box>
             <Box className={classes.rWidth} textAlign={"left"}>
                 <Typography className={classes.h2}>52 LP</Typography>
-                <Typography className={classes.h3}>$150 Total</Typography>
+                <Typography className={classes.h3}><span className={classes.bold}>$150</span> Total</Typography>
             </Box>
-            <Hidden smDown>
+            <Hidden mdDown>
                 <Box className={classes.rWidth} textAlign={"left"}>
                     <Typography className={classes.h2}>50 LP</Typography>
-                    <Typography className={classes.h3}>$150 Deposited</Typography>
+                    <Typography className={classes.h3}><span className={classes.bold}>$150</span> Deposited</Typography>
                 </Box>
             </Hidden>
-            <Hidden smDown>
-                <Box className={classes.rWidth} textAlign={"left"}>
-                    <Typography className={classes.h2}>2 LP</Typography>
-                    <Typography className={classes.h3}>$20 Yield</Typography>
-                </Box>
-            </Hidden>
-            <Hidden smDown>
+            <Box className={classes.rWidth} textAlign={"left"}>
+                <Typography className={classes.h2}>2 LP</Typography>
+                <Typography className={classes.h3}><span className={classes.bold}>$20</span> Yield</Typography>
+            </Box>
+            <Hidden mdDown>
                 <Box className={classes.rWidth} textAlign={"center"}>
                     <HistoricalRateChart chartData={historicalRateChartData}/>
                     <Typography className={classes.h3}>Daily historical rate</Typography>
                 </Box>
             </Hidden>
-            <Box className={classes.apyContainer}>
-                <Box display="flex">
-                    <Typography variant={"h1"}>150%</Typography>
-                    <Typography variant={"h2"}>APY</Typography>
+            <Box className={[classes.apyContainer, classes.roundedRight].join(' ')}>
+                <Box display="flex" justifyContent="center" alignItems="center">
+                    <Typography variant="h1">150%</Typography>
+                    <Box marginLeft={1}>
+                        <Typography variant="h2">APY</Typography>
+                    </Box>
                 </Box>
                 <Box>
-                    <Typography variant={"button"}>Withdrawal</Typography>
+                    <Button className={classes.cta} onClick={() => {history.push('/' + item.network + '/vault/' + (item.id))}}>Withdrawal</Button>
                 </Box>
             </Box>
-            </Button>
         </Grid>
     )
 }

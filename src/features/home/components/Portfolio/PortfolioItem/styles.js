@@ -1,21 +1,8 @@
 const styles = (theme) => ({
-    h1: {
-        fontSize: '48px',
-        fontWeight: '600',
-        lineHeight: '54px',
-        color:   theme.palette.type === 'dark' ? '#ffffff' : '#000000',
-        padding: '60px 0',
-    },
-    numberOfVaults: {
-        marginTop: 20,
-        textTransform: 'uppercase',
-        fontSize: '14px',
-        fontWeight: 600,
-        lineHeight: '18px',
-        letterSpacing: '1px',
-    },
     item: {
         margin: '20px 0 0 0',
+        display: 'flex',
+        alignItems: 'center',
         padding: 0,
         width: '100%',
         background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
@@ -71,7 +58,8 @@ const styles = (theme) => ({
     },
     apyContainer: {
         textAlign: 'center',
-        padding: '25px 50px',
+        backgroundColor: "#3E4570",
+        padding: '25px 25px',
         '& .MuiTypography-h1': {
             fontWeight: 600,
             fontSize: '30px',
@@ -83,18 +71,26 @@ const styles = (theme) => ({
             lineHeight: '24px',
             color: '#8585A6'
         },
-        '& .MuiTypography-button': {
-            border: 'solid 2px #54995C',
+    },
+    cta: {
+        border: 'solid 2px #54995C',
+        backgroundColor: '#54995C',
+        borderRadius: '30px',
+        marginLeft: '10px',
+        color: '#ffffff',
+        fontSize: '18px',
+        fontWeight: 700,
+        padding: '4px 19px',
+        textTransform: 'capitalize',
+        marginTop: '10px',
+        display: 'block',
+        '&:hover': {
             backgroundColor: '#54995C',
-            borderRadius: '30px',
-            marginLeft: '10px',
-            color: '#ffffff',
-            fontSize: '18px',
-            fontWeight: 700,
-            padding: '4px 19px',
-            textTransform: 'capitalize',
-            marginTop: '10px',
-            display: 'block',
+        }
+    },
+    moreInfoIcon: {
+        '&:hover': {
+            cursor: 'pointer'
         }
     },
     infoContainer: {
@@ -112,6 +108,9 @@ const styles = (theme) => ({
                 float: 'left',
             }
         },
+    },
+    bold: {
+        color: "white"
     }
 });
 

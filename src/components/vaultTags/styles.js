@@ -21,6 +21,9 @@ const styles = (theme) => ({
     },
     topTag: {
         backgroundColor: '#073FAB',
+    },
+    depositsPausedTag: {
+        backgroundColor: '#000000'
     }
 });
 

@@ -5,6 +5,7 @@ import AnimateHeight from 'react-animate-height';
 import {Alert} from "@material-ui/lab";
 import styles from "./styles"
 import {useLocation} from "react-router";
+import PortfolioItem from "./PortfolioItem";
 
 const useStyles = makeStyles(styles);
 
@@ -28,23 +29,23 @@ const Portfolio = () => {
                         <Button onClick={() => {setHideBalance(!hideBalance)}}>{hideBalance ? (<React.Fragment><VisibilityOff /> Show</React.Fragment>) : (<React.Fragment><Visibility /> Hide</React.Fragment>)} balance</Button>
                     </Box>
                     <Box>
-                        <Typography variant={"h1"}>Portfolio</Typography>
+                        <Typography className={classes.h1}>Portfolio</Typography>
                     </Box>
                     <Box>
                         <Box display={"flex"}>
                             <Box pt={1} pb={1} pl={5}>
-                                <Typography variant={"h2"}><BlurredText value={"$1.123"} /></Typography>
-                                <Typography>Deposited</Typography>
-                                <Typography variant={"body2"}><ArrowDropUp /> <BlurredText value={"0.59% 1w"} /></Typography>
+                                <Typography className={classes.h2}><BlurredText value={"$1.123"} /></Typography>
+                                <Typography className={classes.body1}>Deposited</Typography>
+                                <Typography className={classes.body2}><ArrowDropUp /> <BlurredText value={"0.59% 1w"} /></Typography>
                             </Box>
                             <Box pt={1} pb={1} pl={5}>
-                                <Typography variant={"h2"}><BlurredText value={"$0"} /></Typography>
-                                <Typography>Total yield</Typography>
-                                <Typography variant={"body2"}> <ArrowDropUp /> <BlurredText value={"0.59% 1w"} /></Typography>
+                                <Typography className={classes.h2}><BlurredText value={"$0"} /></Typography>
+                                <Typography className={classes.body1}>Total yield</Typography>
+                                <Typography className={classes.body2}> <ArrowDropUp /> <BlurredText value={"0.59% 1w"} /></Typography>
                             </Box>
                             <Box pt={1} pb={1} pl={5}>
-                                <Typography variant={"h2"}><BlurredText value={"0"} /></Typography>
-                                <Typography>Daily yield</Typography>
+                                <Typography className={classes.h2}><BlurredText value={"0"} /></Typography>
+                                <Typography className={classes.body1}>Daily yield</Typography>
                             </Box>
                         </Box>
                     </Box>
@@ -53,8 +54,10 @@ const Portfolio = () => {
                     <Box>
                         <PortfolioItem 
                             item={{
-                                id: "bifi",
-                                name: "BIFI",
+                                id: "bifi-maxi",
+                                network: "bsc",
+                                name: "BIFI Maxi",
+                                tags: ['depositsPaused'],
                                 logo: "single-assets/BIFI.png",
                                 apy: { totalApy: '100'}
                             }}

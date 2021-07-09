@@ -2,33 +2,33 @@ const styles = (theme) => ({
     portfolio: {
         backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
         padding: '60px 0 0 0',
-        '& .MuiTypography-h1': {
-            fontSize: '36px',
-            fontWeight: 600,
-            lineHeight: '42px',
-            paddingBottom: '20px',
-        },
-        '& .MuiTypography-h2': {
-            fontSize: '24px',
-            fontWeight: '600',
-            lineHeight: '30px',
-            color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
-        },
-        '& .MuiTypography-body1': {
-            fontSize: '18px',
-            fontWeight: '600',
-            lineHeight: '24px',
-            display: 'inline-flex',
-            color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
-        },
-        '& .MuiTypography-body2': {
-            fontSize: '18px',
-            fontWeight: '600',
-            lineHeight: '24px',
-            verticalAlign: 'middle',
-            display: 'inline-flex',
-            color: theme.palette.type === 'dark' ? '#509658' : '#ff0000',
-        }
+    },
+    h1: {
+        fontSize: '36px',
+        fontWeight: 600,
+        lineHeight: '42px',
+        paddingBottom: '20px',
+    },
+    h2: {
+        fontSize: '24px',
+        fontWeight: '600',
+        lineHeight: '30px',
+        color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
+    },
+    body1: {
+        fontSize: '18px',
+        fontWeight: '600',
+        lineHeight: '24px',
+        display: 'inline-flex',
+        color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
+    },
+    body2: {
+        fontSize: '18px',
+        fontWeight: '600',
+        lineHeight: '24px',
+        verticalAlign: 'middle',
+        display: 'inline-flex',
+        color: theme.palette.type === 'dark' ? '#509658' : '#ff0000',
     },
     mobileFix: {
         position: 'relative',

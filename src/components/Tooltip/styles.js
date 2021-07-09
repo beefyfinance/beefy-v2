@@ -1,6 +1,7 @@
 const styles = (theme) => ({
     container: {
         position: 'relative',
+        display: 'inline-block'
     },
     tooltip: {
         position: 'absolute',
@@ -47,6 +48,8 @@ const styles = (theme) => ({
         }
     },
     content: {
+        display: "flex",
+        alignItems: "center",
         '&:hover': {
             cursor: 'pointer'
         }
