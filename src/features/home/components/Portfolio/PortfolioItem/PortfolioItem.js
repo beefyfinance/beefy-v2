@@ -4,8 +4,9 @@ import { useHistory } from "react-router-dom";
 import styles from "./styles"
 import HistoricalRateChart from "../../HistoricalRateChart/HistoricalRateChart";
 import DisplayTags from "../../../../../components/vaultTags";
-import Tooltip from "../../../../../components/Tooltip/Tooltip";
+import Tooltip from "../../../../../components/Tooltip";
 import question from "../../../../../images/question.svg";
+import vaultStates from "./vaultStates.json";
 
 const historicalRateChartData = [
     { date: "28 Jan", apy: 5.00 },
@@ -41,7 +42,7 @@ const PortfolioItem = ({ item }) => {
                                 <Box marginRight={0.5}>
                                     <DisplayTags tags={item.tags} />
                                 </Box>
-                                <Tooltip title="Vault state" description="This is a state.">
+                                <Tooltip title={vaultStates["eol"].title} description={vaultStates["eol"].description} direction='left'>
                                     <img alt="More info" src={question} className={classes.moreInfoIcon}/>
                                 </Tooltip>
                             </Box>

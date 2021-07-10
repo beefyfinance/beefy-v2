@@ -1,0 +1,14 @@
+{
+    "eol": {
+        "title": "Inactive",
+        "description": "The vault has reached its end of life. It is no longer working and will not return to activity. This can be due to multiple reasons. The underlying platform stopping rewards, or a security concern. Please withdraw your funds."
+    },
+    "paused": {
+        "title": "Temporarily Inactive",
+        "description": "The vault is temporarily paused. It won’t earn rewards for as long as it remains inactive. The most likely reason is that we are working on an upgrade or we are waiting for an action to be taken by the underlying platform. The vault should return to normal functioning within a few days."
+    },
+    "depositsPaused": {
+        "title": "Deposits Paused",
+        "description": "The vault is temporarily not accepting new deposits. The vault is still earning yield for the current depositors."
+    }
+}

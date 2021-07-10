@@ -102,7 +102,6 @@ const styles = (theme) => ({
     },
     title: {
         marginLeft: '20px',
-        textTransform: 'capitalize',
         '& .MuiTypography-root': {
             '& img': {
                 marginRight: '3px',

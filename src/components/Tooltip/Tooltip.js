@@ -5,8 +5,8 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const useStyles = makeStyles(styles);
 
-const Tooltip = ({ title, description, children}) => {
-    const classes = useStyles();
+const Tooltip = ({ title, description, direction = 'right', children }) => {
+    const classes = useStyles({ direction });
     const [isOpen, setIsOpen] = useState(false);
 
     return (
