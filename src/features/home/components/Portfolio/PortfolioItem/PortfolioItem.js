@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles, Grid, Avatar, Button, Hidden, Typography, Box } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { formatApy } from "../../../../../helpers/format";
 import styles from "./styles"
 import HistoricalRateChart from "../../HistoricalRateChart/HistoricalRateChart";
 import DisplayTags from "../../../../../components/vaultTags";
@@ -73,7 +74,7 @@ const PortfolioItem = ({ item }) => {
             </Hidden>
             <Box className={classes.apyContainer}>
                 <Box display="flex" justifyContent="center" alignItems="center">
-                    <Typography variant="h1">150%</Typography>
+                    <Typography variant="h1">{formatApy(item.apy.totalApy)}</Typography>
                     <Box marginLeft={1}>
                         <Typography variant="h2">APY</Typography>
                     </Box>
