@@ -20,7 +20,7 @@ const getPoolsSingle = async (item, state, dispatch) => {
     calls.push({
         id: item.id,
         balance: tokenContract.methods.balance(),
-        pricePerShare: tokenContract.methods.getPricePerFullShare(),
+        pricePerFullShare: tokenContract.methods.getPricePerFullShare(),
         strategy: tokenContract.methods.strategy()
     });
     
@@ -33,7 +33,7 @@ const getPoolsSingle = async (item, state, dispatch) => {
         
         pools[item.id].tvl = balance.times(price).dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
         pools[item.id].apy = (!isEmpty(apy) && item.id in apy) ? apy[item.id] : 0;
-        pools[item.id].pricePerShare = item.pricePerShare;
+        pools[item.id].pricePerFullShare = item.pricePerFullShare;
         pools[item.id].strategy = item.strategy;
     }
     
@@ -76,7 +76,7 @@ const getPoolsAll = async (state, dispatch) => {
         calls[pool.network].push({
             id: pool.id,
             balance: tokenContract.methods.balance(),
-            pricePerShare: tokenContract.methods.getPricePerFullShare(),
+            pricePerFullShare: tokenContract.methods.getPricePerFullShare(),
             strategy: tokenContract.methods.strategy(),
         });
     }
@@ -108,7 +108,7 @@ const getPoolsAll = async (state, dispatch) => {
         
         pools[item.id].tvl = tvl;
         pools[item.id].apy = (!isEmpty(apy) && item.id in apy) ? apy[item.id] : 0;
-        pools[item.id].pricePerShare = item.pricePerShare;
+        pools[item.id].pricePerFullShare = item.pricePerFullShare;
         pools[item.id].strategy = item.strategy;
         totalTvl = new BigNumber(totalTvl).plus(tvl);
     }

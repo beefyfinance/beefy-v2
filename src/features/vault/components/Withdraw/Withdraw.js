@@ -47,7 +47,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
     const handleWithdraw = () => {
         const steps = [];
         if(wallet.address) {
-            const amount = new BigNumber(formData.withdraw.amount).dividedBy(byDecimals(item.pricePerShare, item.tokenDecimals)).toFixed(8);
+            const amount = new BigNumber(formData.withdraw.amount).dividedBy(byDecimals(item.pricePerFullShare, item.tokenDecimals)).toFixed(8);
             steps.push({
                 step: "withdraw",
                 message: "Confirm withdraw transaction on wallet to complete.",
@@ -73,7 +73,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
     React.useEffect(() => {
         let amount = 0;
         if(wallet.address && !isEmpty(balance.tokens[item.earnedToken])) {
-            amount = byDecimals(new BigNumber(balance.tokens[item.earnedToken].balance).multipliedBy(byDecimals(item.pricePerShare)), item.tokenDecimals).toFixed(8);
+            amount = byDecimals(new BigNumber(balance.tokens[item.earnedToken].balance).multipliedBy(byDecimals(item.pricePerFullShare)), item.tokenDecimals).toFixed(8);
         }
         setState({balance: amount});
     }, [wallet.address, item, balance]);

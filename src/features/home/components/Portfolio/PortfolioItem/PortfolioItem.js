@@ -26,6 +26,8 @@ const PortfolioItem = ({ item }) => {
     const classes = useStyles();
     const history = useHistory();
 
+    console.log(item);
+
     return (
         <Grid container key={item.id} className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')}>
             <Box flexGrow={1} textAlign="left">

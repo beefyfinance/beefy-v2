@@ -3,9 +3,9 @@ import { Box, Button, Container, makeStyles, Typography } from "@material-ui/cor
 import { ArrowDropUp, ExpandLess, ExpandMore, Visibility, VisibilityOff } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import AnimateHeight from 'react-animate-height';
-import {Alert} from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 import styles from "./styles"
-import {useLocation} from "react-router";
+import { useLocation } from "react-router";
 import PortfolioItem from "./PortfolioItem";
 
 const useStyles = makeStyles(styles);
@@ -18,6 +18,7 @@ const Portfolio = () => {
     const [userVaults, setUserVaults] = useState([]);
     const balanceReducer = useSelector(state => state.balanceReducer);
     const vaultReducer = useSelector(state => state.vaultReducer);
+    const pricesReducer = useSelector(state => state.pricesReducer);
 
     const BlurredText = ({value}) => {
         return (
@@ -26,19 +27,19 @@ const Portfolio = () => {
     }
 
     useEffect(() => {
-        console.log('Render');
-
         let newUserVaults = [];
 
         Object.keys(balanceReducer.tokens).forEach(tokenName => {
             if (balanceReducer.tokens[tokenName].balance != "0") {
-                const target = Object.values(vaultReducer.pools).find(pool => pool.earnedToken === tokenName);
+                let target = Object.values(vaultReducer.pools).find(pool => pool.earnedToken === tokenName);
                 if (target !== undefined) {
+                    target.balance = balanceReducer.tokens[tokenName].balance;
+                    target.tokenPrice  = pricesReducer.prices[tokenName]
                     newUserVaults.push(target);
                 }
             }
         })
-
+        
         setUserVaults(newUserVaults);
     }, [vaultReducer, balanceReducer])
 
