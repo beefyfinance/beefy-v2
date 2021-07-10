@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
 import { ArrowDropUp, ExpandLess, ExpandMore, Visibility, VisibilityOff } from "@material-ui/icons";
+import { useSelector } from "react-redux";
 import AnimateHeight from 'react-animate-height';
 import {Alert} from "@material-ui/lab";
 import styles from "./styles"
@@ -12,14 +13,32 @@ const useStyles = makeStyles(styles);
 const Portfolio = () => {
     const location = useLocation();
     const classes = useStyles();
-    const [portfolioOpen, setPortfolioOpen] = React.useState(location.portfolioOpen);
-    const [hideBalance, setHideBalance] = React.useState(false);
+    const [portfolioOpen, setPortfolioOpen] = useState(location.portfolioOpen);
+    const [hideBalance, setHideBalance] = useState(false);
+    const [userVaults, setUserVaults] = useState([]);
+    const balanceReducer = useSelector(state => state.balanceReducer);
+    const vaultReducer = useSelector(state => state.vaultReducer);
 
     const BlurredText = ({value}) => {
         return (
             <span className={hideBalance ? classes.blurred : ''}>{value}</span>
         );
     }
+
+    useEffect(() => {
+        let newUserVaults = [];
+
+        Object.keys(balanceReducer.tokens).forEach(tokenName => {
+            if (balanceReducer.tokens[tokenName].balance != "0") {
+                const target = Object.values(vaultReducer.pools).find(pool => pool.earnedToken === tokenName);
+                if (target !== undefined) {
+                    newUserVaults.push(target);
+                }
+            }
+        })
+
+        setUserVaults(newUserVaults);
+    }, [vaultReducer, balanceReducer])
 
     return (
         <Box className={classes.portfolio}>

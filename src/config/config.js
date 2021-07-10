@@ -74,7 +74,7 @@ export const config = {
         name: 'Polygon Chain',
         chainId: 137,
         rpc: [
-            'https://rpc-mainnet.maticvigil.com/v1/9141aacb2243b08dea259e83e388b25a09507eb7',
+            'https://rpc-mainnet.matic.network',
         ],
         explorerUrl: 'https://explorer-mainnet.maticvigil.com',
         multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
