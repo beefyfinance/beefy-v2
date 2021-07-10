@@ -70,7 +70,6 @@ const walletReducer = (state = initialState, action) => {
                     ...state,
                     network: action.payload.network,
                     clients: action.payload.clients,
-                    rpc: false,
                 }
         case "WALLET_ACTION":
             return {
