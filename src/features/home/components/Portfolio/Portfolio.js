@@ -70,21 +70,21 @@ const Portfolio = () => {
                     </Box>
                 </Box>
                 <AnimateHeight duration={ 500 } height={ portfolioOpen ? 'auto' : 0 }>
-                    <Box>
-                        <PortfolioItem 
-                            item={{
-                                id: "bifi-maxi",
-                                network: "bsc",
-                                name: "BIFI Maxi",
-                                tags: ['depositsPaused'],
-                                logo: "single-assets/BIFI.png",
-                                apy: { totalApy: '100'}
-                            }}
-                        />
-                    </Box>
-                    <Box>
-                        <Alert severity="info" >No vaults found for this portfolio.</Alert>
-                    </Box>
+                    {userVaults.length > 0 ? (
+                        <>
+                            {userVaults.map(vault => (
+                                <Box>
+                                    <PortfolioItem 
+                                        item={vault}
+                                    />
+                                </Box>
+                            ))}
+                        </>
+                    ) : (
+                        <Box>
+                            <Alert severity="info" >No vaults found for this portfolio.</Alert>
+                        </Box>
+                    )}
                 </AnimateHeight>
                 <Box display="flex">
                     <Box m="auto">
