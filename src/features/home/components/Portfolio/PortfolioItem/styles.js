@@ -1,6 +1,6 @@
 const styles = (theme) => ({
     item: {
-        margin: '20px 0 0 0',
+        margin: '8px 0 0 0',
         display: 'flex',
         alignItems: 'center',
         padding: 0,
@@ -8,8 +8,8 @@ const styles = (theme) => ({
         background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
         '&:hover': {
             background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
-        }
-
+        },
+        border: "4px solid #484F7F",
     },
     apyBg: {
         background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
@@ -59,7 +59,9 @@ const styles = (theme) => ({
     apyContainer: {
         textAlign: 'center',
         backgroundColor: "#3E4570",
-        padding: '25px 25px',
+        padding: '15px 25px',
+        borderTopRightRadius: '15px',
+        borderBottomRightRadius: '15px',
         '& .MuiTypography-h1': {
             fontWeight: 600,
             fontSize: '30px',

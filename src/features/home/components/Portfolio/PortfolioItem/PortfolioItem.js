@@ -38,7 +38,9 @@ const PortfolioItem = ({ item }) => {
                             <Typography className={classes.h2}>{item.name}</Typography>
                             <Box display="flex" alignItems="center">
                                 <Typography display={"inline"}><img alt={item.network} src={require('../../../../../images/networks/' + item.network + '.svg').default} /></Typography>
-                                <DisplayTags tags={item.tags} />
+                                <Box marginRight={0.5}>
+                                    <DisplayTags tags={item.tags} />
+                                </Box>
                                 <Tooltip title="Vault state" description="This is a state.">
                                     <img alt="More info" src={question} className={classes.moreInfoIcon}/>
                                 </Tooltip>
@@ -68,7 +70,7 @@ const PortfolioItem = ({ item }) => {
                     <Typography className={classes.h3}>Daily historical rate</Typography>
                 </Box>
             </Hidden>
-            <Box className={[classes.apyContainer, classes.roundedRight].join(' ')}>
+            <Box className={classes.apyContainer}>
                 <Box display="flex" justifyContent="center" alignItems="center">
                     <Typography variant="h1">150%</Typography>
                     <Box marginLeft={1}>
