@@ -26,6 +26,8 @@ const Portfolio = () => {
     }
 
     useEffect(() => {
+        console.log('Render');
+
         let newUserVaults = [];
 
         Object.keys(balanceReducer.tokens).forEach(tokenName => {
@@ -73,7 +75,7 @@ const Portfolio = () => {
                     {userVaults.length > 0 ? (
                         <>
                             {userVaults.map(vault => (
-                                <Box>
+                                <Box key={vault.id}>
                                     <PortfolioItem 
                                         item={vault}
                                     />
