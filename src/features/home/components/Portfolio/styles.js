@@ -22,14 +22,6 @@ const styles = (theme) => ({
         display: 'inline-flex',
         color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
     },
-    body2: {
-        fontSize: '18px',
-        fontWeight: '600',
-        lineHeight: '24px',
-        verticalAlign: 'middle',
-        display: 'inline-flex',
-        color: theme.palette.type === 'dark' ? '#509658' : '#ff0000',
-    },
     mobileFix: {
         position: 'relative',
         display: 'block',

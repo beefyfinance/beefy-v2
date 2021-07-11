@@ -58,12 +58,10 @@ const Portfolio = () => {
                             <Box pt={1} pb={1} pl={5}>
                                 <Typography className={classes.h2}><BlurredText value={"$1.123"} /></Typography>
                                 <Typography className={classes.body1}>Deposited</Typography>
-                                <Typography className={classes.body2}><ArrowDropUp /> <BlurredText value={"0.59% 1w"} /></Typography>
                             </Box>
                             <Box pt={1} pb={1} pl={5}>
                                 <Typography className={classes.h2}><BlurredText value={"$0"} /></Typography>
                                 <Typography className={classes.body1}>Total yield</Typography>
-                                <Typography className={classes.body2}> <ArrowDropUp /> <BlurredText value={"0.59% 1w"} /></Typography>
                             </Box>
                             <Box pt={1} pb={1} pl={5}>
                                 <Typography className={classes.h2}><BlurredText value={"0"} /></Typography>
