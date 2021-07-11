@@ -41,6 +41,12 @@ const PortfolioItem = ({ item }) => {
     return formatDecimals(balance.div("1e18"), 4, 6);
   };
 
+  const formatBalanceInUsd = () => {
+    let balance = new BigNumber(item.balance);
+    balance = balance.div("1e18");
+    return balance.times(item.oraclePrice).toFixed(2);
+  }
+
   const ctaText = () => {
     if (item.depositsPaused === true) {
       return "Withdraw";
@@ -111,7 +117,7 @@ const PortfolioItem = ({ item }) => {
       <Box className={classes.rWidth} textAlign={"left"}>
         <Typography className={classes.h2}>{formatBalance()} LP</Typography>
         <Typography className={classes.h3}>
-          <span className={classes.bold}>$150</span> Total
+          <span className={classes.bold}>${formatBalanceInUsd()}</span> Total
         </Typography>
       </Box>
       <Hidden mdDown>
