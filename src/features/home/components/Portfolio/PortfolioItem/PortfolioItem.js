@@ -128,7 +128,7 @@ const PortfolioItem = ({ item }) => {
           <span className={classes.bold}>$20</span> Yield
         </Typography>
       </Box>
-      <Hidden mdDown>
+      <Hidden smDown>
         <Box className={[classes.rWidth, classes.chart].join(' ')} textAlign={"center"}>
           <HistoricalRateChart chartData={historicalRateChartData} />
           <Typography className={classes.h3}>Daily historical rate</Typography>

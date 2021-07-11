@@ -81,9 +81,12 @@ const styles = theme => ({
             lineHeight: '34px',
             color: props.muted ? '#424866' : "white",
             [theme.breakpoints.up('sm')]: {
-                fontSize: '22px',
+                fontSize: '20px',
             },
             [theme.breakpoints.up('md')]: {
+                fontSize: '28px',
+            },
+            [theme.breakpoints.up('lg')]: {
                 fontSize: '30px',
             },
         },
@@ -93,14 +96,17 @@ const styles = theme => ({
             lineHeight: '24px',
             color: '#8585A6',
             [theme.breakpoints.up('sm')]: {
-                fontSize: '16px',
+                fontSize: '14px',
             },
             [theme.breakpoints.up('md')]: {
+                fontSize: '16px',
+            },
+            [theme.breakpoints.up('lg')]: {
                 fontSize: '18px',
             },
         },
         [theme.breakpoints.up('sm')]: {
-            minWidth: '170px',
+            minWidth: '150px',
             padding: '15px 12px',
         },
         [theme.breakpoints.up('md')]: {
