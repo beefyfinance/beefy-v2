@@ -7,7 +7,7 @@
         "title": "Temporarily Inactive",
         "description": "The vault is temporarily paused. It won’t earn rewards for as long as it remains inactive. The most likely reason is that we are working on an upgrade or we are waiting for an action to be taken by the underlying platform. The vault should return to normal functioning within a few days."
     },
-    "depositsPaused": {
+    "active": {
         "title": "Deposits Paused",
         "description": "The vault is temporarily not accepting new deposits. The vault is still earning yield for the current depositors."
     }

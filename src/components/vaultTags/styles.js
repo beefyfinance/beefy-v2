@@ -24,6 +24,12 @@ const styles = (theme) => ({
     },
     depositsPausedTag: {
         backgroundColor: '#000000'
+    },
+    eolTag: {
+        backgroundColor: '#000000'
+    },
+    pausedTag: {
+        backgroundColor: '#484F7F'
     }
 });
 

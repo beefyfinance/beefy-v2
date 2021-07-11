@@ -1,16 +1,16 @@
-const styles = (theme) => ({
-    item: {
+const styles = theme => ({
+    item: props => ({
         margin: '8px 0 0 0',
         display: 'flex',
         alignItems: 'center',
-        padding: 0,
+        padding: 0, 
         width: '100%',
-        background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
+        background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#272B4A',
         '&:hover': {
-            background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
+            background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#272B4A',
         },
-        border: "4px solid #484F7F",
-    },
+        border: props.muted ? "4px solid rgba(72, 79, 127, 0.4)" : "4px solid #484F7F",
+    }),
     apyBg: {
         background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
     },
@@ -56,16 +56,21 @@ const styles = (theme) => ({
             minWidth: '170px',
         },
     },
-    apyContainer: {
+    apyContainer: props => ({
+        display: "flex",
+        flexDirection: 'column',
+        alignItems: "center",
         textAlign: 'center',
-        backgroundColor: "#3E4570",
-        padding: '15px 25px',
+        backgroundColor: props.muted ? 'transparent' : "#3E4570",
+        padding: '15px 15px',
+        minWidth: '250px',
         borderTopRightRadius: '15px',
         borderBottomRightRadius: '15px',
         '& .MuiTypography-h1': {
             fontWeight: 600,
             fontSize: '30px',
             lineHeight: '34px',
+            color: props.muted ? '#424866' : "white",
         },
         '& .MuiTypography-h2': {
             fontWeight: 600,
@@ -73,12 +78,11 @@ const styles = (theme) => ({
             lineHeight: '24px',
             color: '#8585A6'
         },
-    },
+    }),
     cta: {
         border: 'solid 2px #54995C',
         backgroundColor: '#54995C',
         borderRadius: '30px',
-        marginLeft: '10px',
         color: '#ffffff',
         fontSize: '18px',
         fontWeight: 700,
