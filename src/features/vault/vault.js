@@ -201,6 +201,7 @@ const Vault = () => {
                             platform={item.platform}
                             assets={item.assets}
                             want={item.name}
+                            vamp={item.vamp}
                         />
                         {renderTokens(item)}
                     </Grid>

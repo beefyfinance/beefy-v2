@@ -47,6 +47,7 @@ export const pools = [
         platform: 'Froyo',
         assets: ['FROYO', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'NO-AUDIT', 'PLATFORM_NEW', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://app.sushi.com/add/ETH/0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA',
@@ -76,6 +77,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['LINK', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -105,6 +107,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['COVER', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -134,6 +137,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['CREAM', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -163,6 +167,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['SNX', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -192,6 +197,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['YFI', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -221,6 +227,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['fUSDT', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -250,6 +257,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['BTC', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -279,6 +287,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['ETH', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -308,6 +317,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['AAVE', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -337,6 +347,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['CRV', 'FTM'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -366,6 +377,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['FTM', 'BOO'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',
@@ -395,6 +407,7 @@ export const pools = [
         platform: 'SpookySwap',
         assets: ['FTM', 'USDC'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_MEDIUM', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.5,
         addLiquidityUrl:
             'https://spookyswap.finance/add',

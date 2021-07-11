@@ -21,6 +21,7 @@ export const pools = [
         platform: 'Lydia',
         assets: ['LYD', 'USDT'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl: 'https://www.lydia.finance/#/add/0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084/0xde3a24028580884448a5397872046a019649b084',
         buyTokenUrl: 'https://exchange.lydia.finance/#/swap?inputCurrency=0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084&outputCurrency=0xde3a24028580884448a5397872046a019649b084',
@@ -48,6 +49,7 @@ export const pools = [
         platform: 'Lydia',
         assets: ['LYD', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl: 'https://www.lydia.finance/#/add/0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
         buyTokenUrl: 'https://exchange.lydia.finance/#/swap?inputCurrency=0x4c9b4e1ac6f24cde3660d5e4ef1ebf77c710c084&outputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
@@ -75,6 +77,7 @@ export const pools = [
         platform: 'OliveSwap',
         assets: ['OLIVE', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl: 'https://swap.olive.cash/#/add/AVAX/0x617724974218A18769020A70162165A539c07E8a',
         buyTokenUrl: 'https://swap.olive.cash/#/swap?outputCurrency=0x617724974218A18769020A70162165A539c07E8a',
@@ -102,6 +105,7 @@ export const pools = [
         platform: 'OliveSwap',
         assets: ['OLIVE', 'USDT'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl: 'https://swap.olive.cash/#/add/0xde3A24028580884448a5397872046a019649b084/0x617724974218A18769020A70162165A539c07E8a',
         buyTokenUrl: 'https://swap.olive.cash/#/swap?outputCurrency=0x617724974218A18769020A70162165A539c07E8a',
@@ -157,6 +161,7 @@ export const pools = [
         platform: 'Complus',
         assets: ['USDT', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0xde3A24028580884448a5397872046a019649b084',
@@ -185,6 +190,7 @@ export const pools = [
         platform: 'Complus',
         assets: ['ETH', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
@@ -213,6 +219,7 @@ export const pools = [
         platform: 'Complus',
         assets: ['PNG', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982',
@@ -271,6 +278,7 @@ export const pools = [
         platform: 'Complus',
         assets: ['COM', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0x3711c397B6c8F7173391361e27e67d72F252cAad',
@@ -300,6 +308,7 @@ export const pools = [
         platform: 'Complus',
         assets: ['DAI', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://avadex.complus.exchange/#/add/AVAX/0xbA7dEebBFC5fA1100Fb055a87773e1E99Cd3507a',
@@ -329,6 +338,7 @@ export const pools = [
         platform: 'Pangolin',
         assets: ['SUSHI', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0x39cf1BD5f15fb22eC3D9Ff86b0727aFc203427cc',
@@ -358,6 +368,7 @@ export const pools = [
         platform: 'Pangolin',
         assets: ['WBTC', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB',
@@ -387,6 +398,7 @@ export const pools = [
         platform: 'Pangolin',
         assets: ['LINK', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xB3fe5374F67D7a22886A0eE082b2E2f9d2651651',
@@ -416,6 +428,7 @@ export const pools = [
         platform: 'Pangolin',
         assets: ['UNI', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xf39f9671906d8630812f9d9863bBEf5D523c84Ab',
@@ -445,6 +458,7 @@ export const pools = [
         platform: 'Pangolin',
         assets: ['USDT', 'PNG'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0xde3A24028580884448a5397872046a019649b084',
@@ -474,6 +488,7 @@ export const pools = [
         platform: 'Pangolin',
         assets: ['ETH', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xf20d962a6c8f70c731bd838a3a388D7d48fA6e15',
@@ -503,6 +518,7 @@ export const pools = [
         platform: 'Pangolin',
         assets: ['USDT', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_LOW', 'MCAP_HIGH', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0xde3A24028580884448a5397872046a019649b084',
@@ -532,6 +548,7 @@ export const pools = [
         platform: 'Pangolin',
         assets: ['PNG', 'AVAX'],
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_HIGH', 'MCAP_SMALL', 'AUDIT', 'CONTRACTS_VERIFIED'],
+        stratType: 'StratLP',
         callFee: 0.25,
         addLiquidityUrl:
             'https://app.pangolin.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982',

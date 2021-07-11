@@ -11,7 +11,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@walletconnect/web3-provider": "^1.4.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.1.88",
+    "blockchain-addressbook": "^0.1.97",
     "chokidar": "^3.5.2",
     "i18next": "^20.3.2",
     "i18next-browser-languagedetector": "^6.1.2",
