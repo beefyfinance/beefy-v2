@@ -44,8 +44,8 @@ export const calcDaily = apy => {
   return `${(g * 100).toFixed(2)}%`;
 };
 
-export const formatDecimals = number => {
-  return number >= 10 ? number.toFixed(4) : number.isEqualTo(0) ? 0 : number.toFixed(8);
+export const formatDecimals = (number, lgDecimals = 4, dustDecimals = 8) => {
+  return number >= 10 ? number.toFixed(lgDecimals) : number.isEqualTo(0) ? 0 : number.toFixed(dustDecimals);
 };
 
 export function byDecimals(number, tokenDecimals = 18) {

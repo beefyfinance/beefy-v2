@@ -3,7 +3,6 @@ import BigNumber from "bignumber.js";
 import {
   makeStyles,
   Grid,
-  Avatar,
   Button,
   Hidden,
   Typography,
@@ -39,7 +38,7 @@ const PortfolioItem = ({ item }) => {
 
   const formatBalance = () => {
     const balance = new BigNumber(item.balance);
-    return formatDecimals(balance.div("1e18"));
+    return formatDecimals(balance.div("1e18"), 4, 6);
   };
 
   const ctaText = () => {
@@ -73,15 +72,7 @@ const PortfolioItem = ({ item }) => {
       )}
     >
       <Box flexGrow={1} textAlign="left">
-        <Grid container className={classes.infoContainer}>
-          <Hidden smDown>
-            <Grid>
-              <Avatar
-                src={require("../../../../../images/" + item.logo).default}
-                imgProps={{ style: { objectFit: "contain" } }}
-              />
-            </Grid>
-          </Hidden>
+        <Grid container>
           <Grid>
             <Box className={classes.title} textAlign={"left"}>
               <Typography className={classes.h2}>{item.name}</Typography>
@@ -125,20 +116,20 @@ const PortfolioItem = ({ item }) => {
       </Box>
       <Hidden mdDown>
         <Box className={classes.rWidth} textAlign={"left"}>
-          <Typography className={classes.h2}>50 LP</Typography>
+          <Typography className={classes.h2}>0.050781 LP</Typography>
           <Typography className={classes.h3}>
             <span className={classes.bold}>$150</span> Deposited
           </Typography>
         </Box>
       </Hidden>
       <Box className={classes.rWidth} textAlign={"left"}>
-        <Typography className={classes.h2}>2 LP</Typography>
+        <Typography className={classes.h2}>0.050781 LP</Typography>
         <Typography className={classes.h3}>
           <span className={classes.bold}>$20</span> Yield
         </Typography>
       </Box>
       <Hidden mdDown>
-        <Box className={classes.rWidth} textAlign={"center"}>
+        <Box className={[classes.rWidth, classes.chart].join(' ')} textAlign={"center"}>
           <HistoricalRateChart chartData={historicalRateChartData} />
           <Typography className={classes.h3}>Daily historical rate</Typography>
         </Box>
