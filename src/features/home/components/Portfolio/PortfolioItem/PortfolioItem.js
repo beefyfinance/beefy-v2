@@ -1,7 +1,8 @@
 import React from "react";
+import BigNumber from "bignumber.js";
 import { makeStyles, Grid, Avatar, Button, Hidden, Typography, Box } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { formatApy } from "../../../../../helpers/format";
+import { formatApy, formatDecimals } from "../../../../../helpers/format";
 import styles from "./styles"
 import HistoricalRateChart from "../../HistoricalRateChart/HistoricalRateChart";
 import DisplayTags from "../../../../../components/vaultTags";
@@ -27,6 +28,11 @@ const PortfolioItem = ({ item }) => {
     const history = useHistory();
 
     console.log(item);
+
+    const formatBalance = () => {
+        const balance = new BigNumber(item.balance);
+        return formatDecimals(balance.div("1e18"));
+    }
 
     return (
         <Grid container key={item.id} className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')}>
@@ -55,7 +61,7 @@ const PortfolioItem = ({ item }) => {
 
             </Box>
             <Box className={classes.rWidth} textAlign={"left"}>
-                <Typography className={classes.h2}>52 LP</Typography>
+                <Typography className={classes.h2}>{formatBalance()} LP</Typography>
                 <Typography className={classes.h3}><span className={classes.bold}>$150</span> Total</Typography>
             </Box>
             <Hidden mdDown>

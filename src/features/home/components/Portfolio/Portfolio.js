@@ -34,12 +34,12 @@ const Portfolio = () => {
                 let target = Object.values(vaultReducer.pools).find(pool => pool.earnedToken === tokenName);
                 if (target !== undefined) {
                     target.balance = balanceReducer.tokens[tokenName].balance;
-                    target.tokenPrice  = pricesReducer.prices[tokenName]
+                    target.oraclePrice = pricesReducer.prices[target.oracleId];
                     newUserVaults.push(target);
                 }
             }
         })
-        
+
         setUserVaults(newUserVaults);
     }, [vaultReducer, balanceReducer])
 
