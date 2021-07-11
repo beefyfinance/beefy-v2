@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
-import { ArrowDropUp, ExpandLess, ExpandMore, Visibility, VisibilityOff } from "@material-ui/icons";
+import { ExpandLess, ExpandMore, Visibility, VisibilityOff } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import AnimateHeight from 'react-animate-height';
 import { Alert } from "@material-ui/lab";
 import styles from "./styles"
 import { useLocation } from "react-router";
 import PortfolioItem from "./PortfolioItem";
+import BigNumber from "bignumber.js";
 
 const useStyles = makeStyles(styles);
 
@@ -16,6 +17,7 @@ const Portfolio = () => {
     const [portfolioOpen, setPortfolioOpen] = useState(location.portfolioOpen);
     const [hideBalance, setHideBalance] = useState(false);
     const [userVaults, setUserVaults] = useState([]);
+    const [totalDeposit, setTotalDeposit] = useState("0");
     const balanceReducer = useSelector(state => state.balanceReducer);
     const vaultReducer = useSelector(state => state.vaultReducer);
     const pricesReducer = useSelector(state => state.pricesReducer);
@@ -43,6 +45,17 @@ const Portfolio = () => {
         setUserVaults(newUserVaults);
     }, [vaultReducer, balanceReducer])
 
+    useEffect(() => {
+        let newTotalDeposit = BigNumber(0);
+        userVaults.forEach(vault => {
+            const balance = BigNumber(vault.balance);
+            const oraclePrice = pricesReducer.prices[vault.oracleId]
+            newTotalDeposit = newTotalDeposit.plus(balance.div("1e18").times(oraclePrice));
+        })
+
+        setTotalDeposit(newTotalDeposit.toFixed(2));
+    }, [userVaults, pricesReducer])
+
     return (
         <Box className={classes.portfolio}>
             <Container maxWidth="xl">
@@ -56,7 +69,7 @@ const Portfolio = () => {
                     <Box>
                         <Box display={"flex"}>
                             <Box pt={1} pb={1} pl={5}>
-                                <Typography className={classes.h2}><BlurredText value={"$1.123"} /></Typography>
+                                <Typography className={classes.h2}><BlurredText value={`$${totalDeposit}`} /></Typography>
                                 <Typography className={classes.body1}>Deposited</Typography>
                             </Box>
                             <Box pt={1} pb={1} pl={5}>
