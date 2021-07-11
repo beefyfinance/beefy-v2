@@ -47,6 +47,10 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
     const handleWithdraw = () => {
         const steps = [];
         if(wallet.address) {
+            if(item.network !== wallet.network) {
+                dispatch(reduxActions.wallet.setNetwork(item.network));
+                return false;
+            }
             const amount = new BigNumber(formData.withdraw.amount).dividedBy(byDecimals(item.pricePerShare, item.tokenDecimals)).toFixed(8);
             steps.push({
                 step: "withdraw",
@@ -164,7 +168,9 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                 </Box>
                 <Box mt={2}>
                     {wallet.address ? (
-                        <Button onClick={handleWithdraw} className={classes.btnSubmit} fullWidth={true} disabled={formData.withdraw.amount <= 0}>Withdraw {formData.withdraw.max ? ('All') : ''}</Button>
+                        <Button onClick={handleWithdraw} className={classes.btnSubmit} fullWidth={true} disabled={formData.withdraw.amount <= 0}>
+                            {item.network !== wallet.network ? 'Change Network' : (formData.withdraw.max ? 'Withdraw All' : 'Withdraw')}
+                        </Button>
                     ) : (
                         <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
                     )}

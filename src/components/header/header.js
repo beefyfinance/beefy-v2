@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useHistory } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {config} from '../../config/config';
 import reduxActions from "../../features/redux/actions";
 import {
     makeStyles,
@@ -29,14 +28,6 @@ import { localeToLanguageMap } from "../../utils/localeToLanguageMap"
 
 const useStyles = makeStyles(styles);
 
-
-
-const checkNetwork = (path) => {
-    const params = path.substring(1).split('/');
-    const match = params[0].replace(/[^0-9a-z]/gi, '');
-    return match && (match in config) ? match : false;
-}
-
 const Header = ({isNightMode, setNightMode}) => {
     const [language, setLanguage] = React.useState('en');
     const { t, i18n } = useTranslation();
@@ -58,12 +49,6 @@ const Header = ({isNightMode, setNightMode}) => {
     
         setLanguage(cachedLanguage);
     }, [i18n.language]);
-
-    const urlParamNetwork = checkNetwork(location.pathname);
-
-    if(urlParamNetwork && urlParamNetwork !== walletReducer.network) {
-        dispatch(reduxActions.wallet.setNetwork(urlParamNetwork));
-    }
 
     const handleNetworkSwitch = (event) => {
         dispatch(reduxActions.wallet.setNetwork(event.target.value));

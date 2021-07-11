@@ -48,6 +48,10 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
     const handleDeposit = () => {
         const steps = [];
         if(wallet.address) {
+            if(item.network !== wallet.network) {
+                dispatch(reduxActions.wallet.setNetwork(item.network));
+                return false;
+            }
             if(!state.allowance) {
                 steps.push({
                     step: "approve",
@@ -179,7 +183,9 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                 </Box>
                 <Box mt={2}>
                     {wallet.address ? (
-                        <Button onClick={handleDeposit} className={classes.btnSubmit} fullWidth={true} disabled={formData.deposit.amount <= 0}>Deposit {formData.deposit.max ? ('All') : ''}</Button>
+                        <Button onClick={handleDeposit} className={classes.btnSubmit} fullWidth={true} disabled={formData.deposit.amount <= 0}>
+                            {item.network !== wallet.network ? 'Change Network' : (formData.deposit.max ? 'Deposit All' : 'Deposit')}
+                        </Button>
                     ) : (
                         <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
                     )}
