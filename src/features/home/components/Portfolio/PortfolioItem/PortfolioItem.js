@@ -43,19 +43,14 @@ const PortfolioItem = ({ item }) => {
 
   const formatBalanceInUsd = () => {
     let balance = new BigNumber(item.balance);
-    balance = balance.div("1e18");
-    return balance.times(item.oraclePrice).toFixed(2);
+    return balance.div("1e18").times(item.oraclePrice).toFixed(2);
   }
 
-  const ctaText = () => {
-    if (item.depositsPaused === true) {
-      return "Withdraw";
-    } else {
-      return "Deposit / Withdraw";
-    }
-  };
+  const tokenLabel = () => item.oracle === 'lps' ? 'LP' : item.token;
 
-  const getTags = () => {
+  const ctaText = () => item.depositsPaused === true ? "Withdraw" : "Deposit / Withdraw";
+
+  const stateTag = () => {
     if (item.depositsPaused) {
       if (item.status === "active") {
         return ["depositsPaused"];
@@ -94,7 +89,7 @@ const PortfolioItem = ({ item }) => {
                   />
                 </Typography>
                 <Box marginRight={0.5}>
-                  <DisplayTags tags={getTags()} />
+                  <DisplayTags tags={stateTag()} />
                 </Box>
                 {item.depositsPaused && (
                   <Tooltip
@@ -115,21 +110,21 @@ const PortfolioItem = ({ item }) => {
         </Grid>
       </Box>
       <Box className={classes.rWidth} textAlign={"left"}>
-        <Typography className={classes.h2}>{formatBalance()} LP</Typography>
+        <Typography className={classes.h2}>{formatBalance()} {tokenLabel()}</Typography>
         <Typography className={classes.h3}>
           <span className={classes.bold}>${formatBalanceInUsd()}</span> Total
         </Typography>
       </Box>
       <Hidden mdDown>
         <Box className={classes.rWidth} textAlign={"left"}>
-          <Typography className={classes.h2}>0.050781 LP</Typography>
+          <Typography className={classes.h2}>0.050781 {tokenLabel()}</Typography>
           <Typography className={classes.h3}>
             <span className={classes.bold}>$150</span> Deposited
           </Typography>
         </Box>
       </Hidden>
       <Box className={classes.rWidth} textAlign={"left"}>
-        <Typography className={classes.h2}>0.050781 LP</Typography>
+        <Typography className={classes.h2}>0.050781 {tokenLabel()}</Typography>
         <Typography className={classes.h3}>
           <span className={classes.bold}>$20</span> Yield
         </Typography>
