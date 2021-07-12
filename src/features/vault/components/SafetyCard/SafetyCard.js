@@ -25,7 +25,7 @@ const SafetyCard = ({ vaultRisks, score }) => {
             <CardHeader className={classes.cardHeader}>
                 <CardTitle title={<SafetyScore score={score} />} subtitle="Safety Score" />
                 <div className={classes.cardActions}>
-                    <LinkButton href="#" text="How is it calculated?" />
+                    <LinkButton href="https://docs.beefy.finance/beefyfinance/faq/products/vaults#what-is-the-beefy-safety-score" text="How is it calculated?" />
                 </div>
             </CardHeader>
             <CardContent>
