@@ -23,6 +23,7 @@ const Portfolio = () => {
     const balanceReducer = useSelector(state => state.balanceReducer);
     const vaultReducer = useSelector(state => state.vaultReducer);
     const pricesReducer = useSelector(state => state.pricesReducer);
+    const walletReducer = useSelector(state => state.walletReducer);
 
     const BlurredText = ({value}) => {
         return (
@@ -33,50 +34,59 @@ const Portfolio = () => {
     useEffect(() => {
         let newUserVaults = [];
 
-        Object.keys(balanceReducer.tokens).forEach(tokenName => {
-            if (balanceReducer.tokens[tokenName].balance != "0") {
-                let target = Object.values(vaultReducer.pools).find(pool => pool.earnedToken === tokenName);
-                if (target !== undefined) {
-                    target.balance = balanceReducer.tokens[tokenName].balance;
-                    target.oraclePrice = pricesReducer.prices[target.oracleId];
-                    newUserVaults.push(target);
+        if (walletReducer.address !== null) {
+            Object.keys(balanceReducer.tokens).forEach(tokenName => {
+                if (balanceReducer.tokens[tokenName].balance != "0") {
+                    let target = Object.values(vaultReducer.pools).find(pool => pool.earnedToken === tokenName);
+                    if (target !== undefined) {
+                        target.balance = balanceReducer.tokens[tokenName].balance;
+                        target.oraclePrice = pricesReducer.prices[target.oracleId];
+                        newUserVaults.push(target);
+                    }
                 }
-            }
-        })
+            })
+        }
 
         setUserVaults(newUserVaults);
-    }, [vaultReducer, balanceReducer])
+    }, [vaultReducer, balanceReducer, walletReducer])
 
     useEffect(() => {
         let newTotalDeposit = BigNumber(0);
-        if (userVaults.length > 0) {
-            userVaults.forEach(vault => {
-                let balance = BigNumber(vault.balance);
-                balance = balance.times(vault.pricePerFullShare).div("1e18").div("1e18");
-                const oraclePrice = pricesReducer.prices[vault.oracleId]
-                newTotalDeposit = newTotalDeposit.plus(balance.times(oraclePrice));
-            })
 
-            setTotalDeposit(newTotalDeposit.toFixed(2));
+        if (walletReducer.address !== null) {
+            if (userVaults.length > 0) {
+                userVaults.forEach(vault => {
+                    let balance = BigNumber(vault.balance);
+                    balance = balance.times(vault.pricePerFullShare).div("1e18").div("1e18");
+                    const oraclePrice = pricesReducer.prices[vault.oracleId]
+                    newTotalDeposit = newTotalDeposit.plus(balance.times(oraclePrice));
+                })
+            }
         }
-    }, [userVaults, pricesReducer])
+
+        setTotalDeposit(newTotalDeposit.toFixed(2));
+
+    }, [userVaults, pricesReducer, walletReducer])
 
     useEffect(() => {
         let newTotalDaily = BigNumber(0);
 
-        if (userVaults.length > 1) {
-            userVaults.forEach(vault => {
-                const apy = vault.apy.totalApy;
-                const daily = apy / 365;
-                let balance = (BigNumber(vault.balance)).div("1e18");
-                balance = balance.times(vault.pricePerFullShare).div("1e18");
-                const oraclePrice = pricesReducer.prices[vault.oracleId]
-                newTotalDaily = newTotalDaily.plus(balance.times(daily).times(oraclePrice));
-            })
-    
-            setTotalDaily(newTotalDaily.toFixed(2));
+        if (walletReducer.address !== null) {
+            if (userVaults.length > 1) {
+                userVaults.forEach(vault => {
+                    const apy = vault.apy.totalApy;
+                    const daily = apy / 365;
+                    let balance = (BigNumber(vault.balance)).div("1e18");
+                    balance = balance.times(vault.pricePerFullShare).div("1e18");
+                    const oraclePrice = pricesReducer.prices[vault.oracleId]
+                    newTotalDaily = newTotalDaily.plus(balance.times(daily).times(oraclePrice));
+                })
+        
+            }
         }
-    }, [userVaults, pricesReducer])
+
+        setTotalDaily(newTotalDaily.toFixed(2));
+    }, [userVaults, pricesReducer, walletReducer])
 
     useEffect(() => {
         setTotalMonthly(BigNumber(totalDaily).times(30).toFixed(2)); 
