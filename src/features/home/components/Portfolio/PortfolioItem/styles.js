@@ -35,7 +35,7 @@ const styles = theme => ({
             fontSize: '16px',
         },
         [theme.breakpoints.up('lg')]: {
-            fontSize: '27px',
+            fontSize: '23px',
         },
     },
     h3: {
@@ -71,7 +71,7 @@ const styles = theme => ({
         alignItems: "center",
         textAlign: 'center',
         backgroundColor: props.muted ? 'transparent' : "#3E4570",
-        padding: '15px 10px',
+        padding: '10px 10px',
         minWidth: '150px',
         borderTopRightRadius: '15px',
         borderBottomRightRadius: '15px',
@@ -84,10 +84,10 @@ const styles = theme => ({
                 fontSize: '20px',
             },
             [theme.breakpoints.up('md')]: {
-                fontSize: '28px',
+                fontSize: '25px',
             },
             [theme.breakpoints.up('lg')]: {
-                fontSize: '30px',
+                fontSize: '27px',
             },
         },
         '& .MuiTypography-h2': {
@@ -107,11 +107,11 @@ const styles = theme => ({
         },
         [theme.breakpoints.up('sm')]: {
             minWidth: '150px',
-            padding: '15px 12px',
+            padding: '10px 12px',
         },
         [theme.breakpoints.up('md')]: {
             minWidth: '225px',
-            padding: '15px 15px',
+            padding: '10px 15px',
         },
         [theme.breakpoints.up('lg')]: {
             minWidth: '250px',
@@ -137,7 +137,7 @@ const styles = theme => ({
         },
         [theme.breakpoints.up('md')]: {
             padding: '4px 14px',
-            fontSize: '18px',
+            fontSize: '16px',
         },
         [theme.breakpoints.up('lg')]: {
             padding: '4px 17px',
