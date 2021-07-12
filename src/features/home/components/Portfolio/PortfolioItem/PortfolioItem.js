@@ -37,13 +37,15 @@ const PortfolioItem = ({ item }) => {
   const history = useHistory();
 
   const formatBalance = () => {
-    const balance = new BigNumber(item.balance);
-    return formatDecimals(balance.div("1e18"), 4, 6);
+    let balance = new BigNumber(item.balance);
+    balance = balance.times(item.pricePerFullShare).div("1e18").div("1e18");
+    return formatDecimals(balance, 4, 6);
   };
 
   const formatBalanceInUsd = () => {
     let balance = new BigNumber(item.balance);
-    return balance.div("1e18").times(item.oraclePrice).toFixed(2);
+    balance = balance.times(item.pricePerFullShare).div("1e18").div("1e18");
+    return balance.times(item.oraclePrice).toFixed(2);
   }
 
   const tokenLabel = () => item.oracle === 'lps' ? 'LP' : item.token;
@@ -117,14 +119,14 @@ const PortfolioItem = ({ item }) => {
       </Box>
       <Hidden mdDown>
         <Box className={classes.rWidth} textAlign={"left"}>
-          <Typography className={classes.h2}>0.050781 {tokenLabel()}</Typography>
+          <Typography className={classes.h2}>0.000000 {tokenLabel()}</Typography>
           <Typography className={classes.h3}>
             <span className={classes.bold}>$150</span> Deposited
           </Typography>
         </Box>
       </Hidden>
       <Box className={classes.rWidth} textAlign={"left"}>
-        <Typography className={classes.h2}>0.050781 {tokenLabel()}</Typography>
+        <Typography className={classes.h2}>0.000000 {tokenLabel()}</Typography>
         <Typography className={classes.h3}>
           <span className={classes.bold}>$20</span> Yield
         </Typography>

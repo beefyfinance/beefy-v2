@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, Container, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, Container, Hidden, makeStyles, Typography } from "@material-ui/core";
 import { ExpandLess, ExpandMore, Visibility, VisibilityOff } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import AnimateHeight from 'react-animate-height';
@@ -17,7 +17,9 @@ const Portfolio = () => {
     const [portfolioOpen, setPortfolioOpen] = useState(location.portfolioOpen);
     const [hideBalance, setHideBalance] = useState(false);
     const [userVaults, setUserVaults] = useState([]);
-    const [totalDeposit, setTotalDeposit] = useState("0");
+    const [totalDeposit, setTotalDeposit] = useState("0.00");
+    const [totalDaily, setTotalDaily] = useState("0.00");
+    const [totalMonthly, setTotalMonthly] = useState("0.00");
     const balanceReducer = useSelector(state => state.balanceReducer);
     const vaultReducer = useSelector(state => state.vaultReducer);
     const pricesReducer = useSelector(state => state.pricesReducer);
@@ -48,13 +50,32 @@ const Portfolio = () => {
     useEffect(() => {
         let newTotalDeposit = BigNumber(0);
         userVaults.forEach(vault => {
-            const balance = BigNumber(vault.balance);
+            let balance = BigNumber(vault.balance);
+            balance = balance.times(vault.pricePerFullShare).div("1e18").div("1e18");
             const oraclePrice = pricesReducer.prices[vault.oracleId]
-            newTotalDeposit = newTotalDeposit.plus(balance.div("1e18").times(oraclePrice));
+            newTotalDeposit = newTotalDeposit.plus(balance.times(oraclePrice));
         })
 
         setTotalDeposit(newTotalDeposit.toFixed(2));
     }, [userVaults, pricesReducer])
+
+    useEffect(() => {
+        let newTotalDaily = BigNumber(0);
+        userVaults.forEach(vault => {
+            const apy = vault.apy.totalApy;
+            const daily = apy / 365;
+            let balance = (BigNumber(vault.balance)).div("1e18");
+            balance = balance.times(vault.pricePerFullShare).div("1e18");
+            const oraclePrice = pricesReducer.prices[vault.oracleId]
+            newTotalDaily = newTotalDaily.plus(balance.times(daily).times(oraclePrice));
+        })
+
+        setTotalDaily(newTotalDaily.toFixed(2));
+    }, [userVaults, pricesReducer])
+
+    useEffect(() => {
+        setTotalMonthly(BigNumber(totalDaily).times(30).toFixed(2)); 
+    }, [totalDaily])
 
     return (
         <Box className={classes.portfolio}>
@@ -77,9 +98,15 @@ const Portfolio = () => {
                                 <Typography className={classes.body1}>Total yield</Typography>
                             </Box>
                             <Box pt={1} pb={1} pl={5}>
-                                <Typography className={classes.h2}><BlurredText value={"0"} /></Typography>
+                                <Typography className={classes.h2}><BlurredText value={`$${totalDaily}`} /></Typography>
                                 <Typography className={classes.body1}>Daily yield</Typography>
                             </Box>
+                            <Hidden xsDown>
+                                <Box pt={1} pb={1} pl={5}>
+                                    <Typography className={classes.h2}><BlurredText value={`$${totalMonthly}`} /></Typography>
+                                    <Typography className={classes.body1}>Monthly yield</Typography>
+                                </Box>
+                            </Hidden>
                         </Box>
                     </Box>
                 </Box>
