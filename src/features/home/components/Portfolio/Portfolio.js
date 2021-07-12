@@ -49,28 +49,33 @@ const Portfolio = () => {
 
     useEffect(() => {
         let newTotalDeposit = BigNumber(0);
-        userVaults.forEach(vault => {
-            let balance = BigNumber(vault.balance);
-            balance = balance.times(vault.pricePerFullShare).div("1e18").div("1e18");
-            const oraclePrice = pricesReducer.prices[vault.oracleId]
-            newTotalDeposit = newTotalDeposit.plus(balance.times(oraclePrice));
-        })
+        if (userVaults.length > 0) {
+            userVaults.forEach(vault => {
+                let balance = BigNumber(vault.balance);
+                balance = balance.times(vault.pricePerFullShare).div("1e18").div("1e18");
+                const oraclePrice = pricesReducer.prices[vault.oracleId]
+                newTotalDeposit = newTotalDeposit.plus(balance.times(oraclePrice));
+            })
 
-        setTotalDeposit(newTotalDeposit.toFixed(2));
+            setTotalDeposit(newTotalDeposit.toFixed(2));
+        }
     }, [userVaults, pricesReducer])
 
     useEffect(() => {
         let newTotalDaily = BigNumber(0);
-        userVaults.forEach(vault => {
-            const apy = vault.apy.totalApy;
-            const daily = apy / 365;
-            let balance = (BigNumber(vault.balance)).div("1e18");
-            balance = balance.times(vault.pricePerFullShare).div("1e18");
-            const oraclePrice = pricesReducer.prices[vault.oracleId]
-            newTotalDaily = newTotalDaily.plus(balance.times(daily).times(oraclePrice));
-        })
 
-        setTotalDaily(newTotalDaily.toFixed(2));
+        if (userVaults.length > 1) {
+            userVaults.forEach(vault => {
+                const apy = vault.apy.totalApy;
+                const daily = apy / 365;
+                let balance = (BigNumber(vault.balance)).div("1e18");
+                balance = balance.times(vault.pricePerFullShare).div("1e18");
+                const oraclePrice = pricesReducer.prices[vault.oracleId]
+                newTotalDaily = newTotalDaily.plus(balance.times(daily).times(oraclePrice));
+            })
+    
+            setTotalDaily(newTotalDaily.toFixed(2));
+        }
     }, [userVaults, pricesReducer])
 
     useEffect(() => {
@@ -87,27 +92,25 @@ const Portfolio = () => {
                     <Box>
                         <Typography className={classes.h1}>Portfolio</Typography>
                     </Box>
-                    <Box>
-                        <Box display={"flex"}>
-                            <Box pt={1} pb={1} pl={5}>
-                                <Typography className={classes.h2}><BlurredText value={`$${totalDeposit}`} /></Typography>
-                                <Typography className={classes.body1}>Deposited</Typography>
-                            </Box>
-                            <Box pt={1} pb={1} pl={5}>
-                                <Typography className={classes.h2}><BlurredText value={"$0"} /></Typography>
-                                <Typography className={classes.body1}>Total yield</Typography>
-                            </Box>
-                            <Box pt={1} pb={1} pl={5}>
-                                <Typography className={classes.h2}><BlurredText value={`$${totalDaily}`} /></Typography>
-                                <Typography className={classes.body1}>Daily yield</Typography>
-                            </Box>
-                            <Hidden xsDown>
-                                <Box pt={1} pb={1} pl={5}>
-                                    <Typography className={classes.h2}><BlurredText value={`$${totalMonthly}`} /></Typography>
-                                    <Typography className={classes.body1}>Monthly yield</Typography>
-                                </Box>
-                            </Hidden>
+                    <Box className={classes.stats}>
+                        <Box className={classes.stat}>
+                            <Typography className={classes.h2}><BlurredText value={`$${totalDeposit}`} /></Typography>
+                            <Typography className={classes.body1}>Deposited</Typography>
                         </Box>
+                        <Box className={classes.stat}>
+                            <Typography className={classes.h2}><BlurredText value={"$0"} /></Typography>
+                            <Typography className={classes.body1}>Total yield</Typography>
+                        </Box>
+                        <Box className={classes.stat}>
+                            <Typography className={classes.h2}><BlurredText value={`$${totalDaily}`} /></Typography>
+                            <Typography className={classes.body1}>Daily yield</Typography>
+                        </Box>
+                        <Hidden xsDown>
+                            <Box className={classes.stat}>
+                                <Typography className={classes.h2}><BlurredText value={`$${totalMonthly}`} /></Typography>
+                                <Typography className={classes.body1}>Monthly yield</Typography>
+                            </Box>
+                        </Hidden>
                     </Box>
                 </Box>
                 <AnimateHeight duration={ 500 } height={ portfolioOpen ? 'auto' : 0 }>

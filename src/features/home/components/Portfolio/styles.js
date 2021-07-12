@@ -1,4 +1,4 @@
-const styles = (theme) => ({
+const styles = theme => ({
     portfolio: {
         backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
         padding: '60px 0 0 0',
@@ -74,6 +74,19 @@ const styles = (theme) => ({
                 backgroundColor: 'transparent',
                 color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
             }
+        },
+    },
+    stats: {
+        display: 'flex'
+    },
+    stat: {
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+        paddingRight: theme.spacing(5),
+        paddingLeft: theme.spacing(0),
+        [theme.breakpoints.up('md')]: {
+            paddingRight: theme.spacing(0),
+            paddingLeft: theme.spacing(5),
         },
     }
 });
