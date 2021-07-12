@@ -13,7 +13,7 @@ import stratText from "./stratText";
 
 const useStyles = makeStyles(styles);
 
-const StrategyCard = ({ stratType, stratAddr, vaultAddr, apy, audit, network, platform, assets, want }) => {
+const StrategyCard = ({ stratType, stratAddr, vaultAddr, apy, audit, network, platform, assets, want, vamp }) => {
     const classes = useStyles();
 
     return (
@@ -30,7 +30,7 @@ const StrategyCard = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
                 </div>
             </CardHeader>
             <CardContent>
-                <Typography className={classes.text}>{stratText(stratType, platform, assets, want)}</Typography>
+                <Typography className={classes.text}>{stratText(stratType, platform, assets, want, vamp)}</Typography>
                 <div className={classes.apysContainer}>
                     <Typography className={classes.apyTitle}>APY breakdown</Typography>
                     <div className={classes.apys}>
