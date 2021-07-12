@@ -57,9 +57,9 @@ const SafetyCard = ({ vaultRisks, score }) => {
                     ))}
                 </div>
                 <div className={classes.notes}>
-                    <Typography>The higher the Beefy Safe Score the safer your investment.</Typography>
+                    <Typography>The higher the Beefy Safety Score the safer your investment.</Typography>
                     <Typography>
-                        Your funds are secure on beefy.finance. The development team put a lot of time and effort into checking the code 
+                        Your funds are secure on Beefy.Finance. The development team put a lot of time and effort into checking the code 
                         of the vaults they add to the platform. They also have a panic button to pause and protect your assets at short 
                         notice if there is any suspicious activity.
                     </Typography>
