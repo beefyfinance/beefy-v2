@@ -46,7 +46,7 @@ const Portfolio = () => {
         }
 
         setUserVaults(newUserVaults);
-    }, [vaultReducer, balanceReducer, userAddress])
+    }, [vaultReducer, balanceReducer, userAddress, pricesReducer])
 
     useEffect(() => {
         let newGlobalStats = { deposited: BigNumber(0), totalYield: BigNumber(0), daily: BigNumber(0), monthly: BigNumber(0) }
@@ -58,7 +58,7 @@ const Portfolio = () => {
                 const oraclePrice = pricesReducer.prices[vault.oracleId]
                 newGlobalStats.deposited = newGlobalStats.deposited.plus(balance.times(oraclePrice));
 
-                const apy = vault.apy.totalApy;
+                const apy = vault.apy.totalApy || 0;
                 const daily = apy / 365;
                 newGlobalStats.daily = newGlobalStats.daily.plus(balance.times(daily).times(oraclePrice));
             })
@@ -68,7 +68,7 @@ const Portfolio = () => {
 
         setGlobalStats(newGlobalStats);
 
-    }, [userVaults, pricesReducer, userAddress])
+    }, [userVaults, vaultReducer, pricesReducer, userAddress])
 
     return (
         <Box className={classes.portfolio}>
