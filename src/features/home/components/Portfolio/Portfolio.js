@@ -17,13 +17,11 @@ const Portfolio = () => {
     const [portfolioOpen, setPortfolioOpen] = useState(location.portfolioOpen);
     const [hideBalance, setHideBalance] = useState(false);
     const [userVaults, setUserVaults] = useState([]);
-    const [totalDeposit, setTotalDeposit] = useState("0.00");
-    const [totalDaily, setTotalDaily] = useState("0.00");
-    const [totalMonthly, setTotalMonthly] = useState("0.00");
+    const [globalStats, setGlobalStats] = useState({ deposited: BigNumber(0), totalYield: BigNumber(0), daily: BigNumber(0), monthly: BigNumber(0) });
     const balanceReducer = useSelector(state => state.balanceReducer);
     const vaultReducer = useSelector(state => state.vaultReducer);
     const pricesReducer = useSelector(state => state.pricesReducer);
-    const walletReducer = useSelector(state => state.walletReducer);
+    const userAddress = useSelector(state => state.walletReducer.address);
 
     const BlurredText = ({value}) => {
         return (
@@ -34,7 +32,7 @@ const Portfolio = () => {
     useEffect(() => {
         let newUserVaults = [];
 
-        if (walletReducer.address !== null) {
+        if (userAddress !== null) {
             Object.keys(balanceReducer.tokens).forEach(tokenName => {
                 if (balanceReducer.tokens[tokenName].balance != "0") {
                     let target = Object.values(vaultReducer.pools).find(pool => pool.earnedToken === tokenName);
@@ -48,49 +46,30 @@ const Portfolio = () => {
         }
 
         setUserVaults(newUserVaults);
-    }, [vaultReducer, balanceReducer, walletReducer])
+    }, [vaultReducer, balanceReducer, userAddress])
 
     useEffect(() => {
-        let newTotalDeposit = BigNumber(0);
+        console.log("Executing", userAddress);
+        let newGlobalStats = { deposited: BigNumber(0), totalYield: BigNumber(0), daily: BigNumber(0), monthly: BigNumber(0) }
+ 
+        if (userVaults.length > 0) {
+            userVaults.forEach(vault => {
+                let balance = BigNumber(vault.balance);
+                balance = balance.times(vault.pricePerFullShare).div("1e18").div("1e18");
+                const oraclePrice = pricesReducer.prices[vault.oracleId]
+                newGlobalStats.deposited = newGlobalStats.deposited.plus(balance.times(oraclePrice));
 
-        if (walletReducer.address !== null) {
-            if (userVaults.length > 0) {
-                userVaults.forEach(vault => {
-                    let balance = BigNumber(vault.balance);
-                    balance = balance.times(vault.pricePerFullShare).div("1e18").div("1e18");
-                    const oraclePrice = pricesReducer.prices[vault.oracleId]
-                    newTotalDeposit = newTotalDeposit.plus(balance.times(oraclePrice));
-                })
-            }
+                const apy = vault.apy.totalApy;
+                const daily = apy / 365;
+                newGlobalStats.daily = newGlobalStats.daily.plus(balance.times(daily).times(oraclePrice));
+            })
+
+            newGlobalStats.monthly = BigNumber(newGlobalStats.daily).times(30);
         }
 
-        setTotalDeposit(newTotalDeposit.toFixed(2));
+        setGlobalStats(newGlobalStats);
 
-    }, [userVaults, pricesReducer, walletReducer])
-
-    useEffect(() => {
-        let newTotalDaily = BigNumber(0);
-
-        if (walletReducer.address !== null) {
-            if (userVaults.length > 1) {
-                userVaults.forEach(vault => {
-                    const apy = vault.apy.totalApy;
-                    const daily = apy / 365;
-                    let balance = (BigNumber(vault.balance)).div("1e18");
-                    balance = balance.times(vault.pricePerFullShare).div("1e18");
-                    const oraclePrice = pricesReducer.prices[vault.oracleId]
-                    newTotalDaily = newTotalDaily.plus(balance.times(daily).times(oraclePrice));
-                })
-        
-            }
-        }
-
-        setTotalDaily(newTotalDaily.toFixed(2));
-    }, [userVaults, pricesReducer, walletReducer])
-
-    useEffect(() => {
-        setTotalMonthly(BigNumber(totalDaily).times(30).toFixed(2)); 
-    }, [totalDaily])
+    }, [userVaults, pricesReducer, userAddress])
 
     return (
         <Box className={classes.portfolio}>
@@ -104,7 +83,7 @@ const Portfolio = () => {
                     </Box>
                     <Box className={classes.stats}>
                         <Box className={classes.stat}>
-                            <Typography className={classes.h2}><BlurredText value={`$${totalDeposit}`} /></Typography>
+                            <Typography className={classes.h2}><BlurredText value={`$${globalStats.deposited.toFixed(2)}`} /></Typography>
                             <Typography className={classes.body1}>Deposited</Typography>
                         </Box>
                         <Box className={classes.stat}>
@@ -112,12 +91,12 @@ const Portfolio = () => {
                             <Typography className={classes.body1}>Total yield</Typography>
                         </Box>
                         <Box className={classes.stat}>
-                            <Typography className={classes.h2}><BlurredText value={`$${totalDaily}`} /></Typography>
+                            <Typography className={classes.h2}><BlurredText value={`$${globalStats.daily.toFixed(2)}`} /></Typography>
                             <Typography className={classes.body1}>Daily yield</Typography>
                         </Box>
                         <Hidden xsDown>
                             <Box className={classes.stat}>
-                                <Typography className={classes.h2}><BlurredText value={`$${totalMonthly}`} /></Typography>
+                                <Typography className={classes.h2}><BlurredText value={`$${globalStats.monthly.toFixed(2)}`} /></Typography>
                                 <Typography className={classes.body1}>Monthly yield</Typography>
                             </Box>
                         </Hidden>
