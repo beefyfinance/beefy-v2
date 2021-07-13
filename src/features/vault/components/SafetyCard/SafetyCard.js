@@ -3,7 +3,7 @@ import {Box, makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton';
 import Tooltip from '../../../../components/Tooltip';
-import question from "./question.svg";
+import question from "../../../../images/question.svg";
 import up from "./up.svg";
 import down from "./down.svg";
 import { RISKS } from "../../../../config/risk";

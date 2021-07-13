@@ -12,6 +12,10 @@ const DisplayTags = ({tags}) => {
                 return 'Low Risk';
             case 'recent':
                 return 'New';
+            case 'depositsPaused':
+                return 'Deposits Paused';
+            case 'eol':
+                return 'Inactive';
             default:
                 return name;
         }

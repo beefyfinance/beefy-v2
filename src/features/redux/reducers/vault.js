@@ -49,7 +49,7 @@ const initialPools = () => {
             const isStable = type => stables.includes(type);
 
             pool['network'] = net;
-            pool['pricePerShare'] = 1;
+            pool['pricePerFullShare'] = 1;
             pool['balance'] = 0;
             pool['daily'] = 0;
             pool['apy'] = 0;

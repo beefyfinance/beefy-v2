@@ -28,11 +28,11 @@ const Item = ({item}) => {
     return (
         <Grid container key={item.id}>
             <Button className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')} onClick={() => {history.push('/' + item.network + '/vault/' + (item.id))}}>
-                <Box flexGrow={1} textAlign={"left"}>
+                <Box flexGrow={1} textAlign="left">
                     <Grid className={classes.infoContainer} container>
                         <Hidden smDown>
                             <Grid>
-                                <Avatar alt={item.name} src={require('../../../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                            <Avatar alt={item.name} src={require('../../../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
                             </Grid>
                         </Hidden>
                         <Grid>

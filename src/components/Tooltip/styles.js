@@ -1,11 +1,13 @@
-const styles = (theme) => ({
+const styles = theme => ({
     container: {
         position: 'relative',
+        display: 'inline-block'
     },
-    tooltip: {
+    tooltip: props => ({
         position: 'absolute',
-        right: 0,
-        bottom: '80px',
+        right: props.direction === 'right' ? -35 : 'auto',
+        left: props.direction != 'right' ? -35 : 'auto',
+        bottom: props.direction === 'right' ? '80px': '40px',
         width: '417px',
         padding: '15px',
         background: '#272B4A',
@@ -27,9 +29,9 @@ const styles = (theme) => ({
             border: '19px solid',
             height: 0,
             width: 0,
-            left: 'auto',
+            left: props.direction != 'right' ? 21 : 'auto',
             bottom: -35,
-            right: 21,
+            right: props.direction === 'right' ? 21 : 'auto',
             zIndex: 12,
             borderColor: '#272B4A transparent transparent transparent'
         },
@@ -39,14 +41,16 @@ const styles = (theme) => ({
             border: '20px solid',
             height: 0,
             width: 0,
-            left: 'auto',
+            left: props.direction != 'right' ? 20 : 'auto',
             bottom: -40,
-            right: 20,
+            right: props.direction === 'right' ? 20 : 'auto',
             zIndex: 11,
             borderColor: '#484F7F transparent transparent transparent'  
         }
-    },
+    }),
     content: {
+        display: "flex",
+        alignItems: "center",
         '&:hover': {
             cursor: 'pointer'
         }

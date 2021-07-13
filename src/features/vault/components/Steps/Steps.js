@@ -41,7 +41,7 @@ const Steps = ({item, steps, handleClose}) => {
                                     </React.Fragment>
                                 ) : (
                                     <React.Fragment>
-                                        <Typography variant={"h2"}>{byDecimals(new BigNumber(wallet.action.data.amount).multipliedBy(byDecimals(item.pricePerShare)), item.tokenDecimals).toFixed(8)} {item.token}</Typography>
+                                        <Typography variant={"h2"}>{byDecimals(new BigNumber(wallet.action.data.amount).multipliedBy(byDecimals(item.pricePerFullShare)), item.tokenDecimals).toFixed(8)} {item.token}</Typography>
                                         <Typography variant={"h2"}>withdraw confirmed</Typography>
                                     </React.Fragment>
                                 )}
