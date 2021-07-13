@@ -48,8 +48,6 @@ const PortfolioItem = ({ item }) => {
     return balance.times(item.oraclePrice).toFixed(2);
   }
 
-  const tokenLabel = () => item.oracle === 'lps' ? 'LP' : item.token;
-
   const ctaText = () => item.depositsPaused === true ? "Withdraw" : "Deposit / Withdraw";
 
   const stateTag = () => {
@@ -112,25 +110,27 @@ const PortfolioItem = ({ item }) => {
         </Grid>
       </Box>
       <Box className={classes.rWidth} textAlign={"left"}>
-        <Typography className={classes.h2}>{formatBalance()} {tokenLabel()}</Typography>
+        <Typography className={classes.h2}>{formatBalance()}</Typography>
         <Typography className={classes.h3}>
           <span className={classes.bold}>${formatBalanceInUsd()}</span> Total
         </Typography>
       </Box>
       <Hidden mdDown>
         <Box className={classes.rWidth} textAlign={"left"}>
-          <Typography className={classes.h2}>0.000000 {tokenLabel()}</Typography>
+          <Typography className={classes.h2}>0.000000</Typography>
           <Typography className={classes.h3}>
             <span className={classes.bold}>$150</span> Deposited
           </Typography>
         </Box>
       </Hidden>
-      <Box className={classes.rWidth} textAlign={"left"}>
-        <Typography className={classes.h2}>0.000000 {tokenLabel()}</Typography>
-        <Typography className={classes.h3}>
-          <span className={classes.bold}>$20</span> Yield
-        </Typography>
-      </Box>
+      <Hidden xsDown>
+        <Box className={classes.rWidth} textAlign={"left"}>
+          <Typography className={classes.h2}>0.000000</Typography>
+          <Typography className={classes.h3}>
+            <span className={classes.bold}>$20</span> Yield
+          </Typography>
+        </Box>
+      </Hidden>
       <Hidden smDown>
         <Box className={[classes.rWidth, classes.chart].join(' ')} textAlign={"center"}>
           <HistoricalRateChart chartData={historicalRateChartData} />

@@ -49,7 +49,6 @@ const Portfolio = () => {
     }, [vaultReducer, balanceReducer, userAddress])
 
     useEffect(() => {
-        console.log("Executing", userAddress);
         let newGlobalStats = { deposited: BigNumber(0), totalYield: BigNumber(0), daily: BigNumber(0), monthly: BigNumber(0) }
  
         if (userVaults.length > 0) {
