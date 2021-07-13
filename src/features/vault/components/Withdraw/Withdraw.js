@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import BigNumber from "bignumber.js";
 import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import { Link } from 'react-router-dom';
 import * as React from "react";
 import styles from "../styles"
 import {useDispatch, useSelector} from "react-redux";
@@ -123,7 +124,9 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                         )}
                     </Box>
                     <Box>
-                        <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
+                        <Link to={{ pathname: item.buyTokenUrl }} target="_blank">
+                            <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
+                        </Link>
                     </Box>
                 </Box>
                 <Box className={classes.inputContainer}>

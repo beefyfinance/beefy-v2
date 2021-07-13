@@ -10,6 +10,7 @@ import {
     Typography
 } from "@material-ui/core";
 import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import { Link } from 'react-router-dom';
 import * as React from "react";
 import styles from "../styles"
 import {useDispatch, useSelector} from "react-redux";
@@ -138,7 +139,9 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                         )}
                     </Box>
                     <Box>
-                        <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
+                        <Link to={{ pathname: item.buyTokenUrl }} target="_blank">
+                            <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
+                        </Link>
                     </Box>
                 </Box>
                 <Box className={classes.inputContainer}>
