@@ -131,6 +131,9 @@ const styles = (theme) => ({
             backgroundColor: '#389D44'
         }
     },
+    btnSecondary: {
+        textDecoration: 'none'
+    },
     boostContainer: {
         backgroundColor: '#313759',
         borderRadius: '16px',

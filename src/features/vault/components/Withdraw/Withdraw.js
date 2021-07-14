@@ -125,7 +125,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                         )}
                     </Box>
                     <Box>
-                        <Link to={{ pathname: item.buyTokenUrl }} target="_blank">
+                        <Link to={{ pathname: item.buyTokenUrl }} target="_blank" className={classes.btnSecondary}>
                             <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
                         </Link>
                     </Box>
