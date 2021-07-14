@@ -31,7 +31,7 @@ const Portfolio = () => {
 
     useEffect(() => {
         let newUserVaults = [];
-
+        
         if (userAddress !== null) {
             Object.keys(balanceReducer.tokens).forEach(tokenName => {
                 if (balanceReducer.tokens[tokenName].balance != "0") {

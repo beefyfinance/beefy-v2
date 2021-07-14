@@ -1,6 +1,6 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import reduxActions from "../../features/redux/actions";
 import {
     makeStyles,
@@ -17,31 +17,31 @@ import {
     Box,
     Button
 } from "@material-ui/core";
-import {Menu, WbSunny, NightsStay} from "@material-ui/icons";
+import { Menu, WbSunny, NightsStay } from "@material-ui/icons";
 import styles from "./styles"
-import {useLocation} from "react-router";
-import WalletContainer from "./components/WalletContainer";
+import { useLocation } from "react-router";
+import WalletContainer from "./components/WalletContainer/WalletContainer";
 import CustomDropdown from "../customDropdown/CustomDropdown";
-import {getAvailableNetworks} from "../../helpers/utils";
+import { getAvailableNetworks } from "../../helpers/utils";
 import { useTranslation } from "react-i18next";
 import { localeToLanguageMap } from "../../utils/localeToLanguageMap"
 
 const useStyles = makeStyles(styles);
 
-const Header = ({isNightMode, setNightMode}) => {
-    const [language, setLanguage] = React.useState('en');
+const Header = ({ isNightMode, setNightMode }) => {
+    const [language, setLanguage] = useState('en');
     const { t, i18n } = useTranslation();
     const history = useHistory();
     const location = useLocation();
     const dispatch = useDispatch();
     const walletReducer = useSelector(state => state.walletReducer);
     const classes = useStyles();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         const cachedLanguage = i18n.language;
         if (!cachedLanguage) {
           return;
@@ -54,7 +54,7 @@ const Header = ({isNightMode, setNightMode}) => {
         dispatch(reduxActions.wallet.setNetwork(event.target.value));
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if(!walletReducer.web3modal) {
             dispatch(reduxActions.wallet.createWeb3Modal());
         }
@@ -112,11 +112,11 @@ const Header = ({isNightMode, setNightMode}) => {
                             <div className={classes.list} role="presentation" onClick={handleDrawerToggle} onKeyDown={handleDrawerToggle}>
                                 <List component="nav">
                                     {navLinks.map(({ title, path }) => (
-                                        <Link  onClick={() => {history.push(path)}} key={title}>
+                                        <a href={path} key={title}>
                                             <ListItem button className={classes.black}>
                                                 <ListItemText primary={title} />
                                             </ListItem>
-                                        </Link>
+                                        </a>
                                     ))}
                                 </List>
                             </div>
