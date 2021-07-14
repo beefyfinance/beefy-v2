@@ -3,7 +3,6 @@ const styles = (theme) => ({
         border: 'solid 2px #54995C',
         backgroundColor: '#54995C',
         borderRadius: '30px',
-        marginLeft: '10px',
         height: '44px',
         '& .MuiGrid-container': {
             color: '#FFFFFF',
@@ -18,7 +17,6 @@ const styles = (theme) => ({
     connected: {
         border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #ff0000',
         borderRadius: '30px',
-        marginLeft: '10px',
         height: '44px',
         '& .MuiAvatar-root': {
             height: '24px',

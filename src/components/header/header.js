@@ -13,7 +13,6 @@ import {
     ListItemText,
     Hidden,
     Drawer,
-    Link,
     Box,
     Button
 } from "@material-ui/core";
@@ -101,7 +100,9 @@ const Header = ({ isNightMode, setNightMode }) => {
                             </IconButton>
                             <CustomDropdown list={languageDropdownOptions} selected={language} handler={handleLanguageSwitch} css={{marginLeft: 10}} renderValue={languageDropdownCustomRender}/>
                             <CustomDropdown list={getAvailableNetworks(true)} selected={walletReducer.network} handler={handleNetworkSwitch} css={{marginLeft: 10}} />
-                            <WalletContainer />
+                            <Box ml={1}>
+                                <WalletContainer />
+                            </Box>
                         </List>
                     </Hidden>
                     <Hidden mdUp>
@@ -109,10 +110,14 @@ const Header = ({ isNightMode, setNightMode }) => {
                             <Menu fontSize="large" />
                         </IconButton>
                         <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
+                            <CustomDropdown list={languageDropdownOptions} selected={language} handler={handleLanguageSwitch} renderValue={languageDropdownCustomRender} fullWidth/>
+                            <Box mt={0.5}> 
+                                <WalletContainer />
+                            </Box>
                             <div className={classes.list} role="presentation" onClick={handleDrawerToggle} onKeyDown={handleDrawerToggle}>
                                 <List component="nav">
                                     {navLinks.map(({ title, path }) => (
-                                        <a href={path} key={title}>
+                                        <a href={path} key={title} className={classes.mobileLink}>
                                             <ListItem button className={classes.black}>
                                                 <ListItemText primary={title} />
                                             </ListItem>

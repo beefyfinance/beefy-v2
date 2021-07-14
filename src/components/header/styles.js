@@ -58,6 +58,11 @@ const styles = (theme) => ({
             height: '24px',
         }
     },
+    mobileLink: {
+        color: "#6B7199",
+        textDecoration: "none",
+        textTransform: "capitalize"
+    }
 })
 
 export default styles;
