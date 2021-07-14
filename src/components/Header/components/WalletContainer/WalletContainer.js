@@ -5,7 +5,7 @@ import { createCanvas } from 'canvas';
 import styles from "./styles"
 import reduxActions from "../../../../features/redux/actions";
 import {useDispatch, useSelector} from "react-redux";
-import Loader from "../../../loader";
+import Loader from "../../../loader/loader";
 
 const useStyles = makeStyles(styles);
 
