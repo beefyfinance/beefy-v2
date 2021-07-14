@@ -62,6 +62,9 @@ const styles = (theme) => ({
         color: "#6B7199",
         textDecoration: "none",
         textTransform: "capitalize"
+    },
+    hide: {
+        display: 'none'
     }
 })
 

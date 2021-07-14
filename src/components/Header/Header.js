@@ -95,7 +95,7 @@ const Header = ({ isNightMode, setNightMode }) => {
                                         <ListItemText primary={title} />
                                     </ListItem>
                             ))}
-                            <IconButton onClick={setNightMode}>
+                            <IconButton onClick={setNightMode} className={classes.hide}>
                                 {isNightMode ? <WbSunny /> : <NightsStay />}
                             </IconButton>
                             <CustomDropdown list={languageDropdownOptions} selected={language} handler={handleLanguageSwitch} css={{marginLeft: 10}} renderValue={languageDropdownCustomRender}/>
