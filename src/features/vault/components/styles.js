@@ -7,7 +7,7 @@ const styles = (theme) => ({
         lineHeight: '14px',
     },
     balanceContainer: {
-        '& img': {
+        '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
             height: 16,
             width: 16,
         },
@@ -77,7 +77,7 @@ const styles = (theme) => ({
         position: 'absolute',
         top: '12px',
         left: '12px',
-        '& img': {
+        '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
             height: 20,
             width: 20,
         }

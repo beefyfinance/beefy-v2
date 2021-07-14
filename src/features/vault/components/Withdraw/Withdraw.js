@@ -20,6 +20,7 @@ import {byDecimals, convertAmountToRawNumber, stripExtraDecimals} from "../../..
 import {isEmpty} from "../../../../helpers/utils";
 import reduxActions from "../../../redux/actions";
 import Steps from "../Steps";
+import AssetsImage from "../../../../components/AssetsImage";
 
 const useStyles = makeStyles(styles);
 
@@ -114,7 +115,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                 <Typography className={classes.balanceText}>Deposited:</Typography>
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                     <Box lineHeight={0}>
-                        <img alt={item.name} src={require('../../../../images/' + item.logo).default} />
+                        <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
                     </Box>
                     <Box flexGrow={1} pl={1} lineHeight={0}>
                         {isLoading ? (
@@ -132,7 +133,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                 <Box className={classes.inputContainer}>
                     <Paper component="form" className={classes.root}>
                         <Box className={classes.inputLogo}>
-                            <img alt={item.name} src={require('../../../../images/' + item.logo).default} />
+                            <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
                         </Box>
                         <InputBase placeholder="0.00" value={formData.withdraw.amount} onChange={(e) => handleInput(e.target.value)} />
                         <Button onClick={handleMax}>Max</Button>

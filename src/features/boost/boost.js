@@ -8,6 +8,7 @@ import {ArrowLeft, Language, Telegram, Twitter} from "@material-ui/icons";
 import styles from "./styles"
 import {isEmpty} from "../../helpers/utils";
 import { useTranslation } from 'react-i18next';
+import AssetsImage from "../../components/AssetsImage";
 
 const useStyles = makeStyles(styles);
 
@@ -51,7 +52,7 @@ const Boost = () => {
                         <Button className={classes.btnGoBack} onClick={() => {history.push('/' + item.network + '/vault/' + item.poolId)}}><ArrowLeft /> Back to Vault</Button>
                         <Box className={classes.title} display="flex" alignItems="center">
                             <Box>
-                                <Avatar alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                                <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
                             </Box>
                             <Box>
                                 <Typography variant={"h1"}>{item.name} vault</Typography>

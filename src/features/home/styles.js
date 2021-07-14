@@ -115,7 +115,7 @@ const styles = (theme) => ({
         }
     },
     infoContainer: {
-        '& .MuiAvatar-root': {
+        '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
             marginLeft: '20px',
         },
     },

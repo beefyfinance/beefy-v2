@@ -29,6 +29,7 @@ const initialBoosts = () => {
                 boost['tokenAddress'] = pool.earnedTokenAddress;
                 boost['tokenOracle'] = pool.oracle;
                 boost['tokenOracleId'] = pool.oracleId;
+                boost['assets'] = pool.assets;
 
                 boosts[boost.id] = boost;
             }
