@@ -10,7 +10,7 @@ const styles = (theme) => ({
             fontWeight: 600,
             paddingLeft: '10px',
         },
-        '& .MuiAvatar-root': {
+        '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
             width: 54,
             height: 54,
         }

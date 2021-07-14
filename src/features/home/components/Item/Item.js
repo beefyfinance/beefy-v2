@@ -1,4 +1,4 @@
-import {Avatar, Button, Grid, Hidden, makeStyles, Typography} from "@material-ui/core";
+import {Button, Grid, Hidden, makeStyles, Typography} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import DisplayTags from "../../../../components/vaultTags";
 import {calcDaily, formatApy, formatTvl} from "../../../../helpers/format";
@@ -7,6 +7,7 @@ import styles from "../../styles"
 import {useHistory} from "react-router-dom";
 import SafetyScore from "../../../../components/SafetyScore";
 import HistoricalRateChart from "../HistoricalRateChart/HistoricalRateChart";
+import AssetsImage from "../../../../components/AssetsImage";
 
 const historicalRateChartData = [
     { date: "28 Jan", apy: 5.00 },
@@ -32,7 +33,7 @@ const Item = ({item}) => {
                     <Grid className={classes.infoContainer} container>
                         <Hidden smDown>
                             <Grid>
-                            <Avatar alt={item.name} src={require('../../../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                                <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
                             </Grid>
                         </Hidden>
                         <Grid>

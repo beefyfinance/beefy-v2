@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../components/loader";
 import {LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,} from "recharts";
-import {Container, makeStyles, Grid, Paper, Typography, Box, Avatar, Button, Divider, Hidden} from "@material-ui/core"
+import {Container, makeStyles, Grid, Paper, Typography, Box, Button, Divider, Hidden} from "@material-ui/core"
 import styles from "./styles"
 import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
 import {isEmpty} from "../../helpers/utils";
@@ -17,6 +17,7 @@ import Withdraw from "./components/Withdraw";
 import TokenCard from "./components/TokenCard";
 import StrategyCard from "./components/StrategyCard";
 import SafetyCard from "./components/SafetyCard";
+import AssetsImage from "../../components/AssetsImage";
 
 const useStyles = makeStyles(styles);
 const chartData = [
@@ -104,7 +105,7 @@ const Vault = () => {
                         <Button className={classes.btnGoBack} onClick={() => {history.push('/')}}><ArrowLeft /> Back to Explore</Button>
                         <Grid className={classes.title} container>
                             <Grid>
-                                <Avatar className={classes.large} alt={item.name} src={require('../../images/' + item.logo).default} imgProps={{ style: { objectFit: 'contain' } }} />
+                                <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
                             </Grid>
                             <Grid>
                                 <Typography variant={"h1"}>{item.name} vault</Typography>

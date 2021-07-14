@@ -16,7 +16,7 @@ const styles = (theme) => ({
             fontWeight: 600,
             color: '#E88225',
         },
-        '& .MuiAvatar-root': {
+        '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
             width: 54,
             height: 54,
         },
