@@ -1,6 +1,4 @@
 const styles = theme => ({
-    container: {
-    },
     popover: {
         padding: '15px',
         background: '#272B4A',
