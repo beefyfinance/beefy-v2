@@ -47,6 +47,21 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
         }
     }
 
+    let withdrawFee;
+    if (!item.withdrawalFee) {
+            withdrawFee = '0.1%';
+     } else {
+            withdrawFee = item.withdrawalFee;
+    }
+   
+  
+    let depositFee;
+    if (!item.depositFee) {
+            depositFee = '0%';
+     } else {
+            depositFee = item.depositFee;
+    }
+
     const handleDeposit = () => {
         const steps = [];
         if(wallet.address) {
@@ -161,12 +176,13 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                             <Typography variant={"h1"}>Beefy Fee:</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant={"h2"}>0.7% (0.07)</Typography>
+                            <Typography variant={"h2"}>{depositFee}</Typography>
                             <Typography>Deposit fee</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant={"h2"}>0%</Typography>
+                            <Typography variant={"h2"}>{withdrawFee}</Typography>
                             <Typography>Withdrawal fee</Typography>
+                            
                         </Grid>
                         <Grid item xs={12}>
                             <Box pt={1}>

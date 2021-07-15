@@ -58,7 +58,7 @@ const initialPools = () => {
             pool['lastUpdated'] = 0;
             pool['tags'] = [];
             pool['safetyScore'] = 0;
-
+            
             if(!isEmpty(pool.platform)) {
                 if(!platforms.includes(pool.platform)) {
                     platforms[(pool.platform).toLowerCase()] = pool.platform;
