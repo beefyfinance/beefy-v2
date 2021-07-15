@@ -21,15 +21,16 @@ import styles from "./styles"
 import { useLocation } from "react-router";
 import WalletContainer from "./components/WalletContainer/WalletContainer";
 import CustomDropdown from "../customDropdown/CustomDropdown";
-import { getAvailableNetworks } from "../../helpers/utils";
-import { useTranslation } from "react-i18next";
-import { localeToLanguageMap } from "../../utils/localeToLanguageMap"
 
-const useStyles = makeStyles(styles);
+import {getAvailableNetworks} from "../../helpers/utils";
+import {useTranslation} from "react-i18next";
+import {localeToLanguageMap} from "../../i18n.js"
 
-const Header = ({ isNightMode, setNightMode }) => {
-    const [language, setLanguage] = useState('en');
-    const { t, i18n } = useTranslation();
+const useStyles = makeStyles( styles);
+
+const Header = ({isNightMode, setNightMode}) => {
+    const [language, setLanguage] = React.useState('en');
+    const {t, i18n} = useTranslation();
     const history = useHistory();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const Header = ({ isNightMode, setNightMode }) => {
           return;
         }
     
-        setLanguage(cachedLanguage);
+        setLanguage( cachedLanguage);
     }, [i18n.language]);
 
     const handleNetworkSwitch = (event) => {
@@ -60,14 +61,14 @@ const Header = ({ isNightMode, setNightMode }) => {
     }, [dispatch, walletReducer.web3modal]);
 
     const handleLanguageSwitch = event => {
-        if (!event?.target?.value) return;
+        if (!event?.target?.value) return
         const newLanguage = event.target.value
-        return i18n.changeLanguage(newLanguage).then(() => setLanguage(newLanguage));
+        return i18n.changeLanguage( newLanguage).then(() => setLanguage( newLanguage))
     };
 
     const languageDropdownOptions = {}
-    Object.keys(localeToLanguageMap).forEach(locale => {
-        languageDropdownOptions[locale] = localeToLanguageMap[locale]
+    Object.keys( localeToLanguageMap).forEach( locale => {
+        languageDropdownOptions[ locale] = localeToLanguageMap[ locale]
     })
 
     const languageDropdownCustomRender = (locale) => {
