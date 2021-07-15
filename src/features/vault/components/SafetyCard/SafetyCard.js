@@ -2,8 +2,7 @@ import React from 'react';
 import {Box, makeStyles, Typography} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton';
-import Tooltip from '../../../../components/Tooltip';
-import question from "../../../../images/question.svg";
+import Popover from '../../../../components/Popover';
 import up from "./up.svg";
 import down from "./down.svg";
 import { RISKS } from "../../../../config/risk";
@@ -45,12 +44,13 @@ const SafetyCard = ({ vaultRisks, score }) => {
                                         <Typography className={classes.riskCategory}>{categoryText(RISKS[risk].category)}</Typography>
                                     </div>
                                 </div>
-                                <Tooltip title={RISKS[risk].title} description={RISKS[risk].explanation}>
-                                    <div className={classes.moreInfoContainer}>
-                                        <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
-                                        <img alt="More info" src={question} className={classes.moreInfoIcon}/>
-                                    </div>
-                                </Tooltip>
+                                <div className={classes.moreInfoContainer}>
+                                    <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
+                                    <Popover 
+                                        title={RISKS[risk].title}
+                                        description={RISKS[risk].explanation}
+                                    />
+                                </div>
                             </div>
                             )}
                         </Box>
