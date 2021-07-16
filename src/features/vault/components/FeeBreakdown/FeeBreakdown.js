@@ -6,7 +6,7 @@ import {
     makeStyles,
     Typography
 } from "@material-ui/core";
-import styles from "../styles"
+import styles from "./styles"
 import Popover from "../../../../components/Popover";
 
 const useStyles = makeStyles(styles);

@@ -6,7 +6,8 @@ const styles = theme => ({
         filter: 'drop-shadow(0px 0px 40px #0A0F2B)',
         borderRadius: '15px',
         margin: '15px auto',
-        maxWidth: '350px'
+        maxWidth: '350px',
+        zIndex: 10
     },
     trigger: {
         display: "flex",

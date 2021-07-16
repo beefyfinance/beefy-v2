@@ -15,35 +15,38 @@ const BoostWidget = ({ onClick, balance, variant }) => {
     const classes = useStyles();
 
     return (
-        <Box p={4} className={classes.boostContainer}>
+        <div className={classes.container}>
             <Box display="flex" alignItems="center">
-                <Box lineHeight={0}>
-                    <img alt="fire" src={require('../../../../images/fire.png').default} />
-                </Box>
-                <Box>
-                    <Typography variant={"h1"}>Boost</Typography>
-                </Box>
-                <Popover 
-                    title="H"
-                    description="HH"
-                    solid
+                <img 
+                    alt="fire" 
+                    src={require('../../../../images/fire.png').default} 
+                    className={classes.boostImg}
                 />
+                <Typography className={classes.h1}>Boost</Typography>
+                <Box ml={0.5}>
+                    <Popover 
+                        title="Boost Title"
+                        description="Short explanation about vault boosting."
+                        solid
+                        size="md"
+                        placement="top-start"
+                    />
+                </Box>
                 <Box flexGrow={1}>
-                    <Typography variant={"h2"} align={"right"}>{balance}</Typography>
+                    <Typography className={classes.h2} align={"right"}>{balance}</Typography>
                 </Box>
             </Box>
-            <Typography align={"right"}>Receipt Token balance</Typography>
-            <Box pt={4}>
-                <Button 
-                    disabled={true} 
-                    className={classes.btnSubmit} 
-                    fullWidth={true}
-                    onClick={onClick}
-                >
-                    {variant === 'stake' ? 'Stake' : 'Unstake'} Receipt Token
-                </Button>
-            </Box>
-        </Box>
+            <Typography className={classes.body1} align={"right"}>Receipt Token balance</Typography>
+
+            <Button 
+                disabled={true} 
+                className={classes.submit} 
+                fullWidth={true}
+                onClick={onClick}
+            >
+                {variant} Receipt Token
+            </Button>
+        </div>
     )
 }
 
