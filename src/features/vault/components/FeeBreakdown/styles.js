@@ -1,3 +1,10 @@
+const regularText = {
+    fontSize: '14px',
+    fontWeight: 400,
+    color: '#8585A6',
+    letterSpacing: '0.2px',
+}
+
 const styles = theme => ({
     feeContainer: {
         backgroundColor: theme.palette.background.light,
@@ -18,13 +25,13 @@ const styles = theme => ({
         color: '#ffffff',
         paddingTop: '5px',
     },
+    label: {
+        ...regularText,
+        paddingTop: 0,
+    },
     text: {
-        fontSize: '14px',
-        fontWeight: 400,
-        lineHeight: '18px',
-        color: '#8585A6',
-        paddingTop: '5px',
-        letterSpacing: '0.2px',
+        ...regularText,
+        paddingTop: 5,
     },
     divider: {
         margin: '20px 0',

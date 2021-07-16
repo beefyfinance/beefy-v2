@@ -30,11 +30,11 @@ const FeeBreakdown = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <Typography className={classes.value}>0.7% (0.07)</Typography>
-                    <Typography className={classes.text}>Deposit fee</Typography>
+                    <Typography className={classes.label}>Deposit fee</Typography>
                 </Grid>
                 <Grid item xs={6}>
                     <Typography className={classes.value}>0%</Typography>
-                    <Typography className={classes.text}>Withdrawal fee</Typography>
+                    <Typography className={classes.label}>Withdrawal fee</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <Box pt={1}>
@@ -45,11 +45,11 @@ const FeeBreakdown = () => {
                 </Grid>
                 <Grid item xs={6}>
                     <Typography className={classes.value}>~0.05 BNB ($0.1)</Typography>
-                    <Typography className={classes.text}>Deposit</Typography>
+                    <Typography className={classes.label}>Deposit</Typography>
                 </Grid>
                 <Grid item xs={6}>
                     <Typography className={classes.value}>~0.05 BNB ($0.1)</Typography>
-                    <Typography className={classes.text}>Withdrawal</Typography>
+                    <Typography className={classes.label}>Withdrawal</Typography>
                 </Grid>
             </Grid>
         </Box>
