@@ -12,7 +12,7 @@ import {
 import BigNumber from "bignumber.js";
 import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
 import { Link } from 'react-router-dom';
-import * as React from "react";
+import React from "react";
 import styles from "../styles"
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "../../../../components/loader";
@@ -21,6 +21,7 @@ import {isEmpty} from "../../../../helpers/utils";
 import reduxActions from "../../../redux/actions";
 import Steps from "../Steps";
 import AssetsImage from "../../../../components/AssetsImage";
+import BoostWidget from "../BoostWidget";
 
 const useStyles = makeStyles(styles);
 
@@ -180,28 +181,11 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                     )}
                 </Box>
             </Box>
-            <Box p={1}>
-                <Box p={3} className={classes.boostContainer}>
-                    <Box display="flex" alignItems="center">
-                        <Box lineHeight={0}>
-                            <img alt={item.name} src={require('../../../../images/fire.png').default} />
-                        </Box>
-                        <Box>
-                            <Typography variant={"h1"}>Boost</Typography>
-                        </Box>
-                        <Box>
-                            <IconButton><HelpOutline /></IconButton>
-                        </Box>
-                        <Box flexGrow={1}>
-                            <Typography variant={"h2"} align={"right"}>0</Typography>
-                        </Box>
-                    </Box>
-                    <Typography align={"right"}>Receipt Token balance</Typography>
-                    <Box pt={4}>
-                        <Button disabled={true} className={classes.btnSubmit} fullWidth={true}>Unstake Receipt Token</Button>
-                    </Box>
-                </Box>
-            </Box>
+            <BoostWidget
+                balance={0}
+                onClick={() => {}}
+                variant="unstake"
+            />
             <Steps item={item} steps={steps} handleClose={handleClose} />
         </React.Fragment>
     )

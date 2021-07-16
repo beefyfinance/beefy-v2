@@ -3,13 +3,12 @@ import {
     Button,
     Divider,
     Grid,
-    IconButton,
     InputBase,
     makeStyles,
     Paper,
     Typography
 } from "@material-ui/core";
-import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import { ShoppingBasket} from "@material-ui/icons";
 import { Link } from 'react-router-dom';
 import * as React from "react";
 import styles from "../styles"
@@ -21,6 +20,8 @@ import {isEmpty} from "../../../../helpers/utils";
 import reduxActions from "../../../redux/actions";
 import Steps from "../Steps";
 import AssetsImage from "../../../../components/AssetsImage";
+import Popover from "../../../../components/Popover";
+import BoostWidget from "../BoostWidget";
 
 const useStyles = makeStyles(styles);
 
@@ -157,7 +158,11 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                 <Box mt={2} p={2} className={classes.feeContainer}>
                     <Grid container>
                         <Grid item xs={12}>
-                            <IconButton style={{float: 'right'}}><HelpOutline /></IconButton>
+                            <Popover
+                             title="Title"
+                             description="Description"
+                             solid 
+                             />
                             <Typography variant={"h1"}>Beefy Fee:</Typography>
                         </Grid>
                         <Grid item xs={6}>
@@ -195,28 +200,11 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                     )}
                 </Box>
             </Box>
-            <Box p={1}>
-                <Box p={3} className={classes.boostContainer}>
-                    <Box display="flex" alignItems="center">
-                        <Box lineHeight={0}>
-                            <img alt={item.name} src={require('../../../../images/fire.png').default} />
-                        </Box>
-                        <Box>
-                            <Typography variant={"h1"}>Boost</Typography>
-                        </Box>
-                        <Box>
-                            <IconButton><HelpOutline /></IconButton>
-                        </Box>
-                        <Box flexGrow={1}>
-                            <Typography variant={"h2"} align={"right"}>0</Typography>
-                        </Box>
-                    </Box>
-                    <Typography align={"right"}>Receipt Token balance</Typography>
-                    <Box pt={4}>
-                        <Button disabled={true} className={classes.btnSubmit} fullWidth={true}>Stake Receipt Token</Button>
-                    </Box>
-                </Box>
-            </Box>
+            <BoostWidget 
+                balance={0}
+                variant="stake"
+                onClick={() => {}}
+            />
             <Steps item={item} steps={steps} handleClose={handleClose} />
         </React.Fragment>
     )
