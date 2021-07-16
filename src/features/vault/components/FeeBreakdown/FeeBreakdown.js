@@ -18,35 +18,38 @@ const FeeBreakdown = () => {
         <Box mt={2} p={2} className={classes.feeContainer}>
             <Grid container>
                 <Grid item xs={12}>
-                    <Popover
-                    title="Title"
-                    description="Description"
-                    solid 
-                    />
-                    <Typography variant={"h1"}>Beefy Fee:</Typography>
+                    <Box display='flex' justifyContent='space-between'>
+                        <Typography className={classes.title}>Beefy Fee:</Typography>
+                        <Popover
+                            title="What you see is what you earn"
+                            description="Description"
+                            solid 
+                            size='md'
+                        />
+                    </Box>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant={"h2"}>0.7% (0.07)</Typography>
-                    <Typography>Deposit fee</Typography>
+                    <Typography className={classes.value}>0.7% (0.07)</Typography>
+                    <Typography className={classes.text}>Deposit fee</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant={"h2"}>0%</Typography>
-                    <Typography>Withdrawal fee</Typography>
+                    <Typography className={classes.value}>0%</Typography>
+                    <Typography className={classes.text}>Withdrawal fee</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <Box pt={1}>
-                        <Typography>Performance fees are already subtracted from the displayed APY.</Typography>
+                        <Typography className={classes.text}>Performance fees are already subtracted from the displayed APY.</Typography>
                     </Box>
-                    <Divider />
-                    <Typography variant={"h1"}>Est. Transaction Costs:</Typography>
+                    <Divider className={classes.divider} />
+                    <Typography className={classes.title}>Est. Transaction Costs:</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
-                    <Typography>Deposit</Typography>
+                    <Typography className={classes.value}>~0.05 BNB ($0.1)</Typography>
+                    <Typography className={classes.text}>Deposit</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
-                    <Typography>Withdrawal</Typography>
+                    <Typography className={classes.value}>~0.05 BNB ($0.1)</Typography>
+                    <Typography className={classes.text}>Withdrawal</Typography>
                 </Grid>
             </Grid>
         </Box>
