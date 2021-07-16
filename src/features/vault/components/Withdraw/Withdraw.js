@@ -22,6 +22,7 @@ import reduxActions from "../../../redux/actions";
 import Steps from "../Steps";
 import AssetsImage from "../../../../components/AssetsImage";
 import BoostWidget from "../BoostWidget";
+import FeeBreakdown from "../FeeBreakdown";
 
 const useStyles = makeStyles(styles);
 
@@ -140,37 +141,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                         <Button onClick={handleMax}>Max</Button>
                     </Paper>
                 </Box>
-                <Box mt={2} p={2} className={classes.feeContainer}>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <IconButton style={{float: 'right'}}><HelpOutline /></IconButton>
-                            <Typography variant={"h1"}>Beefy Fee:</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography variant={"h2"}>0.7% (0.07)</Typography>
-                            <Typography>Deposit fee</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography variant={"h2"}>0%</Typography>
-                            <Typography>Withdrawal fee</Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Box pt={1}>
-                                <Typography>Performance fees are already subtracted from the displayed APY.</Typography>
-                            </Box>
-                            <Divider />
-                            <Typography variant={"h1"}>Est. Transaction Costs:</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
-                            <Typography>Deposit</Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Typography variant={"h2"}>~0.05 BNB ($0.1)</Typography>
-                            <Typography>Withdrawal</Typography>
-                        </Grid>
-                    </Grid>
-                </Box>
+                <FeeBreakdown />
                 <Box mt={2}>
                     {wallet.address ? (
                         <Button onClick={handleWithdraw} className={classes.btnSubmit} fullWidth={true} disabled={formData.withdraw.amount <= 0}>
