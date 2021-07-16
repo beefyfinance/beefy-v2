@@ -24,7 +24,6 @@ const Popover = ({ title, description, solid, size = 'sm', placement = 'top-end'
                         ref={setAnchorEl} 
                         onClick={() => setIsOpen(!isOpen)}
                     />
-                    <span></span>
                 </div>
                 <Popper 
                     id={title} 
@@ -44,7 +43,7 @@ const Popover = ({ title, description, solid, size = 'sm', placement = 'top-end'
                             enabled: true,
                             element: arrowRef,
                         },
-                        }}
+                    }}
                     className={classes.popper}
                 >
                     <span className={classes.arrow} ref={setArrowRef} />

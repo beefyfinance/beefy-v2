@@ -25,11 +25,11 @@ const BoostWidget = ({ onClick, balance, variant }) => {
                 <Typography className={classes.h1}>Boost</Typography>
                 <Box ml={0.5}>
                     <Popover 
-                        title="Boost Title"
-                        description="Short explanation about vault boosting."
+                        title="What's a Boost?"
+                        description='When you deposit in a Beefy vault, you get a "receipt" called mooToken in your wallet. When a Boost is available, you can stake the receipt token here in order to increase your vault earnings'
                         solid
                         size="md"
-                        placement="top-start"
+                        placement="top-end"
                     />
                 </Box>
                 <Box flexGrow={1}>

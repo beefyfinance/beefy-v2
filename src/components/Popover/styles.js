@@ -7,7 +7,6 @@ const styles = theme => ({
         borderRadius: '15px',
         margin: '15px auto',
         maxWidth: '350px',
-        zIndex: 10
     },
     trigger: {
         display: "flex",
@@ -64,6 +63,7 @@ const styles = theme => ({
         }
     },
     popper: {
+        zIndex: 10,
         '&[x-placement*="end"] .popover': {
             marginRight: -30
         },
