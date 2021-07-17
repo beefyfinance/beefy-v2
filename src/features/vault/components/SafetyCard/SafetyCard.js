@@ -48,7 +48,7 @@ const SafetyCard = ({ vaultRisks, score }) => {
                                     <Typography className={classes.moreInfoLabel}>What does this mean</Typography>
                                     <Popover 
                                         title={RISKS[risk].title}
-                                        description={RISKS[risk].explanation}
+                                        content={RISKS[risk].explanation}
                                     />
                                 </div>
                             </div>

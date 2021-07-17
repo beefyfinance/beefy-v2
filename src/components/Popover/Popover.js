@@ -8,7 +8,7 @@ import styles from "./styles"
 
 const useStyles = makeStyles(styles);
 
-const Popover = ({ title, description, solid, size = 'sm', placement = 'top-end' }) => {
+const Popover = ({ title, content, children, solid, size = 'sm', placement = 'top-end' }) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +50,7 @@ const Popover = ({ title, description, solid, size = 'sm', placement = 'top-end'
                     <div className={[classes.popover, 'popover'].join(' ')}>
                         <Typography className={classes.title}>{title}</Typography>
                         <Divider className={classes.divider} />
-                        <Typography>{description}</Typography>
+                        {content ? <Typography>{content}</Typography> : <>{children}</>}
                     </div>
                 </Popper>
             </div>  

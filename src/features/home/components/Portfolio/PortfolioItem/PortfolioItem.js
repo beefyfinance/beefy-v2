@@ -93,7 +93,7 @@ const PortfolioItem = ({ item }) => {
                 {item.depositsPaused && (
                   <Popover
                     title={vaultStates[item.status].title}
-                    description={vaultStates[item.status].description}
+                    content={vaultStates[item.status].description}
                     placement="top-start"
                     solid
                   />

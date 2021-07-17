@@ -36,6 +36,16 @@ const styles = theme => ({
     divider: {
         margin: '20px 0',
         color: '#8585A6',
+    },
+    feeBreakdownBlock: {
+        marginBottom: 10
+    },
+    feeBreakdownBold: {
+        fontSize: 18
+    },
+    feeBreakdownDetail: {
+        color: "#8585A6",
+
     }
 });
 

@@ -22,10 +22,24 @@ const FeeBreakdown = () => {
                         <Typography className={classes.title}>Beefy Fee:</Typography>
                         <Popover
                             title="What you see is what you earn"
-                            description="Description"
                             solid 
                             size='md'
-                        />
+                        >
+                            <div className={classes.feeBreakdownBlock}>
+                                <Typography className={classes.feeBreakdownBold}>0.7% one time deposit fee</Typography>
+                                <Typography className={classes.feeBreakdownDetail}>Goes to the farmed platform, not Beefy</Typography>
+                            </div>
+                            <div className={classes.feeBreakdownBlock}>
+                                <Typography className={classes.feeBreakdownBold}>0.05% one time withdrawal fee</Typography>
+                                <Typography className={classes.feeBreakdownDetail}>0.05% one time withdrawal fee distributed across vault participants, to protect users</Typography>
+                            </div>
+                            <div className={classes.feeBreakdownBlock}>
+                                <Typography className={classes.feeBreakdownBold}>4.5% ongoing performance fee </Typography>
+                                <Typography className={classes.feeBreakdownDetail}>2.5% Beefy holders</Typography>
+                                <Typography className={classes.feeBreakdownDetail}>1.5% treasury</Typography>
+                                <Typography className={classes.feeBreakdownDetail}>0.5% vault developers</Typography>
+                            </div>
+                        </Popover>
                     </Box>
                 </Grid>
                 <Grid item xs={6}>
