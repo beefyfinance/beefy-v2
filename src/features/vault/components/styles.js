@@ -82,43 +82,6 @@ const styles = (theme) => ({
             width: 20,
         }
     },
-    feeContainer: {
-        backgroundColor: '#313759',
-        borderRadius: '10px',
-        '& .MuiIconButton-root': {
-            margin: 0,
-            padding: 0,
-            width: 14,
-            height: 14,
-        },
-        '& .MuiTypography-h1': {
-            fontSize: '14px',
-            lineHeight: '18px',
-            fontWeight: 600,
-            letterSpacing: '1px',
-            textTransform: 'uppercase',
-            color: '#8585A6',
-        },
-        '& .MuiTypography-h2': {
-            fontSize: '14px',
-            fontWeight: 600,
-            letterSpacing: '0.2px',
-            color: '#ffffff',
-            paddingTop: '5px',
-        },
-        '& .MuiTypography-body1': {
-            fontSize: '14px',
-            fontWeight: 400,
-            lineHeight: '18px',
-            color: '#8585A6',
-            paddingTop: '5px',
-            letterSpacing: '0.2px',
-        },
-        '& .MuiDivider-root': {
-            margin: '20px 0',
-            color: '#8585A6',
-        }
-    },
     btnSubmit: {
         fontSize: '21px',
         fontWeight: 700,
@@ -133,36 +96,6 @@ const styles = (theme) => ({
     },
     btnSecondary: {
         textDecoration: 'none'
-    },
-    boostContainer: {
-        backgroundColor: '#313759',
-        borderRadius: '16px',
-        '& .MuiTypography-h1': {
-            fontSize: '24px',
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            color: '#E88225'
-        },
-        '& .MuiTypography-h2': {
-            fontSize: '24px',
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            color: '#ffffff'
-        },
-        '& .MuiTypography-body1': {
-            fontSize: '14px',
-            lineHeight: '18px',
-            color: '#8585A6',
-            letterSpacing: '0.2px',
-        },
-        '& img': {
-            width: 30,
-            height: 30,
-        },
-        '& .MuiIconButton-root': {
-            margin: '0 0 0 5px',
-            padding: 0,
-        }
     },
     modal: {
         display: 'flex',

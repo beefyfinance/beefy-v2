@@ -13,8 +13,7 @@ import { formatApy, formatDecimals } from "../../../../../helpers/format";
 import styles from "./styles";
 import HistoricalRateChart from "../../HistoricalRateChart/HistoricalRateChart";
 import DisplayTags from "../../../../../components/vaultTags";
-import Tooltip from "../../../../../components/Tooltip";
-import question from "../../../../../images/question_filled.svg";
+import Popover from "../../../../../components/Popover";
 import vaultStates from "./vaultStates.json";
 
 const historicalRateChartData = [
@@ -92,17 +91,12 @@ const PortfolioItem = ({ item }) => {
                   <DisplayTags tags={stateTag()} />
                 </Box>
                 {item.depositsPaused && (
-                  <Tooltip
+                  <Popover
                     title={vaultStates[item.status].title}
-                    description={vaultStates[item.status].description}
-                    direction="left"
-                  >
-                    <img
-                      alt="More info"
-                      src={question}
-                      className={classes.moreInfoIcon}
-                    />
-                  </Tooltip>
+                    content={vaultStates[item.status].description}
+                    placement="top-start"
+                    solid
+                  />
                 )}
               </Box>
             </Box>
