@@ -1,5 +1,6 @@
 import React from "react";
 import AnimateHeight from 'react-animate-height';
+import {useTranslation} from "react-i18next";
 import {
     Box,
     Button, Checkbox,
@@ -17,8 +18,8 @@ import {ToggleButton} from "@material-ui/lab";
 const useStyles = makeStyles(styles);
 
 const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount}) => {
-
     const classes = useStyles();
+    const t = useTranslation().t;
     const [filterOpen, setFilterOpen] = React.useState(false);
 
     const handleCheckbox = (event) => {
@@ -31,23 +32,23 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
 
     const getPlatformTypes = () => {
         return {
-            'all': 'All',
+            'all': t( 'Filter-DropDwnDflt'),
             ...platforms
         }
     }
 
     const getVaultTypes = () => {
         return {
-            'all': 'All',
-            'single': 'Single assets',
-            'stable': 'Stable LPs',
-            'stables': 'Stables'
+            'all': t( 'Filter-DropDwnDflt'),
+            'single': t( 'Filter-AsstSingle'),
+            'stable': t( 'Filter-AsstStableLP'),
+            'stables': t( 'Filter-AsstStables')
         }
     }
 
     const getNetworkTypes = () => {
         return {
-            'all': 'All',
+            'all': t( 'Filter-DropDwnDflt'),
             ...getAvailableNetworks()
         };
     }
@@ -56,35 +57,35 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
         <React.Fragment>
             <Grid container spacing={2} className={classes.categories}>
                 <Grid item xs={12}>
-                    <Typography variant={"h4"}>Categories</Typography>
+                    <Typography variant={"h4"}>{t( 'Filter-Classes')}</Typography>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'all' ? classes.selected : classes.all} fullWidth={true} disabled={sortConfig.category === 'all'} onClick={() => handleChange('category', 'all')}>
-                        <Typography className={classes.text}>All</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-ClassAll')}</Typography>
                         {sortConfig.category === 'all' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'stable' ? classes.selected : classes.stable} fullWidth={true} disabled={sortConfig.category === 'stable'} onClick={() => handleChange('category', 'stable')}>
-                        <Typography className={classes.text}>Stable coins</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-ClassStabl')}</Typography>
                         {sortConfig.category === 'stable' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'top' ? classes.selected : classes.top} fullWidth={true} disabled={sortConfig.category === 'top'} onClick={() => handleChange('category', 'top')}>
-                        <Typography className={classes.text}>Top gainers</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-ClassTop')}</Typography>
                         {sortConfig.category === 'top' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'recent' ? classes.selected : classes.recent} fullWidth={true} disabled={sortConfig.category === 'recent'} onClick={() => handleChange('category', 'recent')}>
-                        <Typography className={classes.text}>Recently added</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-ClassRecnt')}</Typography>
                         {sortConfig.category === 'recent' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'low' ? classes.selected : classes.low} fullWidth={true} disabled={sortConfig.category === 'low'} onClick={() => handleChange('category', 'low')}>
-                        <Typography className={classes.text}>Low risk</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-ClassLowRsk')}</Typography>
                         {sortConfig.category === 'low' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>

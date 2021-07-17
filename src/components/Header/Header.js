@@ -50,9 +50,9 @@ const Header = ({isNightMode, setNightMode}) => {
     }, [dispatch, walletReducer.web3modal]);
 
     const navLinks = [
-        { title: t('home'), path: 'https://beefy.finance' },
-        { title: t('explore'), path: '/' },
-        { title: t('docs'), path: 'https://docs.beefy.finance' },
+        {title: t( 'Header-Home'), path: 'https://beefy.finance' },
+        {title: t( 'Header-Explore'), path: '/' },
+        {title: t( 'Header-Docs'), path: 'https://docs.beefy.finance' },
     ];
 
     return (

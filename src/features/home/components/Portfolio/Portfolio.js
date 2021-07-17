@@ -6,6 +6,7 @@ import AnimateHeight from 'react-animate-height';
 import { Alert } from "@material-ui/lab";
 import styles from "./styles"
 import { useLocation } from "react-router";
+import {useTranslation} from "react-i18next";
 import PortfolioItem from "./PortfolioItem";
 import BigNumber from "bignumber.js";
 
@@ -22,6 +23,7 @@ const Portfolio = () => {
     const vaultReducer = useSelector(state => state.vaultReducer);
     const pricesReducer = useSelector(state => state.pricesReducer);
     const userAddress = useSelector(state => state.walletReducer.address);
+    const t = useTranslation().t;
 
     const BlurredText = ({value}) => {
         return (
@@ -75,28 +77,28 @@ const Portfolio = () => {
             <Container maxWidth="xl">
                 <Box display={"flex"} className={[portfolioOpen ? classes.opened : '', classes.mobileFix].join(' ')}>
                     <Box className={classes.balance}>
-                        <Button onClick={() => {setHideBalance(!hideBalance)}}>{hideBalance ? (<React.Fragment><VisibilityOff /> Show</React.Fragment>) : (<React.Fragment><Visibility /> Hide</React.Fragment>)} balance</Button>
+                        <Button onClick={() => {setHideBalance(!hideBalance)}}>{hideBalance ? (<React.Fragment><VisibilityOff />{t( "Portfolio-BalanceShow")}</React.Fragment>) : (<React.Fragment><Visibility />{t( "Portfolio-BalanceHide")}</React.Fragment>)}</Button>
                     </Box>
                     <Box>
-                        <Typography className={classes.h1}>Portfolio</Typography>
+                        <Typography className={classes.h1}>{t( "Portfolio-Portfolio")}</Typography>
                     </Box>
                     <Box className={classes.stats}>
                         <Box className={classes.stat}>
                             <Typography className={classes.h2}><BlurredText value={`$${globalStats.deposited.toFixed(2)}`} /></Typography>
-                            <Typography className={classes.body1}>Deposited</Typography>
+                            <Typography className={classes.body1}>{t( 'Portfolio-Deposited')}</Typography>
                         </Box>
                         <Box className={classes.stat}>
                             <Typography className={classes.h2}><BlurredText value={"$0"} /></Typography>
-                            <Typography className={classes.body1}>Total yield</Typography>
+                            <Typography className={classes.body1}>{t( 'Portfolio-YieldTot')}</Typography>
                         </Box>
                         <Box className={classes.stat}>
                             <Typography className={classes.h2}><BlurredText value={`$${globalStats.daily.toFixed(2)}`} /></Typography>
-                            <Typography className={classes.body1}>Daily yield</Typography>
+                            <Typography className={classes.body1}>{t( 'Portfolio-YieldDay')}</Typography>
                         </Box>
                         <Hidden xsDown>
                             <Box className={classes.stat}>
                                 <Typography className={classes.h2}><BlurredText value={`$${globalStats.monthly.toFixed(2)}`} /></Typography>
-                                <Typography className={classes.body1}>Monthly yield</Typography>
+                                <Typography className={classes.body1}>{t( 'Portfolio-YieldMnth')}</Typography>
                             </Box>
                         </Hidden>
                     </Box>

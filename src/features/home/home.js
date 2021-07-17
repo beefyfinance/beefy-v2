@@ -1,6 +1,7 @@
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {useTranslation} from "react-i18next";
 import {BigNumber} from 'bignumber.js';
 
 import {Container, makeStyles} from "@material-ui/core"
@@ -41,6 +42,7 @@ const Home = () => {
 
     const dispatch = useDispatch();
     const classes = useStyles();
+    const t = useTranslation().t;
     const [vaultCount, setVaultCount] = React.useState({showing: 0, total: 0});
     const storage = localStorage.getItem('homeSortConfig');
     const [sortConfig, setSortConfig] = React.useState(storage === null ? defaultFilter : JSON.parse(storage));
@@ -177,22 +179,22 @@ const Home = () => {
             <Portfolio />
             <Container maxWidth="xl">
                 <Box className={classes.header}>
-                    <Box className={classes.h1}>Vaults</Box>
+                    <Box className={classes.h1}>{t( 'Vaults-Vaults')}</Box>
                     <Box className={classes.tvl}>
-                        <Box className={classes.tvlLabel}>TVL: </Box>
+                        <Box className={classes.tvlLabel}>{t( 'Vaults-TVL')} </Box>
                         <Box className={classes.tvlValue}>{formatTvl(vault.totalTvl)}</Box>
                     </Box>
                 </Box>
                 {vault.isPoolsLoading ? (
-                    <Loader message={('Loading data from blockchain...')} />
+                    <Loader message={t( 'Vaults-LoadingData')}/>
                 ) : (
                 <Box>
                     <Filter sortConfig={sortConfig} setSortConfig={setSortConfig} defaultFilter={defaultFilter} platforms={vault.platforms} vaultCount={vaultCount} />
                     <Box className={classes.numberOfVaults}>
-                        Showing {vaultCount.showing} vaults
+                        {t( 'Filter-ShowingVaults', {number: vaultCount.showing})}
                     </Box>
                     {isEmpty(filtered) ? '' : (
-                        <InfiniteScroll dataLength={scrollable.items.length} hasMore={scrollable.hasMore} next={fetchScrollable} loader={"loading..."}>
+                        <InfiniteScroll dataLength={scrollable.items.length} hasMore={scrollable.hasMore} next={fetchScrollable} loader={t( 'Filter-LoadingSearch')}>
                             {scrollable.items.map(item => (
                             <Item key={item.id} item={item} />
                             ))}

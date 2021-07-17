@@ -1,6 +1,7 @@
 /node_modules/
 /.idea/
 .eslintcache
+*.swp
 .vscode
 .DS_Store
 /tmp
