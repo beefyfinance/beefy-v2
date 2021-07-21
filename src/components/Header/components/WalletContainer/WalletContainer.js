@@ -5,6 +5,7 @@ import { createCanvas } from 'canvas';
 import styles from "./styles"
 import reduxActions from "../../../../features/redux/actions";
 import {useDispatch, useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 import Loader from "../../../loader/loader";
 
 const useStyles = makeStyles(styles);
@@ -19,6 +20,7 @@ const WalletContainer = () => {
     const dispatch = useDispatch();
     const [dataUrl, setDataUrl] = React.useState(null);
     const canvas = createCanvas(24, 24);
+    const t = useTranslation().t;
 
     const handleWalletConnect = () => {
         if(!walletReducer.address) {
@@ -48,7 +50,7 @@ const WalletContainer = () => {
                 ) : (
                     <React.Fragment>
                         {walletReducer.address ? (<Avatar src={dataUrl} />) : ''}
-                        <Typography noWrap={true}>{walletReducer.address ? formatAddress(walletReducer.address) : 'Connect Wallet'}</Typography>
+                        <Typography noWrap={true}>{walletReducer.address ? formatAddress(walletReducer.address) : t( 'Header-ConnectWallet')}</Typography>
                     </React.Fragment>
                 )}
                 </Grid>

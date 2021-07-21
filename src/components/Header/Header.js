@@ -21,16 +21,14 @@ import styles from "./styles"
 import { useLocation } from "react-router";
 import WalletContainer from "./components/WalletContainer/WalletContainer";
 import CustomDropdown from "../customDropdown/CustomDropdown";
-
+import LanguageDropdown from "../LanguageDropdown/LanguageDropdown";
 import {getAvailableNetworks} from "../../helpers/utils";
 import {useTranslation} from "react-i18next";
-import {localeToLanguageMap} from "../../i18n.js"
 
 const useStyles = makeStyles( styles);
 
 const Header = ({isNightMode, setNightMode}) => {
-    const [language, setLanguage] = React.useState('en');
-    const {t, i18n} = useTranslation();
+    const {t} = useTranslation();
     const history = useHistory();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -40,15 +38,6 @@ const Header = ({isNightMode, setNightMode}) => {
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
-
-    useEffect(() => {
-        const cachedLanguage = i18n.language;
-        if (!cachedLanguage) {
-          return;
-        }
-    
-        setLanguage( cachedLanguage);
-    }, [i18n.language]);
 
     const handleNetworkSwitch = (event) => {
         dispatch(reduxActions.wallet.setNetwork(event.target.value));
@@ -60,25 +49,10 @@ const Header = ({isNightMode, setNightMode}) => {
         }
     }, [dispatch, walletReducer.web3modal]);
 
-    const handleLanguageSwitch = event => {
-        if (!event?.target?.value) return
-        const newLanguage = event.target.value
-        return i18n.changeLanguage( newLanguage).then(() => setLanguage( newLanguage))
-    };
-
-    const languageDropdownOptions = {}
-    Object.keys( localeToLanguageMap).forEach( locale => {
-        languageDropdownOptions[ locale] = localeToLanguageMap[ locale]
-    })
-
-    const languageDropdownCustomRender = (locale) => {
-        return locale.toUpperCase()
-    }
-
     const navLinks = [
-        { title: t('home'), path: 'https://beefy.finance' },
-        { title: t('explore'), path: '/' },
-        { title: t('docs'), path: 'https://docs.beefy.finance' },
+        {title: t( 'Header-Home'), path: 'https://beefy.finance' },
+        {title: t( 'Header-Explore'), path: '/' },
+        {title: t( 'Header-Docs'), path: 'https://docs.beefy.finance' },
     ];
 
     return (
@@ -99,7 +73,7 @@ const Header = ({isNightMode, setNightMode}) => {
                             <IconButton onClick={setNightMode} className={classes.hide}>
                                 {isNightMode ? <WbSunny /> : <NightsStay />}
                             </IconButton>
-                            <CustomDropdown list={languageDropdownOptions} selected={language} handler={handleLanguageSwitch} css={{marginLeft: 10}} renderValue={languageDropdownCustomRender}/>
+                            <LanguageDropdown css={{marginLeft: 10}}/>
                             <CustomDropdown list={getAvailableNetworks(true)} selected={walletReducer.network} handler={handleNetworkSwitch} css={{marginLeft: 10}} />
                             <Box ml={1}>
                                 <WalletContainer />
@@ -111,8 +85,8 @@ const Header = ({isNightMode, setNightMode}) => {
                             <Menu fontSize="large" />
                         </IconButton>
                         <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
-                            <CustomDropdown list={languageDropdownOptions} selected={language} handler={handleLanguageSwitch} renderValue={languageDropdownCustomRender} fullWidth/>
-                            <Box mt={0.5}> 
+                            <LanguageDropdown fullWidth/>
+                            <Box mt={0.5}>
                                 <WalletContainer />
                             </Box>
                             <div className={classes.list} role="presentation" onClick={handleDrawerToggle} onKeyDown={handleDrawerToggle}>

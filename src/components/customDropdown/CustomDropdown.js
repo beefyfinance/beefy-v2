@@ -10,7 +10,7 @@ const CustomDropdown = ({ list, selected, handler, name, label, css, renderValue
 
     return (
         <Box className={classes.select} style={css}>
-            {label && selected === 'all' ? (<Typography>{label}</Typography>) : ''}
+            {label && selected.match( /^(all|default)$/) ? (<Typography>{label}</Typography>) : ''}
             <Select fullWidth className={label ? classes.withLabel : ''} MenuProps={{classes: {list: classes.selectList}}} value={selected} name={name} onChange={handler} disableUnderline={true} IconComponent={ExpandMore} renderValue={renderValue}>
                 {Object.keys(list).map(val => (
                     <MenuItem key={list[val]} value={val}>{list[val]}</MenuItem>

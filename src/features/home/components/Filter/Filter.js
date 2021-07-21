@@ -1,5 +1,6 @@
 import React from "react";
 import AnimateHeight from 'react-animate-height';
+import {useTranslation} from "react-i18next";
 import {
     Box,
     Button, Checkbox,
@@ -17,8 +18,8 @@ import {ToggleButton} from "@material-ui/lab";
 const useStyles = makeStyles(styles);
 
 const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount}) => {
-
     const classes = useStyles();
+    const t = useTranslation().t;
     const [filterOpen, setFilterOpen] = React.useState(false);
 
     const handleCheckbox = (event) => {
@@ -31,23 +32,23 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
 
     const getPlatformTypes = () => {
         return {
-            'all': 'All',
+            'all': t( 'Filter-DropdwnDflt'),
             ...platforms
         }
     }
 
     const getVaultTypes = () => {
         return {
-            'all': 'All',
-            'single': 'Single assets',
-            'stable': 'Stable LPs',
-            'stables': 'Stables'
+            'all': t( 'Filter-DropdwnDflt'),
+            'single': t( 'Filter-AsstSingle'),
+            'stable': t( 'Filter-AsstStableLP'),
+            'stables': t( 'Filter-AsstStables')
         }
     }
 
     const getNetworkTypes = () => {
         return {
-            'all': 'All',
+            'all': t( 'Filter-DropdwnDflt'),
             ...getAvailableNetworks()
         };
     }
@@ -56,45 +57,52 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
         <React.Fragment>
             <Grid container spacing={2} className={classes.categories}>
                 <Grid item xs={12}>
-                    <Typography variant={"h4"}>Categories</Typography>
+                    <Typography variant={"h4"}>{t( 'Filter-Categories')}</Typography>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'all' ? classes.selected : classes.all} fullWidth={true} disabled={sortConfig.category === 'all'} onClick={() => handleChange('category', 'all')}>
-                        <Typography className={classes.text}>All</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-CatgryAll')}</Typography>
                         {sortConfig.category === 'all' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'stable' ? classes.selected : classes.stable} fullWidth={true} disabled={sortConfig.category === 'stable'} onClick={() => handleChange('category', 'stable')}>
-                        <Typography className={classes.text}>Stable coins</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-CatgryStabl')}</Typography>
                         {sortConfig.category === 'stable' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'top' ? classes.selected : classes.top} fullWidth={true} disabled={sortConfig.category === 'top'} onClick={() => handleChange('category', 'top')}>
-                        <Typography className={classes.text}>Top gainers</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-CatgryTop')}</Typography>
                         {sortConfig.category === 'top' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'recent' ? classes.selected : classes.recent} fullWidth={true} disabled={sortConfig.category === 'recent'} onClick={() => handleChange('category', 'recent')}>
-                        <Typography className={classes.text}>Recently added</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-CatgryRecnt')}</Typography>
                         {sortConfig.category === 'recent' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
                 <Grid item xs>
                     <Button className={sortConfig.category === 'low' ? classes.selected : classes.low} fullWidth={true} disabled={sortConfig.category === 'low'} onClick={() => handleChange('category', 'low')}>
-                        <Typography className={classes.text}>Low risk</Typography>
+                        <Typography className={classes.text}>{t( 'Filter-CatgryLowRsk')}</Typography>
                         {sortConfig.category === 'low' ? (<ArrowDropDownIcon />) : ''}
                     </Button>
                 </Grid>
             </Grid>
             <Box display="flex">
-                <Box flexGrow={1}>
-                    <TextField className={classes.searchInput} size="small" variant="outlined" label="Search by name" value={sortConfig.keyword} onChange={(e) => handleChange('keyword', e.target.value)} InputProps={{className: classes.input}} />
+                <Box flexGrow="1">
+                    <TextField className={classes.searchInput} size="small" variant="outlined" label={t( 'Filter-Search')} value={sortConfig.keyword} onChange={(e) => handleChange('keyword', e.target.value)} InputProps={{className: classes.input}} />
                 </Box>
-                <Box>
-                    <CustomDropdown list={{'default': 'Default', 'apy': 'APY', 'tvl': 'TVL', 'safetyScore': 'SAFETY'}} selected={sortConfig.key} handler={(e) => handleChange('key', e.target.value)} label={'Sort by:'} css={{marginRight: 10}} />
+                <Box css={{flexBasis: 230}}>
+                    <CustomDropdown list={{
+			    'default': t( 'Filter-SortDflt'), 
+			    'apy': t( 'Filter-SortAPY'), 
+			    'tvl': t( 'Filter-SortTVL'), 
+			    'safetyScore': t( 'Filter-SortSafety')}} 
+			selected={sortConfig.key} 
+			handler={(e) => handleChange('key', e.target.value)} 
+			label={t( 'Filter-Sort')} css={{marginRight: 10}} />
                 </Box>
                 <Box className={classes.btnFilter}>
                     <ToggleButton value={filterOpen} selected={filterOpen} onChange={() => {setFilterOpen(!filterOpen)}}>Filter {filterOpen ? (<ArrowDropDownIcon />) : ''}</ToggleButton>
@@ -105,20 +113,17 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
                     <Box display="flex">
                         <Box p={3}>
                             <FormGroup row>
-                                <FormControlLabel label="Hide Zero balances"
+                                <FormControlLabel label={t( 'Filter-HideZero')}
                                                   control={<Checkbox checked={sortConfig.zero} onChange={handleCheckbox} name="zero" color="primary" />}
                                 />
-                                <FormControlLabel label="Retired vaults"
+                                <FormControlLabel label={t( 'Filter-Retired')}
                                                   control={<Checkbox checked={sortConfig.retired} onChange={handleCheckbox} name="retired" color="primary" />}
                                 />
-                                <FormControlLabel label="Deposited vaults"
+                                <FormControlLabel label={t( 'Filter-Deposited')}
                                                   control={<Checkbox checked={sortConfig.deposited} onChange={handleCheckbox} name="deposited" color="primary" />}
                                 />
-                                <FormControlLabel label="Boost"
+                                <FormControlLabel label={t( 'Filter-Boost')}
                                                   control={<Checkbox checked={sortConfig.boost} onChange={handleCheckbox} name="boost" color="primary" />}
-                                />
-                                <FormControlLabel label="Experimental"
-                                                  control={<Checkbox checked={sortConfig.experimental} onChange={handleCheckbox} name="experimental" color="primary" />}
                                 />
                             </FormGroup>
                         </Box>
@@ -127,9 +132,9 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
 
                     <Box display="flex">
                         <Box p={3} flexGrow={1} display={"flex"}>
-                            <CustomDropdown list={getPlatformTypes()} selected={sortConfig.platform} handler={(e) => handleChange('platform', e.target.value)} label={'Platform:'} />
-                            <CustomDropdown list={getVaultTypes()} selected={sortConfig.vault} handler={(e) => handleChange('vault', e.target.value)} label={'Vault type:'} css={{marginLeft: 10}} />
-                            <CustomDropdown list={getNetworkTypes()} selected={sortConfig.blockchain} handler={(e) => handleChange('blockchain', e.target.value)} label={'Blockchain:'} css={{marginLeft: 10}} />
+                            <CustomDropdown list={getPlatformTypes()} selected={sortConfig.platform} handler={(e) => handleChange('platform', e.target.value)} label={t( 'Filter-Platform')} />
+                            <CustomDropdown list={getVaultTypes()} selected={sortConfig.vault} handler={(e) => handleChange('vault', e.target.value)} label={t( 'Filter-Type')} css={{marginLeft: 10}} />
+                            <CustomDropdown list={getNetworkTypes()} selected={sortConfig.blockchain} handler={(e) => handleChange('blockchain', e.target.value)} label={t( 'Filter-Blockchn')} css={{marginLeft: 10}} />
                         </Box>
                         <Box p={3}>
                             <Button className={classes.btnReset} variant={"contained"} onClick={() => {setSortConfig(defaultFilter)}}>Reset</Button>
