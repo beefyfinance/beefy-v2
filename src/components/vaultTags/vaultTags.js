@@ -1,23 +1,25 @@
 import {makeStyles, Typography} from "@material-ui/core";
 import * as React from "react";
+import {useTranslation} from "react-i18next";
 import styles from "./styles"
 
 const useStyles = makeStyles(styles);
 
 const DisplayTags = ({tags}) => {
-    const classes = useStyles();
+    const classes = useStyles()
+    const t = useTranslation().t
     const getText = (name) => {
-        switch(name) {
+        switch (name) {
             case 'low':
-                return 'Low Risk';
+                return t( 'VaultTag-LowRisk')
             case 'recent':
-                return 'New';
+                return t( 'VaultTag-New')
             case 'depositsPaused':
-                return 'Deposits Paused';
+                return t( 'VaultTag-Paused')
             case 'eol':
-                return 'Inactive';
+                return t( 'VaultTag-Inactv')
             default:
-                return name;
+                return name
         }
     }
 

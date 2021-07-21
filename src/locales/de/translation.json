@@ -7,13 +7,17 @@
 
   "Filter-DropdwnDflt": "Alle",
   "Filter-AsstSingle": "Einzelne Anlagen",
-  "Filter-CatgryRecnt": "Neu in Sortiment",
+  "Filter-CatgryRecnt": "Neu im Sortiment",
   "Filter-SortSafety": "SICHERHEIT",
   "Filter-HideZero": "Nullsalden ausblenden",
   "Filter-Type": "Vault Typ:",
   "Filter-Sort": "Sortieren nach:",
   "Filter-Showing": "{{number}}/{{count}} werden gezeigt",
   "Filter-ShowingVaults": "{{number}} Vaults werden gezeigt",
+
+  "VaultTag-LowRisk": "Risikoarm",
+
+  "Vault-Deposit": "Anlegen",
 
   "xyz": "last-item placeholder"
 }

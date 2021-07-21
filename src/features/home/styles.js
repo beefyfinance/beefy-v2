@@ -71,7 +71,7 @@ const styles = (theme) => ({
         lineHeight: '24px',
         color: '#8585A6',
         letterSpacing: '0.2px',
-        textTransform: 'capitalize',
+        textTransform: 'none',		//'capitalize' no good due to localization
     },
     rWidth: {
         minWidth: '80px',

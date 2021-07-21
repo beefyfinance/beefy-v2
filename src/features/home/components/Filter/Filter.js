@@ -97,15 +97,15 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
                 <Box css={{flexBasis: 230}}>
                     <CustomDropdown list={{
 			    'default': t( 'Filter-SortDflt'), 
-			    'apy': t( 'Filter-SortAPY'), 
-			    'tvl': t( 'Filter-SortTVL'), 
+			    'apy': t( 'APY'), 
+			    'tvl': t( 'TVL'), 
 			    'safetyScore': t( 'Filter-SortSafety')}} 
 			selected={sortConfig.key} 
 			handler={(e) => handleChange('key', e.target.value)} 
 			label={t( 'Filter-Sort')} css={{marginRight: 10}} />
                 </Box>
                 <Box className={classes.btnFilter}>
-                    <ToggleButton value={filterOpen} selected={filterOpen} onChange={() => {setFilterOpen(!filterOpen)}}>Filter {filterOpen ? (<ArrowDropDownIcon />) : ''}</ToggleButton>
+                    <ToggleButton value={filterOpen} selected={filterOpen} onChange={() => {setFilterOpen(!filterOpen)}}>{t( 'Filter-Btn')}{filterOpen ? (<ArrowDropDownIcon />) : ''}</ToggleButton>
                 </Box>
             </Box>
             <AnimateHeight duration={ 500 } height={ filterOpen ? 'auto' : 0 }>

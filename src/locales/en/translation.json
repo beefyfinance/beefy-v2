@@ -1,4 +1,7 @@
 {
+  "APY": "APY",
+  "TVL": "TVL",
+
   "Header-Home": "Home", 
   "Header-Explore": "Explore",
   "Header-Docs": "Docs",
@@ -26,9 +29,8 @@
   "Filter-Search": "Search by name",
   "Filter-Sort": "Sort by:",
   "Filter-SortDflt": "Default",
-  "Filter-SortAPY": "APY",
-  "Filter-SortTVL": "TVL",
   "Filter-SortSafety": "SAFETY",
+  "Filter-Btn": "Filter",
   "Filter-HideZero": "Hide Zero balances",
   "Filter-Retired": "Retired vaults",
   "Filter-Deposited": "Deposited vaults",
@@ -40,6 +42,14 @@
   "Filter-Reset": "Reset",
   "Filter-ShowingVaults": "Showing {{number}} vaults",
   "Filter-LoadingSearch": "loading...",
+  "VaultTag-LowRisk": "Low Risk",
+  "VaultTag-New": "New",
+  "VaultTag-Paused": "Deposits Paused",
+  "VaultTag-Inactive": "Inactive",
+  "Vault-SftyScore": "Safety Score",
+  "Vault-Daily": "Daily",
+  "Vault-DailyHIst": "Daily Historical Rate",
+  "Vault-Deposit": "Deposit",
 
   "Total-Value-Locked": "Total value locked",
   "Page-Not-Found": "Page not found.",

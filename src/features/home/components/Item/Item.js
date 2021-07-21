@@ -5,6 +5,7 @@ import {calcDaily, formatApy, formatTvl} from "../../../../helpers/format";
 import * as React from "react";
 import styles from "../../styles"
 import {useHistory} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 import SafetyScore from "../../../../components/SafetyScore";
 import HistoricalRateChart from "../HistoricalRateChart/HistoricalRateChart";
 import AssetsImage from "../../../../components/AssetsImage";
@@ -25,6 +26,7 @@ const useStyles = makeStyles(styles);
 const Item = ({item}) => {
     const classes = useStyles();
     const history = useHistory();
+    const t = useTranslation().t;
 
     return (
         <Grid container key={item.id}>
@@ -49,28 +51,28 @@ const Item = ({item}) => {
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>
                     <SafetyScore score={item.safetyScore} whiteLabel size='sm' />
-                    <Typography className={classes.h3}>safety score</Typography>
+                    <Typography className={classes.h3}>{t( 'Vault-SftyScore')}</Typography>
                 </Box>
                 <Box className={classes.rWidth} textAlign={"left"}>
                     <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
-                    <Typography className={classes.h3}>TVL</Typography>
+                    <Typography className={classes.h3}>{t( 'TVL')}</Typography>
                 </Box>
                 <Hidden mdDown>
                     <Box className={classes.rWidth} textAlign={"left"}>
                         <Typography className={classes.h2}>{calcDaily(item.apy.totalApy)}</Typography>
-                        <Typography className={classes.h3}>Daily</Typography>
+                        <Typography className={classes.h3}>{t( 'Vault-Daily')}</Typography>
                     </Box>
                 </Hidden>
                 <Hidden mdDown>
                     <Box className={classes.rWidth} textAlign={"center"}>
                         <HistoricalRateChart chartData={historicalRateChartData}/>
-                        <Typography className={classes.h3}>Daily historical rate</Typography>
+                        <Typography className={classes.h3}>{t( 'Vault-DailyHist')}</Typography>
                     </Box>
                 </Hidden>
                 <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight, classes.apyContainer].join(' ')} textAlign={"center"}>
                     <Typography variant={"h1"}>{formatApy(item.apy.totalApy)}</Typography>
-                    <Typography variant={"h2"}>APY</Typography>
-                    <Typography variant={"button"}>Deposit</Typography>
+                    <Typography variant={"h2"}>{t( 'APY')}</Typography>
+                    <Typography variant={"button"}>{t( 'Vault-Deposit')}</Typography>
                 </Box>
             </Button>
         </Grid>
