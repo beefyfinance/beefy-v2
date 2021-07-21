@@ -36,6 +36,8 @@
   "Filter-Platform": "Platform:",
   "Filter-Type": "Vault type:",
   "Filter-Blockchn": "Blockchain:",
+  "Filter-Showing": "Showing {{number}}/{{count}}",
+  "Filter-Reset": "Reset",
   "Filter-ShowingVaults": "Showing {{number}} vaults",
   "Filter-LoadingSearch": "loading...",
 

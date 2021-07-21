@@ -91,7 +91,7 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
                 </Grid>
             </Grid>
             <Box display="flex">
-                <Box flexGrow="1">
+                <Box flexGrow={1}>
                     <TextField className={classes.searchInput} size="small" variant="outlined" label={t( 'Filter-Search')} value={sortConfig.keyword} onChange={(e) => handleChange('keyword', e.target.value)} InputProps={{className: classes.input}} />
                 </Box>
                 <Box css={{flexBasis: 230}}>
@@ -127,7 +127,10 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
                                 />
                             </FormGroup>
                         </Box>
-                        <Box p={3} flexGrow={1} style={{textAlign: 'right'}}>Showing {vaultCount.showing}/{vaultCount.total}</Box>
+                        <Box p={3} minWidth={200} style={{textAlign: 'right'}}>
+				{t( 'Filter-Showing', {number: vaultCount.showing, 
+				count: vaultCount.total})}
+			</Box>
                     </Box>
 
                     <Box display="flex">
@@ -137,7 +140,7 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
                             <CustomDropdown list={getNetworkTypes()} selected={sortConfig.blockchain} handler={(e) => handleChange('blockchain', e.target.value)} label={t( 'Filter-Blockchn')} css={{marginLeft: 10}} />
                         </Box>
                         <Box p={3}>
-                            <Button className={classes.btnReset} variant={"contained"} onClick={() => {setSortConfig(defaultFilter)}}>Reset</Button>
+                            <Button className={classes.btnReset} variant={"contained"} onClick={() => {setSortConfig(defaultFilter)}}>{t( 'Filter-Reset')}</Button>
                         </Box>
                     </Box>
                 </Box>
