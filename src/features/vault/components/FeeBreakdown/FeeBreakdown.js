@@ -8,11 +8,14 @@ import {
 } from "@material-ui/core";
 import styles from "./styles"
 import Popover from "../../../../components/Popover";
+import useFormattedFee from "../../../../hooks/useFormattedFee";
 
 const useStyles = makeStyles(styles);
 
-const FeeBreakdown = () => {
+const FeeBreakdown = ({ depositFee, withdrawalFee }) => {
     const classes = useStyles();
+    const formattedDepositFee = useFormattedFee(depositFee);
+    const formattedWithdrawalFee = useFormattedFee(withdrawalFee);
 
     return (
         <Box mt={2} p={2} className={classes.feeContainer}>
@@ -26,12 +29,12 @@ const FeeBreakdown = () => {
                             size='md'
                         >
                             <div className={classes.feeBreakdownBlock}>
-                                <Typography className={classes.feeBreakdownBold}>0.7% one time deposit fee</Typography>
+                                <Typography className={classes.feeBreakdownBold}>{formattedDepositFee} one time deposit fee</Typography>
                                 <Typography className={classes.feeBreakdownDetail}>Goes to the farmed platform, not Beefy</Typography>
                             </div>
                             <div className={classes.feeBreakdownBlock}>
-                                <Typography className={classes.feeBreakdownBold}>0.05% one time withdrawal fee</Typography>
-                                <Typography className={classes.feeBreakdownDetail}>0.05% one time withdrawal fee distributed across vault participants, to protect users</Typography>
+                                <Typography className={classes.feeBreakdownBold}>{formattedWithdrawalFee} one time withdrawal fee</Typography>
+                                <Typography className={classes.feeBreakdownDetail}>{formattedWithdrawalFee} one time withdrawal fee distributed across vault participants, to protect users</Typography>
                             </div>
                             <div className={classes.feeBreakdownBlock}>
                                 <Typography className={classes.feeBreakdownBold}>4.5% ongoing performance fee </Typography>
@@ -43,11 +46,11 @@ const FeeBreakdown = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography className={classes.value}>0.7% (0.07)</Typography>
+                    <Typography className={classes.value}>{formattedDepositFee}</Typography>
                     <Typography className={classes.label}>Deposit fee</Typography>
                 </Grid>
                 <Grid item xs={6}>
-                    <Typography className={classes.value}>0%</Typography>
+                    <Typography className={classes.value}>{formattedWithdrawalFee}</Typography>
                     <Typography className={classes.label}>Withdrawal fee</Typography>
                 </Grid>
                 <Grid item xs={12}>

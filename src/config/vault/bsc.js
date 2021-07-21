@@ -79,7 +79,7 @@ export const pools = [
         risks: ['COMPLEXITY_LOW', 'BATTLE_TESTED', 'IL_NONE', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
         stratType: 'SingleStake',
         callFee: 0.5,
-        withdrawalFee: '0.0%',
+        withdrawalFee: '0%',
         buyTokenUrl:
             'https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
         network: 'bsc'
@@ -4899,7 +4899,6 @@ export const pools = [
         earnedToken: 'mooCakeV2CAKE-BNB',
         earnedTokenAddress: '0xb26642B6690E4c4c9A6dAd6115ac149c700C7dfE',
         earnContractAddress: '0xb26642B6690E4c4c9A6dAd6115ac149c700C7dfE',
-        stratType:'StratLP',
         pricePerFullShare: 1,
         tvl: 0,
         oracle: 'lps',

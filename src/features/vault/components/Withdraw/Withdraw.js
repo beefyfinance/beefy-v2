@@ -141,7 +141,10 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                         <Button onClick={handleMax}>Max</Button>
                     </Paper>
                 </Box>
-                <FeeBreakdown />
+                <FeeBreakdown
+                    withdrawalFee={item.withdrawalFee} 
+                    depositFee={item.depositFee} 
+                />
                 <Box mt={2}>
                     {wallet.address ? (
                         <Button onClick={handleWithdraw} className={classes.btnSubmit} fullWidth={true} disabled={formData.withdraw.amount <= 0}>
