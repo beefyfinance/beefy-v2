@@ -32,7 +32,7 @@ const styles = (theme) => ({
         fontWeight: '600',
         height: '24px',
         textAlign: 'center',
-        textTransform: 'capitalize',
+        textTransform: 'none',		//'capitalize' no good due to localization
         opacity: 0.7,
         transition: 'opacity 0.2s ease-in-out',
     },

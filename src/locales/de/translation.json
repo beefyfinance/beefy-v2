@@ -5,9 +5,13 @@
   "Portfolio-Portfolio": "Portfolio",
   "Portfolio-YieldTot": "Totales Erträgnis",
 
-  "Filter-DropDwnDflt": "Alle",
+  "Filter-DropdwnDflt": "Alle",
   "Filter-AsstSingle": "Einzelne Anlagen",
-  "Filter-ClassRecnt": "Neu in Sortiment",
+  "Filter-CatgryRecnt": "Neu in Sortiment",
+  "Filter-SortSafety": "SICHERHEIT",
+  "Filter-HideZero": "Nullsalden ausblenden",
+  "Filter-Type": "Vault Typ:",
+  "Filter-Sort": "Sortieren nach:",
   "Filter-ShowingVaults": "{{number}} Vaults werden gezeigt",
 
   "xyz": "last-item placeholder"

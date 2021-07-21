@@ -26,7 +26,6 @@ const defaultFilter = {
     zero: false,
     deposited: false,
     boost: false,
-    experimental: false,
     platform: 'all',
     vault: 'all',
     blockchain: 'all',
@@ -106,10 +105,6 @@ const Home = () => {
                 return false;
             }
 
-            if(sortConfig.experimental && !item.experimental) {
-                return false;
-            }
-
             if(sortConfig.platform !== 'all' && (isEmpty(item.platform) || sortConfig.platform !== (item.platform).toLowerCase())) {
                 return false;
             }
@@ -179,7 +174,7 @@ const Home = () => {
             <Portfolio />
             <Container maxWidth="xl">
                 <Box className={classes.header}>
-                    <Box className={classes.h1}>{t( 'Vaults-Vaults')}</Box>
+                    <Box className={classes.h1}>{t( 'Vaults-Title')}</Box>
                     <Box className={classes.tvl}>
                         <Box className={classes.tvlLabel}>{t( 'Vaults-TVL')} </Box>
                         <Box className={classes.tvlValue}>{formatTvl(vault.totalTvl)}</Box>
