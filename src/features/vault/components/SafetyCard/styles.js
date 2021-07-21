@@ -48,7 +48,6 @@ const styles = (theme) => ({
     moreInfoContainer: {
         display: 'flex',
         alignItems: "center",
-        position: 'relative'
     },
     moreInfoLabel: {
         ...boldFont,
@@ -57,9 +56,6 @@ const styles = (theme) => ({
         lineHeight: "24px",
         letterSpacing: "0.2px",
         color: "#6B7199",
-    },
-    moreInfoIcon: {
-        
     },
     notes: {
         "& p": {
