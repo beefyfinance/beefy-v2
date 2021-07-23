@@ -17,7 +17,14 @@
 
   "VaultTag-LowRisk": "Risikoarm",
 
-  "Vault-Deposit": "Anlegen",
+  "Vault-Daily": "Tageskurs",
+
+  "Deposit-Verb": "Anlegen",
+  "Deposit-BuyTkn": "Token Kaufen", 
+
+  "Transact-ConnectWallet": "Mit Wallet verbinden",
+
+  "Withdraw-Verb": "Abheben",
 
   "xyz": "last-item placeholder"
 }

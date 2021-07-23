@@ -176,7 +176,7 @@ const Home = () => {
                 <Box className={classes.header}>
                     <Box className={classes.h1}>{t( 'Vaults-Title')}</Box>
                     <Box className={classes.tvl}>
-                        <Box className={classes.tvlLabel}>{t( 'Vaults-TVL')} </Box>
+                        <Box className={classes.tvlLabel}>{t( 'TVL')} </Box>
                         <Box className={classes.tvlValue}>{formatTvl(vault.totalTvl)}</Box>
                     </Box>
                 </Box>
@@ -186,7 +186,7 @@ const Home = () => {
                 <Box>
                     <Filter sortConfig={sortConfig} setSortConfig={setSortConfig} defaultFilter={defaultFilter} platforms={vault.platforms} vaultCount={vaultCount} />
                     <Box className={classes.numberOfVaults}>
-                        {t( 'Filter-ShowingVaults', {number: vaultCount.showing})}
+								{t( 'Filter-ShowingVaults', {number: vaultCount.showing})}
                     </Box>
                     {isEmpty(filtered) ? '' : (
                         <InfiniteScroll dataLength={scrollable.items.length} hasMore={scrollable.hasMore} next={fetchScrollable} loader={t( 'Filter-LoadingSearch')}>

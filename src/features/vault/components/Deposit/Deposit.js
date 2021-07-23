@@ -6,11 +6,12 @@ import {
     Paper,
     Typography
 } from "@material-ui/core";
-import { ShoppingBasket} from "@material-ui/icons";
-import { Link } from 'react-router-dom';
+import {ShoppingBasket} from "@material-ui/icons";
 import React from "react";
-import styles from "../styles"
+import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
+import styles from "../styles"
 import BigNumber from "bignumber.js";
 import Loader from "../../../../components/loader";
 import {byDecimals, convertAmountToRawNumber, stripExtraDecimals} from "../../../../helpers/format";
@@ -30,6 +31,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
         wallet: state.walletReducer,
         balance: state.balanceReducer,
     }));
+    const t = useTranslation().t;
 
     const [state, setState] = React.useState({balance: 0, allowance: 0});
     const [steps, setSteps] = React.useState({modal: false, currentStep: -1, items: [], finished: false});
@@ -56,7 +58,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
             if(!state.allowance) {
                 steps.push({
                     step: "approve",
-                    message: "Approval transaction happens once per vault.",
+                    message: t( 'Vault-ApproveMsg'),
                     action: () => dispatch(reduxActions.wallet.approval(
                         item.network,
                         item.tokenAddress,
@@ -68,7 +70,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
 
             steps.push({
                 step: "deposit",
-                message: "Confirm deposit transaction on wallet to complete.",
+                message: t( 'Vault-TxnConfirm', {type: t( 'Deposit-noun')}),
                 action: () => dispatch(reduxActions.wallet.deposit(
                     item.network,
                     item.earnContractAddress,
@@ -126,7 +128,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
     return (
         <React.Fragment>
             <Box p={3}>
-                <Typography className={classes.balanceText}>Balance:</Typography>
+                <Typography className={classes.balanceText}>{t( 'Vault-Balance')}:</Typography>
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                     <Box lineHeight={0}>
                         <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
@@ -140,7 +142,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                     </Box>
                     <Box>
                         <Link to={{ pathname: item.buyTokenUrl }} target="_blank" className={classes.btnSecondary}>
-                            <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
+                            <Button endIcon={<ShoppingBasket />}>{t( 'Deposit-BuyTkn')}</Button>
                         </Link>
                     </Box>
                 </Box>
@@ -150,7 +152,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                             <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
                         </Box>
                         <InputBase placeholder="0.00" value={formData.deposit.amount} onChange={(e) => handleInput(e.target.value)} />
-                        <Button onClick={handleMax}>Max</Button>
+                        <Button onClick={handleMax}>{t( 'Transact-Max')}</Button>
                     </Paper>
                 </Box>
                 <FeeBreakdown 
@@ -160,10 +162,10 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                 <Box mt={2}>
                     {wallet.address ? (
                         <Button onClick={handleDeposit} className={classes.btnSubmit} fullWidth={true} disabled={formData.deposit.amount <= 0}>
-                            {item.network !== wallet.network ? 'Change Network' : (formData.deposit.max ? 'Deposit All' : 'Deposit')}
+                            {item.network !== wallet.network ? t( 'Network-Change') : (formData.deposit.max ? t( 'Deposit-All') : t( 'Deposit-Verb'))}
                         </Button>
                     ) : (
-                        <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
+                        <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>{t( 'Transact-ConnectWallet')}</Button>
                     )}
                 </Box>
             </Box>

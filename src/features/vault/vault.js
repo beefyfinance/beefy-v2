@@ -3,6 +3,7 @@ import {addressBook} from "blockchain-addressbook";
 import {useParams} from "react-router";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
 import Loader from "../../components/loader";
 import {LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,} from "recharts";
 import {Container, makeStyles, Grid, Paper, Typography, Box, Button, Divider, Hidden} from "@material-ui/core"
@@ -30,6 +31,7 @@ const chartData = [
 const Vault = () => {
     const history = useHistory();
     const classes = useStyles();
+    const t = useTranslation().t;
 
     let { id } = useParams();
     const {vault, wallet, prices} = useSelector(state => ({
@@ -98,17 +100,17 @@ const Vault = () => {
     return (
         <Container className={classes.vaultContainer} maxWidth="xl">
             {isLoading ? (
-                <Loader message="Getting vault data..." />
+                <Loader message={t( 'Vault-GetData')} />
             ) : (
                 <Grid container style={{position: 'relative'}}>
                     <Grid item xs={12} md={8} lg={9}>
-                        <Button className={classes.btnGoBack} onClick={() => {history.push('/')}}><ArrowLeft /> Back to Explore</Button>
+                        <Button className={classes.btnGoBack} onClick={() => {history.push('/')}}><ArrowLeft /> {t( 'Vault-GoBack')}</Button>
                         <Grid className={classes.title} container>
                             <Grid>
                                 <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
                             </Grid>
                             <Grid>
-                                <Typography variant={"h1"}>{item.name} vault</Typography>
+                                <Typography variant={"h1"}>{item.name} {t( 'Vault-vault')}</Typography>
                             </Grid>
                         </Grid>
                         <Box className={classes.mobileFix} display="flex" alignItems="center">
@@ -117,13 +119,15 @@ const Vault = () => {
                                     <img alt={item.network} src={require('../../images/networks/' + item.network + '.svg').default} />
                                 </Box>
                                 <Box pl={1}>
-                                    <Typography className={classes.network} display={"inline"}>{item.network} network</Typography>
+                                    <Typography className={classes.network} 
+				display={"inline"}>{item.network} {t( 'Vault-network')}</Typography>
                                 </Box>
                                 <Box pl={1}>
                                     <DisplayTags tags={item.tags} />
                                 </Box>
                             </Box>
-                            <Box className={classes.summaryContainer} display={"flex"} alignItems="center">
+                            <Box className={classes.summaryContainer} display={"flex"} 
+										alignItems="center">
                                 <Hidden xsDown>
                                     <Box>
                                         <Divider />
@@ -131,21 +135,21 @@ const Vault = () => {
                                 </Hidden>
                                 <Box>
                                     <Typography variant={"h1"}>{formatTvl(item.tvl)}</Typography>
-                                    <Typography variant={"body2"}>TVL</Typography>
+                                    <Typography variant={"body2"}>{t( 'TVL')}</Typography>
                                 </Box>
                                 <Box>
                                     <Divider />
                                 </Box>
                                 <Box>
                                     <Typography variant={"h1"}>{calcDaily(item.apy.totalApy)}</Typography>
-                                    <Typography variant={"body2"}>Daily</Typography>
+                                    <Typography variant={"body2"}>{t( 'Vault-Daily')}</Typography>
                                 </Box>
                                 <Box>
                                     <Divider />
                                 </Box>
                                 <Box>
                                     <Typography variant={"h1"}>{formatApy(item.apy.totalApy)}</Typography>
-                                    <Typography variant={"body2"}>APY</Typography>
+                                    <Typography variant={"body2"}>{t( 'APY')}</Typography>
                                 </Box>
                             </Box>
                         </Box>
@@ -153,8 +157,12 @@ const Vault = () => {
                     <Grid item xs={12} md={4} lg={3} className={classes.customOrder}>
                         <Box className={classes.dw}>
                             <Box className={classes.tabs}>
-                                <Button onClick={() => setDw('deposit')} className={dw === 'deposit' ? classes.selected : ''}>Deposit</Button>
-                                <Button onClick={() => setDw('withdraw')} className={dw === 'withdraw' ? classes.selected : ''}>Withdraw</Button>
+                                <Button onClick={() => setDw('deposit')} 
+											className={dw === 'deposit' ? classes.selected : 
+											''}>{t( 'Deposit-Verb')}</Button>
+                                <Button onClick={() => setDw('withdraw')} 
+											className={dw === 'withdraw' ? classes.selected : 
+											''}>{t( 'Withdraw-Verb')}</Button>
                             </Box>
                             {dw === 'deposit' ? (
                                 <Deposit
@@ -179,7 +187,7 @@ const Vault = () => {
                     </Grid>
                     <Grid item xs={12} md={8} lg={9}>
                         <Paper className={classes.paper}>
-                            <Typography>Historical rate</Typography>
+                            <Typography>{t( 'Vault-RateHist')}</Typography>
                             <Box style={{height: 250}}>
                                 <ResponsiveContainer>
                                     <LineChart data={chartData} margin={{top: 10, right: 30, left: 0, bottom: 5}}>
