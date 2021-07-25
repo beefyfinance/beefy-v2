@@ -113,43 +113,43 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
                         <Box p={3}>
                             <FormGroup row>
                                 <FormControlLabel label={t( 'Filter-HideZero')}
-											control={<Checkbox checked={sortConfig.zero} 
-											onChange={handleCheckbox} 
-											name="zero" color="primary" />}/>
+                                            control={<Checkbox checked={sortConfig.zero} 
+                                            onChange={handleCheckbox} 
+                                            name="zero" color="primary" />}/>
                                 <FormControlLabel label={t( 'Filter-Retired')}
-											control={<Checkbox checked={sortConfig.retired} 
-											onChange={handleCheckbox} 
-											name="retired" color="primary" />}/>
+                                            control={<Checkbox checked={sortConfig.retired} 
+                                            onChange={handleCheckbox} 
+                                            name="retired" color="primary" />}/>
                                 <FormControlLabel label={t( 'Filter-Deposited')}
-											control={<Checkbox checked={sortConfig.deposited} 
-											onChange={handleCheckbox} 
-											name="deposited" color="primary" />}/>
+                                            control={<Checkbox checked={sortConfig.deposited} 
+                                            onChange={handleCheckbox} 
+                                            name="deposited" color="primary" />}/>
                                 <FormControlLabel label={t( 'Filter-Boost')}
-											control={<Checkbox checked={sortConfig.boost} 
-											onChange={handleCheckbox} 
-											name="boost" color="primary" />}/>
+                                            control={<Checkbox checked={sortConfig.boost} 
+                                            onChange={handleCheckbox} 
+                                            name="boost" color="primary" />}/>
                             </FormGroup>
                         </Box>
                         <Box p={3} minWidth={200} style={{textAlign: 'right'}}>
-                {t( 'Filter-Showing', {number: vaultCount.showing, 
-                count: vaultCount.total})}
-            </Box>
+                            {t( 'Filter-Showing', {number: vaultCount.showing, 
+                                                    count: vaultCount.total})}
+                        </Box>
                     </Box>
 
                     <Box display="flex">
                         <Box p={3} flexGrow={1} display={"flex"}>
                             <CustomDropdown list={getPlatformTypes()} 
-										selected={sortConfig.platform} 
-										handler={(e) => handleChange('platform', e.target.value)} 
-										label={t( 'Filter-Platform')} />
+                                        selected={sortConfig.platform} 
+                                        handler={(e) => handleChange('platform', e.target.value)} 
+                                        label={t( 'Filter-Platform')} />
                             <CustomDropdown list={getVaultTypes()} 
-										selected={sortConfig.vault} 
-										handler={(e) => handleChange('vault', e.target.value)} 
-										label={t( 'Filter-Type')} css={{marginLeft: 10}} />
+                                        selected={sortConfig.vault} 
+                                        handler={(e) => handleChange('vault', e.target.value)} 
+                                        label={t( 'Filter-Type')} css={{marginLeft: 10}} />
                             <CustomDropdown list={getNetworkTypes()} 
-										selected={sortConfig.blockchain} handler={(e) => 
-										handleChange('blockchain', e.target.value)} 
-										label={t( 'Filter-Blockchn')} css={{marginLeft: 10}} />
+                                        selected={sortConfig.blockchain} handler={(e) => 
+                                        handleChange('blockchain', e.target.value)} 
+                                        label={t( 'Filter-Blockchn')} css={{marginLeft: 10}} />
                         </Box>
                         <Box p={3}>
                             <Button className={classes.btnReset} variant={"contained"} onClick={() => {setSortConfig(defaultFilter)}}>{t( 'Filter-Reset')}</Button>

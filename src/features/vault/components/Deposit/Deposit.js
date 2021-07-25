@@ -161,11 +161,17 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                 />
                 <Box mt={2}>
                     {wallet.address ? (
-                        <Button onClick={handleDeposit} className={classes.btnSubmit} fullWidth={true} disabled={formData.deposit.amount <= 0}>
-                            {item.network !== wallet.network ? t( 'Network-Change') : (formData.deposit.max ? t( 'Deposit-All') : t( 'Deposit-Verb'))}
+                        <Button onClick={handleDeposit} className={classes.btnSubmit} 
+                                    fullWidth={true} disabled={formData.deposit.amount <= 0}>
+                            {item.network !== wallet.network ? t( 'Network-Change') : 
+                                                (formData.deposit.max ? t( 'Deposit-All') : 
+                                                t( 'Deposit-Verb'))}
                         </Button>
                     ) : (
-                        <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>{t( 'Transact-ConnectWallet')}</Button>
+                        <Button className={classes.btnSubmit} fullWidth={true} 
+                                    onClick={handleWalletConnect}>
+                            {t( 'Transact-ConnectWallet')}
+                        </Button>
                     )}
                 </Box>
             </Box>
@@ -176,7 +182,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
             />
             <Steps item={item} steps={steps} handleClose={handleClose} />
         </React.Fragment>
-    )
-}
+    ) //return
+} //const Deposit
 
 export default Deposit;

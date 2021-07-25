@@ -44,8 +44,12 @@ const styles = theme => ({
         fontSize: 18
     },
     feeBreakdownDetail: {
-        color: "#8585A6",
-
+        ...regularText 
+    },
+    feeBreakdownDetailPerf: {
+        ...regularText, 
+		whiteSpace: 'pre', 
+		tabSize: 10, 
     }
 });
 

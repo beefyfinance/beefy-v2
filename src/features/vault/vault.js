@@ -103,7 +103,7 @@ const Vault = () => {
                 <Loader message={t( 'Vault-GetData')} />
             ) : (
                 <Grid container style={{position: 'relative'}}>
-                    <Grid item xs={12} md={8} lg={9}>
+                    <Grid item xs={12} md={8} lg={8} xl={9}>
                         <Button className={classes.btnGoBack} onClick={() => {history.push('/')}}><ArrowLeft /> {t( 'Vault-GoBack')}</Button>
                         <Grid className={classes.title} container>
                             <Grid>
@@ -119,15 +119,16 @@ const Vault = () => {
                                     <img alt={item.network} src={require('../../images/networks/' + item.network + '.svg').default} />
                                 </Box>
                                 <Box pl={1}>
-                                    <Typography className={classes.network} 
-				display={"inline"}>{item.network} {t( 'Vault-network')}</Typography>
+                                    <Typography className={classes.network} display={"inline"}>
+                                        {item.network} {t( 'Vault-network')}
+                                    </Typography>
                                 </Box>
                                 <Box pl={1}>
                                     <DisplayTags tags={item.tags} />
                                 </Box>
                             </Box>
                             <Box className={classes.summaryContainer} display={"flex"} 
-										alignItems="center">
+                                        alignItems="center">
                                 <Hidden xsDown>
                                     <Box>
                                         <Divider />
@@ -154,15 +155,15 @@ const Vault = () => {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={4} lg={3} className={classes.customOrder}>
+                    <Grid item xs={12} md={4} lg={4} xl={3} className={classes.customOrder}>
                         <Box className={classes.dw}>
                             <Box className={classes.tabs}>
                                 <Button onClick={() => setDw('deposit')} 
-											className={dw === 'deposit' ? classes.selected : 
-											''}>{t( 'Deposit-Verb')}</Button>
+                                            className={dw === 'deposit' ? classes.selected : 
+                                            ''}>{t( 'Deposit-Verb')}</Button>
                                 <Button onClick={() => setDw('withdraw')} 
-											className={dw === 'withdraw' ? classes.selected : 
-											''}>{t( 'Withdraw-Verb')}</Button>
+                                            className={dw === 'withdraw' ? classes.selected : 
+                                            ''}>{t( 'Withdraw-Verb')}</Button>
                             </Box>
                             {dw === 'deposit' ? (
                                 <Deposit
@@ -185,7 +186,7 @@ const Vault = () => {
                             )}
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={8} lg={9}>
+                    <Grid item xs={12} md={8} lg={8} xl={9}>
                         <Paper className={classes.paper}>
                             <Typography>{t( 'Vault-RateHist')}</Typography>
                             <Box style={{height: 250}}>

@@ -26,5 +26,10 @@
 
   "Withdraw-Verb": "Abheben",
 
+  "Fee-Tagline": "Sie nehmen das ein, was Sie anlegt",
+  "Fee-Deposit": "Einzahlungsgebühr",
+  "Fee-Withdraw": "Auszahlungsgebühr",
+  "Fee-Transaction": "Veranschlagte Transaktionsgebühr",
+  
   "xyz": "last-item placeholder"
 }
