@@ -72,7 +72,7 @@ const Item = ({item}) => {
                 <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight, classes.apyContainer].join(' ')} textAlign={"center"}>
                     <Typography variant={"h1"}>{formatApy(item.apy.totalApy)}</Typography>
                     <Typography variant={"h2"}>{t( 'APY')}</Typography>
-                    <Typography variant={"button"}>{t( 'Vault-Deposit')}</Typography>
+                    <Typography variant={"button"}>{t( 'Deposit-Verb')}</Typography>
                 </Box>
             </Button>
         </Grid>

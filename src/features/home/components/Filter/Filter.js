@@ -130,7 +130,7 @@ const Filter = ({sortConfig, setSortConfig, defaultFilter, platforms, vaultCount
                                             name="boost" color="primary" />}/>
                             </FormGroup>
                         </Box>
-                        <Box p={3} minWidth={200} style={{textAlign: 'right'}}>
+                        <Box p={3} flexGrow={1} minWidth={200} style={{textAlign: 'right'}}>
                             {t( 'Filter-Showing', {number: vaultCount.showing, 
                                                     count: vaultCount.total})}
                         </Box>

@@ -15,7 +15,7 @@ const useStyles = makeStyles(styles);
 
 const FeeBreakdown = ({ depositFee, withdrawalFee }) => {
     const classes = useStyles();
-	const t = useTranslation().t;
+    const t = useTranslation().t;
     const formattedDepositFee = useFormattedFee(depositFee);
     const formattedWithdrawalFee = useFormattedFee(withdrawalFee);
 
@@ -32,33 +32,33 @@ const FeeBreakdown = ({ depositFee, withdrawalFee }) => {
                         >
                             <div className={classes.feeBreakdownBlock}>
                                 <Typography className={classes.feeBreakdownBold}>
-									{t( 'Fee-DepositAmt', {amt: formattedDepositFee})}
-								</Typography>
+                                    {t( 'Fee-DepositAmt', {amt: formattedDepositFee})}
+                                </Typography>
                                 <Typography className={classes.feeBreakdownDetail}>
-									{t( 'Fee-DepositTrgt')}
-								</Typography>
+                                    {t( 'Fee-DepositTrgt')}
+                                </Typography>
                             </div>
                             <div className={classes.feeBreakdownBlock}>
                                 <Typography className={classes.feeBreakdownBold}>
-									{t( 'Fee-WithdrawAmt', {amt: formattedWithdrawalFee})}
-								</Typography>
+                                    {t( 'Fee-WithdrawAmt', {amt: formattedWithdrawalFee})}
+                                </Typography>
                                 <Typography className={classes.feeBreakdownDetail}>
-									{t( 'Fee-WithdrawTrgt', {amt: formattedWithdrawalFee})}
-								</Typography>
+                                    {t( 'Fee-WithdrawTrgt', {amt: formattedWithdrawalFee})}
+                                </Typography>
                             </div>
                             <div className={classes.feeBreakdownBlock}>
                                 <Typography className={classes.feeBreakdownBold}>
-									{t( 'Fee-Perform', {amt: '4.5%'})}
-								</Typography>
+                                    {t( 'Fee-Perform', {amt: '4.5%'})}
+                                </Typography>
                                 <Typography className={classes.feeBreakdownDetailPerf}>
-									{t( 'Fee-PerformHodler', {amt: '2.5%'})}
-								</Typography>
+                                    {t( 'Fee-PerformHodler', {amt: '2.5%'})}
+                                </Typography>
                                 <Typography className={classes.feeBreakdownDetailPerf}>
-									{t( 'Fee-PerformTreas', {amt: '1.5%'})}
-								</Typography>
+                                    {t( 'Fee-PerformTreas', {amt: '1.5%'})}
+                                </Typography>
                                 <Typography className={classes.feeBreakdownDetailPerf}>
-									{t( 'Fee-PerformStrat', {amt: '0.5%'})}
-								</Typography>
+                                    {t( 'Fee-PerformStrat', {amt: '0.5%'})}
+                                </Typography>
                             </div>
                         </Popover>
                     </Box>
