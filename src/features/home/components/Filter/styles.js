@@ -32,7 +32,7 @@ const styles = (theme) => ({
         fontWeight: '600',
         height: '24px',
         textAlign: 'center',
-        textTransform: 'none',		//'capitalize' no good due to localization
+        textTransform: 'none',      //'capitalize' no good due to localization
         opacity: 0.7,
         transition: 'opacity 0.2s ease-in-out',
     },
@@ -128,6 +128,11 @@ const styles = (theme) => ({
             backgroundColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
         }
     },
+    lblShowing: {
+        textAlign: 'right',
+        minWidth: 100,
+        [theme.breakpoints.up( 'sm')]: {minWidth: 200}, 
+    }, 
     btnReset: {
         color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
         fontWeight: '600',
