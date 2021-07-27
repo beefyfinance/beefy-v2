@@ -50,7 +50,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
 
     const handleDeposit = () => {
         const steps = [];
-        if(wallet.address) {
+        if (wallet.address) {
             if(item.network !== wallet.network) {
                 dispatch(reduxActions.wallet.setNetwork(item.network));
                 return false;
@@ -81,8 +81,8 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
             });
 
             setSteps({modal: true, currentStep: 0, items: steps, finished: false});
-        }
-    }
+        } //if (wallet.address)
+    } //const handleDeposit
 
     const handleClose = () => {
         updateItemData();
@@ -128,7 +128,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
     return (
         <React.Fragment>
             <Box p={3}>
-                <Typography className={classes.balanceText}>{t( 'Vault-Balance')}:</Typography>
+                <Typography className={classes.balanceText}>{t( 'Vault-Wallet')}:</Typography>
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                     <Box lineHeight={0}>
                         <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
@@ -170,14 +170,14 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                     ) : (
                         <Button className={classes.btnSubmit} fullWidth={true} 
                                     onClick={handleWalletConnect}>
-                            {t( 'Transact-ConnectWallet')}
+                            {t( 'Network-ConnectWallet')}
                         </Button>
                     )}
                 </Box>
             </Box>
             <BoostWidget 
-                balance={0}
-                variant="stake"
+                balance={0  /*TODO: fix parameters*/}
+                s_stake={t( 'Boost-Stake', {mooToken: 'mooToken'})  /*TODO: replace 'mooToken' with real mooName*/} 
                 onClick={() => {}}
             />
             <Steps item={item} steps={steps} handleClose={handleClose} />

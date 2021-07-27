@@ -85,6 +85,7 @@ const styles = (theme) => ({
         [theme.breakpoints.up('md')]: {
             order: 1,
             width: '100%',
+            minWidth: 360, 
             position: 'absolute',
             right: 0,
             paddingLeft: '24px',

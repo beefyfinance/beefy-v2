@@ -9,12 +9,13 @@ import {
     Paper,
     Typography
 } from "@material-ui/core";
-import BigNumber from "bignumber.js";
 import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
-import { Link } from 'react-router-dom';
 import React from "react";
-import styles from "../styles"
+import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
+import {useTranslation} from "react-i18next";
+import BigNumber from "bignumber.js";
+import styles from "../styles"
 import Loader from "../../../../components/loader";
 import {byDecimals, convertAmountToRawNumber, stripExtraDecimals} from "../../../../helpers/format";
 import {isEmpty} from "../../../../helpers/utils";
@@ -29,6 +30,7 @@ const useStyles = makeStyles(styles);
 const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemData, resetFormData}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+	const t = useTranslation().t;
     const {wallet, balance} = useSelector(state => ({
         wallet: state.walletReducer,
         balance: state.balanceReducer,

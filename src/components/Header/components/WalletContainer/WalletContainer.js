@@ -50,7 +50,10 @@ const WalletContainer = () => {
                 ) : (
                     <React.Fragment>
                         {walletReducer.address ? (<Avatar src={dataUrl} />) : ''}
-                        <Typography noWrap={true}>{walletReducer.address ? formatAddress(walletReducer.address) : t( 'Header-ConnectWallet')}</Typography>
+                        <Typography noWrap={true}>
+                            {walletReducer.address ? formatAddress( walletReducer.address) : 
+                                                        t( 'Network-ConnectWallet')}
+                        </Typography>
                     </React.Fragment>
                 )}
                 </Grid>

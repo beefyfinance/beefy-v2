@@ -31,7 +31,7 @@ const styles = theme => ({
         marginTop: theme.spacing(2),
         fontWeight: 700,
         letterSpacing: '0.2px',
-        textTransform: 'capitalize',
+        textTransform: 'none',      //'capitalize' no good due to localization
         color: '#ffffff',
         backgroundColor: '#54995C',
         borderRadius: '30px',

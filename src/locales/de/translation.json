@@ -1,6 +1,5 @@
 {
   "Header-Docs": "Dokumente", 
-  "Header-ConnectWallet": "Mit Wallet verbinden",
 
   "Portfolio-Portfolio": "Portfolio",
   "Portfolio-YieldTot": "Totales Erträgnis",
@@ -22,7 +21,7 @@
   "Deposit-Verb": "Anlegen",
   "Deposit-BuyTkn": "Token Kaufen", 
 
-  "Transact-ConnectWallet": "Mit Wallet verbinden",
+  "Network-ConnectWallet": "Mit Wallet verbinden",
 
   "Withdraw-Verb": "Abheben",
 
@@ -31,5 +30,11 @@
   "Fee-Withdraw": "Auszahlungsgebühr",
   "Fee-Transaction": "Veranschlagte Transaktionsgebühr",
   
+  "Boost-Stake": "Dein {{mooToken}} staken",
+  "Boost-WhatIs": "Was ist ein Boost?",
+
+  "Transactn-View": "Im Explorer anschauen",
+  "Transactn-Confirmed": "Transaktionen bestätigt",
+
   "xyz": "last-item placeholder"
 }
