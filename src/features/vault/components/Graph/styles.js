@@ -1,7 +1,10 @@
 const styles = theme => ({
-    container: {
-
+    headerTabs: {
+        display: 'flex'
     },
+    headerTab: {
+        marginLeft: 20
+    }
 });
 
 export default styles;

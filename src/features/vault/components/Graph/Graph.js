@@ -1,12 +1,24 @@
-import React from 'react';
-import { makeStyles, Paper, Box } from '@material-ui/core';
-import {LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,} from "recharts";
+import React, { useState } from 'react';
+import { 
+    makeStyles, 
+    Paper, 
+    Box,
+} from '@material-ui/core';
+import {
+    LineChart, 
+    Line, 
+    XAxis, 
+    YAxis, 
+    Tooltip, 
+    ResponsiveContainer,
+} from "recharts";
 
 import styles from './styles';
 import Card from "../Card/Card";
 import CardHeader from "../Card/CardHeader";
 import CardContent from "../Card/CardContent";
-import CardTitle from "../Card/CardTitle/CardTitle"
+import CardTitle from "../Card/CardTitle/CardTitle";
+import Tabs from "../../../../components/Tabs";
 
 const useStyles = makeStyles(styles);
 
@@ -19,12 +31,29 @@ const chartData = [
 
 const TokenCard = () => {
     const classes = useStyles();
+    const [metric, setMetric] = useState(0);
+    const [timeframe, setTimeframe] = useState(0);
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle title="Historical rate" />
-                
+                <div className={classes.headerTabs}>
+                    <div className={classes.headerTab}>
+                        <Tabs
+                            labels={['TVL', 'Price', 'Daily']} 
+                            value={metric}
+                            onChange={newValue => setMetric(newValue)} 
+                        />
+                    </div>
+                    <div className={classes.headerTab}>
+                        <Tabs 
+                            labels={['1D', '1W', '1M', '1Y']}
+                            value={timeframe}
+                            onChange={newValue => setTimeframe(newValue)} 
+                        />
+                    </div>
+                </div>
             </CardHeader>
             <CardContent>
                 <Paper className={classes.paper}>
