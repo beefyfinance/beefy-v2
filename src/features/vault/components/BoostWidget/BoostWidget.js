@@ -48,7 +48,7 @@ const BoostWidget = ({ onClick, balance, s_stake }) => {
                 {s_stake}
             </Button>
         </div>
-    ) //return
-} //const BoostWidget
+    ) 
+} 
 
 export default BoostWidget;

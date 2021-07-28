@@ -18,15 +18,10 @@ import Withdraw from "./components/Withdraw";
 import TokenCard from "./components/TokenCard";
 import StrategyCard from "./components/StrategyCard";
 import SafetyCard from "./components/SafetyCard";
+import Graph from "./components/Graph";
 import AssetsImage from "../../components/AssetsImage";
 
 const useStyles = makeStyles(styles);
-const chartData = [
-    { name: "28 Jan", apy: 45.00 },
-    { name: "4 Feb", apy: 57.15 },
-    { name: "11 Feb", apy: 38.50 },
-    { name: "18 Feb", apy: 41.37 }
-];
 
 const Vault = () => {
     const history = useHistory();
@@ -187,20 +182,7 @@ const Vault = () => {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={8} lg={8} xl={9}>
-                        <Paper className={classes.paper}>
-                            <Typography>{t( 'Vault-RateHist')}</Typography>
-                            <Box style={{height: 250}}>
-                                <ResponsiveContainer>
-                                    <LineChart data={chartData} margin={{top: 10, right: 30, left: 0, bottom: 5}}>
-                                        <XAxis dataKey="name" />
-                                        <YAxis />
-                                        <Tooltip />
-                                        <Line type="monotone" dataKey="apy" stroke="#82ca9d" />
-                                    </LineChart>
-                                </ResponsiveContainer>
-                            </Box>
-
-                        </Paper>
+                        <Graph />
                         {item.risks && item.risks.length > 0 && <SafetyCard vaultRisks={item.risks} score={item.safetyScore}/>}
                         <StrategyCard 
                             stratType={item.stratType}
