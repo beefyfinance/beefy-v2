@@ -19,7 +19,6 @@ const Tabs = ({ value, onChange, labels }) => {
     return (
         <MuiTabs
             value={value}
-            indicatorColor="transparent"
             textColor="primary"
             onChange={handleChange}
             className={classes.tabs}

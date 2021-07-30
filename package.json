@@ -15,6 +15,7 @@
     "chokidar": "^3.5.2",
     "i18next": "^20.3.2",
     "i18next-browser-languagedetector": "^6.1.2",
+    "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-animate-height": "^2.0.23",
     "react-dom": "^17.0.1",

@@ -5,6 +5,10 @@ const styles = theme => ({
         backgroundColor: '#14182B',
         borderRadius: 20,
         height: 38,
+        '& .MuiTabs-indicator': {
+            display: 'none',
+            color: 'transparent',
+        },
         '& .MuiTab-root': {
             minWidth: 70,
         },

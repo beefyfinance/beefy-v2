@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { 
     makeStyles, 
-    Paper, 
     Box,
 } from '@material-ui/core';
 import {
-    LineChart, 
-    Line, 
-    XAxis, 
+    AreaChart, 
+    Area,
     YAxis, 
     Tooltip, 
+    CartesianGrid,
     ResponsiveContainer,
+    Text,
 } from "recharts";
 
 import styles from './styles';
@@ -18,21 +19,18 @@ import Card from "../Card/Card";
 import CardHeader from "../Card/CardHeader";
 import CardContent from "../Card/CardContent";
 import CardTitle from "../Card/CardTitle/CardTitle";
+import CustomTooltip from "./CustomTooltip";
 import Tabs from "../../../../components/Tabs";
+import useChartData from "./useChartData";
+import { formatTvl } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
-const chartData = [
-    { name: "28 Jan", apy: 45.00 },
-    { name: "4 Feb", apy: 57.15 },
-    { name: "11 Feb", apy: 38.50 },
-    { name: "18 Feb", apy: 41.37 }
-];
-
-const TokenCard = () => {
+const Graph = () => {
     const classes = useStyles();
     const [metric, setMetric] = useState(0);
     const [timeframe, setTimeframe] = useState(0);
+    const chartData = useChartData();
 
     return (
         <Card>
@@ -56,21 +54,42 @@ const TokenCard = () => {
                 </div>
             </CardHeader>
             <CardContent>
-                <Paper className={classes.paper}>
-                    <Box style={{height: 250}}>
-                        <ResponsiveContainer>
-                            <LineChart data={chartData} margin={{top: 10, right: 30, left: 0, bottom: 5}}>
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Line type="monotone" dataKey="apy" stroke="#82ca9d" />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </Box>
-                </Paper>
+                <Box style={{height: 250}}>
+                    <ResponsiveContainer>
+                        <AreaChart data={chartData} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
+                            <CartesianGrid 
+                                vertical={false}
+                                stroke="#484D73"
+                            />
+                            <YAxis 
+                                dataKey="v" 
+                                tick={{
+                                    fill: "white",
+                                    fontSize: 11
+                                }}
+                                axisLine={false}
+                                tickLine={false}
+                                tickFormatter={(label) => formatTvl(label)}
+                                tickCount={4}
+                                width={50}
+                            />
+                            <Tooltip
+                                content={<CustomTooltip />}
+                            />
+                            <Area 
+                                dataKey="v"
+                                fill="red"
+                                stroke="#6E6399"
+                                strokeWidth={4}
+                                fill="rgba(98, 84, 153, 0.13)"
+                                fillOpacity={100}
+                            />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </Box>
             </CardContent>
         </Card>
     );
 };
 
-export default TokenCard;
+export default Graph;

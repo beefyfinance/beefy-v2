@@ -47,7 +47,7 @@
   "VaultTag-Inactive": "Inactive",
   "Vault-SftyScore": "Safety Score",
   "Vault-Daily": "Daily",
-  "Vault-DailyHIst": "Daily Historical Rate",
+  "Vault-DailyHist": "APY Historical Rate",
   "Vault-GetData": "Getting vault data...",
   "Vault-GoBack": "Back to Explore",
   "Vault-vault": "vault",
