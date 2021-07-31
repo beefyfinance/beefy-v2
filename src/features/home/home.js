@@ -16,7 +16,7 @@ import Item from "./components/Item";
 import Loader from "../../components/loader";
 import {formatTvl} from '../../helpers/format'
 import {isEmpty} from "../../helpers/utils";
-import buildUserEarnedTokenMap from "./buildUserEarnedTokenMap"
+import buildUserEarnedTokenMap from "../../helpers/buildUserEarnedTokenMap"
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
