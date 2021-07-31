@@ -5,8 +5,7 @@ import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import Loader from "../../components/loader";
-import {LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,} from "recharts";
-import {Container, makeStyles, Grid, Paper, Typography, Box, Button, Divider, Hidden} from "@material-ui/core"
+import {Container, makeStyles, Grid, Typography, Box, Button, Divider, Hidden} from "@material-ui/core"
 import styles from "./styles"
 import {calcDaily, formatApy, formatTvl} from "../../helpers/format";
 import {isEmpty} from "../../helpers/utils";
@@ -91,12 +90,6 @@ const Vault = () => {
             }, 60000);
         }
     }, [item, dispatch]);
-
-    React.useEffect(() => {
-        if (item) {
-            console.log(item);
-        }
-    })
 
     return (
         <Container className={classes.vaultContainer} maxWidth="xl">

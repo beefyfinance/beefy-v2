@@ -3,37 +3,31 @@ import axios from 'axios';
 
 import { config } from '../../../../config/config';
 
-const STATS = {
-    0: 'tvl',
-    1: 'price',
-    2: 'apy'
-}
+const STATS = ['tvl', 'price', 'apy'];
+const PERIODS = ['hour', 'hour', 'hour', 'hour'];
+const LIMITS = [24, 168, 30, 50];
+const DAYS_IN_PERIOD = [1, 7, 30, 365];
+const SNAPSHOT_INTERVAL = process.env.SNAPSHOT_INTERVAL || 15 * 60;
 
-const useChartData = (stat, oracleId, vaultId, network) => {
+const useChartData = (stat, period, oracleId, vaultId, network) => {
     const [chartData, setChartData] = useState(null);
-
-    let name;
-    if (stat === 0) {
-        name = `${vaultId}-${config[network].chainId}`
-    } else if (stat === 1) {
-        name = oracleId;
-    } else {
-        name = vaultId
-    }
     
     useEffect(() => {
-        const url = `https://beefy-db.herokuapp.com/${STATS[stat]}?name=${name}&period=hour&from=1627570936&limit=24`
+        const names = [`${vaultId}-${config[network].chainId}`, oracleId, vaultId];
+        const to = Math.floor(Date.now() / (SNAPSHOT_INTERVAL * 1000)) * SNAPSHOT_INTERVAL;
+        const from = to - DAYS_IN_PERIOD[period] * 3600 * 24
+
+        const base = `https://beefy-db.herokuapp.com/${STATS[stat]}`
+        const queries = `?name=${names[stat]}&period=${PERIODS[period]}&from=${from}&to=${to}&limit=${LIMITS[period]}`
+        const url = `${base}${queries}`
 
         const fetchData = async () => {
             const request = await axios.get(url);
-
-            console.log(request.data);
-
             setChartData(request.data);
         }
 
         fetchData();
-    }, [stat]);
+    }, [stat, period, network, oracleId, vaultId]);
 
     return chartData;
 }

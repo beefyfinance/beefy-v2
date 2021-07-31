@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
     makeStyles, 
     Box,
@@ -27,8 +27,8 @@ const useStyles = makeStyles(styles);
 const Graph = ({ oracleId, vaultId, network }) => {
     const classes = useStyles();
     const [stat, setStat] = useState(0);
-    const [timeframe, setTimeframe] = useState(0);
-    const chartData = useChartData(stat, oracleId, vaultId, network);
+    const [period, setPeriod] = useState(0);
+    const chartData = useChartData(stat, period, oracleId, vaultId, network);
 
     return (
         <Card>
@@ -45,8 +45,8 @@ const Graph = ({ oracleId, vaultId, network }) => {
                     <div className={classes.headerTab}>
                         <Tabs 
                             labels={['1D', '1W', '1M', '1Y']}
-                            value={timeframe}
-                            onChange={newValue => setTimeframe(newValue)} 
+                            value={period}
+                            onChange={newValue => setPeriod(newValue)} 
                         />
                     </div>
                 </div>
@@ -76,7 +76,6 @@ const Graph = ({ oracleId, vaultId, network }) => {
                             />
                             <Area 
                                 dataKey="v"
-                                fill="red"
                                 stroke="#6E6399"
                                 strokeWidth={4}
                                 fill="rgba(98, 84, 153, 0.13)"

@@ -23,6 +23,7 @@ const Popover = ({ title, content, children, solid, size = 'sm', placement = 'to
                         className={classes[`size_${size}`]}
                         ref={setAnchorEl} 
                         onClick={() => setIsOpen(!isOpen)}
+                        alt=''
                     />
                 </div>
                 <Popper 

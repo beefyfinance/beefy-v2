@@ -1,15 +1,12 @@
 import {
     Box,
     Button,
-    Divider,
-    Grid,
-    IconButton,
     InputBase,
     makeStyles,
     Paper,
     Typography
 } from "@material-ui/core";
-import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import {ShoppingBasket} from "@material-ui/icons";
 import React from "react";
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";

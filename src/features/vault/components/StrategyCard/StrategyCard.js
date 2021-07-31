@@ -67,7 +67,7 @@ const StrategyCard = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
                         </a>
                     ) : null}
 
-                    <a href="#" target="_blank" rel="noopener noreferrer"  className={classes.audit}>
+                    <a href="#" target="_blank" rel="noopener noreferrer" className={classes.audit}>
                         <img alt="Community Audited" src={shield} className={classes.auditIcon} />
                         <Typography className={classes.auditLabel} >Community Audited</Typography>
                     </a>
