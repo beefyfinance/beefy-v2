@@ -16,6 +16,7 @@ import Item from "./components/Item";
 import Loader from "../../components/loader";
 import {formatTvl} from '../../helpers/format'
 import {isEmpty} from "../../helpers/utils";
+import buildUserEarnedTokenMap from "./buildUserEarnedTokenMap"
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
@@ -168,22 +169,8 @@ const Home = () => {
     React.useEffect(() => {
         // when address is present, and pools and user balance has been fetched, get token map for deposited filter
         if(wallet.address && vault.lastUpdated > 0 && balance.lastUpdated) {
-            const tokenMap = balance.tokens;
-            const userEarnedTokenMap = {};
-            if (wallet.address !== null) {
-                Object.keys(tokenMap).forEach(tokenName => {
-                    const userTokenBalance = parseInt(tokenMap[tokenName].balance)
-                    if (userTokenBalance > 0) {
-                        let poolToUpdate = Object.values(vault.pools).find(pool => pool.earnedToken === tokenName);
-                        if (poolToUpdate !== undefined) {
-                            userEarnedTokenMap[tokenName] = {
-                                balance: userTokenBalance
-                            }
-                        }
-                    }
-                })
-                setUserEarnedTokenMap(userEarnedTokenMap)
-            }
+            const userEarnedTokenMap = buildUserEarnedTokenMap(vault.pools, balance.tokens);
+            setUserEarnedTokenMap(userEarnedTokenMap);
         }
     }, [wallet.address, vault.lastUpdated, balance.lastUpdated, vault.pools, balance.tokens]);
 
