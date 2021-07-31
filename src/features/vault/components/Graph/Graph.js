@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 import { 
     makeStyles, 
     Box,
@@ -11,7 +10,6 @@ import {
     Tooltip, 
     CartesianGrid,
     ResponsiveContainer,
-    Text,
 } from "recharts";
 
 import styles from './styles';
@@ -22,15 +20,15 @@ import CardTitle from "../Card/CardTitle/CardTitle";
 import CustomTooltip from "./CustomTooltip";
 import Tabs from "../../../../components/Tabs";
 import useChartData from "./useChartData";
-import { formatTvl } from '../../../../helpers/format';
+import { formatTvl, formatApy } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
-const Graph = () => {
+const Graph = ({ oracleId, vaultId, network }) => {
     const classes = useStyles();
-    const [metric, setMetric] = useState(0);
+    const [stat, setStat] = useState(0);
     const [timeframe, setTimeframe] = useState(0);
-    const chartData = useChartData();
+    const chartData = useChartData(stat, oracleId, vaultId, network);
 
     return (
         <Card>
@@ -39,9 +37,9 @@ const Graph = () => {
                 <div className={classes.headerTabs}>
                     <div className={classes.headerTab}>
                         <Tabs
-                            labels={['TVL', 'Price', 'Daily']} 
-                            value={metric}
-                            onChange={newValue => setMetric(newValue)} 
+                            labels={['TVL', 'Price', 'APY']} 
+                            value={stat}
+                            onChange={newValue => setStat(newValue)} 
                         />
                     </div>
                     <div className={classes.headerTab}>
@@ -69,7 +67,7 @@ const Graph = () => {
                                 }}
                                 axisLine={false}
                                 tickLine={false}
-                                tickFormatter={(label) => formatTvl(label)}
+                                tickFormatter={(label) => stat === 2 ? formatApy(label) : formatTvl(label)}
                                 tickCount={4}
                                 width={50}
                             />
