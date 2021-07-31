@@ -72,7 +72,7 @@ const Graph = ({ oracleId, vaultId, network }) => {
                                 width={50}
                             />
                             <Tooltip
-                                content={<CustomTooltip />}
+                                content={<CustomTooltip stat={stat} />}
                             />
                             <Area 
                                 dataKey="v"
