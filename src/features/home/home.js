@@ -167,7 +167,6 @@ const Home = () => {
     }, [dispatch, prices.lastUpdated]);
 
     React.useEffect(() => {
-        // when address is present, and pools and user balance has been fetched, get token map for deposited filter
         if(wallet.address && vault.lastUpdated > 0 && balance.lastUpdated) {
             const userEarnedTokenMap = buildUserEarnedTokenMap(vault.pools, balance.tokens);
             setUserEarnedTokenMap(userEarnedTokenMap);
