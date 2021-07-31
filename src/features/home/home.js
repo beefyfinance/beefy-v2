@@ -33,10 +33,11 @@ const defaultFilter = {
 }
 
 const Home = () => {
-    const {vault, wallet, prices} = useSelector(state => ({
+    const {vault, wallet, prices, balance} = useSelector(state => ({
         vault: state.vaultReducer,
         wallet: state.walletReducer,
         prices: state.pricesReducer,
+        balance: state.balanceReducer
     }));
 
     const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const Home = () => {
     const [sortConfig, setSortConfig] = React.useState(storage === null ? defaultFilter : JSON.parse(storage));
     const [filtered, setFiltered] = React.useState([]);
     const [scrollable, setScrollable] = React.useState({items: [], hasMore: true, chunk: 20});
+    const [userEarnedTokenMap, setUserEarnedTokenMap] = React.useState({})
 
     React.useEffect(() => {
         localStorage.setItem('homeSortConfig', JSON.stringify(sortConfig));
@@ -97,7 +99,7 @@ const Home = () => {
                 return false;
             }
 
-            if(sortConfig.deposited && item.deposited === 0) {
+            if(sortConfig.deposited && !(item.earnedToken in userEarnedTokenMap)) {
                 return false;
             }
 
@@ -136,7 +138,7 @@ const Home = () => {
             return {...scrollable, ...{items: data.slice(0, scrollable.chunk), hasMore: data.length > scrollable.chunk}}
         });
 
-    }, [sortConfig, vault.pools]);
+    }, [sortConfig, vault.pools, userEarnedTokenMap]);
 
     const fetchScrollable = () => {
         if (scrollable.items.length >= filtered.length) {
@@ -162,6 +164,28 @@ const Home = () => {
             dispatch(reduxActions.vault.fetchPools());
         }
     }, [dispatch, prices.lastUpdated]);
+
+    React.useEffect(() => {
+        // when address is present, and pools and user balance has been fetched, get token map for deposited filter
+        if(wallet.address && vault.lastUpdated > 0 && balance.lastUpdated) {
+            const tokenMap = balance.tokens;
+            const userEarnedTokenMap = {};
+            if (wallet.address !== null) {
+                Object.keys(tokenMap).forEach(tokenName => {
+                    const userTokenBalance = parseInt(tokenMap[tokenName].balance)
+                    if (userTokenBalance > 0) {
+                        let poolToUpdate = Object.values(vault.pools).find(pool => pool.earnedToken === tokenName);
+                        if (poolToUpdate !== undefined) {
+                            userEarnedTokenMap[tokenName] = {
+                                balance: userTokenBalance
+                            }
+                        }
+                    }
+                })
+                setUserEarnedTokenMap(userEarnedTokenMap)
+            }
+        }
+    }, [wallet.address, vault.lastUpdated, balance.lastUpdated, vault.pools, balance.tokens]);
 
     React.useEffect(() => {
         setInterval(() => {
