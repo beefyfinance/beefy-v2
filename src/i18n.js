@@ -26,9 +26,9 @@ export const localeToLanguageMap = {
 };
 
 const resources = Object.fromEntries(
-  Object.keys( localeToLanguageMap).map( code => [
+  Object.keys(localeToLanguageMap).map(code => [
     code,
-    { translation: require( `./locales/${code}/translation.json`) },
+    { translation: require(`./locales/${code}/translation.json`) },
   ])
 );
 

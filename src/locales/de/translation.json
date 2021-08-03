@@ -1,5 +1,5 @@
 {
-  "Header-Docs": "Dokumente", 
+  "Header-Docs": "Dokumente",
 
   "Portfolio-Portfolio": "Portfolio",
   "Portfolio-YieldTot": "Totales Erträgnis",
@@ -19,7 +19,7 @@
   "Vault-Daily": "Tageskurs",
 
   "Deposit-Verb": "Anlegen",
-  "Deposit-BuyTkn": "Token Kaufen", 
+  "Deposit-BuyTkn": "Token Kaufen",
 
   "Network-ConnectWallet": "Mit Wallet verbinden",
 
@@ -29,7 +29,7 @@
   "Fee-Deposit": "Einzahlungsgebühr",
   "Fee-Withdraw": "Auszahlungsgebühr",
   "Fee-Transaction": "Veranschlagte Transaktionsgebühr",
-  
+
   "Boost-Stake": "Dein {{mooToken}} staken",
   "Boost-WhatIs": "Was ist ein Boost?",
 

@@ -6,13 +6,9 @@ import styles from './styles';
 const useStyles = makeStyles(styles);
 
 const CardContent = ({ children }) => {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
-        <div className={classes.container}>
-            {children}
-        </div>
-    )
-}
+  return <div className={classes.container}>{children}</div>;
+};
 
 export default CardContent;

@@ -1,82 +1,100 @@
-import {Button, Grid, Hidden, makeStyles, Typography} from "@material-ui/core";
-import Box from "@material-ui/core/Box";
-import DisplayTags from "../../../../components/vaultTags";
-import {calcDaily, formatApy, formatTvl} from "../../../../helpers/format";
-import * as React from "react";
-import styles from "../../styles"
-import {useHistory} from "react-router-dom";
-import {useTranslation} from "react-i18next";
-import SafetyScore from "../../../../components/SafetyScore";
-import HistoricalRateChart from "../HistoricalRateChart/HistoricalRateChart";
-import AssetsImage from "../../../../components/AssetsImage";
+import { Button, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import DisplayTags from '../../../../components/vaultTags';
+import { calcDaily, formatApy, formatTvl } from '../../../../helpers/format';
+import * as React from 'react';
+import styles from '../../styles';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import SafetyScore from '../../../../components/SafetyScore';
+import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
+import AssetsImage from '../../../../components/AssetsImage';
 
 const historicalRateChartData = [
-    { date: "28 Jan", apy: 5.00 },
-    { date: "4 Feb", apy: 57.15 },
-    { date: "11 Feb", apy: 38.50 },
-    { date: "18 Feb", apy: 41.37 },
-    { date: "28 March", apy: 95.00 },
-    { date: "4 April", apy: 147.15 },
-    { date: "11 April", apy: 115.50 },
-    { date: "18 April", apy: 179.37 }
+  { date: '28 Jan', apy: 5.0 },
+  { date: '4 Feb', apy: 57.15 },
+  { date: '11 Feb', apy: 38.5 },
+  { date: '18 Feb', apy: 41.37 },
+  { date: '28 March', apy: 95.0 },
+  { date: '4 April', apy: 147.15 },
+  { date: '11 April', apy: 115.5 },
+  { date: '18 April', apy: 179.37 },
 ];
 
 const useStyles = makeStyles(styles);
 
-const Item = ({item}) => {
-    const classes = useStyles();
-    const history = useHistory();
-    const t = useTranslation().t;
+const Item = ({ item }) => {
+  const classes = useStyles();
+  const history = useHistory();
+  const t = useTranslation().t;
 
-    return (
-        <Grid container key={item.id}>
-            <Button className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')} onClick={() => {history.push('/' + item.network + '/vault/' + (item.id))}}>
-                <Box flexGrow={1} textAlign="left">
-                    <Grid className={classes.infoContainer} container>
-                        <Hidden smDown>
-                            <Grid>
-                                <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
-                            </Grid>
-                        </Hidden>
-                        <Grid>
-                            <Box className={classes.title} textAlign={"left"}>
-                                <Typography className={classes.h2}>{item.name}</Typography>
-                                <Box>
-                                    <Typography display={"inline"}><img alt={item.network} src={require('../../../../images/networks/' + item.network + '.svg').default} /></Typography>
-                                    <DisplayTags tags={item.tags} />
-                                </Box>
-                            </Box>
-                        </Grid>
-                    </Grid>
+  return (
+    <Grid container key={item.id}>
+      <Button
+        className={[classes.item, classes.roundedLeft, classes.roundedRight].join(' ')}
+        onClick={() => {
+          history.push('/' + item.network + '/vault/' + item.id);
+        }}
+      >
+        <Box flexGrow={1} textAlign="left">
+          <Grid className={classes.infoContainer} container>
+            <Hidden smDown>
+              <Grid>
+                <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+              </Grid>
+            </Hidden>
+            <Grid>
+              <Box className={classes.title} textAlign={'left'}>
+                <Typography className={classes.h2}>{item.name}</Typography>
+                <Box>
+                  <Typography display={'inline'}>
+                    <img
+                      alt={item.network}
+                      src={require('../../../../images/networks/' + item.network + '.svg').default}
+                    />
+                  </Typography>
+                  <DisplayTags tags={item.tags} />
                 </Box>
-                <Box className={classes.rWidth} textAlign={"left"}>
-                    <SafetyScore score={item.safetyScore} whiteLabel size='sm' />
-                    <Typography className={classes.h3}>{t( 'Vault-SftyScore')}</Typography>
-                </Box>
-                <Box className={classes.rWidth} textAlign={"left"}>
-                    <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
-                    <Typography className={classes.h3}>{t( 'TVL')}</Typography>
-                </Box>
-                <Hidden mdDown>
-                    <Box className={classes.rWidth} textAlign={"left"}>
-                        <Typography className={classes.h2}>{calcDaily(item.apy.totalApy)}</Typography>
-                        <Typography className={classes.h3}>{t( 'Vault-Daily')}</Typography>
-                    </Box>
-                </Hidden>
-                <Hidden mdDown>
-                    <Box className={classes.rWidth} textAlign={"center"}>
-                        <HistoricalRateChart chartData={historicalRateChartData}/>
-                        <Typography className={classes.h3}>{t( 'Vault-DailyHist')}</Typography>
-                    </Box>
-                </Hidden>
-                <Box className={[classes.rWidth, classes.apyBg, classes.roundedRight, classes.apyContainer].join(' ')} textAlign={"center"}>
-                    <Typography variant={"h1"}>{formatApy(item.apy.totalApy)}</Typography>
-                    <Typography variant={"h2"}>{t( 'APY')}</Typography>
-                    <Typography variant={"button"}>{t( 'Deposit-Verb')}</Typography>
-                </Box>
-            </Button>
-        </Grid>
-    )
-}
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box className={classes.rWidth} textAlign={'left'}>
+          <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
+          <Typography className={classes.h3}>{t('Vault-SftyScore')}</Typography>
+        </Box>
+        <Box className={classes.rWidth} textAlign={'left'}>
+          <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
+          <Typography className={classes.h3}>{t('TVL')}</Typography>
+        </Box>
+        <Hidden mdDown>
+          <Box className={classes.rWidth} textAlign={'left'}>
+            <Typography className={classes.h2}>{calcDaily(item.apy.totalApy)}</Typography>
+            <Typography className={classes.h3}>{t('Vault-Daily')}</Typography>
+          </Box>
+        </Hidden>
+        <Hidden mdDown>
+          <Box className={classes.rWidth} textAlign={'center'}>
+            <HistoricalRateChart chartData={historicalRateChartData} />
+            <Typography className={classes.h3}>{t('Vault-DailyHist')}</Typography>
+          </Box>
+        </Hidden>
+        <Box
+          className={[
+            classes.rWidth,
+            classes.apyBg,
+            classes.roundedRight,
+            classes.apyContainer,
+          ].join(' ')}
+          textAlign={'center'}
+        >
+          <Typography variant={'h1'}>{formatApy(item.apy.totalApy)}</Typography>
+          <Typography variant={'h2'}>{t('APY')}</Typography>
+          <Typography variant={'button'}>{t('Deposit-Verb')}</Typography>
+        </Box>
+      </Button>
+    </Grid>
+  );
+};
 
 export default Item;
