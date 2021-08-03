@@ -26,8 +26,8 @@ const useStyles = makeStyles(styles);
 
 const Graph = ({ oracleId, vaultId, network }) => {
     const classes = useStyles();
-    const [stat, setStat] = useState(0);
-    const [period, setPeriod] = useState(0);
+    const [stat, setStat] = useState(2);
+    const [period, setPeriod] = useState(2);
     const chartData = useChartData(stat, period, oracleId, vaultId, network);
 
     return (
