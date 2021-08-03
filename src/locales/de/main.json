@@ -17,9 +17,13 @@
   "VaultTag-LowRisk": "Risikoarm",
 
   "Vault-Daily": "Tageskurs",
+  "Vault-RateHist": "Historischer Kurs",
 
   "Deposit-Verb": "Anlegen",
+<<<<<<< HEAD:src/locales/de/translation.json
   "Deposit-BuyTkn": "Token Kaufen",
+=======
+>>>>>>> 7th batch of l10n wraps.:src/locales/de/main.json
 
   "Network-ConnectWallet": "Mit Wallet verbinden",
 
@@ -31,10 +35,15 @@
   "Fee-Transaction": "Veranschlagte Transaktionsgebühr",
 
   "Boost-Stake": "Dein {{mooToken}} staken",
+  "Boost-Unstake": "Dein {{mooToken}} unstaken",
   "Boost-WhatIs": "Was ist ein Boost?",
 
+  "Transact-BuyTkn": "Token Kaufen", 
   "Transactn-View": "Im Explorer anschauen",
   "Transactn-Confirmed": "Transaktionen bestätigt",
+
+  "Safety-HowCalc": "Wie ist es kalkuliert?",
+  "Safety-Meaning": "Was bedeutet das?",
 
   "xyz": "last-item placeholder"
 }
