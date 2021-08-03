@@ -1,19 +1,15 @@
 import {
     Box,
     Button,
-    Divider,
-    Grid,
-    IconButton,
     InputBase,
     makeStyles,
     Paper,
     Typography
 } from "@material-ui/core";
-import {HelpOutline, ShoppingBasket} from "@material-ui/icons";
+import {ShoppingBasket} from "@material-ui/icons";
 import React from "react";
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {useTranslation} from "react-i18next";
 import BigNumber from "bignumber.js";
 import styles from "../styles"
 import Loader from "../../../../components/loader";
@@ -30,7 +26,6 @@ const useStyles = makeStyles(styles);
 const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemData, resetFormData}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-	const t = useTranslation().t;
     const {wallet, balance} = useSelector(state => ({
         wallet: state.walletReducer,
         balance: state.balanceReducer,
