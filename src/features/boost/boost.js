@@ -1,14 +1,14 @@
+import { Avatar, Box, Button, Container, Grid, Link, makeStyles, Paper, Typography } from "@material-ui/core";
+import { ArrowLeft, Language, Telegram, Twitter } from "@material-ui/icons";
 import * as React from "react";
-import {useHistory} from "react-router-dom";
-import {useParams} from "react-router";
-import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Box, Button, Container, Grid, Link, makeStyles, Paper, Typography} from "@material-ui/core";
-import Loader from "../../components/loader";
-import {ArrowLeft, Language, Telegram, Twitter} from "@material-ui/icons";
-import styles from "./styles"
-import {isEmpty} from "../../helpers/utils";
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 import AssetsImage from "../../components/AssetsImage";
+import Loader from "../../components/loader";
+import { isEmpty } from "../../helpers/utils";
+import styles from "./styles";
 
 const useStyles = makeStyles(styles);
 
@@ -17,11 +17,12 @@ const Boost = () => {
     const history = useHistory();
     const classes = useStyles();
     let { id } = useParams();
-    const {vault, wallet, prices} = useSelector(state => ({
+    const {vault} = useSelector(state => ({
         vault: state.vaultReducer,
         wallet: state.walletReducer,
         prices: state.pricesReducer,
     }));
+    // eslint-disable-next-line no-unused-vars
     const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = React.useState(true);
