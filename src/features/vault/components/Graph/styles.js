@@ -1,9 +1,19 @@
 const styles = theme => ({
     headerTabs: {
-        display: 'flex'
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+        [theme.breakpoints.up('lg')]: {
+            flexDirection: 'row',
+            alignItems: 'center',
+        }
     },
     headerTab: {
-        marginLeft: 20
+        marginTop: 10,
+        [theme.breakpoints.up('lg')]: {
+            marginTop: 0,
+            marginLeft: 20,
+        }
     }
 });
 
