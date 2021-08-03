@@ -55,6 +55,7 @@ const styles = (theme) => ({
         '& .MuiLink-root': {
             color: '#ffffff',
             fontSize: '16px',
+            fontWeight: 600,
             lineHeight: '24px',
             letterSpacing: '0.1px',
             marginLeft: '10px',
@@ -62,9 +63,27 @@ const styles = (theme) => ({
     },
     partnerBody: {
         marginTop: '20px',
+        fontWeight: 400,
+        fontSize: '18px',
+        lineHeight: '32px',
     },
     splitPaper: {
         borderRadius: '20px',
+        '& .MuiTypography-root': {
+            fontSize: '24px',
+            fontWeight: 600,
+            lineHeight: '30px',
+            textAlign: 'center',
+            '& span': {
+                fontSize: '16px',
+            }
+        },
+        '& .MuiTypography-h2': {
+            fontSize: '15px',
+            fontWeight: 400,
+            color: '#8585A6',
+            marginBottom: '30px',
+        }
     },
     splitA: {
         backgroundColor: '#272B4A',
@@ -79,6 +98,36 @@ const styles = (theme) => ({
         borderTopRightRadius: '20px',
         borderBottomRightRadius: '20px',
         padding: '32px',
+    },
+    btnSubmit: {
+        fontSize: '18px',
+        fontWeight: 700,
+        letterSpacing: '0.2px',
+        textTransform: 'none',
+        color: '#ffffff',
+        backgroundColor: '#54995C',
+        borderRadius: '30px',
+        padding: '6px 33px',
+        '&:hover': {
+            backgroundColor: '#389D44'
+        }
+    },
+    btnClaim: {
+        fontSize: '18px',
+        fontWeight: 700,
+        letterSpacing: '0.2px',
+        textTransform: 'none',
+        color: '#ffffff',
+        backgroundColor: 'none',
+        borderRadius: '30px',
+        borderColor: '#54995C',
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        padding: '6px 33px',
+        '&:hover': {
+            backgroundColor: 'rgba(20, 24, 43, 0.5)',
+            borderColor: '#389D44'
+        }
     }
 });
 

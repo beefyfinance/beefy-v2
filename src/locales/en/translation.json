@@ -96,10 +96,13 @@
   "Transactn-Close": "Close", 
   "Transactn-ConfirmPending": "Confirmation Pending", 
   "Transactn-Wait": "Waiting for network to confirm transaction...", 
-  "Transactn-Confirmed": "transactions confirmed", 
-
+  "Transactn-Confirmed": "transactions confirmed",
   "Total-Value-Locked": "Total value locked",
   "Page-Not-Found": "Page not found.",
   "Your-Pool-%": "Your pool %",
-  "Receipt-Balance": "Receipt balance"
+  "Receipt-Balance": "Receipt balance",
+  "Stake-Button-Stake": "Stake",
+  "Stake-Button-Claim-Rewards": "Claim rewards",
+  "Stake-Staked": "Staked",
+  "Stake-Rewards": "Rewards"
 }

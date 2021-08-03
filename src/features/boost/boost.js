@@ -89,12 +89,18 @@ const Boost = () => {
                         <Paper className={classes.splitPaper}>
                             <Box display={'flex'}>
                                 <Box className={classes.splitA}>
-                                    <Typography>0 {item.token}</Typography>
-                                    <Button>{t("Stake-Button-Stake")}</Button>
+                                    <Typography>0 {item.token} <span>$0.00</span></Typography>
+                                    <Typography variant={"h2"}>{t("Stake-Staked")}</Typography>
+                                    <Box textAlign={"center"}>
+                                        <Button className={classes.btnSubmit}>{t("Stake-Button-Stake")}</Button>
+                                    </Box>
                                 </Box>
                                 <Box className={classes.splitB}>
                                     <Typography>0 {item.earnedToken}</Typography>
-                                    <Button>{t("Stake-Button-Claim-Rewards")}</Button>
+                                    <Typography variant={"h2"}>{t("Stake-Rewards")}</Typography>
+                                    <Box textAlign={"center"}>
+                                        <Button className={classes.btnClaim}>{t("Stake-Button-Claim-Rewards")}</Button>
+                                    </Box>
                                 </Box>
                             </Box>
                         </Paper>
