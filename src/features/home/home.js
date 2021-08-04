@@ -1,14 +1,14 @@
-import * as React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import InfiniteScroll from "react-infinite-scroll-component";
-import {useTranslation} from "react-i18next";
-import {BigNumber} from 'bignumber.js';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useTranslation } from 'react-i18next';
+import { BigNumber } from 'bignumber.js';
 
-import {Container, makeStyles} from "@material-ui/core"
+import { Container, makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import styles from "./styles"
+import styles from './styles';
 
-import reduxActions from "../redux/actions";
+import reduxActions from '../redux/actions';
 
 import Filter from './components/Filter';
 import Portfolio from './components/Portfolio';
@@ -20,18 +20,18 @@ import buildUserEarnedTokenMap from "../../helpers/buildUserEarnedTokenMap"
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
-    key: 'default',
-    direction: 'desc',
-    keyword: '',
-    retired: false,
-    zero: false,
-    deposited: false,
-    boost: false,
-    platform: 'all',
-    vault: 'all',
-    blockchain: 'all',
-    category: 'all',
-}
+  key: 'default',
+  direction: 'desc',
+  keyword: '',
+  retired: false,
+  zero: false,
+  deposited: false,
+  boost: false,
+  platform: 'all',
+  vault: 'all',
+  blockchain: 'all',
+  category: 'all',
+};
 
 const Home = () => {
     const {vault, wallet, prices, balance} = useSelector(state => ({

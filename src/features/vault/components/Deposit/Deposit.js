@@ -128,7 +128,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
     return (
         <React.Fragment>
             <Box p={3}>
-                <Typography className={classes.balanceText}>{t( 'Vault-Wallet')}:</Typography>
+                <Typography className={classes.balanceText}>{t( 'Vault-Wallet')}</Typography>
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                     <Box lineHeight={0}>
                         <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
@@ -142,7 +142,7 @@ const Deposit = ({formData, setFormData, item, handleWalletConnect, updateItemDa
                     </Box>
                     <Box>
                         <Link to={{ pathname: item.buyTokenUrl }} target="_blank" className={classes.btnSecondary}>
-                            <Button endIcon={<ShoppingBasket />}>{t( 'Deposit-BuyTkn')}</Button>
+                            <Button endIcon={<ShoppingBasket />}>{t( 'Transact-BuyTkn')}</Button>
                         </Link>
                     </Box>
                 </Box>
