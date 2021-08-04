@@ -1,8 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import {config} from "../../../../config/config";
 import {formatApy} from "../../../../helpers/format"
-import {makeStyles, Typography} from '@material-ui/core';
+import {makeStyles, Typography,Box} from '@material-ui/core';
 import styles from './styles';
 import LinkButton from '../../../../components/LinkButton';
 import Card from "../Card/Card";
@@ -62,16 +61,16 @@ const StrategyCard = ({ stratType, stratAddr, vaultAddr, apy, audit, network, pl
                 </div>
                 <div className={classes.audits}>
                     {audit ? (
-                        <a href="#" target="_blank" rel="noopener noreferrer" className={classes.audit}>
+                        <Box href="#" target="_blank" rel="noopener noreferrer" className={classes.audit}>
                             <img alt="Audited" src={shield} className={classes.auditIcon} />
                             <Typography className={classes.auditLabel} >Audited</Typography>
-                        </a>
+                        </Box>
                     ) : null}
 
-                    <a href="#" target="_blank"  rel="noopener noreferrer"  className={classes.audit}>
+                    <Box className={classes.audit}>
                         <img alt="Community Audited" src={shield} className={classes.auditIcon} />
                         <Typography className={classes.auditLabel} >Community Audited</Typography>
-                    </a>
+                    </Box>
                 </div>
             </CardContent>
         </Card>

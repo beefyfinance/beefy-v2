@@ -48,7 +48,6 @@ const styles = (theme) => ({
     audit: {
         display: 'flex',
         marginRight: '50px',
-        textDecoration: 'none',
         color: 'white'
     },
     auditIcon: {
