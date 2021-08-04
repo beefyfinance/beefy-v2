@@ -20,10 +20,6 @@
   "Vault-RateHist": "Historischer Kurs",
 
   "Deposit-Verb": "Anlegen",
-<<<<<<< HEAD:src/locales/de/translation.json
-  "Deposit-BuyTkn": "Token Kaufen",
-=======
->>>>>>> 7th batch of l10n wraps.:src/locales/de/main.json
 
   "Network-ConnectWallet": "Mit Wallet verbinden",
 
