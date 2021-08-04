@@ -25,16 +25,8 @@ export const localeToLanguageMap = {
     zh: '中文',
 };
 
-const s_FLNM_RISKS = "./locales/${code}/risks.json";
-const o_pth = require( 'path');
-console.log( __dirname);
-const s_pth = o_pth.resolve( "./locales/en", "risks.json");
-console.log( s_pth);
 const  o_risks = code => {
     try {
-console.log( "hi")
-const o = require( `./locales/${code}/risks.json`)
-console.log( o);
         return require( `./locales/${code}/risks.json`)
     }catch  {
         return null
@@ -44,8 +36,6 @@ const resources = Object.fromEntries( Object.keys( localeToLanguageMap).map(
                             code => [code, {translation: {
                             ...require( `./locales/${code}/main.json`), 
                             ...o_risks( code)}}]));
-//                          ...(fs.existsSync( s_FLNM_RISKS) ? 
-//                          require( s_FLNM_RISKS) : {})}}]));
 
 i18n
     // load translation using http -> see /public/locales
