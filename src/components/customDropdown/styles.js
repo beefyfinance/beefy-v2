@@ -28,6 +28,12 @@ const styles = theme => ({
     '&:hover .MuiSelect-select': {
       color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
     },
+    [theme.breakpoints.down('md')]: {
+      '& .MuiSelect-select': {
+        textAlign: 'left',
+        margin: '0 5px',
+      },
+    },
   },
   withLabel: {
     minWidth: 200,

@@ -15,6 +15,7 @@ import {
   Drawer,
   Box,
   Button,
+  Grid,
 } from '@material-ui/core';
 import { Menu, WbSunny, NightsStay } from '@material-ui/icons';
 import styles from './styles';
@@ -110,11 +111,27 @@ const Header = ({ isNightMode, setNightMode }) => {
             <IconButton edge="start" aria-label="menu" onClick={handleDrawerToggle}>
               <Menu fontSize="large" />
             </IconButton>
-            <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
-              <LanguageDropdown fullWidth />
-              <Box mt={0.5}>
+            <Drawer
+              anchor="right"
+              sx={{ paddingTop: '1rem' }}
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+            >
+              <Box sx={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }} my={1}>
                 <WalletContainer />
               </Box>
+              <Grid container alignItems="center" spacing={2}>
+                <Grid item xs={12}>
+                  <LanguageDropdown />
+                </Grid>
+                <Grid item xs={12}>
+                  <CustomDropdown
+                    list={getAvailableNetworks(true)}
+                    selected={walletReducer.network}
+                    handler={handleNetworkSwitch}
+                  />
+                </Grid>
+              </Grid>
               <div
                 className={classes.list}
                 role="presentation"
