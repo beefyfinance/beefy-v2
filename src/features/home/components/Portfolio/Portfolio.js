@@ -39,17 +39,15 @@ const Portfolio = () => {
 
     if (userAddress !== null) {
       Object.keys(balanceReducer.tokens).forEach(tokenName => {
-        if (balanceReducer.tokens[tokenName].balance != '0') {
-          let target = Object.values(vaultReducer.pools).find(
-            pool => pool.earnedToken === tokenName
-          );
+        if (balanceReducer.tokens[tokenName].balance !== "0") {
+          let target = Object.values(vaultReducer.pools).find(pool => pool.earnedToken === tokenName);
           if (target !== undefined) {
-            target.balance = balanceReducer.tokens[tokenName].balance;
-            target.oraclePrice = pricesReducer.prices[target.oracleId];
-            newUserVaults.push(target);
+              target.balance = balanceReducer.tokens[tokenName].balance;
+              target.oraclePrice = pricesReducer.prices[target.oracleId];
+              newUserVaults.push(target);
           }
         }
-      });
+      })
     }
 
     setUserVaults(newUserVaults);

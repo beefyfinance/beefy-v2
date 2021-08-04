@@ -1,11 +1,10 @@
-import {Container, makeStyles, Grid, Paper, Typography, Box, Button, Divider, Hidden} from "@material-ui/core"
+import {Container, makeStyles, Grid, Typography, Box, Button, Divider, Hidden} from "@material-ui/core"
 import {ArrowLeft} from "@material-ui/icons";
 import * as React from "react";
 import {useParams} from "react-router";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
-import {LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,} from "recharts";
 import {addressBook} from "blockchain-addressbook";
 import reduxActions from "../redux/actions";
 import {calcDaily, formatApy, formatTvl} from "../../helpers/format";

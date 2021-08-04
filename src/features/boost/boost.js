@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   Avatar,
   Box,
@@ -27,12 +27,9 @@ const Boost = () => {
   const history = useHistory();
   const classes = useStyles();
   let { id } = useParams();
-  const { vault, wallet, prices } = useSelector(state => ({
+  const { vault } = useSelector(state => ({
     vault: state.vaultReducer,
-    wallet: state.walletReducer,
-    prices: state.pricesReducer,
   }));
-  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = React.useState(true);
   const [item, setItemData] = React.useState(null);
