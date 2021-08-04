@@ -1,4 +1,4 @@
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 export const formatApy = (apy, placeholder = '???') => {
   if (!apy) return placeholder;
@@ -45,7 +45,11 @@ export const calcDaily = apy => {
 };
 
 export const formatDecimals = (number, lgDecimals = 4, dustDecimals = 8) => {
-  return number >= 10 ? number.toFixed(lgDecimals) : number.isEqualTo(0) ? 0 : number.toFixed(dustDecimals);
+  return number >= 10
+    ? number.toFixed(lgDecimals)
+    : number.isEqualTo(0)
+    ? 0
+    : number.toFixed(dustDecimals);
 };
 
 export function byDecimals(number, tokenDecimals = 18) {
@@ -57,28 +61,30 @@ export const formatCountdown = deadline => {
   const time = deadline - new Date().getTime();
 
   const day = Math.floor(time / (1000 * 60 * 60 * 24))
-      .toString()
-      .padStart(2, '0');
+    .toString()
+    .padStart(2, '0');
   const hours = Math.floor((time / (1000 * 60 * 60)) % 24)
-      .toString()
-      .padStart(2, '0');
+    .toString()
+    .padStart(2, '0');
   const minutes = Math.floor((time / (1000 * 60)) % 60)
-      .toString()
-      .padStart(2, '0');
+    .toString()
+    .padStart(2, '0');
   const seconds = Math.floor((time / 1000) % 60)
-      .toString()
-      .padStart(2, '0');
+    .toString()
+    .padStart(2, '0');
 
   return `${day}day ${hours}:${minutes}:${seconds}`;
 };
 
 export const stripExtraDecimals = (f, decimals = 8) => {
-  return (f.indexOf(".") >= 0) ? (f.substr(0, f.indexOf(".")) + f.substr(f.indexOf("."), decimals + 1)) : f;
-}
+  return f.indexOf('.') >= 0
+    ? f.substr(0, f.indexOf('.')) + f.substr(f.indexOf('.'), decimals + 1)
+    : f;
+};
 
 export function convertAmountToRawNumber(value, decimals = 18) {
   return new BigNumber(value)
-      .times(new BigNumber('10').pow(decimals))
-      .decimalPlaces(0, BigNumber.ROUND_DOWN)
-      .toString(10);
+    .times(new BigNumber('10').pow(decimals))
+    .decimalPlaces(0, BigNumber.ROUND_DOWN)
+    .toString(10);
 }

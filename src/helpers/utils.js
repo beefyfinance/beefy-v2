@@ -1,4 +1,4 @@
-import {config} from "../config/config";
+import { config } from '../config/config';
 
 let trimReg = /(^\s*)|(\s*$)/g;
 
@@ -23,13 +23,13 @@ export function isEmpty(key) {
 
 export const getAvailableNetworks = (abbrOnly = false) => {
   const networks = [];
-  for(let key in config) {
+  for (let key in config) {
     networks[key] = abbrOnly ? key.toUpperCase() : config[key].name;
   }
 
   return networks;
-}
+};
 
-export const getStablesForNetwork = (net) => {
+export const getStablesForNetwork = net => {
   return config[net].stableCoins;
-}
+};

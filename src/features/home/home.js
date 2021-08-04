@@ -1,14 +1,14 @@
-import * as React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import InfiniteScroll from "react-infinite-scroll-component";
-import {useTranslation} from "react-i18next";
-import {BigNumber} from 'bignumber.js';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useTranslation } from 'react-i18next';
+import { BigNumber } from 'bignumber.js';
 
-import {Container, makeStyles} from "@material-ui/core"
+import { Container, makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import styles from "./styles"
+import styles from './styles';
 
-import reduxActions from "../redux/actions";
+import reduxActions from '../redux/actions';
 
 import Filter from './components/Filter';
 import Portfolio from './components/Portfolio';
@@ -16,27 +16,29 @@ import Item from "./components/Item";
 import Loader from "../../components/loader";
 import {formatTvl} from '../../helpers/format'
 import {isEmpty} from "../../helpers/utils";
+import buildUserEarnedTokenMap from "../../helpers/buildUserEarnedTokenMap"
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
-    key: 'default',
-    direction: 'desc',
-    keyword: '',
-    retired: false,
-    zero: false,
-    deposited: false,
-    boost: false,
-    platform: 'all',
-    vault: 'all',
-    blockchain: 'all',
-    category: 'all',
-}
+  key: 'default',
+  direction: 'desc',
+  keyword: '',
+  retired: false,
+  zero: false,
+  deposited: false,
+  boost: false,
+  platform: 'all',
+  vault: 'all',
+  blockchain: 'all',
+  category: 'all',
+};
 
 const Home = () => {
-    const {vault, wallet, prices} = useSelector(state => ({
+    const {vault, wallet, prices, balance} = useSelector(state => ({
         vault: state.vaultReducer,
         wallet: state.walletReducer,
         prices: state.pricesReducer,
+        balance: state.balanceReducer
     }));
 
     const dispatch = useDispatch();
@@ -47,6 +49,7 @@ const Home = () => {
     const [sortConfig, setSortConfig] = React.useState(storage === null ? defaultFilter : JSON.parse(storage));
     const [filtered, setFiltered] = React.useState([]);
     const [scrollable, setScrollable] = React.useState({items: [], hasMore: true, chunk: 20});
+    const [userEarnedTokenMap, setUserEarnedTokenMap] = React.useState({})
 
     React.useEffect(() => {
         localStorage.setItem('homeSortConfig', JSON.stringify(sortConfig));
@@ -97,7 +100,7 @@ const Home = () => {
                 return false;
             }
 
-            if(sortConfig.deposited && item.deposited === 0) {
+            if(sortConfig.deposited && !(item.earnedToken in userEarnedTokenMap)) {
                 return false;
             }
 
@@ -136,7 +139,7 @@ const Home = () => {
             return {...scrollable, ...{items: data.slice(0, scrollable.chunk), hasMore: data.length > scrollable.chunk}}
         });
 
-    }, [sortConfig, vault.pools]);
+    }, [sortConfig, vault.pools, userEarnedTokenMap]);
 
     const fetchScrollable = () => {
         if (scrollable.items.length >= filtered.length) {
@@ -162,6 +165,13 @@ const Home = () => {
             dispatch(reduxActions.vault.fetchPools());
         }
     }, [dispatch, prices.lastUpdated]);
+
+    React.useEffect(() => {
+        if(wallet.address && vault.lastUpdated > 0 && balance.lastUpdated) {
+            const userEarnedTokenMap = buildUserEarnedTokenMap(vault.pools, balance.tokens);
+            setUserEarnedTokenMap(userEarnedTokenMap);
+        }
+    }, [wallet.address, vault.lastUpdated, balance.lastUpdated, vault.pools, balance.tokens]);
 
     React.useEffect(() => {
         setInterval(() => {
