@@ -11,23 +11,23 @@ import React from "react";
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
-import BigNumber from "bignumber.js";
-import styles from "../styles"
 import Loader from "../../../../components/loader";
 import {byDecimals, convertAmountToRawNumber, stripExtraDecimals} from "../../../../helpers/format";
 import {isEmpty} from "../../../../helpers/utils";
-import reduxActions from "../../../redux/actions";
-import Steps from "../Steps";
 import AssetsImage from "../../../../components/AssetsImage";
+import reduxActions from "../../../redux/actions";
 import BoostWidget from "../BoostWidget";
 import FeeBreakdown from "../FeeBreakdown";
+import Steps from "../Steps";
+import styles from "../styles"
+import BigNumber from "bignumber.js";
 
 const useStyles = makeStyles(styles);
 
 const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemData, resetFormData}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-	const t = useTranslation().t;
+    const t = useTranslation().t;
     const {wallet, balance} = useSelector(state => ({
         wallet: state.walletReducer,
         balance: state.balanceReducer,
@@ -57,7 +57,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
             const amount = new BigNumber(formData.withdraw.amount).dividedBy(byDecimals(item.pricePerFullShare, item.tokenDecimals)).toFixed(8);
             steps.push({
                 step: "withdraw",
-                message: "Confirm withdraw transaction on wallet to complete.",
+                message: t( 'Vault-TxnConfirm', {type: t( 'Withdraw-noun')}),
                 action: () => dispatch(reduxActions.wallet.withdraw(
                     item.network,
                     item.earnContractAddress,
@@ -68,8 +68,8 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
             });
 
             setSteps({modal: true, currentStep: 0, items: steps, finished: false});
-        }
-    }
+        } //if (wallet.address)
+    } //const handleWithdraw
 
     const handleClose = () => {
         updateItemData();
@@ -113,7 +113,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
     return (
         <React.Fragment>
             <Box p={3}>
-                <Typography className={classes.balanceText}>Deposited:</Typography>
+                <Typography className={classes.balanceText}>{t( 'Vault-Deposited')}</Typography>
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                     <Box lineHeight={0}>
                         <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
@@ -127,7 +127,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                     </Box>
                     <Box>
                         <Link to={{ pathname: item.buyTokenUrl }} target="_blank" className={classes.btnSecondary}>
-                            <Button endIcon={<ShoppingBasket />}>Buy Token</Button>
+                            <Button endIcon={<ShoppingBasket />}>{t( 'Transact-BuyTkn')}</Button>
                         </Link>
                     </Box>
                 </Box>
@@ -137,7 +137,7 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                             <AssetsImage img={item.logo} assets={item.assets} alt={item.name}/>
                         </Box>
                         <InputBase placeholder="0.00" value={formData.withdraw.amount} onChange={(e) => handleInput(e.target.value)} />
-                        <Button onClick={handleMax}>Max</Button>
+                        <Button onClick={handleMax}>{t( 'Transact-Max')}</Button>
                     </Paper>
                 </Box>
                 <FeeBreakdown
@@ -146,22 +146,29 @@ const Withdraw = ({item, handleWalletConnect, formData, setFormData, updateItemD
                 />
                 <Box mt={2}>
                     {wallet.address ? (
-                        <Button onClick={handleWithdraw} className={classes.btnSubmit} fullWidth={true} disabled={formData.withdraw.amount <= 0}>
-                            {item.network !== wallet.network ? 'Change Network' : (formData.withdraw.max ? 'Withdraw All' : 'Withdraw')}
+                        <Button onClick={handleWithdraw} className={classes.btnSubmit} 
+                                                    fullWidth={true} 
+                                                    disabled={formData.withdraw.amount <= 0}>
+                            {item.network !== wallet.network ? t( 'Network-Change') : 
+                                                    (formData.withdraw.max ? 
+                                                    t( 'Withdraw-All') : t( 'Withdraw-Verb'))}
                         </Button>
                     ) : (
-                        <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>Connect Wallet</Button>
+                        <Button className={classes.btnSubmit} fullWidth={true} 
+                                                                onClick={handleWalletConnect}>
+                            {t( 'Network-ConnectWallet')}
+                        </Button>
                     )}
                 </Box>
             </Box>
             <BoostWidget
-                balance={0}
+                balance={0  /*TODO: fix parameters*/}
+                s_stake={t( 'Boost-Unstake', {mooToken: 'mooToken'})  /*TODO: replace 'mooToken' with real mooName*/}
                 onClick={() => {}}
-                variant="unstake"
             />
             <Steps item={item} steps={steps} handleClose={handleClose} />
         </React.Fragment>
-    )
-}
+    ) //return
+} //const Withdraw
 
 export default Withdraw;

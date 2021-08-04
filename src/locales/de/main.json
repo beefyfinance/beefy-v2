@@ -1,5 +1,5 @@
 {
-  "Header-Docs": "Dokumente", 
+  "Header-Docs": "Dokumente",
 
   "Portfolio-Portfolio": "Portfolio",
   "Portfolio-YieldTot": "Totales Erträgnis",
@@ -17,9 +17,9 @@
   "VaultTag-LowRisk": "Risikoarm",
 
   "Vault-Daily": "Tageskurs",
+  "Vault-RateHist": "Historischer Kurs",
 
   "Deposit-Verb": "Anlegen",
-  "Deposit-BuyTkn": "Token Kaufen", 
 
   "Network-ConnectWallet": "Mit Wallet verbinden",
 
@@ -29,12 +29,17 @@
   "Fee-Deposit": "Einzahlungsgebühr",
   "Fee-Withdraw": "Auszahlungsgebühr",
   "Fee-Transaction": "Veranschlagte Transaktionsgebühr",
-  
+
   "Boost-Stake": "Dein {{mooToken}} staken",
+  "Boost-Unstake": "Dein {{mooToken}} unstaken",
   "Boost-WhatIs": "Was ist ein Boost?",
 
+  "Transact-BuyTkn": "Token Kaufen", 
   "Transactn-View": "Im Explorer anschauen",
   "Transactn-Confirmed": "Transaktionen bestätigt",
+
+  "Safety-HowCalc": "Wie ist es kalkuliert?",
+  "Safety-Meaning": "Was bedeutet das?",
 
   "xyz": "last-item placeholder"
 }
