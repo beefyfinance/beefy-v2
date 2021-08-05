@@ -1,18 +1,18 @@
-import { makeStyles, Typography, Divider, Popper } from "@material-ui/core";
-import React, { useState } from "react";
+import { makeStyles, Typography, Divider, Popper } from '@material-ui/core';
+import React, { useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
-import outlinedQuestionMark from "./outlined.svg";
-import solidQuestionMark from "./solid.svg";
-import styles from "./styles"
+import outlinedQuestionMark from './outlined.svg';
+import solidQuestionMark from './solid.svg';
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
 const Popover = ({ title, content, children, solid, size = 'sm', placement = 'top-end' }) => {
-    const classes = useStyles()
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [arrowRef, setArrowRef] = useState(null);
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [arrowRef, setArrowRef] = useState(null);
 
     return (
         <ClickAwayListener onClickAway={() => setIsOpen(false)}>
