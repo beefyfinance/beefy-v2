@@ -58,7 +58,7 @@ const HistoricalRateChart = ({ chartData }) => {
       data={chartData}
       margin={{ top: 10, right: 55, left: 55, bottom: 0 }}
       height={35}
-      width={200}
+      width={180}
     >
       <XAxis hide dataKey={xAxisDataKey} />
       <YAxis hide />
