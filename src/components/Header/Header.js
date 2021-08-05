@@ -120,7 +120,7 @@ const Header = ({ isNightMode, setNightMode }) => {
               <Box sx={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }} my={1}>
                 <WalletContainer />
               </Box>
-              <Grid container alignItems="center" spacing={2}>
+              <Grid container alignItems="center" spacing={1}>
                 <Grid item xs={12}>
                   <LanguageDropdown />
                 </Grid>
