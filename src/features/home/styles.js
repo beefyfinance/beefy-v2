@@ -31,29 +31,9 @@ const styles = theme => ({
     lineHeight: '18px',
     letterSpacing: '1px',
   },
-  item: {
-    margin: '20px 0 0 0',
-    padding: 0,
-    width: '100%',
-    background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
-    '&:hover': {
-      background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
-    },
-  },
-  apyBg: {
-    background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
-  },
-  roundedLeft: {
-    borderTopLeftRadius: '20px',
-    borderBottomLeftRadius: '20px',
-  },
-  roundedRight: {
-    borderTopRightRadius: '20px',
-    borderBottomRightRadius: '20px',
-  },
   h2: {
     fontWeight: 600,
-    fontSize: '12px',
+    fontSize: '1.5rem',
     lineHeight: '36px',
     margin: 0,
     padding: 0,
@@ -119,15 +99,82 @@ const styles = theme => ({
     },
   },
   title: {
-    marginLeft: '20px',
+    padding: '0 10px',
     textTransform: 'capitalize',
-    '& .MuiTypography-root': {
-      '& img': {
-        marginRight: '3px',
-        marginTop: '2px',
-        float: 'left',
-      },
+    fontWeight: '600',
+  },
+  badges: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  mobileCard: {
+    margin: '20px 0 0 0',
+    borderRadius: '20px',
+    padding: 0,
+    width: '100%',
+    background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
+    '&:hover': {
+      background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
     },
+  },
+  titleContainer: {
+    paddingTop: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
+  },
+  center: {
+    padding: '0.5rem 0.5rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  apyMobile: {
+    '& .MuiTypography-h1': {
+      fontWeight: 600,
+      fontSize: '30px',
+      lineHeight: '34px',
+    },
+    '& .MuiTypography-h2': {
+      fontWeight: 600,
+      fontSize: '18px',
+      lineHeight: '24px',
+      color: '#8585A6',
+    },
+    display: 'block',
+    background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
+    borderRadius: '0px 20px 20px 0px',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      borderRadius: '0px 0px 20px 20px',
+    },
+  },
+  centerSpace: {
+    padding: '0.5rem 1rem',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  chart: {
+    padding: '5px',
+  },
+  depositButton: {
+    border: 'solid 2px #54995C',
+    backgroundColor: '#54995C',
+    borderRadius: '30px',
+    marginLeft: '10px',
+    color: '#ffffff',
+    fontSize: '18px',
+    fontWeight: 700,
+    padding: '4px 19px',
+    textTransform: 'capitalize',
+    marginTop: '10px',
+    display: 'block',
   },
 });
 
