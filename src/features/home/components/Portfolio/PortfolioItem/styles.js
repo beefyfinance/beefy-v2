@@ -25,6 +25,16 @@ const styles = theme => ({
     borderTopRightRadius: '20px',
     borderBottomRightRadius: '20px',
   },
+  vaultName: {
+    fontWeight: 600,
+    fontSize: '18px',
+    lineHeight: '36px',
+    margin: 0,
+    padding: 0,
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '27px',
+    },
+  },
   h2: {
     fontWeight: 600,
     fontSize: '12px',
@@ -32,10 +42,10 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     [theme.breakpoints.up('sm')]: {
-      fontSize: '16px',
+      fontSize: '18px',
     },
     [theme.breakpoints.up('lg')]: {
-      fontSize: '23px',
+      fontSize: '24px',
     },
   },
   h3: {

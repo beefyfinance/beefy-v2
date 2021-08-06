@@ -101,11 +101,14 @@ const styles = theme => ({
   },
   btnFilter: {
     '& .MuiToggleButton-root': {
+      textTransform: 'none',
       color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
+      fontSize: '18px',
       fontWeight: '600',
       borderWidth: '2px',
       borderRadius: '30px',
       borderStyle: 'solid',
+      padding: '10px 23px',
       borderColor: theme.palette.type === 'dark' ? '#313759' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#313759' : '#ff0000',
       height: 43,
@@ -145,6 +148,11 @@ const styles = theme => ({
     '&:hover': {
       borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
+    },
+  },
+  searchInput: {
+    '& .MuiFormLabel-root': {
+      fontSize: 18,
     },
   },
 });

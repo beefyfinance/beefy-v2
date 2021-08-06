@@ -39,8 +39,12 @@ const WalletContainer = () => {
     }
   }, [walletReducer.address, canvas]);
 
+  const containerClassName = `${classes.container} ${
+    walletReducer.address ? classes.connected : classes.disconnected
+  }`;
+
   return (
-    <Box className={walletReducer.address ? classes.connected : classes.wallet}>
+    <Box className={containerClassName}>
       <FormControl noValidate autoComplete="off" onClick={handleWalletConnect}>
         <Grid container direction="row" alignItems="center">
           {walletReducer.pending ? (
