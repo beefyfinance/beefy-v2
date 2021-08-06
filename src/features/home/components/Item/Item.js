@@ -52,7 +52,7 @@ const Item = ({ item }) => {
                     onClick={() => history.push('/' + item.network + '/vault/' + item.id)}
                     className={classes.btnGoBack}
                   >
-                    See Details <ArrowGo style={{ fontSize: 12 }} />
+                    {t('Home-SeeDetails')} <ArrowGo style={{ fontSize: 12 }} />
                   </Button>
                 </Box>
               </Hidden>
