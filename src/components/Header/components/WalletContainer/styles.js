@@ -13,11 +13,17 @@ const styles = theme => ({
     '& .MuiTypography-root': {
       fontWeight: 'bold',
     },
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      justifyContent: 'center',
+      width: '95%',
+    },
   },
   connected: {
     border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #ff0000',
     borderRadius: '30px',
     height: '44px',
+    width: '95%',
     '& .MuiAvatar-root': {
       height: '24px',
       width: '24px',
