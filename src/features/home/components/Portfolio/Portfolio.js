@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BigNumber from 'bignumber.js';
-import { Box, Button, Container, Hidden, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, Container, makeStyles, Typography } from '@material-ui/core';
 import { ExpandLess, ExpandMore, Visibility, VisibilityOff } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import AnimateHeight from 'react-animate-height';
@@ -107,7 +107,7 @@ const Portfolio = () => {
             </Button>
           </Box>
           <Box>
-            <Typography className={classes.h1}>{t('Portfolio-Portfolio')}</Typography>
+            <Typography className={classes.title}>{t('Portfolio-Portfolio')}</Typography>
           </Box>
           <Stats stats={globalStats} blurred={hideBalance} />
         </Box>

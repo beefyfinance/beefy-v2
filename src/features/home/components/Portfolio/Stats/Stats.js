@@ -1,6 +1,7 @@
-import React from 'react';
-import { Box, Hidden, makeStyles, Typography } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import BigNumber from 'bignumber.js';
 
 import styles from './styles';
 
@@ -10,38 +11,40 @@ const Stats = ({ stats, blurred }) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
-  const BlurredText = ({ value }) => {
-    return <span className={blurred ? classes.blurred : ''}>{value}</span>;
-  };
+  const [empty, setEmpty] = useState(false);
+  useEffect(() => {
+    setEmpty(stats.deposited.eq(BigNumber(0)));
+  }, [stats]);
+
+  const BlurredText = ({ value }) => (
+    <span className={blurred ? classes.blurred : ''}>{value}</span>
+  );
+
+  const valueClassName = `${classes.value} ${empty ? classes.obscured : ''}`;
+  const labelClassName = `${classes.label} ${empty ? classes.obscured : ''}`;
+
+  const formatStat = value => (empty ? '0' : `$${value.toFixed(2)}`);
 
   return (
     <Box className={classes.stats}>
       <Box className={classes.stat}>
-        <Typography className={classes.h2}>
-          <BlurredText value={`$${stats.deposited.toFixed(2)}`} />
+        <Typography className={valueClassName}>
+          <BlurredText value={formatStat(stats.deposited)} />
         </Typography>
-        <Typography className={classes.body1}>{t('Portfolio-Deposited')}</Typography>
+        <Typography className={labelClassName}>{t('Portfolio-Deposited')}</Typography>
       </Box>
       <Box className={classes.stat}>
-        <Typography className={classes.h2}>
-          <BlurredText value={'$0'} />
+        <Typography className={valueClassName}>
+          <BlurredText value={formatStat(stats.monthly)} />
         </Typography>
-        <Typography className={classes.body1}>{t('Portfolio-YieldTot')}</Typography>
+        <Typography className={labelClassName}>{t('Portfolio-YieldMnth')}</Typography>
       </Box>
       <Box className={classes.stat}>
-        <Typography className={classes.h2}>
-          <BlurredText value={`$${stats.daily.toFixed(2)}`} />
+        <Typography className={valueClassName}>
+          <BlurredText value={formatStat(stats.daily)} />
         </Typography>
-        <Typography className={classes.body1}>{t('Portfolio-YieldDay')}</Typography>
+        <Typography className={labelClassName}>{t('Portfolio-YieldDay')}</Typography>
       </Box>
-      <Hidden xsDown>
-        <Box className={classes.stat}>
-          <Typography className={classes.h2}>
-            <BlurredText value={`$${stats.monthly.toFixed(2)}`} />
-          </Typography>
-          <Typography className={classes.body1}>{t('Portfolio-YieldMnth')}</Typography>
-        </Box>
-      </Hidden>
     </Box>
   );
 };

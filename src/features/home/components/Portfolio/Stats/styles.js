@@ -1,20 +1,4 @@
 const styles = theme => ({
-  h2: {
-    fontSize: '24px',
-    fontWeight: '600',
-    lineHeight: '30px',
-    color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
-  },
-  body1: {
-    fontSize: '18px',
-    fontWeight: '600',
-    lineHeight: '24px',
-    display: 'inline-flex',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
-  },
-  blurred: {
-    filter: 'blur(.5rem)',
-  },
   stats: {
     display: 'flex',
   },
@@ -27,6 +11,25 @@ const styles = theme => ({
       paddingRight: theme.spacing(0),
       paddingLeft: theme.spacing(5),
     },
+  },
+  value: {
+    fontSize: '24px',
+    fontWeight: '600',
+    lineHeight: '30px',
+    color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
+  },
+  label: {
+    fontSize: '18px',
+    fontWeight: '600',
+    lineHeight: '24px',
+    display: 'inline-flex',
+    color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
+  },
+  blurred: {
+    filter: 'blur(.5rem)',
+  },
+  obscured: {
+    color: '#424866',
   },
 });
 
