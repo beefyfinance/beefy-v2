@@ -1,5 +1,5 @@
-import { Button, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import { Button, Grid, Hidden, makeStyles, Typography, Box } from '@material-ui/core';
+import ArrowGo from '@material-ui/icons/ArrowForwardIos';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -37,7 +37,7 @@ const Item = ({ item }) => {
             <Box className={classes.infoContainer}>
               <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
             </Box>
-            <Box className={classes.title}>
+            <Box my={2} className={classes.title}>
               <Typography className={classes.h2}>{item.name}</Typography>
               <Hidden smDown>
                 <Box className={classes.badges}>
@@ -46,6 +46,14 @@ const Item = ({ item }) => {
                     src={require('../../../../images/networks/' + item.network + '.svg').default}
                   />
                   <DisplayTags tags={item.tags} />
+                </Box>
+                <Box my={1}>
+                  <Button
+                    onClick={() => history.push('/' + item.network + '/vault/' + item.id)}
+                    className={classes.btnGoBack}
+                  >
+                    See Details <ArrowGo style={{ fontSize: 12 }} />
+                  </Button>
                 </Box>
               </Hidden>
             </Box>
