@@ -8,7 +8,7 @@ import SafetyScore from '../../../../components/SafetyScore';
 import DisplayTags from '../../../../components/vaultTags';
 import Popover from '../../../../components/Popover';
 import { calcDaily, formatApy, formatTvl } from '../../../../helpers/format';
-import styles from '../../styles';
+import styles from './styles';
 import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 
 const historicalRateChartData = [
