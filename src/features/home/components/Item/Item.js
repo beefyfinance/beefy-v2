@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import AssetsImage from '../../../../components/AssetsImage';
 import SafetyScore from '../../../../components/SafetyScore';
 import DisplayTags from '../../../../components/vaultTags';
+import Popover from '../../../../components/Popover';
 import { calcDaily, formatApy, formatTvl } from '../../../../helpers/format';
 import styles from '../../styles';
 import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
@@ -52,7 +53,16 @@ const Item = ({ item }) => {
           <Grid className={classes.center} flexGrow={1} item xs={12} md={2}>
             <Box textAlign={'center'}>
               <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-              <Typography className={classes.h3}>{t('Vault-SftyScore')}</Typography>
+              <Box display="flex" alignItems="center">
+                <Typography className={classes.h3}>{t('Vault-SftyScore')}</Typography>
+                <Box ml={0.5}>
+                  <Popover
+                    solid
+                    title="What's the Safety Score?"
+                    content="The Safety Score is computed by the Beefy devs when assesing each vault. It is not necessarily perfect, but it is another tool that can help make a decision. The safety score that a vault can get goes from 1 to 10. The best possible score is 10 and the worst is 0"
+                  />
+                </Box>
+              </Box>
             </Box>
           </Grid>
           <Grid className={classes.centerSpace} item xs={12} md={2}>
