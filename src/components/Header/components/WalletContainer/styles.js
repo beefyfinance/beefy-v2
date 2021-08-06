@@ -1,5 +1,8 @@
 const styles = theme => ({
   wallet: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '95%',
     border: 'solid 2px #54995C',
     backgroundColor: '#54995C',
     borderRadius: '30px',
@@ -12,18 +15,16 @@ const styles = theme => ({
     },
     '& .MuiTypography-root': {
       fontWeight: 'bold',
+      fontSize: 18,
     },
-    [theme.breakpoints.down('md')]: {
-      display: 'flex',
-      justifyContent: 'center',
-      width: '95%',
+    [theme.breakpoints.up('md')]: {
+      width: '100%',
     },
   },
   connected: {
     border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #ff0000',
     borderRadius: '30px',
     height: '44px',
-    width: '95%',
     '& .MuiAvatar-root': {
       height: '24px',
       width: '24px',
@@ -37,6 +38,7 @@ const styles = theme => ({
     },
     '& .MuiTypography-root': {
       fontWeight: 'bold',
+      fontSize: 18,
     },
     '&:hover': {
       borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#6B7199',

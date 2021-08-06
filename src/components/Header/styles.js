@@ -58,10 +58,13 @@ const styles = theme => ({
       height: '24px',
     },
   },
-  mobileLink: {
-    color: '#6B7199',
+  navLink: {
     textDecoration: 'none',
     textTransform: 'capitalize',
+    color: '#6B7199',
+    '& .MuiListItemText-primary': {
+      fontSize: 18,
+    },
   },
   hide: {
     display: 'none',

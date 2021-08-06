@@ -89,7 +89,7 @@ const Header = ({ isNightMode, setNightMode }) => {
                     window.location.href = path;
                   }}
                 >
-                  <ListItemText primary={title} />
+                  <ListItemText primary={title} className={classes.navLink} />
                 </ListItem>
               ))}
               <IconButton onClick={setNightMode} className={classes.hide}>
@@ -140,7 +140,7 @@ const Header = ({ isNightMode, setNightMode }) => {
               >
                 <List component="nav">
                   {navLinks.map(({ title, path }) => (
-                    <a href={path} key={title} className={classes.mobileLink}>
+                    <a href={path} key={title} className={classes.navLink}>
                       <ListItem button className={classes.black}>
                         <ListItemText primary={title} />
                       </ListItem>
