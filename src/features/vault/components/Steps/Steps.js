@@ -5,9 +5,9 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { byDecimals } from '../../../../helpers/format';
-import { isEmpty } from '../../../../helpers/utils';
-import Loader from '../../../../components/loader';
+import { byDecimals } from 'helpers/format';
+import { isEmpty } from 'helpers/utils';
+import Loader from 'components/loader';
 import styles from '../styles';
 import BigNumber from 'bignumber.js';
 

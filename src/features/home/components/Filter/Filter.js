@@ -13,9 +13,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import styles from './styles';
-import CustomDropdown from '../../../../components/customDropdown';
+import CustomDropdown from 'components/customDropdown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { getAvailableNetworks } from '../../../../helpers/utils';
+import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
 
 const useStyles = makeStyles(styles);

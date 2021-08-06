@@ -10,13 +10,13 @@ import styles from './styles';
 
 import reduxActions from '../redux/actions';
 
-import Filter from './components/Filter';
-import Portfolio from './components/Portfolio';
-import Item from './components/Item';
-import Loader from '../../components/loader';
-import { formatTvl } from '../../helpers/format';
-import { isEmpty } from '../../helpers/utils';
-import buildUserEarnedTokenMap from '../../helpers/buildUserEarnedTokenMap';
+import Filter from 'features/home/components/Filter';
+import Portfolio from 'features/home/components/Portfolio';
+import Item from 'features/home/components/Item';
+import Loader from 'components/loader';
+import { formatTvl } from 'helpers/format';
+import { isEmpty } from 'helpers/utils';
+import buildUserEarnedTokenMap from 'helpers/buildUserEarnedTokenMap';
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {

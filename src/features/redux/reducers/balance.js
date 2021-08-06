@@ -1,10 +1,10 @@
 import { BALANCE_FETCH_BALANCES_BEGIN, BALANCE_FETCH_BALANCES_DONE } from '../constants';
-import { config } from '../../../config/config';
+import { config } from 'config/config';
 
 const initialTokens = () => {
   const tokens = [];
   for (let net in config) {
-    const data = require('../../../config/vault/' + net + '.js');
+    const data = require('config/vault/' + net + '.js');
     for (const key in data.pools) {
       tokens[data.pools[key].token] = {
         balance: 0,

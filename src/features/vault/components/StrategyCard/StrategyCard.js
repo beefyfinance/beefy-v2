@@ -1,9 +1,9 @@
 import React from 'react';
-import { config } from '../../../../config/config';
-import { formatApy } from '../../../../helpers/format';
+import { config } from 'config/config';
+import { formatApy } from 'helpers/format';
 import { makeStyles, Typography, Box } from '@material-ui/core';
 import styles from './styles';
-import LinkButton from '../../../../components/LinkButton';
+import LinkButton from 'components/LinkButton';
 import Card from '../Card/Card';
 import CardHeader from '../Card/CardHeader';
 import CardContent from '../Card/CardContent';

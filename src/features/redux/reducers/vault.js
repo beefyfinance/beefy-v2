@@ -1,7 +1,7 @@
 import { HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_DONE } from '../constants';
-import { config } from '../../../config/config';
-import { getStablesForNetwork, isEmpty } from '../../../helpers/utils';
-import safetyScore from '../../../helpers/safetyScore';
+import { config } from 'config/config';
+import { getStablesForNetwork, isEmpty } from 'helpers/utils';
+import safetyScore from 'helpers/safetyScore';
 
 let initPlatforms = {};
 let pools = [];
@@ -10,7 +10,7 @@ const initialBoosts = () => {
   const boosts = [];
 
   for (let net in config) {
-    const data = require('../../../config/boost/' + net + '.js');
+    const data = require('config/boost/' + net + '.js');
     for (const key in data.pools) {
       const boost = data.pools[key];
 
@@ -43,7 +43,7 @@ const initialPools = () => {
   const platforms = [];
 
   for (let net in config) {
-    const data = require('../../../config/vault/' + net + '.js');
+    const data = require('config/vault/' + net + '.js');
     for (const key in data.pools) {
       const stables = getStablesForNetwork(net);
       const pool = data.pools[key];
