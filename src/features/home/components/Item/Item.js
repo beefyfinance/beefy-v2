@@ -33,7 +33,7 @@ const Item = ({ item }) => {
     <Grid container key={item.id}>
       <Box className={classes.mobileCard}>
         <Grid container>
-          <Grid className={classes.titleContainer} item xs={12} md={4}>
+          <Grid className={classes.titleContainer} item xs={12} md={3}>
             <Box className={classes.infoContainer}>
               <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
             </Box>
@@ -65,7 +65,7 @@ const Item = ({ item }) => {
               </Box>
             </Box>
           </Grid>
-          <Grid className={classes.centerSpace} item xs={12} md={2}>
+          <Grid className={classes.centerSpace} item xs={12} md={3}>
             <Box>
               <Typography className={classes.value}>{formatTvl(item.tvl)}</Typography>
               <Typography className={classes.label}>{t('TVL')}</Typography>
