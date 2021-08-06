@@ -4,18 +4,6 @@ const styles = theme => ({
     border: 'none',
     boxShadow: 'none',
     paddingTop: '20px',
-    '& .MuiListItem-button': {
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#000000',
-      '& .MuiTypography-root': {
-        fontWeight: 'bold',
-        textTransform: 'capitalize',
-        borderBottom: '2px solid transparent',
-        '&:hover': {
-          color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
-          borderColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
-        },
-      },
-    },
     '&:hover .MuiListItem-button': {
       background: 'transparent',
     },
@@ -29,7 +17,7 @@ const styles = theme => ({
     paddingTop: 0,
     paddingBottom: 0,
   },
-  list: {
+  mobileMenu: {
     width: 250,
   },
   beefy: {
@@ -44,9 +32,8 @@ const styles = theme => ({
       borderRadius: '3px',
       textTransform: 'none',
       whiteSpace: 'nowrap',
-      color: theme.palette.text.primary,
       textDecoration: 'none',
-      '&:hover,&:focus': {
+      '&:hover, &:focus': {
         color: theme.palette.text.primary,
         background: 'transparent',
       },
@@ -61,12 +48,22 @@ const styles = theme => ({
   navLink: {
     textDecoration: 'none',
     textTransform: 'capitalize',
-    color: '#6B7199',
-    '& .MuiListItemText-primary': {
+    color: theme.palette.type === 'dark' ? '#6B7199' : '#000000',
+    '& .MuiTypography-root': {
       fontSize: 18,
+      fontWeight: 'bold',
+      borderBottom: '3px solid transparent',
     },
     '&:hover': {
       color: 'white',
+    },
+
+    [theme.breakpoints.up('md')]: {
+      '&:hover': {
+        '& .MuiTypography-root': {
+          borderColor: 'white',
+        },
+      },
     },
   },
   hide: {
