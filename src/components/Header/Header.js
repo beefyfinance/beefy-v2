@@ -140,11 +140,15 @@ const Header = ({ isNightMode, setNightMode }) => {
               >
                 <List component="nav">
                   {navLinks.map(({ title, path }) => (
-                    <a href={path} key={title} className={classes.navLink}>
-                      <ListItem button className={classes.black}>
-                        <ListItemText primary={title} />
-                      </ListItem>
-                    </a>
+                    <ListItem
+                      key={title}
+                      button
+                      onClick={() => {
+                        window.location.href = path;
+                      }}
+                    >
+                      <ListItemText primary={title} className={classes.navLink} />
+                    </ListItem>
                   ))}
                 </List>
               </div>
@@ -157,3 +161,34 @@ const Header = ({ isNightMode, setNightMode }) => {
 };
 
 export default Header;
+
+// {navLinks.map(({ title, path }) => (
+//   <ListItem
+//     key={title}
+//     button
+//     onClick={() => {
+//       window.location.href = path;
+//     }}
+//   >
+//     <ListItemText primary={title} className={classes.navLink} />
+//   </ListItem>
+// ))}
+
+// {navLinks.map(({ title, path }) => (
+//   <ListItem
+//     key={title}
+//     button
+//     onClick={() => {
+//       window.location.href = path;
+//     }}
+//   >
+//     <ListItemText primary={title} className={classes.navLink} />
+//   </ListItem>
+// ))}
+
+// {navLinks.map(({ title, path }) => (
+//   <a href={path} key={title} className={classes.navLink}>
+//     <ListItem button>
+//       <ListItemText primary={title} />
+//     </ListItem>
+//   </a>

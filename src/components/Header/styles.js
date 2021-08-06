@@ -65,6 +65,9 @@ const styles = theme => ({
     '& .MuiListItemText-primary': {
       fontSize: 18,
     },
+    '&:hover': {
+      color: 'white',
+    },
   },
   hide: {
     display: 'none',

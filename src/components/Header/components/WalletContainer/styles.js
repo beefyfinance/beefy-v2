@@ -1,30 +1,32 @@
 const styles = theme => ({
-  wallet: {
-    display: 'flex',
-    justifyContent: 'center',
+  container: {
     width: '95%',
-    border: 'solid 2px #54995C',
-    backgroundColor: '#54995C',
-    borderRadius: '30px',
-    height: '44px',
-    '& .MuiGrid-container': {
-      color: '#FFFFFF',
-      flexWrap: 'nowrap',
-      cursor: 'pointer',
-      padding: '8px 19px 0px 19px',
-    },
+    height: 44,
+    borderRadius: 30,
     '& .MuiTypography-root': {
       fontWeight: 'bold',
       fontSize: 18,
+    },
+    '& .MuiGrid-container': {
+      flexWrap: 'nowrap',
+      padding: '8px 19px 0px 19px',
+      cursor: 'pointer',
     },
     [theme.breakpoints.up('md')]: {
       width: '100%',
     },
   },
+  disconnected: {
+    display: 'flex',
+    justifyContent: 'center',
+    border: 'solid 2px #54995C',
+    backgroundColor: '#54995C',
+    '& .MuiGrid-container': {
+      color: 'white',
+    },
+  },
   connected: {
     border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #ff0000',
-    borderRadius: '30px',
-    height: '44px',
     '& .MuiAvatar-root': {
       height: '24px',
       width: '24px',
@@ -32,13 +34,6 @@ const styles = theme => ({
     },
     '& .MuiGrid-container': {
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
-      flexWrap: 'nowrap',
-      cursor: 'pointer',
-      padding: '8px 19px 0px 19px',
-    },
-    '& .MuiTypography-root': {
-      fontWeight: 'bold',
-      fontSize: 18,
     },
     '&:hover': {
       borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#6B7199',
