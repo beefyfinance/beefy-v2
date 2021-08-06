@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import BigNumber from 'bignumber.js';
 import { Box, Button, Container, Hidden, makeStyles, Typography } from '@material-ui/core';
 import { ExpandLess, ExpandMore, Visibility, VisibilityOff } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import AnimateHeight from 'react-animate-height';
 import { Alert } from '@material-ui/lab';
-import styles from './styles';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
+
 import PortfolioItem from './PortfolioItem';
-import BigNumber from 'bignumber.js';
+import Stats from './Stats';
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
@@ -29,10 +31,6 @@ const Portfolio = () => {
   const pricesReducer = useSelector(state => state.pricesReducer);
   const userAddress = useSelector(state => state.walletReducer.address);
   const t = useTranslation().t;
-
-  const BlurredText = ({ value }) => {
-    return <span className={hideBalance ? classes.blurred : ''}>{value}</span>;
-  };
 
   useEffect(() => {
     let newUserVaults = [];
@@ -111,34 +109,7 @@ const Portfolio = () => {
           <Box>
             <Typography className={classes.h1}>{t('Portfolio-Portfolio')}</Typography>
           </Box>
-          <Box className={classes.stats}>
-            <Box className={classes.stat}>
-              <Typography className={classes.h2}>
-                <BlurredText value={`$${globalStats.deposited.toFixed(2)}`} />
-              </Typography>
-              <Typography className={classes.body1}>{t('Portfolio-Deposited')}</Typography>
-            </Box>
-            <Box className={classes.stat}>
-              <Typography className={classes.h2}>
-                <BlurredText value={'$0'} />
-              </Typography>
-              <Typography className={classes.body1}>{t('Portfolio-YieldTot')}</Typography>
-            </Box>
-            <Box className={classes.stat}>
-              <Typography className={classes.h2}>
-                <BlurredText value={`$${globalStats.daily.toFixed(2)}`} />
-              </Typography>
-              <Typography className={classes.body1}>{t('Portfolio-YieldDay')}</Typography>
-            </Box>
-            <Hidden xsDown>
-              <Box className={classes.stat}>
-                <Typography className={classes.h2}>
-                  <BlurredText value={`$${globalStats.monthly.toFixed(2)}`} />
-                </Typography>
-                <Typography className={classes.body1}>{t('Portfolio-YieldMnth')}</Typography>
-              </Box>
-            </Hidden>
-          </Box>
+          <Stats stats={globalStats} blurred={hideBalance} />
         </Box>
         <AnimateHeight duration={500} height={portfolioOpen ? 'auto' : 0}>
           {userVaults.length > 0 ? (
