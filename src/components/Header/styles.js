@@ -1,8 +1,5 @@
 const styles = theme => ({
   navHeader: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    boxShadow: 'none',
     paddingTop: '20px',
     '&:hover .MuiListItem-button': {
       background: 'transparent',
@@ -57,7 +54,6 @@ const styles = theme => ({
     '&:hover': {
       color: 'white',
     },
-
     [theme.breakpoints.up('md')]: {
       '&:hover': {
         '& .MuiTypography-root': {
