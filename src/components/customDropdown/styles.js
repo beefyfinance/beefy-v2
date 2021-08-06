@@ -5,6 +5,7 @@ const styles = theme => ({
     '& .MuiSelect-select': {
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       fontWeight: '600',
+      fontSize: 18,
       padding: '11px 29px 0 15px',
       border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #ff0000',
       borderRadius: '30px',

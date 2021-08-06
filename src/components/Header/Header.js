@@ -50,11 +50,30 @@ const Header = ({ isNightMode, setNightMode }) => {
     }
   }, [dispatch, walletReducer.web3modal]);
 
-  const navLinks = [
-    { title: t('Header-Home'), path: 'https://beefy.finance' },
-    { title: t('Header-Explore'), path: '/' },
-    { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
-  ];
+  const NavLinks = () => {
+    const navLinks = [
+      { title: t('Header-Home'), path: 'https://beefy.finance' },
+      { title: t('Header-Explore'), path: '/' },
+      { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
+    ];
+
+    return (
+      <>
+        {navLinks.map(({ title, path }) => (
+          <ListItem
+            key={title}
+            button
+            onClick={() => {
+              window.location.href = path;
+            }}
+            className={classes.navLink}
+          >
+            <ListItemText primary={title} />
+          </ListItem>
+        ))}
+      </>
+    );
+  };
 
   return (
     <AppBar
@@ -81,17 +100,7 @@ const Header = ({ isNightMode, setNightMode }) => {
               aria-labelledby="main navigation"
               className={classes.navDisplayFlex}
             >
-              {navLinks.map(({ title, path }) => (
-                <ListItem
-                  key={title}
-                  button
-                  onClick={() => {
-                    window.location.href = path;
-                  }}
-                >
-                  <ListItemText primary={title} />
-                </ListItem>
-              ))}
+              <NavLinks />
               <IconButton onClick={setNightMode} className={classes.hide}>
                 {isNightMode ? <WbSunny /> : <NightsStay />}
               </IconButton>
@@ -133,19 +142,13 @@ const Header = ({ isNightMode, setNightMode }) => {
                 </Grid>
               </Grid>
               <div
-                className={classes.list}
+                className={classes.mobileMenu}
                 role="presentation"
                 onClick={handleDrawerToggle}
                 onKeyDown={handleDrawerToggle}
               >
                 <List component="nav">
-                  {navLinks.map(({ title, path }) => (
-                    <a href={path} key={title} className={classes.mobileLink}>
-                      <ListItem button className={classes.black}>
-                        <ListItemText primary={title} />
-                      </ListItem>
-                    </a>
-                  ))}
+                  <NavLinks />
                 </List>
               </div>
             </Drawer>

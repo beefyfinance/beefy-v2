@@ -8,7 +8,7 @@ import SafetyScore from 'components/SafetyScore';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
 import { calcDaily, formatApy, formatTvl } from 'helpers/format';
-import styles from '../../styles';
+import styles from './styles';
 import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 
 const historicalRateChartData = [
@@ -33,12 +33,12 @@ const Item = ({ item }) => {
     <Grid container key={item.id}>
       <Box className={classes.mobileCard}>
         <Grid container>
-          <Grid className={classes.titleContainer} item xs={12} md={4}>
+          <Grid className={classes.titleContainer} item xs={12} md={3}>
             <Box className={classes.infoContainer}>
               <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
             </Box>
-            <Box className={classes.title}>
-              <Typography className={classes.h2}>{item.name}</Typography>
+            <Box>
+              <Typography className={classes.vaultName}>{item.name}</Typography>
               <Hidden smDown>
                 <Box className={classes.badges}>
                   <img
@@ -54,7 +54,7 @@ const Item = ({ item }) => {
             <Box textAlign={'center'}>
               <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
               <Box display="flex" alignItems="center">
-                <Typography className={classes.h3}>{t('Vault-SftyScore')}</Typography>
+                <Typography className={classes.label}>{t('Vault-SftyScore')}</Typography>
                 <Box ml={0.5}>
                   <Popover
                     solid
@@ -65,14 +65,14 @@ const Item = ({ item }) => {
               </Box>
             </Box>
           </Grid>
-          <Grid className={classes.centerSpace} item xs={12} md={2}>
+          <Grid className={classes.centerSpace} item xs={12} md={3}>
             <Box>
-              <Typography className={classes.h2}>{formatTvl(item.tvl)}</Typography>
-              <Typography className={classes.h3}>{t('TVL')}</Typography>
+              <Typography className={classes.value}>{formatTvl(item.tvl)}</Typography>
+              <Typography className={classes.label}>{t('TVL')}</Typography>
             </Box>
             <Box textAlign={'center'}>
-              <Typography className={classes.h2}>{calcDaily(item.apy.totalApy)}</Typography>
-              <Typography className={classes.h3}>{t('Vault-Daily')}</Typography>
+              <Typography className={classes.value}>{calcDaily(item.apy.totalApy)}</Typography>
+              <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
             </Box>
           </Grid>
 
@@ -88,7 +88,7 @@ const Item = ({ item }) => {
             </Hidden>
             <Box className={classes.chart}>
               <HistoricalRateChart chartData={historicalRateChartData} />
-              <Typography className={classes.h3}>{t('Vault-DailyHist')}</Typography>
+              <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
             </Box>
           </Grid>
           <Grid className={[classes.apyMobile, classes.rWidth].join(' ')} item xs={12} md={2}>

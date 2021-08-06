@@ -1,4 +1,4 @@
-const styles = {
+const styles = theme => ({
   container: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -15,10 +15,13 @@ const styles = {
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
     fontWeight: 600,
-    fontSize: props.size === 'lg' ? '36px' : '24px',
+    fontSize: props.size === 'lg' ? '36px' : '18px',
     lineHeight: props.size === 'lg' ? '30px' : '24px',
     textAlign: 'center',
     letterSpacing: '-0.1px',
+    [theme.breakpoints.up('lg')]: {
+      fontSize: props.size === 'lg' ? '36px' : '24px',
+    },
   }),
   sm: props => ({
     backgroundColor: props.smColor,
@@ -40,6 +43,6 @@ const styles = {
     height: props.size === 'lg' ? '29px' : '25px',
     borderRadius: '2px',
   }),
-};
+});
 
 export default styles;

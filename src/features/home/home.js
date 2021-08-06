@@ -187,7 +187,7 @@ const Home = () => {
       <Portfolio />
       <Container maxWidth="xl">
         <Box className={classes.header}>
-          <Box className={classes.h1}>{t('Vaults-Title')}</Box>
+          <Box className={classes.title}>{t('Vaults-Title')}</Box>
           <Box className={classes.tvl}>
             <Box className={classes.tvlLabel}>{t('TVL')} </Box>
             <Box className={classes.tvlValue}>{formatTvl(vault.totalTvl)}</Box>

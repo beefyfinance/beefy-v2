@@ -17,7 +17,7 @@ const useChartData = (stat, period, oracleId, vaultId, network) => {
     const to = Math.floor(Date.now() / (SNAPSHOT_INTERVAL * 1000)) * SNAPSHOT_INTERVAL;
     const from = to - DAYS_IN_PERIOD[period] * 3600 * 24;
 
-    const base = `https://beefy-db.herokuapp.com/${STATS[stat]}`;
+    const base = `https://data.beefy.finance/${STATS[stat]}`;
     const queries = `?name=${names[stat]}&period=${PERIODS[period]}&from=${from}&to=${to}&limit=${LIMITS[period]}`;
     const url = `${base}${queries}`;
 
