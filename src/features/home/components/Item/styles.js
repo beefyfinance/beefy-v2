@@ -23,29 +23,30 @@ const styles = theme => ({
   },
   infoContainer: {
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      marginLeft: '20px',
+      margin: '0 10px 0 20px',
     },
   },
-  title: {
-    fontSize: 48,
-    fontWeight: '600',
-    lineHeight: '54px',
-    color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
-  },
-  h2: {
+  vaultName: {
     fontWeight: 600,
-    fontSize: '1.5rem',
+    fontSize: '24px',
     lineHeight: '36px',
     margin: 0,
     padding: 0,
-    [theme.breakpoints.up('sm')]: {
-      fontSize: '16px',
-    },
     [theme.breakpoints.up('lg')]: {
       fontSize: '27px',
     },
   },
-  h3: {
+  value: {
+    fontWeight: 600,
+    fontSize: '18px',
+    lineHeight: '36px',
+    margin: 0,
+    padding: 0,
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '24px',
+    },
+  },
+  label: {
     fontWeight: 400,
     fontSize: '15px',
     lineHeight: '24px',
