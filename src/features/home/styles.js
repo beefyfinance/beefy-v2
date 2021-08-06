@@ -5,11 +5,12 @@ const styles = theme => ({
     alignItems: 'center',
     padding: '4rem 0 2rem',
   },
-  h1: {
-    fontSize: '3rem',
+  title: {
+    fontSize: 48,
     fontWeight: '600',
     lineHeight: '54px',
     color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
+    fontFamily: 'proxima_nova_altbold !important',
   },
   tvl: {
     fontSize: '2rem',
@@ -97,11 +98,6 @@ const styles = theme => ({
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
       marginLeft: '20px',
     },
-  },
-  title: {
-    padding: '0 10px',
-    textTransform: 'capitalize',
-    fontWeight: '600',
   },
   badges: {
     display: 'flex',
