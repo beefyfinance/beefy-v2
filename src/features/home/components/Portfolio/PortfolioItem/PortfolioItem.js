@@ -66,7 +66,7 @@ const PortfolioItem = ({ item }) => {
         <Grid container>
           <Grid>
             <Box className={classes.title} textAlign={'left'}>
-              <Typography className={classes.h2}>{item.name}</Typography>
+              <Typography className={classes.vaultName}>{item.name}</Typography>
               <Box display="flex" alignItems="center">
                 <Typography display={'inline'}>
                   <img
