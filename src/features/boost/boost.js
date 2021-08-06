@@ -13,12 +13,12 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
-import Loader from '../../components/loader';
+import Loader from 'components/loader';
 import { ArrowLeft, Language, Telegram, Twitter } from '@material-ui/icons';
 import styles from './styles';
-import { isEmpty } from '../../helpers/utils';
+import { isEmpty } from 'helpers/utils';
 import { useTranslation } from 'react-i18next';
-import AssetsImage from '../../components/AssetsImage';
+import AssetsImage from 'components/AssetsImage';
 
 const useStyles = makeStyles(styles);
 

@@ -3,11 +3,11 @@ import Box from '@material-ui/core/Box';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import AssetsImage from '../../../../components/AssetsImage';
-import SafetyScore from '../../../../components/SafetyScore';
-import DisplayTags from '../../../../components/vaultTags';
-import Popover from '../../../../components/Popover';
-import { calcDaily, formatApy, formatTvl } from '../../../../helpers/format';
+import AssetsImage from 'components/AssetsImage';
+import SafetyScore from 'components/SafetyScore';
+import DisplayTags from 'components/vaultTags';
+import Popover from 'components/Popover';
+import { calcDaily, formatApy, formatTvl } from 'helpers/format';
 import styles from '../../styles';
 import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 

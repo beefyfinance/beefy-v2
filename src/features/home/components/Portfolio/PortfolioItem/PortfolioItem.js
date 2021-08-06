@@ -2,11 +2,11 @@ import React from 'react';
 import BigNumber from 'bignumber.js';
 import { makeStyles, Grid, Button, Hidden, Typography, Box } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { formatApy, formatDecimals } from '../../../../../helpers/format';
+import { formatApy, formatDecimals } from 'helpers/format';
 import styles from './styles';
 import HistoricalRateChart from '../../HistoricalRateChart/HistoricalRateChart';
-import DisplayTags from '../../../../../components/vaultTags';
-import Popover from '../../../../../components/Popover';
+import DisplayTags from 'components/vaultTags';
+import Popover from 'components/Popover';
 import vaultStates from './vaultStates.json';
 
 const historicalRateChartData = [
@@ -71,7 +71,7 @@ const PortfolioItem = ({ item }) => {
                 <Typography display={'inline'}>
                   <img
                     alt={item.network}
-                    src={require('../../../../../images/networks/' + item.network + '.svg').default}
+                    src={require('images/networks/' + item.network + '.svg').default}
                   />
                 </Typography>
                 <Box marginRight={0.5}>

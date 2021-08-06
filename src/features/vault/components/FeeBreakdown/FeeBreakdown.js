@@ -2,8 +2,8 @@ import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
-import Popover from '../../../../components/Popover';
-import useFormattedFee from '../../../../hooks/useFormattedFee';
+import Popover from 'components/Popover';
+import useFormattedFee from 'hooks/useFormattedFee';
 
 const useStyles = makeStyles(styles);
 

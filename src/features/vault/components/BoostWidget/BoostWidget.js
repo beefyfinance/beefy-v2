@@ -3,7 +3,7 @@ import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import styles from './styles';
-import Popover from '../../../../components/Popover';
+import Popover from 'components/Popover';
 
 const useStyles = makeStyles(styles);
 
@@ -13,11 +13,7 @@ const BoostWidget = ({ onClick, balance, s_stake }) => {
   return (
     <div className={classes.container}>
       <Box display="flex" alignItems="center">
-        <img
-          alt="fire"
-          src={require('../../../../images/fire.png').default}
-          className={classes.boostImg}
-        />
+        <img alt="fire" src={require('images/fire.png').default} className={classes.boostImg} />
         <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
         <Box ml={0.5}>
           <Popover
@@ -42,7 +38,7 @@ const BoostWidget = ({ onClick, balance, s_stake }) => {
         {s_stake}
       </Button>
     </div>
-  ); 
-}; 
+  );
+};
 
 export default BoostWidget;
