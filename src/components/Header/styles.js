@@ -1,6 +1,8 @@
 const styles = theme => ({
   navHeader: {
     paddingTop: '20px',
+    background: 'transparent',
+    boxShadow: 'none',
     '&:hover .MuiListItem-button': {
       background: 'transparent',
     },

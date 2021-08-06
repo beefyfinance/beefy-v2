@@ -10,7 +10,6 @@ const styles = theme => ({
     fontWeight: '600',
     lineHeight: '54px',
     color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
-    fontFamily: 'proxima_nova_altbold !important',
   },
   tvl: {
     fontSize: '2rem',

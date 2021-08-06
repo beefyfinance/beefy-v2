@@ -150,6 +150,11 @@ const styles = theme => ({
       backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
     },
   },
+  searchInput: {
+    '& .MuiFormLabel-root': {
+      fontSize: 18,
+    },
+  },
 });
 
 export default styles;
