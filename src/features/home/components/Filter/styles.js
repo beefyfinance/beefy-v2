@@ -151,8 +151,27 @@ const styles = theme => ({
     },
   },
   searchInput: {
+    borderRadius: 30,
+    color: '#484F7F',
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        border: '2px solid #484F7F',
+      },
+      '&:hover fieldset': {
+        border: '2px solid #484F7F',
+      },
+      '&.Mui-focused fieldset': {
+        border: '2px solid #484F7F',
+      },
+    },
     '& .MuiFormLabel-root': {
       fontSize: 18,
+      color: '#484F7F',
+    },
+    '&:hover': {
+      '& .MuiFormLabel-root': {
+        color: '#6B7199',
+      },
     },
   },
 });
