@@ -19,9 +19,9 @@ const CustomDropdown = ({
 
   return (
     <Box className={classes.select} style={css}>
-      {label && selected.match(/^(all|default)$/) ? <Typography>{label}</Typography> : ''}
+      {label && <Typography>{label}</Typography>}
       <Select
-        fullWidth
+        fullWidth={fullWidth}
         className={label ? classes.withLabel : ''}
         MenuProps={{ classes: { list: classes.selectList } }}
         value={selected}
