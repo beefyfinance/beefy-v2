@@ -38,6 +38,12 @@ const styles = theme => ({
   },
   withLabel: {
     minWidth: 200,
+    '& .MuiSelect-select': {
+      color: theme.palette.type === 'dark' ? 'white' : '#ff0000',
+    },
+    '&:hover .MuiSelect-select': {
+      color: theme.palette.type === 'dark' ? 'white' : '#ff0000',
+    },
   },
   selectList: {
     color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
