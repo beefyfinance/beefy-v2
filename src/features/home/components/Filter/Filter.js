@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import styles from './styles';
-import CustomDropdown from 'components/customDropdown';
+import CustomDropdown from 'components/CustomDropdown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
@@ -133,7 +133,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             InputProps={{ className: classes.input }}
           />
         </Box>
-        <Box css={{ flexBasis: 230 }}>
+        <Box>
           <CustomDropdown
             list={{
               default: t('Filter-SortDflt'),
@@ -144,7 +144,9 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             selected={sortConfig.key}
             handler={e => handleChange('key', e.target.value)}
             label={t('Filter-Sort')}
-            css={{ marginRight: 10 }}
+            css={{
+              marginRight: 10,
+            }}
           />
         </Box>
         <Box className={classes.btnFilter}>

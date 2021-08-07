@@ -20,9 +20,9 @@ import {
 import { Menu, WbSunny, NightsStay } from '@material-ui/icons';
 import styles from './styles';
 import { useLocation } from 'react-router';
-import WalletContainer from './components/WalletContainer/WalletContainer';
-import CustomDropdown from 'components/customDropdown/CustomDropdown';
-import LanguageDropdown from 'components/LanguageDropdown/LanguageDropdown';
+import WalletContainer from './components/WalletContainer';
+import CustomDropdown from 'components/CustomDropdown';
+import LanguageDropdown from 'components/LanguageDropdown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { useTranslation } from 'react-i18next';
 

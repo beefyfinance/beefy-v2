@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { localeToLanguageMap } from 'i18n';
-import CustomDropdown from '../customDropdown';
+import CustomDropdown from '../CustomDropdown';
 
 const getSelectedLanguage = i18n => {
   const cachedLanguage = i18n.language;
