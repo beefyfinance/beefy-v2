@@ -11,10 +11,20 @@ const LabeledDropdown = ({ list, selected, handler, label, renderValue }) => {
 
   return (
     <Box className={classes.container}>
-      <Typography className={classes.label}>{label}</Typography>
       <Select
         className={classes.select}
-        MenuProps={{ classes: { list: classes.selectList } }}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left',
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          getContentAnchorEl: null,
+          classes: { list: classes.selectList },
+        }}
         value={selected}
         onChange={handler}
         disableUnderline={true}
@@ -23,7 +33,9 @@ const LabeledDropdown = ({ list, selected, handler, label, renderValue }) => {
       >
         {Object.keys(list).map(val => (
           <MenuItem key={list[val]} value={val}>
-            <Typography className={classes.value}>{list[val]}</Typography>
+            <Typography className={classes.value}>
+              <span className={`${classes.label} label`}>{label}</span> {list[val]}
+            </Typography>
           </MenuItem>
         ))}
       </Select>
