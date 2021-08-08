@@ -181,7 +181,7 @@ const styles = theme => ({
     lineHeight: '14px',
     fontWeight: 600,
     color: '#6B7199',
-    backgroundColor: '#14182B',
+    backgroundColor: '#232743',
     letterSpacing: '0.5px',
     textTransform: 'inherit',
     borderRadius: '20px',
