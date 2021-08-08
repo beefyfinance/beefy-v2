@@ -144,9 +144,6 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             selected={sortConfig.key}
             handler={e => handleChange('key', e.target.value)}
             label={t('Filter-Sort')}
-            css={{
-              marginRight: 10,
-            }}
           />
         </Box>
         <Box className={classes.btnFilter}>
@@ -234,14 +231,12 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
                 selected={sortConfig.vault}
                 handler={e => handleChange('vault', e.target.value)}
                 label={t('Filter-Type')}
-                css={{ marginLeft: 10 }}
               />
               <LabeledDropdown
                 list={getNetworkTypes()}
                 selected={sortConfig.blockchain}
                 handler={e => handleChange('blockchain', e.target.value)}
                 label={t('Filter-Blockchn')}
-                css={{ marginLeft: 10 }}
               />
             </Box>
             <Box p={3}>

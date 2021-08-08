@@ -104,15 +104,17 @@ const Header = ({ isNightMode, setNightMode }) => {
               <IconButton onClick={setNightMode} className={classes.hide}>
                 {isNightMode ? <WbSunny /> : <NightsStay />}
               </IconButton>
-              <Box>
+              <Box sx={{ marginRight: 10 }}>
                 <LanguageDropdown />
               </Box>
-              <SimpleDropdown
-                list={getAvailableNetworks(true)}
-                selected={walletReducer.network}
-                handler={handleNetworkSwitch}
-              />
-              <Box ml={1}>
+              <Box sx={{ marginRight: 10 }}>
+                <SimpleDropdown
+                  list={getAvailableNetworks(true)}
+                  selected={walletReducer.network}
+                  handler={handleNetworkSwitch}
+                />
+              </Box>
+              <Box>
                 <WalletContainer />
               </Box>
             </List>
