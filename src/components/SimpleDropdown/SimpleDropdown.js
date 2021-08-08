@@ -6,31 +6,19 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const CustomDropdown = ({
-  list,
-  selected,
-  handler,
-  name,
-  label,
-  css,
-  renderValue,
-  fullWidth = false,
-}) => {
+const SimpleDropdown = ({ list, selected, handler, renderValue }) => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.select} style={css}>
-      {label && <Typography>{label}</Typography>}
+    <Box className={classes.select}>
       <Select
-        fullWidth={fullWidth}
-        className={label ? classes.withLabel : ''}
         MenuProps={{ classes: { list: classes.selectList } }}
         value={selected}
-        name={name}
         onChange={handler}
         disableUnderline={true}
         IconComponent={ExpandMore}
         renderValue={renderValue}
+        fullWidth
       >
         {Object.keys(list).map(val => (
           <MenuItem key={list[val]} value={val}>
@@ -42,4 +30,4 @@ const CustomDropdown = ({
   );
 };
 
-export default CustomDropdown;
+export default SimpleDropdown;

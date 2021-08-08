@@ -21,7 +21,7 @@ import { Menu, WbSunny, NightsStay } from '@material-ui/icons';
 import styles from './styles';
 import { useLocation } from 'react-router';
 import WalletContainer from './components/WalletContainer';
-import CustomDropdown from 'components/CustomDropdown';
+import SimpleDropdown from 'components/SimpleDropdown';
 import LanguageDropdown from 'components/LanguageDropdown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { useTranslation } from 'react-i18next';
@@ -104,12 +104,13 @@ const Header = ({ isNightMode, setNightMode }) => {
               <IconButton onClick={setNightMode} className={classes.hide}>
                 {isNightMode ? <WbSunny /> : <NightsStay />}
               </IconButton>
-              <LanguageDropdown css={{ marginLeft: 10 }} />
-              <CustomDropdown
+              <Box>
+                <LanguageDropdown />
+              </Box>
+              <SimpleDropdown
                 list={getAvailableNetworks(true)}
                 selected={walletReducer.network}
                 handler={handleNetworkSwitch}
-                css={{ marginLeft: 10 }}
               />
               <Box ml={1}>
                 <WalletContainer />
@@ -134,7 +135,7 @@ const Header = ({ isNightMode, setNightMode }) => {
                   <LanguageDropdown />
                 </Grid>
                 <Grid item xs={12}>
-                  <CustomDropdown
+                  <SimpleDropdown
                     list={getAvailableNetworks(true)}
                     selected={walletReducer.network}
                     handler={handleNetworkSwitch}
