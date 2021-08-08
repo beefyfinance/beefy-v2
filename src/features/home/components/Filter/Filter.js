@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import styles from './styles';
-import CustomDropdown from 'components/CustomDropdown';
+import LabeledDropdown from 'components/LabeledDropdown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
@@ -134,7 +134,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
           />
         </Box>
         <Box>
-          <CustomDropdown
+          <LabeledDropdown
             list={{
               default: t('Filter-SortDflt'),
               apy: t('APY'),
@@ -223,20 +223,20 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
 
           <Box display="flex">
             <Box p={3} flexGrow={1} display={'flex'}>
-              <CustomDropdown
+              <LabeledDropdown
                 list={getPlatformTypes()}
                 selected={sortConfig.platform}
                 handler={e => handleChange('platform', e.target.value)}
                 label={t('Filter-Platform')}
               />
-              <CustomDropdown
+              <LabeledDropdown
                 list={getVaultTypes()}
                 selected={sortConfig.vault}
                 handler={e => handleChange('vault', e.target.value)}
                 label={t('Filter-Type')}
                 css={{ marginLeft: 10 }}
               />
-              <CustomDropdown
+              <LabeledDropdown
                 list={getNetworkTypes()}
                 selected={sortConfig.blockchain}
                 handler={e => handleChange('blockchain', e.target.value)}

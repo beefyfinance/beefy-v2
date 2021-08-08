@@ -6,7 +6,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const CustomDropdown = ({
+const LabeledDropdown = ({
   list,
   selected,
   handler,
@@ -42,4 +42,4 @@ const CustomDropdown = ({
   );
 };
 
-export default CustomDropdown;
+export default LabeledDropdown;

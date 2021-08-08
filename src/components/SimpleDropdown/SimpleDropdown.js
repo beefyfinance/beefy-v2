@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Box, MenuItem, Select, Typography } from '@material-ui/core';
+import { makeStyles, Box, MenuItem, Select } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
 import styles from './styles';
