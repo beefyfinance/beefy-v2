@@ -37,7 +37,7 @@ const styles = theme => ({
     },
   },
   select: {
-    minWidth: 200,
+    minWidth: 210,
   },
   selectList: {
     color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',

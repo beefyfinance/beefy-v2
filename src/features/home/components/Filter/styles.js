@@ -88,6 +88,9 @@ const styles = theme => ({
     borderRadius: '30px',
     width: 150,
     [theme.breakpoints.up('sm')]: {
+      width: 250,
+    },
+    [theme.breakpoints.up('md')]: {
       width: 375,
     },
   },
@@ -173,6 +176,15 @@ const styles = theme => ({
         color: '#6B7199',
       },
     },
+  },
+  selectors: {
+    display: 'flex',
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    flexWrap: 'wrap',
+  },
+  selector: {
+    margin: `${theme.spacing(0.5)}px 0`,
   },
 });
 

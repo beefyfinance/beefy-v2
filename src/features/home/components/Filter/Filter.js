@@ -218,26 +218,32 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             </Box>
           </Box>
 
-          <Box display="flex">
-            <Box p={3} flexGrow={1} display={'flex'}>
-              <LabeledDropdown
-                list={getPlatformTypes()}
-                selected={sortConfig.platform}
-                handler={e => handleChange('platform', e.target.value)}
-                label={t('Filter-Platform')}
-              />
-              <LabeledDropdown
-                list={getVaultTypes()}
-                selected={sortConfig.vault}
-                handler={e => handleChange('vault', e.target.value)}
-                label={t('Filter-Type')}
-              />
-              <LabeledDropdown
-                list={getNetworkTypes()}
-                selected={sortConfig.blockchain}
-                handler={e => handleChange('blockchain', e.target.value)}
-                label={t('Filter-Blockchn')}
-              />
+          <Box display={'flex'}>
+            <Box className={classes.selectors} p={3} flexGrow={1} display={'flex'}>
+              <Box className={classes.selector}>
+                <LabeledDropdown
+                  list={getPlatformTypes()}
+                  selected={sortConfig.platform}
+                  handler={e => handleChange('platform', e.target.value)}
+                  label={t('Filter-Platform')}
+                />
+              </Box>
+              <Box className={classes.selector}>
+                <LabeledDropdown
+                  list={getVaultTypes()}
+                  selected={sortConfig.vault}
+                  handler={e => handleChange('vault', e.target.value)}
+                  label={t('Filter-Type')}
+                />
+              </Box>
+              <Box className={classes.selector}>
+                <LabeledDropdown
+                  list={getNetworkTypes()}
+                  selected={sortConfig.blockchain}
+                  handler={e => handleChange('blockchain', e.target.value)}
+                  label={t('Filter-Blockchn')}
+                />
+              </Box>
             </Box>
             <Box p={3}>
               <Button
