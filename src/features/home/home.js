@@ -182,12 +182,14 @@ const Home = () => {
     }, 60000);
   }, [dispatch]);
 
-  const itemChartData = (historicalApy, itemId) => {
-    if (!historicalApy[itemId]) {
-      return [0, 0, 0, 0, 0, 0, 0, 0].map(n => ({ apy: n }));
-    } else {
-      return historicalApy[itemId].map(n => ({ apy: n }));
+  const itemChartData = (historicalApy, apy, itemId) => {
+    let baseData = historicalApy[itemId] || [0, 0, 0, 0, 0, 0, 0, 0];
+
+    if (apy[itemId]) {
+      baseData.push(apy[itemId].totalApy);
     }
+
+    return baseData.map(n => ({ apy: n }));
   };
 
   return (
@@ -228,7 +230,7 @@ const Home = () => {
                   <Item
                     key={item.id}
                     item={item}
-                    historicalApy={itemChartData(prices.historicalApy, item.id)}
+                    historicalApy={itemChartData(prices.historicalApy, prices.apy, item.id)}
                   />
                 ))}
               </InfiniteScroll>

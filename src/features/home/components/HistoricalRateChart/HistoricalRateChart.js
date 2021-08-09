@@ -24,7 +24,7 @@ const HistoricalRateChart = ({ chartData }) => {
     const last = index === chartData.length - 1;
     const textStyle = { fontSize: '12px' };
     if (first) {
-      const labelPosWithOffsetX = x - 35;
+      const labelPosWithOffsetX = x - 40;
       const labelPosWithOffsetY = y;
       return (
         <text style={textStyle} fill={firstColor} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>

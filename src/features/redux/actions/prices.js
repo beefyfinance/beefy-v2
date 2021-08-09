@@ -76,7 +76,7 @@ const fetchPrices = reducer => {
         }, 1000);
       };
       try {
-        const request = await axios.get('https://data.beefy.finance/bulk?_=' + cache.getTime(), {
+        const request = await axios.get('https://data.beefy.finance/bulk?_=11' + cache.getTime(), {
           timeout: 1000,
         });
         return request.status === 200 ? request.data : retry();
