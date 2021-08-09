@@ -121,8 +121,8 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
           </Button>
         </Grid>
       </Grid>
-      <Box display="flex">
-        <Box flexGrow={1}>
+      <Box className={classes.filtersContainer}>
+        <Box className={classes.searchContainer}>
           <TextField
             className={classes.searchInput}
             size="small"
@@ -133,7 +133,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             InputProps={{ className: classes.input }}
           />
         </Box>
-        <Box mr={1}>
+        <Box className={classes.sortByContainer}>
           <LabeledDropdown
             list={{
               default: t('Filter-SortDflt'),
@@ -148,6 +148,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
         </Box>
         <Box className={classes.btnFilter}>
           <ToggleButton
+            className={classes.blockBtn}
             value={filterOpen}
             selected={filterOpen}
             onChange={() => {
@@ -218,7 +219,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             </Box>
           </Box>
 
-          <Box display={'flex'}>
+          <Box className={classes.filtersContainer}>
             <Box className={classes.selectors}>
               <Box className={classes.selector}>
                 <LabeledDropdown
@@ -245,7 +246,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
                 />
               </Box>
             </Box>
-            <Box>
+            <Box className={classes.btnFilter}>
               <Button
                 className={classes.btnReset}
                 variant={'contained'}

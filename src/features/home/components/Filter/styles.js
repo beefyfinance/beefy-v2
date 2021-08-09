@@ -25,6 +25,9 @@ const styles = theme => ({
         opacity: 1,
       },
     },
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: '20px',
+    },
   },
   text: {
     color: '#fff',
@@ -93,6 +96,9 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: 375,
     },
+    [theme.breakpoints.down('sm')]: {
+      width: 300,
+    },
   },
   filters: {
     borderColor: theme.palette.type === 'dark' ? '#484F7F' : '#ff0000',
@@ -101,7 +107,7 @@ const styles = theme => ({
     borderStyle: 'solid',
     backgroundColor: '#14182B',
     marginTop: 20,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
   },
   btnFilter: {
     '& .MuiToggleButton-root': {
@@ -134,6 +140,11 @@ const styles = theme => ({
       borderColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
     },
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      justifyContent: 'center',
+      margin: '10px 0',
+    },
   },
   lblShowing: {
     textAlign: 'right',
@@ -153,6 +164,9 @@ const styles = theme => ({
     '&:hover': {
       borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: 300,
     },
   },
   searchInput: {
@@ -189,10 +203,46 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
   },
   selector: {
     marginRight: theme.spacing(1),
     marginTop: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 0,
+    },
+  },
+  filtersContainer: {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
+  },
+  searchContainer: {
+    flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      flexGrow: 0,
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      margin: '10px 0',
+    },
+  },
+  sortByContainer: {
+    marginRight: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      margin: '10px 0',
+    },
+  },
+  blockBtn: {
+    [theme.breakpoints.down('sm')]: {
+      width: 300,
+    },
   },
 });
 

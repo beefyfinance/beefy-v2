@@ -186,9 +186,7 @@ const Home = () => {
     if (!historicalApy[itemId]) {
       return [0, 0, 0, 0, 0, 0, 0, 0].map(n => ({ apy: n }));
     } else {
-      return historicalApy[itemId].map(n => ({
-        apy: (n * 100).toFixed(2),
-      }));
+      return historicalApy[itemId].map(n => ({ apy: n }));
     }
   };
 
