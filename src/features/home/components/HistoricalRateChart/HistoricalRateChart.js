@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, Dot } from 'recharts';
 import { makeStyles } from '@material-ui/core';
 import styles from '../../styles';
@@ -23,7 +23,7 @@ const HistoricalRateChart = ({ chartData }) => {
     const last = index === chartData.length - 1;
     const textStyle = { fontSize: '12px' };
     if (first) {
-      const labelPosWithOffsetX = x - 20;
+      const labelPosWithOffsetX = x - 35;
       const labelPosWithOffsetY = y;
       return (
         <text style={textStyle} fill={firstColor} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>
@@ -71,6 +71,7 @@ const HistoricalRateChart = ({ chartData }) => {
         fillOpacity={100}
         label={renderLabel}
         dot={renderDot}
+        isAnimationActive={false}
       />
     </AreaChart>
   );

@@ -1,6 +1,7 @@
 const initialState = {
   prices: [],
   apy: [],
+  historicalApy: {},
   lastUpdated: 0,
 };
 
@@ -11,6 +12,7 @@ const pricesReducer = (state = initialState, action) => {
         ...state,
         prices: action.payload.prices,
         apy: action.payload.apy,
+        historicalApy: action.payload.historicalApy,
         lastUpdated: action.payload.lastUpdated,
       };
     default:
