@@ -1,5 +1,5 @@
 const styles = theme => ({
-  select: {
+  container: {
     height: '44px',
     position: 'relative',
     '& .MuiSelect-select': {
@@ -21,7 +21,7 @@ const styles = theme => ({
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       position: 'absolute',
       top: '10px',
-      left: '15px',
+      left: '23px',
     },
     '&:hover': {
       borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
@@ -32,12 +32,11 @@ const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       '& .MuiSelect-select': {
         textAlign: 'left',
-        margin: '0 5px',
       },
     },
   },
-  withLabel: {
-    minWidth: 200,
+  select: {
+    minWidth: 210,
   },
   selectList: {
     color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
@@ -45,6 +44,12 @@ const styles = theme => ({
     backgroundColor: theme.palette.type === 'dark' ? '#1B203A' : '#faf6f1',
     padding: '0px',
     margin: '0px',
+    '& .label': {
+      display: 'none',
+    },
+  },
+  label: {
+    color: 'white',
   },
 });
 

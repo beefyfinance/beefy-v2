@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { localeToLanguageMap } from 'i18n';
-import CustomDropdown from '../customDropdown';
+import SimpleDropdown from '../SimpleDropdown';
 
 const getSelectedLanguage = i18n => {
   const cachedLanguage = i18n.language;
@@ -45,12 +45,11 @@ const LanguageDropdown = props => {
   }, [setLanguage, i18nLanguage]);
 
   return (
-    <CustomDropdown
+    <SimpleDropdown
       list={localeToLanguageMap}
       selected={language}
       handler={handleSwitch}
       renderValue={selectedRenderer}
-      {...props}
     />
   );
 };
