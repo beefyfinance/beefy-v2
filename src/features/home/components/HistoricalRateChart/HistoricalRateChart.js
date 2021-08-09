@@ -2,6 +2,7 @@ import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, Dot } from 'recharts';
 import { makeStyles } from '@material-ui/core';
 import styles from '../../styles';
+import { formatApy } from 'helpers/format';
 
 const HistoricalRateChart = ({ chartData }) => {
   const useStyles = makeStyles(styles);
@@ -18,7 +19,7 @@ const HistoricalRateChart = ({ chartData }) => {
   const renderLabel = props => {
     const { index, x, y } = props;
     const { apy } = chartData[index];
-    const labelValue = `${apy}%`;
+    const labelValue = formatApy(apy);
     const first = index === 0;
     const last = index === chartData.length - 1;
     const textStyle = { fontSize: '12px' };
