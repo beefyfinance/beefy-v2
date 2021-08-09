@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import styles from './styles';
-import CustomDropdown from 'components/customDropdown';
+import LabeledDropdown from 'components/LabeledDropdown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
@@ -133,8 +133,8 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             InputProps={{ className: classes.input }}
           />
         </Box>
-        <Box css={{ flexBasis: 230 }}>
-          <CustomDropdown
+        <Box>
+          <LabeledDropdown
             list={{
               default: t('Filter-SortDflt'),
               apy: t('APY'),
@@ -144,7 +144,6 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             selected={sortConfig.key}
             handler={e => handleChange('key', e.target.value)}
             label={t('Filter-Sort')}
-            css={{ marginRight: 10 }}
           />
         </Box>
         <Box className={classes.btnFilter}>
@@ -219,28 +218,32 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             </Box>
           </Box>
 
-          <Box display="flex">
-            <Box p={3} flexGrow={1} display={'flex'}>
-              <CustomDropdown
-                list={getPlatformTypes()}
-                selected={sortConfig.platform}
-                handler={e => handleChange('platform', e.target.value)}
-                label={t('Filter-Platform')}
-              />
-              <CustomDropdown
-                list={getVaultTypes()}
-                selected={sortConfig.vault}
-                handler={e => handleChange('vault', e.target.value)}
-                label={t('Filter-Type')}
-                css={{ marginLeft: 10 }}
-              />
-              <CustomDropdown
-                list={getNetworkTypes()}
-                selected={sortConfig.blockchain}
-                handler={e => handleChange('blockchain', e.target.value)}
-                label={t('Filter-Blockchn')}
-                css={{ marginLeft: 10 }}
-              />
+          <Box display={'flex'}>
+            <Box className={classes.selectors} p={3} flexGrow={1} display={'flex'}>
+              <Box className={classes.selector}>
+                <LabeledDropdown
+                  list={getPlatformTypes()}
+                  selected={sortConfig.platform}
+                  handler={e => handleChange('platform', e.target.value)}
+                  label={t('Filter-Platform')}
+                />
+              </Box>
+              <Box className={classes.selector}>
+                <LabeledDropdown
+                  list={getVaultTypes()}
+                  selected={sortConfig.vault}
+                  handler={e => handleChange('vault', e.target.value)}
+                  label={t('Filter-Type')}
+                />
+              </Box>
+              <Box className={classes.selector}>
+                <LabeledDropdown
+                  list={getNetworkTypes()}
+                  selected={sortConfig.blockchain}
+                  handler={e => handleChange('blockchain', e.target.value)}
+                  label={t('Filter-Blockchn')}
+                />
+              </Box>
             </Box>
             <Box p={3}>
               <Button

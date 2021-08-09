@@ -1,6 +1,6 @@
 export const config = {
   bsc: {
-    name: 'Binance Smart Chain',
+    name: 'BSC',
     chainId: 56,
     rpc: [
       'https://bsc-dataseed.binance.org',
@@ -44,7 +44,7 @@ export const config = {
     ],
   },
   heco: {
-    name: 'Huobi ECO Chain',
+    name: 'HECO',
     chainId: 128,
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
@@ -65,7 +65,7 @@ export const config = {
     stableCoins: ['USDT', 'HUSD'],
   },
   avax: {
-    name: 'Avalanche Chain',
+    name: 'Avalanche',
     chainId: 43114,
     rpc: ['https://api.avax.network/ext/bc/C/rpc'],
     explorerUrl: 'https://cchain.explorer.avax.network',
@@ -86,7 +86,7 @@ export const config = {
     stableCoins: ['USDT', 'DAI', 'BUSD'],
   },
   polygon: {
-    name: 'Polygon Chain',
+    name: 'Polygon',
     chainId: 137,
     rpc: ['https://rpc-mainnet.matic.network'],
     explorerUrl: 'https://polygonscan.com',

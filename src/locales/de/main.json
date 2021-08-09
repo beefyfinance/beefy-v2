@@ -1,5 +1,5 @@
 {
-  "Header-Docs": "Dokumente", 
+  "Header-Docs": "Dokumente",
 
   "Portfolio-Portfolio": "Portfolio",
   "Portfolio-YieldTot": "Totales Erträgnis",
@@ -7,7 +7,7 @@
   "Filter-DropdwnDflt": "Alle",
   "Filter-AsstSingle": "Einzelne Anlagen",
   "Filter-CatgryRecnt": "Neu im Sortiment",
-  "Filter-SortSafety": "SICHERHEIT",
+  "Filter-SortSafety": "Sicherheit",
   "Filter-HideZero": "Nullsalden ausblenden",
   "Filter-Type": "Vault Typ:",
   "Filter-Sort": "Sortieren nach:",
@@ -29,12 +29,12 @@
   "Fee-Deposit": "Einzahlungsgebühr",
   "Fee-Withdraw": "Auszahlungsgebühr",
   "Fee-Transaction": "Veranschlagte Transaktionsgebühr",
-  
+
   "Boost-Stake": "Dein {{mooToken}} staken",
   "Boost-Unstake": "Dein {{mooToken}} unstaken",
   "Boost-WhatIs": "Was ist ein Boost?",
 
-  "Transact-BuyTkn": "Token Kaufen", 
+  "Transact-BuyTkn": "Token Kaufen",
   "Transactn-View": "Im Explorer anschauen",
   "Transactn-Confirmed": "Transaktionen bestätigt",
 
