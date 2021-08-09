@@ -68,11 +68,30 @@ const fetchPrices = reducer => {
       }
     };
 
+    const updateHistoricalApy = async () => {
+      console.log('redux fetchHistoricalApy called.');
+      const retry = () => {
+        setTimeout(async () => {
+          return await updateHistoricalApy();
+        }, 1000);
+      };
+      try {
+        const request = await axios.get('https://data.beefy.finance/bulk?_=' + cache.getTime(), {
+          timeout: 1000,
+        });
+        return request.status === 200 ? request.data : retry();
+      } catch (err) {
+        console.log('error fetchHistoricalApy()', err);
+        return retry();
+      }
+    };
+
     const fetch = async () => {
       const state = getState();
       const prices = await updatePrices(state.pricesReducer);
       const lps = await updateLps(state.pricesReducer);
       const apy = await updateApy(state.pricesReducer);
+      const historicalApy = await updateHistoricalApy(state.pricesReducer);
 
       dispatch({
         type: 'FETCH_PRICES',
@@ -82,7 +101,8 @@ const fetchPrices = reducer => {
             ...lps,
             ...state.pricesReducer.prices,
           },
-          apy: apy,
+          apy,
+          historicalApy,
           lastUpdated: new Date().getTime(),
         },
       });
