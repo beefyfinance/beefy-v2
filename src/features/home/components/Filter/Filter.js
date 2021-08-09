@@ -133,7 +133,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             InputProps={{ className: classes.input }}
           />
         </Box>
-        <Box>
+        <Box mr={1}>
           <LabeledDropdown
             list={{
               default: t('Filter-SortDflt'),
@@ -162,7 +162,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
       <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
         <Box className={classes.filters}>
           <Box display="flex">
-            <Box p={3}>
+            <Box className={classes.checkboxes}>
               <FormGroup row>
                 <FormControlLabel
                   label={t('Filter-HideZero')}
@@ -210,7 +210,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
                 />
               </FormGroup>
             </Box>
-            <Box p={3} flexGrow={1} className={classes.lblShowing}>
+            <Box className={classes.lblShowing}>
               {t('Filter-Showing', {
                 number: vaultCount.showing,
                 count: vaultCount.total,
@@ -219,7 +219,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
           </Box>
 
           <Box display={'flex'}>
-            <Box className={classes.selectors} p={3} flexGrow={1} display={'flex'}>
+            <Box className={classes.selectors}>
               <Box className={classes.selector}>
                 <LabeledDropdown
                   list={getPlatformTypes()}
@@ -245,7 +245,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
                 />
               </Box>
             </Box>
-            <Box p={3}>
+            <Box>
               <Button
                 className={classes.btnReset}
                 variant={'contained'}

@@ -32,7 +32,6 @@ const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       '& .MuiSelect-select': {
         textAlign: 'left',
-        margin: '0 5px',
       },
     },
   },

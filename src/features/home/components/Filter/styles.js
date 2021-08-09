@@ -101,6 +101,7 @@ const styles = theme => ({
     borderStyle: 'solid',
     backgroundColor: '#14182B',
     marginTop: 20,
+    padding: theme.spacing(3),
   },
   btnFilter: {
     '& .MuiToggleButton-root': {
@@ -137,6 +138,7 @@ const styles = theme => ({
   lblShowing: {
     textAlign: 'right',
     minWidth: 100,
+    flexGrow: 1,
     [theme.breakpoints.up('sm')]: { minWidth: 200 },
   },
   btnReset: {
@@ -177,14 +179,20 @@ const styles = theme => ({
       },
     },
   },
+  checkboxes: {
+    color: '#6B7199',
+    '& .MuiSvgIcon-root': {
+      color: '#6B7199',
+    },
+  },
   selectors: {
     display: 'flex',
-    flexGrow: 1,
-    padding: theme.spacing(3),
     flexWrap: 'wrap',
+    flexGrow: 1,
   },
   selector: {
-    margin: `${theme.spacing(0.5)}px 0`,
+    marginRight: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
 });
 
