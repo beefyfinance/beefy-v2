@@ -1,5 +1,5 @@
 import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
-import { ShoppingBasket } from '@material-ui/icons';
+import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -170,7 +170,7 @@ const Deposit = ({
               target="_blank"
               className={classes.btnSecondary}
             >
-              <Button endIcon={<ShoppingBasket />}>{t('Transact-BuyTkn')}</Button>
+              <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
             </Link>
           </Box>
         </Box>
