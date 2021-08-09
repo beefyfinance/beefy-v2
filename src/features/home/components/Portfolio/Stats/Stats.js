@@ -29,19 +29,19 @@ const Stats = ({ stats, blurred }) => {
     <Box className={classes.stats}>
       <Box className={classes.stat}>
         <Typography className={valueClassName}>
-          <BlurredText value={formatStat(stats.deposited)} />
+          <BlurredText value={blurred ? 100 : formatStat(stats.deposited)} />
         </Typography>
         <Typography className={labelClassName}>{t('Portfolio-Deposited')}</Typography>
       </Box>
       <Box className={classes.stat}>
         <Typography className={valueClassName}>
-          <BlurredText value={formatStat(stats.monthly)} />
+          <BlurredText value={blurred ? 100 : formatStat(stats.monthly)} />
         </Typography>
         <Typography className={labelClassName}>{t('Portfolio-YieldMnth')}</Typography>
       </Box>
       <Box className={classes.stat}>
         <Typography className={valueClassName}>
-          <BlurredText value={formatStat(stats.daily)} />
+          <BlurredText value={blurred ? 50 : formatStat(stats.daily)} />
         </Typography>
         <Typography className={labelClassName}>{t('Portfolio-YieldDay')}</Typography>
       </Box>
