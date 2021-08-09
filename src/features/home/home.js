@@ -182,6 +182,14 @@ const Home = () => {
     }, 60000);
   }, [dispatch]);
 
+  const itemChartData = (historicalApy, itemId) => {
+    if (!historicalApy[itemId]) {
+      return [0, 0, 0, 0, 0, 0, 0, 0].map(n => ({ apy: n }));
+    } else {
+      return historicalApy[itemId].map(n => ({ apy: n }));
+    }
+  };
+
   return (
     <React.Fragment>
       <Portfolio />
@@ -217,7 +225,11 @@ const Home = () => {
                 loader={t('Filter-LoadingSearch')}
               >
                 {scrollable.items.map(item => (
-                  <Item key={item.id} item={item} />
+                  <Item
+                    key={item.id}
+                    item={item}
+                    historicalApy={itemChartData(prices.historicalApy, item.id)}
+                  />
                 ))}
               </InfiniteScroll>
             )}
