@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { useTranslation } from 'react-i18next';
 import {
@@ -23,7 +23,7 @@ const useStyles = makeStyles(styles);
 const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCount }) => {
   const classes = useStyles();
   const t = useTranslation().t;
-  const [filterOpen, setFilterOpen] = React.useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const handleCheckbox = event => {
     setSortConfig({
@@ -60,7 +60,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
   };
 
   return (
-    <React.Fragment>
+    <>
       <Grid container spacing={2} className={classes.categories}>
         <Grid item xs={12}>
           <Typography variant={'h4'}>{t('Filter-Categories')}</Typography>
@@ -100,13 +100,13 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
         </Grid>
         <Grid item xs>
           <Button
-            className={sortConfig.category === 'recent' ? classes.selected : classes.recent}
+            className={sortConfig.category === 'beefy' ? classes.selected : classes.recent}
             fullWidth={true}
-            disabled={sortConfig.category === 'recent'}
-            onClick={() => handleChange('category', 'recent')}
+            disabled={sortConfig.category === 'beefy'}
+            onClick={() => handleChange('category', 'beefy')}
           >
-            <Typography className={classes.text}>{t('Filter-CatgryRecnt')}</Typography>
-            {sortConfig.category === 'recent' ? <ArrowDropDownIcon /> : ''}
+            <Typography className={classes.text}>{t('Filter-CatgryBeefy')}</Typography>
+            {sortConfig.category === 'beefy' ? <ArrowDropDownIcon /> : ''}
           </Button>
         </Grid>
         <Grid item xs>
@@ -260,7 +260,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
           </Box>
         </Box>
       </AnimateHeight>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -80,6 +80,11 @@ const initialPools = () => {
         }
       }
 
+      // Check if assets includes either BIFI or POTS.
+      if (pool.assets.some(asset => ['BIFI', 'POTS'].includes(asset))) {
+        pool.tags.push('beefy');
+      }
+
       if (!isEmpty(pool.createdAt)) {
         const created = new Date(pool.createdAt * 1000);
         const days = 3; // number of days to be considered "recent"
