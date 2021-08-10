@@ -64,7 +64,7 @@ const Item = ({ item, historicalApy }) => {
             <Box>
               <Hidden mdUp>
                 <Box className={classes.chart}>
-                  <HistoricalRateChart chartData={historicalRateChartData} />
+                  <HistoricalRateChart chartData={historicalApy} />
                   <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
                 </Box>
               </Hidden>
@@ -81,10 +81,12 @@ const Item = ({ item, historicalApy }) => {
             </Box>
           </Grid>
           <Grid className={classes.centerSpace} item xs={12} md={2}>
-            <Box className={classes.chart}>
-              <HistoricalRateChart chartData={historicalRateChartData} />
-              <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
-            </Box>
+            <Hidden smDown>
+              <Box className={classes.chart}>
+                <HistoricalRateChart chartData={historicalApy} />
+                <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
+              </Box>
+            </Hidden>
           </Grid>
           <Grid className={[classes.apyMobile, classes.rWidth].join(' ')} item xs={12} md={2}>
             <Box textAlign={'center'}>
