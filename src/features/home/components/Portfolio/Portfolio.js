@@ -8,6 +8,7 @@ import { Alert } from '@material-ui/lab';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
+import chartData from 'helpers/chartData';
 import PortfolioItem from './PortfolioItem';
 import Stats from './Stats';
 import styles from './styles';
@@ -116,7 +117,14 @@ const Portfolio = () => {
             <>
               {userVaults.map(vault => (
                 <Box key={vault.id}>
-                  <PortfolioItem item={vault} />
+                  <PortfolioItem
+                    item={vault}
+                    historicalApy={chartData(
+                      pricesReducer.historicalApy,
+                      pricesReducer.apy,
+                      vault.id
+                    )}
+                  />
                 </Box>
               ))}
             </>
