@@ -1,4 +1,4 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography, Box } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { config } from '../../../../config/config';
@@ -91,8 +91,7 @@ const StrategyCard = ({
 
           <Box className={classes.audit}>
             <img alt="Community Audited" src={shield} className={classes.auditIcon} />
-            <Typography className={classes.auditLabel}>
-																							{t('Vault-AuditdCommunity')}</Typography>
+            <Typography className={classes.auditLabel}>{t('Vault-AuditdCommunity')}</Typography>
           </Box>
         </div>
       </CardContent>
