@@ -182,10 +182,6 @@ const Home = () => {
     }, 60000);
   }, [dispatch]);
 
-  React.useEffect(() => {
-    console.log(vault, wallet, prices, balance);
-  });
-
   const itemChartData = (historicalApy, apy, itemId) => {
     let baseData = [0, 0, 0, 0, 0, 0, 0, 0];
 

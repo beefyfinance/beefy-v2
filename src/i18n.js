@@ -25,9 +25,9 @@ export const localeToLanguageMap = {
   zh: '中文',
 };
 
-const o_risks = code => {
+const o_risksNstrats = code => {
   try {
-    return require(`locales/${code}/risks.json`);
+    return require(`./locales/${code}/risksNstrats.json`);
   } catch {
     return null;
   }
@@ -37,8 +37,8 @@ const resources = Object.fromEntries(
     code,
     {
       translation: {
-        ...require(`locales/${code}/main.json`),
-        ...o_risks(code),
+        ...require(`./locales/${code}/main.json`),
+        ...o_risksNstrats(code),
       },
     },
   ])

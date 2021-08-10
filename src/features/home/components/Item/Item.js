@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import ArrowGo from '@material-ui/icons/ArrowForwardIos';
+import { Button, Grid, Hidden, makeStyles, Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import BigNumber from 'bignumber.js';
@@ -39,10 +39,10 @@ const Item = ({ item, historicalApy }) => {
           <Grid className={classes.titleContainer} item xs={12} md={3}>
             <Box className={classes.infoContainer}>
               <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+              <Typography className={classes.vaultName}>{item.name}</Typography>
             </Box>
             <Box>
-              <Typography className={classes.vaultName}>{item.name}</Typography>
-              <Hidden smDown>
+              <Box className={classes.badgesContainter}>
                 <Box className={classes.badges}>
                   <img
                     alt={item.network}
@@ -50,11 +50,19 @@ const Item = ({ item, historicalApy }) => {
                   />
                   <DisplayTags tags={item.tags} />
                 </Box>
-              </Hidden>
+                <Box my={1}>
+                  <Button
+                    onClick={() => history.push('/' + item.network + '/vault/' + item.id)}
+                    className={classes.btnSeeDetails}
+                  >
+                    See Details <ArrowGo style={{ fontSize: 12 }} />
+                  </Button>
+                </Box>
+              </Box>
             </Box>
           </Grid>
-          <Grid className={classes.center} flexGrow={1} item xs={12} md={2}>
-            <Box textAlign={'center'}>
+          <Grid className={classes.centerSpace} flexGrow={1} item xs={12} md={2}>
+            <Box>
               <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
               <Box display="flex" alignItems="center">
                 <Typography className={classes.label}>{t('Vault-SftyScore')}</Typography>
@@ -67,32 +75,32 @@ const Item = ({ item, historicalApy }) => {
                 </Box>
               </Box>
             </Box>
+            <Box>
+              <Hidden mdUp>
+                <Box className={classes.chart}>
+                  <HistoricalRateChart chartData={historicalApy} />
+                  <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
+                </Box>
+              </Hidden>
+            </Box>
           </Grid>
           <Grid className={classes.centerSpace} item xs={12} md={3}>
             <Box>
               <Typography className={classes.value}>{formatTvl(item.tvl)}</Typography>
               <Typography className={classes.label}>{t('TVL')}</Typography>
             </Box>
-            <Box textAlign={'center'}>
+            <Box>
               <Typography className={classes.value}>{calcDaily(item.apy.totalApy)}</Typography>
               <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
             </Box>
           </Grid>
-
           <Grid className={classes.centerSpace} item xs={12} md={2}>
-            <Hidden mdUp>
-              <Box className={classes.badges}>
-                <img
-                  alt={item.network}
-                  src={require('images/networks/' + item.network + '.svg').default}
-                />
-                <DisplayTags tags={item.tags} />
+            <Hidden smDown>
+              <Box className={classes.chart}>
+                <HistoricalRateChart chartData={historicalApy} />
+                <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
               </Box>
             </Hidden>
-            <Box className={classes.chart}>
-              <HistoricalRateChart chartData={historicalApy} />
-              <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
-            </Box>
           </Grid>
           <Grid className={apyContainerClassNames} item xs={12} md={2}>
             <Box textAlign={'center'}>

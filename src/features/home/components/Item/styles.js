@@ -18,18 +18,27 @@ const styles = theme => ({
   badges: {
     display: 'flex',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 10px',
+    },
   },
   titleContainer: {
-    paddingTop: '5px',
-    display: 'flex',
+    paddingTop: '10px',
+    display: 'block',
     alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center',
     },
   },
   infoContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      margin: '0 10px 0 20px',
+      margin: '10px 10px 0 20px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
     },
   },
   vaultName: {
@@ -40,6 +49,12 @@ const styles = theme => ({
     padding: 0,
     [theme.breakpoints.up('lg')]: {
       fontSize: '27px',
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '15px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '24px',
     },
   },
   value: {
@@ -59,6 +74,10 @@ const styles = theme => ({
     color: '#8585A6',
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
+    textAlign: 'left',
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
+    },
   },
   center: {
     padding: '0.5rem 0.5rem',
@@ -75,6 +94,7 @@ const styles = theme => ({
   },
   chart: {
     padding: '5px',
+    textAlign: 'center',
   },
   depositButton: {
     border: 'solid 2px #54995C',
@@ -84,7 +104,7 @@ const styles = theme => ({
     color: '#ffffff',
     fontSize: '18px',
     fontWeight: 700,
-    padding: '4px 19px',
+    padding: '2px 20px 2px',
     textTransform: 'capitalize',
     marginTop: '10px',
     display: 'block',
@@ -112,6 +132,33 @@ const styles = theme => ({
       justifyContent: 'space-around',
       alignItems: 'center',
       borderRadius: '0px 0px 20px 20px',
+    },
+  },
+  btnSeeDetails: {
+    fontSize: '14px',
+    lineHeight: '14px',
+    fontWeight: 600,
+    color: '#6B7199',
+    backgroundColor: '#232743',
+    letterSpacing: '0.5px',
+    textTransform: 'inherit',
+    borderRadius: '20px',
+    padding: '5px 15px 5px',
+  },
+  badgesContainter: {
+    display: 'block',
+    margin: '0 10px 0 70px',
+    [theme.breakpoints.down('sm')]: {
+      margin: '0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+    },
+  },
+  leftCenter: {
+    textAlign: 'left',
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
     },
   },
 });
