@@ -11,20 +11,9 @@ import { calcDaily, formatApy, formatTvl } from 'helpers/format';
 import styles from './styles';
 import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 
-const historicalRateChartData = [
-  { date: '28 Jan', apy: 5.0 },
-  { date: '4 Feb', apy: 57.15 },
-  { date: '11 Feb', apy: 38.5 },
-  { date: '18 Feb', apy: 41.37 },
-  { date: '28 March', apy: 95.0 },
-  { date: '4 April', apy: 147.15 },
-  { date: '11 April', apy: 115.5 },
-  { date: '18 April', apy: 179.37 },
-];
-
 const useStyles = makeStyles(styles);
 
-const Item = ({ item }) => {
+const Item = ({ item, historicalApy }) => {
   const classes = useStyles();
   const history = useHistory();
   const t = useTranslation().t;
@@ -92,12 +81,10 @@ const Item = ({ item }) => {
             </Box>
           </Grid>
           <Grid className={classes.centerSpace} item xs={12} md={2}>
-            <Hidden smDown>
-              <Box className={classes.chart}>
-                <HistoricalRateChart chartData={historicalRateChartData} />
-                <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
-              </Box>
-            </Hidden>
+            <Box className={classes.chart}>
+              <HistoricalRateChart chartData={historicalRateChartData} />
+              <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
+            </Box>
           </Grid>
           <Grid className={[classes.apyMobile, classes.rWidth].join(' ')} item xs={12} md={2}>
             <Box textAlign={'center'}>

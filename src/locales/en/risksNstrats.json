@@ -1,9 +1,9 @@
 {
-  "Categry-Beefy": "Beefy", 
-  "Categry-Asset": "Asset", 
-  "Categry-Platform": "Platform", 
+  "Categry-Beefy": "Beefy",
+  "Categry-Asset": "Asset",
+  "Categry-Platform": "Platform",
   "Complexity-Low-Titl": "Low-complexity strategy",
-  "Complexity-Low-Expl": "Low-complexity strategies have few, if any, moving parts and their code is easy to read and debug. There is a direct correlation between code complexity and implicit risk. A simple strategy effectively mitigates implementation risks.",
+  "Complexity-Low-Expl": "Low-complexity strategies have few, if any, moving parts and their code is easy to read and debug. There is a direct correlation between code complexity and inherent risk. A simple strategy effectively mitigates implementation risks.",
   "Complexity-Low-Cond": "A low-complexity strategy interacts with just one audited and well-known smart contract, e.g. 'MasterChef.' The strategy serves as a façade for this smart contract, forwarding a deposit(), harvest() or withdrawal() call with a single corresponding line of code.",
   "Complexity-Mid-Titl": "Medium-complexity strategy",
   "Complexity-Mid-Expl": "A medium-complexity strategy interacts with two or more audited and well-known smart contracts. Its code is still easy to read, test and debug. It mitigates most implementation risks by keeping things simple, however the interactions between two or more systems add a layer of complexity.",
@@ -76,5 +76,16 @@
   "Platfrm-Timelock-Cond": "A function exists that could rug user funds to some extent. However all such reside behind a timelock at least six hours in length.",
   "Platfrm-TimelockNo-Titl": "Dangerous function not timelocked",
   "Platfrm-TimelockNo-Expl": "In some projects the owner or admin may execute certain functions that put user funds in jeopardy. Best would be to avoid such a feature altogether, but if necessary, it should reside behind a meaningful timelock to give warning to users before being triggered. This vault interacts with a project that has a dangerous function and it does notreside behind a proper timelock.",
-  "Platfrm-TimelockNo-Cond": "A function exists that could rug user funds to some extent, and it does not reside behind a timelock at least six hours in length."
+  "Platfrm-TimelockNo-Cond": "A function exists that could rug user funds to some extent, and it does not reside behind a timelock at least six hours in length.",
+  "Strat-LP-First": "The vault deposits the user's {{LPtoken}} in a {{platform}} farm, earning the platform's governance token.",
+  "Strat-LP": "Earned token is swapped for {{asset1}} and {{asset2}} in order to acquire more of the same LP token. To complete the compounding cycle, the new {{LPtoken}} is added to the farm, ready to go for the next earning event.",
+  "Strat-LP-Multi": "Earned token is swapped for more of the underlying assets in order to acquire more of the same liquidity token. To complete the compounding cycle, the new {{LPtoken}} is added to the farm, ready to go for the next earning event.",
+  "Strat-LP-Vamp": "In order to generate these earnings, {{topPlatform}} in turn performs the same process on a {{subPlatform}} farm. The Beefy vault swaps the ultimately earned token for more of the underlying assets in order to acquire more of the same {{LPtoken}}. To complete the compounding cycle, the new {{LPtoken}} is added to the {{topPlatform}} farm, ready to go for the next earning event.",
+  "Strat-LP-GasCost": "The transaction cost required to do all this is socialized among the vault's users.",
+  "Strat-Lending": "Speaking generally, a lending protocol is a decentralized marketplace for lenders and borrowers. When a user deposits {{asset}} into this vault, Beefy moves it into the protocol, then borrows against the position at a safe level of collateral (i.e. loan of less than 100%). The borrowed {{asset}} is then redeposited into the same protocol, and this procedure is repeated multiple times in order to maximize interest earned, earnings which are used to acquire more {{asset}}. Note that this 'leveraged' multi-lending and -borrowing involves only {{asset}}; therefore price swings present no liquidation risk. However, owing to the multi-supply/borrow cycle, transaction fees with the vault tends to run 4x higher than with standard vaults. Also, because of accrued interest on borrowings, the user may notice that her {{asset}} amount declines slightly between harvests. Yet upon each harvest, the amount bubbles beyond as compounded yields add in.",
+  "Strat-LP-Single": "The vault deposits the {{token}} in {{platform}} and farms for more {{token}}. The earned {{token}} is then deposited back into the {{token}} farm",
+  "Strat-Maxi": "The BIFI Maxi vault allows users to stake their BIFI much like in the RewardPool, but be rewarded instead in more BIFI. By staking BIFI, each participant compounds her share of Beefy’s revenue on the network into more BIFI token. Since BIFI token can no longer be minted, BIFI to be rewarded is purchased on the open market using the network's native token (e.g. BNB on BSC).",
+  "Strat-Default": "No description for the current strategy added yet.",
+
+  "xyz": "last-line placeholder"
 }

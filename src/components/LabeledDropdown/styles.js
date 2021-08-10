@@ -37,6 +37,9 @@ const styles = theme => ({
   },
   select: {
     minWidth: 210,
+    [theme.breakpoints.down('sm')]: {
+      minWidth: 310,
+    },
   },
   selectList: {
     color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
