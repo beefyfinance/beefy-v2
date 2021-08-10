@@ -3,13 +3,12 @@ import ArrowGo from '@material-ui/icons/ArrowForwardIos';
 import { Button, Grid, Hidden, makeStyles, Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import BigNumber from 'bignumber.js';
 
 import AssetsImage from 'components/AssetsImage';
 import SafetyScore from 'components/SafetyScore';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
-import { calcDaily, formatApy, formatTvl, formatDecimals } from 'helpers/format';
+import { calcDaily, formatApy, formatTvl } from 'helpers/format';
 import styles from './styles';
 import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 

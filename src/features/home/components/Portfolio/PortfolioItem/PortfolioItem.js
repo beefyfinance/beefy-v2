@@ -9,20 +9,9 @@ import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
 import vaultStates from './vaultStates.json';
 
-const historicalRateChartData = [
-  { date: '28 Jan', apy: 5.0 },
-  { date: '4 Feb', apy: 57.15 },
-  { date: '11 Feb', apy: 38.5 },
-  { date: '18 Feb', apy: 41.37 },
-  { date: '28 March', apy: 95.0 },
-  { date: '4 April', apy: 147.15 },
-  { date: '11 April', apy: 115.5 },
-  { date: '18 April', apy: 179.37 },
-];
-
 const useStyles = makeStyles(styles);
 
-const PortfolioItem = ({ item }) => {
+const PortfolioItem = ({ item, historicalApy }) => {
   const classes = useStyles({
     muted: item.status === 'paused' || item.status === 'eol',
   });
@@ -114,8 +103,8 @@ const PortfolioItem = ({ item }) => {
       </Hidden>
       <Hidden smDown>
         <Box className={[classes.rWidth, classes.chart].join(' ')} textAlign={'center'}>
-          <HistoricalRateChart chartData={historicalRateChartData} />
-          <Typography className={classes.h3}>Daily historical rate</Typography>
+          <HistoricalRateChart chartData={historicalApy} />
+          <Typography className={classes.h3}>APY historical rate</Typography>
         </Box>
       </Hidden>
       <Box className={classes.apyContainer}>
