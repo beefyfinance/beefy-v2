@@ -1,4 +1,8 @@
-import { BALANCE_FETCH_BALANCES_BEGIN, BALANCE_FETCH_BALANCES_DONE } from '../constants';
+import {
+  BALANCE_FETCH_BALANCES_BEGIN,
+  BALANCE_FETCH_BALANCES_DONE,
+  WALLET_DISCONNECT,
+} from '../constants';
 import { config } from 'config/config';
 
 const initialTokens = () => {
@@ -47,6 +51,8 @@ const balanceReducer = (state = initialState, action) => {
         isBalancesLoading: false,
         isBalancesFirstTime: false,
       };
+    case WALLET_DISCONNECT:
+      return initialState;
     default:
       return state;
   }

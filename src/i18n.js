@@ -27,18 +27,18 @@ export const localeToLanguageMap = {
 
 const o_risksNstrats = code => {
   try {
-    return require( `./locales/${code}/risksNstrats.json`);
+    return require(`./locales/${code}/risksNstrats.json`);
   } catch {
     return null;
   }
 };
 const resources = Object.fromEntries(
-  Object.keys( localeToLanguageMap).map( code => [
+  Object.keys(localeToLanguageMap).map(code => [
     code,
     {
       translation: {
-        ...require( `./locales/${code}/main.json`),
-        ...o_risksNstrats( code),
+        ...require(`./locales/${code}/main.json`),
+        ...o_risksNstrats(code),
       },
     },
   ])
