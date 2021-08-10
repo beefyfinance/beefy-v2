@@ -16,7 +16,7 @@ const styles = theme => ({
   lowTag: {
     backgroundColor: '#2E90A5',
   },
-  recentTag: {
+  beefyTag: {
     backgroundColor: '#9D57F7',
   },
   boostTag: {

@@ -85,14 +85,6 @@ const initialPools = () => {
         pool.tags.push('beefy');
       }
 
-      if (!isEmpty(pool.createdAt)) {
-        const created = new Date(pool.createdAt * 1000);
-        const days = 3; // number of days to be considered "recent"
-        if (created > new Date(new Date().getTime() - days * 24 * 60 * 60 * 1000)) {
-          pool.tags.push('recent');
-        }
-      }
-
       if (!isEmpty(pool.risks)) {
         const riskScore = safetyScore(pool.risks);
         pool['safetyScore'] = riskScore;
