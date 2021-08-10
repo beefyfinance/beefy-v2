@@ -7,7 +7,11 @@ const styles = theme => ({
     borderRadius: '5px',
     margin: '0 3px',
     textTransform: 'uppercase',
-    wordBreak: 'break-word',
+    [theme.breakpoints.down('md')]: {
+      wordBreak: 'none',
+      letterSpacing: '0.2px',
+      fontSize: '10px',
+    },
   },
   lowTag: {
     backgroundColor: '#2E90A5',
@@ -34,6 +38,13 @@ const styles = theme => ({
   },
   pausedTag: {
     backgroundColor: '#484F7F',
+  },
+  spacingMobile: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      justifyContent: 'center',
+      padding: '5px 0',
+    },
   },
 });
 

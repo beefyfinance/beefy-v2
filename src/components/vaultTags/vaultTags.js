@@ -1,4 +1,4 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography, Box } from '@material-ui/core';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
@@ -24,13 +24,15 @@ const DisplayTags = ({ tags }) => {
   };
 
   return tags.map(item => (
-    <Typography
-      className={[classes.tags, classes[item + 'Tag']].join(' ')}
-      display={'inline'}
-      key={item}
-    >
-      {getText(item)}
-    </Typography>
+    <Box className={classes.spacingMobile}>
+      <Typography
+        className={[classes.tags, classes[item + 'Tag']].join(' ')}
+        display={'inline'}
+        key={item}
+      >
+        {getText(item)}
+      </Typography>
+    </Box>
   ));
 };
 
