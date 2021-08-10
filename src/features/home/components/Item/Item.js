@@ -27,14 +27,11 @@ const Item = ({ item, historicalApy }) => {
     } else {
       setHasDeposit(false);
     }
-  }, [item]);
+  }, [item.balance]);
 
   const itemClassNames = `${classes.itemContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
-  const apyContainerClassNames = `${classes.apyContainer} ${classes.rWidth} ${
-    hasDeposit ? 'hasDeposit' : ''
-  }`;
+  const apyContainerClassNames = `${classes.apyContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
 
-  console.log(itemClassNames);
   return (
     <Grid container key={item.id}>
       <Box className={itemClassNames}>
@@ -108,7 +105,7 @@ const Item = ({ item, historicalApy }) => {
                 size="large"
                 className={classes.depositButton}
               >
-                {t('Deposit-Verb')}
+                {hasDeposit ? 'Deposit / Withdraw' : t('Deposit-Verb')}
               </Button>
             </Box>
           </Grid>

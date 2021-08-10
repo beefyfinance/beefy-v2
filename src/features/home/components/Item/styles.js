@@ -90,6 +90,9 @@ const styles = theme => ({
     display: 'block',
   },
   apyContainer: {
+    background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
+    borderRadius: '0px 20px 20px 0px',
+    padding: '20px 0',
     '& .MuiTypography-h1': {
       fontWeight: 600,
       fontSize: '30px',
@@ -101,30 +104,14 @@ const styles = theme => ({
       lineHeight: '24px',
       color: '#8585A6',
     },
-    display: 'block',
-    background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
-    borderRadius: '0px 20px 20px 0px',
+    '&.hasDeposit': {
+      background: theme.palette.type === 'dark' ? '#3F466D' : '#faf6f1',
+    },
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
       borderRadius: '0px 0px 20px 20px',
-    },
-    '&.hasDeposit': {
-      background: theme.palette.type === 'dark' ? '#3F466D' : '#faf6f1',
-    },
-  },
-  rWidth: {
-    minWidth: '80px',
-    padding: '20px',
-    [theme.breakpoints.up('sm')]: {
-      minWidth: '100px',
-    },
-    [theme.breakpoints.up('md')]: {
-      minWidth: '140px',
-    },
-    [theme.breakpoints.up('lg')]: {
-      minWidth: '170px',
     },
   },
 });
