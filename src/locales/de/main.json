@@ -18,6 +18,8 @@
 
   "Vault-Daily": "Tageskurs",
   "Vault-RateHist": "Historischer Kurs",
+  "Vault-Strategy": "Strategie",
+  "Vault-ApyBreakdown": "APY Aufgliederung",
 
   "Deposit-Verb": "Anlegen",
 
@@ -38,8 +40,11 @@
   "Transactn-View": "Im Explorer anschauen",
   "Transactn-Confirmed": "Transaktionen bestätigt",
 
+  "Safety-Score": "Sicherheitsnote",
   "Safety-HowCalc": "Wie ist es kalkuliert?",
   "Safety-Meaning": "Was bedeutet das?",
+
+  "Strat-Address": "Strategie Adresse",
 
   "xyz": "last-item placeholder"
 }
