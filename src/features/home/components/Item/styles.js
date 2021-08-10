@@ -1,5 +1,5 @@
 const styles = theme => ({
-  mobileCard: {
+  itemContainer: {
     margin: '20px 0 0 0',
     borderRadius: '20px',
     padding: 0,
@@ -7,6 +7,12 @@ const styles = theme => ({
     background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
     '&:hover': {
       background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
+    },
+    '&.hasDeposit': {
+      background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
+      '&:hover': {
+        background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
+      },
     },
   },
   badges: {
@@ -83,7 +89,7 @@ const styles = theme => ({
     marginTop: '10px',
     display: 'block',
   },
-  apyMobile: {
+  apyContainer: {
     '& .MuiTypography-h1': {
       fontWeight: 600,
       fontSize: '30px',
@@ -103,6 +109,9 @@ const styles = theme => ({
       justifyContent: 'space-around',
       alignItems: 'center',
       borderRadius: '0px 0px 20px 20px',
+    },
+    '&.hasDeposit': {
+      background: theme.palette.type === 'dark' ? '#3F466D' : '#faf6f1',
     },
   },
   rWidth: {

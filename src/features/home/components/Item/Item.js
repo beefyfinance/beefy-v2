@@ -1,13 +1,15 @@
+import React, { useState, useEffect } from 'react';
 import { Button, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import BigNumber from 'bignumber.js';
+
 import AssetsImage from 'components/AssetsImage';
 import SafetyScore from 'components/SafetyScore';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
-import { calcDaily, formatApy, formatTvl } from 'helpers/format';
+import { calcDaily, formatApy, formatTvl, formatDecimals } from 'helpers/format';
 import styles from './styles';
 import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 
@@ -16,11 +18,26 @@ const useStyles = makeStyles(styles);
 const Item = ({ item, historicalApy }) => {
   const classes = useStyles();
   const history = useHistory();
+  const [hasDeposit, setHasDeposit] = useState(false);
   const t = useTranslation().t;
 
+  useEffect(() => {
+    if (item.balance !== 0) {
+      setHasDeposit(true);
+    } else {
+      setHasDeposit(false);
+    }
+  }, [item]);
+
+  const itemClassNames = `${classes.itemContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
+  const apyContainerClassNames = `${classes.apyContainer} ${classes.rWidth} ${
+    hasDeposit ? 'hasDeposit' : ''
+  }`;
+
+  console.log(itemClassNames);
   return (
     <Grid container key={item.id}>
-      <Box className={classes.mobileCard}>
+      <Box className={itemClassNames}>
         <Grid container>
           <Grid className={classes.titleContainer} item xs={12} md={3}>
             <Box className={classes.infoContainer}>
@@ -32,7 +49,7 @@ const Item = ({ item, historicalApy }) => {
                 <Box className={classes.badges}>
                   <img
                     alt={item.network}
-                    src={require('../../../../images/networks/' + item.network + '.svg').default}
+                    src={require('images/networks/' + item.network + '.svg').default}
                   />
                   <DisplayTags tags={item.tags} />
                 </Box>
@@ -70,7 +87,7 @@ const Item = ({ item, historicalApy }) => {
               <Box className={classes.badges}>
                 <img
                   alt={item.network}
-                  src={require('../../../../images/networks/' + item.network + '.svg').default}
+                  src={require('images/networks/' + item.network + '.svg').default}
                 />
                 <DisplayTags tags={item.tags} />
               </Box>
@@ -80,7 +97,7 @@ const Item = ({ item, historicalApy }) => {
               <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
             </Box>
           </Grid>
-          <Grid className={[classes.apyMobile, classes.rWidth].join(' ')} item xs={12} md={2}>
+          <Grid className={apyContainerClassNames} item xs={12} md={2}>
             <Box textAlign={'center'}>
               <Typography variant={'h1'}>{formatApy(item.apy.totalApy)}</Typography>
               <Typography variant={'h2'}>{t('APY')}</Typography>
