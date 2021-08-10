@@ -183,9 +183,13 @@ const Home = () => {
   }, [dispatch]);
 
   const itemChartData = (historicalApy, apy, itemId) => {
-    let baseData = historicalApy[itemId] || [0, 0, 0, 0, 0, 0, 0, 0];
+    let baseData = [0, 0, 0, 0, 0, 0, 0, 0];
 
-    if (apy[itemId]) {
+    if (historicalApy && historicalApy[itemId]) {
+      baseData = historicalApy[itemId];
+    }
+
+    if (apy && apy[itemId]) {
       baseData.push(apy[itemId].totalApy);
     }
 
