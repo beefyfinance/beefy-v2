@@ -46,5 +46,8 @@
 
   "Strat-Address": "Strategie Adresse",
 
+  "Token-Detail": "Einzelheiten des Anlageguts",
+  "Token-NoDescrip": "Keine Beschreibung vorhanden.",
+
   "xyz": "last-item placeholder"
 }

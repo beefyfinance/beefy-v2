@@ -114,6 +114,10 @@
   "Safety-BeefySecure": "Your funds are secure on Beefy.Finance. The team puts a lot of effort into checking vaults added. Each vault also has a panic button to pause activity and protect user funds at short notice if the need, or suspicious activity, arises.",
   "Strat-Address": "Strategy address",
   "Strat-AddressVault": "Vault address",
+  "Token-Detail": "Asset details",
+  "Token-Site": "Website",
+  "Token-Contract": "Token Contract",
+  "Token-NoDescrip": "No token description available.",
 
   "Stake-Staked": "Staked",
   "Stake-Rewards": "Rewards",

@@ -1,42 +1,44 @@
-import React from 'react';
-import { config } from 'config/config';
 import { makeStyles, Typography } from '@material-ui/core';
-import styles from './styles';
-import LinkButton from 'components/LinkButton';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Card from '../Card/Card';
 import CardHeader from '../Card/CardHeader';
 import CardContent from '../Card/CardContent';
 import CardTitle from '../Card/CardTitle/CardTitle';
+import LinkButton from 'components/LinkButton';
+import { config } from 'config/config';
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
 const TokenCard = ({ token, network }) => {
   const classes = useStyles();
+  const t = useTranslation().t;
 
   const { symbol, website, address, description } = token;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle title={symbol} subtitle="Asset details" />
+        <CardTitle title={symbol} subtitle={t('Token-Detail')} />
         <div className={classes.cardActions}>
           {website ? (
             <div className={classes.cardAction}>
-              <LinkButton href={website} text="Website" />
+              <LinkButton href={website} text={t('Token-Site')} />
             </div>
           ) : null}
           <div className={classes.cardAction}>
             <LinkButton
               href={`${config[network].explorerUrl}/token/${address}`}
               className={classes.cardAction}
-              text="Token Contract"
+              text={t('Token-Contract')}
             />
           </div>
         </div>
       </CardHeader>
       <CardContent>
         <Typography className={classes.text}>
-          {description ? description : 'No token description available.'}
+          {description ? description : t('Token-NoDescrip')}
         </Typography>
       </CardContent>
     </Card>
