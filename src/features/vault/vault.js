@@ -1,13 +1,4 @@
-import {
-  Container,
-  makeStyles,
-  Grid,
-  Typography,
-  Box,
-  Button,
-  Divider,
-  Hidden,
-} from '@material-ui/core';
+import { Container, makeStyles, Grid, Typography, Box, Button, Divider } from '@material-ui/core';
 import { ArrowLeft } from '@material-ui/icons';
 import * as React from 'react';
 import { useParams } from 'react-router';
