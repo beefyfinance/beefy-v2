@@ -83,7 +83,7 @@ const Header = ({ isNightMode, setNightMode }) => {
       position="static"
     >
       <Toolbar disableGutters={true}>
-        <Container maxWidth="xl" className={classes.navDisplayFlex}>
+        <Container maxWidth="lg" className={classes.navDisplayFlex}>
           <Box className={classes.beefy}>
             <img alt="BIFI" src={require('../../images/BIFI.svg').default} />
             <Button

@@ -83,7 +83,7 @@ const Portfolio = () => {
 
   return (
     <Box className={classes.portfolio}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Box
           display={'flex'}
           className={[portfolioOpen ? classes.opened : '', classes.mobileFix].join(' ')}

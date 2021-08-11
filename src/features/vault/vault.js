@@ -104,7 +104,7 @@ const Vault = () => {
   }, [item, dispatch]);
 
   return (
-    <Container className={classes.vaultContainer} maxWidth="xl">
+    <Container className={classes.vaultContainer} maxWidth="lg">
       {isLoading ? (
         <Loader message={t('Vault-GetData')} />
       ) : (
