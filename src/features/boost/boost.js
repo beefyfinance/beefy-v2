@@ -49,7 +49,7 @@ const Boost = () => {
   }, [item]);
 
   return (
-    <Container className={classes.vaultContainer} maxWidth="xl">
+    <Container className={classes.vaultContainer} maxWidth="lg">
       {isLoading ? (
         <Loader message="Getting boost data..." />
       ) : (
