@@ -195,7 +195,7 @@ const Home = () => {
         {vault.isPoolsLoading ? (
           <Loader message={t('Vaults-LoadingData')} />
         ) : (
-          <Box>
+          <Box mb={4}>
             <Filter
               sortConfig={sortConfig}
               setSortConfig={setSortConfig}
