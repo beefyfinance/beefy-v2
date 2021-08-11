@@ -63,6 +63,9 @@ const styles = theme => ({
         margin: '0 30px',
       },
     },
+    '& .MuiBox-root': {
+      padding: '0 5px 0 5px',
+    },
   },
   network: {
     textTransform: 'uppercase',
@@ -118,6 +121,18 @@ const styles = theme => ({
   selected: {
     color: '#ffffff !important',
     borderBottom: 'solid 3px #3F466D',
+  },
+  badges: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '0 30px 0 0',
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 10px',
+    },
+    '& .MuiBox-root': {
+      padding: '0 5px',
+    },
   },
 });
 

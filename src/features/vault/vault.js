@@ -108,7 +108,7 @@ const Vault = () => {
       {isLoading ? (
         <Loader message={t('Vault-GetData')} />
       ) : (
-        <Grid container style={{ position: 'relative' }}>
+        <Grid container spacing={6} style={{ position: 'relative' }}>
           <Grid item xs={12} md={8} lg={8} xl={9}>
             <Button
               className={classes.btnGoBack}
@@ -129,42 +129,32 @@ const Vault = () => {
               </Grid>
             </Grid>
             <Box className={classes.mobileFix} display="flex" alignItems="center">
-              <Box display={'flex'} alignItems="center">
-                <Box lineHeight={0}>
+              <Box className={classes.badges}>
+                <Box>
                   <img
                     alt={item.network}
                     src={require('images/networks/' + item.network + '.svg').default}
                   />
                 </Box>
-                <Box pl={1}>
+                <Box>
                   <Typography className={classes.network} display={'inline'}>
                     {item.network} {t('Vault-network')}
                   </Typography>
                 </Box>
-                <Box pl={1}>
-                  <DisplayTags tags={item.tags} />
-                </Box>
+                <DisplayTags tags={item.tags} />
               </Box>
               <Box className={classes.summaryContainer} display={'flex'} alignItems="center">
-                <Hidden xsDown>
-                  <Box>
-                    <Divider />
-                  </Box>
-                </Hidden>
+                <Divider />
                 <Box>
                   <Typography variant={'h1'}>{formatTvl(item.tvl)}</Typography>
                   <Typography variant={'body2'}>{t('TVL')}</Typography>
                 </Box>
-                <Box>
-                  <Divider />
-                </Box>
+                <Divider />
                 <Box>
                   <Typography variant={'h1'}>{calcDaily(item.apy.totalApy)}</Typography>
                   <Typography variant={'body2'}>{t('Vault-Daily')}</Typography>
                 </Box>
-                <Box>
-                  <Divider />
-                </Box>
+                <Divider />
                 <Box>
                   <Typography variant={'h1'}>{formatApy(item.apy.totalApy)}</Typography>
                   <Typography variant={'body2'}>{t('APY')}</Typography>
