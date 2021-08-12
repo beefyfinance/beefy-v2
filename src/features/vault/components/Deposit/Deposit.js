@@ -147,6 +147,10 @@ const Deposit = ({
     }
   }, [steps, wallet.action]);
 
+  const handleNetworkSwitch = network => {
+    dispatch(reduxActions.wallet.setNetwork(network));
+  };
+
   return (
     <React.Fragment>
       <Box p={3}>
@@ -190,18 +194,28 @@ const Deposit = ({
         <FeeBreakdown withdrawalFee={item.withdrawalFee} depositFee={item.depositFee} />
         <Box mt={2}>
           {wallet.address ? (
-            <Button
-              onClick={handleDeposit}
-              className={classes.btnSubmit}
-              fullWidth={true}
-              disabled={formData.deposit.amount <= 0}
-            >
-              {item.network !== wallet.network
-                ? t('Network-Change')
-                : formData.deposit.max
-                ? t('Deposit-All')
-                : t('Deposit-Verb')}
-            </Button>
+            item.network !== wallet.network ? (
+              <>
+                <Button
+                  onClick={() => handleNetworkSwitch(item.network)}
+                  className={classes.btnSubmit}
+                  fullWidth={true}
+                >
+                  {t('Network-Change', { network: item.network.toUpperCase() })}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={handleDeposit}
+                  className={classes.btnSubmit}
+                  fullWidth={true}
+                  disabled={formData.deposit.amount <= 0}
+                >
+                  {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
+                </Button>
+              </>
+            )
           ) : (
             <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>
               {t('Network-ConnectWallet')}
