@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
 import { makeStyles, Box } from '@material-ui/core';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AreaChart, Area, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 
-import styles from './styles';
 import Card from '../Card/Card';
 import CardHeader from '../Card/CardHeader';
 import CardContent from '../Card/CardContent';
 import CardTitle from '../Card/CardTitle/CardTitle';
 import CustomTooltip from './CustomTooltip';
-import Tabs from 'components/Tabs';
 import useChartData from './useChartData';
+import Tabs from 'components/Tabs';
 import { formatTvl, formatApy } from 'helpers/format';
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
@@ -19,22 +20,23 @@ const Graph = ({ oracleId, vaultId, network }) => {
   const [stat, setStat] = useState(2);
   const [period, setPeriod] = useState(2);
   const chartData = useChartData(stat, period, oracleId, vaultId, network);
+  const t = useTranslation().t;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle title="Historical rate" />
+        <CardTitle title={t('Graph-RateHist')} />
         <div className={classes.headerTabs}>
           <div className={classes.headerTab}>
             <Tabs
-              labels={['TVL', 'Price', 'APY']}
+              labels={[t('TVL'), t('Graph-Price'), t('APY')]}
               value={stat}
               onChange={newValue => setStat(newValue)}
             />
           </div>
           <div className={classes.headerTab}>
             <Tabs
-              labels={['1D', '1W', '1M', '1Y']}
+              labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-1Year')]}
               value={period}
               onChange={newValue => setPeriod(newValue)}
             />

@@ -1,16 +1,16 @@
-import React from 'react';
-import moment from 'moment';
 import { makeStyles, Paper } from '@material-ui/core';
-
-import styles from './styles';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 import { formatTvl, formatApy } from 'helpers/format';
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const LABELS = ['TVL', 'Token Price', 'APY'];
-
 const CustomTooltip = ({ active, payload, stat }) => {
   const classes = useStyles();
+  const t = useTranslation().t;
+  const LABELS = [t('TVL'), t('Graph-PriceTkn'), t('APY')];
 
   if (active && payload && payload.length) {
     const formattedDate = moment(new Date(payload[0].payload.ts)).format('lll');

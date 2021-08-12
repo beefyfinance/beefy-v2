@@ -17,7 +17,7 @@
   "VaultTag-LowRisk": "Risikoarm",
 
   "Vault-Daily": "Tageskurs",
-  "Vault-RateHist": "Historischer Kurs",
+  "Vault-network": "Netzwerk",
   "Vault-Strategy": "Strategie",
   "Vault-ApyBreakdown": "APY Aufgliederung",
 
@@ -39,6 +39,11 @@
   "Transact-BuyTkn": "Token Kaufen",
   "Transactn-View": "Im Explorer anschauen",
   "Transactn-Confirmed": "Transaktionen bestätigt",
+
+  "Graph-RateHist": "Historischer Kurs",
+  "Graph-Price": "Kurs",
+  "Graph-1Day": "1T",
+  "Graph-PriceTkn": "Token Kurs",
 
   "Safety-Score": "Sicherheitsnote",
   "Safety-HowCalc": "Wie ist es kalkuliert?",
