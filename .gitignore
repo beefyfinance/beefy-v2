@@ -1,7 +1,7 @@
 /node_modules/
 /.idea/
 .eslintcache
-*.sw[m-p]
+.*.sw[m-p]
 .vscode
 .DS_Store
 /tmp
