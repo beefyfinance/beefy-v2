@@ -18,7 +18,7 @@ const styles = theme => ({
     },
     '& .MuiTypography-root': {
       fontWeight: '600',
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+      color: theme.palette.type === 'dark' ? 'white' : '#ff0000',
       position: 'absolute',
       top: '10px',
       left: '23px',
@@ -52,7 +52,7 @@ const styles = theme => ({
     },
   },
   label: {
-    color: 'white',
+    color: '#6B7199',
   },
 });
 
