@@ -25,6 +25,7 @@ import SimpleDropdown from 'components/SimpleDropdown';
 import LanguageDropdown from 'components/LanguageDropdown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { useTranslation } from 'react-i18next';
+import switchNetwork from 'helpers/switchNetwork';
 
 const useStyles = makeStyles(styles);
 
@@ -38,10 +39,6 @@ const Header = ({ isNightMode, setNightMode }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
-  };
-
-  const handleNetworkSwitch = event => {
-    dispatch(reduxActions.wallet.setNetwork(event.target.value));
   };
 
   useEffect(() => {
@@ -111,7 +108,7 @@ const Header = ({ isNightMode, setNightMode }) => {
                 <SimpleDropdown
                   list={getAvailableNetworks(true)}
                   selected={walletReducer.network}
-                  handler={handleNetworkSwitch}
+                  handler={e => switchNetwork(e.target.value, dispatch)}
                 />
               </Box>
               <Box>
@@ -140,7 +137,7 @@ const Header = ({ isNightMode, setNightMode }) => {
                   <SimpleDropdown
                     list={getAvailableNetworks(true)}
                     selected={walletReducer.network}
-                    handler={handleNetworkSwitch}
+                    handler={e => switchNetwork(e.target.value, dispatch)}
                   />
                 </Grid>
               </Grid>

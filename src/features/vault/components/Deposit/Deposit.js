@@ -14,6 +14,7 @@ import Steps from '../Steps';
 import AssetsImage from 'components/AssetsImage';
 import BoostWidget from '../BoostWidget';
 import FeeBreakdown from '../FeeBreakdown';
+import switchNetwork from 'helpers/switchNetwork';
 
 const useStyles = makeStyles(styles);
 
@@ -147,10 +148,6 @@ const Deposit = ({
     }
   }, [steps, wallet.action]);
 
-  const handleNetworkSwitch = network => {
-    dispatch(reduxActions.wallet.setNetwork(network));
-  };
-
   return (
     <React.Fragment>
       <Box p={3}>
@@ -197,7 +194,7 @@ const Deposit = ({
             item.network !== wallet.network ? (
               <>
                 <Button
-                  onClick={() => handleNetworkSwitch(item.network)}
+                  onClick={() => switchNetwork(item.network, dispatch)}
                   className={classes.btnSubmit}
                   fullWidth={true}
                 >

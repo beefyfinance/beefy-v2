@@ -14,6 +14,7 @@ import FeeBreakdown from '../FeeBreakdown';
 import Steps from '../Steps';
 import styles from '../styles';
 import BigNumber from 'bignumber.js';
+import switchNetwork from 'helpers/switchNetwork';
 
 const useStyles = makeStyles(styles);
 
@@ -133,10 +134,6 @@ const Withdraw = ({
     }
   }, [steps, wallet.action]);
 
-  const handleNetworkSwitch = network => {
-    dispatch(reduxActions.wallet.setNetwork(network));
-  };
-
   return (
     <React.Fragment>
       <Box p={3}>
@@ -183,7 +180,7 @@ const Withdraw = ({
             item.network !== wallet.network ? (
               <>
                 <Button
-                  onClick={() => handleNetworkSwitch(item.network)}
+                  onClick={() => switchNetwork(item.network, dispatch)}
                   className={classes.btnSubmit}
                   fullWidth={true}
                 >
