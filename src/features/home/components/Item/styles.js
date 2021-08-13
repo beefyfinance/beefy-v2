@@ -23,11 +23,12 @@ const styles = theme => ({
     },
   },
   titleContainer: {
-    paddingTop: '10px',
-    display: 'block',
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'space-around',
+    justifyContent: 'center',
+    [theme.breakpoints.up('md')]: {
+      alignItems: 'flex-start',
     },
   },
   infoContainer: {
