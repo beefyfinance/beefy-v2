@@ -63,7 +63,7 @@
   "Vault-AprBoost": "Boost APR",
   "Vault-Auditd": "Audited",
   "Vault-AuditdCommunity": "Audited Community",
-  "Network-Change": "Network Change",
+  "Network-Change": "Switch to {{network}} network",
   "Network-ConnectWallet": "Connect Wallet",
   "Deposit-noun": "deposit",
   "Deposit-Noun": "Deposit",

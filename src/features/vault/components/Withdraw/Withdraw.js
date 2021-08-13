@@ -14,6 +14,7 @@ import FeeBreakdown from '../FeeBreakdown';
 import Steps from '../Steps';
 import styles from '../styles';
 import BigNumber from 'bignumber.js';
+import switchNetwork from 'helpers/switchNetwork';
 
 const useStyles = makeStyles(styles);
 
@@ -176,18 +177,28 @@ const Withdraw = ({
         <FeeBreakdown withdrawalFee={item.withdrawalFee} depositFee={item.depositFee} />
         <Box mt={2}>
           {wallet.address ? (
-            <Button
-              onClick={handleWithdraw}
-              className={classes.btnSubmit}
-              fullWidth={true}
-              disabled={formData.withdraw.amount <= 0}
-            >
-              {item.network !== wallet.network
-                ? t('Network-Change')
-                : formData.withdraw.max
-                ? t('Withdraw-All')
-                : t('Withdraw-Verb')}
-            </Button>
+            item.network !== wallet.network ? (
+              <>
+                <Button
+                  onClick={() => switchNetwork(item.network, dispatch)}
+                  className={classes.btnSubmit}
+                  fullWidth={true}
+                >
+                  {t('Network-Change', { network: item.network.toUpperCase() })}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={handleWithdraw}
+                  className={classes.btnSubmit}
+                  fullWidth={true}
+                  disabled={formData.withdraw.amount <= 0}
+                >
+                  {formData.withdraw.max ? t('Withdraw-All') : t('Withdraw-Verb')}
+                </Button>
+              </>
+            )
           ) : (
             <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>
               {t('Network-ConnectWallet')}
