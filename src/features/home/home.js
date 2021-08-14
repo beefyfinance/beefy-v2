@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useTranslation } from 'react-i18next';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 
 import { Container, makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
@@ -93,7 +93,7 @@ const Home = () => {
         return false;
       }
 
-      if (sortConfig.zero && item.balance === 0) {
+      if (sortConfig.zero && BigNumber(balance.tokens[item.token].balance).eq(0)) {
         return false;
       }
 
