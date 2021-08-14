@@ -3,6 +3,8 @@ import ArrowGo from '@material-ui/icons/ArrowForwardIos';
 import { Button, Grid, Hidden, makeStyles, Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import BigNumber from 'bignumber.js';
 
 import AssetsImage from 'components/AssetsImage';
 import SafetyScore from 'components/SafetyScore';
@@ -18,15 +20,17 @@ const Item = ({ item, historicalApy }) => {
   const classes = useStyles();
   const history = useHistory();
   const [hasDeposit, setHasDeposit] = useState(false);
+  const balances = useSelector(state => state.balanceReducer);
   const t = useTranslation().t;
 
   useEffect(() => {
-    if (item.balance !== 0) {
+    const mooBalance = BigNumber(balances.tokens[item.earnedToken].balance);
+    if (!mooBalance.eq(0)) {
       setHasDeposit(true);
     } else {
       setHasDeposit(false);
     }
-  }, [item.balance]);
+  }, [balances]);
 
   const itemClassNames = `${classes.itemContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
   const apyContainerClassNames = `${classes.apyContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
