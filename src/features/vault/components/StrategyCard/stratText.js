@@ -17,12 +17,6 @@ const stratText = (stratType, platform, assets, want, vamp, t) => {
       }
       return s_1ST + ' ' + s_mid + ' ' + t('Strat-LP-GasCost');
 
-    /*    case 'StratMultiLP':
-      return t( 'Strat-MultiLP', {platform: platform, asset1: assets[0], 
-                              asset2: assets[1], LPtoken: want});
-    case 'Vamp':
-      return t( 'Strat-Vamp', {subPlatform: platform, topPlatform: vamp, LPtoken: want});
-      } */
     case 'Lending':
       return t('Strat-Lending', { asset: assets[0] });
 
@@ -36,7 +30,7 @@ const stratText = (stratType, platform, assets, want, vamp, t) => {
 
     default:
       return t('Strat-Default');
-  }
-};
+  } //switch (stratType)
+}; //const stratText
 
 export default stratText;

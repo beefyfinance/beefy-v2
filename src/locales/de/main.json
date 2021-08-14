@@ -2,14 +2,26 @@
   "Header-Docs": "Dokumente",
 
   "Portfolio-Portfolio": "Portfolio",
+  "Portfolio-BalanceShow": "Guthaben zeigen",
+  "Portfolio-BalanceHide": "Guthaben verbergen",
+  "Portfolio-Deposited": "Eingezahlt",
   "Portfolio-YieldTot": "Totales Erträgnis",
+
+  "PortfolioItem-Balance": "Saldo",
+  "PortfolioItem-Deposits": "Einzahlungen",
+
+  "Vaults-LoadingData": "Daten werden von Blockchain geladen...",
 
   "Filter-DropdwnDflt": "Alle",
   "Filter-AsstSingle": "Einzelne Anlagen",
-  "Filter-CatgryBeefy": "Beefy",
+  "Filter-Categories": "Kategorien",
+  "Filter-CatgryAll": "Alle",
+  "Filter-CatgryBeefy": "Beefy Vaults",
+  "Filter-CatgryLowRsk": "Risikoarm",
   "Filter-SortSafety": "Sicherheit",
   "Filter-HideZero": "Nullsalden ausblenden",
   "Filter-Type": "Vault Typ:",
+  "Filter-Search": "Schnellsuche...",
   "Filter-Sort": "Sortieren nach:",
   "Filter-Showing": "{{number}}/{{count}} werden gezeigt",
   "Filter-ShowingVaults": "{{number}} Vaults werden gezeigt",
@@ -40,12 +52,13 @@
   "Transactn-View": "Im Explorer anschauen",
   "Transactn-Confirmed": "Transaktionen bestätigt",
 
-  "Graph-RateHist": "Historischer Kurs",
+  "Graph-RateHist": "Historischer Chart",
   "Graph-Price": "Kurs",
   "Graph-1Day": "1T",
   "Graph-PriceTkn": "Token Kurs",
 
   "Safety-Score": "Sicherheitsnote",
+  "Safety-ScoreWhat": "Was ist eine Sicherheitsnote?",
   "Safety-HowCalc": "Wie ist es kalkuliert?",
   "Safety-Meaning": "Was bedeutet das?",
 

@@ -6,7 +6,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const LabeledDropdown = ({ list, selected, handler, label, renderValue }) => {
+const LabeledDropdown = ({ list, selected, handler, label, renderValue, selectStyle }) => {
   const classes = useStyles();
 
   return (
@@ -30,6 +30,7 @@ const LabeledDropdown = ({ list, selected, handler, label, renderValue }) => {
         disableUnderline={true}
         IconComponent={ExpandMore}
         renderValue={renderValue}
+        style={selectStyle}
       >
         {Object.keys(list).map(val => (
           <MenuItem key={list[val]} value={val}>

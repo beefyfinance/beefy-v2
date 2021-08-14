@@ -64,13 +64,9 @@ const Item = ({ item, historicalApy }) => {
             <Box>
               <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
               <Box display="flex" alignItems="center">
-                <Typography className={classes.label}>{t('Vault-SftyScore')}</Typography>
+                <Typography className={classes.label}>{t('Safety-Score')}</Typography>
                 <Box ml={0.5}>
-                  <Popover
-                    solid
-                    title="What's the Safety Score?"
-                    content="The Safety Score is computed by the Beefy devs when assesing each vault. It is not necessarily perfect, but it is another tool that can help make a decision. The safety score that a vault can get goes from 1 to 10. The best possible score is 10 and the worst is 0"
-                  />
+                  <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
                 </Box>
               </Box>
             </Box>
@@ -97,7 +93,7 @@ const Item = ({ item, historicalApy }) => {
             <Hidden smDown>
               <Box className={classes.chart}>
                 <HistoricalRateChart chartData={historicalApy} />
-                <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
+                <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
               </Box>
             </Hidden>
           </Grid>
@@ -112,7 +108,7 @@ const Item = ({ item, historicalApy }) => {
                 size="large"
                 className={classes.depositButton}
               >
-                {hasDeposit ? 'Deposit / Withdraw' : t('Deposit-Verb')}
+                {hasDeposit ? t('Deposit-Withdraw') : t('Deposit-Verb')}
               </Button>
             </Box>
           </Grid>

@@ -1,13 +1,14 @@
-import React from 'react';
-import BigNumber from 'bignumber.js';
 import { makeStyles, Grid, Button, Hidden, Typography, Box } from '@material-ui/core';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { formatApy, formatDecimals } from 'helpers/format';
-import styles from './styles';
+import { useTranslation } from 'react-i18next';
+import BigNumber from 'bignumber.js';
 import HistoricalRateChart from '../../HistoricalRateChart/HistoricalRateChart';
+import { formatApy, formatDecimals } from 'helpers/format';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
 import vaultStates from './vaultStates.json';
+import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
@@ -16,6 +17,7 @@ const PortfolioItem = ({ item, historicalApy }) => {
     muted: item.status === 'paused' || item.status === 'eol',
   });
   const history = useHistory();
+  const t = useTranslation().t;
 
   const formatBalance = () => {
     let balance = new BigNumber(item.balance);
@@ -29,7 +31,7 @@ const PortfolioItem = ({ item, historicalApy }) => {
     return balance.times(item.oraclePrice).toFixed(2);
   };
 
-  const ctaText = () => (item.depositsPaused === true ? 'Withdraw' : 'Deposit / Withdraw');
+  const ctaText = () => (item.depositsPaused === true ? t('Withdraw-Verb') : t('Deposit-Withdraw'));
 
   const stateTag = () => {
     if (item.depositsPaused) {
@@ -68,8 +70,8 @@ const PortfolioItem = ({ item, historicalApy }) => {
                 </Box>
                 {item.depositsPaused && (
                   <Popover
-                    title={vaultStates[item.status].title}
-                    content={vaultStates[item.status].description}
+                    title={t(vaultStates[item.status].title)}
+                    content={t(vaultStates[item.status].description)}
                     placement="top-start"
                     solid
                   />
@@ -84,13 +86,13 @@ const PortfolioItem = ({ item, historicalApy }) => {
           {formatBalance()} {item.oracle === 'tokens' ? item.token : 'LP'}
         </Typography>
         <Typography className={classes.h3}>
-          <span className={classes.bold}>${formatBalanceInUsd()}</span> Total
+          <span className={classes.bold}>${formatBalanceInUsd()}</span> {t('PortfolioItem-Balance')}
         </Typography>
       </Box>
       <Hidden smDown>
         <Box className={[classes.rWidth, classes.chart].join(' ')} textAlign={'center'}>
           <HistoricalRateChart chartData={historicalApy} />
-          <Typography className={classes.h3}>APY historical rate</Typography>
+          <Typography className={classes.h3}>{t('Vault-Chart')}</Typography>
         </Box>
       </Hidden>
       <Box className={classes.apyContainer}>
@@ -101,7 +103,7 @@ const PortfolioItem = ({ item, historicalApy }) => {
             <Typography variant="h1">{formatApy(item.apy.totalApy)}</Typography>
           )}
           <Box marginLeft={1}>
-            <Typography variant="h2">APY</Typography>
+            <Typography variant="h2">{t('APY')}</Typography>
           </Box>
         </Box>
         <Box>

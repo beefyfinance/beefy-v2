@@ -144,6 +144,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             selected={sortConfig.key}
             handler={e => handleChange('key', e.target.value)}
             label={t('Filter-Sort')}
+            selectStyle={{ minWidth: 230 }}
           />
         </Box>
         <Box className={classes.btnFilter}>
