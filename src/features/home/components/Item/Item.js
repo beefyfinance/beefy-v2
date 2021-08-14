@@ -30,7 +30,7 @@ const Item = ({ item, historicalApy }) => {
     } else {
       setHasDeposit(false);
     }
-  }, [balances]);
+  }, [balances, item.earnedToken]);
 
   const itemClassNames = `${classes.itemContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
   const apyContainerClassNames = `${classes.apyContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
