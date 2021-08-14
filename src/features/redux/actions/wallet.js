@@ -5,6 +5,7 @@ import {
   WALLET_CONNECT_BEGIN,
   WALLET_CONNECT_DONE,
   WALLET_CREATE_MODAL,
+  WALLET_DISCONNECT,
 } from '../constants';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal, { connectors } from 'web3modal';
@@ -153,7 +154,7 @@ const disconnect = () => {
     const state = getState();
 
     await state.walletReducer.web3modal.clearCachedProvider();
-    dispatch({ type: WALLET_CONNECT_DONE, payload: { address: null } });
+    dispatch({ type: WALLET_DISCONNECT });
   };
 };
 

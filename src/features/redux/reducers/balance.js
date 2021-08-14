@@ -52,7 +52,7 @@ const balanceReducer = (state = initialState, action) => {
         isBalancesFirstTime: false,
       };
     case WALLET_DISCONNECT:
-      return initialState;
+      return { ...initialState, tokens: initialTokens() };
     default:
       return state;
   }

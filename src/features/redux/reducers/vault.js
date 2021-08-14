@@ -18,7 +18,6 @@ const initialBoosts = () => {
         const pool = pools[boost.poolId];
 
         boost['network'] = net;
-        boost['balance'] = 0;
         boost['apy'] = 0;
         boost['tvl'] = 0;
         boost['periodFinish'] = 0;
@@ -51,7 +50,6 @@ const initialPools = () => {
 
       pool['network'] = net;
       pool['pricePerFullShare'] = 1;
-      pool['balance'] = 0;
       pool['daily'] = 0;
       pool['apy'] = 0;
       pool['tvl'] = 0;

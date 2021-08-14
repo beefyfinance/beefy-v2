@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useTranslation } from 'react-i18next';
-import { BigNumber } from 'bignumber.js';
+import BigNumber from 'bignumber.js';
 
 import { Container, makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
@@ -93,7 +93,7 @@ const Home = () => {
         return false;
       }
 
-      if (sortConfig.zero && item.balance === 0) {
+      if (sortConfig.zero && BigNumber(balance.tokens[item.token].balance).eq(0)) {
         return false;
       }
 
@@ -141,7 +141,7 @@ const Home = () => {
         ...{ items: data.slice(0, scrollable.chunk), hasMore: data.length > scrollable.chunk },
       };
     });
-  }, [sortConfig, vault.pools, userEarnedTokenMap]);
+  }, [sortConfig, vault.pools, userEarnedTokenMap, balance]);
 
   const fetchScrollable = () => {
     if (scrollable.items.length >= filtered.length) {
@@ -172,6 +172,8 @@ const Home = () => {
     if (wallet.address && vault.lastUpdated > 0 && balance.lastUpdated) {
       const userEarnedTokenMap = buildUserEarnedTokenMap(vault.pools, balance.tokens);
       setUserEarnedTokenMap(userEarnedTokenMap);
+    } else {
+      setUserEarnedTokenMap({});
     }
   }, [wallet.address, vault.lastUpdated, balance.lastUpdated, vault.pools, balance.tokens]);
 

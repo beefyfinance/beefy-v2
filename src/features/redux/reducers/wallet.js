@@ -1,5 +1,15 @@
-import { config } from 'config/config';
 import Web3 from 'web3';
+
+import { config } from 'config/config';
+import {
+  WALLET_DISCONNECT,
+  WALLET_CONNECT_BEGIN,
+  WALLET_CONNECT_DONE,
+  WALLET_CREATE_MODAL,
+  SET_NETWORK,
+  WALLET_ACTION,
+  WALLET_ACTION_RESET,
+} from '../constants';
 
 const initialNetwork = () => {
   const storage = localStorage.getItem('network');
@@ -44,34 +54,29 @@ const initialState = {
 
 const walletReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'WALLET_DISCONNECT':
-      return {
-        ...state,
-        address: null,
-      };
-    case 'WALLET_CONNECT_BEGIN':
+    case WALLET_CONNECT_BEGIN:
       return {
         ...state,
         pending: true,
       };
-    case 'WALLET_CONNECT_DONE':
+    case WALLET_CONNECT_DONE:
       return {
         ...state,
         pending: false,
         address: action.payload.address,
       };
-    case 'WALLET_CREATE_MODAL':
+    case WALLET_CREATE_MODAL:
       return {
         ...state,
         web3modal: action.payload.data,
       };
-    case 'SET_NETWORK':
+    case SET_NETWORK:
       return {
         ...state,
         network: action.payload.network,
         clients: action.payload.clients,
       };
-    case 'WALLET_ACTION':
+    case WALLET_ACTION:
       return {
         ...state,
         action: {
@@ -79,10 +84,16 @@ const walletReducer = (state = initialState, action) => {
           data: action.payload.data,
         },
       };
-    case 'WALLET_ACTION_RESET':
+    case WALLET_ACTION_RESET:
       return {
         ...state,
         action: initialAction(),
+      };
+    case WALLET_DISCONNECT:
+      return {
+        ...state,
+        pending: false,
+        address: null,
       };
     default:
       return state;
