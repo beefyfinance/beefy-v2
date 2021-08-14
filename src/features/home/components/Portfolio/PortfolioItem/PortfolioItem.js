@@ -3,11 +3,13 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
+
 import HistoricalRateChart from '../../HistoricalRateChart/HistoricalRateChart';
 import { formatApy, formatDecimals } from 'helpers/format';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
 import vaultStates from './vaultStates.json';
+import { useSelector } from 'react-redux';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
@@ -18,17 +20,18 @@ const PortfolioItem = ({ item, historicalApy }) => {
   });
   const history = useHistory();
   const t = useTranslation().t;
+  const balance = useSelector(state => state.balanceReducer);
 
   const formatBalance = () => {
-    let balance = new BigNumber(item.balance);
-    balance = balance.times(item.pricePerFullShare).div('1e18').div('1e18');
-    return formatDecimals(balance, 4, 6);
+    let vaultBalance = new BigNumber(balance.tokens[item.earnedToken].balance);
+    vaultBalance = vaultBalance.times(item.pricePerFullShare).div('1e18').div('1e18');
+    return formatDecimals(vaultBalance, 4, 6);
   };
 
   const formatBalanceInUsd = () => {
-    let balance = new BigNumber(item.balance);
-    balance = balance.times(item.pricePerFullShare).div('1e18').div('1e18');
-    return balance.times(item.oraclePrice).toFixed(2);
+    let vaultBalance = new BigNumber(balance.tokens[item.earnedToken].balance);
+    vaultBalance = vaultBalance.times(item.pricePerFullShare).div('1e18').div('1e18');
+    return vaultBalance.times(item.oraclePrice).toFixed(2);
   };
 
   const ctaText = () => (item.depositsPaused === true ? t('Withdraw-Verb') : t('Deposit-Withdraw'));
