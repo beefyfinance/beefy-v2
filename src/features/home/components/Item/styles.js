@@ -174,12 +174,12 @@ const styles = theme => ({
     },
   },
   stat: {
-    [theme.breakpoints.down('md')]: {
-      width: '50%',
-      margin: 'auto',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '50%',
+    [theme.breakpoints.up('md')]: {
+      width: 'auto',
     },
   },
   safetyLabel: {
