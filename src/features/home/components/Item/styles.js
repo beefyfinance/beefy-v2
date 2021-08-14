@@ -21,7 +21,9 @@ const styles = theme => ({
     },
   },
   dataGrid: {
-    paddingRight: 18,
+    [theme.breakpoints.up('md')]: {
+      paddingRight: 18,
+    },
   },
   badges: {
     display: 'flex',
@@ -88,18 +90,15 @@ const styles = theme => ({
       textAlign: 'center',
     },
   },
-  center: {
-    padding: '0.5rem 0.5rem',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   centerSpace: {
-    padding: '0.5rem 1rem 0.5rem 0',
+    padding: '0.5rem 0',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
     textAlign: 'center',
+    [theme.breakpoints.up('md')]: {
+      padding: '0.5rem 1rem 0.5rem 0',
+    },
   },
   chart: {
     textAlign: 'center',
@@ -143,7 +142,6 @@ const styles = theme => ({
     },
     [theme.breakpoints.up('md')]: {
       width: '275px',
-      padding: '20px 0',
       flexDirection: 'column',
       borderRadius: '0px 20px 20px 0px',
     },
@@ -174,6 +172,19 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       textAlign: 'center',
     },
+  },
+  stat: {
+    [theme.breakpoints.down('md')]: {
+      width: '50%',
+      margin: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  },
+  safetyLabel: {
+    display: 'flex',
+    alignItems: 'center',
   },
 });
 
