@@ -37,8 +37,8 @@ const Item = ({ item, historicalApy }) => {
 
   return (
     <div className={itemClassNames}>
-      <Grid container>
-        <Grid className={classes.titleContainer} item xs={12} md={3}>
+      <Grid container className={classes.dataGrid}>
+        <Grid className={classes.titleContainer} item xs={12} md={4}>
           <Box className={classes.infoContainer}>
             <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
             <Typography className={classes.vaultName}>{item.name}</Typography>
@@ -63,7 +63,7 @@ const Item = ({ item, historicalApy }) => {
             </Box>
           </Box>
         </Grid>
-        <Grid className={classes.centerSpace} flexGrow={1} item xs={12} md={2} container>
+        <Grid className={classes.centerSpace} item xs={12} md={2} container>
           <Grid>
             <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
             <Box display="flex" alignItems="center">
@@ -77,12 +77,12 @@ const Item = ({ item, historicalApy }) => {
             <Hidden mdUp>
               <Box className={classes.chart}>
                 <HistoricalRateChart chartData={historicalApy} />
-                <Typography className={classes.label}>{t('Vault-DailyHist')}</Typography>
+                <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
               </Box>
             </Hidden>
           </Grid>
         </Grid>
-        <Grid className={classes.centerSpace} item xs={12} md={3}>
+        <Grid className={classes.centerSpace} item xs={12} md={4}>
           <Box>
             <Typography className={classes.value}>{formatTvl(item.tvl)}</Typography>
             <Typography className={classes.label}>{t('TVL')}</Typography>

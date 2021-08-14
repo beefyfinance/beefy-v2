@@ -20,6 +20,9 @@ const styles = theme => ({
       flexDirection: 'row',
     },
   },
+  dataGrid: {
+    paddingRight: 18,
+  },
   badges: {
     display: 'flex',
     alignItems: 'center',
@@ -92,14 +95,13 @@ const styles = theme => ({
     alignItems: 'center',
   },
   centerSpace: {
-    padding: '0.5rem 1rem',
+    padding: '0.5rem 1rem 0.5rem 0',
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
     textAlign: 'center',
   },
   chart: {
-    padding: '5px',
     textAlign: 'center',
     display: 'flex',
     flexDirection: 'column',
