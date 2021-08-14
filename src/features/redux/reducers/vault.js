@@ -1,6 +1,6 @@
 import { HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_DONE } from '../constants';
 import { config } from 'config/config';
-import { getStablesForNetwork, isEmpty } from 'helpers/utils';
+import { getStablesForNetwork, isEmpty, bluechipTokens } from 'helpers/utils';
 import safetyScore from 'helpers/safetyScore';
 
 let initPlatforms = {};
@@ -81,6 +81,10 @@ const initialPools = () => {
       // Check if assets includes either BIFI or POTS.
       if (pool.assets.some(asset => ['BIFI', 'POTS'].includes(asset))) {
         pool.tags.push('beefy');
+      }
+
+      if (pool.assets.every(asset => bluechipTokens.includes(asset))) {
+        pool.tags.push('bluechip');
       }
 
       if (!isEmpty(pool.risks)) {

@@ -25,7 +25,7 @@ const styles = theme => ({
   stableTag: {
     backgroundColor: '#57A1F7',
   },
-  topTag: {
+  bluechipTag: {
     backgroundColor: '#073FAB',
   },
   depositsPausedTag: {

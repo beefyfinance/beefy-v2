@@ -33,3 +33,21 @@ export const getAvailableNetworks = (abbrOnly = false) => {
 export const getStablesForNetwork = net => {
   return config[net].stableCoins;
 };
+
+export const bluechipTokens = [
+  'BTC',
+  'ETH',
+  'BNB',
+  'USDT',
+  'USDC',
+  'DOT',
+  'UNI',
+  'YFI',
+  'BCH',
+  'LINK',
+  'DAI',
+  'AAVE',
+  'SUSHI',
+  'SOL',
+  'LTC',
+];
