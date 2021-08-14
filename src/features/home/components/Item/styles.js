@@ -96,6 +96,9 @@ const styles = theme => ({
   chart: {
     padding: '5px',
     textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   depositButton: {
     border: 'solid 2px #54995C',
