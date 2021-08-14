@@ -141,7 +141,7 @@ const Home = () => {
         ...{ items: data.slice(0, scrollable.chunk), hasMore: data.length > scrollable.chunk },
       };
     });
-  }, [sortConfig, vault.pools, userEarnedTokenMap]);
+  }, [sortConfig, vault.pools, userEarnedTokenMap, balance]);
 
   const fetchScrollable = () => {
     if (scrollable.items.length >= filtered.length) {
@@ -172,6 +172,8 @@ const Home = () => {
     if (wallet.address && vault.lastUpdated > 0 && balance.lastUpdated) {
       const userEarnedTokenMap = buildUserEarnedTokenMap(vault.pools, balance.tokens);
       setUserEarnedTokenMap(userEarnedTokenMap);
+    } else {
+      setUserEarnedTokenMap({});
     }
   }, [wallet.address, vault.lastUpdated, balance.lastUpdated, vault.pools, balance.tokens]);
 
