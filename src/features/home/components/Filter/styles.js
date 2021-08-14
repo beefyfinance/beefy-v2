@@ -63,7 +63,7 @@ const styles = theme => ({
       backgroundColor: '#628be8',
     },
   },
-  top: {
+  bluechip: {
     background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
     backgroundColor: '#073FAB',
     '&:hover': {

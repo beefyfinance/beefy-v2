@@ -15,7 +15,9 @@ const DisplayTags = ({ tags }) => {
       case 'depositsPaused':
         return t('VaultTag-Paused');
       case 'eol':
-        return t('VaultTag-Inactv');
+        return t('VaultTag-Inactive');
+      case 'bluechip':
+        return t('VaultTag-Bluechip');
       default:
         return name;
     }

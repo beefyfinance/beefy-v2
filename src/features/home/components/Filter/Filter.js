@@ -89,17 +89,6 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
         </Grid>
         <Grid item xs>
           <Button
-            className={sortConfig.category === 'top' ? classes.selected : classes.top}
-            fullWidth={true}
-            disabled={sortConfig.category === 'top'}
-            onClick={() => handleChange('category', 'top')}
-          >
-            <Typography className={classes.text}>{t('Filter-CatgryTop')}</Typography>
-            {sortConfig.category === 'top' ? <ArrowDropDownIcon /> : ''}
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Button
             className={sortConfig.category === 'beefy' ? classes.selected : classes.recent}
             fullWidth={true}
             disabled={sortConfig.category === 'beefy'}
@@ -107,6 +96,17 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
           >
             <Typography className={classes.text}>{t('Filter-CatgryBeefy')}</Typography>
             {sortConfig.category === 'beefy' ? <ArrowDropDownIcon /> : ''}
+          </Button>
+        </Grid>
+        <Grid item xs>
+          <Button
+            className={sortConfig.category === 'bluechip' ? classes.selected : classes.bluechip}
+            fullWidth={true}
+            disabled={sortConfig.category === 'bluechip'}
+            onClick={() => handleChange('category', 'bluechip')}
+          >
+            <Typography className={classes.text}>{t('Filter-CatgryBlue')}</Typography>
+            {sortConfig.category === 'bluechip' ? <ArrowDropDownIcon /> : ''}
           </Button>
         </Grid>
         <Grid item xs>
