@@ -1,5 +1,7 @@
 const styles = theme => ({
   itemContainer: {
+    display: 'flex',
+    flexDirection: 'column',
     margin: '20px 0 0 0',
     borderRadius: '20px',
     padding: 0,
@@ -13,6 +15,9 @@ const styles = theme => ({
       '&:hover': {
         background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
       },
+    },
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
     },
   },
   badges: {
@@ -104,8 +109,7 @@ const styles = theme => ({
     border: 'solid 2px #54995C',
     backgroundColor: '#54995C',
     borderRadius: '30px',
-    marginLeft: '10px',
-    color: '#ffffff',
+    color: 'white',
     fontSize: '18px',
     fontWeight: 700,
     padding: '2px 20px 2px',
@@ -114,8 +118,12 @@ const styles = theme => ({
     display: 'block',
   },
   apyContainer: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderRadius: '0px 0px 20px 20px',
     background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
-    borderRadius: '0px 20px 20px 0px',
     padding: '20px 0',
     '& .MuiTypography-h1': {
       fontWeight: 600,
@@ -131,11 +139,11 @@ const styles = theme => ({
     '&.hasDeposit': {
       background: theme.palette.type === 'dark' ? '#3F466D' : '#faf6f1',
     },
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      borderRadius: '0px 0px 20px 20px',
+    [theme.breakpoints.up('md')]: {
+      width: '275px',
+      padding: '20px 0',
+      flexDirection: 'column',
+      borderRadius: '0px 20px 20px 0px',
     },
   },
   btnSeeDetails: {
