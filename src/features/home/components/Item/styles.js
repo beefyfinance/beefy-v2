@@ -1,25 +1,25 @@
 const styles = theme => ({
-  itemContainer: {
+  itemContainer: props => ({
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0 0 0',
     borderRadius: '20px',
     padding: 0,
     width: '100%',
-    background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
+    background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#272B4A',
     '&:hover': {
-      background: theme.palette.type === 'dark' ? '#272B4A' : '#faf6f1',
+      background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#272B4A',
     },
     '&.hasDeposit': {
-      background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
+      background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#313759',
       '&:hover': {
-        background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
+        background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#313759',
       },
     },
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     },
-  },
+  }),
   dataGrid: {
     [theme.breakpoints.up('md')]: {
       paddingRight: 18,
@@ -118,7 +118,7 @@ const styles = theme => ({
     marginTop: '10px',
     display: 'block',
   },
-  apyContainer: {
+  apyContainer: props => ({
     width: '100%',
     display: 'flex',
     justifyContent: 'space-around',
@@ -145,7 +145,7 @@ const styles = theme => ({
       flexDirection: 'column',
       borderRadius: '0px 20px 20px 0px',
     },
-  },
+  }),
   btnSeeDetails: {
     fontSize: '14px',
     lineHeight: '14px',

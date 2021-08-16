@@ -17,7 +17,9 @@ import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 const useStyles = makeStyles(styles);
 
 const Item = ({ item, historicalApy }) => {
-  const classes = useStyles();
+  const classes = useStyles({
+    muted: item.status === 'paused' || item.status === 'eol',
+  });
   const history = useHistory();
   const [hasDeposit, setHasDeposit] = useState(false);
   const balances = useSelector(state => state.balanceReducer);
