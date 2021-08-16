@@ -44,9 +44,7 @@ const initialPools = () => {
   for (let net in config) {
     const data = require('config/vault/' + net + '.js');
     for (const key in data.pools) {
-      const stables = getStablesForNetwork(net);
-      const pool = data.pools[key];
-      const isStable = type => stables.includes(type);
+      let pool = data.pools[key];
 
       pool['network'] = net;
       pool['pricePerFullShare'] = 1;
@@ -65,35 +63,7 @@ const initialPools = () => {
         }
       }
 
-      if (pool.assets.length === 1) {
-        pool['vaultType'] = 'single';
-      } else {
-        pool['vaultType'] = pool.assets.every(isStable)
-          ? 'stable'
-          : pool.assets.some(isStable)
-          ? 'stables'
-          : false;
-        if (pool.assets.every(isStable)) {
-          pool.tags.push('stable');
-        }
-      }
-
-      // Check if assets includes either BIFI or POTS.
-      if (pool.assets.some(asset => ['BIFI', 'POTS'].includes(asset))) {
-        pool.tags.push('beefy');
-      }
-
-      if (pool.assets.every(asset => bluechipTokens.includes(asset))) {
-        pool.tags.push('bluechip');
-      }
-
-      if (!isEmpty(pool.risks)) {
-        const riskScore = safetyScore(pool.risks);
-        pool['safetyScore'] = riskScore;
-        if (riskScore >= 7.5) {
-          pool.tags.push('low');
-        }
-      }
+      pool = initializeTags(pool, net);
 
       pools[pool.id] = pool;
     }
@@ -102,6 +72,46 @@ const initialPools = () => {
   initPlatforms = platforms;
 
   return pools;
+};
+
+const initializeTags = (pool, net) => {
+  const stables = getStablesForNetwork(net);
+  const isStable = type => stables.includes(type);
+
+  if (pool.assets.length === 1) {
+    pool['vaultType'] = 'single';
+  } else {
+    pool['vaultType'] = pool.assets.every(isStable)
+      ? 'stable'
+      : pool.assets.some(isStable)
+      ? 'stables'
+      : false;
+    if (pool.assets.every(isStable)) {
+      pool.tags.push('stable');
+    }
+  }
+
+  if (pool.assets.some(asset => ['BIFI', 'POTS'].includes(asset))) {
+    pool.tags.push('beefy');
+  }
+
+  if (pool.assets.every(asset => bluechipTokens.includes(asset))) {
+    pool.tags.push('bluechip');
+  }
+
+  if (!isEmpty(pool.risks)) {
+    const riskScore = safetyScore(pool.risks);
+    pool['safetyScore'] = riskScore;
+    if (riskScore >= 7.5) {
+      pool.tags.push('low');
+    }
+  }
+
+  if (pool.status !== 'active') {
+    pool.tags.push(pool.status);
+  }
+
+  return pool;
 };
 
 const initialState = {

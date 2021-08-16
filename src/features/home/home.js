@@ -81,8 +81,14 @@ const Home = () => {
 
     // TODO: extract helper fn?
     const check = item => {
-      if (item.status !== (sortConfig.retired ? 'eol' : 'active')) {
-        return false;
+      if (sortConfig.retired) {
+        if (item.status !== 'eol') {
+          return false;
+        }
+      } else {
+        if (item.status === 'eol') {
+          return false;
+        }
       }
 
       if (sortConfig.category !== 'all' && !item.tags.includes(sortConfig.category)) {

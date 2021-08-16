@@ -7,7 +7,7 @@
     "title": "VaultState-Paused",
     "description": "VaultState-PausedDescrp"
   },
-  "active": {
+  "deposits-paused": {
     "title": "VaultState-DepositPaused",
     "description": "VaultState-DepositPausedDescrp"
   }
