@@ -34,21 +34,7 @@ const PortfolioItem = ({ item, historicalApy }) => {
     return formatUsd(vaultBalance.times(item.oraclePrice).toFixed(2));
   };
 
-  const ctaText = () => (item.depositsPaused === true ? t('Withdraw-Verb') : t('Deposit-Withdraw'));
-
-  const stateTag = () => {
-    if (item.depositsPaused) {
-      if (item.status === 'active') {
-        return ['depositsPaused'];
-      } else if (item.status === 'paused') {
-        return ['paused'];
-      } else if (item.status === 'eol') {
-        return ['eol'];
-      }
-    } else {
-      return [];
-    }
-  };
+  const ctaText = () => (item.status !== 'active' ? t('Withdraw-Verb') : t('Deposit-Withdraw'));
 
   return (
     <Grid
@@ -68,16 +54,18 @@ const PortfolioItem = ({ item, historicalApy }) => {
                     src={require('images/networks/' + item.network + '.svg').default}
                   />
                 </Typography>
-                <Box marginRight={0.5}>
-                  <DisplayTags tags={stateTag()} />
-                </Box>
-                {item.depositsPaused && (
-                  <Popover
-                    title={t(vaultStates[item.status].title)}
-                    content={t(vaultStates[item.status].description)}
-                    placement="top-start"
-                    solid
-                  />
+                {item.status !== 'active' && (
+                  <>
+                    <Box marginRight={0.5}>
+                      <DisplayTags tags={[item.status]} />
+                    </Box>
+                    <Popover
+                      title={t(vaultStates[item.status].title)}
+                      content={t(vaultStates[item.status].description)}
+                      placement="top-start"
+                      solid
+                    />
+                  </>
                 )}
               </Box>
             </Box>

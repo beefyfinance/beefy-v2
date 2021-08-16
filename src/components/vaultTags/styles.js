@@ -28,7 +28,7 @@ const styles = theme => ({
   bluechipTag: {
     backgroundColor: '#073FAB',
   },
-  depositsPausedTag: {
+  'deposits-pausedTag': {
     backgroundColor: '#000000',
     letterSpacing: '0.15px',
     padding: '3px 5px',

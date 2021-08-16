@@ -12,7 +12,7 @@ const DisplayTags = ({ tags }) => {
     switch (name) {
       case 'low':
         return t('VaultTag-LowRisk');
-      case 'depositsPaused':
+      case 'deposits-paused':
         return t('VaultTag-Paused');
       case 'eol':
         return t('VaultTag-Inactive');
