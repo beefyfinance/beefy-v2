@@ -48,7 +48,7 @@ const Item = ({ item, historicalApy }) => {
     } else {
       setCtaText(t('Deposit-Verb'));
     }
-  }, [hasDeposit, item.status]);
+  }, [hasDeposit, item.status, balances]);
 
   return (
     <div className={itemClassNames}>
