@@ -13,7 +13,7 @@ import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
 import Item from 'features/home/components/Item';
 import Loader from 'components/loader';
-import { formatTvl } from 'helpers/format';
+import { formatUsd } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import buildUserEarnedTokenMap from 'helpers/buildUserEarnedTokenMap';
 
@@ -191,7 +191,7 @@ const Home = () => {
           <Box className={classes.title}>{t('Vaults-Title')}</Box>
           <Box className={classes.tvl}>
             <Box className={classes.tvlLabel}>{t('TVL')} </Box>
-            <Box className={classes.tvlValue}>{formatTvl(vault.totalTvl)}</Box>
+            <Box className={classes.tvlValue}>{formatUsd(vault.totalTvl)}</Box>
           </Box>
         </Box>
         {vault.isPoolsLoading ? (

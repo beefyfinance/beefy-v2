@@ -2,7 +2,7 @@ import { makeStyles, Paper } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { formatTvl, formatApy } from 'helpers/format';
+import { formatUsd, formatApy } from 'helpers/format';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
@@ -14,7 +14,7 @@ const CustomTooltip = ({ active, payload, stat }) => {
 
   if (active && payload && payload.length) {
     const formattedDate = moment(new Date(payload[0].payload.ts)).format('lll');
-    const formattedValue = stat === 2 ? formatApy(payload[0].value) : formatTvl(payload[0].value);
+    const formattedValue = stat === 2 ? formatApy(payload[0].value) : formatUsd(payload[0].value);
 
     return (
       <Paper className={classes.container}>

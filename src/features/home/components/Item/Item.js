@@ -10,7 +10,7 @@ import AssetsImage from 'components/AssetsImage';
 import SafetyScore from 'components/SafetyScore';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
-import { calcDaily, formatApy, formatTvl } from 'helpers/format';
+import { calcDaily, formatApy, formatUsd } from 'helpers/format';
 import styles from './styles';
 import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 
@@ -84,7 +84,7 @@ const Item = ({ item, historicalApy }) => {
         </Grid>
         <Grid className={classes.centerSpace} item xs={12} md={4}>
           <Box className={classes.stat}>
-            <Typography className={classes.value}>{formatTvl(item.tvl)}</Typography>
+            <Typography className={classes.value}>{formatUsd(item.tvl)}</Typography>
             <Typography className={classes.label}>{t('TVL')}</Typography>
           </Box>
           <Box className={classes.stat}>

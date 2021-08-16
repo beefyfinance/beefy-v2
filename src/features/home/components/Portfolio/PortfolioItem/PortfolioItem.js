@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 
 import HistoricalRateChart from '../../HistoricalRateChart/HistoricalRateChart';
-import { formatApy, formatDecimals } from 'helpers/format';
+import { formatApy, formatDecimals, formatUsd } from 'helpers/format';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
 import vaultStates from './vaultStates.json';
@@ -31,7 +31,7 @@ const PortfolioItem = ({ item, historicalApy }) => {
   const formatBalanceInUsd = () => {
     let vaultBalance = new BigNumber(balance.tokens[item.earnedToken].balance);
     vaultBalance = vaultBalance.times(item.pricePerFullShare).div('1e18').div('1e18');
-    return vaultBalance.times(item.oraclePrice).toFixed(2);
+    return formatUsd(vaultBalance.times(item.oraclePrice).toFixed(2));
   };
 
   const ctaText = () => (item.depositsPaused === true ? t('Withdraw-Verb') : t('Deposit-Withdraw'));
@@ -89,7 +89,7 @@ const PortfolioItem = ({ item, historicalApy }) => {
           {formatBalance()} {item.oracle === 'tokens' ? item.token : 'LP'}
         </Typography>
         <Typography className={classes.h3}>
-          <span className={classes.bold}>${formatBalanceInUsd()}</span> {t('PortfolioItem-Balance')}
+          <span className={classes.bold}>{formatBalanceInUsd()}</span> {t('PortfolioItem-Balance')}
         </Typography>
       </Box>
       <Hidden smDown>

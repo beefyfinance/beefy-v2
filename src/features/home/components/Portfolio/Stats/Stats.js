@@ -3,6 +3,7 @@ import { Box, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 
+import { formatUsd } from 'helpers/format';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
@@ -23,7 +24,7 @@ const Stats = ({ stats, blurred }) => {
   const valueClassName = `${classes.value} ${empty ? classes.obscured : ''}`;
   const labelClassName = `${classes.label} ${empty ? classes.obscured : ''}`;
 
-  const formatStat = value => (empty ? '0' : `$${value.toFixed(2)}`);
+  const formatStat = value => (empty ? '0' : formatUsd(value));
 
   return (
     <Box className={classes.stats}>

@@ -10,7 +10,7 @@ import CardTitle from '../Card/CardTitle/CardTitle';
 import CustomTooltip from './CustomTooltip';
 import useChartData from './useChartData';
 import Tabs from 'components/Tabs';
-import { formatTvl, formatApy } from 'helpers/format';
+import { formatUsd, formatApy } from 'helpers/format';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
@@ -56,7 +56,7 @@ const Graph = ({ oracleId, vaultId, network }) => {
                 }}
                 axisLine={false}
                 tickLine={false}
-                tickFormatter={label => (stat === 2 ? formatApy(label) : formatTvl(label))}
+                tickFormatter={label => (stat === 2 ? formatApy(label) : formatUsd(label))}
                 tickCount={4}
                 width={50}
               />

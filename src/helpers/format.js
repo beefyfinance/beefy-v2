@@ -13,7 +13,7 @@ export const formatApy = (apy, placeholder = '???') => {
   return `${num.toFixed(2)}${units[order]}%`;
 };
 
-export const formatTvl = (tvl, oraclePrice) => {
+export const formatUsd = (tvl, oraclePrice) => {
   // TODO: bignum?
   if (oraclePrice) {
     tvl *= oraclePrice;
@@ -31,7 +31,7 @@ export const formatTvl = (tvl, oraclePrice) => {
   return prefix + num.toFixed(2) + units[order];
 };
 
-export const formatGlobalTvl = tvl => formatTvl(tvl, 1);
+export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
 
 export const calcDaily = apy => {
   if (!apy) return `???`;

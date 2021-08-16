@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { addressBook } from 'blockchain-addressbook';
 import reduxActions from '../redux/actions';
-import { calcDaily, formatApy, formatTvl } from 'helpers/format';
+import { calcDaily, formatApy, formatUsd } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import Loader from 'components/loader';
 import DisplayTags from 'components/vaultTags';
@@ -137,7 +137,7 @@ const Vault = () => {
               <Box className={classes.summaryContainer} display={'flex'} alignItems="center">
                 <Divider />
                 <Box>
-                  <Typography variant={'h1'}>{formatTvl(item.tvl)}</Typography>
+                  <Typography variant={'h1'}>{formatUsd(item.tvl)}</Typography>
                   <Typography variant={'body2'}>{t('TVL')}</Typography>
                 </Box>
                 <Divider />
