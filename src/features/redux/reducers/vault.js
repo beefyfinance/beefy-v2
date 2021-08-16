@@ -107,7 +107,9 @@ const initializeTags = (pool, net) => {
     }
   }
 
-  pool.tags.push(pool.status);
+  if (pool.status !== 'active') {
+    pool.tags.push(pool.status);
+  }
 
   return pool;
 };
