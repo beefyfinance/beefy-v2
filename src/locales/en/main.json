@@ -74,6 +74,7 @@
   "Vault-AuditdCommunity": "Community Audit",
   "Network-Change": "Switch to {{network}} network",
   "Network-ConnectWallet": "Connect Wallet",
+  "Deposit-Disabled": "Deposits disabled",
   "Deposit-Withdraw": "Deposit / Withdraw",
   "Deposit-noun": "deposit",
   "Deposit-Noun": "Deposit",

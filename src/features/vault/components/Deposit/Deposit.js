@@ -190,28 +190,28 @@ const Deposit = ({
         </Box>
         <FeeBreakdown withdrawalFee={item.withdrawalFee} depositFee={item.depositFee} />
         <Box mt={2}>
-          {wallet.address ? (
+          {item.status !== 'active' ? (
+            <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
+              {t('Deposit-Disabled')}
+            </Button>
+          ) : wallet.address ? (
             item.network !== wallet.network ? (
-              <>
-                <Button
-                  onClick={() => switchNetwork(item.network, dispatch)}
-                  className={classes.btnSubmit}
-                  fullWidth={true}
-                >
-                  {t('Network-Change', { network: item.network.toUpperCase() })}
-                </Button>
-              </>
+              <Button
+                onClick={() => switchNetwork(item.network, dispatch)}
+                className={classes.btnSubmit}
+                fullWidth={true}
+              >
+                {t('Network-Change', { network: item.network.toUpperCase() })}
+              </Button>
             ) : (
-              <>
-                <Button
-                  onClick={handleDeposit}
-                  className={classes.btnSubmit}
-                  fullWidth={true}
-                  disabled={formData.deposit.amount <= 0}
-                >
-                  {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
-                </Button>
-              </>
+              <Button
+                onClick={handleDeposit}
+                className={classes.btnSubmit}
+                fullWidth={true}
+                disabled={formData.deposit.amount <= 0}
+              >
+                {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
+              </Button>
             )
           ) : (
             <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>

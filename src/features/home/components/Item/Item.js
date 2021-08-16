@@ -20,10 +20,11 @@ const Item = ({ item, historicalApy }) => {
   const classes = useStyles({
     muted: item.status === 'paused' || item.status === 'eol',
   });
+  const t = useTranslation().t;
   const history = useHistory();
   const [hasDeposit, setHasDeposit] = useState(false);
+  const [ctaText, setCtaText] = useState(t('Deposit-Verb'));
   const balances = useSelector(state => state.balanceReducer);
-  const t = useTranslation().t;
 
   useEffect(() => {
     const mooBalance = BigNumber(balances.tokens[item.earnedToken].balance);
@@ -36,6 +37,18 @@ const Item = ({ item, historicalApy }) => {
 
   const itemClassNames = `${classes.itemContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
   const apyContainerClassNames = `${classes.apyContainer} ${hasDeposit ? 'hasDeposit' : ''}`;
+
+  useEffect(() => {
+    if (hasDeposit) {
+      if (item.status !== 'active') {
+        setCtaText(t('Withdraw'));
+      } else {
+        setCtaText(t('Deposit-Withdraw'));
+      }
+    } else {
+      setCtaText(t('Deposit-Verb'));
+    }
+  }, [hasDeposit, item.status]);
 
   return (
     <div className={itemClassNames}>
@@ -114,7 +127,7 @@ const Item = ({ item, historicalApy }) => {
             size="large"
             className={classes.depositButton}
           >
-            {hasDeposit ? t('Deposit-Withdraw') : t('Deposit-Verb')}
+            {ctaText}
           </Button>
         </Box>
       </div>
