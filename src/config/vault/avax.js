@@ -399,7 +399,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'png-sushi-avax',
     oraclePrice: 0,
-    status: 'deposits-paused',
+    status: 'active',
     platform: 'Pangolin',
     assets: ['SUSHI', 'AVAX'],
     risks: [
@@ -436,7 +436,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'png-wbtc-avax',
     oraclePrice: 0,
-    status: 'paused',
+    status: 'active',
     platform: 'Pangolin',
     assets: ['WBTC', 'AVAX'],
     risks: [
@@ -473,7 +473,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'png-link-avax',
     oraclePrice: 0,
-    status: 'eol',
+    status: 'active',
     platform: 'Pangolin',
     assets: ['LINK', 'AVAX'],
     risks: [
