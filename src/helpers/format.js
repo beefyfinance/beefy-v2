@@ -1,6 +1,7 @@
 import { BigNumber } from 'bignumber.js';
+import Loader from 'components/APYLoader';
 
-export const formatApy = (apy, placeholder = '???') => {
+export const formatApy = (apy, placeholder = <Loader />) => {
   if (!apy) return placeholder;
 
   apy *= 100;
@@ -34,7 +35,7 @@ export const formatUsd = (tvl, oraclePrice) => {
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
 
 export const calcDaily = apy => {
-  if (!apy) return `???`;
+  if (!apy) return <Loader />;
 
   const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
   if (isNaN(g)) {
