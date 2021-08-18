@@ -19,7 +19,7 @@ const Portfolio = () => {
   const location = useLocation();
   const classes = useStyles();
   const [portfolioOpen, setPortfolioOpen] = useState(location.portfolioOpen);
-  const [hideBalance, setHideBalance] = useState(false);
+  const [hideBalance, setHideBalance] = useState(localStorage.getItem('HideBalance'));
   const [userVaults, setUserVaults] = useState([]);
   const [globalStats, setGlobalStats] = useState({
     deposited: BigNumber(0),
@@ -81,6 +81,11 @@ const Portfolio = () => {
     setGlobalStats(newGlobalStats);
   }, [userVaults, vaultReducer, pricesReducer, userAddress]);
 
+  const updateHideBalance = () => {
+    setHideBalance(!hideBalance);
+    localStorage.setItem('HideBalance', !hideBalance);
+  };
+
   return (
     <Box className={classes.portfolio}>
       <Container maxWidth="lg">
@@ -89,11 +94,7 @@ const Portfolio = () => {
           className={[portfolioOpen ? classes.opened : '', classes.mobileFix].join(' ')}
         >
           <Box className={classes.balance}>
-            <Button
-              onClick={() => {
-                setHideBalance(!hideBalance);
-              }}
-            >
+            <Button onClick={updateHideBalance}>
               {hideBalance ? (
                 <React.Fragment>
                   <VisibilityOff />
