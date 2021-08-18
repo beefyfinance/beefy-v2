@@ -198,7 +198,6 @@ const Home = () => {
           <Box className={classes.title}>{t('Vaults-Title')}</Box>
           <Box className={classes.tvl}>
             <Box className={classes.tvlLabel}>{t('TVL')} </Box>
-            {console.log(vault.totalTvl)}
             {vault.totalTvl ? (
               <Box className={classes.tvlValue}>{formatUsd(vault.totalTvl)}</Box>
             ) : (
