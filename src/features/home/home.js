@@ -12,10 +12,11 @@ import reduxActions from '../redux/actions';
 import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
 import Item from 'features/home/components/Item';
-import Loader from 'components/loader';
+import Loader from 'components/CowLoader';
 import { formatUsd } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import buildUserEarnedTokenMap from 'helpers/buildUserEarnedTokenMap';
+import ApyLoader from 'components/APYLoader';
 
 const useStyles = makeStyles(styles);
 const defaultFilter = {
@@ -197,11 +198,15 @@ const Home = () => {
           <Box className={classes.title}>{t('Vaults-Title')}</Box>
           <Box className={classes.tvl}>
             <Box className={classes.tvlLabel}>{t('TVL')} </Box>
-            <Box className={classes.tvlValue}>{formatUsd(vault.totalTvl)}</Box>
+            {vault.totalTvl ? (
+              <Box className={classes.tvlValue}>{formatUsd(vault.totalTvl)}</Box>
+            ) : (
+              <ApyLoader />
+            )}
           </Box>
         </Box>
         {vault.isPoolsLoading ? (
-          <Loader message={t('Vaults-LoadingData')} />
+          <Loader text={t('Vaults-LoadingData')} />
         ) : (
           <Box mb={4}>
             <Filter
