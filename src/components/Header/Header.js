@@ -26,6 +26,7 @@ import LanguageDropdown from 'components/LanguageDropdown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { useTranslation } from 'react-i18next';
 import switchNetwork from 'helpers/switchNetwork';
+import UnsupportedNetwork from 'components/UnsupportedNetwork';
 
 const useStyles = makeStyles(styles);
 
@@ -79,10 +80,13 @@ const Header = ({ isNightMode, setNightMode }) => {
       )}
       position="static"
     >
+      {walletReducer.error.status && walletReducer.error.message === 'UNSUPPORTED NETWORK' && (
+        <UnsupportedNetwork />
+      )}
       <Toolbar disableGutters={true}>
         <Container maxWidth="lg" className={classes.navDisplayFlex}>
           <Box className={classes.beefy}>
-            <img alt="BIFI" src={require('../../images/BIFI.svg').default} />
+            <img alt="BIFI" src={require('images/BIFI.svg').default} />
             <Button
               onClick={() => {
                 history.push('/');
