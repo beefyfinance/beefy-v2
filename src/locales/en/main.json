@@ -22,7 +22,7 @@
   "VaultState-DepositPausedDescrp": "The vault is not accepting new deposits, probably only temporarily. It is still earning yield for current depositors.",
   "Vaults-Title": "Vaults",
   "Vaults-TVL": "TVL:",
-  "Vaults-LoadingData": "Loading data from blockchain...",
+  "Vaults-LoadingData": "Loading data from the blockchain...",
   "Filter-DropdwnDflt": "All",
   "Filter-AsstSingle": "Single assets",
   "Filter-AsstStableLP": "Stable LPs",
