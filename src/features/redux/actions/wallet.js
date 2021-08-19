@@ -1,5 +1,6 @@
 import { config } from '../../../config/config';
 import {
+  UNSUPPORTED_NETWORK,
   WALLET_ACTION,
   WALLET_ACTION_RESET,
   WALLET_CONNECT_BEGIN,
@@ -92,8 +93,7 @@ const connect = () => {
           const net = getNetworkAbbr(networkId);
           dispatch(setNetwork(net));
         } else {
-          await close();
-          console.log('show nice modal: Wallet network not supported: ' + networkId);
+          dispatch({ type: UNSUPPORTED_NETWORK, payload: { address: null } });
         }
       });
     };
@@ -128,22 +128,20 @@ const connect = () => {
         });
       } else {
         await close();
-        if (checkNetworkSupport(networkId) && provider) {
+        if (provider) {
           await provider.request({
             method: 'wallet_addEthereumChain',
             params: [config[state.walletReducer.network].walletSettings],
           });
           dispatch(connect());
         } else {
-          // todo: show error to user for unsupported network
-          alert('show nice modal: Wallet network not supported: ' + networkId);
+          const accounts = await web3.eth.getAccounts();
+          dispatch({ type: UNSUPPORTED_NETWORK, payload: { address: accounts[0] } });
           throw Error('Network not supported, check chainId.');
         }
       }
     } catch (err) {
       console.log('connect error', err);
-      // todo: show modal error to user
-      dispatch({ type: WALLET_CONNECT_DONE, payload: { address: null } });
     }
   };
 };

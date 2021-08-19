@@ -9,6 +9,7 @@ import {
   SET_NETWORK,
   WALLET_ACTION,
   WALLET_ACTION_RESET,
+  UNSUPPORTED_NETWORK,
 } from '../constants';
 
 const initialNetwork = () => {
@@ -50,6 +51,10 @@ const initialState = {
   pending: false,
   explorer: initialExplorer(),
   action: initialAction(),
+  error: {
+    status: false,
+    message: '',
+  },
 };
 
 const walletReducer = (state = initialState, action) => {
@@ -64,6 +69,7 @@ const walletReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         address: action.payload.address,
+        error: { status: false, message: '' },
       };
     case WALLET_CREATE_MODAL:
       return {
@@ -94,6 +100,13 @@ const walletReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         address: null,
+      };
+    case UNSUPPORTED_NETWORK:
+      return {
+        ...state,
+        pending: false,
+        address: action.payload.address,
+        error: { status: true, message: 'UNSUPPORTED NETWORK' },
       };
     default:
       return state;
