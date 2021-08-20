@@ -65,7 +65,7 @@
   "Platfrm-Audit-Titl": "Platform audited by trusted reviewer",
   "Platfrm-Audit-Expl": "An audit assesses the integrity of pieces of a project's code. Having had one does not guarantee that all possible bugs and exploit vectors have been discovered. Undergoing one does however help improve code quality and help avoid security flaws. This project has undergone an audit by a trusted auditor.",
   "Platfrm-Audit-Cond": "At least one audit by an auditor with a positive track record in the space.",
-  "Platfrm-Verified-Titl": "Project contracts public (verified)",
+  "Platfrm-Verified-Titl": "Project contracts are verified",
   "Platfrm-Verified-Expl": "Code running in a particular address is not public by default. However block explorers allow the code to be published ('verified') so anyone may check that it does what it is supposed to do. This is considered best practice. All the contracts involved under this vault are verified.",
   "Platfrm-Verified-Cond": "",
   "Platfrm-VerifiedNo-Titl": "Project contracts non-public (unverified)",
