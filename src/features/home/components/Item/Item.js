@@ -16,7 +16,7 @@ import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 
 const useStyles = makeStyles(styles);
 
-const Item = ({ item, apy, historicalApy }) => {
+const Item = ({ item, chartData }) => {
   const classes = useStyles({
     muted: item.status === 'paused' || item.status === 'eol',
   });
@@ -49,21 +49,6 @@ const Item = ({ item, apy, historicalApy }) => {
       setCtaText(t('Deposit-Verb'));
     }
   }, [hasDeposit, item.status, balances, t]);
-
-  const [chartData, setChartData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
-  useEffect(() => {
-    let data = [0, 0, 0, 0, 0, 0, 0, 0];
-
-    if (historicalApy) {
-      data = historicalApy;
-    }
-
-    if (apy) {
-      data.push(apy.totalApy);
-    }
-
-    setChartData(data.map(n => ({ apy: n })));
-  }, [apy, historicalApy]);
 
   return (
     <div className={itemClassNames}>
