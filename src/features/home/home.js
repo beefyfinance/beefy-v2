@@ -1,14 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
+import { Container, makeStyles, Box } from '@material-ui/core';
 
-import { Container, makeStyles } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import styles from './styles';
-import chartData from 'helpers/chartData';
 import reduxActions from '../redux/actions';
+import chartData from 'helpers/chartData';
 import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
 import Item from 'features/home/components/Item';
@@ -232,7 +231,7 @@ const Home = () => {
                   <Item
                     key={item.id}
                     item={item}
-                    historicalApy={chartData(prices.historicalApy, prices.apy, item.id)}
+                    chartData={chartData(prices.historicalApy, prices.ApyLoader, item.id)}
                   />
                 ))}
               </InfiniteScroll>

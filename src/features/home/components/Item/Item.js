@@ -16,7 +16,7 @@ import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 
 const useStyles = makeStyles(styles);
 
-const Item = ({ item, historicalApy }) => {
+const Item = ({ item, chartData }) => {
   const classes = useStyles({
     muted: item.status === 'paused' || item.status === 'eol',
   });
@@ -91,7 +91,7 @@ const Item = ({ item, historicalApy }) => {
           <div className={classes.stat}>
             <Hidden mdUp>
               <Box className={classes.chart}>
-                <HistoricalRateChart chartData={historicalApy} />
+                <HistoricalRateChart chartData={chartData} />
                 <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
               </Box>
             </Hidden>
@@ -110,7 +110,7 @@ const Item = ({ item, historicalApy }) => {
         <Grid className={classes.centerSpace} item xs={12} md={2}>
           <Hidden smDown>
             <Box className={classes.chart}>
-              <HistoricalRateChart chartData={historicalApy} />
+              <HistoricalRateChart chartData={chartData} />
               <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
             </Box>
           </Hidden>

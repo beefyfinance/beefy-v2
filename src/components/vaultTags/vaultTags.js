@@ -24,12 +24,8 @@ const DisplayTags = ({ tags }) => {
   };
 
   return tags.map(item => (
-    <Box className={classes.spacingMobile}>
-      <Typography
-        className={[classes.tags, classes[item + 'Tag']].join(' ')}
-        display={'inline'}
-        key={item}
-      >
+    <Box className={classes.spacingMobile} key={item}>
+      <Typography className={[classes.tags, classes[item + 'Tag']].join(' ')} display={'inline'}>
         {getText(item)}
       </Typography>
     </Box>

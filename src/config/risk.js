@@ -203,7 +203,7 @@ export const RISKS = {
 };
 
 export const CATEGORIES = {
-  beefy: 0.2,
-  asset: 0.2,
-  platform: 0.6,
+  'Categry-Beefy': 0.2,
+  'Categry-Asset': 0.2,
+  'Categry-Platform': 0.6,
 };
