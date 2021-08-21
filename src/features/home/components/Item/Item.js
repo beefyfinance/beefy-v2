@@ -16,7 +16,7 @@ import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 
 const useStyles = makeStyles(styles);
 
-const Item = ({ item, historicalApy }) => {
+const Item = ({ item, apy, historicalApy }) => {
   const classes = useStyles({
     muted: item.status === 'paused' || item.status === 'eol',
   });
@@ -49,6 +49,21 @@ const Item = ({ item, historicalApy }) => {
       setCtaText(t('Deposit-Verb'));
     }
   }, [hasDeposit, item.status, balances, t]);
+
+  const [chartData, setChartData] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  useEffect(() => {
+    let data = [0, 0, 0, 0, 0, 0, 0, 0];
+
+    if (historicalApy) {
+      data = historicalApy;
+    }
+
+    if (apy) {
+      data.push(apy.totalApy);
+    }
+
+    setChartData(data.map(n => ({ apy: n })));
+  }, [apy, historicalApy]);
 
   return (
     <div className={itemClassNames}>
@@ -91,7 +106,7 @@ const Item = ({ item, historicalApy }) => {
           <div className={classes.stat}>
             <Hidden mdUp>
               <Box className={classes.chart}>
-                <HistoricalRateChart chartData={historicalApy} />
+                <HistoricalRateChart chartData={chartData} />
                 <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
               </Box>
             </Hidden>
@@ -110,7 +125,7 @@ const Item = ({ item, historicalApy }) => {
         <Grid className={classes.centerSpace} item xs={12} md={2}>
           <Hidden smDown>
             <Box className={classes.chart}>
-              <HistoricalRateChart chartData={historicalApy} />
+              <HistoricalRateChart chartData={chartData} />
               <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
             </Box>
           </Hidden>

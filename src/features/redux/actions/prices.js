@@ -13,93 +13,60 @@ const fetchPrices = reducer => {
 
   return async (dispatch, getState) => {
     const updatePrices = async () => {
-      console.log('redux fetchPrices called.');
-      const retry = () => {
-        setTimeout(async () => {
-          return await updatePrices();
-        }, 1000);
-      };
-
       try {
-        const request = await axios.get('https://api.beefy.finance/prices?_=' + cache.getTime(), {
-          timeout: 1000,
-        });
-        return request.status === 200 ? request.data : retry();
+        const request = await axios.get('https://api.beefy.finance/prices?_=' + cache.getTime());
+        return request.status === 200 ? request.data : await updatePrices();
       } catch (err) {
-        console.log('error fetchPrices()', err);
-        return retry();
+        return await updatePrices();
       }
     };
 
     const updateLps = async () => {
-      console.log('redux fetchLps called.');
-      const retry = () => {
-        setTimeout(async () => {
-          return await updateLps();
-        }, 1000);
-      };
       try {
-        const request = await axios.get('https://api.beefy.finance/lps?_=' + cache.getTime(), {
-          timeout: 1000,
-        });
-        return request.status === 200 ? request.data : retry();
+        const request = await axios.get('https://api.beefy.finance/lps?_=' + cache.getTime());
+        return request.status === 200 ? request.data : await updateLps();
       } catch (err) {
-        console.log('error fetchLps()', err);
-        return retry();
+        return await updateLps();
       }
     };
 
     const updateApy = async () => {
-      console.log('redux fetchApy called.');
-      const retry = () => {
-        setTimeout(async () => {
-          return await updateApy();
-        }, 1000);
-      };
       try {
         const request = await axios.get(
-          'https://api.beefy.finance/apy/breakdown?_=' + cache.getTime(),
-          { timeout: 1000 }
+          'https://api.beefy.finance/apy/breakdown?_=' + cache.getTime()
         );
-        return request.status === 200 ? request.data : retry();
+        return request.status === 200 ? request.data : await updateApy();
       } catch (err) {
-        console.log('error fetchApy()', err);
-        return retry();
+        return await updateApy();
       }
     };
 
     const updateHistoricalApy = async () => {
-      console.log('redux fetchHistoricalApy called.');
-      const retry = () => {
-        setTimeout(async () => {
-          return await updateHistoricalApy();
-        }, 1000);
-      };
       try {
-        const request = await axios.get('https://data.beefy.finance/bulk?_=' + cache.getTime(), {
-          timeout: 1000,
-        });
-        return request.status === 200 ? request.data : retry();
+        const request = await axios.get('https://data.beefy.finance/bulk?_=' + cache.getTime());
+        return request.status === 200 ? request.data : await updateHistoricalApy();
       } catch (err) {
-        console.log('error fetchHistoricalApy()', err);
-        return retry();
+        return await updateHistoricalApy();
       }
     };
 
     const fetch = async () => {
       const state = getState();
-      const prices = await updatePrices(state.pricesReducer);
-      const lps = await updateLps(state.pricesReducer);
-      const apy = await updateApy(state.pricesReducer);
-      const historicalApy = await updateHistoricalApy(state.pricesReducer);
+
+      const [prices, lps, apy, historicalApy] = await Promise.all([
+        updatePrices(),
+        updateLps(),
+        updateApy(),
+        updateHistoricalApy(),
+      ]);
 
       dispatch({
         type: 'FETCH_PRICES',
         payload: {
           prices: {
+            ...state.pricesReducer.prices,
             ...prices,
             ...lps,
-            ...state.pricesReducer.prices,
           },
           apy,
           historicalApy,

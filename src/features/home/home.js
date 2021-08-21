@@ -7,7 +7,6 @@ import BigNumber from 'bignumber.js';
 import { Container, makeStyles } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import styles from './styles';
-import chartData from 'helpers/chartData';
 import reduxActions from '../redux/actions';
 import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
@@ -232,7 +231,8 @@ const Home = () => {
                   <Item
                     key={item.id}
                     item={item}
-                    historicalApy={chartData(prices.historicalApy, prices.apy, item.id)}
+                    apy={prices && prices.apy && prices.apy[item.id]}
+                    historicalApy={prices && prices.historicalApy && prices.historicalApy[item.id]}
                   />
                 ))}
               </InfiniteScroll>

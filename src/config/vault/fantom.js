@@ -56,7 +56,7 @@ export const pools = [
       'BATTLE_TESTED',
       'IL_HIGH',
       'MCAP_MICRO',
-      'NO-AUDIT',
+      'NO_AUDIT',
       'PLATFORM_NEW',
       'CONTRACTS_VERIFIED',
     ],

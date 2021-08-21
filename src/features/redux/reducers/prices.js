@@ -1,6 +1,6 @@
 const initialState = {
-  prices: [],
-  apy: [],
+  prices: {},
+  apy: {},
   historicalApy: {},
   lastUpdated: 0,
 };

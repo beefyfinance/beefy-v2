@@ -19,7 +19,7 @@ const HistoricalRateChart = ({ chartData }) => {
   const renderLabel = props => {
     const { index, x, y } = props;
     const { apy } = chartData[index];
-    const labelValue = formatApy(apy);
+    const labelValue = formatApy(apy, '0%');
     const first = index === 0;
     const last = index === chartData.length - 1;
     const textStyle = { fontSize: '12px' };
