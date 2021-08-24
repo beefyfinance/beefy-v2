@@ -19,7 +19,9 @@ const Portfolio = () => {
   const location = useLocation();
   const classes = useStyles();
   const [portfolioOpen, setPortfolioOpen] = useState(location.portfolioOpen);
-  const [hideBalance, setHideBalance] = useState(localStorage.getItem('HideBalance'));
+  const [hideBalance, setHideBalance] = useState(() =>
+    localStorage.getItem('hideBalance') === 'true' ? true : false
+  );
   const [userVaults, setUserVaults] = useState([]);
   const [globalStats, setGlobalStats] = useState({
     deposited: BigNumber(0),
@@ -83,7 +85,7 @@ const Portfolio = () => {
 
   const updateHideBalance = () => {
     setHideBalance(!hideBalance);
-    localStorage.setItem('HideBalance', !hideBalance);
+    localStorage.setItem('hideBalance', JSON.stringify(!hideBalance));
   };
 
   return (
