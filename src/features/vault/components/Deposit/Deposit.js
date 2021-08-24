@@ -188,7 +188,7 @@ const Deposit = ({
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
           </Paper>
         </Box>
-        <FeeBreakdown withdrawalFee={item.withdrawalFee} depositFee={item.depositFee} />
+        <FeeBreakdown withdrawalFee={item.withdrawalFee} depositFee={item.depositFee} item={item} />
         <Box mt={2}>
           {item.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
