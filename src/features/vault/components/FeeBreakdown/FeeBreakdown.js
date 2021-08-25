@@ -4,21 +4,17 @@ import { useTranslation } from 'react-i18next';
 import styles from './styles';
 import Popover from 'components/Popover';
 import useFormattedFee from 'hooks/useFormattedFee';
-import useGasPrice from 'hooks/useTransactionsCosts';
 
 const useStyles = makeStyles(styles);
 
-const FeeBreakdown = ({ depositFee, withdrawalFee, item }) => {
+const FeeBreakdown = ({ depositFee, withdrawalFee }) => {
   const classes = useStyles();
   const t = useTranslation().t;
   const formattedDepositFee = useFormattedFee(depositFee);
   const formattedWithdrawalFee = useFormattedFee(withdrawalFee);
 
-  const price = useGasPrice(item.network, item.earnContractAddress);
-
   return (
     <Box mt={2} p={2} className={classes.feeContainer}>
-      {console.log(price)}
       <Grid container>
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between">
@@ -79,7 +75,7 @@ const FeeBreakdown = ({ depositFee, withdrawalFee, item }) => {
           <Typography className={classes.title}>{t('Fee-Transaction')}</Typography>
         </Grid>
         <Grid item xs={6}>
-          {price && <Typography className={classes.value}>0.05 BNB ({`$ ${price}`})</Typography>}
+          <Typography className={classes.value}>0.05 BNB ($0.10)</Typography>
           <Typography className={classes.label}>{t('Deposit-Noun')}</Typography>
         </Grid>
         <Grid item xs={6}>
