@@ -28,6 +28,7 @@ const styles = theme => ({
   badges: {
     display: 'flex',
     alignItems: 'center',
+    flexWrap: 'wrap',
     [theme.breakpoints.down('sm')]: {
       margin: '0 10px',
     },
@@ -52,22 +53,22 @@ const styles = theme => ({
       justifyContent: 'center',
     },
   },
-  vaultName: {
+  vaultName: props => ({
     fontWeight: 600,
-    fontSize: '24px',
+    fontSize: props.isLongName ? '18px' : '24px',
     lineHeight: '36px',
     margin: 0,
     padding: 0,
     [theme.breakpoints.up('lg')]: {
-      fontSize: '27px',
+      fontSize: props.isLongName ? '18px' : '27px',
     },
     [theme.breakpoints.down('md')]: {
       fontSize: '15px',
     },
     [theme.breakpoints.down('sm')]: {
-      fontSize: '24px',
+      fontSize: props.isLongName ? '18px' : '24px',
     },
-  },
+  }),
   value: {
     fontWeight: 600,
     fontSize: '18px',

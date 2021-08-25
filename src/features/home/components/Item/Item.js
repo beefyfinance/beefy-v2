@@ -19,6 +19,8 @@ const useStyles = makeStyles(styles);
 const Item = ({ item, chartData }) => {
   const classes = useStyles({
     muted: item.status === 'paused' || item.status === 'eol',
+    hasMore3Items: item.tags.length > 2,
+    isLongName: item.name.length > 15,
   });
   const t = useTranslation().t;
   const history = useHistory();
@@ -50,31 +52,57 @@ const Item = ({ item, chartData }) => {
     }
   }, [hasDeposit, item.status, balances, t]);
 
+  const hasMore3Tags = item.tags.length > 2;
+
   return (
     <div className={itemClassNames}>
+      {console.log(hasMore3Tags)}
       <Grid container className={classes.dataGrid}>
         <Grid className={classes.titleContainer} item xs={12} md={4}>
           <Box className={classes.infoContainer}>
             <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
             <Typography className={classes.vaultName}>{item.name}</Typography>
-          </Box>
-          <Box>
-            <Box className={classes.badgesContainter}>
-              <Box className={classes.badges}>
+            {hasMore3Tags && (
+              <Box mx={1}>
                 <img
                   alt={item.network}
                   src={require('images/networks/' + item.network + '.svg').default}
                 />
+              </Box>
+            )}
+          </Box>
+          <Box>
+            <Box className={classes.badgesContainter}>
+              <Box className={classes.badges}>
+                {!hasMore3Tags && (
+                  <img
+                    alt={item.network}
+                    src={require('images/networks/' + item.network + '.svg').default}
+                  />
+                )}
                 <DisplayTags tags={item.tags} />
               </Box>
-              <Box my={1}>
-                <Button
-                  onClick={() => history.push('/' + item.network + '/vault/' + item.id)}
-                  className={classes.btnSeeDetails}
-                >
-                  See Details <ArrowGo style={{ fontSize: 12 }} />
-                </Button>
-              </Box>
+              {hasMore3Tags ? (
+                <Hidden smDown>
+                  <Box my={1}>
+                    <Button
+                      onClick={() => history.push('/' + item.network + '/vault/' + item.id)}
+                      className={classes.btnSeeDetails}
+                    >
+                      See Details <ArrowGo style={{ fontSize: 12 }} />
+                    </Button>
+                  </Box>
+                </Hidden>
+              ) : (
+                <Box my={1}>
+                  <Button
+                    onClick={() => history.push('/' + item.network + '/vault/' + item.id)}
+                    className={classes.btnSeeDetails}
+                  >
+                    See Details <ArrowGo style={{ fontSize: 12 }} />
+                  </Button>
+                </Box>
+              )}
             </Box>
           </Box>
         </Grid>
@@ -113,6 +141,16 @@ const Item = ({ item, chartData }) => {
               <HistoricalRateChart chartData={chartData} />
               <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
             </Box>
+          </Hidden>
+          <Hidden mdUp>
+            {hasMore3Tags && (
+              <Button
+                onClick={() => history.push('/' + item.network + '/vault/' + item.id)}
+                className={classes.btnSeeDetails}
+              >
+                See Details <ArrowGo style={{ fontSize: 12 }} />
+              </Button>
+            )}
           </Hidden>
         </Grid>
       </Grid>
