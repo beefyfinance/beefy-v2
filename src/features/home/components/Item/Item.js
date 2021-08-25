@@ -56,7 +56,6 @@ const Item = ({ item, chartData }) => {
 
   return (
     <div className={itemClassNames}>
-      {console.log(hasMore3Tags)}
       <Grid container className={classes.dataGrid}>
         <Grid className={classes.titleContainer} item xs={12} md={4}>
           <Box className={classes.infoContainer}>
