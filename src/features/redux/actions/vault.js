@@ -6,56 +6,10 @@ import { isEmpty } from '../../../helpers/utils';
 
 const vaultAbi = require('../../../config/abi/vault.json');
 
-const getPoolsSingle = async (item, state, dispatch) => {
-  console.log('redux getPoolsSingle() processing...');
+const getPools = async (items, state, dispatch) => {
+  console.log('redux getPools() processing...');
   const web3 = state.walletReducer.rpc;
-  const pools = state.vaultReducer.pools;
-  const prices = state.pricesReducer.prices;
-  const apy = state.pricesReducer.apy;
-
-  const multicall = new MultiCall(web3[item.network], config[item.network].multicallAddress);
-  const calls = [];
-
-  const tokenContract = new web3[item.network].eth.Contract(vaultAbi, item.earnedTokenAddress);
-  calls.push({
-    id: item.id,
-    balance: tokenContract.methods.balance(),
-    pricePerFullShare: tokenContract.methods.getPricePerFullShare(),
-    strategy: tokenContract.methods.strategy(),
-  });
-
-  const response = await multicall.all([calls]);
-
-  for (let index in response[0]) {
-    const item = response[0][index];
-    const balance = new BigNumber(item.balance);
-    const price = pools[item.id].oracleId in prices ? prices[pools[item.id].oracleId] : 0;
-
-    pools[item.id].tvl = balance
-      .times(price)
-      .dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
-    pools[item.id].apy = !isEmpty(apy) && item.id in apy ? apy[item.id] : 0;
-    pools[item.id].pricePerFullShare = item.pricePerFullShare;
-    pools[item.id].strategy = item.strategy;
-  }
-
-  dispatch({
-    type: HOME_FETCH_POOLS_DONE,
-    payload: {
-      pools: pools,
-      totalTvl: state.vaultReducer.totalTvl,
-      isPoolsLoading: false,
-      lastUpdated: new Date().getTime(),
-    },
-  });
-
-  return true;
-};
-
-const getPoolsAll = async (state, dispatch) => {
-  console.log('redux getPoolsAll() processing...');
-  const web3 = state.walletReducer.rpc;
-  const pools = state.vaultReducer.pools;
+  const pools = { ...state.vaultReducer.pools };
   const prices = state.pricesReducer.prices;
   const apy = state.pricesReducer.apy;
 
@@ -72,8 +26,8 @@ const getPoolsAll = async (state, dispatch) => {
     calls[key] = [];
   }
 
-  for (let key in pools) {
-    const pool = pools[key];
+  for (let key in items) {
+    const pool = items[key];
     const tokenContract = new web3[pool.network].eth.Contract(vaultAbi, pool.earnedTokenAddress);
     calls[pool.network].push({
       id: pool.id,
@@ -132,8 +86,9 @@ const getPoolsAll = async (state, dispatch) => {
 const fetchPools = (item = false) => {
   return async (dispatch, getState) => {
     const state = getState();
+    const pools = state.vaultReducer.pools;
     dispatch({ type: HOME_FETCH_POOLS_BEGIN });
-    return item ? await getPoolsSingle(item, state, dispatch) : await getPoolsAll(state, dispatch);
+    return await getPools(item ? [item] : pools, state, dispatch);
   };
 };
 
