@@ -70,7 +70,7 @@ const styles = theme => ({
       backgroundColor: '#1054d4',
     },
   },
-  recent: {
+  beefy: {
     background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
     backgroundColor: '#9D57F7',
     '&:hover': {

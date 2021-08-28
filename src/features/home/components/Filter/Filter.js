@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { useTranslation } from 'react-i18next';
 import {
@@ -17,110 +17,114 @@ import LabeledDropdown from 'components/LabeledDropdown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
+import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 
 const useStyles = makeStyles(styles);
 
-const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCount }) => {
+const CATEGORY_LABELS = {
+  all: 'Filter-CatgryAll',
+  stable: 'Filter-CatgryStabl',
+  beefy: 'Filter-CatgryBeefy',
+  bluechip: 'Filter-CatgryBlue',
+  low: 'Filter-CatgryLowRsk',
+};
+
+const FilterCategories = memo(function FilterCategories({ category, handleChange }) {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
+  const labels = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(CATEGORY_LABELS).map(([key, i18nKey]) => [key, t(i18nKey)])
+      ),
+    [t]
+  );
+
+  return (
+    <Grid container spacing={2} className={classes.categories}>
+      <Grid item xs={12}>
+        <Typography variant={'h4'}>{t('Filter-Categories')}</Typography>
+      </Grid>
+      {Object.entries(labels).map(([key, label]) => (
+        <Grid item xs key={key}>
+          <Button
+            className={category === key ? classes.selected : classes[key]}
+            fullWidth={true}
+            disabled={category === key}
+            onClick={() => handleChange('category', key)}
+          >
+            <Typography className={classes.text}>{label}</Typography>
+            {category === key ? <ArrowDropDownIcon /> : ''}
+          </Button>
+        </Grid>
+      ))}
+    </Grid>
+  );
+});
+
+function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount }) {
+  const classes = useStyles();
+  const { t } = useTranslation();
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const handleCheckbox = event => {
-    setSortConfig({
-      ...sortConfig,
-      [event.target.name]: event.target.checked,
-    });
-  };
+  const handleCheckbox = useCallback(
+    event => {
+      setSortConfig(current => ({
+        ...current,
+        [event.target.name]: event.target.checked,
+      }));
+    },
+    [setSortConfig]
+  );
 
-  const handleChange = (name, value) => {
-    setSortConfig({ ...sortConfig, [name]: value });
-  };
+  const handleChange = useCallback(
+    (name, value) => {
+      setSortConfig(current => ({ ...current, [name]: value }));
+    },
+    [setSortConfig]
+  );
 
-  const getPlatformTypes = () => {
+  const handleReset = useCallback(() => {
+    setSortConfig(FILTER_DEFAULT);
+  }, [setSortConfig]);
+
+  const platformTypes = useMemo(() => {
     return {
       all: t('Filter-DropdwnDflt'),
       ...platforms,
     };
-  };
+  }, [platforms, t]);
 
-  const getVaultTypes = () => {
+  const vaultTypes = useMemo(() => {
     return {
       all: t('Filter-DropdwnDflt'),
       single: t('Filter-AsstSingle'),
       stable: t('Filter-AsstStableLP'),
       stables: t('Filter-AsstStables'),
     };
-  };
+  }, [t]);
 
-  const getNetworkTypes = () => {
+  const networkTypes = useMemo(() => {
     return {
       all: t('Filter-DropdwnDflt'),
       ...getAvailableNetworks(),
     };
-  };
+  }, [t]);
+
+  const sortList = useMemo(() => {
+    return {
+      default: t('Filter-SortDflt'),
+      apy: t('APY'),
+      tvl: t('TVL'),
+      safetyScore: t('Filter-SortSafety'),
+    };
+  }, [t]);
+
+  const handleSortChange = useCallback(e => handleChange('key', e.target.value), [handleChange]);
 
   return (
     <>
-      <Grid container spacing={2} className={classes.categories}>
-        <Grid item xs={12}>
-          <Typography variant={'h4'}>{t('Filter-Categories')}</Typography>
-        </Grid>
-        <Grid item xs>
-          <Button
-            className={sortConfig.category === 'all' ? classes.selected : classes.all}
-            fullWidth={true}
-            disabled={sortConfig.category === 'all'}
-            onClick={() => handleChange('category', 'all')}
-          >
-            <Typography className={classes.text}>{t('Filter-CatgryAll')}</Typography>
-            {sortConfig.category === 'all' ? <ArrowDropDownIcon /> : ''}
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Button
-            className={sortConfig.category === 'stable' ? classes.selected : classes.stable}
-            fullWidth={true}
-            disabled={sortConfig.category === 'stable'}
-            onClick={() => handleChange('category', 'stable')}
-          >
-            <Typography className={classes.text}>{t('Filter-CatgryStabl')}</Typography>
-            {sortConfig.category === 'stable' ? <ArrowDropDownIcon /> : ''}
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Button
-            className={sortConfig.category === 'beefy' ? classes.selected : classes.recent}
-            fullWidth={true}
-            disabled={sortConfig.category === 'beefy'}
-            onClick={() => handleChange('category', 'beefy')}
-          >
-            <Typography className={classes.text}>{t('Filter-CatgryBeefy')}</Typography>
-            {sortConfig.category === 'beefy' ? <ArrowDropDownIcon /> : ''}
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Button
-            className={sortConfig.category === 'bluechip' ? classes.selected : classes.bluechip}
-            fullWidth={true}
-            disabled={sortConfig.category === 'bluechip'}
-            onClick={() => handleChange('category', 'bluechip')}
-          >
-            <Typography className={classes.text}>{t('Filter-CatgryBlue')}</Typography>
-            {sortConfig.category === 'bluechip' ? <ArrowDropDownIcon /> : ''}
-          </Button>
-        </Grid>
-        <Grid item xs>
-          <Button
-            className={sortConfig.category === 'low' ? classes.selected : classes.low}
-            fullWidth={true}
-            disabled={sortConfig.category === 'low'}
-            onClick={() => handleChange('category', 'low')}
-          >
-            <Typography className={classes.text}>{t('Filter-CatgryLowRsk')}</Typography>
-            {sortConfig.category === 'low' ? <ArrowDropDownIcon /> : ''}
-          </Button>
-        </Grid>
-      </Grid>
+      <FilterCategories category={sortConfig.category} handleChange={handleChange} />
       <Box className={classes.filtersContainer}>
         <Box className={classes.searchContainer}>
           <TextField
@@ -135,14 +139,9 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
         </Box>
         <Box className={classes.sortByContainer}>
           <LabeledDropdown
-            list={{
-              default: t('Filter-SortDflt'),
-              apy: t('APY'),
-              tvl: t('TVL'),
-              safetyScore: t('Filter-SortSafety'),
-            }}
+            list={sortList}
             selected={sortConfig.key}
-            handler={e => handleChange('key', e.target.value)}
+            handler={handleSortChange}
             label={t('Filter-Sort')}
             selectStyle={{ minWidth: 230 }}
           />
@@ -214,8 +213,8 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             </Box>
             <Box className={classes.lblShowing}>
               {t('Filter-Showing', {
-                number: vaultCount.showing,
-                count: vaultCount.total,
+                number: filteredCount,
+                count: allCount,
               })}
             </Box>
           </Box>
@@ -224,7 +223,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
             <Box className={classes.selectors}>
               <Box className={classes.selector}>
                 <LabeledDropdown
-                  list={getPlatformTypes()}
+                  list={platformTypes}
                   selected={sortConfig.platform}
                   handler={e => handleChange('platform', e.target.value)}
                   label={t('Filter-Platform')}
@@ -232,7 +231,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
               </Box>
               <Box className={classes.selector}>
                 <LabeledDropdown
-                  list={getVaultTypes()}
+                  list={vaultTypes}
                   selected={sortConfig.vault}
                   handler={e => handleChange('vault', e.target.value)}
                   label={t('Filter-Type')}
@@ -240,7 +239,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
               </Box>
               <Box className={classes.selector}>
                 <LabeledDropdown
-                  list={getNetworkTypes()}
+                  list={networkTypes}
                   selected={sortConfig.blockchain}
                   handler={e => handleChange('blockchain', e.target.value)}
                   label={t('Filter-Blockchn')}
@@ -248,13 +247,7 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
               </Box>
             </Box>
             <Box className={classes.btnFilter}>
-              <Button
-                className={classes.btnReset}
-                variant={'contained'}
-                onClick={() => {
-                  setSortConfig(defaultFilter);
-                }}
-              >
+              <Button className={classes.btnReset} variant={'contained'} onClick={handleReset}>
                 {t('Filter-Reset')}
               </Button>
             </Box>
@@ -263,6 +256,6 @@ const Filter = ({ sortConfig, setSortConfig, defaultFilter, platforms, vaultCoun
       </AnimateHeight>
     </>
   );
-};
+}
 
-export default Filter;
+export default memo(Filter);

@@ -1,25 +1,25 @@
 const styles = theme => ({
-  itemContainer: props => ({
+  itemContainer: {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0 0 0',
     borderRadius: '20px',
     padding: 0,
     width: '100%',
-    background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#272B4A',
+    background: '#272B4A',
     '&:hover': {
-      background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#272B4A',
+      background: '#272B4A',
     },
     '&.hasDeposit': {
-      background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#313759',
+      background: '#313759',
       '&:hover': {
-        background: props.muted ? 'rgba(48, 53, 92, 0.4)' : '#313759',
+        background: '#313759',
       },
     },
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     },
-  }),
+  },
   dataGrid: {
     [theme.breakpoints.up('md')]: {
       paddingRight: 18,
@@ -53,22 +53,19 @@ const styles = theme => ({
       justifyContent: 'center',
     },
   },
-  vaultName: props => ({
+  vaultName: {
     fontWeight: 600,
-    fontSize: props.isLongName ? '18px' : '24px',
+    fontSize: '24px',
     lineHeight: '36px',
     margin: 0,
     padding: 0,
-    [theme.breakpoints.up('lg')]: {
-      fontSize: props.isLongName ? '18px' : '27px',
-    },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.up('md')]: {
       fontSize: '15px',
     },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: props.isLongName ? '18px' : '24px',
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '27px',
     },
-  }),
+  },
   value: {
     fontWeight: 600,
     fontSize: '18px',
@@ -119,7 +116,7 @@ const styles = theme => ({
     marginTop: '10px',
     display: 'block',
   },
-  apyContainer: props => ({
+  apyContainer: {
     width: '100%',
     display: 'flex',
     justifyContent: 'space-around',
@@ -138,15 +135,12 @@ const styles = theme => ({
       lineHeight: '24px',
       color: '#8585A6',
     },
-    '&.hasDeposit': {
-      background: theme.palette.type === 'dark' ? '#3F466D' : '#faf6f1',
-    },
     [theme.breakpoints.up('md')]: {
       width: '275px',
       flexDirection: 'column',
       borderRadius: '0px 20px 20px 0px',
     },
-  }),
+  },
   btnSeeDetails: {
     fontSize: '14px',
     lineHeight: '14px',
@@ -186,6 +180,48 @@ const styles = theme => ({
   safetyLabel: {
     display: 'flex',
     alignItems: 'center',
+  },
+  networkIconHolder: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
+  seeDetailsHolder: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  safetyScoreExplainerHolder: {
+    marginLeft: theme.spacing(0.5),
+  },
+  apyHolder: {
+    textAlign: 'center',
+  },
+  withHasDeposit: {
+    '& $apyContainer': {
+      background: theme.palette.type === 'dark' ? '#3F466D' : '#faf6f1',
+    },
+  },
+  withMuted: {
+    background: 'rgba(48, 53, 92, 0.4)',
+    '&:hover': {
+      background: 'rgba(48, 53, 92, 0.4)',
+    },
+    '&.hasDeposit': {
+      background: 'rgba(48, 53, 92, 0.4)',
+      '&:hover': {
+        background: 'rgba(48, 53, 92, 0.4)',
+      },
+    },
+  },
+  withIsLongName: {
+    '& $vaultName': {
+      fontSize: '18px',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '15px',
+      },
+      [theme.breakpoints.up('lg')]: {
+        fontSize: '18px',
+      },
+    },
   },
 });
 

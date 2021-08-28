@@ -65,7 +65,7 @@ export default function App() {
         <Header isNightMode={isNightMode} setNightMode={() => setNightMode(!isNightMode)} />
         <React.Suspense fallback={<div className="loader" />}>
           <Switch>
-            <Route exact path="/" key={Date.now()}>
+            <Route exact path="/">
               <Home />
             </Route>
             <Route strict sensitive exact path="/:network/vault/:id">

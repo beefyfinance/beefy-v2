@@ -8,7 +8,7 @@ import { Alert } from '@material-ui/lab';
 import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
-import chartData from 'helpers/chartData';
+import buildChartData from 'helpers/buildChartData';
 import PortfolioItem from './PortfolioItem';
 import Stats from './Stats';
 import styles from './styles';
@@ -122,7 +122,7 @@ const Portfolio = () => {
                 <Box key={vault.id}>
                   <PortfolioItem
                     item={vault}
-                    historicalApy={chartData(
+                    historicalApy={buildChartData(
                       pricesReducer.historicalApy,
                       pricesReducer.apy,
                       vault.id

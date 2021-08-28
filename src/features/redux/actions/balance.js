@@ -45,7 +45,7 @@ const getBalancesSingle = async (item, state, dispatch) => {
     });
   }
 
-  const tokens = state.balanceReducer.tokens;
+  const tokens = { ...state.balanceReducer.tokens };
   const response = await multicall.all([calls]);
   const allow = await multicall.all([allowance]);
 
