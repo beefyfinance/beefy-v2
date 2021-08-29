@@ -86,18 +86,20 @@ const VaultsList = memo(function HomeVaultsList() {
       <div className={classes.numberOfVaults}>
         {t('Filter-ShowingVaults', { number: filteredCount })}
       </div>
-      {filteredCount ? (
-        <InfiniteScroll
-          dataLength={loadedVaultsCount}
-          hasMore={haveMoreVaults}
-          next={loadMoreVaults}
-          loader={t('Filter-LoadingSearch')}
-        >
-          {loadedVaults.map(item => (
-            <Item key={item.id} id={item.id} />
-          ))}
-        </InfiniteScroll>
-      ) : null}
+      <div className={classes.vaultsList}>
+        {filteredCount ? (
+          <InfiniteScroll
+            dataLength={loadedVaultsCount}
+            hasMore={haveMoreVaults}
+            next={loadMoreVaults}
+            loader={t('Filter-LoadingSearch')}
+          >
+            {loadedVaults.map(item => (
+              <Item key={item.id} id={item.id} />
+            ))}
+          </InfiniteScroll>
+        ) : null}
+      </div>
     </>
   );
 });

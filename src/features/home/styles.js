@@ -31,6 +31,9 @@ const styles = theme => ({
     lineHeight: '18px',
     letterSpacing: '1px',
   },
+  vaultsList: {
+    marginBottom: '20px',
+  },
 });
 
 export default styles;
