@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
   Box,
@@ -19,6 +19,8 @@ import styles from './styles';
 import { isEmpty } from 'helpers/utils';
 import { useTranslation } from 'react-i18next';
 import AssetsImage from 'components/AssetsImage';
+import reduxActions from 'features/redux/actions';
+import { formatApy, formatUsd } from '../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
@@ -26,6 +28,7 @@ const Boost = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
   let { id } = useParams();
   const { vault } = useSelector(state => ({
     vault: state.vaultReducer,
@@ -45,8 +48,9 @@ const Boost = () => {
   React.useEffect(() => {
     if (item) {
       setIsLoading(false);
+      dispatch(reduxActions.vault.fetchBoosts(item));
     }
-  }, [item]);
+  }, [item, dispatch]);
 
   return (
     <Container className={classes.vaultContainer} maxWidth="lg">
@@ -87,16 +91,16 @@ const Boost = () => {
           <Grid item xs={12}>
             <Box className={classes.summary} display="flex" alignItems="center">
               <Box flexGrow={1} p={2}>
-                <Typography variant={'h1'}>100</Typography>
+                <Typography variant={'h1'}>0</Typography>
                 <Typography>{t('Receipt-Balance')}</Typography>
               </Box>
               <Box p={2} textAlign={'right'}>
-                <Typography variant={'h1'}>99999</Typography>
+                <Typography variant={'h1'}>{formatUsd(item.tvl)}</Typography>
                 <Typography>{t('Total-Value-Locked')}</Typography>
               </Box>
               <Box p={2} textAlign={'right'}>
-                <Typography variant={'h1'}>999%</Typography>
-                <Typography>{t('Vault-APY')}</Typography>
+                <Typography variant={'h1'}>{formatApy(item.apr)}</Typography>
+                <Typography>{t('Stake-APR')}</Typography>
               </Box>
               <Box p={2} textAlign={'right'}>
                 <Typography variant={'h1'}>0%</Typography>
