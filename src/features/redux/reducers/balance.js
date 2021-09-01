@@ -24,6 +24,18 @@ const initialTokens = () => {
         address: data.pools[key].earnedTokenAddress,
       };
     }
+
+    const boosts = require('config/boost/' + net + '.js');
+    for (const key in boosts.pools) {
+      tokens[boosts.pools[key].token + 'Boost'] = {
+        balance: 0,
+        allowance: { [data.pools[key].earnContractAddress]: 0 },
+      };
+
+      tokens[boosts.pools[key].token]['allowance'] = {
+        [boosts.pools[key].earnContractAddress]: 0,
+      };
+    }
   }
 
   return tokens;
