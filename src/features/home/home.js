@@ -1,18 +1,23 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Box, Container, makeStyles } from '@material-ui/core';
 import reduxActions from '../redux/actions';
 import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
-import Item from 'features/home/components/Item';
 import Loader from 'components/CowLoader';
 import { formatUsd } from 'helpers/format';
 import ApyLoader from 'components/APYLoader';
 import useVaults from './hooks/useFilteredVaults';
 import styles from './styles';
-import useScrollableVaults from './hooks/useScrollableVaults';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import {
+  AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache,
+  List,
+  WindowScroller,
+} from 'react-virtualized';
+import Item from './components/Item';
 
 const useStyles = makeStyles(styles);
 
@@ -61,14 +66,75 @@ const VaultsHeader = memo(function HomeVaultsHeader() {
   );
 });
 
+function createVaultRenderer(vaults, cache) {
+  return function vaultRenderer({ index, parent, key, style }) {
+    const vault = <Item id={vaults[index].id} />;
+
+    return (
+      <CellMeasurer cache={cache} key={key} columnIndex={0} rowIndex={index} parent={parent}>
+        {({ registerChild }) => (
+          <div style={style} ref={registerChild}>
+            {vault}
+          </div>
+        )}
+      </CellMeasurer>
+    );
+  };
+}
+
+function createVaultHeightCache(vaults) {
+  return new CellMeasurerCache({
+    fixedWidth: true,
+    defaultHeight: 140,
+    keyMapper: function (index) {
+      return vaults[index].id + ':' + window.innerWidth;
+    },
+  });
+}
+
+function useVaultRenderer(vaults) {
+  const cache = useMemo(() => createVaultHeightCache(vaults), [vaults]);
+  const renderer = useMemo(() => createVaultRenderer(vaults, cache), [vaults, cache]);
+
+  return { renderer, cache };
+}
+
+const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
+  const { renderer, cache } = useVaultRenderer(vaults);
+
+  return (
+    <WindowScroller>
+      {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <div ref={registerChild}>
+              <List
+                autoHeight
+                height={height}
+                isScrolling={isScrolling}
+                onScroll={onChildScroll}
+                overscanRowCount={2}
+                rowCount={vaults.length}
+                rowHeight={cache.rowHeight}
+                rowRenderer={renderer}
+                scrollTop={scrollTop}
+                width={width}
+                deferredMeasurementCache={cache}
+              />
+            </div>
+          )}
+        </AutoSizer>
+      )}
+    </WindowScroller>
+  );
+});
+
 const VaultsList = memo(function HomeVaultsList() {
   const classes = useStyles();
   const { t } = useTranslation();
   const isPoolsLoading = useSelector(state => state.vaultReducer.isPoolsLoading);
   const platforms = useSelector(state => state.vaultReducer.platforms);
   const [filteredVaults, filterConfig, setFilterConfig, filteredCount, allCount] = useVaults();
-  const [loadedVaults, loadedVaultsCount, haveMoreVaults, loadMoreVaults] =
-    useScrollableVaults(filteredVaults);
 
   if (isPoolsLoading) {
     return <Loader text={t('Vaults-LoadingData')} />;
@@ -87,18 +153,7 @@ const VaultsList = memo(function HomeVaultsList() {
         {t('Filter-ShowingVaults', { number: filteredCount })}
       </div>
       <div className={classes.vaultsList}>
-        {filteredCount ? (
-          <InfiniteScroll
-            dataLength={loadedVaultsCount}
-            hasMore={haveMoreVaults}
-            next={loadMoreVaults}
-            loader={t('Filter-LoadingSearch')}
-          >
-            {loadedVaults.map(item => (
-              <Item key={item.id} id={item.id} />
-            ))}
-          </InfiniteScroll>
-        ) : null}
+        <VirtualVaultsList vaults={filteredVaults} />
       </div>
     </>
   );
