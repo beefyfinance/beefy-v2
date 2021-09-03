@@ -1,4 +1,9 @@
-import { HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_DONE } from '../constants';
+import {
+  HOME_FETCH_BOOSTS_BEGIN,
+  HOME_FETCH_BOOSTS_DONE,
+  HOME_FETCH_POOLS_BEGIN,
+  HOME_FETCH_POOLS_DONE,
+} from '../constants';
 import { config } from 'config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from 'helpers/utils';
 import safetyScore from 'helpers/safetyScore';
@@ -19,7 +24,7 @@ const initialBoosts = () => {
         const pool = pools[boost.poolId];
 
         boost['network'] = net;
-        boost['apy'] = 0;
+        boost['apr'] = 0;
         boost['tvl'] = 0;
         boost['periodFinish'] = 0;
         boost['name'] = pool.name;
@@ -120,6 +125,7 @@ const initialState = {
   boosts: initialBoosts(),
   totalTvl: 0,
   isPoolsLoading: true,
+  isBoostsLoading: true,
   isFirstTime: true,
   lastUpdated: 0,
   platforms: initPlatforms,
@@ -139,6 +145,19 @@ const vaultReducer = (state = initialState, action) => {
         totalTvl: action.payload.totalTvl,
         lastUpdated: action.payload.lastUpdated,
         isPoolsLoading: action.payload.isPoolsLoading,
+        isFirstTime: false,
+      };
+    case HOME_FETCH_BOOSTS_BEGIN:
+      return {
+        ...state,
+        isBoostsLoading: state.isFirstTime,
+      };
+    case HOME_FETCH_BOOSTS_DONE:
+      return {
+        ...state,
+        boosts: action.payload.boosts,
+        lastUpdated: action.payload.lastUpdated,
+        isBoostsLoading: action.payload.isBoostsLoading,
         isFirstTime: false,
       };
     default:
