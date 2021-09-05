@@ -1,12 +1,20 @@
-import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, Dot } from 'recharts';
+import React, { useMemo } from 'react';
+import { Area, AreaChart, Dot, XAxis, YAxis } from 'recharts';
 import { makeStyles } from '@material-ui/core';
 import styles from '../../styles';
 import { formatApy } from 'helpers/format';
+import { useSelector } from 'react-redux';
+import buildChartData from '../../../../helpers/buildChartData';
 
-const HistoricalRateChart = ({ chartData }) => {
+const HistoricalRateChart = ({ id }) => {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
+  const historicalApy = useSelector(state => state.pricesReducer.historicalApy);
+  const ApyLoader = useSelector(state => state.pricesReducer.ApyLoader);
+  const chartData = useMemo(
+    () => buildChartData(historicalApy, ApyLoader, id),
+    [historicalApy, ApyLoader, id]
+  );
 
   const xAxisDataKey = 'date';
   const yAxisDataKey = 'apy';

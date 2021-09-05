@@ -7,6 +7,7 @@ import {
 import { config } from 'config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from 'helpers/utils';
 import safetyScore from 'helpers/safetyScore';
+import BigNumber from 'bignumber.js';
 
 let initPlatforms = {};
 let pools = [];
@@ -55,7 +56,7 @@ const initialPools = () => {
       pool['pricePerFullShare'] = 1;
       pool['daily'] = 0;
       pool['apy'] = 0;
-      pool['tvl'] = 0;
+      pool['tvl'] = new BigNumber(0);
       pool['lastUpdated'] = 0;
       pool['tags'] = [];
       pool['safetyScore'] = 0;

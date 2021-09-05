@@ -65,7 +65,7 @@ const getBalances = async (items, state, dispatch) => {
     response = [...response, ...resp[0]];
   }
 
-  const tokens = state.balanceReducer.tokens;
+  const tokens = { ...state.balanceReducer.tokens };
 
   for (let index in response) {
     const item = response[index];
