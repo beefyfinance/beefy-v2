@@ -24,7 +24,7 @@ const styles = theme => ({
     },
   },
   bar: {
-    backgroundColor: '#424866',
+    backgroundColor: theme.palette.type === 'dark' ? '#424866' : '#A69885',
     width: '5px',
     borderRadius: '2px',
     '& + $bar': {
@@ -94,7 +94,7 @@ const styles = theme => ({
   },
   withWhiteLabel: {
     '& $label': {
-      color: '#ffffff',
+      color: theme.palette.type === 'dark' ? '#ffffff' : '#000',
     },
   },
 });

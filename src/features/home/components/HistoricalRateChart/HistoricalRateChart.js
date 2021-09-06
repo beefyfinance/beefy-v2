@@ -16,13 +16,15 @@ const HistoricalRateChart = ({ id }) => {
     [historicalApy, ApyLoader, id]
   );
 
+  const isDarkTheme = localStorage.getItem('nightMode') === 'true' ? true : false;
+
   const xAxisDataKey = 'date';
   const yAxisDataKey = 'apy';
 
-  const areaColor = '#313759';
-  const lineColor = '#8585A6';
+  const areaColor = isDarkTheme ? '#313759' : 'rgba(166,152,133,0.2)';
+  const lineColor = isDarkTheme ? '#8585A6' : '#A69885';
   const firstColor = lineColor;
-  const lastColor = 'white';
+  const lastColor = isDarkTheme ? '#FFF' : '#000';
 
   const renderLabel = props => {
     const { index, x, y } = props;
