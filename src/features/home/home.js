@@ -21,6 +21,12 @@ import Item from './components/Item';
 
 const useStyles = makeStyles(styles);
 
+export function notifyResize() {
+  const event = document.createEvent('HTMLEvents');
+  event.initEvent('resize', true, false);
+  window.dispatchEvent(event);
+}
+
 const DataLoader = memo(function HomeDataLoader() {
   const pricesLastUpdated = useSelector(state => state.pricesReducer.lastUpdated);
   const vaultLastUpdated = useSelector(state => state.vaultReducer.lastUpdated);
