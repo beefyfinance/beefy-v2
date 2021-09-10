@@ -3,6 +3,7 @@
   "homepage": ".",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@download/blockies": "^1.0.3",
     "@material-ui/lab": "^4.0.0-alpha.57",
