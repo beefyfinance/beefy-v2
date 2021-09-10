@@ -1,39 +1,14 @@
-/*********
-Node.js script to refresh the v2 app with the vaults state found in the v1 app. 
-"New" vaults in v1 are pulled into v2, and outdated properties in current v2 vaults 
-are refreshed with counterpart v1 values and any associated logo/icon files. Thus v1 
-is considered the source of truth in this operation.
-
-Script should be run from root "beefy-v2" directory with the "beefy-app" sources in a 
-_sibling_ directory. A working Node.js environment off the beefy-v2 directory is 
-assumed. Linux command line to invoke the script:
-
-node src/helpers/migrateV1vaults.mjs
-
-Progress will be printed to standard output and standard error.
-
-Aspects of a full migration which this script cannot perform are two:
-(a) The v2 "Vamp" strategy type (key "stratType"). It cannot be reliably 
-programmatically discerned from a v1 input object.
-(b) The v2 child array of risk factors (key "risks"). Concept unnknown in v1.
-
-To assist the maintainer in manually updating these v2 aspects, the script creates an 
-output file with an array-listing of the IDs of the v1 vaults it has added newly to 
-the v2 environment: vaultsAddedFromV1.txt. The file is placed in directory from which 
-the command is run. It makes sense for the maintainer to delete this file before pushing 
-the migration updates into the staging source repository.
-
-Development: v0.1 AllTrades
-**********/
+//Node.js script to be run from root beefy-v2 directory with original "beefy-app" 
+// sources in a sibling directory
 
 import * as FS from 'fs';
 
+//const mAO_CHAIN = ["bsc", "heco", "fantom", "polygon", "avalanche"];
 const mAO_CHAIN = [{S_SRC: "bsc"}, 
 										{S_SRC: "heco"}, 
 										{S_SRC: "fantom"}, 
 										{S_SRC: "polygon"},
-										{S_SRC: "avalanche", S_TRGT_ALIAS: "avax"},
-										{S_SRC: "harmony"}];
+										{S_SRC: "avalanche", S_TRGT_ALIAS: "avax"}];
 const mS_PROPNM_ID = "id", mS_PROPNM_ASSTS = "assets", mS_PROPNM_STRAT_TYP = "stratType", 
 			mS_PROPNM_CHAIN = "network", mS_PROPNM_LOGO = "logo", 
 			mAS_STRAT_TYP = [ "", "SingleStake", "StratLP", "StratMultiLP", "Vamp"];
@@ -43,7 +18,74 @@ const moAO_SRC = {}, mo_trgt = {};
 async function p_loadChain( O_CHN)	{
 	//note the specified chain's source and target vault data such that the target data 
 	//	is efficiently searchable
-	[moAO_SRC[ O_CHN.S_SRC], mo_trgt[ O_CHN.S_SRC]] = await Promise.all( [
+//	const O = await import( 
+//										`../../../beefy-app/src/features/configure/vault/${O_CHN}_pools.js`);
+//	const O = (await import( 
+//										`../../../beefy-app/src/features/configure/vault/${O_CHN}_pools.js`))[ O_CHN + 'Pools'];
+//										`../../../scratch/${O_CHN}_pools.js`))[ O_CHN + 'Pools'];
+//										`../config/vault/${O_CHN}.js`)).pools;
+//										`../../../scratch/${O_CHN}.js`)).pools_Bss;
+//										`../config/vault/${O_CHN}.js`))[ 'pools'];
+//console.log( O);
+//console.log( O[ O_CHN + 'Pools']);
+//console.log( O.pools);
+//return;
+/*	await Promise.all( [async() => {moAO_SRC[ O_CHN] = (await import( 
+										`../../../beefy-app/src/features/configure/vault/${O_CHN}_pools.js`)
+										)[ O_CHN + 'Pools'];
+*//*										.catch( O => {
+											console.error( O);
+											throw "err loading src: " + O_CHN;
+										}))[ O_CHN + 'Pools'];*/
+//console.log( moAO_SRC[ O_CHN])
+//console.log( moAO_SRC)
+//return;
+//let i = 0;
+/*	mo_trgt[ O_CHN] = (await import( `../config/vault/${O_CHN}.js`)).pools.reduce( 
+																																			(o, O) => {
+*//*										.catch( O => {
+											console.error( O);
+											throw "err loading trgt: " + O_CHN;
+										})).pools.reduce( (o, O) => {*/
+//if ( i++ < 5) console.log( "vault: " + O.id);
+/*		o[ O.id] = O;
+		return o;
+	}, {});
+*//*await Promise.all( [import( 
+                     `../../../beefy-app/src/features/configure/vault/${O_CHN}_pools.js`), 
+											import( `../config/vault/${O_CHN}.js`)])
+											.catch( O => console.error( "erroR: " + O));
+*//*await Promise.all( [async () => 
+		moAO_SRC[ O_CHN] = (await import( 
+                     `../../../beefy-app/src/features/configure/vault/${O_CHN}_pools.js`))[
+    																																		O_CHN + 'Pools'], 
+											async () => 
+		mo_trgt[ O_CHN] = (await import( 
+											`../config/vault/${O_CHN}.js`)).pools.reduce( (o, O) => {
+if ( i++ < 5) console.log( "vault: " + O.id);
+				o[ O.id] = O;
+				return o;
+			}, {})]).catch( O => console.error( "erroR: " + O));
+*///await Promise.all( [(async () => console.log( "a1"))(),
+//											(async () => console.log( "a2"))()]);
+//await Promise.all( [console.log( "a1"),
+//											console.log( "a2")]);
+//console.log( "returning"); return;
+//	await Promise.all( [(async () => {
+//console.log( "load src: " + O_CHN); 
+/*	await Promise.all( [(async () => {
+console.log( "load src: " + O_CHN); 
+		moAO_SRC[ O_CHN] = (await import( 
+                     `../../../beefy-app/src/features/configure/vault/${O_CHN}_pools.js`))[
+      																																O_CHN + 'Pools']})(), 
+											(async () => 
+		mo_trgt[ O_CHN] = (await import( 
+											`../config/vault/${O_CHN}.js`)).pools.reduce( (o, O) => {
+//if ( i++ < 5) console.log( "vault: " + O.id);
+			o[ O.id] = O;
+			return o;
+		}, {}))()]);//.catch( O => console.error( "erroR: " + O));
+*/[moAO_SRC[ O_CHN.S_SRC], mo_trgt[ O_CHN.S_SRC]] = await Promise.all( [
 		(async () => (await import( 
 									`../../../beefy-app/src/features/configure/vault/${O_CHN.S_SRC}_pools.js`))
 									[O_CHN.S_SRC + 'Pools'])(), 
@@ -53,18 +95,44 @@ async function p_loadChain( O_CHN)	{
 									if (o[ O[ mS_PROPNM_ID]])
 										throw `Duplicate ${O_CHN.S_SRC} target vault-ID (${O[ mS_PROPNM_ID]}`;
 									o[ O[ mS_PROPNM_ID]] = O; return o;}, {}))()
-		])
+//	).catch( O => console.error( "erroR: " + O));
+		])//.catch( O => {throw (O)});//console.error( "erroR: " + O));
 
-	console.log( "loading: " + O_CHN.S_SRC);
+//	mo_trgt[ O_CHN] = (await import( `../config/vault/${O_CHN}.js`)).pools;
+//	mo_trgt[ O_CHN] = mo_trgt;
+//if ("avalanche" === O_CHN.S_SRC)
+//if ("heco" === O_CHN)
+//console.log( mo_trgt[ O_CHN.S_SRC]);
+//console.log( mo_trgt);
+console.log( "loaded: " + O_CHN.S_SRC);
 } //p_loadChain(
 
 
 async function p_loadAllVaultData()	{
 	const Af = [];
-	for (const O_CHN of mAO_CHAIN)
+	for (const O_CHN of mAO_CHAIN)	{
+//console.log( "chain: " + O_CHN.S_SRC);
 		Af.push( (async () => (await p_loadChain( O_CHN)))());
-
+//		Af.push( async () => await p_loadChain( O_CHN));
+//		let b = false;
+//		try	{
+//			p_loadChain( O_CHN).catch( O => {console.error( "caught: " + O); throw (O);});
+//			p_loadChain( O_CHN);//.catch( O => {b = true; console.error( "ER ROr: " + O);});
+/*			if (b)	{
+				console.error( "stopping");
+				break;
+			}
+*/	//		p_loadChain( O_CHN).catch( O => {throw (O)});//console.error( "ER ROr: " + O));
+	//break;
+/*		} catch (O)	{
+	console.log( "ERROR ERROR ERROR");
+			console.error( "error: " + O);
+		}
+*/	} //for (const O_CHN
+//console.log( Af);
+//	return new Promise(() => true);
 	return Promise.all( Af);
+//	return true;
 } //p_loadAllVaultData(
 
 
@@ -73,11 +141,15 @@ async function p_main()	{
 	//	efficiently searchable
 	try	{
 		await p_loadAllVaultData();
+//		var x = await p_loadAllVaultData();//.catch( O => {console.error( "caught2: " + O);});
+//		var x = await p_loadAllVaultData().catch( O => {console.error( "caught2: " + O);});
+//		var x = await new Promise( loadAllVaultData).catch( O => {console.error( "caught2: " + O);});
+//console.log( mo_trgt[ "avalanche"]);
+//console.log( "all awaited? " + x);
 	} catch (O)	{
 		console.error( O);
 		return;
-	}
-	console.log( "All vault arrays loaded successully for processing.");
+	} //try
 
 	let S_DIR_BASE = import.meta.url.slice( 'file://'.length, 1000).split( '/').slice( 
 																																				0, -4).join( '/');
@@ -89,23 +161,24 @@ async function p_main()	{
 		console.log( `Sync v1 vaults to v2, ${O_CHN.S_SRC} chain...`); 
 		o_trgtChn = mo_trgt[ O_CHN.S_SRC];
 
-		//for each source vault on the chain...
+		//for each source vault...
 		for (const O_SRC of moAO_SRC[ O_CHN.S_SRC])	{
 			let o_trgt;
 
-			//if the vault is present in target vault array already...
+			//if the vault is present in target array already...
 			if (o_trgt = o_trgtChn[ O_SRC[ mS_PROPNM_ID]])	{
-				//for each relevant property in the vault's source descripter...
+				//for each relevant property in the source descripter...
 				for (const S in O_SRC)	{
 					//If the target vault descriptor doesn't need to be tested (because we already 
-					//	know property's value or the property is obsolete), loop for the next 
-					//	property. Or if the target already matches the source value, loop.
+					//	know the property or it's obsolete), loop for the next property. Or, since 
+					//	the source vault descriptor is the latest truth, if the property matches 
+					//	the target's counterpart, loop. 
 					if (S in {[mS_PROPNM_ID]: "", ...O_PROP_IGNR} || o_trgt[ S] === O_SRC[ S])
 						continue;
 
 					//Since the source vault descriptor represents the system's source of truth, 
 					//	the target's descriptor needs to be updated to match. If this property is 
-					//	the assets-array property...
+					//	the vault's assets-array property...
 					if (mS_PROPNM_ASSTS === S)	{
 						//if the array's contents match exactly the target counterpart's, loop for the 
 						//	descriptor's next property
@@ -113,10 +186,10 @@ async function p_main()	{
 																																	O_SRC[ S][ i] === s))
 							continue;
 
-						//update the target's counterpart array
+						//update the target's counterpart property
 						o_trgt[ S] = [...O_SRC[ S]];
-					//else update the target's counterpart property, since it is outdated. Also if 
-					//	it's the logo file that's been updated, go ahead and copy over the file
+					//else update the target's counterpart property, since it's outdated. Also if 
+					//	it's the logo file that's been updated, go ahead and copy over the file now
 					}else	{
 						o_trgt[ S] = O_SRC[ S];
 						if (mS_PROPNM_LOGO === S)
@@ -127,7 +200,7 @@ async function p_main()	{
 							} catch (O)	{
 								console.error( 
 														`Failed to copy over obstensibly updated logo of vault ${O_SRC[ 
-														mS_PROPNM_ID]}:\n   beefy-app/src/images/${O_SRC[ 
+														mS_PROPNM_ID]}: \n   beefy-app/src/images/${O_SRC[ 
 														S]} (Error: ${O}`);
 							}
 					} //if (mS_PROPNM_ASSTS === S)
@@ -142,12 +215,11 @@ async function p_main()	{
 				continue;
 			} //if (o_trgt = o_trgtChn[ O_SRC[ mS_PROPNM_ID]]
 
-			//Since unknown in the target environment, add a copy of the source vault 
+			//Since unknown in the target environment, time to add a copy of the source vault 
 			//	descriptor to the array, First, if no vault logo is specified...
 			const S_LOGO = O_SRC[ mS_PROPNM_LOGO]; 
 			if (!S_LOGO)	{
-				//insofar as still needed, copy each constituent asset's icon from the default 
-				//	source repository
+				//insofar as still needed, copy each asset's icon from the default source repository
 				if (!o_DirSingleLogo)	{
 					const S = `${S_DIR_BASE}/beefy-app/src/images/single-assets`;
 					try	{
@@ -193,7 +265,7 @@ async function p_main()	{
 																	mS_PROPNM_CHAIN]} asset ${s_ASST} of new vault ${O_SRC[ 
 																	mS_PROPNM_ID]}\n  (Error: ${O}`);
 				} //try
-			//else copy the _spedified_ logo over
+			//else copy over the logo specified in the source descriptor
 			}else
 				try	{
 					FS.copyFileSync( `${S_DIR_BASE}/beefy-app/src/images/${S_LOGO}`, 
@@ -203,8 +275,8 @@ async function p_main()	{
 													mS_PROPNM_ID]}:\n   beefy-app/src/images/${S_LOGO} (Error: ${O}`);
 				} //try
 
-			//add a copy of the source vault descriptor to the target array, adjusting as 
-			//	needed to match the target format
+			//form a copy of the source vault descriptor to the array,adjusting as needed to 
+			//	match the target format
 			let o = {...O_SRC}; o[ mS_PROPNM_ASSTS] = [...O_SRC[ mS_PROPNM_ASSTS]];
 			for (const S in O_PROP_IGNR) if (S in o) delete o[S];
 			if (o[ mS_PROPNM_ASSTS])	{
@@ -225,22 +297,26 @@ async function p_main()	{
 		} //for (const O_SRC of moAO_SRC[ O_CHN.S_SRC]
 	} //for (const O_CHN of mAO_CHAIN)
 
-	//if nothing has changed anywhere, our work is done
+	//if nothing has changed, our work is done
 	if (!aS_added.length)	{
 		console.log( "No v1 changes to sync over to v2. Finished.");
 		return;
 	}
 
-	//inform maintainer of the v1 vaults migrated to v2
+	//tell maintainer the v1 vaults migrated to v2
 	FS.writeFileSync( `${S_DIR_BASE}/beefy-v2/vaultsAddedFromV1.txt`, JSON.stringify( 
 																																	aS_added, null, 2));
 
-	//for each changed target array (one per chain), commit it to persistent storage
+	//for each changed target array, commit it to persistent storage
+//	let S;
+//	const FS = require( 'fs');
 	for (const O_CHN of mAO_CHAIN)	{
+//for ([S, o_trgtChn] of Object.entries( mo_trgt))	{
 		o_trgtChn = mo_trgt[ O_CHN.S_SRC];
 		if (!o_trgtChn.b_dirty)
 			continue;
 		console.log( "Writing updated v2 vault descriptors file: " + O_CHN.S_SRC);
+//console.log( import.meta.url.split( '/').slice( 0, -2));		
 		delete o_trgtChn.b_dirty;
 		FS.writeFileSync( `${S_DIR_BASE}/beefy-v2/src/config/vault/${O_CHN.S_TRGT_ALIAS ? 
 										O_CHN.S_TRGT_ALIAS : O_CHN.S_SRC}.js`, 
@@ -251,5 +327,4 @@ async function p_main()	{
 	console.log( "Finished v1-to-v2 vault sync.");
 } //p_main(
 
-//launch the migration
 p_main();
