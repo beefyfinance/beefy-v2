@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import buildChartData from 'helpers/buildChartData';
 import PortfolioItem from './PortfolioItem';
 import Stats from './Stats';
+import { notifyResize } from '../../home';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
@@ -115,7 +116,11 @@ const Portfolio = () => {
           </Box>
           <Stats stats={globalStats} blurred={hideBalance} />
         </Box>
-        <AnimateHeight duration={500} height={portfolioOpen ? 'auto' : 0}>
+        <AnimateHeight
+          duration={500}
+          height={portfolioOpen ? 'auto' : 0}
+          onAnimationEnd={notifyResize}
+        >
           {userVaults.length > 0 ? (
             <>
               {userVaults.map(vault => (
