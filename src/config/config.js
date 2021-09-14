@@ -92,7 +92,7 @@ export const config = {
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     supportedWallets: ['injected', 'walletconnect'],
-    providerName: 'avalanche',
+    providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt(137, 10).toString(16)}`,
       chainName: 'Polygon Mainnet',
@@ -126,5 +126,26 @@ export const config = {
       blockExplorerUrls: ['https://ftmscan.com/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'fUSDT'],
+  },
+  harmony: {
+    name: 'Harmony',
+    chainId: 1666600000,
+    rpc: ['https://api.s0.t.hmny.io'],
+    explorerUrl: 'https://explorer.harmony.one/',
+    multicallAddress: '0x09EF0e7b555599A9F810789FfF68Db8DBF4c51a0',
+    supportedWallets: ['injected'],
+    providerName: 'harmony',
+    walletSettings: {
+      chainId: `0x${parseInt(1666600000, 10).toString(16)}`,
+      chainName: 'Harmony One',
+      nativeCurrency: {
+        name: 'HARMONY',
+        symbol: 'ONE',
+        decimals: 18,
+      },
+      rpcUrls: ['https://api.s0.t.hmny.io/'],
+      blockExplorerUrls: ['https://explorer.harmony.one/'],
+    },
+    stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
   },
 };
