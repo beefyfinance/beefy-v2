@@ -29,6 +29,9 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
+    '& img': {
+      height: '24px',
+    },
     [theme.breakpoints.down('sm')]: {
       margin: '0 10px',
     },
