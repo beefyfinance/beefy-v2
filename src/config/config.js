@@ -88,7 +88,7 @@ export const config = {
   polygon: {
     name: 'Polygon',
     chainId: 137,
-    rpc: ['https://rpc-mainnet.matic.network'],
+    rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     supportedWallets: ['injected', 'walletconnect'],
