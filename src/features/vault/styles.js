@@ -127,6 +127,9 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     margin: '0 30px 0 0',
+    '& img': {
+      height: '24px',
+    },
     [theme.breakpoints.down('sm')]: {
       margin: '0 10px',
     },
