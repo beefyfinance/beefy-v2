@@ -2,7 +2,7 @@ const styles = theme => ({
   container: {
     display: 'flex',
     alignItems: 'flex-end',
-    marginBottom: props => (props.size === 'lg' ? '10px' : '5px'),
+    marginBottom: '5px',
   },
   barsContainer: {
     display: 'flex',
@@ -10,39 +10,93 @@ const styles = theme => ({
     justifyContent: 'space-between',
     margin: 'auto auto 3px 10px',
   },
-  label: props => ({
-    color: props.labelColor,
+  label: {
+    color: '#424866',
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
     fontWeight: 600,
-    fontSize: props.size === 'lg' ? '36px' : '18px',
-    lineHeight: props.size === 'lg' ? '30px' : '24px',
+    fontSize: '18px',
+    lineHeight: '24px',
     textAlign: 'center',
     letterSpacing: '-0.1px',
     [theme.breakpoints.up('lg')]: {
-      fontSize: props.size === 'lg' ? '36px' : '24px',
+      fontSize: '24px',
     },
-  }),
-  sm: props => ({
-    backgroundColor: props.smColor,
+  },
+  bar: {
+    backgroundColor: '#424866',
     width: '5px',
-    height: props.size === 'lg' ? '13px' : '9px',
-    marginRight: '4px',
     borderRadius: '2px',
-  }),
-  md: props => ({
-    backgroundColor: props.mdColor,
-    width: '5px',
-    height: props.size === 'lg' ? '21px' : '17px',
-    marginRight: '4px',
-    borderRadius: '2px',
-  }),
-  lg: props => ({
-    backgroundColor: props.lgColor,
-    width: '5px',
-    height: props.size === 'lg' ? '29px' : '25px',
-    borderRadius: '2px',
-  }),
+    '& + $bar': {
+      marginLeft: '4px',
+    },
+  },
+  sm: {
+    height: '9px',
+  },
+  md: {
+    height: '17px',
+  },
+  lg: {
+    height: '25px',
+  },
+  withSizeLarge: {
+    marginBottom: '10px',
+    '& $label': {
+      fontSize: '36px',
+      lineHeight: '30px',
+      [theme.breakpoints.up('lg')]: {
+        fontSize: '36px',
+      },
+    },
+    '& $sm': {
+      height: '13px',
+    },
+    '& $md': {
+      height: '21px',
+    },
+    '& $lg': {
+      height: '29px',
+    },
+  },
+  withScoreLow: {
+    '& $label': {
+      color: '#E84525',
+    },
+    '& $sm': {
+      backgroundColor: '#E84525',
+    },
+  },
+  withScoreMed: {
+    '& $label': {
+      color: '#E88225',
+    },
+    '& $sm': {
+      backgroundColor: '#E88225',
+    },
+    '& $md': {
+      backgroundColor: '#E88225',
+    },
+  },
+  withScoreHigh: {
+    '& $label': {
+      color: '#4A9252',
+    },
+    '& $sm': {
+      backgroundColor: '#4A9252',
+    },
+    '& $md': {
+      backgroundColor: '#4A9252',
+    },
+    '& $lg': {
+      backgroundColor: '#4A9252',
+    },
+  },
+  withWhiteLabel: {
+    '& $label': {
+      color: '#ffffff',
+    },
+  },
 });
 
 export default styles;

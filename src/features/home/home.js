@@ -1,243 +1,178 @@
-import React from 'react';
+import React, { memo, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { useTranslation } from 'react-i18next';
-import BigNumber from 'bignumber.js';
-import { Container, makeStyles, Box } from '@material-ui/core';
-
-import styles from './styles';
+import { Box, Container, makeStyles } from '@material-ui/core';
 import reduxActions from '../redux/actions';
-import chartData from 'helpers/chartData';
 import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
-import Item from 'features/home/components/Item';
 import Loader from 'components/CowLoader';
 import { formatUsd } from 'helpers/format';
-import { isEmpty } from 'helpers/utils';
-import buildUserEarnedTokenMap from 'helpers/buildUserEarnedTokenMap';
 import ApyLoader from 'components/APYLoader';
+import useVaults from './hooks/useFilteredVaults';
+import styles from './styles';
+import {
+  AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache,
+  List,
+  WindowScroller,
+} from 'react-virtualized';
+import Item from './components/Item';
 
 const useStyles = makeStyles(styles);
-const defaultFilter = {
-  key: 'default',
-  direction: 'desc',
-  keyword: '',
-  retired: false,
-  zero: false,
-  deposited: false,
-  boost: false,
-  platform: 'all',
-  vault: 'all',
-  blockchain: 'all',
-  category: 'all',
-};
 
-const Home = () => {
-  const { vault, wallet, prices, balance } = useSelector(state => ({
-    vault: state.vaultReducer,
-    wallet: state.walletReducer,
-    prices: state.pricesReducer,
-    balance: state.balanceReducer,
-  }));
+export function notifyResize() {
+  const event = document.createEvent('HTMLEvents');
+  event.initEvent('resize', true, false);
+  window.dispatchEvent(event);
+}
 
+const DataLoader = memo(function HomeDataLoader() {
+  const pricesLastUpdated = useSelector(state => state.pricesReducer.lastUpdated);
+  const vaultLastUpdated = useSelector(state => state.vaultReducer.lastUpdated);
+  const walletAddress = useSelector(state => state.walletReducer.address);
   const dispatch = useDispatch();
-  const classes = useStyles();
-  const t = useTranslation().t;
-  const [vaultCount, setVaultCount] = React.useState({ showing: 0, total: 0 });
-  const storage = localStorage.getItem('homeSortConfig');
-  const [sortConfig, setSortConfig] = React.useState(
-    storage === null ? defaultFilter : JSON.parse(storage)
-  );
-  const [filtered, setFiltered] = React.useState([]);
-  const [scrollable, setScrollable] = React.useState({ items: [], hasMore: true, chunk: 20 });
-  const [userEarnedTokenMap, setUserEarnedTokenMap] = React.useState({});
 
-  React.useEffect(() => {
-    localStorage.setItem('homeSortConfig', JSON.stringify(sortConfig));
-
-    let data = [];
-
-    // TODO: extract helper fn?
-    const sorted = items => {
-      const key = sortConfig.key;
-      const direction = sortConfig.direction === 'desc' ? -1 : 1;
-
-      let fn;
-
-      if (key === 'name') {
-        fn = (a, b) => a[key].localeCompare(b[key]);
-      } else if (key === 'apy') {
-        fn = (a, b) => a[key].totalApy - b[key].totalApy;
-      } else if (key === 'tvl') {
-        fn = (a, b) => new BigNumber(a[key]).comparedTo(b[key]);
-      } else if (key === 'safetyScore') {
-        fn = (a, b) => a[key] - b[key];
-      } else {
-        fn = () => 0;
-      }
-
-      return items.sort((a, b) => fn(a, b) * direction);
-    };
-
-    // TODO: extract helper fn?
-    const check = item => {
-      if (sortConfig.retired) {
-        if (item.status !== 'eol') {
-          return false;
-        }
-      } else {
-        if (item.status === 'eol') {
-          return false;
-        }
-      }
-
-      if (sortConfig.category !== 'all' && !item.tags.includes(sortConfig.category)) {
-        return false;
-      }
-
-      if (!item.name.toLowerCase().includes(sortConfig.keyword)) {
-        return false;
-      }
-
-      if (sortConfig.zero && BigNumber(balance.tokens[item.token].balance).eq(0)) {
-        return false;
-      }
-
-      if (sortConfig.deposited && !(item.earnedToken in userEarnedTokenMap)) {
-        return false;
-      }
-
-      if (sortConfig.boost && !item.boost) {
-        return false;
-      }
-
-      if (
-        sortConfig.platform !== 'all' &&
-        (isEmpty(item.platform) || sortConfig.platform !== item.platform.toLowerCase())
-      ) {
-        return false;
-      }
-
-      if (sortConfig.vault !== 'all' && sortConfig.vault !== item.vaultType) {
-        return false;
-      }
-
-      if (sortConfig.blockchain !== 'all' && item.network !== sortConfig.blockchain) {
-        return false;
-      }
-
-      return item;
-    };
-
-    for (const [, item] of Object.entries(vault.pools)) {
-      if (check(item)) {
-        data.push(item);
-      }
-    }
-
-    if (sortConfig !== null) {
-      data = sorted(data);
-    }
-
-    setVaultCount({ showing: data.length, total: Object.entries(vault.pools).length });
-    setFiltered(data);
-    setScrollable(scrollable => {
-      return {
-        ...scrollable,
-        ...{ items: data.slice(0, scrollable.chunk), hasMore: data.length > scrollable.chunk },
-      };
-    });
-  }, [sortConfig, vault.pools, userEarnedTokenMap, balance]);
-
-  const fetchScrollable = () => {
-    if (scrollable.items.length >= filtered.length) {
-      setScrollable({ ...scrollable, hasMore: false });
-      return;
-    }
-
-    const visible = scrollable.items.length;
-    setScrollable({
-      ...scrollable,
-      items: scrollable.items.concat(filtered.slice(visible, visible + scrollable.chunk)),
-    });
-  };
-
-  React.useEffect(() => {
-    if (wallet.address && vault.lastUpdated > 0) {
+  useEffect(() => {
+    if (walletAddress && vaultLastUpdated > 0) {
       dispatch(reduxActions.balance.fetchBalances());
     }
-  }, [dispatch, wallet.address, vault.lastUpdated]);
+  }, [dispatch, walletAddress, vaultLastUpdated]);
 
-  React.useEffect(() => {
-    if (prices.lastUpdated > 0) {
+  useEffect(() => {
+    if (pricesLastUpdated > 0) {
       dispatch(reduxActions.vault.fetchPools());
     }
-  }, [dispatch, prices.lastUpdated]);
+  }, [dispatch, pricesLastUpdated]);
 
-  React.useEffect(() => {
-    if (wallet.address && vault.lastUpdated > 0 && balance.lastUpdated) {
-      const userEarnedTokenMap = buildUserEarnedTokenMap(vault.pools, balance.tokens);
-      setUserEarnedTokenMap(userEarnedTokenMap);
-    } else {
-      setUserEarnedTokenMap({});
-    }
-  }, [wallet.address, vault.lastUpdated, balance.lastUpdated, vault.pools, balance.tokens]);
-
-  React.useEffect(() => {
-    setInterval(() => {
+  useEffect(() => {
+    const id = setInterval(() => {
       dispatch(reduxActions.vault.fetchPools());
     }, 60000);
+
+    return () => clearInterval(id);
   }, [dispatch]);
 
+  return null;
+});
+
+const VaultsHeader = memo(function HomeVaultsHeader() {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const totalTvl = useSelector(state => state.vaultReducer.totalTvl);
+
+  return (
+    <Box className={classes.header}>
+      <Box className={classes.title}>{t('Vaults-Title')}</Box>
+      <Box className={classes.tvl}>
+        <Box className={classes.tvlLabel}>{t('TVL')} </Box>
+        {totalTvl ? <Box className={classes.tvlValue}>{formatUsd(totalTvl)}</Box> : <ApyLoader />}
+      </Box>
+    </Box>
+  );
+});
+
+function createVaultRenderer(vaults, cache) {
+  return function vaultRenderer({ index, parent, key, style }) {
+    const vault = <Item id={vaults[index].id} />;
+
+    return (
+      <CellMeasurer cache={cache} key={key} columnIndex={0} rowIndex={index} parent={parent}>
+        {({ registerChild }) => (
+          <div style={style} ref={registerChild}>
+            {vault}
+          </div>
+        )}
+      </CellMeasurer>
+    );
+  };
+}
+
+function createVaultHeightCache(vaults) {
+  return new CellMeasurerCache({
+    fixedWidth: true,
+    defaultHeight: 140,
+    keyMapper: function (index) {
+      return vaults[index].id + ':' + window.innerWidth;
+    },
+  });
+}
+
+function useVaultRenderer(vaults) {
+  const cache = useMemo(() => createVaultHeightCache(vaults), [vaults]);
+  const renderer = useMemo(() => createVaultRenderer(vaults, cache), [vaults, cache]);
+
+  return { renderer, cache };
+}
+
+const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
+  const { renderer, cache } = useVaultRenderer(vaults);
+
+  return (
+    <WindowScroller>
+      {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <div ref={registerChild}>
+              <List
+                autoHeight
+                height={height}
+                isScrolling={isScrolling}
+                onScroll={onChildScroll}
+                overscanRowCount={2}
+                rowCount={vaults.length}
+                rowHeight={cache.rowHeight}
+                rowRenderer={renderer}
+                scrollTop={scrollTop}
+                width={width}
+                deferredMeasurementCache={cache}
+              />
+            </div>
+          )}
+        </AutoSizer>
+      )}
+    </WindowScroller>
+  );
+});
+
+const VaultsList = memo(function HomeVaultsList() {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const isPoolsLoading = useSelector(state => state.vaultReducer.isPoolsLoading);
+  const platforms = useSelector(state => state.vaultReducer.platforms);
+  const [filteredVaults, filterConfig, setFilterConfig, filteredCount, allCount] = useVaults();
+
+  if (isPoolsLoading) {
+    return <Loader text={t('Vaults-LoadingData')} />;
+  }
+
+  return (
+    <>
+      <Filter
+        sortConfig={filterConfig}
+        setSortConfig={setFilterConfig}
+        platforms={platforms}
+        allCount={allCount}
+        filteredCount={filteredCount}
+      />
+      <div className={classes.numberOfVaults}>
+        {t('Filter-ShowingVaults', { number: filteredCount })}
+      </div>
+      <div className={classes.vaultsList}>
+        <VirtualVaultsList vaults={filteredVaults} />
+      </div>
+    </>
+  );
+});
+
+const Home = () => {
   return (
     <React.Fragment>
+      <DataLoader />
       <Portfolio />
       <Container maxWidth="lg">
-        <Box className={classes.header}>
-          <Box className={classes.title}>{t('Vaults-Title')}</Box>
-          <Box className={classes.tvl}>
-            <Box className={classes.tvlLabel}>{t('TVL')} </Box>
-            {vault.totalTvl ? (
-              <Box className={classes.tvlValue}>{formatUsd(vault.totalTvl)}</Box>
-            ) : (
-              <ApyLoader />
-            )}
-          </Box>
-        </Box>
-        {vault.isPoolsLoading ? (
-          <Loader text={t('Vaults-LoadingData')} />
-        ) : (
-          <Box mb={4}>
-            <Filter
-              sortConfig={sortConfig}
-              setSortConfig={setSortConfig}
-              defaultFilter={defaultFilter}
-              platforms={vault.platforms}
-              vaultCount={vaultCount}
-            />
-            <Box className={classes.numberOfVaults}>
-              {t('Filter-ShowingVaults', { number: vaultCount.showing })}
-            </Box>
-            {isEmpty(filtered) ? (
-              ''
-            ) : (
-              <InfiniteScroll
-                dataLength={scrollable.items.length}
-                hasMore={scrollable.hasMore}
-                next={fetchScrollable}
-                loader={t('Filter-LoadingSearch')}
-              >
-                {scrollable.items.map(item => (
-                  <Item
-                    key={item.id}
-                    item={item}
-                    chartData={chartData(prices.historicalApy, prices.ApyLoader, item.id)}
-                  />
-                ))}
-              </InfiniteScroll>
-            )}
-          </Box>
-        )}
+        <VaultsHeader />
+        <VaultsList />
       </Container>
     </React.Fragment>
   );

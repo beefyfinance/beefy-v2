@@ -21,6 +21,10 @@ export function isEmpty(key) {
   }
 }
 
+export function isObject(value) {
+  return value && typeof value === 'object' && value.constructor === Object;
+}
+
 export const getAvailableNetworks = (abbrOnly = false) => {
   const networks = [];
   for (let key in config) {

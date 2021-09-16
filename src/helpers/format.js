@@ -45,12 +45,17 @@ export const calcDaily = apy => {
   return `${(g * 100).toFixed(2)}%`;
 };
 
-export const formatDecimals = (number, lgDecimals = 4, dustDecimals = 8) => {
-  return number >= 10
-    ? number.toFixed(lgDecimals)
-    : number.isEqualTo(0)
-    ? 0
-    : number.toFixed(dustDecimals);
+export const stripTrailingZeros = str => {
+  return str.replace(/(\.[0-9]*?)(0+$)/, '$1').replace(/\.$/, '');
+};
+
+export const formatDecimals = (number, maxPlaces = 8) => {
+  if (new BigNumber(number).isZero()) {
+    return '0';
+  }
+
+  const places = Math.min(maxPlaces, number >= 10 ? 4 : 8);
+  return stripTrailingZeros(new BigNumber(number).toFixed(places));
 };
 
 export function byDecimals(number, tokenDecimals = 18) {

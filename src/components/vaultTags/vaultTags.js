@@ -1,35 +1,31 @@
-import { makeStyles, Typography, Box } from '@material-ui/core';
-import * as React from 'react';
+import React, { memo, useMemo } from 'react';
+import { makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
 const DisplayTags = ({ tags }) => {
   const classes = useStyles();
-  const t = useTranslation().t;
-  const getText = name => {
-    switch (name) {
-      case 'low':
-        return t('VaultTag-LowRisk');
-      case 'deposits-paused':
-        return t('VaultTag-Paused');
-      case 'eol':
-        return t('VaultTag-Inactive');
-      case 'bluechip':
-        return t('VaultTag-Bluechip');
-      default:
-        return name;
-    }
-  };
+  const { t } = useTranslation();
+  const labels = useMemo(
+    () => ({
+      low: t('VaultTag-LowRisk'),
+      'deposits-paused': t('VaultTag-Paused'),
+      eol: t('VaultTag-Inactive'),
+      bluechip: t('VaultTag-Bluechip'),
+    }),
+    [t]
+  );
 
   return tags.map(item => (
-    <Box className={classes.spacingMobile} key={item}>
-      <Typography className={[classes.tags, classes[item + 'Tag']].join(' ')} display={'inline'}>
-        {getText(item)}
+    <div className={classes.spacingMobile} key={item}>
+      <Typography className={clsx(classes.tags, classes[item + 'Tag'])} display={'inline'}>
+        {item in labels ? labels[item] : item}
       </Typography>
-    </Box>
+    </div>
   ));
 };
 
-export default DisplayTags;
+export default memo(DisplayTags);

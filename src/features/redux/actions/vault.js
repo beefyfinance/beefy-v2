@@ -1,5 +1,10 @@
 import { MultiCall } from 'eth-multicall';
-import { HOME_FETCH_POOLS_BEGIN, HOME_FETCH_POOLS_DONE } from '../constants';
+import {
+  HOME_FETCH_BOOSTS_BEGIN,
+  HOME_FETCH_BOOSTS_DONE,
+  HOME_FETCH_POOLS_BEGIN,
+  HOME_FETCH_POOLS_DONE,
+} from '../constants';
 import BigNumber from 'bignumber.js';
 import { config } from '../../../config/config';
 import { isEmpty } from '../../../helpers/utils';
@@ -83,6 +88,111 @@ const getPools = async (items, state, dispatch) => {
   return true;
 };
 
+const getBoosts = async (items, state, dispatch) => {
+  console.log('redux getBoosts() processing...');
+  const web3 = state.walletReducer.rpc;
+  const prices = state.pricesReducer.prices;
+  const boosts = { ...state.vaultReducer.boosts };
+
+  const multicall = [];
+  const calls = [];
+  const moos = [];
+
+  for (let key in web3) {
+    multicall[key] = new MultiCall(web3[key], config[key].multicallAddress);
+    calls[key] = [];
+    moos[key] = [];
+  }
+
+  for (let key in items) {
+    const pool = items[key];
+    const tokenContract = new web3[pool.network].eth.Contract(vaultAbi, pool.earnContractAddress);
+    calls[pool.network].push({
+      id: pool.id,
+      totalStaked: tokenContract.methods.totalSupply(),
+      rewardRate: tokenContract.methods.rewardRate(),
+    });
+
+    if (pool.isMooStaked) {
+      const mooContract = new web3[pool.network].eth.Contract(vaultAbi, pool.tokenAddress);
+      moos[pool.network].push({
+        id: pool.id,
+        pricePerFullShare: mooContract.methods.getPricePerFullShare(),
+      });
+    }
+  }
+
+  const promises = [];
+  for (const key in multicall) {
+    promises.push(multicall[key].all([calls[key]]));
+    promises.push(multicall[key].all([moos[key]]));
+  }
+  const results = await Promise.allSettled(promises);
+  const response = [];
+
+  results.forEach(result => {
+    if (result.status !== 'fulfilled') {
+      console.warn('getPoolsAll error', result.reason);
+      // FIXME: queue chain retry?
+      return;
+    }
+
+    if (!isEmpty(result.value[0])) {
+      result.value[0].forEach(item => {
+        if (isEmpty(response[item.id])) {
+          response[item.id] = { id: item.id };
+        }
+
+        if (!isEmpty(item.totalStaked)) {
+          response[item.id]['totalStaked'] = item.totalStaked;
+        }
+
+        if (!isEmpty(item.rewardRate)) {
+          response[item.id]['rewardRate'] = item.rewardRate;
+        }
+
+        if (!isEmpty(item.pricePerFullShare)) {
+          response[item.id]['pricePerFullShare'] = item.pricePerFullShare;
+        }
+      });
+    }
+  });
+
+  for (const key in response) {
+    const item = response[key];
+    const tokenDecimals = new BigNumber(10).exponentiatedBy(boosts[item.id].tokenDecimals);
+    const tokenPrice =
+      boosts[item.id].tokenOracleId in prices ? prices[boosts[item.id].tokenOracleId] : 0;
+    const earnPrice =
+      boosts[item.id].earnedOracleId in prices ? prices[boosts[item.id].earnedOracleId] : 0;
+    const totalStaked = boosts[item.id].isMooStaked
+      ? new BigNumber(item.totalStaked).times(item.pricePerFullShare).dividedBy(tokenDecimals)
+      : new BigNumber(item.totalStaked);
+    const totalStakedInUsd = totalStaked.times(tokenPrice).dividedBy(tokenDecimals);
+    const yearlyRewardsInUsd = new BigNumber(item.rewardRate)
+      .times(3600)
+      .times(24)
+      .times(365)
+      .times(earnPrice)
+      .dividedBy(tokenDecimals);
+
+    boosts[item.id].apr = Number(yearlyRewardsInUsd.dividedBy(totalStakedInUsd));
+    boosts[item.id].staked = totalStaked.dividedBy(tokenDecimals);
+    boosts[item.id].tvl = totalStakedInUsd.toFixed(2);
+  }
+
+  dispatch({
+    type: HOME_FETCH_BOOSTS_DONE,
+    payload: {
+      boosts: boosts,
+      isBoostsLoading: false,
+      lastUpdated: new Date().getTime(),
+    },
+  });
+
+  return true;
+};
+
 const fetchPools = (item = false) => {
   return async (dispatch, getState) => {
     const state = getState();
@@ -92,8 +202,18 @@ const fetchPools = (item = false) => {
   };
 };
 
+const fetchBoosts = (item = false) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const boosts = state.vaultReducer.boosts;
+    dispatch({ type: HOME_FETCH_BOOSTS_BEGIN });
+    return await getBoosts(item ? [item] : boosts, state, dispatch);
+  };
+};
+
 const obj = {
   fetchPools,
+  fetchBoosts,
 };
 
 export default obj;
