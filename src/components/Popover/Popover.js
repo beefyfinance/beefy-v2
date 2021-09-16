@@ -1,9 +1,7 @@
-import { makeStyles, Typography, Divider, Popper } from '@material-ui/core';
+import { makeStyles, Typography, Divider, Popper, Box } from '@material-ui/core';
 import React, { memo, useCallback, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
-import outlinedQuestionMark from './outlined.svg';
-import solidQuestionMark from './solid.svg';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
@@ -21,15 +19,14 @@ const Popover = ({ title, content, children, solid, size = 'sm', placement = 'to
   return (
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
       <div>
-        <div className={classes.trigger}>
-          <img
-            src={solid ? solidQuestionMark : outlinedQuestionMark}
-            className={classes[`size_${size}`]}
-            ref={setAnchorEl}
-            onClick={toggleOpen}
-            alt=""
-          />
-        </div>
+        <Box
+          as="span"
+          ref={setAnchorEl}
+          onClick={toggleOpen}
+          className={[classes.dot, classes[`size_${size}`]].join(' ')}
+        >
+          ?
+        </Box>
         <Popper
           id={title}
           open={isOpen}

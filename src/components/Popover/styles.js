@@ -1,16 +1,31 @@
 const styles = theme => ({
   popover: {
     padding: '15px',
-    background: '#272B4A',
-    border: '3px solid #484F7F',
+    background: theme.palette.type === 'dark' ? ' #272B4A' : '#fff',
+    border: theme.palette.type === 'dark' ? '3px solid #484F7F' : '3px solid #A69885',
     filter: 'drop-shadow(0px 0px 40px #0A0F2B)',
     borderRadius: '15px',
     margin: '15px auto',
     maxWidth: '350px',
+    color: theme.palette.type === 'dark' ? '#FFF' : '#A69885',
   },
   trigger: {
     display: 'flex',
     alignItems: 'center',
+    background: theme.palette.type === 'dark' ? ' #272B4A' : '#6E675D',
+    color: '#fff',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  dot: {
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 700,
+    background: theme.palette.type === 'dark' ? '#484F7F' : '#A69885',
+    color: '#fff',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -18,13 +33,13 @@ const styles = theme => ({
   title: {
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
-    background: '#272B4A',
+    background: theme.palette.type === 'dark' ? '#272B4A' : '#fff',
     fontWeight: 600,
     fontSize: '14px',
     lineHeight: '18px',
     letterSpacing: '1px',
     textTransform: 'uppercase',
-    color: '#FFFFFF',
+    color: theme.palette.type === 'dark' ? '#FFFFFF' : '#A69885',
   },
   divider: {
     opacity: '0.4',
@@ -32,8 +47,8 @@ const styles = theme => ({
     margin: '10px auto',
   },
   size_sm: {
-    width: '16px',
-    height: '16px',
+    width: '18px',
+    height: '18px',
   },
   size_md: {
     width: '20px',
@@ -77,11 +92,17 @@ const styles = theme => ({
       '&:before': {
         marginTop: '-4px',
         borderWidth: '12px',
-        borderColor: '#272B4A transparent transparent transparent',
+        borderColor:
+          theme.palette.type === 'dark'
+            ? '#272B4A transparent transparent transparent'
+            : 'transparent transparent transparent transparent',
       },
       '&:after': {
         borderWidth: '12px',
-        borderColor: '#484F7F transparent transparent transparent',
+        borderColor:
+          theme.palette.type === 'dark'
+            ? '#484F7F transparent transparent transparent'
+            : '#A69885 transparent transparent transparent',
       },
     },
     '&[x-placement*="bottom"] span': {
@@ -91,11 +112,17 @@ const styles = theme => ({
       '&:before': {
         top: 4,
         borderWidth: '12px',
-        borderColor: 'transparent transparent #272B4A transparent',
+        borderColor:
+          theme.palette.type === 'dark'
+            ? 'transparent transparent #272B4A transparent'
+            : 'transparent transparent transparent transparent',
       },
       '&:after': {
         borderWidth: '12px',
-        borderColor: 'transparent transparent #484F7F transparent',
+        borderColor:
+          theme.palette.type === 'dark'
+            ? 'transparent transparent #484F7F transparent'
+            : 'transparent transparent #A69885 transparent',
       },
     },
     '&[x-placement*="end"] span': {

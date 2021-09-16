@@ -6,10 +6,8 @@ const styles = theme => ({
     borderRadius: '20px',
     padding: 0,
     width: '100%',
-    background: '#272B4A',
-    '&:hover': {
-      background: '#272B4A',
-    },
+    boxShadow: '0px 1px 8px rgba(0,0,0,0.1)',
+    background: theme.palette.type === 'dark' ? 'rgba(48, 53, 92, 0.4)' : '#FFF',
     '&.hasDeposit': {
       background: '#313759',
       '&:hover': {
@@ -83,7 +81,7 @@ const styles = theme => ({
     fontWeight: 400,
     fontSize: '15px',
     lineHeight: '24px',
-    color: '#8585A6',
+    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     textAlign: 'left',
@@ -118,6 +116,10 @@ const styles = theme => ({
     textTransform: 'capitalize',
     marginTop: '10px',
     display: 'block',
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
+    },
   },
   apyContainer: {
     width: '100%',
@@ -148,8 +150,8 @@ const styles = theme => ({
     fontSize: '14px',
     lineHeight: '14px',
     fontWeight: 600,
-    color: '#6B7199',
-    backgroundColor: '#232743',
+    color: theme.palette.type === 'dark' ? '#6B7199' : '#A69885',
+    backgroundColor: theme.palette.type === 'dark' ? '#232743' : 'rgba(0,0,0,0.04)',
     letterSpacing: '0.5px',
     textTransform: 'inherit',
     borderRadius: '20px',

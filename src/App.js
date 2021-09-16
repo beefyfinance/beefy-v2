@@ -28,7 +28,7 @@ export default function App() {
       background: {
         dark: '#1B203A',
         default: '#232743',
-        paper: '#272B4A',
+        paper: isNightMode ? '#272B4A' : '#FFFFFF',
         light: '#313759',
       },
     },
