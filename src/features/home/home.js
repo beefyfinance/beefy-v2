@@ -59,7 +59,7 @@ const DataLoader = memo(function HomeDataLoader() {
 const VaultsHeader = memo(function HomeVaultsHeader() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const totalTvl = useSelector(state => state.vaultReducer.totalTvl);
+  const totalTvl = useSelector(state => state.vaultReducer.totalTvl.toNumber());
 
   return (
     <Box className={classes.header}>

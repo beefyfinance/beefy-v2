@@ -123,7 +123,7 @@ const initializeTags = (pool, net) => {
 const initialState = {
   pools: initialPools(),
   boosts: initialBoosts(),
-  totalTvl: 0,
+  totalTvl: new BigNumber(0),
   isPoolsLoading: true,
   isBoostsLoading: true,
   isFirstTime: true,
