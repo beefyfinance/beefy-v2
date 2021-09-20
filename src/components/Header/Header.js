@@ -110,6 +110,7 @@ const Header = ({ isNightMode, setNightMode }) => {
               </Box>
               <Box sx={{ marginRight: 10 }}>
                 <SimpleDropdown
+                  chainLogos={true}
                   list={getAvailableNetworks(true)}
                   selected={walletReducer.network}
                   handler={e => switchNetwork(e.target.value, dispatch)}
@@ -139,6 +140,7 @@ const Header = ({ isNightMode, setNightMode }) => {
                 </Grid>
                 <Grid item xs={12}>
                   <SimpleDropdown
+                    chainLogos={true}
                     list={getAvailableNetworks(true)}
                     selected={walletReducer.network}
                     handler={e => switchNetwork(e.target.value, dispatch)}

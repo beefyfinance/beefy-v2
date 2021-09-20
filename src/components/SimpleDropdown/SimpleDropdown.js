@@ -6,7 +6,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const SimpleDropdown = ({ list, selected, handler, renderValue }) => {
+const SimpleDropdown = ({ list, selected, handler, renderValue, chainLogos = false }) => {
   const classes = useStyles();
 
   return (
@@ -22,6 +22,9 @@ const SimpleDropdown = ({ list, selected, handler, renderValue }) => {
       >
         {Object.keys(list).map(val => (
           <MenuItem key={list[val]} value={val}>
+            {chainLogos && (
+              <img alt={val} src={require('images/networks/' + val + '.svg').default} />
+            )}{' '}
             {list[val]}
           </MenuItem>
         ))}
