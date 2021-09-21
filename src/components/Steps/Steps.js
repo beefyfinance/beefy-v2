@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { byDecimals } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import Loader from 'components/loader';
-import styles from '../styles';
+import styles from './styles';
 import BigNumber from 'bignumber.js';
 
 const useStyles = makeStyles(styles);

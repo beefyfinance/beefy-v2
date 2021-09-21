@@ -1,9 +1,8 @@
 import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import styles from '../styles';
+import styles from '../../styles';
 import BigNumber from 'bignumber.js';
 import Loader from 'components/loader';
 import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from 'helpers/format';
@@ -11,13 +10,11 @@ import { isEmpty } from 'helpers/utils';
 import reduxActions from 'features/redux/actions';
 import Steps from 'components/Steps';
 import AssetsImage from 'components/AssetsImage';
-import BoostWidget from '../BoostWidget';
-import FeeBreakdown from '../FeeBreakdown';
 import switchNetwork from 'helpers/switchNetwork';
 
 const useStyles = makeStyles(styles);
 
-const Deposit = ({
+const Stake = ({
   formData,
   setFormData,
   item,
@@ -33,7 +30,7 @@ const Deposit = ({
   }));
   const t = useTranslation().t;
 
-  const [state, setState] = React.useState({ balance: 0, allowance: 0 });
+  const [state, setState] = React.useState({ balance: 0, deposited: 0, allowance: 0 });
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
@@ -89,19 +86,18 @@ const Deposit = ({
         message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
         action: () =>
           dispatch(
-            reduxActions.wallet.deposit(
+            reduxActions.wallet.stake(
               item.network,
               item.earnContractAddress,
-              convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals),
-              formData.deposit.max
+              convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals)
             )
           ),
         pending: false,
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
-    } //if (wallet.address)
-  }; //const handleDeposit
+    }
+  };
 
   const handleClose = () => {
     updateItemData();
@@ -112,14 +108,20 @@ const Deposit = ({
   React.useEffect(() => {
     let amount = 0;
     let approved = 0;
+    let deposited = 0;
+
     if (wallet.address && !isEmpty(balance.tokens[item.token])) {
       amount = byDecimals(
         new BigNumber(balance.tokens[item.token].balance),
         item.tokenDecimals
       ).toFixed(8);
-      approved = balance.tokens[item.token].allowance[item.earnContractAddress];
+      deposited = byDecimals(
+        new BigNumber(balance.tokens[item.token + 'Boost'].balance),
+        item.tokenDecimals
+      ).toFixed(8);
+      approved = balance.tokens[item.token + 'Boost'].allowance[item.earnContractAddress];
     }
-    setState({ balance: amount, allowance: approved });
+    setState({ balance: amount, deposited: deposited, allowance: approved });
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {
@@ -150,11 +152,7 @@ const Deposit = ({
   return (
     <React.Fragment>
       <Box p={3}>
-        <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
         <Box className={classes.balanceContainer} display="flex" alignItems="center">
-          <Box lineHeight={0}>
-            <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-          </Box>
           <Box flexGrow={1} pl={1} lineHeight={0}>
             {isLoading ? (
               <Loader line={true} />
@@ -163,16 +161,17 @@ const Deposit = ({
                 {state.balance} {item.token}
               </Typography>
             )}
+            <Typography variant={'body2'}>{t('Stake-Balance')}</Typography>
           </Box>
           <Box>
-            <a
-              href={item.buyTokenUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.btnSecondary}
-            >
-              <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
-            </a>
+            {isLoading ? (
+              <Loader line={true} />
+            ) : (
+              <Typography variant={'body1'}>{state.deposited}</Typography>
+            )}
+            <Typography align={'right'} variant={'body2'}>
+              {t('Stake-Staked')}
+            </Typography>
           </Box>
         </Box>
         <Box className={classes.inputContainer}>
@@ -188,7 +187,6 @@ const Deposit = ({
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
           </Paper>
         </Box>
-        <FeeBreakdown withdrawalFee={item.withdrawalFee} depositFee={item.depositFee} />
         <Box mt={2}>
           {item.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
@@ -210,7 +208,7 @@ const Deposit = ({
                 fullWidth={true}
                 disabled={formData.deposit.amount <= 0}
               >
-                {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
+                {t('Stake-Button-ConfirmStaking')}
               </Button>
             )
           ) : (
@@ -220,16 +218,9 @@ const Deposit = ({
           )}
         </Box>
       </Box>
-      <BoostWidget
-        balance={0 /*TODO: fix parameters*/}
-        s_stake={
-          t('Boost-Stake', { mooToken: 'mooToken' }) /*TODO: replace 'mooToken' with real mooName*/
-        }
-        onClick={() => {}}
-      />
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
-  ); //return
-}; //const Deposit
+  );
+};
 
-export default Deposit;
+export default Stake;

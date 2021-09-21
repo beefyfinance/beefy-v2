@@ -4,12 +4,15 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
+  Backdrop,
   Box,
   Button,
   Container,
+  Fade,
   Grid,
   Link,
   makeStyles,
+  Modal,
   Paper,
   Typography,
 } from '@material-ui/core';
@@ -22,6 +25,7 @@ import AssetsImage from 'components/AssetsImage';
 import reduxActions from 'features/redux/actions';
 import { byDecimals, formatApy, formatUsd } from '../../helpers/format';
 import BigNumber from 'bignumber.js';
+import Stake from './components/Stake';
 
 const useStyles = makeStyles(styles);
 
@@ -39,13 +43,35 @@ const Boost = () => {
 
   const [isLoading, setIsLoading] = React.useState(true);
   const [item, setItemData] = React.useState(null);
-
+  const [dw, setDw] = React.useState('deposit');
+  const [inputModal, setInputModal] = React.useState(false);
   const [state, setState] = React.useState({
     balance: 0,
     deposited: 0,
     allowance: 0,
     poolPercentage: 0,
   });
+  const [formData, setFormData] = React.useState({
+    deposit: { amount: '', max: false },
+    withdraw: { amount: '', max: false },
+  });
+
+  const handleWalletConnect = () => {
+    if (!wallet.address) {
+      dispatch(reduxActions.wallet.connect());
+    }
+  };
+
+  const updateItemData = () => {
+    if (wallet.address && item) {
+      dispatch(reduxActions.vault.fetchBoosts(item));
+      dispatch(reduxActions.balance.fetchBoostBalances(item));
+    }
+  };
+
+  const resetFormData = () => {
+    setFormData({ deposit: { amount: '', max: false }, withdraw: { amount: '', max: false } });
+  };
 
   React.useEffect(() => {
     if (!isEmpty(vault.boosts) && vault.boosts[id]) {
@@ -175,14 +201,16 @@ const Boost = () => {
                   </Typography>
                   <Typography variant={'h2'}>{t('Stake-Staked')}</Typography>
                   <Box textAlign={'center'}>
-                    <Button className={classes.btnSubmit}>{t('Stake-Button-Stake')}</Button>
+                    <Button onClick={() => setInputModal(true)} className={classes.btnSubmit}>
+                      {t('Stake-Button-Stake')}
+                    </Button>
                   </Box>
                 </Box>
                 <Box className={classes.splitB}>
                   <Typography>0 {item.earnedToken}</Typography>
                   <Typography variant={'h2'}>{t('Stake-Rewards')}</Typography>
                   <Box textAlign={'center'}>
-                    <Button className={classes.btnClaim}>{t('Stake-Button-Claim-Rewards')}</Button>
+                    <Button className={classes.btnClaim}>{t('Stake-Button-ClaimRewards')}</Button>
                   </Box>
                 </Box>
               </Box>
@@ -231,6 +259,50 @@ const Boost = () => {
           </Grid>
         </Grid>
       )}
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={inputModal}
+        onClose={() => setInputModal(false)}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={inputModal}>
+          <Box className={classes.dw}>
+            <Box className={classes.tabs}>
+              <Button
+                onClick={() => setDw('deposit')}
+                className={dw === 'deposit' ? classes.selected : ''}
+              >
+                {t('Stake-Button-Stake')}
+              </Button>
+              <Button
+                onClick={() => setDw('withdraw')}
+                className={dw === 'withdraw' ? classes.selected : ''}
+              >
+                {t('Stake-Button-Unstake')}
+              </Button>
+            </Box>
+            {dw === 'deposit' ? (
+              <Stake
+                item={item}
+                handleWalletConnect={handleWalletConnect}
+                formData={formData}
+                setFormData={setFormData}
+                updateItemData={updateItemData}
+                resetFormData={resetFormData}
+              />
+            ) : (
+              <Box>Withdraw form</Box>
+            )}
+          </Box>
+        </Fade>
+      </Modal>
     </Container>
   );
 };

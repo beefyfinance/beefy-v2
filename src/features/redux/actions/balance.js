@@ -128,7 +128,7 @@ const getBoostBalances = async (items, state, dispatch) => {
 
     calls[items[key].network].push({
       allowance: tokenContract.methods.allowance(address, items[key].earnContractAddress),
-      token: items[key].token,
+      token: items[key].token + 'Boost',
       spender: items[key].earnContractAddress,
     });
   }

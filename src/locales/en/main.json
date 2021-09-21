@@ -141,6 +141,11 @@
   "Stake-Staked": "Staked",
   "Stake-Rewards": "Rewards",
   "Stake-APR": "APR",
+  "Stake-Balance": "Balance",
+  "Stake-Button-Stake": "Stake",
+  "Stake-Button-Unstake": "Unstake",
+  "Stake-Button-ClaimRewards": "Claim Rewards",
+  "Stake-Button-ConfirmStaking": "Confirm Staking",
 
   "Total-Value-Locked": "Total value locked",
   "Page-Not-Found": "Page not found.",
