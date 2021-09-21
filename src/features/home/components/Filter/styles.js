@@ -193,6 +193,15 @@ const styles = theme => ({
       },
     },
   },
+  btnClearSearch: {
+    borderRadius: 30,
+    color: '#484F7F',
+    fontWeight: 'bold',
+    marginLeft: '-4rem',
+    '&:hover': {
+      background: 'none',
+    },
+  },
   checkboxes: {
     color: '#6B7199',
     '& .MuiSvgIcon-root': {
@@ -221,6 +230,8 @@ const styles = theme => ({
     },
   },
   searchContainer: {
+    display: 'flex',
+    alignItem: 'center',
     flexGrow: 1,
     [theme.breakpoints.down('sm')]: {
       flexGrow: 0,
