@@ -67,7 +67,7 @@ const Unstake = ({
       const amount = new BigNumber(formData.withdraw.amount).toFixed(8);
       steps.push({
         step: 'withdraw',
-        message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
         action: () =>
           dispatch(
             reduxActions.wallet.unstake(

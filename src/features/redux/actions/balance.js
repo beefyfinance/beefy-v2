@@ -1,10 +1,16 @@
 import { MultiCall } from 'eth-multicall';
-import { BALANCE_FETCH_BALANCES_BEGIN, BALANCE_FETCH_BALANCES_DONE } from '../constants';
+import {
+  BALANCE_FETCH_BALANCES_BEGIN,
+  BALANCE_FETCH_BALANCES_DONE,
+  BALANCE_FETCH_REWARDS_BEGIN,
+  BALANCE_FETCH_REWARDS_DONE,
+} from '../constants';
 import { config } from 'config/config';
 import { isEmpty } from 'helpers/utils';
 
 const erc20Abi = require('config/abi/erc20.json');
 const multicallAbi = require('config/abi/multicall.json');
+const boostAbi = require('config/abi/boost.json');
 
 const getBalances = async (items, state, dispatch) => {
   console.log('redux getBalances() processing...');
@@ -110,7 +116,7 @@ const getBoostBalances = async (items, state, dispatch) => {
       items[key].tokenAddress
     );
     const earnContract = new web3[items[key].network].eth.Contract(
-      erc20Abi,
+      boostAbi,
       items[key].earnContractAddress
     );
 
@@ -166,6 +172,69 @@ const getBoostBalances = async (items, state, dispatch) => {
   return true;
 };
 
+const getBoostRewards = async (items, state, dispatch) => {
+  console.log('redux getBoostRewards() processing...');
+  const address = state.walletReducer.address;
+  const web3 = state.walletReducer.rpc;
+
+  const multicall = [];
+  const calls = [];
+  const tokens = [];
+
+  for (let key in web3) {
+    multicall[key] = new MultiCall(web3[key], config[key].multicallAddress);
+    calls[key] = [];
+  }
+
+  for (let key in items) {
+    tokens[items[key].earnedToken] = {
+      balance: 0,
+      allowance: { [items[key].earnContractAddress]: 0 },
+    };
+
+    const earnContract = new web3[items[key].network].eth.Contract(
+      boostAbi,
+      items[key].earnContractAddress
+    );
+
+    calls[items[key].network].push({
+      amount: earnContract.methods.earned(address),
+      token: items[key].earnedToken,
+      address: items[key].earnedTokenAddress,
+    });
+  }
+
+  let response = [];
+
+  for (let key in multicall) {
+    const resp = await multicall[key].all([calls[key]]);
+    response = [...response, ...resp[0]];
+  }
+
+  for (let index in response) {
+    const item = response[index];
+
+    if (!isEmpty(item.amount)) {
+      tokens[item.token].balance = item.amount;
+      tokens[item.token].address = item.address;
+    }
+
+    if (!isEmpty(item.allowance)) {
+      tokens[item.token].allowance = { [item.spender]: parseInt(item.allowance) };
+    }
+  }
+
+  dispatch({
+    type: BALANCE_FETCH_REWARDS_DONE,
+    payload: {
+      rewards: tokens,
+      lastUpdated: new Date().getTime(),
+    },
+  });
+
+  return true;
+};
+
 const fetchBalances = (item = false) => {
   return async (dispatch, getState) => {
     const state = getState();
@@ -188,9 +257,20 @@ const fetchBoostBalances = (item = false) => {
   };
 };
 
+const fetchBoostRewards = item => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    if (state.walletReducer.address) {
+      dispatch({ type: BALANCE_FETCH_REWARDS_BEGIN });
+      return await getBoostRewards([item], state, dispatch);
+    }
+  };
+};
+
 const obj = {
   fetchBalances,
   fetchBoostBalances,
+  fetchBoostRewards,
 };
 
 export default obj;

@@ -1,6 +1,8 @@
 import {
   BALANCE_FETCH_BALANCES_BEGIN,
   BALANCE_FETCH_BALANCES_DONE,
+  BALANCE_FETCH_REWARDS_BEGIN,
+  BALANCE_FETCH_REWARDS_DONE,
   WALLET_DISCONNECT,
 } from '../constants';
 import { config } from 'config/config';
@@ -43,9 +45,11 @@ const initialTokens = () => {
 
 const initialState = {
   tokens: initialTokens(),
+  rewards: [],
   lastUpdated: 0,
   isBalancesLoading: false,
   isBalancesFirstTime: true,
+  isRewardsLoading: false,
 };
 
 const balanceReducer = (state = initialState, action) => {
@@ -62,6 +66,18 @@ const balanceReducer = (state = initialState, action) => {
         lastUpdated: action.payload.lastUpdated,
         isBalancesLoading: false,
         isBalancesFirstTime: false,
+      };
+    case BALANCE_FETCH_REWARDS_BEGIN:
+      return {
+        ...state,
+        isRewardsLoading: true,
+      };
+    case BALANCE_FETCH_REWARDS_DONE:
+      return {
+        ...state,
+        rewards: action.payload.rewards,
+        lastUpdated: action.payload.lastUpdated,
+        isRewardsLoading: false,
       };
     case WALLET_DISCONNECT:
       return { ...initialState, tokens: initialTokens() };

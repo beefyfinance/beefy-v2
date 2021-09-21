@@ -83,7 +83,7 @@ const Stake = ({
 
       steps.push({
         step: 'deposit',
-        message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+        message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
         action: () =>
           dispatch(
             reduxActions.wallet.stake(

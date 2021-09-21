@@ -23,10 +23,11 @@ import { isEmpty } from 'helpers/utils';
 import { useTranslation } from 'react-i18next';
 import AssetsImage from 'components/AssetsImage';
 import reduxActions from 'features/redux/actions';
-import { byDecimals, formatApy, formatUsd } from '../../helpers/format';
+import { byDecimals, convertAmountToRawNumber, formatApy, formatUsd } from '../../helpers/format';
 import BigNumber from 'bignumber.js';
 import Stake from './components/Stake';
 import Unstake from './components/Unstake';
+import Steps from 'components/Steps';
 
 const useStyles = makeStyles(styles);
 
@@ -51,11 +52,50 @@ const Boost = () => {
     deposited: 0,
     allowance: 0,
     poolPercentage: 0,
+    rewards: 0,
   });
   const [formData, setFormData] = React.useState({
     deposit: { amount: '', max: false },
     withdraw: { amount: '', max: false },
   });
+  const [steps, setSteps] = React.useState({
+    modal: false,
+    currentStep: -1,
+    items: [],
+    finished: false,
+  });
+
+  const handleClaimRewards = () => {
+    const steps = [];
+    if (wallet.address) {
+      if (item.network !== wallet.network) {
+        dispatch(reduxActions.wallet.setNetwork(item.network));
+        return false;
+      }
+
+      steps.push({
+        step: 'claim',
+        message: t('Vault-TxnConfirm', { type: t('ClaimRewards-noun') }),
+        action: () =>
+          dispatch(
+            reduxActions.wallet.claim(
+              item.network,
+              item.earnContractAddress,
+              convertAmountToRawNumber(state.rewards, item.earnedTokenDecimals)
+            )
+          ),
+        pending: false,
+      });
+
+      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
+    }
+  };
+
+  const handleClose = () => {
+    updateItemData();
+    resetFormData();
+    setSteps({ modal: false, currentStep: -1, items: [], finished: false });
+  };
 
   const handleWalletConnect = () => {
     if (!wallet.address) {
@@ -67,6 +107,7 @@ const Boost = () => {
     if (wallet.address && item) {
       dispatch(reduxActions.vault.fetchBoosts(item));
       dispatch(reduxActions.balance.fetchBoostBalances(item));
+      dispatch(reduxActions.balance.fetchBoostRewards(item));
     }
   };
 
@@ -92,6 +133,7 @@ const Boost = () => {
   React.useEffect(() => {
     if (item && wallet.address) {
       dispatch(reduxActions.balance.fetchBoostBalances(item));
+      dispatch(reduxActions.balance.fetchBoostRewards(item));
     }
   }, [dispatch, item, wallet.address]);
 
@@ -100,6 +142,7 @@ const Boost = () => {
       setInterval(() => {
         dispatch(reduxActions.vault.fetchBoosts(item));
         dispatch(reduxActions.balance.fetchBoostBalances(item));
+        dispatch(reduxActions.balance.fetchBoostRewards(item));
       }, 60000);
     }
   }, [item, dispatch]);
@@ -109,6 +152,8 @@ const Boost = () => {
     let deposited = 0;
     let approved = 0;
     let poolPercentage = 0;
+    let rewards = 0;
+
     if (wallet.address && !isEmpty(balance.tokens[item.token])) {
       amount = byDecimals(
         new BigNumber(balance.tokens[item.token].balance),
@@ -119,6 +164,13 @@ const Boost = () => {
         item.tokenDecimals
       ).toFixed(8);
       approved = balance.tokens[item.token].allowance[item.earnContractAddress];
+
+      if (!isEmpty(balance.rewards[item.earnedToken])) {
+        rewards = byDecimals(
+          new BigNumber(balance.rewards[item.earnedToken].balance),
+          item.earnedTokenDecimals
+        ).toFixed(8);
+      }
 
       if (deposited > 0) {
         poolPercentage = (
@@ -134,8 +186,30 @@ const Boost = () => {
       deposited: deposited,
       allowance: approved,
       poolPercentage: poolPercentage,
+      rewards: rewards,
     });
   }, [wallet.address, item, balance]);
+
+  React.useEffect(() => {
+    const index = steps.currentStep;
+    if (!isEmpty(steps.items[index]) && steps.modal) {
+      const items = steps.items;
+      if (!items[index].pending) {
+        items[index].pending = true;
+        items[index].action();
+        setSteps({ ...steps, items: items });
+      } else {
+        if (wallet.action.result === 'success' && !steps.finished) {
+          const nextStep = index + 1;
+          if (!isEmpty(items[nextStep])) {
+            setSteps({ ...steps, currentStep: nextStep });
+          } else {
+            setSteps({ ...steps, finished: true });
+          }
+        }
+      }
+    }
+  }, [steps, wallet.action]);
 
   return (
     <Container className={classes.vaultContainer} maxWidth="lg">
@@ -208,10 +282,14 @@ const Boost = () => {
                   </Box>
                 </Box>
                 <Box className={classes.splitB}>
-                  <Typography>0 {item.earnedToken}</Typography>
+                  <Typography>
+                    {state.rewards} {item.earnedToken}
+                  </Typography>
                   <Typography variant={'h2'}>{t('Stake-Rewards')}</Typography>
                   <Box textAlign={'center'}>
-                    <Button className={classes.btnClaim}>{t('Stake-Button-ClaimRewards')}</Button>
+                    <Button onClick={handleClaimRewards} className={classes.btnClaim}>
+                      {t('Stake-Button-ClaimRewards')}
+                    </Button>
                   </Box>
                 </Box>
               </Box>
@@ -311,6 +389,7 @@ const Boost = () => {
           </Box>
         </Fade>
       </Modal>
+      <Steps item={item} steps={steps} handleClose={handleClose} />
     </Container>
   );
 };

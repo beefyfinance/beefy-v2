@@ -548,6 +548,65 @@ const unstake = (network, contractAddr, amount) => {
   };
 };
 
+const claim = (network, contractAddr, amount) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = state.walletReducer.address;
+    const provider = await state.walletReducer.web3modal.connect();
+
+    if (address && provider) {
+      const web3 = await new Web3(provider);
+      const contract = new web3.eth.Contract(boostAbi, contractAddr);
+
+      contract.methods
+        .getReward()
+        .send({ from: address })
+        .on('transactionHash', function (hash) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'success_pending',
+              data: {
+                spender: contractAddr,
+                amount: amount,
+                hash: hash,
+              },
+            },
+          });
+        })
+        .on('receipt', function (receipt) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'success',
+              data: {
+                spender: contractAddr,
+                amount: amount,
+                receipt: receipt,
+              },
+            },
+          });
+        })
+        .on('error', function (error) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'error',
+              data: {
+                spender: contractAddr,
+                error: error.message,
+              },
+            },
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+};
+
 const createWeb3Modal = () => {
   return async (dispatch, getState) => {
     const state = getState();
@@ -654,6 +713,7 @@ const obj = {
   withdraw,
   stake,
   unstake,
+  claim,
 };
 
 export default obj;
