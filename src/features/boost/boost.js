@@ -26,6 +26,7 @@ import reduxActions from 'features/redux/actions';
 import { byDecimals, formatApy, formatUsd } from '../../helpers/format';
 import BigNumber from 'bignumber.js';
 import Stake from './components/Stake';
+import Unstake from './components/Unstake';
 
 const useStyles = makeStyles(styles);
 
@@ -298,7 +299,14 @@ const Boost = () => {
                 resetFormData={resetFormData}
               />
             ) : (
-              <Box>Withdraw form</Box>
+              <Unstake
+                item={item}
+                handleWalletConnect={handleWalletConnect}
+                formData={formData}
+                setFormData={setFormData}
+                updateItemData={updateItemData}
+                resetFormData={resetFormData}
+              />
             )}
           </Box>
         </Fade>
