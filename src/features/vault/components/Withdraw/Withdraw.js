@@ -10,7 +10,7 @@ import AssetsImage from 'components/AssetsImage';
 import reduxActions from '../../../redux/actions';
 import BoostWidget from '../BoostWidget';
 import FeeBreakdown from '../FeeBreakdown';
-import Steps from '../Steps';
+import Steps from 'components/Steps';
 import styles from '../styles';
 import BigNumber from 'bignumber.js';
 import switchNetwork from 'helpers/switchNetwork';

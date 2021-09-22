@@ -58,7 +58,7 @@ const getPools = async (items, state, dispatch) => {
     response = [...response, ...result.value[0]];
   });
 
-  let totalTvl = 0;
+  let totalTvl = new BigNumber(0);
   for (let i = 0; i < response.length; i++) {
     const item = response[i];
 
@@ -72,7 +72,7 @@ const getPools = async (items, state, dispatch) => {
     pools[item.id].apy = !isEmpty(apy) && item.id in apy ? apy[item.id] : 0;
     pools[item.id].pricePerFullShare = item.pricePerFullShare;
     pools[item.id].strategy = item.strategy;
-    totalTvl = new BigNumber(totalTvl).plus(tvl);
+    totalTvl = totalTvl.plus(tvl);
   }
 
   dispatch({

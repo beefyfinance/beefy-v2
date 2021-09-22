@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { byDecimals } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import Loader from 'components/loader';
-import styles from '../styles';
+import styles from './styles';
 import BigNumber from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
@@ -50,13 +50,25 @@ const Steps = ({ item, steps, handleClose }) => {
                 ) : (
                   <React.Fragment>
                     <Typography variant={'h2'}>
-                      {byDecimals(
-                        new BigNumber(wallet.action.data.amount).multipliedBy(
-                          byDecimals(item.pricePerFullShare)
-                        ),
-                        item.tokenDecimals
-                      ).toFixed(8)}{' '}
-                      {item.token}
+                      {steps.items[steps.currentStep].step === 'withdraw' ? (
+                        <React.Fragment>
+                          {byDecimals(
+                            new BigNumber(wallet.action.data.amount).multipliedBy(
+                              byDecimals(item.pricePerFullShare)
+                            ),
+                            item.tokenDecimals
+                          ).toFixed(8)}{' '}
+                          {item.token}
+                        </React.Fragment>
+                      ) : (
+                        <React.Fragment>
+                          {byDecimals(
+                            new BigNumber(wallet.action.data.amount),
+                            item.earnedTokenDecimals
+                          ).toFixed(8)}{' '}
+                          {item.earnedToken}
+                        </React.Fragment>
+                      )}
                     </Typography>
                     <Typography variant={'h2'}>{t('Withdraw-Done')}</Typography>
                   </React.Fragment>

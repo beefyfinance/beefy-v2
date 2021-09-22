@@ -10,6 +10,11 @@ const styles = theme => ({
       borderRadius: '30px',
       height: '29px',
       textAlign: 'right',
+      display: 'flex',
+      '& img': {
+        height: '18px',
+        marginRight: '5px',
+      },
     },
     '& .MuiSelect-icon': {
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
@@ -37,6 +42,10 @@ const styles = theme => ({
     backgroundColor: theme.palette.type === 'dark' ? '#1B203A' : '#faf6f1',
     padding: '0px',
     margin: '0px',
+    '& img': {
+      height: '24px',
+      marginRight: '5px',
+    },
   },
 });
 
