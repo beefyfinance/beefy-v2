@@ -136,6 +136,15 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             onChange={e => handleChange('keyword', e.target.value)}
             InputProps={{ className: classes.input }}
           />
+          {sortConfig.keyword.length > 3 && (
+            <Button
+              onClick={() => handleChange('keyword', '')}
+              size="small"
+              className={classes.btnClearSearch}
+            >
+              X
+            </Button>
+          )}
         </Box>
         <Box className={classes.sortByContainer}>
           <LabeledDropdown
