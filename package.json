@@ -6,6 +6,8 @@
   "type": "module",
   "dependencies": {
     "@download/blockies": "^1.0.3",
+    "@ethersproject/address": "^5.4.0",
+    "@ethersproject/solidity": "^5.4.0",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/system": "^4.11.3",
     "@reduxjs/toolkit": "^1.6.1",

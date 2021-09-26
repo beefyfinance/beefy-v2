@@ -1,4 +1,14 @@
-import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  InputBase,
+  makeStyles,
+  Paper,
+  Typography,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+} from '@material-ui/core';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +24,29 @@ import AssetsImage from 'components/AssetsImage';
 import BoostWidget from '../BoostWidget';
 import FeeBreakdown from '../FeeBreakdown';
 import switchNetwork from 'helpers/switchNetwork';
+import { getEligibleZap } from 'helpers/zap';
+
+BigNumber.prototype.significant = function (digits) {
+  const number = this.toFormat({
+    prefix: '',
+    decimalSeparator: '.',
+    groupSeparator: '',
+    groupSize: 0,
+    secondaryGroupSize: 0,
+  });
+  if (number.length <= digits + 1) {
+    return number;
+  }
+  const [wholes, decimals] = number.split('.');
+  if (wholes.length >= digits) {
+    return wholes;
+  }
+  if (decimals < 10000) {
+    return '0'; // Show unprocessible amounts as 0
+  }
+  const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
+  return `${wholes}.${decimals.match(pattern)[0]}`;
+};
 
 const useStyles = makeStyles(styles);
 
@@ -109,14 +142,13 @@ const Deposit = ({
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
   };
 
+  const zap = React.useMemo(() => getEligibleZap(item), [item]);
+
   React.useEffect(() => {
-    let amount = 0;
+    let amount = new BigNumber(0);
     let approved = 0;
     if (wallet.address && !isEmpty(balance.tokens[item.token])) {
-      amount = byDecimals(
-        new BigNumber(balance.tokens[item.token].balance),
-        item.tokenDecimals
-      ).toFixed(8);
+      amount = byDecimals(new BigNumber(balance.tokens[item.token].balance), item.tokenDecimals);
       approved = balance.tokens[item.token].allowance[item.earnContractAddress];
     }
     setState({ balance: amount, allowance: approved });
@@ -151,30 +183,95 @@ const Deposit = ({
     <React.Fragment>
       <Box p={3}>
         <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
-        <Box className={classes.balanceContainer} display="flex" alignItems="center">
-          <Box lineHeight={0}>
-            <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-          </Box>
-          <Box flexGrow={1} pl={1} lineHeight={0}>
-            {isLoading ? (
-              <Loader line={true} />
-            ) : (
-              <Typography variant={'body1'}>
-                {state.balance} {item.token}
-              </Typography>
-            )}
-          </Box>
-          <Box>
-            <a
-              href={item.buyTokenUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.btnSecondary}
-            >
-              <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
-            </a>
-          </Box>
-        </Box>
+        <RadioGroup
+          defaultValue={item.tokenAddress}
+          aria-label="deposit-asset"
+          name="deposit-asset"
+        >
+          <FormControlLabel
+            value={item.tokenAddress}
+            control={<Radio />}
+            label={
+              /*TODO: wrap label content into component */
+              <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                <Box lineHeight={0}>
+                  <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+                </Box>
+                <Box flexGrow={1} pl={1} lineHeight={0}>
+                  {isLoading ? (
+                    <Loader line={true} />
+                  ) : (
+                    <Typography variant={'body1'}>
+                      {state.balance.significant(6)} {item.token}
+                    </Typography>
+                  )}
+                </Box>
+                <Box>
+                  <a
+                    href={item.buyTokenUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={classes.btnSecondary}
+                  >
+                    <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+                  </a>
+                </Box>
+              </Box>
+            }
+          />
+          {zap?.tokens[0] && (
+            <FormControlLabel
+              value={zap.tokens[0].address}
+              control={<Radio />}
+              label={
+                <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                  <Box lineHeight={0}>
+                    <AssetsImage assets={[zap.tokens[0].symbol]} alt={zap.tokens[0].name} />
+                  </Box>
+                  <Box flexGrow={1} pl={1} lineHeight={0}>
+                    {isLoading ? (
+                      <Loader line={true} />
+                    ) : (
+                      <Typography variant={'body1'}>
+                        {byDecimals(
+                          balance.tokens[zap.tokens[0].symbol].balance,
+                          zap.tokens[0].decimals
+                        ).significant(6)}{' '}
+                        {zap.tokens[0].symbol}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+              }
+            />
+          )}
+          {zap?.tokens[1] && (
+            <FormControlLabel
+              value={zap.tokens[1].address}
+              control={<Radio />}
+              label={
+                <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                  <Box lineHeight={0}>
+                    <AssetsImage assets={[zap.tokens[1].symbol]} alt={zap.tokens[1].name} />
+                  </Box>
+                  <Box flexGrow={1} pl={1} lineHeight={0}>
+                    {isLoading ? (
+                      <Loader line={true} />
+                    ) : (
+                      <Typography variant={'body1'}>
+                        {byDecimals(
+                          balance.tokens[zap.tokens[1].symbol].balance,
+                          zap.tokens[1].decimals
+                        ).significant(6)}{' '}
+                        {zap.tokens[1].symbol}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+              }
+            />
+          )}
+        </RadioGroup>
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>

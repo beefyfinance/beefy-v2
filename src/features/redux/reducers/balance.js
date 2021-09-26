@@ -6,6 +6,7 @@ import {
   WALLET_DISCONNECT,
 } from '../constants';
 import { config } from 'config/config';
+import { getEligibleZap } from 'helpers/zap';
 
 const initialTokens = () => {
   const tokens = [];
@@ -21,9 +22,27 @@ const initialTokens = () => {
         tokens[data.pools[key].token]['address'] = data.pools[key].tokenAddress;
       }
 
+      const zap = getEligibleZap(data.pools[key]);
+      if (zap) {
+        for (const ti in zap.tokens) {
+          tokens[zap.tokens[ti].symbol] = {
+            ...tokens[zap.tokens[ti].symbol],
+            balance: 0,
+            address: zap.tokens[ti].address,
+            allowance: {
+              ...tokens[zap.tokens[ti].symbol]?.allowance,
+              [zap.address]: 0,
+            },
+          };
+        }
+      }
+
       tokens[data.pools[key].earnedToken] = {
         balance: 0,
         address: data.pools[key].earnedTokenAddress,
+        allowance: {
+          [zap?.address]: 0,
+        },
       };
     }
 
