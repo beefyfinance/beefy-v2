@@ -6,8 +6,19 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const SimpleDropdown = ({ list, selected, handler, renderValue, chainLogos = false }) => {
-  const classes = useStyles();
+const SimpleDropdown = ({
+  list,
+  selected,
+  handler,
+  renderValue,
+  chainLogos = false,
+  noBorder = false,
+}) => {
+  const props = {
+    noBorder: noBorder,
+  };
+
+  const classes = useStyles(props);
 
   return (
     <Box className={classes.select}>

@@ -13,9 +13,6 @@ const Stats = ({ stats, blurred }) => {
   const t = useTranslation().t;
 
   const [empty, setEmpty] = useState(false);
-  useEffect(() => {
-    setEmpty(stats.deposited.eq(BigNumber(0)));
-  }, [stats]);
 
   const BlurredText = ({ value }) => (
     <span className={blurred ? classes.blurred : ''}>{value}</span>
@@ -30,21 +27,21 @@ const Stats = ({ stats, blurred }) => {
     <Box className={classes.stats}>
       <Box className={classes.stat}>
         <Typography className={valueClassName}>
-          <BlurredText value={blurred ? `$100` : formatStat(stats.deposited)} />
+          <BlurredText value={blurred ? `$100` : '$0'} />
         </Typography>
-        <Typography className={labelClassName}>{t('Portfolio-Deposited')}</Typography>
+        <Typography className={labelClassName}>{t('TVL')}</Typography>
       </Box>
       <Box className={classes.stat}>
         <Typography className={valueClassName}>
-          <BlurredText value={blurred ? `$100` : formatStat(stats.monthly)} />
+          <BlurredText value={blurred ? `$100` : '$0'} />
         </Typography>
-        <Typography className={labelClassName}>{t('Portfolio-YieldMnth')}</Typography>
+        <Typography className={labelClassName}>{t('Vaults-Title')}</Typography>
       </Box>
       <Box className={classes.stat}>
         <Typography className={valueClassName}>
-          <BlurredText value={blurred ? `$100` : formatStat(stats.daily)} />
+          <BlurredText value={blurred ? `$100` : '$0'} />
         </Typography>
-        <Typography className={labelClassName}>{t('Portfolio-YieldDay')}</Typography>
+        <Typography className={labelClassName}>{t('BuyBack')}</Typography>
       </Box>
     </Box>
   );

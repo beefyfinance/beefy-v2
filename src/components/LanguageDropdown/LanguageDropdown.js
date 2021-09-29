@@ -46,6 +46,7 @@ const LanguageDropdown = props => {
 
   return (
     <SimpleDropdown
+      noBorder={true}
       list={localeToLanguageMap}
       selected={language}
       handler={handleSwitch}

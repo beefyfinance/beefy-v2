@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import reduxActions from 'features/redux/actions';
 import {
   makeStyles,
   AppBar,
   Toolbar,
-  Container,
   IconButton,
   List,
   ListItem,
@@ -14,10 +13,10 @@ import {
   Hidden,
   Drawer,
   Box,
-  Button,
   Grid,
+  Container,
 } from '@material-ui/core';
-import { Menu, WbSunny, NightsStay } from '@material-ui/icons';
+import { Menu } from '@material-ui/icons';
 import styles from './styles';
 import { useLocation } from 'react-router';
 import WalletContainer from './components/WalletContainer';
@@ -48,13 +47,13 @@ const Header = ({ isNightMode, setNightMode }) => {
     }
   }, [dispatch, walletReducer.web3modal]);
 
-  const NavLinks = () => {
-    const navLinks = [
-      { title: t('Header-Home'), path: 'https://beefy.finance' },
-      { title: t('Header-Explore'), path: '/' },
-      { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
-    ];
+  const navLinks = [
+    { title: t('Header-Home'), path: 'https://beefy.finance' },
+    { title: t('Header-Explore'), path: '/' },
+    { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
+  ];
 
+  const NavLinks = () => {
     return (
       <>
         {navLinks.map(({ title, path }) => (
@@ -74,94 +73,92 @@ const Header = ({ isNightMode, setNightMode }) => {
   };
 
   return (
-    <AppBar
-      className={[classes.navHeader, location.pathname === '/' ? classes.hasPortfolio : ''].join(
-        ' '
-      )}
-      position="static"
-    >
-      {walletReducer.error.status && walletReducer.error.message === 'UNSUPPORTED NETWORK' && (
-        <UnsupportedNetwork />
-      )}
-      <Toolbar disableGutters={true}>
-        <Container maxWidth="lg" className={classes.navDisplayFlex}>
-          <Box className={classes.beefy}>
-            <img alt="BIFI" src={require('images/BIFI.svg').default} />
-            <Button
-              onClick={() => {
-                history.push('/');
-              }}
-            >
-              Beefy.Finance
-            </Button>
-          </Box>
-          <Hidden smDown>
-            <List
-              component="nav"
-              aria-labelledby="main navigation"
-              className={classes.navDisplayFlex}
-            >
-              <NavLinks />
-              <IconButton onClick={setNightMode} className={classes.hide}>
-                {isNightMode ? <WbSunny /> : <NightsStay />}
-              </IconButton>
-              <Box sx={{ marginRight: 10 }}>
-                <LanguageDropdown />
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar
+        className={[classes.navHeader, location.pathname === '/' ? classes.hasPortfolio : ''].join(
+          ' '
+        )}
+        position="static"
+      >
+        {walletReducer.error.status && walletReducer.error.message === 'UNSUPPORTED NETWORK' && (
+          <UnsupportedNetwork />
+        )}
+        <Container maxWidth="lg">
+          <Toolbar disableGutters={true}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Link className={classes.beefy} to="/">
+                <img alt="BIFI" src={require('images/cow-outlined.svg').default} />
+                <Hidden mdDown>
+                  <Box>Beefy.Finance</Box>
+                </Hidden>
+              </Link>
+            </Box>
+            <Hidden mdDown>
+              <Box className={classes.flex} sx={{ flexGrow: 1 }}>
+                {navLinks.map(link => (
+                  <Link className={classes.navLink} key={link.title} to={link.path}>
+                    {link.title}
+                  </Link>
+                ))}
               </Box>
-              <Box sx={{ marginRight: 10 }}>
-                <SimpleDropdown
-                  chainLogos={true}
-                  list={getAvailableNetworks(true)}
-                  selected={walletReducer.network}
-                  handler={e => switchNetwork(e.target.value, dispatch)}
-                />
-              </Box>
-              <Box>
-                <WalletContainer />
-              </Box>
-            </List>
-          </Hidden>
-          <Hidden mdUp>
-            <IconButton edge="start" aria-label="menu" onClick={handleDrawerToggle}>
-              <Menu fontSize="large" />
-            </IconButton>
-            <Drawer
-              anchor="right"
-              sx={{ paddingTop: '1rem' }}
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            >
-              <Box sx={{ justifyContent: 'center', alignItems: 'center', display: 'flex' }} my={1}>
-                <WalletContainer />
-              </Box>
-              <Grid container alignItems="center" spacing={1}>
-                <Grid item xs={12}>
+            </Hidden>
+            <Box className={classes.flex}>
+              <Hidden mdDown>
+                <Box ml={2}>
                   <LanguageDropdown />
-                </Grid>
-                <Grid item xs={12}>
+                </Box>
+                <Box mx={2}>
                   <SimpleDropdown
+                    noBorder={true}
                     chainLogos={true}
                     list={getAvailableNetworks(true)}
                     selected={walletReducer.network}
                     handler={e => switchNetwork(e.target.value, dispatch)}
                   />
-                </Grid>
-              </Grid>
-              <div
-                className={classes.mobileMenu}
-                role="presentation"
-                onClick={handleDrawerToggle}
-                onKeyDown={handleDrawerToggle}
+                </Box>
+              </Hidden>
+              <WalletContainer />
+            </Box>
+            <Hidden lgUp>
+              <IconButton edge="start" aria-label="menu" onClick={handleDrawerToggle}>
+                <Menu fontSize="large" />
+              </IconButton>
+              <Drawer
+                anchor="right"
+                sx={{ paddingTop: '1rem' }}
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
               >
-                <List component="nav">
-                  <NavLinks />
-                </List>
-              </div>
-            </Drawer>
-          </Hidden>
+                <Grid container alignItems="center" spacing={1}>
+                  <Grid item xs={12}>
+                    <LanguageDropdown />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SimpleDropdown
+                      noBorder={true}
+                      chainLogos={true}
+                      list={getAvailableNetworks(true)}
+                      selected={walletReducer.network}
+                      handler={e => switchNetwork(e.target.value, dispatch)}
+                    />
+                  </Grid>
+                </Grid>
+                <div
+                  className={classes.mobileMenu}
+                  role="presentation"
+                  onClick={handleDrawerToggle}
+                  onKeyDown={handleDrawerToggle}
+                >
+                  <List component="nav">
+                    <NavLinks />
+                  </List>
+                </div>
+              </Drawer>
+            </Hidden>
+          </Toolbar>
         </Container>
-      </Toolbar>
-    </AppBar>
+      </AppBar>
+    </Box>
   );
 };
 
