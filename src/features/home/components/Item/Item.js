@@ -17,6 +17,7 @@ const useStyles = makeStyles(styles);
 
 function Item({ id }) {
   const item = useSelector(state => state.vaultReducer.pools[id]);
+  console.log(item);
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
@@ -27,16 +28,6 @@ function Item({ id }) {
     () => earnedTokenBalance && earnedTokenBalance !== '0',
     [earnedTokenBalance]
   );
-  const ctaText = useMemo(() => {
-    if (hasDeposit) {
-      if (item.status !== 'active') {
-        return t('Withdraw');
-      } else {
-        return t('Deposit-Withdraw');
-      }
-    }
-    return t('Deposit-Verb');
-  }, [hasDeposit, item.status, t]);
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
   const formattedAPY = useMemo(() => formatApy(item.apy.totalApy), [item.apy.totalApy]);
@@ -58,78 +49,85 @@ function Item({ id }) {
       })}
     >
       <Grid container className={classes.dataGrid}>
-        <Grid className={classes.titleContainer} item xs={12} md={4}>
-          <div className={classes.infoContainer}>
-            <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-            <Typography className={classes.vaultName}>{item.name}</Typography>
-            {hasMore3Tags && (
-              <div className={classes.networkIconHolder}>
-                <img
-                  alt={item.network}
-                  src={require('images/networks/' + item.network + '.svg').default}
-                />
-              </div>
-            )}
-          </div>
-          <div>
-            <div className={classes.badgesContainter}>
-              <div className={classes.badges}>
-                {!hasMore3Tags && (
-                  <img
-                    alt={item.network}
-                    src={require('images/networks/' + item.network + '.svg').default}
-                  />
-                )}
-                <DisplayTags tags={item.tags} />
-              </div>
-              {hasMore3Tags ? (
-                <Hidden smDown>
-                  <div className={classes.seeDetailsHolder}>
-                    <Button onClick={handleOpenVault} className={classes.btnSeeDetails}>
-                      See Details <ArrowGo style={{ fontSize: 12 }} />
-                    </Button>
-                  </div>
-                </Hidden>
-              ) : (
-                <div className={classes.seeDetailsHolder}>
-                  <Button onClick={handleOpenVault} className={classes.btnSeeDetails}>
-                    See Details <ArrowGo style={{ fontSize: 12 }} />
-                  </Button>
+        {/*Title*/}
+        <Grid className={classes.titleContainer} item xs={12} md={3}>
+          <Grid container>
+            <Grid className={classes.imageContainer} item>
+              {/*Vault Image*/}
+              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+            </Grid>
+            <Grid item>
+              <div>
+                <div className={classes.infoContainer}>
+                  {/*Vault Name*/}
+                  <Typography className={classes.vaultName}>{item.name}</Typography>
+                  {/*Network Image*/}
+                  {hasMore3Tags && (
+                    <div className={classes.networkIconHolder}>
+                      <img
+                        alt={item.network}
+                        src={require('images/networks/' + item.network + '.svg').default}
+                      />
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-        </Grid>
-        <Grid className={classes.centerSpace} item xs={12} md={2}>
-          <div className={classes.stat}>
-            <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-            <div className={classes.safetyLabel}>
-              <Typography className={classes.label}>{t('Safety-Score')}</Typography>
-              <div className={classes.safetyScoreExplainerHolder}>
-                <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
+                {/*Vault Tags*/}
+                <div className={classes.badgesContainter}>
+                  <div className={classes.badges}>
+                    {!hasMore3Tags && (
+                      <img
+                        alt={item.network}
+                        src={require('images/networks/' + item.network + '.svg').default}
+                      />
+                    )}
+                    <DisplayTags tags={item.tags} />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className={classes.stat}>
-            <Hidden mdUp>
-              <div className={classes.chart}>
-                <HistoricalRateChart id={id} />
-                <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={9}>
+          <Grid container>
+            {/*DEPOSIT*/}
+            <Grid className={classes.centerSpace} item xs={12} md={2}>
+              <div className={classes.stat}>
+                <Typography className={classes.label}>{t('APY')}</Typography>
+                <Typography className={classes.value}>{formattedAPY}</Typography>
               </div>
-            </Hidden>
-          </div>
-        </Grid>
-        <Grid className={classes.centerSpace} item xs={12} md={4}>
-          <div className={classes.stat}>
-            <Typography className={classes.value}>{formattedTVL}</Typography>
-            <Typography className={classes.label}>{t('TVL')}</Typography>
-          </div>
-          <div className={classes.stat}>
-            <Typography className={classes.value}>{formattedDPY}</Typography>
-            <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
-          </div>
-        </Grid>
-        <Grid className={classes.centerSpace} item xs={12} md={2}>
+            </Grid>
+            {/*TVL*/}
+            <Grid className={classes.centerSpace} item xs={12} md={2}>
+              <div className={classes.stat}>
+                <Typography className={classes.label}>{t('TVL')}</Typography>
+                <Typography className={classes.value}>{formattedTVL}</Typography>
+              </div>
+            </Grid>
+            {/*APY*/}
+            <Grid className={classes.centerSpace} item xs={12} md={2}>
+              <div className={classes.stat}>
+                <div className={classes.tooltipLabel}>
+                  <Typography className={classes.label}>{t('APY')}</Typography>
+                  <div className={classes.tooltipHolder}>
+                    <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
+                  </div>
+                </div>
+                <Typography className={classes.value}>{formattedAPY}</Typography>
+              </div>
+            </Grid>
+            {/*Daily*/}
+            <Grid className={classes.centerSpace} item xs={12} md={2}>
+              <div className={classes.stat}>
+                <div className={classes.tooltipLabel}>
+                  <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
+                  <div className={classes.tooltipHolder}>
+                    <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
+                  </div>
+                </div>
+                <Typography className={classes.value}>{formattedDPY}</Typography>
+              </div>
+            </Grid>
+            {/* {<Grid className={classes.centerSpace} item xs={12} md={2}>
           <Hidden smDown>
             <div className={classes.chart}>
               <HistoricalRateChart id={id} />
@@ -143,19 +141,36 @@ function Item({ id }) {
               </Button>
             )}
           </Hidden>
+        </Grid>} */}
+            {/*Saftey Score*/}
+            <Grid className={classes.centerSpace} item xs={12} md={2}>
+              <div className={classes.stat}>
+                <div className={classes.tooltipLabel}>
+                  <Typography className={classes.label}>{t('Safety-Score')}</Typography>
+                  <div className={classes.tooltipHolder}>
+                    <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
+                  </div>
+                </div>
+                <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
+              </div>
+              <div className={classes.stat}>
+                <Hidden mdUp>
+                  <div className={classes.chart}>
+                    <HistoricalRateChart id={id} />
+                    <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
+                  </div>
+                </Hidden>
+              </div>
+            </Grid>
+            {/*Open Vault*/}
+            <Grid className={classes.centerSpace} item xs={12} md={2}>
+              <Button onClick={handleOpenVault} size="large" className={classes.depositButton}>
+                {t('Vault-Open')}
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-      <div className={classes.apyContainer}>
-        <div className={classes.apyHolder}>
-          <Typography variant={'h1'}>{formattedAPY}</Typography>
-          <Typography variant={'h2'}>{t('APY')}</Typography>
-        </div>
-        <div>
-          <Button onClick={handleOpenVault} size="large" className={classes.depositButton}>
-            {ctaText}
-          </Button>
-        </div>
-      </div>
     </div>
   );
 }

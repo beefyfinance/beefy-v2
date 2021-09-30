@@ -4,7 +4,7 @@ const styles = theme => ({
     flexDirection: 'column',
     margin: '20px 0 0 0',
     borderRadius: '20px',
-    padding: 0,
+    padding: '24px',
     width: '100%',
     boxShadow: '0px 1px 8px rgba(0,0,0,0.1)',
     background: theme.palette.type === 'dark' ? 'rgba(48, 53, 92, 0.4)' : '#FFF',
@@ -18,11 +18,7 @@ const styles = theme => ({
       flexDirection: 'row',
     },
   },
-  dataGrid: {
-    [theme.breakpoints.up('md')]: {
-      paddingRight: 18,
-    },
-  },
+  dataGrid: {},
   badges: {
     display: 'flex',
     alignItems: 'center',
@@ -36,12 +32,16 @@ const styles = theme => ({
   },
   titleContainer: {
     display: 'flex',
-    flexDirection: 'column',
+    padding: '8px 0 8px 0',
+    flexDirection: 'row',
     alignItems: 'space-around',
     justifyContent: 'center',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
     },
+  },
+  imageContainer: {
+    paddingRight: '16px',
   },
   infoContainer: {
     display: 'flex',
@@ -96,7 +96,7 @@ const styles = theme => ({
     alignItems: 'center',
     textAlign: 'center',
     [theme.breakpoints.up('md')]: {
-      padding: '0.5rem 1rem 0.5rem 0',
+      padding: '0.5rem 0 0.5rem 0',
     },
   },
   chart: {
@@ -108,13 +108,12 @@ const styles = theme => ({
   depositButton: {
     border: 'solid 2px #54995C',
     backgroundColor: '#54995C',
-    borderRadius: '30px',
+    borderRadius: '8px',
     color: 'white',
     fontSize: '18px',
     fontWeight: 700,
     padding: '2px 20px 2px',
     textTransform: 'capitalize',
-    marginTop: '10px',
     display: 'block',
     '&:hover': {
       cursor: 'pointer',
@@ -159,7 +158,7 @@ const styles = theme => ({
   },
   badgesContainter: {
     display: 'block',
-    margin: '0 10px 0 70px',
+    margin: '0',
     [theme.breakpoints.down('sm')]: {
       margin: '0',
       display: 'flex',
@@ -182,7 +181,7 @@ const styles = theme => ({
       width: 'auto',
     },
   },
-  safetyLabel: {
+  tooltipLabel: {
     display: 'flex',
     alignItems: 'center',
   },
@@ -194,11 +193,8 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
-  safetyScoreExplainerHolder: {
+  tooltipHolder: {
     marginLeft: theme.spacing(0.5),
-  },
-  apyHolder: {
-    textAlign: 'center',
   },
   withHasDeposit: {
     '& $apyContainer': {
