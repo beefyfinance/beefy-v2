@@ -15,6 +15,7 @@ const initialTokens = () => {
     for (const key in data.pools) {
       tokens[data.pools[key].token] = {
         balance: 0,
+        decimals: data.pools[key].tokenDecimals,
         allowance: { [data.pools[key].earnContractAddress]: 0 },
       };
 
@@ -28,6 +29,7 @@ const initialTokens = () => {
           tokens[zap.tokens[ti].symbol] = {
             ...tokens[zap.tokens[ti].symbol],
             balance: 0,
+            decimals: zap.tokens[ti].decimals,
             address: zap.tokens[ti].address,
             allowance: {
               ...tokens[zap.tokens[ti].symbol]?.allowance,
@@ -39,6 +41,7 @@ const initialTokens = () => {
 
       tokens[data.pools[key].earnedToken] = {
         balance: 0,
+        decimals: 18,
         address: data.pools[key].earnedTokenAddress,
         allowance: {
           [zap?.address]: 0,
@@ -50,6 +53,7 @@ const initialTokens = () => {
     for (const key in boosts.pools) {
       tokens[boosts.pools[key].token + 'Boost'] = {
         balance: 0,
+        decimals: 18,
         allowance: { [data.pools[key].earnContractAddress]: 0 },
       };
 

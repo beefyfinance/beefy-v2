@@ -24,7 +24,6 @@ import AssetsImage from 'components/AssetsImage';
 import BoostWidget from '../BoostWidget';
 import FeeBreakdown from '../FeeBreakdown';
 import switchNetwork from 'helpers/switchNetwork';
-import { getEligibleZap } from 'helpers/zap';
 
 BigNumber.prototype.significant = function (digits) {
   const number = this.toFormat({
@@ -84,13 +83,32 @@ const Deposit = ({
         : stripExtraDecimals(val);
     setFormData({
       ...formData,
-      deposit: { amount: value, max: new BigNumber(value).minus(state.balance).toNumber() === 0 },
+      deposit: {
+        ...formData.deposit,
+        amount: value,
+        max: new BigNumber(value).minus(state.balance).toNumber() === 0,
+      },
+    });
+  };
+
+  const handleAsset = tokenSymbol => {
+    setFormData({
+      ...formData,
+      deposit: {
+        ...formData.deposit,
+        amount: '',
+        max: false,
+        token: tokenSymbol,
+      },
     });
   };
 
   const handleMax = () => {
     if (state.balance > 0) {
-      setFormData({ ...formData, deposit: { amount: state.balance, max: true } });
+      setFormData({
+        ...formData,
+        deposit: { ...formData.deposit, amount: state.balance, max: true },
+      });
     }
   };
 
@@ -142,17 +160,22 @@ const Deposit = ({
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
   };
 
-  const zap = React.useMemo(() => getEligibleZap(item), [item]);
-
   React.useEffect(() => {
     let amount = new BigNumber(0);
     let approved = 0;
-    if (wallet.address && !isEmpty(balance.tokens[item.token])) {
-      amount = byDecimals(new BigNumber(balance.tokens[item.token].balance), item.tokenDecimals);
-      approved = balance.tokens[item.token].allowance[item.earnContractAddress];
+    if (wallet.address && !isEmpty(balance.tokens[formData.deposit.token])) {
+      amount = byDecimals(
+        new BigNumber(balance.tokens[formData.deposit.token].balance),
+        balance.tokens[formData.deposit.token].decimals
+      );
+      if (formData.zap && formData.deposit.token !== item.token) {
+        approved = balance.tokens[formData.deposit.token].allowance[formData.zap.address];
+      } else {
+        approved = balance.tokens[formData.deposit.token].allowance[item.earnContractAddress];
+      }
     }
     setState({ balance: amount, allowance: approved });
-  }, [wallet.address, item, balance]);
+  }, [wallet.address, item, balance, formData.deposit.token]);
 
   React.useEffect(() => {
     setIsLoading(balance.isBalancesLoading);
@@ -184,12 +207,13 @@ const Deposit = ({
       <Box p={3}>
         <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
         <RadioGroup
-          defaultValue={item.tokenAddress}
+          value={formData.deposit.token}
           aria-label="deposit-asset"
           name="deposit-asset"
+          onChange={e => handleAsset(e.target.value)}
         >
           <FormControlLabel
-            value={item.tokenAddress}
+            value={item.token}
             control={<Radio />}
             label={
               /*TODO: wrap label content into component */
@@ -202,7 +226,11 @@ const Deposit = ({
                     <Loader line={true} />
                   ) : (
                     <Typography variant={'body1'}>
-                      {state.balance.significant(6)} {item.token}
+                      {byDecimals(
+                        balance.tokens[item.token].balance,
+                        balance.tokens[item.token].decimals
+                      ).significant(6)}{' '}
+                      {item.token}
                     </Typography>
                   )}
                 </Box>
@@ -219,14 +247,17 @@ const Deposit = ({
               </Box>
             }
           />
-          {zap?.tokens[0] && (
+          {formData.zap?.tokens[0] && (
             <FormControlLabel
-              value={zap.tokens[0].address}
+              value={formData.zap.tokens[0].symbol}
               control={<Radio />}
               label={
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
-                    <AssetsImage assets={[zap.tokens[0].symbol]} alt={zap.tokens[0].name} />
+                    <AssetsImage
+                      assets={[formData.zap.tokens[0].symbol]}
+                      alt={formData.zap.tokens[0].name}
+                    />
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
                     {isLoading ? (
@@ -234,10 +265,10 @@ const Deposit = ({
                     ) : (
                       <Typography variant={'body1'}>
                         {byDecimals(
-                          balance.tokens[zap.tokens[0].symbol].balance,
-                          zap.tokens[0].decimals
+                          balance.tokens[formData.zap.tokens[0].symbol].balance,
+                          formData.zap.tokens[0].decimals
                         ).significant(6)}{' '}
-                        {zap.tokens[0].symbol}
+                        {formData.zap.tokens[0].symbol}
                       </Typography>
                     )}
                   </Box>
@@ -245,14 +276,17 @@ const Deposit = ({
               }
             />
           )}
-          {zap?.tokens[1] && (
+          {formData.zap?.tokens[1] && (
             <FormControlLabel
-              value={zap.tokens[1].address}
+              value={formData.zap.tokens[1].symbol}
               control={<Radio />}
               label={
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
-                    <AssetsImage assets={[zap.tokens[1].symbol]} alt={zap.tokens[1].name} />
+                    <AssetsImage
+                      assets={[formData.zap.tokens[1].symbol]}
+                      alt={formData.zap.tokens[1].name}
+                    />
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
                     {isLoading ? (
@@ -260,10 +294,10 @@ const Deposit = ({
                     ) : (
                       <Typography variant={'body1'}>
                         {byDecimals(
-                          balance.tokens[zap.tokens[1].symbol].balance,
-                          zap.tokens[1].decimals
+                          balance.tokens[formData.zap.tokens[1].symbol].balance,
+                          formData.zap.tokens[1].decimals
                         ).significant(6)}{' '}
-                        {zap.tokens[1].symbol}
+                        {formData.zap.tokens[1].symbol}
                       </Typography>
                     )}
                   </Box>
@@ -275,7 +309,13 @@ const Deposit = ({
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+              <AssetsImage
+                img={formData.deposit.token === item.token ? item.logo : null}
+                assets={
+                  formData.deposit.token === item.token ? item.assets : [formData.deposit.token]
+                }
+                alt={formData.token}
+              />
             </Box>
             <InputBase
               placeholder="0.00"
