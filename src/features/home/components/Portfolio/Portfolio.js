@@ -4,7 +4,6 @@ import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-
 import Stats from './Stats';
 import VaultsStats from './VaultsStats';
 import styles from './styles';

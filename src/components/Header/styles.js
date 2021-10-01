@@ -16,6 +16,7 @@ const styles = theme => ({
   },
   mobileMenu: {
     width: 250,
+    backgroundColor: theme.palette.type === 'dark' ? '#14161F' : '#FEFAF4',
   },
   beefy: {
     display: 'flex',
@@ -66,6 +67,26 @@ const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       margin: 0,
     },
+  },
+  bifiPrice: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'flex-start',
+    },
+    '& img': {
+      height: '24px',
+      marginRight: '5px',
+    },
+    '& .MuiTypography-root': {
+      fontWeight: '600',
+      fontSize: 18,
+      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+    },
+  },
+  drawerBlack: {
+    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
   },
   hide: {
     display: 'none',
