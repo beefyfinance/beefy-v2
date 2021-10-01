@@ -52,9 +52,9 @@ function Item({ id }) {
         {/*Title*/}
         <Grid className={classes.titleContainer} item xs={12} md={3}>
           <Grid container>
-            <Grid className={classes.imageContainer} item>
+            <Grid item className={classes.infoContainer} style={{ marginRight: '8px' }}>
               {/*Vault Image*/}
-              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} size={'60px'} />
             </Grid>
             <Grid item>
               <div>
@@ -87,24 +87,24 @@ function Item({ id }) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12} md={9}>
           <Grid container>
             {/*DEPOSIT*/}
-            <Grid className={classes.centerSpace} item xs={12} md={2}>
+            <Grid className={classes.centerSpace} item xs={6} md={2}>
               <div className={classes.stat}>
-                <Typography className={classes.label}>{t('APY')}</Typography>
-                <Typography className={classes.value}>{formattedAPY}</Typography>
+                <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
+                <Typography className={classes.value}>{earnedTokenBalance}</Typography>
               </div>
             </Grid>
             {/*TVL*/}
-            <Grid className={classes.centerSpace} item xs={12} md={2}>
+            <Grid className={classes.centerSpace} item xs={6} md={2}>
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
               </div>
             </Grid>
             {/*APY*/}
-            <Grid className={classes.centerSpace} item xs={12} md={2}>
+            <Grid className={classes.centerSpace} item xs={6} md={2}>
               <div className={classes.stat}>
                 <div className={classes.tooltipLabel}>
                   <Typography className={classes.label}>{t('APY')}</Typography>
@@ -116,7 +116,7 @@ function Item({ id }) {
               </div>
             </Grid>
             {/*Daily*/}
-            <Grid className={classes.centerSpace} item xs={12} md={2}>
+            <Grid className={classes.centerSpace} item xs={6} md={2}>
               <div className={classes.stat}>
                 <div className={classes.tooltipLabel}>
                   <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
@@ -143,7 +143,7 @@ function Item({ id }) {
           </Hidden>
         </Grid>} */}
             {/*Saftey Score*/}
-            <Grid className={classes.centerSpace} item xs={12} md={2}>
+            <Grid className={classes.centerSpace} item xs={6} md={2}>
               <div className={classes.stat}>
                 <div className={classes.tooltipLabel}>
                   <Typography className={classes.label}>{t('Safety-Score')}</Typography>
@@ -153,17 +153,9 @@ function Item({ id }) {
                 </div>
                 <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
               </div>
-              <div className={classes.stat}>
-                <Hidden mdUp>
-                  <div className={classes.chart}>
-                    <HistoricalRateChart id={id} />
-                    <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
-                  </div>
-                </Hidden>
-              </div>
             </Grid>
             {/*Open Vault*/}
-            <Grid className={classes.centerSpace} item xs={12} md={2}>
+            <Grid className={classes.centerSpace} style={{ padding: 0 }} item xs={12} md={2}>
               <Button onClick={handleOpenVault} size="large" className={classes.depositButton}>
                 {t('Vault-Open')}
               </Button>

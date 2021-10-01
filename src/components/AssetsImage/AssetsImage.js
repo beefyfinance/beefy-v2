@@ -20,7 +20,6 @@ const AssetsImage = ({ img, assets, alt }) => {
       alt={alt}
       src={singleImage}
       variant="square"
-      style={{ width: '60px', height: '60px' }}
       imgProps={{ style: { objectFit: 'contain' } }}
     />
   ) : (

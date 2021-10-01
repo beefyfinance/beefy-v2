@@ -6,8 +6,9 @@ const styles = theme => ({
     borderRadius: '20px',
     padding: '24px',
     width: '100%',
+    border: '2px solid #383E6B',
     boxShadow: '0px 1px 8px rgba(0,0,0,0.1)',
-    background: theme.palette.type === 'dark' ? 'rgba(48, 53, 92, 0.4)' : '#FFF',
+    background: theme.palette.type === 'dark' ? '#272B4A' : '#FFF',
     '&.hasDeposit': {
       background: '#313759',
       '&:hover': {
@@ -48,7 +49,9 @@ const styles = theme => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      margin: '10px 10px 0 20px',
+      marginRight: '8px',
+      height: 60,
+      width: 60,
     },
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center',
@@ -76,6 +79,10 @@ const styles = theme => ({
     [theme.breakpoints.up('lg')]: {
       fontSize: '24px',
     },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '24px',
+      textAlign: 'left',
+    },
   },
   label: {
     fontWeight: 400,
@@ -85,18 +92,18 @@ const styles = theme => ({
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     textAlign: 'left',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.up('md')]: {
       textAlign: 'center',
     },
   },
   centerSpace: {
     padding: '0.5rem 0',
     display: 'flex',
-    justifyContent: 'space-around',
     alignItems: 'center',
     textAlign: 'center',
     [theme.breakpoints.up('md')]: {
       padding: '0.5rem 0 0.5rem 0',
+      justifyContent: 'space-around',
     },
   },
   chart: {
@@ -115,9 +122,13 @@ const styles = theme => ({
     padding: '2px 20px 2px',
     textTransform: 'capitalize',
     display: 'block',
+    width: '100%',
     '&:hover': {
       cursor: 'pointer',
       backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '16px',
     },
   },
   apyContainer: {
@@ -175,10 +186,10 @@ const styles = theme => ({
   stat: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    width: '50%',
+    alignItems: 'left',
     [theme.breakpoints.up('md')]: {
       width: 'auto',
+      alignItems: 'center',
     },
   },
   tooltipLabel: {
@@ -202,9 +213,10 @@ const styles = theme => ({
     },
   },
   withMuted: {
-    background: 'rgba(48, 53, 92, 0.4)',
+    background: '#14182B',
+    border: '2px solid #762C2C',
     '&:hover': {
-      background: 'rgba(48, 53, 92, 0.4)',
+      background: '#14182B',
     },
     '&.hasDeposit': {
       background: 'rgba(48, 53, 92, 0.4)',
