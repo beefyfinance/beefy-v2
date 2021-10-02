@@ -56,7 +56,7 @@ const DataLoader = memo(function HomeDataLoader() {
   return null;
 });
 
-const VaultsHeader = memo(function HomeVaultsHeader() {
+/*const VaultsHeader = memo(function HomeVaultsHeader() {
   const classes = useStyles();
   const { t } = useTranslation();
   const totalTvl = useSelector(state => state.vaultReducer.totalTvl.toNumber());
@@ -70,7 +70,7 @@ const VaultsHeader = memo(function HomeVaultsHeader() {
       </Box>
     </Box>
   );
-});
+});*/
 
 function createVaultRenderer(vaults, cache) {
   return function vaultRenderer({ index, parent, key, style }) {
@@ -159,9 +159,6 @@ const VaultsList = memo(function HomeVaultsList() {
         allCount={allCount}
         filteredCount={filteredCount}
       />
-      <div className={classes.numberOfVaults}>
-        {t('Filter-ShowingVaults', { number: filteredCount })}
-      </div>
       <div className={classes.vaultsList}>
         <VirtualVaultsList vaults={filteredVaults} />
       </div>
@@ -170,12 +167,14 @@ const VaultsList = memo(function HomeVaultsList() {
 });
 
 const Home = () => {
+  const classes = useStyles();
+
   return (
     <React.Fragment>
       <DataLoader />
       <Portfolio />
-      <Container maxWidth="lg">
-        <VaultsHeader />
+      <Container maxWidth="lg" className={classes.vaultContainer}>
+        {/*<VaultsHeader />*/}
         <VaultsList />
       </Container>
     </React.Fragment>

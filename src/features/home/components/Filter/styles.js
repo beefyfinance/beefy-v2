@@ -9,8 +9,8 @@ const styles = theme => ({
       letterSpacing: '1px',
     },
     '& .MuiButton-root': {
-      height: '110px',
-      borderRadius: '15px',
+      height: '48px',
+      borderRadius: '8px',
       backgroundBlendMode: 'soft-light, normal',
       '&:hover': {
         '& .MuiTypography-root': {
@@ -36,7 +36,6 @@ const styles = theme => ({
     height: '24px',
     textAlign: 'center',
     textTransform: 'none', //'capitalize' no good due to localization
-    opacity: 0.7,
     transition: 'opacity 0.2s ease-in-out',
   },
   selected: {
@@ -57,31 +56,31 @@ const styles = theme => ({
     },
   },
   stable: {
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
-    backgroundColor: '#4771D1',
+    background: '#3D8F61',
+    backgroundColor: '#3D8F61',
     '&:hover': {
-      backgroundColor: '#628be8',
+      backgroundColor: '#5EBA87',
     },
   },
   bluechip: {
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
-    backgroundColor: '#073FAB',
+    background: '#3E5FA7',
+    backgroundColor: '#3E5FA7',
     '&:hover': {
-      backgroundColor: '#1054d4',
+      backgroundColor: '#6A88C8',
     },
   },
   beefy: {
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
-    backgroundColor: '#9D57F7',
+    background: '#5C499D',
+    backgroundColor: '#5C499D',
     '&:hover': {
-      backgroundColor: '#b576ff',
+      backgroundColor: '#8574BE',
     },
   },
   low: {
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
-    backgroundColor: '#2E90A5',
+    background: '#639CBF',
+    backgroundColor: '#639CBF',
     '&:hover': {
-      backgroundColor: '#3eabc2',
+      backgroundColor: '#76A7C6',
     },
   },
   input: {
@@ -171,6 +170,7 @@ const styles = theme => ({
   },
   searchInput: {
     borderRadius: 30,
+    position: 'relative',
     color: '#484F7F',
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -192,6 +192,10 @@ const styles = theme => ({
         color: '#6B7199',
       },
     },
+  },
+  iconSearch: {
+    marginLeft: '-2rem',
+    marginTop: '8.5px',
   },
   btnClearSearch: {
     borderRadius: 30,
@@ -240,6 +244,32 @@ const styles = theme => ({
       justifyContent: 'center',
       margin: '10px 0',
     },
+  },
+  toggleSwitchContainer: {
+    backgroundColor: '#14182B',
+    borderRadius: '20px',
+    marginRight: '10px',
+  },
+  toggleSwitchButton: {
+    height: '44px',
+    borderRadius: '20px',
+    padding: '0 16px',
+    textTransform: 'none',
+    fontSize: '16px',
+    color: '#484F7F',
+  },
+  toggleSwitchButtonActive: {
+    height: '44px',
+    borderRadius: '20px',
+    padding: '0 16px',
+    textTransform: 'none',
+    fontSize: '16px',
+    color: '#FFFFFF',
+    backgroundColor: '#434B7A',
+    fontWeight: '600',
+  },
+  filterIcon: {
+    marginRight: '8px',
   },
   sortByContainer: {
     marginRight: theme.spacing(1),

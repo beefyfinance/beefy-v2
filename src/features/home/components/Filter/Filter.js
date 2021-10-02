@@ -17,6 +17,7 @@ import LabeledDropdown from 'components/LabeledDropdown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
+import { Search } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 
 const useStyles = makeStyles(styles);
@@ -122,10 +123,13 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
 
   const handleSortChange = useCallback(e => handleChange('key', e.target.value), [handleChange]);
 
+  console.log(sortConfig);
+
   return (
     <>
       <FilterCategories category={sortConfig.category} handleChange={handleChange} />
       <Box className={classes.filtersContainer}>
+        {/*Search*/}
         <Box className={classes.searchContainer}>
           <TextField
             className={classes.searchInput}
@@ -136,6 +140,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             onChange={e => handleChange('keyword', e.target.value)}
             InputProps={{ className: classes.input }}
           />
+          <Search className={classes.iconSearch} />
           {sortConfig.keyword.length > 3 && (
             <Button
               onClick={() => handleChange('keyword', '')}
@@ -146,6 +151,30 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             </Button>
           )}
         </Box>
+        {/*All/My Switch*/}
+        <Box className={classes.toggleSwitchContainer}>
+          <Button
+            className={
+              sortConfig.deposited == false
+                ? classes.toggleSwitchButtonActive
+                : classes.toggleSwitchButton
+            }
+            onClick={() => handleChange('deposited', false)}
+          >
+            {t('Filter-AllVaults')}
+          </Button>
+          <Button
+            className={
+              sortConfig.deposited == true
+                ? classes.toggleSwitchButtonActive
+                : classes.toggleSwitchButton
+            }
+            onClick={() => handleChange('deposited', true)}
+          >
+            {t('Filter-MyVaults')}
+          </Button>
+        </Box>
+        {/*Dropdown*/}
         <Box className={classes.sortByContainer}>
           <LabeledDropdown
             list={sortList}
@@ -155,6 +184,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             selectStyle={{ minWidth: 230 }}
           />
         </Box>
+        {/*All Filters Button*/}
         <Box className={classes.btnFilter}>
           <ToggleButton
             className={classes.blockBtn}
@@ -164,6 +194,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
               setFilterOpen(!filterOpen);
             }}
           >
+            <img src={require('images/filter.svg').default} className={classes.filterIcon} />
             {t('Filter-Btn')}
             {filterOpen ? <ArrowDropDownIcon /> : ''}
           </ToggleButton>

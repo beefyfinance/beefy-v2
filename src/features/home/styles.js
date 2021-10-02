@@ -43,6 +43,9 @@ const styles = theme => ({
     alignItems: 'center',
     boxSizing: 'border-box',
   },
+  vaultContainer: {
+    marginTop: '48px',
+  },
 });
 
 export default styles;
