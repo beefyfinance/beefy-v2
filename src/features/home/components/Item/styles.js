@@ -28,7 +28,7 @@ const styles = theme => ({
       height: '24px',
     },
     [theme.breakpoints.down('sm')]: {
-      margin: '0 10px',
+      margin: '0 -40px',
     },
   },
   titleContainer: {
@@ -48,13 +48,18 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    [theme.breakpoints.down('sm')]: {
+      alignItems: 'baseline',
+    },
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
       marginRight: '8px',
       height: 60,
       width: 60,
-    },
-    [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
+      [theme.breakpoints.down('sm')]: {
+        height: 32,
+        width: 32,
+        marginRight: '0',
+      },
     },
   },
   vaultName: {
@@ -77,16 +82,16 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     [theme.breakpoints.up('lg')]: {
-      fontSize: '24px',
+      fontSize: '18px',
     },
     [theme.breakpoints.down('md')]: {
-      fontSize: '24px',
+      fontSize: '18px',
       textAlign: 'left',
     },
   },
   label: {
     fontWeight: 400,
-    fontSize: '15px',
+    fontSize: '12px',
     lineHeight: '24px',
     color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
     letterSpacing: '0.2px',
@@ -117,7 +122,7 @@ const styles = theme => ({
     backgroundColor: '#54995C',
     borderRadius: '8px',
     color: 'white',
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 700,
     padding: '2px 20px 2px',
     textTransform: 'capitalize',
@@ -174,7 +179,6 @@ const styles = theme => ({
       margin: '0',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-around',
     },
   },
   leftCenter: {

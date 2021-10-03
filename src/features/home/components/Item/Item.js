@@ -45,12 +45,12 @@ function Item({ id }) {
         [classes.itemContainer]: true,
         [classes.withHasDeposit]: hasDeposit,
         [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
-        [classes.withIsLongName]: item.name.length > 15,
+        [classes.withIsLongName]: item.name.length > 12,
       })}
     >
       <Grid container className={classes.dataGrid}>
         {/*Title*/}
-        <Grid className={classes.titleContainer} item xs={12} md={3}>
+        <Grid className={classes.titleContainer} item xs={12} md={4}>
           <Grid container>
             <Grid item className={classes.infoContainer} style={{ marginRight: '8px' }}>
               {/*Vault Image*/}
@@ -87,8 +87,8 @@ function Item({ id }) {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={9}>
-          <Grid container>
+        <Grid item xs={12} md={8}>
+          <Grid container columns={15}>
             {/*DEPOSIT*/}
             <Grid className={classes.centerSpace} item xs={6} md={2}>
               <div className={classes.stat}>
@@ -127,21 +127,6 @@ function Item({ id }) {
                 <Typography className={classes.value}>{formattedDPY}</Typography>
               </div>
             </Grid>
-            {/* {<Grid className={classes.centerSpace} item xs={12} md={2}>
-          <Hidden smDown>
-            <div className={classes.chart}>
-              <HistoricalRateChart id={id} />
-              <Typography className={classes.label}>{t('Vault-Chart')}</Typography>
-            </div>
-          </Hidden>
-          <Hidden mdUp>
-            {hasMore3Tags && (
-              <Button onClick={handleOpenVault} className={classes.btnSeeDetails}>
-                See Details <ArrowGo style={{ fontSize: 12 }} />
-              </Button>
-            )}
-          </Hidden>
-        </Grid>} */}
             {/*Saftey Score*/}
             <Grid className={classes.centerSpace} item xs={6} md={2}>
               <div className={classes.stat}>

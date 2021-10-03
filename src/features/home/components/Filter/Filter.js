@@ -19,6 +19,7 @@ import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
 import { Search } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 
 const useStyles = makeStyles(styles);
 
@@ -181,7 +182,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             selected={sortConfig.key}
             handler={handleSortChange}
             label={t('Filter-Sort')}
-            selectStyle={{ minWidth: 230 }}
+            selectStyle={{ width: '100%', minWidth: 'auto' }}
           />
         </Box>
         {/*All Filters Button*/}

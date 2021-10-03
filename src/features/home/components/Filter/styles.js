@@ -11,6 +11,7 @@ const styles = theme => ({
     '& .MuiButton-root': {
       height: '48px',
       borderRadius: '8px',
+      margin: '0 8px',
       backgroundBlendMode: 'soft-light, normal',
       '&:hover': {
         '& .MuiTypography-root': {
@@ -96,7 +97,10 @@ const styles = theme => ({
       width: 375,
     },
     [theme.breakpoints.down('sm')]: {
-      width: 300,
+      width: 200,
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
     },
   },
   filters: {
@@ -139,17 +143,17 @@ const styles = theme => ({
       borderColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       display: 'flex',
-      justifyContent: 'center',
-      margin: '10px 0',
+      width: '40%',
+      margin: '0 0 18px 0',
     },
   },
   lblShowing: {
     textAlign: 'right',
     minWidth: 100,
     flexGrow: 1,
-    [theme.breakpoints.up('sm')]: { minWidth: 200 },
+    [theme.breakpoints.up('xs')]: { minWidth: 200 },
   },
   btnReset: {
     color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
@@ -164,7 +168,7 @@ const styles = theme => ({
       borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       width: 300,
     },
   },
@@ -192,6 +196,12 @@ const styles = theme => ({
         color: '#6B7199',
       },
     },
+    '& .MuiInputBase-root': {
+      height: '100%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
   iconSearch: {
     marginLeft: '-2rem',
@@ -216,39 +226,45 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     flexGrow: 1,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       justifyContent: 'center',
     },
   },
   selector: {
     marginRight: theme.spacing(1),
     marginTop: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       marginRight: 0,
     },
   },
   filtersContainer: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
+    [theme.breakpoints.down('xs')]: {
+      flexWrap: 'wrap',
+      boxSizing: 'border-box',
     },
   },
   searchContainer: {
-    display: 'flex',
     alignItem: 'center',
     flexGrow: 1,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       flexGrow: 0,
       width: '100%',
       display: 'flex',
-      justifyContent: 'center',
-      margin: '10px 0',
+      justifyContent: 'normal',
+      margin: '0 0 18px 0',
     },
   },
   toggleSwitchContainer: {
     backgroundColor: '#14182B',
     borderRadius: '20px',
     marginRight: '10px',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      marginRight: '0',
+      order: '5',
+      margin: '0 0 18px 0',
+    },
   },
   toggleSwitchButton: {
     height: '44px',
@@ -257,6 +273,9 @@ const styles = theme => ({
     textTransform: 'none',
     fontSize: '16px',
     color: '#484F7F',
+    [theme.breakpoints.down('xs')]: {
+      width: '50%',
+    },
   },
   toggleSwitchButtonActive: {
     height: '44px',
@@ -265,23 +284,32 @@ const styles = theme => ({
     textTransform: 'none',
     fontSize: '16px',
     color: '#FFFFFF',
-    backgroundColor: '#434B7A',
+    backgroundColor: '#434B7A !important',
     fontWeight: '600',
+    [theme.breakpoints.down('xs')]: {
+      width: '50%',
+    },
   },
   filterIcon: {
     marginRight: '8px',
   },
   sortByContainer: {
     marginRight: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
+    '& .MuiBox-root': {
       width: '100%',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '210px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '60%',
       display: 'flex',
-      justifyContent: 'center',
-      margin: '10px 0',
+      margin: '0 0 18px 0',
+      paddingRight: '16px',
     },
   },
   blockBtn: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       width: 300,
     },
   },
