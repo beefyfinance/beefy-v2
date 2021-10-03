@@ -61,7 +61,6 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
     }
   };
 
-  // create an event listener
   useEffect(() => {
     window.addEventListener('resize', handleResize);
   });
