@@ -1,13 +1,11 @@
 import React, { memo, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Container, makeStyles, Grid } from '@material-ui/core';
+import { Container, makeStyles, Grid } from '@material-ui/core';
 import reduxActions from '../redux/actions';
 import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
 import Loader from 'components/CowLoader';
-import { formatUsd } from 'helpers/format';
-import ApyLoader from 'components/APYLoader';
 import useVaults from './hooks/useFilteredVaults';
 import styles from './styles';
 import {

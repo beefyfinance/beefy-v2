@@ -61,7 +61,6 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
     }
   };
 
-  // create an event listener
   useEffect(() => {
     window.addEventListener('resize', handleResize);
   });
@@ -184,7 +183,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
         <Box className={classes.toggleSwitchContainer}>
           <Button
             className={
-              sortConfig.deposited == false
+              sortConfig.deposited === false
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
@@ -194,7 +193,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
           </Button>
           <Button
             className={
-              sortConfig.deposited == true
+              sortConfig.deposited === true
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
@@ -223,7 +222,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
               setFilterOpen(!filterOpen);
             }}
           >
-            <img src={require('images/filter.svg').default} className={classes.filterIcon} />
+            <img src={require('images/filter.svg').default} alt="" className={classes.filterIcon} />
             {t('Filter-Btn')}
             {filterOpen ? <ArrowDropDownIcon /> : ''}
           </ToggleButton>

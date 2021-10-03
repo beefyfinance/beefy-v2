@@ -1,6 +1,5 @@
 import React, { memo, useCallback, useMemo } from 'react';
-import ArrowGo from '@material-ui/icons/ArrowForwardIos';
-import { Button, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -10,7 +9,6 @@ import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
 import { calcDaily, formatApy, formatUsd } from 'helpers/format';
 import styles from './styles';
-import HistoricalRateChart from '../HistoricalRateChart/HistoricalRateChart';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
