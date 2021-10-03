@@ -59,9 +59,10 @@ const Deposit = ({
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { wallet, balance } = useSelector(state => ({
+  const { wallet, balance, tokens } = useSelector(state => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
+    tokens: state.balanceReducer.tokens[item.network],
   }));
   const t = useTranslation().t;
 
@@ -163,15 +164,15 @@ const Deposit = ({
   React.useEffect(() => {
     let amount = new BigNumber(0);
     let approved = 0;
-    if (wallet.address && !isEmpty(balance.tokens[formData.deposit.token])) {
+    if (wallet.address && !isEmpty(tokens[formData.deposit.token])) {
       amount = byDecimals(
-        new BigNumber(balance.tokens[formData.deposit.token].balance),
-        balance.tokens[formData.deposit.token].decimals
+        new BigNumber(tokens[formData.deposit.token].balance),
+        tokens[formData.deposit.token].decimals
       );
       if (formData.zap && formData.deposit.token !== item.token) {
-        approved = balance.tokens[formData.deposit.token].allowance[formData.zap.address];
+        approved = tokens[formData.deposit.token].allowance[formData.zap.address];
       } else {
-        approved = balance.tokens[formData.deposit.token].allowance[item.earnContractAddress];
+        approved = tokens[formData.deposit.token].allowance[item.earnContractAddress];
       }
     }
     setState({ balance: amount, allowance: approved });
@@ -227,8 +228,8 @@ const Deposit = ({
                   ) : (
                     <Typography variant={'body1'}>
                       {byDecimals(
-                        balance.tokens[item.token].balance,
-                        balance.tokens[item.token].decimals
+                        tokens[item.token].balance,
+                        tokens[item.token].decimals
                       ).significant(6)}{' '}
                       {item.token}
                     </Typography>
@@ -265,7 +266,7 @@ const Deposit = ({
                     ) : (
                       <Typography variant={'body1'}>
                         {byDecimals(
-                          balance.tokens[formData.zap.tokens[0].symbol].balance,
+                          tokens[formData.zap.tokens[0].symbol].balance,
                           formData.zap.tokens[0].decimals
                         ).significant(6)}{' '}
                         {formData.zap.tokens[0].symbol}
@@ -294,7 +295,7 @@ const Deposit = ({
                     ) : (
                       <Typography variant={'body1'}>
                         {byDecimals(
-                          balance.tokens[formData.zap.tokens[1].symbol].balance,
+                          tokens[formData.zap.tokens[1].symbol].balance,
                           formData.zap.tokens[1].decimals
                         ).significant(6)}{' '}
                         {formData.zap.tokens[1].symbol}

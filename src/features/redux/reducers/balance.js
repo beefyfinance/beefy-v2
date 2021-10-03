@@ -11,39 +11,46 @@ import { getEligibleZap } from 'helpers/zap';
 const initialTokens = () => {
   const tokens = [];
   for (let net in config) {
+    tokens[net] = [];
     const data = require('config/vault/' + net + '.js');
     for (const key in data.pools) {
-      tokens[data.pools[key].token] = {
+      tokens[net][data.pools[key].token] = {
+        ...tokens[net][data.pools[key].token],
         balance: 0,
         decimals: data.pools[key].tokenDecimals,
-        allowance: { [data.pools[key].earnContractAddress]: 0 },
+        allowance: {
+          ...tokens[net][data.pools[key].token]?.allowance,
+          [data.pools[key].earnContractAddress]: 0,
+        },
       };
 
       if (data.pools[key].tokenAddress) {
-        tokens[data.pools[key].token]['address'] = data.pools[key].tokenAddress;
+        tokens[net][data.pools[key].token]['address'] = data.pools[key].tokenAddress;
       }
 
       const zap = getEligibleZap(data.pools[key]);
       if (zap) {
         for (const ti in zap.tokens) {
-          tokens[zap.tokens[ti].symbol] = {
-            ...tokens[zap.tokens[ti].symbol],
+          tokens[net][zap.tokens[ti].symbol] = {
+            ...tokens[net][zap.tokens[ti].symbol],
             balance: 0,
             decimals: zap.tokens[ti].decimals,
             address: zap.tokens[ti].address,
             allowance: {
-              ...tokens[zap.tokens[ti].symbol]?.allowance,
+              ...tokens[net][zap.tokens[ti].symbol]?.allowance,
               [zap.address]: 0,
             },
           };
         }
       }
 
-      tokens[data.pools[key].earnedToken] = {
+      tokens[net][data.pools[key].earnedToken] = {
+        ...tokens[net][data.pools[key].earnedToken],
         balance: 0,
         decimals: 18,
         address: data.pools[key].earnedTokenAddress,
         allowance: {
+          ...tokens[net][data.pools[key].earnedToken]?.allowance,
           [zap?.address]: 0,
         },
       };
@@ -51,17 +58,19 @@ const initialTokens = () => {
 
     const boosts = require('config/boost/' + net + '.js');
     for (const key in boosts.pools) {
-      tokens[boosts.pools[key].token + 'Boost'] = {
+      tokens[net][boosts.pools[key].token + 'Boost'] = {
         balance: 0,
         decimals: 18,
         allowance: { [data.pools[key].earnContractAddress]: 0 },
       };
 
-      tokens[boosts.pools[key].token]['allowance'] = {
+      tokens[net][boosts.pools[key].token]['allowance'] = {
         [boosts.pools[key].earnContractAddress]: 0,
       };
     }
   }
+
+  console.log(tokens);
 
   return tokens;
 };
