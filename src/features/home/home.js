@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Container, makeStyles } from '@material-ui/core';
+import { Box, Container, makeStyles, Grid } from '@material-ui/core';
 import reduxActions from '../redux/actions';
 import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
@@ -56,7 +56,7 @@ const DataLoader = memo(function HomeDataLoader() {
   return null;
 });
 
-const VaultsHeader = memo(function HomeVaultsHeader() {
+/*const VaultsHeader = memo(function HomeVaultsHeader() {
   const classes = useStyles();
   const { t } = useTranslation();
   const totalTvl = useSelector(state => state.vaultReducer.totalTvl.toNumber());
@@ -70,11 +70,15 @@ const VaultsHeader = memo(function HomeVaultsHeader() {
       </Box>
     </Box>
   );
-});
+});*/
 
 function createVaultRenderer(vaults, cache) {
   return function vaultRenderer({ index, parent, key, style }) {
-    const vault = <Item id={vaults[index].id} />;
+    const vault = (
+      <Grid item xs={12} sm={6} md={12}>
+        <Item id={vaults[index].id} />
+      </Grid>
+    );
 
     return (
       <CellMeasurer cache={cache} key={key} columnIndex={0} rowIndex={index} parent={parent}>
@@ -155,9 +159,6 @@ const VaultsList = memo(function HomeVaultsList() {
         allCount={allCount}
         filteredCount={filteredCount}
       />
-      <div className={classes.numberOfVaults}>
-        {t('Filter-ShowingVaults', { number: filteredCount })}
-      </div>
       <div className={classes.vaultsList}>
         <VirtualVaultsList vaults={filteredVaults} />
       </div>
@@ -166,12 +167,14 @@ const VaultsList = memo(function HomeVaultsList() {
 });
 
 const Home = () => {
+  const classes = useStyles();
+
   return (
     <React.Fragment>
       <DataLoader />
       <Portfolio />
-      <Container maxWidth="lg">
-        <VaultsHeader />
+      <Container maxWidth="lg" className={classes.vaultContainer}>
+        {/*<VaultsHeader />*/}
         <VaultsList />
       </Container>
     </React.Fragment>

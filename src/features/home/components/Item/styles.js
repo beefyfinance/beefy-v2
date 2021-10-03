@@ -4,10 +4,11 @@ const styles = theme => ({
     flexDirection: 'column',
     margin: '20px 0 0 0',
     borderRadius: '20px',
-    padding: 0,
+    padding: '24px',
     width: '100%',
+    border: '2px solid #383E6B',
     boxShadow: '0px 1px 8px rgba(0,0,0,0.1)',
-    background: theme.palette.type === 'dark' ? 'rgba(48, 53, 92, 0.4)' : '#FFF',
+    background: theme.palette.type === 'dark' ? '#272B4A' : '#FFF',
     '&.hasDeposit': {
       background: '#313759',
       '&:hover': {
@@ -18,11 +19,7 @@ const styles = theme => ({
       flexDirection: 'row',
     },
   },
-  dataGrid: {
-    [theme.breakpoints.up('md')]: {
-      paddingRight: 18,
-    },
-  },
+  dataGrid: {},
   badges: {
     display: 'flex',
     alignItems: 'center',
@@ -31,27 +28,38 @@ const styles = theme => ({
       height: '24px',
     },
     [theme.breakpoints.down('sm')]: {
-      margin: '0 10px',
+      margin: '0 -40px',
     },
   },
   titleContainer: {
     display: 'flex',
-    flexDirection: 'column',
+    padding: '8px 0 8px 0',
+    flexDirection: 'row',
     alignItems: 'space-around',
     justifyContent: 'center',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
     },
   },
+  imageContainer: {
+    paddingRight: '16px',
+  },
   infoContainer: {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      margin: '10px 10px 0 20px',
-    },
     [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
+      alignItems: 'baseline',
+    },
+    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
+      marginRight: '8px',
+      height: 60,
+      width: 60,
+      [theme.breakpoints.down('sm')]: {
+        height: 32,
+        width: 32,
+        marginRight: '0',
+      },
     },
   },
   vaultName: {
@@ -74,29 +82,33 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     [theme.breakpoints.up('lg')]: {
-      fontSize: '24px',
+      fontSize: '18px',
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '18px',
+      textAlign: 'left',
     },
   },
   label: {
     fontWeight: 400,
-    fontSize: '15px',
+    fontSize: '12px',
     lineHeight: '24px',
     color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     textAlign: 'left',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.up('md')]: {
       textAlign: 'center',
     },
   },
   centerSpace: {
     padding: '0.5rem 0',
     display: 'flex',
-    justifyContent: 'space-around',
     alignItems: 'center',
     textAlign: 'center',
     [theme.breakpoints.up('md')]: {
-      padding: '0.5rem 1rem 0.5rem 0',
+      padding: '0.5rem 0 0.5rem 0',
+      justifyContent: 'space-around',
     },
   },
   chart: {
@@ -108,17 +120,20 @@ const styles = theme => ({
   depositButton: {
     border: 'solid 2px #54995C',
     backgroundColor: '#54995C',
-    borderRadius: '30px',
+    borderRadius: '8px',
     color: 'white',
-    fontSize: '18px',
+    fontSize: '16px',
     fontWeight: 700,
     padding: '2px 20px 2px',
     textTransform: 'capitalize',
-    marginTop: '10px',
     display: 'block',
+    width: '100%',
     '&:hover': {
       cursor: 'pointer',
       backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '16px',
     },
   },
   apyContainer: {
@@ -159,12 +174,11 @@ const styles = theme => ({
   },
   badgesContainter: {
     display: 'block',
-    margin: '0 10px 0 70px',
+    margin: '0',
     [theme.breakpoints.down('sm')]: {
       margin: '0',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-around',
     },
   },
   leftCenter: {
@@ -176,13 +190,13 @@ const styles = theme => ({
   stat: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    width: '50%',
+    alignItems: 'left',
     [theme.breakpoints.up('md')]: {
       width: 'auto',
+      alignItems: 'center',
     },
   },
-  safetyLabel: {
+  tooltipLabel: {
     display: 'flex',
     alignItems: 'center',
   },
@@ -194,11 +208,8 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
-  safetyScoreExplainerHolder: {
+  tooltipHolder: {
     marginLeft: theme.spacing(0.5),
-  },
-  apyHolder: {
-    textAlign: 'center',
   },
   withHasDeposit: {
     '& $apyContainer': {
@@ -206,9 +217,10 @@ const styles = theme => ({
     },
   },
   withMuted: {
-    background: 'rgba(48, 53, 92, 0.4)',
+    background: '#14182B',
+    border: '2px solid #762C2C',
     '&:hover': {
-      background: 'rgba(48, 53, 92, 0.4)',
+      background: '#14182B',
     },
     '&.hasDeposit': {
       background: 'rgba(48, 53, 92, 0.4)',
