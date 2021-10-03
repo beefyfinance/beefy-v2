@@ -13,7 +13,6 @@ import {
   Hidden,
   Drawer,
   Box,
-  Grid,
   Container,
   Typography,
   Divider,
@@ -50,8 +49,9 @@ const Header = ({ isNightMode, setNightMode }) => {
   }, [dispatch, walletReducer.web3modal]);
 
   const navLinks = [
-    { title: t('Header-Home'), path: 'https://beefy.finance' },
     { title: t('Header-Explore'), path: '/' },
+    { title: t('Header-Vote'), path: 'https://vote.beefy.finance/' },
+    { title: t('Header-Stats'), path: 'https://dashboard.beefy.finance/' },
     { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
   ];
 
@@ -123,10 +123,10 @@ const Header = ({ isNightMode, setNightMode }) => {
             <Box className={classes.flex}>
               <Hidden mdDown>
                 <BifiPrice />
-                <Box ml={2}>
+                <Box>
                   <LanguageDropdown />
                 </Box>
-                <Box mx={2}>
+                <Box>
                   <SimpleDropdown
                     noBorder={true}
                     chainLogos={true}
