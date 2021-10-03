@@ -154,16 +154,16 @@ const Boost = () => {
     let poolPercentage = 0;
     let rewards = 0;
 
-    if (wallet.address && !isEmpty(balance.tokens[item.token])) {
+    if (wallet.address && !isEmpty(balance.tokens[item.network][item.token])) {
       amount = byDecimals(
-        new BigNumber(balance.tokens[item.token].balance),
+        new BigNumber(balance.tokens[item.network][item.token].balance),
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(
         new BigNumber(balance.tokens[item.token + 'Boost'].balance),
         item.tokenDecimals
       ).toFixed(8);
-      approved = balance.tokens[item.token].allowance[item.earnContractAddress];
+      approved = balance.tokens[item.network][item.token].allowance[item.earnContractAddress];
 
       if (!isEmpty(balance.rewards[item.earnedToken])) {
         rewards = byDecimals(

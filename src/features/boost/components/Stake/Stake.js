@@ -110,9 +110,9 @@ const Stake = ({
     let approved = 0;
     let deposited = 0;
 
-    if (wallet.address && !isEmpty(balance.tokens[item.token])) {
+    if (wallet.address && !isEmpty(balance.tokens[item.network][item.token])) {
       amount = byDecimals(
-        new BigNumber(balance.tokens[item.token].balance),
+        new BigNumber(balance.tokens[item.network][item.token].balance),
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(

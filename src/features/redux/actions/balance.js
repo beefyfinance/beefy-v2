@@ -64,25 +64,22 @@ const getBalances = async (items, state, dispatch) => {
     }
   }
 
-  let response = [];
-
-  for (let key in multicall) {
-    const resp = await multicall[key].all([calls[key]]);
-    response = [...response, ...resp[0]];
-  }
-
   const tokens = { ...state.balanceReducer.tokens };
 
-  for (let index in response) {
-    const item = response[index];
+  for (let key in multicall) {
+    const response = (await multicall[key].all([calls[key]]))[0];
 
-    if (!isEmpty(item.amount)) {
-      tokens[item.token].balance = item.amount;
-      tokens[item.token].address = item.address;
-    }
+    for (let index in response) {
+      const item = response[index];
 
-    if (!isEmpty(item.allowance)) {
-      tokens[item.token].allowance = { [item.spender]: parseInt(item.allowance) };
+      if (!isEmpty(item.amount)) {
+        tokens[key][item.token].balance = item.amount;
+        tokens[key][item.token].address = item.address;
+      }
+
+      if (!isEmpty(item.allowance)) {
+        tokens[key][item.token].allowance = { [item.spender]: parseInt(item.allowance) };
+      }
     }
   }
 

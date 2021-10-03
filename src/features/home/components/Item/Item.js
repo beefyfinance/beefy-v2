@@ -21,7 +21,7 @@ function Item({ id }) {
   const { t } = useTranslation();
   const history = useHistory();
   const earnedTokenBalance = useSelector(
-    state => state.balanceReducer.tokens[item.earnedToken].balance
+    state => state.balanceReducer.tokens[item.network][item.earnedToken].balance
   );
   const hasDeposit = useMemo(
     () => earnedTokenBalance && earnedTokenBalance !== '0',

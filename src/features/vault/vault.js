@@ -108,7 +108,7 @@ const Vault = () => {
 
   React.useEffect(() => {
     if (item && wallet.address) {
-      dispatch(reduxActions.balance.fetchBalances(item));
+      dispatch(reduxActions.balance.fetchBalances());
     }
   }, [dispatch, item, wallet.address]);
 
@@ -116,7 +116,7 @@ const Vault = () => {
     if (item) {
       setInterval(() => {
         dispatch(reduxActions.vault.fetchPools(item));
-        dispatch(reduxActions.balance.fetchBalances(item));
+        dispatch(reduxActions.balance.fetchBalances());
       }, 60000);
     }
   }, [item, dispatch]);
