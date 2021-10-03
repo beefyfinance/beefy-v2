@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { useTranslation } from 'react-i18next';
 import {
@@ -19,7 +19,7 @@ import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
 import { Search } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+import ReactSiema from 'react-siema';
 
 const useStyles = makeStyles(styles);
 
@@ -42,24 +42,52 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
     [t]
   );
 
+  var options;
+  if (window.innerWidth <= 760) {
+    options = {
+      perPage: 2.5,
+    };
+  } else {
+    options = {
+      perPage: 5,
+    };
+  }
+
+  const handleResize = () => {
+    if (window.innerWidth < 760) {
+      options.perPage = 2.5;
+    } else {
+      options.perPage = 5;
+    }
+  };
+
+  // create an event listener
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+  });
+
   return (
     <Grid container spacing={2} className={classes.categories}>
       <Grid item xs={12}>
         <Typography variant={'h4'}>{t('Filter-Categories')}</Typography>
       </Grid>
-      {Object.entries(labels).map(([key, label]) => (
-        <Grid item xs key={key}>
-          <Button
-            className={category === key ? classes.selected : classes[key]}
-            fullWidth={true}
-            disabled={category === key}
-            onClick={() => handleChange('category', key)}
-          >
-            <Typography className={classes.text}>{label}</Typography>
-            {category === key ? <ArrowDropDownIcon /> : ''}
-          </Button>
-        </Grid>
-      ))}
+      <Grid item xs={12} className={classes.filtersSlider}>
+        <ReactSiema {...options}>
+          {Object.entries(labels).map(([key, label]) => (
+            <Grid item xs key={key} className={classes.filterItem}>
+              <Button
+                className={category === key ? classes.selected : classes[key]}
+                fullWidth={true}
+                disabled={category === key}
+                onClick={() => handleChange('category', key)}
+              >
+                <Typography className={classes.text}>{label}</Typography>
+                {category === key ? <ArrowDropDownIcon /> : ''}
+              </Button>
+            </Grid>
+          ))}
+        </ReactSiema>
+      </Grid>
     </Grid>
   );
 });

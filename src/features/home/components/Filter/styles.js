@@ -1,6 +1,6 @@
 const styles = theme => ({
   categories: {
-    paddingBottom: '40px',
+    paddingBottom: '20px',
     '& .MuiTypography-h4': {
       textTransform: 'uppercase',
       fontSize: '14px',
@@ -11,7 +11,7 @@ const styles = theme => ({
     '& .MuiButton-root': {
       height: '48px',
       borderRadius: '8px',
-      margin: '0 8px',
+      margin: '0',
       backgroundBlendMode: 'soft-light, normal',
       '&:hover': {
         '& .MuiTypography-root': {
@@ -94,12 +94,15 @@ const styles = theme => ({
       width: 250,
     },
     [theme.breakpoints.up('md')]: {
-      width: 375,
+      width: 370,
     },
     [theme.breakpoints.down('sm')]: {
       width: 200,
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(775)]: {
+      width: 150,
+    },
+    [theme.breakpoints.down(725)]: {
       width: '100%',
     },
   },
@@ -143,7 +146,7 @@ const styles = theme => ({
       borderColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(725)]: {
       display: 'flex',
       width: '40%',
       margin: '0 0 18px 0',
@@ -174,6 +177,7 @@ const styles = theme => ({
   },
   searchInput: {
     borderRadius: 30,
+    height: '44px',
     position: 'relative',
     color: '#484F7F',
     '& .MuiOutlinedInput-root': {
@@ -199,7 +203,7 @@ const styles = theme => ({
     '& .MuiInputBase-root': {
       height: '100%',
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(725)]: {
       width: '100%',
     },
   },
@@ -212,6 +216,8 @@ const styles = theme => ({
     color: '#484F7F',
     fontWeight: 'bold',
     marginLeft: '-4rem',
+    position: 'absolute',
+    padding: '10px',
     '&:hover': {
       background: 'none',
     },
@@ -239,7 +245,7 @@ const styles = theme => ({
   },
   filtersContainer: {
     display: 'flex',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(725)]: {
       flexWrap: 'wrap',
       boxSizing: 'border-box',
     },
@@ -247,7 +253,7 @@ const styles = theme => ({
   searchContainer: {
     alignItem: 'center',
     flexGrow: 1,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(725)]: {
       flexGrow: 0,
       width: '100%',
       display: 'flex',
@@ -259,7 +265,8 @@ const styles = theme => ({
     backgroundColor: '#14182B',
     borderRadius: '20px',
     marginRight: '10px',
-    [theme.breakpoints.down('xs')]: {
+    width: '196px',
+    [theme.breakpoints.down(725)]: {
       width: '100%',
       marginRight: '0',
       order: '5',
@@ -267,27 +274,29 @@ const styles = theme => ({
     },
   },
   toggleSwitchButton: {
-    height: '44px',
+    height: '40px',
     borderRadius: '20px',
-    padding: '0 16px',
+    padding: '0 14px',
+    margin: '2px 2px',
     textTransform: 'none',
     fontSize: '16px',
     color: '#484F7F',
-    [theme.breakpoints.down('xs')]: {
-      width: '50%',
+    [theme.breakpoints.down(725)]: {
+      width: 'calc(50% - 4px)',
     },
   },
   toggleSwitchButtonActive: {
-    height: '44px',
+    height: '40px',
     borderRadius: '20px',
-    padding: '0 16px',
+    padding: '0 14px',
+    margin: '2px 2px',
     textTransform: 'none',
     fontSize: '16px',
     color: '#FFFFFF',
     backgroundColor: '#434B7A !important',
     fontWeight: '600',
-    [theme.breakpoints.down('xs')]: {
-      width: '50%',
+    [theme.breakpoints.down(725)]: {
+      width: 'calc(50% - 4px)',
     },
   },
   filterIcon: {
@@ -299,9 +308,9 @@ const styles = theme => ({
       width: '100%',
     },
     [theme.breakpoints.up('sm')]: {
-      width: '210px',
+      width: '170px',
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(725)]: {
       width: '60%',
       display: 'flex',
       margin: '0 0 18px 0',
@@ -309,9 +318,18 @@ const styles = theme => ({
     },
   },
   blockBtn: {
-    [theme.breakpoints.down('xs')]: {
-      width: 300,
+    [theme.breakpoints.down(725)]: {
+      width: '100%',
     },
+  },
+  filtersSlider: {
+    '& div': {
+      height: '60px',
+    },
+  },
+  filterItem: {
+    margin: '0px 4px',
+    width: 'calc(20% - 8px) !important',
   },
 });
 
