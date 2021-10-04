@@ -104,7 +104,7 @@ export const config = {
       rpcUrls: ['https://rpc-mainnet.matic.network'],
       blockExplorerUrls: ['https://polygonscan.com/'],
     },
-    stableCoins: ['USDC', 'USDT', 'maUSDC'],
+    stableCoins: ['USDC', 'USDT', 'maUSDC', 'DAI', 'IRON', 'MAI', 'FRAX', 'rUSD', 'UST', 'WUSD'],
   },
   fantom: {
     name: 'Fantom',
