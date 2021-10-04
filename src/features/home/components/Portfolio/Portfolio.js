@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import BigNumber from 'bignumber.js';
-import { Box, Button, Container, makeStyles, Typography } from '@material-ui/core';
-import { ExpandLess, ExpandMore, Visibility, VisibilityOff } from '@material-ui/icons';
+import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
-import AnimateHeight from 'react-animate-height';
-import { Alert } from '@material-ui/lab';
-import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
-
-import buildChartData from 'helpers/buildChartData';
-import PortfolioItem from './PortfolioItem';
 import Stats from './Stats';
-import { notifyResize } from '../../home';
+import VaultsStats from './VaultsStats';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
 const Portfolio = () => {
-  const location = useLocation();
   const classes = useStyles();
-  const [portfolioOpen, setPortfolioOpen] = useState(location.portfolioOpen);
   const [hideBalance, setHideBalance] = useState(() =>
     localStorage.getItem('hideBalance') === 'true' ? true : false
   );
@@ -92,12 +84,11 @@ const Portfolio = () => {
   return (
     <Box className={classes.portfolio}>
       <Container maxWidth="lg">
-        <Box
-          display={'flex'}
-          className={[portfolioOpen ? classes.opened : '', classes.mobileFix].join(' ')}
-        >
-          <Box className={classes.balance}>
-            <Button onClick={updateHideBalance}>
+        <Grid container>
+          <Grid item xs={12} lg={6}>
+            <Typography className={classes.title}>{t('Portfolio-Portfolio')}</Typography>
+            <Stats stats={globalStats} blurred={hideBalance} />
+            <Button className={classes.btnHide} onClick={updateHideBalance}>
               {hideBalance ? (
                 <React.Fragment>
                   <VisibilityOff />
@@ -110,50 +101,16 @@ const Portfolio = () => {
                 </React.Fragment>
               )}
             </Button>
-          </Box>
-          <Box>
-            <Typography className={classes.title}>{t('Portfolio-Portfolio')}</Typography>
-          </Box>
-          <Stats stats={globalStats} blurred={hideBalance} />
-        </Box>
-        <AnimateHeight
-          duration={500}
-          height={portfolioOpen ? 'auto' : 0}
-          onAnimationEnd={notifyResize}
-        >
-          {userVaults.length > 0 ? (
-            <>
-              {userVaults.map(vault => (
-                <Box key={vault.id}>
-                  <PortfolioItem
-                    item={vault}
-                    historicalApy={buildChartData(
-                      pricesReducer.historicalApy,
-                      pricesReducer.apy,
-                      vault.id
-                    )}
-                  />
-                </Box>
-              ))}
-            </>
-          ) : (
-            <Box>
-              <Alert severity="info">No vaults found for this portfolio.</Alert>
+          </Grid>
+          <Grid item xs={12} lg={6}>
+            <Box className={classes.vaults}>
+              <Typography className={classes.title}>{t('Vaults-Title')}</Typography>
+              <Box>
+                <VaultsStats />
+              </Box>
             </Box>
-          )}
-        </AnimateHeight>
-        <Box display="flex">
-          <Box m="auto">
-            <Button
-              className={classes.toggler}
-              onClick={() => {
-                setPortfolioOpen(!portfolioOpen);
-              }}
-            >
-              {portfolioOpen ? <ExpandLess /> : <ExpandMore />}
-            </Button>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );

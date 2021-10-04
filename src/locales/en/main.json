@@ -1,9 +1,12 @@
 {
   "APY": "APY",
   "TVL": "TVL",
+  "BuyBack": "BIFI Buyback",
   "DEPOSITED": "DEPOSITED",
   "Header-Home": "Home",
   "Header-Explore": "Explore",
+  "Header-Vote": "Vote",
+  "Header-Stats": "Stats",
   "Header-Docs": "Docs",
   "Portfolio-Portfolio": "Portfolio",
   "Portfolio-BalanceShow": "Show Balance",
