@@ -19,9 +19,6 @@ const styles = theme => ({
     lineHeight: '24px',
     textAlign: 'center',
     letterSpacing: '-0.1px',
-    [theme.breakpoints.up('lg')]: {
-      fontSize: '24px',
-    },
   },
   bar: {
     backgroundColor: theme.palette.type === 'dark' ? '#424866' : '#A69885',

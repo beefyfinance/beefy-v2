@@ -34,6 +34,18 @@ const styles = theme => ({
   vaultsList: {
     marginBottom: '20px',
   },
+  row: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    boxSizing: 'border-box',
+  },
+  vaultContainer: {
+    marginTop: '48px',
+  },
 });
 
 export default styles;
