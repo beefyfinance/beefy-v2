@@ -1,6 +1,10 @@
 const styles = theme => ({
   stats: {
     display: 'flex',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'flex-start',
+    },
   },
   stat: {
     paddingTop: theme.spacing(1),
@@ -19,9 +23,6 @@ const styles = theme => ({
     lineHeight: '24px',
     display: 'inline-flex',
     color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
-  },
-  blurred: {
-    filter: 'blur(.5rem)',
   },
   obscured: {
     color: '#424866',
