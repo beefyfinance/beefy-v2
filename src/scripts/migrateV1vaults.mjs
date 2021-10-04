@@ -8,7 +8,7 @@ Script should be run from root "beefy-v2" directory with the "beefy-app" sources
 _sibling_ directory. A working Node.js environment off the beefy-v2 directory is 
 assumed. Linux command line to invoke the script:
 
-node src/helpers/migrateV1vaults.mjs
+node src/scripts/migrateV1vaults.mjs
 
 Progress will be printed to standard output and standard error.
 
@@ -21,9 +21,11 @@ To assist the maintainer in manually updating these v2 aspects, the script creat
 output file with an array-listing of the IDs of the v1 vaults it has added newly to 
 the v2 environment: vaultsAddedFromV1.txt. The file is placed in directory from which 
 the command is run. It makes sense for the maintainer to delete this file before pushing 
-the migration updates into the staging source repository.
+the migration updates into the staging repository.
 
-Development: v0.1 AllTrades
+Development
++ v0.1.0.1 AllTrades: moved script into a new src/script, incorporated Arbitrum
++ v0.1 AllTrades
 **********/
 
 import * as FS from 'fs';
@@ -33,7 +35,8 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 										{S_SRC: "fantom"}, 
 										{S_SRC: "polygon"},
 										{S_SRC: "avalanche", S_TRGT_ALIAS: "avax"},
-										{S_SRC: "harmony"}];
+										{S_SRC: "harmony"},
+										{S_SRC: "arbitrum"}];
 const mS_PROPNM_ID = "id", mS_PROPNM_ASSTS = "assets", mS_PROPNM_STRAT_TYP = "stratType", 
 			mS_PROPNM_CHAIN = "network", mS_PROPNM_LOGO = "logo", 
 			mAS_STRAT_TYP = [ "", "SingleStake", "StratLP", "StratMultiLP", "Vamp"];

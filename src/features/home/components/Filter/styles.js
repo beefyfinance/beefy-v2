@@ -1,6 +1,6 @@
 const styles = theme => ({
   categories: {
-    paddingBottom: '40px',
+    paddingBottom: '20px',
     '& .MuiTypography-h4': {
       textTransform: 'uppercase',
       fontSize: '14px',
@@ -9,8 +9,9 @@ const styles = theme => ({
       letterSpacing: '1px',
     },
     '& .MuiButton-root': {
-      height: '110px',
-      borderRadius: '15px',
+      height: '48px',
+      borderRadius: '8px',
+      margin: '0',
       backgroundBlendMode: 'soft-light, normal',
       '&:hover': {
         '& .MuiTypography-root': {
@@ -36,7 +37,6 @@ const styles = theme => ({
     height: '24px',
     textAlign: 'center',
     textTransform: 'none', //'capitalize' no good due to localization
-    opacity: 0.7,
     transition: 'opacity 0.2s ease-in-out',
   },
   selected: {
@@ -57,31 +57,31 @@ const styles = theme => ({
     },
   },
   stable: {
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
-    backgroundColor: '#4771D1',
+    background: '#3D8F61',
+    backgroundColor: '#3D8F61',
     '&:hover': {
-      backgroundColor: '#628be8',
+      backgroundColor: '#5EBA87',
     },
   },
   bluechip: {
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
-    backgroundColor: '#073FAB',
+    background: '#3E5FA7',
+    backgroundColor: '#3E5FA7',
     '&:hover': {
-      backgroundColor: '#1054d4',
+      backgroundColor: '#6A88C8',
     },
   },
   beefy: {
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
-    backgroundColor: '#9D57F7',
+    background: '#5C499D',
+    backgroundColor: '#5C499D',
     '&:hover': {
-      backgroundColor: '#b576ff',
+      backgroundColor: '#8574BE',
     },
   },
   low: {
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%)',
-    backgroundColor: '#2E90A5',
+    background: '#639CBF',
+    backgroundColor: '#639CBF',
     '&:hover': {
-      backgroundColor: '#3eabc2',
+      backgroundColor: '#76A7C6',
     },
   },
   input: {
@@ -94,10 +94,16 @@ const styles = theme => ({
       width: 250,
     },
     [theme.breakpoints.up('md')]: {
-      width: 375,
+      width: 370,
     },
     [theme.breakpoints.down('sm')]: {
-      width: 300,
+      width: 200,
+    },
+    [theme.breakpoints.down(775)]: {
+      width: 150,
+    },
+    [theme.breakpoints.down(725)]: {
+      width: '100%',
     },
   },
   filters: {
@@ -140,17 +146,17 @@ const styles = theme => ({
       borderColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down(725)]: {
       display: 'flex',
-      justifyContent: 'center',
-      margin: '10px 0',
+      width: '40%',
+      margin: '0 0 18px 0',
     },
   },
   lblShowing: {
     textAlign: 'right',
     minWidth: 100,
     flexGrow: 1,
-    [theme.breakpoints.up('sm')]: { minWidth: 200 },
+    [theme.breakpoints.up('xs')]: { minWidth: 200 },
   },
   btnReset: {
     color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
@@ -165,12 +171,14 @@ const styles = theme => ({
       borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
       backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       width: 300,
     },
   },
   searchInput: {
     borderRadius: 30,
+    height: '44px',
+    position: 'relative',
     color: '#484F7F',
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -192,12 +200,24 @@ const styles = theme => ({
         color: '#6B7199',
       },
     },
+    '& .MuiInputBase-root': {
+      height: '100%',
+    },
+    [theme.breakpoints.down(725)]: {
+      width: '100%',
+    },
+  },
+  iconSearch: {
+    marginLeft: '-2rem',
+    marginTop: '8.5px',
   },
   btnClearSearch: {
     borderRadius: 30,
     color: '#484F7F',
     fontWeight: 'bold',
     marginLeft: '-4rem',
+    position: 'absolute',
+    padding: '10px',
     '&:hover': {
       background: 'none',
     },
@@ -212,48 +232,104 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     flexGrow: 1,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       justifyContent: 'center',
     },
   },
   selector: {
     marginRight: theme.spacing(1),
     marginTop: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       marginRight: 0,
     },
   },
   filtersContainer: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
+    [theme.breakpoints.down(725)]: {
+      flexWrap: 'wrap',
+      boxSizing: 'border-box',
     },
   },
   searchContainer: {
-    display: 'flex',
     alignItem: 'center',
     flexGrow: 1,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down(725)]: {
       flexGrow: 0,
       width: '100%',
       display: 'flex',
-      justifyContent: 'center',
-      margin: '10px 0',
+      justifyContent: 'normal',
+      margin: '0 0 18px 0',
     },
+  },
+  toggleSwitchContainer: {
+    backgroundColor: '#14182B',
+    borderRadius: '20px',
+    marginRight: '10px',
+    width: '196px',
+    [theme.breakpoints.down(725)]: {
+      width: '100%',
+      marginRight: '0',
+      order: '5',
+      margin: '0 0 18px 0',
+    },
+  },
+  toggleSwitchButton: {
+    height: '40px',
+    borderRadius: '20px',
+    padding: '0 14px',
+    margin: '2px 2px',
+    textTransform: 'none',
+    fontSize: '16px',
+    color: '#484F7F',
+    [theme.breakpoints.down(725)]: {
+      width: 'calc(50% - 4px)',
+    },
+  },
+  toggleSwitchButtonActive: {
+    height: '40px',
+    borderRadius: '20px',
+    padding: '0 14px',
+    margin: '2px 2px',
+    textTransform: 'none',
+    fontSize: '16px',
+    color: '#FFFFFF',
+    backgroundColor: '#434B7A !important',
+    fontWeight: '600',
+    [theme.breakpoints.down(725)]: {
+      width: 'calc(50% - 4px)',
+    },
+  },
+  filterIcon: {
+    marginRight: '8px',
   },
   sortByContainer: {
     marginRight: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
+    '& .MuiBox-root': {
       width: '100%',
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '170px',
+    },
+    [theme.breakpoints.down(725)]: {
+      width: '60%',
       display: 'flex',
-      justifyContent: 'center',
-      margin: '10px 0',
+      margin: '0 0 18px 0',
+      paddingRight: '16px',
     },
   },
   blockBtn: {
-    [theme.breakpoints.down('sm')]: {
-      width: 300,
+    [theme.breakpoints.down(725)]: {
+      width: '100%',
     },
+  },
+  filtersSlider: {
+    '& div': {
+      height: '60px',
+    },
+  },
+  filterItem: {
+    margin: '0px 4px',
+    width: 'calc(20% - 8px) !important',
   },
 });
 
