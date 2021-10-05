@@ -20,6 +20,7 @@ import StrategyCard from 'features/vault/components/StrategyCard';
 import SafetyCard from 'features/vault/components/SafetyCard';
 import Graph from 'features/vault/components/Graph';
 import { getEligibleZap } from 'helpers/zap';
+import BigNumber from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 
@@ -40,8 +41,8 @@ const Vault = () => {
   const [dw, setDw] = React.useState('deposit');
 
   const [formData, setFormData] = React.useState({
-    deposit: { amount: '', max: false, token: null },
-    withdraw: { amount: '', max: false, token: null },
+    deposit: { amount: new BigNumber(0), max: false, token: null },
+    withdraw: { amount: new BigNumber(0), max: false, token: null },
     zap: null,
   });
 
@@ -50,12 +51,12 @@ const Vault = () => {
       ...formData,
       deposit: {
         ...formData.deposit,
-        amount: '',
+        amount: new BigNumber(0),
         max: false,
       },
       withdraw: {
         ...formData.withdraw,
-        amount: '',
+        amount: new BigNumber(0),
         max: false,
       },
     });

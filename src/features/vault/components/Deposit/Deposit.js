@@ -40,9 +40,6 @@ BigNumber.prototype.significant = function (digits) {
   if (wholes.length >= digits) {
     return wholes;
   }
-  if (decimals < 10000) {
-    return '0'; // Show unprocessible amounts as 0
-  }
   const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
   return `${wholes}.${decimals.match(pattern)[0]}`;
 };
@@ -66,7 +63,10 @@ const Deposit = ({
   }));
   const t = useTranslation().t;
 
-  const [state, setState] = React.useState({ balance: 0, allowance: 0 });
+  const [state, setState] = React.useState({
+    balance: new BigNumber(0),
+    allowance: new BigNumber(0),
+  });
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
@@ -76,18 +76,24 @@ const Deposit = ({
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleInput = val => {
-    const value =
-      parseFloat(val) > state.balance
-        ? state.balance
-        : parseFloat(val) < 0
-        ? 0
-        : stripExtraDecimals(val);
+    let max = false;
+    let value = new BigNumber(val);
+
+    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
+      value = new BigNumber(0);
+    }
+
+    if (value.isGreaterThanOrEqualTo(state.balance)) {
+      value = state.balance;
+      max = true;
+    }
+
     setFormData({
       ...formData,
       deposit: {
         ...formData.deposit,
         amount: value,
-        max: new BigNumber(value).minus(state.balance).toNumber() === 0,
+        max: max,
       },
     });
   };
@@ -97,7 +103,7 @@ const Deposit = ({
       ...formData,
       deposit: {
         ...formData.deposit,
-        amount: '',
+        amount: new BigNumber(0),
         max: false,
         token: tokenSymbol,
       },
@@ -120,7 +126,10 @@ const Deposit = ({
         dispatch(reduxActions.wallet.setNetwork(item.network));
         return false;
       }
-      if (!state.allowance) {
+
+      const amount = convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals);
+
+      if (state.allowance.isLessThan(amount)) {
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),
@@ -144,7 +153,7 @@ const Deposit = ({
             reduxActions.wallet.deposit(
               item.network,
               item.earnContractAddress,
-              convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals),
+              amount,
               formData.deposit.max
             )
           ),
@@ -162,7 +171,7 @@ const Deposit = ({
   };
 
   React.useEffect(() => {
-    let amount = new BigNumber(0);
+    let amount = 0;
     let approved = 0;
     if (wallet.address && !isEmpty(tokens[formData.deposit.token])) {
       amount = byDecimals(
@@ -175,7 +184,10 @@ const Deposit = ({
         approved = tokens[formData.deposit.token].allowance[item.earnContractAddress];
       }
     }
-    setState({ balance: amount, allowance: approved });
+    setState({
+      balance: new BigNumber(amount),
+      allowance: new BigNumber(approved),
+    });
   }, [wallet.address, item, balance, formData.deposit.token]);
 
   React.useEffect(() => {
@@ -320,7 +332,7 @@ const Deposit = ({
             </Box>
             <InputBase
               placeholder="0.00"
-              value={formData.deposit.amount}
+              value={formData.deposit.amount.significant(8)}
               onChange={e => handleInput(e.target.value)}
             />
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
@@ -346,7 +358,7 @@ const Deposit = ({
                 onClick={handleDeposit}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                disabled={formData.deposit.amount <= 0}
+                disabled={formData.deposit.amount.isLessThanOrEqualTo(0)}
               >
                 {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
               </Button>
