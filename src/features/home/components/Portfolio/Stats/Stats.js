@@ -21,27 +21,25 @@ const Stats = ({ stats, blurred }) => {
     <span className={blurred ? classes.blurred : ''}>{value}</span>
   );
 
-  const valueClassName = `${classes.value} ${empty ? classes.obscured : ''}`;
-
   const formatStat = value => (empty ? '0' : formatUsd(value));
 
   return (
     <Box className={classes.stats}>
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('Portfolio-Deposited')}</Typography>
-        <Typography className={valueClassName}>
+        <Typography className={classes.value}>
           <BlurredText value={blurred ? `$100` : formatStat(stats.deposited)} />
         </Typography>
       </Box>
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('Portfolio-YieldMnth')}</Typography>
-        <Typography className={valueClassName}>
+        <Typography className={classes.value}>
           <BlurredText value={blurred ? `$100` : formatStat(stats.monthly)} />
         </Typography>
       </Box>
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('Portfolio-YieldDay')}</Typography>
-        <Typography className={valueClassName}>
+        <Typography className={classes.value}>
           <BlurredText value={blurred ? `$100` : formatStat(stats.daily)} />
         </Typography>
       </Box>
