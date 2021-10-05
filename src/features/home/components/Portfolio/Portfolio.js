@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import BigNumber from 'bignumber.js';
 import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Stats from './Stats';
 import VaultsStats from './VaultsStats';
 import styles from './styles';
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
 const useStyles = makeStyles(styles);
 
@@ -91,12 +92,12 @@ const Portfolio = () => {
             <Button className={classes.btnHide} onClick={updateHideBalance}>
               {hideBalance ? (
                 <React.Fragment>
-                  <VisibilityOff />
+                  <VisibilityOutlinedIcon />
                   {t('Portfolio-BalanceShow')}
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <Visibility />
+                  <VisibilityOffOutlinedIcon />
                   {t('Portfolio-BalanceHide')}
                 </React.Fragment>
               )}

@@ -7,9 +7,9 @@ const styles = theme => ({
     },
   },
   stat: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-    marginRight: theme.spacing(2),
+    paddingTop: 0,
+    paddingBottom: 0,
+    marginRight: theme.spacing(4),
   },
   value: {
     fontSize: '24px',
@@ -18,9 +18,11 @@ const styles = theme => ({
     color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
   },
   label: {
-    fontSize: '18px',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+    fontSize: '14px',
     fontWeight: '600',
-    lineHeight: '24px',
+    lineHeight: '18px',
     display: 'inline-flex',
     color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
   },
