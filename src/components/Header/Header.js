@@ -7,7 +7,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  List,
   Hidden,
   Drawer,
   Box,
@@ -47,7 +46,6 @@ const Header = ({ isNightMode, setNightMode }) => {
   }, [dispatch, walletReducer.web3modal]);
 
   const navLinks = [
-    { title: t('Header-Explore'), path: '/' },
     { title: t('Header-Vote'), path: 'https://vote.beefy.finance/' },
     { title: t('Header-Stats'), path: 'https://dashboard.beefy.finance/' },
     { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
@@ -56,16 +54,18 @@ const Header = ({ isNightMode, setNightMode }) => {
   const NavLinks = () => {
     return (
       <>
+        <NavLink
+          activeClassName={classes.active}
+          className={classes.navLink}
+          key={'explore'}
+          to="/"
+        >
+          {t('Header-Explore')}
+        </NavLink>
         {navLinks.map(({ title, path }) => (
-          <NavLink
-            exact
-            activeClassName={classes.active}
-            key={title}
-            className={classes.navLink}
-            path={path}
-          >
+          <a target="_blank" rel="noreferrer" className={classes.navLink} href={path}>
             {title}
-          </NavLink>
+          </a>
         ))}
       </>
     );
@@ -119,11 +119,7 @@ const Header = ({ isNightMode, setNightMode }) => {
             </Box>
             <Hidden mdDown>
               <Box className={classes.flex} sx={{ flexGrow: 1 }}>
-                {navLinks.map(link => (
-                  <Link className={classes.navLink} key={link.title} to={link.path}>
-                    {link.title}
-                  </Link>
-                ))}
+                <NavLinks />
               </Box>
             </Hidden>
             <Box className={classes.flex}>
@@ -166,9 +162,9 @@ const Header = ({ isNightMode, setNightMode }) => {
                   onKeyDown={handleDrawerToggle}
                   flexGrow={1}
                 >
-                  <List component="nav">
+                  <Box mt={2} className={classes.navMobile}>
                     <NavLinks />
-                  </List>
+                  </Box>
                 </Box>
                 <Divider />
                 <Box className={classes.drawerBlack}>

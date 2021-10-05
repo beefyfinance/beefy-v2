@@ -62,8 +62,12 @@ const styles = theme => ({
       },
     },
     [theme.breakpoints.down('md')]: {
-      margin: 0,
+      margin: '8px',
     },
+  },
+  navMobile: {
+    display: 'flex',
+    flexDirection: 'column',
   },
   active: {
     color: '#fff',

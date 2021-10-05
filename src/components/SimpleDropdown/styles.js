@@ -2,6 +2,9 @@ const styles = theme => ({
   select: {
     height: '44px',
     marginLeft: '24px',
+    [theme.breakpoints.down('lg')]: {
+      marginLeft: 0,
+    },
     '& .MuiSelect-select': {
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       fontWeight: '600',
