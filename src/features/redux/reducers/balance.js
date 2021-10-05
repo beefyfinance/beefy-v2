@@ -74,8 +74,6 @@ const initialTokens = () => {
     }
   }
 
-  console.log(tokens);
-
   return tokens;
 };
 

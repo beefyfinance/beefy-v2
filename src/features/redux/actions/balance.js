@@ -70,7 +70,10 @@ const getBalances = async (state, dispatch) => {
       }
 
       if (!isEmpty(item.allowance)) {
-        tokens[key][item.token].allowance = { [item.spender]: parseInt(item.allowance) };
+        tokens[key][item.token].allowance = {
+          ...tokens[key][item.token].allowance,
+          [item.spender]: item.allowance,
+        };
       }
     }
   }
@@ -148,7 +151,7 @@ const getBoostBalances = async (items, state, dispatch) => {
     if (!isEmpty(item.allowance)) {
       tokens[item.token].allowance = {
         ...tokens[item.token].allowance,
-        [item.spender]: parseInt(item.allowance),
+        [item.spender]: item.allowance,
       };
     }
   }
@@ -212,7 +215,10 @@ const getBoostRewards = async (items, state, dispatch) => {
     }
 
     if (!isEmpty(item.allowance)) {
-      tokens[item.token].allowance = { [item.spender]: parseInt(item.allowance) };
+      tokens[item.token].allowance = {
+        ...tokens[item.token].allowance,
+        [item.spender]: item.allowance,
+      };
     }
   }
 
