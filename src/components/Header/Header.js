@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import reduxActions from 'features/redux/actions';
 import {
@@ -8,8 +8,6 @@ import {
   Toolbar,
   IconButton,
   List,
-  ListItem,
-  ListItemText,
   Hidden,
   Drawer,
   Box,
@@ -59,16 +57,15 @@ const Header = ({ isNightMode, setNightMode }) => {
     return (
       <>
         {navLinks.map(({ title, path }) => (
-          <ListItem
+          <NavLink
+            exact
+            activeClassName={classes.active}
             key={title}
-            button
-            onClick={() => {
-              window.location.href = path;
-            }}
             className={classes.navLink}
+            path={path}
           >
-            <ListItemText primary={title} />
-          </ListItem>
+            {title}
+          </NavLink>
         ))}
       </>
     );
@@ -84,8 +81,17 @@ const Header = ({ isNightMode, setNightMode }) => {
 
     return (
       <Box className={classes.bifiPrice}>
-        <img alt="BIFI" src={require('images/BIFI-TOKEN.svg').default} />
-        <Typography noWrap={true}>{`$${price ? price : 0}`}</Typography>
+        <a
+          className={classes.bifiPrice}
+          style={{ textDecoration: 'none' }}
+          href="https://app.1inch.io/#/56/swap/BNB/BIFI"
+          target="_blank"
+          without
+          rel="noreferrer"
+        >
+          <img alt="BIFI" src={require('images/BIFI-TOKEN.svg').default} />
+          <Typography noWrap={true}>{`$${price ? price : 0}`}</Typography>
+        </a>
       </Box>
     );
   });

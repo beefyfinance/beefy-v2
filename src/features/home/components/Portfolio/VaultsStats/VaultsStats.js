@@ -36,7 +36,7 @@ const Stats = ({ stats, blurred }) => {
           <ValueText value={data[4]} />
         </Typography>
       </Box>
-      <Box className={classes.stat}>
+      <Box>
         <Typography className={classes.label}>{t('BuyBack')}</Typography>
         <Typography>
           <ValueText value={buyback ? `$${buyback}` : 0} />

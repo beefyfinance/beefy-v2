@@ -1,10 +1,11 @@
 const styles = theme => ({
   select: {
     height: '44px',
+    marginLeft: '24px',
     '& .MuiSelect-select': {
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       fontWeight: '600',
-      fontSize: 18,
+      fontSize: 16,
       padding: '12px 30px 0px 15px',
       border: props =>
         props.noBorder
