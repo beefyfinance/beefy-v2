@@ -47,13 +47,10 @@ const styles = theme => ({
     textDecoration: 'none',
     textTransform: 'capitalize',
     color: theme.palette.type === 'dark' ? '#6B7199' : '#000000',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    margin: theme.spacing(2),
-    '& .MuiTypography-root': {
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
+    lineHeight: '24px',
+    margin: theme.spacing(3),
     '&:hover': {
       color: 'white',
     },
@@ -68,6 +65,9 @@ const styles = theme => ({
       margin: 0,
     },
   },
+  active: {
+    color: '#fff',
+  },
   bifiPrice: {
     display: 'flex',
     justifyContent: 'center',
@@ -76,12 +76,12 @@ const styles = theme => ({
       justifyContent: 'flex-start',
     },
     '& img': {
-      height: '24px',
+      height: '18px',
       marginRight: '5px',
     },
     '& .MuiTypography-root': {
       fontWeight: '600',
-      fontSize: 18,
+      fontSize: 16,
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
     },
   },

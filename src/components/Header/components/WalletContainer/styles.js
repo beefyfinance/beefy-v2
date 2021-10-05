@@ -6,13 +6,14 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 30,
+    marginLeft: '24px',
     '& .MuiTypography-root': {
       fontWeight: 'bold',
       fontSize: 16,
     },
     '& .MuiGrid-container': {
       flexWrap: 'nowrap',
-      padding: '0px 19px 0px 19px',
+      padding: '8px 24px',
       cursor: 'pointer',
     },
     [theme.breakpoints.up('md')]: {
