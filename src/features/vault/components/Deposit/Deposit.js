@@ -76,8 +76,13 @@ const Deposit = ({
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleInput = val => {
+    const input = val.replace(/[,]+/, '').replace(/[^0-9\.]+/, '');
+
     let max = false;
-    let value = new BigNumber(val);
+    let value = new BigNumber(input).decimalPlaces(
+      tokens[formData.deposit.token].decimals,
+      BigNumber.ROUND_DOWN
+    );
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
       value = new BigNumber(0);
@@ -88,10 +93,18 @@ const Deposit = ({
       max = true;
     }
 
+    const formattedInput = (() => {
+      if (value.isEqualTo(input)) return input;
+      if (input === '') return '';
+      if (input === '.') return `0.`;
+      return value.significant(6);
+    })();
+
     setFormData({
       ...formData,
       deposit: {
         ...formData.deposit,
+        input: formattedInput,
         amount: value,
         max: max,
       },
@@ -103,6 +116,7 @@ const Deposit = ({
       ...formData,
       deposit: {
         ...formData.deposit,
+        input: '',
         amount: new BigNumber(0),
         max: false,
         token: tokenSymbol,
@@ -114,7 +128,12 @@ const Deposit = ({
     if (state.balance > 0) {
       setFormData({
         ...formData,
-        deposit: { ...formData.deposit, amount: state.balance, max: true },
+        deposit: {
+          ...formData.deposit,
+          input: state.balance.significant(6),
+          amount: state.balance,
+          max: true,
+        },
       });
     }
   };
@@ -332,7 +351,7 @@ const Deposit = ({
             </Box>
             <InputBase
               placeholder="0.00"
-              value={formData.deposit.amount.significant(8)}
+              value={formData.deposit.input}
               onChange={e => handleInput(e.target.value)}
             />
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>

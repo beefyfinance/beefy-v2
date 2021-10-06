@@ -41,8 +41,8 @@ const Vault = () => {
   const [dw, setDw] = React.useState('deposit');
 
   const [formData, setFormData] = React.useState({
-    deposit: { amount: new BigNumber(0), max: false, token: null },
-    withdraw: { amount: new BigNumber(0), max: false, token: null },
+    deposit: { input: '', amount: new BigNumber(0), max: false, token: null },
+    withdraw: { input: '', amount: new BigNumber(0), max: false, token: null },
     zap: null,
   });
 
@@ -51,11 +51,13 @@ const Vault = () => {
       ...formData,
       deposit: {
         ...formData.deposit,
+        input: '',
         amount: new BigNumber(0),
         max: false,
       },
       withdraw: {
         ...formData.withdraw,
+        input: '',
         amount: new BigNumber(0),
         max: false,
       },
