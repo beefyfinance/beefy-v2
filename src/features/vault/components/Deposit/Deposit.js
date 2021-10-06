@@ -120,6 +120,7 @@ const Deposit = ({
         amount: new BigNumber(0),
         max: false,
         token: tokenSymbol,
+        isZap: item.token !== tokenSymbol,
       },
     });
   };
@@ -146,7 +147,10 @@ const Deposit = ({
         return false;
       }
 
-      const amount = convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals);
+      const amount = convertAmountToRawNumber(
+        formData.deposit.amount,
+        tokens[formData.deposit.token].decimals
+      );
 
       if (state.allowance.isLessThan(amount)) {
         steps.push({
@@ -156,28 +160,49 @@ const Deposit = ({
             dispatch(
               reduxActions.wallet.approval(
                 item.network,
-                item.tokenAddress,
-                item.earnContractAddress
+                tokens[formData.deposit.token].address,
+                formData.deposit.isZap ? formData.zap.address : item.earnContractAddress
               )
             ),
           pending: false,
         });
       }
 
-      steps.push({
-        step: 'deposit',
-        message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-        action: () =>
-          dispatch(
-            reduxActions.wallet.deposit(
-              item.network,
-              item.earnContractAddress,
-              amount,
-              formData.deposit.max
-            )
-          ),
-        pending: false,
-      });
+      if (true === formData.deposit.isZap) {
+        steps.push({
+          step: 'swap-and-deposit',
+          message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+          action: () =>
+            dispatch(
+              reduxActions.wallet.beefIn(
+                item.earnContractAddress,
+                false, // isETH
+                tokens[formData.deposit.token].address,
+                amount,
+                formData.zap.address,
+                1000 // swapAmountOutMin
+              )
+            ),
+          pending: false,
+        });
+      }
+
+      if (false === formData.deposit.isZap) {
+        steps.push({
+          step: 'deposit',
+          message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+          action: () =>
+            dispatch(
+              reduxActions.wallet.deposit(
+                item.network,
+                item.earnContractAddress,
+                amount,
+                formData.deposit.max
+              )
+            ),
+          pending: false,
+        });
+      }
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
     } //if (wallet.address)
