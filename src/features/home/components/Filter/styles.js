@@ -152,6 +152,11 @@ const styles = theme => ({
       margin: '0 0 18px 0',
     },
   },
+  btnResetContainer: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
   lblShowing: {
     textAlign: 'right',
     minWidth: 100,
@@ -172,7 +177,11 @@ const styles = theme => ({
       backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
     },
     [theme.breakpoints.down('xs')]: {
-      width: 300,
+      width: '100%',
+      margin: '10px 0 0 0',
+    },
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '310px',
     },
   },
   searchInput: {
@@ -208,8 +217,8 @@ const styles = theme => ({
     },
   },
   iconSearch: {
-    marginLeft: '-2rem',
-    marginTop: '8.5px',
+    marginLeft: '-44px',
+    marginTop: '10px',
   },
   btnClearSearch: {
     borderRadius: 30,
@@ -233,7 +242,7 @@ const styles = theme => ({
     flexWrap: 'wrap',
     flexGrow: 1,
     [theme.breakpoints.down('xs')]: {
-      justifyContent: 'center',
+      width: '100%',
     },
   },
   selector: {
@@ -241,6 +250,15 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
     [theme.breakpoints.down('xs')]: {
       marginRight: 0,
+      width: '100%',
+      marginBottom: '8px',
+    },
+    '& .MuiBox-root': {
+      '& .MuiInputBase-root': {
+        [theme.breakpoints.down('sm')]: {
+          width: '100%',
+        },
+      },
     },
   },
   filtersContainer: {
@@ -263,9 +281,9 @@ const styles = theme => ({
   },
   toggleSwitchContainer: {
     backgroundColor: '#14182B',
-    borderRadius: '20px',
+    borderRadius: '22px',
     marginRight: '10px',
-    width: '196px',
+    width: '204px',
     [theme.breakpoints.down(725)]: {
       width: '100%',
       marginRight: '0',
@@ -276,7 +294,7 @@ const styles = theme => ({
   toggleSwitchButton: {
     height: '40px',
     borderRadius: '20px',
-    padding: '0 14px',
+    padding: '0 16px',
     margin: '2px 2px',
     textTransform: 'none',
     fontSize: '16px',
@@ -288,7 +306,7 @@ const styles = theme => ({
   toggleSwitchButtonActive: {
     height: '40px',
     borderRadius: '20px',
-    padding: '0 14px',
+    padding: '0 16px',
     margin: '2px 2px',
     textTransform: 'none',
     fontSize: '16px',
@@ -330,6 +348,14 @@ const styles = theme => ({
   filterItem: {
     margin: '0px 4px',
     width: 'calc(20% - 8px) !important',
+  },
+  boostFilterLabel: {
+    display: 'flex',
+  },
+  checkboxContainer: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
 });
 

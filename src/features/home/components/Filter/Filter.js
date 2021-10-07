@@ -2,6 +2,7 @@ import React, { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { useTranslation } from 'react-i18next';
 import {
+  Avatar,
   Box,
   Button,
   Checkbox,
@@ -42,28 +43,27 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
     [t]
   );
 
-  var options;
-  if (window.innerWidth <= 760) {
-    options = {
-      perPage: 2.5,
-    };
-  } else {
-    options = {
-      perPage: 5,
-    };
-  }
+  const [options, setOptions] = useState(() => {
+    if (window.innerWidth < 760) {
+      return { perPage: 2.5 };
+    } else {
+      return { perPage: 5 };
+    }
+  });
 
   const handleResize = () => {
     if (window.innerWidth < 760) {
-      options.perPage = 2.5;
+      console.log('resized: small');
+      setOptions({ perPage: 2.5 });
     } else {
-      options.perPage = 5;
+      console.log('resized: large');
+      setOptions({ perPage: 5 });
     }
   };
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-  });
+  }, []);
 
   return (
     <Grid container spacing={2} className={classes.categories}>
@@ -234,6 +234,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             <Box className={classes.checkboxes}>
               <FormGroup row>
                 <FormControlLabel
+                  className={classes.checkboxContainer}
                   label={t('Filter-HideZero')}
                   control={
                     <Checkbox
@@ -245,6 +246,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                   }
                 />
                 <FormControlLabel
+                  className={classes.checkboxContainer}
                   label={t('Filter-Retired')}
                   control={
                     <Checkbox
@@ -256,6 +258,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                   }
                 />
                 <FormControlLabel
+                  className={classes.checkboxContainer}
                   label={t('Filter-Deposited')}
                   control={
                     <Checkbox
@@ -267,7 +270,19 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                   }
                 />
                 <FormControlLabel
-                  label={t('Filter-Boost')}
+                  className={classes.checkboxContainer}
+                  label={
+                    <span className={classes.boostFilterLabel}>
+                      <Avatar
+                        alt="Fire"
+                        src={require('../../../../images/fire.png').default}
+                        imgProps={{
+                          style: { objectFit: 'contain' },
+                        }}
+                      />
+                      <Typography style={{ margin: 'auto' }}>{t('Filter-Boost')}</Typography>
+                    </span>
+                  }
                   control={
                     <Checkbox
                       checked={sortConfig.boost}
@@ -313,11 +328,11 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                   label={t('Filter-Blockchn')}
                 />
               </Box>
-            </Box>
-            <Box className={classes.btnFilter}>
-              <Button className={classes.btnReset} variant={'contained'} onClick={handleReset}>
-                {t('Filter-Reset')}
-              </Button>
+              <Box className={classes.selector}>
+                <Button className={classes.btnReset} variant={'contained'} onClick={handleReset}>
+                  {t('Filter-Reset')}
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Box>
