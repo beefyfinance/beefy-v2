@@ -7,9 +7,11 @@ import AssetsImage from 'components/AssetsImage';
 import SafetyScore from 'components/SafetyScore';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
-import { calcDaily, formatApy, formatUsd } from 'helpers/format';
+import { byDecimals, calcDaily, formatApy, formatUsd } from 'helpers/format';
+import BigNumber from 'bignumber.js';
 import styles from './styles';
 import clsx from 'clsx';
+import { isEmpty } from 'helpers/utils';
 
 const useStyles = makeStyles(styles);
 
@@ -26,6 +28,11 @@ function Item({ id }) {
     () => earnedTokenBalance && earnedTokenBalance !== '0',
     [earnedTokenBalance]
   );
+  const { wallet, balance } = useSelector(state => ({
+    wallet: state.walletReducer,
+    balance: state.balanceReducer,
+  }));
+  const [state, setState] = React.useState({ balance: 0 });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
   const formattedAPY = useMemo(() => formatApy(item.apy.totalApy), [item.apy.totalApy]);
@@ -36,6 +43,19 @@ function Item({ id }) {
   }, [history, item.network, item.id]);
 
   const hasMore3Tags = item.tags.length > 2;
+
+  React.useEffect(() => {
+    let amount = 0;
+    if (wallet.address && !isEmpty(balance.tokens[item.earnedToken])) {
+      amount = byDecimals(
+        new BigNumber(balance.tokens[item.earnedToken].balance).multipliedBy(
+          byDecimals(item.pricePerFullShare)
+        ),
+        item.tokenDecimals
+      ).toFixed(8);
+    }
+    setState({ balance: amount });
+  }, [wallet.address, item, balance]);
 
   return (
     <div
@@ -95,7 +115,9 @@ function Item({ id }) {
             <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-                <Typography className={classes.value}>{earnedTokenBalance}</Typography>
+                <Typography className={classes.value}>
+                  {state.balance === 0 ? state.balance : '0'}
+                </Typography>
               </div>
             </div>
             {/*TVL*/}
