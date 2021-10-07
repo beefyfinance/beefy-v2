@@ -48,7 +48,7 @@ function Item({ id }) {
     >
       <Grid container className={classes.dataGrid}>
         {/*Title*/}
-        <Grid className={classes.titleContainer} item xs={12} md={4}>
+        <div className={classes.titleContainer}>
           <Grid container>
             <Grid item className={classes.infoContainer} style={{ marginRight: '8px' }}>
               {/*Vault Image*/}
@@ -82,27 +82,31 @@ function Item({ id }) {
                   </div>
                 </div>
               </div>
+              <span className={classes.platformContainer}>
+                <Typography className={classes.platformLabel}>{t('PLATFORM')}:&nbsp;</Typography>
+                <Typography className={classes.platformValue}>{item.platform}</Typography>
+              </span>
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Grid container columns={15}>
+        </div>
+        <div className={classes.statsContainer}>
+          <Grid container>
             {/*DEPOSIT*/}
-            <Grid className={classes.centerSpace} item xs={6} md={2}>
+            <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
                 <Typography className={classes.value}>{earnedTokenBalance}</Typography>
               </div>
-            </Grid>
+            </div>
             {/*TVL*/}
-            <Grid className={classes.centerSpace} item xs={6} md={2}>
+            <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
               </div>
-            </Grid>
+            </div>
             {/*APY*/}
-            <Grid className={classes.centerSpace} item xs={6} md={2}>
+            <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <div className={classes.tooltipLabel}>
                   <Typography className={classes.label}>{t('APY')}</Typography>
@@ -112,9 +116,9 @@ function Item({ id }) {
                 </div>
                 <Typography className={classes.value}>{formattedAPY}</Typography>
               </div>
-            </Grid>
+            </div>
             {/*Daily*/}
-            <Grid className={classes.centerSpace} item xs={6} md={2}>
+            <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <div className={classes.tooltipLabel}>
                   <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
@@ -124,27 +128,27 @@ function Item({ id }) {
                 </div>
                 <Typography className={classes.value}>{formattedDPY}</Typography>
               </div>
-            </Grid>
+            </div>
             {/*Saftey Score*/}
-            <Grid className={classes.centerSpace} item xs={6} md={2}>
+            <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <div className={classes.tooltipLabel}>
-                  <Typography className={classes.label}>{t('Safety-Score')}</Typography>
+                  <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
                   <div className={classes.tooltipHolder}>
                     <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
                   </div>
                 </div>
                 <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
               </div>
-            </Grid>
+            </div>
             {/*Open Vault*/}
-            <Grid className={classes.centerSpace} style={{ padding: 0 }} item xs={12} md={2}>
+            <div className={classes.centerSpaceOpen} style={{ padding: 0 }}>
               <Button onClick={handleOpenVault} size="large" className={classes.depositButton}>
                 {t('Vault-Open')}
               </Button>
-            </Grid>
+            </div>
           </Grid>
-        </Grid>
+        </div>
       </Grid>
     </div>
   );

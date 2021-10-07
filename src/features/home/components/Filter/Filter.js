@@ -42,28 +42,27 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
     [t]
   );
 
-  var options;
-  if (window.innerWidth <= 760) {
-    options = {
-      perPage: 2.5,
-    };
-  } else {
-    options = {
-      perPage: 5,
-    };
-  }
+  const [options, setOptions] = useState(() => {
+    if (window.innerWidth < 760) {
+      return { perPage: 2.5 };
+    } else {
+      return { perPage: 5 };
+    }
+  });
 
   const handleResize = () => {
     if (window.innerWidth < 760) {
-      options.perPage = 2.5;
+      console.log('resized: small');
+      setOptions({ perPage: 2.5 });
     } else {
-      options.perPage = 5;
+      console.log('resized: large');
+      setOptions({ perPage: 5 });
     }
   };
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
-  });
+  }, []);
 
   return (
     <Grid container spacing={2} className={classes.categories}>

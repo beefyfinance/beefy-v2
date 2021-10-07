@@ -208,8 +208,8 @@ const styles = theme => ({
     },
   },
   iconSearch: {
-    marginLeft: '-2rem',
-    marginTop: '8.5px',
+    marginLeft: '-44px',
+    marginTop: '10px',
   },
   btnClearSearch: {
     borderRadius: 30,
@@ -263,9 +263,9 @@ const styles = theme => ({
   },
   toggleSwitchContainer: {
     backgroundColor: '#14182B',
-    borderRadius: '20px',
+    borderRadius: '22px',
     marginRight: '10px',
-    width: '196px',
+    width: '204px',
     [theme.breakpoints.down(725)]: {
       width: '100%',
       marginRight: '0',
@@ -276,7 +276,7 @@ const styles = theme => ({
   toggleSwitchButton: {
     height: '40px',
     borderRadius: '20px',
-    padding: '0 14px',
+    padding: '0 16px',
     margin: '2px 2px',
     textTransform: 'none',
     fontSize: '16px',
@@ -288,7 +288,7 @@ const styles = theme => ({
   toggleSwitchButtonActive: {
     height: '40px',
     borderRadius: '20px',
-    padding: '0 14px',
+    padding: '0 16px',
     margin: '2px 2px',
     textTransform: 'none',
     fontSize: '16px',

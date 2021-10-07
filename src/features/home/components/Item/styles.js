@@ -39,6 +39,15 @@ const styles = theme => ({
     justifyContent: 'center',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
+      flexGrow: '0',
+      maxWidth: '30%',
+      flexBasis: '30%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      alignItems: 'flex-start',
+      flexGrow: '0',
+      maxWidth: '100%',
+      flexBasis: '100%',
     },
   },
   imageContainer: {
@@ -89,7 +98,30 @@ const styles = theme => ({
       textAlign: 'left',
     },
   },
+  platformValue: {
+    fontWeight: 600,
+    fontSize: '12px',
+    textTransform: 'uppercase',
+  },
   label: {
+    fontWeight: 400,
+    fontSize: '12px',
+    lineHeight: '24px',
+    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+    letterSpacing: '0.2px',
+    textTransform: 'none', //'capitalize' no good due to localization
+    textAlign: 'left',
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'center',
+    },
+  },
+  platformLabel: {
+    fontWeight: 600,
+    fontSize: '12px',
+    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+  },
+  safetyLabel: {
+    whiteSpace: 'nowrap',
     fontWeight: 400,
     fontSize: '12px',
     lineHeight: '24px',
@@ -107,8 +139,34 @@ const styles = theme => ({
     alignItems: 'center',
     textAlign: 'center',
     [theme.breakpoints.up('md')]: {
-      padding: '0.5rem 0 0.5rem 0',
+      padding: '0.5rem 32px 0.5rem 32px',
       justifyContent: 'space-around',
+      flexGrow: '0',
+      maxWidth: '15%',
+      flexBasis: '15%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      flexGrow: '0',
+      maxWidth: '50%',
+      flexBasis: '50%',
+    },
+  },
+  centerSpaceOpen: {
+    padding: '0.5rem 0',
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center',
+    [theme.breakpoints.up('md')]: {
+      padding: '0.5rem 32px 0.5rem 32px',
+      justifyContent: 'space-around',
+      flexGrow: '0',
+      maxWidth: '25%',
+      flexBasis: '25%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      flexGrow: '0',
+      maxWidth: '100%',
+      flexBasis: '100%',
     },
   },
   chart: {
@@ -127,13 +185,18 @@ const styles = theme => ({
     padding: '2px 20px 2px',
     textTransform: 'capitalize',
     display: 'block',
-    width: '100%',
     '&:hover': {
       cursor: 'pointer',
       backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
     },
+    [theme.breakpoints.up('md')]: {
+      marginLeft: 'auto',
+      marginRight: '0',
+      width: '75%',
+    },
     [theme.breakpoints.down('sm')]: {
       marginTop: '16px',
+      width: '100%',
     },
   },
   apyContainer: {
@@ -238,6 +301,28 @@ const styles = theme => ({
       [theme.breakpoints.up('lg')]: {
         fontSize: '18px',
       },
+    },
+  },
+  statsContainer: {
+    margin: 'auto',
+    [theme.breakpoints.up('md')]: {
+      alignItems: 'flex-start',
+      flexGrow: '0',
+      maxWidth: '70%',
+      flexBasis: '70%',
+    },
+    [theme.breakpoints.down('sm')]: {
+      alignItems: 'flex-start',
+      flexGrow: '0',
+      maxWidth: '100%',
+      flexBasis: '100%',
+    },
+  },
+  platformContainer: {
+    display: 'flex',
+    marginTop: '8px',
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 -40px',
     },
   },
 });
