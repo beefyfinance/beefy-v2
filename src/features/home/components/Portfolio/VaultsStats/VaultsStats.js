@@ -13,7 +13,7 @@ const useStyles = makeStyles(styles);
 const Stats = ({ stats, blurred }) => {
   const classes = useStyles();
   const t = useTranslation().t;
-  const data = useVaults();
+  const [, , , activeVaults] = useVaults();
   const totalTvl = useSelector(state => state.vaultReducer.totalTvl.toNumber());
 
   const buyback = useBuyback();
@@ -33,7 +33,7 @@ const Stats = ({ stats, blurred }) => {
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('Vaults-Title')}</Typography>
         <Typography>
-          <ValueText value={data[4]} />
+          <ValueText value={activeVaults} />
         </Typography>
       </Box>
       <Box>
