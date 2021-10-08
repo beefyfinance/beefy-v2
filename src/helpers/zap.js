@@ -11,8 +11,8 @@ for (let net in config) {
 export const getEligibleZap = pool => {
   if (pool.assets.length !== 2) return undefined;
 
-  const tokenA = addressBook[pool.network].tokens[pool.assets[0]];
-  const tokenB = addressBook[pool.network].tokens[pool.assets[1]];
+  const tokenA = addressBook[pool.network]?.tokens[pool.assets[0]];
+  const tokenB = addressBook[pool.network]?.tokens[pool.assets[1]];
   if (!tokenA || !tokenB) return undefined;
 
   const zap = data[pool.network].zaps.find(zap => {
