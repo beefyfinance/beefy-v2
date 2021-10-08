@@ -40,6 +40,7 @@ export const getStablesForNetwork = net => {
 
 export const bluechipTokens = [
   'BTC',
+  'WBTC',
   'ETH',
   'BNB',
   'USDT',

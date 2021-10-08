@@ -1,15 +1,19 @@
 const styles = theme => ({
   container: {
     width: '95%',
-    height: 44,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 30,
+    marginLeft: '24px',
     '& .MuiTypography-root': {
       fontWeight: 'bold',
-      fontSize: 18,
+      fontSize: 16,
     },
     '& .MuiGrid-container': {
       flexWrap: 'nowrap',
-      padding: '8px 19px 0px 19px',
+      padding: '8px 24px',
       cursor: 'pointer',
     },
     [theme.breakpoints.up('md')]: {
@@ -20,7 +24,9 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     border: 'solid 2px #54995C',
-    backgroundColor: '#54995C',
+    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
+    // eslint-disable-next-line no-dupe-keys
+    background: '#54995C26',
     '& .MuiGrid-container': {
       color: 'white',
     },

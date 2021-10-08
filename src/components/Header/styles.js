@@ -7,30 +7,29 @@ const styles = theme => ({
       background: 'transparent',
     },
   },
+  flex: {
+    display: 'flex',
+    alignItem: 'center',
+  },
   hasPortfolio: {
     backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
   },
-  navDisplayFlex: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    paddingTop: 0,
-    paddingBottom: 0,
-  },
   mobileMenu: {
     width: 250,
+    backgroundColor: theme.palette.type === 'dark' ? '#14161F' : '#FEFAF4',
   },
   beefy: {
     display: 'flex',
     paddingTop: '4px',
     letterSpacing: 'unset',
-    alignItems: 'center',
-    justifyContent: 'center',
-    '&,& .MuiButton-root': {
+    '& div': {
+      color: 'white',
+      marginLeft: '10px',
       fontSize: '20px',
       fontWeight: '700',
-      borderRadius: '3px',
-      textTransform: 'none',
-      whiteSpace: 'nowrap',
+      textDecoration: 'none',
+    },
+    '&,& .MuiButton-root': {
       textDecoration: 'none',
       '&:hover, &:focus': {
         color: theme.palette.text.primary,
@@ -48,11 +47,10 @@ const styles = theme => ({
     textDecoration: 'none',
     textTransform: 'capitalize',
     color: theme.palette.type === 'dark' ? '#6B7199' : '#000000',
-    '& .MuiTypography-root': {
-      fontSize: 18,
-      fontWeight: 'bold',
-      borderBottom: '3px solid transparent',
-    },
+    fontSize: 16,
+    fontWeight: 'bold',
+    lineHeight: '24px',
+    margin: theme.spacing(3),
     '&:hover': {
       color: 'white',
     },
@@ -63,6 +61,36 @@ const styles = theme => ({
         },
       },
     },
+    [theme.breakpoints.down('md')]: {
+      margin: '8px',
+    },
+  },
+  navMobile: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  active: {
+    color: '#fff',
+  },
+  bifiPrice: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'flex-start',
+    },
+    '& img': {
+      height: '18px',
+      marginRight: '5px',
+    },
+    '& .MuiTypography-root': {
+      fontWeight: '600',
+      fontSize: 16,
+      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+    },
+  },
+  drawerBlack: {
+    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
   },
   hide: {
     display: 'none',

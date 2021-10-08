@@ -104,7 +104,7 @@ export const config = {
       rpcUrls: ['https://rpc-mainnet.matic.network'],
       blockExplorerUrls: ['https://polygonscan.com/'],
     },
-    stableCoins: ['USDC', 'USDT', 'maUSDC'],
+    stableCoins: ['USDC', 'USDT', 'maUSDC', 'DAI', 'IRON', 'MAI', 'FRAX', 'rUSD', 'UST', 'WUSD'],
   },
   fantom: {
     name: 'Fantom',
@@ -126,6 +126,27 @@ export const config = {
       blockExplorerUrls: ['https://ftmscan.com/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'fUSDT'],
+  },
+  harmony: {
+    name: 'Harmony',
+    chainId: 1666600000,
+    rpc: ['https://api.s0.t.hmny.io'],
+    explorerUrl: 'https://explorer.harmony.one/',
+    multicallAddress: '0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5',
+    supportedWallets: ['injected'],
+    providerName: 'harmony',
+    walletSettings: {
+      chainId: `0x${parseInt(1666600000, 10).toString(16)}`,
+      chainName: 'Harmony One',
+      nativeCurrency: {
+        name: 'HARMONY',
+        symbol: 'ONE',
+        decimals: 18,
+      },
+      rpcUrls: ['https://api.s0.t.hmny.io/'],
+      blockExplorerUrls: ['https://explorer.harmony.one/'],
+    },
+    stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
   },
   arbitrum: {
     name: 'Arbitrum',

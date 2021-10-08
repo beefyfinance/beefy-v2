@@ -1,7 +1,8 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { useTranslation } from 'react-i18next';
 import {
+  Avatar,
   Box,
   Button,
   Checkbox,
@@ -17,7 +18,9 @@ import LabeledDropdown from 'components/LabeledDropdown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
+import { Search } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
+import ReactSiema from 'react-siema';
 
 const useStyles = makeStyles(styles);
 
@@ -40,24 +43,50 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
     [t]
   );
 
+  const [options, setOptions] = useState(() => {
+    if (window.innerWidth < 760) {
+      return { perPage: 2.5 };
+    } else {
+      return { perPage: 5 };
+    }
+  });
+
+  const handleResize = () => {
+    if (window.innerWidth < 760) {
+      console.log('resized: small');
+      setOptions({ perPage: 2.5 });
+    } else {
+      console.log('resized: large');
+      setOptions({ perPage: 5 });
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+  }, []);
+
   return (
     <Grid container spacing={2} className={classes.categories}>
       <Grid item xs={12}>
         <Typography variant={'h4'}>{t('Filter-Categories')}</Typography>
       </Grid>
-      {Object.entries(labels).map(([key, label]) => (
-        <Grid item xs key={key}>
-          <Button
-            className={category === key ? classes.selected : classes[key]}
-            fullWidth={true}
-            disabled={category === key}
-            onClick={() => handleChange('category', key)}
-          >
-            <Typography className={classes.text}>{label}</Typography>
-            {category === key ? <ArrowDropDownIcon /> : ''}
-          </Button>
-        </Grid>
-      ))}
+      <Grid item xs={12} className={classes.filtersSlider}>
+        <ReactSiema {...options}>
+          {Object.entries(labels).map(([key, label]) => (
+            <Grid item xs key={key} className={classes.filterItem}>
+              <Button
+                className={category === key ? classes.selected : classes[key]}
+                fullWidth={true}
+                disabled={category === key}
+                onClick={() => handleChange('category', key)}
+              >
+                <Typography className={classes.text}>{label}</Typography>
+                {category === key ? <ArrowDropDownIcon /> : ''}
+              </Button>
+            </Grid>
+          ))}
+        </ReactSiema>
+      </Grid>
     </Grid>
   );
 });
@@ -122,10 +151,13 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
 
   const handleSortChange = useCallback(e => handleChange('key', e.target.value), [handleChange]);
 
+  console.log(sortConfig);
+
   return (
     <>
       <FilterCategories category={sortConfig.category} handleChange={handleChange} />
       <Box className={classes.filtersContainer}>
+        {/*Search*/}
         <Box className={classes.searchContainer}>
           <TextField
             className={classes.searchInput}
@@ -136,6 +168,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             onChange={e => handleChange('keyword', e.target.value)}
             InputProps={{ className: classes.input }}
           />
+          <Search className={classes.iconSearch} />
           {sortConfig.keyword.length > 3 && (
             <Button
               onClick={() => handleChange('keyword', '')}
@@ -146,15 +179,40 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             </Button>
           )}
         </Box>
+        {/*All/My Switch*/}
+        <Box className={classes.toggleSwitchContainer}>
+          <Button
+            className={
+              sortConfig.deposited === false
+                ? classes.toggleSwitchButtonActive
+                : classes.toggleSwitchButton
+            }
+            onClick={() => handleChange('deposited', false)}
+          >
+            {t('Filter-AllVaults')}
+          </Button>
+          <Button
+            className={
+              sortConfig.deposited === true
+                ? classes.toggleSwitchButtonActive
+                : classes.toggleSwitchButton
+            }
+            onClick={() => handleChange('deposited', true)}
+          >
+            {t('Filter-MyVaults')}
+          </Button>
+        </Box>
+        {/*Dropdown*/}
         <Box className={classes.sortByContainer}>
           <LabeledDropdown
             list={sortList}
             selected={sortConfig.key}
             handler={handleSortChange}
             label={t('Filter-Sort')}
-            selectStyle={{ minWidth: 230 }}
+            selectStyle={{ width: '100%', minWidth: 'auto' }}
           />
         </Box>
+        {/*All Filters Button*/}
         <Box className={classes.btnFilter}>
           <ToggleButton
             className={classes.blockBtn}
@@ -164,6 +222,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
               setFilterOpen(!filterOpen);
             }}
           >
+            <img src={require('images/filter.svg').default} alt="" className={classes.filterIcon} />
             {t('Filter-Btn')}
             {filterOpen ? <ArrowDropDownIcon /> : ''}
           </ToggleButton>
@@ -175,6 +234,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
             <Box className={classes.checkboxes}>
               <FormGroup row>
                 <FormControlLabel
+                  className={classes.checkboxContainer}
                   label={t('Filter-HideZero')}
                   control={
                     <Checkbox
@@ -186,6 +246,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                   }
                 />
                 <FormControlLabel
+                  className={classes.checkboxContainer}
                   label={t('Filter-Retired')}
                   control={
                     <Checkbox
@@ -197,6 +258,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                   }
                 />
                 <FormControlLabel
+                  className={classes.checkboxContainer}
                   label={t('Filter-Deposited')}
                   control={
                     <Checkbox
@@ -208,7 +270,19 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                   }
                 />
                 <FormControlLabel
-                  label={t('Filter-Boost')}
+                  className={classes.checkboxContainer}
+                  label={
+                    <span className={classes.boostFilterLabel}>
+                      <Avatar
+                        alt="Fire"
+                        src={require('../../../../images/fire.png').default}
+                        imgProps={{
+                          style: { objectFit: 'contain' },
+                        }}
+                      />
+                      <Typography style={{ margin: 'auto' }}>{t('Filter-Boost')}</Typography>
+                    </span>
+                  }
                   control={
                     <Checkbox
                       checked={sortConfig.boost}
@@ -254,11 +328,11 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                   label={t('Filter-Blockchn')}
                 />
               </Box>
-            </Box>
-            <Box className={classes.btnFilter}>
-              <Button className={classes.btnReset} variant={'contained'} onClick={handleReset}>
-                {t('Filter-Reset')}
-              </Button>
+              <Box className={classes.selector}>
+                <Button className={classes.btnReset} variant={'contained'} onClick={handleReset}>
+                  {t('Filter-Reset')}
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Box>

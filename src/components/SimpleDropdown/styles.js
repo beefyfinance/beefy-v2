@@ -1,12 +1,21 @@
 const styles = theme => ({
   select: {
     height: '44px',
+    marginLeft: '24px',
+    [theme.breakpoints.down('lg')]: {
+      marginLeft: 0,
+    },
     '& .MuiSelect-select': {
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
       fontWeight: '600',
-      fontSize: 18,
-      padding: '10px 29px 0px 15px',
-      border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #ff0000',
+      fontSize: 16,
+      padding: '12px 30px 0px 15px',
+      border: props =>
+        props.noBorder
+          ? 'none'
+          : theme.palette.type === 'dark'
+          ? '2px solid #313759'
+          : '2px solid #ff0000',
       borderRadius: '30px',
       height: '29px',
       textAlign: 'right',

@@ -1,63 +1,35 @@
 const styles = theme => ({
   portfolio: {
     backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
-    padding: '60px 0 0 0',
+    padding: '30px 0 30px 0',
   },
   title: {
     fontSize: '36px',
     fontWeight: 600,
     lineHeight: '42px',
-    paddingBottom: '20px',
+    paddingBottom: '16px',
   },
-  mobileFix: {
-    position: 'relative',
-    display: 'block',
-    padding: '20px 0',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-      padding: 0,
+  btnHide: {
+    marginTop: '8px',
+    textTransform: 'capitalize',
+    color: theme.palette.type === 'dark' ? '#484F7F' : '#ff0000',
+    fontSize: '16px',
+    fontWeight: '600',
+    '& .MuiSvgIcon-root': {
+      marginRight: '5px',
     },
-  },
-  opened: {
-    '& .MuiTypography-h2': {
-      fontSize: '42px',
-      fontWeight: 600,
-      lineHeight: '54px',
-      paddingBottom: '20px',
+    '&.MuiButton-text': {
+      padding: '6px 0px',
     },
-    '& .MuiTypography-body1': {
-      display: 'block',
-    },
-  },
-  balance: {
-    textAlign: 'right',
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    '& .MuiButton-root': {
-      textTransform: 'capitalize',
-      color: theme.palette.type === 'dark' ? '#484F7F' : '#ff0000',
-      fontSize: '16px',
-      fontWeight: '600',
-      '& .MuiSvgIcon-root': {
-        marginRight: '5px',
-      },
-      '&:hover': {
-        backgroundColor: 'transparent',
-        color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
-      },
-    },
-  },
-  toggler: {
-    backgroundColor: theme.palette.type === 'dark' ? '#1B203A' : '#ff0000',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#fff',
-    borderRadius: '26px 26px 0 0',
-    height: '26px',
-    paddingTop: '14px',
-    marginTop: '20px',
     '&:hover': {
-      backgroundColor: theme.palette.type === 'dark' ? '#1B203A' : '#ff0000',
-      color: theme.palette.type === 'dark' ? '#fff' : '#fff',
+      backgroundColor: 'transparent',
+      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+    },
+  },
+  vaults: {
+    textAlign: 'right',
+    [theme.breakpoints.down('md')]: {
+      textAlign: 'left',
     },
   },
 });

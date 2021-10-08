@@ -154,7 +154,7 @@ function keepVault(vault, config, address, tokenBalances) {
   }
 
   // hide when name does not include keyword
-  if (!vault.name.toLowerCase().includes(config.keyword)) {
+  if (!vault.name.toLowerCase().includes(config.keyword.toLowerCase())) {
     return false;
   }
 
