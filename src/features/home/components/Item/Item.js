@@ -8,30 +8,21 @@ import SafetyScore from 'components/SafetyScore';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
 import { byDecimals, calcDaily, formatApy, formatUsd } from 'helpers/format';
-import BigNumber from 'bignumber.js';
 import styles from './styles';
 import clsx from 'clsx';
-import { isEmpty } from 'helpers/utils';
 
 const useStyles = makeStyles(styles);
 
-function Item({ id }) {
-  const item = useSelector(state => state.vaultReducer.pools[id]);
-  console.log(item);
+function Item({ vault }) {
+  const item = useSelector(state => state.vaultReducer.pools[vault.id]);
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
-  const earnedTokenBalance = useSelector(
-    state => state.balanceReducer.tokens[item.network][item.earnedToken].balance
-  );
-  const hasDeposit = useMemo(
-    () => earnedTokenBalance && earnedTokenBalance !== '0',
-    [earnedTokenBalance]
-  );
   const { wallet, balance } = useSelector(state => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
+
   const [state, setState] = React.useState({ balance: 0 });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
@@ -46,22 +37,19 @@ function Item({ id }) {
 
   React.useEffect(() => {
     let amount = 0;
-    if (wallet.address && !isEmpty(balance.tokens[item.earnedToken])) {
-      amount = byDecimals(
-        new BigNumber(balance.tokens[item.earnedToken].balance).multipliedBy(
-          byDecimals(item.pricePerFullShare)
-        ),
-        item.tokenDecimals
-      ).toFixed(8);
+    if (wallet.address) {
+      amount = byDecimals(item.balance, item.tokenDecimals)
+        .multipliedBy(byDecimals(item.pricePerFullShare))
+        .toFixed(8);
     }
     setState({ balance: amount });
-  }, [wallet.address, item, balance]);
+  }, [wallet.address, item]);
 
   return (
     <div
       className={clsx({
         [classes.itemContainer]: true,
-        [classes.withHasDeposit]: hasDeposit,
+        [classes.withHasDeposit]: item.balance > 0,
         [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
         [classes.withIsLongName]: item.name.length > 12,
       })}
@@ -116,7 +104,7 @@ function Item({ id }) {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
                 <Typography className={classes.value}>
-                  {state.balance === 0 ? state.balance : '0'}
+                  {state.balance > 0 ? state.balance : '0'}
                 </Typography>
               </div>
             </div>
