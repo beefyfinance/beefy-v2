@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import styles from '../styles';
 import BigNumber from 'bignumber.js';
 import Loader from 'components/loader';
-import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from 'helpers/format';
+import { byDecimals, convertAmountToRawNumber } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import reduxActions from 'features/redux/actions';
 import Steps from 'components/Steps';
