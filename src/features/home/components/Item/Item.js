@@ -14,7 +14,8 @@ import clsx from 'clsx';
 const useStyles = makeStyles(styles);
 
 function Item({ vault }) {
-  const item = useSelector(state => state.vaultReducer.pools[vault.id]);
+  const item = vault;
+
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
@@ -30,7 +31,7 @@ function Item({ vault }) {
   const formattedDPY = useMemo(() => calcDaily(item.apy.totalApy), [item.apy.totalApy]);
 
   const handleOpenVault = useCallback(() => {
-    history.push('/' + item.network + '/vault/' + item.id);
+    history.push(`/${item.network}/vault/${item.id}`);
   }, [history, item.network, item.id]);
 
   const hasMore3Tags = item.tags.length > 2;
@@ -43,7 +44,7 @@ function Item({ vault }) {
         .toFixed(8);
     }
     setState({ balance: amount });
-  }, [wallet.address, item]);
+  }, [wallet.address, item.balance, balance.isBalancesLoading]);
 
   return (
     <div
