@@ -16,6 +16,7 @@ const initialTokens = () => {
     for (const key in data.pools) {
       tokens[net][data.pools[key].token] = {
         ...tokens[net][data.pools[key].token],
+        symbol: data.pools[key].token,
         balance: 0,
         decimals: data.pools[key].tokenDecimals,
         allowance: {
@@ -30,6 +31,7 @@ const initialTokens = () => {
 
       tokens[net][data.pools[key].earnedToken] = {
         ...tokens[net][data.pools[key].earnedToken],
+        symbol: data.pools[key].earnedToken,
         balance: 0,
         decimals: 18,
         address: data.pools[key].earnedTokenAddress,
@@ -43,6 +45,7 @@ const initialTokens = () => {
         for (const ti in zap.tokens) {
           tokens[net][zap.tokens[ti].symbol] = {
             ...tokens[net][zap.tokens[ti].symbol],
+            symbol: zap.tokens[ti].symbol,
             balance: 0,
             decimals: zap.tokens[ti].decimals,
             address: zap.tokens[ti].address,
@@ -61,7 +64,9 @@ const initialTokens = () => {
 
     const boosts = require('config/boost/' + net + '.js');
     for (const key in boosts.pools) {
-      tokens[net][boosts.pools[key].token + 'Boost'] = {
+      const boostSymbol = boosts.pools[key].token + 'Boost';
+      tokens[net][boostSymbol] = {
+        symbol: boostSymbol,
         balance: 0,
         decimals: 18,
         allowance: { [data.pools[key].earnContractAddress]: 0 },

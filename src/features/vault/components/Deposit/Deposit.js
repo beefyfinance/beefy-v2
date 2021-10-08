@@ -170,11 +170,12 @@ const Deposit = ({
 
       if (true === formData.deposit.isZap) {
         steps.push({
-          step: 'swap-and-deposit',
+          step: 'deposit',
           message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
           action: () =>
             dispatch(
               reduxActions.wallet.beefIn(
+                item.network,
                 item.earnContractAddress,
                 false, // isETH
                 tokens[formData.deposit.token].address,
@@ -183,6 +184,7 @@ const Deposit = ({
                 1000 // swapAmountOutMin
               )
             ),
+          token: tokens[formData.deposit.token],
           pending: false,
         });
       }
@@ -200,6 +202,7 @@ const Deposit = ({
                 formData.deposit.max
               )
             ),
+          token: tokens[formData.deposit.token],
           pending: false,
         });
       }

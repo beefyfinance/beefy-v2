@@ -15,6 +15,7 @@ import {
 import erc20Abi from 'config/abi/erc20.json';
 import vaultAbi from 'config/abi/vault.json';
 import boostAbi from 'config/abi/boost.json';
+import zapAbi from 'config/abi/zap.json';
 
 const getClientsForNetwork = async net => {
   return config[net].rpc;
@@ -320,6 +321,86 @@ const deposit = (network, contractAddr, amount, max) => {
             console.log(error);
           });
       }
+    }
+  };
+};
+
+const beefIn = (
+  network,
+  vaultAddress,
+  isETH,
+  tokenAddress,
+  tokenAmount,
+  zapAddress,
+  swapAmountOutMin
+) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = state.walletReducer.address;
+    const provider = await state.walletReducer.web3modal.connect();
+
+    if (address && provider) {
+      const web3 = await new Web3(provider);
+      const contract = new web3.eth.Contract(zapAbi, zapAddress);
+
+      const transaction = (() => {
+        if (isETH) {
+          return contract.methods.beefInETH(vaultAddress, swapAmountOutMin).send({
+            from: address,
+            value: tokenAmount,
+          });
+        } else {
+          return contract.methods
+            .beefIn(vaultAddress, swapAmountOutMin, tokenAddress, tokenAmount)
+            .send({
+              from: address,
+            });
+        }
+      })();
+
+      transaction
+        .on('transactionHash', function (hash) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'success_pending',
+              data: {
+                spender: zapAddress,
+                amount: tokenAmount,
+                hash: hash,
+              },
+            },
+          });
+        })
+        .on('receipt', function (receipt) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'success',
+              data: {
+                spender: zapAddress,
+                amount: tokenAmount,
+                receipt: receipt,
+              },
+            },
+          });
+        })
+        .on('error', function (error) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'error',
+              data: {
+                spender: zapAddress,
+                error: error.message,
+              },
+            },
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   };
 };
@@ -710,6 +791,7 @@ const obj = {
   disconnect,
   approval,
   deposit,
+  beefIn,
   withdraw,
   stake,
   unstake,
