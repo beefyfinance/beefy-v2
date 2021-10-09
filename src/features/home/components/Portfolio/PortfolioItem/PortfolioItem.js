@@ -23,13 +23,13 @@ const PortfolioItem = ({ item, historicalApy }) => {
   const balance = useSelector(state => state.balanceReducer);
 
   const formatBalance = () => {
-    let vaultBalance = new BigNumber(balance.tokens[item.earnedToken].balance);
+    let vaultBalance = new BigNumber(balance.tokens[item.network][item.earnedToken].balance);
     vaultBalance = vaultBalance.times(item.pricePerFullShare).div('1e18').div('1e18');
     return formatDecimals(vaultBalance, 4, 6);
   };
 
   const formatBalanceInUsd = () => {
-    let vaultBalance = new BigNumber(balance.tokens[item.earnedToken].balance);
+    let vaultBalance = new BigNumber(balance.tokens[item.network][item.earnedToken].balance);
     vaultBalance = vaultBalance.times(item.pricePerFullShare).div('1e18').div('1e18');
     return formatUsd(vaultBalance.times(item.oraclePrice).toFixed(2));
   };

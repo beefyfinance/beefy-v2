@@ -14,5 +14,5 @@ export const getSingleAssetSrc = symbol => {
     return (singleAssetCache[symbol] = asset);
   }
 
-  throw new Error(`Image required for '${symbol}' token in 'images/single-assets/'`);
+  // throw new Error(`Image required for '${symbol}' token in 'images/single-assets/'`);
 };

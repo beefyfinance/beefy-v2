@@ -86,7 +86,6 @@ const Header = ({ isNightMode, setNightMode }) => {
           style={{ textDecoration: 'none' }}
           href="https://app.1inch.io/#/56/swap/BNB/BIFI"
           target="_blank"
-          without
           rel="noreferrer"
         >
           <img alt="BIFI" src={require('images/BIFI-TOKEN.svg').default} />

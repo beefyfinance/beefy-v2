@@ -30,22 +30,18 @@ const Portfolio = () => {
   const t = useTranslation().t;
 
   useEffect(() => {
-    let newUserVaults = [];
+    const newUserVaults = [];
 
     if (userAddress !== null) {
-      Object.keys(balanceReducer.tokens).forEach(tokenName => {
-        // eslint-disable-next-line eqeqeq
-        if (balanceReducer.tokens[tokenName].balance != '0') {
-          let target = Object.values(vaultReducer.pools).find(
-            pool => pool.earnedToken === tokenName
-          );
-          if (target !== undefined) {
-            target.balance = balanceReducer.tokens[tokenName].balance;
-            target.oraclePrice = pricesReducer.prices[target.oracleId];
-            newUserVaults.push(target);
-          }
+      for (const poolKey in vaultReducer.pools) {
+        const pool = vaultReducer.pools[poolKey];
+        const balance = balanceReducer.tokens[pool.network][pool.earnedToken].balance;
+        if (balance > 0) {
+          pool.balance = balance;
+          pool.oraclePrice = pricesReducer.prices[pool.oracleId];
+          newUserVaults.push(pool);
         }
-      });
+      }
     }
 
     setUserVaults(newUserVaults);
