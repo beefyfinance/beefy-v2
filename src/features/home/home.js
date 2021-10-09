@@ -74,7 +74,7 @@ function createVaultRenderer(vaults, cache) {
   return function vaultRenderer({ index, parent, key, style }) {
     const vault = (
       <Grid item xs={12} sm={6} md={12}>
-        <Item id={vaults[index].id} />
+        <Item vault={vaults[index]} />
       </Grid>
     );
 

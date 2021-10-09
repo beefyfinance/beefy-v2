@@ -6,13 +6,16 @@ import { getSingleAssetSrc } from 'helpers/singleAssetSrc';
 
 const useStyles = makeStyles(styles);
 
+const resolveImgSrc = (img, assets) => {
+  if (img) {
+    return require('images/' + img).default;
+  }
+  return assets.length === 1 ? getSingleAssetSrc(assets[0]) : undefined;
+};
+
 const AssetsImage = ({ img, assets, alt }) => {
   const classes = useStyles();
-  const singleImage = img
-    ? require('images/' + img).default
-    : assets.length === 1
-    ? getSingleAssetSrc(assets[0])
-    : undefined;
+  const singleImage = resolveImgSrc(img, assets);
 
   return singleImage ? (
     <Avatar

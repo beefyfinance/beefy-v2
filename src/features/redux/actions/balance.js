@@ -12,7 +12,9 @@ const erc20Abi = require('config/abi/erc20.json');
 const multicallAbi = require('config/abi/multicall.json');
 const boostAbi = require('config/abi/boost.json');
 
-const getBalances = async (items, state, dispatch) => {
+const boostRegex = /^moo.*Boost$/;
+
+const getBalances = async (state, dispatch) => {
   console.log('redux getBalances() processing...');
   const address = state.walletReducer.address;
   const web3 = state.walletReducer.rpc;
@@ -20,69 +22,59 @@ const getBalances = async (items, state, dispatch) => {
   const multicall = [];
   const calls = [];
 
-  for (let key in web3) {
-    multicall[key] = new MultiCall(web3[key], config[key].multicallAddress);
-    calls[key] = [];
-  }
+  for (let net in web3) {
+    multicall[net] = new MultiCall(web3[net], config[net].multicallAddress);
+    calls[net] = [];
 
-  for (let key in items) {
-    if (isEmpty(items[key].tokenAddress)) {
-      const tokenContract = new web3[items[key].network].eth.Contract(
-        multicallAbi,
-        multicall[items[key].network].contract
-      );
-      calls[items[key].network].push({
-        amount: tokenContract.methods.getEthBalance(address),
-        token: items[key].token,
-      });
-    } else {
-      const tokenContract = new web3[items[key].network].eth.Contract(
-        erc20Abi,
-        items[key].tokenAddress
-      );
-      calls[items[key].network].push({
-        amount: tokenContract.methods.balanceOf(address),
-        token: items[key].token,
-        address: items[key].tokenAddress,
-      });
+    for (let tokenSymbol in state.balanceReducer.tokens[net]) {
+      if (boostRegex.test(tokenSymbol)) continue; // Skip Boost enties
 
-      calls[items[key].network].push({
-        allowance: tokenContract.methods.allowance(address, items[key].earnContractAddress),
-        token: items[key].token,
-        spender: items[key].earnContractAddress,
-      });
+      let token = state.balanceReducer.tokens[net][tokenSymbol];
 
-      const earnedTokenContract = new web3[items[key].network].eth.Contract(
-        erc20Abi,
-        items[key].earnedTokenAddress
-      );
-      calls[items[key].network].push({
-        amount: earnedTokenContract.methods.balanceOf(address),
-        token: items[key].earnedToken,
-        address: items[key].tokenAddress,
-      });
+      if (tokenSymbol === config[net].walletSettings.nativeCurrency.symbol) {
+        const tokenContract = new web3[net].eth.Contract(multicallAbi, multicall[net].contract);
+        calls[net].push({
+          amount: tokenContract.methods.getEthBalance(address),
+          token: tokenSymbol,
+        });
+      } else {
+        const tokenContract = new web3[net].eth.Contract(erc20Abi, token.address);
+        calls[net].push({
+          amount: tokenContract.methods.balanceOf(address),
+          token: tokenSymbol,
+          address: token.address,
+        });
+
+        for (let spender in token.allowance) {
+          calls[net].push({
+            allowance: tokenContract.methods.allowance(address, spender),
+            token: tokenSymbol,
+            spender: spender,
+          });
+        }
+      }
     }
-  }
-
-  let response = [];
-
-  for (let key in multicall) {
-    const resp = await multicall[key].all([calls[key]]);
-    response = [...response, ...resp[0]];
   }
 
   const tokens = { ...state.balanceReducer.tokens };
 
-  for (let index in response) {
-    const item = response[index];
+  for (let key in multicall) {
+    const response = (await multicall[key].all([calls[key]]))[0];
 
-    if (!isEmpty(item.amount)) {
-      tokens[item.token].balance = item.amount;
-      tokens[item.token].address = item.address;
-    }
+    for (let index in response) {
+      const item = response[index];
 
-    if (!isEmpty(item.allowance)) {
-      tokens[item.token].allowance = { [item.spender]: parseInt(item.allowance) };
+      if (!isEmpty(item.amount)) {
+        tokens[key][item.token].balance = item.amount;
+        tokens[key][item.token].address = item.address;
+      }
+
+      if (!isEmpty(item.allowance)) {
+        tokens[key][item.token].allowance = {
+          ...tokens[key][item.token].allowance,
+          [item.spender]: item.allowance,
+        };
+      }
     }
   }
 
@@ -157,7 +149,10 @@ const getBoostBalances = async (items, state, dispatch) => {
     }
 
     if (!isEmpty(item.allowance)) {
-      tokens[item.token].allowance = { [item.spender]: parseInt(item.allowance) };
+      tokens[item.token].allowance = {
+        ...tokens[item.token].allowance,
+        [item.spender]: item.allowance,
+      };
     }
   }
 
@@ -220,7 +215,10 @@ const getBoostRewards = async (items, state, dispatch) => {
     }
 
     if (!isEmpty(item.allowance)) {
-      tokens[item.token].allowance = { [item.spender]: parseInt(item.allowance) };
+      tokens[item.token].allowance = {
+        ...tokens[item.token].allowance,
+        [item.spender]: item.allowance,
+      };
     }
   }
 
@@ -238,10 +236,9 @@ const getBoostRewards = async (items, state, dispatch) => {
 const fetchBalances = (item = false) => {
   return async (dispatch, getState) => {
     const state = getState();
-    if (state.walletReducer.address) {
-      const pools = state.vaultReducer.pools;
+    if (state.walletReducer.address && state.balanceReducer.isBalancesLoading === false) {
       dispatch({ type: BALANCE_FETCH_BALANCES_BEGIN });
-      return await getBalances(item ? [item] : pools, state, dispatch);
+      return await getBalances(state, dispatch);
     }
   };
 };

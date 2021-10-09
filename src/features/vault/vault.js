@@ -19,6 +19,8 @@ import TokenCard from 'features/vault/components/TokenCard';
 import StrategyCard from 'features/vault/components/StrategyCard';
 import SafetyCard from 'features/vault/components/SafetyCard';
 import Graph from 'features/vault/components/Graph';
+import { getEligibleZap } from 'helpers/zap';
+import BigNumber from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 
@@ -37,10 +39,30 @@ const Vault = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [item, setVaultData] = React.useState(null);
   const [dw, setDw] = React.useState('deposit');
+
   const [formData, setFormData] = React.useState({
-    deposit: { amount: '', max: false },
-    withdraw: { amount: '', max: false },
+    deposit: { input: '', amount: new BigNumber(0), max: false, token: null, isZap: false },
+    withdraw: { input: '', amount: new BigNumber(0), max: false, token: null, isZap: false },
+    zap: null,
   });
+
+  const resetFormData = () => {
+    setFormData({
+      ...formData,
+      deposit: {
+        ...formData.deposit,
+        input: '',
+        amount: new BigNumber(0),
+        max: false,
+      },
+      withdraw: {
+        ...formData.withdraw,
+        input: '',
+        amount: new BigNumber(0),
+        max: false,
+      },
+    });
+  };
 
   const handleWalletConnect = () => {
     if (!wallet.address) {
@@ -55,10 +77,6 @@ const Vault = () => {
     }
   };
 
-  const resetFormData = () => {
-    setFormData({ deposit: { amount: '', max: false }, withdraw: { amount: '', max: false } });
-  };
-
   React.useEffect(() => {
     if (!isEmpty(vault.pools) && vault.pools[id]) {
       setVaultData(vault.pools[id]);
@@ -69,6 +87,18 @@ const Vault = () => {
 
   React.useEffect(() => {
     if (item) {
+      setFormData({
+        ...formData,
+        deposit: {
+          ...formData.deposit,
+          token: item.token,
+        },
+        withdraw: {
+          ...formData.withdraw,
+          token: item.token,
+        },
+        zap: getEligibleZap(item),
+      });
       setIsLoading(false);
     }
   }, [item]);
@@ -81,7 +111,7 @@ const Vault = () => {
 
   React.useEffect(() => {
     if (item && wallet.address) {
-      dispatch(reduxActions.balance.fetchBalances(item));
+      dispatch(reduxActions.balance.fetchBalances());
     }
   }, [dispatch, item, wallet.address]);
 
@@ -89,7 +119,7 @@ const Vault = () => {
     if (item) {
       setInterval(() => {
         dispatch(reduxActions.vault.fetchPools(item));
-        dispatch(reduxActions.balance.fetchBalances(item));
+        dispatch(reduxActions.balance.fetchBalances());
       }, 60000);
     }
   }, [item, dispatch]);

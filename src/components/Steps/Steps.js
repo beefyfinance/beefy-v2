@@ -41,9 +41,9 @@ const Steps = ({ item, steps, handleClose }) => {
                     <Typography variant={'h2'}>
                       {byDecimals(
                         new BigNumber(wallet.action.data.amount),
-                        item.tokenDecimals
+                        steps.items[steps.currentStep].token.decimals
                       ).toFixed(8)}{' '}
-                      {item.token}
+                      {steps.items[steps.currentStep].token.symbol}
                     </Typography>
                     <Typography variant={'h2'}>{t('Deposit-Done')}</Typography>
                   </React.Fragment>

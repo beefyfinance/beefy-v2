@@ -1,4 +1,14 @@
-import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  InputBase,
+  makeStyles,
+  Paper,
+  Typography,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+} from '@material-ui/core';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import styles from '../styles';
 import BigNumber from 'bignumber.js';
 import Loader from 'components/loader';
-import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from 'helpers/format';
+import { byDecimals, convertAmountToRawNumber } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import reduxActions from 'features/redux/actions';
 import Steps from 'components/Steps';
@@ -14,6 +24,25 @@ import AssetsImage from 'components/AssetsImage';
 import BoostWidget from '../BoostWidget';
 import FeeBreakdown from '../FeeBreakdown';
 import switchNetwork from 'helpers/switchNetwork';
+
+BigNumber.prototype.significant = function (digits) {
+  const number = this.toFormat({
+    prefix: '',
+    decimalSeparator: '.',
+    groupSeparator: '',
+    groupSize: 0,
+    secondaryGroupSize: 0,
+  });
+  if (number.length <= digits + 1) {
+    return number;
+  }
+  const [wholes, decimals] = number.split('.');
+  if (wholes.length >= digits) {
+    return wholes;
+  }
+  const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
+  return `${wholes}.${decimals.match(pattern)[0]}`;
+};
 
 const useStyles = makeStyles(styles);
 
@@ -27,13 +56,17 @@ const Deposit = ({
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { wallet, balance } = useSelector(state => ({
+  const { wallet, balance, tokens } = useSelector(state => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
+    tokens: state.balanceReducer.tokens[item.network],
   }));
   const t = useTranslation().t;
 
-  const [state, setState] = React.useState({ balance: 0, allowance: 0 });
+  const [state, setState] = React.useState({
+    balance: new BigNumber(0),
+    allowance: new BigNumber(0),
+  });
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
@@ -43,21 +76,66 @@ const Deposit = ({
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleInput = val => {
-    const value =
-      parseFloat(val) > state.balance
-        ? state.balance
-        : parseFloat(val) < 0
-        ? 0
-        : stripExtraDecimals(val);
+    const input = val.replace(/[,]+/, '').replace(/[^0-9\.]+/, '');
+
+    let max = false;
+    let value = new BigNumber(input).decimalPlaces(
+      tokens[formData.deposit.token].decimals,
+      BigNumber.ROUND_DOWN
+    );
+
+    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
+      value = new BigNumber(0);
+    }
+
+    if (value.isGreaterThanOrEqualTo(state.balance)) {
+      value = state.balance;
+      max = true;
+    }
+
+    const formattedInput = (() => {
+      if (value.isEqualTo(input)) return input;
+      if (input === '') return '';
+      if (input === '.') return `0.`;
+      return value.significant(6);
+    })();
+
     setFormData({
       ...formData,
-      deposit: { amount: value, max: new BigNumber(value).minus(state.balance).toNumber() === 0 },
+      deposit: {
+        ...formData.deposit,
+        input: formattedInput,
+        amount: value,
+        max: max,
+      },
+    });
+  };
+
+  const handleAsset = tokenSymbol => {
+    setFormData({
+      ...formData,
+      deposit: {
+        ...formData.deposit,
+        input: '',
+        amount: new BigNumber(0),
+        max: false,
+        token: tokenSymbol,
+        isZap: item.token !== tokenSymbol,
+      },
     });
   };
 
   const handleMax = () => {
     if (state.balance > 0) {
-      setFormData({ ...formData, deposit: { amount: state.balance, max: true } });
+      setFormData({
+        ...formData,
+        deposit: {
+          ...formData.deposit,
+          input: state.balance.significant(6),
+          amount: state.balance,
+          max: true,
+        },
+      });
     }
   };
 
@@ -68,7 +146,13 @@ const Deposit = ({
         dispatch(reduxActions.wallet.setNetwork(item.network));
         return false;
       }
-      if (!state.allowance) {
+
+      const amount = convertAmountToRawNumber(
+        formData.deposit.amount,
+        tokens[formData.deposit.token].decimals
+      );
+
+      if (state.allowance.isLessThan(amount)) {
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),
@@ -76,28 +160,52 @@ const Deposit = ({
             dispatch(
               reduxActions.wallet.approval(
                 item.network,
-                item.tokenAddress,
-                item.earnContractAddress
+                tokens[formData.deposit.token].address,
+                formData.deposit.isZap ? formData.zap.address : item.earnContractAddress
               )
             ),
           pending: false,
         });
       }
 
-      steps.push({
-        step: 'deposit',
-        message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-        action: () =>
-          dispatch(
-            reduxActions.wallet.deposit(
-              item.network,
-              item.earnContractAddress,
-              convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals),
-              formData.deposit.max
-            )
-          ),
-        pending: false,
-      });
+      if (true === formData.deposit.isZap) {
+        steps.push({
+          step: 'deposit',
+          message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+          action: () =>
+            dispatch(
+              reduxActions.wallet.beefIn(
+                item.network,
+                item.earnContractAddress,
+                false, // isETH
+                tokens[formData.deposit.token].address,
+                amount,
+                formData.zap.address,
+                1000 // swapAmountOutMin
+              )
+            ),
+          token: tokens[formData.deposit.token],
+          pending: false,
+        });
+      }
+
+      if (false === formData.deposit.isZap) {
+        steps.push({
+          step: 'deposit',
+          message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+          action: () =>
+            dispatch(
+              reduxActions.wallet.deposit(
+                item.network,
+                item.earnContractAddress,
+                amount,
+                formData.deposit.max
+              )
+            ),
+          token: tokens[formData.deposit.token],
+          pending: false,
+        });
+      }
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
     } //if (wallet.address)
@@ -112,15 +220,22 @@ const Deposit = ({
   React.useEffect(() => {
     let amount = 0;
     let approved = 0;
-    if (wallet.address && !isEmpty(balance.tokens[item.token])) {
+    if (wallet.address && !isEmpty(tokens[formData.deposit.token])) {
       amount = byDecimals(
-        new BigNumber(balance.tokens[item.token].balance),
-        item.tokenDecimals
-      ).toFixed(8);
-      approved = balance.tokens[item.token].allowance[item.earnContractAddress];
+        new BigNumber(tokens[formData.deposit.token].balance),
+        tokens[formData.deposit.token].decimals
+      );
+      if (formData.zap && formData.deposit.token !== item.token) {
+        approved = tokens[formData.deposit.token].allowance[formData.zap.address];
+      } else {
+        approved = tokens[formData.deposit.token].allowance[item.earnContractAddress];
+      }
     }
-    setState({ balance: amount, allowance: approved });
-  }, [wallet.address, item, balance]);
+    setState({
+      balance: new BigNumber(amount),
+      allowance: new BigNumber(approved),
+    });
+  }, [wallet.address, item, balance, formData.deposit.token]);
 
   React.useEffect(() => {
     setIsLoading(balance.isBalancesLoading);
@@ -151,38 +266,120 @@ const Deposit = ({
     <React.Fragment>
       <Box p={3}>
         <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
-        <Box className={classes.balanceContainer} display="flex" alignItems="center">
-          <Box lineHeight={0}>
-            <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-          </Box>
-          <Box flexGrow={1} pl={1} lineHeight={0}>
-            {isLoading ? (
-              <Loader line={true} />
-            ) : (
-              <Typography variant={'body1'}>
-                {state.balance} {item.token}
-              </Typography>
-            )}
-          </Box>
-          <Box>
-            <a
-              href={item.buyTokenUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.btnSecondary}
-            >
-              <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
-            </a>
-          </Box>
-        </Box>
+        <RadioGroup
+          value={formData.deposit.token}
+          aria-label="deposit-asset"
+          name="deposit-asset"
+          onChange={e => handleAsset(e.target.value)}
+        >
+          <FormControlLabel
+            value={item.token}
+            control={<Radio />}
+            label={
+              /*TODO: wrap label content into component */
+              <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                <Box lineHeight={0}>
+                  <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+                </Box>
+                <Box flexGrow={1} pl={1} lineHeight={0}>
+                  {isLoading ? (
+                    <Loader line={true} />
+                  ) : (
+                    <Typography variant={'body1'}>
+                      {byDecimals(
+                        tokens[item.token].balance,
+                        tokens[item.token].decimals
+                      ).significant(6)}{' '}
+                      {item.token}
+                    </Typography>
+                  )}
+                </Box>
+                <Box>
+                  <a
+                    href={item.buyTokenUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={classes.btnSecondary}
+                  >
+                    <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+                  </a>
+                </Box>
+              </Box>
+            }
+          />
+          {formData.zap?.tokens[0] && (
+            <FormControlLabel
+              value={formData.zap.tokens[0].symbol}
+              control={<Radio />}
+              label={
+                <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                  <Box lineHeight={0}>
+                    <AssetsImage
+                      assets={[formData.zap.tokens[0].symbol]}
+                      alt={formData.zap.tokens[0].name}
+                    />
+                  </Box>
+                  <Box flexGrow={1} pl={1} lineHeight={0}>
+                    {isLoading ? (
+                      <Loader line={true} />
+                    ) : (
+                      <Typography variant={'body1'}>
+                        {byDecimals(
+                          tokens[formData.zap.tokens[0].symbol].balance,
+                          formData.zap.tokens[0].decimals
+                        ).significant(6)}{' '}
+                        {formData.zap.tokens[0].symbol}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+              }
+            />
+          )}
+          {formData.zap?.tokens[1] && (
+            <FormControlLabel
+              value={formData.zap.tokens[1].symbol}
+              control={<Radio />}
+              label={
+                <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                  <Box lineHeight={0}>
+                    <AssetsImage
+                      assets={[formData.zap.tokens[1].symbol]}
+                      alt={formData.zap.tokens[1].name}
+                    />
+                  </Box>
+                  <Box flexGrow={1} pl={1} lineHeight={0}>
+                    {isLoading ? (
+                      <Loader line={true} />
+                    ) : (
+                      <Typography variant={'body1'}>
+                        {byDecimals(
+                          tokens[formData.zap.tokens[1].symbol].balance,
+                          formData.zap.tokens[1].decimals
+                        ).significant(6)}{' '}
+                        {formData.zap.tokens[1].symbol}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+              }
+            />
+          )}
+        </RadioGroup>
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+              <AssetsImage
+                img={formData.deposit.token === item.token ? item.logo : null}
+                assets={
+                  formData.deposit.token === item.token ? item.assets : [formData.deposit.token]
+                }
+                alt={formData.token}
+              />
             </Box>
             <InputBase
               placeholder="0.00"
-              value={formData.deposit.amount}
+              value={formData.deposit.input}
               onChange={e => handleInput(e.target.value)}
             />
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
@@ -208,7 +405,7 @@ const Deposit = ({
                 onClick={handleDeposit}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                disabled={formData.deposit.amount <= 0}
+                disabled={formData.deposit.amount.isLessThanOrEqualTo(0)}
               >
                 {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
               </Button>

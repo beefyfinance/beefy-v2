@@ -97,9 +97,9 @@ const Withdraw = ({
 
   React.useEffect(() => {
     let amount = 0;
-    if (wallet.address && !isEmpty(balance.tokens[item.earnedToken])) {
+    if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
       amount = byDecimals(
-        new BigNumber(balance.tokens[item.earnedToken].balance).multipliedBy(
+        new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
           byDecimals(item.pricePerFullShare)
         ),
         item.tokenDecimals
