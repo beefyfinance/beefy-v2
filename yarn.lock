@@ -11888,10 +11888,9 @@ react-scripts@4.0.1:
   optionalDependencies:
     fsevents "^2.1.3"
 
-react-siema@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-siema/-/react-siema-1.0.1.tgz#7f043f8cb44c4747fe0729542ba52772cd3d57b4"
-  integrity sha1-fwQ/jLRMR0f+BylUK6Uncs09V7Q=
+"react-siema@https://github.com/mantaskaveckas/react-siema#32eff6717349e86eb18d4a11eb2609359c297f13":
+  version "1.0.4"
+  resolved "https://github.com/mantaskaveckas/react-siema#32eff6717349e86eb18d4a11eb2609359c297f13"
   dependencies:
     react "^15.4.1"
     react-dom "^15.4.1"

@@ -31,7 +31,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "react-siema": "^1.0.1",
+    "react-siema": "https://github.com/mantaskaveckas/react-siema#32eff6717349e86eb18d4a11eb2609359c297f13",
     "react-virtualized": "^9.22.3",
     "recharts": "^2.0.7",
     "redux": "^4.0.5",
