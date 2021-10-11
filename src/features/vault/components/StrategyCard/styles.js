@@ -13,7 +13,7 @@ const styles = theme => ({
     display: 'flex',
   },
   cardAction: {
-    marginLeft: '15px',
+    marginRight: '15px',
   },
   apysContainer: {
     marginBottom: '32px',
@@ -23,22 +23,23 @@ const styles = theme => ({
   },
   apyTitle: {
     ...bold,
-    fontSize: '18px',
-    lineHeight: '30px',
+    fontSize: '16px',
+    lineHeight: '24px',
     marginBottom: '12px',
+    fontWeight: '700',
   },
   apy: {
     marginRight: '24px',
   },
   apyValue: {
     ...bold,
-    fontSize: '24px',
-    lineHeight: '30px',
+    fontSize: '18px',
+    lineHeight: '24px',
   },
   apyLabel: {
     ...defaultFont,
-    fontSize: '15px',
-    lineHeight: '24px',
+    fontSize: '12px',
+    lineHeight: '20px',
     letterSpacing: '0.2px',
     color: '#8585A6',
   },
@@ -60,8 +61,8 @@ const styles = theme => ({
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: '18px',
-    lineHeight: '32px',
+    fontSize: '16px',
+    lineHeight: '24px',
     marginBottom: '28px',
   },
 });

@@ -4,9 +4,6 @@ const styles = theme => ({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '3px 15px 4px',
-    background: '#232743',
-    borderRadius: '20px',
     textDecoration: 'none',
   },
   text: {
@@ -21,7 +18,7 @@ const styles = theme => ({
     flex: 'none',
     order: 0,
     flexGrow: 0,
-    margin: '0px 10px',
+    marginRight: '10px',
   },
 });
 

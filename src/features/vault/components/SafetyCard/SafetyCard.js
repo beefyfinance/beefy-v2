@@ -22,11 +22,11 @@ const SafetyCard = ({ vaultRisks, score }) => {
   return (
     <Card>
       <CardHeader className={classes.cardHeader}>
-        <CardTitle title={<SafetyScore score={score} />} subtitle={t('Safety-Score')} />
+        <CardTitle title={<SafetyScore score={score} />} />
         <div className={classes.cardActions}>
           <LinkButton
             href="https://docs.beefy.finance/beefyfinance/faq/beefy-safety-score"
-            text={t('Safety-HowCalc')}
+            text={t('Safety-Score')}
           />
         </div>
       </CardHeader>
@@ -43,15 +43,17 @@ const SafetyCard = ({ vaultRisks, score }) => {
                       <img alt="Negative score" src={down} className={classes.arrow} />
                     )}
                     <div>
-                      <Typography className={classes.risk}>{t(RISKS[risk].title)}</Typography>
+                      <div className={classes.moreInfoContainer}>
+                        <Typography className={classes.risk}>{t(RISKS[risk].title)}</Typography>
+                        <Popover
+                          title={t(RISKS[risk].title)}
+                          content={t(RISKS[risk].explanation)}
+                        />
+                      </div>
                       <Typography className={classes.riskCategory}>
                         {t(RISKS[risk].category)}
                       </Typography>
                     </div>
-                  </div>
-                  <div className={classes.moreInfoContainer}>
-                    <Typography className={classes.moreInfoLabel}>{t('Safety-Meaning')}</Typography>
-                    <Popover title={t(RISKS[risk].title)} content={t(RISKS[risk].explanation)} />
                   </div>
                 </div>
               )}

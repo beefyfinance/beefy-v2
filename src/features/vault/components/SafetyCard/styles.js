@@ -10,7 +10,7 @@ const boldFont = {
 
 const styles = theme => ({
   cardActions: {
-    margin: '10px',
+    fontSize: '18px',
   },
   cardSubtitle: {
     ...boldFont,
@@ -30,9 +30,11 @@ const styles = theme => ({
   },
   risk: {
     ...boldFont,
-    fontSize: '24px',
-    lineHeight: '30px',
+    fontSize: '18px',
+    lineHeight: '28px',
     color: '#FFFFFF',
+    fontWeight: 700,
+    marginRight: 8,
   },
   riskCategory: {
     ...defaultFont,
