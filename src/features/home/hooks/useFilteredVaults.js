@@ -2,7 +2,6 @@ import useLocalStorage from '../../../hooks/useLocalStorage';
 import { isEmpty, isObject } from '../../../helpers/utils';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
-import lodash from 'lodash';
 
 const FILTER_STORAGE_KEY = 'homeSortConfig';
 export const FILTER_DEFAULT = {
@@ -207,8 +206,6 @@ function useVaults() {
   );
   const filteredVaults = useFilteredVaults(allVaults, config, address, tokenBalances);
   const sortedVaults = useSortedVaults(filteredVaults, config.key, config.direction);
-
-  console.log(activeVaults);
 
   return [
     sortedVaults,

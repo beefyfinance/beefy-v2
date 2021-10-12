@@ -76,7 +76,7 @@ const Deposit = ({
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleInput = val => {
-    const input = val.replace(/[,]+/, '').replace(/[^0-9\.]+/, '');
+    const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
     let max = false;
     let value = new BigNumber(input).decimalPlaces(
@@ -235,6 +235,7 @@ const Deposit = ({
       balance: new BigNumber(amount),
       allowance: new BigNumber(approved),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wallet.address, item, balance, formData.deposit.token]);
 
   React.useEffect(() => {

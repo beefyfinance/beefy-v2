@@ -44,7 +44,13 @@ function Item({ vault }) {
         .toFixed(8);
     }
     setState({ balance: amount });
-  }, [wallet.address, item.balance, balance.isBalancesLoading]);
+  }, [
+    wallet.address,
+    item.balance,
+    balance.isBalancesLoading,
+    item.tokenDecimals,
+    item.pricePerFullShare,
+  ]);
 
   return (
     <div

@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 import { Menu, Close } from '@material-ui/icons';
 import styles from './styles';
-import { useLocation } from 'react-router';
 import WalletContainer from './components/WalletContainer';
 import SimpleDropdown from 'components/SimpleDropdown';
 import LanguageDropdown from 'components/LanguageDropdown';
@@ -31,7 +30,6 @@ const useStyles = makeStyles(styles);
 
 const Header = ({ isNightMode, setNightMode }) => {
   const { t } = useTranslation();
-  const location = useLocation();
   const dispatch = useDispatch();
   const walletReducer = useSelector(state => state.walletReducer);
   const classes = useStyles();

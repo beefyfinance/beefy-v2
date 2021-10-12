@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import ApyLoader from 'components/APYLoader';
 import { useSelector } from 'react-redux';
 import { calcDaily, formatApy, formatUsd } from 'helpers/format';
-import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from 'helpers/format';
+import { byDecimals } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import BigNumber from 'bignumber.js';
 import styles from './styles';
