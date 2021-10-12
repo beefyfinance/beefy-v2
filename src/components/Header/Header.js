@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import switchNetwork from 'helpers/switchNetwork';
 import UnsupportedNetwork from 'components/UnsupportedNetwork';
 import BigNumber from 'bignumber.js';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -89,20 +90,17 @@ const Header = ({ isNightMode, setNightMode }) => {
           rel="noreferrer"
         >
           <img alt="BIFI" src={require('images/BIFI-TOKEN.svg').default} />
-          <Typography noWrap={true}>{`$${price ? price : 0}`}</Typography>
+          <Typography noWrap={true}>{`$${price ? price : '$0'}`}</Typography>
         </a>
       </Box>
     );
   });
 
+  const appBarStyle = clsx([classes.navHeader, classes.hasPortfolio]);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        className={[classes.navHeader, location.pathname === '/' ? classes.hasPortfolio : ''].join(
-          ' '
-        )}
-        position="static"
-      >
+      <AppBar className={appBarStyle} position="static">
         {walletReducer.error.status && walletReducer.error.message === 'UNSUPPORTED NETWORK' && (
           <UnsupportedNetwork />
         )}

@@ -67,6 +67,8 @@
   "Vault-GoBack": "Back to Explore",
   "Vault-vault": "vault",
   "Vault-network": "network",
+  "Vault-deposited": "Deposited",
+  "Vault-LastHarvest": "Last harvest",
   "Vault-ApproveMsg": "Approval transaction happens once per vault.",
   "Vault-TxnConfirm": "Confirm wallet transaction to complete {{type}}.",
   "Vault-Wallet": "Wallet:",

@@ -1,37 +1,21 @@
 const styles = theme => ({
   vaultContainer: {
-    marginTop: '40px',
+    padding: '40px 0',
+    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
   },
   title: {
-    marginTop: '40px',
+    display: 'flex',
+    marginBottom: '8px',
     '& .MuiTypography-h1': {
-      fontSize: '48px',
-      lineHeight: '54px',
+      fontSize: '36px',
+      lineHeight: '52px',
       fontWeight: 600,
-      paddingLeft: '10px',
+      paddingLeft: '12px',
+      letterSpacing: '-0.1px',
     },
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      width: 54,
-      height: 54,
-    },
-  },
-  btnGoBack: {
-    fontSize: '14px',
-    lineHeight: '18px',
-    fontWeight: 600,
-    color: '#6B7199',
-    backgroundColor: '#14182B',
-    letterSpacing: '0.2px',
-    textTransform: 'inherit',
-    borderRadius: '20px',
-    padding: '6px 20px 6px 10px',
-  },
-  mobileFix: {
-    display: 'block',
-    padding: '20px 0',
-    [theme.breakpoints.up('sm')]: {
-      display: 'flex',
-      padding: 0,
+      width: 48,
+      height: 48,
     },
   },
   summaryContainer: {
@@ -84,15 +68,7 @@ const styles = theme => ({
     borderRadius: '20px',
   },
   customOrder: {
-    order: 0,
-    [theme.breakpoints.up('md')]: {
-      order: 1,
-      width: '100%',
-      minWidth: 360,
-      position: 'absolute',
-      right: 0,
-      paddingLeft: '24px',
-    },
+    order: 1,
   },
   tabs: {
     backgroundColor: '#14182B',
@@ -125,17 +101,25 @@ const styles = theme => ({
   badges: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    margin: '0 30px 0 0',
+    justifyContent: 'flex-start',
     '& img': {
       height: '24px',
+      marginRight: '4px',
     },
-    [theme.breakpoints.down('sm')]: {
-      margin: '0 10px',
-    },
-    '& .MuiBox-root': {
-      padding: '0 5px',
-    },
+  },
+  platformContainer: {
+    display: 'flex',
+    marginTop: '8px',
+  },
+  platformValue: {
+    fontWeight: 600,
+    fontSize: '12px',
+    textTransform: 'uppercase',
+  },
+  platformLabel: {
+    fontWeight: 600,
+    fontSize: '12px',
+    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
   },
 });
 

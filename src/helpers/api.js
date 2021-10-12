@@ -11,4 +11,15 @@ const getBuyback = async () => {
   }
 };
 
-export { getBuyback };
+const getVaults = async () => {
+  const cache = new Date();
+  cache.setMinutes(0, 0, 0);
+  try {
+    const request = await axios.get('https://api.beefy.finance/vaults?_=' + cache.getTime());
+    return request.status === 200 ? request.data : null;
+  } catch (err) {
+    return err;
+  }
+};
+
+export { getBuyback, getVaults };
