@@ -1,10 +1,10 @@
 /*********
 Node.js script to refresh the v2 app with the vaults state found in the v1 app. 
 "New" vaults in v1 are pulled into v2, and outdated properties in current v2 vaults 
-are refreshed with counterpart v1 values and any associated logo/icon files. Thus v1 
-is considered the source of truth in this operation.
+are refreshed with their v1 counterparts. Associated logo/icon files are accounted for 
+as well. Thus v1 is considered the source of truth in this operation.
 
-Script should be run from root "beefy-v2" directory with the "beefy-app" sources in a 
+Script should be run from root "beefy-v2" directory with fresh "beefy-app" sources in a 
 _sibling_ directory. A working Node.js environment off the beefy-v2 directory is 
 assumed. Linux command line to invoke the script:
 
@@ -13,17 +13,22 @@ node src/scripts/migrateV1vaults.mjs
 Progress will be printed to standard output and standard error.
 
 Aspects of a full migration which this script cannot perform are two:
-(a) The v2 "Vamp" strategy type (key "stratType"). It cannot be reliably 
-programmatically discerned from a v1 input object.
-(b) The v2 child array of risk factors (key "risks"). Concept unnknown in v1.
+(a) The v2 "Vamp" strategy type (key "stratType"). This cannot be reliably 
+programmatically discerned from a v1 input object. This property may however be added to 
+the v1 object in anticipation of future use in v2. This script will accmmodatively copy 
+it over.
+(b) The v2 child array of risk factors (key "risks"). Concept unnknown in v1. This array 
+may however be added to the v1 object in anticipation of future use in v2. This script 
+will accommodatively copy it over.
 
-To assist the maintainer in manually updating these v2 aspects, the script creates an 
-output file with an array-listing of the IDs of the v1 vaults it has added newly to 
-the v2 environment: vaultsAddedFromV1.txt. The file is placed in directory from which 
-the command is run. It makes sense for the maintainer to delete this file before pushing 
-the migration updates into the staging repository.
+To assist the maintainer in manually updating these v2 aspects, an output file with an 
+array-listing of the IDs of the v1 vaults it has added newly to the v2 environment is 
+created: vaultsAddedFromV1.txt. The file is placed in directory from which the command 
+is run. To help minimize pollution, the maintainer may avoid pushing this file into the 
+staging repository.
 
 Development
++ v0.7 AllTrades: accomodated v2 property-anticipation in v1 vault objects
 + v0.1.0.1 AllTrades: moved script into a new src/script, incorporated Arbitrum
 + v0.1 AllTrades
 **********/
@@ -38,7 +43,7 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 										{S_SRC: "harmony"},
 										{S_SRC: "arbitrum"}];
 const mS_PROPNM_ID = "id", mS_PROPNM_ASSTS = "assets", mS_PROPNM_STRAT_TYP = "stratType", 
-			mS_PROPNM_CHAIN = "network", mS_PROPNM_LOGO = "logo", 
+			mS_PROPNM_CHAIN = "network", mS_PROPNM_LOGO = "logo", mS_PROPNM_RISKS = "risks",
 			mAS_STRAT_TYP = [ "", "SingleStake", "StratLP", "StratMultiLP", "Vamp"];
 const moAO_SRC = {}, mo_trgt = {}; 
 
@@ -116,6 +121,10 @@ async function p_main()	{
 																																	O_SRC[ S][ i] === s))
 							continue;
 
+						//update the target's counterpart array
+						o_trgt[ S] = [...O_SRC[ S]];
+					//else if this is the risks-array property...
+					}else if (mS_PROPNM_RISKS === S)	{
 						//update the target's counterpart array
 						o_trgt[ S] = [...O_SRC[ S]];
 					//else update the target's counterpart property, since it is outdated. Also if 
@@ -208,12 +217,16 @@ async function p_main()	{
 
 			//add a copy of the source vault descriptor to the target array, adjusting as 
 			//	needed to match the target format
-			let o = {...O_SRC}; o[ mS_PROPNM_ASSTS] = [...O_SRC[ mS_PROPNM_ASSTS]];
+			let o = {...O_SRC};
+			o[ mS_PROPNM_ASSTS] = [...O_SRC[ mS_PROPNM_ASSTS]];
+			if (O_SRC[ mS_PROPNM_RISKS])
+				o[ mS_PROPNM_RISKS] = [...O_SRC[ mS_PROPNM_RISKS]];
 			for (const S in O_PROP_IGNR) if (S in o) delete o[S];
 			if (o[ mS_PROPNM_ASSTS])	{
 				const I = o[ mS_PROPNM_ASSTS].length;
+				if (!o[ mS_PROPNM_STRAT_TYP])
 //TODO?: somehow programatically set 'Vamp' stratType
-				o[ mS_PROPNM_STRAT_TYP] = mAS_STRAT_TYP[ I < 3 ? I : 3]; 
+					o[ mS_PROPNM_STRAT_TYP] = mAS_STRAT_TYP[ I < 3 ? I : 3]; 
 			}else
 				console.error( `Asset list missing on source vault ${o[ mS_PROPNM_ID]} on ${o[ 
 																															mS_PROPNM_CHAIN]} chain`);
@@ -238,13 +251,14 @@ async function p_main()	{
 	FS.writeFileSync( `${S_DIR_BASE}/beefy-v2/vaultsAddedFromV1.txt`, JSON.stringify( 
 																																	aS_added, null, 2));
 
-	//for each changed target array (one per chain), commit it to persistent storage
+	//for each changed target array (one per chain), commit it to persistent storage as a 
+	//	loadable JavaScript file
 	for (const O_CHN of mAO_CHAIN)	{
 		o_trgtChn = mo_trgt[ O_CHN.S_SRC];
 		if (!o_trgtChn.b_dirty)
 			continue;
-		console.log( "Writing updated v2 vault descriptors file: " + O_CHN.S_SRC);
 		delete o_trgtChn.b_dirty;
+		console.log( "Writing updated v2 vault descriptors file: " + O_CHN.S_SRC);
 		FS.writeFileSync( `${S_DIR_BASE}/beefy-v2/src/config/vault/${O_CHN.S_TRGT_ALIAS ? 
 										O_CHN.S_TRGT_ALIAS : O_CHN.S_SRC}.js`, 
 										`export const pools = ${JSON.stringify( Object.values( o_trgtChn), 
