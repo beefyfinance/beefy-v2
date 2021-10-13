@@ -29,6 +29,8 @@ const StrategyCard = ({
   const classes = useStyles();
   const t = useTranslation().t;
 
+  console.log(apy.tradingApr);
+
   return (
     <Card>
       <CardHeader>
@@ -65,7 +67,7 @@ const StrategyCard = ({
                 <Typography className={classes.apyValue}>{formatApy(apy.vaultApr, '-')}</Typography>
               </div>
             )}
-            {apy.tradingApr && (
+            {apy.tradingApr > 0 && (
               <div className={classes.apy}>
                 <Typography className={classes.apyLabel}>{t('Vault-AprTrading')}</Typography>
                 <Typography className={classes.apyValue}>
