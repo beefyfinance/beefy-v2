@@ -14,8 +14,6 @@ const useLastHarvest = vaultId => {
         return i.id === vaultId;
       });
 
-      console.log(vault);
-
       var ts = Math.round(new Date().getTime() / 1000);
 
       const string =

@@ -1,4 +1,4 @@
-import { Container, makeStyles, Grid, Typography, Box, Button, Divider } from '@material-ui/core';
+import { Container, makeStyles, Grid, Typography, Box, Button } from '@material-ui/core';
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { addressBook } from 'blockchain-addressbook';
 import reduxActions from '../redux/actions';
-import { calcDaily, formatApy, formatUsd } from 'helpers/format';
 import { isEmpty } from 'helpers/utils';
 import Loader from 'components/loader';
 import DisplayTags from 'components/vaultTags';

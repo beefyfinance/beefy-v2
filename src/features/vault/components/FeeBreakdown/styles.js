@@ -61,6 +61,7 @@ const styles = theme => ({
     lineHeight: '18px',
     marginBottom: '12px',
   },
+  // eslint-disable-next-line no-dupe-keys
   divider: {
     height: '2px',
     marginBottom: '20px',

@@ -48,11 +48,19 @@ const Stats = ({ item }) => {
     <>{value ? <span className={classes.tached}>{value}</span> : <ApyLoader />}</>
   );
 
+  const ValuePrice = ({ value }) => (
+    <>{value ? <span className={classes.price}>{value}</span> : <ApyLoader />}</>
+  );
+
   const price = React.useMemo(() => {
     return state.balance > 0
       ? BigNumber(pricesReducer.prices[item.id]).times(state.balance).toFixed(2)
       : 0;
   }, [state.balance, pricesReducer.prices, item.id]);
+
+  const tokensEarned = React.useMemo(() => {
+    return state.balance > 0 ? state.balance : '0';
+  }, [state.balance]);
 
   return (
     <Box className={classes.container}>
@@ -105,8 +113,13 @@ const Stats = ({ item }) => {
         <Box className={classes.stat}>
           <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
           <Typography>
-            <ValueText value={formatUsd(price)} />
+            <ValueText value={tokensEarned} />
           </Typography>
+          {state.balance > 0 && (
+            <Typography>
+              <ValuePrice value={formatUsd(price)} />
+            </Typography>
+          )}
         </Box>
         <Box className={classes.stat}>
           <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>

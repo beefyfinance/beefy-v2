@@ -1,5 +1,3 @@
-import { fontSize } from '@material-ui/system';
-
 const styles = theme => ({
   cardActions: {
     display: 'flex',

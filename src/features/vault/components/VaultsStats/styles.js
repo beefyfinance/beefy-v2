@@ -31,6 +31,12 @@ const styles = theme => ({
     lineHeight: '30px',
     color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
   },
+  price: {
+    color: '#9595B2',
+    letterSpacing: '0.2px',
+    fontSize: '14px',
+    lineHeight: '18px',
+  },
   tached: {
     color: '#9595B2',
     textDecorationLine: 'line-through',

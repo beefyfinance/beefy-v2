@@ -13,9 +13,6 @@ const FeeBreakdown = ({ item, formData, type }) => {
   const formattedDepositFee = useFormattedFee(item.depositFee);
   const formattedWithdrawalFee = useFormattedFee(item.withdrawalFee);
 
-  console.log(formData);
-  console.log(item);
-
   return (
     <Box mt={2} p={2} className={classes.feeContainer}>
       <Grid container>
