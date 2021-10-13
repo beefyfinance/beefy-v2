@@ -1,5 +1,4 @@
 import { Container, makeStyles, Grid, Typography, Box, Button, Divider } from '@material-ui/core';
-import { ArrowLeft } from '@material-ui/icons';
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
@@ -21,6 +20,7 @@ import SafetyCard from 'features/vault/components/SafetyCard';
 import Graph from 'features/vault/components/Graph';
 import { getEligibleZap } from 'helpers/zap';
 import BigNumber from 'bignumber.js';
+import VaultStats from './components/VaultsStats';
 
 const useStyles = makeStyles(styles);
 
@@ -101,6 +101,7 @@ const Vault = () => {
       });
       setIsLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item]);
 
   React.useEffect(() => {
@@ -125,122 +126,103 @@ const Vault = () => {
   }, [item, dispatch]);
 
   return (
-    <Container className={classes.vaultContainer} maxWidth="lg">
-      {isLoading ? (
-        <Loader message={t('Vault-GetData')} />
-      ) : (
-        <Grid container spacing={6} style={{ position: 'relative' }}>
-          <Grid item xs={12} md={8} lg={8} xl={9}>
-            <Button
-              className={classes.btnGoBack}
-              onClick={() => {
-                history.push('/');
-              }}
-            >
-              <ArrowLeft /> {t('Vault-GoBack')}
-            </Button>
-            <Grid className={classes.title} container>
-              <Grid>
+    <>
+      <Box className={classes.vaultContainer}>
+        <Container maxWidth="lg">
+          {isLoading ? (
+            <Loader message={t('Vault-GetData')} />
+          ) : (
+            <>
+              <Box className={classes.title}>
                 <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-              </Grid>
-              <Grid>
                 <Typography variant={'h1'}>
                   {item.name} {t('Vault-vault')}
                 </Typography>
-              </Grid>
-            </Grid>
-            <Box className={classes.mobileFix} display="flex" alignItems="center">
+              </Box>
               <Box className={classes.badges}>
-                <Box>
-                  <img
-                    alt={item.network}
-                    src={require('images/networks/' + item.network + '.svg').default}
-                  />
-                </Box>
-                <Box>
-                  <Typography className={classes.network} display={'inline'}>
-                    {item.network} {t('Vault-network')}
-                  </Typography>
-                </Box>
+                <img
+                  alt={item.network}
+                  src={require('images/networks/' + item.network + '.svg').default}
+                />
                 <DisplayTags tags={item.tags} />
               </Box>
-              <Box className={classes.summaryContainer} display={'flex'} alignItems="center">
-                <Divider />
-                <Box>
-                  <Typography variant={'h1'}>{formatUsd(item.tvl)}</Typography>
-                  <Typography variant={'body2'}>{t('TVL')}</Typography>
-                </Box>
-                <Divider />
-                <Box>
-                  <Typography variant={'h1'}>{calcDaily(item.apy.totalApy)}</Typography>
-                  <Typography variant={'body2'}>{t('Vault-Daily')}</Typography>
-                </Box>
-                <Divider />
-                <Box>
-                  <Typography variant={'h1'}>{formatApy(item.apy.totalApy)}</Typography>
-                  <Typography variant={'body2'}>{t('APY')}</Typography>
-                </Box>
+              <Box>
+                <span className={classes.platformContainer}>
+                  <Typography className={classes.platformLabel}>{t('PLATFORM')}:&nbsp;</Typography>
+                  <Typography className={classes.platformValue}>{item.platform}</Typography>
+                </span>
               </Box>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={4} className={classes.customOrder}>
-            <Box className={classes.dw}>
-              <Box className={classes.tabs}>
-                <Button
-                  onClick={() => setDw('deposit')}
-                  className={dw === 'deposit' ? classes.selected : ''}
-                >
-                  {t('Deposit-Verb')}
-                </Button>
-                <Button
-                  onClick={() => setDw('withdraw')}
-                  className={dw === 'withdraw' ? classes.selected : ''}
-                >
-                  {t('Withdraw-Verb')}
-                </Button>
-              </Box>
-              {dw === 'deposit' ? (
-                <Deposit
-                  item={item}
-                  handleWalletConnect={handleWalletConnect}
-                  formData={formData}
-                  setFormData={setFormData}
-                  updateItemData={updateItemData}
-                  resetFormData={resetFormData}
+              <VaultStats item={item} />
+            </>
+          )}
+        </Container>
+      </Box>
+      <Box mt={5}>
+        <Container maxWidth="lg" my={5}>
+          {isLoading ? (
+            <Loader message={t('Vault-GetData')} />
+          ) : (
+            <Grid container spacing={6}>
+              <Grid item xs={12} md={4} lg={4} xl={3} className={classes.customOrder}>
+                <Box className={classes.dw}>
+                  <Box className={classes.tabs}>
+                    <Button
+                      onClick={() => setDw('deposit')}
+                      className={dw === 'deposit' ? classes.selected : ''}
+                    >
+                      {t('Deposit-Verb')}
+                    </Button>
+                    <Button
+                      onClick={() => setDw('withdraw')}
+                      className={dw === 'withdraw' ? classes.selected : ''}
+                    >
+                      {t('Withdraw-Verb')}
+                    </Button>
+                  </Box>
+                  {dw === 'deposit' ? (
+                    <Deposit
+                      item={item}
+                      handleWalletConnect={handleWalletConnect}
+                      formData={formData}
+                      setFormData={setFormData}
+                      updateItemData={updateItemData}
+                      resetFormData={resetFormData}
+                    />
+                  ) : (
+                    <Withdraw
+                      item={item}
+                      handleWalletConnect={handleWalletConnect}
+                      formData={formData}
+                      setFormData={setFormData}
+                      updateItemData={updateItemData}
+                      resetFormData={resetFormData}
+                    />
+                  )}
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={8} lg={8} xl={9}>
+                <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
+                {item.risks && item.risks.length > 0 && (
+                  <SafetyCard vaultRisks={item.risks} score={item.safetyScore} />
+                )}
+                <StrategyCard
+                  stratType={item.stratType}
+                  stratAddr={item.strategy}
+                  vaultAddr={item.earnContractAddress}
+                  network={item.network}
+                  apy={item.apy}
+                  platform={item.platform}
+                  assets={item.assets}
+                  want={item.name}
+                  vamp={item.vamp}
                 />
-              ) : (
-                <Withdraw
-                  item={item}
-                  handleWalletConnect={handleWalletConnect}
-                  formData={formData}
-                  setFormData={setFormData}
-                  updateItemData={updateItemData}
-                  resetFormData={resetFormData}
-                />
-              )}
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={7}>
-            <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
-            {item.risks && item.risks.length > 0 && (
-              <SafetyCard vaultRisks={item.risks} score={item.safetyScore} />
-            )}
-            <StrategyCard
-              stratType={item.stratType}
-              stratAddr={item.strategy}
-              vaultAddr={item.earnContractAddress}
-              network={item.network}
-              apy={item.apy}
-              platform={item.platform}
-              assets={item.assets}
-              want={item.name}
-              vamp={item.vamp}
-            />
-            {renderTokens(item)}
-          </Grid>
-        </Grid>
-      )}
-    </Container>
+                {renderTokens(item)}
+              </Grid>
+            </Grid>
+          )}
+        </Container>
+      </Box>
+    </>
   ); //return
 }; //const Vault
 
