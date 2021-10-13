@@ -67,6 +67,7 @@
   "Vault-GoBack": "Back to Explore",
   "Vault-vault": "vault",
   "Vault-network": "network",
+  "Vault-platform": "Platform",
   "Vault-deposited": "Deposited",
   "Vault-LastHarvest": "Last harvest",
   "Vault-ApproveMsg": "Approval transaction happens once per vault.",

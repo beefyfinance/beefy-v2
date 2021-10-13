@@ -101,7 +101,7 @@ const Portfolio = () => {
           </Grid>
           <Grid item xs={12} lg={6}>
             <Box className={classes.vaults}>
-              <Typography className={classes.title}>{t('Vaults-Title')}</Typography>
+              <Typography className={classes.title}>{t('Vault-platform')}</Typography>
               <Box>
                 <VaultsStats />
               </Box>
