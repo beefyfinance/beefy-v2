@@ -1,6 +1,6 @@
 const styles = theme => ({
   vaultContainer: {
-    padding: '40px 0',
+    padding: '48px 0',
     backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
   },
   title: {

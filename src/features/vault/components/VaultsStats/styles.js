@@ -31,6 +31,13 @@ const styles = theme => ({
     lineHeight: '30px',
     color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
   },
+  tached: {
+    color: '#9595B2',
+    textDecorationLine: 'line-through',
+    letterSpacing: '0.2px',
+    fontSize: '14px',
+    lineHeight: '18px',
+  },
   label: {
     textTransform: 'uppercase',
     letterSpacing: '1px',
