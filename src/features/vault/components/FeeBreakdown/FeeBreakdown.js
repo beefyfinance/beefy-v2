@@ -60,28 +60,28 @@ const FeeBreakdown = ({ depositFee, withdrawalFee }) => {
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <Typography className={classes.value}>{formattedDepositFee}</Typography>
           <Typography className={classes.label}>{t('Fee-Deposit')}</Typography>
+          <Typography className={classes.value}>{formattedDepositFee}</Typography>
         </Grid>
         <Grid item xs={6}>
-          <Typography className={classes.value}>{formattedWithdrawalFee}</Typography>
           <Typography className={classes.label}>{t('Fee-Withdraw')}</Typography>
+          <Typography className={classes.value}>{formattedWithdrawalFee}</Typography>
         </Grid>
         <Grid item xs={12}>
           <Box pt={1}>
             <Typography className={classes.text}>{t('Fee-PerformExt')}</Typography>
           </Box>
-          <Divider className={classes.divider} />
-          <Typography className={classes.title}>{t('Fee-Transaction')}</Typography>
+          {/*<Divider className={classes.divider} />
+          <Typography className={classes.title}>{t('Fee-Transaction')}</Typography>*/}
         </Grid>
-        <Grid item xs={6}>
+        {/*<Grid item xs={6}>
           <Typography className={classes.value}>0.05 BNB ($0.10)</Typography>
           <Typography className={classes.label}>{t('Deposit-Noun')}</Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography className={classes.value}>0.05 BNB ($0.10)</Typography>
           <Typography className={classes.label}>{t('Withdraw-Noun')}</Typography>
-        </Grid>
+        </Grid>*/}
       </Grid>
     </Box>
   ); //return

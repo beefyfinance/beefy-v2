@@ -97,6 +97,12 @@ const styles = theme => ({
   btnSecondary: {
     textDecoration: 'none',
   },
+  depositTokenContainer: {
+    width: 'calc(100% + 16px)',
+    '& .MuiTypography-root': {
+      width: '100%',
+    },
+  },
 });
 
 export default styles;

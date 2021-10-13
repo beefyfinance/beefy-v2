@@ -273,6 +273,7 @@ const Deposit = ({
           onChange={e => handleAsset(e.target.value)}
         >
           <FormControlLabel
+            className={classes.depositTokenContainer}
             value={item.token}
             control={<Radio />}
             label={

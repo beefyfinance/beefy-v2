@@ -97,7 +97,7 @@
   "Withdraw-Verb": "Withdraw",
   "Withdraw-All": "Withdraw All",
   "Withdraw-Done": "withdrawal confirmed",
-  "Fee-Title": "Beefy Fee",
+  "Fee-Title": "Beefy Fees",
   "Fee-Tagline": "You earn what you stake",
   "Fee-DepositAmt": "{{amt}} deposit fee",
   "Fee-DepositTrgt": "Sent to the farmed platform, not Beefy",
