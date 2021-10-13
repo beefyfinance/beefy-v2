@@ -274,6 +274,7 @@ const Deposit = ({
           onChange={e => handleAsset(e.target.value)}
         >
           <FormControlLabel
+            className={classes.depositTokenContainer}
             value={item.token}
             control={<Radio />}
             label={
@@ -386,7 +387,7 @@ const Deposit = ({
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
           </Paper>
         </Box>
-        <FeeBreakdown withdrawalFee={item.withdrawalFee} depositFee={item.depositFee} />
+        <FeeBreakdown item={item} formData={formData} type={'deposit'} />
         <Box mt={2}>
           {item.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>

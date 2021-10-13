@@ -29,6 +29,8 @@ const StrategyCard = ({
   const classes = useStyles();
   const t = useTranslation().t;
 
+  console.log(apy.tradingApr);
+
   return (
     <Card>
       <CardHeader>
@@ -56,27 +58,27 @@ const StrategyCard = ({
           <Typography className={classes.apyTitle}>{t('Vault-ApyBreakdown')}</Typography>
           <div className={classes.apys}>
             <div className={classes.apy}>
-              <Typography className={classes.apyValue}>{formatApy(apy.totalApy, '-')}</Typography>
               <Typography className={classes.apyLabel}>{t('Vault-ApyTotal')}</Typography>
+              <Typography className={classes.apyValue}>{formatApy(apy.totalApy, '-')}</Typography>
             </div>
             {apy.vaultApr && (
               <div className={classes.apy}>
-                <Typography className={classes.apyValue}>{formatApy(apy.vaultApr, '-')}</Typography>
                 <Typography className={classes.apyLabel}>{t('Vault-AprFarm')}</Typography>
+                <Typography className={classes.apyValue}>{formatApy(apy.vaultApr, '-')}</Typography>
               </div>
             )}
-            {apy.tradingApr && (
+            {apy.tradingApr > 0 && (
               <div className={classes.apy}>
+                <Typography className={classes.apyLabel}>{t('Vault-AprTrading')}</Typography>
                 <Typography className={classes.apyValue}>
                   {formatApy(apy.tradingApr, '-')}
                 </Typography>
-                <Typography className={classes.apyLabel}>{t('Vault-AprTrading')}</Typography>
               </div>
             )}
             {apy.boostApr && (
               <div className={classes.apy}>
-                <Typography className={classes.apyValue}>{formatApy(apy.boostApr, '-')}</Typography>
                 <Typography className={classes.apyLabel}>{t('Vault-AprBoost')}</Typography>
+                <Typography className={classes.apyValue}>{formatApy(apy.boostApr, '-')}</Typography>
               </div>
             )}
           </div>

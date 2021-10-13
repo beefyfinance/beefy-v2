@@ -38,7 +38,7 @@ const styles = theme => ({
     height: '25px',
   },
   withSizeLarge: {
-    marginBottom: '10px',
+    marginBottom: '5px',
     '& $label': {
       fontSize: '36px',
       lineHeight: '30px',

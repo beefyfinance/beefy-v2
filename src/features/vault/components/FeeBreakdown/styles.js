@@ -11,7 +11,7 @@ const styles = theme => ({
     borderRadius: '10px',
   },
   title: {
-    fontSize: '14px',
+    fontSize: '16px',
     lineHeight: '18px',
     fontWeight: 600,
     letterSpacing: '1px',
@@ -19,19 +19,24 @@ const styles = theme => ({
     color: '#8585A6',
   },
   value: {
-    fontSize: '14px',
+    fontSize: '18px',
     fontWeight: 600,
     letterSpacing: '0.2px',
     color: '#ffffff',
-    paddingTop: '5px',
+    paddingTop: '0',
   },
   label: {
     ...regularText,
-    paddingTop: 0,
+    paddingTop: 5,
+    fontSize: '12px',
+    fontWeight: 600,
+    lineHeight: '20px',
   },
   text: {
     ...regularText,
     paddingTop: 5,
+    fontSize: '14px',
+    lineHeight: '18px',
   },
   divider: {
     margin: '20px 0',
@@ -50,6 +55,20 @@ const styles = theme => ({
     ...regularText,
     whiteSpace: 'pre',
     tabSize: 10,
+  },
+  zapStep: {
+    fontSize: '14px',
+    lineHeight: '18px',
+    marginBottom: '12px',
+  },
+  divider: {
+    height: '2px',
+    marginBottom: '20px',
+    marginTop: '8px',
+  },
+  flexAlignCenter: {
+    display: 'flex',
+    alignItems: 'baseline',
   },
 });
 

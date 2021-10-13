@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import styles from './styles';
@@ -15,7 +15,7 @@ const BoostWidget = ({ onClick, balance, s_stake }) => {
       <Box display="flex" alignItems="center">
         <img alt="fire" src={require('images/fire.png').default} className={classes.boostImg} />
         <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
-        <Box ml={0.5}>
+        <Box style={{ marginLeft: '8px' }}>
           <Popover
             title={t('Boost-WhatIs')}
             content={t('Boost-Explain')}
@@ -24,18 +24,34 @@ const BoostWidget = ({ onClick, balance, s_stake }) => {
             placement="top-end"
           />
         </Box>
-        <Box flexGrow={1}>
-          <Typography className={classes.h2} align={'right'}>
-            {balance}
-          </Typography>
-        </Box>
       </Box>
-      <Typography className={classes.body1} align={'right'}>
-        {t('Boost-Balance')}
-      </Typography>
+      {/* TODO: connect boost data + buttons*/}
+      <Grid container>
+        <Grid item xs={6}>
+          <Typography className={classes.body1}>{t('Boost-Balance')}</Typography>
+          <Typography className={classes.h2}>{balance}</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography className={classes.body1}>{t('Boost-Balance-Staked')}</Typography>
+          <Typography className={classes.h2}>0</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <Typography className={classes.body1}>{t('Boost-Rewards')}</Typography>
+          <Typography className={classes.h2}>0</Typography>
+        </Grid>
+      </Grid>
 
-      <Button disabled={true} className={classes.submit} fullWidth={true} onClick={onClick}>
-        {s_stake}
+      <Button disabled={false} className={classes.button} fullWidth={true} onClick={onClick}>
+        {t('Boost-Button-Vault')}
+      </Button>
+      <Button disabled={true} className={classes.button} fullWidth={true} onClick={onClick}>
+        {t('Boost-Button-Withdraw')}
+      </Button>
+      <Button disabled={true} className={classes.button} fullWidth={true} onClick={onClick}>
+        {t('Boost-Button-Claim')}
+      </Button>
+      <Button disabled={true} className={classes.button} fullWidth={true} onClick={onClick}>
+        {t('Boost-Button-Claim-Unstake')}
       </Button>
     </div>
   );

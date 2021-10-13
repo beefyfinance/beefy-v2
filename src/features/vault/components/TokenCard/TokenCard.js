@@ -20,7 +20,8 @@ const TokenCard = ({ token, network }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle title={symbol} subtitle={t('Token-Detail')} />
+        <Typography className={classes.detailTitle}>{t('Token-Detail')}</Typography>
+        <CardTitle title={symbol} />
         <div className={classes.cardActions}>
           {website ? (
             <div className={classes.cardAction}>

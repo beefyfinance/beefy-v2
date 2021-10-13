@@ -10,6 +10,7 @@ import CardTitle from '../Card/CardTitle/CardTitle';
 import CustomTooltip from './CustomTooltip';
 import useChartData from './useChartData';
 import Tabs from 'components/Tabs';
+import BasicTabs from 'components/Tabs/BasicTabs';
 import { formatUsd, formatApy } from 'helpers/format';
 import styles from './styles';
 
@@ -25,21 +26,16 @@ const Graph = ({ oracleId, vaultId, network }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle title={t('Graph-RateHist')} />
-        <div className={classes.headerTabs}>
-          <div className={classes.headerTab}>
-            <Tabs
-              labels={[t('TVL'), t('Graph-Price'), t('APY')]}
-              value={stat}
-              onChange={newValue => setStat(newValue)}
-            />
-          </div>
-          <div className={classes.headerTab}>
-            <Tabs
-              labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-1Year')]}
-              value={period}
-              onChange={newValue => setPeriod(newValue)}
-            />
+        <div style={{ display: 'flex' }}>
+          <CardTitle title={t('Graph-RateHist')} />
+          <div className={classes.headerTabs}>
+            <div className={classes.headerTab}>
+              <Tabs
+                labels={[t('TVL'), t('Graph-Price'), t('APY')]}
+                value={stat}
+                onChange={newValue => setStat(newValue)}
+              />
+            </div>
           </div>
         </div>
       </CardHeader>
@@ -71,6 +67,13 @@ const Graph = ({ oracleId, vaultId, network }) => {
             </AreaChart>
           </ResponsiveContainer>
         </Box>
+        <div className={classes.footerTab}>
+          <BasicTabs
+            labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-1Year')]}
+            value={period}
+            onChange={newValue => setPeriod(newValue)}
+          />
+        </div>
       </CardContent>
     </Card>
   );

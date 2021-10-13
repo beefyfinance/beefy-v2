@@ -3,6 +3,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-end',
+    marginLeft: 'auto',
     [theme.breakpoints.up('lg')]: {
       flexDirection: 'row',
       alignItems: 'center',

@@ -23,6 +23,25 @@ const styles = theme => ({
       padding: '5px',
     },
   },
+  basicTabs: {
+    float: 'right',
+    '& .MuiTabs-indicator': {
+      display: 'none',
+      color: 'transparent',
+    },
+    '& .MuiTab-root': {
+      minWidth: 'fit-content',
+      padding: '0 12',
+    },
+    '& .MuiTab-textColorPrimary': {
+      fontWeight: 600,
+      letterSpacing: 0.2,
+      color: '#484F7F',
+    },
+    '& .Mui-selected': {
+      color: 'white',
+    },
+  },
 });
 
 export default styles;
