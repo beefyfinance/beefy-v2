@@ -56,6 +56,20 @@ const styles = theme => ({
     whiteSpace: 'pre',
     tabSize: 10,
   },
+  zapStep: {
+    fontSize: '14px',
+    lineHeight: '18px',
+    marginBottom: '12px',
+  },
+  divider: {
+    height: '2px',
+    marginBottom: '20px',
+    marginTop: '8px',
+  },
+  flexAlignCenter: {
+    display: 'flex',
+    alignItems: 'baseline',
+  },
 });
 
 export default styles;

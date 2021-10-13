@@ -174,7 +174,7 @@ const Withdraw = ({
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
           </Paper>
         </Box>
-        <FeeBreakdown withdrawalFee={item.withdrawalFee} depositFee={item.depositFee} />
+        <FeeBreakdown item={item} formData={formData} type={'withdraw'} />
         <Box mt={2}>
           {wallet.address ? (
             item.network !== wallet.network ? (

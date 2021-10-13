@@ -157,13 +157,13 @@ const Vault = () => {
           )}
         </Container>
       </Box>
-      <Box mt={5}>
+      <Box style={{ marginTop: '24px' }}>
         <Container maxWidth="lg" my={5}>
           {isLoading ? (
             <Loader message={t('Vault-GetData')} />
           ) : (
             <Grid container spacing={6}>
-              <Grid item xs={12} md={4} lg={4} xl={3} className={classes.customOrder}>
+              <Grid item xs={12} md={4} className={classes.customOrder}>
                 <Box className={classes.dw}>
                   <Box className={classes.tabs}>
                     <Button
@@ -200,7 +200,7 @@ const Vault = () => {
                   )}
                 </Box>
               </Grid>
-              <Grid item xs={12} md={8} lg={8} xl={9}>
+              <Grid item xs={12} md={8}>
                 <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
                 {item.risks && item.risks.length > 0 && (
                   <SafetyCard vaultRisks={item.risks} score={item.safetyScore} />

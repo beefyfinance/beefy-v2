@@ -69,6 +69,7 @@ const styles = theme => ({
   },
   customOrder: {
     order: 1,
+    marginTop: 24,
   },
   tabs: {
     backgroundColor: '#14182B',

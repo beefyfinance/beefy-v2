@@ -7,19 +7,83 @@ import useFormattedFee from 'hooks/useFormattedFee';
 
 const useStyles = makeStyles(styles);
 
-const FeeBreakdown = ({ depositFee, withdrawalFee }) => {
+const FeeBreakdown = ({ item, formData, type }) => {
   const classes = useStyles();
   const t = useTranslation().t;
-  const formattedDepositFee = useFormattedFee(depositFee);
-  const formattedWithdrawalFee = useFormattedFee(withdrawalFee);
+  const formattedDepositFee = useFormattedFee(item.depositFee);
+  const formattedWithdrawalFee = useFormattedFee(item.withdrawalFee);
+
+  console.log(formData);
+  console.log(item);
 
   return (
     <Box mt={2} p={2} className={classes.feeContainer}>
       <Grid container>
+        {formData.deposit.isZap ? (
+          <Grid item xs={12}>
+            <Typography className={classes.title} style={{ marginBottom: '12px' }}>
+              {t('Zap-Title')}
+            </Typography>
+            {type === 'deposit' ? (
+              <>
+                <Typography className={classes.zapStep}>
+                  {/* TODO: Fill zap estimate */}
+                  {t('Zap-Step-Deposit-1', {
+                    valueFrom: formData.deposit.amount.toFixed(2),
+                    tokenFrom: formData.deposit.token,
+                    valueTo: '0.00',
+                    tokenTo: 'TOKEN',
+                  })}
+                </Typography>
+                <Typography className={classes.zapStep}>
+                  {t('Zap-Step-Deposit-2', { lpToken: item.token })}
+                </Typography>
+                <Typography className={classes.zapStep}>
+                  {t('Zap-Step-Deposit-3', { lpToken: item.token })}
+                </Typography>
+                <Typography className={classes.zapStep}>
+                  {t('Zap-Step-Deposit-4', { token0: item.assets[0], token1: item.assets[1] })}
+                </Typography>
+              </>
+            ) : (
+              <>
+                <Typography className={classes.zapStep}>
+                  {/* TODO: Fill zap estimate */}
+                  {t('Zap-Step-Withdraw-1', {
+                    mooToken: item.earnedToken,
+                    lpToken: item.token,
+                  })}
+                </Typography>
+                <Typography className={classes.zapStep}>
+                  {t('Zap-Step-Withdraw-2', {
+                    lpToken: item.token,
+                    token0: item.assets[0],
+                    token1: item.assets[1],
+                  })}
+                </Typography>
+                {/* TODO: hook up dynamic values */}
+                <Typography className={classes.zapStep}>
+                  {t('Zap-Step-Withdraw-3', {
+                    valueFrom: formData.withdraw.amount.toFixed(2),
+                    tokenFrom: formData.withdraw.token,
+                    valueTo: '0.00',
+                    tokenTo: 'TOKEN',
+                  })}
+                </Typography>
+                {/* TODO: hook up dynamic values */}
+                <Typography className={classes.zapStep}>
+                  {t('Zap-Step-Withdraw-4', { balance: '0.00', token: 'TOKEN' })}
+                </Typography>
+              </>
+            )}
+
+            <Divider className={classes.divider} />
+          </Grid>
+        ) : null}
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between">
             <Typography className={classes.title}>{t('Fee-Title')}</Typography>
-            <Popover title={t('Fee-Tagline')} solid size="md">
+            {/*<Popover title={t('Fee-Tagline')} solid size="md">
               <div className={classes.feeBreakdownBlock}>
                 <Typography className={classes.feeBreakdownBold}>
                   {t('Fee-DepositAmt', {
@@ -56,7 +120,7 @@ const FeeBreakdown = ({ depositFee, withdrawalFee }) => {
                   {t('Fee-PerformStrat', { amt: '0.5%' })}
                 </Typography>
               </div>
-            </Popover>
+                </Popover>*/}
           </Box>
         </Grid>
         <Grid item xs={6}>
@@ -66,6 +130,17 @@ const FeeBreakdown = ({ depositFee, withdrawalFee }) => {
         <Grid item xs={6}>
           <Typography className={classes.label}>{t('Fee-Withdraw')}</Typography>
           <Typography className={classes.value}>{formattedWithdrawalFee}</Typography>
+        </Grid>
+        <Grid item xs={6}>
+          <div className={classes.flexAlignCenter}>
+            <Typography className={classes.label} style={{ marginRight: '4px' }}>
+              {/* TODO: add dynamic fee */}
+              {t('Fee-Performance')}
+            </Typography>
+            {/* TODO: Tooltip (need design) */}
+            <Popover title={t('Fee-Tagline')} solid size="md"></Popover>
+          </div>
+          <Typography className={classes.value}>4.5%</Typography>
         </Grid>
         <Grid item xs={12}>
           <Box pt={1}>
