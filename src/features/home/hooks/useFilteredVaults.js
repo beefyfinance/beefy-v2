@@ -179,9 +179,25 @@ function useVaultsArray() {
   return useMemo(() => Object.values(allVaults), [allVaults]);
 }
 
+function useActiveVaults() {
+  const allVaults = useSelector(selectVaults);
+  return useMemo(
+    () =>
+      Object.keys(allVaults).filter(
+        vault =>
+          !(
+            allVaults[vault].tags.includes('eol') ||
+            allVaults[vault].tags.includes('deposits-paused')
+          )
+      ),
+    [allVaults]
+  );
+}
+
 function useVaults() {
   const allVaults = useVaultsArray();
   const address = useSelector(selectAddress);
+  const activeVaults = useActiveVaults();
   const tokenBalances = useSelector(selectTokenBalances);
   const [config, setConfig] = useLocalStorage(
     FILTER_STORAGE_KEY,
@@ -191,7 +207,14 @@ function useVaults() {
   const filteredVaults = useFilteredVaults(allVaults, config, address, tokenBalances);
   const sortedVaults = useSortedVaults(filteredVaults, config.key, config.direction);
 
-  return [sortedVaults, config, setConfig, filteredVaults.length, allVaults.length];
+  return [
+    sortedVaults,
+    config,
+    setConfig,
+    filteredVaults.length,
+    allVaults.length,
+    activeVaults.length,
+  ];
 }
 
 export default useVaults;

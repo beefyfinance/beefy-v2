@@ -5,7 +5,7 @@ const styles = theme => ({
     letterSpacing: '0.5px',
     padding: '3px 9px',
     borderRadius: '5px',
-    margin: '2px 3px',
+    margin: '2px 4px',
     textTransform: 'uppercase',
     color: '#FFF',
     [theme.breakpoints.down('md')]: {
