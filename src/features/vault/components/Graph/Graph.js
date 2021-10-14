@@ -26,7 +26,7 @@ const Graph = ({ oracleId, vaultId, network }) => {
   return (
     <Card>
       <CardHeader>
-        <div style={{ display: 'flex' }}>
+        <div className={classes.titleBox}>
           <CardTitle title={t('Graph-RateHist')} />
           <div className={classes.headerTabs}>
             <div className={classes.headerTab}>

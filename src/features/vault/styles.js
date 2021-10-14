@@ -68,8 +68,15 @@ const styles = theme => ({
     borderRadius: '20px',
   },
   customOrder: {
-    order: 1,
+    [theme.breakpoints.up('md')]: {
+      order: 1,
+    },
     marginTop: 24,
+  },
+  customOrder2: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '-48px',
+    },
   },
   tabs: {
     backgroundColor: '#14182B',

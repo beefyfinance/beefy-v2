@@ -24,7 +24,7 @@ function Item({ vault }) {
     balance: state.balanceReducer,
   }));
 
-  const [state, setState] = React.useState({ balance: 0 });
+  const [state, setState] = React.useState({ formattedBalance: 0 });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
   const formattedAPY = useMemo(() => formatApy(item.apy.totalApy), [item.apy.totalApy]);
@@ -43,7 +43,7 @@ function Item({ vault }) {
         .multipliedBy(byDecimals(item.pricePerFullShare))
         .toFixed(8);
     }
-    setState({ balance: amount });
+    setState({ formattedBalance: amount });
   }, [
     wallet.address,
     item.balance,
@@ -118,7 +118,7 @@ function Item({ vault }) {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
                 <Typography className={classes.value}>
-                  {state.balance > 0 ? state.balance : '0'}
+                  {state.formattedBalance > 0 ? state.formattedBalance : '0'}
                 </Typography>
               </div>
             </div>

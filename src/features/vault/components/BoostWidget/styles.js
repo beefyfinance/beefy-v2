@@ -7,6 +7,7 @@ const styles = theme => ({
   boostImg: {
     width: 30,
     height: 30,
+    marginLeft: '-8px',
   },
   h1: {
     fontSize: '24px',
