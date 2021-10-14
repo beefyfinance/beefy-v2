@@ -65,7 +65,12 @@ function Item({ vault }) {
         {/*Title*/}
         <div className={classes.titleContainer}>
           <Grid container>
-            <Grid item className={classes.infoContainer} style={{ marginRight: '8px' }}>
+            <Grid
+              item
+              onClick={handleOpenVault}
+              className={classes.infoContainer}
+              style={{ marginRight: '8px', cursor: 'pointer' }}
+            >
               {/*Vault Image*/}
               <AssetsImage img={item.logo} assets={item.assets} alt={item.name} size={'60px'} />
             </Grid>
@@ -73,7 +78,9 @@ function Item({ vault }) {
               <div>
                 <div className={classes.infoContainer}>
                   {/*Vault Name*/}
-                  <Typography className={classes.vaultName}>{item.name}</Typography>
+                  <Typography className={classes.vaultName} onClick={handleOpenVault}>
+                    {item.name}
+                  </Typography>
                   {/*Network Image*/}
                   {hasMore3Tags && (
                     <div className={classes.networkIconHolder}>
