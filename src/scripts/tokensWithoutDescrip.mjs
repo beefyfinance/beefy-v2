@@ -16,6 +16,7 @@ directory from which the command is run. The maintainer should move or delete th
 file to ensure it won't be pushed into the main repository.
 
 Development
++ v0.1.0.1 AllTrades: minor code cleanup (superfluous variable removal)
 + v0.1 AllTrades
 **********/
 import * as FS from 'fs';
@@ -29,7 +30,7 @@ const mAO_CHAIN = [{S_DIR: "bsc"},
 										{S_DIR: "arbitrum"}];
 const mS_PROPNM_DESCRIP = "description", mS_PROPNM_NM = "name", mS_PROPNM_SYMBL = "symbol", 
 			mS_PROPNM_ADDR = "address", mS_PROPNM_SITE = "website";
-const mo_SRC = {}, moao_trgt = {}; 
+const mo_SRC = {};
 
 
 async function p_loadChain( O_CHN)	{
