@@ -345,9 +345,17 @@ const styles = theme => ({
       height: '60px',
     },
   },
+  filtersSliderContainer: {
+    display: 'flex',
+  },
   filterItem: {
     margin: '0px 4px',
-    width: 'calc(20% - 8px) !important',
+    [theme.breakpoints.up(700)]: {
+      width: 'calc(20% - 8px) !important',
+    },
+    [theme.breakpoints.down(700)]: {
+      minWidth: '200px',
+    },
   },
   boostFilterLabel: {
     display: 'flex',
