@@ -208,7 +208,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
       </Box>
       <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
         <Box className={classes.filters}>
-          <Box display="flex">
+          <Box className={classes.filtersInner}>
             <Box className={classes.checkboxes}>
               <FormGroup row>
                 <FormControlLabel
