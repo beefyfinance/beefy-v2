@@ -39,6 +39,11 @@ export const getStablesForNetwork = net => {
 };
 
 export const bluechipTokens = [
+  'DAIe',
+  'USDCe',
+  'USDTe',
+  'WBTCe',
+  'WETHe',
   'BTC',
   'WBTC',
   'ETH',
