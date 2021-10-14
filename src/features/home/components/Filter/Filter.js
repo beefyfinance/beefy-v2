@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState, useEffect } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { useTranslation } from 'react-i18next';
 import {
@@ -20,7 +20,7 @@ import { getAvailableNetworks } from 'helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
 import { Search } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
-import ReactSiema from 'react-siema';
+import ScrollContainer from 'react-indiana-drag-scroll';
 
 const useStyles = makeStyles(styles);
 
@@ -43,37 +43,15 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
     [t]
   );
 
-  const [options, setOptions] = useState(() => {
-    if (window.innerWidth < 760) {
-      return { perPage: 2.5 };
-    } else {
-      return { perPage: 5 };
-    }
-  });
-
-  const handleResize = () => {
-    if (window.innerWidth < 760) {
-      console.log('resized: small');
-      setOptions({ perPage: 2.5 });
-    } else {
-      console.log('resized: large');
-      setOptions({ perPage: 5 });
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-  }, []);
-
   return (
     <Grid container spacing={2} className={classes.categories}>
       <Grid item xs={12}>
         <Typography variant={'h4'}>{t('Filter-Categories')}</Typography>
       </Grid>
       <Grid item xs={12} className={classes.filtersSlider}>
-        <ReactSiema {...options}>
+        <ScrollContainer className={classes.filtersSliderContainer} vertical={false}>
           {Object.entries(labels).map(([key, label]) => (
-            <Grid item xs key={key} className={classes.filterItem}>
+            <div key={key} className={classes.filterItem}>
               <Button
                 className={category === key ? classes.selected : classes[key]}
                 fullWidth={true}
@@ -83,9 +61,9 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
                 <Typography className={classes.text}>{label}</Typography>
                 {category === key ? <ArrowDropDownIcon /> : ''}
               </Button>
-            </Grid>
+            </div>
           ))}
-        </ReactSiema>
+        </ScrollContainer>
       </Grid>
     </Grid>
   );
@@ -230,7 +208,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
       </Box>
       <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
         <Box className={classes.filters}>
-          <Box display="flex">
+          <Box className={classes.filtersInner}>
             <Box className={classes.checkboxes}>
               <FormGroup row>
                 <FormControlLabel

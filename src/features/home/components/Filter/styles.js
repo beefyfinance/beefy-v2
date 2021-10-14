@@ -113,7 +113,7 @@ const styles = theme => ({
     borderStyle: 'solid',
     backgroundColor: '#14182B',
     marginTop: 20,
-    padding: theme.spacing(2),
+    padding: '16px 24px 24px 24px',
   },
   btnFilter: {
     '& .MuiToggleButton-root': {
@@ -158,10 +158,23 @@ const styles = theme => ({
     },
   },
   lblShowing: {
-    textAlign: 'right',
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'right',
+    },
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: '8px',
+    },
     minWidth: 100,
     flexGrow: 1,
-    [theme.breakpoints.up('xs')]: { minWidth: 200 },
+    [theme.breakpoints.up('xs')]: {
+      minWidth: 'fit-content',
+    },
+  },
+  filtersInner: {
+    display: 'flex',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column-reverse',
+    },
   },
   btnReset: {
     color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
@@ -345,12 +358,21 @@ const styles = theme => ({
       height: '60px',
     },
   },
+  filtersSliderContainer: {
+    display: 'flex',
+  },
   filterItem: {
     margin: '0px 4px',
-    width: 'calc(20% - 8px) !important',
+    [theme.breakpoints.up(700)]: {
+      width: 'calc(20% - 8px) !important',
+    },
+    [theme.breakpoints.down(700)]: {
+      minWidth: '200px',
+    },
   },
   boostFilterLabel: {
     display: 'flex',
+    marginLeft: '-10px',
   },
   checkboxContainer: {
     [theme.breakpoints.down('xs')]: {

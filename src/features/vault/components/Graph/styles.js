@@ -8,6 +8,10 @@ const styles = theme => ({
       flexDirection: 'row',
       alignItems: 'center',
     },
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 'auto',
+      marginLeft: 0,
+    },
   },
   headerTab: {
     marginTop: 10,
@@ -20,6 +24,12 @@ const styles = theme => ({
     [theme.breakpoints.up('lg')]: {
       marginTop: 0,
       marginLeft: 20,
+    },
+  },
+  titleBox: {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
     },
   },
 });

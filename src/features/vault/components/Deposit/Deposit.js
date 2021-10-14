@@ -276,7 +276,7 @@ const Deposit = ({
           <FormControlLabel
             className={classes.depositTokenContainer}
             value={item.token}
-            control={<Radio />}
+            control={formData.zap ? <Radio /> : <div style={{ width: 12 }} />}
             label={
               /*TODO: wrap label content into component */
               <Box className={classes.balanceContainer} display="flex" alignItems="center">

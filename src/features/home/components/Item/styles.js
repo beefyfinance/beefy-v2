@@ -77,6 +77,7 @@ const styles = theme => ({
     lineHeight: '36px',
     margin: 0,
     padding: 0,
+    cursor: 'pointer',
     [theme.breakpoints.up('md')]: {
       fontSize: '15px',
     },

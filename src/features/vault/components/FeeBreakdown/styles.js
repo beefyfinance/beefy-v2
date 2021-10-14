@@ -31,6 +31,7 @@ const styles = theme => ({
     fontSize: '12px',
     fontWeight: 600,
     lineHeight: '20px',
+    textTransform: 'uppercase',
   },
   text: {
     ...regularText,
