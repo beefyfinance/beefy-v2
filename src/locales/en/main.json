@@ -154,7 +154,7 @@
   "Graph-1Month": "1M",
   "Graph-1Year": "1Y",
   "Graph-PriceTkn": "Token Price",
-  "Safety-Score": "Safety score",
+  "Safety-Score": "SAFETY SCORE",
   "Safety-ScoreWhat": "The Beefy Safety Score",
   "Safety-ScoreExpl": "The Safety Score is computed by Beefy’s developers when assessing a vault. No score can capture risk levels perfectly, but Beefy finds it a useful gauge in making decisions. The Safety Score ranks a vault from 0 to 10, worst to best.",
   "Safety-HowCalc": "How is it calculated?",
