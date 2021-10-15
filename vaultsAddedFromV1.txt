@@ -1,12 +1,4 @@
 [
-  "bsc: baby-baby",
-  "bsc: baby-baby-usdt",
-  "bsc: baby-baby-bnb",
-  "fantom: boo-wftm-spell",
-  "polygon: kyber-usdc-jeur",
-  "polygon: kyber-usdc-jgbp",
-  "polygon: kyber-usdc-jchf",
-  "polygon: sushi-fox-eth",
-  "avax: curve-avax-av3crv",
-  "avax: curve-avax-atricrypto"
+  "bsc: blizzard-xblzd-eol",
+  "fantom: sing-ftm-usdc-sing"
 ]
