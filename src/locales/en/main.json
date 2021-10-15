@@ -83,6 +83,7 @@
   "Vault-Auditd": "Audited",
   "Vault-AuditdCommunity": "Community Audit",
   "Vault-Open": "Open Vault",
+  "Vault-BoostedBy": "Boosted By",
   "Network-Change": "Switch to {{network}} network",
   "Network-ConnectWallet": "Connect Wallet",
   "Deposit-Disabled": "Deposits disabled",
