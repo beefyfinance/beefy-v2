@@ -116,6 +116,12 @@ const styles = theme => ({
       textAlign: 'center',
     },
   },
+  price: {
+    color: '#9595B2',
+    letterSpacing: '0.2px',
+    fontSize: '14px',
+    lineHeight: '18px',
+  },
   platformLabel: {
     fontWeight: 600,
     fontSize: '12px',
