@@ -739,4 +739,14 @@
 
   "bsc: blizzard-xblzd-eol",
   "fantom: sing-ftm-usdc-sing"
+
+  "bsc: banana-wbnb-ceek",
+  "bsc: banana-wbnb-dep",
+  "bsc: wex-wusd-dep",
+  "bsc: cakev2-rpg-busd",
+  "bsc: cakev2-mcb-wbnb",
+  "fantom: scream-frax",
+  "fantom: scream-mim-supply",
+  "fantom: spirit-wmemo-mim",
+  "polygon: ape-wmatic-crystl"
 ]
