@@ -90,15 +90,10 @@ function sortVaults(vaults, key, direction) {
 }
 
 function hasWalletBalance(token, tokenBalances) {
-  if (token in tokenBalances) {
-    const balance256 = tokenBalances[token].balance;
-    // shortcut instead of byDecimals
-    if (balance256 && balance256 !== '0') {
-      return true;
-    }
-  }
-
-  return false;
+  return tokenBalances[token.network][token.earnedToken].balance &&
+    tokenBalances[token.network][token.earnedToken].balance > 0
+    ? false
+    : true;
 }
 
 function keepVault(vault, config, address, tokenBalances) {
@@ -115,12 +110,8 @@ function keepVault(vault, config, address, tokenBalances) {
   }
 
   // hide when no wallet balance of deposit token
-  if (config.zero && address && !hasWalletBalance(vault.token, tokenBalances)) {
-    return false;
-  }
-
-  // hide when not deposited in vault (i.e. have no mooToken)
-  if (config.deposited && address && !hasWalletBalance(vault.earnedToken, tokenBalances)) {
+  // TODO show the vaults with mooToken
+  if (config.deposited && address && hasWalletBalance(vault, tokenBalances)) {
     return false;
   }
 
@@ -192,6 +183,31 @@ function useActiveVaults() {
       ),
     [allVaults]
   );
+}
+
+// eslint-disable-next-line no-unused-vars
+function useUserVaults() {
+  const balanceReducer = useSelector(state => state.balanceReducer);
+  const vaultReducer = useSelector(state => state.vaultReducer);
+  const pricesReducer = useSelector(state => state.pricesReducer);
+  const userAddress = useSelector(state => state.walletReducer.address);
+
+  let newUserVaults = [];
+
+  if (userAddress !== null) {
+    for (const poolKey in vaultReducer.pools) {
+      console.log();
+      const pool = vaultReducer.pools[poolKey];
+      const balance = balanceReducer.tokens[pool.network][pool.earnedToken].balance;
+      if (balance > 0) {
+        pool.balance = balance;
+        pool.oraclePrice = pricesReducer.prices[pool.oracleId];
+        newUserVaults.push(pool);
+      }
+    }
+  }
+
+  return newUserVaults;
 }
 
 function useVaults() {
