@@ -20,13 +20,13 @@ export const formatUsd = (tvl, oraclePrice) => {
     tvl *= oraclePrice;
   }
 
-  const order = Math.floor(Math.log10(tvl) / 6);
+  const order = Math.floor(Math.log10(tvl) / 3);
   if (order < 0) {
     return '$0.00';
   }
 
-  const units = ['', 'M', 'B', 'T'];
-  const num = tvl / 1000000 ** order;
+  const units = ['', 'k', 'M', 'B', 'T'];
+  const num = tvl / 1000 ** order;
   const prefix = '$';
 
   return prefix + num.toFixed(2) + units[order];
