@@ -54,9 +54,9 @@ const Stats = ({ item }) => {
 
   const price = React.useMemo(() => {
     return state.balance > 0
-      ? BigNumber(pricesReducer.prices[item.id]).times(state.balance).toFixed(2)
+      ? BigNumber(pricesReducer.prices[item.oracleId]).times(state.balance).toFixed(2)
       : 0;
-  }, [state.balance, pricesReducer.prices, item.id]);
+  }, [state.balance, pricesReducer.prices, item.oracleId]);
 
   const tokensEarned = React.useMemo(() => {
     return state.balance > 0 ? state.balance : '0';

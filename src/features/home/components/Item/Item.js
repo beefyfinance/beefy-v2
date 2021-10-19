@@ -80,9 +80,9 @@ function Item({ vault }) {
 
   const price = React.useMemo(() => {
     return priceInDolar.balance > 0
-      ? BigNumber(pricesReducer.prices[item.id]).times(priceInDolar.balance).toFixed(2)
+      ? BigNumber(pricesReducer.prices[item.oracleId]).times(priceInDolar.balance).toFixed(2)
       : 0;
-  }, [priceInDolar.balance, pricesReducer.prices, item.id]);
+  }, [priceInDolar.balance, pricesReducer.prices, item.oracleId]);
 
   const tokensEarned = React.useMemo(() => {
     return state.formattedBalance > 0 ? state.formattedBalance : '0';
