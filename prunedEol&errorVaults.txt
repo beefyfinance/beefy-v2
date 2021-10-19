@@ -901,5 +901,13 @@
   {
     vault-contract: "avax: 0x7a670e849DB824364d1031DEAfB4cD603144F23D",
     removed-eold-dupe: "png-usdt-avax"
+  },
+
+  {
+    vault-contract: "fantom: 0x074A2a6d0fdbf6860033E57eBD37Aeb88c3931b4",
+    ERROR-duplicates: [
+      "scream-mim",
+      "scream-mim-supply"
+    ]
   }
 ]

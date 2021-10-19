@@ -89,69 +89,79 @@ async function p_main() {
 
       //if none of the duplicates is marked as being at end-of-life...
       if (-1 == I_EOL)  {
-        //we have a problem beyond our scope of operation, so complain and take pains 
-        //  to preserve the duplicates for overlords to assess
-        const O_noted = { [S_PRPNM_CTRCT]: `${O_CHN.S_FILENM}: ${S_CTRCT}`, 
+        //We have a problem beyond our scope of operation, so complain and take pains 
+        //  to preserve the duplicates for overlords to assess. Then loop for the next 
+				//  vault-contract entry. No need to mark the chain for persistence because of 
+				//  this because none of the vault descriptors require removal.
+        const O_note = { [S_PRPNM_CTRCT]: `${O_CHN.S_FILENM}: ${S_CTRCT}`, 
 													[S_PRPNM_ERR_DUPES]: []};
         console.error( `${O_CHN.S_FILENM}: Duplicate vaults with address ${S_CTRCT}`);
         O_ctrct.forEach( (O, I) => {
           const S = O[ mS_PRPNM_ID];
           console.error( `  - ${S}`);
-          O_noted[ S_PRPNM_ERR_DUPES].push( S);
+          O_note[ S_PRPNM_ERR_DUPES].push( S);
           if (I < O_ctrct.length - 1)
             o_trgtChn[ `${S_CTRCT}-${I}`] = O;
           else
-            o_trgtChn[ S_CTRCT] = O});
-        aO_noted.push( O_noted);
-      //Else we have a candidate case for removing an obsolete vault descriptor (object). 
-      //  Let's validate it...
-      }else {
-        //for each duplicate vault descriptor...
-        let o_oddEolDupes = null;
-        O_ctrct.forEach( (O, I) => {
-          let s;
-
-          //if this duplicate is our anticipated end-of-life vault, loop for the next 
-          //  duplicate to validate
-          if (I_EOL == I)
-            return;
-          
-          //if this is not a weird case of a duplicated end-of-lifed vault descriptor, 
-          //  note that this descriptor "has now been" removed, and loop for the next 
-          //  duplicate
-          s = O[ mS_PRPNM_ID];
-          if (!(O_REGX_EOL.test( s))) {
-            aO_noted.push( {[S_PRPNM_CTRCT]: `${O_CHN.S_FILENM}: ${S_CTRCT}`, 
-                            [S_PRPNM_REMVD]: s});
-            return;
-          }
-
-          //complain about this weird case of duplicate end-of-lifed vaults registered, 
-          //  and preserve this particular duplicate for overlords to assess
-          if (!o_oddEolDupes) {
-            o_oddEolDupes = { [S_PRPNM_CTRCT]: `${O_CHN.S_FILENM}: ${S_CTRCT}`, 
-															[S_PRPNM_ERR_DUPES]: []};
-            console.error( `${O_CHN.S_FILENM}: Duplicate EOL'd vaults with address ${
-                                                                              S_CTRCT}`);
-            const S = O_ctrct[ I_EOL][ mS_PRPNM_ID];
-            console.error( `  - ${S}`);
-            o_oddEolDupes[ S_PRPNM_ERR_DUPES].push( S);
-          } //if (!o_oddEolDupes)
-          console.error( `  - ${s}`);
-          o_oddEolDupes[ S_PRPNM_ERR_DUPES].push( s);
-          o_trgtChn[ `${S_CTRCT}-${I}`] = O;
-        }); //O_ctrct.forEach(
-        if (o_oddEolDupes)
-          aO_noted.push( o_oddEolDupes);
-
-        //edge-case handling done, cement the settled-upon end-of-lifed vault object for
-        //  normal persistence
-        o_trgtChn[ S_CTRCT] = O_ctrct[ I_EOL];
+            o_trgtChn[ S_CTRCT] = O
+				});
+        aO_noted.push( O_note);
+				continue;
       } //if (-1 == I_EOL)
 
-      //ensure it's noted that a change to this chain's array of vault descriptors has 
-      //  been prepared
-      if (!o_trgtChn.b_dirty)
+      //We have a candidate case for removing an obsolete vault descriptor (object). For 
+			//	each duplicate vault descriptor...
+			let o_note = null;
+			O_ctrct.forEach( (O, I) => {
+				let s;
+
+				//if this duplicate is our anticipated end-of-life vault, loop for the next 
+				//  duplicate to validate
+				if (I_EOL == I)
+					return;
+				
+				//if this is not a weird case of a duplicated end-of-lifed vault descriptor, note 
+				//  that this descriptor "has now been" removed, and loop for the next duplicate
+				s = O[ mS_PRPNM_ID];
+				if (!(O_REGX_EOL.test( s))) {
+					if (!o_note)
+						o_note = {[S_PRPNM_CTRCT]: `${O_CHN.S_FILENM}: ${S_CTRCT}`, 
+											 [S_PRPNM_REMVD]: s};
+					else if (!o_note[ S_PRPNM_REMVD])
+						o_note[ S_PRPNM_REMVD] = s;
+					else if (!o_note[ S_PRPNM_REMVD].isArray())
+						o_note[ S_PRPNM_REMVD] = [o_note[ S_PRPNM_REMVD], s];
+					else
+						o_note[ S_PRPNM_REMVD].push( s);
+					return;
+				} //if (!(O_REGX_EOL.test( s)))
+
+				//complain about this weird case of duplicate end-of-lifed vaults registered, 
+				//  and preserve this particular duplicate for overlords to assess
+				if (!(o_note || o_note[ S_PRPNM_ERR_DUPES]))	{
+					const S = O_ctrct[ I_EOL][ mS_PRPNM_ID];
+					if (!o_note)
+						o_note = { [S_PRPNM_CTRCT]: `${O_CHN.S_FILENM}: ${S_CTRCT}`, 
+												[S_PRPNM_ERR_DUPES]: [S]};
+					else
+						o_note[ S_PRPNM_ERR_DUPES] = [S];
+					console.error( `${O_CHN.S_FILENM}: Duplicate EOL'd vaults with address ${
+																																	S_CTRCT}\n  - ${S}`);
+				} //if (!(o_note ||
+				console.error( `  - ${s}`);
+				o_note[ S_PRPNM_ERR_DUPES].push( s);
+				o_trgtChn[ `${S_CTRCT}-${I}`] = O;
+			}); //O_ctrct.forEach(
+			if (o_note)
+				aO_noted.push( o_note);
+
+			//edge-case handling done, cement the settled-upon end-of-lifed vault object for
+			//  normal persistence
+			o_trgtChn[ S_CTRCT] = O_ctrct[ I_EOL];
+
+      //if a vault descriptor was removed, ensure it's noted that a change to this 
+			//	chain's array of vault descriptors has been prepared
+      if (!o_trgtChn.b_dirty && o_note[ S_PRPNM_REMVD])
         o_trgtChn.b_dirty = true;
     } //for (const S_CTRCT in o_trgtChn)
   } //for (const O_CHN of mAO_CHAIN)
