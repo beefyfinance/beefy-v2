@@ -26,10 +26,17 @@ export const formatUsd = (tvl, oraclePrice) => {
   }
 
   const units = ['', 'k', 'M', 'B', 'T'];
-  const num = tvl / 1000 ** order;
+  const shouldShowUnits = order > 1; // only use units if 1M+
+  let unitToDisplay = '';
+  let num = tvl;
+
+  if (shouldShowUnits) {
+    num = tvl / 1000 ** order;
+    unitToDisplay = units[order];
+  }
   const prefix = '$';
 
-  return prefix + num.toFixed(2) + units[order];
+  return prefix + num.toFixed(2) + unitToDisplay;
 };
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
