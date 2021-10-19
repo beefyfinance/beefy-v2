@@ -20,16 +20,23 @@ export const formatUsd = (tvl, oraclePrice) => {
     tvl *= oraclePrice;
   }
 
-  const order = Math.floor(Math.log10(tvl) / 6);
+  const order = Math.floor(Math.log10(tvl) / 3);
   if (order < 0) {
     return '$0.00';
   }
 
-  const units = ['', 'M', 'B', 'T'];
-  const num = tvl / 1000000 ** order;
+  const units = ['', 'k', 'M', 'B', 'T'];
+  const shouldShowUnits = order > 1; // only use units if 1M+
+  let unitToDisplay = '';
+  let num = tvl;
+
+  if (shouldShowUnits) {
+    num = tvl / 1000 ** order;
+    unitToDisplay = units[order];
+  }
   const prefix = '$';
 
-  return prefix + num.toFixed(2) + units[order];
+  return prefix + num.toFixed(2) + unitToDisplay;
 };
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
