@@ -2521,7 +2521,7 @@ export const pools = [
     network: 'fantom',
   },
   {
-    id: 'scream-mim-supply',
+    id: 'scream-mim',
     logo: 'single-assets/MIM.png',
     name: 'MIM',
     token: 'MIM',
@@ -2590,7 +2590,7 @@ export const pools = [
     network: 'fantom',
   },
   {
-    id: 'scream-mim',
+    id: 'scream-mim-supply',
     logo: 'single-assets/MIM.png',
     name: 'MIM',
     token: 'MIM',
