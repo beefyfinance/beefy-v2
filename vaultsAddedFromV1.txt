@@ -738,7 +738,7 @@
   "avax: curve-avax-atricrypto",
 
   "bsc: blizzard-xblzd-eol",
-  "fantom: sing-ftm-usdc-sing"
+  "fantom: sing-ftm-usdc-sing", 
 
   "bsc: banana-wbnb-ceek",
   "bsc: banana-wbnb-dep",
@@ -748,5 +748,7 @@
   "fantom: scream-frax",
   "fantom: scream-mim-supply",
   "fantom: spirit-wmemo-mim",
-  "polygon: ape-wmatic-crystl"
+  "polygon: ape-wmatic-crystl", 
+
+  "fantom: scream-mim"
 ]
