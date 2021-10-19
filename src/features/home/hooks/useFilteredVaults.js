@@ -89,9 +89,10 @@ function sortVaults(vaults, key, direction) {
   return vaults;
 }
 
-function hasWalletBalance(token, tokenBalances) {
-  return tokenBalances[token.network][token.earnedToken].balance &&
-    tokenBalances[token.network][token.earnedToken].balance > 0
+//If token = vault.token check if he had balance in the wallet
+//If token = vault.earnedToekn check if he had deposited in the vault
+function hasWalletBalance(token, tokenBalances, network) {
+  return tokenBalances[network][token].balance && tokenBalances[network][token].balance > 0
     ? false
     : true;
 }
@@ -110,8 +111,17 @@ function keepVault(vault, config, address, tokenBalances) {
   }
 
   // hide when no wallet balance of deposit token
+  if (config.zero && address && hasWalletBalance(vault.token, tokenBalances, vault.network)) {
+    return false;
+  }
+
+  // hide when no wallet balance of deposit token
   // TODO show the vaults with mooToken
-  if (config.deposited && address && hasWalletBalance(vault, tokenBalances)) {
+  if (
+    config.deposited &&
+    address &&
+    hasWalletBalance(vault.earnedToken, tokenBalances, vault.network)
+  ) {
     return false;
   }
 
