@@ -28,7 +28,7 @@ export const formatUsd = (tvl, oraclePrice) => {
   const units = ['', 'k', 'M', 'B', 'T'];
   const shouldShowUnits = order > 1; // only use units if 1M+
   let unitToDisplay = '';
-  let num = tvl;
+  let num = BigNumber(tvl);
 
   if (shouldShowUnits) {
     num = tvl / 1000 ** order;
