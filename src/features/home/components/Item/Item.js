@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -18,6 +18,8 @@ const useStyles = makeStyles(styles);
 
 function Item({ vault }) {
   const item = vault;
+
+  const [isBoosted, setIsBoosted] = React.useState(false);
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -95,6 +97,7 @@ function Item({ vault }) {
         [classes.withHasDeposit]: item.balance > 0,
         [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
         [classes.withIsLongName]: item.name.length > 12,
+        [classes.withBoosted]: isBoosted,
       })}
     >
       <Grid container className={classes.dataGrid}>
@@ -161,7 +164,9 @@ function Item({ vault }) {
                     <ValuePrice value={formatUsd(price)} />
                   </Typography>
                 )}
-                {}
+                {isBoosted && priceInDolar.balance == 0 ? (
+                  <div className={classes.boostSpacer} />
+                ) : null}
               </div>
             </div>
             {/*TVL*/}
@@ -169,6 +174,7 @@ function Item({ vault }) {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
+                {isBoosted ? <div className={classes.boostSpacer} /> : null}
               </div>
             </div>
             {/*APY*/}
@@ -181,6 +187,9 @@ function Item({ vault }) {
                   </div>
                 </div>
                 <Typography className={classes.value}>{formattedAPY}</Typography>
+                {isBoosted ? (
+                  <Typography className={classes.valueStrikethrough}>{formattedAPY}</Typography>
+                ) : null}
               </div>
             </div>
             {/*Daily*/}
@@ -193,6 +202,9 @@ function Item({ vault }) {
                   </div>
                 </div>
                 <Typography className={classes.value}>{formattedDPY}</Typography>
+                {isBoosted ? (
+                  <Typography className={classes.valueStrikethrough}>{formattedDPY}</Typography>
+                ) : null}
               </div>
             </div>
             {/*Saftey Score*/}
@@ -205,6 +217,7 @@ function Item({ vault }) {
                   </div>
                 </div>
                 <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
+                {isBoosted ? <div className={classes.boostSpacerSm} /> : null}
               </div>
             </div>
             {/*Open Vault*/}

@@ -20,6 +20,7 @@ import Graph from 'features/vault/components/Graph';
 import { getEligibleZap } from 'helpers/zap';
 import BigNumber from 'bignumber.js';
 import VaultStats from './components/VaultsStats';
+import BoostCard from './components/BoostCard/BoostCard';
 
 const useStyles = makeStyles(styles);
 
@@ -200,6 +201,7 @@ const Vault = () => {
                 </Box>
               </Grid>
               <Grid item xs={12} md={8} className={classes.customOrder2}>
+                <BoostCard />
                 <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
                 {item.risks && item.risks.length > 0 && (
                   <SafetyCard vaultRisks={item.risks} score={item.safetyScore} />

@@ -88,7 +88,7 @@ const styles = theme => ({
   value: {
     fontWeight: 600,
     fontSize: '18px',
-    lineHeight: '36px',
+    lineHeight: '24px',
     margin: 0,
     padding: 0,
     [theme.breakpoints.up('lg')]: {
@@ -107,7 +107,7 @@ const styles = theme => ({
   label: {
     fontWeight: 400,
     fontSize: '12px',
-    lineHeight: '24px',
+    lineHeight: '20px',
     color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
@@ -310,6 +310,22 @@ const styles = theme => ({
       },
     },
   },
+  withBoosted: {
+    border: '2px solid #DB8332',
+  },
+  valueStrikethrough: {
+    fontWeight: 400,
+    fontSize: '12px',
+    lineHeight: '18px',
+    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+    letterSpacing: '0.2px',
+    textTransform: 'none', //'capitalize' no good due to localization
+    textAlign: 'left',
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'center',
+    },
+    textDecoration: 'line-through',
+  },
   statsContainer: {
     margin: 'auto',
     [theme.breakpoints.up('md')]: {
@@ -330,6 +346,16 @@ const styles = theme => ({
     marginTop: '8px',
     [theme.breakpoints.down('sm')]: {
       margin: '0 -40px',
+    },
+  },
+  boostSpacer: {
+    [theme.breakpoints.up('md')]: {
+      height: 18,
+    },
+  },
+  boostSpacerSm: {
+    [theme.breakpoints.up('md')]: {
+      height: 10,
     },
   },
 });
