@@ -72,6 +72,9 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'baseline',
   },
+  ol: {
+    paddingLeft: 14,
+  },
 });
 
 export default styles;

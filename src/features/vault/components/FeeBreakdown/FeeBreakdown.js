@@ -23,54 +23,74 @@ const FeeBreakdown = ({ item, formData, type }) => {
             </Typography>
             {type === 'deposit' ? (
               <>
-                <Typography className={classes.zapStep}>
-                  {/* TODO: Fill zap estimate */}
-                  {t('Zap-Step-Deposit-1', {
-                    valueFrom: formData.deposit.amount.toFixed(2),
-                    tokenFrom: formData.deposit.token,
-                    valueTo: '0.00',
-                    tokenTo: 'TOKEN',
-                  })}
-                </Typography>
-                <Typography className={classes.zapStep}>
-                  {t('Zap-Step-Deposit-2', { lpToken: item.token })}
-                </Typography>
-                <Typography className={classes.zapStep}>
-                  {t('Zap-Step-Deposit-3', { lpToken: item.token })}
-                </Typography>
-                <Typography className={classes.zapStep}>
-                  {t('Zap-Step-Deposit-4', { token0: item.assets[0], token1: item.assets[1] })}
-                </Typography>
+                <ol className={classes.ol}>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {/* TODO: Fill zap estimate */}
+                      {t('Zap-Step-Deposit-1', {
+                        valueFrom: formData.deposit.amount.toFixed(2),
+                        tokenFrom: formData.deposit.token,
+                        valueTo: '0.00',
+                        tokenTo: 'TOKEN',
+                      })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-2', { lpToken: item.token })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-3', { lpToken: item.token })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-4', { token0: item.assets[0], token1: item.assets[1] })}
+                    </Typography>
+                  </li>
+                </ol>
               </>
             ) : (
               <>
-                <Typography className={classes.zapStep}>
-                  {/* TODO: Fill zap estimate */}
-                  {t('Zap-Step-Withdraw-1', {
-                    mooToken: item.earnedToken,
-                    lpToken: item.token,
-                  })}
-                </Typography>
-                <Typography className={classes.zapStep}>
-                  {t('Zap-Step-Withdraw-2', {
-                    lpToken: item.token,
-                    token0: item.assets[0],
-                    token1: item.assets[1],
-                  })}
-                </Typography>
-                {/* TODO: hook up dynamic values */}
-                <Typography className={classes.zapStep}>
-                  {t('Zap-Step-Withdraw-3', {
-                    valueFrom: formData.withdraw.amount.toFixed(2),
-                    tokenFrom: formData.withdraw.token,
-                    valueTo: '0.00',
-                    tokenTo: 'TOKEN',
-                  })}
-                </Typography>
-                {/* TODO: hook up dynamic values */}
-                <Typography className={classes.zapStep}>
-                  {t('Zap-Step-Withdraw-4', { balance: '0.00', token: 'TOKEN' })}
-                </Typography>
+                <ol className={classes.ol}>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {/* TODO: Fill zap estimate */}
+                      {t('Zap-Step-Withdraw-1', {
+                        mooToken: item.earnedToken,
+                        lpToken: item.token,
+                      })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Withdraw-2', {
+                        lpToken: item.token,
+                        token0: item.assets[0],
+                        token1: item.assets[1],
+                      })}
+                    </Typography>
+                  </li>
+                  <li>
+                    {/* TODO: hook up dynamic values */}
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Withdraw-3', {
+                        valueFrom: formData.withdraw.amount.toFixed(2),
+                        tokenFrom: formData.withdraw.token,
+                        valueTo: '0.00',
+                        tokenTo: 'TOKEN',
+                      })}
+                    </Typography>
+                  </li>
+                  <li>
+                    {/* TODO: hook up dynamic values */}
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Withdraw-4', { balance: '0.00', token: 'TOKEN' })}
+                    </Typography>
+                  </li>
+                </ol>
               </>
             )}
 

@@ -194,12 +194,12 @@ const styles = theme => ({
       margin: '10px 0 0 0',
     },
     [theme.breakpoints.down('sm')]: {
-      minWidth: '310px',
+      minWidth: 'none',
     },
   },
   searchInput: {
     borderRadius: 30,
-    height: '44px',
+    height: '40px',
     position: 'relative',
     color: '#484F7F',
     '& .MuiOutlinedInput-root': {
@@ -215,6 +215,7 @@ const styles = theme => ({
     },
     '& .MuiFormLabel-root': {
       fontSize: 18,
+      lineHeight: '16px',
       color: '#484F7F',
     },
     '&:hover': {
@@ -231,7 +232,7 @@ const styles = theme => ({
   },
   iconSearch: {
     marginLeft: '-44px',
-    marginTop: '10px',
+    marginTop: '8px',
   },
   btnClearSearch: {
     borderRadius: 30,
@@ -284,6 +285,7 @@ const styles = theme => ({
   searchContainer: {
     alignItem: 'center',
     flexGrow: 1,
+    height: 40,
     [theme.breakpoints.down(725)]: {
       flexGrow: 0,
       width: '100%',
@@ -337,6 +339,9 @@ const styles = theme => ({
     marginRight: theme.spacing(1),
     '& .MuiBox-root': {
       width: '100%',
+    },
+    '& .MuiSelect-select': {
+      minWidth: 'auto',
     },
     [theme.breakpoints.up('sm')]: {
       width: '170px',

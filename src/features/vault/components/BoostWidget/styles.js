@@ -47,7 +47,7 @@ const styles = theme => ({
       backgroundColor: '#232743',
     },
     '&:disabled': {
-      backgroundColor: '#272C47',
+      backgroundColor: '#282C48',
       color: '#D1D3E0',
     },
   },

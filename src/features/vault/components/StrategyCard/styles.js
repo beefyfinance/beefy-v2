@@ -11,6 +11,7 @@ const bold = {
 const styles = theme => ({
   cardActions: {
     display: 'flex',
+    flexWrap: 'wrap',
   },
   cardAction: {
     marginRight: '15px',

@@ -11,6 +11,9 @@ const styles = theme => ({
       borderRadius: '30px',
       height: '29px',
       textAlign: 'right',
+      [theme.breakpoints.up('md')]: {
+        minWidth: '200px',
+      },
     },
     '& .MuiSelect-icon': {
       color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
@@ -38,7 +41,7 @@ const styles = theme => ({
   select: {
     minWidth: 210,
     [theme.breakpoints.down('sm')]: {
-      minWidth: 310,
+      minWidth: 'none',
     },
   },
   selectList: {
