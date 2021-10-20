@@ -160,7 +160,7 @@ function Item({ vault }) {
                   <ValueText value={tokensEarned} />
                 </Typography>
                 {priceInDolar.balance > 0 && (
-                  <Typography>
+                  <Typography className={classes.label}>
                     <ValuePrice value={formatUsd(price)} />
                   </Typography>
                 )}
@@ -174,7 +174,9 @@ function Item({ vault }) {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
-                {isBoosted ? <div className={classes.boostSpacer} /> : null}
+                {isBoosted || priceInDolar.balance > 0 ? (
+                  <div className={classes.mobileSpacer} />
+                ) : null}
               </div>
             </div>
             {/*APY*/}

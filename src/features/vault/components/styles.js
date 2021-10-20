@@ -98,7 +98,7 @@ const styles = theme => ({
     textDecoration: 'none',
   },
   depositTokenContainer: {
-    width: 'calc(100% + 16px)',
+    width: 'calc(100% + 11px)',
     '& .MuiTypography-root': {
       width: '100%',
     },

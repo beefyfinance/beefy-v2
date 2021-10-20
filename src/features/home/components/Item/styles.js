@@ -91,6 +91,7 @@ const styles = theme => ({
     lineHeight: '24px',
     margin: 0,
     padding: 0,
+    letterSpacing: '0.2px',
     [theme.breakpoints.up('lg')]: {
       fontSize: '18px',
     },
@@ -356,6 +357,11 @@ const styles = theme => ({
   boostSpacerSm: {
     [theme.breakpoints.up('md')]: {
       height: 10,
+    },
+  },
+  mobileSpacer: {
+    [theme.breakpoints.down('sm')]: {
+      height: 20,
     },
   },
 });
