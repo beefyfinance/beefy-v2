@@ -19,7 +19,7 @@ const useStyles = makeStyles(styles);
 function Item({ vault }) {
   const item = vault;
 
-  const [isBoosted, setIsBoosted] = React.useState(true);
+  const [isBoosted, setIsBoosted] = React.useState(false);
 
   const classes = useStyles();
   const { t } = useTranslation();
