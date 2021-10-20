@@ -6,6 +6,9 @@ const styles = theme => ({
     paddingTop: 0,
     paddingBottom: 0,
     marginRight: theme.spacing(4),
+    [theme.breakpoints.down('sm')]: {
+      margin: '8px 32px 8px 0px',
+    },
   },
   value: {
     fontSize: '24px',

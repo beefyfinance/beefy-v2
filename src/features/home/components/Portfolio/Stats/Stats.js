@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 
@@ -24,7 +24,7 @@ const Stats = ({ stats, blurred }) => {
   const formatStat = value => (empty ? '0' : formatUsd(value));
 
   return (
-    <Box className={classes.stats}>
+    <Grid container className={classes.stats}>
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('Portfolio-Deposited')}</Typography>
         <Typography className={classes.value}>
@@ -43,7 +43,7 @@ const Stats = ({ stats, blurred }) => {
           <BlurredText value={blurred ? `$100` : formatStat(stats.daily)} />
         </Typography>
       </Box>
-    </Box>
+    </Grid>
   );
 };
 

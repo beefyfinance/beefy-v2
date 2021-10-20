@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import useVaults from 'features/home/hooks/useFilteredVaults';
 import { useSelector } from 'react-redux';
@@ -23,7 +23,7 @@ const Stats = ({ stats, blurred }) => {
   );
 
   return (
-    <Box className={classes.stats}>
+    <Grid container className={classes.stats}>
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('TVL')}</Typography>
         <Typography>
@@ -36,13 +36,13 @@ const Stats = ({ stats, blurred }) => {
           <ValueText value={activeVaults} />
         </Typography>
       </Box>
-      <Box>
+      <Box className={classes.stat}>
         <Typography className={classes.label}>{t('BuyBack')}</Typography>
         <Typography>
-          <ValueText value={buyback ? `$${buyback}` : 0} />
+          <ValueText value={buyback ? formatUsd(buyback) : 0} />
         </Typography>
       </Box>
-    </Box>
+    </Grid>
   );
 };
 
