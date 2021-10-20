@@ -1,6 +1,5 @@
 import React from 'react';
 import { getBuyback } from 'helpers/api';
-import BigNumber from 'bignumber.js';
 
 const useBuyback = () => {
   const [state, setState] = React.useState(0);
@@ -17,7 +16,7 @@ const useBuyback = () => {
         _buyback += number;
       });
 
-      setState(BigNumber(_buyback).toFixed(2));
+      setState(_buyback);
     }
 
     fetchData();
