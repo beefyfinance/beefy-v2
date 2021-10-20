@@ -49,7 +49,11 @@ const FilterCategories = memo(function FilterCategories({ category, handleChange
         <Typography variant={'h4'}>{t('Filter-Categories')}</Typography>
       </Grid>
       <Grid item xs={12} className={classes.filtersSlider}>
-        <ScrollContainer className={classes.filtersSliderContainer} vertical={false}>
+        <ScrollContainer
+          className={classes.filtersSliderContainer}
+          vertical={false}
+          nativeMobileScroll={false}
+        >
           {Object.entries(labels).map(([key, label]) => (
             <div key={key} className={classes.filterItem}>
               <Button
