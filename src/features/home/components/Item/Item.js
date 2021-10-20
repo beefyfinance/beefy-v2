@@ -156,9 +156,9 @@ function Item({ vault }) {
             <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-                <Typography>
-                  <ValueText value={tokensEarned} />
-                </Typography>
+
+                <ValueText value={tokensEarned} />
+
                 {priceInDolar.balance > 0 && (
                   <Typography className={classes.label}>
                     <ValuePrice value={formatUsd(price)} />
