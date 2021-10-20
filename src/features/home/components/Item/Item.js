@@ -7,6 +7,9 @@ import AssetsImage from 'components/AssetsImage';
 import SafetyScore from 'components/SafetyScore';
 import DisplayTags from 'components/vaultTags';
 import Popover from 'components/Popover';
+import BigNumber from 'bignumber.js';
+import { isEmpty } from 'helpers/utils';
+import ApyLoader from 'components/APYLoader';
 import { byDecimals, calcDaily, formatApy, formatUsd } from 'helpers/format';
 import styles from './styles';
 import clsx from 'clsx';
@@ -25,8 +28,10 @@ function Item({ vault }) {
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
+  const pricesReducer = useSelector(state => state.pricesReducer);
 
   const [state, setState] = React.useState({ formattedBalance: 0 });
+  const [priceInDolar, setPriceInDolar] = React.useState({ balance: 0 });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
   const formattedAPY = useMemo(() => formatApy(item.apy.totalApy), [item.apy.totalApy]);
@@ -37,6 +42,19 @@ function Item({ vault }) {
   }, [history, item.network, item.id]);
 
   const hasMore3Tags = item.tags.length > 2;
+
+  React.useEffect(() => {
+    let amount = 0;
+    if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
+      amount = byDecimals(
+        new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
+          byDecimals(item.pricePerFullShare)
+        ),
+        item.tokenDecimals
+      ).toFixed(8);
+    }
+    setPriceInDolar({ balance: amount });
+  }, [wallet.address, item, balance]);
 
   React.useEffect(() => {
     let amount = 0;
@@ -53,6 +71,24 @@ function Item({ vault }) {
     item.tokenDecimals,
     item.pricePerFullShare,
   ]);
+
+  const ValueText = ({ value }) => (
+    <>{value ? <span className={classes.value}>{value}</span> : <ApyLoader />}</>
+  );
+
+  const ValuePrice = ({ value }) => (
+    <>{value ? <span className={classes.price}>{value}</span> : <ApyLoader />}</>
+  );
+
+  const price = React.useMemo(() => {
+    return priceInDolar.balance > 0
+      ? BigNumber(pricesReducer.prices[item.oracleId]).times(priceInDolar.balance).toFixed(2)
+      : 0;
+  }, [priceInDolar.balance, pricesReducer.prices, item.oracleId]);
+
+  const tokensEarned = React.useMemo(() => {
+    return state.formattedBalance > 0 ? state.formattedBalance : '0';
+  }, [state.formattedBalance]);
 
   return (
     <div
@@ -120,10 +156,17 @@ function Item({ vault }) {
             <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-                <Typography className={classes.value}>
-                  {state.formattedBalance > 0 ? state.formattedBalance : '0'}
+                <Typography>
+                  <ValueText value={tokensEarned} />
                 </Typography>
-                {isBoosted ? <div className={classes.boostSpacer} /> : null}
+                {priceInDolar.balance > 0 && (
+                  <Typography>
+                    <ValuePrice value={formatUsd(price)} />
+                  </Typography>
+                )}
+                {isBoosted && priceInDolar.balance == 0 ? (
+                  <div className={classes.boostSpacer} />
+                ) : null}
               </div>
             </div>
             {/*TVL*/}

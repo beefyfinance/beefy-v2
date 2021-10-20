@@ -1,12 +1,13 @@
 /*********
 Node.js script to refresh the v2 app with the vaults state found in the v1 app. 
-"New" vaults in v1 are pulled into v2, and outdated properties in current v2 vaults 
-are refreshed with their v1 counterparts. Associated logo/icon files are accounted for 
-as well. Thus v1 is considered the source of truth in this operation.
+
+"New" vaults in v1 are pulled into v2, and outdated properties in current v2 vaults are 
+refreshed with their v1 counterparts. Associated logo/icon files are accounted for as 
+well. In other words, v1 is considered the source of truth in this operation.
 
 Script should be run from root "beefy-v2" directory with fresh "beefy-app" sources in a 
-_sibling_ directory. A working Node.js environment off the beefy-v2 directory is 
-assumed. Linux command line to invoke the script:
+_sibling_ directory. A working Node.js environment off the beefy-v2 directory is assumed. 
+Linux command line to invoke the script:
 
 node src/scripts/migrateV1vaults.mjs
 
@@ -22,13 +23,15 @@ may however be added to the v1 object in anticipation of future use in v2. This 
 will accommodatively copy it over.
 
 To assist the maintainer in manually updating these v2 aspects, an output file with an 
-array-listing of the IDs of the v1 vaults it has added newly to the v2 environment is 
-created: vaultsAddedFromV1.txt. The file is placed in directory from which the command 
-is run. To help minimize pollution, the maintainer may avoid pushing this file into the 
-staging repository.
+array-listing of the IDs of the v1 vaults which have been added newly to the v2 
+environment is created: vaultsAddedFromV1.txt. The file is placed in directory from which 
+the command is run. To help minimize pollution, the maintainer may avoid pushing this file 
+into the staging repository.
 
 Development
-+ v0.7 AllTrades: accomodated v2 property-anticipation in v1 vault objects
++ v0.8 AllTrades: handle EOL'd v1 vaults properly and so prevent vault-object duplication  
+	in v2
++ v0.7 AllTrades: accomodate v2 property-anticipation in v1 vault objects
 + v0.1.0.1 AllTrades: moved script into a new src/script, incorporated Arbitrum
 + v0.1 AllTrades
 **********/
@@ -42,8 +45,9 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 										{S_SRC: "avalanche", S_TRGT_ALIAS: "avax"},
 										{S_SRC: "harmony"},
 										{S_SRC: "arbitrum"}];
-const mS_PROPNM_ID = "id", mS_PROPNM_ASSTS = "assets", mS_PROPNM_STRAT_TYP = "stratType", 
-			mS_PROPNM_CHAIN = "network", mS_PROPNM_LOGO = "logo", mS_PROPNM_RISKS = "risks",
+const mS_PRPNM_ID = "id", mS_PRPNM_ASSTS = "assets", mS_PRPNM_STRAT_TYP = "stratType", 
+			mS_PRPNM_CHAIN = "network", mS_PRPNM_LOGO = "logo", mS_PRPNM_RISKS = "risks",
+			mS_PRPNM_CTRCT = "earnContractAddress", 
 			mAS_STRAT_TYP = [ "", "SingleStake", "StratLP", "StratMultiLP", "Vamp"];
 const moAO_SRC = {}, mo_trgt = {}; 
 
@@ -58,9 +62,9 @@ async function p_loadChain( O_CHN)	{
 		(async () => (await import( 
 													`../config/vault/${O_CHN.S_TRGT_ALIAS ? O_CHN.S_TRGT_ALIAS : 
 													O_CHN.S_SRC}.js`)).pools.reduce( (o, O) => {
-									if (o[ O[ mS_PROPNM_ID]])
-										throw `Duplicate ${O_CHN.S_SRC} target vault-ID (${O[ mS_PROPNM_ID]}`;
-									o[ O[ mS_PROPNM_ID]] = O; return o;}, {}))()
+									if (o[ O[ mS_PRPNM_ID]])
+										throw `Duplicate ${O_CHN.S_SRC} target vault-ID (${O[ mS_PRPNM_ID]}`;
+									o[ O[ mS_PRPNM_ID]] = O; return o;}, {}))()
 		])
 
 	console.log( "loading: " + O_CHN.S_SRC);
@@ -98,23 +102,36 @@ async function p_main()	{
 		o_trgtChn = mo_trgt[ O_CHN.S_SRC];
 
 		//for each source vault on the chain...
+		let s, o;
 		for (const O_SRC of moAO_SRC[ O_CHN.S_SRC])	{
 			let o_trgt;
 
 			//if the vault is present in target vault array already...
-			if (o_trgt = o_trgtChn[ O_SRC[ mS_PROPNM_ID]])	{
+			s = null; o = null;
+			const S_ID_SRC = O_SRC[ mS_PRPNM_ID];
+			if (o_trgt = (o_trgtChn[ S_ID_SRC] || ((s = S_ID_SRC.split( /[-=]eol[0-9a-z]?$/)[0]) && 
+																		S_ID_SRC !== s && (o = o_trgtChn[ s]) && O_SRC[ 
+																		mS_PRPNM_CTRCT] === o[ mS_PRPNM_CTRCT] ? o : null)))	{
+				//if the target vault's ID needs changing to the reflect the end-of-life status of 
+				//	the source vault, make it so
+				if (o)	{
+					o_trgtChn[ S_ID_SRC] = o_trgt;
+					o_trgt[ mS_PRPNM_ID] = S_ID_SRC;
+					delete o_trgtChn[ s];
+				}
+
 				//for each relevant property in the vault's source descripter...
 				for (const S in O_SRC)	{
 					//If the target vault descriptor doesn't need to be tested (because we already 
-					//	know property's value or the property is obsolete), loop for the next 
-					//	property. Or if the target already matches the source value, loop.
-					if (S in {[mS_PROPNM_ID]: "", ...O_PROP_IGNR} || o_trgt[ S] === O_SRC[ S])
+					//	know the property's value or the property is obsolete), loop for the next 
+					//	property. Or if the target's value already matches the source value, loop.
+					if (S in {[mS_PRPNM_ID]: "", ...O_PROP_IGNR} || o_trgt[ S] === O_SRC[ S])
 						continue;
 
 					//Since the source vault descriptor represents the system's source of truth, 
 					//	the target's descriptor needs to be updated to match. If this property is 
 					//	the assets-array property...
-					if (mS_PROPNM_ASSTS === S)	{
+					if (mS_PRPNM_ASSTS === S)	{
 						//if the array's contents match exactly the target counterpart's, loop for the 
 						//	descriptor's next property
 						if (O_SRC[ S].length == o_trgt[ S].length && o_trgt[ S].every( (s, i) => 
@@ -124,25 +141,25 @@ async function p_main()	{
 						//update the target's counterpart array
 						o_trgt[ S] = [...O_SRC[ S]];
 					//else if this is the risks-array property...
-					}else if (mS_PROPNM_RISKS === S)	{
+					}else if (mS_PRPNM_RISKS === S)	{
 						//update the target's counterpart array
 						o_trgt[ S] = [...O_SRC[ S]];
 					//else update the target's counterpart property, since it is outdated. Also if 
 					//	it's the logo file that's been updated, go ahead and copy over the file
 					}else	{
 						o_trgt[ S] = O_SRC[ S];
-						if (mS_PROPNM_LOGO === S)
+						if (mS_PRPNM_LOGO === S)
 							try	{
 								FS.copyFileSync( `${S_DIR_BASE}/beefy-app/src/images/${O_SRC[ S]}`, 
 																				`${S_DIR_BASE}/beefy-v2/src/images/${O_SRC[ S]}`);
-								console.log( `Migrated updated logo of vault ${O_SRC[ mS_PROPNM_ID]}`);
+								console.log( `Migrated updated logo of vault ${O_SRC[ mS_PRPNM_ID]}`);
 							} catch (O)	{
 								console.error( 
 														`Failed to copy over obstensibly updated logo of vault ${O_SRC[ 
-														mS_PROPNM_ID]}:\n   beefy-app/src/images/${O_SRC[ 
+														mS_PRPNM_ID]}:\n   beefy-app/src/images/${O_SRC[ 
 														S]} (Error: ${O}`);
 							}
-					} //if (mS_PROPNM_ASSTS === S)
+					} //if (mS_PRPNM_ASSTS === S)
 
 					//ensure it's noted that a change to the target array of vault descriptors 
 					//	has occurred 
@@ -152,11 +169,11 @@ async function p_main()	{
 
 				//loop for the next source vault
 				continue;
-			} //if (o_trgt = o_trgtChn[ O_SRC[ mS_PROPNM_ID]]
+			} //if (o_trgt = (o_trgtChn[ S_ID_SRC] ||
 
-			//Since unknown in the target environment, add a copy of the source vault 
-			//	descriptor to the array, First, if no vault logo is specified...
-			const S_LOGO = O_SRC[ mS_PROPNM_LOGO]; 
+			//Since unknown in the target environment, add a copy of the source vault descriptor 
+			//	to the array, First, if no vault logo is specified...
+			const S_LOGO = O_SRC[ mS_PRPNM_LOGO]; 
 			if (!S_LOGO)	{
 				//insofar as still needed, copy each constituent asset's icon from the default 
 				//	source repository
@@ -173,8 +190,8 @@ async function p_main()	{
 				let s_ASST;
 				try	{
 					const S_PROCESSD = ':';
-					for (s_ASST of O_SRC[ mS_PROPNM_ASSTS])	{
-						let s = o_singleLogo[ s_ASST];
+					for (s_ASST of O_SRC[ mS_PRPNM_ASSTS])	{
+						s = o_singleLogo[ s_ASST];
 						if (!s && o_Dirent)	{
 							while (o_Dirent = o_DirSingleLogo.readSync())	{
 								let i;
@@ -197,13 +214,13 @@ async function p_main()	{
 																`${S_DIR_BASE}/beefy-v2/src/images/single-assets/${s}`);
 						}else
 							console.error( `Failed to locate icon for ${O_SRC[ 
-																	mS_PROPNM_CHAIN]} asset ${s_ASST} of new vault ${O_SRC[ 
-																	mS_PROPNM_ID]}`);
-					} //for (s_ASST of O_SRC[ mS_PROPNM_ASSTS])
+																	mS_PRPNM_CHAIN]} asset ${s_ASST} of new vault ${O_SRC[ 
+																	mS_PRPNM_ID]}`);
+					} //for (s_ASST of O_SRC[ mS_PRPNM_ASSTS])
 				} catch (O)	{
 					console.error( `Failed to copy over an expected icon for ${O_SRC[ 
-																	mS_PROPNM_CHAIN]} asset ${s_ASST} of new vault ${O_SRC[ 
-																	mS_PROPNM_ID]}\n  (Error: ${O}`);
+																	mS_PRPNM_CHAIN]} asset ${s_ASST} of new vault ${O_SRC[ 
+																	mS_PRPNM_ID]}\n  (Error: ${O}`);
 				} //try
 			//else copy the _spedified_ logo over
 			}else
@@ -212,32 +229,32 @@ async function p_main()	{
 														`${S_DIR_BASE}/beefy-v2/src/images/${S_LOGO}`);
 				} catch (O)	{
 					console.error( `Failed to copy over specified logo of new vault ${O_SRC[ 
-													mS_PROPNM_ID]}:\n   beefy-app/src/images/${S_LOGO} (Error: ${O}`);
+													mS_PRPNM_ID]}:\n   beefy-app/src/images/${S_LOGO} (Error: ${O}`);
 				} //try
 
 			//add a copy of the source vault descriptor to the target array, adjusting as 
 			//	needed to match the target format
-			let o = {...O_SRC};
-			o[ mS_PROPNM_ASSTS] = [...O_SRC[ mS_PROPNM_ASSTS]];
-			if (O_SRC[ mS_PROPNM_RISKS])
-				o[ mS_PROPNM_RISKS] = [...O_SRC[ mS_PROPNM_RISKS]];
+			o = {...O_SRC};
+			o[ mS_PRPNM_ASSTS] = [...O_SRC[ mS_PRPNM_ASSTS]];
+			if (O_SRC[ mS_PRPNM_RISKS])
+				o[ mS_PRPNM_RISKS] = [...O_SRC[ mS_PRPNM_RISKS]];
 			for (const S in O_PROP_IGNR) if (S in o) delete o[S];
-			if (o[ mS_PROPNM_ASSTS])	{
-				const I = o[ mS_PROPNM_ASSTS].length;
-				if (!o[ mS_PROPNM_STRAT_TYP])
+			if (o[ mS_PRPNM_ASSTS])	{
+				const I = o[ mS_PRPNM_ASSTS].length;
+				if (!o[ mS_PRPNM_STRAT_TYP])
 //TODO?: somehow programatically set 'Vamp' stratType
-					o[ mS_PROPNM_STRAT_TYP] = mAS_STRAT_TYP[ I < 3 ? I : 3]; 
+					o[ mS_PRPNM_STRAT_TYP] = mAS_STRAT_TYP[ I < 3 ? I : 3]; 
 			}else
-				console.error( `Asset list missing on source vault ${o[ mS_PROPNM_ID]} on ${o[ 
-																															mS_PROPNM_CHAIN]} chain`);
-			o[ mS_PROPNM_CHAIN] = O_CHN.S_TRGT_ALIAS ? O_CHN.S_TRGT_ALIAS : O_CHN.S_SRC;
-			o_trgtChn[ o[ mS_PROPNM_ID]] = o;
+				console.error( `Asset list missing on source vault ${o[ mS_PRPNM_ID]} on ${o[ 
+																															mS_PRPNM_CHAIN]} chain`);
+			o[ mS_PRPNM_CHAIN] = O_CHN.S_TRGT_ALIAS ? O_CHN.S_TRGT_ALIAS : O_CHN.S_SRC;
+			o_trgtChn[ o[ mS_PRPNM_ID]] = o;
 
 			//Both ensure it's noted that a change to the target vault array has occurred and add 
 			//	the vault's ID to a running list of descriptors migrated.
-			if (!o_trgtChn.sirty)
+			if (!o_trgtChn.b_dirty)
 				o_trgtChn.b_dirty = true;
-			aS_added.push( o[ mS_PROPNM_CHAIN] + ": " + o[ mS_PROPNM_ID]);
+			aS_added.push( o[ mS_PRPNM_CHAIN] + ": " + o[ mS_PRPNM_ID]);
 		} //for (const O_SRC of moAO_SRC[ O_CHN.S_SRC]
 	} //for (const O_CHN of mAO_CHAIN)
 
