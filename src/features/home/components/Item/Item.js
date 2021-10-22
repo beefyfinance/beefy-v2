@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -19,6 +19,7 @@ const useStyles = makeStyles(styles);
 function Item({ vault }) {
   const item = vault;
 
+  // eslint-disable-next-line
   const [isBoosted, setIsBoosted] = React.useState(false);
 
   const classes = useStyles();
@@ -164,7 +165,7 @@ function Item({ vault }) {
                     <ValuePrice value={formatUsd(price)} />
                   </Typography>
                 )}
-                {isBoosted && priceInDolar.balance == 0 ? (
+                {isBoosted && priceInDolar.balance === 0 ? (
                   <div className={classes.boostSpacer} />
                 ) : null}
               </div>
