@@ -239,7 +239,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                     />
                   }
                 />
-                <FormControlLabel
+                {/* <FormControlLabel
                   className={classes.checkboxContainer}
                   label={t('Filter-Deposited')}
                   control={
@@ -250,7 +250,7 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
                       color="primary"
                     />
                   }
-                />
+                /> */}
                 <FormControlLabel
                   className={classes.checkboxContainer}
                   label={

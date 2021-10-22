@@ -4,6 +4,18 @@ const styles = theme => ({
     backgroundColor: '#313759',
     borderRadius: '16px',
   },
+  containerExpired: {
+    padding: '24px 24px 0.1px 24px',
+    backgroundColor: '#3F466D',
+    borderRadius: '16px',
+    marginTop: '-24px',
+  },
+  expiredBoostContainer: {
+    background: '#555D8B',
+    borderRadius: '16px',
+    padding: '16px',
+    marginBottom: '20px',
+  },
   boostImg: {
     width: 30,
     height: 30,
@@ -14,6 +26,12 @@ const styles = theme => ({
     fontWeight: 600,
     textTransform: 'uppercase',
     color: '#E88225',
+  },
+  h1white: {
+    fontSize: '24px',
+    fontWeight: 600,
+    textTransform: 'uppercase',
+    color: '#FFFFFF',
   },
   h2: {
     fontSize: '18px',
@@ -40,16 +58,23 @@ const styles = theme => ({
     textTransform: 'none', //'capitalize' no good due to localization
     color: '#D1D3E0',
     backgroundColor: '#232743',
-    borderRadius: '30px',
+    borderRadius: '8px',
     zIndex: 0,
     marginBottom: '12px',
     '&:hover': {
       backgroundColor: '#232743',
     },
     '&:disabled': {
-      backgroundColor: '#282C48',
+      backgroundColor: '#272C47',
       color: '#D1D3E0',
     },
+  },
+  blockBtn: {
+    marginLeft: 'auto',
+    marginRight: '0',
+    border: 'none',
+    padding: 0,
+    width: 32,
   },
 });
 
