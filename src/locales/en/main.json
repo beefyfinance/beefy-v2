@@ -133,6 +133,7 @@
   "Fee-PerformExt": "Performance fees are already subtracted from the displayed APY.",
   "Fee-Transaction": "Estimated Transaction Cost",
   "Boost-Noun": "Boost",
+  "Boost-Expired": "Expired",
   "Boost-Stake": "Stake Your {{mooToken}}",
   "Boost-Unstake": "Unstake Your {{mooToken}}",
   "Boost-WhatIs": "What's a Boost?",

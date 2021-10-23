@@ -20,7 +20,8 @@ const useStyles = makeStyles(styles);
 function Item({ vault }) {
   const item = vault;
 
-  // eslint-disable-next-line no-unused-vars
+
+  // eslint-disable-next-line
   const [isBoosted, setIsBoosted] = React.useState(false);
 
   const classes = useStyles();
@@ -156,9 +157,9 @@ function Item({ vault }) {
             <div className={classes.centerSpace}>
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-                <Typography>
-                  <ValueText value={tokensEarned} />
-                </Typography>
+
+                <ValueText value={tokensEarned} />
+
                 {priceInDolar.balance > 0 && (
                   <Typography className={classes.label}>
                     <ValuePrice value={formatUsd(price)} />

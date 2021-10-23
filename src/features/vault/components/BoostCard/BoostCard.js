@@ -1,7 +1,6 @@
-import { makeStyles, Typography, Box } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { config } from '../../../../config/config';
 import LinkButton from '../../../../components/LinkButton';
 import Card from '../Card/Card';
 import CardHeader from '../Card/CardHeader';

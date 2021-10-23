@@ -1,13 +1,3 @@
-const defaultFont = {
-  fontFamily: 'Proxima Nova',
-  fontStyle: 'normal',
-};
-
-const bold = {
-  ...defaultFont,
-  fontWeight: 600,
-};
-
 const styles = theme => ({
   cardActions: {
     display: 'flex',
