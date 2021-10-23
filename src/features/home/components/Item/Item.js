@@ -13,11 +13,13 @@ import ApyLoader from 'components/APYLoader';
 import { byDecimals, calcDaily, formatApy, formatUsd } from 'helpers/format';
 import styles from './styles';
 import clsx from 'clsx';
+import ApyStats from '../ApyStats/ApyStats';
 
 const useStyles = makeStyles(styles);
 
 function Item({ vault }) {
   const item = vault;
+
 
   // eslint-disable-next-line
   const [isBoosted, setIsBoosted] = React.useState(false);
@@ -35,8 +37,6 @@ function Item({ vault }) {
   const [priceInDolar, setPriceInDolar] = React.useState({ balance: 0 });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
-  const formattedAPY = useMemo(() => formatApy(item.apy.totalApy), [item.apy.totalApy]);
-  const formattedDPY = useMemo(() => calcDaily(item.apy.totalApy), [item.apy.totalApy]);
 
   const handleOpenVault = useCallback(() => {
     history.push(`/${item.network}/vault/${item.id}`);
@@ -180,36 +180,8 @@ function Item({ vault }) {
                 ) : null}
               </div>
             </div>
-            {/*APY*/}
-            <div className={classes.centerSpace}>
-              <div className={classes.stat}>
-                <div className={classes.tooltipLabel}>
-                  <Typography className={classes.label}>{t('APY')}</Typography>
-                  <div className={classes.tooltipHolder}>
-                    <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
-                  </div>
-                </div>
-                <Typography className={classes.value}>{formattedAPY}</Typography>
-                {isBoosted ? (
-                  <Typography className={classes.valueStrikethrough}>{formattedAPY}</Typography>
-                ) : null}
-              </div>
-            </div>
-            {/*Daily*/}
-            <div className={classes.centerSpace}>
-              <div className={classes.stat}>
-                <div className={classes.tooltipLabel}>
-                  <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
-                  <div className={classes.tooltipHolder}>
-                    <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
-                  </div>
-                </div>
-                <Typography className={classes.value}>{formattedDPY}</Typography>
-                {isBoosted ? (
-                  <Typography className={classes.valueStrikethrough}>{formattedDPY}</Typography>
-                ) : null}
-              </div>
-            </div>
+            {/*APY STATS*/}
+            <ApyStats launchpoolApr={isBoosted} apy={item.apy} />
             {/*Saftey Score*/}
             <div className={classes.centerSpace}>
               <div className={classes.stat}>

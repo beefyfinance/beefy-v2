@@ -36,7 +36,9 @@ export const formatUsd = (tvl, oraclePrice) => {
   }
   const prefix = '$';
 
-  return prefix + num.toFixed(2) + unitToDisplay;
+  return num < 999
+    ? prefix + num.toFixed(2) + unitToDisplay
+    : prefix + num.toFixed(0) + unitToDisplay;
 };
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
