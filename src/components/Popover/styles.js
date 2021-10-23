@@ -1,13 +1,18 @@
 const styles = theme => ({
   popover: {
-    padding: '15px',
-    background: theme.palette.type === 'dark' ? ' #272B4A' : '#fff',
+    padding: '16px',
+    background: theme.palette.type === 'dark' ? '#FFF' : '#272B4A',
     border: theme.palette.type === 'dark' ? '3px solid #484F7F' : '3px solid #A69885',
     filter: 'drop-shadow(0px 0px 40px #0A0F2B)',
     borderRadius: '15px',
     margin: '15px auto',
     maxWidth: '350px',
-    color: theme.palette.type === 'dark' ? '#FFF' : '#A69885',
+    minWidth: '250px',
+    textAlign: 'left',
+    color: theme.palette.type === 'dark' ? '#565B81' : '#A69885',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '160px',
+    },
   },
   trigger: {
     display: 'flex',
@@ -20,12 +25,13 @@ const styles = theme => ({
   },
   dot: {
     borderRadius: '50%',
+    border: theme.palette.type === 'dark' ? '2px solid #484F7F' : '1.5px solid #A69885',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontWeight: 700,
-    background: theme.palette.type === 'dark' ? '#484F7F' : '#A69885',
-    color: '#fff',
+    background: 'transparent',
+    color: '#6B7199',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -33,18 +39,13 @@ const styles = theme => ({
   title: {
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
-    background: theme.palette.type === 'dark' ? '#272B4A' : '#fff',
     fontWeight: 600,
     fontSize: '14px',
     lineHeight: '18px',
     letterSpacing: '1px',
     textTransform: 'uppercase',
-    color: theme.palette.type === 'dark' ? '#FFFFFF' : '#A69885',
-  },
-  divider: {
-    opacity: '0.4',
-    border: '1px solid #8585A6',
-    margin: '10px auto',
+    color: theme.palette.type === 'dark' ? '#272B4A' : '#A69885',
+    marginBottom: '8px',
   },
   size_sm: {
     width: '18px',
@@ -94,15 +95,15 @@ const styles = theme => ({
         borderWidth: '12px',
         borderColor:
           theme.palette.type === 'dark'
-            ? '#272B4A transparent transparent transparent'
+            ? '#FFF transparent transparent transparent'
             : 'transparent transparent transparent transparent',
       },
       '&:after': {
         borderWidth: '12px',
         borderColor:
           theme.palette.type === 'dark'
-            ? '#484F7F transparent transparent transparent'
-            : '#A69885 transparent transparent transparent',
+            ? 'transparent transparent transparent transparent'
+            : 'transparent transparent #A69885 transparent',
       },
     },
     '&[x-placement*="bottom"] span': {
@@ -114,7 +115,7 @@ const styles = theme => ({
         borderWidth: '12px',
         borderColor:
           theme.palette.type === 'dark'
-            ? 'transparent transparent #272B4A transparent'
+            ? 'transparent transparent #FFF transparent'
             : 'transparent transparent transparent transparent',
       },
       '&:after': {

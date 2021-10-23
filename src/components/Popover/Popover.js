@@ -1,4 +1,4 @@
-import { makeStyles, Typography, Divider, Popper, Box } from '@material-ui/core';
+import { makeStyles, Typography, Popper, Box } from '@material-ui/core';
 import React, { memo, useCallback, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
@@ -50,8 +50,7 @@ const Popover = ({ title, content, children, solid, size = 'sm', placement = 'to
         >
           <span className={classes.arrow} ref={setArrowRef} />
           <div className={[classes.popover, 'popover'].join(' ')}>
-            <Typography className={classes.title}>{title}</Typography>
-            <Divider className={classes.divider} />
+            {title && <Typography className={classes.title}>{title}</Typography>}
             {content ? <Typography>{content}</Typography> : <>{children}</>}
           </div>
         </Popper>
