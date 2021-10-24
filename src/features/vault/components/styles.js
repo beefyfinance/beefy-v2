@@ -102,6 +102,11 @@ const styles = theme => ({
     '& .MuiTypography-root': {
       width: '100%',
     },
+    '& .MuiButtonBase-root': {
+      '& .MuiIconButton-label': {
+        color: '#FFF',
+      },
+    },
   },
 });
 

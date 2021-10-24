@@ -311,6 +311,7 @@ const Deposit = ({
           />
           {formData.zap?.tokens[0] && (
             <FormControlLabel
+              className={classes.depositTokenContainer}
               value={formData.zap.tokens[0].symbol}
               control={<Radio />}
               label={
@@ -340,6 +341,7 @@ const Deposit = ({
           )}
           {formData.zap?.tokens[1] && (
             <FormControlLabel
+              className={classes.depositTokenContainer}
               value={formData.zap.tokens[1].symbol}
               control={<Radio />}
               label={
