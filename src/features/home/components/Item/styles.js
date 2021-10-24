@@ -353,6 +353,9 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       height: 18,
     },
+    [theme.breakpoints.down('sm')]: {
+      height: 20,
+    },
   },
   boostSpacerSm: {
     [theme.breakpoints.up('md')]: {

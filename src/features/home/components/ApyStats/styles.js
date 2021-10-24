@@ -4,12 +4,15 @@ const styles = theme => ({
   },
   label: {
     fontWeight: 400,
-    fontSize: '14px',
-    lineHeight: '18px',
-    color: theme.palette.type === 'dark' ? '#565B81' : '#A69885',
+    fontSize: '12px',
+    lineHeight: '20px',
+    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     textAlign: 'left',
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'center',
+    },
   },
   value: {
     fontWeight: 400,
@@ -67,6 +70,14 @@ const styles = theme => ({
   },
   tooltipHolder: {
     marginLeft: theme.spacing(0.5),
+  },
+  boostSpacer: {
+    [theme.breakpoints.up('md')]: {
+      height: 18,
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: 20,
+    },
   },
 });
 
