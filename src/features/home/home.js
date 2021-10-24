@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, Grid } from '@material-ui/core';
@@ -12,10 +12,11 @@ import {
   AutoSizer,
   CellMeasurer,
   CellMeasurerCache,
-  List,
   WindowScroller,
+  Grid as GridVirtualized,
 } from 'react-virtualized';
 import Item from './components/Item';
+import { ceil } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
@@ -71,15 +72,21 @@ const DataLoader = memo(function HomeDataLoader() {
 });*/
 
 function createVaultRenderer(vaults, cache) {
-  return function vaultRenderer({ index, parent, key, style }) {
+  return function vaultRenderer({ rowIndex, columnIndex, parent, key, style }) {
     const vault = (
-      <Grid item xs={12} sm={6} md={12}>
-        <Item vault={vaults[index]} />
+      <Grid item xs={12}>
+        <Item vault={vaults[rowIndex * 2 + columnIndex]} />
       </Grid>
     );
 
     return (
-      <CellMeasurer cache={cache} key={key} columnIndex={0} rowIndex={index} parent={parent}>
+      <CellMeasurer
+        cache={cache}
+        key={key}
+        columnIndex={columnIndex}
+        rowIndex={rowIndex}
+        parent={parent}
+      >
         {({ registerChild }) => (
           <div style={style} ref={registerChild}>
             {vault}
@@ -110,24 +117,39 @@ function useVaultRenderer(vaults) {
 const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
   const { renderer, cache } = useVaultRenderer(vaults);
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isTwoColumns, setIsTwoColumns] = useState(windowWidth > 599 && windowWidth < 960);
+
+  const updateDimensions = async () => {
+    setWindowWidth(window.innerWidth);
+    setIsTwoColumns(windowWidth > 599 && windowWidth < 960);
+    console.log(windowWidth + ' ' + isTwoColumns);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions());
+  });
+
   return (
     <WindowScroller>
       {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
         <AutoSizer disableHeight>
           {({ width }) => (
             <div ref={registerChild}>
-              <List
+              <GridVirtualized
                 autoHeight
                 height={height}
                 isScrolling={isScrolling}
                 onScroll={onChildScroll}
                 overscanRowCount={2}
-                rowCount={vaults.length}
+                rowCount={isTwoColumns ? ceil(vaults.length / 2) : vaults.length}
                 rowHeight={cache.rowHeight}
-                rowRenderer={renderer}
+                cellRenderer={renderer}
                 scrollTop={scrollTop}
                 width={width}
                 deferredMeasurementCache={cache}
+                columnCount={isTwoColumns ? 2 : 1}
+                columnWidth={isTwoColumns ? width / 2 : width}
               />
             </div>
           )}
