@@ -196,7 +196,7 @@ function Item({ vault }) {
                 </div>
                 <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
                 {isBoosted || priceInDolar.balance > 0 ? (
-                  <div className={classes.boostSpacerSm} />
+                  <div className={classes.boostSpacer} />
                 ) : null}
               </div>
             </div>

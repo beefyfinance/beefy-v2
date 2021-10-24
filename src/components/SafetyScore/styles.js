@@ -29,13 +29,13 @@ const styles = theme => ({
     },
   },
   sm: {
-    height: '9px',
+    height: '11px',
   },
   md: {
-    height: '17px',
+    height: '14px',
   },
   lg: {
-    height: '25px',
+    height: '19px',
   },
   withSizeLarge: {
     marginBottom: '5px',
