@@ -71,11 +71,11 @@ const DataLoader = memo(function HomeDataLoader() {
   );
 });*/
 
-function createVaultRenderer(vaults, cache) {
+function createVaultRenderer(vaults, isTwoColumns, cache) {
   return function vaultRenderer({ rowIndex, columnIndex, parent, key, style }) {
     const vault = (
       <Grid item xs={12}>
-        <Item vault={vaults[rowIndex * 2 + columnIndex]} />
+        <Item vault={isTwoColumns ? vaults[rowIndex * 2 + columnIndex] : vaults[rowIndex]} />
       </Grid>
     );
 
@@ -107,16 +107,15 @@ function createVaultHeightCache(vaults) {
   });
 }
 
-function useVaultRenderer(vaults) {
+function useVaultRenderer(vaults, isTwoColumns) {
   const cache = useMemo(() => createVaultHeightCache(vaults), [vaults]);
-  const renderer = useMemo(() => createVaultRenderer(vaults, cache), [vaults, cache]);
+  const renderer = useMemo(() => createVaultRenderer(vaults, isTwoColumns, cache), [vaults, cache]);
 
   return { renderer, cache };
 }
 
 const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
-  const { renderer, cache } = useVaultRenderer(vaults);
-
+  const classes = useStyles();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isTwoColumns, setIsTwoColumns] = useState(windowWidth > 599 && windowWidth < 960);
 
@@ -129,6 +128,8 @@ const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
   useEffect(() => {
     window.addEventListener('resize', updateDimensions());
   });
+
+  const { renderer, cache } = useVaultRenderer(vaults, isTwoColumns);
 
   return (
     <WindowScroller>
@@ -150,6 +151,7 @@ const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
                 deferredMeasurementCache={cache}
                 columnCount={isTwoColumns ? 2 : 1}
                 columnWidth={isTwoColumns ? width / 2 : width}
+                style={{ outline: 'none' }}
               />
             </div>
           )}

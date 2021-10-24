@@ -46,6 +46,12 @@ const styles = theme => ({
   vaultContainer: {
     marginTop: '48px',
   },
+  gridContainer: {
+    outline: 'none',
+    '& .ReactVirtualized__Grid': {
+      outline: 'none',
+    },
+  },
 });
 
 export default styles;
