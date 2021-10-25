@@ -209,7 +209,10 @@ const FeeBreakdown = ({ item, formData, type }) => {
               <PerformanceFees vaultID={item.id} />
             </Popover>
           </div>
-          <Typography className={classes.value}>4.5%</Typography>
+          {/*TODO : add dynamic fee */}
+          <Typography className={classes.value}>
+            {item.id === 'cake-cakev2' ? '1%' : '4.5%'}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Box pt={1}>
