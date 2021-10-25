@@ -14,7 +14,7 @@ const styles = theme => ({
     lineHeight: '24px',
     textAlign: 'center',
     letterSpacing: '0.1px',
-    color: '#6B7199',
+    color: '#8585A6',
     flex: 'none',
     order: 0,
     flexGrow: 0,

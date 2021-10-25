@@ -135,7 +135,14 @@ const LabeledStatWithTooltip = memo(({ children, boosted, label, value, ...passt
   );
 });
 
-const ApyStats = ({ apy, launchpoolApr, isLoading = false, itemClasses, itemInnerClasses }) => {
+const ApyStats = ({
+  apy,
+  launchpoolApr,
+  isGovVault,
+  isLoading = false,
+  itemClasses,
+  itemInnerClasses,
+}) => {
   const { t } = useTranslation();
   const isBoosted = !!launchpoolApr;
   const values = {};
@@ -178,7 +185,7 @@ const ApyStats = ({ apy, launchpoolApr, isLoading = false, itemClasses, itemInne
     <>
       <LabeledStatWithTooltip
         value={formatted.totalApy}
-        label={t('APY')}
+        label={isGovVault ? t('APR') : t('APY')}
         boosted={isBoosted ? formatted.boostedTotalApy : ''}
         isLoading={isLoading}
         className={`tooltip-toggle ${itemInnerClasses}`}
