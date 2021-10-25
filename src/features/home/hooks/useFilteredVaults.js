@@ -159,6 +159,11 @@ function keepVault(vault, config, address, tokenBalances) {
     return false;
   }
 
+  //hide when wallet no connected and my vaults = true
+  if (!address && config.deposited) {
+    return false;
+  }
+
   // default show
   return true;
 }

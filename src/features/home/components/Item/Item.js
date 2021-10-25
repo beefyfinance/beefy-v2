@@ -10,7 +10,7 @@ import Popover from 'components/Popover';
 import BigNumber from 'bignumber.js';
 import { isEmpty } from 'helpers/utils';
 import ApyLoader from 'components/APYLoader';
-import { byDecimals, calcDaily, formatApy, formatUsd } from 'helpers/format';
+import { byDecimals, formatUsd } from 'helpers/format';
 import styles from './styles';
 import clsx from 'clsx';
 import ApyStats from '../ApyStats/ApyStats';
@@ -19,7 +19,6 @@ const useStyles = makeStyles(styles);
 
 function Item({ vault }) {
   const item = vault;
-
 
   // eslint-disable-next-line
   const [isBoosted, setIsBoosted] = React.useState(false);
