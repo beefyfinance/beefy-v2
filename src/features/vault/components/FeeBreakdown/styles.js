@@ -75,6 +75,41 @@ const styles = theme => ({
   ol: {
     paddingLeft: 14,
   },
+  labelTooltip: {
+    fontWeight: 400,
+    fontSize: '14px',
+    lineHeight: '18px',
+    color: theme.palette.type === 'dark' ? '#565B81' : '#A69885',
+    letterSpacing: '0.2px',
+    textTransform: 'none', //'capitalize' no good due to localization
+    textAlign: 'left',
+  },
+  valueTooltip: {
+    fontWeight: 400,
+    fontSize: '14px',
+    lineHeight: '18px',
+    color: theme.palette.type === 'dark' ? '#565B81' : '#A69885',
+    letterSpacing: '0.2px',
+    textTransform: 'none', //'capitalize' no good due to localization
+    textAlign: 'rigth',
+  },
+  bold: {
+    fontWeight: 'bold',
+    fontSize: '14px',
+    lineHeight: '18px',
+    color: theme.palette.type === 'dark' ? '#272B4A' : '#A69885',
+    letterSpacing: '0.2px',
+    textTransform: 'none',
+  },
+  rows: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    '& div': {
+      margin: '5px 0px',
+    },
+  },
 });
 
 export default styles;

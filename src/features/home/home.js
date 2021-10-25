@@ -7,6 +7,7 @@ import Filter from 'features/home/components/Filter';
 import Portfolio from 'features/home/components/Portfolio';
 import Loader from 'components/CowLoader';
 import useVaults from './hooks/useFilteredVaults';
+import EmptyStates from 'features/home/components/EmptyStates';
 import styles from './styles';
 import {
   AutoSizer,
@@ -143,6 +144,7 @@ const VaultsList = memo(function HomeVaultsList() {
   const isPoolsLoading = useSelector(state => state.vaultReducer.isPoolsLoading);
   const platforms = useSelector(state => state.vaultReducer.platforms);
   const [filteredVaults, filterConfig, setFilterConfig, filteredCount, allCount] = useVaults();
+  const address = useSelector(state => state.walletReducer.address);
 
   if (isPoolsLoading) {
     return <Loader text={t('Vaults-LoadingData')} />;
@@ -157,7 +159,15 @@ const VaultsList = memo(function HomeVaultsList() {
         allCount={allCount}
         filteredCount={filteredCount}
       />
+
       <div className={classes.vaultsList}>
+        {filterConfig.deposited && address && filteredVaults.length === 0 && (
+          <EmptyStates setFilterConfig={setFilterConfig} connected={address} />
+        )}
+        {console.log(address)}
+        {filterConfig.deposited && !address && (
+          <EmptyStates setFilterConfig={setFilterConfig} connected={address} />
+        )}
         <VirtualVaultsList vaults={filteredVaults} />
       </div>
     </>
