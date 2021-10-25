@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { formatDecimals } from 'helpers/format';
 import Stats from './Stats';
 import VaultsStats from './VaultsStats';
 import styles from './styles';
@@ -36,8 +37,13 @@ const Portfolio = () => {
       for (const poolKey in vaultReducer.pools) {
         const pool = vaultReducer.pools[poolKey];
         const balance = balanceReducer.tokens[pool.network][pool.earnedToken].balance;
-        if (balance > 0) {
-          pool.balance = balance;
+        const boostpoolBalance = formatDecimals(
+          balanceReducer.tokens[pool.network][pool.earnedToken + 'Boost']?.balance
+        );
+        if (balance > 0 || (!isNaN(boostpoolBalance) && boostpoolBalance > 0)) {
+          pool.balance = isNaN(boostpoolBalance)
+            ? balance
+            : formatDecimals(BigNumber.sum(balance, boostpoolBalance).toNumber());
           pool.oraclePrice = pricesReducer.prices[pool.oracleId];
           newUserVaults.push(pool);
         }
