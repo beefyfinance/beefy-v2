@@ -23,7 +23,8 @@ function Item({ vault }) {
   // eslint-disable-next-line
   const [isBoosted, setIsBoosted] = React.useState(false);
   // eslint-disable-next-line
-  const [isGovVault, setIsGovVault] = React.useState(true);
+  const [isGovVault, setIsGovVault] = React.useState(false);
+
 
   const classes = useStyles();
   const { t } = useTranslation();
