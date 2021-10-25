@@ -43,8 +43,6 @@ const YearlyBreakdownTooltip = memo(({ rates }) => {
   const rows = [];
   const { t } = useTranslation();
 
-  console.log('Year', rates);
-
   if ('vaultApr' in rates) {
     rows.push({
       label: t('Vault-Breakdown-VaultApr'),
@@ -81,8 +79,6 @@ const YearlyBreakdownTooltip = memo(({ rates }) => {
 const DailyBreakdownTooltip = memo(({ rates }) => {
   const rows = [];
   const { t } = useTranslation();
-
-  console.log('Daily', rates);
 
   if ('vaultDaily' in rates) {
     rows.push({

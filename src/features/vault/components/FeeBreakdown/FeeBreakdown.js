@@ -1,11 +1,60 @@
 import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
 import Popover from 'components/Popover';
 import useFormattedFee from 'hooks/useFormattedFee';
 
 const useStyles = makeStyles(styles);
+
+const BreakdownTooltip = memo(({ rows }) => {
+  const classes = useStyles();
+
+  return (
+    <>
+      {rows.map(row => (
+        <Box className={classes.rows} key={row.label}>
+          <div className={row.last ? classes.bold : classes.labelTooltip}>{row.label}</div>
+          <div className={row.last ? classes.bold : classes.valueTooltip}>{row.value}</div>
+        </Box>
+      ))}
+    </>
+  );
+});
+
+const PerformanceFees = memo(({ rates, vaultID }) => {
+  const rows = [];
+  const { t } = useTranslation();
+
+  //TODO REMOVE WHEN CAN GET DYNAMIC DATA FROM ABOUT FEES
+  const isCakeVault = vaultID === 'cake-cakev2';
+
+  rows.push({
+    label: t('Fee-Holder'),
+    value: isCakeVault ? '1%' : '2.5%',
+    last: false,
+  });
+
+  rows.push({
+    label: t('Fee-Treasury'),
+    value: isCakeVault ? '0%' : '1.5%',
+    last: false,
+  });
+
+  rows.push({
+    label: t('Fee-Developers'),
+    value: isCakeVault ? '0%' : '0.5%',
+    last: false,
+  });
+
+  rows.push({
+    label: t('Fee-TotalFee'),
+    value: isCakeVault ? '1%' : '4.5%',
+    last: true,
+  });
+
+  return <BreakdownTooltip rows={rows} />;
+});
 
 const FeeBreakdown = ({ item, formData, type }) => {
   const classes = useStyles();
@@ -15,6 +64,7 @@ const FeeBreakdown = ({ item, formData, type }) => {
 
   return (
     <Box mt={2} p={2} className={classes.feeContainer}>
+      {console.log(item)}
       <Grid container>
         {formData.deposit.isZap ? (
           <Grid item xs={12}>
@@ -155,7 +205,9 @@ const FeeBreakdown = ({ item, formData, type }) => {
               {t('Fee-Performance')}
             </Typography>
             {/* TODO: Tooltip (need design) */}
-            <Popover title={t('Fee-Tagline')} solid size="md"></Popover>
+            <Popover>
+              <PerformanceFees vaultID={item.id} />
+            </Popover>
           </div>
           <Typography className={classes.value}>4.5%</Typography>
         </Grid>
