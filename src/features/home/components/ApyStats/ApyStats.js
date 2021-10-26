@@ -43,8 +43,6 @@ const YearlyBreakdownTooltip = memo(({ rates }) => {
   const rows = [];
   const { t } = useTranslation();
 
-  console.log('Year', rates);
-
   if ('vaultApr' in rates) {
     rows.push({
       label: t('Vault-Breakdown-VaultApr'),
@@ -81,8 +79,6 @@ const YearlyBreakdownTooltip = memo(({ rates }) => {
 const DailyBreakdownTooltip = memo(({ rates }) => {
   const rows = [];
   const { t } = useTranslation();
-
-  console.log('Daily', rates);
 
   if ('vaultDaily' in rates) {
     rows.push({
@@ -145,6 +141,7 @@ const ApyStats = ({
   itemClasses,
   itemInnerClasses,
   spacer,
+  isGovVault,
 }) => {
   const { t } = useTranslation();
   const isBoosted = !!launchpoolApr;
@@ -188,7 +185,7 @@ const ApyStats = ({
     <>
       <LabeledStatWithTooltip
         value={formatted.totalApy}
-        label={t('APY')}
+        label={isGovVault ? t('APR') : t('APY')}
         boosted={isBoosted ? formatted.boostedTotalApy : ''}
         isLoading={isLoading}
         className={`tooltip-toggle ${itemInnerClasses}`}

@@ -96,6 +96,7 @@ const styles = theme => ({
     lineHeight: '24px',
     margin: 0,
     padding: 0,
+    whiteSpace: 'nowrap',
     letterSpacing: '0.2px',
     [theme.breakpoints.up('lg')]: {
       fontSize: '18px',
@@ -127,6 +128,7 @@ const styles = theme => ({
     letterSpacing: '0.2px',
     fontSize: '14px',
     lineHeight: '18px',
+    whiteSpace: 'nowrap',
   },
   platformLabel: {
     fontWeight: 600,
@@ -318,6 +320,13 @@ const styles = theme => ({
   },
   withBoosted: {
     border: '2px solid #DB8332',
+  },
+  withGovVault: {
+    background: '#291E4D',
+    border: '2px solid #3C2D71',
+  },
+  govVaultTitle: {
+    fontSize: '15px',
   },
   valueStrikethrough: {
     fontWeight: 400,

@@ -10,7 +10,7 @@ import Popover from 'components/Popover';
 import BigNumber from 'bignumber.js';
 import { isEmpty } from 'helpers/utils';
 import ApyLoader from 'components/APYLoader';
-import { byDecimals, calcDaily, formatApy, formatUsd } from 'helpers/format';
+import { byDecimals, formatUsd } from 'helpers/format';
 import styles from './styles';
 import clsx from 'clsx';
 import ApyStats from '../ApyStats/ApyStats';
@@ -22,6 +22,8 @@ function Item({ vault }) {
 
   // eslint-disable-next-line
   const [isBoosted, setIsBoosted] = React.useState(false);
+  // eslint-disable-next-line
+  const [isGovVault, setIsGovVault] = React.useState(false);
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -98,6 +100,7 @@ function Item({ vault }) {
         [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
         [classes.withIsLongName]: item.name.length > 12,
         [classes.withBoosted]: isBoosted,
+        [classes.withGovVault]: isGovVault,
       })}
     >
       <Grid container className={classes.dataGrid}>
@@ -115,6 +118,11 @@ function Item({ vault }) {
             </Grid>
             <Grid item>
               <div>
+                {isGovVault ? (
+                  <Typography className={classes.govVaultTitle} onClick={handleOpenVault}>
+                    EARN BNB
+                  </Typography>
+                ) : null}
                 <div className={classes.infoContainer}>
                   {/*Vault Name*/}
                   <Typography className={classes.vaultName} onClick={handleOpenVault}>
@@ -185,25 +193,43 @@ function Item({ vault }) {
               apy={item.apy}
               spacer={isBoosted || priceInDolar.balance > 0}
             />
-            {/*Saftey Score*/}
-            <div className={classes.centerSpace}>
-              <div className={classes.stat}>
-                <div className={classes.tooltipLabel}>
-                  <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
-                  <div className={classes.tooltipHolder}>
-                    <Popover solid title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
-                  </div>
+            {/*Rewards/Saftey Score*/}
+            {isGovVault ? (
+              <div className={classes.centerSpace}>
+                <div className={classes.stat}>
+                  <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
+
+                  <ValueText value={'4.0 BNB'} />
+                  {isBoosted && priceInDolar.balance === 0 ? (
+                    <div className={classes.boostSpacer} />
+                  ) : null}
                 </div>
-                <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-                {isBoosted || priceInDolar.balance > 0 ? (
-                  <div className={classes.boostSpacer} />
-                ) : null}
               </div>
-            </div>
+            ) : (
+              <div className={classes.centerSpace}>
+                <div className={classes.stat}>
+                  <div className={classes.tooltipLabel}>
+                    <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
+                    <div className={classes.tooltipHolder}>
+                      <Popover
+                        solid
+                        title={t('Safety-ScoreWhat')}
+                        content={t('Safety-ScoreExpl')}
+                      />
+                    </div>
+                  </div>
+                  <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
+                  {isBoosted || priceInDolar.balance > 0 ? (
+                    <div className={classes.boostSpacer} />
+                  ) : null}
+                </div>
+              </div>
+            )}
+
             {/*Open Vault*/}
             <div className={classes.centerSpaceOpen} style={{ padding: 0 }}>
               <Button onClick={handleOpenVault} size="large" className={classes.depositButton}>
-                {t('Vault-Open')}
+                {isGovVault ? t('Vault-Open-Pool') : t('Vault-Open')}
               </Button>
             </div>
           </Grid>

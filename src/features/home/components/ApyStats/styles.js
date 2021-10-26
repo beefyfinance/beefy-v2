@@ -28,6 +28,9 @@ const styles = theme => ({
     flexWrap: 'nowrap',
     justifyContent: 'space-between',
     alignItems: 'center',
+    '& div': {
+      margin: '5px 0px',
+    },
   },
   bold: {
     fontWeight: 'bold',
