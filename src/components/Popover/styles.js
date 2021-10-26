@@ -2,7 +2,7 @@ const styles = theme => ({
   popover: {
     padding: '16px',
     background: theme.palette.type === 'dark' ? '#FFF' : '#272B4A',
-    border: theme.palette.type === 'dark' ? '3px solid #484F7F' : '3px solid #A69885',
+    border: theme.palette.type === 'dark' ? '2px solid #E5E5E5' : '2px solid #A69885',
     filter: 'drop-shadow(0px 0px 40px #0A0F2B)',
     borderRadius: '15px',
     margin: '15px auto',
@@ -10,9 +10,6 @@ const styles = theme => ({
     minWidth: '250px',
     textAlign: 'left',
     color: theme.palette.type === 'dark' ? '#565B81' : '#A69885',
-    [theme.breakpoints.down('sm')]: {
-      minWidth: '160px',
-    },
   },
   trigger: {
     display: 'flex',
@@ -25,13 +22,13 @@ const styles = theme => ({
   },
   dot: {
     borderRadius: '50%',
-    border: theme.palette.type === 'dark' ? '2px solid #484F7F' : '1.5px solid #A69885',
+    border: theme.palette.type === 'dark' ? '1px solid #8585A6' : '1.5px solid #A69885',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontWeight: 700,
     background: 'transparent',
-    color: '#6B7199',
+    color: '#8585A6',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -122,7 +119,7 @@ const styles = theme => ({
         borderWidth: '12px',
         borderColor:
           theme.palette.type === 'dark'
-            ? 'transparent transparent #484F7F transparent'
+            ? 'transparent transparent transparent transparent'
             : 'transparent transparent #A69885 transparent',
       },
     },
