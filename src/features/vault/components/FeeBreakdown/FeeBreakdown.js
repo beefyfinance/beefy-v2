@@ -204,7 +204,6 @@ const FeeBreakdown = ({ item, formData, type }) => {
               {/* TODO: add dynamic fee */}
               {t('Fee-Performance')}
             </Typography>
-            {/* TODO: Tooltip (need design) */}
             <Popover>
               <PerformanceFees vaultID={item.id} />
             </Popover>

@@ -6,7 +6,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const Popover = ({ title, content, children, solid, size = 'sm', placement = 'top-end' }) => {
+const Popover = ({ title, content, children, size = 'sm', placement = 'top-end' }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
