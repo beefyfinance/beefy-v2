@@ -62,7 +62,7 @@ const Header = ({ isNightMode, setNightMode }) => {
           {t('Header-Explore')}
         </NavLink>
         {navLinks.map(({ title, path }) => (
-          <a target="_blank" rel="noreferrer" className={classes.navLink} href={path}>
+          <a target="_blank" rel="noreferrer" className={classes.navLink} href={path} key={title}>
             {title}
           </a>
         ))}

@@ -25,7 +25,6 @@ function Item({ vault }) {
   // eslint-disable-next-line
   const [isGovVault, setIsGovVault] = React.useState(false);
 
-
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
@@ -184,12 +183,16 @@ function Item({ vault }) {
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
                 {isBoosted || priceInDolar.balance > 0 ? (
-                  <div className={classes.mobileSpacer} />
+                  <div className={classes.boostSpacer} />
                 ) : null}
               </div>
             </div>
             {/*APY STATS*/}
-            <ApyStats launchpoolApr={isBoosted} isGovVault={isGovVault} apy={item.apy} />
+            <ApyStats
+              launchpoolApr={isBoosted}
+              apy={item.apy}
+              spacer={isBoosted || priceInDolar.balance > 0}
+            />
             {/*Rewards/Saftey Score*/}
             {isGovVault ? (
               <div className={classes.centerSpace}>
@@ -216,7 +219,9 @@ function Item({ vault }) {
                     </div>
                   </div>
                   <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-                  {isBoosted ? <div className={classes.boostSpacerSm} /> : null}
+                  {isBoosted || priceInDolar.balance > 0 ? (
+                    <div className={classes.boostSpacer} />
+                  ) : null}
                 </div>
               </div>
             )}

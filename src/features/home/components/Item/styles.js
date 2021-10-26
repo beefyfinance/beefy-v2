@@ -18,6 +18,11 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     },
+    [theme.breakpoints.only('sm')]: {
+      marginRight: '12px',
+      marginLeft: '12px',
+      width: 'calc(100% - 24px)',
+    },
   },
   dataGrid: {},
   badges: {
@@ -361,6 +366,9 @@ const styles = theme => ({
   boostSpacer: {
     [theme.breakpoints.up('md')]: {
       height: 18,
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: 20,
     },
   },
   boostSpacerSm: {

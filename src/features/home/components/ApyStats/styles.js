@@ -74,6 +74,14 @@ const styles = theme => ({
   tooltipHolder: {
     marginLeft: theme.spacing(0.5),
   },
+  boostSpacer: {
+    [theme.breakpoints.up('md')]: {
+      height: 18,
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: 20,
+    },
+  },
 });
 
 export default styles;
