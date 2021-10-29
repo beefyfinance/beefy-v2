@@ -30,6 +30,7 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    withdrawalFee: '0.01%',
   },
   {
     id: 'sushi-arb-spell-weth',

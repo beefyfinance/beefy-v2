@@ -1,0 +1,495 @@
+[
+  {
+    "id": "bsc: belt-beltbtc",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: belt-beltbnb",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: belt-belteth",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: wsg-wsg",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wsg-wsg-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-tusd-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-fil-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: belt-4belt",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: cakev2-naos-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: cakev2-pha-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: cakev2-form-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: cakev2-ata-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: satis-xsat-busd-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: banana-keyfi-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: cakev2-reef-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: cakev2-band-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: cakev2-bel-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: auto-auto-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: sponge-soak-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: cakev2-bcfx-busd-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-math-busd-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: jetfuel-fuel-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-helmet-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-bux-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-fil-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-nuls-busd-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-mamzn-ust-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-mgoogl-ust-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-comp-eth-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-bopen-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-hard-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-easy-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: mdex-inj-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: swamp-bifi-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-gum-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-zil-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-pcws-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-ramp-busd",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: jul-btcb-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: auto-comp-eth",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: auto-ust-busd",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: auto-usdc-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: auto-wbnb-old-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-dot-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-unfi-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: jetfuel-link-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: venus-bch-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: street-twt-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-fil-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-alpha-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: street-nar-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: street-guns-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: street-guns-bnb-v1",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cake-link-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-sfund-wbnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-bmon-busd-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: memefarmv2-mfrm-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "heco: mdex-wht-husd",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: curve-ftm-geist",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-dola",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-guqin-qi-2",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-fantom-conservatory",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: summit-summit",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: summit-summit-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-sound-of-moosic",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: pearzap-fpear-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: pearzap-fpear-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-ftm-sonata",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-dance-of-degens",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-magic-touch-daniele",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-classic-trio",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-e-major",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-b-major",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-ziggy-mim",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-guqin-qi",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-fidelio-duetto",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-symphony-nr-10",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-grand-orchestra",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-fantom-of-opera",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-steady-beets",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-frax",
+    "type": "synced"
+  },
+  {
+    "id": "fantom: scream-mim",
+    "type": "synced"
+  },
+  {
+    "id": "fantom: spirit-wmemo-mim",
+    "type": "synced"
+  },
+  {
+    "id": "fantom: boo-yfi-ftm",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: boo-ftm-badger",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: quick-shib-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-dpi-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-ftm-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-jrt-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-wmatic-crystl",
+    "type": "synced"
+  },
+  {
+    "id": "polygon: telxchange-quick-quick-tel-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon: telxchange-quick-eth-tel-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon: dfyn-bifi-dfyn-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon: sushi-wbtc-ibbtc",
+    "type": "synced"
+  },
+  {
+    "id": "polygon: quick-quick-uni-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon: quick-aave-eth",
+    "type": "synced"
+  },
+  {
+    "id": "polygon: curve-poly-atricrypto2",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: quick-quick-woo-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: quick-woo-eth",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: quick-start-quick",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: dfyn-aave-dfyn-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: quick-nexo-quick-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: quick-vision-quick-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax: joe-mai-usdc.e-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax: joe-joe-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax: joe-joe-usdt.e",
+    "type": "synced"
+  },
+  {
+    "id": "avax: joe-qi-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax: joe-syn-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax: joe-weth.e-usdt.e-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax: joe-wbtc.e-usdt.e-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax: png-bnb-png-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax: png-wbtc-png-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax: png-dai-png-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "arbitrum: spell-mim-crv",
+    "type": "synced"
+  },
+  {
+    "id": "celo: sushi-celo-celo-weth",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-cusd-dai",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-ceur-weth",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-cusd-weth",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-cusd-ceur",
+    "type": "Added"
+  }
+]
