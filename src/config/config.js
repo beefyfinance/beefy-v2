@@ -169,4 +169,25 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'MIM'],
   },
+  celo: {
+    name: 'celo',
+    chainId: 42220,
+    rpc: ['https://forno.celo.org'],
+    explorerUrl: 'https://explorer.celo.org/',
+    multicallAddress: '0xa9E6E271b27b20F65394914f8784B3B860dBd259',
+    supportedWallets: ['injected'],
+    providerName: 'Celo',
+    walletSettings: {
+      chainId: `0x${parseInt(42220, 10).toString(16)}`,
+      chainName: 'Celo',
+      nativeCurrency: {
+        name: 'CELO',
+        symbol: 'CELO',
+        decimals: 18,
+      },
+      rpcUrls: ['https://forno.celo.org'],
+      blockExplorerUrls: ['https://explorer.celo.org/'],
+    },
+    stableCoins: ['cUSD, cEUR, DAI'],
+  },
 };
