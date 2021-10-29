@@ -160,7 +160,7 @@ const Boost = () => {
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(
-        new BigNumber(balance.tokens[item.token + 'Boost'].balance),
+        new BigNumber(balance.tokens[item.network][item.token + 'Boost'].balance),
         item.tokenDecimals
       ).toFixed(8);
       approved = balance.tokens[item.network][item.token].allowance[item.earnContractAddress];
@@ -213,6 +213,7 @@ const Boost = () => {
 
   return (
     <Container className={classes.vaultContainer} maxWidth="lg">
+      {console.log(vault)}
       {isLoading ? (
         <Loader message="Getting boost data..." />
       ) : (
