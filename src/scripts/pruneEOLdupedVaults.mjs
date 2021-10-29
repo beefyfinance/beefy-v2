@@ -73,7 +73,7 @@ async function p_main() {
     console.log( `Analyzing vaults on chain '${O_CHN.S_FILENM}'...`);
     o_trgtChn = mo_trgt[ O_CHN.S_FILENM];
 
-    //for each vault registered on the chain...
+    //for each vault contract registered on the chain...
     for (const S_CTRCT in o_trgtChn)  {
       const O_REGX_EOL = /[-=]eol[0-9a-z]?$/, 
             S_PRPNM_CTRCT = "vault-contract", S_PRPNM_ERR_DUPES = "ERROR-duplicates", 
@@ -112,7 +112,7 @@ async function p_main() {
       //We have a candidate case for removing an obsolete vault descriptor (object). For 
 			//	each duplicate vault descriptor...
 			let o_note = null;
-			O_ctrct.forEach( (O, I) => {
+			O_ctrct.forEach( (O_VLT, I) => {
 				let s;
 
 				//if this duplicate is our anticipated end-of-life vault, loop for the next 
@@ -122,7 +122,7 @@ async function p_main() {
 				
 				//if this is not a weird case of a duplicated end-of-lifed vault descriptor, note 
 				//  that this descriptor "has now been" removed, and loop for the next duplicate
-				s = O[ mS_PRPNM_ID];
+				s = O_VLT[ mS_PRPNM_ID];
 				if (!(O_REGX_EOL.test( s))) {
 					if (!o_note)
 						o_note = {[S_PRPNM_CTRCT]: `${O_CHN.S_FILENM}: ${S_CTRCT}`, 
@@ -137,7 +137,7 @@ async function p_main() {
 				} //if (!(O_REGX_EOL.test( s)))
 
 				//complain about this weird case of duplicate end-of-lifed vaults registered, 
-				//  and preserve this particular duplicate for overlords to assess
+				//  and _preserve_ this particular duplicate for overlords to assess
 				if (!(o_note || o_note[ S_PRPNM_ERR_DUPES]))	{
 					const S = O_ctrct[ I_EOL][ mS_PRPNM_ID];
 					if (!o_note)
@@ -150,7 +150,7 @@ async function p_main() {
 				} //if (!(o_note ||
 				console.error( `  - ${s}`);
 				o_note[ S_PRPNM_ERR_DUPES].push( s);
-				o_trgtChn[ `${S_CTRCT}-${I}`] = O;
+				o_trgtChn[ `${S_CTRCT}-${I}`] = O_VLT;
 			}); //O_ctrct.forEach(
 			if (o_note)
 				aO_noted.push( o_note);
@@ -161,7 +161,7 @@ async function p_main() {
 
       //if a vault descriptor was removed, ensure it's noted that a change to this 
 			//	chain's array of vault descriptors has been prepared
-      if (!o_trgtChn.b_dirty && o_note[ S_PRPNM_REMVD])
+      if (o_note[ S_PRPNM_REMVD])
         o_trgtChn.b_dirty = true;
     } //for (const S_CTRCT in o_trgtChn)
   } //for (const O_CHN of mAO_CHAIN)
