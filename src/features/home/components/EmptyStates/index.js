@@ -34,7 +34,7 @@ const EmptyStates = ({ setFilterConfig }) => {
   return (
     <Box className={classes.itemContainer}>
       <Box>
-        <img alt="BIFI" src={require('images/empty-state.png').default} />
+        <img height={120} alt="BIFI" src={require('images/empty-state.svg').default} />
       </Box>
       <Box>
         <Typography className={classes.bold} component="h5">

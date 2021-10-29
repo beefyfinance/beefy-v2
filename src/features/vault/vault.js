@@ -30,6 +30,9 @@ const Vault = () => {
   const classes = useStyles();
   const t = useTranslation().t;
 
+  let isGovPool = false;
+  let isBoosted = false;
+
   let { id } = useParams();
   const { vault, wallet, prices } = useSelector(state => ({
     vault: state.vaultReducer,
@@ -203,9 +206,9 @@ const Vault = () => {
               </Grid>
               <Grid item xs={12} md={8} className={classes.customOrder2}>
                 {/* TODO: Show only for boosts */}
-                <BoostCard />
+                {isBoosted && <BoostCard />}
                 {/* TODO: Show only for gov pools */}
-                <GovDetailsCard />
+                {isGovPool && <GovDetailsCard />}
                 <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
                 {item.risks && item.risks.length > 0 && (
                   <SafetyCard vaultRisks={item.risks} score={item.safetyScore} />

@@ -110,13 +110,15 @@ function createVaultHeightCache(vaults) {
 
 function useVaultRenderer(vaults, isTwoColumns) {
   const cache = useMemo(() => createVaultHeightCache(vaults), [vaults]);
-  const renderer = useMemo(() => createVaultRenderer(vaults, isTwoColumns, cache), [vaults, cache]);
+  const renderer = useMemo(
+    () => createVaultRenderer(vaults, isTwoColumns, cache),
+    [vaults, isTwoColumns, cache]
+  );
 
   return { renderer, cache };
 }
 
 const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
-  const classes = useStyles();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isTwoColumns, setIsTwoColumns] = useState(windowWidth > 599 && windowWidth < 960);
 

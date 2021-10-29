@@ -149,17 +149,17 @@ const ApyStats = ({
 
   values.totalApy = apy.totalApy;
 
-  if ('vaultApr' in apy && apy.vaultApr) {
+  if (apy.vaultApr) {
     values.vaultApr = apy.vaultApr;
     values.vaultDaily = apy.vaultApr / 365;
   }
 
-  if ('tradingApr' in apy && apy.tradingApr) {
+  if (apy.tradingApr) {
     values.tradingApr = apy.tradingApr;
     values.tradingDaily = apy.tradingApr / 365;
   }
 
-  if ('vaultAprDaily' in values || 'tradingAprDaily' in values) {
+  if (values.vaultDaily || values.tradingDaily) {
     values.totalDaily = (values.vaultDaily || 0) + (values.tradingDaily || 0);
   } else {
     values.totalDaily = yearlyToDaily(values.totalApy);
