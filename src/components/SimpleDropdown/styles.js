@@ -10,6 +10,9 @@ const styles = theme => ({
       fontWeight: '600',
       fontSize: 16,
       padding: '12px 30px 0px 15px',
+      [theme.breakpoints.down('md')]: {
+        padding: '12px 30px 0px 11px',
+      },
       border: props =>
         props.noBorder
           ? 'none'

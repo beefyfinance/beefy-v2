@@ -214,6 +214,7 @@ const styles = theme => ({
       backgroundColor: '#14182B',
       border: 'solid 2px #3F466D',
       borderRadius: '30px',
+      boxShadow: 'none',
       padding: 0,
       margin: 0,
       '& .MuiInputBase-input': {
