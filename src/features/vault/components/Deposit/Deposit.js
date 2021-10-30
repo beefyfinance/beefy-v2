@@ -273,42 +273,44 @@ const Deposit = ({
           name="deposit-asset"
           onChange={e => handleAsset(e.target.value)}
         >
-          <FormControlLabel
-            className={classes.depositTokenContainer}
-            value={item.token}
-            control={formData.zap ? <Radio /> : <div style={{ width: 12 }} />}
-            label={
-              /*TODO: wrap label content into component */
-              <Box className={classes.balanceContainer} display="flex" alignItems="center">
-                <Box lineHeight={0}>
-                  <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+          <div style={{ display: 'flex' }}>
+            <FormControlLabel
+              className={classes.depositTokenContainer}
+              value={item.token}
+              control={formData.zap ? <Radio /> : <div style={{ width: 12 }} />}
+              label={
+                /*TODO: wrap label content into component */
+                <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                  <Box lineHeight={0}>
+                    <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+                  </Box>
+                  <Box flexGrow={1} pl={1} lineHeight={0}>
+                    {isLoading ? (
+                      <Loader line={true} />
+                    ) : (
+                      <Typography variant={'body1'}>
+                        {byDecimals(
+                          tokens[item.token].balance,
+                          tokens[item.token].decimals
+                        ).significant(6)}{' '}
+                        {item.token}
+                      </Typography>
+                    )}
+                  </Box>
                 </Box>
-                <Box flexGrow={1} pl={1} lineHeight={0}>
-                  {isLoading ? (
-                    <Loader line={true} />
-                  ) : (
-                    <Typography variant={'body1'}>
-                      {byDecimals(
-                        tokens[item.token].balance,
-                        tokens[item.token].decimals
-                      ).significant(6)}{' '}
-                      {item.token}
-                    </Typography>
-                  )}
-                </Box>
-                <Box>
-                  <a
-                    href={item.buyTokenUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={classes.btnSecondary}
-                  >
-                    <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
-                  </a>
-                </Box>
-              </Box>
-            }
-          />
+              }
+            />
+            <Box>
+              <a
+                href={item.buyTokenUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={classes.btnSecondary}
+              >
+                <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+              </a>
+            </Box>
+          </div>
           {formData.zap?.tokens[0] && (
             <FormControlLabel
               className={classes.depositTokenContainer}

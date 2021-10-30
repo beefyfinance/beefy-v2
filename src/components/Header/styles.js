@@ -62,7 +62,7 @@ const styles = theme => ({
       },
     },
     [theme.breakpoints.down('md')]: {
-      margin: '8px',
+      margin: '16px',
     },
   },
   navMobile: {

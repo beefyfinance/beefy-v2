@@ -31,7 +31,7 @@ const BreakdownTooltip = memo(({ rows }) => {
     <>
       {rows.map(row => (
         <Box className={classes.rows} key={row.label}>
-          <div className={row.last ? classes.bold : classes.label}>{row.label}</div>
+          <div className={row.last ? classes.bold : classes.statLabel}>{row.label}</div>
           <div className={row.last ? classes.bold : classes.value}>{row.value}</div>
         </Box>
       ))}

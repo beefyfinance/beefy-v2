@@ -17,22 +17,6 @@ const styles = theme => ({
       textTransform: 'inherit',
       color: '#ffffff',
     },
-    '& .MuiButton-root': {
-      fontSize: '16px',
-      fontWeight: 600,
-      color: '#6B7199',
-      backgroundColor: '#232743',
-      borderRadius: '20px',
-      textTransform: 'capitalize',
-      letterSpacing: '0.1px',
-      padding: '3px 15px',
-      transition: 'color 0.2s',
-      '&:hover': {
-        color: '#ffffff',
-        backgroundColor: '#3F466D',
-        transition: 'color 0.1s',
-      },
-    },
   },
   inputContainer: {
     paddingTop: '10px',
@@ -43,6 +27,7 @@ const styles = theme => ({
       borderRadius: '30px',
       padding: 0,
       margin: 0,
+      boxShadow: 'none',
       '& .MuiInputBase-input': {
         padding: '10px 5px 8px 40px',
         fontSize: '21px',
@@ -96,6 +81,23 @@ const styles = theme => ({
   },
   btnSecondary: {
     textDecoration: 'none',
+    '& .MuiButton-root': {
+      fontSize: '16px',
+      fontWeight: 600,
+      color: '#6B7199',
+      backgroundColor: '#232743',
+      borderRadius: '20px',
+      textTransform: 'capitalize',
+      letterSpacing: '0.1px',
+      padding: '3px 15px',
+      transition: 'color 0.2s',
+      width: 'max-content',
+      '&:hover': {
+        color: '#ffffff',
+        backgroundColor: '#3F466D',
+        transition: 'color 0.1s',
+      },
+    },
   },
   depositTokenContainer: {
     width: 'calc(100% + 11px)',

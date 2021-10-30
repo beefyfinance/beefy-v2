@@ -4,7 +4,7 @@ const styles = theme => ({
     background: theme.palette.type === 'dark' ? '#FFF' : '#272B4A',
     border: theme.palette.type === 'dark' ? '2px solid #E5E5E5' : '2px solid #A69885',
     filter: 'drop-shadow(0px 0px 40px #0A0F2B)',
-    borderRadius: '15px',
+    borderRadius: '10px',
     margin: '15px auto',
     maxWidth: '350px',
     minWidth: '250px',
