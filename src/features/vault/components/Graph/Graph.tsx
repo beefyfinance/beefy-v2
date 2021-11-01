@@ -8,7 +8,7 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { CustomTooltip } from './CustomTooltip';
-import useChartData from './useChartData';
+import { useChartData } from './useChartData';
 import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatUsd, formatApy } from '../../../../helpers/format';
