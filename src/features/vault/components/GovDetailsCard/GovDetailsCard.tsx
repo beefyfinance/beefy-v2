@@ -7,7 +7,7 @@ import CardHeader from '../Card/CardHeader/CardHeader';
 import CardContent from '../Card/CardContent/CardContent';
 import CardTitle from '../Card/CardTitle/CardTitle';
 import styles from './styles';
-import AssetsImage from 'components/AssetsImage';
+import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles);
 

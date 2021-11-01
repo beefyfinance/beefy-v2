@@ -5,15 +5,15 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { byDecimals } from 'helpers/format';
-import { isEmpty } from 'helpers/utils';
-import Loader from 'components/loader';
+import { byDecimals } from '../../helpers/format';
+import { isEmpty } from '../../helpers/utils';
+import { Loader } from '../loader';
 import styles from './styles';
 import BigNumber from 'bignumber.js';
 
 const useStyles = makeStyles(styles);
 
-const Steps = ({ item, steps, handleClose }) => {
+export const Steps = ({ item, steps, handleClose }) => {
   const history = useHistory();
   const classes = useStyles();
   const t = useTranslation().t;
@@ -157,5 +157,3 @@ const Steps = ({ item, steps, handleClose }) => {
     </Modal>
   ); //return
 }; //const Steps
-
-export default Steps;

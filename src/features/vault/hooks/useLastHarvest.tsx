@@ -1,7 +1,7 @@
 import React from 'react';
-import { getVaults } from 'helpers/api';
 import lodash from 'lodash';
 import moment from 'moment';
+import { getVaults } from '../../../helpers/api';
 
 const useLastHarvest = vaultId => {
   const [state, setState] = React.useState('');

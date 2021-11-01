@@ -1,14 +1,13 @@
 import React from 'react';
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import ApyLoader from 'components/APYLoader';
+import ApyLoader from '../../../../components/APYLoader';
 import { useSelector } from 'react-redux';
-import { calcDaily, formatApy, formatUsd } from 'helpers/format';
-import { byDecimals } from 'helpers/format';
-import { isEmpty } from 'helpers/utils';
+import { calcDaily, formatApy, formatUsd, byDecimals } from '../../../../helpers/format';
+import { isEmpty } from '../../../../helpers/utils';
 import BigNumber from 'bignumber.js';
 import styles from './styles';
-import useLastHarvest from 'features/vault/hooks/useLastHarvest';
+import useLastHarvest from '../../hooks/useLastHarvest';
 
 const useStyles = makeStyles(styles);
 
@@ -54,7 +53,7 @@ const Stats = ({ item }) => {
 
   const price = React.useMemo(() => {
     return state.balance > 0
-      ? BigNumber(pricesReducer.prices[item.oracleId]).times(state.balance).toFixed(2)
+      ? new BigNumber(pricesReducer.prices[item.oracleId]).times(state.balance).toFixed(2)
       : 0;
   }, [state.balance, pricesReducer.prices, item.oracleId]);
 

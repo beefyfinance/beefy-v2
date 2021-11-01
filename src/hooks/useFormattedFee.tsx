@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useFormattedFee = fee => {
+export const useFormattedFee = fee => {
   const [formattedFee, setFormattedFee] = useState('0%');
 
   useEffect(() => {
@@ -11,5 +11,3 @@ const useFormattedFee = fee => {
 
   return formattedFee;
 };
-
-export default useFormattedFee;

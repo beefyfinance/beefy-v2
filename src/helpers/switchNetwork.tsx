@@ -1,4 +1,4 @@
-import reduxActions from 'features/redux/actions';
+import reduxActions from "../features/redux/actions";
 
 const switchNetwork = (network, dispatch) => {
   dispatch(reduxActions.wallet.setNetwork(network));

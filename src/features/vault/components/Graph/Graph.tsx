@@ -9,9 +9,9 @@ import CardContent from '../Card/CardContent';
 import CardTitle from '../Card/CardTitle/CardTitle';
 import CustomTooltip from './CustomTooltip';
 import useChartData from './useChartData';
-import Tabs from 'components/Tabs';
-import BasicTabs from 'components/Tabs/BasicTabs';
-import { formatUsd, formatApy } from 'helpers/format';
+import Tabs from '../../../../components/Tabs';
+import BasicTabs from '../../../../components/Tabs/BasicTabs';
+import { formatUsd, formatApy } from '../../../../helpers/format';
 import styles from './styles';
 
 const useStyles = makeStyles(styles);

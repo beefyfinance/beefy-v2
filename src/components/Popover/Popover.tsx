@@ -6,7 +6,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const Popover = ({ title, content, children, size = 'sm', placement = 'top-end' }) => {
+export const Popover = memo(({ title, content, children, size = 'sm', placement = 'top-end' }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -57,6 +57,4 @@ const Popover = ({ title, content, children, size = 'sm', placement = 'top-end' 
       </div>
     </ClickAwayListener>
   );
-};
-
-export default memo(Popover);
+});

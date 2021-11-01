@@ -4,7 +4,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const Loader = ({ message, line }) => {
+export const Loader = ({ message, line }) => {
   const classes = useStyles();
   return (
     <Box textAlign={'center'}>
@@ -13,5 +13,3 @@ const Loader = ({ message, line }) => {
     </Box>
   );
 };
-
-export default Loader;

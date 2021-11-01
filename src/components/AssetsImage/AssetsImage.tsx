@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './styles';
 import { Avatar, makeStyles } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
-import { getSingleAssetSrc } from 'helpers/singleAssetSrc';
+import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
 
 const useStyles = makeStyles(styles);
 
@@ -13,7 +13,7 @@ const resolveImgSrc = (img, assets) => {
   return assets.length === 1 ? getSingleAssetSrc(assets[0]) : undefined;
 };
 
-const AssetsImage = ({ img, assets, alt }) => {
+export const AssetsImage = ({ img, assets, alt }) => {
   const classes = useStyles();
   const singleImage = resolveImgSrc(img, assets);
 
@@ -42,5 +42,3 @@ const AssetsImage = ({ img, assets, alt }) => {
     </AvatarGroup>
   );
 };
-
-export default AssetsImage;

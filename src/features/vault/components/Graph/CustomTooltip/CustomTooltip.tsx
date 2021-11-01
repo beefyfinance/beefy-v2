@@ -2,8 +2,8 @@ import { makeStyles, Paper } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { formatUsd, formatApy } from 'helpers/format';
 import styles from './styles';
+import { formatApy, formatUsd } from '../../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 

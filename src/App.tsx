@@ -1,16 +1,16 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
+import { Header } from './components/Header';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import reduxActions from './features/redux/actions';
 import { useTranslation } from 'react-i18next';
-import ScrollToTop from 'components/ScrollToTop';
+import { ScrollToTop } from './components/ScrollToTop';
 
-const Home = React.lazy(() => import(`features/home`));
-const Vault = React.lazy(() => import(`features/vault`));
-const Boost = React.lazy(() => import(`features/boost`));
+const Home = React.lazy(() => import(`./features/home`));
+const Vault = React.lazy(() => import(`./features/vault`));
+const Boost = React.lazy(() => import(`./features/boost`));
 
 const PageNotFound = () => {
   const { t } = useTranslation();

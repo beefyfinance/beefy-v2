@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -7,5 +7,3 @@ const styles = theme => ({
     padding: '24px',
   },
 });
-
-export default styles;

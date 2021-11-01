@@ -1,17 +1,17 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import LinkButton from '../../../../components/LinkButton';
-import Card from '../Card/Card';
-import CardHeader from '../Card/CardHeader';
-import CardContent from '../Card/CardContent';
-import CardTitle from '../Card/CardTitle';
-import styles from './styles';
-import AssetsImage from 'components/AssetsImage';
+import { LinkButton } from '../../../../components/LinkButton';
+import { Card } from '../Card/Card';
+import { CardHeader } from '../Card/CardHeader';
+import { CardContent } from '../Card/CardContent';
+import { CardTitle } from '../Card/CardTitle';
+import { styles } from './styles';
+import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles);
 
-const BoostCard = ({ stratAddr, apy, network }) => {
+export const BoostCard = ({ stratAddr, apy, network }) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -42,5 +42,3 @@ const BoostCard = ({ stratAddr, apy, network }) => {
     </Card>
   );
 };
-
-export default BoostCard;

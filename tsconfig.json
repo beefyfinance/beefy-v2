@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "noImplicitAny": false, // TODO: remove this eventually
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
@@ -14,8 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "allowJs": false,
-    "baseUrl": "src"
+    "allowJs": true
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts*"]
 }

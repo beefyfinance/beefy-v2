@@ -1,10 +1,10 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import LinkButton from 'components/LinkButton';
-import Popover from 'components/Popover';
-import { RISKS } from 'config/risk';
-import SafetyScore from 'components/SafetyScore';
+import LinkButton from '../../../../components/LinkButton/LinkButton';
+import Popover from '../../../../components/Popover';
+import { RISKS } from '../../../../config/risk';
+import SafetyScore from '../../../../components/SafetyScore';
 import Card from '../Card/Card';
 import CardHeader from '../Card/CardHeader';
 import CardContent from '../Card/CardContent';

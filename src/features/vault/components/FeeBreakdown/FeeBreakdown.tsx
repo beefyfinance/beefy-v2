@@ -2,8 +2,8 @@ import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles';
-import Popover from 'components/Popover';
-import useFormattedFee from 'hooks/useFormattedFee';
+import { Popover } from '../../../../components/Popover';
+import { useFormattedFee } from '../../../../hooks/useFormattedFee';
 
 const useStyles = makeStyles(styles);
 
@@ -56,7 +56,7 @@ const PerformanceFees = memo(({ rates, vaultID }) => {
   return <BreakdownTooltip rows={rows} />;
 });
 
-const FeeBreakdown = ({ item, formData, type }) => {
+export const FeeBreakdown = ({ item, formData, type }) => {
   const classes = useStyles();
   const t = useTranslation().t;
   const formattedDepositFee = useFormattedFee(item.depositFee);
@@ -232,5 +232,3 @@ const FeeBreakdown = ({ item, formData, type }) => {
     </Box>
   ); //return
 }; //const FeeBreakdown
-
-export default FeeBreakdown;

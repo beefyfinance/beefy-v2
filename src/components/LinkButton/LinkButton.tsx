@@ -4,7 +4,7 @@ import styles from './styles';
 
 const useStyles = makeStyles(styles);
 
-const LinkButton = ({ href, text }) => {
+export const LinkButton = ({ href, text }) => {
   const classes = useStyles();
   return (
     <a className={classes.container} href={href} target="_blank" rel="noopener noreferrer">
@@ -26,5 +26,3 @@ const LinkButton = ({ href, text }) => {
     </a>
   );
 };
-
-export default LinkButton;

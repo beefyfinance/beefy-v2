@@ -1,7 +1,7 @@
 import { pack, keccak256 } from '@ethersproject/solidity';
 import { getCreate2Address } from '@ethersproject/address';
 import { addressBook } from 'blockchain-addressbook';
-import { config } from 'config/config';
+import { config } from '../config/config';
 
 const data = [];
 for (let net in config) {

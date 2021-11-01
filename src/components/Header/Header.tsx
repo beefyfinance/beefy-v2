@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import reduxActions from 'features/redux/actions';
+import reduxActions from '../../features/redux/actions';
 import {
   makeStyles,
   AppBar,
@@ -17,18 +17,18 @@ import {
 import { Menu, Close } from '@material-ui/icons';
 import styles from './styles';
 import WalletContainer from './components/WalletContainer';
-import SimpleDropdown from 'components/SimpleDropdown';
-import LanguageDropdown from 'components/LanguageDropdown';
-import { getAvailableNetworks } from 'helpers/utils';
 import { useTranslation } from 'react-i18next';
-import switchNetwork from 'helpers/switchNetwork';
-import UnsupportedNetwork from 'components/UnsupportedNetwork';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
+import switchNetwork from '../../helpers/switchNetwork';
+import { getAvailableNetworks } from '../../helpers/utils';
+import LanguageDropdown from '../LanguageDropdown/LanguageDropdown';
+import SimpleDropdown from '../SimpleDropdown/SimpleDropdown';
+import UnsupportedNetwork from '../UnsupportedNetwork';
 
 const useStyles = makeStyles(styles);
 
-const Header = ({ isNightMode, setNightMode }) => {
+export const Header = ({ isNightMode, setNightMode }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const walletReducer = useSelector(state => state.walletReducer);
@@ -185,5 +185,3 @@ const Header = ({ isNightMode, setNightMode }) => {
     </Box>
   );
 };
-
-export default Header;

@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   cardActions: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -26,5 +26,3 @@ const styles = theme => ({
     width: 8,
   },
 });
-
-export default styles;

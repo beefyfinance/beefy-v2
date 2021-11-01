@@ -3,11 +3,11 @@ import { Box, Button, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import AnimateHeight from 'react-animate-height';
 import styles from './styles';
-import Popover from 'components/Popover';
+import { Popover } from '../../../../components/Popover/Popover';
 
 const useStyles = makeStyles(styles);
 
-const BoostWidget = ({ onClick, balance, s_stake }) => {
+export const BoostWidget = ({ onClick, balance, s_stake }) => {
   const classes = useStyles();
   const t = useTranslation().t;
   const [filterOpen, setFilterOpen] = useState(false);
@@ -139,5 +139,3 @@ const BoostWidget = ({ onClick, balance, s_stake }) => {
     </>
   );
 };
-
-export default BoostWidget;
