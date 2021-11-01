@@ -5,10 +5,8 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const Card = ({ children }) => {
+export const Card = ({ children }) => {
   const classes = useStyles();
 
   return <Paper className={classes.container}>{children}</Paper>;
 };
-
-export default Card;

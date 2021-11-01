@@ -9,7 +9,7 @@ const LIMITS = [24, 168, 30, 365];
 const DAYS_IN_PERIOD = [1, 7, 30, 365];
 const SNAPSHOT_INTERVAL = process.env.SNAPSHOT_INTERVAL || 15 * 60;
 
-const useChartData = (stat, period, oracleId, vaultId, network) => {
+export const useChartData = (stat, period, oracleId, vaultId, network) => {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
@@ -31,5 +31,3 @@ const useChartData = (stat, period, oracleId, vaultId, network) => {
 
   return chartData;
 };
-
-export default useChartData;

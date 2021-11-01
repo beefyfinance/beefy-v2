@@ -3,18 +3,18 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { config } from '../../../../config/config';
 import { formatApy } from '../../../../helpers/format';
-import LinkButton from '../../../../components/LinkButton';
-import Card from '../Card/Card';
+import { LinkButton } from '../../../../components/LinkButton';
+import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
-import CardTitle from '../Card/CardTitle';
+import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import shield from './shield.svg';
 import stratText from './stratText';
 
 const useStyles = makeStyles(styles);
 
-const StrategyCard = ({
+export const StrategyCard = ({
   stratType,
   stratAddr,
   vaultAddr,
@@ -100,5 +100,3 @@ const StrategyCard = ({
     </Card>
   );
 };
-
-export default StrategyCard;

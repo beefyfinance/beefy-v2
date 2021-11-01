@@ -11,7 +11,7 @@ import useLastHarvest from '../../hooks/useLastHarvest';
 
 const useStyles = makeStyles(styles);
 
-const Stats = ({ item }) => {
+export const Stats = ({ item }) => {
   const pricesReducer = useSelector(state => state.pricesReducer);
   const classes = useStyles();
   const t = useTranslation().t;
@@ -130,5 +130,3 @@ const Stats = ({ item }) => {
     </Box>
   );
 };
-
-export default Stats;

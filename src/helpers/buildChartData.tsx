@@ -1,4 +1,4 @@
-const buildChartData = (historicalApy, apy, itemId) => {
+export const buildChartData = (historicalApy, apy, itemId) => {
   let baseData = [0, 0, 0, 0, 0, 0, 0, 0];
 
   if (historicalApy && historicalApy[itemId]) {
@@ -11,5 +11,3 @@ const buildChartData = (historicalApy, apy, itemId) => {
 
   return baseData.map(n => ({ apy: n }));
 };
-
-export default buildChartData;

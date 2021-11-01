@@ -1,4 +1,4 @@
-const stratText = (stratType, platform, assets, want, vamp, t) => {
+export const stratText = (stratType, platform, assets, want, vamp, t) => {
   switch (stratType) {
     case 'StratLP':
     case 'StratMultiLP':
@@ -32,5 +32,3 @@ const stratText = (stratType, platform, assets, want, vamp, t) => {
       return t('Strat-Default');
   } //switch (stratType)
 }; //const stratText
-
-export default stratText;

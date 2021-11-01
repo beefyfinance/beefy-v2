@@ -13,17 +13,18 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import styles from '../styles';
+import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
-import Loader from '../../../../components/loader';
+import { Loader } from '../../../../components/loader';
 import { byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
-import reduxActions from '../../../redux/actions';
-import Steps from '../../../../components/Steps';
+import { reduxActions } from '../../../redux/actions';
+import { Steps } from '../../../../components/Steps';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { BoostWidget } from '../BoostWidget';
-import FeeBreakdown from '../FeeBreakdown';
-import switchNetwork from '../../../../helpers/switchNetwork';
+import { FeeBreakdown } from '../FeeBreakdown';
+import { switchNetwork } from '../../../../helpers/switchNetwork';
+import { DepositProps } from './DepositProps';
 
 BigNumber.prototype.significant = function (digits) {
   const number = this.toFormat({
@@ -46,7 +47,7 @@ BigNumber.prototype.significant = function (digits) {
 
 const useStyles = makeStyles(styles);
 
-const Deposit = ({
+export const Deposit: React.FC<DepositProps> = ({
   formData,
   setFormData,
   item,
@@ -434,5 +435,3 @@ const Deposit = ({
     </React.Fragment>
   ); //return
 }; //const Deposit
-
-export default Deposit;

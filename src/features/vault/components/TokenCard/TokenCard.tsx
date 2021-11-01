@@ -5,13 +5,13 @@ import Card from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
-import LinkButton from '../../../../components/LinkButton/LinkButton';
+import { LinkButton } from '../../../../components/LinkButton';
 import { config } from '../../../../config/config';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const TokenCard = ({ token, network }) => {
+export const TokenCard = ({ token, network }) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -45,5 +45,3 @@ const TokenCard = ({ token, network }) => {
     </Card>
   );
 };
-
-export default TokenCard;

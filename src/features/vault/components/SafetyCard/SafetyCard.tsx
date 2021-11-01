@@ -1,21 +1,21 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import LinkButton from '../../../../components/LinkButton/LinkButton';
-import Popover from '../../../../components/Popover';
+import { LinkButton } from '../../../../components/LinkButton/LinkButton';
+import { Popover } from '../../../../components/Popover';
 import { RISKS } from '../../../../config/risk';
-import SafetyScore from '../../../../components/SafetyScore';
-import Card from '../Card/Card';
+import { SafetyScore } from '../../../../components/SafetyScore';
+import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
-import CardTitle from '../Card/CardTitle';
+import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import up from './up.svg';
 import down from './down.svg';
 
 const useStyles = makeStyles(styles);
 
-const SafetyCard = ({ vaultRisks, score }) => {
+export const SafetyCard = ({ vaultRisks, score }) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -68,5 +68,3 @@ const SafetyCard = ({ vaultRisks, score }) => {
     </Card>
   ); //return
 }; //const SafetyCard
-
-export default SafetyCard;

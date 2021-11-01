@@ -3,7 +3,7 @@ import lodash from 'lodash';
 import moment from 'moment';
 import { getVaults } from '../../../helpers/api';
 
-const useLastHarvest = vaultId => {
+export const useLastHarvest = (vaultId: string) => {
   const [state, setState] = React.useState('');
 
   React.useEffect(() => {
@@ -32,5 +32,3 @@ const useLastHarvest = vaultId => {
 
   return state;
 };
-
-export default useLastHarvest;

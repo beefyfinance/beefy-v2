@@ -17,7 +17,7 @@ import { switchNetwork } from '../../../../helpers/switchNetwork';
 
 const useStyles = makeStyles(styles);
 
-const Withdraw = ({
+export const Withdraw = ({
   item,
   handleWalletConnect,
   formData,
@@ -219,5 +219,3 @@ const Withdraw = ({
     </React.Fragment>
   ); //return
 }; //const Withdraw
-
-export default Withdraw;

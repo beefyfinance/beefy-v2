@@ -7,7 +7,7 @@ import { formatApy, formatUsd } from '../../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
-const CustomTooltip = ({ active, payload, stat }) => {
+export const CustomTooltip = ({ active, payload, stat }) => {
   const classes = useStyles();
   const t = useTranslation().t;
   const LABELS = [t('TVL'), t('Graph-PriceTkn'), t('APY')];
@@ -26,5 +26,3 @@ const CustomTooltip = ({ active, payload, stat }) => {
 
   return null;
 };
-
-export default CustomTooltip;

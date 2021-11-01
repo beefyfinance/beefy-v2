@@ -1,8 +1,8 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import LinkButton from '../../../../components/LinkButton/LinkButton';
-import Card from '../Card/Card';
+import { LinkButton } from '../../../../components/LinkButton';
+import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
@@ -11,7 +11,7 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles);
 
-const GovDetailsCard = ({ stratAddr, apy, network }) => {
+export const GovDetailsCard = ({ stratAddr, apy, network }) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -36,5 +36,3 @@ const GovDetailsCard = ({ stratAddr, apy, network }) => {
     </Card>
   );
 };
-
-export default GovDetailsCard;
