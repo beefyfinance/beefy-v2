@@ -10,7 +10,7 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const Stats = ({ stats, blurred }) => {
+export const VaultsStats = ({ stats, blurred }) => {
   const classes = useStyles();
   const t = useTranslation().t;
   const [, , , , , activeVaults] = useVaults();

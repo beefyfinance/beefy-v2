@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import Loader from '../components/loader/loader';
+import { Loader } from '../components/loader';
 
 export const formatApy = (apy, placeholder = <Loader />) => {
   if (!apy) return placeholder;

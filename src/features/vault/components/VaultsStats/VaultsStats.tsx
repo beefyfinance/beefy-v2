@@ -7,11 +7,11 @@ import { calcDaily, formatApy, formatUsd, byDecimals } from '../../../../helpers
 import { isEmpty } from '../../../../helpers/utils';
 import BigNumber from 'bignumber.js';
 import { styles } from './styles';
-import useLastHarvest from '../../hooks/useLastHarvest';
+import { useLastHarvest } from '../../hooks/useLastHarvest';
 
 const useStyles = makeStyles(styles);
 
-export const Stats = ({ item }) => {
+export const VaultsStats = ({ item }) => {
   const pricesReducer = useSelector(state => state.pricesReducer);
   const classes = useStyles();
   const t = useTranslation().t;

@@ -39,10 +39,6 @@ export const styles = theme => ({
     fontSize: '14px',
     lineHeight: '18px',
   },
-  divider: {
-    margin: '20px 0',
-    color: '#8585A6',
-  },
   feeBreakdownBlock: {
     marginBottom: 10,
   },
@@ -62,7 +58,6 @@ export const styles = theme => ({
     lineHeight: '18px',
     marginBottom: '12px',
   },
-  // eslint-disable-next-line no-dupe-keys
   divider: {
     height: '2px',
     marginBottom: '20px',

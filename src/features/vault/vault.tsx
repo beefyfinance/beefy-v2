@@ -5,23 +5,23 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { addressBook } from 'blockchain-addressbook';
-import reduxActions from '../redux/actions';
+import { reduxActions } from '../redux/actions';
 import { isEmpty } from '../../helpers/utils';
-import Loader from '../../components/loader';
-import DisplayTags from '../../components/vaultTags';
+import { Loader } from '../../components/loader';
+import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
 import { styles } from './styles';
-import Deposit from './components/Deposit';
-import Withdraw from './components/Withdraw';
-import TokenCard from './components/TokenCard';
-import StrategyCard from './components/StrategyCard';
-import SafetyCard from './components/SafetyCard';
-import Graph from './components/Graph';
+import { Deposit } from './components/Deposit';
+import { Withdraw } from './components/Withdraw';
+import { TokenCard } from './components/TokenCard';
+import { StrategyCard } from './components/StrategyCard';
+import { SafetyCard } from './components/SafetyCard';
+import { Graph } from './components/Graph';
 import { getEligibleZap } from '../../helpers/zap';
 import BigNumber from 'bignumber.js';
-import VaultStats from './components/VaultsStats';
-import BoostCard from './components/BoostCard/BoostCard';
-import GovDetailsCard from './components/GovDetailsCard/GovDetailsCard';
+import { VaultsStats } from './components/VaultsStats';
+import { BoostCard } from './components/BoostCard';
+import { GovDetailsCard } from './components/GovDetailsCard';
 
 const useStyles = makeStyles(styles);
 
@@ -156,7 +156,7 @@ export const Vault = () => {
                   <Typography className={classes.platformValue}>{item.platform}</Typography>
                 </span>
               </Box>
-              <VaultStats item={item} />
+              <VaultsStats item={item} />
             </>
           )}
         </Container>
