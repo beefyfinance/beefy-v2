@@ -131,7 +131,7 @@ const initialState = {
   platforms: initPlatforms,
 };
 
-const vaultReducer = (state = initialState, action) => {
+export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
     case HOME_FETCH_POOLS_BEGIN:
       return {
