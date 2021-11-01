@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   categories: {
     paddingBottom: '20px',
     '& .MuiTypography-h4': {
@@ -385,5 +385,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

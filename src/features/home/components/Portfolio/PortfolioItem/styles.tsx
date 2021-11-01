@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   item: props => ({
     marginTop: '6px',
     display: 'flex',
@@ -175,5 +175,3 @@ const styles = theme => ({
     padding: 0,
   },
 });
-
-export default styles;

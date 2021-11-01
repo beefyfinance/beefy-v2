@@ -2,11 +2,11 @@ import React, { forwardRef, memo } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const LabeledStat = forwardRef(({ value, boosted, ...passthrough }, ref) => {
+const _LabeledStat = forwardRef(({ value, boosted, ...passthrough }, ref) => {
   const classes = useStyles();
 
   const valueClassName = React.useMemo(
@@ -22,4 +22,4 @@ const LabeledStat = forwardRef(({ value, boosted, ...passthrough }, ref) => {
   );
 });
 
-export default memo(LabeledStat);
+export const LabeledStat = memo(_LabeledStat);

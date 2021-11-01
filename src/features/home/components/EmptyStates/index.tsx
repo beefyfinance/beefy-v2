@@ -1,14 +1,15 @@
 import React, { memo } from 'react';
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
-import styles from './styles';
+import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { useDispatch, useSelector } from 'react-redux';
-import reduxActions from 'features/redux/actions';
+import { reduxActions } from '../../../redux/actions';
+import { EmptyStatesProps } from './EmptyStatesProps';
 
 const useStyles = makeStyles(styles);
 
-const EmptyStates = ({ setFilterConfig }) => {
+const _EmptyStates: React.FC<EmptyStatesProps> = ({ setFilterConfig }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -61,4 +62,4 @@ const EmptyStates = ({ setFilterConfig }) => {
   );
 };
 
-export default memo(EmptyStates);
+export const EmptyStates = memo(_EmptyStates);

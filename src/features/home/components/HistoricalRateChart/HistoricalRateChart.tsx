@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { Area, AreaChart, Dot, XAxis, YAxis } from 'recharts';
 import { makeStyles } from '@material-ui/core';
-import styles from '../../styles';
-import { formatApy } from 'helpers/format';
+import { styles } from '../../styles';
+import { formatApy } from '../../../../helpers/format';
 import { useSelector } from 'react-redux';
 import buildChartData from '../../../../helpers/buildChartData';
 
-const HistoricalRateChart = ({ id }) => {
+export const HistoricalRateChart = ({ id }) => {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   const historicalApy = useSelector(state => state.pricesReducer.historicalApy);
@@ -87,5 +87,3 @@ const HistoricalRateChart = ({ id }) => {
     </AreaChart>
   );
 };
-
-export default HistoricalRateChart;

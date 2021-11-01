@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   tooltip: {
     fontSize: 14,
   },
@@ -95,5 +95,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

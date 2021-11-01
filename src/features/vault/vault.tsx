@@ -10,7 +10,7 @@ import { isEmpty } from '../../helpers/utils';
 import Loader from '../../components/loader';
 import DisplayTags from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
-import styles from './styles';
+import { styles } from './styles';
 import Deposit from './components/Deposit';
 import Withdraw from './components/Withdraw';
 import TokenCard from './components/TokenCard';

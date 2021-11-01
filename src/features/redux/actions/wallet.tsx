@@ -784,7 +784,7 @@ const generateProviderOptions = (wallet, clients) => {
   };
 };
 
-const obj = {
+export const wallet = {
   setNetwork,
   createWeb3Modal,
   connect,
@@ -797,5 +797,3 @@ const obj = {
   unstake,
   claim,
 };
-
-export default obj;

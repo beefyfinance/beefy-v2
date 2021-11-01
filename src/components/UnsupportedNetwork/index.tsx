@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Typography, Button, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './styles';
+import { styles } from './styles';
 
 import reduxActions from 'features/redux/actions';
 

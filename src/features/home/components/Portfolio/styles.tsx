@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   portfolio: {
     backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
     padding: '30px 0 30px 0',
@@ -33,5 +33,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

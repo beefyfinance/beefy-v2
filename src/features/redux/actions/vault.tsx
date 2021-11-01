@@ -211,9 +211,7 @@ const fetchBoosts = (item = false) => {
   };
 };
 
-const obj = {
+export const vault = {
   fetchPools,
   fetchBoosts,
 };
-
-export default obj;

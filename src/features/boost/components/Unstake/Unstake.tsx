@@ -2,19 +2,20 @@ import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Loader from 'components/loader';
-import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from 'helpers/format';
-import { isEmpty } from 'helpers/utils';
-import AssetsImage from 'components/AssetsImage';
-import reduxActions from '../../../redux/actions';
-import Steps from 'components/Steps';
-import styles from '../../styles';
+import { Loader } from '../../../../components/loader';
+import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from '../../../../helpers/format';
+import { isEmpty } from '../../../../helpers/utils';
+import { AssetsImage } from '../../../../components/AssetsImage';
+import { reduxActions } from '../../../redux/actions';
+import { Steps } from '../../../../components/Steps';
+import { styles } from '../../styles';
 import BigNumber from 'bignumber.js';
-import switchNetwork from 'helpers/switchNetwork';
+import { switchNetwork } from '../../../../helpers/switchNetwork';
+import { UnstakeProps } from './UnstakeProps';
 
 const useStyles = makeStyles(styles);
 
-const Unstake = ({
+export const Unstake: React.FC<UnstakeProps> = ({
   item,
   handleWalletConnect,
   formData,
@@ -203,5 +204,3 @@ const Unstake = ({
     </React.Fragment>
   );
 };
-
-export default Unstake;

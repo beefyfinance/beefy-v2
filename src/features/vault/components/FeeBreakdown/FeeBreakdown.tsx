@@ -1,7 +1,7 @@
 import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import styles from './styles';
+import { styles } from './styles';
 import { Popover } from '../../../../components/Popover';
 import { useFormattedFee } from '../../../../hooks/useFormattedFee';
 

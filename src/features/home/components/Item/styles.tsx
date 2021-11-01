@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   itemContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -382,5 +382,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

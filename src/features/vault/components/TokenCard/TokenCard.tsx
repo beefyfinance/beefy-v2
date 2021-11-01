@@ -2,12 +2,12 @@ import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '../Card/Card';
-import CardHeader from '../Card/CardHeader';
-import CardContent from '../Card/CardContent';
-import CardTitle from '../Card/CardTitle/CardTitle';
+import { CardHeader } from '../Card/CardHeader';
+import { CardContent } from '../Card/CardContent';
+import { CardTitle } from '../Card/CardTitle';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
 import { config } from '../../../../config/config';
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 

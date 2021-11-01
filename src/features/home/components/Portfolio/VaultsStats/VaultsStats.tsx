@@ -1,16 +1,16 @@
 import React from 'react';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import useVaults from 'features/home/hooks/useFilteredVaults';
+import { useVaults } from '../../../hooks/useFilteredVaults';
 import { useSelector } from 'react-redux';
-import ApyLoader from 'components/APYLoader';
-import useBuyback from 'features/home/hooks/useBuyback';
-import { formatUsd } from 'helpers/format';
-import styles from './styles';
+import { ApyLoader } from '../../../../../components/ApyLoader';
+import { useBuyback } from '../../../hooks/useBuyback';
+import { formatUsd } from '../../../../../helpers/format';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const Stats = ({ stats, blurred }) => {
+export const Stats = ({ stats, blurred }) => {
   const classes = useStyles();
   const t = useTranslation().t;
   const [, , , , , activeVaults] = useVaults();
@@ -45,5 +45,3 @@ const Stats = ({ stats, blurred }) => {
     </Grid>
   );
 };
-
-export default Stats;

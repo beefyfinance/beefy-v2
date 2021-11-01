@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   balanceText: {
     fontSize: '14px',
     fontWeight: 400,
@@ -111,5 +111,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

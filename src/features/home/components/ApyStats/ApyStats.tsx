@@ -1,12 +1,13 @@
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import styles from './styles';
+import { styles } from './styles';
 import LabeledStat from '../LabeledStat/LabeledStat';
 import { Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formatApy } from 'helpers/format';
+import { formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';
-import Popover from 'components/Popover';
+import { Popover } from '../../../../components/Popover';
+import { ApyStatsProps } from './ApyStatsProps';
 
 const useStyles = makeStyles(styles);
 
@@ -134,7 +135,7 @@ const LabeledStatWithTooltip = memo(
   }
 );
 
-const ApyStats = ({
+export const _ApyStats: React.FC<ApyStatsProps> = ({
   apy,
   launchpoolApr,
   isLoading = false,
@@ -208,4 +209,4 @@ const ApyStats = ({
   );
 };
 
-export default memo(ApyStats);
+export const ApyStats = memo(_ApyStats);

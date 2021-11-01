@@ -4,9 +4,9 @@ import {
   HOME_FETCH_POOLS_BEGIN,
   HOME_FETCH_POOLS_DONE,
 } from '../constants';
-import { config } from 'config/config';
-import { getStablesForNetwork, isEmpty, bluechipTokens } from 'helpers/utils';
-import safetyScore from 'helpers/safetyScore';
+import { config } from '../../../config/config';
+import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
+import { safetyScore } from '../../../helpers/safetyScore';
 import BigNumber from 'bignumber.js';
 
 let initPlatforms = {};
@@ -164,5 +164,3 @@ const vaultReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default vaultReducer;

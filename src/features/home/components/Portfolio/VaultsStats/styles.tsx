@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   stats: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -36,5 +36,3 @@ const styles = theme => ({
     color: '#424866',
   },
 });
-
-export default styles;

@@ -3,10 +3,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import LinkButton from '../../../../components/LinkButton/LinkButton';
 import Card from '../Card/Card';
-import CardHeader from '../Card/CardHeader/CardHeader';
-import CardContent from '../Card/CardContent/CardContent';
-import CardTitle from '../Card/CardTitle/CardTitle';
-import styles from './styles';
+import { CardHeader } from '../Card/CardHeader';
+import { CardContent } from '../Card/CardContent';
+import { CardTitle } from '../Card/CardTitle';
+import { styles } from './styles';
 import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles);

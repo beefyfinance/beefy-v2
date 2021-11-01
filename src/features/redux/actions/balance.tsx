@@ -5,8 +5,8 @@ import {
   BALANCE_FETCH_REWARDS_BEGIN,
   BALANCE_FETCH_REWARDS_DONE,
 } from '../constants';
-import { config } from 'config/config';
-import { isEmpty } from 'helpers/utils';
+import { config } from '../../../config/config';
+import { isEmpty } from '../../../helpers/utils';
 
 const erc20Abi = require('config/abi/erc20.json');
 const multicallAbi = require('config/abi/multicall.json');
@@ -264,10 +264,8 @@ const fetchBoostRewards = item => {
   };
 };
 
-const obj = {
+export const balance = {
   fetchBalances,
   fetchBoostBalances,
   fetchBoostRewards,
 };
-
-export default obj;

@@ -8,72 +8,23 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Grid,
   makeStyles,
   TextField,
   Typography,
 } from '@material-ui/core';
-import styles from './styles';
-import LabeledDropdown from 'components/LabeledDropdown';
+import { styles } from './styles';
+import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { getAvailableNetworks } from 'helpers/utils';
+import { getAvailableNetworks } from '../../../../helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
 import { Search } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
-import ScrollContainer from 'react-indiana-drag-scroll';
+import { FilterProps } from './FilterProps';
+import { FilterCategories } from './FilterCategories';
 
 const useStyles = makeStyles(styles);
 
-const CATEGORY_LABELS = {
-  all: 'Filter-CatgryAll',
-  stable: 'Filter-CatgryStabl',
-  beefy: 'Filter-CatgryBeefy',
-  bluechip: 'Filter-CatgryBlue',
-  low: 'Filter-CatgryLowRsk',
-};
-
-const FilterCategories = memo(function FilterCategories({ category, handleChange }) {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  const labels = useMemo(
-    () =>
-      Object.fromEntries(
-        Object.entries(CATEGORY_LABELS).map(([key, i18nKey]) => [key, t(i18nKey)])
-      ),
-    [t]
-  );
-
-  return (
-    <Grid container spacing={2} className={classes.categories}>
-      <Grid item xs={12}>
-        <Typography variant={'h4'}>{t('Filter-Categories')}</Typography>
-      </Grid>
-      <Grid item xs={12} className={classes.filtersSlider}>
-        <ScrollContainer
-          className={classes.filtersSliderContainer}
-          vertical={false}
-          nativeMobileScroll={false}
-        >
-          {Object.entries(labels).map(([key, label]) => (
-            <div key={key} className={classes.filterItem}>
-              <Button
-                className={category === key ? classes.selected : classes[key]}
-                fullWidth={true}
-                disabled={category === key}
-                onClick={() => handleChange('category', key)}
-              >
-                <Typography className={classes.text}>{label}</Typography>
-                {category === key ? <ArrowDropDownIcon /> : ''}
-              </Button>
-            </div>
-          ))}
-        </ScrollContainer>
-      </Grid>
-    </Grid>
-  );
-});
-
-function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount }) {
+const _Filter: React.FC<FilterProps> = ({ sortConfig, setSortConfig, platforms, filteredCount, allCount }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [filterOpen, setFilterOpen] = useState(false);
@@ -323,4 +274,4 @@ function Filter({ sortConfig, setSortConfig, platforms, filteredCount, allCount 
   );
 }
 
-export default memo(Filter);
+export const Filter = memo(_Filter);

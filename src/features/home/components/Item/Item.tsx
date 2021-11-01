@@ -3,21 +3,21 @@ import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import AssetsImage from 'components/AssetsImage';
-import SafetyScore from 'components/SafetyScore';
-import DisplayTags from 'components/vaultTags';
-import Popover from 'components/Popover';
+import { AssetsImage } from '../../../../components/AssetsImage';
+import { SafetyScore } from '../../../../components/SafetyScore';
+import { DisplayTags } from '../../../../components/vaultTags';
+import { Popover } from '../../../../components/Popover';
 import BigNumber from 'bignumber.js';
-import { isEmpty } from 'helpers/utils';
-import ApyLoader from 'components/APYLoader';
-import { byDecimals, formatUsd } from 'helpers/format';
-import styles from './styles';
+import { isEmpty } from '../../../../helpers/utils';
+import { ApyLoader } from '../../../../components/ApyLoader';
+import { byDecimals, formatUsd } from '../../../../helpers/format';
+import { styles } from './styles';
 import clsx from 'clsx';
-import ApyStats from '../ApyStats/ApyStats';
+import { ApyStats } from '../ApyStats';
 
 const useStyles = makeStyles(styles);
 
-function Item({ vault }) {
+const _Item = ({ vault }) => {
   const item = vault;
 
   // eslint-disable-next-line
@@ -84,7 +84,7 @@ function Item({ vault }) {
 
   const price = React.useMemo(() => {
     return priceInDolar.balance > 0
-      ? BigNumber(pricesReducer.prices[item.oracleId]).times(priceInDolar.balance).toFixed(2)
+      ? new BigNumber(pricesReducer.prices[item.oracleId]).times(priceInDolar.balance).toFixed(2)
       : 0;
   }, [priceInDolar.balance, pricesReducer.prices, item.oracleId]);
 
@@ -193,7 +193,7 @@ function Item({ vault }) {
               apy={item.apy}
               spacer={isBoosted || priceInDolar.balance > 0}
             />
-            {/*Rewards/Saftey Score*/}
+            {/*Rewards/Safety Score*/}
             {isGovVault ? (
               <div className={classes.centerSpace}>
                 <div className={classes.stat}>
@@ -212,7 +212,6 @@ function Item({ vault }) {
                     <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
                     <div className={classes.tooltipHolder}>
                       <Popover
-                        solid
                         title={t('Safety-ScoreWhat')}
                         content={t('Safety-ScoreExpl')}
                       />
@@ -239,4 +238,4 @@ function Item({ vault }) {
   );
 }
 
-export default memo(Item);
+export const Item = memo(_Item);

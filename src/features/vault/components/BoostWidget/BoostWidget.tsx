@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import AnimateHeight from 'react-animate-height';
-import styles from './styles';
+import { styles } from './styles';
 import { Popover } from '../../../../components/Popover/Popover';
 
 const useStyles = makeStyles(styles);

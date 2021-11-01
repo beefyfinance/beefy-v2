@@ -8,7 +8,7 @@ import Portfolio from 'features/home/components/Portfolio';
 import Loader from 'components/CowLoader';
 import useVaults from './hooks/useFilteredVaults';
 import EmptyStates from 'features/home/components/EmptyStates';
-import styles from './styles';
+import { styles } from './styles';
 import {
   AutoSizer,
   CellMeasurer,
@@ -16,7 +16,7 @@ import {
   WindowScroller,
   Grid as GridVirtualized,
 } from 'react-virtualized';
-import Item from './components/Item';
+import _Item from './components/Item';
 import { ceil } from 'lodash';
 
 const useStyles = makeStyles(styles);
@@ -76,7 +76,7 @@ function createVaultRenderer(vaults, isTwoColumns, cache) {
   return function vaultRenderer({ rowIndex, columnIndex, parent, key, style }) {
     const vault = (
       <Grid item xs={12}>
-        <Item vault={isTwoColumns ? vaults[rowIndex * 2 + columnIndex] : vaults[rowIndex]} />
+        <_Item vault={isTwoColumns ? vaults[rowIndex * 2 + columnIndex] : vaults[rowIndex]} />
       </Grid>
     );
 

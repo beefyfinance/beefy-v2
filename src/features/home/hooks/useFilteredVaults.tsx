@@ -225,7 +225,7 @@ function useUserVaults() {
   return newUserVaults;
 }
 
-function useVaults() {
+export const useVaults = () => {
   const allVaults = useVaultsArray();
   const address = useSelector(selectAddress);
   const activeVaults = useActiveVaults();
@@ -247,5 +247,3 @@ function useVaults() {
     activeVaults.length,
   ];
 }
-
-export default useVaults;

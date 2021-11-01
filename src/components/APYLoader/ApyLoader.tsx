@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-export const ValueLoader = props => {
+export const ApyLoader = props => {
   const isDarkTheme = localStorage.getItem('nightMode') === 'true' ? true : false;
   return (
     <ContentLoader

@@ -83,8 +83,6 @@ const fetchPrices = reducer => {
   };
 };
 
-const obj = {
+export const prices = {
   fetchPrices,
 };
-
-export default obj;

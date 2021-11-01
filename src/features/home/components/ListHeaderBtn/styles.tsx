@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   listHeaderBtn: {
     fontSize: '10px',
     textAlign: 'right',
@@ -40,5 +40,3 @@ const styles = theme => ({
       theme.palette.type === 'dark' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)',
   },
 });
-
-export default styles;

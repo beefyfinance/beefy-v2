@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   valueStrikethrough: {
     fontWeight: 400,
     fontSize: '12px',
@@ -28,5 +28,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

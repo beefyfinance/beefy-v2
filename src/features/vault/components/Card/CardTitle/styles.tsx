@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   title: {
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
@@ -16,5 +16,3 @@ const styles = theme => ({
     letterSpacing: '0.2px',
   },
 });
-
-export default styles;

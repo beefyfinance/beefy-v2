@@ -1,11 +1,11 @@
 import React from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const CardTitle = ({ title, subtitle }) => {
+export const CardTitle = ({ title, subtitle }) => {
   const classes = useStyles();
 
   return (
@@ -19,5 +19,3 @@ const CardTitle = ({ title, subtitle }) => {
     </div>
   );
 };
-
-export default CardTitle;

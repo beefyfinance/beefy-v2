@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   header: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -53,5 +53,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

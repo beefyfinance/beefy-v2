@@ -6,10 +6,10 @@ import Popover from '../../../../components/Popover';
 import { RISKS } from '../../../../config/risk';
 import SafetyScore from '../../../../components/SafetyScore';
 import Card from '../Card/Card';
-import CardHeader from '../Card/CardHeader';
-import CardContent from '../Card/CardContent';
+import { CardHeader } from '../Card/CardHeader';
+import { CardContent } from '../Card/CardContent';
 import CardTitle from '../Card/CardTitle';
-import styles from './styles';
+import { styles } from './styles';
 import up from './up.svg';
 import down from './down.svg';
 

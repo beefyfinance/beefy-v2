@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   vaultContainer: {
     padding: '48px 0',
     backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
@@ -130,5 +130,3 @@ const styles = theme => ({
     color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
   },
 });
-
-export default styles;

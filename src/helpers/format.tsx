@@ -14,7 +14,7 @@ export const formatApy = (apy, placeholder = <Loader />) => {
   return `${num.toFixed(2)}${units[order]}%`;
 };
 
-export const formatUsd = (tvl, oraclePrice) => {
+export const formatUsd = (tvl, oraclePrice = undefined) => {
   // TODO: bignum?
   if (oraclePrice) {
     tvl *= oraclePrice;

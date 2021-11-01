@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, makeStyles, Box } from '@material-ui/core';
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const ListHeaderBtn = ({ name, sort, sortConfig, requestSort }) => {
+export const ListHeaderBtn: React.FC<ListHeaderBtnProps> = ({ name, sort, sortConfig, requestSort }) => {
   const classes = useStyles();
   let obj = [classes.listHeaderBtnArrow];
 
@@ -21,5 +21,3 @@ const ListHeaderBtn = ({ name, sort, sortConfig, requestSort }) => {
     </Button>
   );
 };
-
-export default ListHeaderBtn;

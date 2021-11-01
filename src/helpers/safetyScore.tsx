@@ -1,6 +1,6 @@
 import { MAX_SCORE, RISKS, CATEGORIES } from '../config/risk';
 
-const calcRisk = arr => {
+const calcRisk = (arr: any[]) => {
   const categories = {};
   for (const c in CATEGORIES) {
     categories[c] = [];
@@ -37,10 +37,8 @@ const calcRisk = arr => {
   return risk;
 };
 
-const safetyScore = arr => {
+export const safetyScore = (arr: any[]) => {
   if (arr.length === 0) return null;
 
   return (MAX_SCORE * (1 - calcRisk(arr))).toFixed(1);
 };
-
-export default safetyScore;

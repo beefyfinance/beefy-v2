@@ -4,17 +4,17 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 
-import HistoricalRateChart from '../../HistoricalRateChart/HistoricalRateChart';
-import { formatApy, formatDecimals, formatUsd } from 'helpers/format';
-import DisplayTags from 'components/vaultTags';
-import Popover from 'components/Popover';
+import { HistoricalRateChart } from '../../HistoricalRateChart';
+import { formatApy, formatDecimals, formatUsd } from '../../../../../helpers/format';
+import { DisplayTags } from '../../../../../components/vaultTags';
+import { Popover } from '../../../../../components/Popover';
 import vaultStates from './vaultStates.json';
 import { useSelector } from 'react-redux';
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const PortfolioItem = ({ item, historicalApy }) => {
+export const PortfolioItem = ({ item, historicalApy }) => {
   const classes = useStyles({
     muted: item.status === 'paused' || item.status === 'eol',
   });
@@ -63,7 +63,6 @@ const PortfolioItem = ({ item, historicalApy }) => {
                       title={t(vaultStates[item.status].title)}
                       content={t(vaultStates[item.status].description)}
                       placement="top-start"
-                      solid
                     />
                   </>
                 )}
@@ -111,5 +110,3 @@ const PortfolioItem = ({ item, historicalApy }) => {
     </Grid>
   );
 };
-
-export default PortfolioItem;

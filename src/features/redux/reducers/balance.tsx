@@ -5,8 +5,8 @@ import {
   BALANCE_FETCH_REWARDS_DONE,
   WALLET_DISCONNECT,
 } from '../constants';
-import { config } from 'config/config';
-import { getEligibleZap } from 'helpers/zap';
+import { config } from '../../../config/config';
+import { getEligibleZap } from '../../../helpers/zap';
 
 const initialTokens = () => {
   const tokens = [];
@@ -91,7 +91,7 @@ const initialState = {
   isRewardsLoading: false,
 };
 
-const balanceReducer = (state = initialState, action) => {
+export const balanceReducer = (state = initialState, action) => {
   switch (action.type) {
     case BALANCE_FETCH_BALANCES_BEGIN:
       return {
@@ -124,5 +124,3 @@ const balanceReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default balanceReducer;

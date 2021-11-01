@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 
-import { config } from 'config/config';
+import { config } from '../../../config/config';
 import {
   WALLET_DISCONNECT,
   WALLET_CONNECT_BEGIN,
@@ -57,7 +57,7 @@ const initialState = {
   },
 };
 
-const walletReducer = (state = initialState, action) => {
+export const walletReducer = (state = initialState, action) => {
   switch (action.type) {
     case WALLET_CONNECT_BEGIN:
       return {
@@ -112,5 +112,3 @@ const walletReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default walletReducer;

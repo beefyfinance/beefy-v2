@@ -1,7 +1,7 @@
 import React from 'react';
-import { getBuyback } from 'helpers/api';
+import { getBuyback } from '../../../helpers/api';
 
-const useBuyback = () => {
+export const useBuyback = () => {
   const [state, setState] = React.useState(0);
 
   React.useEffect(() => {
@@ -24,5 +24,3 @@ const useBuyback = () => {
 
   return state;
 };
-
-export default useBuyback;

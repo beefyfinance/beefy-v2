@@ -3,18 +3,18 @@ import { Box, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 
-import { formatUsd } from 'helpers/format';
-import styles from './styles';
+import { formatUsd } from '../../../../../helpers/format';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const Stats = ({ stats, blurred }) => {
+export const Stats = ({ stats, blurred }) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
   const [empty, setEmpty] = useState(false);
   useEffect(() => {
-    setEmpty(stats.deposited.eq(BigNumber(0)));
+    setEmpty(stats.deposited.eq(new BigNumber(0)));
   }, [stats]);
 
   const BlurredText = ({ value }) => (
@@ -46,5 +46,3 @@ const Stats = ({ stats, blurred }) => {
     </Grid>
   );
 };
-
-export default Stats;

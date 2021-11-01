@@ -1,12 +1,13 @@
 import React from 'react';
 import { makeStyles, Box, MenuItem, Select, Typography } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
+import { LabeledDropdownProps } from './LabeledDropdownProps';
 
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const LabeledDropdown = ({ list, selected, handler, label, renderValue, selectStyle }) => {
+export const LabeledDropdown: React.FC<LabeledDropdownProps> = ({ list, selected, handler, label, renderValue, selectStyle }) => {
   const classes = useStyles();
 
   return (

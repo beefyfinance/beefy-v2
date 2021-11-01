@@ -5,7 +5,7 @@ const initialState = {
   lastUpdated: 0,
 };
 
-const pricesReducer = (state = initialState, action) => {
+export const pricesReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_PRICES':
       return {
@@ -19,5 +19,3 @@ const pricesReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-export default pricesReducer;

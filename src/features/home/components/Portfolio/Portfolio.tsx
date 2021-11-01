@@ -3,15 +3,15 @@ import BigNumber from 'bignumber.js';
 import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Stats from './Stats';
-import VaultsStats from './VaultsStats';
-import styles from './styles';
+import { Stats } from './Stats';
+import { VaultsStats } from './VaultsStats';
+import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
 const useStyles = makeStyles(styles);
 
-const Portfolio = () => {
+export const Portfolio = () => {
   const classes = useStyles();
   const [hideBalance, setHideBalance] = useState(() =>
     localStorage.getItem('hideBalance') === 'true' ? true : false
@@ -112,5 +112,3 @@ const Portfolio = () => {
     </Box>
   );
 };
-
-export default Portfolio;

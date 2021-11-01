@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import ApyLoader from '../../../../components/APYLoader';
+import { ApyLoader } from '../../../../components/ApyLoader';
 import { useSelector } from 'react-redux';
 import { calcDaily, formatApy, formatUsd, byDecimals } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import BigNumber from 'bignumber.js';
-import styles from './styles';
+import { styles } from './styles';
 import useLastHarvest from '../../hooks/useLastHarvest';
 
 const useStyles = makeStyles(styles);
