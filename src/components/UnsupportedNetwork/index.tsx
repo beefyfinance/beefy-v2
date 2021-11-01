@@ -3,11 +3,11 @@ import { Box, Typography, Button, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
 
-import reduxActions from 'features/redux/actions';
+import { reduxActions } from '../../features/redux/actions';
 
 const useStyles = makeStyles(styles);
 
-export const LongTextSnackbar = () => {
+export const UnsupportedNetwork = () => {
   const dispatch = useDispatch();
   const walletReducer = useSelector(state => state.walletReducer);
 

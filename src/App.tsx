@@ -4,7 +4,7 @@ import { Header } from './components/Header';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import reduxActions from './features/redux/actions';
+import { reduxActions } from './features/redux/actions';
 import { useTranslation } from 'react-i18next';
 import { ScrollToTop } from './components/ScrollToTop';
 

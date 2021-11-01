@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
-import LabeledStat from '../LabeledStat/LabeledStat';
+import { LabeledStat } from '../LabeledStat';
 import { Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formatApy } from '../../../../helpers/format';

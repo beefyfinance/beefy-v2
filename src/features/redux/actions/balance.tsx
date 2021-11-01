@@ -8,9 +8,9 @@ import {
 import { config } from '../../../config/config';
 import { isEmpty } from '../../../helpers/utils';
 
-const erc20Abi = require('config/abi/erc20.json');
-const multicallAbi = require('config/abi/multicall.json');
-const boostAbi = require('config/abi/boost.json');
+import erc20Abi from '../../../config/abi/erc20.json';
+import multicallAbi from '../../../config/abi/multicall.json';
+import boostAbi from '../../../config/abi/boost.json';
 
 const boostRegex = /^moo.*Boost$/;
 

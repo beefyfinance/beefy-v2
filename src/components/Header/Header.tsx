@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import reduxActions from '../../features/redux/actions';
+import { reduxActions } from '../../features/redux/actions';
 import {
   makeStyles,
   AppBar,

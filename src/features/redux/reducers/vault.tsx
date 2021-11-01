@@ -16,7 +16,7 @@ const initialBoosts = () => {
   const boosts = [];
 
   for (let net in config) {
-    const data = require('config/boost/' + net + '.js');
+    // const data =  require(`../../../config/boost/${net}`); // TODO: fix this import
     for (const key in data.pools) {
       const boost = data.pools[key];
 

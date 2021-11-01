@@ -16,18 +16,18 @@ import {
   Paper,
   Typography,
 } from '@material-ui/core';
-import Loader from 'components/loader';
+import { Loader } from '../../components/loader';
 import { ArrowLeft, Language, Telegram, Twitter } from '@material-ui/icons';
 import { styles } from './styles';
-import { isEmpty } from 'helpers/utils';
+import { isEmpty } from '../../helpers/utils';
 import { useTranslation } from 'react-i18next';
-import AssetsImage from 'components/AssetsImage';
-import reduxActions from 'features/redux/actions';
+import { AssetsImage } from '../../components/AssetsImage';
+import { reduxActions } from '../redux/actions';
 import { byDecimals, convertAmountToRawNumber, formatApy, formatUsd } from '../../helpers/format';
 import BigNumber from 'bignumber.js';
-import Stake from './components/Stake';
-import Unstake from './components/Unstake';
-import Steps from 'components/Steps';
+import { Stake } from './components/Stake';
+import { Unstake } from './components/Unstake';
+import { Steps } from '../../components/Steps';
 
 const useStyles = makeStyles(styles);
 
