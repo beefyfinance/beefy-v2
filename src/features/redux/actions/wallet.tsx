@@ -2,7 +2,7 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal, { connectors } from 'web3modal';
 import Web3 from 'web3';
 
-import { config } from 'config/config';
+import { config } from '../../../config/config';
 import {
   UNSUPPORTED_NETWORK,
   WALLET_ACTION,
@@ -12,10 +12,10 @@ import {
   WALLET_CREATE_MODAL,
   WALLET_DISCONNECT,
 } from '../constants';
-import erc20Abi from 'config/abi/erc20.json';
-import vaultAbi from 'config/abi/vault.json';
-import boostAbi from 'config/abi/boost.json';
-import zapAbi from 'config/abi/zap.json';
+import erc20Abi from '../../../config/abi/erc20.json';
+import vaultAbi from '../../../config/abi/vault.json';
+import boostAbi from '../../../config/abi/boost.json';
+import zapAbi from '../../../config/abi/zap.json';
 
 const getClientsForNetwork = async net => {
   return config[net].rpc;

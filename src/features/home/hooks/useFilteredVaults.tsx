@@ -1,4 +1,4 @@
-import useLocalStorage from '../../../hooks/useLocalStorage';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { isEmpty, isObject } from '../../../helpers/utils';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';

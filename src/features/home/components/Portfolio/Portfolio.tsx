@@ -18,10 +18,10 @@ export const Portfolio = () => {
   );
   const [userVaults, setUserVaults] = useState([]);
   const [globalStats, setGlobalStats] = useState({
-    deposited: BigNumber(0),
-    totalYield: BigNumber(0),
-    daily: BigNumber(0),
-    monthly: BigNumber(0),
+    deposited: new BigNumber(0),
+    totalYield: new BigNumber(0),
+    daily: new BigNumber(0),
+    monthly: new BigNumber(0),
   });
   const balanceReducer = useSelector(state => state.balanceReducer);
   const vaultReducer = useSelector(state => state.vaultReducer);
@@ -49,15 +49,15 @@ export const Portfolio = () => {
 
   useEffect(() => {
     let newGlobalStats = {
-      deposited: BigNumber(0),
-      totalYield: BigNumber(0),
-      daily: BigNumber(0),
-      monthly: BigNumber(0),
+      deposited: new BigNumber(0),
+      totalYield: new BigNumber(0),
+      daily: new BigNumber(0),
+      monthly: new BigNumber(0),
     };
 
     if (userVaults.length > 0) {
       userVaults.forEach(vault => {
-        let balance = BigNumber(vault.balance);
+        let balance = new BigNumber(vault.balance);
         balance = balance.times(vault.pricePerFullShare).div('1e18').div('1e18');
         const oraclePrice = pricesReducer.prices[vault.oracleId];
         newGlobalStats.deposited = newGlobalStats.deposited.plus(balance.times(oraclePrice));
@@ -67,7 +67,7 @@ export const Portfolio = () => {
         newGlobalStats.daily = newGlobalStats.daily.plus(balance.times(daily).times(oraclePrice));
       });
 
-      newGlobalStats.monthly = BigNumber(newGlobalStats.daily).times(30);
+      newGlobalStats.monthly = new BigNumber(newGlobalStats.daily).times(30);
     }
 
     setGlobalStats(newGlobalStats);

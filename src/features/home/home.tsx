@@ -2,12 +2,12 @@ import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, Grid } from '@material-ui/core';
-import reduxActions from '../redux/actions';
-import Filter from 'features/home/components/Filter';
-import Portfolio from 'features/home/components/Portfolio';
-import Loader from 'components/CowLoader';
-import useVaults from './hooks/useFilteredVaults';
-import EmptyStates from 'features/home/components/EmptyStates';
+import { reduxActions } from '../redux/actions';
+import { Filter } from './components/Filter';
+import { Portfolio } from './components/Portfolio';
+import { CowLoader } from '../../components/CowLoader/CowLoader';
+import { useVaults } from './hooks/useFilteredVaults';
+import { EmptyStates } from './components/EmptyStates';
 import { styles } from './styles';
 import {
   AutoSizer,
@@ -16,7 +16,7 @@ import {
   WindowScroller,
   Grid as GridVirtualized,
 } from 'react-virtualized';
-import _Item from './components/Item';
+import { Item } from './components/Item';
 import { ceil } from 'lodash';
 
 const useStyles = makeStyles(styles);
@@ -76,7 +76,7 @@ function createVaultRenderer(vaults, isTwoColumns, cache) {
   return function vaultRenderer({ rowIndex, columnIndex, parent, key, style }) {
     const vault = (
       <Grid item xs={12}>
-        <_Item vault={isTwoColumns ? vaults[rowIndex * 2 + columnIndex] : vaults[rowIndex]} />
+        <Item vault={isTwoColumns ? vaults[rowIndex * 2 + columnIndex] : vaults[rowIndex]} />
       </Grid>
     );
 
@@ -173,7 +173,7 @@ const VaultsList = memo(function HomeVaultsList() {
   const address = useSelector(state => state.walletReducer.address);
 
   if (isPoolsLoading) {
-    return <Loader text={t('Vaults-LoadingData')} />;
+    return <CowLoader text={t('Vaults-LoadingData')} />;
   }
 
   return (
