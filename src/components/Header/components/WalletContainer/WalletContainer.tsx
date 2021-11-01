@@ -2,11 +2,11 @@ import React from 'react';
 import { makeStyles, Box, Avatar, FormControl, Typography, Grid } from '@material-ui/core';
 import { renderIcon } from '@download/blockies';
 import { createCanvas } from 'canvas';
-import styles from './styles';
-import reduxActions from 'features/redux/actions';
+import { styles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Loader from 'components/loader/loader';
+import { reduxActions } from '../../../../features/redux/actions';
+import { Loader } from '../../../loader';
 
 const useStyles = makeStyles(styles);
 
@@ -14,7 +14,7 @@ const formatAddress = addr => {
   return addr.substr(0, 5) + '...' + addr.substr(addr.length - 5, 5);
 };
 
-const WalletContainer = () => {
+export const WalletContainer = () => {
   const classes = useStyles();
   const walletReducer = useSelector(state => state.walletReducer);
   const dispatch = useDispatch();
@@ -66,5 +66,3 @@ const WalletContainer = () => {
     </Box>
   );
 };
-
-export default WalletContainer;

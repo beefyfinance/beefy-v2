@@ -61,4 +61,5 @@ i18n
     },
   });
 
+// eslint-disable-next-line no-restricted-syntax
 export default i18n;

@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   circle: {
     width: '48px',
     height: '48px',
@@ -17,5 +17,3 @@ const styles = theme => ({
     backgroundRepeat: 'no-repeat',
   },
 });
-
-export default styles;

@@ -15,16 +15,16 @@ import {
   Divider,
 } from '@material-ui/core';
 import { Menu, Close } from '@material-ui/icons';
-import styles from './styles';
-import WalletContainer from './components/WalletContainer';
+import { styles } from './styles';
+import { WalletContainer } from './components/WalletContainer';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import switchNetwork from '../../helpers/switchNetwork';
+import { switchNetwork } from '../../helpers/switchNetwork';
 import { getAvailableNetworks } from '../../helpers/utils';
-import LanguageDropdown from '../LanguageDropdown/LanguageDropdown';
-import SimpleDropdown from '../SimpleDropdown/SimpleDropdown';
-import UnsupportedNetwork from '../UnsupportedNetwork';
+import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
+import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
+import { UnsupportedNetwork } from '../UnsupportedNetwork';
 
 const useStyles = makeStyles(styles);
 

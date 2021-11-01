@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './styles';
+import { styles } from './styles';
 import { Avatar, makeStyles } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
 import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';

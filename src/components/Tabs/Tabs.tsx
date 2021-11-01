@@ -5,11 +5,11 @@ import {
     Tab,
 } from '@material-ui/core';
 
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const Tabs = ({ value, onChange, labels }) => {
+export const Tabs = ({ value, onChange, labels }) => {
     const classes = useStyles();
 
     const handleChange = (event, newValue) => {
@@ -27,5 +27,3 @@ const Tabs = ({ value, onChange, labels }) => {
         </MuiTabs>
     );
 };
-
-export default Tabs;

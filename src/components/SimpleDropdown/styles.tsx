@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   select: {
     height: '44px',
     marginLeft: '24px',
@@ -60,5 +60,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

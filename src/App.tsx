@@ -17,7 +17,7 @@ const PageNotFound = () => {
   return <div>{t('Page-Not-Found')}</div>;
 };
 
-export default function App() {
+export const App = () => {
   const dispatch = useDispatch();
   // const storage = localStorage.getItem('nightMode');
   //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));

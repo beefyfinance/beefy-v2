@@ -1,12 +1,13 @@
 import { makeStyles, Typography, Popper, Box } from '@material-ui/core';
 import React, { memo, useCallback, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import { PopoverProps } from './PopoverProps';
 
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const Popover = memo(({ title, content, children, size = 'sm', placement = 'top-end' }) => {
+const _Popover: React.FC<PopoverProps> = ({ title, content, children, size = 'sm', placement = 'top-end' }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -57,4 +58,6 @@ export const Popover = memo(({ title, content, children, size = 'sm', placement 
       </div>
     </ClickAwayListener>
   );
-});
+};
+
+export const Popover = memo(_Popover);

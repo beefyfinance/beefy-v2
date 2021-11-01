@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   icon: {
     color: theme.palette.text.primary,
     'flex-shrink': 0,
@@ -19,5 +19,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

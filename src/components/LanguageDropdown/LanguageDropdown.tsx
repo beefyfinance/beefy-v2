@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { localeToLanguageMap } from 'i18n';
-import SimpleDropdown from '../SimpleDropdown';
+import { SimpleDropdown } from '../SimpleDropdown';
 
 const getSelectedLanguage = i18n => {
   const cachedLanguage = i18n.language;
@@ -26,7 +26,7 @@ const selectedRenderer = locale => {
   return locale.toUpperCase();
 };
 
-const LanguageDropdown = props => {
+export const LanguageDropdown = props => {
   const { i18n } = useTranslation();
   const i18nLanguage = getSelectedLanguage(i18n);
   const [language, setLanguage] = React.useState(i18nLanguage);
@@ -54,5 +54,3 @@ const LanguageDropdown = props => {
     />
   );
 };
-
-export default LanguageDropdown;

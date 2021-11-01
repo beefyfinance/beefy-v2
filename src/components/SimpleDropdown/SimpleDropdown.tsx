@@ -1,12 +1,13 @@
 import React from 'react';
 import { makeStyles, Box, MenuItem, Select } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
+import { SimpleDropdownProps } from './SimpleDropdownProps';
 
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const SimpleDropdown = ({
+export const SimpleDropdown: React.FC<SimpleDropdownProps> = ({
   list,
   selected,
   handler,
@@ -43,5 +44,3 @@ const SimpleDropdown = ({
     </Box>
   );
 };
-
-export default SimpleDropdown;

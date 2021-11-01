@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   popover: {
     padding: '16px',
     background: theme.palette.type === 'dark' ? '#FFF' : '#272B4A',
@@ -141,5 +141,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

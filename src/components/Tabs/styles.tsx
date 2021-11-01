@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   container: {},
   tabs: {
     backgroundColor: '#14182B',
@@ -43,5 +43,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

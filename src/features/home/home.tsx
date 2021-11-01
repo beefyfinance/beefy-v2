@@ -200,7 +200,7 @@ const VaultsList = memo(function HomeVaultsList() {
   );
 });
 
-const Home = () => {
+export const Home = () => {
   const classes = useStyles();
 
   return (
@@ -214,5 +214,3 @@ const Home = () => {
     </React.Fragment>
   );
 };
-
-export default Home;

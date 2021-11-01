@@ -7,7 +7,7 @@ import reduxActions from 'features/redux/actions';
 
 const useStyles = makeStyles(styles);
 
-export default function LongTextSnackbar() {
+export const LongTextSnackbar = () => {
   const dispatch = useDispatch();
   const walletReducer = useSelector(state => state.walletReducer);
 

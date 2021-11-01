@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   btn: {
     color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
     fontWeight: '400',
@@ -17,5 +17,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

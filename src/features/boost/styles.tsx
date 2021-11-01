@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   vaultContainer: {
     marginTop: '40px',
   },
@@ -257,5 +257,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

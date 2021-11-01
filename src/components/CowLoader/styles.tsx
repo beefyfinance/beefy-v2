@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   rotateIcon: {
     animation: '$spin 4s linear infinite',
     height: '48px',
@@ -16,5 +16,3 @@ const styles = theme => ({
     fontWeight: '600',
   },
 });
-
-export default styles;

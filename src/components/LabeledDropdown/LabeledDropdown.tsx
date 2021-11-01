@@ -2,11 +2,11 @@ import React from 'react';
 import { makeStyles, Box, MenuItem, Select, Typography } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 
-import styles from './styles';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-const LabeledDropdown = ({ list, selected, handler, label, renderValue, selectStyle }) => {
+export const LabeledDropdown = ({ list, selected, handler, label, renderValue, selectStyle }) => {
   const classes = useStyles();
 
   return (
@@ -43,5 +43,3 @@ const LabeledDropdown = ({ list, selected, handler, label, renderValue, selectSt
     </Box>
   );
 };
-
-export default LabeledDropdown;

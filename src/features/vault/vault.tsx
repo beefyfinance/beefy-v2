@@ -25,7 +25,7 @@ import GovDetailsCard from './components/GovDetailsCard/GovDetailsCard';
 
 const useStyles = makeStyles(styles);
 
-const Vault = () => {
+export const Vault = () => {
   const history = useHistory();
   const classes = useStyles();
   const t = useTranslation().t;
@@ -247,5 +247,3 @@ const renderTokens = item => {
     } else return null;
   });
 };
-
-export default Vault;

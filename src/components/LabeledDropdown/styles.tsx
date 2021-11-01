@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   container: {
     height: '44px',
     position: 'relative',
@@ -58,5 +58,3 @@ const styles = theme => ({
     color: '#6B7199',
   },
 });
-
-export default styles;

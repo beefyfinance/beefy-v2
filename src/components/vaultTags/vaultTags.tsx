@@ -1,12 +1,12 @@
 import React, { memo, useMemo } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import styles from './styles';
+import { styles } from './styles';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
-const DisplayTags = ({ tags }) => {
+const _DisplayTags = ({ tags }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const labels = useMemo(
@@ -28,4 +28,4 @@ const DisplayTags = ({ tags }) => {
   ));
 };
 
-export default memo(DisplayTags);
+export const DisplayTags = memo(_DisplayTags);

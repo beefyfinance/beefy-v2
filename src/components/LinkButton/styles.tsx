@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   container: {
     display: 'inline-flex',
     flexDirection: 'row',
@@ -21,5 +21,3 @@ const styles = theme => ({
     marginRight: '10px',
   },
 });
-
-export default styles;

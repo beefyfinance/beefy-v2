@@ -31,7 +31,7 @@ import Steps from 'components/Steps';
 
 const useStyles = makeStyles(styles);
 
-const Boost = () => {
+export const Boost = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
@@ -394,5 +394,3 @@ const Boost = () => {
     </Container>
   );
 };
-
-export default Boost;

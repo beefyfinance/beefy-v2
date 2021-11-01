@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   navHeader: {
     paddingTop: '20px',
     background: 'transparent',
@@ -96,5 +96,3 @@ const styles = theme => ({
     display: 'none',
   },
 });
-
-export default styles;

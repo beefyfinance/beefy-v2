@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
-import styles from './styles';
+import { styles } from './styles';
 import clsx from 'clsx';
+import { SafetyScoreProps } from './SafetyScoreProps';
 
 const useStyles = makeStyles(styles);
 
-function SafetyScore({ score, whiteLabel, size = 'lg' }) {
+const _SafetyScore: React.FC<SafetyScoreProps> = ({ score, whiteLabel, size = 'lg' }) => {
   const classes = useStyles();
   const scoreText = score === 0 ? '-' : score;
 
@@ -29,4 +30,4 @@ function SafetyScore({ score, whiteLabel, size = 'lg' }) {
   );
 }
 
-export default memo(SafetyScore);
+export const SafetyScore = memo(_SafetyScore);

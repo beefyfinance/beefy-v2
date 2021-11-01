@@ -2,19 +2,20 @@ import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import styles from '../../styles';
+import { styles } from '../../styles';
 import BigNumber from 'bignumber.js';
-import Loader from 'components/loader';
-import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from 'helpers/format';
-import { isEmpty } from 'helpers/utils';
-import reduxActions from 'features/redux/actions';
-import Steps from 'components/Steps';
-import AssetsImage from 'components/AssetsImage';
-import switchNetwork from 'helpers/switchNetwork';
+import { Loader } from '../../../../components/loader';
+import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from '../../../../helpers/format';
+import { isEmpty } from '../../../../helpers/utils';
+import { Steps } from '../../../../components/Steps';
+import { AssetsImage } from '../../../../components/AssetsImage';
+import { switchNetwork } from '../../../../helpers/switchNetwork';
+import { reduxActions } from '../../../redux/actions';
+import { StakeProps } from './StakeProps';
 
 const useStyles = makeStyles(styles);
 
-const Stake = ({
+export const Stake: React.FC<StakeProps> = ({
   formData,
   setFormData,
   item,
@@ -222,5 +223,3 @@ const Stake = ({
     </React.Fragment>
   );
 };
-
-export default Stake;

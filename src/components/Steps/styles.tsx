@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -55,5 +55,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

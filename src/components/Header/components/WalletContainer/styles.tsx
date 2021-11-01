@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   container: {
     width: '95%',
     height: 40,
@@ -52,5 +52,3 @@ const styles = theme => ({
     paddingTop: '4px',
   },
 });
-
-export default styles;

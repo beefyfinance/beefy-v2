@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   container: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -95,5 +95,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

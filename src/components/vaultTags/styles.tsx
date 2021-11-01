@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   tags: {
     fontSize: '12px',
     fontWeight: 600,
@@ -48,5 +48,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;
