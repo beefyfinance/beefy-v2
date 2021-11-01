@@ -3,7 +3,7 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import P Loader } from '../../../../components/loader';
+import { Loader } from '../../../../components/loader';
 import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { AssetsImage } from '../../../../components/AssetsImage';
