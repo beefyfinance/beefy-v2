@@ -5,7 +5,7 @@ const regularText = {
   letterSpacing: '0.2px',
 };
 
-const styles = theme => ({
+export const styles = theme => ({
   feeContainer: {
     backgroundColor: theme.palette.background.light,
     borderRadius: '10px',
@@ -111,5 +111,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;

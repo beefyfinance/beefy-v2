@@ -1,4 +1,4 @@
-const styles = {
+export const styles = {
   container: {
     borderRadius: '20px',
     marginTop: '24px',
@@ -7,5 +7,3 @@ const styles = {
     },
   },
 };
-
-export default styles;

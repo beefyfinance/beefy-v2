@@ -8,7 +8,7 @@ const bold = {
   fontWeight: 600,
 };
 
-const styles = theme => ({
+export const styles = theme => ({
   cardActions: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -67,5 +67,3 @@ const styles = theme => ({
     marginBottom: '28px',
   },
 });
-
-export default styles;

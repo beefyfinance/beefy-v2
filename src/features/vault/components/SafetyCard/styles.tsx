@@ -8,7 +8,7 @@ const boldFont = {
   fontWeight: 600,
 };
 
-const styles = theme => ({
+export const styles = theme => ({
   cardActions: {
     fontSize: '18px',
   },
@@ -75,5 +75,3 @@ const styles = theme => ({
     marginRight: '8px',
   },
 });
-
-export default styles;

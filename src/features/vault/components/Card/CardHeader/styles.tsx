@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   container: {
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -7,5 +7,3 @@ const styles = theme => ({
     padding: '24px',
   },
 });
-
-export default styles;

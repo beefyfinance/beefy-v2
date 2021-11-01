@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   cardActions: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -20,5 +20,3 @@ const styles = theme => ({
     textTransform: 'uppercase',
   },
 });
-
-export default styles;

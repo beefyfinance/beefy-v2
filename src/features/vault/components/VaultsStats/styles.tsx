@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   container: {
     display: 'flex',
     [theme.breakpoints.down('md')]: {
@@ -57,5 +57,3 @@ const styles = theme => ({
     color: '#424866',
   },
 });
-
-export default styles;

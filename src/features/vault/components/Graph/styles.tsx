@@ -1,4 +1,4 @@
-const styles = theme => ({
+export const styles = theme => ({
   headerTabs: {
     display: 'flex',
     flexDirection: 'column',
@@ -33,5 +33,3 @@ const styles = theme => ({
     },
   },
 });
-
-export default styles;
