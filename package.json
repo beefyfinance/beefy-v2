@@ -56,7 +56,16 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-restricted-syntax": [
+        "error",
+        {
+          "selector": "ExportDefaultDeclaration",
+          "message": "Prefer named exports"
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
