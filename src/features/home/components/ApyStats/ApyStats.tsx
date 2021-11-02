@@ -8,6 +8,8 @@ import { formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { Popover } from '../../../../components/Popover';
 import { ApyStatsProps } from './ApyStatsProps';
+import { YearlyBreakdownTooltipProps } from './YearlyBreakdownTooltipProps';
+import { DailyBreakdownTooltipProps } from './DailyBreakdownTooltipProps';
 
 const useStyles = makeStyles(styles as any);
 const yearlyToDaily = apy => {
@@ -39,7 +41,7 @@ const BreakdownTooltip = memo(({ rows }: any) => {
   );
 });
 
-const YearlyBreakdownTooltip = memo(({ rates }: any) => {
+const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ boosted, rates }) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -69,14 +71,16 @@ const YearlyBreakdownTooltip = memo(({ rates }: any) => {
 
   rows.push({
     label: t('APY'),
-    value: rates.totalApy,
+    value: boosted ? rates.boostedTotalApy : rates.totalApy,
     last: true,
   });
 
   return <BreakdownTooltip rows={rows} />;
-});
+};
 
-const DailyBreakdownTooltip = memo(({ rates }: any) => {
+const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
+
+const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ boosted, rates }) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -106,12 +110,14 @@ const DailyBreakdownTooltip = memo(({ rates }: any) => {
 
   rows.push({
     label: t('Vault-Breakdown-DailyAPY'),
-    value: rates.totalDaily,
+    value: boosted ? rates.boostedTotalDaily : rates.totalDaily,
     last: true,
   });
 
   return <BreakdownTooltip rows={rows} />;
-});
+};
+
+const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip)
 
 const LabeledStatWithTooltip = memo(
   ({ children, boosted, label, value, spacer, ...passthrough }: any) => {
@@ -142,9 +148,9 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   itemInnerClasses,
   spacer,
   isGovVault,
+  isBoosted
 }) => {
   const { t } = useTranslation();
-  const isBoosted = !!launchpoolApr;
   const values: Record<string, any> = {};
 
   values.totalApy = apy.totalApy;
@@ -166,8 +172,8 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   }
 
   if (isBoosted) {
-    values.boostApr = launchpoolApr;
-    values.boostDaily = launchpoolApr / 365;
+    values.boostApr = launchpoolApr.apr;
+    values.boostDaily = launchpoolApr.apr / 365;
     values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
     values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
   }
@@ -191,7 +197,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
       >
-        <YearlyBreakdownTooltip rates={formatted} />
+        <YearlyBreakdownTooltip boosted={isBoosted} rates={formatted} />
       </LabeledStatWithTooltip>
 
       <LabeledStatWithTooltip
@@ -202,7 +208,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
       >
-        <DailyBreakdownTooltip rates={formatted} />
+        <DailyBreakdownTooltip boosted={isBoosted} rates={formatted} />
       </LabeledStatWithTooltip>
     </>
   );

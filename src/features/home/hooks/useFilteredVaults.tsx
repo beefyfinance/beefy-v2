@@ -66,6 +66,15 @@ function selectTokenBalances(state) {
   return state.balanceReducer.tokens;
 }
 
+function selectBoostVaults(state) {
+  return state.vaultReducer.boosts;
+}
+
+function useBoostArray() {
+  const boostsVaults = useSelector(selectBoostVaults);
+  return useMemo(() => Object.values(boostsVaults), [boostsVaults]);
+}
+
 function selectSortValue(key, vault) {
   switch (key) {
     case 'apy': {
@@ -230,6 +239,7 @@ export const useVaults = () => {
   const address = useSelector(selectAddress);
   const activeVaults = useActiveVaults();
   const tokenBalances = useSelector(selectTokenBalances);
+  const boostVaults = useBoostArray();
   const [config, setConfig] = useLocalStorage(
     FILTER_STORAGE_KEY,
     FILTER_DEFAULT,
@@ -245,5 +255,6 @@ export const useVaults = () => {
     filteredVaults.length,
     allVaults.length,
     activeVaults.length,
+    boostVaults
   ];
 }

@@ -14,6 +14,7 @@ const _DisplayTags = ({ tags }) => {
       'deposits-paused': t('VaultTag-Paused'),
       eol: t('VaultTag-Inactive'),
       bluechip: t('VaultTag-Bluechip'),
+      boost: t('VaultTag-Boost'),
     }),
     [t]
   );
