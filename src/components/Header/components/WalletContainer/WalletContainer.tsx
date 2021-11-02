@@ -6,7 +6,7 @@ import { styles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { reduxActions } from '../../../../features/redux/actions';
-import { Loader } from '../../../loader';
+import { ApyStatLoader } from '../../../ApyStatLoader';
 
 const useStyles = makeStyles(styles as any);
 const formatAddress = addr => {
@@ -44,9 +44,9 @@ export const WalletContainer = () => {
 
   const formControlProps = {
     noValidate: true,
-    autoComplete:"off",
-    onClick: handleWalletConnect
-  }
+    autoComplete: 'off',
+    onClick: handleWalletConnect,
+  };
 
   return (
     <Box className={containerClassName}>
@@ -54,7 +54,7 @@ export const WalletContainer = () => {
         <Grid container direction="row" alignItems="center">
           {walletReducer.pending ? (
             <Box className={classes.loading}>
-              <Loader line={true} message={''}/>
+              <ApyStatLoader />
             </Box>
           ) : (
             <React.Fragment>

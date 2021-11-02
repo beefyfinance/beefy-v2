@@ -117,7 +117,7 @@ const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ boosted,
   return <BreakdownTooltip rows={rows} />;
 };
 
-const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip)
+const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
 
 const LabeledStatWithTooltip = memo(
   ({ children, boosted, label, value, spacer, ...passthrough }: any) => {
@@ -132,7 +132,7 @@ const LabeledStatWithTooltip = memo(
               <Popover {...({} as any)}>{children}</Popover>
             </div>
           </div>
-          <LabeledStat {...({boosted} as any)} value={value} />
+          <LabeledStat {...({ boosted } as any)} value={value} />
           {spacer ? <div className={classes.boostSpacer} /> : null}
         </div>
       </div>
@@ -148,7 +148,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   itemInnerClasses,
   spacer,
   isGovVault,
-  isBoosted
+  isBoosted,
 }) => {
   const { t } = useTranslation();
   const values: Record<string, any> = {};

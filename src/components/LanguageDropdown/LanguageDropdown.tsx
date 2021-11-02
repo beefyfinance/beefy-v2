@@ -46,7 +46,7 @@ export const LanguageDropdown = props => {
 
   return (
     <SimpleDropdown
-      chainLogos
+      chainLogos={false}
       noBorder={true}
       list={localeToLanguageMap}
       selected={language}
