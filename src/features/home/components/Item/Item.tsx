@@ -9,11 +9,11 @@ import { DisplayTags } from '../../../../components/vaultTags';
 import { Popover } from '../../../../components/Popover';
 import BigNumber from 'bignumber.js';
 import { isEmpty } from '../../../../helpers/utils';
-import { ApyLoader } from '../../../../components/ApyLoader';
 import { byDecimals, formatUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
+import { ApyLoader } from '../../../../components/ApyLoader';
 
 const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
