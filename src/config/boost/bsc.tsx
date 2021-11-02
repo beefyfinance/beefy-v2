@@ -1,5 +1,31 @@
 export const pools = [
   {
+    id: 'moo_belt-beltbtc-wsg',
+    name: 'WallStreetGames',
+    earnedToken: 'MooWSG',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xf6581Be77F4933FDcf92C9E0D49e7f85e5360705',
+    earnContractAddress: '0xAD02D935D7BDAEa0ba3227Fe160856be78b782Cf',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'WSG',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        name: 'Wall Street Games',
+        logo: 'stake/wsg/logo.png',
+        background: 'stake/wsg/bg.png',
+        text: 'Wall Street Games is a next-generation hybrid blockchain-based online gaming platform, where players can earn cryptocurrencies by playing fun & addictive games, collect tradable NFTs and win rewards!',
+        website: 'https://stake.wallstreetgames.net/',
+        social: {
+          telegram: 'https://t.me/WSGToken',
+          twitter: 'https://twitter.com/WSGToken',
+        },
+      },
+    ],
+  },
+  {
     id: '1inch-ten-finance',
     poolId: '1inch-1inch',
     earnedToken: 'TENFI',
