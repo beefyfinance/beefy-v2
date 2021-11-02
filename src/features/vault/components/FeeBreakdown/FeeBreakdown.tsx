@@ -6,7 +6,7 @@ import { Popover } from '../../../../components/Popover';
 import { useFormattedFee } from '../../../../hooks/useFormattedFee';
 
 const useStyles = makeStyles(styles as any);
-const BreakdownTooltip = memo(({ rows }) => {
+const BreakdownTooltip = memo(({ rows }: any) => {
   const classes = useStyles();
 
   return (
@@ -21,7 +21,7 @@ const BreakdownTooltip = memo(({ rows }) => {
   );
 });
 
-const PerformanceFees = memo(({ rates, vaultID }) => {
+const PerformanceFees = memo(({ rates, vaultID }: any) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -203,7 +203,7 @@ export const FeeBreakdown = ({ item, formData, type }) => {
               {/* TODO: add dynamic fee */}
               {t('Fee-Performance')}
             </Typography>
-            <Popover>
+            <Popover {...({} as any)}>
               <PerformanceFees vaultID={item.id} />
             </Popover>
           </div>

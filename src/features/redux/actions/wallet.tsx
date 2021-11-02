@@ -109,7 +109,7 @@ const connect = () => {
           {
             name: 'chainId',
             call: 'eth_chainId',
-            outputFormatter: web3.utils.hexToNumber,
+            outputFormatter: web3.utils.hexToNumber as any,
           },
         ],
       });
@@ -168,7 +168,7 @@ const approval = (network, tokenAddr, contractAddr) => {
 
     if (address && provider) {
       const web3 = await new Web3(provider);
-      const contract = new web3.eth.Contract(erc20Abi, tokenAddr);
+      const contract = new web3.eth.Contract(erc20Abi as any, tokenAddr);
       const maxAmount = Web3.utils.toWei('8000000000', 'ether');
 
       contract.methods
@@ -228,7 +228,7 @@ const deposit = (network, contractAddr, amount, max) => {
 
     if (address && provider) {
       const web3 = await new Web3(provider);
-      const contract = new web3.eth.Contract(vaultAbi, contractAddr);
+      const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
 
       if (max) {
         contract.methods
@@ -342,7 +342,7 @@ const beefIn = (
 
     if (address && provider) {
       const web3 = await new Web3(provider);
-      const contract = new web3.eth.Contract(zapAbi, zapAddress);
+      const contract = new web3.eth.Contract(zapAbi as any, zapAddress);
 
       const transaction = (() => {
         if (isETH) {
@@ -414,7 +414,7 @@ const withdraw = (network, contractAddr, amount, max) => {
 
     if (address && provider) {
       const web3 = await new Web3(provider);
-      const contract = new web3.eth.Contract(vaultAbi, contractAddr);
+      const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
 
       if (max) {
         contract.methods
@@ -520,7 +520,7 @@ const stake = (network, contractAddr, amount) => {
 
     if (address && provider) {
       const web3 = await new Web3(provider);
-      const contract = new web3.eth.Contract(boostAbi, contractAddr);
+      const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
 
       contract.methods
         .stake(amount)
@@ -579,7 +579,7 @@ const unstake = (network, contractAddr, amount) => {
 
     if (address && provider) {
       const web3 = await new Web3(provider);
-      const contract = new web3.eth.Contract(boostAbi, contractAddr);
+      const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
 
       contract.methods
         .withdraw(amount)
@@ -638,7 +638,7 @@ const claim = (network, contractAddr, amount) => {
 
     if (address && provider) {
       const web3 = await new Web3(provider);
-      const contract = new web3.eth.Contract(boostAbi, contractAddr);
+      const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
 
       contract.methods
         .getReward()
@@ -692,7 +692,7 @@ const createWeb3Modal = () => {
   return async (dispatch, getState) => {
     const state = getState();
     const clients = await getClientsForNetwork(state.walletReducer.network);
-    const web3Modal = new Web3Modal(generateProviderOptions(state.walletReducer, clients));
+    const web3Modal = new Web3Modal(generateProviderOptions(state.walletReducer, clients) as any);
 
     dispatch({ type: WALLET_CREATE_MODAL, payload: { data: web3Modal } });
 
@@ -733,7 +733,7 @@ const generateProviderOptions = (wallet, clients) => {
         },
         package: 'binance',
         connector: async (ProviderPackage, options) => {
-          const provider = window.BinanceChain;
+          const provider = (window as any).BinanceChain;
           await provider.enable();
           return provider;
         },

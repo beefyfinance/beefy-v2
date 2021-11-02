@@ -31,7 +31,7 @@ export const Withdraw = ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
-  const [state, setState] = React.useState({ balance: 0 });
+  const [state, setState] = React.useState({ balance: "0" });
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
@@ -42,7 +42,7 @@ export const Withdraw = ({
 
   const handleInput = val => {
     const value =
-      parseFloat(val) > state.balance
+      parseFloat(val) > parseInt(state.balance)
         ? state.balance
         : parseFloat(val) < 0
         ? 0
@@ -54,7 +54,7 @@ export const Withdraw = ({
   };
 
   const handleMax = () => {
-    if (state.balance > 0) {
+    if (parseInt(state.balance) > 0) {
       setFormData({ ...formData, withdraw: { amount: state.balance, max: true } });
     }
   };
@@ -95,7 +95,7 @@ export const Withdraw = ({
   };
 
   React.useEffect(() => {
-    let amount = 0;
+    let amount = "0";
     if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
       amount = byDecimals(
         new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(

@@ -102,7 +102,7 @@ export const Portfolio = () => {
             <Box className={classes.vaults}>
               <Typography className={classes.title}>{t('Vault-platform')}</Typography>
               <Box>
-                <VaultsStats />
+                <VaultsStats {...({} as any)}/>
               </Box>
             </Box>
           </Grid>

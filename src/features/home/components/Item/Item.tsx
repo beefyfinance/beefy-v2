@@ -33,8 +33,8 @@ const _Item = ({ vault }) => {
   }));
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
 
-  const [state, setState] = React.useState({ formattedBalance: 0 });
-  const [priceInDolar, setPriceInDolar] = React.useState({ balance: 0 });
+  const [state, setState] = React.useState({ formattedBalance: "0" });
+  const [priceInDolar, setPriceInDolar] = React.useState({ balance: "0" });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
 
@@ -45,7 +45,7 @@ const _Item = ({ vault }) => {
   const hasMore3Tags = item.tags.length > 2;
 
   React.useEffect(() => {
-    let amount = 0;
+    let amount = "0";
     if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
       amount = byDecimals(
         new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
@@ -58,7 +58,7 @@ const _Item = ({ vault }) => {
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {
-    let amount = 0;
+    let amount = "0";
     if (wallet.address) {
       amount = byDecimals(item.balance, item.tokenDecimals)
         .multipliedBy(byDecimals(item.pricePerFullShare))
@@ -82,13 +82,13 @@ const _Item = ({ vault }) => {
   );
 
   const price = React.useMemo(() => {
-    return priceInDolar.balance > 0
+    return parseInt(priceInDolar.balance) > 0
       ? new BigNumber(pricesReducer.prices[item.oracleId]).times(priceInDolar.balance).toFixed(2)
       : 0;
   }, [priceInDolar.balance, pricesReducer.prices, item.oracleId]);
 
   const tokensEarned = React.useMemo(() => {
-    return state.formattedBalance > 0 ? state.formattedBalance : '0';
+    return parseInt(state.formattedBalance) > 0 ? state.formattedBalance : '0';
   }, [state.formattedBalance]);
 
   return (
@@ -113,7 +113,7 @@ const _Item = ({ vault }) => {
               style={{ marginRight: '8px', cursor: 'pointer' }}
             >
               {/*Vault Image*/}
-              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} size={'60px'} />
+              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} {...({size:'60px'} as any)} />
             </Grid>
             <Grid item>
               <div>
@@ -166,12 +166,12 @@ const _Item = ({ vault }) => {
 
                 <ValueText value={tokensEarned} />
 
-                {priceInDolar.balance > 0 && (
+                {parseInt(priceInDolar.balance) > 0 && (
                   <Typography className={classes.label}>
                     <ValuePrice value={formatUsd(price)} />
                   </Typography>
                 )}
-                {isBoosted && priceInDolar.balance === 0 ? (
+                {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
                   <div className={classes.boostSpacer} />
                 ) : null}
               </div>
@@ -181,16 +181,18 @@ const _Item = ({ vault }) => {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
-                {isBoosted || priceInDolar.balance > 0 ? (
+                {isBoosted || parseInt(priceInDolar.balance) > 0 ? (
                   <div className={classes.boostSpacer} />
                 ) : null}
               </div>
             </div>
             {/*APY STATS*/}
             <ApyStats
-              launchpoolApr={isBoosted}
-              apy={item.apy}
-              spacer={isBoosted || priceInDolar.balance > 0}
+            {...({
+              launchpoolApr:isBoosted,
+              apy:item.apy,
+              spacer:isBoosted || parseInt(priceInDolar.balance) > 0
+            } as any)}
             />
             {/*Rewards/Safety Score*/}
             {isGovVault ? (
@@ -199,7 +201,7 @@ const _Item = ({ vault }) => {
                   <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
 
                   <ValueText value={'4.0 BNB'} />
-                  {isBoosted && priceInDolar.balance === 0 ? (
+                  {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
                 </div>
@@ -211,13 +213,13 @@ const _Item = ({ vault }) => {
                     <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
                     <div className={classes.tooltipHolder}>
                       <Popover
-                        title={t('Safety-ScoreWhat')}
-                        content={t('Safety-ScoreExpl')}
+                        {...({title:t('Safety-ScoreWhat'),
+                        content:t('Safety-ScoreExpl')}as any)}
                       />
                     </div>
                   </div>
                   <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-                  {isBoosted || priceInDolar.balance > 0 ? (
+                  {isBoosted || parseInt(priceInDolar.balance) > 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
                 </div>

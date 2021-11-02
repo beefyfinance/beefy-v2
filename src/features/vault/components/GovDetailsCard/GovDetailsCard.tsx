@@ -10,7 +10,7 @@ import { styles } from './styles';
 import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles as any);
-export const GovDetailsCard = ({ stratAddr, apy, network }) => {
+export const GovDetailsCard = () => {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -19,9 +19,9 @@ export const GovDetailsCard = ({ stratAddr, apy, network }) => {
       <CardHeader>
         <Typography className={classes.preTitle}>{t('Gov-How')}</Typography>
         <div style={{ display: 'flex' }}>
-          <AssetsImage img={'single-assets/POTS.png'} />
+          <AssetsImage {...({img:`../../../../images/single-assets/POTS.png`} as any)} />
           <div className={classes.divider} />
-          <CardTitle title={t('Gov-Pool')} />
+          <CardTitle title={t('Gov-Pool')} subtitle={''} />
         </div>
         <div className={classes.cardActions}>
           <div className={classes.cardAction}>

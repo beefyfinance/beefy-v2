@@ -1,10 +1,11 @@
 import React from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
+import { CardTitleProps } from './CardTitleProps';
 
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
-export const CardTitle = ({ title, subtitle }) => {
+export const CardTitle: React.FC<CardTitleProps> = ({ title, subtitle }) => {
   const classes = useStyles();
 
   return (

@@ -32,7 +32,7 @@ export const Vault = () => {
   let isGovPool = false;
   let isBoosted = false;
 
-  let { id } = useParams();
+  let { id }: any = useParams();
   const { vault, wallet, prices } = useSelector((state: any) => ({
     vault: state.vaultReducer,
     wallet: state.walletReducer,
@@ -161,7 +161,7 @@ export const Vault = () => {
         </Container>
       </Box>
       <Box style={{ marginTop: '24px' }}>
-        <Container maxWidth="lg" my={5}>
+        <Container {...({maxWidth:"lg", my:5}) as any}>
           {isLoading ? (
             <Loader message={t('Vault-GetData')} />
           ) : (

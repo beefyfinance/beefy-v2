@@ -26,7 +26,7 @@ import { FeeBreakdown } from '../FeeBreakdown';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { DepositProps } from './DepositProps';
 
-BigNumber.prototype.significant = function (digits) {
+(BigNumber.prototype as any).significant = function (digits) {
   const number = this.toFormat({
     prefix: '',
     decimalSeparator: '.',
@@ -97,7 +97,7 @@ export const Deposit: React.FC<DepositProps> = ({
       if (value.isEqualTo(input)) return input;
       if (input === '') return '';
       if (input === '.') return `0.`;
-      return value.significant(6);
+      return (value as any).significant(6);
     })();
 
     setFormData({
@@ -126,12 +126,12 @@ export const Deposit: React.FC<DepositProps> = ({
   };
 
   const handleMax = () => {
-    if (state.balance > 0) {
+    if (state.balance > new BigNumber(0)) {
       setFormData({
         ...formData,
         deposit: {
           ...formData.deposit,
-          input: state.balance.significant(6),
+          input: (state.balance as any).significant(6),
           amount: state.balance,
           max: true,
         },
@@ -218,8 +218,8 @@ export const Deposit: React.FC<DepositProps> = ({
   };
 
   React.useEffect(() => {
-    let amount = 0;
-    let approved = 0;
+    let amount = new BigNumber(0);
+    let approved = new BigNumber(0);
     if (wallet.address && !isEmpty(tokens[formData.deposit.token])) {
       amount = byDecimals(
         new BigNumber(tokens[formData.deposit.token].balance),
@@ -286,13 +286,13 @@ export const Deposit: React.FC<DepositProps> = ({
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
                     {isLoading ? (
-                      <Loader line={true} />
+                      <Loader message={''} line={true} />
                     ) : (
                       <Typography variant={'body1'}>
-                        {byDecimals(
+                        {(byDecimals(
                           tokens[item.token].balance,
                           tokens[item.token].decimals
-                        ).significant(6)}{' '}
+                        ) as any).significant(6)}{' '}
                         {item.token}
                       </Typography>
                     )}
@@ -320,19 +320,19 @@ export const Deposit: React.FC<DepositProps> = ({
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
                     <AssetsImage
-                      assets={[formData.zap.tokens[0].symbol]}
-                      alt={formData.zap.tokens[0].name}
+                      {...({assets:[formData.zap.tokens[0].symbol],
+                      alt:formData.zap.tokens[0].name,} as any)}
                     />
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
                     {isLoading ? (
-                      <Loader line={true} />
+                      <Loader message={''} line={true} />
                     ) : (
                       <Typography variant={'body1'}>
-                        {byDecimals(
+                        {(byDecimals(
                           tokens[formData.zap.tokens[0].symbol].balance,
                           formData.zap.tokens[0].decimals
-                        ).significant(6)}{' '}
+                        ) as any).significant(6)}{' '}
                         {formData.zap.tokens[0].symbol}
                       </Typography>
                     )}
@@ -350,19 +350,19 @@ export const Deposit: React.FC<DepositProps> = ({
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
                     <AssetsImage
-                      assets={[formData.zap.tokens[1].symbol]}
-                      alt={formData.zap.tokens[1].name}
+                      {...({assets:[formData.zap.tokens[1].symbol],
+                      alt:formData.zap.tokens[1].name,} as any)}
                     />
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
                     {isLoading ? (
-                      <Loader line={true} />
+                      <Loader message={''} line={true} />
                     ) : (
                       <Typography variant={'body1'}>
-                        {byDecimals(
+                        {(byDecimals(
                           tokens[formData.zap.tokens[1].symbol].balance,
                           formData.zap.tokens[1].decimals
-                        ).significant(6)}{' '}
+                        ) as any).significant(6)}{' '}
                         {formData.zap.tokens[1].symbol}
                       </Typography>
                     )}

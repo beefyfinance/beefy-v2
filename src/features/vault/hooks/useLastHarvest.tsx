@@ -18,8 +18,8 @@ export const useLastHarvest = (vaultId: string) => {
 
       const string =
         vault && vault.lastHarvest === 0
-          ? moment.unix(`${ts}`).startOf('hour').fromNow()
-          : moment.unix(`${vault.lastHarvest}`).fromNow();
+          ? moment.unix(ts).startOf('hour').fromNow()
+          : moment.unix(parseInt(vault.lastHarvest)).fromNow();
 
       string.replace(' hours', 'h');
       string.replace(' minutes', 'm');

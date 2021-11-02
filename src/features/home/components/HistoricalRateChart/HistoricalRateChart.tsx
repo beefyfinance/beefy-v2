@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from '../../styles';
 import { formatApy } from '../../../../helpers/format';
 import { useSelector } from 'react-redux';
-import buildChartData from '../../../../helpers/buildChartData';
+import { buildChartData } from '../../../../helpers/buildChartData';
 
 export const HistoricalRateChart = ({ id }) => {
   const useStyles = makeStyles(styles as any);  const classes = useStyles();
@@ -28,12 +28,12 @@ export const HistoricalRateChart = ({ id }) => {
   const renderLabel = props => {
     const { index, x, y } = props;
     const { apy } = chartData[index];
-    const labelValue = formatApy(apy, '0%');
+    const labelValue = formatApy(apy/*, '0%'*/); // TODO: fix formatApy
     const first = index === 0;
     const last = index === chartData.length - 1;
     const textStyle = { fontSize: '12px' };
     if (first) {
-      const labelPosWithOffsetX = x - (labelValue.length * 4 + 20);
+      const labelPosWithOffsetX = x - ((labelValue as any).length * 4 + 20);
       const labelPosWithOffsetY = y;
       return (
         <text style={textStyle} fill={firstColor} x={labelPosWithOffsetX} y={labelPosWithOffsetY}>

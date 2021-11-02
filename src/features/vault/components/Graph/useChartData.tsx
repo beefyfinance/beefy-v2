@@ -7,7 +7,7 @@ const STATS = ['tvl', 'price', 'apy'];
 const PERIODS = ['hour', 'hour', 'day', 'day'];
 const LIMITS = [24, 168, 30, 365];
 const DAYS_IN_PERIOD = [1, 7, 30, 365];
-const SNAPSHOT_INTERVAL = process.env.SNAPSHOT_INTERVAL || 15 * 60;
+const SNAPSHOT_INTERVAL = parseInt(process.env.SNAPSHOT_INTERVAL) || 15 * 60;
 
 export const useChartData = (stat, period, oracleId, vaultId, network) => {
   const [chartData, setChartData] = useState(null);

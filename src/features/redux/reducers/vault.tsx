@@ -108,7 +108,7 @@ const initializeTags = (pool, net) => {
   if (!isEmpty(pool.risks)) {
     const riskScore = safetyScore(pool.risks);
     pool['safetyScore'] = riskScore;
-    if (riskScore >= 7.5) {
+    if (parseInt(riskScore) >= 7.5) {
       pool.tags.push('low');
     }
   }

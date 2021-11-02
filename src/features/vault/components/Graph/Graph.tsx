@@ -13,9 +13,10 @@ import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatUsd, formatApy } from '../../../../helpers/format';
 import { styles } from './styles';
+import { GraphProps } from './GraphProps';
 
 const useStyles = makeStyles(styles as any);
-export const Graph = ({ oracleId, vaultId, network }) => {
+export const Graph: React.FC<GraphProps> = ({ oracleId, vaultId, network }) => {
   const classes = useStyles();
   const [stat, setStat] = useState(2);
   const [period, setPeriod] = useState(2);
@@ -51,7 +52,9 @@ export const Graph = ({ oracleId, vaultId, network }) => {
                 }}
                 axisLine={false}
                 tickLine={false}
-                tickFormatter={label => (stat === 2 ? formatApy(label) : formatUsd(label))}
+                tickFormatter={label => {
+                  return (stat === 2 ? formatApy(label) : formatUsd(label)) as any
+                }}
                 tickCount={4}
                 width={50}
               />

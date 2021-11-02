@@ -24,7 +24,7 @@ export const PortfolioItem = ({ item, historicalApy }) => {
   const formatBalance = () => {
     let vaultBalance = new BigNumber(balance.tokens[item.network][item.earnedToken].balance);
     vaultBalance = vaultBalance.times(item.pricePerFullShare).div('1e18').div('1e18');
-    return formatDecimals(vaultBalance, 4, 6);
+    return formatDecimals(vaultBalance, 4);
   };
 
   const formatBalanceInUsd = () => {
@@ -80,7 +80,7 @@ export const PortfolioItem = ({ item, historicalApy }) => {
       </Box>
       <Hidden smDown>
         <Box className={[classes.rWidth, classes.chart].join(' ')} textAlign={'center'}>
-          <HistoricalRateChart chartData={historicalApy} />
+          <HistoricalRateChart id={item.id}/>
           <Typography className={classes.h3}>{t('Vault-Chart')}</Typography>
         </Box>
       </Hidden>

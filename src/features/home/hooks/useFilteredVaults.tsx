@@ -27,7 +27,7 @@ const SORT_COMPARE_FUNCTIONS = {
 };
 
 function compareNumber(a, b) {
-  return (a > b) - (a < b);
+  return (a > b) as any - ((a < b) as any);
 }
 
 function compareNumberCoerced(a, b) {
@@ -37,7 +37,7 @@ function compareNumberCoerced(a, b) {
 function compareStringCaseInsensitive(a, b) {
   const lowercaseA = a.toLowerCase();
   const lowercaseB = b.toLowerCase();
-  return (lowercaseA > lowercaseB) - (lowercaseA < lowercaseB);
+  return (lowercaseA > lowercaseB) as any - ((lowercaseA < lowercaseB) as any);
 }
 
 function compareBigNumber(a, b) {

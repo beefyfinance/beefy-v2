@@ -1,9 +1,10 @@
 import React from 'react';
 import { Typography, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import { LinkButtonProps } from './LinkButtonProps';
 
 const useStyles = makeStyles(styles as any);
-export const LinkButton = ({ href, text }) => {
+export const LinkButton: React.FC<LinkButtonProps> = ({ href, text }) => {
   const classes = useStyles();
   return (
     <a className={classes.container} href={href} target="_blank" rel="noopener noreferrer">

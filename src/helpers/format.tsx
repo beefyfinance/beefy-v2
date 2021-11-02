@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { Loader } from '../components/loader';
 
-export const formatApy = (apy, placeholder = <Loader />) => {
+export const formatApy = (apy, placeholder: any = <Loader message={''} line={false} />) => {
   if (!apy) return placeholder;
 
   apy *= 100;
@@ -28,7 +28,7 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
   const units = ['', 'k', 'M', 'B', 'T'];
   const shouldShowUnits = order > 1; // only use units if 1M+
   let unitToDisplay = '';
-  let num = new BigNumber(tvl);
+  let num: BigNumber | number = new BigNumber(tvl);
 
   if (shouldShowUnits) {
     num = tvl / 1000 ** order;

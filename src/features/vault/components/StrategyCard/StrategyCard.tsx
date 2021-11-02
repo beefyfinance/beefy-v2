@@ -11,9 +11,10 @@ import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import shield from './shield.svg';
 import { stratText } from './stratText';
+import { StrategyCardProps } from './StrategyCardProps';
 
 const useStyles = makeStyles(styles as any);
-export const StrategyCard = ({
+export const StrategyCard: React.FC<StrategyCardProps> = ({
   stratType,
   stratAddr,
   vaultAddr,

@@ -21,7 +21,7 @@ export const SafetyCard = ({ vaultRisks, score }) => {
   return (
     <Card>
       <CardHeader className={classes.cardHeader}>
-        <CardTitle title={<SafetyScore score={score} />} />
+        <CardTitle title={<SafetyScore score={score} /> as any} />
         <div className={classes.cardActions}>
           <LinkButton
             href="https://docs.beefy.finance/beefyfinance/faq/beefy-safety-score"

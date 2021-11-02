@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { styles } from './styles';
 import { formatApy, formatUsd } from '../../../../../helpers/format';
+import { CustomTooltipProps } from './CustomTooltipProps';
 
 const useStyles = makeStyles(styles as any);
-export const CustomTooltip = ({ active, payload, stat }) => {
+export const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, stat }) => {
   const classes = useStyles();
   const t = useTranslation().t;
   const LABELS = [t('TVL'), t('Graph-PriceTkn'), t('APY')];

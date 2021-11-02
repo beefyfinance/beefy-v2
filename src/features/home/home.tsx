@@ -117,11 +117,11 @@ function useVaultRenderer(vaults, isTwoColumns) {
   return { renderer, cache };
 }
 
-const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
+const VirtualVaultsList = memo(({ vaults }: any) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isTwoColumns, setIsTwoColumns] = useState(windowWidth > 599 && windowWidth < 960);
 
-  const updateDimensions = async () => {
+  const updateDimensions: any = async () => {
     setWindowWidth(window.innerWidth);
     setIsTwoColumns(windowWidth > 599 && windowWidth < 960);
     console.log(windowWidth + ' ' + isTwoColumns);
@@ -187,11 +187,11 @@ const VaultsList = memo(function HomeVaultsList() {
 
       <div className={classes.vaultsList}>
         {filterConfig.deposited && address && filteredVaults.length === 0 && (
-          <EmptyStates setFilterConfig={setFilterConfig} connected={address} />
+          <EmptyStates setFilterConfig={setFilterConfig} />
         )}
         {console.log(address)}
         {filterConfig.deposited && !address && (
-          <EmptyStates setFilterConfig={setFilterConfig} connected={address} />
+          <EmptyStates setFilterConfig={setFilterConfig} />
         )}
         <VirtualVaultsList vaults={filteredVaults} />
       </div>

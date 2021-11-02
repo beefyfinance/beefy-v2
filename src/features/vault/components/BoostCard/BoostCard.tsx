@@ -10,7 +10,7 @@ import { styles } from './styles';
 import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles as any);
-export const BoostCard = ({ stratAddr, apy, network }) => {
+export const BoostCard = () => {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -19,9 +19,9 @@ export const BoostCard = ({ stratAddr, apy, network }) => {
       <CardHeader>
         <Typography className={classes.boostedBy}>{t('Vault-BoostedBy')}</Typography>
         <div style={{ display: 'flex' }}>
-          <AssetsImage img={'single-assets/POTS.png'} />
+          <AssetsImage {...({img:'single-assets/POTS.png'} as any)} />
           <div className={classes.divider} />
-          <CardTitle title={'Sponsor Project'} />
+          <CardTitle title={'Sponsor Project'} subtitle={''} />
         </div>
         <div className={classes.cardActions}>
           <div className={classes.cardAction}>

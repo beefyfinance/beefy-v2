@@ -24,7 +24,7 @@ export function isNaN(value) {
   return new BigNumber(`${value}`).isNaN();
 }
 
-const BreakdownTooltip = memo(({ rows }) => {
+const BreakdownTooltip = memo(({ rows }: any) => {
   const classes = useStyles();
 
   return (
@@ -39,7 +39,7 @@ const BreakdownTooltip = memo(({ rows }) => {
   );
 });
 
-const YearlyBreakdownTooltip = memo(({ rates }) => {
+const YearlyBreakdownTooltip = memo(({ rates }: any) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -76,7 +76,7 @@ const YearlyBreakdownTooltip = memo(({ rates }) => {
   return <BreakdownTooltip rows={rows} />;
 });
 
-const DailyBreakdownTooltip = memo(({ rates }) => {
+const DailyBreakdownTooltip = memo(({ rates }: any) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -114,7 +114,7 @@ const DailyBreakdownTooltip = memo(({ rates }) => {
 });
 
 const LabeledStatWithTooltip = memo(
-  ({ children, boosted, label, value, spacer, ...passthrough }) => {
+  ({ children, boosted, label, value, spacer, ...passthrough }: any) => {
     const classes = useStyles();
 
     return (
@@ -123,10 +123,10 @@ const LabeledStatWithTooltip = memo(
           <div className={classes.tooltipLabel}>
             <Typography className={classes.label}>{label}</Typography>
             <div className={classes.tooltipHolder}>
-              <Popover>{children}</Popover>
+              <Popover {...({} as any)}>{children}</Popover>
             </div>
           </div>
-          <LabeledStat boosted={boosted} value={value} />
+          <LabeledStat {...({boosted} as any)} value={value} />
           {spacer ? <div className={classes.boostSpacer} /> : null}
         </div>
       </div>
@@ -145,7 +145,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
 }) => {
   const { t } = useTranslation();
   const isBoosted = !!launchpoolApr;
-  const values = {};
+  const values: Record<string, any> = {};
 
   values.totalApy = apy.totalApy;
 
@@ -175,7 +175,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   const formatted = Object.fromEntries(
     Object.entries(values).map(([key, value]) => {
       const formattedValue = key.toLowerCase().includes('daily')
-        ? formatApy(value, 4)
+        ? formatApy(value /*, 4*/) // TODO: fix this formatApy
         : formatApy(value);
       return [key, formattedValue];
     })

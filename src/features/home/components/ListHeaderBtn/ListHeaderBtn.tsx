@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, makeStyles, Box } from '@material-ui/core';
 import { styles } from './styles';
+import { ListHeaderBtnProps } from './ListHeaderBtnProps';
 
 const useStyles = makeStyles(styles as any);
 export const ListHeaderBtn: React.FC<ListHeaderBtnProps> = ({ name, sort, sortConfig, requestSort }) => {

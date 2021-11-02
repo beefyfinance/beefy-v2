@@ -14,7 +14,7 @@ export const VaultsStats = ({ item }) => {
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
   const classes = useStyles();
   const t = useTranslation().t;
-  const [state, setState] = React.useState({ balance: 0 });
+  const [state, setState] = React.useState({ balance: "0" });
 
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
@@ -24,7 +24,7 @@ export const VaultsStats = ({ item }) => {
   let boosted = false;
 
   React.useEffect(() => {
-    let amount = 0;
+    let amount = "0";
     if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
       amount = byDecimals(
         new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
@@ -51,13 +51,13 @@ export const VaultsStats = ({ item }) => {
   );
 
   const price = React.useMemo(() => {
-    return state.balance > 0
+    return parseInt(state.balance) > 0
       ? new BigNumber(pricesReducer.prices[item.oracleId]).times(state.balance).toFixed(2)
       : 0;
   }, [state.balance, pricesReducer.prices, item.oracleId]);
 
   const tokensEarned = React.useMemo(() => {
-    return state.balance > 0 ? state.balance : '0';
+    return parseInt(state.balance) > 0 ? state.balance : '0';
   }, [state.balance]);
 
   return (
@@ -113,7 +113,7 @@ export const VaultsStats = ({ item }) => {
           <Typography>
             <ValueText value={tokensEarned} />
           </Typography>
-          {state.balance > 0 && (
+          {parseInt(state.balance) > 0 && (
             <Typography>
               <ValuePrice value={formatUsd(price)} />
             </Typography>

@@ -90,8 +90,8 @@ export const Unstake: React.FC<UnstakeProps> = ({
   };
 
   React.useEffect(() => {
-    let amount = 0;
-    let deposited = 0;
+    let amount: any = 0;
+    let deposited: any = 0;
     if (wallet.address && !isEmpty(balance.tokens[item.network][item.token])) {
       amount = byDecimals(
         new BigNumber(balance.tokens[item.network][item.token].balance),
@@ -136,7 +136,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
         <Box className={classes.balanceContainer} display="flex" alignItems="center">
           <Box flexGrow={1} pl={1} lineHeight={0}>
             {isLoading ? (
-              <Loader line={true} />
+              <Loader message={""} line={true} />
             ) : (
               <Typography variant={'body1'}>
                 {state.wallet} {item.token}
@@ -146,7 +146,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
           </Box>
           <Box>
             {isLoading ? (
-              <Loader line={true} />
+              <Loader message={""} line={true} />
             ) : (
               <Typography variant={'body1'}>{state.balance}</Typography>
             )}
