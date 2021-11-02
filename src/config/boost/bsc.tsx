@@ -1,7 +1,7 @@
 export const pools = [
   {
-    id: 'moo_belt-beltbtc-wsg',
-    name: 'WallStreetGames',
+    id: 'beltbtc-wallstreetgames',
+    poolId: 'belt-beltbtc',
     earnedToken: 'MooWSG',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xf6581Be77F4933FDcf92C9E0D49e7f85e5360705',
@@ -13,7 +13,7 @@ export const pools = [
     isMooStaked: true,
     partners: [
       {
-        name: 'Wall Street Games',
+        name: 'WallStreetGames',
         logo: 'stake/wsg/logo.png',
         background: 'stake/wsg/bg.png',
         text: 'Wall Street Games is a next-generation hybrid blockchain-based online gaming platform, where players can earn cryptocurrencies by playing fun & addictive games, collect tradable NFTs and win rewards!',
