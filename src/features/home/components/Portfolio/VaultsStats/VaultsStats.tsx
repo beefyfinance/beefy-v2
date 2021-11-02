@@ -3,7 +3,7 @@ import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useVaults } from '../../../hooks/useFilteredVaults';
 import { useSelector } from 'react-redux';
-import { ApyLoader } from '../../../../../components/ApyLoader';
+import { ApyStatLoader } from '../../../../../components/ApyStatLoader';
 import { useBuyback } from '../../../hooks/useBuyback';
 import { formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
@@ -18,7 +18,7 @@ export const VaultsStats = ({ stats, blurred }) => {
   const buyback = useBuyback();
 
   const ValueText = ({ value }) => (
-    <>{value ? <span className={classes.value}>{value}</span> : <ApyLoader />}</>
+    <>{value ? <span className={classes.value}>{value}</span> : <ApyStatLoader />}</>
   );
 
   return (

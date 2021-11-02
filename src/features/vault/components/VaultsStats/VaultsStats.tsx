@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { ApyLoader } from '../../../../components/ApyLoader';
+import { ApyStatLoader } from '../../../../components/ApyStatLoader';
 import { useSelector } from 'react-redux';
 import { calcDaily, formatApy, formatUsd, byDecimals } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
@@ -39,15 +39,15 @@ export const VaultsStats = ({ item }) => {
   const lastHarvest = useLastHarvest(item.id);
 
   const ValueText = ({ value }) => (
-    <>{value ? <span className={classes.value}>{value}</span> : <ApyLoader />}</>
+    <>{value ? <span className={classes.value}>{value}</span> : <ApyStatLoader />}</>
   );
 
   const ValueTached = ({ value }) => (
-    <>{value ? <span className={classes.tached}>{value}</span> : <ApyLoader />}</>
+    <>{value ? <span className={classes.tached}>{value}</span> : <ApyStatLoader />}</>
   );
 
   const ValuePrice = ({ value }) => (
-    <>{value ? <span className={classes.price}>{value}</span> : <ApyLoader />}</>
+    <>{value ? <span className={classes.price}>{value}</span> : <ApyStatLoader />}</>
   );
 
   const price = React.useMemo(() => {

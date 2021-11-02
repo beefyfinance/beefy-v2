@@ -13,7 +13,7 @@ import { byDecimals, formatUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
-import { ApyLoader } from '../../../../components/ApyLoader';
+import { ApyStatLoader } from '../../../../components/ApyStatLoader';
 
 const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
@@ -74,11 +74,11 @@ const _Item = ({ vault }) => {
   ]);
 
   const ValueText = ({ value }) => (
-    <>{value ? <span className={classes.value}>{value}</span> : <ApyLoader />}</>
+    <>{value ? <span className={classes.value}>{value}</span> : <ApyStatLoader />}</>
   );
 
   const ValuePrice = ({ value }) => (
-    <>{value ? <span className={classes.price}>{value}</span> : <ApyLoader />}</>
+    <>{value ? <span className={classes.price}>{value}</span> : <ApyStatLoader />}</>
   );
 
   const price = React.useMemo(() => {

@@ -9,10 +9,10 @@ import { buildChartData } from '../../../../helpers/buildChartData';
 export const HistoricalRateChart = ({ id }) => {
   const useStyles = makeStyles(styles as any);  const classes = useStyles();
   const historicalApy = useSelector((state: any) => state.pricesReducer.historicalApy);
-  const ApyLoader = useSelector((state: any) => state.pricesReducer.ApyLoader);
+  const ApyStatLoader = useSelector((state: any) => state.pricesReducer.ApyStatLoader);
   const chartData = useMemo(
-    () => buildChartData(historicalApy, ApyLoader, id),
-    [historicalApy, ApyLoader, id]
+    () => buildChartData(historicalApy, ApyStatLoader, id),
+    [historicalApy, ApyStatLoader, id]
   );
 
   const isDarkTheme = localStorage.getItem('nightMode') === 'true' ? true : false;

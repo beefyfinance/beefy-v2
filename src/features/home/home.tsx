@@ -65,7 +65,7 @@ const DataLoader = memo(function HomeDataLoader() {
       <Box className={classes.title}>{t('Vaults-Title')}</Box>
       <Box className={classes.tvl}>
         <Box className={classes.tvlLabel}>{t('TVL')} </Box>
-        {totalTvl ? <Box className={classes.tvlValue}>{formatUsd(totalTvl)}</Box> : <ApyLoader />}
+        {totalTvl ? <Box className={classes.tvlValue}>{formatUsd(totalTvl)}</Box> : <ApyStatLoader />}
       </Box>
     </Box>
   );
