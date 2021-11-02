@@ -33,7 +33,7 @@ export const Vault = () => {
   let isBoosted = false;
 
   let { id } = useParams();
-  const { vault, wallet, prices } = useSelector(state => ({
+  const { vault, wallet, prices } = useSelector((state: any) => ({
     vault: state.vaultReducer,
     wallet: state.walletReducer,
     prices: state.pricesReducer,

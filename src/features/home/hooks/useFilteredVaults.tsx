@@ -202,10 +202,10 @@ function useActiveVaults() {
 
 // eslint-disable-next-line no-unused-vars
 function useUserVaults() {
-  const balanceReducer = useSelector(state => state.balanceReducer);
-  const vaultReducer = useSelector(state => state.vaultReducer);
-  const pricesReducer = useSelector(state => state.pricesReducer);
-  const userAddress = useSelector(state => state.walletReducer.address);
+  const balanceReducer = useSelector((state: any) => state.balanceReducer);
+  const vaultReducer = useSelector((state: any) => state.vaultReducer);
+  const pricesReducer = useSelector((state: any) => state.pricesReducer);
+  const userAddress = useSelector((state: any) => state.walletReducer.address);
 
   let newUserVaults = [];
 

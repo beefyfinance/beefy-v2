@@ -16,7 +16,7 @@ export const Steps = ({ item, steps, handleClose }) => {
   const history = useHistory();
   const classes = useStyles();
   const t = useTranslation().t;
-  const wallet = useSelector(state => state.walletReducer);
+  const wallet = useSelector((state: any) => state.walletReducer);
 
   return (
     <Modal
@@ -96,7 +96,7 @@ export const Steps = ({ item, steps, handleClose }) => {
                     history.push({
                       pathname: '/',
                       portfolioOpen: true,
-                    });
+                    } as any);
                   }}
                   className={classes.finishedBtn}
                 >
@@ -135,7 +135,7 @@ export const Steps = ({ item, steps, handleClose }) => {
                 <AlertTitle>{t('Transactn-ConfirmPending')}</AlertTitle>
                 <Typography>{t('Transactn-Wait')}</Typography>
                 <Box textAlign={'center'}>
-                  <Loader />
+                  <Loader message={''} line={false}/>
                 </Box>
                 <Box textAlign={'center'} mt={2}>
                   <Button

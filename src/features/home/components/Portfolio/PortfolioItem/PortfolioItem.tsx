@@ -19,7 +19,7 @@ export const PortfolioItem = ({ item, historicalApy }) => {
   });
   const history = useHistory();
   const t = useTranslation().t;
-  const balance = useSelector(state => state.balanceReducer);
+  const balance = useSelector((state: any) => state.balanceReducer);
 
   const formatBalance = () => {
     let vaultBalance = new BigNumber(balance.tokens[item.network][item.earnedToken].balance);

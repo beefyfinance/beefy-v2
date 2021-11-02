@@ -8,8 +8,8 @@ import buildChartData from '../../../../helpers/buildChartData';
 
 export const HistoricalRateChart = ({ id }) => {
   const useStyles = makeStyles(styles as any);  const classes = useStyles();
-  const historicalApy = useSelector(state => state.pricesReducer.historicalApy);
-  const ApyLoader = useSelector(state => state.pricesReducer.ApyLoader);
+  const historicalApy = useSelector((state: any) => state.pricesReducer.historicalApy);
+  const ApyLoader = useSelector((state: any) => state.pricesReducer.ApyLoader);
   const chartData = useMemo(
     () => buildChartData(historicalApy, ApyLoader, id),
     [historicalApy, ApyLoader, id]

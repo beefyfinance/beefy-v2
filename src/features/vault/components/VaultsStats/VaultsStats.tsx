@@ -11,12 +11,12 @@ import { useLastHarvest } from '../../hooks/useLastHarvest';
 
 const useStyles = makeStyles(styles as any);
 export const VaultsStats = ({ item }) => {
-  const pricesReducer = useSelector(state => state.pricesReducer);
+  const pricesReducer = useSelector((state: any) => state.pricesReducer);
   const classes = useStyles();
   const t = useTranslation().t;
   const [state, setState] = React.useState({ balance: 0 });
 
-  const { wallet, balance } = useSelector(state => ({
+  const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));

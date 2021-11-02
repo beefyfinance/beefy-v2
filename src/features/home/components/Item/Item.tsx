@@ -27,11 +27,11 @@ const _Item = ({ vault }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
-  const { wallet, balance } = useSelector(state => ({
+  const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
-  const pricesReducer = useSelector(state => state.pricesReducer);
+  const pricesReducer = useSelector((state: any) => state.pricesReducer);
 
   const [state, setState] = React.useState({ formattedBalance: 0 });
   const [priceInDolar, setPriceInDolar] = React.useState({ balance: 0 });

@@ -27,7 +27,7 @@ export const Withdraw = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const t = useTranslation().t;
-  const { wallet, balance } = useSelector(state => ({
+  const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));

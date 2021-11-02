@@ -35,8 +35,8 @@ export const Boost = () => {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
-  let { id } = useParams();
-  const { vault, wallet, balance } = useSelector(state => ({
+  let { id }: any = useParams();
+  const { vault, wallet, balance } = useSelector((state: any) => ({
     vault: state.vaultReducer,
     wallet: state.walletReducer,
     balance: state.balanceReducer,
@@ -147,11 +147,11 @@ export const Boost = () => {
   }, [item, dispatch]);
 
   React.useEffect(() => {
-    let amount = 0;
-    let deposited = 0;
-    let approved = 0;
-    let poolPercentage = 0;
-    let rewards = 0;
+    let amount: any = 0;
+    let deposited: any = 0;
+    let approved: any = 0;
+    let poolPercentage: any = 0;
+    let rewards: any = 0;
 
     if (wallet.address && !isEmpty(balance.tokens[item.network][item.token])) {
       amount = byDecimals(
@@ -214,7 +214,7 @@ export const Boost = () => {
     <Container className={classes.vaultContainer} maxWidth="lg">
       {console.log(vault)}
       {isLoading ? (
-        <Loader message="Getting boost data..." />
+        <Loader message="Getting boost data..." line={false}/>
       ) : (
         <Grid container spacing={4}>
           <Grid item xs={12}>

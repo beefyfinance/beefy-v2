@@ -13,7 +13,7 @@ const _EmptyStates: React.FC<EmptyStatesProps> = ({ setFilterConfig }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const walletReducer = useSelector(state => state.walletReducer);
+  const walletReducer = useSelector((state: any) => state.walletReducer);
   const isConnected = React.useMemo(
     () => (walletReducer.address ? true : false),
     [walletReducer.address]

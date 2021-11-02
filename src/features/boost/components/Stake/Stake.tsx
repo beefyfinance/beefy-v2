@@ -24,7 +24,7 @@ export const Stake: React.FC<StakeProps> = ({
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { wallet, balance } = useSelector(state => ({
+  const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
@@ -106,9 +106,9 @@ export const Stake: React.FC<StakeProps> = ({
   };
 
   React.useEffect(() => {
-    let amount = 0;
-    let approved = 0;
-    let deposited = 0;
+    let amount: any = 0;
+    let approved: any = 0;
+    let deposited: any = 0;
 
     if (wallet.address && !isEmpty(balance.tokens[item.network][item.token])) {
       amount = byDecimals(
@@ -155,7 +155,7 @@ export const Stake: React.FC<StakeProps> = ({
         <Box className={classes.balanceContainer} display="flex" alignItems="center">
           <Box flexGrow={1} pl={1} lineHeight={0}>
             {isLoading ? (
-              <Loader line={true} />
+              <Loader message={""} line={true} />
             ) : (
               <Typography variant={'body1'}>
                 {state.balance} {item.token}
@@ -165,7 +165,7 @@ export const Stake: React.FC<StakeProps> = ({
           </Box>
           <Box>
             {isLoading ? (
-              <Loader line={true} />
+              <Loader message={""} line={true} />
             ) : (
               <Typography variant={'body1'}>{state.deposited}</Typography>
             )}

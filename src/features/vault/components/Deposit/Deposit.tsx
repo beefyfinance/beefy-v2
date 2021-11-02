@@ -56,7 +56,7 @@ export const Deposit: React.FC<DepositProps> = ({
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { wallet, balance, tokens } = useSelector(state => ({
+  const { wallet, balance, tokens } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
     tokens: state.balanceReducer.tokens[item.network],

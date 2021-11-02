@@ -30,7 +30,7 @@ const useStyles = makeStyles(styles as any);
 export const Header = ({ isNightMode, setNightMode }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const walletReducer = useSelector(state => state.walletReducer);
+  const walletReducer = useSelector((state: any) => state.walletReducer);
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
@@ -70,11 +70,11 @@ export const Header = ({ isNightMode, setNightMode }) => {
   };
 
   const BifiPrice = memo(function HeaderBifiPrice() {
-    const pricesReducer = useSelector(state => state.pricesReducer);
+    const pricesReducer = useSelector((state: any) => state.pricesReducer);
     const classes = useStyles();
 
     const price = React.useMemo(() => {
-      return BigNumber(pricesReducer.prices['BIFI']).toFixed(2);
+      return new BigNumber(pricesReducer.prices['BIFI']).toFixed(2);
     }, [pricesReducer]);
 
     return (
@@ -129,6 +129,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
                     list={getAvailableNetworks(true)}
                     selected={walletReducer.network}
                     handler={e => switchNetwork(e.target.value, dispatch)}
+                    renderValue
                   />
                 </Box>
               </Hidden>
@@ -172,6 +173,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
                       list={getAvailableNetworks(true)}
                       selected={walletReducer.network}
                       handler={e => switchNetwork(e.target.value, dispatch)}
+                      renderValue
                     />
                     <LanguageDropdown />
                   </Box>

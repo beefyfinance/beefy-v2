@@ -19,7 +19,7 @@ export const config = {
     ],
     providerName: 'binance',
     walletSettings: {
-      chainId: `0x${parseInt(56, 10).toString(16)}`,
+      chainId: `0x${parseInt("56", 10).toString(16)}`,
       chainName: 'BSC Mainnet',
       nativeCurrency: {
         name: 'Binance Coin',
@@ -52,7 +52,7 @@ export const config = {
     supportedWallets: ['injected', 'walletconnect', 'custom-math'],
     providerName: 'heco',
     walletSettings: {
-      chainId: `0x${parseInt(128, 10).toString(16)}`,
+      chainId: `0x${parseInt("128", 10).toString(16)}`,
       chainName: 'HECO Mainnet',
       nativeCurrency: {
         name: 'Huobi Token',
@@ -73,7 +73,7 @@ export const config = {
     supportedWallets: ['injected', 'walletconnect'],
     providerName: 'avalanche',
     walletSettings: {
-      chainId: `0x${parseInt(43114, 10).toString(16)}`,
+      chainId: `0x${parseInt("43114", 10).toString(16)}`,
       chainName: 'Avalanche C-Chain',
       nativeCurrency: {
         name: 'AVAX',
@@ -94,7 +94,7 @@ export const config = {
     supportedWallets: ['injected', 'walletconnect'],
     providerName: 'polygon',
     walletSettings: {
-      chainId: `0x${parseInt(137, 10).toString(16)}`,
+      chainId: `0x${parseInt("137", 10).toString(16)}`,
       chainName: 'Polygon Mainnet',
       nativeCurrency: {
         name: 'MATIC',
@@ -115,7 +115,7 @@ export const config = {
     supportedWallets: ['injected', 'walletconnect'],
     providerName: 'fantom',
     walletSettings: {
-      chainId: `0x${parseInt(250, 10).toString(16)}`,
+      chainId: `0x${parseInt("250", 10).toString(16)}`,
       chainName: 'Fantom Opera',
       nativeCurrency: {
         name: 'FTM',
@@ -136,7 +136,7 @@ export const config = {
     supportedWallets: ['injected'],
     providerName: 'harmony',
     walletSettings: {
-      chainId: `0x${parseInt(1666600000, 10).toString(16)}`,
+      chainId: `0x${parseInt("1666600000", 10).toString(16)}`,
       chainName: 'Harmony One',
       nativeCurrency: {
         name: 'HARMONY',
@@ -157,7 +157,7 @@ export const config = {
     supportedWallets: ['injected'],
     providerName: 'Arbitrum',
     walletSettings: {
-      chainId: `0x${parseInt(42161, 10).toString(16)}`,
+      chainId: `0x${parseInt("42161", 10).toString(16)}`,
       chainName: 'Arbitrum One',
       nativeCurrency: {
         name: 'ETH',
@@ -178,7 +178,7 @@ export const config = {
     supportedWallets: ['injected'],
     providerName: 'Celo',
     walletSettings: {
-      chainId: `0x${parseInt(42220, 10).toString(16)}`,
+      chainId: `0x${parseInt("42220", 10).toString(16)}`,
       chainName: 'Celo',
       nativeCurrency: {
         name: 'CELO',

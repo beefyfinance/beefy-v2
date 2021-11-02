@@ -22,10 +22,10 @@ export const Portfolio = () => {
     daily: new BigNumber(0),
     monthly: new BigNumber(0),
   });
-  const balanceReducer = useSelector(state => state.balanceReducer);
-  const vaultReducer = useSelector(state => state.vaultReducer);
-  const pricesReducer = useSelector(state => state.pricesReducer);
-  const userAddress = useSelector(state => state.walletReducer.address);
+  const balanceReducer = useSelector((state: any) => state.balanceReducer);
+  const vaultReducer = useSelector((state: any) => state.vaultReducer);
+  const pricesReducer = useSelector((state: any) => state.pricesReducer);
+  const userAddress = useSelector((state: any) => state.walletReducer.address);
   const t = useTranslation().t;
 
   useEffect(() => {

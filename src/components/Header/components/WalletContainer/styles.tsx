@@ -24,12 +24,10 @@ export const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     border: 'solid 2px #54995C',
-    background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0) 100%)',
-    // eslint-disable-next-line no-dupe-keys
     background: '#54995C26',
     '& .MuiGrid-container': {
       color: 'white',
-    },
+    } as any,
   },
   connected: {
     border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #ff0000',

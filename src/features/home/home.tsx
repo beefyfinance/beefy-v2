@@ -27,9 +27,9 @@ export function notifyResize() {
 }
 
 const DataLoader = memo(function HomeDataLoader() {
-  const pricesLastUpdated = useSelector(state => state.pricesReducer.lastUpdated);
-  const vaultLastUpdated = useSelector(state => state.vaultReducer.lastUpdated);
-  const walletAddress = useSelector(state => state.walletReducer.address);
+  const pricesLastUpdated = useSelector((state: any) => state.pricesReducer.lastUpdated);
+  const vaultLastUpdated = useSelector((state: any) => state.vaultReducer.lastUpdated);
+  const walletAddress = useSelector((state: any) => state.walletReducer.address);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const DataLoader = memo(function HomeDataLoader() {
 /*const VaultsHeader = memo(function HomeVaultsHeader() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const totalTvl = useSelector(state => state.vaultReducer.totalTvl.toNumber());
+  const totalTvl = useSelector((state: any) => state.vaultReducer.totalTvl.toNumber());
 
   return (
     <Box className={classes.header}>
@@ -166,10 +166,10 @@ const VirtualVaultsList = memo(function VirtualVaultsList({ vaults }) {
 const VaultsList = memo(function HomeVaultsList() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const isPoolsLoading = useSelector(state => state.vaultReducer.isPoolsLoading);
-  const platforms = useSelector(state => state.vaultReducer.platforms);
+  const isPoolsLoading = useSelector((state: any) => state.vaultReducer.isPoolsLoading);
+  const platforms = useSelector((state: any) => state.vaultReducer.platforms);
   const [filteredVaults, filterConfig, setFilterConfig, filteredCount, allCount] = useVaults();
-  const address = useSelector(state => state.walletReducer.address);
+  const address = useSelector((state: any) => state.walletReducer.address);
 
   if (isPoolsLoading) {
     return <CowLoader text={t('Vaults-LoadingData')} />;

@@ -15,7 +15,7 @@ const formatAddress = addr => {
 
 export const WalletContainer = () => {
   const classes = useStyles();
-  const walletReducer = useSelector(state => state.walletReducer);
+  const walletReducer = useSelector((state: any) => state.walletReducer);
   const dispatch = useDispatch();
   const [dataUrl, setDataUrl] = React.useState(null);
   const canvas = createCanvas(24, 24);
@@ -42,13 +42,19 @@ export const WalletContainer = () => {
     walletReducer.address ? classes.connected : classes.disconnected
   }`;
 
+  const formControlProps = {
+    noValidate: true,
+    autoComplete:"off",
+    onClick: handleWalletConnect
+  }
+
   return (
     <Box className={containerClassName}>
-      <FormControl noValidate autoComplete="off" onClick={handleWalletConnect}>
+      <FormControl {...formControlProps}>
         <Grid container direction="row" alignItems="center">
           {walletReducer.pending ? (
             <Box className={classes.loading}>
-              <Loader line={true} />
+              <Loader line={true} message={''}/>
             </Box>
           ) : (
             <React.Fragment>
