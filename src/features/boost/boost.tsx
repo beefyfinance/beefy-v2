@@ -105,8 +105,8 @@ export const Boost = () => {
   const updateItemData = () => {
     if (wallet.address && item) {
       dispatch(reduxActions.vault.fetchBoosts(item));
-      dispatch(reduxActions.balance.fetchBoostBalances(item));
-      dispatch(reduxActions.balance.fetchBoostRewards(item));
+      dispatch(reduxActions.balance.fetchBoostBalances(item, undefined)); // TODO add network
+      dispatch(reduxActions.balance.fetchBoostRewards(item, undefined));
     }
   };
 
@@ -131,8 +131,8 @@ export const Boost = () => {
 
   React.useEffect(() => {
     if (item && wallet.address) {
-      dispatch(reduxActions.balance.fetchBoostBalances(item));
-      dispatch(reduxActions.balance.fetchBoostRewards(item));
+      dispatch(reduxActions.balance.fetchBoostBalances(item, undefined)); // TODO add network
+      dispatch(reduxActions.balance.fetchBoostRewards(item, undefined));
     }
   }, [dispatch, item, wallet.address]);
 
