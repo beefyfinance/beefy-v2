@@ -29,7 +29,7 @@ export const LabeledDropdown: React.FC<LabeledDropdownProps> = ({ list, selected
         onChange={handler}
         disableUnderline={true}
         IconComponent={ExpandMore}
-        renderValue={renderValue}
+        // renderValue={renderValue} // TODO: renable
         style={selectStyle}
       >
         {Object.keys(list).map(val => (

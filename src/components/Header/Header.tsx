@@ -129,7 +129,6 @@ export const Header = ({ isNightMode, setNightMode }) => {
                     list={getAvailableNetworks(true)}
                     selected={walletReducer.network}
                     handler={e => switchNetwork(e.target.value, dispatch)}
-                    renderValue
                   />
                 </Box>
               </Hidden>
@@ -173,7 +172,6 @@ export const Header = ({ isNightMode, setNightMode }) => {
                       list={getAvailableNetworks(true)}
                       selected={walletReducer.network}
                       handler={e => switchNetwork(e.target.value, dispatch)}
-                      renderValue
                     />
                     <LanguageDropdown />
                   </Box>

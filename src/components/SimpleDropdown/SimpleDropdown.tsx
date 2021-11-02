@@ -28,13 +28,13 @@ export const SimpleDropdown: React.FC<SimpleDropdownProps> = ({
         onChange={handler}
         disableUnderline={true}
         IconComponent={ExpandMore}
-        renderValue={renderValue}
+        // renderValue={renderValue} // TODO: renable
         fullWidth
       >
         {Object.keys(list).map(val => (
           <MenuItem key={list[val]} value={val}>
             {chainLogos && (
-              <img alt={val} src={require(`../../images/networks/${val}.svg`).default} />
+              <img alt={val} src={`../../images/networks/${val}.svg`} />
             )}{' '}
             {list[val]}
           </MenuItem>
