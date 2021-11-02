@@ -33,13 +33,23 @@ const getPools = async (items, state, dispatch) => {
 
   for (let key in items) {
     const pool = items[key];
-    const tokenContract = new web3[pool.network].eth.Contract(vaultAbi, pool.earnedTokenAddress);
-    calls[pool.network].push({
-      id: pool.id,
-      balance: tokenContract.methods.balance(),
-      pricePerFullShare: tokenContract.methods.getPricePerFullShare(),
-      strategy: tokenContract.methods.strategy(),
-    });
+    if (pool.isGovVault) {
+      const tokenContract = new web3[pool.network].eth.Contract(vaultAbi, pool.poolAddress);
+      let reqs = {
+        id: pool.id,
+        balance: tokenContract.methods.balance(),
+        totalStaked: tokenContract.methods.totalSupply(),
+      };
+      calls[pool.network].push(reqs);
+    } else {
+      const tokenContract = new web3[pool.network].eth.Contract(vaultAbi, pool.earnedTokenAddress);
+      calls[pool.network].push({
+        id: pool.id,
+        balance: tokenContract.methods.balance(),
+        pricePerFullShare: tokenContract.methods.getPricePerFullShare(),
+        strategy: tokenContract.methods.strategy(),
+      });
+    }
   }
 
   const promises = [];
@@ -62,16 +72,29 @@ const getPools = async (items, state, dispatch) => {
   for (let i = 0; i < response.length; i++) {
     const item = response[i];
 
-    const balance = new BigNumber(item.balance);
-    const price = pools[item.id].oracleId in prices ? prices[pools[item.id].oracleId] : 0;
-    const tvl = balance
-      .times(price)
-      .dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
+    let tvl;
+
+    if (pools[item.id].isGovVault) {
+      console.log(`Got gov pool response`);
+      console.log(item);
+      const totalStaked = new BigNumber(item.totalStaked);
+      const price = pools[item.id].oracleId in prices ? prices[pools[item.id].oracleId] : 0;
+      tvl = totalStaked
+        .times(price)
+        .dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
+      tvl = tvl.minus(pools[pools[item.id].excluded].tvl);
+    } else {
+      const balance = new BigNumber(item.balance);
+      const price = pools[item.id].oracleId in prices ? prices[pools[item.id].oracleId] : 0;
+      tvl = balance
+        .times(price)
+        .dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
+      pools[item.id].pricePerFullShare = item.pricePerFullShare;
+      pools[item.id].strategy = item.strategy;
+    }
 
     pools[item.id].tvl = tvl;
     pools[item.id].apy = !isEmpty(apy) && item.id in apy ? apy[item.id] : 0;
-    pools[item.id].pricePerFullShare = item.pricePerFullShare;
-    pools[item.id].strategy = item.strategy;
     totalTvl = totalTvl.plus(tvl);
   }
 

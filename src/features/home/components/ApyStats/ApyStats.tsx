@@ -8,6 +8,8 @@ import { formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { Popover } from '../../../../components/Popover';
 import { ApyStatsProps } from './ApyStatsProps';
+import { DailyBreakdownTooltipProps } from './DailyBreakdownTooltipProps';
+import { YearlyBreakdownTooltipProps } from './YearlyBreakdownTooltipProps';
 
 const useStyles = makeStyles(styles as any);
 const yearlyToDaily = apy => {
@@ -39,9 +41,18 @@ const BreakdownTooltip = memo(({ rows }: any) => {
   );
 });
 
-const YearlyBreakdownTooltip = memo(({ rates }: any) => {
+const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ rates, isGovVault }) => {
   const rows = [];
   const { t } = useTranslation();
+
+  if (isGovVault) {
+    rows.push({
+      label: t('Pool-Apr'),
+      value: rates.vaultApr,
+      last: true,
+    });
+    return <BreakdownTooltip rows={rows} />;
+  }
 
   if ('vaultApr' in rates) {
     rows.push({
@@ -74,11 +85,22 @@ const YearlyBreakdownTooltip = memo(({ rates }: any) => {
   });
 
   return <BreakdownTooltip rows={rows} />;
-});
+}
 
-const DailyBreakdownTooltip = memo(({ rates }: any) => {
+const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
+
+const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ rates, isGovVault }) => {
   const rows = [];
   const { t } = useTranslation();
+
+  if (isGovVault) {
+    rows.push({
+      label: t('Pool-AprDaily'),
+      value: rates.vaultDaily,
+      last: true,
+    });
+    return <BreakdownTooltip rows={rows} />;
+  }
 
   if ('vaultDaily' in rates) {
     rows.push({
@@ -111,7 +133,9 @@ const DailyBreakdownTooltip = memo(({ rates }: any) => {
   });
 
   return <BreakdownTooltip rows={rows} />;
-});
+}
+
+const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
 
 const LabeledStatWithTooltip = memo(
   ({ children, boosted, label, value, spacer, ...passthrough }: any) => {
@@ -148,6 +172,10 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   const values: Record<string, any> = {};
 
   values.totalApy = apy.totalApy;
+  if (isGovVault) {
+    console.log('ASDASDASD');
+    console.log(apy);
+  }
 
   if (apy.vaultApr) {
     values.vaultApr = apy.vaultApr;
@@ -163,6 +191,11 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
     values.totalDaily = (values.vaultDaily || 0) + (values.tradingDaily || 0);
   } else {
     values.totalDaily = yearlyToDaily(values.totalApy);
+
+    if (isGovVault) {
+      values.totalApy = apy.vaultApr;
+      values.totalDaily = apy.vaultApr / 365;
+    }
   }
 
   if (isBoosted) {
@@ -170,6 +203,10 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
     values.boostDaily = launchpoolApr / 365;
     values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
     values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
+  }
+
+  if (isGovVault) {
+    console.log(values);
   }
 
   const formatted = Object.fromEntries(
@@ -181,6 +218,10 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
     })
   );
 
+  if (isGovVault) {
+    console.log(formatted);
+  }
+
   return (
     <>
       <LabeledStatWithTooltip
@@ -191,7 +232,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
       >
-        <YearlyBreakdownTooltip rates={formatted} />
+        <YearlyBreakdownTooltip rates={formatted} isGovVault={isGovVault} />
       </LabeledStatWithTooltip>
 
       <LabeledStatWithTooltip
@@ -202,7 +243,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
       >
-        <DailyBreakdownTooltip rates={formatted} />
+        <DailyBreakdownTooltip rates={formatted} isGovVault={isGovVault} />
       </LabeledStatWithTooltip>
     </>
   );

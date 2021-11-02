@@ -21,8 +21,14 @@ const _Item = ({ vault }) => {
 
   // eslint-disable-next-line
   const [isBoosted, setIsBoosted] = React.useState(false);
+  
   // eslint-disable-next-line
-  const [isGovVault, setIsGovVault] = React.useState(false);
+  const [isGovVault, setIsGovVault] = React.useState(item.isGovVault ?? false);
+
+  if (item.isGovVault) {
+    console.log('@@@@@@@@@@');
+    console.log(item);
+  }
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -35,6 +41,7 @@ const _Item = ({ vault }) => {
 
   const [state, setState] = React.useState({ formattedBalance: "0" });
   const [priceInDolar, setPriceInDolar] = React.useState({ balance: "0" });
+  const [poolRewards, setPoolRewards] = React.useState({ rewards: "0" });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
 
@@ -46,15 +53,36 @@ const _Item = ({ vault }) => {
 
   React.useEffect(() => {
     let amount = "0";
-    if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
-      amount = byDecimals(
-        new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
-          byDecimals(item.pricePerFullShare)
-        ),
-        item.tokenDecimals
-      ).toFixed(8);
+    let rewardAmount = "0";
+    if (item.isGovVault) {
+      console.log('new list');
+      console.log(balance.tokens[item.network]);
+      let symbol = `${item.token}GovVault`;
+      if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
+        amount = byDecimals(
+          new BigNumber(balance.tokens[item.network][symbol].balance),
+          item.tokenDecimals
+        ).toFixed(8);
+
+        rewardAmount = byDecimals(
+          new BigNumber(balance.tokens[item.network][symbol].rewards),
+          item.tokenDecimals
+        ).toFixed(8);
+      }
+      console.log(`amount it ${amount}`);
+      console.log(`rewards it ${rewardAmount}`);
+    } else {
+      if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
+        amount = byDecimals(
+          new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
+            byDecimals(item.pricePerFullShare)
+          ),
+          item.tokenDecimals
+        ).toFixed(8);
+      }
     }
     setPriceInDolar({ balance: amount });
+    setPoolRewards({ rewards: rewardAmount });
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {
@@ -119,7 +147,7 @@ const _Item = ({ vault }) => {
               <div>
                 {isGovVault ? (
                   <Typography className={classes.govVaultTitle} onClick={handleOpenVault}>
-                    EARN BNB
+                    EARN {item.earnedToken}
                   </Typography>
                 ) : null}
                 <div className={classes.infoContainer}>
@@ -191,7 +219,8 @@ const _Item = ({ vault }) => {
             {...({
               launchpoolApr:isBoosted,
               apy:item.apy,
-              spacer:isBoosted || parseInt(priceInDolar.balance) > 0
+              spacer:isBoosted || parseInt(priceInDolar.balance) > 0,
+              isGovVault:item.isGovVault ?? false
             } as any)}
             />
             {/*Rewards/Safety Score*/}
@@ -200,7 +229,7 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
 
-                  <ValueText value={'4.0 BNB'} />
+                  <ValueText value={(poolRewards.rewards ?? '') + ' BNB'} />
                   {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
