@@ -27,7 +27,7 @@ will accommodatively copy it over.
 
 To assist the maintainer in manually updating these v2 aspects, an output file with an 
 array-listing of the IDs of the v1 vaults which have been added newly to the v2 
-environment is created: V2vaultsMigrated.txt. The file is placed in directory from which 
+environment is created: V1vaultsMigrated.txt. The file is placed in directory from which 
 the command is run. To help minimize pollution, the maintainer may avoid pushing this file 
 into the staging repository.
 
@@ -53,8 +53,8 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 										{S_SRC: "avalanche", S_TRGT_ALIAS: "avax"},
 										{S_SRC: "harmony"},
 										{S_SRC: "arbitrum"},
-										{S_SRC: "celo"}]; 
-//										{S_SRC: "moonriver"}];
+										{S_SRC: "celo"}, 
+										{S_SRC: "moonriver"}];
 const mS_PRPNM_ID = "id", mS_PRPNM_ASSTS = "assets", mS_PRPNM_STRAT_TYP = "stratType", 
 			mS_PRPNM_CHAIN = "network", mS_PRPNM_LOGO = "logo", mS_PRPNM_RISKS = "risks",
 			mS_PRPNM_CTRCT = "earnContractAddress", mS_PRPNM_TYP = "type", 
@@ -67,16 +67,16 @@ async function p_loadChain( O_CHN)	{
 	//	is efficiently searchable
 	[moAO_SRC[ O_CHN.S_SRC], mo_trgt[ O_CHN.S_SRC]] = await Promise.all( [
 		(async () => (await import( 
-									`../../../beefy-app/src/features/configure/vault/${O_CHN.S_SRC}_pools.js`))
-									[O_CHN.S_SRC + 'Pools'])(), 
+							`../../../beefy-app/src/features/configure/vault/${O_CHN.S_SRC}_pools.js`))
+							[O_CHN.S_SRC + 'Pools'])(), 
 		(async () => (await import( 
-													`../config/vault/${O_CHN.S_TRGT_ALIAS ? O_CHN.S_TRGT_ALIAS : 
-													O_CHN.S_SRC}.js`).then( O_MOD => O_MOD.pools.reduce( (o, O) => {
-									if (o[ O[ mS_PRPNM_ID]])
-										throw `Duplicate ${O_CHN.S_SRC} target vault-ID (${O[ mS_PRPNM_ID]}`;
-									o[ O[ mS_PRPNM_ID]] = O; return o;}, {}), 
-													() => ({})) ))()
-		])
+												`../config/vault/${O_CHN.S_TRGT_ALIAS ? O_CHN.S_TRGT_ALIAS : 
+												O_CHN.S_SRC}.tsx`).then( O_MOD => O_MOD.pools.reduce( (o, O) => {
+							if (o[ O[ mS_PRPNM_ID]])
+								throw `Duplicate ${O_CHN.S_SRC} target vault-ID (${O[ mS_PRPNM_ID]}`;
+							o[ O[ mS_PRPNM_ID]] = O; return o;}, {}), 
+											() => ({})) ))()
+		]);
 
 	console.log( "loading: " + O_CHN.S_SRC);
 } //p_loadChain(
@@ -100,7 +100,7 @@ async function p_main()	{
 		console.error( O);
 		return;
 	}
-	console.log( "All vault arrays loaded successully for processing.");
+	console.log( "All vault arrays loaded successfully for processing.");
 
 	const S_DIR_BASE = import.meta.url.slice( 'file://'.length, 1000).split( '/').slice( 
 																																				0, -4).join( '/');
@@ -314,7 +314,8 @@ async function p_main()	{
 
 	//if nothing has changed anywhere, our work is done
 	if (!b_dirty)	{
-		console.log( "No v1 changes to sync over to v2, and nothing in v2 to prune. Finished.");
+		console.log( 
+							"No v1 changes to sync over to v2, and nothing in v2 to prune. Finished.");
 		return;
 	}
 
@@ -323,7 +324,7 @@ async function p_main()	{
 		if (!O[ mS_PRPNM_TYP])
 			delete O_hits[ O[ mS_PRPNM_ID]];
 	});
-	FS.writeFileSync( `${S_DIR_BASE}/beefy-v2/V2vaultsMigrated.txt`, JSON.stringify( 
+	FS.writeFileSync( `${S_DIR_BASE}/beefy-v2/V1vaultsMigrated.txt`, JSON.stringify( 
 																												Object.values( O_hits), null, 2));
 
 	//for each changed target array (one per chain), commit it to persistent storage as a 
@@ -335,13 +336,13 @@ async function p_main()	{
 		delete o_trgtChn.b_dirty;
 		console.log( "Writing updated v2 vault descriptors file: " + O_CHN.S_SRC);
 		FS.writeFileSync( `${S_DIR_BASE}/beefy-v2/src/config/vault/${O_CHN.S_TRGT_ALIAS ? 
-											O_CHN.S_TRGT_ALIAS : O_CHN.S_SRC}.js`, 
+											O_CHN.S_TRGT_ALIAS : O_CHN.S_SRC}.tsx`, 
 											`export const pools = ${JSON.stringify( Object.values( o_trgtChn), 
 											null, 2).replace( /"([^"]+)":/g, "$1:")};`);
 	} //for (o_trgtChn of mo_trgt)
 
 	console.log( `\nFinished vault sync.\n  ${i_added} v1 vaults added to v2\n  ${
-								i_pruned} v2 vaults pruned\nOperation detail in V2vaultsMigrated.txt`);
+								i_pruned} v2 vaults pruned\nOperation detail in V1vaultsMigrated.txt`);
 } //p_main(
 
 //launch the migration
