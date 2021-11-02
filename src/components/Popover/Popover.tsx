@@ -1,4 +1,4 @@
-import { makeStyles, Typography, Popper, Box } from '@material-ui/core';
+import { makeStyles, Typography, Popper, Box, BoxProps } from '@material-ui/core';
 import React, { memo, useCallback, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { PopoverProps } from './PopoverProps';
@@ -16,14 +16,17 @@ const _Popover: React.FC<PopoverProps> = ({ title, content, children, size = 'sm
     setIsOpen(open => !open);
   }, [setIsOpen]);
 
+  const boxProps: BoxProps & {ref: any} = {
+    ref: setAnchorEl,
+    onClick: toggleOpen,
+    className:[classes.dot, classes[`size_${size}`]].join(' '),
+  }
+
   return (
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
       <div>
         <Box
-          // as="span"
-          // ref={setAnchorEl}
-          onClick={toggleOpen}
-          className={[classes.dot, classes[`size_${size}`]].join(' ')}
+          {...boxProps}
         >
           ?
         </Box>
