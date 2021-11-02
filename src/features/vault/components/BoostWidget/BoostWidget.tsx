@@ -16,7 +16,7 @@ export const BoostWidget = ({ onClick, balance, s_stake }) => {
     <>
       <div className={classes.container}>
         <Box display="flex" alignItems="center">
-          <img alt="fire" src={require('images/fire.png').default} className={classes.boostImg} />
+          <img alt="fire" src={require(`../../../../images/fire.png`).default} className={classes.boostImg} />
           <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
           <Box style={{ marginLeft: '8px' }}>
             <Popover
@@ -59,7 +59,7 @@ export const BoostWidget = ({ onClick, balance, s_stake }) => {
       </div>
       <div className={classes.containerExpired}>
         <Box display="flex" alignItems="center" style={{ marginBottom: '24px' }}>
-          <img alt="fire" src={require('images/fire.png').default} className={classes.boostImg} />
+          <img alt="fire" src={require(`../../../../images/fire.png`).default} className={classes.boostImg} />
           <Typography className={classes.h1white}>{t('Boost-Expired')}</Typography>
           &nbsp;
           <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>

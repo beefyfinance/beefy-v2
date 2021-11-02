@@ -3,7 +3,7 @@ import { useMemo, memo } from "react";
 import { useTranslation } from "react-i18next";
 import ScrollContainer from "react-indiana-drag-scroll";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { CATEGORY_LABELS } from "./categoryLabels";
+import { CATEGORY_LABELS } from "./CategoryLabels";
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);

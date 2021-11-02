@@ -155,7 +155,7 @@ const _Filter: React.FC<FilterProps> = ({ sortConfig, setSortConfig, platforms, 
               setFilterOpen(!filterOpen);
             }}
           >
-            <img src={require('images/filter.svg').default} alt="" className={classes.filterIcon} />
+            <img src={require(`../../../../images/filter.svg`).default} alt="" className={classes.filterIcon} />
             {t('Filter-Btn')}
             {filterOpen ? <ArrowDropDownIcon /> : ''}
           </ToggleButton>

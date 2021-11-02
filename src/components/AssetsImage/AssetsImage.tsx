@@ -8,7 +8,7 @@ const useStyles = makeStyles(styles);
 
 const resolveImgSrc = (img, assets) => {
   if (img) {
-    return require('images/' + img).default;
+    return require(`../../images/${img}`).default;
   }
   return assets.length === 1 ? getSingleAssetSrc(assets[0]) : undefined;
 };

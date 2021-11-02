@@ -35,7 +35,7 @@ const _EmptyStates: React.FC<EmptyStatesProps> = ({ setFilterConfig }) => {
   return (
     <Box className={classes.itemContainer}>
       <Box>
-        <img height={120} alt="BIFI" src={require('images/empty-state.svg').default} />
+        <img height={120} alt="BIFI" src={require(`../../../../images/empty-state.svg`).default} />
       </Box>
       <Box>
         <Typography className={classes.bold} component="h5">

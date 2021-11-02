@@ -729,7 +729,7 @@ const generateProviderOptions = (wallet, clients) => {
         display: {
           name: 'Binance',
           description: 'Binance Chain Wallet',
-          logo: require('images/wallets/binance-wallet.png').default,
+          logo: require(`../../../images/wallets/binance-wallet.png`).default,
         },
         package: 'binance',
         connector: async (ProviderPackage, options) => {
@@ -742,7 +742,7 @@ const generateProviderOptions = (wallet, clients) => {
         display: {
           name: 'Math',
           description: 'Math Wallet',
-          logo: require('images/wallets/math-wallet.svg').default,
+          logo: require(`../../../images/wallets/math-wallet.svg`).default,
         },
         package: 'math',
         connector: connectors.injected,
@@ -751,7 +751,7 @@ const generateProviderOptions = (wallet, clients) => {
         display: {
           name: 'Trust',
           description: 'Trust Wallet',
-          logo: require('images/wallets/trust-wallet.svg').default,
+          logo: require(`../../../images/wallets/trust-wallet.svg`).default,
         },
         package: 'twt',
         connector: connectors.injected,
@@ -760,7 +760,7 @@ const generateProviderOptions = (wallet, clients) => {
         display: {
           name: 'SafePal',
           description: 'SafePal App',
-          logo: require('images/wallets/safepal-wallet.svg').default,
+          logo: require(`../../../images/wallets/safepal-wallet.svg`).default,
         },
         package: 'safepal',
         connector: connectors.injected,

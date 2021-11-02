@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { localeToLanguageMap } from 'i18n';
+import { localeToLanguageMap } from '../../i18n';
 import { SimpleDropdown } from '../SimpleDropdown';
 
 const getSelectedLanguage = i18n => {

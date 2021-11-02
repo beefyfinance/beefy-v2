@@ -87,7 +87,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
           target="_blank"
           rel="noreferrer"
         >
-          <img alt="BIFI" src={require('images/BIFI-TOKEN.svg').default} />
+          <img alt="BIFI" src={require(`../../images/BIFI-TOKEN.svg`).default} />
           <Typography noWrap={true}>{`$${price ? price : '$0'}`}</Typography>
         </a>
       </Box>
@@ -106,7 +106,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
           <Toolbar disableGutters={true}>
             <Box sx={{ flexGrow: 1 }}>
               <Link className={classes.beefy} to="/">
-                <img alt="BIFI" src={require('images/cow-outlined.svg').default} />
+                <img alt="BIFI" src={require(`../../images/cow-outlined.svg`).default} />
                 <Hidden mdDown>
                   <Box>Beefy.Finance</Box>
                 </Hidden>

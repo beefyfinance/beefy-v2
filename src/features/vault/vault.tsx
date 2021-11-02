@@ -146,7 +146,7 @@ export const Vault = () => {
               <Box className={classes.badges}>
                 <img
                   alt={item.network}
-                  src={require('images/networks/' + item.network + '.svg').default}
+                  src={require(`../../images/networks/${item.network}.svg`).default}
                 />
                 <DisplayTags tags={item.tags} />
               </Box>

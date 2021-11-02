@@ -16,7 +16,7 @@ const initialBoosts = () => {
   const boosts = [];
 
   for (let net in config) {
-    // const data =  require(`../../../config/boost/${net}`); // TODO: fix this import
+    const data =  require(`../../../config/boost/${net}`);
     for (const key in data.pools) {
       const boost = data.pools[key];
 
@@ -48,7 +48,7 @@ const initialPools = () => {
   const platforms = [];
 
   for (let net in config) {
-    const data = require('config/vault/' + net + '.js');
+    const data = require(`../../../config/vault/${net}`);
     for (const key in data.pools) {
       let pool = data.pools[key];
 

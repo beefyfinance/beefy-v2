@@ -5,7 +5,7 @@ import { config } from '../config/config';
 
 const data = [];
 for (let net in config) {
-  data[net] = require('config/zap/' + net + '.js');
+  data[net] = require(`../config/zap/${net}`);
 }
 
 export const getEligibleZap = pool => {

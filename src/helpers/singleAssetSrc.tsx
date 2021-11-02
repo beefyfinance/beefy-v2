@@ -1,4 +1,4 @@
-const singleAssetRequire = require.context('images/single-assets', false, /\.(svg|webp|png)$/);
+const singleAssetRequire = require.context('../images/single-assets', false, /\.(svg|webp|png)$/);
 const singleAssets = Object.fromEntries(
   singleAssetRequire.keys().map(path => [path.substring(2, path.lastIndexOf('.')), path])
 );

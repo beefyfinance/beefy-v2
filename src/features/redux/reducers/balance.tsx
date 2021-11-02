@@ -12,7 +12,7 @@ const initialTokens = () => {
   const tokens = [];
   for (let net in config) {
     tokens[net] = [];
-    const data = require('config/vault/' + net + '.js');
+    const data = require(`../../../config/vault/${net}`);
     for (const key in data.pools) {
       tokens[net][data.pools[key].token] = {
         ...tokens[net][data.pools[key].token],
@@ -62,7 +62,7 @@ const initialTokens = () => {
       }
     }
 
-    const boosts = require('config/boost/' + net + '.js');
+    const boosts = require(`../../../config/boost/${net}`);
     for (const key in boosts.pools) {
       const boostSymbol = boosts.pools[key].token + 'Boost';
       tokens[net][boostSymbol] = {

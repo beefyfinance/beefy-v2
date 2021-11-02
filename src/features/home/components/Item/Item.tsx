@@ -133,7 +133,7 @@ const _Item = ({ vault }) => {
                     <div className={classes.networkIconHolder}>
                       <img
                         alt={item.network}
-                        src={require('images/networks/' + item.network + '.svg').default}
+                        src={require(`../../../../images/networks/${item.network}.svg`).default}
                       />
                     </div>
                   )}
@@ -144,7 +144,7 @@ const _Item = ({ vault }) => {
                     {!hasMore3Tags && (
                       <img
                         alt={item.network}
-                        src={require('images/networks/' + item.network + '.svg').default}
+                        src={require(`../../../../images/networks/${item.network}.svg`).default}
                       />
                     )}
                     <DisplayTags tags={item.tags} />
