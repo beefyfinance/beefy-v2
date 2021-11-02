@@ -20,10 +20,11 @@ const _Popover: React.FC<PopoverProps> = ({ title, content, children, size = 'sm
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
       <div>
         <Box
-          // as="span"
-          // ref={setAnchorEl}
-          onClick={toggleOpen}
-          className={[classes.dot, classes[`size_${size}`]].join(' ')}
+          {...({
+          ref: setAnchorEl,
+          onClick: toggleOpen,
+          className:[classes.dot, classes[`size_${size}`]].join(' '),
+        } as any)}
         >
           ?
         </Box>
