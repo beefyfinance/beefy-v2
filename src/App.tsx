@@ -30,7 +30,7 @@ export const App = () => {
         default: '#232743',
         paper: isNightMode ? '#272B4A' : '#FFFFFF',
         light: '#313759',
-      },
+      } as any, // TODO: fix any
     },
     overrides: {
       MuiCssBaseline: {
@@ -50,7 +50,7 @@ export const App = () => {
     const initiate = async () => {
       await dispatch(reduxActions.prices.fetchPrices());
     };
-    return initiate();
+    initiate();
   }, [dispatch]);
 
   React.useEffect(() => {

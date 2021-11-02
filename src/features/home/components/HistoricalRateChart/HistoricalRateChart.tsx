@@ -7,8 +7,7 @@ import { useSelector } from 'react-redux';
 import buildChartData from '../../../../helpers/buildChartData';
 
 export const HistoricalRateChart = ({ id }) => {
-  const useStyles = makeStyles(styles);
-  const classes = useStyles();
+  const useStyles = makeStyles(styles as any);  const classes = useStyles();
   const historicalApy = useSelector(state => state.pricesReducer.historicalApy);
   const ApyLoader = useSelector(state => state.pricesReducer.ApyLoader);
   const chartData = useMemo(

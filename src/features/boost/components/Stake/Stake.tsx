@@ -13,8 +13,7 @@ import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { reduxActions } from '../../../redux/actions';
 import { StakeProps } from './StakeProps';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Stake: React.FC<StakeProps> = ({
   formData,
   setFormData,

@@ -7,7 +7,7 @@ import axios from 'axios';
  *
  */
 
-const fetchPrices = reducer => {
+const fetchPrices = (reducer?: any) => {
   const cache = new Date();
   cache.setMinutes(0, 0, 0);
 

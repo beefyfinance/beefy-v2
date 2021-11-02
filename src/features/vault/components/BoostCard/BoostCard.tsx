@@ -9,8 +9,7 @@ import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import { AssetsImage } from '../../../../components/AssetsImage';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const BoostCard = ({ stratAddr, apy, network }) => {
   const classes = useStyles();
   const t = useTranslation().t;

@@ -4,8 +4,7 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { SafetyScoreProps } from './SafetyScoreProps';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const _SafetyScore: React.FC<SafetyScoreProps> = ({ score, whiteLabel, size = 'lg' }) => {
   const classes = useStyles();
   const scoreText = score === 0 ? '-' : score;

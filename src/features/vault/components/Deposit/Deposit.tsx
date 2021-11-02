@@ -45,8 +45,7 @@ BigNumber.prototype.significant = function (digits) {
   return `${wholes}.${decimals.match(pattern)[0]}`;
 };
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Deposit: React.FC<DepositProps> = ({
   formData,
   setFormData,

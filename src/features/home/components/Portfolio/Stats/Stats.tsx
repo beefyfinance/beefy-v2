@@ -6,8 +6,7 @@ import BigNumber from 'bignumber.js';
 import { formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Stats = ({ stats, blurred }) => {
   const classes = useStyles();
   const t = useTranslation().t;

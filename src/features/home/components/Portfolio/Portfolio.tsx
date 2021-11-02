@@ -9,8 +9,7 @@ import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Portfolio = () => {
   const classes = useStyles();
   const [hideBalance, setHideBalance] = useState(() =>

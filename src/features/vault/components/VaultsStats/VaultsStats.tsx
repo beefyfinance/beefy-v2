@@ -9,8 +9,7 @@ import BigNumber from 'bignumber.js';
 import { styles } from './styles';
 import { useLastHarvest } from '../../hooks/useLastHarvest';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const VaultsStats = ({ item }) => {
   const pricesReducer = useSelector(state => state.pricesReducer);
   const classes = useStyles();

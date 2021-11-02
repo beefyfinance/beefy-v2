@@ -3,8 +3,7 @@ import { makeStyles, Typography } from '@material-ui/core';
 
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const CardTitle = ({ title, subtitle }) => {
   const classes = useStyles();
 

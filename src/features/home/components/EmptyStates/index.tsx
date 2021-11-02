@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { reduxActions } from '../../../redux/actions';
 import { EmptyStatesProps } from './EmptyStatesProps';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const _EmptyStates: React.FC<EmptyStatesProps> = ({ setFilterConfig }) => {
   const { t } = useTranslation();
   const classes = useStyles();

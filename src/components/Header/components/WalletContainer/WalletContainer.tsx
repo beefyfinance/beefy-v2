@@ -8,8 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { reduxActions } from '../../../../features/redux/actions';
 import { Loader } from '../../../loader';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const formatAddress = addr => {
   return addr.substr(0, 5) + '...' + addr.substr(addr.length - 5, 5);
 };

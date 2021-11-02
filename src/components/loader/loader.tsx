@@ -2,8 +2,7 @@ import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Loader = ({ message, line }) => {
   const classes = useStyles();
   return (

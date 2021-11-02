@@ -5,8 +5,7 @@ import { styles } from './styles';
 
 import { reduxActions } from '../../features/redux/actions';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const UnsupportedNetwork = () => {
   const dispatch = useDispatch();
   const walletReducer = useSelector(state => state.walletReducer);

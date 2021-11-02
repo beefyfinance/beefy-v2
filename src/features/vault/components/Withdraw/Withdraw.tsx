@@ -15,8 +15,7 @@ import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Withdraw = ({
   item,
   handleWalletConnect,

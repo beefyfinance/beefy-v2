@@ -5,8 +5,7 @@ import AnimateHeight from 'react-animate-height';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover/Popover';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const BoostWidget = ({ onClick, balance, s_stake }) => {
   const classes = useStyles();
   const t = useTranslation().t;

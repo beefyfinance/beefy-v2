@@ -5,8 +5,7 @@ import { PopoverProps } from './PopoverProps';
 
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const _Popover: React.FC<PopoverProps> = ({ title, content, children, size = 'sm', placement = 'top-end' }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);

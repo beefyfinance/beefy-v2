@@ -29,8 +29,7 @@ import { Stake } from './components/Stake';
 import { Unstake } from './components/Unstake';
 import { Steps } from '../../components/Steps';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Boost = () => {
   const { t } = useTranslation();
   const history = useHistory();

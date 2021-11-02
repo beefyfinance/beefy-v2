@@ -19,8 +19,7 @@ import {
 import { Item } from './components/Item';
 import { ceil } from 'lodash';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export function notifyResize() {
   const event = document.createEvent('HTMLEvents');
   event.initEvent('resize', true, false);

@@ -12,8 +12,7 @@ import vaultStates from './vaultStates.json';
 import { useSelector } from 'react-redux';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const PortfolioItem = ({ item, historicalApy }) => {
   const classes = useStyles({
     muted: item.status === 'paused' || item.status === 'eol',

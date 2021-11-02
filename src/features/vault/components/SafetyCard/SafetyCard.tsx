@@ -13,8 +13,7 @@ import { styles } from './styles';
 import up from './up.svg';
 import down from './down.svg';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const SafetyCard = ({ vaultRisks, score }) => {
   const classes = useStyles();
   const t = useTranslation().t;

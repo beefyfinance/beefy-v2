@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/core';
 
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const CardContent = ({ children }) => {
   const classes = useStyles();
 

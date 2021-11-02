@@ -14,8 +14,7 @@ import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatUsd, formatApy } from '../../../../helpers/format';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Graph = ({ oracleId, vaultId, network }) => {
   const classes = useStyles();
   const [stat, setStat] = useState(2);

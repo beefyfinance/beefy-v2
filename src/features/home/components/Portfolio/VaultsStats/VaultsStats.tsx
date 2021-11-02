@@ -8,8 +8,7 @@ import { useBuyback } from '../../../hooks/useBuyback';
 import { formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const VaultsStats = ({ stats, blurred }) => {
   const classes = useStyles();
   const t = useTranslation().t;

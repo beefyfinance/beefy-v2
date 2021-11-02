@@ -26,8 +26,7 @@ import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
 import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Header = ({ isNightMode, setNightMode }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();

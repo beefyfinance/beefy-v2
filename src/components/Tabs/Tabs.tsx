@@ -7,8 +7,7 @@ import {
 
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Tabs = ({ value, onChange, labels }) => {
     const classes = useStyles();
 

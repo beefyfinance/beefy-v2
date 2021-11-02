@@ -22,8 +22,7 @@ import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { FilterProps } from './FilterProps';
 import { FilterCategories } from './FilterCategories';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const _Filter: React.FC<FilterProps> = ({ sortConfig, setSortConfig, platforms, filteredCount, allCount }) => {
   const classes = useStyles();
   const { t } = useTranslation();

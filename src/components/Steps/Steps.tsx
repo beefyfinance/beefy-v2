@@ -11,8 +11,7 @@ import { Loader } from '../loader';
 import { styles } from './styles';
 import BigNumber from 'bignumber.js';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Steps = ({ item, steps, handleClose }) => {
   const history = useHistory();
   const classes = useStyles();

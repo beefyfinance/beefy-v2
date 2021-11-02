@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import clsx from 'clsx';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const _DisplayTags = ({ tags }) => {
   const classes = useStyles();
   const { t } = useTranslation();

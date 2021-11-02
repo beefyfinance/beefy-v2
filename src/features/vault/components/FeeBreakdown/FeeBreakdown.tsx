@@ -5,8 +5,7 @@ import { styles } from './styles';
 import { Popover } from '../../../../components/Popover';
 import { useFormattedFee } from '../../../../hooks/useFormattedFee';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const BreakdownTooltip = memo(({ rows }) => {
   const classes = useStyles();
 

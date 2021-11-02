@@ -12,8 +12,7 @@ import { styles } from './styles';
 import shield from './shield.svg';
 import { stratText } from './stratText';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const StrategyCard = ({
   stratType,
   stratAddr,

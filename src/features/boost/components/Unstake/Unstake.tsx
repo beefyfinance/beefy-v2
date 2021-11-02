@@ -13,8 +13,7 @@ import BigNumber from 'bignumber.js';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { UnstakeProps } from './UnstakeProps';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Unstake: React.FC<UnstakeProps> = ({
   item,
   handleWalletConnect,

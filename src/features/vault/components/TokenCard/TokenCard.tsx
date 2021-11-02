@@ -9,8 +9,7 @@ import { LinkButton } from '../../../../components/LinkButton';
 import { config } from '../../../../config/config';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const TokenCard = ({ token, network }) => {
   const classes = useStyles();
   const t = useTranslation().t;

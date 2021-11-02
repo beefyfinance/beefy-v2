@@ -4,8 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const _LabeledStat = forwardRef(({ value, boosted, ...passthrough }, ref) => {
   const classes = useStyles();
 

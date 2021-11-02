@@ -23,8 +23,7 @@ import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const Vault = () => {
   const history = useHistory();
   const classes = useStyles();

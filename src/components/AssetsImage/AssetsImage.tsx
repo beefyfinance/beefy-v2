@@ -4,8 +4,7 @@ import { Avatar, makeStyles } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
 import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const resolveImgSrc = (img, assets) => {
   if (img) {
     return require(`../../images/${img}`).default;
@@ -19,7 +18,7 @@ export const AssetsImage = ({ img, assets, alt }) => {
 
   return singleImage ? (
     <Avatar
-      className={classes.large}
+      className={(classes as any).large}
       alt={alt}
       src={singleImage}
       variant="square"

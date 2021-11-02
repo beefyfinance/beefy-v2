@@ -5,8 +5,7 @@ import moment from 'moment';
 import { styles } from './styles';
 import { formatApy, formatUsd } from '../../../../../helpers/format';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const CustomTooltip = ({ active, payload, stat }) => {
   const classes = useStyles();
   const t = useTranslation().t;

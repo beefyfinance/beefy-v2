@@ -15,8 +15,7 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
   const item = vault;
 

@@ -6,8 +6,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { CATEGORY_LABELS } from "./CategoryLabels";
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 const _FilterCategories = ({ category, handleChange }) => {
     const classes = useStyles();
     const { t } = useTranslation();

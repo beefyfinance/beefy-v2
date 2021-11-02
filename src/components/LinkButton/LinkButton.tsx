@@ -2,8 +2,7 @@ import React from 'react';
 import { Typography, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles);
-
+const useStyles = makeStyles(styles as any);
 export const LinkButton = ({ href, text }) => {
   const classes = useStyles();
   return (
