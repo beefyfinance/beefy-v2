@@ -1,1 +1,1 @@
-export * from "./Cowloader"
+export * from "./CowLoader"

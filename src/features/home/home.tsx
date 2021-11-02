@@ -5,7 +5,6 @@ import { Container, makeStyles, Grid } from '@material-ui/core';
 import { reduxActions } from '../redux/actions';
 import { Filter } from './components/Filter';
 import { Portfolio } from './components/Portfolio';
-import { CowLoader } from '../../components/CowLoader/CowLoader';
 import { useVaults } from './hooks/useFilteredVaults';
 import { EmptyStates } from './components/EmptyStates';
 import { styles } from './styles';
@@ -18,6 +17,7 @@ import {
 } from 'react-virtualized';
 import { Item } from './components/Item';
 import { ceil } from 'lodash';
+import { CowLoader } from '../../components/CowLoader';
 
 const useStyles = makeStyles(styles as any);
 export function notifyResize() {
