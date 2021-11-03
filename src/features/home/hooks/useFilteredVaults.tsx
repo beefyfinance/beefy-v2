@@ -27,7 +27,7 @@ const SORT_COMPARE_FUNCTIONS = {
 };
 
 function compareNumber(a, b) {
-  return (a > b) as any - ((a < b) as any);
+  return ((a > b) as any) - ((a < b) as any);
 }
 
 function compareNumberCoerced(a, b) {
@@ -37,7 +37,7 @@ function compareNumberCoerced(a, b) {
 function compareStringCaseInsensitive(a, b) {
   const lowercaseA = a.toLowerCase();
   const lowercaseB = b.toLowerCase();
-  return (lowercaseA > lowercaseB) as any - ((lowercaseA < lowercaseB) as any);
+  return ((lowercaseA > lowercaseB) as any) - ((lowercaseA < lowercaseB) as any);
 }
 
 function compareBigNumber(a, b) {
@@ -209,7 +209,7 @@ function useActiveVaults() {
   );
 }
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function useUserVaults() {
   const balanceReducer = useSelector((state: any) => state.balanceReducer);
   const vaultReducer = useSelector((state: any) => state.vaultReducer);
@@ -255,6 +255,6 @@ export const useVaults = () => {
     filteredVaults.length,
     allVaults.length,
     activeVaults.length,
-    boostVaults
+    boostVaults,
   ];
-}
+};
