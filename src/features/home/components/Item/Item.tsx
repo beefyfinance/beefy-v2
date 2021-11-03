@@ -59,6 +59,9 @@ const _Item = ({ vault }) => {
       console.log(balance.tokens[item.network]);
       let symbol = `${item.token}GovVault`;
       if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
+        console.log(`amount ${balance.tokens[item.network][symbol].balance}`);
+        console.log(`decimals ${item.tokenDecimals}`);
+        console.log(`rewards ${balance.tokens[item.network][symbol].rewards}`);
         amount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].balance),
           item.tokenDecimals
@@ -69,8 +72,8 @@ const _Item = ({ vault }) => {
           item.tokenDecimals
         ).toFixed(8);
       }
-      console.log(`amount it ${amount}`);
-      console.log(`rewards it ${rewardAmount}`);
+      console.log(`amount is ${amount}`);
+      console.log(`rewards is ${rewardAmount}`);
     } else {
       if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
         amount = byDecimals(
@@ -81,8 +84,8 @@ const _Item = ({ vault }) => {
         ).toFixed(8);
       }
     }
-    setPriceInDolar({ balance: amount });
-    setPoolRewards({ rewards: rewardAmount });
+    if (amount != "NaN") setPriceInDolar({ balance: amount });
+    if (rewardAmount != "NaN") setPoolRewards({ rewards: rewardAmount });
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {

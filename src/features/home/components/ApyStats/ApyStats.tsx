@@ -191,11 +191,11 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
     values.totalDaily = (values.vaultDaily || 0) + (values.tradingDaily || 0);
   } else {
     values.totalDaily = yearlyToDaily(values.totalApy);
-
-    if (isGovVault) {
-      values.totalApy = apy.vaultApr;
-      values.totalDaily = apy.vaultApr / 365;
-    }
+  }
+  
+  if (isGovVault) {
+    values.totalApy = apy.vaultApr / 1;
+    values.totalDaily = apy.vaultApr / 365;
   }
 
   if (isBoosted) {
