@@ -19,7 +19,7 @@ export const config = {
     ],
     providerName: 'binance',
     walletSettings: {
-      chainId: `0x${parseInt("56", 10).toString(16)}`,
+      chainId: `0x${parseInt('56', 10).toString(16)}`,
       chainName: 'BSC Mainnet',
       nativeCurrency: {
         name: 'Binance Coin',
@@ -52,7 +52,7 @@ export const config = {
     supportedWallets: ['injected', 'walletconnect', 'custom-math'],
     providerName: 'heco',
     walletSettings: {
-      chainId: `0x${parseInt("128", 10).toString(16)}`,
+      chainId: `0x${parseInt('128', 10).toString(16)}`,
       chainName: 'HECO Mainnet',
       nativeCurrency: {
         name: 'Huobi Token',
@@ -73,7 +73,7 @@ export const config = {
     supportedWallets: ['injected', 'walletconnect'],
     providerName: 'avalanche',
     walletSettings: {
-      chainId: `0x${parseInt("43114", 10).toString(16)}`,
+      chainId: `0x${parseInt('43114', 10).toString(16)}`,
       chainName: 'Avalanche C-Chain',
       nativeCurrency: {
         name: 'AVAX',
@@ -94,7 +94,7 @@ export const config = {
     supportedWallets: ['injected', 'walletconnect'],
     providerName: 'polygon',
     walletSettings: {
-      chainId: `0x${parseInt("137", 10).toString(16)}`,
+      chainId: `0x${parseInt('137', 10).toString(16)}`,
       chainName: 'Polygon Mainnet',
       nativeCurrency: {
         name: 'MATIC',
@@ -115,7 +115,7 @@ export const config = {
     supportedWallets: ['injected', 'walletconnect'],
     providerName: 'fantom',
     walletSettings: {
-      chainId: `0x${parseInt("250", 10).toString(16)}`,
+      chainId: `0x${parseInt('250', 10).toString(16)}`,
       chainName: 'Fantom Opera',
       nativeCurrency: {
         name: 'FTM',
@@ -136,7 +136,7 @@ export const config = {
     supportedWallets: ['injected'],
     providerName: 'harmony',
     walletSettings: {
-      chainId: `0x${parseInt("1666600000", 10).toString(16)}`,
+      chainId: `0x${parseInt('1666600000', 10).toString(16)}`,
       chainName: 'Harmony One',
       nativeCurrency: {
         name: 'HARMONY',
@@ -157,7 +157,7 @@ export const config = {
     supportedWallets: ['injected'],
     providerName: 'Arbitrum',
     walletSettings: {
-      chainId: `0x${parseInt("42161", 10).toString(16)}`,
+      chainId: `0x${parseInt('42161', 10).toString(16)}`,
       chainName: 'Arbitrum One',
       nativeCurrency: {
         name: 'ETH',
@@ -178,7 +178,7 @@ export const config = {
     supportedWallets: ['injected'],
     providerName: 'Celo',
     walletSettings: {
-      chainId: `0x${parseInt("42220", 10).toString(16)}`,
+      chainId: `0x${parseInt('42220', 10).toString(16)}`,
       chainName: 'Celo',
       nativeCurrency: {
         name: 'CELO',
@@ -189,5 +189,26 @@ export const config = {
       blockExplorerUrls: ['https://explorer.celo.org/'],
     },
     stableCoins: ['cUSD, cEUR, DAI'],
+  },
+  moonriver: {
+    name: 'moonriver',
+    chainId: 1285,
+    rpc: ['https://rpc.moonriver.moonbeam.network'],
+    explorerUrl: 'https://blockscout.moonriver.moonbeam.network/',
+    multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
+    supportedWallets: ['injected'],
+    providerName: 'Moonriver',
+    walletSettings: {
+      chainId: `0x${parseInt('1285', 10).toString(16)}`,
+      chainName: 'Moonriver',
+      nativeCurrency: {
+        name: 'Moonriver',
+        symbol: 'MOVR',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.moonriver.moonbeam.network'],
+      blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network/'],
+    },
+    stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM'],
   },
 };
