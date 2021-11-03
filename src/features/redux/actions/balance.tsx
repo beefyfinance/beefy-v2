@@ -89,7 +89,8 @@ const getBalances = async (state, dispatch) => {
   return true;
 };
 
-const getBoostBalances = async (items, state, dispatch) => {
+const getBoostBalances = async (items, state, dispatch, network) => {
+  console.log('items', items);
   console.log('redux getBoostBalances() processing...');
   const address = state.walletReducer.address;
   const web3 = state.walletReducer.rpc;
@@ -143,14 +144,16 @@ const getBoostBalances = async (items, state, dispatch) => {
   for (let index in response) {
     const item = response[index];
 
+    console.log(tokens[network]);
+
     if (!isEmpty(item.amount)) {
-      tokens[item.token].balance = item.amount;
-      tokens[item.token].address = item.address;
+      tokens[network][item.token].balance = item.amount;
+      tokens[network][item.token].address = item.address;
     }
 
     if (!isEmpty(item.allowance)) {
-      tokens[item.token].allowance = {
-        ...tokens[item.token].allowance,
+      tokens[network][item.token].allowance = {
+        ...tokens[network][item.token].allowance,
         [item.spender]: item.allowance,
       };
     }
@@ -167,7 +170,7 @@ const getBoostBalances = async (items, state, dispatch) => {
   return true;
 };
 
-const getBoostRewards = async (items, state, dispatch) => {
+const getBoostRewards = async (items, state, dispatch, network) => {
   console.log('redux getBoostRewards() processing...');
   const address = state.walletReducer.address;
   const web3 = state.walletReducer.rpc;
@@ -243,23 +246,23 @@ const fetchBalances = (item = false) => {
   };
 };
 
-const fetchBoostBalances = (item = false) => {
+const fetchBoostBalances = (item = false, network) => {
   return async (dispatch, getState) => {
     const state = getState();
     if (state.walletReducer.address) {
       const boosts = state.vaultReducer.boosts;
       dispatch({ type: BALANCE_FETCH_BALANCES_BEGIN });
-      return await getBoostBalances(item ? [item] : boosts, state, dispatch);
+      return await getBoostBalances(item ? [item] : boosts, state, dispatch, network);
     }
   };
 };
 
-const fetchBoostRewards = item => {
+const fetchBoostRewards = (item, network) => {
   return async (dispatch, getState) => {
     const state = getState();
     if (state.walletReducer.address) {
       dispatch({ type: BALANCE_FETCH_REWARDS_BEGIN });
-      return await getBoostRewards([item], state, dispatch);
+      return await getBoostRewards([item], state, dispatch, network);
     }
   };
 };

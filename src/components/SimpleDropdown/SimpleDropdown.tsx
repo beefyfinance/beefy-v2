@@ -34,7 +34,7 @@ export const SimpleDropdown: React.FC<SimpleDropdownProps> = ({
         {Object.keys(list).map(val => (
           <MenuItem key={list[val]} value={val}>
             {chainLogos && (
-              <img alt={val} src={`../../images/networks/${val}.svg`} />
+              <img alt={val} src={require(`../../images/networks/${val}.svg`).default} />
             )}{' '}
             {list[val]}
           </MenuItem>

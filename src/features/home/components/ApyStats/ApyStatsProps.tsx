@@ -6,4 +6,5 @@ export interface ApyStatsProps {
     itemInnerClasses: any;
     spacer: any;
     isGovVault: boolean;
+    isBoosted: boolean;
 }
