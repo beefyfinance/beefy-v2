@@ -99,14 +99,10 @@ const getBoostBalances = async (items, state, dispatch, network) => {
   const multicall = [];
   const calls = [];
 
-  if (network) {
-    multicall[network] = new MultiCall(web3[network], config[network].multicallAddress);
-    calls[network] = [];
-  } else  {
-    for (let key in web3) {
-      multicall[key] = new MultiCall(web3[key], config[key].multicallAddress);
-      calls[key] = [];
-    }
+  for (let key in web3) {
+    if (network && key !== network) continue
+    multicall[key] = new MultiCall(web3[key], config[key].multicallAddress);
+    calls[key] = [];
   }
 
   const tokens = state.balanceReducer.tokens;
