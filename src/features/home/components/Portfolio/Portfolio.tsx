@@ -34,6 +34,7 @@ export const Portfolio = () => {
     if (userAddress !== null) {
       for (const poolKey in vaultReducer.pools) {
         const pool = vaultReducer.pools[poolKey];
+
         const balance = balanceReducer.tokens[pool.network][pool.earnedToken].balance;
         if (balance > 0) {
           pool.balance = balance;
