@@ -19,5 +19,6 @@ export const styles = theme => ({
     order: 0,
     flexGrow: 0,
     marginRight: '10px',
+    textTransform: 'capitalize',
   },
 });
