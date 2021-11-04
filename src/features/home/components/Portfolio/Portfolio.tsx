@@ -4,6 +4,7 @@ import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Stats } from './Stats';
+import { formatDecimals } from '../../../../helpers/format';
 import { VaultsStats } from './VaultsStats';
 import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
@@ -34,10 +35,14 @@ export const Portfolio = () => {
     if (userAddress !== null) {
       for (const poolKey in vaultReducer.pools) {
         const pool = vaultReducer.pools[poolKey];
-
         const balance = balanceReducer.tokens[pool.network][pool.earnedToken].balance;
-        if (balance > 0) {
-          pool.balance = balance;
+        const boostpoolBalance = formatDecimals(
+          balanceReducer.tokens[pool.network][pool.earnedToken + 'Boost']?.balance
+        );
+        if (balance > 0 || (!isNaN(boostpoolBalance) && boostpoolBalance > 0)) {
+          pool.balance = isNaN(boostpoolBalance)
+            ? balance
+            : formatDecimals(BigNumber.sum(balance, boostpoolBalance).toNumber());
           pool.oraclePrice = pricesReducer.prices[pool.oracleId];
           newUserVaults.push(pool);
         }

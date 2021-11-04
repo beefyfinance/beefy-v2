@@ -19,26 +19,33 @@ const initialBoosts = () => {
     const data =  require(`../../../config/boost/${net}`);
     for (const key in data.pools) {
       const boost = data.pools[key];
+      let pool;
 
+      // Boost pools should have poolId, this is a temp fix until Boost pools are transferred correctly
       if (!isEmpty(pools[boost.poolId])) {
-        const pool = pools[boost.poolId];
-
-        boost['network'] = net;
-        boost['apr'] = 0;
-        boost['tvl'] = 0;
-        boost['periodFinish'] = 0;
-        boost['name'] = pool.name;
-        boost['logo'] = pool.logo;
-        boost['token'] = pool.earnedToken;
-        boost['tokenDecimals'] = pool.tokenDecimals;
-        boost['tokenAddress'] = pool.earnedTokenAddress;
-        boost['tokenOracle'] = pool.oracle;
-        boost['tokenOracleId'] = pool.oracleId;
-        boost['assets'] = pool.assets;
-
-        boosts[boost.id] = boost;
+        pool = pools[boost.poolId];
+      } else if (!isEmpty(pools[boost.tokenOracleId]) && pools[boost.tokenOracleId] !== 'BIFI') {
+        pool = pools[boost.tokenOracleId];
+      } else {
+        continue;
       }
+
+      boost['network'] = net;
+      boost['apr'] = 0;
+      boost['tvl'] = 0;
+      boost['periodFinish'] = 0;
+      boost['name'] = pool.name;
+      boost['logo'] = pool.logo;
+      boost['token'] = pool.earnedToken;
+      boost['tokenDecimals'] = pool.tokenDecimals;
+      boost['tokenAddress'] = pool.earnedTokenAddress;
+      boost['tokenOracle'] = pool.oracle;
+      boost['tokenOracleId'] = pool.oracleId;
+      boost['assets'] = pool.assets;
+
+      boosts[boost.id] = boost;
     }
+
   }
 
   return boosts;

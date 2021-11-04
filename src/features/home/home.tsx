@@ -39,6 +39,12 @@ const DataLoader = memo(function HomeDataLoader() {
   }, [dispatch, walletAddress, vaultLastUpdated]);
 
   useEffect(() => {
+    if (walletAddress && vaultLastUpdated > 0) {
+      dispatch(reduxActions.balance.fetchBoostBalances());
+    }
+  }, [dispatch, walletAddress, vaultLastUpdated]);
+
+  useEffect(() => {
     if (pricesLastUpdated > 0) {
       dispatch(reduxActions.vault.fetchPools());
     }
