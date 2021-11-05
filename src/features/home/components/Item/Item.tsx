@@ -129,25 +129,15 @@ const _Item = ({ vault }) => {
                   <Typography className={classes.vaultName} onClick={handleOpenVault}>
                     {item.name}
                   </Typography>
-                  {/*Network Image*/}
-                  {hasMore3Tags && (
-                    <div className={classes.networkIconHolder}>
-                      <img
-                        alt={item.network}
-                        src={require(`../../../../images/networks/${item.network}.svg`).default}
-                      />
-                    </div>
-                  )}
                 </div>
-                {/*Vault Tags*/}
                 <div className={classes.badgesContainter}>
                   <div className={classes.badges}>
-                    {!hasMore3Tags && (
+                      {/*Network Image*/}
                       <img
                         alt={item.network}
                         src={require(`../../../../images/networks/${item.network}.svg`).default}
                       />
-                    )}
+                    {/*Vault Tags*/}
                     <DisplayTags tags={item.tags} />
                   </div>
                 </div>
