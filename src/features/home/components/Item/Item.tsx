@@ -84,24 +84,32 @@ const _Item = ({ vault }) => {
         ).toFixed(8);
       }
     }
+    console.log(`before ${item.balance}`)
     if (amount != "NaN") setPriceInDolar({ balance: amount });
+    console.log(`after ${item.balance}`)
     if (rewardAmount != "NaN") setPoolRewards({ rewards: rewardAmount });
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {
     let amount = "0";
     if (wallet.address) {
-      amount = byDecimals(item.balance, item.tokenDecimals)
-        .multipliedBy(byDecimals(item.pricePerFullShare))
-        .toFixed(8);
+      if (isGovVault) {
+        console.log(`item balance is ${item.balance}`)
+      } else {
+        amount = byDecimals(item.balance, item.tokenDecimals)
+          .multipliedBy(byDecimals(item.pricePerFullShare))
+          .toFixed(8);
+      }
     }
     setState({ formattedBalance: amount });
+    console.log(`formatted balance is ${amount}`)
   }, [
     wallet.address,
     item.balance,
     balance.isBalancesLoading,
     item.tokenDecimals,
     item.pricePerFullShare,
+    isGovVault
   ]);
 
   const ValueText = ({ value }) => (

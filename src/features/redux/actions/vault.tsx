@@ -37,7 +37,6 @@ const getPools = async (items, state, dispatch) => {
       const tokenContract = new web3[pool.network].eth.Contract(vaultAbi, pool.poolAddress);
       let reqs = {
         id: pool.id,
-        balance: tokenContract.methods.balance(),
         totalStaked: tokenContract.methods.totalSupply(),
       };
       calls[pool.network].push(reqs);
