@@ -74,8 +74,6 @@ const getPools = async (items, state, dispatch) => {
     let tvl;
 
     if (pools[item.id].isGovVault) {
-      console.log(`Got gov pool response`);
-      console.log(item);
       const totalStaked = new BigNumber(item.totalStaked);
       const price = pools[item.id].oracleId in prices ? prices[pools[item.id].oracleId] : 0;
       tvl = totalStaked

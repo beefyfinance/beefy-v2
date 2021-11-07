@@ -29,8 +29,6 @@ export const StrategyCard: React.FC<StrategyCardProps> = ({
   const classes = useStyles();
   const t = useTranslation().t;
 
-  console.log(apy.tradingApr);
-
   return (
     <Card>
       <CardHeader>

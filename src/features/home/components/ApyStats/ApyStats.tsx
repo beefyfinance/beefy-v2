@@ -8,8 +8,8 @@ import { formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { Popover } from '../../../../components/Popover';
 import { ApyStatsProps } from './ApyStatsProps';
-import { DailyBreakdownTooltipProps } from './DailyBreakdownTooltipProps';
 import { YearlyBreakdownTooltipProps } from './YearlyBreakdownTooltipProps';
+import { DailyBreakdownTooltipProps } from './DailyBreakdownTooltipProps';
 
 const useStyles = makeStyles(styles as any);
 const yearlyToDaily = apy => {
@@ -41,7 +41,7 @@ const BreakdownTooltip = memo(({ rows }: any) => {
   );
 });
 
-const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ rates, isGovVault }) => {
+const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ isGovVault, boosted, rates }) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -80,16 +80,16 @@ const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ rates,
 
   rows.push({
     label: t('APY'),
-    value: rates.totalApy,
+    value: boosted ? rates.boostedTotalApy : rates.totalApy,
     last: true,
   });
 
   return <BreakdownTooltip rows={rows} />;
-}
+};
 
 const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
 
-const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ rates, isGovVault }) => {
+const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ isGovVault, boosted, rates }) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -128,12 +128,12 @@ const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ rates, i
 
   rows.push({
     label: t('Vault-Breakdown-DailyAPY'),
-    value: rates.totalDaily,
+    value: boosted ? rates.boostedTotalDaily : rates.totalDaily,
     last: true,
   });
 
   return <BreakdownTooltip rows={rows} />;
-}
+};
 
 const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
 
@@ -150,7 +150,7 @@ const LabeledStatWithTooltip = memo(
               <Popover {...({} as any)}>{children}</Popover>
             </div>
           </div>
-          <LabeledStat {...({boosted} as any)} value={value} />
+          <LabeledStat {...({ boosted } as any)} value={value} />
           {spacer ? <div className={classes.boostSpacer} /> : null}
         </div>
       </div>
@@ -166,16 +166,12 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   itemInnerClasses,
   spacer,
   isGovVault,
+  isBoosted,
 }) => {
   const { t } = useTranslation();
-  const isBoosted = !!launchpoolApr;
   const values: Record<string, any> = {};
 
   values.totalApy = apy.totalApy;
-  if (isGovVault) {
-    console.log('ASDASDASD');
-    console.log(apy);
-  }
 
   if (apy.vaultApr) {
     values.vaultApr = apy.vaultApr;
@@ -199,14 +195,10 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   }
 
   if (isBoosted) {
-    values.boostApr = launchpoolApr;
-    values.boostDaily = launchpoolApr / 365;
+    values.boostApr = launchpoolApr.apr;
+    values.boostDaily = launchpoolApr.apr / 365;
     values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
     values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
-  }
-
-  if (isGovVault) {
-    console.log(values);
   }
 
   const formatted = Object.fromEntries(
@@ -218,10 +210,6 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
     })
   );
 
-  if (isGovVault) {
-    console.log(formatted);
-  }
-
   return (
     <>
       <LabeledStatWithTooltip
@@ -232,7 +220,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
       >
-        <YearlyBreakdownTooltip rates={formatted} isGovVault={isGovVault} />
+        <YearlyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
       </LabeledStatWithTooltip>
 
       <LabeledStatWithTooltip
@@ -243,7 +231,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
       >
-        <DailyBreakdownTooltip rates={formatted} isGovVault={isGovVault} />
+        <DailyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
       </LabeledStatWithTooltip>
     </>
   );

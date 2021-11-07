@@ -1,4 +1,5 @@
 import { MultiCall } from 'eth-multicall';
+import BigNumber from 'bignumber.js';
 import {
   BALANCE_FETCH_BALANCES_BEGIN,
   BALANCE_FETCH_BALANCES_DONE,
@@ -7,7 +8,7 @@ import {
 } from '../constants';
 import { config } from '../../../config/config';
 import { isEmpty } from '../../../helpers/utils';
-
+import { formatDecimals } from '../../../helpers/format';
 import erc20Abi from '../../../config/abi/erc20.json';
 import multicallAbi from '../../../config/abi/multicall.json';
 import boostAbi from '../../../config/abi/boost.json';
@@ -41,11 +42,6 @@ const getBalances = async (state, dispatch) => {
         if (token.isGovVault) {
           const tokenContract = new web3[net].eth.Contract(erc20Abi, token.address);
           const poolContract = new web3[net].eth.Contract(boostAbi, token.poolAddress);
-          console.log('GOV TOKEN');
-          console.log(token);
-          console.log(`addres is  ${address}`);
-          console.log(`token symbol ${tokenSymbol}`);
-          console.log(`net is ${net}`);
           calls[net].push({
             token: token.baseSymbol,
             amount: tokenContract.methods.balanceOf(address),
@@ -92,14 +88,9 @@ const getBalances = async (state, dispatch) => {
       const item = response[index];
 
       if (item.isGovVault) {
-        console.log('ITEM IS GOV POOL');
-        console.log(item);
-
         if (!isEmpty(item.balance)) {
           tokens[key][item.token].balance = item.balance;
           tokens[key][item.token].rewards = item.rewards;
-          console.log('KIKI');
-          console.log(tokens[key][item.token]);
         }
 
         if (!isEmpty(item.allowance)) {
@@ -109,9 +100,6 @@ const getBalances = async (state, dispatch) => {
           };
           tokens[key][item.token].balance = item.amount;
           tokens[key][item.token].address = item.address;
-
-          console.log('KEKE');
-          console.log(tokens[key][item.token]);
         }
       } else {
         if (!isEmpty(item.amount)) {
@@ -140,7 +128,7 @@ const getBalances = async (state, dispatch) => {
   return true;
 };
 
-const getBoostBalances = async (items, state, dispatch) => {
+const getBoostBalances = async (items, state, dispatch, network) => {
   console.log('redux getBoostBalances() processing...');
   const address = state.walletReducer.address;
   const web3 = state.walletReducer.rpc;
@@ -149,11 +137,21 @@ const getBoostBalances = async (items, state, dispatch) => {
   const calls = [];
 
   for (let key in web3) {
+    if (network && key !== network) continue
     multicall[key] = new MultiCall(web3[key], config[key].multicallAddress);
     calls[key] = [];
   }
 
+  const tokens = state.balanceReducer.tokens;
+
   for (let key in items) {
+    if (network && items[key].network !== network) continue
+    const boostToken = items[key].token + 'Boost';
+    tokens[items[key].network][boostToken] = {
+      ...tokens[items[key].network][boostToken],
+      balance: 0,
+    };
+
     const tokenContract = new web3[items[key].network].eth.Contract(
       erc20Abi,
       items[key].tokenAddress
@@ -163,22 +161,25 @@ const getBoostBalances = async (items, state, dispatch) => {
       items[key].earnContractAddress
     );
 
-    calls[items[key].network].push({
-      amount: tokenContract.methods.balanceOf(address),
-      token: items[key].token,
-      address: items[key].tokenAddress,
-    });
+    // Looks like these calls are refetching the mooToken balance of the user
+    // calls[items[key].network].push({
+    //   amount: tokenContract.methods.balanceOf(address),
+    //   token: items[key].token,
+    //   address: items[key].tokenAddress,
+    // });
 
     calls[items[key].network].push({
       amount: earnContract.methods.balanceOf(address),
       token: items[key].token + 'Boost',
       address: items[key].tokenAddress,
+      network: items[key].network,
     });
 
     calls[items[key].network].push({
       allowance: tokenContract.methods.allowance(address, items[key].earnContractAddress),
       token: items[key].token + 'Boost',
       spender: items[key].earnContractAddress,
+      network: items[key].network,
     });
   }
 
@@ -189,19 +190,21 @@ const getBoostBalances = async (items, state, dispatch) => {
     response = [...response, ...resp[0]];
   }
 
-  const tokens = state.balanceReducer.tokens;
-
   for (let index in response) {
     const item = response[index];
 
     if (!isEmpty(item.amount)) {
-      tokens[item.token].balance = item.amount;
-      tokens[item.token].address = item.address;
+      const amount = BigNumber.sum(
+        item.amount,
+        tokens[item.network][item.token].balance
+      ).toNumber();
+      tokens[item.network][item.token].balance = formatDecimals(amount);
+      tokens[item.network][item.token].address = item.address;
     }
 
     if (!isEmpty(item.allowance)) {
-      tokens[item.token].allowance = {
-        ...tokens[item.token].allowance,
+      tokens[item.network][item.token].allowance = {
+        ...tokens[item.network][item.token].allowance,
         [item.spender]: item.allowance,
       };
     }
@@ -218,7 +221,7 @@ const getBoostBalances = async (items, state, dispatch) => {
   return true;
 };
 
-const getBoostRewards = async (items, state, dispatch) => {
+const getBoostRewards = async (items, state, dispatch, network) => {
   console.log('redux getBoostRewards() processing...');
   const address = state.walletReducer.address;
   const web3 = state.walletReducer.rpc;
@@ -294,23 +297,23 @@ const fetchBalances = (item = false) => {
   };
 };
 
-const fetchBoostBalances = (item = false) => {
+const fetchBoostBalances = (item = false, network = undefined) => {
   return async (dispatch, getState) => {
     const state = getState();
     if (state.walletReducer.address) {
       const boosts = state.vaultReducer.boosts;
       dispatch({ type: BALANCE_FETCH_BALANCES_BEGIN });
-      return await getBoostBalances(item ? [item] : boosts, state, dispatch);
+      return await getBoostBalances(item ? [item] : boosts, state, dispatch, network);
     }
   };
 };
 
-const fetchBoostRewards = item => {
+const fetchBoostRewards = (item, network) => {
   return async (dispatch, getState) => {
     const state = getState();
     if (state.walletReducer.address) {
       dispatch({ type: BALANCE_FETCH_REWARDS_BEGIN });
-      return await getBoostRewards([item], state, dispatch);
+      return await getBoostRewards([item], state, dispatch, network);
     }
   };
 };

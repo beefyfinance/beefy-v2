@@ -11,6 +11,7 @@ export const BoostWidget = ({ onClick, balance, s_stake }) => {
   const t = useTranslation().t;
   const [filterOpen, setFilterOpen] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const buttonProps: any = {
     className:classes.blockBtn,
     style:{ maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px' },

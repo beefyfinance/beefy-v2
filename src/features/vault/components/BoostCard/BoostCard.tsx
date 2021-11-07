@@ -10,33 +10,36 @@ import { styles } from './styles';
 import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles as any);
-export const BoostCard = () => {
+export const BoostCard = ({ boostedData }) => {
   const classes = useStyles();
   const t = useTranslation().t;
+
+  const { logo, name, text, social, website } = boostedData['partners'][0];
 
   return (
     <Card>
       <CardHeader>
         <Typography className={classes.boostedBy}>{t('Vault-BoostedBy')}</Typography>
         <div style={{ display: 'flex' }}>
-          <AssetsImage {...({img:'single-assets/POTS.png'} as any)} />
+          <AssetsImage {...({ img: logo } as any)} />
           <div className={classes.divider} />
-          <CardTitle title={'Sponsor Project'} subtitle={''} />
+          <CardTitle title={name} subtitle={''} />
         </div>
         <div className={classes.cardActions}>
           <div className={classes.cardAction}>
-            <LinkButton href={`/`} text={'Social Link'} />
+            <LinkButton href={website} text={'Website'} />
           </div>
-          <div className={classes.cardAction}>
-            <LinkButton href={`/`} text={'Social Link'} />
-          </div>
-          <div className={classes.cardAction}>
-            <LinkButton href={`/`} text={'Social Link'} />
-          </div>
+          {Object.keys(social).map(net => {
+            return (
+              <div className={classes.cardAction}>
+                <LinkButton href={social[net]} text={net} />
+              </div>
+            );
+          })}
         </div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.text}>Text Here</Typography>
+        <Typography className={classes.text}>{text}</Typography>
       </CardContent>
     </Card>
   );

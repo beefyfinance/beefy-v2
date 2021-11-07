@@ -80,6 +80,7 @@ const initialTokens = () => {
 
     const boosts = require(`../../../config/boost/${net}`);
     for (const key in boosts.pools) {
+      if (boosts.pools[key].token === 'BIFI') continue; // Skip gov pools
       const boostSymbol = boosts.pools[key].token + 'Boost';
       tokens[net][boostSymbol] = {
         symbol: boostSymbol,
@@ -88,8 +89,8 @@ const initialTokens = () => {
         allowance: { [data.pools[key].earnContractAddress]: 0 },
       };
 
-      tokens[net][boosts.pools[key].token]['allowance'] = {
-        ...tokens[net][boosts.pools[key].token]['allowance'],
+      tokens[net][boostSymbol]['allowance'] = {
+        ...tokens[net][boostSymbol]['allowance'],
         [boosts.pools[key].earnContractAddress]: 0,
       };
     }

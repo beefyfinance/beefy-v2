@@ -22,16 +22,14 @@ import BigNumber from 'bignumber.js';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
+import { useIsBoosted } from '../home/hooks/useIsBoosted';
 
 const useStyles = makeStyles(styles as any);
 export const Vault = () => {
   const history = useHistory();
   const classes = useStyles();
   const t = useTranslation().t;
-
-  let isGovPool = false;
-  let isBoosted = false;
-
+  
   let { id }: any = useParams();
   const { vault, wallet, prices } = useSelector((state: any) => ({
     vault: state.vaultReducer,
@@ -41,7 +39,10 @@ export const Vault = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(true);
   const [item, setVaultData] = React.useState(null);
+  const { isBoosted, data: boostedData } = useIsBoosted(vault.pools[id]);
   const [dw, setDw] = React.useState('deposit');
+  
+  let isGovPool = item.isGovVault;
 
   const [formData, setFormData] = React.useState({
     deposit: { input: '', amount: new BigNumber(0), max: false, token: null, isZap: false },
@@ -155,13 +156,13 @@ export const Vault = () => {
                   <Typography className={classes.platformValue}>{item.platform}</Typography>
                 </span>
               </Box>
-              <VaultsStats item={item} />
+              <VaultsStats item={item} isBoosted={isBoosted} boostedData={boostedData} />
             </>
           )}
         </Container>
       </Box>
       <Box style={{ marginTop: '24px' }}>
-        <Container {...({maxWidth:"lg", my:5}) as any}>
+        <Container {...({ maxWidth: 'lg', my: 5 } as any)}>
           {isLoading ? (
             <Loader message={t('Vault-GetData')} />
           ) : (
@@ -205,7 +206,7 @@ export const Vault = () => {
               </Grid>
               <Grid item xs={12} md={8} className={classes.customOrder2}>
                 {/* TODO: Show only for boosts */}
-                {isBoosted && <BoostCard />}
+                {isBoosted && <BoostCard boostedData={boostedData} />}
                 {/* TODO: Show only for gov pools */}
                 {isGovPool && <GovDetailsCard />}
                 <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />

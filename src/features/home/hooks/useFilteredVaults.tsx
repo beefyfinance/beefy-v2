@@ -1,7 +1,9 @@
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { isEmpty, isObject } from '../../../helpers/utils';
+import { formatDecimals } from '../../../helpers/format';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
+import BigNumber from 'bignumber.js';
 
 const FILTER_STORAGE_KEY = 'homeSortConfig';
 export const FILTER_DEFAULT = {
@@ -27,7 +29,7 @@ const SORT_COMPARE_FUNCTIONS = {
 };
 
 function compareNumber(a, b) {
-  return (a > b) as any - ((a < b) as any);
+  return ((a > b) as any) - ((a < b) as any);
 }
 
 function compareNumberCoerced(a, b) {
@@ -37,7 +39,7 @@ function compareNumberCoerced(a, b) {
 function compareStringCaseInsensitive(a, b) {
   const lowercaseA = a.toLowerCase();
   const lowercaseB = b.toLowerCase();
-  return (lowercaseA > lowercaseB) as any - ((lowercaseA < lowercaseB) as any);
+  return ((lowercaseA > lowercaseB) as any) - ((lowercaseA < lowercaseB) as any);
 }
 
 function compareBigNumber(a, b) {
@@ -66,6 +68,15 @@ function selectTokenBalances(state) {
   return state.balanceReducer.tokens;
 }
 
+function selectBoostVaults(state) {
+  return state.vaultReducer.boosts;
+}
+
+function useBoostArray() {
+  const boostsVaults = useSelector(selectBoostVaults);
+  return useMemo(() => Object.values(boostsVaults), [boostsVaults]);
+}
+
 function selectSortValue(key, vault) {
   switch (key) {
     case 'apy': {
@@ -90,14 +101,19 @@ function sortVaults(vaults, key, direction) {
 }
 
 //If token = vault.token check if he had balance in the wallet
-//If token = vault.earnedToekn check if he had deposited in the vault
+//If token = vault.earnedToken check if he had deposited in the vault
 function hasWalletBalance(token, tokenBalances, network) {
   return tokenBalances[network][token].balance && tokenBalances[network][token].balance > 0
     ? false
     : true;
 }
 
-function keepVault(vault, config, address, tokenBalances) {
+// Check if he is deposited in boosted pool
+function hasBoostedBalance(userVault) {
+  return userVault && userVault['balance'] > 0 ? false : true;
+}
+
+function keepVault(vault, config, address, tokenBalances, userVaults) {
   if (config.retired) {
     // hide non-retired
     if (vault.status !== 'eol') {
@@ -120,7 +136,8 @@ function keepVault(vault, config, address, tokenBalances) {
   if (
     config.deposited &&
     address &&
-    hasWalletBalance(vault.earnedToken, tokenBalances, vault.network)
+    hasWalletBalance(vault.earnedToken, tokenBalances, vault.network) &&
+    hasBoostedBalance(userVaults[vault.id])
   ) {
     return false;
   }
@@ -174,9 +191,9 @@ function useSortedVaults(vaults, key, direction) {
   }, [vaults, key, direction]);
 }
 
-function useFilteredVaults(vaults, config, address, tokenBalances) {
+function useFilteredVaults(vaults, config, address, tokenBalances, userVaults) {
   return useMemo(() => {
-    return vaults.filter(vault => keepVault(vault, config, address, tokenBalances));
+    return vaults.filter(vault => keepVault(vault, config, address, tokenBalances, userVaults));
   }, [vaults, config, address, tokenBalances]);
 }
 
@@ -200,7 +217,7 @@ function useActiveVaults() {
   );
 }
 
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function useUserVaults() {
   const balanceReducer = useSelector((state: any) => state.balanceReducer);
   const vaultReducer = useSelector((state: any) => state.vaultReducer);
@@ -211,13 +228,20 @@ function useUserVaults() {
 
   if (userAddress !== null) {
     for (const poolKey in vaultReducer.pools) {
-      console.log();
       const pool = vaultReducer.pools[poolKey];
       const balance = balanceReducer.tokens[pool.network][pool.earnedToken].balance;
-      if (balance > 0) {
-        pool.balance = balance;
+      const boostpoolBalance = formatDecimals(
+        balanceReducer.tokens[pool.network][pool.earnedToken + 'Boost']?.balance
+      );
+      if (balance > 0 || (!isNaN(boostpoolBalance) && boostpoolBalance > 0)) {
+        pool.balance = isNaN(boostpoolBalance)
+          ? balance
+          : formatDecimals(BigNumber.sum(balance, boostpoolBalance).toNumber());
         pool.oraclePrice = pricesReducer.prices[pool.oracleId];
-        newUserVaults.push(pool);
+        newUserVaults = {
+          ...newUserVaults,
+          [pool.id]: pool,
+        }
       }
     }
   }
@@ -230,12 +254,14 @@ export const useVaults = () => {
   const address = useSelector(selectAddress);
   const activeVaults = useActiveVaults();
   const tokenBalances = useSelector(selectTokenBalances);
+  const boostVaults = useBoostArray();
+  const userVaults = useUserVaults();
   const [config, setConfig] = useLocalStorage(
     FILTER_STORAGE_KEY,
     FILTER_DEFAULT,
     isStoredConfigValid
   );
-  const filteredVaults = useFilteredVaults(allVaults, config, address, tokenBalances);
+  const filteredVaults = useFilteredVaults(allVaults, config, address, tokenBalances, userVaults);
   const sortedVaults = useSortedVaults(filteredVaults, config.key, config.direction);
 
   return [
@@ -245,5 +271,6 @@ export const useVaults = () => {
     filteredVaults.length,
     allVaults.length,
     activeVaults.length,
+    boostVaults,
   ];
-}
+};

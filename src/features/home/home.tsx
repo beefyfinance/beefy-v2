@@ -39,6 +39,12 @@ const DataLoader = memo(function HomeDataLoader() {
   }, [dispatch, walletAddress, vaultLastUpdated]);
 
   useEffect(() => {
+    if (walletAddress && vaultLastUpdated > 0) {
+      dispatch(reduxActions.balance.fetchBoostBalances());
+    }
+  }, [dispatch, walletAddress, vaultLastUpdated]);
+
+  useEffect(() => {
     if (pricesLastUpdated > 0) {
       dispatch(reduxActions.vault.fetchPools());
     }
@@ -118,18 +124,19 @@ function useVaultRenderer(vaults, isTwoColumns) {
 }
 
 const VirtualVaultsList = memo(({ vaults }: any) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [isTwoColumns, setIsTwoColumns] = useState(windowWidth > 599 && windowWidth < 960);
+  
+  const [isTwoColumns, setIsTwoColumns] = useState(window.innerWidth > 599 && window.innerWidth < 960);
 
-  const updateDimensions: any = async () => {
-    setWindowWidth(window.innerWidth);
-    setIsTwoColumns(windowWidth > 599 && windowWidth < 960);
-    console.log(windowWidth + ' ' + isTwoColumns);
+  const updateDimensions: any = () => {
+    setIsTwoColumns(window.innerWidth > 599 && window.innerWidth < 960);
   };
 
   useEffect(() => {
-    window.addEventListener('resize', updateDimensions());
-  });
+    function handleResize() {
+      updateDimensions();
+    }
+    window.addEventListener('resize', handleResize);
+  })
 
   const { renderer, cache } = useVaultRenderer(vaults, isTwoColumns);
 
@@ -189,7 +196,6 @@ const VaultsList = memo(function HomeVaultsList() {
         {filterConfig.deposited && address && filteredVaults.length === 0 && (
           <EmptyStates setFilterConfig={setFilterConfig} />
         )}
-        {console.log(address)}
         {filterConfig.deposited && !address && (
           <EmptyStates setFilterConfig={setFilterConfig} />
         )}

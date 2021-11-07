@@ -14,21 +14,16 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
+import { useIsBoosted } from '../../hooks/useIsBoosted';
 
 const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
   const item = vault;
 
+  // eslint-disable-next-line no-unused-vars
+  const { isBoosted, data: boostedData } = useIsBoosted(item);
   // eslint-disable-next-line
-  const [isBoosted, setIsBoosted] = React.useState(false);
-  
-  // eslint-disable-next-line
-  const [isGovVault, setIsGovVault] = React.useState(item.isGovVault ?? false);
-
-  if (item.isGovVault) {
-    console.log('@@@@@@@@@@');
-    console.log(item);
-  }
+  const [isGovVault] = React.useState(item.isGovVault ?? false);
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -55,13 +50,8 @@ const _Item = ({ vault }) => {
     let amount = "0";
     let rewardAmount = "0";
     if (item.isGovVault) {
-      console.log('new list');
-      console.log(balance.tokens[item.network]);
       let symbol = `${item.token}GovVault`;
       if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
-        console.log(`amount ${balance.tokens[item.network][symbol].balance}`);
-        console.log(`decimals ${item.tokenDecimals}`);
-        console.log(`rewards ${balance.tokens[item.network][symbol].rewards}`);
         amount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].balance),
           item.tokenDecimals
@@ -72,8 +62,6 @@ const _Item = ({ vault }) => {
           item.tokenDecimals
         ).toFixed(8);
       }
-      console.log(`amount is ${amount}`);
-      console.log(`rewards is ${rewardAmount}`);
     } else {
       if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
         amount = byDecimals(
@@ -84,25 +72,18 @@ const _Item = ({ vault }) => {
         ).toFixed(8);
       }
     }
-    console.log(`before ${item.balance}`)
     if (amount != "NaN") setPriceInDolar({ balance: amount });
-    console.log(`after ${item.balance}`)
     if (rewardAmount != "NaN") setPoolRewards({ rewards: rewardAmount });
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {
     let amount = "0";
     if (wallet.address) {
-      if (isGovVault) {
-        console.log(`item balance is ${item.balance}`)
-      } else {
-        amount = byDecimals(item.balance, item.tokenDecimals)
-          .multipliedBy(byDecimals(item.pricePerFullShare))
+        amount = byDecimals(new BigNumber(item.balance), item.tokenDecimals)
+          .multipliedBy(new BigNumber(item.pricePerFullShare))
           .toFixed(8);
-      }
     }
     setState({ formattedBalance: amount });
-    console.log(`formatted balance is ${amount}`)
   }, [
     wallet.address,
     item.balance,
@@ -121,13 +102,13 @@ const _Item = ({ vault }) => {
   );
 
   const price = React.useMemo(() => {
-    return parseInt(priceInDolar.balance) > 0
+    return parseFloat(priceInDolar.balance) > 0
       ? new BigNumber(pricesReducer.prices[item.oracleId]).times(priceInDolar.balance).toFixed(2)
       : 0;
   }, [priceInDolar.balance, pricesReducer.prices, item.oracleId]);
 
   const tokensEarned = React.useMemo(() => {
-    return parseInt(state.formattedBalance) > 0 ? state.formattedBalance : '0';
+    return parseFloat(state.formattedBalance) > 0 ? state.formattedBalance : '0';
   }, [state.formattedBalance]);
 
   return (
@@ -166,25 +147,15 @@ const _Item = ({ vault }) => {
                   <Typography className={classes.vaultName} onClick={handleOpenVault}>
                     {item.name}
                   </Typography>
-                  {/*Network Image*/}
-                  {hasMore3Tags && (
-                    <div className={classes.networkIconHolder}>
-                      <img
-                        alt={item.network}
-                        src={require(`../../../../images/networks/${item.network}.svg`).default}
-                      />
-                    </div>
-                  )}
                 </div>
-                {/*Vault Tags*/}
                 <div className={classes.badgesContainter}>
                   <div className={classes.badges}>
-                    {!hasMore3Tags && (
+                      {/*Network Image*/}
                       <img
                         alt={item.network}
                         src={require(`../../../../images/networks/${item.network}.svg`).default}
                       />
-                    )}
+                    {/*Vault Tags*/}
                     <DisplayTags tags={item.tags} />
                   </div>
                 </div>
@@ -198,23 +169,38 @@ const _Item = ({ vault }) => {
         </div>
         <div className={classes.statsContainer}>
           <Grid container>
-            {/*DEPOSIT*/}
-            <div className={classes.centerSpace}>
-              <div className={classes.stat}>
-                <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
+            {/*BOOSTED BY*/}
+            {isBoosted && parseInt(priceInDolar.balance) === 0 && (
+              <div className={classes.centerSpace}>
+                <div className={classes.stat}>
+                  <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
 
-                <ValueText value={tokensEarned} />
-
-                {parseInt(priceInDolar.balance) > 0 && (
+                  <ValueText value={boostedData.partners[0].name} />
                   <Typography className={classes.label}>
-                    <ValuePrice value={formatUsd(price)} />
+                    <ValuePrice value={t('BOOST')} />
                   </Typography>
-                )}
-                {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
-                  <div className={classes.boostSpacer} />
-                ) : null}
+                </div>
               </div>
-            </div>
+            )}
+            {/*DEPOSIT*/}
+            {!isBoosted && (
+              <div className={classes.centerSpace}>
+                <div className={classes.stat}>
+                  <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
+
+                  <ValueText value={tokensEarned} />
+
+                  {parseFloat(priceInDolar.balance) > 0 && (
+                    <Typography className={classes.label}>
+                      <ValuePrice value={formatUsd(price)} />
+                    </Typography>
+                  )}
+                  {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
+                    <div className={classes.boostSpacer} />
+                  ) : null}
+                </div>
+              </div>
+            )}
             {/*TVL*/}
             <div className={classes.centerSpace}>
               <div className={classes.stat}>
@@ -228,7 +214,8 @@ const _Item = ({ vault }) => {
             {/*APY STATS*/}
             <ApyStats
             {...({
-              launchpoolApr:isBoosted,
+              isBoosted:isBoosted,
+              launchpoolApr:boostedData,
               apy:item.apy,
               spacer:isBoosted || parseInt(priceInDolar.balance) > 0,
               isGovVault:item.isGovVault ?? false

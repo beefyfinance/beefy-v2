@@ -63,7 +63,6 @@ export const FeeBreakdown = ({ item, formData, type }) => {
 
   return (
     <Box mt={2} p={2} className={classes.feeContainer}>
-      {console.log(item)}
       <Grid container>
         {formData.deposit.isZap ? (
           <Grid item xs={12}>
