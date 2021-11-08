@@ -4,10 +4,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Loader } from '../../../../components/loader';
-import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from '../../../../helpers/format';
+import {
+  byDecimals,
+  convertAmountToRawNumber,
+  stripExtraDecimals,
+} from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { AssetsImage } from '../../../../components/AssetsImage';
-import { reduxActions} from '../../../redux/actions';
+import { reduxActions } from '../../../redux/actions';
 import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
 import { Steps } from '../../../../components/Steps';
@@ -31,7 +35,7 @@ export const Withdraw = ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
-  const [state, setState] = React.useState({ balance: "0" });
+  const [state, setState] = React.useState({ balance: '0' });
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
@@ -84,7 +88,7 @@ export const Withdraw = ({
               )
             ),
           pending: false,
-          token: balance.tokens[item.network][item.token]
+          token: balance.tokens[item.network][item.token],
         });
       } else {
         steps.push({
@@ -114,7 +118,7 @@ export const Withdraw = ({
   };
 
   React.useEffect(() => {
-    let amount = "0";
+    let amount = '0';
 
     if (item.isGovVault) {
       let symbol = `${item.token}GovVault`;
@@ -218,14 +222,33 @@ export const Withdraw = ({
               </>
             ) : (
               <>
-                <Button
-                  onClick={handleWithdraw}
-                  className={classes.btnSubmit}
-                  fullWidth={true}
-                  disabled={formData.withdraw.amount <= 0}
-                >
-                  {formData.withdraw.max ? t('Withdraw-All') : t('Withdraw-Verb')}
-                </Button>
+                {item.isGovVault ? (
+                  <>
+                    <Button disabled={false} className={classes.btnSubmit} fullWidth={true}>
+                      {t('ClaimRewards-noun')}
+                    </Button>
+                    <Button
+                      onClick={handleWithdraw}
+                      className={classes.btnSubmitSecondary}
+                      fullWidth={true}
+                      disabled={formData.withdraw.amount <= 0}
+                    >
+                      {formData.withdraw.max ? t('Withdraw-All') : t('Withdraw-Verb')}
+                    </Button>
+                    <Button disabled={true} className={classes.btnSubmitSecondary} fullWidth={true}>
+                      {t('Claim-And-Withdraw')}
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    onClick={handleWithdraw}
+                    className={classes.btnSubmit}
+                    fullWidth={true}
+                    disabled={formData.withdraw.amount <= 0}
+                  >
+                    {formData.withdraw.max ? t('Withdraw-All') : t('Withdraw-Verb')}
+                  </Button>
+                )}
               </>
             )
           ) : (

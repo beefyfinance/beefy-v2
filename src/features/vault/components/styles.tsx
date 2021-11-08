@@ -68,15 +68,28 @@ export const styles = theme => ({
     },
   },
   btnSubmit: {
-    fontSize: '21px',
+    fontSize: '18px',
     fontWeight: 700,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     color: '#ffffff',
     backgroundColor: '#54995C',
-    borderRadius: '40px',
+    borderRadius: '8px',
     '&:hover': {
       backgroundColor: '#389D44',
+    },
+  },
+  btnSubmitSecondary: {
+    fontSize: '18px',
+    marginTop: '12px',
+    fontWeight: 700,
+    letterSpacing: '0.2px',
+    textTransform: 'none', //'capitalize' no good due to localization
+    color: '#ffffff',
+    backgroundColor: '#30345A',
+    borderRadius: '8px',
+    '&:hover': {
+      backgroundColor: '#30345A',
     },
   },
   btnSecondary: {
