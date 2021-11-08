@@ -205,6 +205,7 @@ export const Deposit: React.FC<DepositProps> = ({
             token: tokens[formData.deposit.token],
             pending: false,
           });
+
         } else {
           steps.push({
             step: 'deposit',
@@ -306,9 +307,10 @@ export const Deposit: React.FC<DepositProps> = ({
                       <Loader message={''} line={true} />
                     ) : (
                       <Typography variant={'body1'}>
-                        {(
-                          byDecimals(tokens[item.token].balance, tokens[item.token].decimals) as any
-                        ).significant(6)}{' '}
+                        {(byDecimals(
+                          tokens[item.token].balance,
+                          tokens[item.token].decimals
+                        ) as any).significant(6)}{' '}
                         {item.token}
                       </Typography>
                     )}
@@ -336,10 +338,8 @@ export const Deposit: React.FC<DepositProps> = ({
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
                     <AssetsImage
-                      {...({
-                        assets: [formData.zap.tokens[0].symbol],
-                        alt: formData.zap.tokens[0].name,
-                      } as any)}
+                      {...({assets:[formData.zap.tokens[0].symbol],
+                      alt:formData.zap.tokens[0].name,} as any)}
                     />
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
@@ -347,12 +347,10 @@ export const Deposit: React.FC<DepositProps> = ({
                       <Loader message={''} line={true} />
                     ) : (
                       <Typography variant={'body1'}>
-                        {(
-                          byDecimals(
-                            tokens[formData.zap.tokens[0].symbol].balance,
-                            formData.zap.tokens[0].decimals
-                          ) as any
-                        ).significant(6)}{' '}
+                        {(byDecimals(
+                          tokens[formData.zap.tokens[0].symbol].balance,
+                          formData.zap.tokens[0].decimals
+                        ) as any).significant(6)}{' '}
                         {formData.zap.tokens[0].symbol}
                       </Typography>
                     )}
@@ -370,10 +368,8 @@ export const Deposit: React.FC<DepositProps> = ({
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
                     <AssetsImage
-                      {...({
-                        assets: [formData.zap.tokens[1].symbol],
-                        alt: formData.zap.tokens[1].name,
-                      } as any)}
+                      {...({assets:[formData.zap.tokens[1].symbol],
+                      alt:formData.zap.tokens[1].name,} as any)}
                     />
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
@@ -381,12 +377,10 @@ export const Deposit: React.FC<DepositProps> = ({
                       <Loader message={''} line={true} />
                     ) : (
                       <Typography variant={'body1'}>
-                        {(
-                          byDecimals(
-                            tokens[formData.zap.tokens[1].symbol].balance,
-                            formData.zap.tokens[1].decimals
-                          ) as any
-                        ).significant(6)}{' '}
+                        {(byDecimals(
+                          tokens[formData.zap.tokens[1].symbol].balance,
+                          formData.zap.tokens[1].decimals
+                        ) as any).significant(6)}{' '}
                         {formData.zap.tokens[1].symbol}
                       </Typography>
                     )}
@@ -447,29 +441,15 @@ export const Deposit: React.FC<DepositProps> = ({
           )}
         </Box>
       </Box>
-      {/* Gov Withdraw Section */}
-      <Box className={classes.container}>
-        <Button disabled={true} className={classes.button} fullWidth={true}>
-          {t('Boost-Button-Withdraw')}
-        </Button>
-        <Button disabled={true} className={classes.button} fullWidth={true}>
-          {t('Boost-Button-Claim')}
-        </Button>
-        <Button disabled={true} className={classes.button} fullWidth={true}>
-          {t('Boost-Button-Claim-Unstake')}
-        </Button>
-      </Box>
       {!item.isGovVault ? (
         <BoostWidget
           balance={0 /*TODO: fix parameters*/}
           s_stake={
-            t('Boost-Stake', {
-              mooToken: 'mooToken',
-            }) /*TODO: replace 'mooToken' with real mooName*/
+            t('Boost-Stake', { mooToken: 'mooToken' }) /*TODO: replace 'mooToken' with real mooName*/
           }
           onClick={() => {}}
         />
-      ) : null}
+      ): null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   ); //return
