@@ -34,9 +34,9 @@ const _Item = ({ vault }) => {
   }));
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
 
-  const [state, setState] = React.useState({ formattedBalance: "0" });
-  const [priceInDolar, setPriceInDolar] = React.useState({ balance: "0" });
-  const [poolRewards, setPoolRewards] = React.useState({ rewards: "0" });
+  const [state, setState] = React.useState({ formattedBalance: '0' });
+  const [priceInDolar, setPriceInDolar] = React.useState({ balance: '0' });
+  const [poolRewards, setPoolRewards] = React.useState({ rewards: '0' });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
 
@@ -44,11 +44,9 @@ const _Item = ({ vault }) => {
     history.push(`/${item.network}/vault/${item.id}`);
   }, [history, item.network, item.id]);
 
-  const hasMore3Tags = item.tags.length > 2;
-
   React.useEffect(() => {
-    let amount = "0";
-    let rewardAmount = "0";
+    let amount = '0';
+    let rewardAmount = '0';
     if (item.isGovVault) {
       let symbol = `${item.token}GovVault`;
       if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
@@ -72,16 +70,17 @@ const _Item = ({ vault }) => {
         ).toFixed(8);
       }
     }
-    if (amount != "NaN") setPriceInDolar({ balance: amount });
-    if (rewardAmount != "NaN") setPoolRewards({ rewards: rewardAmount });
+
+    if (isNaN(parseFloat(amount))) setPriceInDolar({ balance: amount });
+    if (isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {
-    let amount = "0";
+    let amount = '0';
     if (wallet.address) {
-        amount = byDecimals(new BigNumber(item.balance), item.tokenDecimals)
-          .multipliedBy(new BigNumber(item.pricePerFullShare))
-          .toFixed(8);
+      amount = byDecimals(new BigNumber(item.balance), item.tokenDecimals)
+        .multipliedBy(new BigNumber(item.pricePerFullShare))
+        .toFixed(8);
     }
     setState({ formattedBalance: amount });
   }, [
@@ -90,7 +89,7 @@ const _Item = ({ vault }) => {
     balance.isBalancesLoading,
     item.tokenDecimals,
     item.pricePerFullShare,
-    isGovVault
+    isGovVault,
   ]);
 
   const ValueText = ({ value }) => (
@@ -133,7 +132,12 @@ const _Item = ({ vault }) => {
               style={{ marginRight: '8px', cursor: 'pointer' }}
             >
               {/*Vault Image*/}
-              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} {...({size:'60px'} as any)} />
+              <AssetsImage
+                img={item.logo}
+                assets={item.assets}
+                alt={item.name}
+                {...({ size: '60px' } as any)}
+              />
             </Grid>
             <Grid item>
               <div>
@@ -150,11 +154,11 @@ const _Item = ({ vault }) => {
                 </div>
                 <div className={classes.badgesContainter}>
                   <div className={classes.badges}>
-                      {/*Network Image*/}
-                      <img
-                        alt={item.network}
-                        src={require(`../../../../images/networks/${item.network}.svg`).default}
-                      />
+                    {/*Network Image*/}
+                    <img
+                      alt={item.network}
+                      src={require(`../../../../images/networks/${item.network}.svg`).default}
+                    />
                     {/*Vault Tags*/}
                     <DisplayTags tags={item.tags} />
                   </div>
@@ -213,13 +217,13 @@ const _Item = ({ vault }) => {
             </div>
             {/*APY STATS*/}
             <ApyStats
-            {...({
-              isBoosted:isBoosted,
-              launchpoolApr:boostedData,
-              apy:item.apy,
-              spacer:isBoosted || parseInt(priceInDolar.balance) > 0,
-              isGovVault:item.isGovVault ?? false
-            } as any)}
+              {...({
+                isBoosted: isBoosted,
+                launchpoolApr: boostedData,
+                apy: item.apy,
+                spacer: isBoosted || parseInt(priceInDolar.balance) > 0,
+                isGovVault: item.isGovVault ?? false,
+              } as any)}
             />
             {/*Rewards/Safety Score*/}
             {isGovVault ? (
@@ -240,8 +244,10 @@ const _Item = ({ vault }) => {
                     <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
                     <div className={classes.tooltipHolder}>
                       <Popover
-                        {...({title:t('Safety-ScoreWhat'),
-                        content:t('Safety-ScoreExpl')}as any)}
+                        {...({
+                          title: t('Safety-ScoreWhat'),
+                          content: t('Safety-ScoreExpl'),
+                        } as any)}
                       />
                     </div>
                   </div>
@@ -264,6 +270,6 @@ const _Item = ({ vault }) => {
       </Grid>
     </div>
   );
-}
+};
 
 export const Item = memo(_Item);
