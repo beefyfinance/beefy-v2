@@ -646,5 +646,76 @@ export const pools = [
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B&outputCurrency=0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     network: "moonriver"
+  },
+  {
+    id: "solarbeam-frax-wmovr",
+    name: "FRAX-MOVR",
+    token: "FRAX-MOVR LP",
+    tokenDescription: "SolarBeam",
+    tokenAddress: "0x56d095C15706e1199A2402373066700385DB5372",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSolarFRAX-MOVR",
+    earnedTokenAddress: "0x161Ae50fb6Ecd7258701B2886d0136ae20b33d55",
+    earnContractAddress: "0x161Ae50fb6Ecd7258701B2886d0136ae20b33d55",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "solarbeam-frax-wmovr",
+    oraclePrice: 0,
+    status: "active",
+    platform: "SolarBeam",
+    assets: [
+      "FRAX",
+      "MOVR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x965f84D915a9eFa2dD81b653e3AE736555d945f4",
+    addLiquidityUrl: "https://app.solarbeam.io/exchange/add/ETH/0x965f84D915a9eFa2dD81b653e3AE736555d945f4",
+    network: "moonriver"
+  },
+  {
+    id: "solarbeam-solar",
+    logo: "single-assets/SOLAR.png",
+    name: "SOLAR",
+    token: "SOLAR",
+    tokenDescription: "SolarBeam",
+    tokenAddress: "0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSolarSOLAR",
+    earnedTokenAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
+    earnContractAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "SOLAR",
+    oraclePrice: 0,
+    status: "active",
+    platform: "SolarBeam",
+    assets: [
+      "SOLAR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
+    network: "moonriver"
   }
 ];
