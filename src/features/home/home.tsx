@@ -79,6 +79,11 @@ const DataLoader = memo(function HomeDataLoader() {
 
 function createVaultRenderer(vaults, isTwoColumns, cache) {
   return function vaultRenderer({ rowIndex, columnIndex, parent, key, style }) {
+		//if displaying in two columns and we have an odd number of vaults to show, skip the 
+		//	bottom-right cell
+		if (isTwoColumns && vaults.length <= rowIndex * 2 + columnIndex)
+			return false;
+
     const vault = (
       <Grid item xs={12}>
         <Item vault={isTwoColumns ? vaults[rowIndex * 2 + columnIndex] : vaults[rowIndex]} />
