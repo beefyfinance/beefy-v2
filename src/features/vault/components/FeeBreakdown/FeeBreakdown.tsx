@@ -63,7 +63,6 @@ export const FeeBreakdown = ({ item, formData, type }) => {
 
   return (
     <Box mt={2} p={2} className={classes.feeContainer}>
-      {console.log(item)}
       <Grid container>
         {formData.deposit.isZap ? (
           <Grid item xs={12}>
@@ -209,7 +208,7 @@ export const FeeBreakdown = ({ item, formData, type }) => {
           </div>
           {/*TODO : add dynamic fee */}
           <Typography className={classes.value}>
-            {item.id === 'cake-cakev2' ? '1%' : '4.5%'}
+            {item.isGovVault ? "0%" : (item.id === 'cake-cakev2' ? '1%' : '4.5%')}
           </Typography>
         </Grid>
         <Grid item xs={12}>

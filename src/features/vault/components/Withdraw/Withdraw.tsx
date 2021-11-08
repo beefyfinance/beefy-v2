@@ -42,7 +42,7 @@ export const Withdraw = ({
 
   const handleInput = val => {
     const value =
-      parseFloat(val) > parseInt(state.balance)
+      parseFloat(val) > parseFloat(state.balance)
         ? state.balance
         : parseFloat(val) < 0
         ? 0
@@ -54,7 +54,8 @@ export const Withdraw = ({
   };
 
   const handleMax = () => {
-    if (parseInt(state.balance) > 0) {
+    if (parseFloat(state.balance) > 0) {
+      console.log(`max amount is ${state.balance}`);
       setFormData({ ...formData, withdraw: { amount: state.balance, max: true } });
     }
   };
@@ -69,20 +70,38 @@ export const Withdraw = ({
       const amount = new BigNumber(formData.withdraw.amount)
         .dividedBy(byDecimals(item.pricePerFullShare, item.tokenDecimals))
         .toFixed(8);
-      steps.push({
-        step: 'withdraw',
-        message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-        action: () =>
-          dispatch(
-            reduxActions.wallet.withdraw(
-              item.network,
-              item.earnContractAddress,
-              convertAmountToRawNumber(amount, item.tokenDecimals),
-              formData.withdraw.max
-            )
-          ),
-        pending: false,
-      });
+
+      if (item.isGovVault) {
+        steps.push({
+          step: 'withdraw',
+          message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+          action: () =>
+            dispatch(
+              reduxActions.wallet.unstake(
+                item.network,
+                item.earnContractAddress,
+                convertAmountToRawNumber(formData.withdraw.amount, item.tokenDecimals)
+              )
+            ),
+          pending: false,
+          token: balance.tokens[item.network][item.token]
+        });
+      } else {
+        steps.push({
+          step: 'withdraw',
+          message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+          action: () =>
+            dispatch(
+              reduxActions.wallet.withdraw(
+                item.network,
+                item.earnContractAddress,
+                convertAmountToRawNumber(amount, item.tokenDecimals),
+                formData.withdraw.max
+              )
+            ),
+          pending: false,
+        });
+      }
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
     } //if (wallet.address)
@@ -96,13 +115,24 @@ export const Withdraw = ({
 
   React.useEffect(() => {
     let amount = "0";
-    if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
-      amount = byDecimals(
-        new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
-          byDecimals(item.pricePerFullShare)
-        ),
-        item.tokenDecimals
-      ).toFixed(8);
+
+    if (item.isGovVault) {
+      let symbol = `${item.token}GovVault`;
+      if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
+        amount = byDecimals(
+          new BigNumber(balance.tokens[item.network][symbol].balance),
+          item.tokenDecimals
+        ).toFixed(8);
+      }
+    } else {
+      if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
+        amount = byDecimals(
+          new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
+            byDecimals(item.pricePerFullShare)
+          ),
+          item.tokenDecimals
+        ).toFixed(8);
+      }
     }
     setState({ balance: amount });
   }, [wallet.address, item, balance]);
@@ -205,15 +235,17 @@ export const Withdraw = ({
           )}
         </Box>
       </Box>
-      <BoostWidget
-        balance={0 /*TODO: fix parameters*/}
-        s_stake={
-          t('Boost-Unstake', {
-            mooToken: 'mooToken',
-          }) /*TODO: replace 'mooToken' with real mooName*/
-        }
-        onClick={() => {}}
-      />
+      {!item.isGovVault ? (
+        <BoostWidget
+          balance={0 /*TODO: fix parameters*/}
+          s_stake={
+            t('Boost-Unstake', {
+              mooToken: 'mooToken',
+            }) /*TODO: replace 'mooToken' with real mooName*/
+          }
+          onClick={() => {}}
+        />
+      ) : null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   ); //return

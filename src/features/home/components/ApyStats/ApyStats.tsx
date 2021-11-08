@@ -41,9 +41,18 @@ const BreakdownTooltip = memo(({ rows }: any) => {
   );
 });
 
-const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ boosted, rates }) => {
+const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ isGovVault, boosted, rates }) => {
   const rows = [];
   const { t } = useTranslation();
+
+  if (isGovVault) {
+    rows.push({
+      label: t('Pool-Apr'),
+      value: rates.vaultApr,
+      last: true,
+    });
+    return <BreakdownTooltip rows={rows} />;
+  }
 
   if ('vaultApr' in rates) {
     rows.push({
@@ -80,9 +89,18 @@ const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ booste
 
 const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
 
-const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ boosted, rates }) => {
+const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ isGovVault, boosted, rates }) => {
   const rows = [];
   const { t } = useTranslation();
+
+  if (isGovVault) {
+    rows.push({
+      label: t('Pool-AprDaily'),
+      value: rates.vaultDaily,
+      last: true,
+    });
+    return <BreakdownTooltip rows={rows} />;
+  }
 
   if ('vaultDaily' in rates) {
     rows.push({
@@ -170,6 +188,11 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   } else {
     values.totalDaily = yearlyToDaily(values.totalApy);
   }
+  
+  if (isGovVault) {
+    values.totalApy = apy.vaultApr / 1;
+    values.totalDaily = apy.vaultApr / 365;
+  }
 
   if (isBoosted) {
     values.boostApr = launchpoolApr.apr;
@@ -197,7 +220,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
       >
-        <YearlyBreakdownTooltip boosted={isBoosted} rates={formatted} />
+        <YearlyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
       </LabeledStatWithTooltip>
 
       <LabeledStatWithTooltip
@@ -208,7 +231,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
       >
-        <DailyBreakdownTooltip boosted={isBoosted} rates={formatted} />
+        <DailyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
       </LabeledStatWithTooltip>
     </>
   );

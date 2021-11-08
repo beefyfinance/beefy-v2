@@ -35,6 +35,7 @@ const fetchPrices = (reducer?: any) => {
         const request = await axios.get(
           'https://api.beefy.finance/apy/breakdown?_=' + cache.getTime()
         );
+        request.data['bifi-gov'] = { vaultApr: 0.55 };
         return request.status === 200 ? request.data : await updateApy();
       } catch (err) {
         return await updateApy();

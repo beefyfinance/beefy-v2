@@ -23,7 +23,7 @@ const _Item = ({ vault }) => {
   // eslint-disable-next-line no-unused-vars
   const { isBoosted, data: boostedData } = useIsBoosted(item);
   // eslint-disable-next-line
-  const [isGovVault, setIsGovVault] = React.useState(false);
+  const [isGovVault] = React.useState(item.isGovVault ?? false);
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -36,6 +36,7 @@ const _Item = ({ vault }) => {
 
   const [state, setState] = React.useState({ formattedBalance: "0" });
   const [priceInDolar, setPriceInDolar] = React.useState({ balance: "0" });
+  const [poolRewards, setPoolRewards] = React.useState({ rewards: "0" });
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
 
@@ -47,23 +48,40 @@ const _Item = ({ vault }) => {
 
   React.useEffect(() => {
     let amount = "0";
-    if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
-      amount = byDecimals(
-        new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
-          byDecimals(item.pricePerFullShare)
-        ),
-        item.tokenDecimals
-      ).toFixed(8);
+    let rewardAmount = "0";
+    if (item.isGovVault) {
+      let symbol = `${item.token}GovVault`;
+      if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
+        amount = byDecimals(
+          new BigNumber(balance.tokens[item.network][symbol].balance),
+          item.tokenDecimals
+        ).toFixed(8);
+
+        rewardAmount = byDecimals(
+          new BigNumber(balance.tokens[item.network][symbol].rewards),
+          item.tokenDecimals
+        ).toFixed(8);
+      }
+    } else {
+      if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
+        amount = byDecimals(
+          new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
+            byDecimals(item.pricePerFullShare)
+          ),
+          item.tokenDecimals
+        ).toFixed(8);
+      }
     }
-    setPriceInDolar({ balance: amount });
+    if (amount != "NaN") setPriceInDolar({ balance: amount });
+    if (rewardAmount != "NaN") setPoolRewards({ rewards: rewardAmount });
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {
     let amount = "0";
     if (wallet.address) {
-      amount = byDecimals(item.balance, item.tokenDecimals)
-        .multipliedBy(byDecimals(item.pricePerFullShare))
-        .toFixed(8);
+        amount = byDecimals(new BigNumber(item.balance), item.tokenDecimals)
+          .multipliedBy(new BigNumber(item.pricePerFullShare))
+          .toFixed(8);
     }
     setState({ formattedBalance: amount });
   }, [
@@ -72,6 +90,7 @@ const _Item = ({ vault }) => {
     balance.isBalancesLoading,
     item.tokenDecimals,
     item.pricePerFullShare,
+    isGovVault
   ]);
 
   const ValueText = ({ value }) => (
@@ -83,13 +102,13 @@ const _Item = ({ vault }) => {
   );
 
   const price = React.useMemo(() => {
-    return parseInt(priceInDolar.balance) > 0
+    return parseFloat(priceInDolar.balance) > 0
       ? new BigNumber(pricesReducer.prices[item.oracleId]).times(priceInDolar.balance).toFixed(2)
       : 0;
   }, [priceInDolar.balance, pricesReducer.prices, item.oracleId]);
 
   const tokensEarned = React.useMemo(() => {
-    return parseInt(state.formattedBalance) > 0 ? state.formattedBalance : '0';
+    return parseFloat(state.formattedBalance) > 0 ? state.formattedBalance : '0';
   }, [state.formattedBalance]);
 
   return (
@@ -104,7 +123,6 @@ const _Item = ({ vault }) => {
       })}
     >
       <Grid container className={classes.dataGrid}>
-        {console.log(boostedData)}
         {/*Title*/}
         <div className={classes.titleContainer}>
           <Grid container>
@@ -121,7 +139,7 @@ const _Item = ({ vault }) => {
               <div>
                 {isGovVault ? (
                   <Typography className={classes.govVaultTitle} onClick={handleOpenVault}>
-                    EARN BNB
+                    EARN {item.earnedToken}
                   </Typography>
                 ) : null}
                 <div className={classes.infoContainer}>
@@ -172,7 +190,7 @@ const _Item = ({ vault }) => {
 
                   <ValueText value={tokensEarned} />
 
-                  {parseInt(priceInDolar.balance) > 0 && (
+                  {parseFloat(priceInDolar.balance) > 0 && (
                     <Typography className={classes.label}>
                       <ValuePrice value={formatUsd(price)} />
                     </Typography>
@@ -199,7 +217,8 @@ const _Item = ({ vault }) => {
               isBoosted:isBoosted,
               launchpoolApr:boostedData,
               apy:item.apy,
-              spacer:false,
+              spacer:isBoosted || parseInt(priceInDolar.balance) > 0,
+              isGovVault:item.isGovVault ?? false
             } as any)}
             />
             {/*Rewards/Safety Score*/}
@@ -208,7 +227,7 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
 
-                  <ValueText value={'4.0 BNB'} />
+                  <ValueText value={(poolRewards.rewards ?? '') + ' BNB'} />
                   {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}

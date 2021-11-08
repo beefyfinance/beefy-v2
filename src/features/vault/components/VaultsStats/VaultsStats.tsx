@@ -24,12 +24,21 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
   React.useEffect(() => {
     let amount = '0';
     if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
-      amount = byDecimals(
-        new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
-          byDecimals(item.pricePerFullShare)
-        ),
-        item.tokenDecimals
-      ).toFixed(8);
+      if (item.isGovVault) {
+        let symbol = `${item.token}GovVault`;
+        amount = byDecimals(
+          new BigNumber(balance.tokens[item.network][symbol].balance),
+          item.tokenDecimals
+        ).toFixed(8);
+
+      } else {
+        amount = byDecimals(
+          new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
+            byDecimals(item.pricePerFullShare)
+          ),
+          item.tokenDecimals
+        ).toFixed(8);
+      }
     }
     setState({ balance: amount });
   }, [wallet.address, item, balance]);
@@ -49,13 +58,13 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
   );
 
   const price = React.useMemo(() => {
-    return parseInt(state.balance) > 0
+    return parseFloat(state.balance) > 0
       ? new BigNumber(pricesReducer.prices[item.oracleId]).times(state.balance).toFixed(2)
       : 0;
   }, [state.balance, pricesReducer.prices, item.oracleId]);
 
   const tokensEarned = React.useMemo(() => {
-    return parseInt(state.balance) > 0 ? state.balance : '0';
+    return parseFloat(state.balance) > 0 ? state.balance : '0';
   }, [state.balance]);
 
   const yearlyToDaily = apy => {
@@ -88,6 +97,11 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
     values.totalDaily = yearlyToDaily(values.totalApy);
   }
 
+  if (item.isGovVault) {
+    values.totalApy = values.vaultApr / 1;
+    values.totalDaily = values.vaultApr / 365;
+  }
+
   if (isBoosted) {
     values.boostApr = boostedData.apr;
     values.boostDaily = boostedData.apr / 365;
@@ -106,7 +120,6 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
 
   return (
     <Box className={classes.container}>
-      {console.log(item.apy)}
       <Box sx={{ flexGrow: 1 }} className={classes.stats}>
         <Box className={classes.stat}>
           <Typography className={classes.label}>{t('TVL')}</Typography>
@@ -115,7 +128,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
           </Typography>
         </Box>
         <Box className={classes.stat}>
-          <Typography className={classes.label}>{t('APY')}</Typography>
+          <Typography className={classes.label}>{!item.isGovVault ? t('APY') : t('APR')}</Typography>
           {isBoosted ? (
             <>
               {' '}
@@ -129,7 +142,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
           ) : (
             <>
               <Typography>
-                <ValueText value={formatApy(item.apy.totalApy)} />
+                <ValueText value={item.isGovVault ? formatApy(values.totalApy) : formatApy(item.apy.totalApy)} />
               </Typography>
             </>
           )}
@@ -147,7 +160,8 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
             </>
           ) : (
             <Typography>
-              <ValueText value={item ? calcDaily(item.apy.totalApy) : 0} />
+              <ValueText value={item.isGovVault ? formatApy(values.totalDaily) : calcDaily(item.apy.totalApy)} />
+              {/* <ValueText value={item ? calcDaily(item.apy.totalApy) : 0} /> */}
             </Typography>
           )}
         </Box>
@@ -164,12 +178,14 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
             </Typography>
           )}
         </Box>
-        <Box className={classes.stat}>
-          <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>
-          <Typography>
-            <ValueText value={lastHarvest} />
-          </Typography>
-        </Box>
+        {!item.isGovVault ? (
+          <Box className={classes.stat}>
+            <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>
+            <Typography>
+              <ValueText value={lastHarvest} />
+            </Typography>
+          </Box>
+        ) : null}
       </Box>
     </Box>
   );

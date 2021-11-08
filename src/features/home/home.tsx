@@ -201,7 +201,6 @@ const VaultsList = memo(function HomeVaultsList() {
         {filterConfig.deposited && address && filteredVaults.length === 0 && (
           <EmptyStates setFilterConfig={setFilterConfig} />
         )}
-        {console.log(address)}
         {filterConfig.deposited && !address && (
           <EmptyStates setFilterConfig={setFilterConfig} />
         )}

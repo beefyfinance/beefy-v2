@@ -39,19 +39,41 @@ const getBalances = async (state, dispatch) => {
           token: tokenSymbol,
         });
       } else {
-        const tokenContract = new web3[net].eth.Contract(erc20Abi, token.address);
-        calls[net].push({
-          amount: tokenContract.methods.balanceOf(address),
-          token: tokenSymbol,
-          address: token.address,
-        });
-
-        for (let spender in token.allowance) {
+        if (token.isGovVault) {
+          const tokenContract = new web3[net].eth.Contract(erc20Abi, token.address);
+          const poolContract = new web3[net].eth.Contract(boostAbi, token.poolAddress);
           calls[net].push({
-            allowance: tokenContract.methods.allowance(address, spender),
-            token: tokenSymbol,
-            spender: spender,
+            token: token.baseSymbol,
+            amount: tokenContract.methods.balanceOf(address),
+            // balance: poolContract.methods.balanceOf(address),
+            // rewards: poolContract.methods.rewards(address),
+            allowance: tokenContract.methods.allowance(address, token.poolAddress),
+            isGovVault: 'true',
+            address: token.address,
+            spender: token.poolAddress,
           });
+
+          calls[net].push({
+            token: tokenSymbol,
+            balance: poolContract.methods.balanceOf(address),
+            rewards: poolContract.methods.earned(address),
+            isGovVault: 'true',
+          });
+        } else {
+          const tokenContract = new web3[net].eth.Contract(erc20Abi, token.address);
+          calls[net].push({
+            amount: tokenContract.methods.balanceOf(address),
+            token: tokenSymbol,
+            address: token.address,
+          });
+
+          for (let spender in token.allowance) {
+            calls[net].push({
+              allowance: tokenContract.methods.allowance(address, spender),
+              token: tokenSymbol,
+              spender: spender,
+            });
+          }
         }
       }
     }
@@ -65,16 +87,32 @@ const getBalances = async (state, dispatch) => {
     for (let index in response) {
       const item = response[index];
 
-      if (!isEmpty(item.amount)) {
-        tokens[key][item.token].balance = item.amount;
-        tokens[key][item.token].address = item.address;
-      }
+      if (item.isGovVault) {
+        if (!isEmpty(item.balance)) {
+          tokens[key][item.token].balance = item.balance;
+          tokens[key][item.token].rewards = item.rewards;
+        }
 
-      if (!isEmpty(item.allowance)) {
-        tokens[key][item.token].allowance = {
-          ...tokens[key][item.token].allowance,
-          [item.spender]: item.allowance,
-        };
+        if (!isEmpty(item.allowance)) {
+          tokens[key][item.token].allowance = {
+            ...tokens[key][item.token].allowance,
+            [item.spender]: item.allowance,
+          };
+          tokens[key][item.token].balance = item.amount;
+          tokens[key][item.token].address = item.address;
+        }
+      } else {
+        if (!isEmpty(item.amount)) {
+          tokens[key][item.token].balance = item.amount;
+          tokens[key][item.token].address = item.address;
+        }
+
+        if (!isEmpty(item.allowance)) {
+          tokens[key][item.token].allowance = {
+            ...tokens[key][item.token].allowance,
+            [item.spender]: item.allowance,
+          };
+        }
       }
     }
   }
@@ -91,7 +129,6 @@ const getBalances = async (state, dispatch) => {
 };
 
 const getBoostBalances = async (items, state, dispatch, network) => {
-  console.log('items', items);
   console.log('redux getBoostBalances() processing...');
   const address = state.walletReducer.address;
   const web3 = state.walletReducer.rpc;
