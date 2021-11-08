@@ -18,26 +18,6 @@ export const styles = theme => ({
       color: '#ffffff',
     },
   },
-  button: {
-    fontSize: '18px',
-    fontWeight: 600,
-    height: '48px',
-    lineHeight: '24px',
-    letterSpacing: '0.2px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    color: '#D1D3E0',
-    backgroundColor: '#232743',
-    borderRadius: '8px',
-    zIndex: 0,
-    marginBottom: '12px',
-    '&:hover': {
-      backgroundColor: '#232743',
-    },
-    '&:disabled': {
-      backgroundColor: '#272C47',
-      color: '#D1D3E0',
-    },
-  },
   inputContainer: {
     paddingTop: '10px',
     '& .MuiPaper-root': {
@@ -118,11 +98,6 @@ export const styles = theme => ({
         transition: 'color 0.1s',
       },
     },
-  },
-  container: {
-    padding: '24px 24px 12px 24px',
-    backgroundColor: '#313759',
-    borderRadius: '16px',
   },
   depositTokenContainer: {
     width: 'calc(100% + 11px)',

@@ -102,7 +102,7 @@ export const Vault = () => {
         },
         zap: getEligibleZap(item),
       });
-      setIsGovVault(item.isGovVault);
+      setIsGovVault(item.isGovVault)
       setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -169,30 +169,19 @@ export const Vault = () => {
             <Grid container spacing={6}>
               <Grid item xs={12} md={4} className={classes.customOrder}>
                 <Box className={classes.dw}>
-                  <Box className={isGovVault ? classes.tabsFullWidth : classes.tabs}>
-                    {isGovVault ? (
-                      <Button
-                        onClick={() => setDw('deposit')}
-                        className={classes.selected}
-                      >
-                        {t('Deposit-And-Withdraw')}
-                      </Button>
-                    ) : (
-                      <>
-                        <Button
-                          onClick={() => setDw('deposit')}
-                          className={dw === 'deposit' ? classes.selected : ''}
-                        >
-                          {t('Deposit-Verb')}
-                        </Button>
-                        <Button
-                          onClick={() => setDw('withdraw')}
-                          className={dw === 'withdraw' ? classes.selected : ''}
-                        >
-                          {t('Withdraw-Verb')}
-                        </Button>
-                      </>
-                    )}
+                  <Box className={classes.tabs}>
+                    <Button
+                      onClick={() => setDw('deposit')}
+                      className={dw === 'deposit' ? classes.selected : ''}
+                    >
+                      {t('Deposit-Verb')}
+                    </Button>
+                    <Button
+                      onClick={() => setDw('withdraw')}
+                      className={dw === 'withdraw' ? classes.selected : ''}
+                    >
+                      {t('Withdraw-Verb')}
+                    </Button>
                   </Box>
                   {dw === 'deposit' ? (
                     <Deposit
