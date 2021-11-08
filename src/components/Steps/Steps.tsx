@@ -51,12 +51,20 @@ export const Steps = ({ item, steps, handleClose }) => {
                     <Typography variant={'h2'}>
                       {steps.items[steps.currentStep].step === 'withdraw' ? (
                         <React.Fragment>
-                          {byDecimals(
-                            new BigNumber(wallet.action.data.amount).multipliedBy(
-                              byDecimals(item.pricePerFullShare)
-                            ),
-                            item.tokenDecimals
-                          ).toFixed(8)}{' '}
+                          {item.isGovVault
+                            ? byDecimals(
+                                new BigNumber(wallet.action.data.amount),
+                                steps.items[steps.currentStep].token.decimals
+                              ).toFixed(8)
+                            : null}
+                          {!item.isGovVault
+                            ? byDecimals(
+                                new BigNumber(wallet.action.data.amount).multipliedBy(
+                                  byDecimals(item.pricePerFullShare)
+                                ),
+                                item.tokenDecimals
+                              ).toFixed(8)
+                            : null}{' '}
                           {item.token}
                         </React.Fragment>
                       ) : (
@@ -135,7 +143,7 @@ export const Steps = ({ item, steps, handleClose }) => {
                 <AlertTitle>{t('Transactn-ConfirmPending')}</AlertTitle>
                 <Typography>{t('Transactn-Wait')}</Typography>
                 <Box textAlign={'center'}>
-                  <Loader message={''} line={false}/>
+                  <Loader message={''} line={false} />
                 </Box>
                 <Box textAlign={'center'} mt={2}>
                   <Button

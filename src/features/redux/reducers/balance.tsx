@@ -99,8 +99,6 @@ const initialTokens = () => {
   return tokens;
 };
 
-const initGovPool = () => {};
-
 const initialState = {
   tokens: initialTokens(),
   rewards: [],

@@ -29,7 +29,7 @@ export const Vault = () => {
   const history = useHistory();
   const classes = useStyles();
   const t = useTranslation().t;
-  
+
   let { id }: any = useParams();
   const { vault, wallet, prices } = useSelector((state: any) => ({
     vault: state.vaultReducer,
@@ -38,11 +38,10 @@ export const Vault = () => {
   }));
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(true);
+  const [isGovVault, setIsGovVault] = React.useState(false);
   const [item, setVaultData] = React.useState(null);
   const { isBoosted, data: boostedData } = useIsBoosted(vault.pools[id]);
   const [dw, setDw] = React.useState('deposit');
-  
-  let isGovPool = item.isGovVault;
 
   const [formData, setFormData] = React.useState({
     deposit: { input: '', amount: new BigNumber(0), max: false, token: null, isZap: false },
@@ -103,6 +102,7 @@ export const Vault = () => {
         },
         zap: getEligibleZap(item),
       });
+      setIsGovVault(item.isGovVault)
       setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -208,22 +208,27 @@ export const Vault = () => {
                 {/* TODO: Show only for boosts */}
                 {isBoosted && <BoostCard boostedData={boostedData} />}
                 {/* TODO: Show only for gov pools */}
-                {isGovPool && <GovDetailsCard />}
-                <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
+                {isGovVault && <GovDetailsCard />}
+                {!isGovVault ? (
+                  <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
+                ) : null}
+
                 {item.risks && item.risks.length > 0 && (
                   <SafetyCard vaultRisks={item.risks} score={item.safetyScore} />
                 )}
-                <StrategyCard
-                  stratType={item.stratType}
-                  stratAddr={item.strategy}
-                  vaultAddr={item.earnContractAddress}
-                  network={item.network}
-                  apy={item.apy}
-                  platform={item.platform}
-                  assets={item.assets}
-                  want={item.name}
-                  vamp={item.vamp}
-                />
+                {!isGovVault ? (
+                  <StrategyCard
+                    stratType={item.stratType}
+                    stratAddr={item.strategy}
+                    vaultAddr={item.earnContractAddress}
+                    network={item.network}
+                    apy={item.apy}
+                    platform={item.platform}
+                    assets={item.assets}
+                    want={item.name}
+                    vamp={item.vamp}
+                  />
+                ) : null}
                 {renderTokens(item)}
               </Grid>
             </Grid>

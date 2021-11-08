@@ -67,7 +67,7 @@ const initialPools = () => {
       pool['lastUpdated'] = 0;
       pool['tags'] = [];
       pool['safetyScore'] = 0;
-      pool['withdrawalFee'] = 0.001;
+      pool['withdrawalFee'] = pool.isGovVault ?  0 : 0.001;
       pool['depositFee'] = 0;
 
       if (!isEmpty(pool.platform)) {

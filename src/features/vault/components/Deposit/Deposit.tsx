@@ -190,21 +190,39 @@ export const Deposit: React.FC<DepositProps> = ({
       }
 
       if (false === formData.deposit.isZap) {
-        steps.push({
-          step: 'deposit',
-          message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-          action: () =>
-            dispatch(
-              reduxActions.wallet.deposit(
-                item.network,
-                item.earnContractAddress,
-                amount,
-                formData.deposit.max
-              )
-            ),
-          token: tokens[formData.deposit.token],
-          pending: false,
-        });
+        if (item.isGovVault) {
+          steps.push({
+            step: 'deposit',
+            message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
+            action: () =>
+              dispatch(
+                reduxActions.wallet.stake(
+                  item.network,
+                  item.earnContractAddress,
+                  convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals)
+                )
+              ),
+            token: tokens[formData.deposit.token],
+            pending: false,
+          });
+
+        } else {
+          steps.push({
+            step: 'deposit',
+            message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+            action: () =>
+              dispatch(
+                reduxActions.wallet.deposit(
+                  item.network,
+                  item.earnContractAddress,
+                  amount,
+                  formData.deposit.max
+                )
+              ),
+            token: tokens[formData.deposit.token],
+            pending: false,
+          });
+        }
       }
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
@@ -423,13 +441,15 @@ export const Deposit: React.FC<DepositProps> = ({
           )}
         </Box>
       </Box>
-      <BoostWidget
-        balance={0 /*TODO: fix parameters*/}
-        s_stake={
-          t('Boost-Stake', { mooToken: 'mooToken' }) /*TODO: replace 'mooToken' with real mooName*/
-        }
-        onClick={() => {}}
-      />
+      {!item.isGovVault ? (
+        <BoostWidget
+          balance={0 /*TODO: fix parameters*/}
+          s_stake={
+            t('Boost-Stake', { mooToken: 'mooToken' }) /*TODO: replace 'mooToken' with real mooName*/
+          }
+          onClick={() => {}}
+        />
+      ): null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   ); //return
