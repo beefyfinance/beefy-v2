@@ -12,7 +12,7 @@ Script should be run from root "beefy-v2" directory with fresh "beefy-app" sourc
 _sibling_ directory. A working Node.js environment off the beefy-v2 directory is assumed. 
 Linux command line to invoke the script:
 
-node src/scripts/migrateV1vaults.mjs
+node --loader ts-node/esm  src/scripts/migrateV0vaults.mjs
 
 Progress will be printed to standard output and standard error.
 
@@ -32,6 +32,7 @@ the command is run. To help minimize pollution, the maintainer may avoid pushing
 into the staging repository.
 
 Development
++ v0.9.0.1 AllTrades: switched over to *.tsx v2 targets
 + v0.9 AllTrades
   - add support for Celo chain, and prep for other chains going forward by allowing the 
 	  target v2 vault-descriptor file to be generated automatically if not found

@@ -1,139 +1,114 @@
 [
   {
-    "id": "bsc: cakev2-lazio-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: cakev2-dkt-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: cakev2-rusd-busd",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: cakev2-bmon-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: wex-bnb-ont-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-bnb-dep-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-tusd-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: cakev2-rusd-busd-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc: cakev2-bmon-wbnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: beets-late-quartet",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: boo-wftm-dola",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: boo-dola-inv",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: beets-dance-of-degens-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom: beets-guqin-qi-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "celo: sushi-celo-cusd-ceur",
+    "id": "bsc: ellipsis-renbtc",
     "type": "synced"
   },
   {
-    "id": "moonriver: solarbeam-solar-wmovr",
+    "id": "bsc: banana-exp-wbnb",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-solar-usdc",
+    "id": "bsc: cakev2-bscdefi-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: cakev2-qbt-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: auto-eth-beth",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: auto-eth-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: auto-btcb-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: auto-btcb-eth",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: auto-usdt-busd",
+    "type": "synced"
+  },
+  {
+    "id": "fantom: geist-ftm",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-wmovr-usdc",
+    "id": "fantom: geist-wbtc",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-dai-usdc",
+    "id": "fantom: geist-eth",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-busd-usdc",
+    "id": "fantom: geist-fusdt",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-eth-usdc",
+    "id": "fantom: geist-usdc",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-bnb-busd",
+    "id": "fantom: geist-dai",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-wbtc-usdc",
+    "id": "fantom: beets-song-ice-fire",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-usdt-usdc",
+    "id": "fantom: beets-tubular-bells",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-mimatic-usdc",
+    "id": "fantom: beets-guqin-qi-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: kyber-usdc-jeur",
+    "type": "synced"
+  },
+  {
+    "id": "avax: blizz-blzz-avax",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-mim-usdc",
+    "id": "avax: joe-mai-wavax-v2",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-matic-wmovr",
+    "id": "avax: joe-ampl-wavax",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-avax-wmovr",
+    "id": "avax: joe-mai-wavax-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax: joe-time-wavax-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax: joe-mai-usdc.e-eol",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver: solarbeam-frax-wmovr",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-wmovr-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-wmovr-rib",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-wmovr-relay",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-pets-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-solar-rib",
+    "id": "moonriver: solarbeam-solar",
     "type": "Added"
   }
 ]
