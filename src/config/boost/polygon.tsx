@@ -2,6 +2,7 @@ export const pools = [
   {
     id: 'moo_curve-am3crv-jarvis',
     name: 'Jarvis',
+		poolId: 'kyber-usdc-jeur',
     logo: 'polygon/CURVE-3Pool.png',
     earnedToken: 'jEUR',
     earnedTokenDecimals: 18,
@@ -28,7 +29,6 @@ export const pools = [
   {
     id: 'moo_BIFI-jarvis',
     name: 'Jarvis',
-    logo: 'single-assets/BIFI.png',
     earnedToken: 'BIFI',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xFbdd194376de19a88118e84E279b977f165d01b8',
