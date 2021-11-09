@@ -71,8 +71,8 @@ const _Item = ({ vault }) => {
       }
     }
 
-    if (isNaN(parseFloat(amount))) setPriceInDolar({ balance: amount });
-    if (isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
+    if (!isNaN(parseFloat(amount))) setPriceInDolar({ balance: amount });
+    if (!isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
   }, [wallet.address, item, balance]);
 
   React.useEffect(() => {

@@ -229,7 +229,8 @@ function useUserVaults() {
   if (userAddress !== null) {
     for (const poolKey in vaultReducer.pools) {
       const pool = vaultReducer.pools[poolKey];
-      const balance = balanceReducer.tokens[pool.network][pool.earnedToken].balance;
+      let symbol = pool.isGovVault ? `${pool.token}GovVault` : pool.earnedToken;
+      const balance = balanceReducer.tokens[pool.network][symbol].balance;
       const boostpoolBalance = formatDecimals(
         balanceReducer.tokens[pool.network][pool.earnedToken + 'Boost']?.balance
       );
