@@ -107,8 +107,6 @@ export const pools = [
     id: 'moo_banana-wbnb-ceek-ceek',
     name: 'CEEK',
 		poolId: 'banana-wbnb-ceek',
-    assets: ['CEEK', 'BNB'],
-    token: 'mooApeCEEK-BNB',
     earnedToken: 'CEEK',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xe0F94Ac5462997D2BC57287Ac3a3aE4C31345D66',

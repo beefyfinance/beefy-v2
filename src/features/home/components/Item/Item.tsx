@@ -160,7 +160,7 @@ const _Item = ({ vault }) => {
                       src={require(`../../../../images/networks/${item.network}.svg`).default}
                     />
                     {/*Vault Tags*/}
-                    <DisplayTags tags={item.tags} />
+                    <DisplayTags isBoosted={isBoosted} tags={item.tags} />
                   </div>
                 </div>
               </div>
@@ -178,8 +178,7 @@ const _Item = ({ vault }) => {
               <div className={classes.centerSpace}>
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-
-                  <ValueText value={boostedData.partners[0].name} />
+                  <ValueText value={boostedData.name} />
                   <Typography className={classes.label}>
                     <ValuePrice value={t('BOOST')} />
                   </Typography>
@@ -199,9 +198,9 @@ const _Item = ({ vault }) => {
                       <ValuePrice value={formatUsd(price)} />
                     </Typography>
                   )}
-                  {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
+                  {/* {parseInt(priceInDolar.balance) > 0 ? (
                     <div className={classes.boostSpacer} />
-                  ) : null}
+                  ) : null} */}
                 </div>
               </div>
             )}
@@ -210,7 +209,7 @@ const _Item = ({ vault }) => {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
-                {isBoosted || parseInt(priceInDolar.balance) > 0 ? (
+                {isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
                   <div className={classes.boostSpacer} />
                 ) : null}
               </div>
@@ -221,7 +220,7 @@ const _Item = ({ vault }) => {
                 isBoosted: isBoosted,
                 launchpoolApr: boostedData,
                 apy: item.apy,
-                spacer: isBoosted || parseInt(priceInDolar.balance) > 0,
+                spacer: !isBoosted && parseFloat(priceInDolar.balance) > 0,
                 isGovVault: item.isGovVault ?? false,
               } as any)}
             />
@@ -231,8 +230,8 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
 
-                  <ValueText value={(poolRewards.rewards ?? '') + ' BNB'} />
-                  {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
+                  <ValueText value={(poolRewards.rewards ?? '') + ` ${item.earnedToken}`} />
+                  {parseFloat(priceInDolar.balance) > 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
                 </div>
@@ -252,7 +251,7 @@ const _Item = ({ vault }) => {
                     </div>
                   </div>
                   <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-                  {isBoosted || parseInt(priceInDolar.balance) > 0 ? (
+                  {isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
                 </div>

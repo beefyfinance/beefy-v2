@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import lodash from 'lodash';
+import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { useVaults } from '../hooks/useFilteredVaults';
 import { reduxActions } from '../../redux/actions';
@@ -12,14 +13,18 @@ export const useIsBoosted = item => {
   const boostVaults = data[6];
 
   React.useEffect(() => {
-  	const boostedVault = lodash.filter(boostVaults, { poolId: item.id, status: 'active' });
+    var ts = Date.now() / 1000;
 
-		if (boostedVault.length !== 0) {
-			dispatch(reduxActions.vault.fetchBoosts(boostedVault[0]));
-			setState({ isBoosted: true, data: boostedVault[0] });
-			item.tags.push('boost');
-		}
-	//eslint-disable-next-line react-hooks/exhaustive-deps
+    const boostedVault = lodash.filter(boostVaults, function (vault) {
+      return (
+        vault.poolId === item.id && vault.status === 'active' && parseInt(vault.periodFinish) > ts
+      );
+    });
+
+    if (boostedVault.length !== 0) {
+      setState({ isBoosted: true, data: boostedVault[0] });
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return state;

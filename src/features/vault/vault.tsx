@@ -102,7 +102,7 @@ export const Vault = () => {
         },
         zap: getEligibleZap(item),
       });
-      setIsGovVault(item.isGovVault)
+      setIsGovVault(item.isGovVault);
       setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -140,7 +140,7 @@ export const Vault = () => {
               <Box className={classes.title}>
                 <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
                 <Typography variant={'h1'}>
-                  {item.name} {t('Vault-vault')}
+                  {item.name} {!item.isGovVault ? t('Vault-vault') : ""}
                 </Typography>
               </Box>
               <Box className={classes.badges}>
@@ -148,7 +148,7 @@ export const Vault = () => {
                   alt={item.network}
                   src={require(`../../images/networks/${item.network}.svg`).default}
                 />
-                <DisplayTags tags={item.tags} />
+                <DisplayTags isBoosted={isBoosted} tags={item.tags} />
               </Box>
               <Box>
                 <span className={classes.platformContainer}>
