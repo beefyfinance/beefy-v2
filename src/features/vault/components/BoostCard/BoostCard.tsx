@@ -14,7 +14,11 @@ export const BoostCard = ({ boostedData }) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
-  const { logo, name, text, social, website } = boostedData['partners'][0];
+  console.log({ boostedData });
+
+  const name = React.useMemo(() => boostedData.name, [boostedData.name]);
+
+  const { logo, text, social, website } = boostedData['partners'][0];
 
   return (
     <Card>
