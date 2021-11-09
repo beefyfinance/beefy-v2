@@ -10,6 +10,7 @@ import { config } from '../../../config/config';
 import { isEmpty } from '../../../helpers/utils';
 
 const vaultAbi = require('../../../config/abi/vault.json');
+const boostAbi = require('../../../config/abi/boost.json')
 
 const getPools = async (items, state, dispatch) => {
   console.log('redux getPools() processing...');
@@ -126,11 +127,12 @@ const getBoosts = async (items, state, dispatch) => {
 
   for (let key in items) {
     const pool = items[key];
-    const tokenContract = new web3[pool.network].eth.Contract(vaultAbi, pool.earnContractAddress);
+    const tokenContract = new web3[pool.network].eth.Contract(boostAbi, pool.earnContractAddress);
     calls[pool.network].push({
       id: pool.id,
       totalStaked: tokenContract.methods.totalSupply(),
       rewardRate: tokenContract.methods.rewardRate(),
+      periodFinish: tokenContract.methods.periodFinish(),
     });
 
     if (pool.isMooStaked) {
@@ -173,6 +175,10 @@ const getBoosts = async (items, state, dispatch) => {
 
         if (!isEmpty(item.pricePerFullShare)) {
           response[item.id]['pricePerFullShare'] = item.pricePerFullShare;
+        }
+
+        if (!isEmpty(item.periodFinish)) {
+          response[item.id]['periodFinish'] = item.periodFinish;
         }
       });
     }
