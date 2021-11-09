@@ -16,9 +16,10 @@ const initialBoosts = () => {
   const boosts = [];
 
   for (let net in config) {
-    const data =  require(`../../../config/boost/${net}`);
+    const data = require(`../../../config/boost/${net}`);
     for (const key in data.pools) {
       const boost = data.pools[key];
+      console.log(boost);
       let pool;
 
       // Boost pools should have poolId, this is a temp fix until Boost pools are transferred correctly
@@ -34,8 +35,6 @@ const initialBoosts = () => {
       boost['apr'] = 0;
       boost['tvl'] = 0;
       boost['periodFinish'] = 0;
-      boost['name'] = pool.name;
-      boost['logo'] = pool.logo;
       boost['token'] = pool.earnedToken;
       boost['tokenDecimals'] = pool.tokenDecimals;
       boost['tokenAddress'] = pool.earnedTokenAddress;
@@ -44,12 +43,11 @@ const initialBoosts = () => {
       boost['assets'] = pool.assets;
 
       boosts[boost.id] = boost;
-    }
-
-  }
+    } //for (const key in data.pools)
+  } //for (let net in config)
 
   return boosts;
-};
+}; //const initialBoosts = () =>
 
 const initialPools = () => {
   const platforms = [];
@@ -67,7 +65,7 @@ const initialPools = () => {
       pool['lastUpdated'] = 0;
       pool['tags'] = [];
       pool['safetyScore'] = 0;
-      pool['withdrawalFee'] = pool.isGovVault ?  0 : 0.001;
+      pool['withdrawalFee'] = pool.isGovVault ? 0 : 0.001;
       pool['depositFee'] = 0;
       pool['periodFinish'] = 1500000000;
 
@@ -86,7 +84,7 @@ const initialPools = () => {
   initPlatforms = platforms;
 
   return pools;
-};
+}; //const initialPools = () =>
 
 const initializeTags = (pool, net) => {
   const stables = getStablesForNetwork(net);
@@ -126,7 +124,7 @@ const initializeTags = (pool, net) => {
   }
 
   return pool;
-};
+}; //const initializeTags = (pool, net) =>
 
 const initialState = {
   pools: initialPools(),
@@ -171,4 +169,4 @@ export const vaultReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}; //const vaultReducer =
