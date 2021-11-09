@@ -80,7 +80,9 @@ const getPools = async (items, state, dispatch) => {
       tvl = totalStaked
         .times(price)
         .dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
-      tvl = tvl.minus(pools[pools[item.id].excluded].tvl);
+      if (pools[item.id].excluded) {
+        tvl = tvl.minus(pools[pools[item.id].excluded].tvl);
+      }
     } else {
       const balance = new BigNumber(item.balance);
       const price = pools[item.id].oracleId in prices ? prices[pools[item.id].oracleId] : 0;
