@@ -13,11 +13,11 @@ export const useIsBoosted = item => {
   const boostVaults = data[6];
 
   React.useEffect(() => {
-    var ts = Math.round(new Date().getTime() / 1000);
+    var ts = Date.now() / 1000;
 
     const boostedVault = lodash.filter(boostVaults, function (vault) {
       return (
-        vault.poolId === item.id && vault.status === 'active' && parseInt(vault.periodFinish) < ts
+        vault.poolId === item.id && vault.status === 'active' && ts >= parseInt(vault.periodFinish)
       );
     });
 
