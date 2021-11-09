@@ -140,7 +140,7 @@ export const Vault = () => {
               <Box className={classes.title}>
                 <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
                 <Typography variant={'h1'}>
-                  {item.name} {t('Vault-vault')}
+                  {item.name} {!item.isGovVault ? t('Vault-vault') : ""}
                 </Typography>
               </Box>
               <Box className={classes.badges}>
