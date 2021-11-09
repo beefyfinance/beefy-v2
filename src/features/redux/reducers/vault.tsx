@@ -43,13 +43,13 @@ const initialBoosts = () => {
       boost['tokenOracleId'] = pool.oracleId;
       boost['assets'] = pool.assets;
 
-      boosts[boost.id] = boost;
-    }
-
-  }
+      boosts[ boost.id] = boost;
+		} //for (const key in data.pools)
+	} //for (let net in config)
 
   return boosts;
-};
+}; //const initialBoosts = () =>
+
 
 const initialPools = () => {
   const platforms = [];
@@ -86,7 +86,8 @@ const initialPools = () => {
   initPlatforms = platforms;
 
   return pools;
-};
+}; //const initialPools = () =>
+
 
 const initializeTags = (pool, net) => {
   const stables = getStablesForNetwork(net);
@@ -126,7 +127,8 @@ const initializeTags = (pool, net) => {
   }
 
   return pool;
-};
+}; //const initializeTags = (pool, net) =>
+
 
 const initialState = {
   pools: initialPools(),
@@ -138,6 +140,7 @@ const initialState = {
   lastUpdated: 0,
   platforms: initPlatforms,
 };
+
 
 export const vaultReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -171,4 +174,4 @@ export const vaultReducer = (state = initialState, action) => {
     default:
       return state;
   }
-};
+}; //const vaultReducer =
