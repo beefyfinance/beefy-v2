@@ -41,7 +41,11 @@ const BreakdownTooltip = memo(({ rows }: any) => {
   );
 });
 
-const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ isGovVault, boosted, rates }) => {
+const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({
+  isGovVault,
+  boosted,
+  rates,
+}) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -89,7 +93,11 @@ const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({ isGovV
 
 const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
 
-const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({ isGovVault, boosted, rates }) => {
+const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({
+  isGovVault,
+  boosted,
+  rates,
+}) => {
   const rows = [];
   const { t } = useTranslation();
 
@@ -188,7 +196,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   } else {
     values.totalDaily = yearlyToDaily(values.totalApy);
   }
-  
+
   if (isGovVault) {
     values.totalApy = apy.vaultApr / 1;
     values.totalDaily = apy.vaultApr / 365;
@@ -212,6 +220,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
 
   return (
     <>
+      {isBoosted && console.log(formatted)}
       <LabeledStatWithTooltip
         value={formatted.totalApy}
         label={isGovVault ? t('APR') : t('APY')}

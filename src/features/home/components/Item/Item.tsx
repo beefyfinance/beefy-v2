@@ -160,7 +160,7 @@ const _Item = ({ vault }) => {
                       src={require(`../../../../images/networks/${item.network}.svg`).default}
                     />
                     {/*Vault Tags*/}
-                    <DisplayTags tags={item.tags} />
+                    <DisplayTags isBoosted={isBoosted} tags={item.tags} />
                   </div>
                 </div>
               </div>
@@ -178,7 +178,6 @@ const _Item = ({ vault }) => {
               <div className={classes.centerSpace}>
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-
                   <ValueText value={boostedData.partners[0].name} />
                   <Typography className={classes.label}>
                     <ValuePrice value={t('BOOST')} />
