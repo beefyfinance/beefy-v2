@@ -28,6 +28,19 @@ const initialTokens = () => {
           poolAddress: data.pools[key].poolAddress,
           baseSymbol: data.pools[key].token,
         };
+        if (!tokens[net][data.pools[key].token]) {
+          tokens[net][data.pools[key].token] = {
+            ...tokens[net][data.pools[key].token],
+            symbol: data.pools[key].token,
+            balance: 0,
+            decimals: data.pools[key].tokenDecimals,
+            address: data.pools[key].tokenAddress,
+            allowance: {
+              ...tokens[net][data.pools[key].token]?.allowance,
+              [data.pools[key].earnContractAddress]: 0,
+            },
+          };
+        }
       } else {
         tokens[net][data.pools[key].token] = {
           ...tokens[net][data.pools[key].token],
