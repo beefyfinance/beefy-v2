@@ -35,7 +35,7 @@ export const Withdraw = ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
-  const [state, setState] = React.useState({ balance: '0' });
+  const [state, setState] = React.useState({ balance: new BigNumber(0) });
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
@@ -46,11 +46,11 @@ export const Withdraw = ({
 
   const handleInput = val => {
     const value =
-      parseFloat(val) > parseFloat(state.balance)
-        ? state.balance
+      parseFloat(val) > state.balance.toNumber()
+        ? state.balance.toNumber()
         : parseFloat(val) < 0
         ? 0
-        : stripExtraDecimals(val);
+        : parseFloat(val);
     setFormData({
       ...formData,
       withdraw: { amount: value, max: new BigNumber(value).minus(state.balance).toNumber() === 0 },
@@ -58,9 +58,8 @@ export const Withdraw = ({
   };
 
   const handleMax = () => {
-    if (parseFloat(state.balance) > 0) {
-      console.log(`max amount is ${state.balance}`);
-      setFormData({ ...formData, withdraw: { amount: state.balance, max: true } });
+    if (state.balance.toNumber() > 0) {
+      setFormData({ ...formData, withdraw: { amount: state.balance.toNumber(), max: true } });
     }
   };
 
@@ -118,7 +117,7 @@ export const Withdraw = ({
   };
 
   React.useEffect(() => {
-    let amount = '0';
+    let amount = new BigNumber(0);
 
     if (item.isGovVault) {
       let symbol = `${item.token}GovVault`;
@@ -126,7 +125,7 @@ export const Withdraw = ({
         amount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].balance),
           item.tokenDecimals
-        ).toFixed(8);
+        )
       }
     } else {
       if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
@@ -135,7 +134,7 @@ export const Withdraw = ({
             byDecimals(item.pricePerFullShare)
           ),
           item.tokenDecimals
-        ).toFixed(8);
+        )
       }
     }
     setState({ balance: amount });
@@ -179,7 +178,7 @@ export const Withdraw = ({
               <Loader line={true} />
             ) : (
               <Typography variant={'body1'}>
-                {state.balance} {item.token}
+                {state.balance.toNumber().toFixed(8)} {item.token}
               </Typography>
             )}
           </Box>
@@ -201,7 +200,7 @@ export const Withdraw = ({
             </Box>
             <InputBase
               placeholder="0.00"
-              value={formData.withdraw.amount}
+              value={stripExtraDecimals(formData.withdraw.amount.toFixed(8))}
               onChange={e => handleInput(e.target.value)}
             />
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
