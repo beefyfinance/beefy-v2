@@ -231,7 +231,7 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
 
-                  <ValueText value={(poolRewards.rewards ?? '') + ' BNB'} />
+                  <ValueText value={(poolRewards.rewards ?? '') + ` ${item.earnedToken}`} />
                   {isBoosted && parseInt(priceInDolar.balance) === 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
