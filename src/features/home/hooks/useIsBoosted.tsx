@@ -17,7 +17,7 @@ export const useIsBoosted = item => {
 
     const boostedVault = lodash.filter(boostVaults, function (vault) {
       return (
-        vault.poolId === item.id && vault.status === 'active' && ts >= parseInt(vault.periodFinish)
+        vault.poolId === item.id && vault.status === 'active' && parseInt(vault.periodFinish) > ts
       );
     });
 
