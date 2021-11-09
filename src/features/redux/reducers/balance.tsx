@@ -29,7 +29,6 @@ const initialTokens = () => {
           baseSymbol: data.pools[key].token,
         };
         if (!tokens[net][data.pools[key].token]) {
-          console.log('this happened')
           tokens[net][data.pools[key].token] = {
             ...tokens[net][data.pools[key].token],
             symbol: data.pools[key].token,
@@ -41,7 +40,6 @@ const initialTokens = () => {
               [data.pools[key].earnContractAddress]: 0,
             },
           };
-          console.log(tokens[net][data.pools[key].token]);
         }
       } else {
         tokens[net][data.pools[key].token] = {
