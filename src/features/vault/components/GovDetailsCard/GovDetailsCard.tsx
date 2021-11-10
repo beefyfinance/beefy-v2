@@ -19,8 +19,6 @@ export const GovDetailsCard = (earnedToken) => {
       <CardHeader>
         <Typography className={classes.preTitle}>{t('Gov-How')}</Typography>
         <div style={{ display: 'flex' }}>
-          {/* <AssetsImage {...({img:`../../../../images/single-assets/POTS.png`} as any)} /> */}
-          <div className={classes.divider} />
           <CardTitle title={t('Gov-Pool')} subtitle={''} />
         </div>
         <div className={classes.cardActions}>
