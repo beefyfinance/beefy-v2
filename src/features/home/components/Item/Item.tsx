@@ -79,7 +79,7 @@ const _Item = ({ vault }) => {
     let amount = '0';
     if (wallet.address) {
       amount = byDecimals(new BigNumber(item.balance), item.tokenDecimals)
-        .multipliedBy(new BigNumber(item.pricePerFullShare))
+        .multipliedBy(byDecimals(new BigNumber(item.pricePerFullShare), item.tokenDecimals))
         .toFixed(8);
     }
     setState({ formattedBalance: amount });
@@ -108,7 +108,9 @@ const _Item = ({ vault }) => {
 
   const rewardPrice = React.useMemo(() => {
     return parseFloat(poolRewards.rewards) > 0
-      ? new BigNumber(pricesReducer.prices[item.earnedToken]).times(parseFloat(poolRewards.rewards)).toFixed(2)
+      ? new BigNumber(pricesReducer.prices[item.earnedToken])
+          .times(parseFloat(poolRewards.rewards))
+          .toFixed(2)
       : 0;
   }, [poolRewards.rewards, pricesReducer.prices]);
 
