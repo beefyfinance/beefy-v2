@@ -140,7 +140,7 @@ export const Vault = () => {
               <Box className={classes.title}>
                 <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
                 <Typography variant={'h1'}>
-                  {item.name} {!item.isGovVault ? t('Vault-vault') : ""}
+                  {item.name} {!item.isGovVault ? t('Vault-vault') : ''}
                 </Typography>
               </Box>
               <Box className={classes.badges}>
@@ -185,6 +185,8 @@ export const Vault = () => {
                   </Box>
                   {dw === 'deposit' ? (
                     <Deposit
+                      boostedData={boostedData}
+                      isBoosted={isBoosted}
                       item={item}
                       handleWalletConnect={handleWalletConnect}
                       formData={formData}
@@ -194,6 +196,8 @@ export const Vault = () => {
                     />
                   ) : (
                     <Withdraw
+                      boostedData={boostedData}
+                      isBoosted={isBoosted}
                       item={item}
                       handleWalletConnect={handleWalletConnect}
                       formData={formData}

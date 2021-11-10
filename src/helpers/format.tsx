@@ -84,11 +84,11 @@ export const formatCountdown = deadline => {
   const minutes = Math.floor((time / (1000 * 60)) % 60)
     .toString()
     .padStart(2, '0');
-  const seconds = Math.floor((time / 1000) % 60)
-    .toString()
-    .padStart(2, '0');
+  // const seconds = Math.floor((time / 1000) % 60)
+  //   .toString()
+  //   .padStart(2, '0');
 
-  return `${day}day ${hours}:${minutes}:${seconds}`;
+  return `${day}d ${hours}h ${minutes}m`;
 };
 
 export const stripExtraDecimals = (f, decimals = 8) => {
