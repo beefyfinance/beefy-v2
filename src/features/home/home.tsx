@@ -51,6 +51,12 @@ const DataLoader = memo(function HomeDataLoader() {
   }, [dispatch, pricesLastUpdated]);
 
   useEffect(() => {
+    if (pricesLastUpdated > 0) {
+      dispatch(reduxActions.vault.fetchBoosts());
+    }
+  }, [dispatch, pricesLastUpdated]);
+
+  useEffect(() => {
     const id = setInterval(() => {
       dispatch(reduxActions.vault.fetchPools());
     }, 60000);
@@ -79,10 +85,9 @@ const DataLoader = memo(function HomeDataLoader() {
 
 function createVaultRenderer(vaults, isTwoColumns, cache) {
   return function vaultRenderer({ rowIndex, columnIndex, parent, key, style }) {
-		//if displaying in two columns and we have an odd number of vaults to show, skip the 
-		//	bottom-right cell
-		if (isTwoColumns && vaults.length <= rowIndex * 2 + columnIndex)
-			return false;
+    //if displaying in two columns and we have an odd number of vaults to show, skip the
+    //	bottom-right cell
+    if (isTwoColumns && vaults.length <= rowIndex * 2 + columnIndex) return false;
 
     const vault = (
       <Grid item xs={12}>
@@ -129,8 +134,9 @@ function useVaultRenderer(vaults, isTwoColumns) {
 }
 
 const VirtualVaultsList = memo(({ vaults }: any) => {
-  
-  const [isTwoColumns, setIsTwoColumns] = useState(window.innerWidth > 599 && window.innerWidth < 960);
+  const [isTwoColumns, setIsTwoColumns] = useState(
+    window.innerWidth > 599 && window.innerWidth < 960
+  );
 
   const updateDimensions: any = () => {
     setIsTwoColumns(window.innerWidth > 599 && window.innerWidth < 960);
@@ -141,7 +147,7 @@ const VirtualVaultsList = memo(({ vaults }: any) => {
       updateDimensions();
     }
     window.addEventListener('resize', handleResize);
-  })
+  });
 
   const { renderer, cache } = useVaultRenderer(vaults, isTwoColumns);
 
@@ -201,9 +207,7 @@ const VaultsList = memo(function HomeVaultsList() {
         {filterConfig.deposited && address && filteredVaults.length === 0 && (
           <EmptyStates setFilterConfig={setFilterConfig} />
         )}
-        {filterConfig.deposited && !address && (
-          <EmptyStates setFilterConfig={setFilterConfig} />
-        )}
+        {filterConfig.deposited && !address && <EmptyStates setFilterConfig={setFilterConfig} />}
         <VirtualVaultsList vaults={filteredVaults} />
       </div>
     </>

@@ -5,7 +5,7 @@ import { styles } from './styles';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles as any);
-const _DisplayTags = ({ tags }) => {
+const _DisplayTags = ({ tags, isBoosted }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const labels = useMemo(
@@ -19,13 +19,24 @@ const _DisplayTags = ({ tags }) => {
     [t]
   );
 
-  return tags.map(item => (
-    <div className={classes.spacingMobile} key={item}>
-      <Typography className={clsx(classes.tags, classes[item + 'Tag'])} display={'inline'}>
-        {item in labels ? labels[item] : item}
-      </Typography>
-    </div>
-  ));
+  return (
+    <>
+      {tags.map(item => (
+        <div className={classes.spacingMobile} key={item}>
+          <Typography className={clsx(classes.tags, classes[item + 'Tag'])} display={'inline'}>
+            {item in labels ? labels[item] : item}
+          </Typography>
+        </div>
+      ))}
+      {isBoosted && (
+        <div className={classes.spacingMobile} key={'boost'}>
+          <Typography className={clsx(classes.tags, classes['boost' + 'Tag'])} display={'inline'}>
+            {t('VaultTag-Boost')}
+          </Typography>
+        </div>
+      )}
+    </>
+  );
 };
 
 export const DisplayTags = memo(_DisplayTags);
