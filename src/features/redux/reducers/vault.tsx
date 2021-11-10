@@ -19,7 +19,6 @@ const initialBoosts = () => {
     const data = require(`../../../config/boost/${net}`);
     for (const key in data.pools) {
       const boost = data.pools[key];
-      console.log(boost);
       let pool;
 
       // Boost pools should have poolId, this is a temp fix until Boost pools are transferred correctly
