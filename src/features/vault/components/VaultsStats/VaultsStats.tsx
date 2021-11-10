@@ -26,9 +26,9 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
   React.useEffect(() => {
     let amount = '0';
     let rewardAmount = '0';
-    if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
+    let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
+    if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
       if (item.isGovVault) {
-        let symbol = `${item.token}GovVault`;
         amount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].balance),
           item.tokenDecimals
@@ -37,10 +37,9 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
           new BigNumber(balance.tokens[item.network][symbol].rewards),
           item.tokenDecimals
         ).toFixed(8);
-
       } else {
         amount = byDecimals(
-          new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
+          new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
             byDecimals(item.pricePerFullShare)
           ),
           item.tokenDecimals

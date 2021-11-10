@@ -110,6 +110,33 @@ export const Withdraw = ({
     } //if (wallet.address)
   }; //const handleWithdraw
 
+  const handleClaim = () => {
+    const steps = [];
+    if (wallet.address) {
+      if (item.network !== wallet.network) {
+        dispatch(reduxActions.wallet.setNetwork(item.network));
+        return false;
+      }
+
+      steps.push({
+        step: 'withdraw',
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        action: () =>
+          dispatch(
+            reduxActions.wallet.claim(
+              item.network,
+              item.earnContractAddress,
+              state.balance.toNumber()
+            )
+          ),
+        pending: false,
+        token: balance.tokens[item.network][item.token],
+      });
+
+      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
+    } //if (wallet.address)
+  }; //const handleWithdraw
+
   const handleClose = () => {
     updateItemData();
     resetFormData();
@@ -125,7 +152,7 @@ export const Withdraw = ({
         amount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].balance),
           item.tokenDecimals
-        )
+        );
       }
     } else {
       if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
@@ -134,7 +161,7 @@ export const Withdraw = ({
             byDecimals(item.pricePerFullShare)
           ),
           item.tokenDecimals
-        )
+        );
       }
     }
     setState({ balance: amount });
@@ -200,7 +227,7 @@ export const Withdraw = ({
             </Box>
             <InputBase
               placeholder="0.00"
-              value={stripExtraDecimals(formData.withdraw.amount.toFixed(8))}
+              value={formData.withdraw.amount}
               onChange={e => handleInput(e.target.value)}
             />
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
@@ -223,7 +250,7 @@ export const Withdraw = ({
               <>
                 {item.isGovVault ? (
                   <>
-                    <Button disabled={false} className={classes.btnSubmit} fullWidth={true}>
+                    <Button onClick={handleClaim} disabled={state.balance.toNumber()<=0} className={classes.btnSubmit} fullWidth={true}>
                       {t('ClaimRewards-noun')}
                     </Button>
                     <Button

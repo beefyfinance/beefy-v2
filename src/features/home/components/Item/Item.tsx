@@ -106,9 +106,19 @@ const _Item = ({ vault }) => {
       : 0;
   }, [priceInDolar.balance, pricesReducer.prices, item.oracleId]);
 
+  const rewardPrice = React.useMemo(() => {
+    return parseFloat(poolRewards.rewards) > 0
+      ? new BigNumber(pricesReducer.prices[item.earnedToken]).times(parseFloat(poolRewards.rewards)).toFixed(2)
+      : 0;
+  }, [poolRewards.rewards, pricesReducer.prices]);
+
   const tokensEarned = React.useMemo(() => {
     return parseFloat(state.formattedBalance) > 0 ? state.formattedBalance : '0';
   }, [state.formattedBalance]);
+
+  const rewardsEarned = React.useMemo(() => {
+    return parseFloat(poolRewards.rewards) > 0 ? poolRewards.rewards : '0';
+  }, [poolRewards.rewards]);
 
   return (
     <div
@@ -230,10 +240,15 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
 
-                  <ValueText value={(poolRewards.rewards ?? '') + ` ${item.earnedToken}`} />
-                  {parseFloat(priceInDolar.balance) > 0 ? (
+                  <ValueText value={(rewardsEarned ?? '') + ` ${item.earnedToken}`} />
+                  {parseFloat(poolRewards.rewards) > 0 && (
+                    <Typography className={classes.label}>
+                      <ValuePrice value={formatUsd(rewardPrice)} />
+                    </Typography>
+                  )}
+                  {/* {parseFloat(priceInDolar.balance) > 0 ? (
                     <div className={classes.boostSpacer} />
-                  ) : null}
+                  ) : null} */}
                 </div>
               </div>
             ) : (

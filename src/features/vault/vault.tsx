@@ -208,7 +208,7 @@ export const Vault = () => {
                 {/* TODO: Show only for boosts */}
                 {isBoosted && <BoostCard boostedData={boostedData} />}
                 {/* TODO: Show only for gov pools */}
-                {isGovVault && <GovDetailsCard />}
+                {isGovVault && <GovDetailsCard earnedToken={item.earnedToken}/>}
                 {!isGovVault ? (
                   <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
                 ) : null}
