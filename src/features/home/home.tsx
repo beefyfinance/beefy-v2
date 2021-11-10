@@ -1,70 +1,65 @@
-import React, { memo, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Container, makeStyles, Grid } from '@material-ui/core';
-import { reduxActions } from '../redux/actions';
-import { Filter } from './components/Filter';
-import { Portfolio } from './components/Portfolio';
-import { useVaults } from './hooks/useFilteredVaults';
-import { EmptyStates } from './components/EmptyStates';
-import { styles } from './styles';
-import {
-  AutoSizer,
-  CellMeasurer,
-  CellMeasurerCache,
-  WindowScroller,
-  Grid as GridVirtualized,
-} from 'react-virtualized';
-import { Item } from './components/Item';
-import { ceil } from 'lodash';
-import { CowLoader } from '../../components/CowLoader';
+import React, {memo, useEffect, useMemo} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
+import {Container, makeStyles, useMediaQuery} from '@material-ui/core';
+import {reduxActions} from '../redux/actions';
+import {Filter} from './components/Filter';
+import {Portfolio} from './components/Portfolio';
+import {useVaults} from './hooks/useFilteredVaults';
+import {EmptyStates} from './components/EmptyStates';
+import {styles} from './styles';
+import {AutoSizer, CellMeasurer, CellMeasurerCache, Grid as GridVirtualized, WindowScroller,} from 'react-virtualized';
+import {Item} from './components/Item';
+import {ceil} from 'lodash';
+import {CowLoader} from '../../components/CowLoader';
 
 const useStyles = makeStyles(styles as any);
+
 export function notifyResize() {
-  const event = document.createEvent('HTMLEvents');
-  event.initEvent('resize', true, false);
-  window.dispatchEvent(event);
+    const event = document.createEvent('HTMLEvents');
+    event.initEvent('resize', true, false);
+    window.dispatchEvent(event);
 }
 
 const DataLoader = memo(function HomeDataLoader() {
-  const pricesLastUpdated = useSelector((state: any) => state.pricesReducer.lastUpdated);
-  const vaultLastUpdated = useSelector((state: any) => state.vaultReducer.lastUpdated);
-  const walletAddress = useSelector((state: any) => state.walletReducer.address);
-  const dispatch = useDispatch();
+    const pricesLastUpdated = useSelector((state: any) => state.pricesReducer.lastUpdated);
+    const vaultLastUpdated = useSelector((state: any) => state.vaultReducer.lastUpdated);
+    const walletAddress = useSelector((state: any) => state.walletReducer.address);
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (walletAddress && vaultLastUpdated > 0) {
-      dispatch(reduxActions.balance.fetchBalances());
-    }
-  }, [dispatch, walletAddress, vaultLastUpdated]);
+    useEffect(() => {
+        if (walletAddress && vaultLastUpdated > 0) {
+            dispatch(reduxActions.balance.fetchBalances());
+        }
+    }, [dispatch, walletAddress, vaultLastUpdated]);
 
-  useEffect(() => {
-    if (walletAddress && vaultLastUpdated > 0) {
-      dispatch(reduxActions.balance.fetchBoostBalances());
-    }
-  }, [dispatch, walletAddress, vaultLastUpdated]);
+    useEffect(() => {
+        if (walletAddress && vaultLastUpdated > 0) {
+            dispatch(reduxActions.balance.fetchBoostBalances());
+        }
+    }, [dispatch, walletAddress, vaultLastUpdated]);
 
-  useEffect(() => {
-    if (pricesLastUpdated > 0) {
-      dispatch(reduxActions.vault.fetchPools());
-    }
-  }, [dispatch, pricesLastUpdated]);
+    useEffect(() => {
+        if (pricesLastUpdated > 0) {
+            dispatch(reduxActions.vault.fetchPools());
+        }
+    }, [dispatch, pricesLastUpdated]);
 
-  useEffect(() => {
-    if (pricesLastUpdated > 0) {
-      dispatch(reduxActions.vault.fetchBoosts());
-    }
-  }, [dispatch, pricesLastUpdated]);
+    useEffect(() => {
+        if (pricesLastUpdated > 0) {
+            dispatch(reduxActions.vault.fetchBoosts());
+        }
+    }, [dispatch, pricesLastUpdated]);
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      dispatch(reduxActions.vault.fetchPools());
-    }, 60000);
+    useEffect(() => {
+        const id = setInterval(() => {
+            dispatch(reduxActions.vault.fetchPools());
+        }, 60000);
 
-    return () => clearInterval(id);
-  }, [dispatch]);
+        return () => clearInterval(id);
+    }, [dispatch]);
 
-  return null;
+    return null;
 });
 
 /*const VaultsHeader = memo(function HomeVaultsHeader() {
@@ -83,148 +78,134 @@ const DataLoader = memo(function HomeDataLoader() {
   );
 });*/
 
-function createVaultRenderer(vaults, isTwoColumns, cache) {
-  return function vaultRenderer({ rowIndex, columnIndex, parent, key, style }) {
-    //if displaying in two columns and we have an odd number of vaults to show, skip the
-    //	bottom-right cell
-    if (isTwoColumns && vaults.length <= rowIndex * 2 + columnIndex) return false;
+function createVaultRenderer(vaults, columns, cache) {
+    return function vaultRenderer({rowIndex, columnIndex, parent, key, style}) {
+        const index = rowIndex * columns + columnIndex;
+        const vault = vaults[index] ?? null;
+        if (!vault) {
+            console.log(rowIndex, columnIndex, index);
+        }
 
-    const vault = (
-      <Grid item xs={12}>
-        <Item vault={isTwoColumns ? vaults[rowIndex * 2 + columnIndex] : vaults[rowIndex]} />
-      </Grid>
-    );
-
-    return (
-      <CellMeasurer
-        cache={cache}
-        key={key}
-        columnIndex={columnIndex}
-        rowIndex={rowIndex}
-        parent={parent}
-      >
-        {({ registerChild }) => (
-          <div style={style} ref={registerChild}>
-            {vault}
-          </div>
-        )}
-      </CellMeasurer>
-    );
-  };
+        return (
+            <CellMeasurer
+                cache={cache}
+                key={key}
+                columnIndex={columnIndex}
+                rowIndex={rowIndex}
+                parent={parent}
+            >
+                {({registerChild}) => (
+                    <div style={style} ref={registerChild} data-id={vault ? vault.id : 'null'}>
+                        {vault ? <Item vault={vault}/> : null}
+                    </div>
+                )}
+            </CellMeasurer>
+        );
+    };
 }
 
-function createVaultHeightCache(vaults) {
-  return new CellMeasurerCache({
-    fixedWidth: true,
-    defaultHeight: 140,
-    keyMapper: function (index) {
-      return vaults[index].id + ':' + window.innerWidth;
-    },
-  });
+function createVaultHeightCache(vaults, columns) {
+    return new CellMeasurerCache({
+        fixedWidth: true,
+        defaultHeight: 140,
+        keyMapper: function (rowIndex, columnIndex) {
+            const index = rowIndex * columns + columnIndex;
+            if (index in vaults) {
+                return vaults[index].id + ':' + rowIndex + ':' + columnIndex + ':' + window.innerWidth;
+            }
+            return rowIndex + ':' + columnIndex + ':' + window.innerWidth;
+        },
+    });
 }
 
 function useVaultRenderer(vaults, isTwoColumns) {
-  const cache = useMemo(() => createVaultHeightCache(vaults), [vaults]);
-  const renderer = useMemo(
-    () => createVaultRenderer(vaults, isTwoColumns, cache),
-    [vaults, isTwoColumns, cache]
-  );
+    const cache = useMemo(() => createVaultHeightCache(vaults, isTwoColumns ? 2 : 1), [vaults]);
+    const renderer = useMemo(
+        () => createVaultRenderer(vaults, isTwoColumns ? 2 : 1, cache),
+        [vaults, isTwoColumns, cache]
+    );
 
-  return { renderer, cache };
+    return {renderer, cache};
 }
 
-const VirtualVaultsList = memo(({ vaults }: any) => {
-  const [isTwoColumns, setIsTwoColumns] = useState(
-    window.innerWidth > 599 && window.innerWidth < 960
-  );
+const VirtualVaultsList = memo(({vaults}: any) => {
+    const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
+    const {renderer, cache} = useVaultRenderer(vaults, isTwoColumns);
 
-  const updateDimensions: any = () => {
-    setIsTwoColumns(window.innerWidth > 599 && window.innerWidth < 960);
-  };
-
-  useEffect(() => {
-    function handleResize() {
-      updateDimensions();
-    }
-    window.addEventListener('resize', handleResize);
-  });
-
-  const { renderer, cache } = useVaultRenderer(vaults, isTwoColumns);
-
-  return (
-    <WindowScroller>
-      {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
-        <AutoSizer disableHeight>
-          {({ width }) => (
-            <div ref={registerChild}>
-              <GridVirtualized
-                autoHeight
-                height={height}
-                isScrolling={isScrolling}
-                onScroll={onChildScroll}
-                overscanRowCount={2}
-                rowCount={isTwoColumns ? ceil(vaults.length / 2) : vaults.length}
-                rowHeight={cache.rowHeight}
-                cellRenderer={renderer}
-                scrollTop={scrollTop}
-                width={width}
-                deferredMeasurementCache={cache}
-                columnCount={isTwoColumns ? 2 : 1}
-                columnWidth={isTwoColumns ? width / 2 : width}
-                style={{ outline: 'none' }}
-              />
-            </div>
-          )}
-        </AutoSizer>
-      )}
-    </WindowScroller>
-  );
+    return (
+        <WindowScroller>
+            {({height, isScrolling, registerChild, onChildScroll, scrollTop}) => (
+                <AutoSizer disableHeight>
+                    {({width}) => (
+                        <div ref={registerChild}>
+                            <GridVirtualized
+                                autoHeight
+                                height={height}
+                                isScrolling={isScrolling}
+                                onScroll={onChildScroll}
+                                overscanRowCount={2}
+                                rowCount={isTwoColumns ? ceil(vaults.length / 2) : vaults.length}
+                                rowHeight={cache.rowHeight}
+                                cellRenderer={renderer}
+                                scrollTop={scrollTop}
+                                width={width}
+                                deferredMeasurementCache={cache}
+                                columnCount={isTwoColumns ? 2 : 1}
+                                columnWidth={isTwoColumns ? width / 2 : width}
+                                style={{outline: 'none'}}
+                            />
+                        </div>
+                    )}
+                </AutoSizer>
+            )}
+        </WindowScroller>
+    );
 });
 
 const VaultsList = memo(function HomeVaultsList() {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  const isPoolsLoading = useSelector((state: any) => state.vaultReducer.isPoolsLoading);
-  const platforms = useSelector((state: any) => state.vaultReducer.platforms);
-  const [filteredVaults, filterConfig, setFilterConfig, filteredCount, allCount] = useVaults();
-  const address = useSelector((state: any) => state.walletReducer.address);
+    const classes = useStyles();
+    const {t} = useTranslation();
+    const isPoolsLoading = useSelector((state: any) => state.vaultReducer.isPoolsLoading);
+    const platforms = useSelector((state: any) => state.vaultReducer.platforms);
+    const [filteredVaults, filterConfig, setFilterConfig, filteredCount, allCount] = useVaults();
+    const address = useSelector((state: any) => state.walletReducer.address);
 
-  if (isPoolsLoading) {
-    return <CowLoader text={t('Vaults-LoadingData')} />;
-  }
+    if (isPoolsLoading) {
+        return <CowLoader text={t('Vaults-LoadingData')}/>;
+    }
 
-  return (
-    <>
-      <Filter
-        sortConfig={filterConfig}
-        setSortConfig={setFilterConfig}
-        platforms={platforms}
-        allCount={allCount}
-        filteredCount={filteredCount}
-      />
+    return (
+        <>
+            <Filter
+                sortConfig={filterConfig}
+                setSortConfig={setFilterConfig}
+                platforms={platforms}
+                allCount={allCount}
+                filteredCount={filteredCount}
+            />
 
-      <div className={classes.vaultsList}>
-        {filterConfig.deposited && address && filteredVaults.length === 0 && (
-          <EmptyStates setFilterConfig={setFilterConfig} />
-        )}
-        {filterConfig.deposited && !address && <EmptyStates setFilterConfig={setFilterConfig} />}
-        <VirtualVaultsList vaults={filteredVaults} />
-      </div>
-    </>
-  );
+            <div className={classes.vaultsList}>
+                {filterConfig.deposited && address && filteredVaults.length === 0 && (
+                    <EmptyStates setFilterConfig={setFilterConfig}/>
+                )}
+                {filterConfig.deposited && !address && <EmptyStates setFilterConfig={setFilterConfig}/>}
+                <VirtualVaultsList vaults={filteredVaults}/>
+            </div>
+        </>
+    );
 });
 
 export const Home = () => {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  return (
-    <React.Fragment>
-      <DataLoader />
-      <Portfolio />
-      <Container maxWidth="lg" className={classes.vaultContainer}>
-        {/*<VaultsHeader />*/}
-        <VaultsList />
-      </Container>
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            <DataLoader/>
+            <Portfolio/>
+            <Container maxWidth="lg" className={classes.vaultContainer}>
+                {/*<VaultsHeader />*/}
+                <VaultsList/>
+            </Container>
+        </React.Fragment>
+    );
 };
