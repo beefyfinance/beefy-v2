@@ -79,16 +79,20 @@ export const BoostWidget = ({ onClick, balance, s_stake, isBoosted, boostedData 
           {/* TODO: connect boost data + buttons*/}
           <Grid container>
             <Grid item xs={6}>
-              <Typography className={classes.body1}>{t('Boost-Balance')}</Typography>
+              <Typography className={classes.body1}>
+                {t('Boost-Balance', { mooToken: boostedData.token })}
+              </Typography>
               <Typography className={classes.h2}>{balance}</Typography>
             </Grid>
             <Grid item xs={6}>
-              <Typography className={classes.body1}>{t('Boost-Balance-Staked')}</Typography>
+              <Typography className={classes.body1}>
+                {t('Boost-Balance-Staked', { mooToken: boostedData.token })}
+              </Typography>
               <Typography className={classes.h2}>0</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography className={classes.body1}>{t('Boost-Rewards')}</Typography>
-              <Typography className={classes.h2}>0</Typography>
+              <Typography className={classes.h2}>0 {boostedData.earnedToken}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography className={classes.body1}>{t('Boost-Ends')}</Typography>

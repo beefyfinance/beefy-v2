@@ -220,7 +220,6 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
 
   return (
     <>
-      {isBoosted && console.log(formatted)}
       <LabeledStatWithTooltip
         value={formatted.totalApy}
         label={isGovVault ? t('APR') : t('APY')}

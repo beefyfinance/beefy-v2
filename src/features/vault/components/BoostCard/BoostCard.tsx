@@ -33,7 +33,7 @@ export const BoostCard = ({ boostedData }) => {
           </div>
           {Object.keys(social).map(net => {
             return (
-              <div className={classes.cardAction}>
+              <div key={net} className={classes.cardAction}>
                 <LinkButton href={social[net]} text={net} />
               </div>
             );

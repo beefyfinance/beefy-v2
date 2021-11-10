@@ -81,6 +81,15 @@ export const Vault = () => {
   };
 
   React.useEffect(() => {
+    dispatch(reduxActions.vault.fetchBoosts());
+    if (item) {
+      setInterval(() => {
+        dispatch(reduxActions.vault.fetchBoosts());
+      }, 60000);
+    }
+  }, [dispatch, item]);
+
+  React.useEffect(() => {
     if (!isEmpty(vault.pools) && vault.pools[id]) {
       setVaultData(vault.pools[id]);
     } else {
@@ -125,6 +134,7 @@ export const Vault = () => {
       setInterval(() => {
         dispatch(reduxActions.vault.fetchPools(item));
         dispatch(reduxActions.balance.fetchBalances());
+        dispatch(reduxActions.vault.fetchBoosts());
       }, 60000);
     }
   }, [item, dispatch]);
@@ -212,7 +222,7 @@ export const Vault = () => {
                 {/* TODO: Show only for boosts */}
                 {isBoosted && <BoostCard boostedData={boostedData} />}
                 {/* TODO: Show only for gov pools */}
-                {isGovVault && <GovDetailsCard earnedToken={item.earnedToken}/>}
+                {isGovVault && <GovDetailsCard earnedToken={item.earnedToken} />}
                 {!isGovVault ? (
                   <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
                 ) : null}

@@ -23,6 +23,9 @@ export const useIsBoosted = item => {
 
     if (boostedVault.length !== 0) {
       setState({ isBoosted: true, data: boostedVault[0] });
+      setInterval(() => {
+        setState({ isBoosted: true, data: boostedVault[0] });
+      }, 60000);
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
