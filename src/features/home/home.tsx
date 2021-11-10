@@ -110,10 +110,14 @@ function createVaultHeightCache(vaults, columns) {
         defaultHeight: 140,
         keyMapper: function (rowIndex, columnIndex) {
             const index = rowIndex * columns + columnIndex;
+            // eslint-disable-next-line no-restricted-globals
+            const orientation = (screen.orientation || {}).type || (screen as any).mozOrientation || (screen as any).msOrientation || 'undefined';
+
             if (index in vaults) {
-                return vaults[index].id + ':' + rowIndex + ':' + columnIndex + ':' + window.innerWidth;
+                return vaults[index].id + ':' + rowIndex + ':' + columnIndex + ':' + orientation + ':' + window.innerWidth;
             }
-            return rowIndex + ':' + columnIndex + ':' + window.innerWidth;
+
+            return rowIndex + ':' + columnIndex + ':' + orientation + ':' + window.innerWidth;
         },
     });
 }
