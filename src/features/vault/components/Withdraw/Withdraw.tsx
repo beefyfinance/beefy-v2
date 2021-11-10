@@ -7,7 +7,6 @@ import { Loader } from '../../../../components/loader';
 import {
   byDecimals,
   convertAmountToRawNumber,
-  stripExtraDecimals,
 } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { AssetsImage } from '../../../../components/AssetsImage';
@@ -45,21 +44,54 @@ export const Withdraw = ({
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleInput = val => {
-    const value =
-      parseFloat(val) > state.balance.toNumber()
-        ? state.balance.toNumber()
-        : parseFloat(val) < 0
-        ? 0
-        : parseFloat(val);
+    const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
+
+    let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
+
+    let max = false;
+
+    let value = new BigNumber(input).decimalPlaces(
+      balance.tokens[item.network][symbol].decimals,
+      BigNumber.ROUND_DOWN
+    );
+
+    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
+      value = new BigNumber(0);
+    }
+
+    if (value.isGreaterThanOrEqualTo(state.balance)) {
+      value = state.balance;
+      max = true;
+    }
+
+    const formattedInput = (() => {
+      if (value.isEqualTo(input)) return input;
+      if (input === '') return '';
+      if (input === '.') return `0.`;
+      return (value as any).significant(6);
+    })();
+
     setFormData({
       ...formData,
-      withdraw: { amount: value, max: new BigNumber(value).minus(state.balance).toNumber() === 0 },
+      withdraw: {
+        ...formData.withdraw,
+        input: formattedInput,
+        amount: value,
+        max: max,
+      },
     });
   };
 
   const handleMax = () => {
     if (state.balance.toNumber() > 0) {
-      setFormData({ ...formData, withdraw: { amount: state.balance.toNumber(), max: true } });
+      setFormData({
+        ...formData,
+        withdraw: {
+          input: (state.balance as any).significant(6),
+          amount: state.balance.toNumber(),
+          max: true,
+        },
+      });
     }
   };
 
@@ -124,6 +156,33 @@ export const Withdraw = ({
         action: () =>
           dispatch(
             reduxActions.wallet.claim(
+              item.network,
+              item.earnContractAddress,
+              state.balance.toNumber()
+            )
+          ),
+        pending: false,
+        token: balance.tokens[item.network][item.token],
+      });
+
+      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
+    } //if (wallet.address)
+  }; //const handleWithdraw
+
+  const handleExit = () => {
+    const steps = [];
+    if (wallet.address) {
+      if (item.network !== wallet.network) {
+        dispatch(reduxActions.wallet.setNetwork(item.network));
+        return false;
+      }
+
+      steps.push({
+        step: 'withdraw',
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        action: () =>
+          dispatch(
+            reduxActions.wallet.exit(
               item.network,
               item.earnContractAddress,
               state.balance.toNumber()
@@ -205,7 +264,8 @@ export const Withdraw = ({
               <Loader line={true} />
             ) : (
               <Typography variant={'body1'}>
-                {state.balance.toNumber().toFixed(8)} {item.token}
+                {(state.balance as any).significant(6)}{' '}
+                {item.token}
               </Typography>
             )}
           </Box>
@@ -227,7 +287,7 @@ export const Withdraw = ({
             </Box>
             <InputBase
               placeholder="0.00"
-              value={formData.withdraw.amount}
+              value={formData.withdraw.input}
               onChange={e => handleInput(e.target.value)}
             />
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
@@ -250,7 +310,12 @@ export const Withdraw = ({
               <>
                 {item.isGovVault ? (
                   <>
-                    <Button onClick={handleClaim} disabled={state.balance.toNumber()<=0} className={classes.btnSubmit} fullWidth={true}>
+                    <Button
+                      onClick={handleClaim}
+                      disabled={state.balance.toNumber() <= 0}
+                      className={classes.btnSubmit}
+                      fullWidth={true}
+                    >
                       {t('ClaimRewards-noun')}
                     </Button>
                     <Button
@@ -261,7 +326,12 @@ export const Withdraw = ({
                     >
                       {formData.withdraw.max ? t('Withdraw-All') : t('Withdraw-Verb')}
                     </Button>
-                    <Button disabled={true} className={classes.btnSubmitSecondary} fullWidth={true}>
+                    <Button
+                      onClick={handleExit}
+                      disabled={state.balance.toNumber() <= 0}
+                      className={classes.btnSubmitSecondary}
+                      fullWidth={true}
+                    >
                       {t('Claim-And-Withdraw')}
                     </Button>
                   </>
