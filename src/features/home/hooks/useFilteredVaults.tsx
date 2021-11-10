@@ -80,6 +80,7 @@ function useBoostArray() {
 function selectSortValue(key, vault) {
   switch (key) {
     case 'apy': {
+      if (vault.isGovVault) return vault.apy?.vaultApr ?? 0;
       return vault.apy?.totalApy ?? 0;
     }
     default: {

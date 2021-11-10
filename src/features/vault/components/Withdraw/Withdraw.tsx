@@ -200,7 +200,7 @@ export const Withdraw = ({
             </Box>
             <InputBase
               placeholder="0.00"
-              value={stripExtraDecimals(formData.withdraw.amount.toFixed(8))}
+              value={formData.withdraw.amount}
               onChange={e => handleInput(e.target.value)}
             />
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>

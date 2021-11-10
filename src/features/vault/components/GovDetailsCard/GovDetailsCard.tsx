@@ -10,7 +10,7 @@ import { styles } from './styles';
 import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles as any);
-export const GovDetailsCard = () => {
+export const GovDetailsCard = (earnedToken) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -30,7 +30,7 @@ export const GovDetailsCard = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.text}>{t('Gov-Info')}</Typography>
+        <Typography className={classes.text}>{t('Gov-Info1') + earnedToken.earnedToken + t('Gov-Info2') + earnedToken.earnedToken + t('Gov-Info3')}</Typography>
       </CardContent>
     </Card>
   );
