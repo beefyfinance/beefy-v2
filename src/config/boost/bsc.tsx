@@ -1,3 +1,14 @@
+const ceek = {
+  logo: 'stake/ceek/logo.png',
+  background: 'stake/ceek/bg.png',
+  text: 'CEEK (CEEK) is a decentralized platform featuring global superstars like Lady Gaga, Katy Perry, Ziggy Marley, Bon Jovi, UFC Champion Francis Ngannou, 3x NBA Champion Dwyane Wade and more. CEEK enables music artists, sports athletes and digital content creators to directly connect with their fans. CEEK tracks digital media assets on the blockchain, and makes fast, efficient secure payments for entertainment and education via smart contracts.',
+  website: 'https://www.ceek.io/',
+  social: {
+    telegram: 'https://t.me/ceekvrtokensale',
+    twitter: 'https://twitter.com/ceek',
+  },
+};
+
 export const pools = [
   {
     id: 'moo_belt-beltbtc-wsg',
@@ -106,7 +117,6 @@ export const pools = [
   {
     id: 'moo_banana-wbnb-ceek-ceek',
     name: 'CEEK',
-		poolId: 'banana-wbnb-ceek',
     earnedToken: 'CEEK',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xe0F94Ac5462997D2BC57287Ac3a3aE4C31345D66',
@@ -128,6 +138,21 @@ export const pools = [
         },
       },
     ],
+  },
+  {
+    id: 'moo_banana-wbnb-ceek-ceek-2',
+    name: 'CEEK',
+		poolId: 'banana-wbnb-ceek',
+    earnedToken: 'CEEK',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xe0F94Ac5462997D2BC57287Ac3a3aE4C31345D66',
+    earnContractAddress: '0x9ba849C8b9FD8D4f04c6b22557553195f3a02870',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'CEEK',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [ceek],
   },
   {
     id: 'moo_belt-beltbnb-babyswap',

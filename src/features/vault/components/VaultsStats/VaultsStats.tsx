@@ -80,6 +80,10 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
     return parseFloat(state.balance) > 0 ? state.balance : '0';
   }, [state.balance]);
 
+  const rewardsEarned = React.useMemo(() => {
+        return parseFloat(poolRewards.rewards) > 0 ? poolRewards.rewards : '0';
+  }, [poolRewards.rewards]);
+
   const yearlyToDaily = apy => {
     const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
 
@@ -212,13 +216,13 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
           <Box className={classes.stat}>
             <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
             <Typography>
-              <ValueText value={poolRewards.rewards} />
+              <ValueText value={rewardsEarned} />
             </Typography>
-              {parseFloat(state.balance) > 0 && (
-                <Typography>
-                  <ValuePrice value={formatUsd(rewardPrice)} />
-                </Typography>
-              )}
+            {parseFloat(state.balance) > 0 && (
+              <Typography>
+                <ValuePrice value={formatUsd(rewardPrice)} />
+              </Typography>
+            )}
           </Box>
         )}
       </Box>
