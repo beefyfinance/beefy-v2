@@ -30,7 +30,7 @@ const _DisplayTags = ({ tags, isBoosted }) => {
       ))}
       {isBoosted && (
         <div className={classes.spacingMobile} key={'boost'}>
-          <Typography className={clsx(classes.tags, classes['boost' + 'Tag'])} display={'inline'}>
+          <Typography className={clsx(classes.tags, classes['boostTag'])} display={'inline'}>
             {t('VaultTag-Boost')}
           </Typography>
         </div>

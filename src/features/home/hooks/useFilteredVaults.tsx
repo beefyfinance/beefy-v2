@@ -4,6 +4,7 @@ import { formatDecimals } from '../../../helpers/format';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
+import lodash from 'lodash';
 
 const FILTER_STORAGE_KEY = 'homeSortConfig';
 export const FILTER_DEFAULT = {
@@ -105,7 +106,9 @@ function sortVaults(vaults, key, direction) {
 //If token = vault.earnedToken check if he had deposited in the vault
 function hasWalletBalance(token, tokenBalances, network, isGovVault) {
   let symbol = isGovVault ? `${token}GovVault` : token;
-  return tokenBalances[network][symbol] !== undefined && tokenBalances[network][symbol].balance && tokenBalances[network][symbol].balance > 0
+  return tokenBalances[network][symbol] !== undefined &&
+    tokenBalances[network][symbol].balance &&
+    tokenBalances[network][symbol].balance > 0
     ? false
     : true;
 }
@@ -115,7 +118,22 @@ function hasBoostedBalance(userVault) {
   return userVault && userVault['balance'] > 0 ? false : true;
 }
 
-function keepVault(vault, config, address, tokenBalances, userVaults) {
+const isBoosted = (item, boostVaults) => {
+  var ts = Date.now() / 1000;
+  const boostedVault = lodash.filter(boostVaults, function (vault) {
+    return (
+      vault.poolId === item.id && vault.status === 'active' && parseInt(vault.periodFinish) > ts
+    );
+  });
+
+  if (boostedVault.length !== 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+function keepVault(vault, config, address, tokenBalances, userVaults, boostVaults) {
   if (config.retired) {
     // hide non-retired
     if (vault.status !== 'eol') {
@@ -129,7 +147,11 @@ function keepVault(vault, config, address, tokenBalances, userVaults) {
   }
 
   // hide when no wallet balance of deposit token
-  if (config.zero && address && hasWalletBalance(vault.token, tokenBalances, vault.network, vault.isGovVault)) {
+  if (
+    config.zero &&
+    address &&
+    hasWalletBalance(vault.token, tokenBalances, vault.network, vault.isGovVault)
+  ) {
     return false;
   }
 
@@ -145,8 +167,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults) {
   }
 
   // hide when vault is not boosted
-  // TODO handle once boost implemented
-  if (config.boost && !vault.boost) {
+  if (config.boost && !isBoosted(vault, boostVaults)) {
     return false;
   }
 
@@ -193,10 +214,12 @@ function useSortedVaults(vaults, key, direction) {
   }, [vaults, key, direction]);
 }
 
-function useFilteredVaults(vaults, config, address, tokenBalances, userVaults) {
+function useFilteredVaults(vaults, config, address, tokenBalances, userVaults, boostVaults) {
   return useMemo(() => {
-    return vaults.filter(vault => keepVault(vault, config, address, tokenBalances, userVaults));
-  }, [vaults, config, address, tokenBalances]);
+    return vaults.filter(vault =>
+      keepVault(vault, config, address, tokenBalances, userVaults, boostVaults)
+    );
+  }, [vaults, config, address, tokenBalances, userVaults, boostVaults]);
 }
 
 function useVaultsArray() {
@@ -244,7 +267,7 @@ function useUserVaults() {
         newUserVaults = {
           ...newUserVaults,
           [pool.id]: pool,
-        }
+        };
       }
     }
   }
@@ -264,7 +287,14 @@ export const useVaults = () => {
     FILTER_DEFAULT,
     isStoredConfigValid
   );
-  const filteredVaults = useFilteredVaults(allVaults, config, address, tokenBalances, userVaults);
+  const filteredVaults = useFilteredVaults(
+    allVaults,
+    config,
+    address,
+    tokenBalances,
+    userVaults,
+    boostVaults
+  );
   const sortedVaults = useSortedVaults(filteredVaults, config.key, config.direction);
 
   return [

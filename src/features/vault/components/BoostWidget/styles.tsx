@@ -8,7 +8,7 @@ export const styles = theme => ({
     padding: '24px 24px 0.1px 24px',
     backgroundColor: '#3F466D',
     borderRadius: '16px',
-    marginTop: '-24px',
+    marginTop: props => (props.isBoosted ? '-24px' : '0px'),
   },
   expiredBoostContainer: {
     background: '#555D8B',
@@ -34,13 +34,21 @@ export const styles = theme => ({
     color: '#FFFFFF',
   },
   h2: {
+    marginLeft: '1px',
     fontSize: '18px',
     lineHeight: '24px',
     fontWeight: 600,
-    textTransform: 'uppercase',
     color: '#ffffff',
     marginBottom: '16px',
   },
+  countDown: {
+    fontSize: '18px',
+    lineHeight: '24px',
+    fontWeight: 600,
+    color: '#ffffff',
+    marginBottom: '16px',
+  },
+
   body1: {
     fontSize: '12px',
     lineHeight: '20px',

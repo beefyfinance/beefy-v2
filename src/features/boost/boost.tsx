@@ -105,8 +105,8 @@ export const Boost = () => {
   const updateItemData = () => {
     if (wallet.address && item) {
       dispatch(reduxActions.vault.fetchBoosts(item));
-      dispatch(reduxActions.balance.fetchBoostBalances(item, undefined)); // TODO add network
-      dispatch(reduxActions.balance.fetchBoostRewards(item, undefined));
+      dispatch(reduxActions.balance.fetchBoostBalances(item, network)); // TODO add network
+      dispatch(reduxActions.balance.fetchBoostRewards(item, network));
     }
   };
 
@@ -131,10 +131,10 @@ export const Boost = () => {
 
   React.useEffect(() => {
     if (item && wallet.address) {
-      dispatch(reduxActions.balance.fetchBoostBalances(item, undefined)); // TODO add network
-      dispatch(reduxActions.balance.fetchBoostRewards(item, undefined));
+      dispatch(reduxActions.balance.fetchBoostBalances(item, network)); // TODO add network
+      dispatch(reduxActions.balance.fetchBoostRewards(item, network));
     }
-  }, [dispatch, item, wallet.address]);
+  }, [dispatch, item, network, wallet.address]);
 
   React.useEffect(() => {
     if (item) {
@@ -153,13 +153,15 @@ export const Boost = () => {
     let poolPercentage: any = 0;
     let rewards: any = 0;
 
-    if (wallet.address && !isEmpty(balance.tokens[network][item])) {
+    console.log(balance.tokens[network]);
+    console.log(item);
+    if (wallet.address && !isEmpty(balance.tokens[network][item.token])) {
       amount = byDecimals(
-        new BigNumber(balance.tokens[network][item.token].balance),
+        new BigNumber(balance.tokens[network][item.token]?.balance),
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(
-        new BigNumber(balance.tokens[network][item.token + 'Boost'].balance),
+        new BigNumber(balance.tokens[network][item.token + 'Boost']?.balance),
         item.tokenDecimals
       ).toFixed(8);
       approved = balance.tokens[network][item.token].allowance[item.earnContractAddress];
@@ -213,7 +215,7 @@ export const Boost = () => {
   return (
     <Container className={classes.vaultContainer} maxWidth="lg">
       {isLoading ? (
-        <Loader message="Getting boost data..." line={false}/>
+        <Loader message="Getting boost data..." line={false} />
       ) : (
         <Grid container spacing={4}>
           <Grid item xs={12}>

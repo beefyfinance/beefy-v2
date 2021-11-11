@@ -26,6 +26,8 @@ export const Withdraw = ({
   setFormData,
   updateItemData,
   resetFormData,
+  isBoosted,
+  boostedData,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -355,15 +357,7 @@ export const Withdraw = ({
         </Box>
       </Box>
       {!item.isGovVault ? (
-        <BoostWidget
-          balance={0 /*TODO: fix parameters*/}
-          s_stake={
-            t('Boost-Unstake', {
-              mooToken: 'mooToken',
-            }) /*TODO: replace 'mooToken' with real mooName*/
-          }
-          onClick={() => {}}
-        />
+        <BoostWidget boostedData={boostedData} isBoosted={isBoosted}  />
       ) : null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>

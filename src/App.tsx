@@ -49,6 +49,8 @@ export const App = () => {
   React.useEffect(() => {
     const initiate = async () => {
       await dispatch(reduxActions.prices.fetchPrices());
+      await dispatch(reduxActions.vault.fetchPools());
+      await dispatch(reduxActions.vault.fetchBoosts());
     };
     initiate();
   }, [dispatch]);
@@ -71,7 +73,7 @@ export const App = () => {
             <Route strict sensitive exact path="/:network/vault/:id">
               <Vault />
             </Route>
-            <Route strict sensitive exact path="/:network/boost/:id">
+            <Route strict sensitive exact path="/:network/boosts/:id">
               <Boost />
             </Route>
             <Route>
@@ -82,4 +84,4 @@ export const App = () => {
       </Router>
     </ThemeProvider>
   );
-}
+};
