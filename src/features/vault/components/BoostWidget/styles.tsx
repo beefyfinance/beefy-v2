@@ -34,6 +34,7 @@ export const styles = theme => ({
     color: '#FFFFFF',
   },
   h2: {
+    marginLeft: '1px',
     fontSize: '18px',
     lineHeight: '24px',
     fontWeight: 600,

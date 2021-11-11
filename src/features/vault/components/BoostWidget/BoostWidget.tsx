@@ -72,8 +72,7 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
     let poolPercentage: any = 0;
     let rewards: any = 0;
 
-    console.log(item);
-    if (wallet.address && !isEmpty(balance.tokens[network][item.token])) {
+    if (item && wallet.address && !isEmpty(balance.tokens[network][item.token])) {
       amount = byDecimals(
         new BigNumber(balance.tokens[network][item.token]?.balance),
         item.tokenDecimals
@@ -196,18 +195,22 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
               <Typography className={classes.body1}>
                 {t('Boost-Balance', { mooToken: boostedData.token })}
               </Typography>
-              <Typography className={classes.h2}>{state.balance}</Typography>
+              <Typography className={classes.h2}>
+                {state.balance > 0 ? state.balance : '0'}
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography className={classes.body1}>
                 {t('Boost-Balance-Staked', { mooToken: boostedData.token })}
               </Typography>
-              <Typography className={classes.h2}>{state.deposited}</Typography>
+              <Typography className={classes.h2}>
+                {state.deposited > 0 ? state.deposited : '0'}
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography className={classes.body1}>{t('Boost-Rewards')}</Typography>
               <Typography className={classes.h2}>
-                {state.rewards} {boostedData.earnedToken}
+                {state.rewards > 0 ? state.rewards : '0'} {boostedData.earnedToken}
               </Typography>
             </Grid>
             <Grid item xs={6}>
