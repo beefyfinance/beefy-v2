@@ -450,17 +450,7 @@ export const Deposit: React.FC<DepositProps> = ({
         </Box>
       </Box>
       {!item.isGovVault ? (
-        <BoostWidget
-          boostedData={boostedData}
-          isBoosted={isBoosted}
-          balance={0 /*TODO: fix parameters*/}
-          s_stake={
-            t('Boost-Stake', {
-              mooToken: 'mooToken',
-            }) /*TODO: replace 'mooToken' with real mooName*/
-          }
-          onClick={() => {}}
-        />
+        <BoostWidget boostedData={boostedData} isBoosted={isBoosted}  />
       ) : null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>

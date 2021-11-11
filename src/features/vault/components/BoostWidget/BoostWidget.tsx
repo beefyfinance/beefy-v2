@@ -1,20 +1,134 @@
 import React, { useState } from 'react';
 import { Box, Button, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+import BigNumber from 'bignumber.js';
 import AnimateHeight from 'react-animate-height';
+import { reduxActions } from '../../../redux/actions';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover/Popover';
 import { StakeCountdown } from '../StakeCountdown';
+import { isEmpty } from '../../../../helpers/utils';
+import { byDecimals } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
-export const BoostWidget = ({ onClick, balance, s_stake, isBoosted, boostedData }) => {
+export const BoostWidget = ({ isBoosted, boostedData }) => {
+  const item = boostedData;
   const stylesProps = {
     isBoosted,
   };
-
   const classes = useStyles(stylesProps);
   const t = useTranslation().t;
   const [filterOpen, setFilterOpen] = useState(false);
+  const dispatch = useDispatch();
+  let { network }: any = useParams();
+
+  const [state, setState] = React.useState({
+    balance: 0,
+    deposited: 0,
+    allowance: 0,
+    poolPercentage: 0,
+    rewards: 0,
+  });
+
+  const { wallet, balance } = useSelector((state: any) => ({
+    wallet: state.walletReducer,
+    balance: state.balanceReducer,
+  }));
+
+  const [formData, setFormData] = React.useState({
+    deposit: { amount: '', max: false },
+    withdraw: { amount: '', max: false },
+  });
+  const [steps, setSteps] = React.useState({
+    modal: false,
+    currentStep: -1,
+    items: [],
+    finished: false,
+  });
+
+  React.useEffect(() => {
+    if (item && wallet.address) {
+      dispatch(reduxActions.balance.fetchBoostBalances(item, network)); // TODO add network
+      dispatch(reduxActions.balance.fetchBoostRewards(item, network));
+    }
+  }, [dispatch, item, network, wallet.address]);
+
+  React.useEffect(() => {
+    if (item) {
+      setInterval(() => {
+        dispatch(reduxActions.vault.fetchBoosts(item));
+        dispatch(reduxActions.balance.fetchBoostBalances(item, network));
+        dispatch(reduxActions.balance.fetchBoostRewards(item, network));
+      }, 60000);
+    }
+  }, [item, dispatch, network]);
+
+  React.useEffect(() => {
+    let amount: any = 0;
+    let deposited: any = 0;
+    let approved: any = 0;
+    let poolPercentage: any = 0;
+    let rewards: any = 0;
+
+    console.log(item);
+    if (wallet.address && !isEmpty(balance.tokens[network][item.token])) {
+      amount = byDecimals(
+        new BigNumber(balance.tokens[network][item.token]?.balance),
+        item.tokenDecimals
+      ).toFixed(8);
+      deposited = byDecimals(
+        new BigNumber(balance.tokens[network][item.token + 'Boost']?.balance),
+        item.tokenDecimals
+      ).toFixed(8);
+      approved = balance.tokens[network][item.token].allowance[item.earnContractAddress];
+
+      if (!isEmpty(balance.rewards[item.earnedToken])) {
+        rewards = byDecimals(
+          new BigNumber(balance.rewards[item.earnedToken].balance),
+          item.earnedTokenDecimals
+        ).toFixed(8);
+      }
+
+      if (deposited > 0) {
+        poolPercentage = (
+          (Math.floor(new BigNumber(deposited).toNumber() * 1000000000) /
+            1000000000 /
+            item.staked) *
+          100
+        ).toFixed(4);
+      }
+    }
+    setState({
+      balance: amount,
+      deposited: deposited,
+      allowance: approved,
+      poolPercentage: poolPercentage,
+      rewards: rewards,
+    });
+  }, [wallet.address, item, balance, network]);
+
+  React.useEffect(() => {
+    const index = steps.currentStep;
+    if (!isEmpty(steps.items[index]) && steps.modal) {
+      const items = steps.items;
+      if (!items[index].pending) {
+        items[index].pending = true;
+        items[index].action();
+        setSteps({ ...steps, items: items });
+      } else {
+        if (wallet.action.result === 'success' && !steps.finished) {
+          const nextStep = index + 1;
+          if (!isEmpty(items[nextStep])) {
+            setSteps({ ...steps, currentStep: nextStep });
+          } else {
+            setSteps({ ...steps, finished: true });
+          }
+        }
+      }
+    }
+  }, [steps, wallet.action]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const buttonProps: any = {
@@ -60,6 +174,7 @@ export const BoostWidget = ({ onClick, balance, s_stake, isBoosted, boostedData 
     <>
       {isBoosted && (
         <div className={classes.container}>
+          {console.log(boostedData)}
           <Box display="flex" alignItems="center">
             <img
               alt="fire"
@@ -76,23 +191,24 @@ export const BoostWidget = ({ onClick, balance, s_stake, isBoosted, boostedData 
               />
             </Box>
           </Box>
-          {/* TODO: connect boost data + buttons*/}
           <Grid container>
             <Grid item xs={6}>
               <Typography className={classes.body1}>
                 {t('Boost-Balance', { mooToken: boostedData.token })}
               </Typography>
-              <Typography className={classes.h2}>{balance}</Typography>
+              <Typography className={classes.h2}>{state.balance}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography className={classes.body1}>
                 {t('Boost-Balance-Staked', { mooToken: boostedData.token })}
               </Typography>
-              <Typography className={classes.h2}>0</Typography>
+              <Typography className={classes.h2}>{state.deposited}</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography className={classes.body1}>{t('Boost-Rewards')}</Typography>
-              <Typography className={classes.h2}>0 {boostedData.earnedToken}</Typography>
+              <Typography className={classes.h2}>
+                {state.rewards} {boostedData.earnedToken}
+              </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography className={classes.body1}>{t('Boost-Ends')}</Typography>
@@ -102,16 +218,16 @@ export const BoostWidget = ({ onClick, balance, s_stake, isBoosted, boostedData 
             </Grid>
           </Grid>
 
-          <Button disabled={false} className={classes.button} fullWidth={true} onClick={onClick}>
+          <Button disabled={false} className={classes.button} fullWidth={true}>
             {t('Boost-Button-Vault')}
           </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true} onClick={onClick}>
+          <Button disabled={true} className={classes.button} fullWidth={true}>
             {t('Boost-Button-Withdraw')}
           </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true} onClick={onClick}>
+          <Button disabled={true} className={classes.button} fullWidth={true}>
             {t('Boost-Button-Claim')}
           </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true} onClick={onClick}>
+          <Button disabled={true} className={classes.button} fullWidth={true}>
             {t('Boost-Button-Claim-Unstake')}
           </Button>
         </div>
@@ -139,7 +255,6 @@ export const BoostWidget = ({ onClick, balance, s_stake, isBoosted, boostedData 
               className={classes.button}
               style={{ marginBottom: 0 }}
               fullWidth={true}
-              onClick={onClick}
             >
               {t('Boost-Button-Claim-Unstake')}
             </Button>
@@ -153,7 +268,6 @@ export const BoostWidget = ({ onClick, balance, s_stake, isBoosted, boostedData 
               className={classes.button}
               style={{ marginBottom: 0 }}
               fullWidth={true}
-              onClick={onClick}
             >
               {t('Boost-Button-Claim-Unstake')}
             </Button>

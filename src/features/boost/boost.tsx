@@ -153,13 +153,15 @@ export const Boost = () => {
     let poolPercentage: any = 0;
     let rewards: any = 0;
 
-    if (wallet.address && !isEmpty(balance.tokens[network][item])) {
+    console.log(balance.tokens[network]);
+    console.log(item);
+    if (wallet.address && !isEmpty(balance.tokens[network][item.token])) {
       amount = byDecimals(
-        new BigNumber(balance.tokens[network][item.token].balance),
+        new BigNumber(balance.tokens[network][item.token]?.balance),
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(
-        new BigNumber(balance.tokens[network][item.token + 'Boost'].balance),
+        new BigNumber(balance.tokens[network][item.token + 'Boost']?.balance),
         item.tokenDecimals
       ).toFixed(8);
       approved = balance.tokens[network][item.token].allowance[item.earnContractAddress];
@@ -212,7 +214,6 @@ export const Boost = () => {
 
   return (
     <Container className={classes.vaultContainer} maxWidth="lg">
-      {console.log(vault)}
       {isLoading ? (
         <Loader message="Getting boost data..." line={false} />
       ) : (

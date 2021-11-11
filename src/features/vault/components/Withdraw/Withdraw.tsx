@@ -252,7 +252,12 @@ export const Withdraw = ({
               <>
                 {item.isGovVault ? (
                   <>
-                    <Button onClick={handleClaim} disabled={state.balance.toNumber()<=0} className={classes.btnSubmit} fullWidth={true}>
+                    <Button
+                      onClick={handleClaim}
+                      disabled={state.balance.toNumber() <= 0}
+                      className={classes.btnSubmit}
+                      fullWidth={true}
+                    >
                       {t('ClaimRewards-noun')}
                     </Button>
                     <Button
@@ -287,17 +292,7 @@ export const Withdraw = ({
         </Box>
       </Box>
       {!item.isGovVault ? (
-        <BoostWidget
-          boostedData={boostedData}
-          isBoosted={isBoosted}
-          balance={0 /*TODO: fix parameters*/}
-          s_stake={
-            t('Boost-Unstake', {
-              mooToken: 'mooToken',
-            }) /*TODO: replace 'mooToken' with real mooName*/
-          }
-          onClick={() => {}}
-        />
+        <BoostWidget boostedData={boostedData} isBoosted={isBoosted}  />
       ) : null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
