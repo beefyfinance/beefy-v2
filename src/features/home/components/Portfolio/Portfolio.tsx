@@ -4,7 +4,7 @@ import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Stats } from './Stats';
-import { formatDecimals } from '../../../../helpers/format';
+import { byDecimals, formatDecimals } from '../../../../helpers/format';
 import { VaultsStats } from './VaultsStats';
 import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
@@ -64,11 +64,13 @@ export const Portfolio = () => {
     if (userVaults.length > 0) {
       userVaults.forEach(vault => {
         let balance = new BigNumber(vault.balance);
-        balance = balance.times(vault.pricePerFullShare).div('1e18').div('1e18');
+        balance = vault.isGovVault 
+          ? byDecimals(balance, vault.tokenDecimals)
+          : balance.times(vault.pricePerFullShare).div('1e18').div('1e18');
         const oraclePrice = pricesReducer.prices[vault.oracleId];
         newGlobalStats.deposited = newGlobalStats.deposited.plus(balance.times(oraclePrice));
 
-        const apy = vault.apy.totalApy || 0;
+        const apy = vault.isGovVault ? vault.apy.vaultApr : vault.apy.totalApy || 0;
         const daily = apy / 365;
         newGlobalStats.daily = newGlobalStats.daily.plus(balance.times(daily).times(oraclePrice));
       });
