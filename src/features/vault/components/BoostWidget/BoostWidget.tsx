@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Box, Button, makeStyles, Typography, Grid } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  makeStyles,
+  Typography,
+  Grid,
+  Modal,
+  Fade,
+  Backdrop,
+} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
@@ -7,7 +16,10 @@ import BigNumber from 'bignumber.js';
 import AnimateHeight from 'react-animate-height';
 import { reduxActions } from '../../../redux/actions';
 import { styles } from './styles';
+import { Stake } from '../Stake';
+import { Unstake } from '../Unstake';
 import { Popover } from '../../../../components/Popover/Popover';
+import { Steps } from '../../../../components/Steps';
 import { StakeCountdown } from '../StakeCountdown';
 import { isEmpty } from '../../../../helpers/utils';
 import { byDecimals } from '../../../../helpers/format';
@@ -21,9 +33,11 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
   const classes = useStyles(stylesProps);
   const t = useTranslation().t;
   const [filterOpen, setFilterOpen] = useState(false);
+  const [dw, setDw] = React.useState('deposit');
   const dispatch = useDispatch();
   let { network }: any = useParams();
 
+  const [inputModal, setInputModal] = React.useState(false);
   const [state, setState] = React.useState({
     balance: 0,
     deposited: 0,
@@ -31,6 +45,34 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
     poolPercentage: 0,
     rewards: 0,
   });
+
+  const handleInputModal = () => {
+    setInputModal(!inputModal);
+  };
+
+  const handleClose = () => {
+    updateItemData();
+    resetFormData();
+    setSteps({ modal: false, currentStep: -1, items: [], finished: false });
+  };
+
+  const handleWalletConnect = () => {
+    if (!wallet.address) {
+      dispatch(reduxActions.wallet.connect());
+    }
+  };
+
+  const updateItemData = () => {
+    if (wallet.address && item) {
+      dispatch(reduxActions.vault.fetchBoosts(item));
+      dispatch(reduxActions.balance.fetchBoostBalances(item, network)); // TODO add network
+      dispatch(reduxActions.balance.fetchBoostRewards(item, network));
+    }
+  };
+
+  const resetFormData = () => {
+    setFormData({ deposit: { amount: '', max: false }, withdraw: { amount: '', max: false } });
+  };
 
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
@@ -107,6 +149,15 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
       rewards: rewards,
     });
   }, [wallet.address, item, balance, network]);
+
+  function claimUnestake() {}
+
+  function claimRewards() {}
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function depositWithdraw(balance, isDeposit) {
+    // this function should be set the type of action (stake/deposit or unestake)
+  }
 
   React.useEffect(() => {
     const index = steps.currentStep;
@@ -221,18 +272,85 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
             </Grid>
           </Grid>
 
-          <Button disabled={false} className={classes.button} fullWidth={true}>
+          <Button
+            disabled={false}
+            className={classes.button}
+            onClick={handleInputModal}
+            fullWidth={true}
+          >
             {t('Boost-Button-Vault')}
           </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true}>
+          <Button
+            disabled={true}
+            className={classes.button}
+            onClick={claimRewards}
+            fullWidth={true}
+          >
             {t('Boost-Button-Withdraw')}
           </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true}>
-            {t('Boost-Button-Claim')}
-          </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true}>
+          <Button
+            disabled={true}
+            className={classes.button}
+            onClick={claimUnestake}
+            fullWidth={true}
+          >
             {t('Boost-Button-Claim-Unstake')}
           </Button>
+          <Button disabled={true} className={classes.button} fullWidth={true}>
+            {t('Boost-Button-Unestake')}
+          </Button>
+
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={inputModal}
+            onClose={() => setInputModal(false)}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={inputModal}>
+              <Box className={classes.dw}>
+                <Box className={classes.tabs}>
+                  <Button
+                    onClick={() => setDw('deposit')}
+                    className={dw === 'deposit' ? classes.selected : ''}
+                  >
+                    {t('Stake-Button-Stake')}
+                  </Button>
+                  <Button
+                    onClick={() => setDw('withdraw')}
+                    className={dw === 'withdraw' ? classes.selected : ''}
+                  >
+                    {t('Stake-Button-Unstake')}
+                  </Button>
+                </Box>
+                {/* {dw === 'deposit' ? (
+                  <Stake
+                    item={item}
+                    handleWalletConnect={handleWalletConnect}
+                    formData={formData}
+                    setFormData={setFormData}
+                    updateItemData={updateItemData}
+                    resetFormData={resetFormData}
+                  />
+                ) : (
+                  <Unstake
+                    item={item}
+                    handleWalletConnect={handleWalletConnect}
+                    formData={formData}
+                    setFormData={setFormData}
+                    updateItemData={updateItemData}
+                    resetFormData={resetFormData}
+                  />
+                )} */}
+              </Box>
+            </Fade>
+          </Modal>
+          <Steps item={item} steps={steps} handleClose={handleClose} />
         </div>
       )}
       <div className={classes.containerExpired}>
