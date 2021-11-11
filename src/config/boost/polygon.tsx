@@ -2,17 +2,15 @@ export const pools = [
   {
     id: 'moo_kyber-usdc-jeur-jarvis',
     name: 'Jarvis',
-		poolId: "kyber-usdc-jeur",
-    assets: ['jEUR', 'USDC'],
     earnedToken: 'BIFI',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xFbdd194376de19a88118e84E279b977f165d01b8',
     earnContractAddress: '0xE2C04ff677394872e43ee06B4a28a3cbd542A327',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0x4A041eD4dda1cf460D557E1bdCBf0b29c02A1b3c',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/jarvis/logo.png',
@@ -25,6 +23,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'kyber-usdc-jeur',
   },
   {
     id: 'moo_curve-am3crv-jarvis',
@@ -36,9 +35,9 @@ export const pools = [
     earnContractAddress: '0x5936Db923b6E1727DA19d801eC22CeE555b6047b',
     earnedOracle: 'tokens',
     earnedOracleId: 'jEUR',
-    partnership: true,
+    vaultAddress: '0xAA7C2879DaF8034722A0977f13c343aF0883E92e',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/jarvis/logo.png',
@@ -51,19 +50,21 @@ export const pools = [
         },
       },
     ],
+    poolId: 'curve-am3crv',
   },
   {
     id: 'moo_BIFI-jarvis',
     name: 'Jarvis',
+    logo: 'single-assets/BIFI.png',
     earnedToken: 'BIFI',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xFbdd194376de19a88118e84E279b977f165d01b8',
     earnContractAddress: '0x68161e06104d2d2f48cBfE7f6970720BB62DCA92',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/jarvis/logo.png',
@@ -76,8 +77,8 @@ export const pools = [
         },
       },
     ],
+    poolId: 'polygon-bifi-maxi',
   },
-
   {
     id: 'moo_QUICK-polysage',
     name: 'PolySage',
@@ -88,17 +89,14 @@ export const pools = [
     earnContractAddress: '0xC01b5D452F2a5571E8FbC2D589Ab940DB7B16EFA',
     earnedOracle: 'tokens',
     earnedOracleId: 'polySAGE',
-    partnership: true,
+    vaultAddress: '0x659418cc3cf755F5367a51aDb586a7F770Da6d29',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polysage/logo.png',
         background: 'stake/polysage/bg.png',
-        text:
-          'PolySage Finance is a next-generation yield farming protocol on the Polygon network with lots of unique and creative features that enable you to earn a passive income. We are trying to create a protocol like Yearn, but with a reduced token supply and high value for Polygon Network users, LP providers and stakers.\n' +
-          '\n' +
-          'PolySage is a Layered farm that is temporary.',
+        text: 'PolySage Finance is a next-generation yield farming protocol on the Polygon network with lots of unique and creative features that enable you to earn a passive income. We are trying to create a protocol like Yearn, but with a reduced token supply and high value for Polygon Network users, LP providers and stakers.\n\nPolySage is a Layered farm that is temporary.',
         website: 'https://polysage.finance/',
         social: {
           telegram: 'https://t.me/polywisedefi',
@@ -106,20 +104,20 @@ export const pools = [
         },
       },
     ],
+    poolId: 'quick-quick',
   },
   {
     id: 'moo_bifi-usdc-cafe',
     name: 'CafeSwap',
-    assets: ['BIFI', 'USDC'],
     earnedToken: 'pBREW',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xb5106A3277718eCaD2F20aB6b86Ce0Fee7A21F09',
     earnContractAddress: '0x602fAEa31a6F388559E88B93666Ff5908CAE2c9c',
     earnedOracle: 'tokens',
     earnedOracleId: 'pBREW',
-    partnership: true,
+    vaultAddress: '0x03F69AAF4c8512f533Da46cC9eFd49C4969e3CB8',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/cafeswap/logo.png',
@@ -132,6 +130,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'sushi-usdc-bifi',
   },
   {
     id: 'moo_curve-ren-tetu',
@@ -143,14 +142,14 @@ export const pools = [
     earnContractAddress: '0x73EA48822D7802590294a56d153b3458849A41C2',
     earnedOracle: 'tokens',
     earnedOracleId: 'TETU',
-    partnership: true,
+    vaultAddress: '0x8c9d3bc4425773bd2f00c4a2ac105c5ad73c8141',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/tetu/logo.png',
         background: 'stake/tetu/bg.png',
-        text: `TETU is a DeFi application built on Polygon that implements automated yield farming strategies in order to provide investors with a safe and secure method of receiving a high yield on their investments. TETU tokens represent a share of the collective efforts and expertise of the team who are wholly focused on creating robust income streams for Tetu users. Audited by PeckShield, our tech speaks for itself, but more important are the people behind it forming a culture of inclusivity, transparency, and a global community who all wants high yields secured by competent technology.`,
+        text: 'TETU is a DeFi application built on Polygon that implements automated yield farming strategies in order to provide investors with a safe and secure method of receiving a high yield on their investments. TETU tokens represent a share of the collective efforts and expertise of the team who are wholly focused on creating robust income streams for Tetu users. Audited by PeckShield, our tech speaks for itself, but more important are the people behind it forming a culture of inclusivity, transparency, and a global community who all wants high yields secured by competent technology.',
         website: 'https://app.tetu.io/',
         social: {
           telegram: 'https://t.me/tetu_io',
@@ -158,25 +157,25 @@ export const pools = [
         },
       },
     ],
+    poolId: 'curve-poly-ren',
   },
   {
     id: 'moo_banana_matic-polywise',
     name: 'PolyWise',
-    assets: ['BANANA', 'MATIC'],
     earnedToken: 'WISE',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0x4c19DdeebAF84cA3A255730295AD9d824D4Ff51f',
     earnContractAddress: '0x4d20db515199B7C799Ca0da4e2Eaedc99F1367Fc',
     earnedOracle: 'tokens',
     earnedOracleId: 'polyWISE',
-    partnership: true,
+    vaultAddress: '0xADA7F98fb2594E76914EB593e74B348A498Ea5Bd',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polywise/logo.png',
         background: 'stake/polywise/bg.png',
-        text: `PolyWise is a high-yield on Polygon which is opening dividend pools soon. You will be able to stake $WISE and earn $USDC and $WMATIC. PolyWise is audited by Paladin, KYC'd by rugdoc and has a low risk rating on Rugdoc.`,
+        text: "PolyWise is a high-yield on Polygon which is opening dividend pools soon. You will be able to stake $WISE and earn $USDC and $WMATIC. PolyWise is audited by Paladin, KYC'd by rugdoc and has a low risk rating on Rugdoc.",
         website: 'https://polywise.finance/',
         social: {
           telegram: 'https://t.me/polywisedefi',
@@ -184,6 +183,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'ape-banana-matic',
   },
   {
     id: 'moo_curve-tricrypto-polyalpha',
@@ -195,14 +195,14 @@ export const pools = [
     earnContractAddress: '0x0C2741b8eD387803D876Cd63A67dD814a029A4f1',
     earnedOracle: 'tokens',
     earnedOracleId: 'polyALPHA',
-    partnership: true,
+    vaultAddress: '0x5A0801BAd20B6c62d86C566ca90688A6b9ea1d3f',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polyalpha/logo.png',
         background: 'stake/polyalpha/bg.png',
-        text: `PolyAlpha Finance is the second layer to PolygonFarm’s ecosystem and it’s another famers’ fav! Placing the security of investors’ funds as the topmost priority, 2 full security audits have been completed with CertiK and Paladin, two of the best blockchain security experts. To further signal transparency, the project owner has again completed the RugDoc KYC and received a low-risk review. In just 10 days, PolyAlpha has reached from $8M to $10M TVL (~$1.2M MC), over $500K in liquidity, and averaged just under $1M in 24-hour trading volume. The relatively higher trading volume for the native token $ALPHA is highly advantageous for liquidity providers and Beefy vaults will no question elevate benefits for both communities! With a scares supply of only 9300 and a constant emission rate of 0.011/block, $ALPHA’s tokenomics are built for success!`,
+        text: 'PolyAlpha Finance is the second layer to PolygonFarm’s ecosystem and it’s another famers’ fav! Placing the security of investors’ funds as the topmost priority, 2 full security audits have been completed with CertiK and Paladin, two of the best blockchain security experts. To further signal transparency, the project owner has again completed the RugDoc KYC and received a low-risk review. In just 10 days, PolyAlpha has reached from $8M to $10M TVL (~$1.2M MC), over $500K in liquidity, and averaged just under $1M in 24-hour trading volume. The relatively higher trading volume for the native token $ALPHA is highly advantageous for liquidity providers and Beefy vaults will no question elevate benefits for both communities! With a scares supply of only 9300 and a constant emission rate of 0.011/block, $ALPHA’s tokenomics are built for success!',
         website: 'https://polyalpha.finance/',
         social: {
           telegram: 'https://t.me/PolyAlphaFi',
@@ -210,6 +210,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'curve-poly-atricrypto3',
   },
   {
     id: 'moo_curve-poly-sandman',
@@ -221,17 +222,14 @@ export const pools = [
     earnContractAddress: '0x7ee6B34B51eAEbc887A16616AfE0855795B6ac74',
     earnedOracle: 'tokens',
     earnedOracleId: 'DELIRIUM',
-    partnership: true,
+    vaultAddress: '0xAA7C2879DaF8034722A0977f13c343aF0883E92e',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/sandman/logo.png',
         background: 'stake/sandman/bg.png',
-        text: `The Greatest Multilayered Hybrid Yield Farming, NFTs & Vaults.
-The First Stealth Presale ever, sold out in under 30 secs. On its path to Community-Owned AMM, Gambling, and a premier DAO.
-We have several uses for your NFTs: NFTs Battles, NFTs farm boosting, NFT's Game Cards over layer.
-Sandman Finance was the first project to present the swap/utility token. Where you are rewarded just by holding the presale token. Never seen before!`,
+        text: "The Greatest Multilayered Hybrid Yield Farming, NFTs & Vaults.\nThe First Stealth Presale ever, sold out in under 30 secs. On its path to Community-Owned AMM, Gambling, and a premier DAO.\nWe have several uses for your NFTs: NFTs Battles, NFTs farm boosting, NFT's Game Cards over layer.\nSandman Finance was the first project to present the swap/utility token. Where you are rewarded just by holding the presale token. Never seen before!",
         website: 'https://sandman.finance/',
         social: {
           telegram: 'https://t.me/SandMan_Finance',
@@ -239,10 +237,10 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'curve-am3crv',
   },
   {
     id: 'moo_bifi-yieldwatch',
-    poolId: 'polygon-bifi-maxi',
     name: 'Yieldwatch',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'WATCH',
@@ -251,9 +249,9 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x71a4449dD18177A1a19fEF671558964f10AF4be8',
     earnedOracle: 'tokens',
     earnedOracleId: 'WATCHpoly',
-    partnership: true,
+    vaultAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/yieldwatch/logo.png',
@@ -266,10 +264,10 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'polygon-bifi-maxi',
   },
   {
     id: 'moo_bifi-pearzap',
-    poolId: 'polygon-bifi-maxi',
     name: 'PearZap',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'PEAR',
@@ -278,9 +276,9 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x77D205420cE5557cd8E9DEFC915Fd0D701CCaEa3',
     earnedOracle: 'tokens',
     earnedOracleId: 'PEAR',
-    partnership: true,
+    vaultAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/pearzap/logo.png',
@@ -293,10 +291,10 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'polygon-bifi-maxi',
   },
   {
     id: 'moo_bifi-polypup',
-    poolId: 'polygon-bifi-maxi',
     name: 'PolyPup',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'BALL',
@@ -305,14 +303,14 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x6B30E11d72AA1D14f79Ba52aF3139F798DFca18d',
     earnedOracle: 'tokens',
     earnedOracleId: 'BALL',
-    partnership: true,
+    vaultAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polypup/logo.png',
         background: 'stake/polypup/background.png',
-        text: `PolyPup Finance is a new DeFi project on Polygon featuring a deflationary token model. The main features are a low emission rate, low supply, and a layered farming approach to the platform. This model will help end-users earn maximum yields over a long time. Buyback and burns will help stabilize a price floor for long term holders.`,
+        text: 'PolyPup Finance is a new DeFi project on Polygon featuring a deflationary token model. The main features are a low emission rate, low supply, and a layered farming approach to the platform. This model will help end-users earn maximum yields over a long time. Buyback and burns will help stabilize a price floor for long term holders.',
         website: 'https://bone.polypup.finance/',
         social: {
           telegram: 'https://t.me/PolyPupFarm',
@@ -320,10 +318,10 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'polygon-bifi-maxi',
   },
   {
     id: 'moo_bifi-polyfarm',
-    poolId: 'polygon-bifi-maxi',
     name: 'PolygonFarm',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'SPADE',
@@ -332,9 +330,9 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x3439A5815153CA1156828bBa89Aa332f41534602',
     earnedOracle: 'tokens',
     earnedOracleId: 'SPADE',
-    partnership: true,
+    vaultAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polyfarm/logo.png',
@@ -347,10 +345,10 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'polygon-bifi-maxi',
   },
   {
     id: 'moo_bifi-lithium',
-    poolId: 'polygon-bifi-maxi',
     name: 'PolyWantsACracker',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'mooPolyCrackerLITH',
@@ -359,9 +357,9 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0xC1d4DaBE517B5715077082ade69872ab82F86899',
     earnedOracle: 'tokens',
     earnedOracleId: 'LITHIUM',
-    partnership: true,
+    vaultAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polycracker/logo.png',
@@ -374,6 +372,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'polygon-bifi-maxi',
   },
   {
     id: 'moo_polyyeld-xyeld',
@@ -385,9 +384,9 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x6b4971b8dAfc3c426EdE7E629394f31B0BdF3c16',
     earnedOracle: 'tokens',
     earnedOracleId: 'xYELD',
-    partnership: true,
+    vaultAddress: '0xa450f23570868A33bc66bF60f2268E85575bbDC9',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/xyeld/logo.png',
@@ -400,6 +399,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'polyyeld-xyeld-quick-wmatic-xyeld-eol',
   },
   {
     id: 'moo_jetswap-pwings',
@@ -411,9 +411,9 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x9231457582c0E6F3c631e93AEA2d063F59606710',
     earnedOracle: 'tokens',
     earnedOracleId: 'pWINGS',
-    partnership: true,
+    vaultAddress: '0x93c9f29CF2496e73f3d8b07055e2359267207147',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/jetswap/logo.png',
@@ -426,6 +426,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'jetswap-poly-usdc-usdt',
   },
   {
     id: 'moo_mai_usdc_matic-qidao',
@@ -437,14 +438,14 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0xd1Cae9751268Eb4f93bfdE9A4788F312D2c0D045',
     earnedOracle: 'tokens',
     earnedOracleId: 'QI',
-    partnership: true,
+    vaultAddress: '0xebe0c8d842AA5A57D7BEf8e524dEabA676F91cD1',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/qidao/logo.png',
         background: 'stake/qidao/background.png',
-        text: `QiDao is Polygon's first native stablecoin protocol and a way for you to hold on to your crypto while still being able to spend its value. It allows you to borrow stablecoins at 0% interest, without selling your crypto. MAI is a stablecoin collateralized by your MATIC holdings.`,
+        text: "QiDao is Polygon's first native stablecoin protocol and a way for you to hold on to your crypto while still being able to spend its value. It allows you to borrow stablecoins at 0% interest, without selling your crypto. MAI is a stablecoin collateralized by your MATIC holdings.",
         website: 'https://www.mai.finance/',
         social: {
           telegram: 'https://t.me/QiDaoProtocol',
@@ -452,6 +453,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'mai-usdc-mimatic',
   },
   {
     id: 'moo_poly_usdc-bone',
@@ -463,14 +465,14 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0xa8b86b9AF7e844DA90A2e72840Ad01CCBD11EdC3',
     earnedOracle: 'tokens',
     earnedOracleId: 'BONE',
-    partnership: true,
+    vaultAddress: '0x8Ce906F6f383c31b09B1D2A5f2c9f480b87ceb58',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polypup/logo.png',
         background: 'stake/polypup/background.png',
-        text: `PolyPup Finance is a new DeFi project on Polygon featuring a deflationary token model. The main features are a low emission rate, low supply, and a layered farming approach to the platform. This model will help end-users earn maximum yields over a long time. Buyback and burns will help stabilize a price floor for long term holders.`,
+        text: 'PolyPup Finance is a new DeFi project on Polygon featuring a deflationary token model. The main features are a low emission rate, low supply, and a layered farming approach to the platform. This model will help end-users earn maximum yields over a long time. Buyback and burns will help stabilize a price floor for long term holders.',
         website: 'https://bone.polypup.finance/',
         social: {
           telegram: 'https://t.me/PolyPupFarm',
@@ -478,6 +480,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'polypup-usdc-bone-eol',
   },
   {
     id: 'moo_atricrypto-bone',
@@ -489,14 +492,14 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0xed5010eDF8812003B7d4c9a69E7AfCBceaB62F4f',
     earnedOracle: 'tokens',
     earnedOracleId: 'BONEswap',
-    partnership: true,
+    vaultAddress: '0x3dab1aCB811dc4C8b2FdC77812552f4d4Efd0A8c',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/boneswap/logo.png',
         background: 'stake/boneswap/background.png',
-        text: `Bone Swap is a full ecosystem that have yield farming and automated market-making (AMM) for the Polygon network. We introduce Decentralized Exchange (DEX), Yield Farm, Info Service, which is the strong and secure foundation with our own BONE token as the center of our service.`,
+        text: 'Bone Swap is a full ecosystem that have yield farming and automated market-making (AMM) for the Polygon network. We introduce Decentralized Exchange (DEX), Yield Farm, Info Service, which is the strong and secure foundation with our own BONE token as the center of our service.',
         website: 'https://farm.boneswap.finance',
         social: {
           telegram: 'https://t.me/boneswapfi',
@@ -504,6 +507,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'curve-poly-atricrypto',
   },
   {
     id: 'moo_curve-poly-ren',
@@ -515,14 +519,14 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x54c9B796a96877dee81E1A22e9DfA2488ab2675D',
     earnedOracle: 'tokens',
     earnedOracleId: 'BONE',
-    partnership: true,
+    vaultAddress: '0x8c9d3Bc4425773BD2F00C4a2aC105c5Ad73c8141',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polypup/logo.png',
         background: 'stake/polypup/background.png',
-        text: `PolyPup Finance is a new DeFi project on Polygon featuring a deflationary token model. The main features are a low emission rate, low supply, and a layered farming approach to the platform. This model will help end-users earn maximum yields over a long time. Buyback and burns will help stabilize a price floor for long term holders.`,
+        text: 'PolyPup Finance is a new DeFi project on Polygon featuring a deflationary token model. The main features are a low emission rate, low supply, and a layered farming approach to the platform. This model will help end-users earn maximum yields over a long time. Buyback and burns will help stabilize a price floor for long term holders.',
         website: 'https://bone.polypup.finance/',
         social: {
           telegram: 'https://t.me/PolyPupFarm',
@@ -530,6 +534,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'curve-poly-ren',
   },
   {
     id: 'moo_matic_yeld-yeld',
@@ -541,14 +546,14 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x86EB0e64Ca632543BE37e73836d84eD612bb7C34',
     earnedOracle: 'tokens',
     earnedOracleId: 'YELD',
-    partnership: true,
+    vaultAddress: '0xbea5D2Aed651F579fa3e7ADAA2eC51276B2ea420',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/polyyeld/logo.png',
         background: 'stake/polyyeld/background.png',
-        text: `PolyYeld Finance is a next-generation yield farming protocol on the Polygon network with lots of unique and creative features that enable you to earn a passive income. We are trying to create a protocol like Yearn, but with a reduced token supply with high value for Polygon Network users, LP providers, and stakers. There will only be 62,100 YELD tokens which will be minted throughout the course of 2-3 months.`,
+        text: 'PolyYeld Finance is a next-generation yield farming protocol on the Polygon network with lots of unique and creative features that enable you to earn a passive income. We are trying to create a protocol like Yearn, but with a reduced token supply with high value for Polygon Network users, LP providers, and stakers. There will only be 62,100 YELD tokens which will be minted throughout the course of 2-3 months.',
         website: 'https://polyyeld.finance/',
         social: {
           telegram: 'https://t.me/polyyeld',
@@ -557,10 +562,10 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'polyyeld-quick-wmatic-yeld-eol',
   },
   {
     id: 'moo_aave-eth',
-    poolId: 'polygon-bifi-maxi',
     name: 'Iron / Garuda / Fanatics',
     logo: 'single-assets/ETH.svg',
     earnedToken: 'mooPolygonBIFI',
@@ -569,14 +574,14 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x9B508ad657ed5A139D1a7c97fD84d7B7240849Cf',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0x77276a7c9Ff3a6cbD334524d6F1f6219D039ac0E',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/garuda/logo.png',
         background: 'stake/polygon/background.png',
-        text: `GarudaSwap is the 1st Next Generation Automatic Liquidity Acquisition yield farm and AMM decentralized exchange running on Binance Smart Chain with lots of unique and creative features that let you earn and win for a long time.`,
+        text: 'GarudaSwap is the 1st Next Generation Automatic Liquidity Acquisition yield farm and AMM decentralized exchange running on Binance Smart Chain with lots of unique and creative features that let you earn and win for a long time.',
         website: 'https://garudaswap.finance/',
         social: {
           telegram: 'https://t.me/garudaswap',
@@ -586,10 +591,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
       {
         logo: 'stake/ironfinance/logo.png',
         background: 'stake/polygon/background.png',
-        text: `Inspired by FRAX, a unique fractionally-algorithmic stablecoin on the Ethereum network, and utilizing a similar approach, we have created IRON, the first partially-collateralized stablecoin on Binance Smart Chain. The IRON protocol makes use of 2 tokens to achieve its goal:  STEEL and IRON. 
-      STEEL - The share token of the Iron finance protocol. Serves as part of the collateral behind IRON. Backed by seigniorage revenue as well as the value of any excess collateral. 
-      IRON -  A stablecoin pegged to $1. Partially backed by a continuously adjusting ratio of collateral equal to $1 in value.
-      Check out the docs for more information: https://docs.iron.finance/`,
+        text: 'Inspired by FRAX, a unique fractionally-algorithmic stablecoin on the Ethereum network, and utilizing a similar approach, we have created IRON, the first partially-collateralized stablecoin on Binance Smart Chain. The IRON protocol makes use of 2 tokens to achieve its goal:  STEEL and IRON. \n      STEEL - The share token of the Iron finance protocol. Serves as part of the collateral behind IRON. Backed by seigniorage revenue as well as the value of any excess collateral. \n      IRON -  A stablecoin pegged to $1. Partially backed by a continuously adjusting ratio of collateral equal to $1 in value.\n      Check out the docs for more information: https://docs.iron.finance/',
         website: 'https://app.iron.finance/',
         social: {
           telegram: 'https://t.me/ironfinance',
@@ -599,7 +601,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
       {
         logo: 'stake/fanatics/logo.png',
         background: 'stake/polygon/background.png',
-        text: `fanatics.finance is a whole new Decentralized Exchange on Binance smart chain as known as 3° Generation yield farming mechanism that allows perpetual price increase with a sustainable and profitable farming yield with a Timelock contract at launch! And numerous new Features. Fanatics Finance is under Fanatics Finance is under license from KSOC Sports OÜ Registration: 16197453 Harju County, Tallinn, Kesklinna district, Pärnu mnt 158, ESTONIA.`,
+        text: 'fanatics.finance is a whole new Decentralized Exchange on Binance smart chain as known as 3° Generation yield farming mechanism that allows perpetual price increase with a sustainable and profitable farming yield with a Timelock contract at launch! And numerous new Features. Fanatics Finance is under Fanatics Finance is under license from KSOC Sports OÜ Registration: 16197453 Harju County, Tallinn, Kesklinna district, Pärnu mnt 158, ESTONIA.',
         website: 'https://fanaticsfinance.com/',
         social: {
           telegram: 'https://t.me/fanaticsfinance_EN',
@@ -607,10 +609,10 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'aave-eth',
   },
   {
     id: 'moo_aave-btc',
-    poolId: 'polygon-bifi-maxi',
     name: 'Iron / Garuda / Fanatics',
     logo: 'single-assets/BTCB.svg',
     earnedToken: 'mooPolygonBIFI',
@@ -619,14 +621,14 @@ Sandman Finance was the first project to present the swap/utility token. Where y
     earnContractAddress: '0x20948Cad130c3D7B24d27CC66163b4aaed4684F0',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0xD3395577febc6AdaB25490a69955ebC47040766C',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/garuda/logo.png',
         background: 'stake/polygon/background.png',
-        text: `GarudaSwap is the 1st Next Generation Automatic Liquidity Acquisition yield farm and AMM decentralized exchange running on Binance Smart Chain with lots of unique and creative features that let you earn and win for a long time.`,
+        text: 'GarudaSwap is the 1st Next Generation Automatic Liquidity Acquisition yield farm and AMM decentralized exchange running on Binance Smart Chain with lots of unique and creative features that let you earn and win for a long time.',
         website: 'https://garudaswap.finance/',
         social: {
           telegram: 'https://t.me/garudaswap',
@@ -636,10 +638,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
       {
         logo: 'stake/ironfinance/logo.png',
         background: 'stake/polygon/background.png',
-        text: `Inspired by FRAX, a unique fractionally-algorithmic stablecoin on the Ethereum network, and utilizing a similar approach, we have created IRON, the first partially-collateralized stablecoin on Binance Smart Chain. The IRON protocol makes use of 2 tokens to achieve its goal:  STEEL and IRON. 
-      STEEL - The share token of the Iron finance protocol. Serves as part of the collateral behind IRON. Backed by seigniorage revenue as well as the value of any excess collateral. 
-      IRON -  A stablecoin pegged to $1. Partially backed by a continuously adjusting ratio of collateral equal to $1 in value.
-      Check out the docs for more information: https://docs.iron.finance/`,
+        text: 'Inspired by FRAX, a unique fractionally-algorithmic stablecoin on the Ethereum network, and utilizing a similar approach, we have created IRON, the first partially-collateralized stablecoin on Binance Smart Chain. The IRON protocol makes use of 2 tokens to achieve its goal:  STEEL and IRON. \n      STEEL - The share token of the Iron finance protocol. Serves as part of the collateral behind IRON. Backed by seigniorage revenue as well as the value of any excess collateral. \n      IRON -  A stablecoin pegged to $1. Partially backed by a continuously adjusting ratio of collateral equal to $1 in value.\n      Check out the docs for more information: https://docs.iron.finance/',
         website: 'https://app.iron.finance/',
         social: {
           telegram: 'https://t.me/ironfinance',
@@ -649,7 +648,7 @@ Sandman Finance was the first project to present the swap/utility token. Where y
       {
         logo: 'stake/fanatics/logo.png',
         background: 'stake/polygon/background.png',
-        text: `fanaticsfinance is a whole new Decentralized Exchange on Binance smart chain as known as 3° Generation yield farming mechanism that allows perpetual price increase with a sustainable and profitable farming yield with a Timelock contract at launch! And numerous new Features. Fanatics Finance is under Fanatics Finance is under license from KSOC Sports OÜ Registration: 16197453 Harju County, Tallinn, Kesklinna district, Pärnu mnt 158, ESTONIA.`,
+        text: 'fanaticsfinance is a whole new Decentralized Exchange on Binance smart chain as known as 3° Generation yield farming mechanism that allows perpetual price increase with a sustainable and profitable farming yield with a Timelock contract at launch! And numerous new Features. Fanatics Finance is under Fanatics Finance is under license from KSOC Sports OÜ Registration: 16197453 Harju County, Tallinn, Kesklinna district, Pärnu mnt 158, ESTONIA.',
         website: 'https://fanaticsfinance.com/',
         social: {
           telegram: 'https://t.me/fanaticsfinance_EN',
@@ -657,5 +656,6 @@ Sandman Finance was the first project to present the swap/utility token. Where y
         },
       },
     ],
+    poolId: 'aave-wbtc',
   },
 ];
