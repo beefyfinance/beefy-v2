@@ -79,7 +79,12 @@ const _Item = ({vault}) => {
   React.useEffect(() => {
     let amount = '0';
     if (wallet.address) {
-      amount = byDecimals(new BigNumber(item.balance), item.tokenDecimals)
+      amount = item.isGovVault
+      ? byDecimals(
+          new BigNumber(balance.tokens[item.network][`${item.token}GovVault`].balance),
+          item.tokenDecimals
+        ).toFixed(8)
+      : byDecimals(new BigNumber(item.balance), item.tokenDecimals)
         .multipliedBy(byDecimals(new BigNumber(item.pricePerFullShare), item.tokenDecimals))
         .toFixed(8);
     }
@@ -247,7 +252,7 @@ const _Item = ({vault}) => {
                   <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
 
                   <ValueText value={(rewardsEarned ?? '') + ` ${item.earnedToken}`} />
-                  {parseFloat(poolRewards.rewards) > 0 && (
+                  {parseFloat(priceInDolar.balance) > 0 && (
                     <Typography className={classes.label}>
                       <ValuePrice value={formatUsd(rewardPrice)} />
                     </Typography>
