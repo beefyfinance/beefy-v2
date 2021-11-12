@@ -1,41 +1,2643 @@
 [
   {
+    "id": "bsc: bifi-maxi",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: alpaca-ibalpaca",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-nfty-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-bnb-stars",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-wbnb-ceek",
+    "type": "Added"
+  },
+  {
     "id": "bsc: ellipsis-renbtc",
-    "type": "synced"
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-banana-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: nfty-nfty",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: belt-beltbtc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-bananav2",
+    "type": "Added"
   },
   {
     "id": "bsc: banana-exp-wbnb",
     "type": "Added"
   },
   {
+    "id": "bsc: cakev2-lazio-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dkt-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-rusd-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bmon-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: belt-beltbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: belt-belteth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-bifi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wsg-wsg",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wsg-wsg-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-bifi-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-tusd-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-fil-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-wbnb-dep",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-wusd-dep",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-rpg-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mcb-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: baby-baby",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: baby-baby-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: baby-baby-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-wbnb-beta",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: sing-sing-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cafev2-brew-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cafev2-brew-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-nft-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-ong-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: pacoca-pacoca-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: pacoca-pacoca",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: annex-ann-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: annex-ann",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: belt-4belt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: pearzap-pear-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: pearzap-pear-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: czf-czf-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: czf-czf-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: long-long-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-wbnb-gnt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dvi-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mcrn-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-pots-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-pots-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-tlos-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: honeyfarm-moon-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: honeyfarm-moon-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-usdt-btcb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-usdt-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-usdt-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-rabbit-busd",
+    "type": "Added"
+  },
+  {
     "id": "bsc: cakev2-bscdefi-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bp-wbnb",
+    "type": "Added"
   },
   {
     "id": "bsc: cakev2-qbt-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auro-auro-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auro-auro-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: elk-elk-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: elk-elk-dai",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-wusd-wex",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-cake-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-naos-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-pha-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: omnifarm-usdo-busd-ot",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: omnifarm-usdo-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: omnifarm-usdo-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: omnifarm-usdo-bdp",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: omnifarm-usdo-popen",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: omnifarm-usdo-anymtlx",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: omnifarm-fet-usdo",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: omnifarm-ocp-usdo",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: tosdisbsc-dis-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-ont-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-bnb-ont-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-cakev2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: yel-yel",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: yel-yel-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-bhc-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-caps-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: honeyfarm-bear-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: honeyfarm-bear-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: honeyfarm-honey-bnb-eol2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: honeyfarm-honey-busd-eol2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-hotcross-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-eth-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-busd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-sxp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-bake-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-wusd-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-cake-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-btcb-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-banana-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-guard-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-land-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: honeyfarm-honey-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: honeyfarm-honey-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-cyt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-btt-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-trx-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-win-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-revv-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-wsg-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-wbnb-babycak-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-bnb-sista",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-bnb-dep-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetswap-btcb-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: pera-pera-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-tape-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-axs-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-if-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-skill-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: farmhero-pancake-hero-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: farmhero-pancake-hero-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-sps-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-c98-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-mdx",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-tusd-usdt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-axs-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ellipsis-usdn",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fruit-fruit-cake",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fruit-fruit-xvs",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-fruit-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: stablequant-quant-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: rabbit-carrot-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-krown-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kingdefi-krown-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kingdefi-krown-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ooe-ooe-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ooe-ooe-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-yfi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-wex-btcb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-chess-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mask-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ellipsis-pbtc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-sfp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-eps-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-xvs-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-twt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-titan-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-one-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-watch-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-form-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-busd-orbs-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bscpad-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-adx-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-usdt-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-cake-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: merlin-merlin-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-rabbit-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-htb-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-wex-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-waultx-wbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dg-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-woo-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ica-zbtc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ica-zeth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-boring-bn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-marsh-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-hai-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-o3-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: 1inch-1inch",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-eth-beth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: iron-steel-iron",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: iron-steel",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: memefarmv2-ape-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ampl-bsc-mp-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-eth-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-usdt-alpaca",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-usdt-matic",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-ltc-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-ada-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-xrp-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-alpaca-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-usdt-wex",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: wex-wex-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-btcb-eth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-eth-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-typh-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: tenfi-tenfi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: tenfi-tenfi-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mbox-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-celr-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-shib-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ata-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: panther-panther-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: panther-panther-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: garuda-garuda-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mtrg-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-qkc-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mx-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ktn-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ellipsis-eps",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: dopple-dop-lp",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-tusd-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-bnb-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-fil-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-vrt-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ez-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-kalm-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetswap-wings",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: dopple-ust-lp",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bifi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-sushi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-dot-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-xrp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-snx-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-blz-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-popen-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-well-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-ltc-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-cake-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-chr-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-deri-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: hps-hps",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: dopple-dolly-lp",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-xend-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-cyc-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-near-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-coti-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-etc-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-zec-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: garuda-garuda-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetswap-wings-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetswap-wings-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetswap-busd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: grand-grand-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: grand-grand-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: dumpling-sdump-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: dumpling-sdump-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: satis-xsat-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: satis-xsat-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: iron-dnd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: iron-dnd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-hotcross-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-rfox-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-wmass-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ubxt-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-btr-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-pmon-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-one-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-oin-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-tdoge-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-fine-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-doge-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-hyfi-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-avax-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: garuda-garuda-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-ftm-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-comp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-aave-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-link-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-ada-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: iron-iron-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: iron-steel-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bhc-bhc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-matic-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bunny-bunny-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: tofy-tofy-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: tofy-tofy-mash-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: tofy-tofy-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: goal-goal-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-kun-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mcoin-ust-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-watch-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-fts-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-bxbtc-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-btt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-trx-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-win-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-naut-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-pnt-pbtc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ica-ica-btcb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ica-ica-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: zefiv2-zefi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: zefiv2-zefi-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: satis-sat-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: satis-sat-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-busd-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-doge-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-btcb-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-keyfi-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: typhv2-typh-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-lmt-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swampv2-cake-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: beltv2-belt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dfd-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-alpaca-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swampv2-swamp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swampv2-swamp-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bunny-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-eos-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-xrp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-uni-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-sxp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-blk-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-jgn-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-eps-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-nrv-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bfi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bdo-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-for-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-vai-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-usdt-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-alpha-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-inj-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-twt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-xvs-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-unfi-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-reef-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-yfi-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-band-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-atom-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-hget-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-cgg-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-xed-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-link-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-usdt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-busd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-eth-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-btcb-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-hakka-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-hoo-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-txl-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ust-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mnflx-ust-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mtsla-ust-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-mir-ust-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-tbtc-btcb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bbadger-btcb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bdigg-btcb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ramp-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dexe-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-tpt-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-xmark-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-iotx-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-lina-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-usdc-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dai-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-sushi-eth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dego-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-gum-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-pbtc-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-belt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bel-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bmxx-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bor-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-swgb-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-lit-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ditto-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-sfp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-wsote-bn-eolb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-front-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-btcst-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ltc-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ada-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dot-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-zil-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-lto-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-pcws-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-trade-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dusk-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-cos-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-watch-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bry-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-zee-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dodo-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-swingby-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-apys-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-oddz-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bondly-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-itam-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-arpa-bnb=eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-dft-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-swth-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-lien-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-broobee-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-tko-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-tlm-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-perl-bnb=eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-alpa-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-hzn-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-suter-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ten-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-bscx-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-ctk-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bunny-bunny-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-eth-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: belt-venus-blp-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-mdx-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-btc-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-broobee-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-ada-eth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-iota-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-bat-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ellipsis-fusdt-3eps",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-apys-bnb-eol",
+    "type": "Added"
   },
   {
     "id": "bsc: auto-eth-beth",
-    "type": "synced"
+    "type": "Added"
   },
   {
     "id": "bsc: auto-eth-usdt",
-    "type": "synced"
+    "type": "Added"
   },
   {
     "id": "bsc: auto-btcb-usdt",
-    "type": "synced"
+    "type": "Added"
   },
   {
     "id": "bsc: auto-btcb-eth",
-    "type": "synced"
+    "type": "Added"
   },
   {
     "id": "bsc: auto-usdt-busd",
-    "type": "synced"
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mash-mash-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mash-mash-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mash-mash-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-mdx-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: palm-palm-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-hoo-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-itam-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-arpa-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-xvs-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-uni-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-sxp-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-ada-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-wbnb-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-busd-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-usdt-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-usdc-v2-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-xblzd-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-xblzd-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-xblzd-bnb-old-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-xblzd-busd-old-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-xblzd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-xblzd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-blzd-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-blzd-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: blizzard-blzd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-cake-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: mdex-bsc-eth-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-auto-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: typh-typh-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: biti-biti-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: palm-palm-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: palm-palm-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swamp-cake-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swamp-swamp",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-cake-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swamp-cake-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bingo-bgo-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bingo-sbgo-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ellipsis-3eps",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: tndr-tndr-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: tndr-tndr-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swamp-swamp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swamp-swamp-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: swirl-swirl-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-dft-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-swth-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: zefi-zefi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: zefi-zefi-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: hps-hps-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ellipsis-eps-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: alpaca-salpaca-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: naut-naut-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-lto-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-trade-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: alpaca-alpaca-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: space-space-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: space-space-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bdigg-btcb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: pumpy-pmp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bifi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jul-twt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: com-com-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-dusk-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-cos-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: squirrel-nuts-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: squirrel-nuts-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bakery-bat-bake-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: memefarm-ape-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: memefarm-mfrm-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: slime-slime-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: slime-slime-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cakev2-alice-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-alice-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-beth-eth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: belt-belt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-belt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-busd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-btc-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-btcb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-dexe-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jul-bifi-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jul-juld-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-ada-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bel-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-tpt-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-watch-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-xmark-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: soup-soup-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: soup-soups-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: banana-banana-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bmxx-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bopen-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: 1inch-1inch-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-iotx-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-lina-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-dai-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: sponge-steam-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: salt-salt-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: salt-salt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-sushi-eth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: crow-crow-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: crow-crow-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ramen-ramen-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: ramen-ramen-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cafe-brew-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cafe-brew-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cafe-bifi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bry-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-zee-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-dodo-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-swingby-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kebab-usdt-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kebab-eth-btcb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: monster-msc-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: monster-msc-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bts-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-btd-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-btc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-usdt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kebab-kebab-btc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-swgb-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-lit-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kebab-bifi-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-ditto-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-cake-old-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: auto-busd-old-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: sponge-sponge-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: sponge-soak-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-sfp-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: nyacash-nyas-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: monster-mss-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jul-juld",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bdo-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kebab-kebab",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kebab-kebab-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: kebab-kebab-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-egld-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-mamzn-ust",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-mgoogl-ust",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-mnflx-ust",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-mtsla-ust",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-wsote-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-front-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-btcst-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: thugs-drugs-btri",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-ada-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bakery-bake-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-vapor-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bdo-bnb-sbdo",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bdo-bnb-old",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-sbdo-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-bdo-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-beth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-dai-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-fil-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-balbt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bakery-btc-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-bhc-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-reef-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-nar-cake",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-nya-cake",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: thugs-drugs-drugs",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: thugs-drugs-bhc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: thugs-drugs-jgn",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-fuel-bnb-ss-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-fuel-bnb-pcs-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-bhc-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-eth-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-cake-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-uni-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-busd-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: jetfuel-usdt-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-smart-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-dot-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-link-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-atom-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-vai-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-broobee-cake",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-sxp-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-usdt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-busd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-ltc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: venus-xrp-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-twt-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-xvs-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: narwhal-gold-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bakery-bake-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: bakery-bake-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-bifi-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-drugs-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-thugs-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-cred-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-busd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-panacakelp-thugs-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-dai-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-bliq-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: street-drugs-bnb-v1",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-cake-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-twt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-hard",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-cake-bnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-busd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-usdt-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fortube-fil",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fortube-busd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fortube-dot",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fortube-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fortube-btcb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fry-burger-v2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: cake-syrup-twt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: fry-burger-v1",
+    "type": "Added"
+  },
+  {
+    "id": "bsc: beltv2-4belt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: heco-bifi-maxi",
+    "type": "Added"
+  },
+  {
+    "id": "heco: lendhub-btc",
+    "type": "Added"
+  },
+  {
+    "id": "heco: lendhub-dot",
+    "type": "Added"
+  },
+  {
+    "id": "heco: lendhub-eth",
+    "type": "Added"
+  },
+  {
+    "id": "heco: lendhub-lhb-wht",
+    "type": "Added"
+  },
+  {
+    "id": "heco: lendhub-lhb-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-mdx",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-shib-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-bifi-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: hfi-hfi-ht-eol",
+    "type": "Added"
+  },
+  {
+    "id": "heco: hfi-hfi-husd-eol",
+    "type": "Added"
+  },
+  {
+    "id": "heco: lava-lava-eol",
+    "type": "Added"
+  },
+  {
+    "id": "heco: lava-lava-usdt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "heco: lava-lava-wht-eol",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-hbtc-wht",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-eth-wht",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-husd-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-hltc-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-hbch-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-hdot-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-hfil-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-hpt-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-lhb-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-aave-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-snx-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-link-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-bal-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-yfi-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-uni-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-mdx-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-mdx-wht",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-wht-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-hbtc-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "heco: mdex-eth-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: fantom-bifi-maxi",
+    "type": "Added"
   },
   {
     "id": "fantom: geist-ftm",
@@ -70,15 +2672,1363 @@
     "type": "Added"
   },
   {
-    "id": "fantom: beets-guqin-qi-eol",
-    "type": "REMOVED"
+    "id": "fantom: curve-ftm-geist",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-late-quartet",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-wftm-dola",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-dola-inv",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-dola",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-guqin-qi-2",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-fantom-conservatory",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: summit-summit",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: summit-summit-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-sound-of-moosic",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: pearzap-fpear-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: pearzap-fpear-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-ftm-sonata",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-dance-of-degens-eol",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-magic-touch-daniele",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-classic-trio",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-e-major",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-b-major",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-ziggy-mim",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-fidelio-duetto",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-symphony-nr-10",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-grand-orchestra",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-fantom-of-opera",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: beets-steady-beets",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-frax",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-mim",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-wmemo-mim",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spell-ftm-mim-crv",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-geist-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-wftm-spell",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-link-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-any-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: curve-ftm-tricrypto",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: sing-ftm-usdc-sing",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-ftm-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-fusdt-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-ftm-mim",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-crv-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-zoo-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-ftm-ice",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: jetswap-fantom-eth-btc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: jetswap-fantom-eth-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: jetswap-fantom-btc-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: jetswap-fantom-fusdt-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: jetswap-fantom-fwings-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: jetswap-fantom-fwings-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: jetswap-fantom-fwings",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: tomb-tshare-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: tomb-tomb-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-ftm-just",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-ftm-sushi",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: spirit-fusdt-spell",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-usdc-woo",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-wftm-shade",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-wftm-treeb",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-crv",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-link",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-boo",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: stakesteak-fusd-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-steak-wftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-wftm-foo",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-ftm-scream",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-zoo-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: steakhouse-scream-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-wbtc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-dai",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-eth",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: scream-fusdt",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-yfi-eth",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: curve-ftm-2pool",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: curve-ftm-fusdt",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: curve-ftm-ren",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-mim-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-boo-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-bifi-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-ftm-ice",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-ftm-sushi",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-ftm-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-any-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-dai-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: ester-est-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: ester-est",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-woofy-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-bnb-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: froyo-3pool",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: froyo-froyo-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-link-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-cover-ftm-eol",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-cream-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-snx-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-usdt-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-btc-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-eth-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-aave-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-crv-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polygon-bifi-maxi",
+    "type": "Added"
   },
   {
     "id": "polygon: kyber-usdc-jeur",
-    "type": "synced"
+    "type": "Added"
+  },
+  {
+    "id": "polygon: curve-am3crv",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-shib-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-dpi-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-ftm-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-quick",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-usdc-bifi",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-jrt-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-wmatic-crystl",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: kyber-usdc-jgbp",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: kyber-usdc-jchf",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: curve-poly-ren",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polysage-usdc-sage",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polysage-wmatic-sage",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cafe-pbrew-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cafe-pbrew-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sing-usdc-sing",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-banana-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: curve-poly-atricrypto3",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-fox-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-wmatic-ghst",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: tetu-tetu-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: tetu-matic-tetu",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polywise-usdc-wise-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polywise-wmatic-wise-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyalpha-alpha-matic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyalpha-alpha-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sandman-delirium-matic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sandman-delirium-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdc-rbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: mai-qi-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-qi-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-mai-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-dai-mai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-mai-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdt-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-usdc-wusd",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-watch-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-usdc-wex",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-axs-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ironswap-ice-iron",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-usdc-dai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-avax-weth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ironswap-iron",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-eth-rendoge",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-ball-ball-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-ball-usdc-ball-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-ball-wmatic-ball-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dinoswap-dfyn-route-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdc-quick",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-wmatic-avax",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-wmatic-ht-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: pearzap-pear-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: pearzap-pear-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polygonfarm-spade-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polygonfarm-spade-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-eth-wbtc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-eth-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-sol-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-uni-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-guard-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dinoswap-dino-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dinoswap-dfyn-ust-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dinoswap-dfyn-eth-dfyn",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-quick-yamp-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-quick-rendgb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-quick-polydoge-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: farmhero-quick-usdc-honor",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: farmhero-wault-usdc-honor",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-matic-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-luna-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-link-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-uni-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-crv-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-yamp-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyyeld-xyeld-quick-wmatic-xyeld-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polycracker-lith-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polycracker-lith-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dinoswap-xmark-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dinoswap-dino-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dinoswap-usdc-mimatic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dinoswap-usdc-usdt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: jetswap-poly-usdc-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: mai-usdc-mimatic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-usdc-bone-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyyeld-xyeld-xyeld-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyyeld-xyeld-yeld-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyyeld-xyeld-quick-wmatic-yeld-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-nexo-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: telxchange-quick-quick-tel-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: telxchange-quick-wmatic-tel",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: telxchange-quick-eth-tel-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: telxchange-quick-aave-tel",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: telxchange-quick-wbtc-tel",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: curve-poly-atricrypto",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-ice-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ironswap-ice-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ironswap-ice-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ironswap-3usd",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-wbtc-wex",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-bifi-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: jetswap-poly-pwings",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: jetswap-poly-pwings-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: jetswap-poly-pwings-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: mai-qi-mimatic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-qi-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdc-mimatic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-polybunny-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-polybunny-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: boneswap-quick-wmatic-bone-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: boneswap-sushi-wmatic-bone-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: boneswap-ape-wmatic-bone-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: boneswap-quick-usdc-bone-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyyeld-quick-wmatic-yeld-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-route-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-sx-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-ez-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-uft-dfyn-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polycat-dfyn-fish-matic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-bone-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-pup-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-wmatic-bone-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-usdc-pup-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-wmatic-pup-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-matic-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-matic-dai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polypup-weth-pup-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-eth-ramp-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdc-rusd",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyyeld-ape-wmatic-yeld-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-wbtc-ibbtc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-eth-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-btc-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: ape-bnb-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyyeld-sushi-wmatic-yeld-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polyyeld-quick-usdc-yeld-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-pbnb-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdc-pbnb-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-dai-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-eth-fff-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-wbtc-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-wbtc-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-matic-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-polydoge-matic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-snx-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-link-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-aave-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-dai-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-usdc-dai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-matic-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-usdc-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-wex-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-wex",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-wex-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: wexpoly-bifi-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-eth-wfil",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdc-dai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-quick-uni-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-link-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polycat-fish-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdc-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-dai-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-fff-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: aave-wbtc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: aave-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-titan-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: iron-iron-usdc-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polycat-sushi-fish-matic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: polycat-quick-fish-matic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-grt-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-frax-fxs",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-frax-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-wmatic-woofy",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-usdc-dai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-snx-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: iron-titan-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: iron-titan-iron-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-bifi-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-bifi-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-degen-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-cc10-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-defi5-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-btc-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: iron-titan-matic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: iron-iron-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-matic-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-vision-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-degen-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-cc10-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: pzap-pzap-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: pzap-pzap-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-bifi-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-bifi-must",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: aave-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: aave-aave",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: aave-dai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: aave-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-crv-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-usdc-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-link-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-mocean-matic-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-any-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-frax-quick-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-aave-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-eth-dai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-btc-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-eth-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-usdc-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-matic-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-azuki-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-doki-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-usdc-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-must-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-eth-btc",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-ubt-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-defi5-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-wise-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-cel-eth-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-quick-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-mausdc-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-aave-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-link-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: krill-krill-usdc-eol",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-eth-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-eth-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: quick-quick-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-eth-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-matic-must",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: cometh-usdc-must",
+    "type": "Added"
+  },
+  {
+    "id": "avax: avax-bifi-maxi",
+    "type": "Added"
+  },
+  {
+    "id": "avax: bankerjoe-avax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: bankerjoe-weth.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: bankerjoe-wbtc.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: bankerjoe-usdc.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: bankerjoe-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: bankerjoe-dai.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: bankerjoe-link.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: bankerjoe-mim",
+    "type": "Added"
   },
   {
     "id": "avax: blizz-blzz-avax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wavax-bifi",
+    "type": "Added"
+  },
+  {
+    "id": "avax: curve-avax-av3crv",
+    "type": "Added"
+  },
+  {
+    "id": "avax: curve-avax-atricrypto",
     "type": "Added"
   },
   {
@@ -90,18 +4040,436 @@
     "type": "Added"
   },
   {
+    "id": "avax: sing-usdt.e-sing",
+    "type": "Added"
+  },
+  {
+    "id": "avax: aave-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: aave-dai.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: aave-usdc.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: aave-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: aave-weth.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: aave-wbtc.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: aave-aave.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-joe",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-joe-usdc.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wavax-aave.e",
+    "type": "Added"
+  },
+  {
     "id": "avax: joe-mai-wavax-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-weth.e-usdc.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wbtc.e-usdc.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-bnb-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-usdc.e-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-usdt.e-dai.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wavax-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-link.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wavax-spell",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-frax-wavax",
+    "type": "Added"
   },
   {
     "id": "avax: joe-time-wavax-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-png",
+    "type": "Added"
   },
   {
     "id": "avax: joe-mai-usdc.e-eol",
-    "type": "synced"
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-joe-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-joe-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-mim-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-qi-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-syn-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wbtc.e-usdt.e-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wbtc.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-weth.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-usdc.e-dai.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-usdc.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wavax-dai.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-usdc.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: olive-dai.e-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: olive-busd.e-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-png-qi",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-qi-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-uni.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-yfi.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-aave.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-sushi.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-wavax-xava",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-png-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-weth.e-png",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-wbtc.e-png",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-wavax-dai.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-link.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-weth.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-wavax-usdt.e",
+    "type": "Added"
+  },
+  {
+    "id": "avax: pangolin-wbtc.e-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-bifi-png",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-bifi-avax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-bnb-avax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: gondola-usdt-zusdt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: lyd-lyd-usdt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: lyd-lyd-avax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: olive-olive-avax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: olive-olive-usdt-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: snob-3pool-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: com-usdt-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: com-eth-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: com-png-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: snob-snob-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: com-com-avax",
+    "type": "Added"
+  },
+  {
+    "id": "avax: com-dai-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-sushi-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-wbtc-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-link-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-uni-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-usdt-png-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-eth-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-usdt-avax-eol",
+    "type": "Added"
+  },
+  {
+    "id": "avax: png-png-avax",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1ygg-1eth",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1eth-1aave",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1axs-1eth",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1eth-1dai",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1usdt-1eth",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1eth-1frax",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-ust-1eth",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1wbtc-1eth",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1usdt-1usdc",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-1usdt-wone",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-sushi-one",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-busd-one",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-bscbusd-busd",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-eth-one",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-btc-one",
+    "type": "Added"
+  },
+  {
+    "id": "harmony: sushi-one-usdc-one",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: spell-mim-crv",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: sushi-arb-spell-weth",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: sushi-arb-weth-mim",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: sushi-arb-weth-link",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: sushi-arb-eth-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: curve-arb-tricrypto",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: curve-arb-2pool",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: curve-arb-ren",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: sushi-arb-wbtc-weth",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: sushi-arb-sushi-eth",
+    "type": "Added"
+  },
+  {
+    "id": "arbitrum: sushi-arb-weth-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-celo-weth",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-cusd-dai",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-ceur-weth",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-cusd-weth",
+    "type": "Added"
+  },
+  {
+    "id": "celo: sushi-celo-cusd-ceur",
+    "type": "Added"
   },
   {
     "id": "moonriver: solarbeam-frax-wmovr",
@@ -109,6 +4477,78 @@
   },
   {
     "id": "moonriver: solarbeam-solar",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-solar-wmovr",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-solar-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-wmovr-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-dai-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-busd-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-eth-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-bnb-busd",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-wbtc-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-usdt-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-mimatic-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-mim-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-matic-wmovr",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-avax-wmovr",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-wmovr-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-wmovr-rib",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-wmovr-relay",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-pets-wmovr",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-solar-rib",
     "type": "Added"
   }
 ]
