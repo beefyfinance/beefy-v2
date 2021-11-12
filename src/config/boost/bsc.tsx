@@ -1,28 +1,202 @@
-const ceek = {
-  logo: 'stake/ceek/logo.png',
-  background: 'stake/ceek/bg.png',
-  text: 'CEEK (CEEK) is a decentralized platform featuring global superstars like Lady Gaga, Katy Perry, Ziggy Marley, Bon Jovi, UFC Champion Francis Ngannou, 3x NBA Champion Dwyane Wade and more. CEEK enables music artists, sports athletes and digital content creators to directly connect with their fans. CEEK tracks digital media assets on the blockchain, and makes fast, efficient secure payments for entertainment and education via smart contracts.',
-  website: 'https://www.ceek.io/',
-  social: {
-    telegram: 'https://t.me/ceekvrtokensale',
-    twitter: 'https://twitter.com/ceek',
-  },
-};
-
 export const pools = [
+  {
+    id: 'moo_alpaca-ibalpaca-nfty',
+    name: 'NFTY',
+    logo: 'single-assets/ALPACA.png',
+    earnedToken: 'mooNfty',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x55669f1c00D55F55bA1E736A23cEE54877D922Be',
+    earnContractAddress: '0xF9353488011a4b10e31656B68684bEc6Cfadf2b7',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'NFTY',
+    vaultAddress: '0x6EB4F8975b15F34AdccFDE830087Fc8FdB006C36',
+    status: 'active',
+    partnership: true,
+    partners: [
+      {
+        logo: 'stake/nfty/logo.png',
+        background: 'stake/nfty/bg.png',
+        text: 'NFTYLabs envisions a world where NFTs function as a medium of access, bringing a means of utility and privilege to NFT holders in a secure and confidential manner. NFTY will act as a cross-chain and interoperable bridge between enterprise, private content, and VIP communities; further strengthening the bond in ways never before imagined.',
+        website: 'https://nftynetwork.io/',
+        social: {
+          telegram: 'https://t.me/NFTYNetwork',
+          twitter: 'https://twitter.com/NFTYNetwork',
+        },
+      },
+    ],
+    poolId: 'alpaca-ibalpaca',
+  },
+  {
+    id: 'moo_banana-nfty-wbnb-nfty-2',
+    name: 'NFTY',
+    earnedToken: 'mooNfty',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x55669f1c00D55F55bA1E736A23cEE54877D922Be',
+    earnContractAddress: '0xA79CC48b4968ADF1B06eB1b6395EFb786Ab5445C',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'NFTY',
+    vaultAddress: '0x69476255A2703Df58C0F6Bb60D1c5deC9a8406C1',
+    status: 'active',
+    partnership: true,
+    partners: [
+      {
+        logo: 'stake/nfty/logo.png',
+        background: 'stake/nfty/bg.png',
+        text: 'NFTYLabs envisions a world where NFTs function as a medium of access, bringing a means of utility and privilege to NFT holders in a secure and confidential manner. NFTY will act as a cross-chain and interoperable bridge between enterprise, private content, and VIP communities; further strengthening the bond in ways never before imagined.',
+        website: 'https://nftynetwork.io/',
+        social: {
+          telegram: 'https://t.me/NFTYNetwork',
+          twitter: 'https://twitter.com/NFTYNetwork',
+        },
+      },
+    ],
+    poolId: 'banana-nfty-wbnb',
+  },
+  {
+    id: 'moo_banana-bnb-stars-mogul',
+    name: 'Mogul',
+    earnedToken: 'STARS',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xbD83010eB60F12112908774998F65761cf9f6f9a',
+    earnContractAddress: '0xe2fbB4A510d0E290d8B8533b0136Dc1Fe603e946',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'STARS',
+    vaultAddress: '0xd6Cf54a0545675AdB0aa5175b9461Cd3d6a61f8e',
+    status: 'active',
+    partnership: true,
+    partners: [
+      {
+        logo: 'stake/mogul/logo.png',
+        background: 'stake/mogul/bg.png',
+        text: 'Mogul is an NFT and DeFi platform for film and entertainment, bridging Hollywood and blockchain technology. The STARS token powers the Mogul platform and offers rewards from movies. The Mogul platform has an NFT auction house, marketplace, and other products in the metaverse to bring movie fans closer to the action.',
+        website: 'https://www.mogulproductions.com/',
+        social: {
+          telegram: 'https://t.me/mogulproductions',
+          twitter: 'https://twitter.com/mogulofficial_',
+        },
+      },
+    ],
+    poolId: 'banana-bnb-stars',
+  },
+  {
+    id: 'moo_banana-wbnb-ceek-ceek-2',
+    name: 'CEEK',
+    earnedToken: 'CEEK',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xe0F94Ac5462997D2BC57287Ac3a3aE4C31345D66',
+    earnContractAddress: '0x9ba849C8b9FD8D4f04c6b22557553195f3a02870',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'CEEK',
+    vaultAddress: '0xd244fD01Ca42415b5B3f9dCe164C762eB28d6eA4',
+    status: 'active',
+    partnership: true,
+    partners: [
+      {
+        logo: 'stake/ceek/logo.png',
+        background: 'stake/ceek/bg.png',
+        text: 'CEEK (CEEK) is a decentralized platform featuring global superstars like Lady Gaga, Katy Perry, Ziggy Marley, Bon Jovi, UFC Champion Francis Ngannou, 3x NBA Champion Dwyane Wade and more. CEEK enables music artists, sports athletes and digital content creators to directly connect with their fans. CEEK tracks digital media assets on the blockchain, and makes fast, efficient secure payments for entertainment and education via smart contracts.',
+        website: 'https://www.ceek.io/',
+        social: {
+          telegram: 'https://t.me/ceekvrtokensale',
+          twitter: 'https://twitter.com/ceek',
+        },
+      },
+    ],
+    poolId: 'banana-wbnb-ceek',
+  },
+  {
+    id: 'moo_banana-banana-bnb-ceek',
+    name: 'CEEK',
+    logo: 'degens/banana-bnb.svg',
+    earnedToken: 'CEEK',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xe0F94Ac5462997D2BC57287Ac3a3aE4C31345D66',
+    earnContractAddress: '0x6EA8849E656Fb6cf357681ECe6165F2c4BACB038',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'CEEK',
+    vaultAddress: '0x15396D3BD9338A14AE90613Fc2b85c5F7b5621CF',
+    status: 'active',
+    partnership: true,
+    partners: [
+      {
+        logo: 'stake/ceek/logo.png',
+        background: 'stake/ceek/bg.png',
+        text: 'CEEK (CEEK) is a decentralized platform featuring global superstars like Lady Gaga, Katy Perry, Ziggy Marley, Bon Jovi, UFC Champion Francis Ngannou, 3x NBA Champion Dwyane Wade and more. CEEK enables music artists, sports athletes and digital content creators to directly connect with their fans. CEEK tracks digital media assets on the blockchain, and makes fast, efficient secure payments for entertainment and education via smart contracts.',
+        website: 'https://www.ceek.io/',
+        social: {
+          telegram: 'https://t.me/ceekvrtokensale',
+          twitter: 'https://twitter.com/ceek',
+        },
+      },
+    ],
+    poolId: 'banana-banana-bnb',
+  },
+  {
+    id: 'moo_ellipsis-renbtc-gamexchange',
+    name: 'Game X Change',
+    logo: 'uncategorized/epsRENBTC.png',
+    earnedToken: 'EXP',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x639d4C62F58a4048AD0F69B8CE675dB1A3e8e00e',
+    earnContractAddress: '0x4298Ff137C8F583F530ea241da3Da6a6AA66dAEb',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'EXP',
+    vaultAddress: '0x24AE9e5424575690aCab61a384B6A76d69F4f89c',
+    status: 'active',
+    partnership: true,
+    partners: [
+      {
+        logo: 'stake/gamexchange/logo.png',
+        background: 'stake/gamexchange/bg.png',
+        text: 'Game X Change is a gaming platform where users can move assets (virtual cash and NFTs) from one platform, game, or blockchain to another, in a safe and controlled way. Play & earn and convert in-game currencies and NFTs from game to game! Game X Change offers rewards for playing, earning, and farming across the platform through its native utility token, $EXP. Through the use of Game X Change’s technology solutions stack, developers are provided with a full suite of tools to innovate and integrate both legacy and blockchain games. Game X Change is the future of game asset exchange.',
+        website: 'https://gamexchange.app/',
+        social: {
+          telegram: 'https://t.me/GameXChange',
+          twitter: 'https://twitter.com/GameX_Change',
+        },
+      },
+    ],
+    poolId: 'ellipsis-renbtc',
+  },
+  {
+    id: 'moo_banana-exp-wbnb-gamexchange',
+    name: 'Game X Change',
+    earnedToken: 'EXP',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x639d4C62F58a4048AD0F69B8CE675dB1A3e8e00e',
+    earnContractAddress: '0x522ceA0bc3EEb3c6B35f12662326F2b8d5Fb69e3',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'EXP',
+    vaultAddress: '0x5B5ADf5cA7a7149194182a86fDA329019c57524b',
+    status: 'active',
+    partnership: true,
+    partners: [
+      {
+        logo: 'stake/gamexchange/logo.png',
+        background: 'stake/gamexchange/bg.png',
+        text: 'Game X Change is a gaming platform where users can move assets (virtual cash and NFTs) from one platform, game, or blockchain to another, in a safe and controlled way. Play & earn and convert in-game currencies and NFTs from game to game! Game X Change offers rewards for playing, earning, and farming across the platform through its native utility token, $EXP. Through the use of Game X Change’s technology solutions stack, developers are provided with a full suite of tools to innovate and integrate both legacy and blockchain games. Game X Change is the future of game asset exchange.',
+        website: 'https://gamexchange.app/',
+        social: {
+          telegram: 'https://t.me/GameXChange',
+          twitter: 'https://twitter.com/GameX_Change',
+        },
+      },
+    ],
+    poolId: 'banana-exp-wbnb',
+  },
   {
     id: 'moo_belt-beltbtc-wsg',
     name: 'WallStreetGames',
-    poolId: 'belt-beltbtc',
+    logo: 'single-assets/BTCB.svg',
     earnedToken: 'MooWSG',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xf6581Be77F4933FDcf92C9E0D49e7f85e5360705',
     earnContractAddress: '0xAD02D935D7BDAEa0ba3227Fe160856be78b782Cf',
     earnedOracle: 'tokens',
     earnedOracleId: 'WSG',
-    partnership: true,
+    vaultAddress: '0xD411121C948Cff739857513E1ADF25ED448623f8',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/wsg/logo.png',
@@ -35,32 +209,7 @@ export const pools = [
         },
       },
     ],
-  },
-  {
-    id: 'moo_1inch_1inch-ten',
-    name: 'TEN Finance',
-    poolId: '1inch-1inch',
-    earnedToken: 'TENFI',
-    earnedTokenDecimals: 18,
-    earnedTokenAddress: '0xd15C444F1199Ae72795eba15E8C1db44E47abF62',
-    earnContractAddress: '0xebF08C4F58E443b94b06b4281834dB29c888dD1F',
-    earnedOracle: 'tokens',
-    earnedOracleId: 'TENFI',
-    partnership: true,
-    status: 'closed',
-    isMooStaked: true,
-    partners: [
-      {
-        logo: 'stake/tenfi/logo.png',
-        background: 'stake/tenfi/background.png',
-        text: 'TEN is a yield aggregator, audited by Certik, that simplifies staking and yield farming with the most liquid Binance Smart Chain Liquidity Pools available and provides a robust yield earning environment on the market while adhering to security, sustainability, longevity, and simplicity. TEN is the Token Enrichment Network, decentralized finance, simplified! TEN aims to simplify DeFi by creating a seamless and streamlined process in staking your assets to earn a rewardingly high yet modest APY in the simplest and safest manner while ensuring sustainable growth within the TEN platform across multiple farming ecosystems and optimizing returns for maximum yields in a sustainable and robust manner. TEN was launched to create a truly long-term, yet beneficial model that would ensure the longevity of the $TENFI ecosystem that allows for TEN to adapt and evolve with the DeFi space in general. This allows for high yield opportunities and ensuring that the $TENFI ecosystem continues to evolve and adapt. $TENFI aims to be a vanguard in decentralized finance.\n',
-        website: 'https://ten.finance',
-        social: {
-          telegram: 'https://t.me/tenfinance',
-          twitter: 'https://twitter.com/tenfinance',
-        },
-      },
-    ],
+    poolId: 'belt-beltbtc',
   },
   {
     id: 'moo_banana-banana-bnb-playmining',
@@ -72,9 +221,9 @@ export const pools = [
     earnContractAddress: '0x849F856f54C7b45e574300E9B7834B96F62a5166',
     earnedOracle: 'tokens',
     earnedOracleId: 'DEP',
-    partnership: true,
+    vaultAddress: '0x15396D3BD9338A14AE90613Fc2b85c5F7b5621CF',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/dep/logo.png',
@@ -87,6 +236,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-banana-bnb',
   },
   {
     id: 'moo_BANANA-ceek',
@@ -98,9 +248,9 @@ export const pools = [
     earnContractAddress: '0x260aAC1fCc624dF1F3CeB752f1F77538053565bf',
     earnedOracle: 'tokens',
     earnedOracleId: 'CEEK',
-    partnership: true,
+    vaultAddress: '0xED4ea41Daf652964789b16e3Ff76eC07d99d2340',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/ceek/logo.png',
@@ -113,6 +263,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-bananav2',
   },
   {
     id: 'moo_banana-wbnb-ceek-ceek',
@@ -123,9 +274,9 @@ export const pools = [
     earnContractAddress: '0xb6fC871229CA8D44AAa0AD01Ef61320b9b103F3E',
     earnedOracle: 'tokens',
     earnedOracleId: 'CEEK',
-    partnership: true,
+    vaultAddress: '0xd244fD01Ca42415b5B3f9dCe164C762eB28d6eA4',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/ceek/logo.png',
@@ -138,21 +289,7 @@ export const pools = [
         },
       },
     ],
-  },
-  {
-    id: 'moo_banana-wbnb-ceek-ceek-2',
-    name: 'CEEK',
-		poolId: 'banana-wbnb-ceek',
-    earnedToken: 'CEEK',
-    earnedTokenDecimals: 18,
-    earnedTokenAddress: '0xe0F94Ac5462997D2BC57287Ac3a3aE4C31345D66',
-    earnContractAddress: '0x9ba849C8b9FD8D4f04c6b22557553195f3a02870',
-    earnedOracle: 'tokens',
-    earnedOracleId: 'CEEK',
-    partnership: true,
-    status: 'active',
-    isMooStaked: true,
-    partners: [ceek],
+    poolId: 'banana-wbnb-ceek',
   },
   {
     id: 'moo_belt-beltbnb-babyswap',
@@ -164,9 +301,9 @@ export const pools = [
     earnContractAddress: '0x2d75b722c43e9cf57640909bF0a79cFC9f0bf800',
     earnedOracle: 'tokens',
     earnedOracleId: 'BABY',
-    partnership: true,
+    vaultAddress: '0xC34Ae91312A3c3F9420691922040a5DEe1698E52',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/babyswap/logo.png',
@@ -179,6 +316,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-beltbnb',
   },
   {
     id: 'moo_belt-belteth-nfty',
@@ -190,9 +328,9 @@ export const pools = [
     earnContractAddress: '0x804f23055DE069cB80a8590f96a5b7367b710d14',
     earnedOracle: 'tokens',
     earnedOracleId: 'NFTY',
-    partnership: true,
+    vaultAddress: '0xf2064C230b285AA6Cf45c6267DA86a8E3505D0AA',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/nfty/logo.png',
@@ -205,20 +343,20 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-belteth',
   },
   {
     id: 'moo_banana-nfty-wbnb-nfty',
     name: 'NFTY',
-    assets: ['NFTY', 'BNB'],
     earnedToken: 'NFTY',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0x5774B2fc3e91aF89f89141EacF76545e74265982',
     earnContractAddress: '0x0355dcA72d92E4fACDa3DaAdFCf142E04E4d6633',
     earnedOracle: 'tokens',
     earnedOracleId: 'NFTY',
-    partnership: true,
+    vaultAddress: '0x69476255A2703Df58C0F6Bb60D1c5deC9a8406C1',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/nfty/logo.png',
@@ -231,6 +369,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-nfty-wbnb',
   },
   {
     id: 'moo_bifi_bnb-cafeswap',
@@ -242,9 +381,9 @@ export const pools = [
     earnContractAddress: '0xe3Ac77F805805bE7639D9576405D52dddCB5F431',
     earnedOracle: 'tokens',
     earnedOracleId: 'BREW',
-    partnership: true,
+    vaultAddress: '0x6ebA4A31c46937B42E66f44a0A1165a08495a38F',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/cafeswap/logo.png',
@@ -257,20 +396,20 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-bifi-bnb',
   },
   {
     id: 'moo_bifi_usdt-singular',
     name: 'Singular',
-    assets: ['BIFI', 'USDT'],
     earnedToken: 'SING',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0x23894C0ce2d79B79Ea33A4D02e67ae843Ef6e563',
     earnContractAddress: '0x254A1D081CE07485856656FF6312619b95875De0',
     earnedOracle: 'tokens',
     earnedOracleId: 'SING',
-    partnership: true,
+    vaultAddress: '0x78dB17F440A223464B15046A25A273De510A14Ce',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/singular/logo.png',
@@ -283,6 +422,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'mdex-bsc-bifi-usdt',
   },
   {
     id: 'moo_banana_bnb-pacoca',
@@ -294,9 +434,9 @@ export const pools = [
     earnContractAddress: '0x3B6D305FAe833A64E56B1A4067A959D285B4F238',
     earnedOracle: 'tokens',
     earnedOracleId: 'PACOCA',
-    partnership: true,
+    vaultAddress: '0x15396D3BD9338A14AE90613Fc2b85c5F7b5621CF',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/pacoca/logo.png',
@@ -309,6 +449,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-banana-bnb',
   },
   {
     id: 'moo_beltbtc-annex',
@@ -320,9 +461,9 @@ export const pools = [
     earnContractAddress: '0x0172248F06Fc60a6c3F2760b83Da330E3c4AeE00',
     earnedOracle: 'tokens',
     earnedOracleId: 'ANN',
-    partnership: true,
+    vaultAddress: '0xD411121C948Cff739857513E1ADF25ED448623f8',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/annex/logo.png',
@@ -335,6 +476,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-beltbtc',
   },
   {
     id: 'moo_belteth-pearzap',
@@ -346,9 +488,9 @@ export const pools = [
     earnContractAddress: '0xCd661f69f8059409dB08B185395a1B015ee9805A',
     earnedOracle: 'tokens',
     earnedOracleId: 'bPEAR',
-    partnership: true,
+    vaultAddress: '0xf2064C230b285AA6Cf45c6267DA86a8E3505D0AA',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/pearzap/logo.png',
@@ -361,6 +503,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-belteth',
   },
   {
     id: 'moo_beltbnb-czodiac',
@@ -372,9 +515,9 @@ export const pools = [
     earnContractAddress: '0x5D774D57Fd635Cd4Bb6E556A4FFf45f288Effeb9',
     earnedOracle: 'tokens',
     earnedOracleId: 'CZF',
-    partnership: true,
+    vaultAddress: '0xC34Ae91312A3c3F9420691922040a5DEe1698E52',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/czodiac/logo.png',
@@ -387,6 +530,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-beltbnb',
   },
   {
     id: 'moo_bifi-bnb-long',
@@ -398,19 +542,14 @@ export const pools = [
     earnContractAddress: '0xB0E65F0B6b202a0bb46B9C929B33A23648dDAf10',
     earnedOracle: 'tokens',
     earnedOracleId: 'LONG',
-    partnership: true,
+    vaultAddress: '0x6ebA4A31c46937B42E66f44a0A1165a08495a38F',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/longdrink/logo.png',
         background: 'stake/longdrink/bg.png',
-        text:
-          'Longdrink Finance is an index protocol for cryptocurrencies. Currently, it offers two index tokens, each containing multiple underlying assets. $BEV (Binance Ecosystem Value) captures the growth of the BSC Ecosystem by uniting ten of the biggest BSC-native projects in one token. $L1Q (Layer 1 Quality Index) gives investors exposure to the leading blockchain architecture, by combining eight of the major layer-1 solutions in one token. Thereby, Longdrink Finance offers investors easy diversification to a wide range of assets, outperforming individual project picks in the long-term (similar to how passive index funds outperform individual stock picks in TradFi). \n' +
-          '\n' +
-          'Longdrink Finance is community-governed, designed as a DAO of talented and unique individuals - of thinkers and tinkerers with a mission. \n' +
-          '\n' +
-          'Through our community governance token $LONG, holders have exclusive voting rights and say in future protocol innovation.\n',
+        text: 'Longdrink Finance is an index protocol for cryptocurrencies. Currently, it offers two index tokens, each containing multiple underlying assets. $BEV (Binance Ecosystem Value) captures the growth of the BSC Ecosystem by uniting ten of the biggest BSC-native projects in one token. $L1Q (Layer 1 Quality Index) gives investors exposure to the leading blockchain architecture, by combining eight of the major layer-1 solutions in one token. Thereby, Longdrink Finance offers investors easy diversification to a wide range of assets, outperforming individual project picks in the long-term (similar to how passive index funds outperform individual stock picks in TradFi). \n\nLongdrink Finance is community-governed, designed as a DAO of talented and unique individuals - of thinkers and tinkerers with a mission. \n\nThrough our community governance token $LONG, holders have exclusive voting rights and say in future protocol innovation.\n',
         website: 'https://longdrink.finance/',
         social: {
           telegram: 'https://t.me/longdrinkfinance',
@@ -418,6 +557,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-bifi-bnb',
   },
   {
     id: 'moo_belt_4belt-honeymoon',
@@ -429,9 +569,9 @@ export const pools = [
     earnContractAddress: '0x4Ae70db74264D78E2497f6cd7829A0eE217BCb69',
     earnedOracle: 'tokens',
     earnedOracleId: 'MOON',
-    partnership: true,
+    vaultAddress: '0xc1fcf50ccaCd1583BD9d3b41657056878C94e592',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/honey/logo.png',
@@ -444,20 +584,20 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-4belt',
   },
   {
     id: 'moo_pots_busd-moonpot',
     name: 'Moonpot',
-    assets: ['POTS', 'BUSD'],
     earnedToken: 'POTS',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0x3fcca8648651e5b974dd6d3e50f61567779772a8',
     earnContractAddress: '0xB33Ed43421344b9Afc9f2568f1fe0576A705ea64',
     earnedOracle: 'tokens',
     earnedOracleId: 'POTS',
-    partnership: true,
+    vaultAddress: '0x3106d9B3d5e04ff5D575212140FAb1Cf17C8933F',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/moonpot/logo.png',
@@ -470,20 +610,20 @@ export const pools = [
         },
       },
     ],
+    poolId: 'cakev2-pots-busd',
   },
   {
     id: 'moo_pots_bnb-moonpot',
     name: 'Moonpot',
-    assets: ['POTS', 'BNB'],
     earnedToken: 'POTS',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0x3fcca8648651e5b974dd6d3e50f61567779772a8',
     earnContractAddress: '0xFbb7004696c7E9bEd8d138A00d050Faeb9712ba5',
     earnedOracle: 'tokens',
     earnedOracleId: 'POTS',
-    partnership: true,
+    vaultAddress: '0xbfa24f7c2376c28407504fb8512797dd8d316abf',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/moonpot/logo.png',
@@ -496,6 +636,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-pots-bnb',
   },
   {
     id: 'moo_belt_4belt-viralata',
@@ -507,9 +648,9 @@ export const pools = [
     earnContractAddress: '0xf71B9fE4454a2beA4F20adad32f9Ff0D3335A89e',
     earnedOracle: 'tokens',
     earnedOracleId: 'AURO',
-    partnership: true,
+    vaultAddress: '0xc1fcf50ccaCd1583BD9d3b41657056878C94e592',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/viralata/logo.png',
@@ -522,10 +663,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-4belt',
   },
   {
     id: 'moo_bifi-elk',
-    poolId: 'bifi-maxi',
     name: 'Elk',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'ELK',
@@ -534,9 +675,9 @@ export const pools = [
     earnContractAddress: '0xE34FAdb095E9bCD25923208d42fAC71a2d75286f',
     earnedOracle: 'tokens',
     earnedOracleId: 'ELK',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/elk/logo.png',
@@ -549,6 +690,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_beltbtc-omnifarm',
@@ -560,9 +702,9 @@ export const pools = [
     earnContractAddress: '0x871AC67F0880a14252737CE9Ac12654ffce37B3F',
     earnedOracle: 'tokens',
     earnedOracleId: 'USDO',
-    partnership: true,
+    vaultAddress: '0xD411121C948Cff739857513E1ADF25ED448623f8',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/omnifarm/logo.png',
@@ -575,6 +717,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-beltbtc',
   },
   {
     id: 'moo_beltbnb-tosdis',
@@ -586,9 +729,9 @@ export const pools = [
     earnContractAddress: '0x2Daa8de309A688c5e9084B4A227D75C1998a481d',
     earnedOracle: 'tokens',
     earnedOracleId: 'DIS',
-    partnership: true,
+    vaultAddress: '0xC34Ae91312A3c3F9420691922040a5DEe1698E52',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/tosdis/logo.png',
@@ -601,6 +744,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-beltbnb',
   },
   {
     id: 'moo_belt_eth-yel',
@@ -612,9 +756,9 @@ export const pools = [
     earnContractAddress: '0x61Fd5B186A35cC65aea46Fd39f0DBCb3371f8749',
     earnedOracle: 'tokens',
     earnedOracleId: 'YEL',
-    partnership: true,
+    vaultAddress: '0xf2064C230b285AA6Cf45c6267DA86a8E3505D0AA',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/yel/logo.png',
@@ -627,10 +771,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-belteth',
   },
   {
     id: 'moo_bifi-bhc',
-    poolId: 'bifi-maxi',
     name: 'Billionhappiness',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'BHC',
@@ -639,9 +783,9 @@ export const pools = [
     earnContractAddress: '0xa3A4B70AF33E2a71cE48754b2b9B5A40b982F91A',
     earnedOracle: 'tokens',
     earnedOracleId: 'BHC',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/billionhappiness/logo.png',
@@ -654,21 +798,21 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_belt_4belt-caps',
     name: 'Ternoa',
     logo: 'uncategorized/BELT-VENUSBLP.png',
-    token: 'mooBelt4Belt',
     earnedToken: 'CAPS',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xFfBa7529AC181c2Ee1844548e6D7061c9A597dF4',
     earnContractAddress: '0xB94c2c6B5c3021fb78567b7bdC3e47EB1447ec4E',
     earnedOracle: 'tokens',
     earnedOracleId: 'CAPS',
-    partnership: true,
+    vaultAddress: '0xc1fcf50ccaCd1583BD9d3b41657056878C94e592',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/ternoa/logo.png',
@@ -681,6 +825,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-4belt',
   },
   {
     id: 'moo_cake_bnb-guard',
@@ -692,9 +837,9 @@ export const pools = [
     earnContractAddress: '0x5E6061667c589470c5B99152EaA21D35109c8a9D',
     earnedOracle: 'tokens',
     earnedOracleId: 'gGUARD',
-    partnership: true,
+    vaultAddress: '0xb26642B6690E4c4c9A6dAd6115ac149c700C7dfE',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/wolfden/logo.png',
@@ -707,6 +852,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'cakev2-cake-bnb',
   },
   {
     id: 'moo_banana-moonpot',
@@ -718,9 +864,9 @@ export const pools = [
     earnContractAddress: '0xe33fE08b6a293a34a29C56533aE6c21ED3D78500',
     earnedOracle: 'tokens',
     earnedOracleId: 'POTS',
-    partnership: true,
+    vaultAddress: '0xED4ea41Daf652964789b16e3Ff76eC07d99d2340',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/moonpot/logo.png',
@@ -733,10 +879,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-bananav2',
   },
   {
     id: 'moo_bifi-honeyfarm',
-    poolId: 'bifi-maxi',
     name: 'HoneyFarm',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'HONEY',
@@ -745,9 +891,9 @@ export const pools = [
     earnContractAddress: '0x08B5d70e9e5A5117594889Baf078f6C5a3FfeC36',
     earnedOracle: 'tokens',
     earnedOracleId: 'HONEY',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/honey/logo.png',
@@ -760,6 +906,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_banana-land',
@@ -771,9 +918,9 @@ export const pools = [
     earnContractAddress: '0xaDC9D67EF0f2a72080253d2bF28EB7EEaDDE5C9C',
     earnedOracle: 'tokens',
     earnedOracleId: 'LAND',
-    partnership: true,
+    vaultAddress: '0xED4ea41Daf652964789b16e3Ff76eC07d99d2340',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/landshare/logo.png',
@@ -786,10 +933,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-bananav2',
   },
   {
     id: 'moo_bifi-moonpot',
-    poolId: 'bifi-maxi',
     name: 'Moonpot',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'POTS',
@@ -798,9 +945,9 @@ export const pools = [
     earnContractAddress: '0xA4703D9ba09361da84d1e31c8a356889E7D628F8',
     earnedOracle: 'tokens',
     earnedOracleId: 'POTS',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/moonpot/logo.png',
@@ -813,22 +960,21 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_bifi-honeyfarm2',
-    poolId: 'bifi-maxi',
     name: 'HoneyFarm',
     logo: 'single-assets/BIFI.png',
-    tokenOracleId: 'BIFI',
     earnedToken: 'HONEY',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xFa363022816aBf82f18a9C2809dCd2BB393F6AC5',
     earnContractAddress: '0xEB7C46fB3372E952541Ed1d6FCb29EB2C34C3b83',
     earnedOracle: 'tokens',
     earnedOracleId: 'HONEY',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/honey/logo.png',
@@ -841,6 +987,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_banana-pera',
@@ -852,9 +999,9 @@ export const pools = [
     earnContractAddress: '0x38247fCE28480A7BEF2CB7aD134ce091Bd2E1a82',
     earnedOracle: 'tokens',
     earnedOracleId: 'PERA',
-    partnership: true,
+    vaultAddress: '0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/pera/logo.png',
@@ -867,10 +1014,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'banana-banana-eol',
   },
   {
     id: 'moo_bifi-farmhero',
-    poolId: 'bifi-maxi',
     name: 'FarmHero',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'HERO',
@@ -879,9 +1026,9 @@ export const pools = [
     earnContractAddress: '0x13465c094e33BB2952aBA55A5b7583655711d5C3',
     earnedOracle: 'tokens',
     earnedOracleId: 'HERO',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/farmhero/logo.png',
@@ -894,10 +1041,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_bifi-fruits',
-    poolId: 'bifi-maxi',
     name: 'Fruit',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'FRUIT',
@@ -906,9 +1053,9 @@ export const pools = [
     earnContractAddress: '0x63D4b32bB980C7b0f7f0e5bc9585Ba4f78d8102C',
     earnedOracle: 'tokens',
     earnedOracleId: 'FRUIT',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/fruit/logo.png',
@@ -921,6 +1068,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_cake-krown',
@@ -932,9 +1080,9 @@ export const pools = [
     earnContractAddress: '0x584C90FEB63a8fAE7350f055C6880eD10FDd8918',
     earnedOracle: 'tokens',
     earnedOracleId: 'KRW',
-    partnership: true,
+    vaultAddress: '0x97e5d50Fe0632A95b9cf1853E744E02f7D816677',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/krown/logo.png',
@@ -947,10 +1095,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'cake-cakev2',
   },
   {
     id: 'moo_cake-cakev2',
-    poolId: 'bifi-maxi',
     name: 'Beefy',
     logo: 'single-assets/CAKE.svg',
     earnedToken: 'mooBIFI',
@@ -959,9 +1107,9 @@ export const pools = [
     earnContractAddress: '0xA17A86e836199489801A00B50b9C09525ddC232b',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0x97e5d50Fe0632A95b9cf1853E744E02f7D816677',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/beefy/beefyfinance.png',
@@ -975,6 +1123,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'cake-cakev2',
   },
   {
     id: 'moo_merlin-merlin',
@@ -986,9 +1135,9 @@ export const pools = [
     earnContractAddress: '0x0c0487579b4378dbF5199d468bd3c6E8B7bB97fE',
     earnedOracle: 'tokens',
     earnedOracleId: 'MERL',
-    partnership: true,
+    vaultAddress: '0x6261d793BdAe82842461A72B746bc18a5B7D2Bc4',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/merlin/logo.png',
@@ -1001,6 +1150,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'merlin-merlin-eol',
   },
   {
     id: 'moo_steel_iron-merlin',
@@ -1012,10 +1162,9 @@ export const pools = [
     earnContractAddress: '0xa5BD31B804f9CDfE7de37f4EaEB19156cAeDEC3A',
     earnedOracle: 'tokens',
     earnedOracleId: 'MERL',
-    partnership: true,
+    vaultAddress: '0x1384Ed18E881C0CC9027DC04ab88bFBF641c6106',
     status: 'closed',
-    isMooStaked: true,
-    fixedStatus: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/merlin/logo.png',
@@ -1028,6 +1177,34 @@ export const pools = [
         },
       },
     ],
+    poolId: 'iron-steel-iron',
+  },
+  {
+    id: 'moo_1inch_1inch-ten',
+    name: 'TEN Finance',
+    logo: 'single-assets/INCH.png',
+    earnedToken: 'TENFI',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xd15C444F1199Ae72795eba15E8C1db44E47abF62',
+    earnContractAddress: '0xebF08C4F58E443b94b06b4281834dB29c888dD1F',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'TENFI',
+    vaultAddress: '0xBa53AF4C2f1649F82e8070FB306DDBF2771A1950',
+    status: 'closed',
+    partnership: true,
+    partners: [
+      {
+        logo: 'stake/tenfi/logo.png',
+        background: 'stake/tenfi/background.png',
+        text: 'TEN is a yield aggregator, audited by Certik, that simplifies staking and yield farming with the most liquid Binance Smart Chain Liquidity Pools available and provides a robust yield earning environment on the market while adhering to security, sustainability, longevity, and simplicity. TEN is the Token Enrichment Network, decentralized finance, simplified! TEN aims to simplify DeFi by creating a seamless and streamlined process in staking your assets to earn a rewardingly high yet modest APY in the simplest and safest manner while ensuring sustainable growth within the TEN platform across multiple farming ecosystems and optimizing returns for maximum yields in a sustainable and robust manner. TEN was launched to create a truly long-term, yet beneficial model that would ensure the longevity of the $TENFI ecosystem that allows for TEN to adapt and evolve with the DeFi space in general. This allows for high yield opportunities and ensuring that the $TENFI ecosystem continues to evolve and adapt. $TENFI aims to be a vanguard in decentralized finance.\n',
+        website: 'https://ten.finance',
+        social: {
+          telegram: 'https://t.me/tenfinance',
+          twitter: 'https://twitter.com/tenfinance',
+        },
+      },
+    ],
+    poolId: '1inch-1inch',
   },
   {
     id: 'moo_mdex_mdx-panther',
@@ -1039,9 +1216,9 @@ export const pools = [
     earnContractAddress: '0xB415c2f5555C163563d1F17830DBEEfA0168cA87',
     earnedOracle: 'tokens',
     earnedOracleId: 'PANTHER',
-    partnership: true,
+    vaultAddress: '0xc34C7923B73eB68E363AaEB2b7fbBeC11Cf90884',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/panther/logo.png',
@@ -1054,6 +1231,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'mdex-bsc-mdx',
   },
   {
     id: 'moo_dop_lp-dop',
@@ -1065,9 +1243,9 @@ export const pools = [
     earnContractAddress: '0xd4c1FEb9defBcf1f4a56133201C29ba9421f9fb4',
     earnedOracle: 'tokens',
     earnedOracleId: 'DOP',
-    partnership: true,
+    vaultAddress: '0x8464365600d6A1b86A7f7c80DCD63AFa861069dB',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/dopple/logo.png',
@@ -1080,6 +1258,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'dopple-dop-lp',
   },
   {
     id: 'moo_jetswap-wings',
@@ -1091,9 +1270,9 @@ export const pools = [
     earnContractAddress: '0x1481d3da44eB00697bbBcEA85172179D3F3dC82C',
     earnedOracle: 'tokens',
     earnedOracleId: 'WINGS',
-    partnership: true,
+    vaultAddress: '0x5e784882E8D2ac69777713f0e71100741b8aC2F6',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/jetswap/logo.png',
@@ -1106,22 +1285,21 @@ export const pools = [
         },
       },
     ],
+    poolId: 'jetswap-wings',
   },
   {
     id: 'moo_dumpling-sdump',
-    poolId: 'bifi-maxi',
     name: 'DumplingSwap',
     logo: 'single-assets/BIFI.png',
-    tokenOracleId: 'BIFI',
     earnedToken: 'SDUMP',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0x13F6751ba11337BC67aBBdAd638a56194ee133B8',
     earnContractAddress: '0xc842B409FFA6d0CC2F74d99F6016a7CBac92E97b',
     earnedOracle: 'tokens',
     earnedOracleId: 'SDUMP',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/dumpling/logo.png',
@@ -1134,6 +1312,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_grandbanks-grand',
@@ -1145,9 +1324,9 @@ export const pools = [
     earnContractAddress: '0x50Bd1D83619143e4af8d6f1BBEe8062E3c967EaF',
     earnedOracle: 'tokens',
     earnedOracleId: 'GRAND',
-    partnership: true,
+    vaultAddress: '0x59960d624600aE1669584Bb504a5f4F2e90EbF46',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/grandbanks/logo.png',
@@ -1160,6 +1339,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'cakev2-bifi-bnb',
   },
   {
     id: 'moo_bhc-hps2',
@@ -1171,9 +1351,9 @@ export const pools = [
     earnContractAddress: '0x8e5fF8542Bd2c675F22C58ee146607df822F30B5',
     earnedOracle: 'tokens',
     earnedOracleId: 'BHC',
-    partnership: true,
+    vaultAddress: '0xAC8E64BE515fAe8c6026fb22954d4D1375938Bb5',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/billionhappiness/logo.png',
@@ -1186,6 +1366,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'hps-hps',
   },
   {
     id: 'moo_belt_btc-iron',
@@ -1197,9 +1378,9 @@ export const pools = [
     earnContractAddress: '0x57db966945691Ac03C704566BF5E20207def4215',
     earnedOracle: 'tokens',
     earnedOracleId: 'STEEL',
-    partnership: true,
+    vaultAddress: '0xD411121C948Cff739857513E1ADF25ED448623f8',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/ironfinance/logo.png',
@@ -1212,6 +1393,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-beltbtc',
   },
   {
     id: 'moo_belt_4belt-tofy',
@@ -1223,9 +1405,9 @@ export const pools = [
     earnContractAddress: '0x42b9939020c2CeD30eA54B0A05D3aeD45DA74F54',
     earnedOracle: 'tokens',
     earnedOracleId: 'TOFY',
-    partnership: true,
+    vaultAddress: '0xc1fcf50ccaCd1583BD9d3b41657056878C94e592',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/safefarm/logo.png',
@@ -1238,6 +1420,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-4belt',
   },
   {
     id: 'moo_belt_btc-xbtc',
@@ -1249,9 +1432,9 @@ export const pools = [
     earnContractAddress: '0x1BA1B43227325E8Dc0FA1378d7C41fa7F49e32e0',
     earnedOracle: 'lps',
     earnedOracleId: 'banana-bxbtc-bnb',
-    partnership: true,
+    vaultAddress: '0xD411121C948Cff739857513E1ADF25ED448623f8',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/xbtc/logo.png',
@@ -1264,6 +1447,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-beltbtc',
   },
   {
     id: 'moo_belt_eth-icarus',
@@ -1275,9 +1459,9 @@ export const pools = [
     earnContractAddress: '0xf6259516B5c38a110f634FcC2f14fEF02a318B66',
     earnedOracle: 'tokens',
     earnedOracleId: 'ICA',
-    partnership: true,
+    vaultAddress: '0xf2064C230b285AA6Cf45c6267DA86a8E3505D0AA',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/icarus/logo.png',
@@ -1290,6 +1474,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-belteth',
   },
   {
     id: 'moo_belt_eth-satis',
@@ -1301,10 +1486,9 @@ export const pools = [
     earnContractAddress: '0x36361230D435ce1829634cCd68Ba479628CaFe04',
     earnedOracle: 'tokens',
     earnedOracleId: 'SAT',
-    partnership: true,
+    vaultAddress: '0xf2064C230b285AA6Cf45c6267DA86a8E3505D0AA',
     status: 'closed',
-    fixedStatus: true,
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/satis/logo.png',
@@ -1317,6 +1501,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-belteth',
   },
   {
     id: 'moo_bhc-hps',
@@ -1328,9 +1513,9 @@ export const pools = [
     earnContractAddress: '0x79d9dd12f5c070eFbD9721F06dd8811825c9d9FC',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0x56E899E56F6B8635B4A01b724db23674a64A7231',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/billionhappiness/logo.png',
@@ -1343,6 +1528,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bhc-bhc-eol',
   },
   {
     id: 'moo_auto_eth-apys',
@@ -1354,9 +1540,9 @@ export const pools = [
     earnContractAddress: '0x9A7DB018897B99F47661EcFFb143A7BF80724a7d',
     earnedOracle: 'lps',
     earnedOracleId: 'cake-apys-bnb',
-    partnership: true,
+    vaultAddress: '0x0F47eaae1EC5fD11067455210c494a7828024524',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/apyswap/logo.png',
@@ -1369,6 +1555,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-eth-v2-eol',
   },
   {
     id: 'moo_belt_venus-mash',
@@ -1380,9 +1567,9 @@ export const pools = [
     earnContractAddress: '0x2Ad5e76e09ef581a8fb7B66901D80C75Db571824',
     earnedOracle: 'tokens',
     earnedOracleId: 'MASH',
-    partnership: true,
+    vaultAddress: '0xb35Dc0b5eFd7c75590a9da55BE46d968c5804e24',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/mash/logo.png',
@@ -1395,6 +1582,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-venus-blp-eol',
   },
   {
     id: 'moo_mdx_bnb-palm',
@@ -1406,9 +1594,9 @@ export const pools = [
     earnContractAddress: '0x4B86435B0749b27008060Cb5696fceB606386835',
     earnedOracle: 'tokens',
     earnedOracleId: 'PALM',
-    partnership: true,
+    vaultAddress: '0x31e2d52A04FEb223109506E4c6f195C0cF16b98A',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/yieldbay/logo.png',
@@ -1421,6 +1609,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'mdex-bsc-mdx-bnb',
   },
   {
     id: 'moo_auto_btc-typh',
@@ -1432,9 +1621,9 @@ export const pools = [
     earnContractAddress: '0x1643BC20913fA2D62C521E7cE8fFeD9e1Dd87964',
     earnedOracle: 'tokens',
     earnedOracleId: 'TYPH',
-    partnership: true,
+    vaultAddress: '0x0845813938515FE56730c124Ab8CA2DF58B01463',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/thypoon/logo.png',
@@ -1447,10 +1636,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-btc-v2-eol',
   },
   {
     id: 'moo_bifi-biti',
-    poolId: 'bifi-maxi',
     name: 'BitiCity',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'BITI',
@@ -1459,9 +1648,9 @@ export const pools = [
     earnContractAddress: '0xa8b86b9AF7e844DA90A2e72840Ad01CCBD11EdC3',
     earnedOracle: 'tokens',
     earnedOracleId: 'BITI',
-    partnership: true,
+    vaultAddress: '0xf7069e41C57EcC5F122093811d8c75bdB5f7c14e',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/biticity/logo.png',
@@ -1474,6 +1663,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'bifi-maxi',
   },
   {
     id: 'moo_belt_venus-palm',
@@ -1485,9 +1675,9 @@ export const pools = [
     earnContractAddress: '0xC1B4ed2861639ebFaFAeDb7eD2381052454bab43',
     earnedOracle: 'tokens',
     earnedOracleId: 'PALM',
-    partnership: true,
+    vaultAddress: '0xb35Dc0b5eFd7c75590a9da55BE46d968c5804e24',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/yieldbay/logo.png',
@@ -1500,6 +1690,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-venus-blp-eol',
   },
   {
     id: 'moo_cake_bnb-bingo',
@@ -1511,9 +1702,9 @@ export const pools = [
     earnContractAddress: '0x253aABcC693aEE2180178174241857cBB08BEDD8',
     earnedOracle: 'tokens',
     earnedOracleId: 'sBGO',
-    partnership: true,
+    vaultAddress: '0x5DA77c7DBF6dBa1155CF343db06a7D79aaaad9Ee',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/bingo/logo.png',
@@ -1526,6 +1717,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-cake-bnb-eol',
   },
   {
     id: 'moo_auto_wbnb-thunder',
@@ -1537,9 +1729,9 @@ export const pools = [
     earnContractAddress: '0x04715103e1d8A6D7a2B06737380DBd28a30Ca4Bc',
     earnedOracle: 'tokens',
     earnedOracleId: 'TNDR',
-    partnership: true,
+    vaultAddress: '0x6Cb6D451e7E7ca5d5F73715D6B5dfc55EfbC1f82',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/thunder/logo.png',
@@ -1552,6 +1744,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-auto-bnb-eol',
   },
   {
     id: 'moo_auto_cake-swirl',
@@ -1563,9 +1756,9 @@ export const pools = [
     earnContractAddress: '0x062939d2EAe7586424180E9b4D80e442885A6E2F',
     earnedOracle: 'tokens',
     earnedOracleId: 'SWIRL',
-    partnership: true,
+    vaultAddress: '0xe0B473c0dD6D7Fea5B395c3Ce7ffd4FEF0ab4373',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/swirl/logo.png',
@@ -1578,6 +1771,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-cake-eol',
   },
   {
     id: 'moo_ellipsis_3pool-zefi',
@@ -1589,9 +1783,9 @@ export const pools = [
     earnContractAddress: '0xc7ccd3520bEa91a87ecf39Ed39d9BD59946ED2b5',
     earnedOracle: 'tokens',
     earnedOracleId: 'ZEFI',
-    partnership: true,
+    vaultAddress: '0xE563c046147b4dF98bfCD3d00Dc54511F0c3b752',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/zcore/logo.png',
@@ -1604,6 +1798,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'ellipsis-3eps',
   },
   {
     id: 'moo_1inch-hps',
@@ -1615,9 +1810,9 @@ export const pools = [
     earnContractAddress: '0x9ae4496b063f5715561Cbe8f1d389a3FE4720258',
     earnedOracle: 'tokens',
     earnedOracleId: 'HPS',
-    partnership: true,
+    vaultAddress: '0xBa53AF4C2f1649F82e8070FB306DDBF2771A1950',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/billionhappiness/logo.png',
@@ -1630,6 +1825,7 @@ export const pools = [
         },
       },
     ],
+    poolId: '1inch-1inch',
   },
   {
     id: 'moo_auto_wbnb-naut',
@@ -1641,9 +1837,9 @@ export const pools = [
     earnContractAddress: '0x47F7CbE34aD6f857662759CDAECC48152237d135',
     earnedOracle: 'tokens',
     earnedOracleId: 'NAUT',
-    partnership: true,
+    vaultAddress: '0x5B06aA1ebd2e15bC6001076355E5B4C39Cbc83F3',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/astronaut/logo.png',
@@ -1656,6 +1852,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-wbnb-v2-eol',
   },
   {
     id: 'moo_cake_bnb-space',
@@ -1667,9 +1864,9 @@ export const pools = [
     earnContractAddress: '0x680dDCDAB13735d11a09d3c6d60867B2C75861bE',
     earnedOracle: 'tokens',
     earnedOracleId: 'SPACE',
-    partnership: true,
+    vaultAddress: '0x5DA77c7DBF6dBa1155CF343db06a7D79aaaad9Ee',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/space/logo.png',
@@ -1682,6 +1879,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-cake-bnb-eol',
   },
   {
     id: 'moo_bifi_wbnb-nuts',
@@ -1693,9 +1891,9 @@ export const pools = [
     earnContractAddress: '0x02e2B4212b8F5610E2ab548cB680cb58E61056F6',
     earnedOracle: 'tokens',
     earnedOracleId: 'NUTS',
-    partnership: true,
+    vaultAddress: '0x3B5332A476AbCdb80Cde6645e9e5563435e97772',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/squirrel/logo.png',
@@ -1708,6 +1906,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'cake-bifi-bnb',
   },
   {
     id: 'moo_venus_eth-ape',
@@ -1719,9 +1918,9 @@ export const pools = [
     earnContractAddress: '0xEd1B64D539b945Fb291E5487F527D19B7748321e',
     earnedOracle: 'tokens',
     earnedOracleId: 'APE',
-    partnership: true,
+    vaultAddress: '0xA9936272065e6DDAc9D2453C9a2712B581e9aE1B',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/memefarm/logo.png',
@@ -1734,6 +1933,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'venus-eth-eol',
   },
   {
     id: 'moo_belt_venus-slime',
@@ -1745,9 +1945,9 @@ export const pools = [
     earnContractAddress: '0xba4Ee74E45De614bd8c2DFEEf16a4c13922C5659',
     earnedOracle: 'tokens',
     earnedOracleId: 'SLIME',
-    partnership: true,
+    vaultAddress: '0xb35Dc0b5eFd7c75590a9da55BE46d968c5804e24',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/slimefinance/logo.png',
@@ -1760,6 +1960,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'belt-venus-blp-eol',
   },
   {
     id: 'moo_venus_eth-brew',
@@ -1771,9 +1972,9 @@ export const pools = [
     earnContractAddress: '0xC7e3795259e9f74F4F2265Bf28680a70b41B4334',
     earnedOracle: 'tokens',
     earnedOracleId: 'BREW',
-    partnership: true,
+    vaultAddress: '0xA9936272065e6DDAc9D2453C9a2712B581e9aE1B',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/cafeswap/cafeswap.png',
@@ -1786,6 +1987,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'venus-eth-eol',
   },
   {
     id: 'moo_venus_btc-ramen',
@@ -1797,9 +1999,9 @@ export const pools = [
     earnContractAddress: '0x07613c90c6f4F4910e53A1A6fF5dAc352C6a16e4',
     earnedOracle: 'tokens',
     earnedOracleId: 'Ramen',
-    partnership: true,
+    vaultAddress: '0x7255Ae13BA4484eD33fB48c4b833000dC12888B4',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/ramenswap/ramenswap.png',
@@ -1812,6 +2014,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'venus-btcb-eol',
   },
   {
     id: 'moo_auto_cake-salt',
@@ -1823,9 +2026,9 @@ export const pools = [
     earnContractAddress: '0xDda39b0a11de6e0Ebce995D4A065960532EB332E',
     earnedOracle: 'tokens',
     earnedOracleId: 'SALT',
-    partnership: true,
+    vaultAddress: '0xe0B473c0dD6D7Fea5B395c3Ce7ffd4FEF0ab4373',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/saltswap/saltswap.png',
@@ -1838,6 +2041,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-cake-eol',
   },
   {
     id: 'moo_venus_ada-crow',
@@ -1849,9 +2053,9 @@ export const pools = [
     earnContractAddress: '0x7fcfD0ceb5e9bD1A8b910b52983fe9c8aB656E20',
     earnedOracle: 'tokens',
     earnedOracleId: 'CROW',
-    partnership: true,
+    vaultAddress: '0x53c0CE2EBdA0c2A39327bE0B58a3c28A8Dcde420',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/crowfinance/crowfinance.png',
@@ -1864,6 +2068,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'venus-ada-eol',
   },
   {
     id: 'moo_auto_wbnb-banana',
@@ -1875,9 +2080,9 @@ export const pools = [
     earnContractAddress: '0xe4267bFDE62B79d27c8BeD68dB8C114ccBbEE545',
     earnedOracle: 'tokens',
     earnedOracleId: 'BANANA',
-    partnership: true,
+    vaultAddress: '0x5B06aA1ebd2e15bC6001076355E5B4C39Cbc83F3',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/apeswap/logo.png',
@@ -1890,6 +2095,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-wbnb-v2-eol',
   },
   {
     id: 'moo_auto_beth-soups',
@@ -1901,9 +2107,9 @@ export const pools = [
     earnContractAddress: '0x2526Bc61506665494E39cacCaF8c76A1f928D838',
     earnedOracle: 'tokens',
     earnedOracleId: 'SOUPS',
-    partnership: true,
+    vaultAddress: '0xF3C1EB01E40c47fd32D0397e56569809aae0e9c7',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/soup/logo.png',
@@ -1916,5 +2122,6 @@ export const pools = [
         },
       },
     ],
+    poolId: 'auto-beth-eth',
   },
 ];
