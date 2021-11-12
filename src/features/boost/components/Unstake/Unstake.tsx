@@ -98,7 +98,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(
-        new BigNumber(balance.tokens[item.token + 'Boost'].balance),
+        new BigNumber(balance.tokens[item.token + item.id + 'Boost'].balance),
         item.tokenDecimals
       ).toFixed(8);
     }

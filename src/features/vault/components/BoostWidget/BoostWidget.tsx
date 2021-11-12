@@ -78,7 +78,7 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(
-        new BigNumber(balance.tokens[network][item.token + 'Boost']?.balance),
+        new BigNumber(balance.tokens[network][item.token + item.id + 'Boost']?.balance),
         item.tokenDecimals
       ).toFixed(8);
       approved = balance.tokens[network][item.token].allowance[item.earnContractAddress];

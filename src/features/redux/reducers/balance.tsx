@@ -94,10 +94,10 @@ const initialTokens = () => {
     const boosts = require(`../../../config/boost/${net}`);
     for (const key in boosts.pools) {
 //      if (boosts.pools[key].token === 'BIFI') continue; // Skip gov pools
-			if (!boosts.pools[ key].token)
+			if (!boosts.pools[key].token)
 				continue;
 
-      const boostSymbol = boosts.pools[key].token + 'Boost';
+      const boostSymbol = boosts.pools[key].token + boosts.pools[key].id + 'Boost';
       tokens[net][boostSymbol] = {
         symbol: boostSymbol,
         balance: 0,

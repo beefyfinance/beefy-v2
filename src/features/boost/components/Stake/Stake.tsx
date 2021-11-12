@@ -116,10 +116,10 @@ export const Stake: React.FC<StakeProps> = ({
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(
-        new BigNumber(balance.tokens[item.token + 'Boost'].balance),
+        new BigNumber(balance.tokens[item.token + item.id + 'Boost'].balance),
         item.tokenDecimals
       ).toFixed(8);
-      approved = balance.tokens[item.token + 'Boost'].allowance[item.earnContractAddress];
+      approved = balance.tokens[item.token + item.id + 'Boost'].allowance[item.earnContractAddress];
     }
     setState({ balance: amount, deposited: deposited, allowance: approved });
   }, [wallet.address, item, balance]);

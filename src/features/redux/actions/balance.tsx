@@ -146,7 +146,7 @@ const getBoostBalances = async (items, state, dispatch, network) => {
 
   for (let key in items) {
     if (network && items[key].network !== network) continue
-    const boostToken = items[key].token + 'Boost';
+    const boostToken = items[key].token + items[key].id + 'Boost';
     tokens[items[key].network][boostToken] = {
       ...tokens[items[key].network][boostToken],
       balance: 0,
@@ -170,14 +170,14 @@ const getBoostBalances = async (items, state, dispatch, network) => {
 
     calls[items[key].network].push({
       amount: earnContract.methods.balanceOf(address),
-      token: items[key].token + 'Boost',
+      token: items[key].token + items[key].id + 'Boost',
       address: items[key].tokenAddress,
       network: items[key].network,
     });
 
     calls[items[key].network].push({
       allowance: tokenContract.methods.allowance(address, items[key].earnContractAddress),
-      token: items[key].token + 'Boost',
+      token: items[key].token + items[key].id + 'Boost',
       spender: items[key].earnContractAddress,
       network: items[key].network,
     });
