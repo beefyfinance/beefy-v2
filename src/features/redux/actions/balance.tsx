@@ -13,7 +13,7 @@ import erc20Abi from '../../../config/abi/erc20.json';
 import multicallAbi from '../../../config/abi/multicall.json';
 import boostAbi from '../../../config/abi/boost.json';
 
-const boostRegex = /^moo.*Boost$/;
+const boostRegex = /^[mM]oo.*Boost$/;
 
 const getBalances = async (state, dispatch) => {
   console.log('redux getBalances() processing...');
@@ -161,19 +161,19 @@ const getBoostBalances = async (items, state, dispatch, network) => {
       items[key].earnContractAddress
     );
 
-    // Looks like these calls are refetching the mooToken balance of the user
-    // calls[items[key].network].push({
-    //   amount: tokenContract.methods.balanceOf(address),
-    //   token: items[key].token,
-    //   address: items[key].tokenAddress,
-    // });
+      // Looks like these calls are refetching the mooToken balance of the user
+      // calls[items[key].network].push({
+      //   amount: tokenContract.methods.balanceOf(address),
+      //   token: items[key].token,
+      //   address: items[key].tokenAddress,
+      // });
 
-    calls[items[key].network].push({
-      amount: earnContract.methods.balanceOf(address),
-      token: items[key].token + items[key].id + 'Boost',
-      address: items[key].tokenAddress,
-      network: items[key].network,
-    });
+      calls[items[key].network].push({
+        amount: earnContract.methods.balanceOf(address),
+        token: items[key].token + items[key].id + 'Boost',
+        address: items[key].tokenAddress,
+        network: items[key].network,
+      });
 
     calls[items[key].network].push({
       allowance: tokenContract.methods.allowance(address, items[key].earnContractAddress),

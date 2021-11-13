@@ -25,7 +25,7 @@ import { isEmpty } from '../../../../helpers/utils';
 import { byDecimals } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
-export const BoostWidget = ({ isBoosted, boostedData }) => {
+export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   const item = boostedData;
   const stylesProps = {
     isBoosted,
@@ -45,6 +45,7 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
     poolPercentage: 0,
     rewards: 0,
   });
+
 
   const handleClose = () => {
     updateItemData();
@@ -74,21 +75,45 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
     setFormData({ deposit: { amount: '', max: false }, withdraw: { amount: '', max: false } });
   };
 
+
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
-
+  
   const [formData, setFormData] = React.useState({
     deposit: { amount: '', max: false },
     withdraw: { amount: '', max: false },
   });
+
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
     items: [],
     finished: false,
   });
+
+  const [pastBoosts, setPastBoosts] = React.useState([]);
+
+  React.useEffect(() => {
+    if (wallet.address) {
+      let expiredBoostsWithBalance = [];
+      let openFilter = false;
+      for (const boost of vaultBoosts) {
+        let symbol = `${boost.token}${boost.id}Boost`;
+        if (
+          !isEmpty(balance.tokens[boost.network][symbol]) &&
+          new BigNumber(balance.tokens[boost.network][symbol].balance).toNumber() > 0
+        ) {
+          expiredBoostsWithBalance.push(boost);
+          openFilter = true;
+        }
+      }
+      setPastBoosts(expiredBoostsWithBalance);
+      setFilterOpen(openFilter);
+    }
+    
+  },[wallet.address, vaultBoosts, state.balance])
 
   React.useEffect(() => {
     if (item && wallet.address) {
@@ -342,7 +367,22 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
         </Box>
         {/* TODO: Map to expired boosts */}
         <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
-          <div className={classes.expiredBoostContainer}>
+          {pastBoosts.map((boost, key) => (
+            <div className={classes.expiredBoostContainer} key={boost.id}>
+              <Typography className={classes.h2} style={{ textTransform: 'none' }}>
+                {boost.name}&nbsp;{t('Filter-Boost')}
+              </Typography>
+              <Button
+                disabled={false}
+                className={classes.button}
+                style={{ marginBottom: 0 }}
+                fullWidth={true}
+              >
+                {t('Boost-Button-Claim-Unstake')}
+              </Button>
+            </div>
+          ))}
+          {/* <div className={classes.expiredBoostContainer}>
             <Typography className={classes.h2} style={{ textTransform: 'none' }}>
               POTS&nbsp;{t('Filter-Boost')}
             </Typography>
@@ -367,7 +407,7 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
             >
               {t('Boost-Button-Claim-Unstake')}
             </Button>
-          </div>
+          </div> */}
         </AnimateHeight>
       </div>
     </>
