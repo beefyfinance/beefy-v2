@@ -55,6 +55,7 @@ export const Deposit: React.FC<DepositProps> = ({
   resetFormData,
   isBoosted,
   boostedData,
+  vaultBoosts
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -449,9 +450,7 @@ export const Deposit: React.FC<DepositProps> = ({
           )}
         </Box>
       </Box>
-      {!item.isGovVault ? (
-        <BoostWidget boostedData={boostedData} isBoosted={isBoosted}  />
-      ) : null}
+      {!item.isGovVault ? <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} /> : null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   ); //return

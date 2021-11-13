@@ -10,13 +10,12 @@ import { styles } from './styles';
 import { useLastHarvest } from '../../hooks/useLastHarvest';
 
 const useStyles = makeStyles(styles as any);
-export const VaultsStats = ({ item, boostedData, isBoosted }) => {
+export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
   const classes = useStyles();
   const t = useTranslation().t;
   const [state, setState] = React.useState({ balance: '0' });
   const [poolRewards, setPoolRewards] = React.useState({ rewards: '0' });
-
 
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
@@ -28,27 +27,42 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
     let rewardAmount = '0';
     let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
     if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
+      let sumAmount = new BigNumber(0);
       if (item.isGovVault) {
-        amount = byDecimals(
+        sumAmount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].balance),
           item.tokenDecimals
-        ).toFixed(8);
+        )
         rewardAmount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].rewards),
           item.tokenDecimals
         ).toFixed(8);
       } else {
-        amount = byDecimals(
+        sumAmount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
             byDecimals(item.pricePerFullShare)
           ),
           item.tokenDecimals
-        ).toFixed(8);
+        )
       }
+      for (const boost of vaultBoosts) {
+        let symbol = `${boost.token}${boost.id}Boost`;
+        if (!isEmpty(balance.tokens[item.network][symbol])) {
+          sumAmount = sumAmount.plus(
+            byDecimals(
+              new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+                byDecimals(item.pricePerFullShare)
+              ),
+              item.tokenDecimals
+            )
+          );
+        }
+      }
+      amount = sumAmount.toFixed(8);
     }
     setState({ balance: amount });
-    if (!isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards : rewardAmount });
-  }, [wallet.address, item, balance]);
+    if (!isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
+  }, [wallet.address, item, balance, vaultBoosts]);
 
   const lastHarvest = useLastHarvest(item.id);
 
@@ -71,17 +85,19 @@ export const VaultsStats = ({ item, boostedData, isBoosted }) => {
   }, [state.balance, pricesReducer.prices, item.oracleId]);
 
   const rewardPrice = React.useMemo(() => {
-    return parseFloat(poolRewards.rewards) > 0 
-      ? new BigNumber(pricesReducer.prices[item.earnedToken]).times(parseFloat(poolRewards.rewards)).toFixed(2)
+    return parseFloat(poolRewards.rewards) > 0
+      ? new BigNumber(pricesReducer.prices[item.earnedToken])
+          .times(parseFloat(poolRewards.rewards))
+          .toFixed(2)
       : 0;
-  },[poolRewards.rewards, pricesReducer.prices, item.oracleId]);
+  }, [poolRewards.rewards, pricesReducer.prices, item.oracleId]);
 
   const tokensEarned = React.useMemo(() => {
     return parseFloat(state.balance) > 0 ? state.balance : '0';
   }, [state.balance]);
 
   const rewardsEarned = React.useMemo(() => {
-        return parseFloat(poolRewards.rewards) > 0 ? poolRewards.rewards : '0';
+    return parseFloat(poolRewards.rewards) > 0 ? poolRewards.rewards : '0';
   }, [poolRewards.rewards]);
 
   const yearlyToDaily = apy => {
