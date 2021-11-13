@@ -50,23 +50,24 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     finished: false,
   });
 
-  const [pastBoosts, setPastBoosts] = React.useState({
-    boosts: []
-  });
+  const [pastBoosts, setPastBoosts] = React.useState([]);
 
   React.useEffect(() => {
     if (wallet.address) {
-      let pastBoosts = [];
+      let expiredBoostsWithBalance = [];
+      let openFilter = false;
       for (const boost of vaultBoosts) {
         let symbol = `${boost.token}${boost.id}Boost`;
         if (
           !isEmpty(balance.tokens[boost.network][symbol]) &&
           new BigNumber(balance.tokens[boost.network][symbol].balance).toNumber() > 0
         ) {
-          pastBoosts.push(boost);
+          expiredBoostsWithBalance.push(boost);
+          openFilter = true;
         }
       }
-      setPastBoosts({boosts: pastBoosts});
+      setPastBoosts(expiredBoostsWithBalance);
+      setFilterOpen(openFilter);
     }
     
   },[wallet.address, vaultBoosts, state.balance])
@@ -272,7 +273,22 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
         </Box>
         {/* TODO: Map to expired boosts */}
         <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
-          <div className={classes.expiredBoostContainer}>
+          {pastBoosts.map((boost, key) => (
+            <div className={classes.expiredBoostContainer} key={boost.id}>
+              <Typography className={classes.h2} style={{ textTransform: 'none' }}>
+                {boost.name}&nbsp;{t('Filter-Boost')}
+              </Typography>
+              <Button
+                disabled={false}
+                className={classes.button}
+                style={{ marginBottom: 0 }}
+                fullWidth={true}
+              >
+                {t('Boost-Button-Claim-Unstake')}
+              </Button>
+            </div>
+          ))}
+          {/* <div className={classes.expiredBoostContainer}>
             <Typography className={classes.h2} style={{ textTransform: 'none' }}>
               POTS&nbsp;{t('Filter-Boost')}
             </Typography>
@@ -297,7 +313,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
             >
               {t('Boost-Button-Claim-Unstake')}
             </Button>
-          </div>
+          </div> */}
         </AnimateHeight>
       </div>
     </>
