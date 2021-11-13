@@ -3,9 +3,9 @@ export const styles = theme => ({
     fontSize: '12px',
     fontWeight: 600,
     letterSpacing: '0.5px',
-    padding: '3px 9px',
+    padding: '3px 8px',
     borderRadius: '5px',
-    margin: '2px 4px',
+    margin: '2px 0 0 7.8px',
     textTransform: 'uppercase',
     color: '#FFF',
     [theme.breakpoints.down('md')]: {

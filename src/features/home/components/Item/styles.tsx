@@ -35,6 +35,7 @@ export const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       margin: '0 -40px',
     },
+    width: 'fit-content',
   },
   titleContainer: {
     display: 'flex',
