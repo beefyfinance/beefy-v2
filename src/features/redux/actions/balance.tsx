@@ -194,10 +194,11 @@ const getBoostBalances = async (items, state, dispatch, network) => {
     const item = response[index];
 
     if (!isEmpty(item.amount)) {
-      const amount = BigNumber.sum(
-        item.amount,
-        tokens[item.network][item.token].balance
-      ).toNumber();
+      const amount = item.amount;
+      // const amount = BigNumber.sum(
+        // item.amount,
+        // tokens[item.network][item.token].balance
+      // ).toNumber();
       tokens[item.network][item.token].balance = formatDecimals(amount);
       tokens[item.network][item.token].address = item.address;
     }

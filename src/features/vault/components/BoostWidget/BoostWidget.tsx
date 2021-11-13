@@ -32,12 +32,11 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     rewards: 0,
   });
 
-  
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
-  
+
   const [formData, setFormData] = React.useState({
     deposit: { amount: '', max: false },
     withdraw: { amount: '', max: false },
@@ -69,8 +68,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
       setPastBoosts(expiredBoostsWithBalance);
       setFilterOpen(openFilter);
     }
-    
-  },[wallet.address, vaultBoosts, state.balance])
+  }, [wallet.address, vaultBoosts, state.balance]);
 
   React.useEffect(() => {
     if (item && wallet.address) {
@@ -82,7 +80,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   React.useEffect(() => {
     if (item) {
       setInterval(() => {
-        dispatch(reduxActions.vault.fetchBoosts(item));
+        // dispatch(reduxActions.vault.fetchBoosts(item));
         dispatch(reduxActions.balance.fetchBoostBalances(item, network));
         dispatch(reduxActions.balance.fetchBoostRewards(item, network));
       }, 60000);
@@ -193,6 +191,27 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     },
   };
 
+  const handleExit = boost => {
+    const steps = [];
+    if (wallet.address) {
+      if (boost.network !== wallet.network) {
+        dispatch(reduxActions.wallet.setNetwork(boost.network));
+        return false;
+      }
+
+      steps.push({
+        step: 'exit',
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        action: () =>
+          dispatch(reduxActions.wallet.exit(boost.network, boost.earnContractAddress, 0)),
+        pending: false,
+        token: balance.tokens[boost.network][boost.token],
+      });
+
+      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
+    } //if (wallet.address)
+  }; //const handleWithdraw
+
   return (
     <>
       {isBoosted && (
@@ -259,24 +278,40 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
           </Button>
         </div>
       )}
-      <div className={classes.containerExpired}>
-        <Box display="flex" alignItems="center" style={{ marginBottom: '24px' }}>
-          <img
-            alt="fire"
-            src={require(`../../../../images/fire.png`).default}
-            className={classes.boostImg}
-          />
-          <Typography className={classes.h1white}>{t('Boost-Expired')}</Typography>
-          &nbsp;
-          <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
-          <Button></Button>
-        </Box>
-        {/* TODO: Map to expired boosts */}
-        <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
-          {pastBoosts.map((boost, key) => (
-            <div className={classes.expiredBoostContainer} key={boost.id}>
+      {filterOpen && (
+        <div className={classes.containerExpired} hidden={!filterOpen}>
+          <Box display="flex" alignItems="center" style={{ marginBottom: '24px' }}>
+            <img
+              alt="fire"
+              src={require(`../../../../images/fire.png`).default}
+              className={classes.boostImg}
+            />
+            <Typography className={classes.h1white}>{t('Boost-Expired')}</Typography>
+            &nbsp;
+            <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
+            <Button></Button>
+          </Box>
+          {/* TODO: Map to expired boosts */}
+          <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
+            {pastBoosts.map((boost, key) => (
+              <div className={classes.expiredBoostContainer} key={boost.id}>
+                <Typography className={classes.h2} style={{ textTransform: 'none' }}>
+                  {boost.name}&nbsp;{t('Filter-Boost')}
+                </Typography>
+                <Button
+                  onClick={() => handleExit(boost)}
+                  disabled={false}
+                  className={classes.button}
+                  style={{ marginBottom: 0 }}
+                  fullWidth={true}
+                >
+                  {t('Boost-Button-Claim-Unstake')}
+                </Button>
+              </div>
+            ))}
+            {/* <div className={classes.expiredBoostContainer}>
               <Typography className={classes.h2} style={{ textTransform: 'none' }}>
-                {boost.name}&nbsp;{t('Filter-Boost')}
+                POTS&nbsp;{t('Filter-Boost')}
               </Typography>
               <Button
                 disabled={false}
@@ -287,35 +322,22 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
                 {t('Boost-Button-Claim-Unstake')}
               </Button>
             </div>
-          ))}
-          {/* <div className={classes.expiredBoostContainer}>
-            <Typography className={classes.h2} style={{ textTransform: 'none' }}>
-              POTS&nbsp;{t('Filter-Boost')}
-            </Typography>
-            <Button
-              disabled={false}
-              className={classes.button}
-              style={{ marginBottom: 0 }}
-              fullWidth={true}
-            >
-              {t('Boost-Button-Claim-Unstake')}
-            </Button>
-          </div>
-          <div className={classes.expiredBoostContainer}>
-            <Typography className={classes.h2} style={{ textTransform: 'none' }}>
-              PACOCA&nbsp;{t('Filter-Boost')}
-            </Typography>
-            <Button
-              disabled={false}
-              className={classes.button}
-              style={{ marginBottom: 0 }}
-              fullWidth={true}
-            >
-              {t('Boost-Button-Claim-Unstake')}
-            </Button>
-          </div> */}
-        </AnimateHeight>
-      </div>
+            <div className={classes.expiredBoostContainer}>
+              <Typography className={classes.h2} style={{ textTransform: 'none' }}>
+                PACOCA&nbsp;{t('Filter-Boost')}
+              </Typography>
+              <Button
+                disabled={false}
+                className={classes.button}
+                style={{ marginBottom: 0 }}
+                fullWidth={true}
+              >
+                {t('Boost-Button-Claim-Unstake')}
+              </Button>
+            </div> */}
+          </AnimateHeight>
+        </div>
+      )}
     </>
   );
 };
