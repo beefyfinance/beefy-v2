@@ -46,14 +46,14 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
     rewards: 0,
   });
 
-  const handleInputModal = () => {
-    setInputModal(!inputModal);
-  };
-
   const handleClose = () => {
     updateItemData();
     resetFormData();
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
+  };
+
+  const closeInputModal = () => {
+    setInputModal(false);
   };
 
   const handleWalletConnect = () => {
@@ -155,8 +155,9 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
   function claimRewards() {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function depositWithdraw(balance, isDeposit) {
-    // this function should be set the type of action (stake/deposit or unestake)
+  function depositWithdraw(deposit: string) {
+    setDw(deposit);
+    setInputModal(true);
   }
 
   React.useEffect(() => {
@@ -275,80 +276,54 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
           <Button
             disabled={false}
             className={classes.button}
-            onClick={handleInputModal}
+            onClick={() => depositWithdraw('deposit')}
             fullWidth={true}
           >
             {t('Boost-Button-Vault')}
           </Button>
-          <Button
-            disabled={true}
-            className={classes.button}
-            onClick={claimRewards}
-            fullWidth={true}
-          >
+          <Button className={classes.button} onClick={claimRewards} fullWidth={true}>
             {t('Boost-Button-Withdraw')}
           </Button>
-          <Button
-            disabled={true}
-            className={classes.button}
-            onClick={claimUnestake}
-            fullWidth={true}
-          >
+          <Button className={classes.button} onClick={claimUnestake} fullWidth={true}>
             {t('Boost-Button-Claim-Unstake')}
           </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true}>
+          <Button
+            onClick={() => depositWithdraw('unstake')}
+            className={classes.button}
+            fullWidth={true}
+          >
             {t('Boost-Button-Unestake')}
           </Button>
 
           <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
-            className={classes.modal}
             open={inputModal}
             onClose={() => setInputModal(false)}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
           >
-            <Fade in={inputModal}>
-              <Box className={classes.dw}>
-                <Box className={classes.tabs}>
-                  <Button
-                    onClick={() => setDw('deposit')}
-                    className={dw === 'deposit' ? classes.selected : ''}
-                  >
-                    {t('Stake-Button-Stake')}
-                  </Button>
-                  <Button
-                    onClick={() => setDw('withdraw')}
-                    className={dw === 'withdraw' ? classes.selected : ''}
-                  >
-                    {t('Stake-Button-Unstake')}
-                  </Button>
-                </Box>
-                {/* {dw === 'deposit' ? (
-                  <Stake
-                    item={item}
-                    handleWalletConnect={handleWalletConnect}
-                    formData={formData}
-                    setFormData={setFormData}
-                    updateItemData={updateItemData}
-                    resetFormData={resetFormData}
-                  />
-                ) : (
-                  <Unstake
-                    item={item}
-                    handleWalletConnect={handleWalletConnect}
-                    formData={formData}
-                    setFormData={setFormData}
-                    updateItemData={updateItemData}
-                    resetFormData={resetFormData}
-                  />
-                )} */}
-              </Box>
-            </Fade>
+            {dw === 'deposit' ? (
+              <Stake
+                closeModal={closeInputModal}
+                item={item}
+                balance={state}
+                handleWalletConnect={handleWalletConnect}
+                formData={formData}
+                setFormData={setFormData}
+                updateItemData={updateItemData}
+                resetFormData={resetFormData}
+              />
+            ) : (
+              <Unstake
+                closeModal={closeInputModal}
+                item={item}
+                balance={state}
+                handleWalletConnect={handleWalletConnect}
+                formData={formData}
+                setFormData={setFormData}
+                updateItemData={updateItemData}
+                resetFormData={resetFormData}
+              />
+            )}
           </Modal>
           <Steps item={item} steps={steps} handleClose={handleClose} />
         </div>

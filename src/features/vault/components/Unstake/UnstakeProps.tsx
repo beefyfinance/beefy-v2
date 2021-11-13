@@ -1,8 +1,10 @@
 export interface UnstakeProps {
-    item: any;
-    handleWalletConnect: any;
-    formData: any;
-    setFormData: any;
-    updateItemData: any;
-    resetFormData: any;
+  item: any;
+  formData: any;
+  setFormData: any;
+  balance: any;
+  handleWalletConnect: any;
+  updateItemData: any;
+  resetFormData: any;
+  closeModal: () => void;
 }
