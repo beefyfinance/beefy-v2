@@ -21,7 +21,7 @@ const _Item = ({vault}) => {
   const item = vault;
 
   // eslint-disable-next-line no-unused-vars
-  const {isBoosted, data: boostedData} = useIsBoosted(item);
+  const {isBoosted, data: boostedData, vaultBoosts} = useIsBoosted(item);
   // eslint-disable-next-line
   // const [isGovVault] = React.useState(item.isGovVault ?? false);
   const isGovVault = item.isGovVault;
@@ -38,6 +38,7 @@ const _Item = ({vault}) => {
   const [state, setState] = React.useState({ formattedBalance: '0' });
   const [priceInDolar, setPriceInDolar] = React.useState({ balance: '0' });
   const [poolRewards, setPoolRewards] = React.useState({ rewards: '0' });
+  const [userStaked, setUserStaked] = React.useState(false);
 
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
 
@@ -62,31 +63,62 @@ const _Item = ({vault}) => {
         ).toFixed(8);
       }
     } else {
+      let sumAmount = new BigNumber(0);
       if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
-        amount = byDecimals(
+        sumAmount = byDecimals(
           new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
             byDecimals(item.pricePerFullShare)
           ),
           item.tokenDecimals
-        ).toFixed(8);
+        )
+        // ).toFixed(8);
       }
+      if (wallet) {
+        for (const boost of vaultBoosts) {
+          let symbol = `${boost.token}${boost.id}Boost`
+          if (!isEmpty(balance.tokens[item.network][symbol])) {
+            sumAmount = sumAmount.plus(
+              byDecimals(
+                new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+                  byDecimals(item.pricePerFullShare)
+                ),
+                item.tokenDecimals
+              )
+            );
+          }
+        }
+      }
+      amount = sumAmount.toFixed(8);
     }
-
     if (!isNaN(parseFloat(amount))) setPriceInDolar({ balance: amount });
     if (!isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
-  }, [wallet.address, item, balance]);
+  }, [wallet.address, item, balance, vaultBoosts]);
 
   React.useEffect(() => {
     let amount = '0';
     if (wallet.address) {
-      amount = item.isGovVault
-      ? byDecimals(
-          new BigNumber(balance.tokens[item.network][`${item.token}GovVault`].balance),
-          item.tokenDecimals
-        ).toFixed(8)
-      : byDecimals(new BigNumber(item.balance), item.tokenDecimals)
-        .multipliedBy(byDecimals(new BigNumber(item.pricePerFullShare), item.tokenDecimals))
-        .toFixed(8);
+      let sumAmount = item.isGovVault
+        ? byDecimals(
+            new BigNumber(balance.tokens[item.network][`${item.token}GovVault`].balance),
+            item.tokenDecimals
+          )
+        : byDecimals(new BigNumber(item.balance), item.tokenDecimals)
+            .multipliedBy(byDecimals(new BigNumber(item.pricePerFullShare), item.tokenDecimals))
+      
+      for (const boost of vaultBoosts) {
+        let symbol = `${boost.token}${boost.id}Boost`;
+        if (!isEmpty(balance.tokens[item.network][symbol])) {
+          sumAmount = sumAmount.plus(
+            byDecimals(
+              new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+                byDecimals(item.pricePerFullShare)
+              ),
+              item.tokenDecimals
+            )
+          );
+        }
+      }
+      amount = sumAmount.toFixed(8);
     }
     setState({ formattedBalance: amount });
   }, [
@@ -96,7 +128,22 @@ const _Item = ({vault}) => {
     item.tokenDecimals,
     item.pricePerFullShare,
     isGovVault,
+    vaultBoosts,
   ]);
+
+  React.useEffect(() => {
+    let staked = false;
+    if (wallet.address && boostedData) {
+        let symbol = `${boostedData.token}${boostedData.id}Boost`;
+        if (
+          !isEmpty(balance.tokens[item.network][symbol]) &&
+          new BigNumber(balance.tokens[item.network][symbol].balance).toNumber() > 0
+        ) {
+          staked = true;
+        } 
+    }
+    setUserStaked(staked);
+  }, [boostedData, wallet.address])
 
   const ValueText = ({ value }) => (
     <>{value ? <span className={classes.value}>{value}</span> : <ApyStatLoader />}</>
@@ -195,7 +242,8 @@ const _Item = ({vault}) => {
         <div className={classes.statsContainer}>
           <Grid container>
             {/*BOOSTED BY*/}
-            {isBoosted && parseInt(priceInDolar.balance) === 0 && (
+            {/* {isBoosted && parseInt(priceInDolar.balance) === 0 && ( */}
+            {isBoosted && userStaked && (
               <div className={classes.centerSpace}>
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
@@ -207,7 +255,7 @@ const _Item = ({vault}) => {
               </div>
             )}
             {/*DEPOSIT*/}
-            {!isBoosted && (
+            {(!isBoosted || !userStaked ) && (
               <div className={classes.centerSpace}>
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
