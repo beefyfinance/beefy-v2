@@ -102,6 +102,7 @@ const initialTokens = () => {
         symbol: boostSymbol,
         balance: 0,
         decimals: 18,
+        network: net,
         allowance: { [data.pools[key].earnContractAddress]: 0 },
       };
 

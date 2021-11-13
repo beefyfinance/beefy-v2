@@ -28,6 +28,7 @@ export const Withdraw = ({
   resetFormData,
   isBoosted,
   boostedData,
+  vaultBoosts
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -266,8 +267,7 @@ export const Withdraw = ({
               <Loader line={true} />
             ) : (
               <Typography variant={'body1'}>
-                {(state.balance as any).significant(6)}{' '}
-                {item.token}
+                {(state.balance as any).significant(6)} {item.token}
               </Typography>
             )}
           </Box>
@@ -356,9 +356,7 @@ export const Withdraw = ({
           )}
         </Box>
       </Box>
-      {!item.isGovVault ? (
-        <BoostWidget boostedData={boostedData} isBoosted={isBoosted}  />
-      ) : null}
+      {!item.isGovVault ? <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} /> : null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   ); //return

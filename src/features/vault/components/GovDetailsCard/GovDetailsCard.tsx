@@ -7,7 +7,6 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
-import { AssetsImage } from '../../../../components/AssetsImage';
 
 const useStyles = makeStyles(styles as any);
 export const GovDetailsCard = (earnedToken) => {

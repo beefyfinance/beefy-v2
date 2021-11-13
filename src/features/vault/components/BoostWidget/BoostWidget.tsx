@@ -13,7 +13,7 @@ import { isEmpty } from '../../../../helpers/utils';
 import { byDecimals } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
-export const BoostWidget = ({ isBoosted, boostedData }) => {
+export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   const item = boostedData;
   const stylesProps = {
     isBoosted,
@@ -32,21 +32,44 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
     rewards: 0,
   });
 
+  
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
-
+  
   const [formData, setFormData] = React.useState({
     deposit: { amount: '', max: false },
     withdraw: { amount: '', max: false },
   });
+
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
     items: [],
     finished: false,
   });
+
+  const [pastBoosts, setPastBoosts] = React.useState({
+    boosts: []
+  });
+
+  React.useEffect(() => {
+    if (wallet.address) {
+      let pastBoosts = [];
+      for (const boost of vaultBoosts) {
+        let symbol = `${boost.token}${boost.id}Boost`;
+        if (
+          !isEmpty(balance.tokens[boost.network][symbol]) &&
+          new BigNumber(balance.tokens[boost.network][symbol].balance).toNumber() > 0
+        ) {
+          pastBoosts.push(boost);
+        }
+      }
+      setPastBoosts({boosts: pastBoosts});
+    }
+    
+  },[wallet.address, vaultBoosts, state.balance])
 
   React.useEffect(() => {
     if (item && wallet.address) {

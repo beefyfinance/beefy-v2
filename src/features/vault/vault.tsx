@@ -40,7 +40,7 @@ export const Vault = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isGovVault, setIsGovVault] = React.useState(false);
   const [item, setVaultData] = React.useState(null);
-  const { isBoosted, data: boostedData } = useIsBoosted(vault.pools[id]);
+  const { isBoosted, data: boostedData, vaultBoosts } = useIsBoosted(vault.pools[id]);
   const [dw, setDw] = React.useState('deposit');
 
   const [formData, setFormData] = React.useState({
@@ -166,7 +166,12 @@ export const Vault = () => {
                   <Typography className={classes.platformValue}>{item.platform}</Typography>
                 </span>
               </Box>
-              <VaultsStats item={item} isBoosted={isBoosted} boostedData={boostedData} />
+              <VaultsStats
+                item={item}
+                isBoosted={isBoosted}
+                boostedData={boostedData}
+                vaultBoosts={vaultBoosts}
+              />
             </>
           )}
         </Container>
@@ -197,6 +202,7 @@ export const Vault = () => {
                     <Deposit
                       boostedData={boostedData}
                       isBoosted={isBoosted}
+                      vaultBoosts={vaultBoosts}
                       item={item}
                       handleWalletConnect={handleWalletConnect}
                       formData={formData}
@@ -208,6 +214,7 @@ export const Vault = () => {
                     <Withdraw
                       boostedData={boostedData}
                       isBoosted={isBoosted}
+                      vaultBoosts={vaultBoosts}
                       item={item}
                       handleWalletConnect={handleWalletConnect}
                       formData={formData}
