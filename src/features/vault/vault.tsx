@@ -40,8 +40,12 @@ export const Vault = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [isGovVault, setIsGovVault] = React.useState(false);
   const [item, setVaultData] = React.useState(null);
-  const { isBoosted, data: boostedData, vaultBoosts } = useIsBoosted(vault.pools[id]);
   const [dw, setDw] = React.useState('deposit');
+
+  const isBoosted = vault.pools[id].isBoosted;
+  const boostedData = vault.pools[id].boostData;
+  const vaultBoosts = vault.pools[id].boosts;
+  // const { isBoosted, data: boostedData, vaultBoosts } = useIsBoosted(vault.pools[id]);
 
   const [formData, setFormData] = React.useState({
     deposit: { input: '', amount: new BigNumber(0), max: false, token: null, isZap: false },

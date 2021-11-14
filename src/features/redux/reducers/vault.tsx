@@ -3,6 +3,7 @@ import {
   HOME_FETCH_BOOSTS_DONE,
   HOME_FETCH_POOLS_BEGIN,
   HOME_FETCH_POOLS_DONE,
+  HOME_LINK_BOOSTS_DONE
 } from '../constants';
 import { config } from '../../../config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
@@ -66,7 +67,9 @@ const initialPools = () => {
       pool['safetyScore'] = 0;
       pool['withdrawalFee'] = pool.isGovVault ? 0 : 0.001;
       pool['depositFee'] = 0;
-      pool['periodFinish'] = 1500000000;
+      pool['boosts'] = [];
+      pool['isBoosted'] = false;
+      pool['boostData'] = null;
 
       if (!isEmpty(pool.platform)) {
         if (!platforms.includes(pool.platform)) {
@@ -164,6 +167,13 @@ export const vaultReducer = (state = initialState, action) => {
         lastUpdated: action.payload.lastUpdated,
         isBoostsLoading: action.payload.isBoostsLoading,
         isFirstTime: false,
+      };
+    case HOME_LINK_BOOSTS_DONE:
+      return {
+        ...state,
+        boosts: action.payload.boosts,
+        lastUpdated: action.payload.lastUpdated,
+        isBoostsLoading: action.payload.isBoostsLoading,
       };
     default:
       return state;

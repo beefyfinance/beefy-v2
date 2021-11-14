@@ -75,6 +75,8 @@ export const App = () => {
       ];
       await Promise.all(promises);
       
+      await dispatch(reduxActions.vault.linkVaultBoosts());
+
       await dispatch(reduxActions.balance.fetchBalances());
       await dispatch(reduxActions.balance.fetchBoostBalances());
       
