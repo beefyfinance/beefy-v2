@@ -118,11 +118,13 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     if (wallet.address) {
       let expiredBoostsWithBalance = [];
       let openFilter = false;
+      let currentTs = Date.now() /1000;
       for (const boost of vaultBoosts) {
         let symbol = `${boost.token}${boost.id}Boost`;
         if (
           !isEmpty(balance.tokens[boost.network][symbol]) &&
-          new BigNumber(balance.tokens[boost.network][symbol].balance).toNumber() > 0
+          new BigNumber(balance.tokens[boost.network][symbol].balance).toNumber() > 0 && 
+          parseInt(boost.periodFinish) <= currentTs
         ) {
           expiredBoostsWithBalance.push(boost);
           openFilter = true;
@@ -434,8 +436,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
             <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
             <Button></Button>
           </Box>
-          {/* TODO: Map to expired boosts */}
-          {/* <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
+          <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
             {pastBoosts.map((boost, key) => (
               <div className={classes.expiredBoostContainer} key={boost.id}>
                 <Typography className={classes.h2} style={{ textTransform: 'none' }}>
@@ -452,7 +453,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
                 </Button>
               </div>
             ))}
-          </AnimateHeight> */}
+          </AnimateHeight>
         </div>
       )}
     </>
