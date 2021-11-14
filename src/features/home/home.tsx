@@ -27,37 +27,37 @@ const DataLoader = memo(function HomeDataLoader() {
     const walletAddress = useSelector((state: any) => state.walletReducer.address);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (walletAddress && vaultLastUpdated > 0) {
-            dispatch(reduxActions.balance.fetchBalances());
-        }
-    }, [dispatch, walletAddress, vaultLastUpdated]);
+    // useEffect(() => {
+    //     if (walletAddress && vaultLastUpdated > 0) {
+    //         dispatch(reduxActions.balance.fetchBalances());
+    //     }
+    // }, [dispatch, walletAddress, vaultLastUpdated]);
 
-    useEffect(() => {
-        if (walletAddress && vaultLastUpdated > 0) {
-            dispatch(reduxActions.balance.fetchBoostBalances());
-        }
-    }, [dispatch, walletAddress, vaultLastUpdated]);
+    // useEffect(() => {
+    //     if (walletAddress && vaultLastUpdated > 0) {
+    //         dispatch(reduxActions.balance.fetchBoostBalances());
+    //     }
+    // }, [dispatch, walletAddress, vaultLastUpdated]);
 
-    useEffect(() => {
-        if (pricesLastUpdated > 0) {
-            dispatch(reduxActions.vault.fetchPools());
-        }
-    }, [dispatch, pricesLastUpdated]);
+    // useEffect(() => {
+    //     if (pricesLastUpdated > 0) {
+    //         dispatch(reduxActions.vault.fetchPools());
+    //     }
+    // }, [dispatch, pricesLastUpdated]);
 
-    useEffect(() => {
-        if (pricesLastUpdated > 0) {
-            dispatch(reduxActions.vault.fetchBoosts());
-        }
-    }, [dispatch, pricesLastUpdated]);
+    // useEffect(() => {
+    //     if (pricesLastUpdated > 0) {
+    //         dispatch(reduxActions.vault.fetchBoosts());
+    //     }
+    // }, [dispatch, pricesLastUpdated]);
 
-    useEffect(() => {
-        const id = setInterval(() => {
-            dispatch(reduxActions.vault.fetchPools());
-        }, 60000);
+    // useEffect(() => {
+    //     const id = setInterval(() => {
+    //         dispatch(reduxActions.vault.fetchPools());
+    //     }, 60000);
 
-        return () => clearInterval(id);
-    }, [dispatch]);
+    //     return () => clearInterval(id);
+    // }, [dispatch]);
 
     return null;
 });

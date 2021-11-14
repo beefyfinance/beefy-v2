@@ -25,6 +25,25 @@ import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { reduxActions } from '../../../redux/actions';
 import { StakeProps } from './StakeProps';
 
+(BigNumber.prototype as any).significant = function (digits) {
+  const number = this.toFormat({
+    prefix: '',
+    decimalSeparator: '.',
+    groupSeparator: '',
+    groupSize: 0,
+    secondaryGroupSize: 0,
+  });
+  if (number.length <= digits + 1) {
+    return number;
+  }
+  const [wholes, decimals] = number.split('.');
+  if (wholes.length >= digits) {
+    return wholes;
+  }
+  const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
+  return `${wholes}.${decimals.match(pattern)[0]}`;
+};
+
 const useStyles = makeStyles(styles as any);
 export const Stake: React.FC<StakeProps> = ({
   formData,
@@ -41,8 +60,9 @@ export const Stake: React.FC<StakeProps> = ({
 
   const t = useTranslation().t;
 
-  const { wallet } = useSelector((state: any) => ({
+  const { wallet, tokens } = useSelector((state: any) => ({
     wallet: state.walletReducer,
+    tokens: state.balanceReducer.tokens[item.network]
   }));
 
   const [steps, setSteps] = React.useState({
@@ -54,32 +74,77 @@ export const Stake: React.FC<StakeProps> = ({
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleInput = val => {
-    const value =
-      parseFloat(val) > balance.balance
-        ? balance.balance
-        : parseFloat(val) < 0
-        ? 0
-        : stripExtraDecimals(val);
+    const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
+
+    let max = false;
+
+    let value = new BigNumber(input).decimalPlaces(
+      tokens[formData.deposit.token].decimals,
+      BigNumber.ROUND_DOWN
+    );
+
+    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
+      value = new BigNumber(0);
+    }
+
+    if (value.isGreaterThanOrEqualTo(balance.balance)) {
+      value = balance.balance;
+      max = true;
+    }
+
+    const formattedInput = (() => {
+      if (value.isEqualTo(input)) return input;
+      if (input === '') return '';
+      if (input === '.') return `0.`;
+      return (value as any).significant(6);
+    })();
+
     setFormData({
       ...formData,
-      deposit: { amount: value, max: new BigNumber(value).minus(balance.balance).toNumber() === 0 },
+      deposit: {
+        ...formData.deposit,
+        input: formattedInput,
+        amount: value,
+        max: max,
+      },
     });
   };
 
+
+  // const handleInput = val => {
+  //   const value =
+  //     parseFloat(val) > balance.balance
+  //       ? balance.balance
+  //       : parseFloat(val) < 0
+  //       ? 0
+  //       : stripExtraDecimals(val);
+  //   setFormData({
+  //     ...formData,
+  //     deposit: { amount: value, max: new BigNumber(value).minus(balance.balance).toNumber() === 0 },
+  //   });
+  // };
+
   const handleMax = () => {
     if (balance.balance > 0) {
-      setFormData({ ...formData, deposit: { amount: balance.balance, max: true } });
+      setFormData({ ...formData, deposit: {...formData.deposit, input: (balance.balance as any).significant(6),amount: balance.balance, max: true } });
     }
   };
 
   const handleDeposit = () => {
     const steps = [];
+
     if (wallet.address) {
       if (item.network !== wallet.network) {
         dispatch(reduxActions.wallet.setNetwork(item.network));
         return false;
       }
-      if (!balance.allowance) {
+
+      const amount = convertAmountToRawNumber(
+        formData.deposit.amount,
+        tokens[formData.deposit.token].decimals
+      );
+
+      if (balance.allowance.isLessThan(amount)) {
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),
@@ -87,13 +152,29 @@ export const Stake: React.FC<StakeProps> = ({
             dispatch(
               reduxActions.wallet.approval(
                 item.network,
-                item.tokenAddress,
+                tokens[formData.deposit.token].address,
                 item.earnContractAddress
               )
             ),
           pending: false,
         });
       }
+
+      // if (!balance.allowance) {
+      //   steps.push({
+      //     step: 'approve',
+      //     message: t('Vault-ApproveMsg'),
+      //     action: () =>
+      //       dispatch(
+      //         reduxActions.wallet.approval(
+      //           item.network,
+      //           item.tokenAddress,
+      //           item.earnContractAddress
+      //         )
+      //       ),
+      //     pending: false,
+      //   });
+      // }
 
       steps.push({
         step: 'deposit',
@@ -103,10 +184,11 @@ export const Stake: React.FC<StakeProps> = ({
             reduxActions.wallet.stake(
               item.network,
               item.earnContractAddress,
-              convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals)
+              amount
             )
           ),
         pending: false,
+        token: tokens[formData.deposit.token],
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
@@ -168,11 +250,15 @@ export const Stake: React.FC<StakeProps> = ({
               <Box className={classes.balances}>
                 <Box className={classes.available}>
                   <Typography className={classes.label}>{t('Stake-Label-Available')}</Typography>
-                  <Typography className={classes.value}>{balance.balance}</Typography>
+                  <Typography className={classes.value}>
+                    {(balance.balance as any).significant(6)}
+                  </Typography>
                 </Box>
                 <Box className={classes.staked}>
                   <Typography className={classes.label}>{t('Stake-Label-Staked')}</Typography>
-                  <Typography className={classes.value}>{balance.deposited}</Typography>
+                  <Typography className={classes.value}>
+                    {(balance.deposited as any).significant}
+                  </Typography>
                 </Box>
               </Box>
               <Box pt={2}>
@@ -180,7 +266,7 @@ export const Stake: React.FC<StakeProps> = ({
                   <InputBase
                     placeholder="0.00"
                     className={classes.input}
-                    value={formData.deposit.amount}
+                    value={formData.deposit.input}
                     onChange={e => handleInput(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
