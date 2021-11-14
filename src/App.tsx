@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { reduxActions } from './features/redux/actions';
 import { useTranslation } from 'react-i18next';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -22,6 +22,11 @@ export const App = () => {
   // const storage = localStorage.getItem('nightMode');
   //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
   const [isNightMode, setNightMode] = React.useState(true);
+  
+  const { wallet } = useSelector((state: any) => ({
+    wallet: state.walletReducer,
+  }));  
+  
   const theme = createTheme({
     palette: {
       type: isNightMode ? 'dark' : 'light',
@@ -45,6 +50,19 @@ export const App = () => {
       fontFamily: ['Proxima Nova', 'sans-serif'].join(','),
     },
   });
+
+  React.useEffect(() => {
+
+    const updateBalances = async () => {
+      await dispatch(reduxActions.balance.fetchBalances());
+      await dispatch(reduxActions.balance.fetchBoostBalances());
+    }
+
+    if (wallet.address) {
+      updateBalances();
+    }
+
+  }, [wallet]);
 
   React.useEffect(() => {
     const initiate = async () => {
