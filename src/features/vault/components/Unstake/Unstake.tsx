@@ -183,7 +183,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
       );
 
       console.log(`Handling Unstake`)
-      console.log(`Amount submitted to contract is ` + amount.toNumber());
+      console.log(`Amount submitted to contract is ` + amount);
 
       steps.push({
         step: 'withdraw',
