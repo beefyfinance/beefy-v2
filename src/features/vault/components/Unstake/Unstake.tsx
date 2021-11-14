@@ -190,11 +190,10 @@ export const Unstake: React.FC<UnstakeProps> = ({
         message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
         action: () =>
           dispatch(
-            reduxActions.wallet.withdraw(
+            reduxActions.wallet.unstake(
               item.network,
               item.earnContractAddress,
-              amount,
-              formData.withdraw.max
+              amount
             )
           ),
         pending: false,
