@@ -48,9 +48,26 @@ export const App = () => {
 
   React.useEffect(() => {
     const initiate = async () => {
+      let now = Date.now();
+      
       await dispatch(reduxActions.prices.fetchPrices());
-      await dispatch(reduxActions.vault.fetchPools());
-      await dispatch(reduxActions.vault.fetchBoosts());
+      let promises = [
+        dispatch(reduxActions.vault.fetchPools()),
+        dispatch(reduxActions.vault.fetchBoosts())
+      ];
+      await Promise.all(promises);
+      
+      await dispatch(reduxActions.balance.fetchBalances());
+      await dispatch(reduxActions.balance.fetchBoostBalances());
+      
+      setInterval(async () => {
+        await dispatch(reduxActions.balance.fetchBalances());
+        await dispatch(reduxActions.balance.fetchBoostBalances());
+      }, 60000)
+
+      let end = Date.now();
+      console.log(`Load time is ${(end-now)/1000}s`);
+      
     };
     initiate();
   }, [dispatch]);

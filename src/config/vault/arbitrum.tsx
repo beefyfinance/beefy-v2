@@ -56,9 +56,6 @@ export const pools = [
     status: 'active',
     platform: 'MIM',
     assets: ['MIM', 'USDC', 'USDT'],
-    addLiquidityUrl: 'https://arbitrum.curve.fi/factory/0/deposit',
-    stratType: 'StratMultiLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -67,7 +64,10 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratMultiLP',
     withdrawalFee: '0.01%',
+    addLiquidityUrl: 'https://arbitrum.curve.fi/factory/0/deposit',
+    network: 'arbitrum',
   },
   {
     id: 'sushi-arb-spell-weth',
@@ -88,12 +88,6 @@ export const pools = [
     status: 'active',
     platform: 'Sushi',
     assets: ['SPELL', 'ETH'],
-    addLiquidityUrl:
-      'https://app.sushi.com/add/0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    buyTokenUrl:
-      'https://app.sushi.com/swap?inputCurrency=0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    stratType: 'StratLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -102,6 +96,12 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratLP',
+    addLiquidityUrl:
+      'https://app.sushi.com/add/0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    buyTokenUrl:
+      'https://app.sushi.com/swap?inputCurrency=0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    network: 'arbitrum',
   },
   {
     id: 'sushi-arb-weth-mim',
@@ -122,12 +122,6 @@ export const pools = [
     status: 'active',
     platform: 'Sushi',
     assets: ['MIM', 'ETH'],
-    addLiquidityUrl:
-      'https://app.sushi.com/add/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    buyTokenUrl:
-      'https://app.sushi.com/swap?inputCurrency=0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    stratType: 'StratLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -136,6 +130,12 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratLP',
+    addLiquidityUrl:
+      'https://app.sushi.com/add/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    buyTokenUrl:
+      'https://app.sushi.com/swap?inputCurrency=0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    network: 'arbitrum',
   },
   {
     id: 'sushi-arb-weth-link',
@@ -156,12 +156,6 @@ export const pools = [
     status: 'active',
     platform: 'Sushi',
     assets: ['LINK', 'ETH'],
-    addLiquidityUrl:
-      'https://app.sushi.com/add/0xf97f4df75117a78c1A5a0DBb814Af92458539FB4/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    buyTokenUrl:
-      'https://app.sushi.com/swap?inputCurrency=0xf97f4df75117a78c1A5a0DBb814Af92458539FB4&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    stratType: 'StratLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -170,6 +164,12 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratLP',
+    addLiquidityUrl:
+      'https://app.sushi.com/add/0xf97f4df75117a78c1A5a0DBb814Af92458539FB4/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    buyTokenUrl:
+      'https://app.sushi.com/swap?inputCurrency=0xf97f4df75117a78c1A5a0DBb814Af92458539FB4&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    network: 'arbitrum',
   },
   {
     id: 'sushi-arb-eth-usdc',
@@ -190,12 +190,6 @@ export const pools = [
     status: 'active',
     platform: 'Sushi',
     assets: ['USDC', 'ETH'],
-    addLiquidityUrl:
-      'https://app.sushi.com/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    buyTokenUrl:
-      'https://app.sushi.com/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    stratType: 'StratLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -204,6 +198,12 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratLP',
+    addLiquidityUrl:
+      'https://app.sushi.com/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    buyTokenUrl:
+      'https://app.sushi.com/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    network: 'arbitrum',
   },
   {
     id: 'curve-arb-tricrypto',
@@ -225,10 +225,6 @@ export const pools = [
     status: 'active',
     platform: 'Curve',
     assets: ['USDT', 'WBTC', 'ETH'],
-    withdrawalFee: '0.01%',
-    addLiquidityUrl: 'https://arbitrum.curve.fi/tricrypto/deposit',
-    stratType: 'StratMultiLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -237,6 +233,10 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratMultiLP',
+    withdrawalFee: '0.01%',
+    addLiquidityUrl: 'https://arbitrum.curve.fi/tricrypto/deposit',
+    network: 'arbitrum',
   },
   {
     id: 'curve-arb-2pool',
@@ -258,10 +258,6 @@ export const pools = [
     status: 'active',
     platform: 'Curve',
     assets: ['USDT', 'USDC'],
-    withdrawalFee: '0.01%',
-    addLiquidityUrl: 'https://arbitrum.curve.fi/2pool/deposit',
-    stratType: 'StratMultiLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -270,6 +266,10 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratMultiLP',
+    withdrawalFee: '0.01%',
+    addLiquidityUrl: 'https://arbitrum.curve.fi/2pool/deposit',
+    network: 'arbitrum',
   },
   {
     id: 'curve-arb-ren',
@@ -291,10 +291,6 @@ export const pools = [
     status: 'active',
     platform: 'Curve',
     assets: ['WBTC', 'renBTC'],
-    withdrawalFee: '0.01%',
-    addLiquidityUrl: 'https://arbitrum.curve.fi/ren/deposit',
-    stratType: 'StratMultiLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -303,6 +299,10 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratMultiLP',
+    withdrawalFee: '0.01%',
+    addLiquidityUrl: 'https://arbitrum.curve.fi/ren/deposit',
+    network: 'arbitrum',
   },
   {
     id: 'sushi-arb-wbtc-weth',
@@ -323,12 +323,6 @@ export const pools = [
     status: 'active',
     platform: 'Sushi',
     assets: ['WBTC', 'ETH'],
-    addLiquidityUrl:
-      'https://app.sushi.com/add/0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    buyTokenUrl:
-      'https://app.sushi.com/swap?inputCurrency=0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    stratType: 'StratLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -337,6 +331,12 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratLP',
+    addLiquidityUrl:
+      'https://app.sushi.com/add/0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    buyTokenUrl:
+      'https://app.sushi.com/swap?inputCurrency=0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    network: 'arbitrum',
   },
   {
     id: 'sushi-arb-sushi-eth',
@@ -357,12 +357,6 @@ export const pools = [
     status: 'active',
     platform: 'Sushi',
     assets: ['SUSHI', 'ETH'],
-    addLiquidityUrl:
-      'https://app.sushi.com/add/0xd4d42f0b6def4ce0383636770ef773390d85c61a/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    buyTokenUrl:
-      'https://app.sushi.com/swap?inputCurrency=0xd4d42f0b6def4ce0383636770ef773390d85c61af&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    stratType: 'StratLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -371,6 +365,12 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratLP',
+    addLiquidityUrl:
+      'https://app.sushi.com/add/0xd4d42f0b6def4ce0383636770ef773390d85c61a/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    buyTokenUrl:
+      'https://app.sushi.com/swap?inputCurrency=0xd4d42f0b6def4ce0383636770ef773390d85c61af&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    network: 'arbitrum',
   },
   {
     id: 'sushi-arb-weth-usdt',
@@ -391,12 +391,6 @@ export const pools = [
     status: 'active',
     platform: 'Sushi',
     assets: ['USDT', 'ETH'],
-    addLiquidityUrl:
-      'https://app.sushi.com/add/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    buyTokenUrl:
-      'https://app.sushi.com/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    stratType: 'StratLP',
-    network: 'arbitrum',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -405,5 +399,11 @@ export const pools = [
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],
+    stratType: 'StratLP',
+    addLiquidityUrl:
+      'https://app.sushi.com/add/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9/0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    buyTokenUrl:
+      'https://app.sushi.com/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+    network: 'arbitrum',
   },
 ];

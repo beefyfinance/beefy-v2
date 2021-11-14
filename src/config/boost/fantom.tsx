@@ -2,16 +2,16 @@ export const pools = [
   {
     id: 'moo_curve-ftm-geist-pearzap',
     name: 'PearZap',
-    poolId: 'curve-ftm-geist',
+    logo: 'uncategorized/3CRV.png',
     earnedToken: 'PEAR',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0x7C10108d4B7f4bd659ee57A53b30dF928244b354',
     earnContractAddress: '0xBE316e157BDfe5f06413E6DB9916D3F52D32d65F',
     earnedOracle: 'tokens',
     earnedOracleId: 'PEAR',
-    partnership: true,
+    vaultAddress: '0xf710D90A1Bd702dAEa619eEbbe876e7085c2A1df',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/pearzap/logo.png',
@@ -24,10 +24,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'curve-ftm-geist',
   },
   {
     id: 'moo_bifi-scream',
-    poolId: 'fantom-bifi-maxi',
     name: 'Scream',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'SCREAM',
@@ -36,9 +36,9 @@ export const pools = [
     earnContractAddress: '0xE105940939444b056C2de0834214824254D23615',
     earnedOracle: 'tokens',
     earnedOracleId: 'SCREAM',
-    partnership: true,
+    vaultAddress: '0xbF07093ccd6adFC3dEB259C557b61E94c1F66945',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/scream/logo.png',
@@ -51,10 +51,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'fantom-bifi-maxi',
   },
   {
     id: 'moo_boo_ftm-tomb',
-    poolId: 'fantom-bifi-maxi',
     name: 'TOMB.Finance',
     logo: 'fantom/BOO-FTM.png',
     earnedToken: 'mooFantomBIFI',
@@ -63,9 +63,9 @@ export const pools = [
     earnContractAddress: '0x1643BC20913fA2D62C521E7cE8fFeD9e1Dd87964',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0xEe3a7c885Fd3cc5358FF583F2DAB3b8bC473316f',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/tombfinance/logo.png',
@@ -78,10 +78,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'boo-boo-ftm',
   },
   {
     id: 'boo-bifi-ftm-bifi',
-    poolId: 'fantom-bifi-maxi',
     name: 'Beefy.Finance',
     logo: 'fantom/BIFI-FTM.png',
     earnedToken: 'mooFantomBIFI',
@@ -90,9 +90,9 @@ export const pools = [
     earnContractAddress: '0xa8b86b9AF7e844DA90A2e72840Ad01CCBD11EdC3',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0xe8188B9701E6DB1Fe24c75783474D22e5957BBEF',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/beefy/beefyfinance.png',
@@ -105,6 +105,7 @@ export const pools = [
         },
       },
     ],
+    poolId: 'boo-bifi-ftm',
   },
   {
     id: 'moo_usdc-ftm-ester',
@@ -116,20 +117,18 @@ export const pools = [
     earnContractAddress: '0xed5010eDF8812003B7d4c9a69E7AfCBceaB62F4f',
     earnedOracle: 'tokens',
     earnedOracleId: 'EST',
-    partnership: true,
+    vaultAddress: '0x41D44B276904561Ac51855159516FD4cB2c90968',
     status: 'closed',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/esterfinance/logo.png',
         background: 'stake/esterfinance/background.png',
         text: 'Ester.Finance is a Decentralized Finance (DeFi) Yield Optimizer project on the Fantom Opera Blockchain. Ester can make you earn more crypto with crypto. Through a set of smart contracts and several investment strategies, Ester.Finance automatically maximizes the user rewards from various liquidity pools (LPs), automated market-making (AMM) projects, and other yield farming opportunities in the DeFi ecosystem. This provides a huge advantage over attempting to do this manually yourself.',
         website: 'https://app.ester.finance/',
-        social: {
-          telegram: '',
-          twitter: 'https://twitter.com/EsterFinance',
-        },
+        social: { telegram: '', twitter: 'https://twitter.com/EsterFinance' },
       },
     ],
+    poolId: 'boo-ftm-usdc',
   },
 ];

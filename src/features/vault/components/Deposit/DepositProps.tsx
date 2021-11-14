@@ -7,4 +7,5 @@ export interface DepositProps {
   resetFormData: any;
   isBoosted: boolean;
   boostedData: any;
+  vaultBoosts: any;
 }

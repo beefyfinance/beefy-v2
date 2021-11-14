@@ -2,16 +2,15 @@ export const pools = [
   {
     id: 'moo_bifi_avax-singular',
     name: 'Singular',
-    assets: ['BIFI', 'AVAX'],
     earnedToken: 'SING',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xF9A075C9647e91410bF6C402bDF166e1540f67F0',
     earnContractAddress: '0x2554216fD346ABDBD59cc6f7E85A3fdAF15c1419',
     earnedOracle: 'tokens',
     earnedOracleId: 'SING',
-    partnership: true,
+    vaultAddress: '0xb1e29194d90d67b8d1c4104FDf6DaF0F7d3344D5',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/singular/logo.png',
@@ -24,10 +23,10 @@ export const pools = [
         },
       },
     ],
+    poolId: 'joe-wavax-bifi',
   },
   {
     id: 'moo_joe-bifi',
-    poolId: 'avax-bifi-maxi',
     name: 'Beefy',
     logo: 'single-assets/JOE.png',
     earnedToken: 'mooAvalancheBIFI',
@@ -36,9 +35,9 @@ export const pools = [
     earnContractAddress: '0x90e91cAf13F6C06fD04031cF5f398F8b3BAB794B',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
-    partnership: true,
+    vaultAddress: '0x282B11E65f0B49363D4505F91c7A44fBEe6bCc0b',
     status: 'active',
-    isMooStaked: true,
+    partnership: true,
     partners: [
       {
         logo: 'stake/beefy/beefyfinance.png',
@@ -52,5 +51,6 @@ export const pools = [
         },
       },
     ],
+    poolId: 'joe-joe',
   },
 ];

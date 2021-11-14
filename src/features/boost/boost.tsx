@@ -125,7 +125,7 @@ export const Boost = () => {
   React.useEffect(() => {
     if (item) {
       setIsLoading(false);
-      dispatch(reduxActions.vault.fetchBoosts(item));
+      // dispatch(reduxActions.vault.fetchBoosts(item));
     }
   }, [item, dispatch]);
 
@@ -136,15 +136,15 @@ export const Boost = () => {
     }
   }, [dispatch, item, network, wallet.address]);
 
-  React.useEffect(() => {
-    if (item) {
-      setInterval(() => {
-        dispatch(reduxActions.vault.fetchBoosts(item));
-        dispatch(reduxActions.balance.fetchBoostBalances(item, network));
-        dispatch(reduxActions.balance.fetchBoostRewards(item, network));
-      }, 60000);
-    }
-  }, [item, dispatch, network]);
+  // React.useEffect(() => {
+  //   if (item) {
+  //     setInterval(() => {
+  //       dispatch(reduxActions.vault.fetchBoosts(item));
+  //       dispatch(reduxActions.balance.fetchBoostBalances(item, network));
+  //       dispatch(reduxActions.balance.fetchBoostRewards(item, network));
+  //     }, 60000);
+  //   }
+  // }, [item, dispatch, network]);
 
   React.useEffect(() => {
     let amount: any = 0;
@@ -161,7 +161,7 @@ export const Boost = () => {
         item.tokenDecimals
       ).toFixed(8);
       deposited = byDecimals(
-        new BigNumber(balance.tokens[network][item.token + 'Boost']?.balance),
+        new BigNumber(balance.tokens[network][item.token + item.id + 'Boost']?.balance),
         item.tokenDecimals
       ).toFixed(8);
       approved = balance.tokens[network][item.token].allowance[item.earnContractAddress];

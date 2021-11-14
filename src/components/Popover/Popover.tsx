@@ -1,4 +1,4 @@
-import { makeStyles, Typography, Popper, Box, BoxProps } from '@material-ui/core';
+import { makeStyles, Typography, Popper, Box, BoxProps, Fade } from '@material-ui/core';
 import React, { memo, useCallback, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { PopoverProps } from './PopoverProps';
@@ -6,30 +6,36 @@ import { PopoverProps } from './PopoverProps';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
-const _Popover: React.FC<PopoverProps> = ({ title, content, children, size = 'sm', placement = 'top-end' }) => {
+const _Popover: React.FC<PopoverProps> = ({
+  title,
+  content,
+  children,
+  size = 'sm',
+  placement = 'top-end',
+}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [arrowRef, setArrowRef] = useState(null);
 
-  const toggleOpen = useCallback(() => {
-    setIsOpen(open => !open);
-  }, [setIsOpen]);
+  const handlePopoverOpen = () => {
+    setIsOpen(true);
+  };
 
-  const boxProps: BoxProps & {ref: any} = {
+  const handlePopoverClose = () => {
+    setIsOpen(false);
+  };
+
+  const boxProps: BoxProps & { ref: any } = {
     ref: setAnchorEl,
-    onClick: toggleOpen,
-    className:[classes.dot, classes[`size_${size}`]].join(' '),
-  }
+    onClick: handlePopoverOpen,
+    className: [classes.dot, classes[`size_${size}`]].join(' '),
+  };
 
   return (
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
-      <div>
-        <Box
-          {...boxProps}
-        >
-          ?
-        </Box>
+      <div onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
+        <Box {...boxProps}>?</Box>
         <Popper
           id={title}
           open={isOpen}

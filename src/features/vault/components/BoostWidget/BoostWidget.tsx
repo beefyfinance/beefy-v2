@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Box, Button, makeStyles, Typography, Grid } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  makeStyles,
+  Typography,
+  Grid,
+  Modal,
+  Fade,
+  Backdrop,
+} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
@@ -7,13 +16,16 @@ import BigNumber from 'bignumber.js';
 import AnimateHeight from 'react-animate-height';
 import { reduxActions } from '../../../redux/actions';
 import { styles } from './styles';
+import { Stake } from '../Stake';
+import { Unstake } from '../Unstake';
 import { Popover } from '../../../../components/Popover/Popover';
+import { Steps } from '../../../../components/Steps';
 import { StakeCountdown } from '../StakeCountdown';
 import { isEmpty } from '../../../../helpers/utils';
 import { byDecimals } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
-export const BoostWidget = ({ isBoosted, boostedData }) => {
+export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   const item = boostedData;
   const stylesProps = {
     isBoosted,
@@ -21,32 +33,105 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
   const classes = useStyles(stylesProps);
   const t = useTranslation().t;
   const [filterOpen, setFilterOpen] = useState(false);
+  const [dw, setDw] = React.useState('deposit');
   const dispatch = useDispatch();
   let { network }: any = useParams();
 
+  const [inputModal, setInputModal] = React.useState(false);
   const [state, setState] = React.useState({
-    balance: 0,
-    deposited: 0,
-    allowance: 0,
-    poolPercentage: 0,
-    rewards: 0,
+    balance: new BigNumber(0),
+    deposited: new BigNumber(0),
+    allowance: new BigNumber(0),
+    poolPercentage: '0',
+    rewards: new BigNumber(0),
   });
+
+  const [formData, setFormData] = React.useState({
+    deposit: { token: null, input: '', amount: new BigNumber(0), max: false },
+    withdraw: { token: null, input: '', amount: new BigNumber(0), max: false },
+  });
+
+  const handleClose = () => {
+    updateItemData();
+    resetFormData();
+    setSteps({ modal: false, currentStep: -1, items: [], finished: false });
+  };
+
+  const closeInputModal = () => {
+    setInputModal(false);
+  };
+
+  const handleWalletConnect = () => {
+    if (!wallet.address) {
+      dispatch(reduxActions.wallet.connect());
+    }
+  };
+
+  const updateItemData = () => {
+    if (wallet.address && item) {
+      // dispatch(reduxActions.vault.fetchBoosts(item));
+      dispatch(reduxActions.balance.fetchBalances())
+      dispatch(reduxActions.balance.fetchBoostBalances(item, network)); // TODO add network
+      dispatch(reduxActions.balance.fetchBoostRewards(item, network));
+    }
+  };
+
+  const resetFormData = () => {
+    setFormData({
+      deposit: { ...formData.deposit, input: '', amount: new BigNumber(0), max: false },
+      withdraw: { ...formData.withdraw, input: '', amount: new BigNumber(0), max: false },
+    });
+  };
+
+  React.useEffect(() => {
+    if (item) {
+      setFormData({
+        ...formData,
+        deposit: {
+          ...formData.deposit,
+          token: item.token,
+        },
+        withdraw: {
+          ...formData.withdraw,
+          token: item.token,
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item]);
 
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
 
-  const [formData, setFormData] = React.useState({
-    deposit: { amount: '', max: false },
-    withdraw: { amount: '', max: false },
-  });
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
     items: [],
     finished: false,
   });
+
+  const [pastBoosts, setPastBoosts] = React.useState([]);
+
+  React.useEffect(() => {
+    if (wallet.address) {
+      let expiredBoostsWithBalance = [];
+      let openFilter = false;
+      for (const boost of vaultBoosts) {
+        let symbol = `${boost.token}${boost.id}Boost`;
+        if (
+          !isEmpty(balance.tokens[boost.network][symbol]) &&
+          new BigNumber(balance.tokens[boost.network][symbol].balance).toNumber() > 0
+        ) {
+          expiredBoostsWithBalance.push(boost);
+          openFilter = true;
+        }
+      }
+      setPastBoosts(expiredBoostsWithBalance);
+      setFilterOpen(openFilter);
+    }
+  }, [wallet.address, vaultBoosts, state.balance]);
 
   React.useEffect(() => {
     if (item && wallet.address) {
@@ -55,42 +140,48 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
     }
   }, [dispatch, item, network, wallet.address]);
 
-  React.useEffect(() => {
-    if (item) {
-      setInterval(() => {
-        dispatch(reduxActions.vault.fetchBoosts(item));
-        dispatch(reduxActions.balance.fetchBoostBalances(item, network));
-        dispatch(reduxActions.balance.fetchBoostRewards(item, network));
-      }, 60000);
-    }
-  }, [item, dispatch, network]);
+  // React.useEffect(() => {
+  //   if (item) {
+  //     setInterval(() => {
+  //       // dispatch(reduxActions.vault.fetchBoosts(item));
+  //       dispatch(reduxActions.balance.fetchBoostBalances(item, network));
+  //       dispatch(reduxActions.balance.fetchBoostRewards(item, network));
+  //     }, 60000);
+  //   }
+  // }, [item, dispatch, network]);
 
   React.useEffect(() => {
-    let amount: any = 0;
-    let deposited: any = 0;
-    let approved: any = 0;
+    let amount = new BigNumber(0);
+    let deposited = new BigNumber(0);
+    let approved = new BigNumber(0);
     let poolPercentage: any = 0;
-    let rewards: any = 0;
+    let rewards = new BigNumber(0);
 
-    if (item && wallet.address && !isEmpty(balance.tokens[network][item.token])) {
+    if (
+      item &&
+      wallet.address &&
+      !isEmpty(balance.tokens[network][item.token]) &&
+      !isEmpty(balance.tokens[network][`${item.token}${item.id}Boost`])
+    ) {
+      let symbol = `${item.token}${item.id}Boost`;
       amount = byDecimals(
         new BigNumber(balance.tokens[network][item.token]?.balance),
         item.tokenDecimals
-      ).toFixed(8);
+      );
       deposited = byDecimals(
-        new BigNumber(balance.tokens[network][item.token + 'Boost']?.balance),
+        new BigNumber(balance.tokens[network][symbol]?.balance),
         item.tokenDecimals
-      ).toFixed(8);
-      approved = balance.tokens[network][item.token].allowance[item.earnContractAddress];
+      );
+      approved = new BigNumber(balance.tokens[network][symbol].allowance[item.earnContractAddress]);
 
       if (!isEmpty(balance.rewards[item.earnedToken])) {
         rewards = byDecimals(
           new BigNumber(balance.rewards[item.earnedToken].balance),
           item.earnedTokenDecimals
-        ).toFixed(8);
+        );
       }
 
-      if (deposited > 0) {
+      if (deposited.toNumber() > 0) {
         poolPercentage = (
           (Math.floor(new BigNumber(deposited).toNumber() * 1000000000) /
             1000000000 /
@@ -107,6 +198,39 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
       rewards: rewards,
     });
   }, [wallet.address, item, balance, network]);
+
+  const handleClaim = () => {
+    const steps = [];
+    if (wallet.address) {
+      if (item.network !== wallet.network) {
+        dispatch(reduxActions.wallet.setNetwork(item.network));
+        return false;
+      }
+
+      steps.push({
+        step: 'withdraw',
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        action: () =>
+          dispatch(
+            reduxActions.wallet.claim(
+              item.network,
+              item.earnContractAddress,
+              state.rewards.toNumber()
+            )
+          ),
+        pending: false,
+        token: balance.tokens[item.network][item.earnedToken],
+      });
+
+      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
+    } //if (wallet.address)
+  }; //const handleWithdraw
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  function depositWithdraw(deposit: string) {
+    setDw(deposit);
+    setInputModal(true);
+  }
 
   React.useEffect(() => {
     const index = steps.currentStep;
@@ -169,11 +293,31 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
     },
   };
 
+  const handleExit = boost => {
+    const steps = [];
+    if (wallet.address) {
+      if (boost.network !== wallet.network) {
+        dispatch(reduxActions.wallet.setNetwork(boost.network));
+        return false;
+      }
+
+      steps.push({
+        step: 'exit',
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        action: () =>
+          dispatch(reduxActions.wallet.exit(boost.network, boost.earnContractAddress, 0)),
+        pending: false,
+        token: balance.tokens[boost.network][boost.token],
+      });
+
+      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
+    } //if (wallet.address)
+  }; //const handleWithdraw
+
   return (
     <>
       {isBoosted && (
         <div className={classes.container}>
-          {console.log(boostedData)}
           <Box display="flex" alignItems="center">
             <img
               alt="fire"
@@ -196,7 +340,7 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
                 {t('Boost-Balance', { mooToken: boostedData.token })}
               </Typography>
               <Typography className={classes.h2}>
-                {state.balance > 0 ? state.balance : '0'}
+                {state.balance.toNumber() > 0 ? state.balance.toFixed(8) : '0'}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -204,13 +348,14 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
                 {t('Boost-Balance-Staked', { mooToken: boostedData.token })}
               </Typography>
               <Typography className={classes.h2}>
-                {state.deposited > 0 ? state.deposited : '0'}
+                {state.deposited.toNumber() > 0 ? state.deposited.toFixed(8) : '0'}
               </Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography className={classes.body1}>{t('Boost-Rewards')}</Typography>
               <Typography className={classes.h2}>
-                {state.rewards > 0 ? state.rewards : '0'} {boostedData.earnedToken}
+                {state.rewards.toNumber() > 0 ? state.rewards.toFixed(8) : '0'}{' '}
+                {boostedData.earnedToken}
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -221,62 +366,95 @@ export const BoostWidget = ({ isBoosted, boostedData }) => {
             </Grid>
           </Grid>
 
-          <Button disabled={false} className={classes.button} fullWidth={true}>
+          <Button
+            disabled={false}
+            className={classes.button}
+            onClick={() => depositWithdraw('deposit')}
+            fullWidth={true}
+          >
             {t('Boost-Button-Vault')}
           </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true}>
+          <Button className={classes.button} onClick={handleClaim} fullWidth={true}>
             {t('Boost-Button-Withdraw')}
           </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true}>
-            {t('Boost-Button-Claim')}
-          </Button>
-          <Button disabled={true} className={classes.button} fullWidth={true}>
+          <Button className={classes.button} onClick={() => handleExit(item)} fullWidth={true}>
             {t('Boost-Button-Claim-Unstake')}
           </Button>
+          <Button
+            onClick={() => depositWithdraw('unstake')}
+            className={classes.button}
+            fullWidth={true}
+          >
+            {t('Boost-Button-Unestake')}
+          </Button>
+
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={inputModal}
+            onClose={() => setInputModal(false)}
+          >
+            {dw === 'deposit' ? (
+              <Stake
+                closeModal={closeInputModal}
+                item={item}
+                balance={state}
+                handleWalletConnect={handleWalletConnect}
+                formData={formData}
+                setFormData={setFormData}
+                updateItemData={updateItemData}
+                resetFormData={resetFormData}
+              />
+            ) : (
+              <Unstake
+                closeModal={closeInputModal}
+                item={item}
+                balance={state}
+                handleWalletConnect={handleWalletConnect}
+                formData={formData}
+                setFormData={setFormData}
+                updateItemData={updateItemData}
+                resetFormData={resetFormData}
+              />
+            )}
+          </Modal>
+          <Steps item={item} steps={steps} handleClose={handleClose} />
         </div>
       )}
-      <div className={classes.containerExpired}>
-        <Box display="flex" alignItems="center" style={{ marginBottom: '24px' }}>
-          <img
-            alt="fire"
-            src={require(`../../../../images/fire.png`).default}
-            className={classes.boostImg}
-          />
-          <Typography className={classes.h1white}>{t('Boost-Expired')}</Typography>
-          &nbsp;
-          <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
-          <Button></Button>
-        </Box>
-        {/* TODO: Map to expired boosts */}
-        <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
-          <div className={classes.expiredBoostContainer}>
-            <Typography className={classes.h2} style={{ textTransform: 'none' }}>
-              POTS&nbsp;{t('Filter-Boost')}
-            </Typography>
-            <Button
-              disabled={false}
-              className={classes.button}
-              style={{ marginBottom: 0 }}
-              fullWidth={true}
-            >
-              {t('Boost-Button-Claim-Unstake')}
-            </Button>
-          </div>
-          <div className={classes.expiredBoostContainer}>
-            <Typography className={classes.h2} style={{ textTransform: 'none' }}>
-              PACOCA&nbsp;{t('Filter-Boost')}
-            </Typography>
-            <Button
-              disabled={false}
-              className={classes.button}
-              style={{ marginBottom: 0 }}
-              fullWidth={true}
-            >
-              {t('Boost-Button-Claim-Unstake')}
-            </Button>
-          </div>
-        </AnimateHeight>
-      </div>
+      {filterOpen && (
+        <div className={classes.containerExpired} hidden={!filterOpen}>
+          <Box display="flex" alignItems="center" style={{ marginBottom: '24px' }}>
+            <img
+              alt="fire"
+              src={require(`../../../../images/fire.png`).default}
+              className={classes.boostImg}
+            />
+            <Typography className={classes.h1white}>{t('Boost-Expired')}</Typography>
+            &nbsp;
+            <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
+            <Button></Button>
+          </Box>
+          {/* TODO: Map to expired boosts */}
+          {/* <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
+            {pastBoosts.map((boost, key) => (
+              <div className={classes.expiredBoostContainer} key={boost.id}>
+                <Typography className={classes.h2} style={{ textTransform: 'none' }}>
+                  {boost.name}&nbsp;{t('Filter-Boost')}
+                </Typography>
+                <Button
+                  onClick={() => handleExit(boost)}
+                  disabled={false}
+                  className={classes.button}
+                  style={{ marginBottom: 0 }}
+                  fullWidth={true}
+                >
+                  {t('Boost-Button-Claim-Unstake')}
+                </Button>
+              </div>
+            ))}
+          </AnimateHeight> */}
+        </div>
+      )}
     </>
   );
-};
+};;
