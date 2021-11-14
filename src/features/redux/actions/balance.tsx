@@ -199,7 +199,7 @@ const getBoostBalances = async (items, state, dispatch, network) => {
         // item.amount,
         // tokens[item.network][item.token].balance
       // ).toNumber();
-      tokens[item.network][item.token].balance = formatDecimals(amount);
+      tokens[item.network][item.token].balance = amount;
       tokens[item.network][item.token].address = item.address;
     }
 

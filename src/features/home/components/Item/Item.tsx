@@ -20,8 +20,12 @@ const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
   const item = vault;
 
+  const isBoosted = vault.isBoosted;
+  const boostedData = vault.boostData;
+  const vaultBoosts = vault.boosts; 
+
   // eslint-disable-next-line no-unused-vars
-  const { isBoosted, data: boostedData, vaultBoosts } = useIsBoosted(item);
+  // const { isBoosted, data: boostedData, vaultBoosts } = useIsBoosted(item);
   // eslint-disable-next-line
   // const [isGovVault] = React.useState(item.isGovVault ?? false);
   const isGovVault = item.isGovVault;

@@ -92,7 +92,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
     let max = false;
 
     let value = new BigNumber(input).decimalPlaces(
-      tokens[formData.deposit.token].decimals,
+      tokens[formData.withdraw.token].decimals,
       BigNumber.ROUND_DOWN
     );
 
@@ -175,7 +175,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
         dispatch(reduxActions.wallet.setNetwork(item.network));
         return false;
       }
-      
+
       const amount = convertAmountToRawNumber(
         formData.withdraw.amount,
         tokens[formData.withdraw.token].decimals
@@ -186,11 +186,10 @@ export const Unstake: React.FC<UnstakeProps> = ({
         message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
         action: () =>
           dispatch(
-            reduxActions.wallet.withdraw(
+            reduxActions.wallet.unstake(
               item.network,
               item.earnContractAddress,
-              amount,
-              formData.withdraw.max
+              amount
             )
           ),
         pending: false,
