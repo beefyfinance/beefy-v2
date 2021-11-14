@@ -25,6 +25,25 @@ import BigNumber from 'bignumber.js';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { UnstakeProps } from './UnstakeProps';
 
+(BigNumber.prototype as any).significant = function (digits) {
+  const number = this.toFormat({
+    prefix: '',
+    decimalSeparator: '.',
+    groupSeparator: '',
+    groupSize: 0,
+    secondaryGroupSize: 0,
+  });
+  if (number.length <= digits + 1) {
+    return number;
+  }
+  const [wholes, decimals] = number.split('.');
+  if (wholes.length >= digits) {
+    return wholes;
+  }
+  const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
+  return `${wholes}.${decimals.match(pattern)[0]}`;
+};
+
 const useStyles = makeStyles(styles as any);
 export const Unstake: React.FC<UnstakeProps> = ({
   item,
@@ -39,8 +58,9 @@ export const Unstake: React.FC<UnstakeProps> = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const t = useTranslation().t;
-  const { wallet } = useSelector((state: any) => ({
+  const { wallet, tokens } = useSelector((state: any) => ({
     wallet: state.walletReducer,
+    tokens: state.balanceReducer.tokens[item.network],
   }));
   const [steps, setSteps] = React.useState({
     modal: false,
@@ -50,51 +70,70 @@ export const Unstake: React.FC<UnstakeProps> = ({
   });
   const [isLoading, setIsLoading] = React.useState(true);
 
+  // const handleInput = val => {
+  //   const value =
+  //     parseFloat(val) > balance.balance
+  //       ? balance.balance
+  //       : parseFloat(val) < 0
+  //       ? 0
+  //       : stripExtraDecimals(val);
+  //   setFormData({
+  //     ...formData,
+  //     withdraw: {
+  //       amount: value,
+  //       max: new BigNumber(value).minus(balance.balance).toNumber() === 0,
+  //     },
+  //   });
+  // };
+
   const handleInput = val => {
-    const value =
-      parseFloat(val) > balance.balance
-        ? balance.balance
-        : parseFloat(val) < 0
-        ? 0
-        : stripExtraDecimals(val);
+    const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
+
+    let max = false;
+
+    let value = new BigNumber(input).decimalPlaces(
+      tokens[formData.deposit.token].decimals,
+      BigNumber.ROUND_DOWN
+    );
+
+    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
+      value = new BigNumber(0);
+    }
+
+    if (value.isGreaterThanOrEqualTo(balance.deposited)) {
+      value = balance.deposited;
+      max = true;
+    }
+
+    const formattedInput = (() => {
+      if (value.isEqualTo(input)) return input;
+      if (input === '') return '';
+      if (input === '.') return `0.`;
+      return (value as any).significant(6);
+    })();
+
     setFormData({
       ...formData,
       withdraw: {
+        ...formData.withdraw,
+        input: formattedInput,
         amount: value,
-        max: new BigNumber(value).minus(balance.balance).toNumber() === 0,
+        max: max,
       },
     });
   };
 
   const handleMax = () => {
-    if (balance.balance > 0) {
-      setFormData({ ...formData, withdraw: { amount: balance.balance, max: true } });
-    }
-  };
-
-  const handleWithdraw = () => {
-    const steps = [];
-    if (wallet.address) {
-      if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
-        return false;
-      }
-      const amount = new BigNumber(formData.withdraw.amount).toFixed(8);
-      steps.push({
-        step: 'withdraw',
-        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
-        action: () =>
-          dispatch(
-            reduxActions.wallet.unstake(
-              item.network,
-              item.earnContractAddress,
-              convertAmountToRawNumber(amount, item.tokenDecimals)
-            )
-          ),
-        pending: false,
+    if (balance.deposited > 0) {
+      setFormData({
+        ...formData,
+        withdraw: {
+          ...formData.withdraw,
+          input: (balance.deposited as any).significant(6),
+          amount: balance.deposited,
+          max: true,
+        },
       });
-
-      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
     }
   };
 
@@ -129,6 +168,39 @@ export const Unstake: React.FC<UnstakeProps> = ({
     }
   }, [steps, wallet.action]);
 
+  const handleUnstake = () => {
+    const steps = [];
+    if (wallet.address) {
+      if (item.network !== wallet.network) {
+        dispatch(reduxActions.wallet.setNetwork(item.network));
+        return false;
+      }
+      
+      const amount = convertAmountToRawNumber(
+        formData.withdraw.amount,
+        tokens[formData.withdraw.token].decimals
+      );
+
+      steps.push({
+        step: 'withdraw',
+        message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+        action: () =>
+          dispatch(
+            reduxActions.wallet.withdraw(
+              item.network,
+              item.earnContractAddress,
+              amount,
+              formData.withdraw.max
+            )
+          ),
+        pending: false,
+        token: tokens[formData.deposit.token]
+      });
+
+      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
+    } //if (wallet.address)
+  };
+
   const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -143,7 +215,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
       <Box sx={style}>
         <Card>
           <CardHeader className={classes.header}>
-            <CardTitle titleClassName={classes.title} title={t('Stake-Modal-Title')} />
+            <CardTitle titleClassName={classes.title} title={t('Unstake-Modal-Title')} />
             <IconButton onClick={closeModal} aria-label="settings">
               <CloseIcon htmlColor="#6B7199" />
             </IconButton>
@@ -153,11 +225,15 @@ export const Unstake: React.FC<UnstakeProps> = ({
               <Box className={classes.balances}>
                 <Box className={classes.available}>
                   <Typography className={classes.label}>{t('Stake-Label-Available')}</Typography>
-                  <Typography className={classes.value}>{balance.balance}</Typography>
+                  <Typography className={classes.value}>
+                    {(balance.balance as any).significant(6)}
+                  </Typography>
                 </Box>
                 <Box className={classes.staked}>
                   <Typography className={classes.label}>{t('Stake-Label-Staked')}</Typography>
-                  <Typography className={classes.value}>{balance.deposited}</Typography>
+                  <Typography className={classes.value}>
+                    {(balance.deposited as any).significant(6)}
+                  </Typography>
                 </Box>
               </Box>
               <Box pt={2}>
@@ -165,7 +241,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
                   <InputBase
                     placeholder="0.00"
                     className={classes.input}
-                    value={formData.deposit.amount}
+                    value={formData.withdraw.input}
                     onChange={e => handleInput(e.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
@@ -202,12 +278,12 @@ export const Unstake: React.FC<UnstakeProps> = ({
                   </Button>
                 ) : (
                   <Button
-                    onClick={handleWithdraw}
+                    onClick={handleUnstake}
                     className={classes.btnSubmit}
                     fullWidth={true}
-                    disabled={formData.deposit.amount <= 0}
+                    disabled={formData.withdraw.amount <= 0}
                   >
-                    {t('Stake-Button-ConfirmStaking')}
+                    {t('Stake-Button-ConfirmUnstaking')}
                   </Button>
                 )
               ) : (
