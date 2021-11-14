@@ -92,7 +92,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
     let max = false;
 
     let value = new BigNumber(input).decimalPlaces(
-      tokens[formData.deposit.token].decimals,
+      tokens[formData.withdraw.token].decimals,
       BigNumber.ROUND_DOWN
     );
 
@@ -125,6 +125,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
 
   const handleMax = () => {
     if (balance.deposited > 0) {
+      console.log(`setting value as ` + balance.deposited.toNumber());
       setFormData({
         ...formData,
         withdraw: {
@@ -175,11 +176,14 @@ export const Unstake: React.FC<UnstakeProps> = ({
         dispatch(reduxActions.wallet.setNetwork(item.network));
         return false;
       }
-      
+
       const amount = convertAmountToRawNumber(
         formData.withdraw.amount,
         tokens[formData.withdraw.token].decimals
       );
+
+      console.log(`Handling Unstake`)
+      console.log(`Amount submitted to contract is ` + amount.toNumber());
 
       steps.push({
         step: 'withdraw',
