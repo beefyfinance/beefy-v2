@@ -174,8 +174,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
         new BigNumber(balance.tokens[network][symbol]?.balance),
         item.tokenDecimals
       );
-      console.log(`deposited amount found is `)
-      console.log(deposited.toNumber());
+
       approved = new BigNumber(balance.tokens[network][symbol].allowance[item.earnContractAddress]);
 
       if (!isEmpty(balance.rewards[item.earnedToken])) {

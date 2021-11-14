@@ -125,7 +125,6 @@ export const Unstake: React.FC<UnstakeProps> = ({
 
   const handleMax = () => {
     if (balance.deposited > 0) {
-      console.log(`setting value as ` + balance.deposited.toNumber());
       setFormData({
         ...formData,
         withdraw: {
@@ -181,9 +180,6 @@ export const Unstake: React.FC<UnstakeProps> = ({
         formData.withdraw.amount,
         tokens[formData.withdraw.token].decimals
       );
-
-      console.log(`Handling Unstake`)
-      console.log(`Amount submitted to contract is ` + amount);
 
       steps.push({
         step: 'withdraw',
