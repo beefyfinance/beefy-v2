@@ -34,6 +34,8 @@ export const styles = theme => ({
     maxHeight: '48px',
     width: '100%',
     padding: '12px 16px',
+    fontSize: '21px',
+    fontWeight: 600,
   },
   width: {
     width: '100%',
