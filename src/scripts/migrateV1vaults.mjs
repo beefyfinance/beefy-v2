@@ -32,6 +32,7 @@ the command is run. To help minimize pollution, the maintainer may avoid pushing
 into the staging repository.
 
 Development
++ v0.9.0.2 AllTrades: adjustment to preserve the new & special v2 bifi-gov vault objects
 + v0.9.0.1 AllTrades: switched over to *.tsx v2 targets
 + v0.9 AllTrades
   - add support for Celo chain, and prep for other chains going forward by allowing the 
@@ -56,6 +57,7 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 										{S_SRC: "arbitrum"},
 										{S_SRC: "celo"}, 
 										{S_SRC: "moonriver"}];
+//										{S_SRC: "chronos"}];
 const mS_PRPNM_ID = "id", mS_PRPNM_ASSTS = "assets", mS_PRPNM_STRAT_TYP = "stratType", 
 			mS_PRPNM_CHAIN = "network", mS_PRPNM_LOGO = "logo", mS_PRPNM_RISKS = "risks",
 			mS_PRPNM_CTRCT = "earnContractAddress", mS_PRPNM_TYP = "type", 
@@ -296,7 +298,8 @@ async function p_main()	{
 		//	deletions.
 		const I = i_pruned;
 		Object.values( o_trgtChn).forEach( O_trgt => {
-			if (!(O_trgt && Object === O_trgt.constructor))
+			if (!(O_trgt && Object === O_trgt.constructor) || O_trgt[ mS_PRPNM_ID].endsWith( 
+																																							"bifi-gov"))
 				return;
 			const S = S_TRGT_CHN + ": " + O_trgt[ mS_PRPNM_ID];
 			if (O_hits[ S])
