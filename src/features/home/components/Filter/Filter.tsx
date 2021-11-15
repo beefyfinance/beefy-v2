@@ -23,7 +23,13 @@ import { FilterProps } from './FilterProps';
 import { FilterCategories } from './FilterCategories';
 
 const useStyles = makeStyles(styles as any);
-const _Filter: React.FC<FilterProps> = ({ sortConfig, setSortConfig, platforms, filteredCount, allCount }) => {
+const _Filter: React.FC<FilterProps> = ({
+  sortConfig,
+  setSortConfig,
+  platforms,
+  filteredCount,
+  allCount,
+}) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const [filterOpen, setFilterOpen] = useState(false);
@@ -82,8 +88,6 @@ const _Filter: React.FC<FilterProps> = ({ sortConfig, setSortConfig, platforms, 
   }, [t]);
 
   const handleSortChange = useCallback(e => handleChange('key', e.target.value), [handleChange]);
-
-  console.log(sortConfig);
 
   return (
     <>
@@ -154,7 +158,11 @@ const _Filter: React.FC<FilterProps> = ({ sortConfig, setSortConfig, platforms, 
               setFilterOpen(!filterOpen);
             }}
           >
-            <img src={require(`../../../../images/filter.svg`).default} alt="" className={classes.filterIcon} />
+            <img
+              src={require(`../../../../images/filter.svg`).default}
+              alt=""
+              className={classes.filterIcon}
+            />
             {t('Filter-Btn')}
             {filterOpen ? <ArrowDropDownIcon /> : ''}
           </ToggleButton>
@@ -271,6 +279,6 @@ const _Filter: React.FC<FilterProps> = ({ sortConfig, setSortConfig, platforms, 
       </AnimateHeight>
     </>
   );
-}
+};
 
 export const Filter = memo(_Filter);

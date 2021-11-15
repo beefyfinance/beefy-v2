@@ -14,7 +14,6 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
-import { useIsBoosted } from '../../hooks/useIsBoosted';
 
 const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
@@ -22,7 +21,7 @@ const _Item = ({ vault }) => {
 
   const isBoosted = vault.isBoosted;
   const boostedData = vault.boostData;
-  const vaultBoosts = vault.boosts; 
+  const vaultBoosts = vault.boosts;
 
   // eslint-disable-next-line no-unused-vars
   // const { isBoosted, data: boostedData, vaultBoosts } = useIsBoosted(item);
@@ -96,7 +95,7 @@ const _Item = ({ vault }) => {
     }
     if (!isNaN(parseFloat(amount))) setPriceInDolar({ balance: amount });
     if (!isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
-  }, [wallet.address, item, balance, vaultBoosts]);
+  }, [wallet.address, item, balance, vaultBoosts, wallet]);
 
   React.useEffect(() => {
     let amount = '0';
@@ -133,6 +132,9 @@ const _Item = ({ vault }) => {
     item.pricePerFullShare,
     isGovVault,
     vaultBoosts,
+    item.isGovVault,
+    item.network,
+    item.token,
   ]);
 
   React.useEffect(() => {
@@ -147,7 +149,7 @@ const _Item = ({ vault }) => {
       }
     }
     setUserStaked(staked);
-  }, [boostedData, wallet.address]);
+  }, [balance.tokens, boostedData, item.network, wallet.address]);
 
   const ValueText = ({ value }) => (
     <>{value ? <span className={classes.value}>{value}</span> : <ApyStatLoader />}</>
@@ -169,7 +171,7 @@ const _Item = ({ vault }) => {
           .times(parseFloat(poolRewards.rewards))
           .toFixed(2)
       : 0;
-  }, [poolRewards.rewards, pricesReducer.prices]);
+  }, [item.earnedToken, poolRewards.rewards, pricesReducer.prices]);
 
   const tokensEarned = React.useMemo(() => {
     return parseFloat(state.formattedBalance) > 0 ? state.formattedBalance : '0';

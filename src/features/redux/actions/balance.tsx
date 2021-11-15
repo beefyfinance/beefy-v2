@@ -1,5 +1,4 @@
 import { MultiCall } from 'eth-multicall';
-import BigNumber from 'bignumber.js';
 import {
   BALANCE_FETCH_BALANCES_BEGIN,
   BALANCE_FETCH_BALANCES_DONE,
@@ -8,7 +7,6 @@ import {
 } from '../constants';
 import { config } from '../../../config/config';
 import { isEmpty } from '../../../helpers/utils';
-import { formatDecimals } from '../../../helpers/format';
 import erc20Abi from '../../../config/abi/erc20.json';
 import multicallAbi from '../../../config/abi/multicall.json';
 import boostAbi from '../../../config/abi/boost.json';
@@ -137,7 +135,7 @@ const getBoostBalances = async (items, state, dispatch, network) => {
   const calls = [];
 
   for (let key in web3) {
-    if (network && key !== network) continue
+    if (network && key !== network) continue;
     multicall[key] = new MultiCall(web3[key], config[key].multicallAddress);
     calls[key] = [];
   }
@@ -145,7 +143,7 @@ const getBoostBalances = async (items, state, dispatch, network) => {
   const tokens = state.balanceReducer.tokens;
 
   for (let key in items) {
-    if (network && items[key].network !== network) continue
+    if (network && items[key].network !== network) continue;
     const boostToken = items[key].token + items[key].id + 'Boost';
     tokens[items[key].network][boostToken] = {
       ...tokens[items[key].network][boostToken],
@@ -161,19 +159,19 @@ const getBoostBalances = async (items, state, dispatch, network) => {
       items[key].earnContractAddress
     );
 
-      // Looks like these calls are refetching the mooToken balance of the user
-      // calls[items[key].network].push({
-      //   amount: tokenContract.methods.balanceOf(address),
-      //   token: items[key].token,
-      //   address: items[key].tokenAddress,
-      // });
+    // Looks like these calls are refetching the mooToken balance of the user
+    // calls[items[key].network].push({
+    //   amount: tokenContract.methods.balanceOf(address),
+    //   token: items[key].token,
+    //   address: items[key].tokenAddress,
+    // });
 
-      calls[items[key].network].push({
-        amount: earnContract.methods.balanceOf(address),
-        token: items[key].token + items[key].id + 'Boost',
-        address: items[key].tokenAddress,
-        network: items[key].network,
-      });
+    calls[items[key].network].push({
+      amount: earnContract.methods.balanceOf(address),
+      token: items[key].token + items[key].id + 'Boost',
+      address: items[key].tokenAddress,
+      network: items[key].network,
+    });
 
     calls[items[key].network].push({
       allowance: tokenContract.methods.allowance(address, items[key].earnContractAddress),
@@ -196,8 +194,8 @@ const getBoostBalances = async (items, state, dispatch, network) => {
     if (!isEmpty(item.amount)) {
       const amount = item.amount;
       // const amount = BigNumber.sum(
-        // item.amount,
-        // tokens[item.network][item.token].balance
+      // item.amount,
+      // tokens[item.network][item.token].balance
       // ).toNumber();
       tokens[item.network][item.token].balance = amount;
       tokens[item.network][item.token].address = item.address;
