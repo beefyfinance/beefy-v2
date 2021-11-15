@@ -13,13 +13,19 @@ export const styles = theme => ({
   maxButton: {
     background: '#313759',
     borderRadius: '30px',
-    margin: '8px',
-    padding: '7px 12px',
+    margin: 0,
+    padding: '5px 12px',
     fontSize: '12px',
     lineHeight: '20px',
     letterSpacing: '0.5px',
     textTransform: 'uppercase',
     color: '#FFF',
+    fontWeight: 600,
+  },
+  positionButton: {
+    '& .MuiIconButton-edgeEnd': {
+      marginRight: '-8px',
+    },
   },
   input: {
     background: '#14182B',
@@ -28,6 +34,8 @@ export const styles = theme => ({
     maxHeight: '48px',
     width: '100%',
     padding: '12px 16px',
+    fontSize: '21px',
+    fontWeight: 600,
   },
   width: {
     width: '100%',
