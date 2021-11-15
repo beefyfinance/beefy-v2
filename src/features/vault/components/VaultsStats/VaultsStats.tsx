@@ -222,12 +222,16 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
           )}
         </Box>
         {!item.isGovVault ? (
-          <Box className={classes.stat}>
-            <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>
-            <Typography>
-              <ValueText value={lastHarvest} />
-            </Typography>
-          </Box>
+          <>
+            {lastHarvest !== 'never' && (
+              <Box className={classes.stat}>
+                <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>
+                <Typography>
+                  <ValueText value={lastHarvest} />
+                </Typography>
+              </Box>
+            )}
+          </>
         ) : (
           <Box className={classes.stat}>
             <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
