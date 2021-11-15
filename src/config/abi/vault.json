@@ -252,7 +252,7 @@
   {
     "constant": false,
     "inputs": [],
-    "name": "depositETH",
+    "name": "depositBNB",
     "outputs": [],
     "payable": true,
     "stateMutability": "payable",
@@ -572,7 +572,7 @@
   {
     "constant": false,
     "inputs": [],
-    "name": "withdrawAllETH",
+    "name": "withdrawAllBNB",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -587,7 +587,7 @@
         "type": "uint256"
       }
     ],
-    "name": "withdrawETH",
+    "name": "withdrawBNB",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

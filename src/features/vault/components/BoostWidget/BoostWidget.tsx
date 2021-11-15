@@ -142,16 +142,6 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     }
   }, [dispatch, item, network, wallet.address]);
 
-  // React.useEffect(() => {
-  //   if (item) {
-  //     setInterval(() => {
-  //       // dispatch(reduxActions.vault.fetchBoosts(item));
-  //       dispatch(reduxActions.balance.fetchBoostBalances(item, network));
-  //       dispatch(reduxActions.balance.fetchBoostRewards(item, network));
-  //     }, 60000);
-  //   }
-  // }, [item, dispatch, network]);
-
   React.useEffect(() => {
     let amount = new BigNumber(0);
     let deposited = new BigNumber(0);
