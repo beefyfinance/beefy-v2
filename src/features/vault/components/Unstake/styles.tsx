@@ -22,6 +22,11 @@ export const styles = theme => ({
     color: '#FFF',
     fontWeight: 600,
   },
+  positionButton: {
+    '& .MuiIconButton-edgeEnd': {
+      marginRight: '-8px',
+    },
+  },
   input: {
     background: '#14182B',
     border: '2px solid #3F466D',
