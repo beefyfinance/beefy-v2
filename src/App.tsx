@@ -62,7 +62,7 @@ export const App = () => {
       updateBalances();
     }
 
-  }, [wallet]);
+  }, [dispatch, wallet]);
 
   React.useEffect(() => {
     const initiate = async () => {

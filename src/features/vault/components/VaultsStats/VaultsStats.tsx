@@ -32,7 +32,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
         sumAmount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].balance),
           item.tokenDecimals
-        )
+        );
         rewardAmount = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].rewards),
           item.tokenDecimals
@@ -43,7 +43,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
             byDecimals(item.pricePerFullShare)
           ),
           item.tokenDecimals
-        )
+        );
       }
       for (const boost of vaultBoosts) {
         let symbol = `${boost.token}${boost.id}Boost`;
@@ -90,7 +90,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
           .times(parseFloat(poolRewards.rewards))
           .toFixed(2)
       : 0;
-  }, [poolRewards.rewards, pricesReducer.prices, item.oracleId]);
+  }, [poolRewards.rewards, pricesReducer.prices, item.earnedToken]);
 
   const tokensEarned = React.useMemo(() => {
     return parseFloat(state.balance) > 0 ? state.balance : '0';
