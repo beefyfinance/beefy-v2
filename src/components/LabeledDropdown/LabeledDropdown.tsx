@@ -6,7 +6,14 @@ import { LabeledDropdownProps } from './LabeledDropdownProps';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
-export const LabeledDropdown: React.FC<LabeledDropdownProps> = ({ list, selected, handler, label, renderValue, selectStyle }) => {
+export const LabeledDropdown: React.FC<LabeledDropdownProps> = ({
+  list,
+  selected,
+  handler,
+  label,
+  renderValue,
+  selectStyle,
+}) => {
   const classes = useStyles();
 
   return (
