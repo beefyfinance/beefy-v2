@@ -17,6 +17,7 @@ import { Steps } from '../../../../components/Steps';
 import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
+import { config } from '../../../../config/config';
 
 const useStyles = makeStyles(styles as any);
 export const Withdraw = ({
@@ -90,8 +91,9 @@ export const Withdraw = ({
       setFormData({
         ...formData,
         withdraw: {
+          ...formData.withdraw,
           input: (state.balance as any).significant(6),
-          amount: state.balance.toNumber(),
+          amount: state.balance,
           max: true,
         },
       });
@@ -105,9 +107,12 @@ export const Withdraw = ({
         dispatch(reduxActions.wallet.setNetwork(item.network));
         return false;
       }
-      const amount = new BigNumber(formData.withdraw.amount)
-        .dividedBy(byDecimals(item.pricePerFullShare, item.tokenDecimals))
-        .toFixed(8);
+
+      const isNative = item.token === config[item.network].walletSettings.nativeCurrency.symbol;
+
+      // const amount = new BigNumber(formData.withdraw.amount)
+      //   .dividedBy(byDecimals(item.pricePerFullShare, item.tokenDecimals))
+      //   .toFixed(8);
 
       if (item.isGovVault) {
         steps.push({
@@ -125,21 +130,56 @@ export const Withdraw = ({
           token: balance.tokens[item.network][item.token],
         });
       } else {
-        steps.push({
-          step: 'withdraw',
-          message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-          action: () =>
-            dispatch(
-              reduxActions.wallet.withdraw(
-                item.network,
-                item.earnContractAddress,
-                convertAmountToRawNumber(amount, item.tokenDecimals),
-                formData.withdraw.max
-              )
-            ),
-          pending: false,
-        });
-      }
+        const shares = formData.withdraw.amount.dividedBy(byDecimals(item.pricePerFullShare,18)).decimalPlaces(item.tokenDecimals, BigNumber.ROUND_UP);
+        const sharesByDecimals = byDecimals(state.balance, item.tokenDecimals);
+        if (shares.times(100).dividedBy(sharesByDecimals).isGreaterThan(99)) {
+          setFormData({
+            ...formData,
+            withdraw: {
+              ...formData.withdraw,
+              input: (state.balance as any).significant(6),
+              amount: state.balance.toNumber(),
+              max: true,
+            },
+          });
+        }
+        if (isNative) {
+          steps.push({
+            step: 'withdraw',
+            message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+            action: () =>
+              dispatch(
+                reduxActions.wallet.withdrawNative(
+                  item.network,
+                  item.earnContractAddress,
+                  convertAmountToRawNumber(shares, item.tokenDecimals),
+                  formData.withdraw.max
+                )
+              ),
+            pending: false,
+            token: balance.tokens[item.network][item.token],
+          });
+
+        } else {
+          steps.push({
+            step: 'withdraw',
+            message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+            action: () =>
+              dispatch(
+                reduxActions.wallet.withdraw(
+                  item.network,
+                  item.earnContractAddress,
+                  // convertAmountToRawNumber(formData.withdraw.amount, item.tokenDecimals),
+                  convertAmountToRawNumber(shares, item.tokenDecimals),
+                  formData.withdraw.max
+                )
+              ),
+            pending: false,
+            token: balance.tokens[item.network][item.token],
+          });
+        }
+
+      } 
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
     } //if (wallet.address)
