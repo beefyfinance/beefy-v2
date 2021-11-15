@@ -232,7 +232,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
                     value={formData.withdraw.input}
                     onChange={e => handleInput(e.target.value)}
                     endAdornment={
-                      <InputAdornment position="end">
+                      <InputAdornment className={classes.positionButton} position="end">
                         <IconButton
                           size="small"
                           className={classes.maxButton}
