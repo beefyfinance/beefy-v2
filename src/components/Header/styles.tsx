@@ -50,7 +50,7 @@ export const styles = theme => ({
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: '24px',
-    margin: theme.spacing(3),
+    margin: '12px',
     '&:hover': {
       color: 'white',
     },
