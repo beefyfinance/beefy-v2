@@ -25,6 +25,7 @@ import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { DepositProps } from './DepositProps';
+import { config } from '../../../../config/config';
 
 (BigNumber.prototype as any).significant = function (digits) {
   const number = this.toFormat({
@@ -155,7 +156,9 @@ export const Deposit: React.FC<DepositProps> = ({
         tokens[formData.deposit.token].decimals
       );
 
-      if (state.allowance.isLessThan(amount)) {
+      const isNative = item.token === config[item.network].walletSettings.nativeCurrency.symbol;
+
+      if (!isNative && state.allowance.isLessThan(amount)) {
         steps.push({
           step: 'approve',
           message: t('Vault-ApproveMsg'),
@@ -208,6 +211,23 @@ export const Deposit: React.FC<DepositProps> = ({
             token: tokens[formData.deposit.token],
             pending: false,
           });
+        } else if (isNative) {
+        
+          steps.push({
+            step: 'deposit',
+            message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+            action: () =>
+              dispatch(
+                reduxActions.wallet.depositNative(
+                  item.network,
+                  item.earnContractAddress,
+                  amount
+                )
+              ),
+            token: tokens[formData.deposit.token],
+            pending: false,
+          });
+
         } else {
           steps.push({
             step: 'deposit',
