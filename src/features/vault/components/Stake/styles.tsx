@@ -29,7 +29,9 @@ export const styles = theme => ({
     width: '100%',
     padding: '12px 16px',
   },
-
+  width: {
+    width: '100%',
+  },
   balances: {
     display: 'flex',
     justifyContent: 'space-between',

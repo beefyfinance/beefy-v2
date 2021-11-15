@@ -22,7 +22,6 @@ import BigNumber from 'bignumber.js';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
-import { useIsBoosted } from '../home/hooks/useIsBoosted';
 
 const useStyles = makeStyles(styles as any);
 export const Vault = () => {
@@ -31,10 +30,9 @@ export const Vault = () => {
   const t = useTranslation().t;
 
   let { id }: any = useParams();
-  const { vault, wallet, prices } = useSelector((state: any) => ({
+  const { vault, wallet } = useSelector((state: any) => ({
     vault: state.vaultReducer,
     wallet: state.walletReducer,
-    prices: state.pricesReducer,
   }));
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(true);
@@ -83,8 +81,6 @@ export const Vault = () => {
       dispatch(reduxActions.balance.fetchBalances(item));
     }
   };
-
-
 
   React.useEffect(() => {
     if (!isEmpty(vault.pools) && vault.pools[id]) {
