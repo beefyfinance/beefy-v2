@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, useMediaQuery } from '@material-ui/core';
@@ -85,7 +85,10 @@ function createVaultHeightCache(vaults, columns) {
 }
 
 function useVaultRenderer(vaults, isTwoColumns) {
-  const cache = useMemo(() => createVaultHeightCache(vaults, isTwoColumns ? 2 : 1), [isTwoColumns, vaults]);
+  const cache = useMemo(
+    () => createVaultHeightCache(vaults, isTwoColumns ? 2 : 1),
+    [isTwoColumns, vaults]
+  );
   const renderer = useMemo(
     () => createVaultRenderer(vaults, isTwoColumns ? 2 : 1, cache),
     [vaults, isTwoColumns, cache]
@@ -163,6 +166,10 @@ const VaultsList = memo(function HomeVaultsList() {
 
 export const Home = () => {
   const classes = useStyles();
+
+  useEffect(() => {
+    document.body.style.backgroundColor = '#1B203A';
+  }, []);
 
   return (
     <React.Fragment>
