@@ -110,6 +110,10 @@ export const Vault = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item]);
 
+  React.useEffect(() => {
+    document.body.style.backgroundColor = '#1B203A';
+  }, []);
+
   return (
     <>
       <Box className={classes.vaultContainer}>

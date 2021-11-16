@@ -220,7 +220,8 @@
   "Stake-Button-ConfirmUnstaking": "Confirm Unstaking",
 
   "Total-Value-Locked": "Total value locked",
-  "Page-Not-Found": "Page not found.",
+  "Page-Not-Found": "We can’t find the page that you’re looking for",
   "Your-Pool-%": "Your pool %",
-  "Receipt-Balance": "Receipt balance"
+  "Receipt-Balance": "Receipt balance",
+  "View-All": "View all Vaults"
 }

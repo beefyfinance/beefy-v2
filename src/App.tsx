@@ -11,22 +11,18 @@ import { ScrollToTop } from './components/ScrollToTop';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
-
-const PageNotFound = () => {
-  const { t } = useTranslation();
-  return <div>{t('Page-Not-Found')}</div>;
-};
+const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
   const dispatch = useDispatch();
   // const storage = localStorage.getItem('nightMode');
   //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
   const [isNightMode, setNightMode] = React.useState(true);
-  
+
   const { wallet } = useSelector((state: any) => ({
     wallet: state.walletReducer,
-  }));  
-  
+  }));
+
   const theme = createTheme({
     palette: {
       type: isNightMode ? 'dark' : 'light',
@@ -52,42 +48,39 @@ export const App = () => {
   });
 
   React.useEffect(() => {
-
     const updateBalances = async () => {
       await dispatch(reduxActions.balance.fetchBalances());
       await dispatch(reduxActions.balance.fetchBoostBalances());
-    }
+    };
 
     if (wallet.address) {
       updateBalances();
     }
-
   }, [dispatch, wallet]);
 
   React.useEffect(() => {
     const initiate = async () => {
       let now = Date.now();
-      
+
       await dispatch(reduxActions.prices.fetchPrices());
       let promises = [
         dispatch(reduxActions.vault.fetchPools()),
-        dispatch(reduxActions.vault.fetchBoosts())
+        dispatch(reduxActions.vault.fetchBoosts()),
       ];
       await Promise.all(promises);
-      
+
       await dispatch(reduxActions.vault.linkVaultBoosts());
 
       await dispatch(reduxActions.balance.fetchBalances());
       await dispatch(reduxActions.balance.fetchBoostBalances());
-      
+
       setInterval(async () => {
         await dispatch(reduxActions.balance.fetchBalances());
         await dispatch(reduxActions.balance.fetchBoostBalances());
-      }, 60000)
+      }, 60000);
 
       let end = Date.now();
-      console.log(`Load time is ${(end-now)/1000}s`);
-      
+      console.log(`Load time is ${(end - now) / 1000}s`);
     };
     initiate();
   }, [dispatch]);
