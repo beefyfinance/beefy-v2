@@ -44,22 +44,17 @@ export const styles = theme => ({
       minWidth: 'none',
     },
   },
-  value: {
-    textTransform: 'capitalize',
-  },
   selectList: {
     color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
     border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #6B7199',
     backgroundColor: theme.palette.type === 'dark' ? '#1B203A' : '#faf6f1',
     padding: '0px',
     margin: '0px',
-    textTransform: 'capitalize',
     '& .label': {
       display: 'none',
     },
   },
   label: {
     color: '#6B7199',
-    textTransform: 'capitalize',
   },
 });
