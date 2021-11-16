@@ -44,6 +44,9 @@ export const styles = theme => ({
       minWidth: 'none',
     },
   },
+  value: {
+    textTransform: 'capitalize',
+  },
   selectList: {
     color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
     border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #6B7199',
