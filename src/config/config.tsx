@@ -49,7 +49,7 @@ export const config = {
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
     multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
-    supportedWallets: ['injected', 'walletconnect', 'custom-math'],
+    supportedWallets: ['injected', 'custom-math'],
     providerName: 'heco',
     walletSettings: {
       chainId: `0x${parseInt('128', 10).toString(16)}`,
@@ -70,7 +70,7 @@ export const config = {
     rpc: ['https://api.avax.network/ext/bc/C/rpc'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
-    supportedWallets: ['injected', 'walletconnect'],
+    supportedWallets: ['injected'],
     providerName: 'avalanche',
     walletSettings: {
       chainId: `0x${parseInt('43114', 10).toString(16)}`,
@@ -112,7 +112,7 @@ export const config = {
     rpc: ['https://rpcapi.fantom.network'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
-    supportedWallets: ['injected', 'walletconnect'],
+    supportedWallets: ['injected'],
     providerName: 'fantom',
     walletSettings: {
       chainId: `0x${parseInt('250', 10).toString(16)}`,
@@ -175,7 +175,7 @@ export const config = {
     rpc: ['https://forno.celo.org'],
     explorerUrl: 'https://explorer.celo.org/',
     multicallAddress: '0xa9E6E271b27b20F65394914f8784B3B860dBd259',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'walletconnect'],
     providerName: 'Celo',
     walletSettings: {
       chainId: `0x${parseInt('42220', 10).toString(16)}`,
@@ -210,5 +210,26 @@ export const config = {
       blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM'],
+  },
+  cronos: {
+    name: 'cronos',
+    chainId: 25,
+    rpc: ['https://evm-cronos.crypto.org'],
+    explorerUrl: 'https://cronos.crypto.org/explorer/',
+    multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
+    supportedWallets: ['injected'],
+    providerName: 'Cronos',
+    walletSettings: {
+      chainId: `0x${parseInt('25', 10).toString(16)}`,
+      chainName: 'Cronos',
+      nativeCurrency: {
+        name: 'CRO',
+        symbol: 'CRO',
+        decimals: 18,
+      },
+      rpcUrls: ['https://evm-cronos.crypto.org'],
+      blockExplorerUrls: ['https://cronos.crypto.org/explorer/'],
+    },
+    stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
   },
 };
