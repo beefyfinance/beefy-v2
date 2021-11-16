@@ -170,7 +170,7 @@ export const config = {
     stableCoins: ['USDC', 'USDT', 'MIM'],
   },
   celo: {
-    name: 'celo',
+    name: 'Celo',
     chainId: 42220,
     rpc: ['https://forno.celo.org'],
     explorerUrl: 'https://explorer.celo.org/',
@@ -191,7 +191,7 @@ export const config = {
     stableCoins: ['cUSD, cEUR, DAI'],
   },
   moonriver: {
-    name: 'moonriver',
+    name: 'Moonriver',
     chainId: 1285,
     rpc: ['https://rpc.moonriver.moonbeam.network'],
     explorerUrl: 'https://blockscout.moonriver.moonbeam.network/',
@@ -212,7 +212,7 @@ export const config = {
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM'],
   },
   cronos: {
-    name: 'cronos',
+    name: 'Cronos',
     chainId: 25,
     rpc: ['https://evm-cronos.crypto.org'],
     explorerUrl: 'https://cronos.crypto.org/explorer/',
