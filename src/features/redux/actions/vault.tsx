@@ -4,7 +4,7 @@ import {
   HOME_FETCH_BOOSTS_DONE,
   HOME_FETCH_POOLS_BEGIN,
   HOME_FETCH_POOLS_DONE,
-  HOME_LINK_BOOSTS_DONE
+  HOME_LINK_BOOSTS_DONE,
 } from '../constants';
 import BigNumber from 'bignumber.js';
 import { config } from '../../../config/config';
@@ -227,17 +227,14 @@ const linkBoosts = async (pools, boosts, dispatch) => {
   var ts = Date.now() / 1000;
   for (const key in boosts) {
     const boost = boosts[key];
-    const isActive = parseInt(boost.periodFinish) > ts
+    const isActive = parseInt(boost.periodFinish) > ts;
 
     const relevantVault = pools[boost.poolId];
-    if (parseInt(boost.periodFinish) > ts) {
+    if (isActive) {
       relevantVault.isBoosted = true;
       relevantVault.boostData = boost;
     }
-    relevantVault.boosts = [
-      ...relevantVault.boosts,
-      boost
-    ];
+    relevantVault.boosts = [...relevantVault.boosts, boost];
   }
 
   dispatch({

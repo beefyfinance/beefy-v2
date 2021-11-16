@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  makeStyles,
-  Typography,
-  Grid,
-  Modal,
-  Fade,
-  Backdrop,
-} from '@material-ui/core';
+import { Box, Button, makeStyles, Typography, Grid, Modal } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
@@ -70,7 +61,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   const updateItemData = () => {
     if (wallet.address && item) {
       // dispatch(reduxActions.vault.fetchBoosts(item));
-      dispatch(reduxActions.balance.fetchBalances())
+      dispatch(reduxActions.balance.fetchBalances());
       dispatch(reduxActions.balance.fetchBoostBalances(item, network)); // TODO add network
       dispatch(reduxActions.balance.fetchBoostRewards(item, network));
     }
@@ -118,12 +109,12 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     if (wallet.address) {
       let expiredBoostsWithBalance = [];
       let openFilter = false;
-      let currentTs = Date.now() /1000;
+      let currentTs = Date.now() / 1000;
       for (const boost of vaultBoosts) {
         let symbol = `${boost.token}${boost.id}Boost`;
         if (
           !isEmpty(balance.tokens[boost.network][symbol]) &&
-          new BigNumber(balance.tokens[boost.network][symbol].balance).toNumber() > 0 && 
+          new BigNumber(balance.tokens[boost.network][symbol].balance).toNumber() > 0 &&
           parseInt(boost.periodFinish) <= currentTs
         ) {
           expiredBoostsWithBalance.push(boost);
@@ -133,7 +124,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
       setPastBoosts(expiredBoostsWithBalance);
       setFilterOpen(openFilter);
     }
-  }, [wallet.address, vaultBoosts, state.balance]);
+  }, [wallet.address, vaultBoosts, state.balance, balance.tokens]);
 
   React.useEffect(() => {
     if (item && wallet.address) {
@@ -387,29 +378,31 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
             open={inputModal}
             onClose={() => setInputModal(false)}
           >
-            {dw === 'deposit' ? (
-              <Stake
-                closeModal={closeInputModal}
-                item={item}
-                balance={state}
-                handleWalletConnect={handleWalletConnect}
-                formData={formData}
-                setFormData={setFormData}
-                updateItemData={updateItemData}
-                resetFormData={resetFormData}
-              />
-            ) : (
-              <Unstake
-                closeModal={closeInputModal}
-                item={item}
-                balance={state}
-                handleWalletConnect={handleWalletConnect}
-                formData={formData}
-                setFormData={setFormData}
-                updateItemData={updateItemData}
-                resetFormData={resetFormData}
-              />
-            )}
+            <>
+              {dw === 'deposit' ? (
+                <Stake
+                  closeModal={closeInputModal}
+                  item={item}
+                  balance={state}
+                  handleWalletConnect={handleWalletConnect}
+                  formData={formData}
+                  setFormData={setFormData}
+                  updateItemData={updateItemData}
+                  resetFormData={resetFormData}
+                />
+              ) : (
+                <Unstake
+                  closeModal={closeInputModal}
+                  item={item}
+                  balance={state}
+                  handleWalletConnect={handleWalletConnect}
+                  formData={formData}
+                  setFormData={setFormData}
+                  updateItemData={updateItemData}
+                  resetFormData={resetFormData}
+                />
+              )}
+            </>
           </Modal>
           <Steps item={item} steps={steps} handleClose={handleClose} />
         </div>
@@ -449,4 +442,4 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
       )}
     </>
   );
-};;
+};

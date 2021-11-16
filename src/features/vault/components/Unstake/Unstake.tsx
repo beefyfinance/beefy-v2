@@ -11,7 +11,7 @@ import {
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { convertAmountToRawNumber, stripExtraDecimals } from '../../../../helpers/format';
+import { convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { reduxActions } from '../../../redux/actions';
 import { Steps } from '../../../../components/Steps';
@@ -68,7 +68,6 @@ export const Unstake: React.FC<UnstakeProps> = ({
     items: [],
     finished: false,
   });
-  const [isLoading, setIsLoading] = React.useState(true);
 
   // const handleInput = val => {
   //   const value =
@@ -144,10 +143,6 @@ export const Unstake: React.FC<UnstakeProps> = ({
   };
 
   React.useEffect(() => {
-    setIsLoading(balance.isBalancesLoading);
-  }, [balance.isBalancesLoading]);
-
-  React.useEffect(() => {
     const index = steps.currentStep;
     if (!isEmpty(steps.items[index]) && steps.modal) {
       const items = steps.items;
@@ -185,15 +180,9 @@ export const Unstake: React.FC<UnstakeProps> = ({
         step: 'withdraw',
         message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
         action: () =>
-          dispatch(
-            reduxActions.wallet.unstake(
-              item.network,
-              item.earnContractAddress,
-              amount
-            )
-          ),
+          dispatch(reduxActions.wallet.unstake(item.network, item.earnContractAddress, amount)),
         pending: false,
-        token: tokens[formData.deposit.token]
+        token: tokens[formData.deposit.token],
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
@@ -236,14 +225,14 @@ export const Unstake: React.FC<UnstakeProps> = ({
                 </Box>
               </Box>
               <Box pt={2}>
-                <FormControl variant="filled">
+                <FormControl className={classes.width} variant="filled">
                   <InputBase
                     placeholder="0.00"
                     className={classes.input}
                     value={formData.withdraw.input}
                     onChange={e => handleInput(e.target.value)}
                     endAdornment={
-                      <InputAdornment position="end">
+                      <InputAdornment className={classes.positionButton} position="end">
                         <IconButton
                           size="small"
                           className={classes.maxButton}

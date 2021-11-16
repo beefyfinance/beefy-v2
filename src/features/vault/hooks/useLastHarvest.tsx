@@ -14,20 +14,22 @@ export const useLastHarvest = (vaultId: string) => {
         return i.id === vaultId;
       });
 
-      var ts = Math.round(new Date().getTime() / 1000);
+      if (vault && 'lastHarvest' in vault && vault.lastHarvest === 0) {
+        setState('never');
+      }
 
-      if (vault && 'lastHarvest' in vault) { 
-        const string =
-        vault && vault.lastHarvest && vault.lastHarvest === 0
-          ? moment.unix(ts).startOf('hour').fromNow()
-          : moment.unix(parseInt(vault.lastHarvest)).fromNow();
+      if (vault && 'lastHarvest' in vault) {
+        const string = moment.unix(parseInt(vault.lastHarvest)).fromNow();
+        const lastHarvest = string
+          .replace(' hours', 'h')
+          .replace(' minutes', 'm')
+          .replace(' days', 'd');
 
-        string.replace(' hours', 'h');
-        string.replace(' minutes', 'm');
-
-        const lastHarvest = string.replace(' hours', 'h').replace(' minutes', 'm').replace(' days', 'd')
-
-        setState(lastHarvest);
+        if (parseInt(vault.lastHarvest) === 0) {
+          setState('never');
+        } else {
+          setState(lastHarvest);
+        }
       }
     }
 

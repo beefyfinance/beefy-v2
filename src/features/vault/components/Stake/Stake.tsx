@@ -18,7 +18,7 @@ import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
-import { convertAmountToRawNumber, stripExtraDecimals } from '../../../../helpers/format';
+import { convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { Steps } from '../../../../components/Steps';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
@@ -62,7 +62,7 @@ export const Stake: React.FC<StakeProps> = ({
 
   const { wallet, tokens } = useSelector((state: any) => ({
     wallet: state.walletReducer,
-    tokens: state.balanceReducer.tokens[item.network]
+    tokens: state.balanceReducer.tokens[item.network],
   }));
 
   const [steps, setSteps] = React.useState({
@@ -71,7 +71,6 @@ export const Stake: React.FC<StakeProps> = ({
     items: [],
     finished: false,
   });
-  const [isLoading, setIsLoading] = React.useState(true);
 
   const handleInput = val => {
     const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
@@ -110,7 +109,6 @@ export const Stake: React.FC<StakeProps> = ({
     });
   };
 
-
   // const handleInput = val => {
   //   const value =
   //     parseFloat(val) > balance.balance
@@ -126,7 +124,15 @@ export const Stake: React.FC<StakeProps> = ({
 
   const handleMax = () => {
     if (balance.balance > 0) {
-      setFormData({ ...formData, deposit: {...formData.deposit, input: (balance.balance as any).significant(6),amount: balance.balance, max: true } });
+      setFormData({
+        ...formData,
+        deposit: {
+          ...formData.deposit,
+          input: (balance.balance as any).significant(6),
+          amount: balance.balance,
+          max: true,
+        },
+      });
     }
   };
 
@@ -180,13 +186,7 @@ export const Stake: React.FC<StakeProps> = ({
         step: 'deposit',
         message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
         action: () =>
-          dispatch(
-            reduxActions.wallet.stake(
-              item.network,
-              item.earnContractAddress,
-              amount
-            )
-          ),
+          dispatch(reduxActions.wallet.stake(item.network, item.earnContractAddress, amount)),
         pending: false,
         token: tokens[formData.deposit.token],
       });
@@ -200,10 +200,6 @@ export const Stake: React.FC<StakeProps> = ({
     resetFormData();
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
   };
-
-  React.useEffect(() => {
-    setIsLoading(balance.isBalancesLoading);
-  }, [balance.isBalancesLoading]);
 
   React.useEffect(() => {
     const index = steps.currentStep;
@@ -257,19 +253,19 @@ export const Stake: React.FC<StakeProps> = ({
                 <Box className={classes.staked}>
                   <Typography className={classes.label}>{t('Stake-Label-Staked')}</Typography>
                   <Typography className={classes.value}>
-                    {(balance.deposited as any).significant}
+                    {(balance.deposited as any).significant(6)}
                   </Typography>
                 </Box>
               </Box>
               <Box pt={2}>
-                <FormControl variant="filled">
+                <FormControl className={classes.width} variant="filled">
                   <InputBase
                     placeholder="0.00"
                     className={classes.input}
                     value={formData.deposit.input}
                     onChange={e => handleInput(e.target.value)}
                     endAdornment={
-                      <InputAdornment position="end">
+                      <InputAdornment className={classes.positionButton} position="end">
                         <IconButton
                           size="small"
                           className={classes.maxButton}
@@ -324,73 +320,6 @@ export const Stake: React.FC<StakeProps> = ({
           </CardContent>
         </Card>
       </Box>
-      {/* <Box p={3}>
-        <Box className={classes.balanceContainer} display="flex" alignItems="center">
-          <Box flexGrow={1} pl={1} lineHeight={0}>
-            {isLoading ? (
-              <Loader message={''} line={true} />
-            ) : (
-              <Typography variant={'body1'}>
-                {balance.balance} {item.token}
-              </Typography>
-            )}
-            <Typography variant={'body2'}>{t('Stake-Balance')}</Typography>
-          </Box>
-          <Box>
-            {isLoading ? (
-              <Loader message={''} line={true} />
-            ) : (
-              <Typography variant={'body1'}>{balance.deposited}</Typography>
-            )}
-            <Typography align={'right'} variant={'body2'}>
-              {t('Stake-Staked')}
-            </Typography>
-          </Box>
-        </Box>
-        <Box className={classes.inputContainer}>
-          <Paper component="form" className={classes.root}>
-            <Box className={classes.inputLogo}>
-              <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-            </Box>
-            <InputBase
-              placeholder="0.00"
-              value={formData.deposit.amount}
-              onChange={e => handleInput(e.target.value)}
-            />
-            <Button onClick={handleMax}>{t('Transact-Max')}</Button>
-          </Paper>
-        </Box>
-        <Box mt={2}>
-          {item.status !== 'active' ? (
-            <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
-              {t('Deposit-Disabled')}
-            </Button>
-          ) : wallet.address ? (
-            item.network !== wallet.network ? (
-              <Button
-                onClick={() => switchNetwork(item.network, dispatch)}
-                className={classes.btnSubmit}
-                fullWidth={true}
-              >
-                {t('Network-Change', { network: item.network.toUpperCase() })}
-              </Button>
-            ) : (
-              <Button
-                onClick={handleDeposit}
-                className={classes.btnSubmit}
-                fullWidth={true}
-                disabled={formData.deposit.amount <= 0}
-              >
-                {t('Stake-Button-ConfirmStaking')}
-              </Button>
-            )
-          ) : (
-            <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>
-              {t('Network-ConnectWallet')}
-            </Button>
-          )}
-        </Box>
-      </Box> */}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   );

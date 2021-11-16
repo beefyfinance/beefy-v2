@@ -23,7 +23,7 @@ export const BoostCard = ({ boostedData }) => {
       <CardHeader>
         <Typography className={classes.boostedBy}>{t('Vault-BoostedBy')}</Typography>
         <div style={{ display: 'flex' }}>
-          {/* <AssetsImage {...({ img: logo } as any)} /> */}
+          <AssetsImage {...({ img: logo } as any)} />
           <div className={classes.divider} />
           <CardTitle title={name} subtitle={''} />
         </div>
