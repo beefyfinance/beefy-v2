@@ -50,13 +50,11 @@ export const styles = theme => ({
     backgroundColor: theme.palette.type === 'dark' ? '#1B203A' : '#faf6f1',
     padding: '0px',
     margin: '0px',
-    textTransform: 'capitalize',
     '& .label': {
       display: 'none',
     },
   },
   label: {
     color: '#6B7199',
-    textTransform: 'capitalize',
   },
 });
