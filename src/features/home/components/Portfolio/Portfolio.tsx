@@ -4,7 +4,7 @@ import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Stats } from './Stats';
-import { byDecimals, formatDecimals } from '../../../../helpers/format';
+import { byDecimals, formatDecimals, calcDaily } from '../../../../helpers/format';
 import { VaultsStats } from './VaultsStats';
 import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
@@ -73,7 +73,7 @@ export const Portfolio = () => {
 
         const apy = vault.isGovVault ? vault.apy.vaultApr : vault.apy.totalApy || 0;
 
-        const daily = vault.isGovVault ? apy / 365 : Math.pow(10, Math.log10(apy + 1) / 365) - 1;
+        const daily = vault.isGovVault ? (apy / 365) : (Math.pow(10, Math.log10(apy + 1) / 365) - 1);
 
         newGlobalStats.daily = newGlobalStats.daily.plus(balance.times(daily).times(oraclePrice));
       });
