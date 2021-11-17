@@ -35,7 +35,75 @@ export const Steps = ({ item, steps, handleClose }) => {
           <React.Fragment>
             <Box>
               <Box p={8} className={classes.finishedCard}>
+                {/* New Attempt  */}
                 {steps.items[steps.currentStep].step === 'deposit' ? (
+                  <React.Fragment>
+                    <Typography variant={'h2'}>
+                      {byDecimals(
+                        new BigNumber(wallet.action.data.amount),
+                        steps.items[steps.currentStep].token.decimals
+                      ).toFixed(8)}{' '}
+                      {steps.items[steps.currentStep].token.symbol}
+                    </Typography>
+                    <Typography variant={'h2'}>{t('Deposit-Done')}</Typography>
+                  </React.Fragment>
+                ) : null}
+                {steps.items[steps.currentStep].step === 'withdraw' ? (
+                  <React.Fragment>
+                    <Typography variant={'h2'}>
+                      <React.Fragment>
+                        {item.isGovVault
+                          ? byDecimals(
+                              new BigNumber(wallet.action.data.amount),
+                              steps.items[steps.currentStep].token.decimals
+                            ).toFixed(8)
+                          : null}
+                        {!item.isGovVault
+                          ? byDecimals(
+                              new BigNumber(wallet.action.data.amount).multipliedBy(
+                                byDecimals(item.pricePerFullShare)
+                              ),
+                              item.tokenDecimals
+                            ).toFixed(8)
+                          : null}{' '}
+                        {item.token}
+                      </React.Fragment>
+                    </Typography>
+                    <Typography variant={'h2'}>{t('Withdraw-Done')}</Typography>
+                  </React.Fragment>
+                ) : null}
+                {/* exit-unstake should be used for boosts, since button mentions
+                  those function names */}
+                {steps.items[steps.currentStep].step === 'claim-unstake' ? (
+                  <React.Fragment>
+                    <Typography variant={'h2'}>{t('Claim-Unstake-Done')}</Typography>
+                  </React.Fragment>
+                ) : null}
+                {/* exit-withdraw should be used for gov pools, since button mentions
+                  those function names */}
+                {steps.items[steps.currentStep].step === 'claim-withdraw' ? (
+                  <React.Fragment>
+                    <Typography variant={'h2'}>{t('Claim-Withdraw-Done')}</Typography>
+                  </React.Fragment>
+                ) : null}
+                {steps.items[steps.currentStep].step === 'stake' ? (
+                  <React.Fragment>
+                    <Typography variant={'h2'}>{t('Stake-Done')}</Typography>
+                  </React.Fragment>
+                ) : null}
+                {steps.items[steps.currentStep].step === 'unstake' ? (
+                  <React.Fragment>
+                    <Typography variant={'h2'}>{t('Unstake-Done')}</Typography>
+                  </React.Fragment>
+                ) : null}
+                {steps.items[steps.currentStep].step === 'claim' ? (
+                  <React.Fragment>
+                    <Typography variant={'h2'}>{t('Claim-Done')}</Typography>
+                  </React.Fragment>
+                ) : null}
+
+                {/* Old stuff */}
+                {/* {steps.items[steps.currentStep].step === 'deposit' ? (
                   <React.Fragment>
                     <Typography variant={'h2'}>
                       {byDecimals(
@@ -79,7 +147,7 @@ export const Steps = ({ item, steps, handleClose }) => {
                     </Typography>
                     <Typography variant={'h2'}>{t('Withdraw-Done')}</Typography>
                   </React.Fragment>
-                )}
+                )} */}
                 <Typography>{t('Transactn-EnRoute')}</Typography>
                 <Box mt={1} textAlign={'center'}>
                   <Button

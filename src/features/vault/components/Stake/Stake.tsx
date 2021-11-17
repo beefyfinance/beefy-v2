@@ -183,7 +183,7 @@ export const Stake: React.FC<StakeProps> = ({
       // }
 
       steps.push({
-        step: 'deposit',
+        step: 'stake',
         message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
         action: () =>
           dispatch(reduxActions.wallet.stake(item.network, item.earnContractAddress, amount)),
