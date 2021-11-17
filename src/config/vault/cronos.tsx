@@ -9,7 +9,7 @@ export const pools = [
     tokenDecimals: 18,
     tokenDescriptionUrl:
       'https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance',
-    earnedToken: 'CRO',
+    earnedToken: 'WCRO',
     earnedTokenAddress: '0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF',
     earnContractAddress: '0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF',
     poolAddress: '0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF',
