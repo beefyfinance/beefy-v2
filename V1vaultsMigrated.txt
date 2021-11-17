@@ -1,39 +1,22 @@
 [
   {
-    "id": "bsc: cakev2-dar-wbnb",
+    "id": "cronos: vvs-vvs",
     "type": "Added"
   },
   {
-    "id": "bsc: cake-bopen-bnb",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: boo-usdc-mai",
+    "id": "cronos: vvs-vvs-usdc",
     "type": "Added"
   },
   {
-    "id": "avax: bankerjoe-dai.e-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax: com-usdt-avax-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "harmony: one-bifi-maxi",
+    "id": "cronos: vvs-vvs-cro",
     "type": "Added"
   },
   {
-    "id": "arbitrum: arbi-bifi-maxi",
+    "id": "cronos: vvs-cro-eth",
     "type": "Added"
   },
   {
-    "id": "celo: celo-bifi-maxi",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: movr-bifi-maxi",
+    "id": "cronos: vvs-cro-btc",
     "type": "Added"
   }
 ]
