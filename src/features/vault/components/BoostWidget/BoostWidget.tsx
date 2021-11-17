@@ -440,7 +440,11 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
           </AnimateHeight>
         </div>
       )}
-      <Steps item={item} steps={steps} handleClose={handleClose} />
+      {
+        (isBoosted || filterOpen) && (
+          <Steps item={item} steps={steps} handleClose={handleClose} />
+        )
+      }
     </>
   );
 };
