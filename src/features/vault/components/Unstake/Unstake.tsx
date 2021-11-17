@@ -177,8 +177,8 @@ export const Unstake: React.FC<UnstakeProps> = ({
       );
 
       steps.push({
-        step: 'withdraw',
-        message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+        step: 'unstake',
+        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
         action: () =>
           dispatch(reduxActions.wallet.unstake(item.network, item.earnContractAddress, amount)),
         pending: false,

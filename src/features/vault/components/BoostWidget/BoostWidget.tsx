@@ -17,7 +17,7 @@ import { byDecimals } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
 export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
-  const item = boostedData;
+  const item = boostedData ?? (vaultBoosts.length > 0 ? vaultBoosts[0] : null);
   const stylesProps = {
     isBoosted,
   };
@@ -59,6 +59,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   };
 
   const updateItemData = () => {
+    console.log(`updating data`);
     if (wallet.address && item) {
       // dispatch(reduxActions.vault.fetchBoosts(item));
       dispatch(reduxActions.balance.fetchBalances());
@@ -192,8 +193,8 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
       }
 
       steps.push({
-        step: 'withdraw',
-        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        step: 'claim',
+        message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
         action: () =>
           dispatch(
             reduxActions.wallet.claim(
@@ -286,8 +287,8 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
       }
 
       steps.push({
-        step: 'exit',
-        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        step: 'claim-unstake',
+        message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
         action: () =>
           dispatch(reduxActions.wallet.exit(boost.network, boost.earnContractAddress, 0)),
         pending: false,
@@ -404,7 +405,6 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
               )}
             </>
           </Modal>
-          <Steps item={item} steps={steps} handleClose={handleClose} />
         </div>
       )}
       {filterOpen && (
@@ -440,6 +440,11 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
           </AnimateHeight>
         </div>
       )}
+      {
+        (isBoosted || filterOpen) && (
+          <Steps item={item} steps={steps} handleClose={handleClose} />
+        )
+      }
     </>
   );
 };

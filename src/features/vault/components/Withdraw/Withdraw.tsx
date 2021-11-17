@@ -117,7 +117,7 @@ export const Withdraw = ({
       if (item.isGovVault) {
         steps.push({
           step: 'withdraw',
-          message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+          message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
           action: () =>
             dispatch(
               reduxActions.wallet.unstake(
@@ -146,7 +146,7 @@ export const Withdraw = ({
         if (isNative) {
           steps.push({
             step: 'withdraw',
-            message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+            message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
             action: () =>
               dispatch(
                 reduxActions.wallet.withdrawNative(
@@ -194,8 +194,8 @@ export const Withdraw = ({
       }
 
       steps.push({
-        step: 'withdraw',
-        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        step: 'claim',
+        message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
         action: () =>
           dispatch(
             reduxActions.wallet.claim(
@@ -221,8 +221,8 @@ export const Withdraw = ({
       }
 
       steps.push({
-        step: 'withdraw',
-        message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
+        step: 'claim-withdraw',
+        message: t('Vault-TxnConfirm', { type: t('Claim-Withdraw-noun') }),
         action: () =>
           dispatch(
             reduxActions.wallet.exit(
