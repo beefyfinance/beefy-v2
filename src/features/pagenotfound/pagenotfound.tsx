@@ -19,7 +19,7 @@ export const PageNotFound = () => {
 
   const handleOpen = useCallback(() => {
     history.push(`/`);
-  }, []);
+  }, [history]);
 
   return (
     <React.Fragment>

@@ -14,20 +14,20 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
+import { useVaults } from '../../hooks/useFilteredVaults';
 
 const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
   const item = vault;
+  const [filteredVaults] = useVaults();
 
   const isBoosted = vault.isBoosted;
   const boostedData = vault.boostData;
   const vaultBoosts = vault.boosts;
 
-  // eslint-disable-next-line no-unused-vars
-  // const { isBoosted, data: boostedData, vaultBoosts } = useIsBoosted(item);
-  // eslint-disable-next-line
-  // const [isGovVault] = React.useState(item.isGovVault ?? false);
   const isGovVault = item.isGovVault;
+
+  const [isFirstVault, setIsFirstVault] = React.useState<boolean>(false);
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -48,6 +48,10 @@ const _Item = ({ vault }) => {
   const handleOpenVault = useCallback(() => {
     history.push(`/${item.network}/vault/${item.id}`);
   }, [history, item.network, item.id]);
+
+  React.useEffect(() => {
+    if (filteredVaults && filteredVaults[0] === item) setIsFirstVault(true);
+  }, [filteredVaults, item]);
 
   React.useEffect(() => {
     let amount = '0';
@@ -297,6 +301,7 @@ const _Item = ({ vault }) => {
                 apy: item.apy,
                 spacer: !isBoosted && parseFloat(priceInDolar.balance) > 0,
                 isGovVault: item.isGovVault ?? false,
+                isFirstVault: isFirstVault,
               } as any)}
             />
             {/*Rewards/Safety Score*/}
@@ -324,6 +329,7 @@ const _Item = ({ vault }) => {
                     <div className={classes.tooltipHolder}>
                       <Popover
                         {...({
+                          placement: isFirstVault ? 'bottom-end' : 'top-end',
                           title: t('Safety-ScoreWhat'),
                           content: t('Safety-ScoreExpl'),
                         } as any)}
