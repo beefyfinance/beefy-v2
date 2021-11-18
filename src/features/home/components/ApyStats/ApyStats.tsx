@@ -146,7 +146,7 @@ const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({
 const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
 
 const LabeledStatWithTooltip = memo(
-  ({ children, boosted, label, value, spacer, isFirstVault, ...passthrough }: any) => {
+  ({ children, boosted, label, value, spacer, ...passthrough }: any) => {
     const classes = useStyles();
 
     return (
@@ -155,9 +155,7 @@ const LabeledStatWithTooltip = memo(
           <div className={classes.tooltipLabel}>
             <Typography className={classes.label}>{label}</Typography>
             <div className={classes.tooltipHolder}>
-              <Popover {...({ placement: isFirstVault ? 'bottom-end' : 'top-end' } as any)}>
-                {children}
-              </Popover>
+              <Popover {...({} as any)}>{children}</Popover>
             </div>
           </div>
           <LabeledStat {...({ boosted } as any)} value={value} />
@@ -177,7 +175,6 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   spacer,
   isGovVault,
   isBoosted,
-  isFirstVault,
 }) => {
   const { t } = useTranslation();
   const values: Record<string, any> = {};
@@ -230,7 +227,6 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         isLoading={isLoading}
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
-        isFirstVault={isFirstVault}
       >
         <YearlyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
       </LabeledStatWithTooltip>
@@ -242,7 +238,6 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
         isLoading={isLoading}
         className={`tooltip-toggle ${itemInnerClasses}`}
         spacer={spacer}
-        isFirstVault={isFirstVault}
       >
         <DailyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
       </LabeledStatWithTooltip>

@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo } from 'react';
-import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -14,22 +14,22 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
-import { useVaults } from '../../hooks/useFilteredVaults';
 
 const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
   const item = vault;
-  const [filteredVaults] = useVaults();
 
   const isBoosted = vault.isBoosted;
   const boostedData = vault.boostData;
   const vaultBoosts = vault.boosts;
-
   const isGovVault = item.isGovVault;
+  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
 
-  const [isFirstVault, setIsFirstVault] = React.useState<boolean>(false);
+  const styleProps = {
+    marginStats: isTwoColumns && !isGovVault && !isBoosted,
+  };
 
-  const classes = useStyles();
+  const classes = useStyles(styleProps as any);
   const { t } = useTranslation();
   const history = useHistory();
   const { wallet, balance } = useSelector((state: any) => ({
@@ -48,10 +48,6 @@ const _Item = ({ vault }) => {
   const handleOpenVault = useCallback(() => {
     history.push(`/${item.network}/vault/${item.id}`);
   }, [history, item.network, item.id]);
-
-  React.useEffect(() => {
-    if (filteredVaults && filteredVaults[0] === item) setIsFirstVault(true);
-  }, [filteredVaults, item]);
 
   React.useEffect(() => {
     let amount = '0';
@@ -288,7 +284,7 @@ const _Item = ({ vault }) => {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
-                {isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
+                {isTwoColumns || isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
                   <div className={classes.boostSpacer} />
                 ) : null}
               </div>
@@ -299,9 +295,8 @@ const _Item = ({ vault }) => {
                 isBoosted: isBoosted,
                 launchpoolApr: boostedData,
                 apy: item.apy,
-                spacer: !isBoosted && parseFloat(priceInDolar.balance) > 0,
+                spacer: isTwoColumns || (!isBoosted && parseFloat(priceInDolar.balance) > 0),
                 isGovVault: item.isGovVault ?? false,
-                isFirstVault: isFirstVault,
               } as any)}
             />
             {/*Rewards/Safety Score*/}
@@ -316,9 +311,7 @@ const _Item = ({ vault }) => {
                       <ValuePrice value={formatUsd(rewardPrice)} />
                     </Typography>
                   )}
-                  {/* {parseFloat(priceInDolar.balance) > 0 ? (
-                    <div className={classes.boostSpacer} />
-                  ) : null} */}
+                  {isTwoColumns ? <div className={classes.boostSpacer} /> : null}
                 </div>
               </div>
             ) : (
@@ -329,7 +322,6 @@ const _Item = ({ vault }) => {
                     <div className={classes.tooltipHolder}>
                       <Popover
                         {...({
-                          placement: isFirstVault ? 'bottom-end' : 'top-end',
                           title: t('Safety-ScoreWhat'),
                           content: t('Safety-ScoreExpl'),
                         } as any)}
@@ -337,13 +329,12 @@ const _Item = ({ vault }) => {
                     </div>
                   </div>
                   <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-                  {isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
+                  {isTwoColumns || isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
                 </div>
               </div>
             )}
-
             {/*Open Vault*/}
             <div className={classes.centerSpaceOpen} style={{ padding: 0 }}>
               <Button onClick={handleOpenVault} size="large" className={classes.depositButton}>

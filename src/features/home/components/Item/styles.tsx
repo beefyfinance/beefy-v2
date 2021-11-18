@@ -22,6 +22,7 @@ export const styles = theme => ({
       marginRight: '12px',
       marginLeft: '12px',
       width: 'calc(100% - 24px)',
+      height: '470px',
     },
   },
   dataGrid: {},
@@ -343,7 +344,7 @@ export const styles = theme => ({
     textDecoration: 'line-through',
   },
   statsContainer: {
-    margin: 'auto',
+    margin: props => (props.marginStats ? '16px 0px 0px 0px' : 'auto'),
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
       flexGrow: '0',

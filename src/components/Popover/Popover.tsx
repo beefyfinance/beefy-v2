@@ -41,11 +41,7 @@ const _Popover: React.FC<PopoverProps> = ({
           open={isOpen}
           anchorEl={anchorEl}
           placement={placement}
-          disablePortal={true}
           modifiers={{
-            flip: {
-              enabled: true,
-            },
             preventOverflow: {
               enabled: true,
               boundariesElement: 'scrollParent',
