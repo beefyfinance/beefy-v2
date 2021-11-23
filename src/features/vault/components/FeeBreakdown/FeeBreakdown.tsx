@@ -3,7 +3,6 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover';
-import { useFormattedFee } from '../../../../hooks/useFormattedFee';
 
 const useStyles = makeStyles(styles as any);
 const BreakdownTooltip = memo(({ rows }: any) => {
@@ -21,36 +20,73 @@ const BreakdownTooltip = memo(({ rows }: any) => {
   );
 });
 
-const PerformanceFees = memo(({ rates, vaultID }: any) => {
+const PerformanceFees = memo(({ rates, vaultID, performanceFee }: any) => {
   const rows = [];
   const { t } = useTranslation();
 
   //TODO REMOVE WHEN CAN GET DYNAMIC DATA FROM ABOUT FEES
   const isCakeVault = vaultID === 'cake-cakev2';
 
-  rows.push({
-    label: t('Fee-Holder'),
-    value: isCakeVault ? '1%' : '2.5%',
-    last: false,
-  });
+  if (performanceFee === '0%') {
+    rows.push({
+      label: t('Fee-Holder'),
+      value: '0%',
+      last: false,
+    });
 
-  rows.push({
-    label: t('Fee-Treasury'),
-    value: isCakeVault ? '0%' : '1.5%',
-    last: false,
-  });
+    rows.push({
+      label: t('Fee-Treasury'),
+      value: '0%',
+      last: false,
+    });
 
-  rows.push({
-    label: t('Fee-Developers'),
-    value: isCakeVault ? '0%' : '0.5%',
-    last: false,
-  });
+    rows.push({
+      label: t('Fee-Developers'),
+      value: '0%',
+      last: false,
+    });
 
-  rows.push({
-    label: t('Fee-TotalFee'),
-    value: isCakeVault ? '1%' : '4.5%',
-    last: true,
-  });
+    rows.push({
+      label: t('Fee-HarvestFee'),
+      value: '0%',
+      last: false,
+    });
+
+    rows.push({
+      label: t('Fee-TotalFee'),
+      value: '0%',
+      last: true,
+    });
+  } else {
+    rows.push({
+      label: t('Fee-Holder'),
+      value: isCakeVault ? '1%' : '3%',
+      last: false,
+    });
+
+    rows.push({
+      label: t('Fee-Treasury'),
+      value: isCakeVault ? '0%' : '0.5%',
+      last: false,
+    });
+
+    rows.push({
+      label: t('Fee-Developers'),
+      value: isCakeVault ? '0%' : '0.5%',
+      last: false,
+    });
+    rows.push({
+      label: t('Fee-HarvestFee'),
+      value: isCakeVault ? '0%' : '0.5%',
+      last: false,
+    });
+
+    rows.push({
+      label: t('Fee-TotalFee'),
+      value: isCakeVault ? '1%' : '4.5%',
+      last: true,
+    });
+  }
 
   return <BreakdownTooltip rows={rows} />;
 });
@@ -58,8 +94,9 @@ const PerformanceFees = memo(({ rates, vaultID }: any) => {
 export const FeeBreakdown = ({ item, formData, type }) => {
   const classes = useStyles();
   const t = useTranslation().t;
-  const formattedDepositFee = useFormattedFee(item.depositFee);
-  const formattedWithdrawalFee = useFormattedFee(item.withdrawalFee);
+  const formattedDepositFee = item.depositFee;
+  const formattedWithdrawalFee = item.withdrawalFee;
+  const performanceFee = item.isGovVault ? '0%' : item.id === 'cake-cakev2' ? '1%' : '4.5%';
 
   return (
     <Box mt={2} p={2} className={classes.feeContainer}>
@@ -202,30 +239,19 @@ export const FeeBreakdown = ({ item, formData, type }) => {
               {/* TODO: add dynamic fee */}
               {t('Fee-Performance')}
             </Typography>
+
             <Popover {...({} as any)}>
-              <PerformanceFees vaultID={item.id} />
+              <PerformanceFees performanceFee={performanceFee} vaultID={item.id} />
             </Popover>
           </div>
           {/*TODO : add dynamic fee */}
-          <Typography className={classes.value}>
-            {item.isGovVault ? "0%" : (item.id === 'cake-cakev2' ? '1%' : '4.5%')}
-          </Typography>
+          <Typography className={classes.value}>{performanceFee}</Typography>
         </Grid>
         <Grid item xs={12}>
           <Box pt={1}>
             <Typography className={classes.text}>{t('Fee-PerformExt')}</Typography>
           </Box>
-          {/*<Divider className={classes.divider} />
-          <Typography className={classes.title}>{t('Fee-Transaction')}</Typography>*/}
         </Grid>
-        {/*<Grid item xs={6}>
-          <Typography className={classes.value}>0.05 BNB ($0.10)</Typography>
-          <Typography className={classes.label}>{t('Deposit-Noun')}</Typography>
-        </Grid>
-        <Grid item xs={6}>
-          <Typography className={classes.value}>0.05 BNB ($0.10)</Typography>
-          <Typography className={classes.label}>{t('Withdraw-Noun')}</Typography>
-        </Grid>*/}
       </Grid>
     </Box>
   ); //return
