@@ -3,7 +3,7 @@ import {
   HOME_FETCH_BOOSTS_DONE,
   HOME_FETCH_POOLS_BEGIN,
   HOME_FETCH_POOLS_DONE,
-  HOME_LINK_BOOSTS_DONE
+  HOME_LINK_BOOSTS_DONE,
 } from '../constants';
 import { config } from '../../../config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
@@ -65,8 +65,8 @@ const initialPools = () => {
       pool['lastUpdated'] = 0;
       pool['tags'] = [];
       pool['safetyScore'] = 0;
-      pool['withdrawalFee'] = pool.isGovVault ? 0 : 0.001;
-      pool['depositFee'] = 0;
+      pool['withdrawalFee'] = pool.isGovVault ? '0%' : pool.withdrawalFee ?? '0.1%';
+      pool['depositFee'] = pool.depositFee ?? '0%';
       pool['boosts'] = [];
       pool['isBoosted'] = false;
       pool['boostData'] = null;
