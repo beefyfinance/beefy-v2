@@ -9,6 +9,7 @@ import { config } from '../../../config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
 import { safetyScore } from '../../../helpers/safetyScore';
 import BigNumber from 'bignumber.js';
+import _ from 'lodash';
 
 let initPlatforms = {};
 let pools = [];
@@ -90,19 +91,16 @@ const initialPools = () => {
 
 const initializeTags = (pool, net) => {
   const stables = getStablesForNetwork(net);
-  const isStable = type => stables.includes(type);
 
+  const presentsStables = _.intersectionWith(stables, pool.assets, _.isEqual);
   if (pool.assets.length === 1) {
     pool['vaultType'] = 'single';
   } else {
-    pool['vaultType'] = pool.assets.every(isStable)
-      ? 'stable'
-      : pool.assets.some(isStable)
-      ? 'stables'
-      : false;
-    if (pool.assets.every(isStable)) {
-      pool.tags.push('stable');
-    }
+    pool['vaultType'] = presentsStables.length > 1 ? 'stables' : 'stable';
+  }
+
+  if (presentsStables.length !== 0) {
+    pool.tags.push('stable');
   }
 
   if (pool.assets.some(asset => ['BIFI', 'POTS'].includes(asset))) {
