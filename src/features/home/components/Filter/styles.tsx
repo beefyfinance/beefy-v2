@@ -298,7 +298,7 @@ export const styles = theme => ({
     backgroundColor: '#14182B',
     borderRadius: '22px',
     marginRight: '10px',
-    width: '204px',
+    width: '212px',
     [theme.breakpoints.down(725)]: {
       width: '100%',
       marginRight: '0',
@@ -314,9 +314,8 @@ export const styles = theme => ({
     textTransform: 'none',
     fontSize: '16px',
     color: '#484F7F',
-    [theme.breakpoints.down(725)]: {
-      width: 'calc(50% - 4px)',
-    },
+    width: 'calc(50% - 4px)',
+    whiteSpace: 'nowrap',
   },
   toggleSwitchButtonActive: {
     height: '40px',
@@ -328,9 +327,8 @@ export const styles = theme => ({
     color: '#FFFFFF',
     backgroundColor: '#434B7A !important',
     fontWeight: '600',
-    [theme.breakpoints.down(725)]: {
-      width: 'calc(50% - 4px)',
-    },
+    width: 'calc(50% - 4px)',
+    whiteSpace: 'nowrap',
   },
   filterIcon: {
     marginRight: '8px',
