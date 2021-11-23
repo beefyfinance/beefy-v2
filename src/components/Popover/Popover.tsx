@@ -1,4 +1,11 @@
-import { makeStyles, Typography, Popper, Box, BoxProps } from '@material-ui/core';
+import {
+  makeStyles,
+  Typography,
+  Popper,
+  Box,
+  BoxProps,
+  PopperPlacementType,
+} from '@material-ui/core';
 import React, { memo, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { PopoverProps } from './PopoverProps';
@@ -14,12 +21,15 @@ const _Popover: React.FC<PopoverProps> = ({
   placement = 'top-end',
 }) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [arrowRef, setArrowRef] = useState(null);
+  const [_placement, setPlacement] = React.useState<PopperPlacementType>(placement);
 
-  const handlePopoverOpen = () => {
-    setIsOpen(true);
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
+    setIsOpen(prev => !prev);
+    setPlacement(placement);
   };
 
   const handlePopoverClose = () => {
@@ -40,16 +50,8 @@ const _Popover: React.FC<PopoverProps> = ({
           id={title}
           open={isOpen}
           anchorEl={anchorEl}
-          placement={placement}
-          disablePortal={true}
+          placement={_placement}
           modifiers={{
-            flip: {
-              enabled: true,
-            },
-            preventOverflow: {
-              enabled: true,
-              boundariesElement: 'scrollParent',
-            },
             arrow: {
               enabled: true,
               element: arrowRef,

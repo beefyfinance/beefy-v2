@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo } from 'react';
-import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -22,14 +22,14 @@ const _Item = ({ vault }) => {
   const isBoosted = vault.isBoosted;
   const boostedData = vault.boostData;
   const vaultBoosts = vault.boosts;
-
-  // eslint-disable-next-line no-unused-vars
-  // const { isBoosted, data: boostedData, vaultBoosts } = useIsBoosted(item);
-  // eslint-disable-next-line
-  // const [isGovVault] = React.useState(item.isGovVault ?? false);
   const isGovVault = item.isGovVault;
+  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
 
-  const classes = useStyles();
+  const styleProps = {
+    marginStats: isTwoColumns && !isGovVault && !isBoosted,
+  };
+
+  const classes = useStyles(styleProps as any);
   const { t } = useTranslation();
   const history = useHistory();
   const { wallet, balance } = useSelector((state: any) => ({
@@ -284,7 +284,7 @@ const _Item = ({ vault }) => {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
-                {isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
+                {isTwoColumns || isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
                   <div className={classes.boostSpacer} />
                 ) : null}
               </div>
@@ -295,7 +295,7 @@ const _Item = ({ vault }) => {
                 isBoosted: isBoosted,
                 launchpoolApr: boostedData,
                 apy: item.apy,
-                spacer: !isBoosted && parseFloat(priceInDolar.balance) > 0,
+                spacer: isTwoColumns || (!isBoosted && parseFloat(priceInDolar.balance) > 0),
                 isGovVault: item.isGovVault ?? false,
               } as any)}
             />
@@ -311,9 +311,7 @@ const _Item = ({ vault }) => {
                       <ValuePrice value={formatUsd(rewardPrice)} />
                     </Typography>
                   )}
-                  {/* {parseFloat(priceInDolar.balance) > 0 ? (
-                    <div className={classes.boostSpacer} />
-                  ) : null} */}
+                  {isTwoColumns ? <div className={classes.boostSpacer} /> : null}
                 </div>
               </div>
             ) : (
@@ -331,13 +329,12 @@ const _Item = ({ vault }) => {
                     </div>
                   </div>
                   <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-                  {isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
+                  {isTwoColumns || isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
                 </div>
               </div>
             )}
-
             {/*Open Vault*/}
             <div className={classes.centerSpaceOpen} style={{ padding: 0 }}>
               <Button onClick={handleOpenVault} size="large" className={classes.depositButton}>

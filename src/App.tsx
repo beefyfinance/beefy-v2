@@ -5,7 +5,6 @@ import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { reduxActions } from './features/redux/actions';
-import { useTranslation } from 'react-i18next';
 import { ScrollToTop } from './components/ScrollToTop';
 
 const Home = React.lazy(() => import(`./features/home`));

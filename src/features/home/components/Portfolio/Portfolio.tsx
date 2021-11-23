@@ -4,7 +4,7 @@ import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Stats } from './Stats';
-import { byDecimals, formatDecimals, calcDaily } from '../../../../helpers/format';
+import { byDecimals, formatDecimals } from '../../../../helpers/format';
 import { VaultsStats } from './VaultsStats';
 import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
@@ -64,7 +64,7 @@ export const Portfolio = () => {
     if (userVaults.length > 0) {
       userVaults.forEach(vault => {
         let balance = new BigNumber(vault.balance);
-        balance = vault.isGovVault 
+        balance = vault.isGovVault
           ? byDecimals(balance, vault.tokenDecimals)
           : balance.times(vault.pricePerFullShare).div('1e18').div('1e18');
 
@@ -73,7 +73,7 @@ export const Portfolio = () => {
 
         const apy = vault.isGovVault ? vault.apy.vaultApr : vault.apy.totalApy || 0;
 
-        const daily = vault.isGovVault ? (apy / 365) : (Math.pow(10, Math.log10(apy + 1) / 365) - 1);
+        const daily = vault.isGovVault ? apy / 365 : Math.pow(10, Math.log10(apy + 1) / 365) - 1;
 
         newGlobalStats.daily = newGlobalStats.daily.plus(balance.times(daily).times(oraclePrice));
       });
@@ -114,7 +114,7 @@ export const Portfolio = () => {
             <Box className={classes.vaults}>
               <Typography className={classes.title}>{t('Vault-platform')}</Typography>
               <Box>
-                <VaultsStats {...({} as any)}/>
+                <VaultsStats {...({} as any)} />
               </Box>
             </Box>
           </Grid>

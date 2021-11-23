@@ -32,6 +32,7 @@ the command is run. To help minimize pollution, the maintainer may avoid pushing
 into the staging repository.
 
 Development
++ v0.9.0.4 AllTrades: small bugfix
 + v0.9.0.3 AllTrades: add support for Cronos chain
 + v0.9.0.2 AllTrades: adjustment to preserve the new & special v2 bifi-gov vault objects
 + v0.9.0.1 AllTrades: switched over to *.tsx v2 targets
@@ -163,8 +164,8 @@ async function p_main()	{
 					if (mS_PRPNM_ASSTS === S || mS_PRPNM_RISKS === S)	{
 						//if the array's contents match exactly the target counterpart's, loop for the 
 						//	descriptor's next property
-						if (O_SRC[ S].length == o_trgt[ S].length && o_trgt[ S].every( (s, i) => 
-																																	O_SRC[ S][ i] === s))
+						if (o_trgt[ S] && O_SRC[ S].length == o_trgt[ S].length && o_trgt[ S].every( 
+																													(s, i) => O_SRC[ S][ i] === s))
 							continue;
 
 						//update the target's counterpart array, and ensure it's noted that an update 
