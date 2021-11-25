@@ -17917,5 +17917,40 @@ export const pools = [
     stratType: "StratLP",
     network: "bsc",
     retireReason: "rewards"
+  },
+  {
+    id: "bison-bison-bnb",
+    name: "BISON-BNB LP",
+    token: "BISON-BNB ALP",
+    tokenDescription: "ApeSwap (BiShares)",
+    tokenAddress: "0xEC1214Ee197304c17EB9e427E246a4Fd37BA718E",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBisonBISON-BNB",
+    earnedTokenAddress: "0x813EBFD51604E0066bFA4E0Bf6d2324eA8CebE60",
+    earnContractAddress: "0x813EBFD51604E0066bFA4E0Bf6d2324eA8CebE60",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "bison-bison-bnb",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "BISON",
+      "BNB"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://dex.apeswap.finance/#/add/ETH/0x19A6Da6e382b85F827088092a3DBe864d9cCba73",
+    buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x19A6Da6e382b85F827088092a3DBe864d9cCba73",
+    network: "bsc"
   }
 ];

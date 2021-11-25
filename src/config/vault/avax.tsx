@@ -2981,7 +2981,7 @@ export const pools = [
   {
     id: "mai-qi-wavax",
     name: "QI-AVAX LP",
-    token: "QI-AVAX JLP",
+    token: "QI-WAVAX JLP",
     tokenDescription: "Trader Joe (Mai)",
     tokenAddress: "0x05366F13d5f655FFB2d2ABb7b2ba005b12eB8bdE",
     tokenDecimals: 18,
@@ -3333,5 +3333,44 @@ export const pools = [
     buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     network: "avax",
     retireReason: "rewards"
+  },
+  {
+    id: "synapse-nusdlp",
+    logo: "uncategorized/nUSD-LP.png",
+    name: "nUSD/DAI/USDC/USDT",
+    token: "nUSD-LP",
+    tokenDescription: "Synapse",
+    tokenAddress: "0xCA87BF3ec55372D9540437d7a86a7750B42C02f4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSynapsenUSD-LP",
+    earnedTokenAddress: "0xa803058482F2681f347BB0da6f31F2DF94d72DEA",
+    earnContractAddress: "0xa803058482F2681f347BB0da6f31F2DF94d72DEA",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "synapse-nusdlp",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Synapse",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "ALGO_STABLE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    assets: [
+      "nUSD",
+      "DAIe",
+      "USDCe",
+      "USDTe"
+    ],
+    withdrawalFee: "0.01%",
+    addLiquidityUrl: "https://synapseprotocol.com/pools/avalanchenusd",
+    network: "avax"
   }
 ];

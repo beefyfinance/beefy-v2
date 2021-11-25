@@ -3986,5 +3986,77 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x5e65474c8400d0bb76edbbe066b2d2e7b0b6e7fb00010000000000000000007c",
     network: "fantom"
+  },
+  {
+    id: "beets-phantom-dai-opera",
+    logo: "fantom/phantom-dai-opera.png",
+    name: "Phantom Dai Opera",
+    token: "Phantom Dai Opera",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0x63386eF152E1Ddef96c065636D6cC0165Ff33291",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetsDaiOpera",
+    earnedTokenAddress: "0x876A3E8AFD0548930Ed9fb9741787c27986a613C",
+    earnContractAddress: "0x876A3E8AFD0548930Ed9fb9741787c27986a613C",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-phantom-dai-opera",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "FTM",
+      "DAI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beets.fi/#/pool/0x63386ef152e1ddef96c065636d6cc0165ff332910002000000000000000000a1",
+    network: "fantom"
+  },
+  {
+    id: "boo-usdc-tusd",
+    name: "TUSD-USDC LP",
+    token: "TUSD-USDC LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x12692B3bf8dd9Aa1d2E721d1a79efD0C244d7d96",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooUSDC-TUSD",
+    earnedTokenAddress: "0x6F0169e452211Ee0146812C1cc111FB228480d42",
+    earnContractAddress: "0x6F0169e452211Ee0146812C1cc111FB228480d42",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-usdc-tusd",
+    oraclePrice: 0,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "TUSD",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x9879aBDea01a879644185341F7aF7d8343556B7a",
+    buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
+    network: "fantom"
   }
 ];
