@@ -151,7 +151,6 @@ const _Item = ({ vault }) => {
         [classes.withGovVault]: isGovVault,
       })}
     >
-      {console.log(item.id, tokensEarned)}
       <Grid container className={classes.dataGrid}>
         {/*Title*/}
         <div className={classes.titleContainer}>
