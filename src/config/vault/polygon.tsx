@@ -7286,5 +7286,44 @@ export const pools = [
     buyTokenUrl: "https://swap.wault.finance/polygon/#/swap?outputCurrency=0xFbdd194376de19a88118e84E279b977f165d01b8",
     network: "polygon",
     retireReason: "rewards"
+  },
+  {
+    id: "curve-poly-eurt",
+    logo: "single-assets/EURt.png",
+    name: "EURt/DAI/USDC/USDT",
+    token: "crvEURT",
+    tokenDescription: "Curve",
+    tokenAddress: "0x600743B1d8A96438bD46836fD34977a00293f6Aa",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCurveEURt",
+    earnedTokenAddress: "0x108c7a293162Adff86DA216AB5F91e56723125dc",
+    earnContractAddress: "0x108c7a293162Adff86DA216AB5F91e56723125dc",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "curve-poly-eurt",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Curve",
+    assets: [
+      "EURt",
+      "DAI",
+      "USDC",
+      "USDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0.01%",
+    addLiquidityUrl: "https://polygon.curve.fi/eurtusd/deposit",
+    network: "polygon"
   }
 ];

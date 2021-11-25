@@ -23,10 +23,8 @@ export const WalletContainer = () => {
 
   const handleWalletConnect = () => {
     if (!walletReducer.address) {
-      console.log('called connect');
       dispatch(reduxActions.wallet.connect());
     } else {
-      console.log('called disconnect');
       dispatch(reduxActions.wallet.disconnect());
     }
   };

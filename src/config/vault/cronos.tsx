@@ -743,5 +743,112 @@ export const pools = [
     buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     network: "cronos"
+  },
+  {
+    id: "cronos-bifi-maxi",
+    logo: "single-assets/BIFI.png",
+    name: "BIFI Maxi",
+    token: "BIFI",
+    tokenDescription: "Beefy.Finance",
+    tokenAddress: "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCronosBIFI",
+    earnedTokenAddress: "0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5",
+    earnContractAddress: "0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "BIFI",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Beefy.Finance",
+    assets: [
+      "BIFI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0.05%",
+    buyTokenUrl: "https://vvs.finance/swap?inputCurrency=0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23&outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
+    network: "cronos"
+  },
+  {
+    id: "vvs-cro-usdt",
+    name: "CRO-USDT",
+    token: "CRO-USDT LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x3d2180DB9E1B909f35C398BC39EF36108C0FC8c3",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsCRO-USDT",
+    earnedTokenAddress: "0x3bDA6f10af7911F40C761eE7B1607ECe9ee99Aa4",
+    earnContractAddress: "0x3bDA6f10af7911F40C761eE7B1607ECe9ee99Aa4",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-cro-usdt",
+    oraclePrice: 0,
+    status: "active",
+    platform: "VVS",
+    assets: [
+      "CRO",
+      "USDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
+    addLiquidityUrl: "https://vvs.finance/add/CRO/0x66e428c3f67a68878562e79A0234c1F83c208770",
+    network: "cronos"
+  },
+  {
+    id: "vvs-cro-usdc",
+    name: "CRO-USDC",
+    token: "CRO-USDC LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0xe61Db569E231B3f5530168Aa2C9D50246525b6d6",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsCRO-USDC",
+    earnedTokenAddress: "0x6bBdC5cacB4e72884432E3d63745cc8e7A4392Ca",
+    earnContractAddress: "0x6bBdC5cacB4e72884432E3d63745cc8e7A4392Ca",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-cro-usdc",
+    oraclePrice: 0,
+    status: "active",
+    platform: "VVS",
+    assets: [
+      "CRO",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
+    addLiquidityUrl: "https://vvs.finance/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
+    network: "cronos"
   }
 ];

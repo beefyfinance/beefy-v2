@@ -38,7 +38,6 @@ const _Item = ({ vault }) => {
   }));
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
 
-  const [state, setState] = React.useState({ formattedBalance: '0' });
   const [priceInDolar, setPriceInDolar] = React.useState({ balance: '0' });
   const [poolRewards, setPoolRewards] = React.useState({ rewards: '0' });
   const [userStaked, setUserStaked] = React.useState(false);
@@ -98,46 +97,6 @@ const _Item = ({ vault }) => {
   }, [wallet.address, item, balance, vaultBoosts, wallet]);
 
   React.useEffect(() => {
-    let amount = '0';
-    if (wallet.address) {
-      let sumAmount = item.isGovVault
-        ? byDecimals(
-            new BigNumber(balance.tokens[item.network][`${item.token}GovVault`].balance),
-            item.tokenDecimals
-          )
-        : byDecimals(new BigNumber(item.balance), item.tokenDecimals).multipliedBy(
-            byDecimals(new BigNumber(item.pricePerFullShare), item.tokenDecimals)
-          );
-
-      for (const boost of vaultBoosts) {
-        let symbol = `${boost.token}${boost.id}Boost`;
-        if (!isEmpty(balance.tokens[item.network][symbol])) {
-          let boostAmount = byDecimals(
-            new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-              byDecimals(item.pricePerFullShare)
-            ),
-            item.tokenDecimals
-          );
-          sumAmount = sumAmount.plus(boostAmount);
-        }
-      }
-      amount = sumAmount.toFixed(8);
-    }
-    setState({ formattedBalance: amount });
-  }, [
-    wallet.address,
-    item.balance,
-    balance,
-    item.tokenDecimals,
-    item.pricePerFullShare,
-    isGovVault,
-    vaultBoosts,
-    item.isGovVault,
-    item.network,
-    item.token,
-  ]);
-
-  React.useEffect(() => {
     let staked = false;
     if (wallet.address && boostedData) {
       let symbol = `${boostedData.token}${boostedData.id}Boost`;
@@ -174,8 +133,8 @@ const _Item = ({ vault }) => {
   }, [item.earnedToken, poolRewards.rewards, pricesReducer.prices]);
 
   const tokensEarned = React.useMemo(() => {
-    return parseFloat(state.formattedBalance) > 0 ? state.formattedBalance : '0';
-  }, [state.formattedBalance]);
+    return parseFloat(priceInDolar.balance) > 0 ? priceInDolar.balance : '0';
+  }, [priceInDolar.balance]);
 
   const rewardsEarned = React.useMemo(() => {
     return parseFloat(poolRewards.rewards) > 0 ? poolRewards.rewards : '0';
@@ -192,6 +151,7 @@ const _Item = ({ vault }) => {
         [classes.withGovVault]: isGovVault,
       })}
     >
+      {console.log(item.id, tokensEarned)}
       <Grid container className={classes.dataGrid}>
         {/*Title*/}
         <div className={classes.titleContainer}>
