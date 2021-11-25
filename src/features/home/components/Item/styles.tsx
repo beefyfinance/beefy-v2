@@ -192,6 +192,9 @@ export const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  blurred: {
+    filter: 'blur(.5rem)',
+  },
   depositButton: {
     border: 'solid 2px #54995C',
     backgroundColor: '#54995C',

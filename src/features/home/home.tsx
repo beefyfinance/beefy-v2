@@ -136,7 +136,8 @@ const VaultsList = memo(function HomeVaultsList() {
   const { t } = useTranslation();
   const isPoolsLoading = useSelector((state: any) => state.vaultReducer.isPoolsLoading);
   const platforms = useSelector((state: any) => state.vaultReducer.platforms);
-  const [filteredVaults, filterConfig, setFilterConfig, filteredCount, allCount] = useVaults();
+  const { sortedVaults, filterConfig, setFilterConfig, filteredVaultsCount, allVaultsCount } =
+    useVaults();
   const address = useSelector((state: any) => state.walletReducer.address);
 
   if (isPoolsLoading) {
@@ -149,16 +150,16 @@ const VaultsList = memo(function HomeVaultsList() {
         sortConfig={filterConfig}
         setSortConfig={setFilterConfig}
         platforms={platforms}
-        allCount={allCount}
-        filteredCount={filteredCount}
+        allCount={allVaultsCount}
+        filteredCount={filteredVaultsCount}
       />
 
       <div className={classes.vaultsList}>
-        {filterConfig.deposited && address && filteredVaults.length === 0 && (
+        {filterConfig.deposited && address && sortedVaults.length === 0 && (
           <EmptyStates setFilterConfig={setFilterConfig} />
         )}
         {filterConfig.deposited && !address && <EmptyStates setFilterConfig={setFilterConfig} />}
-        <VirtualVaultsList vaults={filteredVaults} />
+        <VirtualVaultsList vaults={sortedVaults} />
       </div>
     </>
   );

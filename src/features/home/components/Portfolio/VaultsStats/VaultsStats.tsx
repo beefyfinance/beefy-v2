@@ -12,7 +12,7 @@ const useStyles = makeStyles(styles as any);
 export const VaultsStats = ({ stats, blurred }) => {
   const classes = useStyles();
   const t = useTranslation().t;
-  const [, , , , , activeVaults] = useVaults();
+  const { activeVaults } = useVaults();
   const totalTvl = useSelector((state: any) => state.vaultReducer.totalTvl.toNumber());
 
   const buyback = useBuyback();

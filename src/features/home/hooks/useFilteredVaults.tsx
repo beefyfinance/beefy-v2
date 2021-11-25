@@ -282,28 +282,29 @@ export const useVaults = () => {
   const tokenBalances = useSelector(selectTokenBalances);
   const boostVaults = useBoostArray();
   const userVaults = useUserVaults();
-  const [config, setConfig] = useLocalStorage(
+  const [filterConfig, setFilterConfig] = useLocalStorage(
     FILTER_STORAGE_KEY,
     FILTER_DEFAULT,
     isStoredConfigValid
   );
+
   const filteredVaults = useFilteredVaults(
     allVaults,
-    config,
+    filterConfig,
     address,
     tokenBalances,
     userVaults,
     boostVaults
   );
-  const sortedVaults = useSortedVaults(filteredVaults, config.key, config.direction);
+  const sortedVaults = useSortedVaults(filteredVaults, filterConfig.key, filterConfig.direction);
 
-  return [
+  return {
     sortedVaults,
-    config,
-    setConfig,
-    filteredVaults.length,
-    allVaults.length,
-    activeVaults.length,
+    filterConfig,
+    setFilterConfig,
+    filteredVaultsCount: filteredVaults.length,
+    allVaultsCount: allVaults.length,
+    activeVaults: activeVaults.length,
     boostVaults,
-  ];
+  };
 };
