@@ -9,13 +9,12 @@ import { VaultsStats } from './VaultsStats';
 import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import { useHideBalanceCtx } from '../../../../components/HideBalancesContext';
 
 const useStyles = makeStyles(styles as any);
 export const Portfolio = () => {
   const classes = useStyles();
-  const [hideBalance, setHideBalance] = useState(() =>
-    localStorage.getItem('hideBalance') === 'true' ? true : false
-  );
+  const { hideBalance, setHideBalance } = useHideBalanceCtx();
   const [userVaults, setUserVaults] = useState([]);
   const [globalStats, setGlobalStats] = useState({
     deposited: new BigNumber(0),
