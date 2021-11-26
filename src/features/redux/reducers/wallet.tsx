@@ -10,6 +10,7 @@ import {
   WALLET_ACTION,
   WALLET_ACTION_RESET,
   UNSUPPORTED_NETWORK,
+  WALLET_RPC,
 } from '../constants';
 
 const initialNetwork = () => {
@@ -108,6 +109,12 @@ export const walletReducer = (state = initialState, action) => {
         address: action.payload.address,
         error: { status: true, message: 'UNSUPPORTED NETWORK' },
       };
+    case WALLET_RPC: {
+      return {
+        ...state,
+        rpc: action.payload.rpc,
+      };
+    }
     default:
       return state;
   }

@@ -11,6 +11,7 @@ import {
   WALLET_CONNECT_DONE,
   WALLET_CREATE_MODAL,
   WALLET_DISCONNECT,
+  WALLET_RPC,
 } from '../constants';
 import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
@@ -68,7 +69,7 @@ const connect = () => {
 
     const close = async () => {
       await state.walletReducer.web3modal.clearCachedProvider();
-      dispatch({ type: WALLET_CONNECT_DONE, payload: { address: null } });
+       dispatch({ type: WALLET_CONNECT_DONE, payload: { address: null } });
     };
 
     const subscribeProvider = (provider, web3) => {
@@ -124,7 +125,8 @@ const connect = () => {
 
       if (networkId === config[state.walletReducer.network].chainId) {
         const accounts = await web3.eth.getAccounts();
-        //dispatch({type: WALLET_RPC, payload: {rpc: web3}}); => TODO: set same rpc as connected wallet to rpc[network] for consistency
+        console.log(accounts);
+        dispatch({ type: WALLET_RPC, payload: { rpc: state.rpc[state.network] } });
         dispatch({
           type: WALLET_CONNECT_DONE,
           payload: { address: accounts[0] },
@@ -1022,5 +1024,5 @@ export const wallet = {
   claim,
   exit,
   depositNative,
-  withdrawNative
+  withdrawNative,
 };
