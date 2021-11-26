@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { makeStyles, Box, MenuItem, Select, Typography } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { LabeledDropdownProps } from './LabeledDropdownProps';
@@ -15,6 +16,16 @@ export const LabeledDropdown: React.FC<LabeledDropdownProps> = ({
   selectStyle,
 }) => {
   const classes = useStyles();
+
+  let sortedList = Object.keys(list).sort((a, b) => (a > b ? 1 : -1));
+  if (sortedList.includes('all')) {
+    _.remove(sortedList, n => n === 'all');
+    sortedList = ['all', ...sortedList];
+  }
+  if (sortedList.includes('default')) {
+    _.remove(sortedList, n => n === 'default');
+    sortedList = ['default', ...sortedList];
+  }
 
   return (
     <Box className={classes.container}>
@@ -39,7 +50,7 @@ export const LabeledDropdown: React.FC<LabeledDropdownProps> = ({
         // renderValue={renderValue} // TODO: renable
         style={selectStyle}
       >
-        {Object.keys(list).map(val => (
+        {sortedList.map(val => (
           <MenuItem key={list[val]} value={val}>
             <Typography className={classes.value}>
               <span className={`${classes.label} label`}>{label}</span> {list[val]}
