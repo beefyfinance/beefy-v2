@@ -1,7 +1,6 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { reduxActions } from '../../features/redux/actions';
 import {
   makeStyles,
   AppBar,
@@ -25,6 +24,7 @@ import { getAvailableNetworks } from '../../helpers/utils';
 import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
 import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
+import { reduxActions } from '../../features/redux/actions';
 
 const useStyles = makeStyles(styles as any);
 export const Header = ({ isNightMode, setNightMode }) => {
@@ -37,18 +37,17 @@ export const Header = ({ isNightMode, setNightMode }) => {
     setMobileOpen(!mobileOpen);
   };
 
-  useEffect(() => {
-    if (!walletReducer.web3modal) {
-      dispatch(reduxActions.wallet.createWeb3Modal());
-    }
-  }, [dispatch, walletReducer.web3modal]);
-
   const navLinks = [
     { title: t('Header-Vote'), path: 'https://vote.beefy.finance/' },
     { title: t('Header-Stats'), path: 'https://dashboard.beefy.finance/' },
     { title: t('Header-Blog'), path: 'https://blog.beefy.finance/articles/' },
     { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
   ];
+
+  const updateNetwork = e => {
+    e.preventDefault();
+    dispatch(reduxActions.wallet.setNetwork(e.target.value));
+  };
 
   const NavLinks = () => {
     return (
@@ -172,7 +171,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
                       chainLogos={true}
                       list={getAvailableNetworks(true)}
                       selected={walletReducer.network}
-                      handler={e => switchNetwork(e.target.value, dispatch)}
+                      handler={updateNetwork}
                     />
                     <LanguageDropdown />
                   </Box>
