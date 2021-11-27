@@ -69,7 +69,7 @@ const connect = () => {
 
     const close = async () => {
       await state.walletReducer.web3modal.clearCachedProvider();
-       dispatch({ type: WALLET_CONNECT_DONE, payload: { address: null } });
+      dispatch({ type: WALLET_CONNECT_DONE, payload: { address: null } });
     };
 
     const subscribeProvider = (provider, web3) => {
@@ -125,8 +125,8 @@ const connect = () => {
 
       if (networkId === config[state.walletReducer.network].chainId) {
         const accounts = await web3.eth.getAccounts();
-        console.log(accounts);
-        dispatch({ type: WALLET_RPC, payload: { rpc: state.rpc[state.network] } });
+        // console.log(accounts);
+        // dispatch({ type: WALLET_RPC, payload: { rpc: state.rpc[state.network] } });
         dispatch({
           type: WALLET_CONNECT_DONE,
           payload: { address: accounts[0] },
@@ -146,6 +146,7 @@ const connect = () => {
         }
       }
     } catch (err) {
+      dispatch({ type: WALLET_DISCONNECT });
       console.log('connect error', err);
     }
   };
