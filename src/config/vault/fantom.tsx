@@ -4058,5 +4058,40 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x9879aBDea01a879644185341F7aF7d8343556B7a",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
     network: "fantom"
+  },
+  {
+    id: "scream-tusd",
+    logo: "single-assets/TUSD.png",
+    name: "TUSD",
+    token: "TUSD",
+    tokenDescription: "Scream",
+    tokenAddress: "0x9879aBDea01a879644185341F7aF7d8343556B7a",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooScreamTUSD",
+    earnedTokenAddress: "0x42ECfA11Db08FB3Bb0AAf722857be56FA8E57Dc0",
+    earnContractAddress: "0x42ECfA11Db08FB3Bb0AAf722857be56FA8E57Dc0",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "TUSD",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Scream",
+    assets: [
+      "TUSD"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
+    network: "fantom"
   }
 ];

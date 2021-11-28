@@ -17952,5 +17952,75 @@ export const pools = [
     addLiquidityUrl: "https://dex.apeswap.finance/#/add/ETH/0x19A6Da6e382b85F827088092a3DBe864d9cCba73",
     buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x19A6Da6e382b85F827088092a3DBe864d9cCba73",
     network: "bsc"
+  },
+  {
+    id: "bison-bison",
+    logo: "single-assets/BISON.png",
+    name: "BISON",
+    token: "BISON",
+    tokenDescription: "BiShares",
+    tokenAddress: "0x19A6Da6e382b85F827088092a3DBe864d9cCba73",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBison",
+    earnedTokenAddress: "0x7886484722747F66B53A27b2854eF4e6Cdd80881",
+    earnContractAddress: "0x7886484722747F66B53A27b2854eF4e6Cdd80881",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "BISON",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "BISON"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x19A6Da6e382b85F827088092a3DBe864d9cCba73",
+    network: "bsc"
+  },
+  {
+    id: "blockmine-nugget-goldcoin",
+    name: "NUGGET-GOLDCOIN LP",
+    token: "NUGGET-GOLDCOIN ALP",
+    tokenDescription: "ApeSwap (BlockMine)",
+    tokenAddress: "0x50EF5ccB4E34b751B25e9F449Dc58C248554c465",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooMineNUGGET-GOLDCOIN",
+    earnedTokenAddress: "0xd3FC1C726E1FaF21bADc029382FD10EC6c9Bc9A8",
+    earnContractAddress: "0xd3FC1C726E1FaF21bADc029382FD10EC6c9Bc9A8",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "blockmine-nugget-goldcoin",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "NUGGET",
+      "GOLDCOIN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://dex.apeswap.finance/#/add/0xE0B58022487131eC9913C1F3AcFD8F74FC6A6C7E/0xF2f02f60fD1a376270e777Aa2a4667329E3984eD",
+    buyTokenUrl: "https://dex.apeswap.finance/#/swap?inputCurrency=0xE0B58022487131eC9913C1F3AcFD8F74FC6A6C7E&outputCurrency=0xF2f02f60fD1a376270e777Aa2a4667329E3984eD",
+    network: "bsc"
   }
 ];

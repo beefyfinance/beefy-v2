@@ -1,54 +1,94 @@
 [
   {
-    "id": "bsc: bison-bison-bnb",
+    "id": "bsc: bison-bison",
     "type": "Added"
   },
   {
-    "id": "fantom: beets-phantom-dai-opera",
+    "id": "bsc: blockmine-nugget-goldcoin",
     "type": "Added"
   },
   {
-    "id": "fantom: boo-usdc-tusd",
+    "id": "fantom: scream-tusd",
     "type": "Added"
   },
   {
-    "id": "polygon: curve-poly-eurt",
+    "id": "moonriver: finn-finn",
     "type": "Added"
   },
   {
-    "id": "avax: synapse-nusdlp",
+    "id": "moonriver: finn-wmovr-usdt",
     "type": "Added"
   },
   {
-    "id": "avax: mai-qi-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver: finn-wmovr-finn",
+    "id": "moonriver: finn-eth-wmovr",
     "type": "Added"
   },
   {
-    "id": "moonriver: finn-usdc-finn",
+    "id": "moonriver: finn-wbtc-wmovr",
     "type": "Added"
   },
   {
-    "id": "moonriver: finn-dot-finn",
+    "id": "moonriver: finn-usdc-usdt",
     "type": "Added"
   },
   {
-    "id": "moonriver: solarbeam-bnb-wmovr",
-    "type": "synced"
-  },
-  {
-    "id": "cronos: cronos-bifi-maxi",
+    "id": "moonriver: finn-wan-wmovr",
     "type": "Added"
   },
   {
-    "id": "cronos: vvs-cro-usdt",
+    "id": "moonriver: finn-eth-finn",
     "type": "Added"
   },
   {
-    "id": "cronos: vvs-cro-usdc",
+    "id": "moonriver: finn-wbtc-finn",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: finn-finn-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: finn-finn-avax",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: finn-finn-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: finn-finn-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: finn-finn-xrp",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: finn-wan-finn",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: finn-finn-doge",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver: solarbeam-frax-arome",
+    "type": "Added"
+  },
+  {
+    "id": "cronos: crona-crona-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "cronos: crona-usdt-crona",
+    "type": "Added"
+  },
+  {
+    "id": "cronos: crona-usdc-dai",
+    "type": "Added"
+  },
+  {
+    "id": "cronos: crona-busd-bnb",
     "type": "Added"
   }
 ]
