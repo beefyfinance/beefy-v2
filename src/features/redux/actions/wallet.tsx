@@ -11,7 +11,6 @@ import {
   WALLET_CONNECT_DONE,
   WALLET_CREATE_MODAL,
   WALLET_DISCONNECT,
-  WALLET_RPC,
 } from '../constants';
 import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
