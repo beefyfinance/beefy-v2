@@ -27,10 +27,7 @@ const _Item = ({ vault }) => {
   const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
 
   const { hideBalance } = useHideBalanceCtx();
-  const styleProps = {
-    marginStats: isTwoColumns && !isGovVault && !isBoosted,
-  };
-  const classes = useStyles(styleProps as any);
+
   const { t } = useTranslation();
   const history = useHistory();
   const { wallet, balance } = useSelector((state: any) => ({
@@ -44,6 +41,12 @@ const _Item = ({ vault }) => {
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
 
   const blurred = parseFloat(priceInDolar.balance) > 0 && hideBalance;
+
+  const styleProps = {
+    marginStats: isTwoColumns && !isGovVault && !isBoosted,
+    removeMarginButton: isGovVault && parseFloat(poolRewards.rewards) > 0,
+  };
+  const classes = useStyles(styleProps as any);
 
   const handleOpenVault = useCallback(() => {
     history.push(`/${item.network}/vault/${item.id}`);

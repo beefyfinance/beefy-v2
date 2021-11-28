@@ -89,6 +89,12 @@ export const App = () => {
     localStorage.setItem('nightMode', JSON.stringify(isNightMode));
   }, [isNightMode]);
 
+  React.useEffect(() => {
+    if (!wallet.web3modal) {
+      dispatch(reduxActions.wallet.createWeb3Modal());
+    }
+  }, [dispatch, wallet.web3modal]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -124,7 +124,8 @@ const connect = () => {
 
       if (networkId === config[state.walletReducer.network].chainId) {
         const accounts = await web3.eth.getAccounts();
-        //dispatch({type: WALLET_RPC, payload: {rpc: web3}}); => TODO: set same rpc as connected wallet to rpc[network] for consistency
+        // console.log(accounts);
+        // dispatch({ type: WALLET_RPC, payload: { rpc: state.rpc[state.network] } });
         dispatch({
           type: WALLET_CONNECT_DONE,
           payload: { address: accounts[0] },
@@ -144,6 +145,7 @@ const connect = () => {
         }
       }
     } catch (err) {
+      dispatch({ type: WALLET_DISCONNECT });
       console.log('connect error', err);
     }
   };
@@ -1022,5 +1024,5 @@ export const wallet = {
   claim,
   exit,
   depositNative,
-  withdrawNative
+  withdrawNative,
 };
