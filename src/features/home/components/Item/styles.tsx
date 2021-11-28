@@ -215,7 +215,7 @@ export const styles = theme => ({
       width: '75%',
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: '16px',
+      marginTop: props => (props.removeMarginButton ? '0px' : '16px'),
       width: '100%',
     },
   },
