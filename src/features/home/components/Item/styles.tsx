@@ -1,7 +1,7 @@
 export const styles = theme => ({
   itemContainer: {
     [theme.breakpoints.up(1300)]: {
-      minWidth: '1180px',
+      minWidth: '1230px',
     },
     display: 'flex',
     flexDirection: 'column',
