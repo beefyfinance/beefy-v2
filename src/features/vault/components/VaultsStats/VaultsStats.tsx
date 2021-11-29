@@ -60,7 +60,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
       }
       amount = sumAmount.toFixed(8);
     }
-    setState({ balance: amount });
+    if (!isNaN(parseFloat(rewardAmount))) setState({ balance: amount });
     if (!isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
   }, [wallet.address, item, balance, vaultBoosts]);
 
@@ -85,10 +85,9 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
   }, [state.balance, pricesReducer.prices, item.oracleId]);
 
   const rewardPrice = React.useMemo(() => {
+    console.log(pricesReducer.prices[item.earnedToken]);
     return parseFloat(poolRewards.rewards) > 0
-      ? new BigNumber(pricesReducer.prices[item.earnedToken])
-          .times(parseFloat(poolRewards.rewards))
-          .toFixed(2)
+      ? new BigNumber(poolRewards.rewards).times(pricesReducer.prices[item.earnedToken]).toFixed(4)
       : 0;
   }, [poolRewards.rewards, pricesReducer.prices, item.earnedToken]);
 

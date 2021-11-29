@@ -6,6 +6,7 @@ import { createTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { reduxActions } from './features/redux/actions';
 import { ScrollToTop } from './components/ScrollToTop';
+import { HideBalanceProvider } from './components/HideBalancesContext';
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
@@ -88,28 +89,36 @@ export const App = () => {
     localStorage.setItem('nightMode', JSON.stringify(isNightMode));
   }, [isNightMode]);
 
+  React.useEffect(() => {
+    if (!wallet.web3modal) {
+      dispatch(reduxActions.wallet.createWeb3Modal());
+    }
+  }, [dispatch, wallet.web3modal]);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <ScrollToTop />
-        <Header isNightMode={isNightMode} setNightMode={() => setNightMode(!isNightMode)} />
-        <React.Suspense fallback={<div className="loader" />}>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route strict sensitive exact path="/:network/vault/:id">
-              <Vault />
-            </Route>
-            <Route strict sensitive exact path="/:network/boosts/:id">
-              <Boost />
-            </Route>
-            <Route>
-              <PageNotFound />
-            </Route>
-          </Switch>
-        </React.Suspense>
+        <HideBalanceProvider>
+          <ScrollToTop />
+          <Header isNightMode={isNightMode} setNightMode={() => setNightMode(!isNightMode)} />
+          <React.Suspense fallback={<div className="loader" />}>
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route strict sensitive exact path="/:network/vault/:id">
+                <Vault />
+              </Route>
+              <Route strict sensitive exact path="/:network/boosts/:id">
+                <Boost />
+              </Route>
+              <Route>
+                <PageNotFound />
+              </Route>
+            </Switch>
+          </React.Suspense>
+        </HideBalanceProvider>
       </Router>
     </ThemeProvider>
   );

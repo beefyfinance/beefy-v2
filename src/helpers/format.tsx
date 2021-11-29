@@ -21,9 +21,6 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
   }
 
   const order = Math.floor(Math.log10(tvl) / 3);
-  if (order < 0) {
-    return '$0.00';
-  }
 
   const units = ['', 'k', 'M', 'B', 'T'];
   const shouldShowUnits = order > 1; // only use units if 1M+

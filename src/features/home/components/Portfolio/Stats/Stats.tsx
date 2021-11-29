@@ -17,7 +17,7 @@ export const Stats = ({ stats, blurred }) => {
   }, [stats]);
 
   const BlurredText = ({ value }) => (
-    <span className={blurred ? classes.blurred : ''}>{value}</span>
+    <span className={blurred ? classes.blurred : ''}>{blurred ? '$100' : value}</span>
   );
 
   const formatStat = value => (empty ? '0' : formatUsd(value));
@@ -27,19 +27,19 @@ export const Stats = ({ stats, blurred }) => {
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('Portfolio-Deposited')}</Typography>
         <Typography className={classes.value}>
-          <BlurredText value={blurred ? `$100` : formatStat(stats.deposited)} />
+          <BlurredText value={formatStat(stats.deposited)} />
         </Typography>
       </Box>
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('Portfolio-YieldMnth')}</Typography>
         <Typography className={classes.value}>
-          <BlurredText value={blurred ? `$100` : formatStat(stats.monthly)} />
+          <BlurredText value={formatStat(stats.monthly)} />
         </Typography>
       </Box>
       <Box className={classes.stat}>
         <Typography className={classes.label}>{t('Portfolio-YieldDay')}</Typography>
         <Typography className={classes.value}>
-          <BlurredText value={blurred ? `$100` : formatStat(stats.daily)} />
+          <BlurredText value={formatStat(stats.daily)} />
         </Typography>
       </Box>
     </Grid>

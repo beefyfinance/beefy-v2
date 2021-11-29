@@ -1,5 +1,8 @@
 export const styles = theme => ({
   itemContainer: {
+    [theme.breakpoints.up(1300)]: {
+      minWidth: '1230px',
+    },
     display: 'flex',
     flexDirection: 'column',
     margin: '20px 0 0 0',
@@ -192,6 +195,9 @@ export const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  blurred: {
+    filter: 'blur(.5rem)',
+  },
   depositButton: {
     border: 'solid 2px #54995C',
     backgroundColor: '#54995C',
@@ -212,7 +218,7 @@ export const styles = theme => ({
       width: '75%',
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: '16px',
+      marginTop: props => (props.removeMarginButton ? '0px' : '16px'),
       width: '100%',
     },
   },

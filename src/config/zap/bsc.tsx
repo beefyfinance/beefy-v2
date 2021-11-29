@@ -27,4 +27,11 @@ export const zaps = [
     ammFactory: '0x3cd1c46068daea5ebb0d3f55f6915b10648062b8',
     ammPairInitHash: '0x0d994d996174b05cfc7bed897dc1b20b4c458fc8d64fe98bc78b3c64a6b4d093',
   },
+  {
+    // BabySwap
+    zapAddress: '0xfd5701FB4139e6E18cE4F9712ADBAB355a6b606e',
+    ammRouter: '0x325E343f1dE602396E256B67eFd1F61C3A6B38Bd',
+    ammFactory: '0x86407bEa2078ea5f5EB5A52B2caA963bC1F889Da',
+    ammPairInitHash: '0x48c8bec5512d397a5d512fbb7d83d515e7b6d91e9838730bd1aa1b16575da7f5',
+  },
 ];

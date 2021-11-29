@@ -14,6 +14,7 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
+import { useHideBalanceCtx } from '../../../../components/HideBalancesContext';
 
 const useStyles = makeStyles(styles as any);
 const _Item = ({ vault }) => {
@@ -25,11 +26,8 @@ const _Item = ({ vault }) => {
   const isGovVault = item.isGovVault;
   const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
 
-  const styleProps = {
-    marginStats: isTwoColumns && !isGovVault && !isBoosted,
-  };
+  const { hideBalance } = useHideBalanceCtx();
 
-  const classes = useStyles(styleProps as any);
   const { t } = useTranslation();
   const history = useHistory();
   const { wallet, balance } = useSelector((state: any) => ({
@@ -37,12 +35,18 @@ const _Item = ({ vault }) => {
     balance: state.balanceReducer,
   }));
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
-
   const [priceInDolar, setPriceInDolar] = React.useState({ balance: '0' });
   const [poolRewards, setPoolRewards] = React.useState({ rewards: '0' });
   const [userStaked, setUserStaked] = React.useState(false);
-
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
+
+  const blurred = parseFloat(priceInDolar.balance) > 0 && hideBalance;
+
+  const styleProps = {
+    marginStats: isTwoColumns && !isGovVault && !isBoosted,
+    removeMarginButton: isGovVault && parseFloat(poolRewards.rewards) > 0,
+  };
+  const classes = useStyles(styleProps as any);
 
   const handleOpenVault = useCallback(() => {
     history.push(`/${item.network}/vault/${item.id}`);
@@ -110,12 +114,38 @@ const _Item = ({ vault }) => {
     setUserStaked(staked);
   }, [balance.tokens, boostedData, item.network, wallet.address]);
 
-  const ValueText = ({ value }) => (
-    <>{value ? <span className={classes.value}>{value}</span> : <ApyStatLoader />}</>
+  const ValueText = ({ value, blurred = false }) => (
+    <>
+      {value ? (
+        <span
+          className={clsx({
+            [classes.value]: true,
+            [classes.blurred]: blurred,
+          })}
+        >
+          {blurred ? '$100' : value}
+        </span>
+      ) : (
+        <ApyStatLoader />
+      )}
+    </>
   );
 
-  const ValuePrice = ({ value }) => (
-    <>{value ? <span className={classes.price}>{value}</span> : <ApyStatLoader />}</>
+  const ValuePrice = ({ value, blurred = false }) => (
+    <>
+      {value ? (
+        <span
+          className={clsx({
+            [classes.price]: true,
+            [classes.blurred]: blurred,
+          })}
+        >
+          {blurred ? '$100' : value}
+        </span>
+      ) : (
+        <ApyStatLoader />
+      )}
+    </>
   );
 
   const price = React.useMemo(() => {
@@ -151,7 +181,6 @@ const _Item = ({ vault }) => {
         [classes.withGovVault]: isGovVault,
       })}
     >
-      {console.log(item.id, tokensEarned)}
       <Grid container className={classes.dataGrid}>
         {/*Title*/}
         <div className={classes.titleContainer}>
@@ -226,11 +255,11 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
 
-                  <ValueText value={tokensEarned} />
+                  <ValueText blurred={blurred} value={tokensEarned} />
 
                   {parseFloat(priceInDolar.balance) > 0 && (
                     <Typography className={classes.label}>
-                      <ValuePrice value={formatUsd(price)} />
+                      <ValuePrice blurred={blurred} value={formatUsd(price)} />
                     </Typography>
                   )}
                   {/* {parseInt(priceInDolar.balance) > 0 ? (
@@ -265,10 +294,13 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
 
-                  <ValueText value={(rewardsEarned ?? '') + ` ${item.earnedToken}`} />
+                  <ValueText
+                    blurred={blurred}
+                    value={(rewardsEarned ?? '') + ` ${item.earnedToken}`}
+                  />
                   {parseFloat(priceInDolar.balance) > 0 && (
                     <Typography className={classes.label}>
-                      <ValuePrice value={formatUsd(rewardPrice)} />
+                      <ValuePrice blurred={blurred} value={formatUsd(rewardPrice)} />
                     </Typography>
                   )}
                   {isTwoColumns ? <div className={classes.boostSpacer} /> : null}
