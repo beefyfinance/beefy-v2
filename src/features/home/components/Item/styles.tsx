@@ -363,27 +363,21 @@ export const styles = theme => ({
   },
   statsContainer: {
     margin: props => (props.marginStats ? '16px 0px 0px 0px' : 'auto'),
+    alignItems: 'flex-start',
+    flexGrow: '0',
     [theme.breakpoints.up('md')]: {
-      alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '67%',
       flexBasis: '67%',
     },
     [theme.breakpoints.down(1050)]: {
-      alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '65%',
       flexBasis: '65%',
     },
     [theme.breakpoints.down(1000)]: {
-      alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '63%',
       flexBasis: '63%',
     },
     [theme.breakpoints.down('sm')]: {
-      alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '100%',
       flexBasis: '100%',
     },
