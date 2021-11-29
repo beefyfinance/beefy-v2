@@ -47,27 +47,24 @@ export const styles = theme => ({
     flexDirection: 'row',
     alignItems: 'space-around',
     justifyContent: 'center',
+    flexGrow: '0',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '33%',
       flexBasis: '33%',
     },
     [theme.breakpoints.down(1050)]: {
       alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '35%',
       flexBasis: '35%',
     },
     [theme.breakpoints.down(1000)]: {
       alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '37%',
       flexBasis: '37%',
     },
     [theme.breakpoints.down('sm')]: {
       alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '100%',
       flexBasis: '100%',
     },
