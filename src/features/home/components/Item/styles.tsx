@@ -50,8 +50,20 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
       flexGrow: '0',
-      maxWidth: '30%',
-      flexBasis: '30%',
+      maxWidth: '33%',
+      flexBasis: '33%',
+    },
+    [theme.breakpoints.down(1050)]: {
+      alignItems: 'flex-start',
+      flexGrow: '0',
+      maxWidth: '35%',
+      flexBasis: '35%',
+    },
+    [theme.breakpoints.down(1000)]: {
+      alignItems: 'flex-start',
+      flexGrow: '0',
+      maxWidth: '37%',
+      flexBasis: '37%',
     },
     [theme.breakpoints.down('sm')]: {
       alignItems: 'flex-start',
@@ -354,8 +366,20 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
       flexGrow: '0',
-      maxWidth: '70%',
-      flexBasis: '70%',
+      maxWidth: '67%',
+      flexBasis: '67%',
+    },
+    [theme.breakpoints.down(1050)]: {
+      alignItems: 'flex-start',
+      flexGrow: '0',
+      maxWidth: '65%',
+      flexBasis: '65%',
+    },
+    [theme.breakpoints.down(1000)]: {
+      alignItems: 'flex-start',
+      flexGrow: '0',
+      maxWidth: '63%',
+      flexBasis: '63%',
     },
     [theme.breakpoints.down('sm')]: {
       alignItems: 'flex-start',
