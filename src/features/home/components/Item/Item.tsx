@@ -72,9 +72,9 @@ const _Item = ({ vault }) => {
       let sumAmount = new BigNumber(0);
       if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
         sumAmount = byDecimals(
-          new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
-            byDecimals(item.pricePerFullShare)
-          ),
+          new BigNumber(balance.tokens[item.network][item.earnedToken].balance)
+            .multipliedBy(byDecimals(item.pricePerFullShare))
+            .toFixed(8),
           item.tokenDecimals
         );
         // ).toFixed(8);
@@ -147,12 +147,6 @@ const _Item = ({ vault }) => {
       )}
     </>
   );
-
-  const price = React.useMemo(() => {
-    return parseFloat(priceInDolar.balance) > 0
-      ? new BigNumber(pricesReducer.prices[item.oracleId]).times(priceInDolar.balance).toFixed(2)
-      : 0;
-  }, [priceInDolar.balance, pricesReducer.prices, item.oracleId]);
 
   const rewardPrice = React.useMemo(() => {
     return parseFloat(poolRewards.rewards) > 0
@@ -259,7 +253,10 @@ const _Item = ({ vault }) => {
 
                   {parseFloat(priceInDolar.balance) > 0 && (
                     <Typography className={classes.label}>
-                      <ValuePrice blurred={blurred} value={formatUsd(price)} />
+                      <ValuePrice
+                        blurred={blurred}
+                        value={formatUsd(priceInDolar.balance, item.oraclePrice)}
+                      />
                     </Typography>
                   )}
                   {/* {parseInt(priceInDolar.balance) > 0 ? (
@@ -300,7 +297,10 @@ const _Item = ({ vault }) => {
                   />
                   {parseFloat(priceInDolar.balance) > 0 && (
                     <Typography className={classes.label}>
-                      <ValuePrice blurred={blurred} value={formatUsd(rewardPrice)} />
+                      <ValuePrice
+                        blurred={blurred}
+                        value={formatUsd(rewardPrice, pricesReducer.prices[item.earnedToken])}
+                      />
                     </Typography>
                   )}
                   {isTwoColumns ? <div className={classes.boostSpacer} /> : null}
