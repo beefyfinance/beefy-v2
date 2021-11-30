@@ -1,94 +1,22 @@
 [
   {
-    "id": "bsc: bison-bison",
+    "id": "polygon: quick-matic-wcro",
     "type": "Added"
   },
   {
-    "id": "bsc: blockmine-nugget-goldcoin",
+    "id": "polygon: quick-matic-mana",
     "type": "Added"
   },
   {
-    "id": "fantom: scream-tusd",
+    "id": "harmony: curve-harmony-tricrypto",
     "type": "Added"
   },
   {
-    "id": "moonriver: finn-finn",
+    "id": "harmony: curve-harmony-3pool",
     "type": "Added"
   },
   {
-    "id": "moonriver: finn-wmovr-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-eth-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-wbtc-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-usdc-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-wan-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-eth-finn",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-wbtc-finn",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-avax",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-bnb",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-xrp",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-wan-finn",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-doge",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-frax-arome",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-crona-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-usdt-crona",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-usdc-dai",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-busd-bnb",
+    "id": "cronos: vvs-cro-dai",
     "type": "Added"
   }
 ]

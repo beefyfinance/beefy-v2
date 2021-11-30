@@ -535,5 +535,83 @@ export const pools = [
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
     stratType: "SingleStake",
     network: "harmony"
+  },
+  {
+    id: "curve-harmony-tricrypto",
+    logo: "uncategorized/ATRICRYPTO.png",
+    name: "TriCrypto",
+    token: "crvUSDBTCETH",
+    tokenDescription: "Curve",
+    tokenAddress: "0x99E8eD28B97c7F1878776eD94fFC77CABFB9B726",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCurveTriCrypto",
+    earnedTokenAddress: "0xAFEe37A5FaAf9cDb9E0528bb60E457b570b5520E",
+    earnContractAddress: "0xAFEe37A5FaAf9cDb9E0528bb60E457b570b5520E",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "curve-harmony-tricrypto",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Curve",
+    assets: [
+      "DAI",
+      "USDC",
+      "USDT",
+      "WBTC",
+      "ETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0.01%",
+    addLiquidityUrl: "https://harmony.curve.fi/tricrypto/deposit",
+    network: "harmony"
+  },
+  {
+    id: "curve-harmony-3pool",
+    logo: "polygon/CURVE-3Pool.png",
+    name: "DAI/USDC/USDT",
+    token: "3CRV",
+    tokenDescription: "Curve",
+    tokenAddress: "0xC5cfaDA84E902aD92DD40194f0883ad49639b023",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCurve3CRV",
+    earnedTokenAddress: "0x44e67bCDf95aE53b60ab20929626274640998FDB",
+    earnContractAddress: "0x44e67bCDf95aE53b60ab20929626274640998FDB",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "curve-harmony-3pool",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Curve",
+    assets: [
+      "DAI",
+      "USDC",
+      "USDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0.01%",
+    addLiquidityUrl: "https://harmony.curve.fi/3pool/deposit",
+    network: "harmony"
   }
 ];

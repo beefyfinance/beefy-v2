@@ -7325,5 +7325,77 @@ export const pools = [
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://polygon.curve.fi/eurtusd/deposit",
     network: "polygon"
+  },
+  {
+    id: "quick-matic-wcro",
+    name: "WCRO-MATIC LP",
+    token: "WCRO-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0xfD168748dD07a32A401E800240aEC8EC6EFc706f",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickWCRO-MATIC",
+    earnedTokenAddress: "0x6EfBc871323148d9Fc34226594e90d9Ce2de3da3",
+    earnContractAddress: "0x6EfBc871323148d9Fc34226594e90d9Ce2de3da3",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-matic-wcro",
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "CRO",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0xf2D8124b8F9267DaD61351c7aD252362880C6638",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xf2D8124b8F9267DaD61351c7aD252362880C6638&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    network: "polygon"
+  },
+  {
+    id: "quick-matic-mana",
+    name: "MANA-MATIC LP",
+    token: "MANA-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x6b0Ce31eAD9b14c2281D80A5DDE903AB0855313A",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickMANA-MATIC",
+    earnedTokenAddress: "0x5e03C75a8728a8E0FF0326baADC95433009424d6",
+    earnContractAddress: "0x5e03C75a8728a8E0FF0326baADC95433009424d6",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-matic-mana",
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "MANA",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0xA1c57f48F0Deb89f569dFbE6E2B7f46D33606fD4",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xA1c57f48F0Deb89f569dFbE6E2B7f46D33606fD4&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    network: "polygon"
   }
 ];
