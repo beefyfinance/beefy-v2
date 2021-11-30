@@ -31,6 +31,14 @@ export const App = () => {
         default: '#232743',
         paper: isNightMode ? '#272B4A' : '#FFFFFF',
         light: '#313759',
+        tags: {
+          bifi: '#5C499D',
+          stable: '#3D8F61',
+          blueChip: '#3E5FA7',
+          lowRisk: '#4683AA',
+          boost: '#E88225',
+          eol: '#313A68',
+        },
       } as any, // TODO: fix any
     },
     overrides: {
