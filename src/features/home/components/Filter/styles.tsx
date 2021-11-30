@@ -40,7 +40,7 @@ export const styles = theme => ({
     transition: 'opacity 0.2s ease-in-out',
   },
   selected: {
-    border: 'solid 3px #3F466D',
+    border: 'solid 2px #3F466D',
     backgroundColor: '#272B4A',
     '& .MuiSvgIcon-root': {
       fontSize: '80px',
@@ -57,29 +57,29 @@ export const styles = theme => ({
     },
   },
   stable: {
-    background: '#3D8F61',
-    backgroundColor: '#3D8F61',
+    background: theme.palette.background.tags.stable,
+    backgroundColor: theme.palette.background.tags.stable,
     '&:hover': {
       backgroundColor: '#5EBA87',
     },
   },
   bluechip: {
-    background: '#3E5FA7',
-    backgroundColor: '#3E5FA7',
+    background: theme.palette.background.tags.blueChip,
+    backgroundColor: theme.palette.background.tags.blueChip,
     '&:hover': {
       backgroundColor: '#6A88C8',
     },
   },
   beefy: {
-    background: '#5C499D',
-    backgroundColor: '#5C499D',
+    background: theme.palette.background.tags.bifi,
+    backgroundColor: theme.palette.background.tags.bifi,
     '&:hover': {
       backgroundColor: '#8574BE',
     },
   },
   low: {
-    background: '#639CBF',
-    backgroundColor: '#639CBF',
+    background: theme.palette.background.tags.lowRisk,
+    backgroundColor: theme.palette.background.tags.lowRisk,
     '&:hover': {
       backgroundColor: '#76A7C6',
     },
