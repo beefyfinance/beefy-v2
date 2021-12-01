@@ -1,7 +1,7 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Button, Grid, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
@@ -29,7 +29,6 @@ const _Item = ({ vault }) => {
   const { hideBalance } = useHideBalanceCtx();
 
   const { t } = useTranslation();
-  const history = useHistory();
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
@@ -47,10 +46,6 @@ const _Item = ({ vault }) => {
     removeMarginButton: isGovVault && parseFloat(poolRewards.rewards) > 0,
   };
   const classes = useStyles(styleProps as any);
-
-  const handleOpenVault = useCallback(() => {
-    history.push(`/${item.network}/vault/${item.id}`);
-  }, [history, item.network, item.id]);
 
   React.useEffect(() => {
     let amount = '0';
