@@ -217,6 +217,7 @@ export const styles = theme => ({
     padding: '2px 20px 2px',
     textTransform: 'capitalize',
     display: 'block',
+    minWidth: '64px',
     '&:hover': {
       cursor: 'pointer',
       backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
@@ -230,6 +231,11 @@ export const styles = theme => ({
       marginTop: props => (props.removeMarginButton ? '0px' : '16px'),
       width: '100%',
     },
+  },
+  removeLinkStyles: {
+    textDecoration: 'none',
+    color: '#FFF',
+    width: '100%',
   },
   apyContainer: {
     width: '100%',
