@@ -32,6 +32,7 @@ the command is run. To help minimize pollution, the maintainer may avoid pushing
 into the staging repository.
 
 Development
++ v0.9.0.5 AllTrades: small bugfix
 + v0.9.0.4 AllTrades: small bugfix
 + v0.9.0.3 AllTrades: add support for Cronos chain
 + v0.9.0.2 AllTrades: adjustment to preserve the new & special v2 bifi-gov vault objects
@@ -313,9 +314,11 @@ async function p_main()	{
 		if (i_pruned > I)
 			o_trgtChn.b_dirty = true;
 
-		//if something changed within the target's array of vaults on this chain, note 
-		//	overall that change has occurred
-		b_dirty = o_trgtChn.b_dirty;
+		//if no change has been noted prior to processing this chain and a change to this  
+		//	chain's target array of vaults on this chain was identified, note now overall 
+		//	that change has occurred
+		if (!b_dirty)
+			b_dirty = o_trgtChn.b_dirty;
 	} //for (const O_CHN of mAO_CHAIN)
 
 	//if nothing has changed anywhere, our work is done
