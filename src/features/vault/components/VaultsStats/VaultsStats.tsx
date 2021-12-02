@@ -14,54 +14,66 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
   const classes = useStyles();
   const t = useTranslation().t;
-  const [state, setState] = React.useState({ balance: '0' });
-  const [poolRewards, setPoolRewards] = React.useState({ rewards: '0' });
-
+  const [deposited, setDeposited] = React.useState({
+    balance: new BigNumber(0),
+    shares: new BigNumber(0),
+  });
+  const [poolRewards, setPoolRewards] = React.useState({
+    balance: new BigNumber(0),
+    shares: new BigNumber(0),
+  });
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
   }));
 
   React.useEffect(() => {
-    let amount = '0';
-    let rewardAmount = '0';
     let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
+
+    let balanceSingle = new BigNumber(0);
+    let rewardsBalance = new BigNumber(0);
+    let sharesBalance = new BigNumber(0);
+    let rewardsSharesBalance = new BigNumber(0);
+
     if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
-      let sumAmount = new BigNumber(0);
       if (item.isGovVault) {
-        sumAmount = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].balance),
+        balanceSingle = byDecimals(
+          balance.tokens[item.network][symbol].balance,
           item.tokenDecimals
         );
-        rewardAmount = byDecimals(
+        rewardsBalance = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].rewards),
           item.tokenDecimals
-        ).toFixed(8);
+        );
+        sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
+        rewardsSharesBalance = byDecimals(
+          new BigNumber(balance.tokens[item.network][symbol].rewards)
+        );
       } else {
-        sumAmount = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-            byDecimals(item.pricePerFullShare)
-          ),
+        balanceSingle = byDecimals(
+          new BigNumber(balance.tokens[item.network][item.earnedToken].balance)
+            .multipliedBy(byDecimals(item.pricePerFullShare))
+            .toFixed(8),
           item.tokenDecimals
         );
+        sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
       }
-      for (const boost of vaultBoosts) {
+      if (item.isBoosted) {
+        const boost = item.boostData;
         let symbol = `${boost.token}${boost.id}Boost`;
         if (!isEmpty(balance.tokens[item.network][symbol])) {
-          sumAmount = sumAmount.plus(
-            byDecimals(
-              new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-                byDecimals(item.pricePerFullShare)
-              ),
-              item.tokenDecimals
-            )
+          balanceSingle = byDecimals(
+            new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+              byDecimals(item.pricePerFullShare)
+            ),
+            item.tokenDecimals
           );
+          sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
         }
       }
-      amount = sumAmount.toFixed(8);
     }
-    if (!isNaN(parseFloat(rewardAmount))) setState({ balance: amount });
-    if (!isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
+    setDeposited({ balance: balanceSingle, shares: sharesBalance });
+    setPoolRewards({ balance: rewardsBalance, shares: rewardsSharesBalance });
   }, [wallet.address, item, balance, vaultBoosts]);
 
   const lastHarvest = useLastHarvest(item.id);
@@ -77,27 +89,6 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
   const ValuePrice = ({ value }) => (
     <>{value ? <span className={classes.price}>{value}</span> : <ApyStatLoader />}</>
   );
-
-  const price = React.useMemo(() => {
-    return parseFloat(state.balance) > 0
-      ? new BigNumber(pricesReducer.prices[item.oracleId]).times(state.balance).toFixed(2)
-      : 0;
-  }, [state.balance, pricesReducer.prices, item.oracleId]);
-
-  const rewardPrice = React.useMemo(() => {
-    console.log(pricesReducer.prices[item.earnedToken]);
-    return parseFloat(poolRewards.rewards) > 0
-      ? new BigNumber(poolRewards.rewards).times(pricesReducer.prices[item.earnedToken]).toFixed(4)
-      : 0;
-  }, [poolRewards.rewards, pricesReducer.prices, item.earnedToken]);
-
-  const tokensEarned = React.useMemo(() => {
-    return parseFloat(state.balance) > 0 ? state.balance : '0';
-  }, [state.balance]);
-
-  const rewardsEarned = React.useMemo(() => {
-    return parseFloat(poolRewards.rewards) > 0 ? poolRewards.rewards : '0';
-  }, [poolRewards.rewards]);
 
   const yearlyToDaily = apy => {
     const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
@@ -150,101 +141,129 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
     })
   );
 
+  const _deposited = deposited.balance.isGreaterThan(0)
+    ? deposited.balance.toFixed(8)
+    : new BigNumber(0).toFixed(2);
+
+  const depositedUsd = deposited.balance.isGreaterThan(0)
+    ? formatUsd(deposited.balance, pricesReducer.prices[item.oracleId])
+    : formatUsd(0);
+
+  const rewardsEarned = poolRewards.balance.isGreaterThan(0)
+    ? poolRewards.shares
+    : new BigNumber(0);
+
+  const rewardPrice = poolRewards.balance.isGreaterThan(0)
+    ? formatUsd(poolRewards.balance, pricesReducer.prices[item.earnedToken])
+    : formatUsd(0);
+
+  const formatDecimals = number => {
+    return number.isGreaterThanOrEqualTo(0)
+      ? number.toFixed(4)
+      : number.isEqualTo(0)
+      ? 0
+      : number.toFixed(8);
+  };
+
   return (
-    <Box className={classes.container}>
-      <Box sx={{ flexGrow: 1 }} className={classes.stats}>
-        <Box className={classes.stat}>
-          <Typography className={classes.label}>{t('TVL')}</Typography>
-          <Typography>
-            <ValueText value={item ? formatUsd(item.tvl) : 0} />
-          </Typography>
-        </Box>
-        <Box className={classes.stat}>
-          <Typography className={classes.label}>
-            {!item.isGovVault ? t('APY') : t('APR')}
-          </Typography>
-          {isBoosted ? (
-            <>
-              {' '}
+    <>
+      {item && (
+        <Box className={classes.container}>
+          <Box sx={{ flexGrow: 1 }} className={classes.stats}>
+            <Box className={classes.stat}>
+              <Typography className={classes.label}>{t('TVL')}</Typography>
               <Typography>
-                <ValueText value={formatted.boostedTotalApy} />
+                <ValueText value={item ? formatUsd(item.tvl) : 0} />
               </Typography>
-              <Typography>
-                <ValueTached value={formatApy(item.apy.totalApy)} />
-              </Typography>{' '}
-            </>
-          ) : (
-            <>
-              <Typography>
-                <ValueText
-                  value={
-                    item.isGovVault ? formatApy(values.totalApy) : formatApy(item.apy.totalApy)
-                  }
-                />
+            </Box>
+            <Box className={classes.stat}>
+              <Typography className={classes.label}>
+                {!item.isGovVault ? t('APY') : t('APR')}
               </Typography>
-            </>
-          )}
-        </Box>
-        <Box>
-          <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
-          {isBoosted ? (
-            <>
-              <Typography>
-                <ValueText value={formatted.boostedTotalDaily} />
-              </Typography>
-              <Typography>
-                <ValueTached value={item ? calcDaily(item.apy.totalApy) : 0} />
-              </Typography>
-            </>
-          ) : (
-            <Typography>
-              <ValueText
-                value={
-                  item.isGovVault ? formatApy(values.totalDaily) : calcDaily(item.apy.totalApy)
-                }
-              />
-              {/* <ValueText value={item ? calcDaily(item.apy.totalApy) : 0} /> */}
-            </Typography>
-          )}
-        </Box>
-      </Box>
-      <Box className={classes.stats2}>
-        <Box className={classes.stat}>
-          <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
-          <Typography>
-            <ValueText value={tokensEarned} />
-          </Typography>
-          {parseFloat(state.balance) > 0 && (
-            <Typography>
-              <ValuePrice value={formatUsd(price)} />
-            </Typography>
-          )}
-        </Box>
-        {!item.isGovVault ? (
-          <>
-            {lastHarvest !== 'never' && (
-              <Box className={classes.stat}>
-                <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>
+              {isBoosted ? (
+                <>
+                  {' '}
+                  <Typography>
+                    <ValueText value={formatted.boostedTotalApy} />
+                  </Typography>
+                  <Typography>
+                    <ValueTached value={formatApy(item.apy.totalApy)} />
+                  </Typography>{' '}
+                </>
+              ) : (
+                <>
+                  <Typography>
+                    <ValueText
+                      value={
+                        item.isGovVault ? formatApy(values.totalApy) : formatApy(item.apy.totalApy)
+                      }
+                    />
+                  </Typography>
+                </>
+              )}
+            </Box>
+            <Box>
+              <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
+              {isBoosted ? (
+                <>
+                  <Typography>
+                    <ValueText value={formatted.boostedTotalDaily} />
+                  </Typography>
+                  <Typography>
+                    <ValueTached value={item ? calcDaily(item.apy.totalApy) : 0} />
+                  </Typography>
+                </>
+              ) : (
                 <Typography>
-                  <ValueText value={lastHarvest} />
+                  <ValueText
+                    value={
+                      item.isGovVault ? formatApy(values.totalDaily) : calcDaily(item.apy.totalApy)
+                    }
+                  />
+                  {/* <ValueText value={item ? calcDaily(item.apy.totalApy) : 0} /> */}
                 </Typography>
+              )}
+            </Box>
+          </Box>
+          <Box className={classes.stats2}>
+            <Box className={classes.stat}>
+              <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
+              <Typography>
+                <ValueText value={_deposited} />
+              </Typography>
+              {deposited.balance.isGreaterThan(0) && (
+                <Typography>
+                  <ValuePrice value={depositedUsd} />
+                </Typography>
+              )}
+            </Box>
+            {!item.isGovVault ? (
+              <>
+                {lastHarvest !== 'never' && (
+                  <Box className={classes.stat}>
+                    <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>
+                    <Typography>
+                      <ValueText value={lastHarvest} />
+                    </Typography>
+                  </Box>
+                )}
+              </>
+            ) : (
+              <Box className={classes.stat}>
+                <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
+                <Typography>
+                  <ValueText value={formatDecimals(rewardsEarned)} />
+                </Typography>
+                {deposited.balance.isGreaterThan(0) && (
+                  <Typography>
+                    <ValuePrice value={rewardPrice} />
+                  </Typography>
+                )}
               </Box>
             )}
-          </>
-        ) : (
-          <Box className={classes.stat}>
-            <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
-            <Typography>
-              <ValueText value={rewardsEarned} />
-            </Typography>
-            {parseFloat(state.balance) > 0 && (
-              <Typography>
-                <ValuePrice value={formatUsd(rewardPrice)} />
-              </Typography>
-            )}
           </Box>
-        )}
-      </Box>
-    </Box>
+        </Box>
+      )}
+    </>
   );
 };

@@ -34,80 +34,76 @@ const _Item = ({ vault }) => {
     balance: state.balanceReducer,
   }));
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
-  const [priceInDolar, setPriceInDolar] = React.useState({ balance: '0' });
-  const [poolRewards, setPoolRewards] = React.useState({ rewards: '0' });
+  const [deposited, setDeposited] = React.useState({
+    balance: new BigNumber(0),
+    shares: new BigNumber(0),
+  });
+  const [poolRewards, setPoolRewards] = React.useState({
+    balance: new BigNumber(0),
+    shares: new BigNumber(0),
+  });
   const [userStaked, setUserStaked] = React.useState(false);
   const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
 
-  const blurred = parseFloat(priceInDolar.balance) > 0 && hideBalance;
+  const blurred = deposited.balance.isGreaterThan(0) && hideBalance;
 
   const styleProps = {
     marginStats: isTwoColumns && !isGovVault && !isBoosted,
-    removeMarginButton: isGovVault && parseFloat(poolRewards.rewards) > 0,
+    removeMarginButton: isGovVault && poolRewards.balance.isGreaterThan(0),
   };
   const classes = useStyles(styleProps as any);
 
   React.useEffect(() => {
-    let amount = '0';
-    let rewardAmount = '0';
-    if (item.isGovVault) {
-      let symbol = `${item.token}GovVault`;
-      if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
-        amount = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].balance),
-          item.tokenDecimals
-        ).toFixed(8);
+    let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
 
-        rewardAmount = byDecimals(
+    let balanceSingle = new BigNumber(0);
+    let rewardsBalance = new BigNumber(0);
+    let sharesBalance = new BigNumber(0);
+    let rewardsSharesBalance = new BigNumber(0);
+
+    if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
+      if (item.isGovVault) {
+        balanceSingle = byDecimals(
+          balance.tokens[item.network][symbol].balance,
+          item.tokenDecimals
+        );
+        rewardsBalance = byDecimals(
           new BigNumber(balance.tokens[item.network][symbol].rewards),
           item.tokenDecimals
-        ).toFixed(8);
-      }
-    } else {
-      let sumAmount = new BigNumber(0);
-      if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
-        sumAmount = byDecimals(
+        );
+        sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
+        rewardsSharesBalance = byDecimals(
+          new BigNumber(balance.tokens[item.network][symbol].rewards)
+        );
+      } else {
+        balanceSingle = byDecimals(
           new BigNumber(balance.tokens[item.network][item.earnedToken].balance)
             .multipliedBy(byDecimals(item.pricePerFullShare))
             .toFixed(8),
           item.tokenDecimals
         );
-        // ).toFixed(8);
+        sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
       }
-      if (wallet) {
-        for (const boost of vaultBoosts) {
-          let symbol = `${boost.token}${boost.id}Boost`;
-          if (!isEmpty(balance.tokens[item.network][symbol])) {
-            sumAmount = sumAmount.plus(
-              byDecimals(
-                new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-                  byDecimals(item.pricePerFullShare)
-                ),
-                item.tokenDecimals
-              )
-            );
+      if (item.isBoosted) {
+        const boost = item.boostData;
+        let symbol = `${boost.token}${boost.id}Boost`;
+        if (!isEmpty(balance.tokens[item.network][symbol])) {
+          balanceSingle = byDecimals(
+            new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+              byDecimals(item.pricePerFullShare)
+            ),
+            item.tokenDecimals
+          );
+          sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
+          if (balanceSingle.isGreaterThan(0)) {
+            setUserStaked(true);
           }
         }
       }
-      amount = sumAmount.toFixed(8);
     }
-    if (!isNaN(parseFloat(amount))) setPriceInDolar({ balance: amount });
-    if (!isNaN(parseFloat(rewardAmount))) setPoolRewards({ rewards: rewardAmount });
-  }, [wallet.address, item, balance, vaultBoosts, wallet]);
-
-  React.useEffect(() => {
-    let staked = false;
-    if (wallet.address && boostedData) {
-      let symbol = `${boostedData.token}${boostedData.id}Boost`;
-      if (
-        !isEmpty(balance.tokens[item.network][symbol]) &&
-        new BigNumber(balance.tokens[item.network][symbol].balance).toNumber() > 0
-      ) {
-        staked = true;
-      }
-    }
-    setUserStaked(staked);
-  }, [balance.tokens, boostedData, item.network, wallet.address]);
+    setDeposited({ balance: balanceSingle, shares: sharesBalance });
+    setPoolRewards({ balance: rewardsBalance, shares: rewardsSharesBalance });
+  }, [wallet.address, item, balance, vaultBoosts]);
 
   const ValueText = ({ value, blurred = false }) => (
     <>
@@ -143,21 +139,29 @@ const _Item = ({ vault }) => {
     </>
   );
 
-  const rewardPrice = React.useMemo(() => {
-    return parseFloat(poolRewards.rewards) > 0
-      ? new BigNumber(pricesReducer.prices[item.earnedToken])
-          .times(parseFloat(poolRewards.rewards))
-          .toFixed(2)
-      : 0;
-  }, [item.earnedToken, poolRewards.rewards, pricesReducer.prices]);
+  const _deposited = deposited.balance.isGreaterThan(0)
+    ? deposited.balance.toFixed(8)
+    : new BigNumber(0).toFixed(0);
 
-  const tokensEarned = React.useMemo(() => {
-    return parseFloat(priceInDolar.balance) > 0 ? priceInDolar.balance : '0';
-  }, [priceInDolar.balance]);
+  const depositedUsd = deposited.balance.isGreaterThan(0)
+    ? formatUsd(deposited.balance, pricesReducer.prices[item.oracleId])
+    : formatUsd(0);
 
-  const rewardsEarned = React.useMemo(() => {
-    return parseFloat(poolRewards.rewards) > 0 ? poolRewards.rewards : '0';
-  }, [poolRewards.rewards]);
+  const rewardsEarned = poolRewards.balance.isGreaterThan(0)
+    ? poolRewards.shares
+    : new BigNumber(0);
+
+  const rewardPrice = poolRewards.balance.isGreaterThan(0)
+    ? formatUsd(poolRewards.balance, pricesReducer.prices[item.earnedToken])
+    : formatUsd(0);
+
+  const formatDecimals = number => {
+    return number.isGreaterThanOrEqualTo(0)
+      ? number.toFixed(4)
+      : number.isEqualTo(0)
+      ? 0
+      : number.toFixed(8);
+  };
 
   return (
     <div
@@ -241,14 +245,11 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
 
-                  <ValueText blurred={blurred} value={tokensEarned} />
+                  <ValueText blurred={blurred} value={_deposited} />
 
-                  {parseFloat(priceInDolar.balance) > 0 && (
+                  {deposited.balance.isGreaterThan(0) && (
                     <Typography className={classes.label}>
-                      <ValuePrice
-                        blurred={blurred}
-                        value={formatUsd(priceInDolar.balance, item.oraclePrice)}
-                      />
+                      <ValuePrice blurred={blurred} value={depositedUsd} />
                     </Typography>
                   )}
                   {/* {parseInt(priceInDolar.balance) > 0 ? (
@@ -262,7 +263,7 @@ const _Item = ({ vault }) => {
               <div className={classes.stat}>
                 <Typography className={classes.label}>{t('TVL')}</Typography>
                 <Typography className={classes.value}>{formattedTVL}</Typography>
-                {isTwoColumns || isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
+                {isTwoColumns || isBoosted || deposited.balance.isGreaterThan(0) ? (
                   <div className={classes.boostSpacer} />
                 ) : null}
               </div>
@@ -273,7 +274,7 @@ const _Item = ({ vault }) => {
                 isBoosted: isBoosted,
                 launchpoolApr: boostedData,
                 apy: item.apy,
-                spacer: isTwoColumns || (!isBoosted && parseFloat(priceInDolar.balance) > 0),
+                spacer: isTwoColumns || (!isBoosted && deposited.balance.isGreaterThan(0)),
                 isGovVault: item.isGovVault ?? false,
               } as any)}
             />
@@ -285,14 +286,11 @@ const _Item = ({ vault }) => {
 
                   <ValueText
                     blurred={blurred}
-                    value={(rewardsEarned ?? '') + ` ${item.earnedToken}`}
+                    value={(formatDecimals(rewardsEarned) ?? '') + ` ${item.earnedToken}`}
                   />
-                  {parseFloat(priceInDolar.balance) > 0 && (
+                  {deposited.balance.isGreaterThan(0) && (
                     <Typography className={classes.label}>
-                      <ValuePrice
-                        blurred={blurred}
-                        value={formatUsd(rewardPrice, pricesReducer.prices[item.earnedToken])}
-                      />
+                      <ValuePrice blurred={blurred} value={rewardPrice} />
                     </Typography>
                   )}
                   {isTwoColumns ? <div className={classes.boostSpacer} /> : null}
@@ -313,7 +311,7 @@ const _Item = ({ vault }) => {
                     </div>
                   </div>
                   <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-                  {isTwoColumns || isBoosted || parseFloat(priceInDolar.balance) > 0 ? (
+                  {isTwoColumns || isBoosted || deposited.balance.isGreaterThan(0) ? (
                     <div className={classes.boostSpacer} />
                   ) : null}
                 </div>
