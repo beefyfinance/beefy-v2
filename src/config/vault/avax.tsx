@@ -2145,41 +2145,6 @@ export const pools = [
     network: "avax"
   },
   {
-    id: "pangolin-wbtc.e-png",
-    name: "WBTC.e-PNG LP",
-    token: "WBTC.e-PNG LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xf277e270bc7664E6EBba19620530b83883748a13",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinWBTC.e-PNG",
-    earnedTokenAddress: "0xd15db63C47Df2F669ef1560b63fF0aD6996960D4",
-    earnContractAddress: "0xd15db63C47Df2F669ef1560b63fF0aD6996960D4",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-wbtc.e-png",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Pangolin",
-    assets: [
-      "WBTCe",
-      "PNG"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
-    network: "avax"
-  },
-  {
     id: "pangolin-wavax-dai.e",
     name: "DAI.e-AVAX LP",
     token: "DAI.e-AVAX LP",
@@ -3299,42 +3264,6 @@ export const pools = [
     retireReason: "rewards"
   },
   {
-    id: "png-bifi-avax-eol",
-    name: "BIFI-AVAX LP",
-    token: "BIFI-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xAaCE68f9C8506610929D76a0729c7C24603641fC",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinBIFI-AVAX",
-    earnedTokenAddress: "0x4a9F72415A159753ee1eC85edBf4D212627762a9",
-    earnContractAddress: "0x4a9F72415A159753ee1eC85edBf4D212627762a9",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "png-bifi-avax",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "Pangolin",
-    assets: [
-      "BIFI",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/0xd6070ae98b8069de6B494332d1A1a81B6179D960",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960",
-    network: "avax",
-    retireReason: "rewards"
-  },
-  {
     id: "synapse-nusdlp",
     logo: "uncategorized/nUSD-LP.png",
     name: "nUSD/DAI/USDC/USDT",
@@ -3371,6 +3300,41 @@ export const pools = [
     ],
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://synapseprotocol.com/pools/avalanchenusd",
+    network: "avax"
+  },
+  {
+    id: "joe-gohm-wavax",
+    name: "gOHM-AVAX LP",
+    token: "gOHM-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0xB674f93952F02F2538214D4572Aa47F262e990Ff",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoegOHM-AVAX",
+    earnedTokenAddress: "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
+    earnContractAddress: "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-gohm-wavax",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "gOHM",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x321E7092a180BB43555132ec53AaA65a5bF84251",
+    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x321E7092a180BB43555132ec53AaA65a5bF84251",
     network: "avax"
   }
 ];

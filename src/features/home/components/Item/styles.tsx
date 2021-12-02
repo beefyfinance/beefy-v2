@@ -47,15 +47,24 @@ export const styles = theme => ({
     flexDirection: 'row',
     alignItems: 'space-around',
     justifyContent: 'center',
+    flexGrow: '0',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
-      flexGrow: '0',
-      maxWidth: '30%',
-      flexBasis: '30%',
+      maxWidth: '33%',
+      flexBasis: '33%',
+    },
+    [theme.breakpoints.down(1050)]: {
+      alignItems: 'flex-start',
+      maxWidth: '35%',
+      flexBasis: '35%',
+    },
+    [theme.breakpoints.down(1000)]: {
+      alignItems: 'flex-start',
+      maxWidth: '37%',
+      flexBasis: '37%',
     },
     [theme.breakpoints.down('sm')]: {
       alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '100%',
       flexBasis: '100%',
     },
@@ -208,6 +217,7 @@ export const styles = theme => ({
     padding: '2px 20px 2px',
     textTransform: 'capitalize',
     display: 'block',
+    minWidth: '64px',
     '&:hover': {
       cursor: 'pointer',
       backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
@@ -221,6 +231,11 @@ export const styles = theme => ({
       marginTop: props => (props.removeMarginButton ? '0px' : '16px'),
       width: '100%',
     },
+  },
+  removeLinkStyles: {
+    textDecoration: 'none',
+    color: '#FFF',
+    width: '100%',
   },
   apyContainer: {
     width: '100%',
@@ -351,15 +366,21 @@ export const styles = theme => ({
   },
   statsContainer: {
     margin: props => (props.marginStats ? '16px 0px 0px 0px' : 'auto'),
+    alignItems: 'flex-start',
+    flexGrow: '0',
     [theme.breakpoints.up('md')]: {
-      alignItems: 'flex-start',
-      flexGrow: '0',
-      maxWidth: '70%',
-      flexBasis: '70%',
+      maxWidth: '67%',
+      flexBasis: '67%',
+    },
+    [theme.breakpoints.down(1050)]: {
+      maxWidth: '65%',
+      flexBasis: '65%',
+    },
+    [theme.breakpoints.down(1000)]: {
+      maxWidth: '63%',
+      flexBasis: '63%',
     },
     [theme.breakpoints.down('sm')]: {
-      alignItems: 'flex-start',
-      flexGrow: '0',
       maxWidth: '100%',
       flexBasis: '100%',
     },

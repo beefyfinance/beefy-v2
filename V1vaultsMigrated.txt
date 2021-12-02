@@ -1,94 +1,51 @@
 [
   {
-    "id": "bsc: bison-bison",
+    "id": "bsc: charge-static-busd",
     "type": "Added"
   },
   {
-    "id": "bsc: blockmine-nugget-goldcoin",
+    "id": "bsc: charge-charge-busd",
     "type": "Added"
   },
   {
-    "id": "fantom: scream-tusd",
+    "id": "bsc: mdex-bsc-usdt-usdc-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: mdex-bsc-usdt-busd-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: wex-ltc-busd-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc: cakev2-bor-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: beets-solana-sonata",
     "type": "Added"
   },
   {
-    "id": "moonriver: finn-finn",
+    "id": "fantom: boo-eth-ftm",
+    "type": "synced",
+    "logo-copied": "logo"
+  },
+  {
+    "id": "polygon: quick-usdc-rbnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax: joe-gohm-wavax",
     "type": "Added"
   },
   {
-    "id": "moonriver: finn-wmovr-usdt",
-    "type": "Added"
+    "id": "avax: pangolin-wbtc.e-png",
+    "type": "REMOVED"
   },
   {
-    "id": "moonriver: finn-eth-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-wbtc-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-usdc-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-wan-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-eth-finn",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-wbtc-finn",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-avax",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-bnb",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-xrp",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-wan-finn",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: finn-finn-doge",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-frax-arome",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-crona-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-usdt-crona",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-usdc-dai",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-busd-bnb",
-    "type": "Added"
+    "id": "avax: png-bifi-avax-eol",
+    "type": "REMOVED"
   }
 ]

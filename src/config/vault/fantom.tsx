@@ -3736,7 +3736,6 @@ export const pools = [
   },
   {
     id: "boo-eth-ftm",
-    logo: "fantom/ETH-FTM.png",
     name: "ETH-FTM LP",
     token: "ETH-FTM LP",
     tokenDescription: "SpookySwap",
@@ -3768,7 +3767,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add",
     buyTokenUrl: "https://spookyswap.finance/swap",
-    network: "fantom"
+    network: "fantom",
+    logo: "fantom/ETH-FTM.png"
   },
   {
     id: "boo-aave-ftm",
@@ -4092,6 +4092,43 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
+    network: "fantom"
+  },
+  {
+    id: "beets-solana-sonata",
+    logo: "fantom/solana-sonata.png",
+    name: "Solana Sonata",
+    token: "Solana Sonata",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0x41870439b607A29293D48f7c9da10e6714217624",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetSolanaSonata",
+    earnedTokenAddress: "0x58511De7Dc12230096Feb1AAB420872Df0371A45",
+    earnContractAddress: "0x58511De7Dc12230096Feb1AAB420872Df0371A45",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-solana-sonata",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "USDC",
+      "FTM",
+      "SOL"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beets.fi/#/pool/0x41870439b607a29293d48f7c9da10e67142176240001000000000000000000a4",
     network: "fantom"
   }
 ];

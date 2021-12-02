@@ -990,5 +990,41 @@ export const pools = [
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     network: "cronos"
+  },
+  {
+    id: "vvs-cro-dai",
+    name: "CRO-DAI",
+    token: "CRO-DAI LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x3Eb9FF92e19b73235A393000C176c8bb150F1B20",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsCRO-DAI",
+    earnedTokenAddress: "0x3979ed0a99C63A8be8E031cfF0226A07421D524B",
+    earnContractAddress: "0x3979ed0a99C63A8be8E031cfF0226A07421D524B",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-cro-dai",
+    oraclePrice: 0,
+    status: "active",
+    platform: "VVS",
+    assets: [
+      "CRO",
+      "DAI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
+    addLiquidityUrl: "https://vvs.finance/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
+    network: "cronos"
   }
 ];

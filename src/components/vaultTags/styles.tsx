@@ -5,7 +5,7 @@ export const styles = theme => ({
     letterSpacing: '0.5px',
     padding: '3px 8px',
     borderRadius: '5px',
-    margin: '2px 0 0 7.8px',
+    margin: '2px 0 0 6px',
     textTransform: 'uppercase',
     color: '#FFF',
     [theme.breakpoints.down('md')]: {
@@ -15,27 +15,27 @@ export const styles = theme => ({
     },
   },
   lowTag: {
-    backgroundColor: '#2E90A5',
+    backgroundColor: theme.palette.background.tags.lowRisk,
   },
   beefyTag: {
-    backgroundColor: '#9D57F7',
+    backgroundColor: theme.palette.background.tags.bifi,
   },
   boostTag: {
-    backgroundColor: '#E88225',
+    backgroundColor: theme.palette.background.tags.boost,
   },
   stableTag: {
-    backgroundColor: '#57A1F7',
+    backgroundColor: theme.palette.background.tags.stable,
   },
   bluechipTag: {
-    backgroundColor: '#073FAB',
+    backgroundColor: theme.palette.background.tags.blueChip,
   },
   'deposits-pausedTag': {
-    backgroundColor: '#000000',
+    backgroundColor: theme.palette.background.tags.eol,
     letterSpacing: '0.15px',
     padding: '3px 5px',
   },
   eolTag: {
-    backgroundColor: '#000000',
+    backgroundColor: theme.palette.background.tags.eol,
   },
   pausedTag: {
     backgroundColor: '#484F7F',
