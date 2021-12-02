@@ -928,34 +928,6 @@ export const pools = [
     network: "polygon"
   },
   {
-    id: "quick-usdc-rbnb-eol",
-    name: "USDC-rBNB LP",
-    token: "USDC-rBNB LP",
-    tokenDescription: "QuickSwap",
-    tokenAddress: "0x40A5Df3E37152d4DaF279e0450289Af76472b02e",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooQuickUSDC-BNB",
-    earnedTokenAddress: "0xCd414F00d9E4e76f75F5de77DB376cb4ECe2b17f",
-    earnContractAddress: "0xCd414F00d9E4e76f75F5de77DB376cb4ECe2b17f",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "quick-usdc-rbnb",
-    status: "eol",
-    platform: "QuickSwap",
-    assets: [
-      "USDC",
-      "BNB"
-    ],
-    withdrawalFee: "0%",
-    retireReason: "tvl",
-    addLiquidityUrl: "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x5c4b7CCBF908E64F32e12c6650ec0C96d717f03F",
-    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x5c4b7CCBF908E64F32e12c6650ec0C96d717f03F",
-    stratType: "StratLP",
-    network: "polygon"
-  },
-  {
     id: "mai-qi-matic",
     name: "QI-MATIC LP",
     token: "QI-MATIC QLP",
