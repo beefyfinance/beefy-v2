@@ -38,7 +38,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
     if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
       if (item.isGovVault) {
         balanceSingle = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].balance),
+          balance.tokens[item.network][symbol].balance,
           item.tokenDecimals
         );
         rewardsBalance = byDecimals(
@@ -51,9 +51,9 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
         );
       } else {
         balanceSingle = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-            byDecimals(item.pricePerFullShare)
-          ),
+          new BigNumber(balance.tokens[item.network][item.earnedToken].balance)
+            .multipliedBy(byDecimals(item.pricePerFullShare))
+            .toFixed(8),
           item.tokenDecimals
         );
         sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
@@ -63,8 +63,10 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
         let symbol = `${boost.token}${boost.id}Boost`;
         if (!isEmpty(balance.tokens[item.network][symbol])) {
           balanceSingle = byDecimals(
-            new BigNumber(balance.tokens[item.network][symbol].balance),
-            boost.tokenDecimals
+            new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+              byDecimals(item.pricePerFullShare)
+            ),
+            item.tokenDecimals
           );
           sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
         }
@@ -140,14 +142,11 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
   );
 
   const _deposited = deposited.balance.isGreaterThan(0)
-    ? byDecimals(
-        deposited.shares.multipliedBy(new BigNumber(item.pricePerFullShare)),
-        item.tokenDecimals
-      )
-    : new BigNumber(0);
+    ? deposited.balance.toFixed(8)
+    : new BigNumber(0).toFixed(2);
 
   const depositedUsd = deposited.balance.isGreaterThan(0)
-    ? formatUsd(deposited.balance, item.oraclePrice)
+    ? formatUsd(deposited.balance, pricesReducer.prices[item.oracleId])
     : formatUsd(0);
 
   const rewardsEarned = poolRewards.balance.isGreaterThan(0)
@@ -230,7 +229,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
             <Box className={classes.stat}>
               <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
               <Typography>
-                <ValueText value={formatDecimals(_deposited)} />
+                <ValueText value={_deposited} />
               </Typography>
               {deposited.balance.isGreaterThan(0) && (
                 <Typography>
