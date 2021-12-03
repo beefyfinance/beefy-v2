@@ -3831,7 +3831,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "rabbit-carrot-busd",
     oraclePrice: 0,
-    status: "active",
+    status: "eol",
     platform: "Other",
     assets: [
       "CARROT",
@@ -3840,7 +3840,8 @@ export const pools = [
     addLiquidityUrl: "https://bsc.mdex.me/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0xA5043373edC09f3f7d87Fe35CA933e0a7B59D005",
     buyTokenUrl: "https://bsc.mdex.me/#/swap?outputCurrency=0xA5043373edC09f3f7d87Fe35CA933e0a7B59D005",
     stratType: "StratLP",
-    network: "bsc"
+    network: "bsc",
+    retireReason: "rewards"
   },
   {
     id: "wex-krown-bnb-eol",
