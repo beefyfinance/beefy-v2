@@ -1,6 +1,6 @@
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { isEmpty, isObject } from '../../../helpers/utils';
-import { formatDecimals } from '../../../helpers/format';
+import { byDecimals } from '../../../helpers/format';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
@@ -114,8 +114,24 @@ function hasWalletBalance(token, tokenBalances, network, isGovVault) {
 }
 
 // Check if he is deposited in boosted pool
-function hasBoostedBalance(userVault) {
-  return userVault && userVault['balance'] > 0 ? false : true;
+function hasBoostedBalance(userVaults, vaultId, tokenBalances) {
+  const vault = userVaults[vaultId];
+  if (vault && vault.isBoosted) {
+    const boost = vault.boostData;
+    let symbol = `${boost.token}${boost.id}Boost`;
+    if (!isEmpty(tokenBalances[vault.network][symbol])) {
+      const balanceSingle = byDecimals(
+        tokenBalances[vault.network][symbol].balance,
+        boost.decimals
+      );
+      if (balanceSingle.isGreaterThan(0)) {
+        return false;
+      }
+    }
+    return true;
+  } else {
+    return true;
+  }
 }
 
 const isBoosted = (item, boostVaults) => {
@@ -161,7 +177,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
     config.deposited &&
     address &&
     hasWalletBalance(vault.earnedToken, tokenBalances, vault.network, vault.isGovVault) &&
-    hasBoostedBalance(userVaults[vault.id])
+    hasBoostedBalance(userVaults, vault.id, tokenBalances)
   ) {
     return false;
   }
@@ -242,32 +258,50 @@ function useActiveVaults() {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function useUserVaults() {
-  const balanceReducer = useSelector((state: any) => state.balanceReducer);
+  const balance = useSelector((state: any) => state.balanceReducer);
   const vaultReducer = useSelector((state: any) => state.vaultReducer);
-  const pricesReducer = useSelector((state: any) => state.pricesReducer);
   const userAddress = useSelector((state: any) => state.walletReducer.address);
 
   let newUserVaults = [];
 
-  if (userAddress !== null) {
-    for (const poolKey in vaultReducer.pools) {
-      const pool = vaultReducer.pools[poolKey];
-      let symbol = pool.isGovVault ? `${pool.token}GovVault` : pool.earnedToken;
-      const balance = balanceReducer.tokens[pool.network][symbol].balance;
-      const boostpoolBalance = formatDecimals(
-        balanceReducer.tokens[pool.network][pool.earnedToken + 'Boost']?.balance
-      );
-      if (balance > 0 || (!isNaN(boostpoolBalance) && boostpoolBalance > 0)) {
-        pool.balance = isNaN(boostpoolBalance)
-          ? balance
-          : formatDecimals(BigNumber.sum(balance, boostpoolBalance).toNumber());
-        pool.oraclePrice = pricesReducer.prices[pool.oracleId];
+  for (const poolKey in vaultReducer.pools) {
+    let balanceSingle = new BigNumber(0);
+    const pool = vaultReducer.pools[poolKey];
+    let symbol = pool.isGovVault ? `${pool.token}GovVault` : pool.earnedToken;
+    if (userAddress && !isEmpty(balance.tokens[pool.network][symbol])) {
+      if (pool.isGovVault) {
+        const _balance = byDecimals(
+          balance.tokens[pool.network][symbol].balance,
+          pool.tokenDecimals
+        );
+
+        if (_balance.isGreaterThan(0)) {
+          newUserVaults = {
+            ...newUserVaults,
+            [pool.id]: pool,
+          };
+        }
+      }
+      balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, pool.tokenDecimals);
+      if (balanceSingle.isGreaterThan(0)) {
         newUserVaults = {
           ...newUserVaults,
           [pool.id]: pool,
         };
+      }
+      if (pool.isBoosted) {
+        const boost = pool.boostData;
+        let symbol = `${boost.token}${boost.id}Boost`;
+        if (!isEmpty(balance.tokens[pool.network][symbol])) {
+          balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
+          if (balanceSingle.isGreaterThan(0)) {
+            newUserVaults = {
+              ...newUserVaults,
+              [pool.id]: pool,
+            };
+          }
+        }
       }
     }
   }
@@ -306,5 +340,6 @@ export const useVaults = () => {
     allVaultsCount: allVaults.length,
     activeVaults: activeVaults.length,
     boostVaults,
+    userVaults,
   };
 };
