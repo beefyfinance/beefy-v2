@@ -113,27 +113,6 @@ function hasWalletBalance(token, tokenBalances, network, isGovVault) {
     : true;
 }
 
-// Check if he is deposited in boosted pool
-function hasBoostedBalance(userVaults, vaultId, tokenBalances) {
-  const vault = userVaults[vaultId];
-  if (vault && vault.isBoosted) {
-    const boost = vault.boostData;
-    let symbol = `${boost.token}${boost.id}Boost`;
-    if (!isEmpty(tokenBalances[vault.network][symbol])) {
-      const balanceSingle = byDecimals(
-        tokenBalances[vault.network][symbol].balance,
-        boost.decimals
-      );
-      if (balanceSingle.isGreaterThan(0)) {
-        return false;
-      }
-    }
-    return true;
-  } else {
-    return true;
-  }
-}
-
 const isBoosted = (item, boostVaults) => {
   var ts = Date.now() / 1000;
   const boostedVault = lodash.filter(boostVaults, function (vault) {
@@ -148,6 +127,11 @@ const isBoosted = (item, boostVaults) => {
     return false;
   }
 };
+
+function keepUserVaults(userVaults, vault) {
+  if (userVaults[vault.id]) return false;
+  return true;
+}
 
 function keepVault(vault, config, address, tokenBalances, userVaults, boostVaults) {
   if (config.retired) {
@@ -173,12 +157,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
 
   // hide when no wallet balance of deposit token
   // TODO show the vaults with mooToken
-  if (
-    config.deposited &&
-    address &&
-    hasWalletBalance(vault.earnedToken, tokenBalances, vault.network, vault.isGovVault) &&
-    hasBoostedBalance(userVaults, vault.id, tokenBalances)
-  ) {
+  if (config.deposited && address && userVaults && keepUserVaults(userVaults, vault)) {
     return false;
   }
 
