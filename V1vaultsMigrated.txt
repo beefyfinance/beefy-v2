@@ -1,51 +1,22 @@
 [
   {
-    "id": "bsc: charge-static-busd",
+    "id": "bsc: cakev2-nabox-busd",
     "type": "Added"
   },
   {
-    "id": "bsc: charge-charge-busd",
+    "id": "bsc: cakev2-santos-wbnb",
     "type": "Added"
   },
   {
-    "id": "bsc: mdex-bsc-usdt-usdc-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc: mdex-bsc-usdt-busd-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc: wex-ltc-busd-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc: cakev2-bor-bnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: beets-solana-sonata",
+    "id": "bsc: cakev2-quidd-wbnb",
     "type": "Added"
   },
   {
-    "id": "fantom: boo-eth-ftm",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "polygon: quick-usdc-rbnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: joe-gohm-wavax",
+    "id": "bsc: cakev2-zoo-wbnb",
     "type": "Added"
   },
   {
-    "id": "avax: pangolin-wbtc.e-png",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: png-bifi-avax-eol",
-    "type": "REMOVED"
+    "id": "fantom: scream-tusd",
+    "type": "synced"
   }
 ]

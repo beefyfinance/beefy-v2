@@ -4092,7 +4092,9 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
-    network: "fantom"
+    network: "fantom",
+    showWarning: false,
+    warning: "liquidity"
   },
   {
     id: "beets-solana-sonata",
@@ -4129,6 +4131,43 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x41870439b607a29293d48f7c9da10e67142176240001000000000000000000a4",
+    network: "fantom"
+  },
+  {
+    id: "beets-double-dollar-fugue",
+    logo: "fantom/double-dollar-fugue.png",
+    name: "Double Dollar Fugue",
+    token: "Double Dollar Fugue",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0xF3f0970BCA8ce7E9672d17a301b54D1485D93807",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetDoubleDollarFugue",
+    earnedTokenAddress: "0x3246893C1F8c1Bf928121094ea4558c7B93Bdc9A",
+    earnContractAddress: "0x3246893C1F8c1Bf928121094ea4558c7B93Bdc9A",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-double-dollar-fugue",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "USDC",
+      "MIM",
+      "UST"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beets.fi/#/pool/0xf3f0970bca8ce7e9672d17a301b54d1485d938070000000000000000000000c8",
     network: "fantom"
   }
 ];
