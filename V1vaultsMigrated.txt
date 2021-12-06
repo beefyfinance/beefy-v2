@@ -1,51 +1,78 @@
 [
   {
-    "id": "bsc: charge-static-busd",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: charge-charge-busd",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: mdex-bsc-usdt-usdc-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc: mdex-bsc-usdt-busd-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc: wex-ltc-busd-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc: cakev2-bor-bnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: beets-solana-sonata",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: boo-eth-ftm",
+    "id": "bsc: wex-wusd-dep-eol",
     "type": "synced",
-    "logo-copied": "logo"
+    "EOLd": true
   },
   {
-    "id": "polygon: quick-usdc-rbnb-eol",
-    "type": "REMOVED"
+    "id": "bsc: wex-wusd-wex-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "avax: joe-gohm-wavax",
+    "id": "bsc: wex-wusd-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-wex-btcb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-eth-beth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-eth-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-usdt-alpaca-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-usdt-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-ada-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-alpaca-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-usdt-wex-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc: wex-wex-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom: beets-double-dollar-fugue",
     "type": "Added"
   },
   {
-    "id": "avax: pangolin-wbtc.e-png",
-    "type": "REMOVED"
+    "id": "fantom: scream-tusd",
+    "type": "synced"
   },
   {
-    "id": "avax: png-bifi-avax-eol",
-    "type": "REMOVED"
+    "id": "cronos: cronos-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "cronos: vvs-cro-bifi",
+    "type": "Added"
   }
 ]

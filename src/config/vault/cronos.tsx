@@ -775,7 +775,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "SingleStake",
-    withdrawalFee: "0.05%",
+    withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?inputCurrency=0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23&outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
     network: "cronos"
   },
@@ -1025,6 +1025,42 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
+    network: "cronos"
+  },
+  {
+    id: "vvs-cro-bifi",
+    name: "BIFI-CRO",
+    token: "BIFI-CRO LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x1803E360393A472beC6E1A688BDF7048d3076b1A",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsCRO-BIFI",
+    earnedTokenAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
+    earnContractAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-cro-bifi",
+    oraclePrice: 0,
+    status: "active",
+    platform: "VVS",
+    assets: [
+      "BIFI",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
+    addLiquidityUrl: "https://vvs.finance/add/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     network: "cronos"
   }
 ];
