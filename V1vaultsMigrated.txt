@@ -1,78 +1,22 @@
 [
   {
-    "id": "bsc: wex-wusd-dep-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc: cakev2-nabox-busd",
+    "type": "Added"
   },
   {
-    "id": "bsc: wex-wusd-wex-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc: cakev2-santos-wbnb",
+    "type": "Added"
   },
   {
-    "id": "bsc: wex-wusd-busd-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc: cakev2-quidd-wbnb",
+    "type": "Added"
   },
   {
-    "id": "bsc: wex-wex-btcb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-eth-beth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-eth-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-usdt-alpaca-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-usdt-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-ada-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-alpaca-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-usdt-wex-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: wex-wex-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom: beets-double-dollar-fugue",
+    "id": "bsc: cakev2-zoo-wbnb",
     "type": "Added"
   },
   {
     "id": "fantom: scream-tusd",
     "type": "synced"
-  },
-  {
-    "id": "cronos: cronos-bifi-maxi",
-    "type": "synced"
-  },
-  {
-    "id": "cronos: vvs-cro-bifi",
-    "type": "Added"
   }
 ]
