@@ -92,17 +92,21 @@ export const styles = theme => ({
       backgroundColor: '#30345A',
     },
   },
+  btnContaniner: {
+    marginTop: 16,
+  },
   btnSecondary: {
     textDecoration: 'none',
     '& .MuiButton-root': {
       fontSize: '16px',
+      lineHeight: '24px',
       fontWeight: 600,
       color: '#6B7199',
       backgroundColor: '#232743',
       borderRadius: '20px',
       textTransform: 'capitalize',
       letterSpacing: '0.1px',
-      padding: '3px 15px',
+      padding: '3px 15px 4px',
       transition: 'color 0.2s',
       width: 'max-content',
       '&:hover': {

@@ -4,10 +4,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Loader } from '../../../../components/loader';
-import {
-  byDecimals,
-  convertAmountToRawNumber,
-} from '../../../../helpers/format';
+import { byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { reduxActions } from '../../../redux/actions';
@@ -29,7 +26,7 @@ export const Withdraw = ({
   resetFormData,
   isBoosted,
   boostedData,
-  vaultBoosts
+  vaultBoosts,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -130,7 +127,9 @@ export const Withdraw = ({
           token: balance.tokens[item.network][item.token],
         });
       } else {
-        const shares = formData.withdraw.amount.dividedBy(byDecimals(item.pricePerFullShare,18)).decimalPlaces(item.tokenDecimals, BigNumber.ROUND_UP);
+        const shares = formData.withdraw.amount
+          .dividedBy(byDecimals(item.pricePerFullShare, 18))
+          .decimalPlaces(item.tokenDecimals, BigNumber.ROUND_UP);
         const sharesByDecimals = byDecimals(state.balance, item.tokenDecimals);
         if (shares.times(100).dividedBy(sharesByDecimals).isGreaterThan(99)) {
           setFormData({
@@ -159,7 +158,6 @@ export const Withdraw = ({
             pending: false,
             token: balance.tokens[item.network][item.token],
           });
-
         } else {
           steps.push({
             step: 'withdraw',
@@ -178,8 +176,7 @@ export const Withdraw = ({
             token: balance.tokens[item.network][item.token],
           });
         }
-
-      } 
+      }
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
     } //if (wallet.address)
@@ -312,16 +309,53 @@ export const Withdraw = ({
             )}
           </Box>
           <Box>
+            {item.buyTokenUrl && !item.addLiquidityUrl && (
+              <a
+                href={item.buyTokenUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={classes.btnSecondary}
+              >
+                <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+              </a>
+            )}
+            {item.addLiquidityUrl && !item.buyTokenUrl && (
+              <a
+                href={item.addLiquidityUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={classes.btnSecondary}
+              >
+                <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-AddLiquidity')}</Button>
+              </a>
+            )}
+          </Box>
+        </Box>
+        {item.buyTokenUrl && item.addLiquidityUrl && (
+          <Box className={classes.btnContaniner}>
             <a
               href={item.buyTokenUrl}
               target="_blank"
               rel="noreferrer"
               className={classes.btnSecondary}
             >
-              <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+                {t('Transact-BuyTkn')}
+              </Button>
+            </a>
+            <a
+              style={{ marginLeft: '12px' }}
+              href={item.addLiquidityUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={classes.btnSecondary}
+            >
+              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+                {t('Transact-AddLiquidity')}
+              </Button>
             </a>
           </Box>
-        </Box>
+        )}
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
@@ -396,7 +430,9 @@ export const Withdraw = ({
           )}
         </Box>
       </Box>
-      {!item.isGovVault ? <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} /> : null}
+      {!item.isGovVault ? (
+        <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} />
+      ) : null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   ); //return
