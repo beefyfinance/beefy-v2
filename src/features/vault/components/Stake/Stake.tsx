@@ -50,7 +50,6 @@ export const Stake: React.FC<StakeProps> = ({
   setFormData,
   item,
   handleWalletConnect,
-  updateItemData,
   resetFormData,
   balance,
   closeModal,
@@ -196,7 +195,6 @@ export const Stake: React.FC<StakeProps> = ({
   };
 
   const handleClose = () => {
-    updateItemData();
     resetFormData();
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
   };

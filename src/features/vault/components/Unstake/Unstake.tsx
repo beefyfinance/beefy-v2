@@ -51,7 +51,6 @@ export const Unstake: React.FC<UnstakeProps> = ({
   handleWalletConnect,
   formData,
   setFormData,
-  updateItemData,
   resetFormData,
   closeModal,
 }) => {
@@ -137,7 +136,6 @@ export const Unstake: React.FC<UnstakeProps> = ({
   };
 
   const handleClose = () => {
-    updateItemData();
     resetFormData();
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
   };

@@ -4,7 +4,6 @@ export interface StakeProps {
   setFormData: any;
   balance: any;
   handleWalletConnect: any;
-  updateItemData: any;
   resetFormData: any;
   closeModal: () => void;
 }
