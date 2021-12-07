@@ -131,4 +131,31 @@ export const pools = [
     ],
     poolId: 'boo-ftm-usdc',
   },
+  {
+    id: 'moo_beets-guqin-qi-2-qidao',
+    name: 'Beefy',
+    logo: 'fantom/Guqin Qi 2.png',
+    earnedToken: 'mooFantomBIFI',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xbF07093ccd6adFC3dEB259C557b61E94c1F66945',
+    earnContractAddress: '0x0eEeefE7e7f5361b7410f9e50FD1B329b81896b7',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'mooFantomBIFI',
+    vaultAddress: '0x1711b008DA67a18B3a5171B906Dae7812BEb147b',
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        logo: 'stake/beefy/beefyfinance.png',
+        background: 'stake/beefy/background.png',
+        text: "Beefy Finance is The Multi-Chain Yield Optimizer across many blockchains, enabling users to earn autocompounded yield on their crypto. Did you know also that you can own a piece of Beefy itself? Beefy runs on its governance token, BIFI. The token has a set supply of 80,000 across all chains; no more may be minted, ever! As a holder of BIFI you may create and vote on important DAO proposals, and you become dividend-eligible to earn a share of every compounding harvest on Beefy vaults, hour by hour. Here on Fantom, you just need to stake BIFI in this reward pool, or in the autocompounding BIFI Maxi vault on the main page. For this pool, FTM dividends are gathered and sent proportionally to each staker. Stake here, return later to claim the FTM you've earned.",
+        website: 'https://app.beefy.finance',
+        social: {
+          telegram: 'http://t.me/beefyfinance',
+          twitter: 'https://twitter.com/beefyfinance',
+        },
+      },
+    ],
+    poolId: 'beets-guqin-qi-2',
+  },
 ];
