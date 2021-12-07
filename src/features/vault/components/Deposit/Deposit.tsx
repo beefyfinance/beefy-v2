@@ -56,7 +56,7 @@ export const Deposit: React.FC<DepositProps> = ({
   resetFormData,
   isBoosted,
   boostedData,
-  vaultBoosts
+  vaultBoosts,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -212,22 +212,16 @@ export const Deposit: React.FC<DepositProps> = ({
             pending: false,
           });
         } else if (isNative) {
-        
           steps.push({
             step: 'deposit',
             message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
             action: () =>
               dispatch(
-                reduxActions.wallet.depositNative(
-                  item.network,
-                  item.earnContractAddress,
-                  amount
-                )
+                reduxActions.wallet.depositNative(item.network, item.earnContractAddress, amount)
               ),
             token: tokens[formData.deposit.token],
             pending: false,
           });
-
         } else {
           steps.push({
             step: 'deposit',
@@ -340,14 +334,26 @@ export const Deposit: React.FC<DepositProps> = ({
               }
             />
             <Box>
-              <a
-                href={item.buyTokenUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={classes.btnSecondary}
-              >
-                <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
-              </a>
+              {item.buyTokenUrl && !item.addLiquidityUrl && (
+                <a
+                  href={item.buyTokenUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={classes.btnSecondary}
+                >
+                  <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+                </a>
+              )}
+              {item.addLiquidityUrl && !item.buyTokenUrl && (
+                <a
+                  href={item.addLiquidityUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={classes.btnSecondary}
+                >
+                  <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-AddLiquidity')}</Button>
+                </a>
+              )}
             </Box>
           </div>
           {formData.zap?.tokens[0] && (
@@ -419,6 +425,31 @@ export const Deposit: React.FC<DepositProps> = ({
             />
           )}
         </RadioGroup>
+        {item.buyTokenUrl && item.addLiquidityUrl && (
+          <Box className={classes.btnContaniner}>
+            <a
+              href={item.buyTokenUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={classes.btnSecondary}
+            >
+              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+                {t('Transact-BuyTkn')}
+              </Button>
+            </a>
+            <a
+              style={{ marginLeft: '12px' }}
+              href={item.addLiquidityUrl}
+              target="_blank"
+              rel="noreferrer"
+              className={classes.btnSecondary}
+            >
+              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+                {t('Transact-AddLiquidity')}
+              </Button>
+            </a>
+          </Box>
+        )}
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
@@ -470,7 +501,9 @@ export const Deposit: React.FC<DepositProps> = ({
           )}
         </Box>
       </Box>
-      {!item.isGovVault ? <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} /> : null}
+      {!item.isGovVault ? (
+        <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} />
+      ) : null}
       <Steps item={item} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   ); //return
