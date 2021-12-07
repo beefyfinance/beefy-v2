@@ -4,18 +4,20 @@ import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Stats } from './Stats';
-import { byDecimals, formatDecimals } from '../../../../helpers/format';
+import { byDecimals } from '../../../../helpers/format';
 import { VaultsStats } from './VaultsStats';
 import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { useHideBalanceCtx } from '../../../../components/HideBalancesContext';
+import { useVaults } from '../../hooks/useFilteredVaults';
+import { isEmpty } from '../../../../helpers/utils';
 
 const useStyles = makeStyles(styles as any);
 export const Portfolio = () => {
   const classes = useStyles();
   const { hideBalance, setHideBalance } = useHideBalanceCtx();
-  const [userVaults, setUserVaults] = useState([]);
+
   const [globalStats, setGlobalStats] = useState({
     deposited: new BigNumber(0),
     totalYield: new BigNumber(0),
@@ -23,34 +25,10 @@ export const Portfolio = () => {
     monthly: new BigNumber(0),
   });
   const balanceReducer = useSelector((state: any) => state.balanceReducer);
-  const vaultReducer = useSelector((state: any) => state.vaultReducer);
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
   const userAddress = useSelector((state: any) => state.walletReducer.address);
+  const { userVaults } = useVaults();
   const t = useTranslation().t;
-
-  useEffect(() => {
-    const newUserVaults = [];
-
-    if (userAddress !== null) {
-      for (const poolKey in vaultReducer.pools) {
-        const pool = vaultReducer.pools[poolKey];
-        let symbol = pool.isGovVault ? `${pool.token}GovVault` : pool.earnedToken;
-        const balance = balanceReducer.tokens[pool.network][symbol].balance;
-        const boostpoolBalance = formatDecimals(
-          balanceReducer.tokens[pool.network][pool.earnedToken + 'Boost']?.balance
-        );
-        if (balance > 0 || (!isNaN(boostpoolBalance) && boostpoolBalance > 0)) {
-          pool.balance = isNaN(boostpoolBalance)
-            ? balance
-            : formatDecimals(BigNumber.sum(balance, boostpoolBalance).toNumber());
-          pool.oraclePrice = pricesReducer.prices[pool.oracleId];
-          newUserVaults.push(pool);
-        }
-      }
-    }
-
-    setUserVaults(newUserVaults);
-  }, [vaultReducer, balanceReducer, userAddress, pricesReducer]);
 
   useEffect(() => {
     let newGlobalStats = {
@@ -60,28 +38,57 @@ export const Portfolio = () => {
       monthly: new BigNumber(0),
     };
 
-    if (userVaults.length > 0) {
-      userVaults.forEach(vault => {
-        let balance = new BigNumber(vault.balance);
-        balance = vault.isGovVault
-          ? byDecimals(balance, vault.tokenDecimals)
-          : balance.times(vault.pricePerFullShare).div('1e18').div('1e18');
-
-        const oraclePrice = pricesReducer.prices[vault.oracleId];
-        newGlobalStats.deposited = newGlobalStats.deposited.plus(balance.times(oraclePrice));
-
+    console.log(userVaults);
+    if (userAddress && userVaults) {
+      Object.keys(userVaults).map(_vault => {
+        const vault = userVaults[_vault];
+        let symbol = vault.isGovVault ? `${vault.token}GovVault` : vault.earnedToken;
+        let balance = new BigNumber(0);
+        if (vault.isGovPool) {
+          balance = byDecimals(
+            balanceReducer.tokens[vault.network][symbol].balance,
+            vault.tokenDecimals
+          );
+          newGlobalStats.deposited = newGlobalStats.deposited.plus(
+            balance.times(pricesReducer.prices[vault.oracleId])
+          );
+        } else {
+          balance = byDecimals(
+            balanceReducer.tokens[vault.network][symbol].balance,
+            vault.tokenDecimals
+          );
+          newGlobalStats.deposited = newGlobalStats.deposited.plus(
+            balance.times(pricesReducer.prices[vault.oracleId])
+          );
+        }
+        if (vault.isBoosted) {
+          const boost = vault.boostData;
+          let symbol = `${boost.token}${boost.id}Boost`;
+          if (!isEmpty(balanceReducer.tokens[vault.network][symbol])) {
+            balance = byDecimals(
+              balanceReducer.tokens[vault.network][symbol].balance,
+              boost.decimals
+            );
+            newGlobalStats.deposited = newGlobalStats.deposited.plus(
+              balance.times(pricesReducer.prices[vault.oracleId])
+            );
+          }
+        }
         const apy = vault.isGovVault ? vault.apy.vaultApr : vault.apy.totalApy || 0;
 
         const daily = vault.isGovVault ? apy / 365 : Math.pow(10, Math.log10(apy + 1) / 365) - 1;
 
-        newGlobalStats.daily = newGlobalStats.daily.plus(balance.times(daily).times(oraclePrice));
+        newGlobalStats.daily = newGlobalStats.daily.plus(
+          balance.times(daily).times(pricesReducer.prices[vault.oracleId])
+        );
+        newGlobalStats.monthly = new BigNumber(newGlobalStats.daily).times(30);
+        return true;
       });
-
-      newGlobalStats.monthly = new BigNumber(newGlobalStats.daily).times(30);
     }
 
     setGlobalStats(newGlobalStats);
-  }, [userVaults, vaultReducer, pricesReducer, userAddress]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pricesReducer, userAddress, balanceReducer.tokens]);
 
   const updateHideBalance = () => {
     setHideBalance(!hideBalance);
