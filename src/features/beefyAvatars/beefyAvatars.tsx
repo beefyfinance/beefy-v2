@@ -12,11 +12,12 @@ import {
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import grass from '../../images/nfts/grass.svg';
-
+import cow from '../../images/nfts/3d.png';
+import cowRotate from '../../images/nfts/3d-rotate.png';
 const useStyles = makeStyles(styles as any);
 
 export const BeefyAvatars = () => {
-  const props = { bgImage: grass };
+  const props = { bgImage: grass, item: cow, item1: cowRotate };
   const classes = useStyles(props);
 
   return (
@@ -60,9 +61,29 @@ export const BeefyAvatars = () => {
                 </CardContent>
               </Card>
             </Grid>
+            {/* <Grid item xs={12}>
+              <Card className={classes.card}>
+                <CardHeader className={classes.cardHeader} title="Atributes & Rrities" />
+                <CardContent>
+                  <Grid container>
+                    <Grid item xs></Grid>
+                    <Divider className={classes.divider} orientation="vertical" flexItem />
+                    <Grid item xs></Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid> */}
           </Grid>
+          <Box py={5} className={classes.center}>
+            <a href="https://app.beefy.finance/">
+              <img
+                height={20}
+                alt="byBeefy"
+                src={require('../../images/nfts/powered-by.svg').default}
+              />
+            </a>
+          </Box>
         </Box>
-        <Box></Box>
       </Container>
     </Box>
   );
