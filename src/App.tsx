@@ -12,6 +12,7 @@ import { featureFlag_isDataLoaderV2Enabled } from './features/data/utils/feature
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
+const BeefyAvatars = React.lazy(() => import(`./features/beefyAvatars`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
@@ -106,6 +107,9 @@ export const App = () => {
               </Route>
               <Route strict sensitive exact path="/:network/boosts/:id">
                 <Boost />
+              </Route>
+              <Route exact path="/nfts">
+                <BeefyAvatars />
               </Route>
               <Route>
                 <PageNotFound />
