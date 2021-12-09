@@ -43,7 +43,7 @@ const _Item = ({ vault }) => {
     shares: new BigNumber(0),
   });
   const [userStaked, setUserStaked] = React.useState(false);
-  const formattedTVL = useMemo(() => formatUsd(item.tvl), [item.tvl]);
+  const formattedTVL = useMemo(() => formatUsd(item.tvl.toNumber()), [item.tvl]);
 
   const blurred = deposited.balance.isGreaterThan(0) && hideBalance;
 
