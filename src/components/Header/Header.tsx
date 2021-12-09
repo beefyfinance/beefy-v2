@@ -21,6 +21,7 @@ import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { switchNetwork } from '../../helpers/switchNetwork';
 import { getAvailableNetworks } from '../../helpers/utils';
+import { formatUsd } from '../../helpers/format';
 import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
 import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
@@ -70,12 +71,10 @@ export const Header = ({ isNightMode, setNightMode }) => {
   };
 
   const BifiPrice = memo(function HeaderBifiPrice() {
-    const pricesReducer = useSelector((state: any) => state.pricesReducer);
+    const pricesReducer = useSelector((state: any) => state.pricesReducer.prices);
     const classes = useStyles();
 
-    const price = React.useMemo(() => {
-      return new BigNumber(pricesReducer.prices['BIFI']).toFixed(2);
-    }, [pricesReducer]);
+    const price = new BigNumber(pricesReducer['BIFI']);
 
     return (
       <Box className={classes.bifiPrice}>
@@ -87,7 +86,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
           rel="noreferrer"
         >
           <img alt="BIFI" src={require(`../../images/BIFI-TOKEN.svg`).default} />
-          <Typography noWrap={true}>{`$${price ? price : '$0'}`}</Typography>
+          <Typography noWrap={true}>{formatUsd(price.toNumber())}</Typography>
         </a>
       </Box>
     );

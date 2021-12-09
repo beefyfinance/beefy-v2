@@ -19,7 +19,7 @@ export const Stats = ({ stats, blurred }) => {
     <span className={blurred ? classes.blurred : ''}>{blurred ? '$100' : value}</span>
   );
 
-  const formatStat = value => (empty ? new BigNumber(0).toFixed(0) : formatUsd(value));
+  const formatStat = value => (empty ? new BigNumber(0).toFixed(0) : formatUsd(value.toNumber()));
 
   return (
     <Grid container className={classes.stats}>

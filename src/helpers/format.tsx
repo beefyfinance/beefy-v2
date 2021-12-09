@@ -33,9 +33,15 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
   }
   const prefix = '$';
 
+  console.log();
   return num < 999
     ? prefix + num.toFixed(2) + unitToDisplay
-    : prefix + num.toFixed(0) + unitToDisplay;
+    : tvl.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+      });
 };
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);

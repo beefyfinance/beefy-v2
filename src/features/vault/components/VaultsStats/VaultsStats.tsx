@@ -173,7 +173,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
             <Box className={classes.stat}>
               <Typography className={classes.label}>{t('TVL')}</Typography>
               <Typography>
-                <ValueText value={item ? formatUsd(item.tvl) : 0} />
+                <ValueText value={item ? formatUsd(item.tvl.toNumber()) : formatUsd(0)} />
               </Typography>
             </Box>
             <Box className={classes.stat}>

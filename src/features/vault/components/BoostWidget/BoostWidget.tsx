@@ -46,8 +46,10 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     async function fetchRewards() {
       await dispatch(reduxActions.balance.fetchBoostRewards(item, network));
     }
-    fetchRewards();
-  }, [dispatch, item, network]);
+    if (isBoosted) {
+      fetchRewards();
+    }
+  }, [dispatch, isBoosted, item, network]);
 
   const handleClose = () => {
     resetFormData();
