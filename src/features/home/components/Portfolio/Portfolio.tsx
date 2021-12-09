@@ -54,7 +54,9 @@ export const Portfolio = () => {
           );
         } else {
           balance = byDecimals(
-            balanceReducer.tokens[vault.network][symbol].balance,
+            new BigNumber(balanceReducer.tokens[vault.network][vault.earnedToken].balance)
+              .multipliedBy(byDecimals(vault.pricePerFullShare))
+              .toFixed(8),
             vault.tokenDecimals
           );
           newGlobalStats.deposited = newGlobalStats.deposited.plus(
@@ -66,8 +68,10 @@ export const Portfolio = () => {
           let symbol = `${boost.token}${boost.id}Boost`;
           if (!isEmpty(balanceReducer.tokens[vault.network][symbol])) {
             balance = byDecimals(
-              balanceReducer.tokens[vault.network][symbol].balance,
-              boost.decimals
+              new BigNumber(balanceReducer.tokens[vault.network][symbol].balance).multipliedBy(
+                byDecimals(vault.pricePerFullShare)
+              ),
+              vault.tokenDecimals
             );
             newGlobalStats.deposited = newGlobalStats.deposited.plus(
               balance.times(pricesReducer.prices[vault.oracleId])
