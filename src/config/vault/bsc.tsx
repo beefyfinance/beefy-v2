@@ -17605,7 +17605,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://pancakeswap.finance/add/0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983",
-    network: "bsc"
+    network: "bsc",
+    withdrawalFee: "0%"
   },
   {
     id: "charge-charge-busd",
@@ -17640,7 +17641,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://pancakeswap.finance/add/0x1C6bc8e962427dEb4106aE06A7fA2d715687395c/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x1C6bc8e962427dEb4106aE06A7fA2d715687395c",
-    network: "bsc"
+    network: "bsc",
+    withdrawalFee: "0%"
   },
   {
     id: "wex-wusd-dep-eol",

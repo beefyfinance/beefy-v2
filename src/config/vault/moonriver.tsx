@@ -1584,7 +1584,7 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "solarbeam-frax-arome",
+    id: "solarbeam-frax-arome-eol",
     name: "FRAX-aROME",
     token: "FRAX-aROME LP",
     tokenDescription: "SolarBeam",
@@ -1599,7 +1599,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "solarbeam-frax-arome",
     oraclePrice: 0,
-    status: "active",
+    status: "eol",
     platform: "SolarBeam",
     assets: [
       "FRAX",
@@ -1617,6 +1617,7 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=0x3D2D044E8C6dAd46b4F7896418d3d4DFaAD902bE&outputCurrency=0x1A93B23281CC1CDE4C4741353F3064709A16197d",
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/0x3D2D044E8C6dAd46b4F7896418d3d4DFaAD902bE/0x1A93B23281CC1CDE4C4741353F3064709A16197d",
-    network: "moonriver"
+    network: "moonriver",
+    retireReason: "rewards"
   }
 ];

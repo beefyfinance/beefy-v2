@@ -1,22 +1,23 @@
 [
   {
-    "id": "bsc: cakev2-nabox-busd",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: cakev2-santos-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: cakev2-quidd-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc: cakev2-zoo-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: scream-tusd",
+    "id": "bsc: charge-static-busd",
     "type": "synced"
+  },
+  {
+    "id": "bsc: charge-charge-busd",
+    "type": "synced"
+  },
+  {
+    "id": "polygon: kyber-usdc-jgbp",
+    "type": "synced"
+  },
+  {
+    "id": "polygon: kyber-usdc-jchf",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver: solarbeam-frax-arome-eol",
+    "type": "synced",
+    "EOLd": true
   }
 ]
