@@ -42,6 +42,13 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     withdraw: { token: null, input: '', amount: new BigNumber(0), max: false },
   });
 
+  React.useEffect(() => {
+    async function fetchRewards() {
+      await dispatch(reduxActions.balance.fetchBoostRewards(item, network));
+    }
+    fetchRewards();
+  }, [dispatch, item, network]);
+
   const handleClose = () => {
     resetFormData();
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
