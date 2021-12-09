@@ -25,9 +25,44 @@ export const StrategyCard: React.FC<StrategyCardProps> = ({
   assets,
   want,
   vamp,
+  boostedData,
+  isBoosted,
+  isGovVault,
 }) => {
   const classes = useStyles();
   const t = useTranslation().t;
+
+  const values: Record<string, any> = {};
+
+  values.totalApy = apy.totalApy;
+
+  if (apy.vaultApr) {
+    values.vaultApr = apy.vaultApr;
+    values.vaultDaily = apy.vaultApr / 365;
+  }
+
+  if (apy.tradingApr) {
+    values.tradingApr = apy.tradingApr;
+  }
+
+  if (isGovVault) {
+    values.totalApy = values.vaultApr / 1;
+    values.totalDaily = values.vaultApr / 365;
+  }
+
+  if (isBoosted) {
+    values.boostApr = boostedData.apr;
+    values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
+  }
+
+  const formatted = Object.fromEntries(
+    Object.entries(values).map(([key, value]) => {
+      const formattedValue = key.toLowerCase().includes('daily')
+        ? formatApy(value, '-' /*, 4*/) // TODO: fix this formatApy
+        : formatApy(value, '-');
+      return [key, formattedValue];
+    })
+  );
 
   return (
     <Card>
@@ -57,26 +92,26 @@ export const StrategyCard: React.FC<StrategyCardProps> = ({
           <div className={classes.apys}>
             <div className={classes.apy}>
               <Typography className={classes.apyLabel}>{t('Vault-ApyTotal')}</Typography>
-              <Typography className={classes.apyValue}>{formatApy(apy.totalApy, '-')}</Typography>
+              <Typography className={classes.apyValue}>
+                {isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
+              </Typography>
             </div>
             {apy.vaultApr && (
               <div className={classes.apy}>
-                <Typography className={classes.apyLabel}>{t('Vault-AprFarm')}</Typography>
-                <Typography className={classes.apyValue}>{formatApy(apy.vaultApr, '-')}</Typography>
+                <Typography className={classes.apyLabel}>{t('Vault-VaultApr')}</Typography>
+                <Typography className={classes.apyValue}>{formatted.vaultApr}</Typography>
               </div>
             )}
             {apy.tradingApr > 0 && (
               <div className={classes.apy}>
                 <Typography className={classes.apyLabel}>{t('Vault-AprTrading')}</Typography>
-                <Typography className={classes.apyValue}>
-                  {formatApy(apy.tradingApr, '-')}
-                </Typography>
+                <Typography className={classes.apyValue}>{formatted.tradingApr}</Typography>
               </div>
             )}
-            {apy.boostApr && (
+            {isBoosted && (
               <div className={classes.apy}>
                 <Typography className={classes.apyLabel}>{t('Vault-AprBoost')}</Typography>
-                <Typography className={classes.apyValue}>{formatApy(apy.boostApr, '-')}</Typography>
+                <Typography className={classes.apyValue}>{formatted.boostApr}</Typography>
               </div>
             )}
           </div>
