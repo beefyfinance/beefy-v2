@@ -222,6 +222,9 @@ export const Vault = () => {
                     assets={item.assets}
                     want={item.name}
                     vamp={item.vamp}
+                    isBoosted={isBoosted}
+                    boostedData={boostedData}
+                    isGovVault={isGovVault}
                   />
                 ) : null}
                 {renderTokens(item)}

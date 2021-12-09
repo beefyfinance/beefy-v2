@@ -1,12 +1,15 @@
 export interface StrategyCardProps {
-    stratType?: any;
-    stratAddr?: any;
-    vaultAddr?: any;
-    apy?: any;
-    audit?: any;
-    network?: any;
-    platform?: any;
-    assets?: any;
-    want?: any;
-    vamp?: any;
+  stratType?: any;
+  stratAddr?: any;
+  vaultAddr?: any;
+  apy?: any;
+  audit?: any;
+  network?: any;
+  platform?: any;
+  assets?: any;
+  want?: any;
+  vamp?: any;
+  isBoosted?: any;
+  boostedData?: any;
+  isGovVault?: any;
 }

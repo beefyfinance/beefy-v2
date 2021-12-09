@@ -94,7 +94,7 @@
   "Vault-Strategy": "Strategy",
   "Vault-ApyBreakdown": "APY breakdown",
   "Vault-ApyTotal": "TOTAL APY",
-  "Vault-AprFarm": "Farm APR",
+  "Vault-VaultApr": "Vault APR",
   "Vault-AprTrading": "Trading APR",
   "Vault-AprBoost": "Boost APR",
   "Vault-Auditd": "Audited",
