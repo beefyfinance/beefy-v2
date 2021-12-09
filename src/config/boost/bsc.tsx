@@ -1,4 +1,4 @@
-[
+export const pools = [
   {
     id: "moo_banana-nfty-wbnb-nfty-3",
     name: "NFTY",

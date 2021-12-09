@@ -1,4 +1,4 @@
-[
+export const pools = [
   {
     id: 'moo_bifi_avax-singular',
     name: 'Singular',
