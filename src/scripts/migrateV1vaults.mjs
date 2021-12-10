@@ -32,6 +32,8 @@ the command is run. To help minimize pollution, the maintainer may avoid pushing
 into the staging repository.
 
 Development
++ v0.9.1 AllTrades: fix bug where v1 deposits-paused property was not being reflected over 
+											to v2
 + v0.9.0.5 AllTrades: small bugfix
 + v0.9.0.4 AllTrades: small bugfix
 + v0.9.0.3 AllTrades: add support for Cronos chain
@@ -64,6 +66,7 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 const mS_PRPNM_ID = "id", mS_PRPNM_ASSTS = "assets", mS_PRPNM_STRAT_TYP = "stratType", 
 			mS_PRPNM_CHAIN = "network", mS_PRPNM_LOGO = "logo", mS_PRPNM_RISKS = "risks",
 			mS_PRPNM_CTRCT = "earnContractAddress", mS_PRPNM_TYP = "type", 
+			mS_PRPNM_DEPOST_PSD = "depositsPaused", mS_PRPNM_STATUS = "status", 
 			mAS_STRAT_TYP = [ "", "SingleStake", "StratLP", "StratMultiLP", "Vamp"];
 const moAO_SRC = {}, mo_trgt = {}; 
 
@@ -115,7 +118,7 @@ async function p_main()	{
 			o_singleLogo = {};
 
 	//for each chain...
-	const O_PROP_IGNR = {depositsPaused: ""}; 
+	const O_PROP_IGNR = {}; 
 	for (const O_CHN of mAO_CHAIN)	{
 		const S_TYP_RMVD = "REMOVED", S_TYP_ADD = "Added", S_TYP_UPDT = "synced", 
 					S_PRPNM_LGO = "logo-copied", S_PRPNM_EOLD = "EOLd",
@@ -152,6 +155,7 @@ async function p_main()	{
 				}
 
 				//for each relevant property in the vault's source descripter...
+				let b_pausedStatusProcessd = false;
 				for (const S in O_SRC)	{
 					//If the target vault descriptor doesn't need to be tested (because we already 
 					//	know the property's value or the property is obsolete), loop for the next 
@@ -162,6 +166,7 @@ async function p_main()	{
 					//Since the source vault descriptor represents the system's source of truth, 
 					//	the target's descriptor needs to be updated to match. If this property is 
 					//	the assets-array or risks-array property...
+					let b_pausedPrp, b_eol;
 					if (mS_PRPNM_ASSTS === S || mS_PRPNM_RISKS === S)	{
 						//if the array's contents match exactly the target counterpart's, loop for the 
 						//	descriptor's next property
@@ -173,6 +178,50 @@ async function p_main()	{
 						//	to the vault occurred
 						o_trgt[ S] = [...O_SRC[ S]];
 						O_hit[ mS_PRPNM_TYP] = S_TYP_UPDT;
+					//else if this is the deposits-paused or vault-status property, handle the 
+					//	interrelationship of these properties as the target requires...
+					}else if ((b_pausedPrp = mS_PRPNM_DEPOST_PSD === S) || mS_PRPNM_STATUS === S)	{
+						//if this interrelated pair of properties has already been processed for this 
+						//	vault, loop for the next source property
+						if (b_pausedStatusProcessd)
+							continue;
+
+						//if prompted first by the deposits-paused property...
+						if (b_pausedPrp)	{
+							//if the vault is now fully turned off...
+							if ('eol' === O_SRC[ mS_PRPNM_STATUS])	{
+								//if the target does not yet reflect this status, make it so now, and 
+								//	ensure it's noted that an update to the vault has occurred
+								if ('eol' !== o_trgt[ mS_PRPNM_STATUS])	{
+									o_trgt[ mS_PRPNM_STATUS] = 'eol';
+									O_hit[ mS_PRPNM_TYP] = S_TYP_UPDT;
+								}
+							//else if the source deposits-paused and vault-status property 
+							//	interrelationship differs from that shown for the target vault, update  
+							//	the target's status, and ensure it's noted that an update to the vault 
+							//	has occurred
+							}else if (O_SRC[ S] ? 'active' === o_trgt[ mS_PRPNM_STATUS] : 'paused' === 
+																																o_trgt[ mS_PRPNM_STATUS])	{
+								o_trgt[ mS_PRPNM_STATUS] = O_SRC[ S] ? 'paused' : 'active';
+								O_hit[ mS_PRPNM_TYP] = S_TYP_UPDT;
+							} //if ('eol' === O_SRC[ mS_PRPNM_STATUS])
+						//else if the source vault has an active deposits-paused status which the 
+						//	target doesn't reflect, reflect it now, and ensure it's noted that an 
+						//	update to the vault has occurred
+						}else if ((b_eol = 'eol' === O_SRC[ S]) || O_SRC[ mS_PRPNM_DEPOST_PSD] && 
+																									'paused' !== o_trgt[ mS_PRPNM_STATUS])	{
+							if (b_eol)
+								o_trgt[ S] = 'eol';
+							else
+								o_trgt[ mS_PRPNM_STATUS] = o_SRC[ mS_PRPNM_DEPOST_PSD] ? 'paused' : 
+																																									'active';
+							O_hit[ mS_PRPNM_TYP] = S_TYP_UPDT;
+						} //if (b_pausedPrp)
+
+						//note that the deposits-paused and vault-status property interrelationship has 
+						//	been processed for this vault, and loop for the next source property
+						b_pausedStatusProcessd = true;
+						continue;
 					//Else update the target's counterpart property, since it is outdated. Also if 
 					//	it's the logo file that's been updated, go ahead and copy over the file.
 					}else	{
@@ -207,8 +256,8 @@ async function p_main()	{
 				continue;
 			} //if (o_trgt = (o_trgtChn[ S_ID_SRC] ||
 
-			//Since unknown in the target environment, add a copy of the source vault descriptor 
-			//	to the array, First, if no vault logo is specified...
+			//Since unknown in the target environment, reflect the source vault descriptor into 
+			//	the target array, First, if no vault logo is specified...
 			const S_LOGO = O_SRC[ mS_PRPNM_LOGO]; 
 			if (!S_LOGO)	{
 				//insofar as still needed, copy each constituent asset's icon from the default 
@@ -268,28 +317,37 @@ async function p_main()	{
 													mS_PRPNM_ID]}:\n   beefy-app/src/images/${S_LOGO} (Error: ${O}`);
 				} //try
 
-			//add a copy of the source vault descriptor to the target array, adjusting as 
-			//	needed to match the target format
+			//reflect the source vault descriptor to the target array such that it adheres to 
+			//	to the format	the target requires
 			o = {...O_SRC};
 			o[ mS_PRPNM_ASSTS] = [...O_SRC[ mS_PRPNM_ASSTS]];
+			for (const S in O_PROP_IGNR) if (S in o) delete o[ S];
 			if (O_SRC[ mS_PRPNM_RISKS])
 				o[ mS_PRPNM_RISKS] = [...O_SRC[ mS_PRPNM_RISKS]];
-			for (const S in O_PROP_IGNR) if (S in o) delete o[S];
 			if (o[ mS_PRPNM_ASSTS])	{
-				const I = o[ mS_PRPNM_ASSTS].length;
-				if (!o[ mS_PRPNM_STRAT_TYP])
+				if (!o[ mS_PRPNM_STRAT_TYP])	{
+					const I = o[ mS_PRPNM_ASSTS].length;
 //TODO?: somehow programatically set 'Vamp' stratType
 					o[ mS_PRPNM_STRAT_TYP] = mAS_STRAT_TYP[ I < 3 ? I : 3]; 
+				}
 			}else
 				console.error( `Asset list missing on source vault ${o[ mS_PRPNM_ID]} on ${o[ 
 																															mS_PRPNM_CHAIN]} chain`);
 			o[ mS_PRPNM_CHAIN] = O_CHN.S_TRGT_ALIAS ? O_CHN.S_TRGT_ALIAS : O_CHN.S_SRC;
+
+			//reflect the interrelationship between the source deposits-paused and vault-status 
+			//	properties as required by the target
+			if (o_SRC[ mS_PRPNM_DEPOST_PSD])
+				delete o[ mS_PRPNM_DEPOST_PSD];
+			if (O_SRC[ mS_PRPNM_DEPOST_PSD] && 'eol' !== o_SRC[ mS_PRPNM_STATUS])
+				o_trgt[ mS_PRPNM_STATUS] = 'paused';
+
+			//register the newly reflected vault descriptor in the target-vault list, and ensure 
+			//	it's noted that a change to the overall target vault array has occurred, and add  
+			//	the vault's ID to a running list of target vaults encountered, including a 
+			//	special note that this one was newly added
 			o_trgtChn[ o[ mS_PRPNM_ID]] = o;
 			i_added++;
-
-			//ensure it's noted that a change to the overall target vault array has occurred, 
-			//	and add the vault's ID to a running list of target vaults encountered, noting 
-			//	specially that this one was newly added
 			O_hits[ s = o[ mS_PRPNM_CHAIN] + ": " + o[ mS_PRPNM_ID]] = 
 																						{[mS_PRPNM_ID]: s, [mS_PRPNM_TYP]: S_TYP_ADD};
 			o_trgtChn.b_dirty = true;

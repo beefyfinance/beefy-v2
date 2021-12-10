@@ -389,7 +389,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "banana-exp-wbnb",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "ApeSwap",
     assets: [
       "EXP",
@@ -1948,7 +1948,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "elk-elk-bnb",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Other",
     assets: [
       "ELK",
@@ -1975,7 +1975,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "elk-elk-dai",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Other",
     assets: [
       "ELK",
@@ -3715,7 +3715,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "stablequant-quant-busd",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Other",
     assets: [
       "QUANT",
@@ -3989,7 +3989,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "ellipsis-pbtc",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Ellipsis",
     assets: [
       "pBTC",
@@ -7235,7 +7235,7 @@ export const pools = [
     oracle: "tokens",
     oracleId: "TOFY",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Other",
     assets: [
       "TOFY"

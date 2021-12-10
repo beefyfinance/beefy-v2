@@ -1742,7 +1742,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-usdc.e-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "USDCe",
@@ -1845,7 +1845,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-png-qi",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "aQI",
@@ -1880,7 +1880,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-qi-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "aQI",
@@ -1915,7 +1915,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-uni.e-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "UNIe",
@@ -1950,7 +1950,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-yfi.e-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "YFIe",
@@ -1985,7 +1985,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-aave.e-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "AAVEe",
@@ -2020,7 +2020,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-sushi.e-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "SUSHIe",
@@ -2055,7 +2055,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-wavax-xava",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "XAVA",
@@ -2090,7 +2090,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-png-usdt.e",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "USDTe",
@@ -2125,7 +2125,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-weth.e-png",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "WETHe",
@@ -2160,7 +2160,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-wavax-dai.e",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "DAIe",
@@ -2195,7 +2195,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-link.e-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "LINKe",
@@ -2230,7 +2230,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-weth.e-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "WETHe",
@@ -2265,7 +2265,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-wavax-usdt.e",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "USDTe",
@@ -2300,7 +2300,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "pangolin-wbtc.e-wavax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "WBTCe",
@@ -2335,7 +2335,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "png-bnb-avax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "BNB",
@@ -2888,7 +2888,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "png-png-avax",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "Pangolin",
     assets: [
       "PNG",

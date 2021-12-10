@@ -2472,7 +2472,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "stakesteak-fusd-usdc",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "StakeSteak",
     assets: [
       "fUSD",
@@ -2509,7 +2509,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "boo-steak-wftm",
     oraclePrice: 0,
-    status: "active",
+    status: "paused",
     platform: "SpookySwap",
     assets: [
       "STEAK",
