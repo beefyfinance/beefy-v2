@@ -1,2 +1,1 @@
-export const pools = [
-];
+export const pools = [];
