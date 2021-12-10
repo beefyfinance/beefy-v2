@@ -212,7 +212,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   const formatted = Object.fromEntries(
     Object.entries(values).map(([key, value]) => {
       const formattedValue = key.toLowerCase().includes('daily')
-        ? formatApy(value /*, 4*/) // TODO: fix this formatApy
+        ? formatApy(value, 4)
         : formatApy(value);
       return [key, formattedValue];
     })

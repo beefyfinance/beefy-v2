@@ -135,7 +135,7 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
   const formatted = Object.fromEntries(
     Object.entries(values).map(([key, value]) => {
       const formattedValue = key.toLowerCase().includes('daily')
-        ? formatApy(value /*, 4*/) // TODO: fix this formatApy
+        ? formatApy(value, 4)
         : formatApy(value);
       return [key, formattedValue];
     })

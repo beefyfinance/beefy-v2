@@ -58,8 +58,8 @@ export const StrategyCard: React.FC<StrategyCardProps> = ({
   const formatted = Object.fromEntries(
     Object.entries(values).map(([key, value]) => {
       const formattedValue = key.toLowerCase().includes('daily')
-        ? formatApy(value, '-' /*, 4*/) // TODO: fix this formatApy
-        : formatApy(value, '-');
+        ? formatApy(value, 4, '-' /*, 4*/) // TODO: fix this formatApy
+        : formatApy(value, 2, '-');
       return [key, formattedValue];
     })
   );
