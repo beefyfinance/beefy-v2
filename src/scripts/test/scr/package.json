@@ -1,0 +1,17 @@
+{
+  "homepage": "http://.",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "name": "test",
+  "main": "\"\"",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "babel-plugin-rewire": "^1.2.0"
+  }
+}

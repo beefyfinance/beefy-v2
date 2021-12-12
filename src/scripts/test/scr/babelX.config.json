@@ -1,0 +1,5 @@
+{
+  "parserOpts": {
+    "plugins": ["babel-plugin-rewire"]
+  }
+}
