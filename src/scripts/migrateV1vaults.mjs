@@ -213,7 +213,7 @@ async function p_main()	{
 							if (b_eol)
 								o_trgt[ S] = 'eol';
 							else
-								o_trgt[ mS_PRPNM_STATUS] = o_SRC[ mS_PRPNM_DEPOST_PSD] ? 'paused' : 
+								o_trgt[ mS_PRPNM_STATUS] = O_SRC[ mS_PRPNM_DEPOST_PSD] ? 'paused' : 
 																																									'active';
 							O_hit[ mS_PRPNM_TYP] = S_TYP_UPDT;
 						} //if (b_pausedPrp)
@@ -337,10 +337,10 @@ async function p_main()	{
 
 			//reflect the interrelationship between the source deposits-paused and vault-status 
 			//	properties as required by the target
-			if (o_SRC[ mS_PRPNM_DEPOST_PSD])
+			if (O_SRC[ mS_PRPNM_DEPOST_PSD])
 				delete o[ mS_PRPNM_DEPOST_PSD];
-			if (O_SRC[ mS_PRPNM_DEPOST_PSD] && 'eol' !== o_SRC[ mS_PRPNM_STATUS])
-				o_trgt[ mS_PRPNM_STATUS] = 'paused';
+			if (O_SRC[ mS_PRPNM_DEPOST_PSD] && 'eol' !== O_SRC[ mS_PRPNM_STATUS])
+				o[ mS_PRPNM_STATUS] = 'paused';
 
 			//register the newly reflected vault descriptor in the target-vault list, and ensure 
 			//	it's noted that a change to the overall target vault array has occurred, and add  
