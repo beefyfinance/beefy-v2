@@ -47,7 +47,7 @@ export const LabeledDropdown: React.FC<LabeledDropdownProps> = ({
         onChange={handler}
         disableUnderline={true}
         IconComponent={ExpandMore}
-        // renderValue={renderValue} // TODO: renable
+        renderValue={renderValue} // TODO: renable
         style={selectStyle}
       >
         {sortedList.map(val => (

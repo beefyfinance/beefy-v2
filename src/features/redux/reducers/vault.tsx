@@ -95,8 +95,10 @@ const initializeTags = (pool, net) => {
   const presentsStables = _.intersectionWith(stables, pool.assets, _.isEqual);
   if (pool.assets.length === 1) {
     pool['vaultType'] = 'single';
-  } else {
-    pool['vaultType'] = presentsStables.length > 1 ? 'stables' : 'stable';
+  }
+  if (pool.assets.length > 1) {
+    console.log(pool);
+    pool['vaultType'] = 'lps';
   }
 
   if (presentsStables.length !== 0) {
