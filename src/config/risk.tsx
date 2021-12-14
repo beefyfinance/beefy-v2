@@ -193,9 +193,17 @@ export const RISKS = {
     condition: 'Platfrm-Timelock-Cond',
   },
 
-  ADMIN_WITHOUT_TIMELOCK: {
+  ADMIN_WITH_SHORT_TIMELOCK: {
     category: 'Categry-Platform',
     score: 0.5,
+    title: 'Platfrm-TimelockShort-Titl',
+    explanation: 'Platfrm-TimelockShort-Expl',
+    condition: 'Platfrm-TimelockShort-Cond',
+  },
+
+  ADMIN_WITHOUT_TIMELOCK: {
+    category: 'Categry-Platform',
+    score: 1,
     title: 'Platfrm-TimelockNo-Titl',
     explanation: 'Platfrm-TimelockNo-Expl',
     condition: 'Platfrm-TimelockNo-Cond',
