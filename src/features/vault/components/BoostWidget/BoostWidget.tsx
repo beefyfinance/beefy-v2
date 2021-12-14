@@ -42,8 +42,16 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     withdraw: { token: null, input: '', amount: new BigNumber(0), max: false },
   });
 
+  React.useEffect(() => {
+    async function fetchRewards() {
+      await dispatch(reduxActions.balance.fetchBoostRewards(item, network));
+    }
+    if (isBoosted) {
+      fetchRewards();
+    }
+  }, [dispatch, isBoosted, item, network]);
+
   const handleClose = () => {
-    updateItemData();
     resetFormData();
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
   };
@@ -55,16 +63,6 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   const handleWalletConnect = () => {
     if (!wallet.address) {
       dispatch(reduxActions.wallet.connect());
-    }
-  };
-
-  const updateItemData = () => {
-    console.log(`updating data`);
-    if (wallet.address && item) {
-      // dispatch(reduxActions.vault.fetchBoosts(item));
-      dispatch(reduxActions.balance.fetchBalances());
-      dispatch(reduxActions.balance.fetchBoostBalances(item, network)); // TODO add network
-      dispatch(reduxActions.balance.fetchBoostRewards(item, network));
     }
   };
 
@@ -126,13 +124,6 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
       setFilterOpen(openFilter);
     }
   }, [wallet.address, vaultBoosts, state.balance, balance.tokens]);
-
-  React.useEffect(() => {
-    if (item && wallet.address) {
-      dispatch(reduxActions.balance.fetchBoostBalances(item, network)); // TODO add network
-      dispatch(reduxActions.balance.fetchBoostRewards(item, network));
-    }
-  }, [dispatch, item, network, wallet.address]);
 
   React.useEffect(() => {
     let amount = new BigNumber(0);
@@ -388,7 +379,6 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
                   handleWalletConnect={handleWalletConnect}
                   formData={formData}
                   setFormData={setFormData}
-                  updateItemData={updateItemData}
                   resetFormData={resetFormData}
                 />
               ) : (
@@ -399,7 +389,6 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
                   handleWalletConnect={handleWalletConnect}
                   formData={formData}
                   setFormData={setFormData}
-                  updateItemData={updateItemData}
                   resetFormData={resetFormData}
                 />
               )}
@@ -440,11 +429,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
           </AnimateHeight>
         </div>
       )}
-      {
-        (isBoosted || filterOpen) && (
-          <Steps item={item} steps={steps} handleClose={handleClose} />
-        )
-      }
+      {(isBoosted || filterOpen) && <Steps item={item} steps={steps} handleClose={handleClose} />}
     </>
   );
 };

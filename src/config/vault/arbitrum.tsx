@@ -462,5 +462,77 @@ export const pools = [
     withdrawalFee: "0.05%",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     network: "arbitrum"
+  },
+  {
+    id: "sushi-arb-magic-weth",
+    name: "MAGIC-ETH LP",
+    token: "MAGIC-ETH LP",
+    tokenDescription: "Sushi",
+    tokenAddress: "0xB7E50106A5bd3Cf21AF210A755F9C8740890A8c9",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSushiMAGIC-ETH",
+    earnedTokenAddress: "0x8cbaAC87FDD9Bb6C3FdB5b3C870b2443D0284fa6",
+    earnContractAddress: "0x8cbaAC87FDD9Bb6C3FdB5b3C870b2443D0284fa6",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "sushi-arb-magic-weth",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Sushi",
+    assets: [
+      "MAGIC",
+      "ETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.sushi.com/add/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/0x539bdE0d7Dbd336b79148AA742883198BBF60342",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&outputCurrency=0x539bdE0d7Dbd336b79148AA742883198BBF60342",
+    network: "arbitrum"
+  },
+  {
+    id: "sushi-arb-weth-gohm",
+    name: "gOHM-ETH LP",
+    token: "gOHM-ETH LP",
+    tokenDescription: "Sushi",
+    tokenAddress: "0xaa5bD49f2162ffdC15634c87A77AC67bD51C6a6D",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSushigOHM-ETH",
+    earnedTokenAddress: "0xD295d690b9BF17bd217B94BC50C12729762C1862",
+    earnContractAddress: "0xD295d690b9BF17bd217B94BC50C12729762C1862",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "sushi-arb-weth-gohm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Sushi",
+    assets: [
+      "gOHM",
+      "ETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.sushi.com/add/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/0x8D9bA570D6cb60C7e3e0F31343Efe75AB8E65FB1",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&outputCurrency=0x8D9bA570D6cb60C7e3e0F31343Efe75AB8E65FB1",
+    network: "arbitrum"
   }
 ];

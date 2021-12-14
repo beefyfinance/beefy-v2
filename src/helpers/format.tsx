@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { ApyStatLoader } from '../components/ApyStatLoader';
 
-export const formatApy = (apy, placeholder: any = <ApyStatLoader />) => {
+export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => {
   if (!apy) return placeholder;
 
   apy *= 100;
@@ -11,7 +11,7 @@ export const formatApy = (apy, placeholder: any = <ApyStatLoader />) => {
   if (order >= units.length - 1) return `🔥`;
 
   const num = apy / 1000 ** order;
-  return `${num.toFixed(2)}${units[order]}%`;
+  return `${num.toFixed(dp)}${units[order]}%`;
 };
 
 export const formatUsd = (tvl, oraclePrice = undefined) => {
@@ -33,9 +33,15 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
   }
   const prefix = '$';
 
+  console.log();
   return num < 999
     ? prefix + num.toFixed(2) + unitToDisplay
-    : prefix + num.toFixed(0) + unitToDisplay;
+    : tvl.toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+      });
 };
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);

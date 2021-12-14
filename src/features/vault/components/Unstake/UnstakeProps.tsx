@@ -4,7 +4,6 @@ export interface UnstakeProps {
   setFormData: any;
   balance: any;
   handleWalletConnect: any;
-  updateItemData: any;
   resetFormData: any;
   closeModal: () => void;
 }
