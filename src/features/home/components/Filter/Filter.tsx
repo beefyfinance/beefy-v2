@@ -46,6 +46,7 @@ const _Filter: React.FC<FilterProps> = ({
 
   const handleChange = useCallback(
     (name, value) => {
+      console.log(value);
       setSortConfig(current => ({ ...current, [name]: value }));
     },
     [setSortConfig]
@@ -66,8 +67,7 @@ const _Filter: React.FC<FilterProps> = ({
     return {
       all: t('Filter-DropdwnDflt'),
       single: t('Filter-AsstSingle'),
-      stable: t('Filter-AsstStableLP'),
-      stables: t('Filter-AsstStables'),
+      lps: t('Filter-LPS'),
     };
   }, [t]);
 
