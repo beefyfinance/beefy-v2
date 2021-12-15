@@ -92,16 +92,14 @@ const initialPools = () => {
 const initializeTags = (pool, net) => {
   const stables = getStablesForNetwork(net);
 
-  const presentsStables = _.intersectionWith(stables, pool.assets, _.isEqual);
   if (pool.assets.length === 1) {
     pool['vaultType'] = 'single';
   }
   if (pool.assets.length > 1) {
-    console.log(pool);
     pool['vaultType'] = 'lps';
   }
 
-  if (presentsStables.length !== 0) {
+  if (pool.assets.every(stable => stables.includes(stable))) {
     pool.tags.push('stable');
   }
 
