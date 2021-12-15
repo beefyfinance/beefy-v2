@@ -9,7 +9,6 @@ import { config } from '../../../config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
 import { safetyScore } from '../../../helpers/safetyScore';
 import BigNumber from 'bignumber.js';
-import _ from 'lodash';
 
 let initPlatforms = {};
 let pools = [];
