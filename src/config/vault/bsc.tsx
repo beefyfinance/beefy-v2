@@ -1817,60 +1817,6 @@ export const pools = [
     network: "bsc"
   },
   {
-    id: "elk-elk-bnb",
-    name: "ELK-BNB ELP",
-    token: "ELK-BNB ELP",
-    tokenDescription: "ElkFinance",
-    tokenAddress: "0x6aDB3c5a9673ffFe6502e3bdEC465AdC91Ab3C01",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooElkELK-BNB",
-    earnedTokenAddress: "0x69B2f487B2eDD9E272211f7CD8f57C1cddE0764E",
-    earnContractAddress: "0x69B2f487B2eDD9E272211f7CD8f57C1cddE0764E",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "elk-elk-bnb",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Other",
-    assets: [
-      "ELK",
-      "BNB"
-    ],
-    addLiquidityUrl: "https://app.elk.finance/#/add/BNB/0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
-    buyTokenUrl: "https://app.elk.finance/#/swap?outputCurrency=0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
-    id: "elk-elk-dai",
-    name: "ELK-DAI ELP",
-    token: "ELK-DAI ELP",
-    tokenDescription: "ElkFinance",
-    tokenAddress: "0xFDB340B7902B5DC6A0F3434246767BFfA841b9c1",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooElkELK-DAI",
-    earnedTokenAddress: "0x41a6CdA789316B2Fa5D824EF27E4223872E4cB34",
-    earnContractAddress: "0x41a6CdA789316B2Fa5D824EF27E4223872E4cB34",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "elk-elk-dai",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Other",
-    assets: [
-      "ELK",
-      "DAI"
-    ],
-    addLiquidityUrl: "https://app.elk.finance/#/add/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3/0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
-    buyTokenUrl: "https://app.elk.finance/#/swap?outputCurrency=0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
     id: "cakev2-cake-bnb",
     name: "CAKE-BNB LP",
     token: "CAKE-BNB LP2",
@@ -2285,7 +2231,15 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
     stratType: "SingleStake",
-    network: "bsc"
+    network: "bsc",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "yel-yel",
@@ -6764,7 +6718,15 @@ export const pools = [
     addLiquidityUrl: "https://dex.apeswap.finance/#/add/ETH/0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
     buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
     stratType: "StratLP",
-    network: "bsc"
+    network: "bsc",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "banana-ada-bnb",
@@ -8818,7 +8780,15 @@ export const pools = [
     addLiquidityUrl: "https://pancakeswap.finance/add/0x23396cF899Ca06c4472205fC903bDB4de249D6fC/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0x23396cF899Ca06c4472205fC903bDB4de249D6fC&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     stratType: "StratLP",
-    network: "bsc"
+    network: "bsc",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "cakev2-mnflx-ust-eol",
@@ -9155,7 +9125,15 @@ export const pools = [
     addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     stratType: "StratLP",
-    network: "bsc"
+    network: "bsc",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "cakev2-dai-busd",
@@ -10661,7 +10639,15 @@ export const pools = [
     addLiquidityUrl: "https://dex.apeswap.finance/#/add/0x3EE2200Efb3400fAbB9AacF31297cBdD1d435D47/0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
     buyTokenUrl: "https://dex.apeswap.finance/#/swap?inputCurrency=0x2170ed0880ac9a755fd29b2688956bd959f933f8&outputCurrency=0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
     stratType: "StratLP",
-    network: "bsc"
+    network: "bsc",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "banana-iota-bnb",
@@ -10889,7 +10875,15 @@ export const pools = [
     addLiquidityUrl: "https://bsc.mdex.com/#/add/0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c/0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
     buyTokenUrl: "https://bsc.mdex.com/#/swap?inputCurrency=0x2170ed0880ac9a755fd29b2688956bd959f933f8&outputCurrency=0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
     stratType: "StratLP",
-    network: "bsc"
+    network: "bsc",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "auto-usdt-busd",
@@ -18121,5 +18115,61 @@ export const pools = [
     stratType: "StratLP",
     network: "bsc",
     retireReason: "tvl"
+  },
+  {
+    id: "elk-elk-bnb-eol",
+    name: "ELK-BNB ELP",
+    token: "ELK-BNB ELP",
+    tokenDescription: "ElkFinance",
+    tokenAddress: "0x6aDB3c5a9673ffFe6502e3bdEC465AdC91Ab3C01",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooElkELK-BNB",
+    earnedTokenAddress: "0x69B2f487B2eDD9E272211f7CD8f57C1cddE0764E",
+    earnContractAddress: "0x69B2f487B2eDD9E272211f7CD8f57C1cddE0764E",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "elk-elk-bnb",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "ELK",
+      "BNB"
+    ],
+    addLiquidityUrl: "https://app.elk.finance/#/add/BNB/0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
+    buyTokenUrl: "https://app.elk.finance/#/swap?outputCurrency=0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
+    stratType: "StratLP",
+    network: "bsc",
+    retireReason: "rewards"
+  },
+  {
+    id: "elk-elk-dai-eol",
+    name: "ELK-DAI ELP",
+    token: "ELK-DAI ELP",
+    tokenDescription: "ElkFinance",
+    tokenAddress: "0xFDB340B7902B5DC6A0F3434246767BFfA841b9c1",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooElkELK-DAI",
+    earnedTokenAddress: "0x41a6CdA789316B2Fa5D824EF27E4223872E4cB34",
+    earnContractAddress: "0x41a6CdA789316B2Fa5D824EF27E4223872E4cB34",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "elk-elk-dai",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "ELK",
+      "DAI"
+    ],
+    addLiquidityUrl: "https://app.elk.finance/#/add/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3/0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
+    buyTokenUrl: "https://app.elk.finance/#/swap?outputCurrency=0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
+    stratType: "StratLP",
+    network: "bsc",
+    retireReason: "rewards"
   }
 ];

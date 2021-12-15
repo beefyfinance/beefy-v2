@@ -1,389 +1,131 @@
 [
   {
-    "id": "bsc: 1inch-1inch-eol",
+    "id": "bsc: elk-elk-bnb-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc: banana-exp-wbnb-eol",
+    "id": "bsc: elk-elk-dai-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc: pearzap-pear-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: pearzap-pear-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: mdex-bsc-rabbit-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: fruit-fruit-cake-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: fruit-fruit-xvs-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: banana-fruit-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: stablequant-quant-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: ellipsis-pbtc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc: tofy-tofy-eol",
+    "id": "bsc: cake-cakev2",
     "type": "synced"
   },
   {
-    "id": "bsc: com-com-bnb-eol",
+    "id": "bsc: banana-link-bnb",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: cakev2-ust-busd",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: cakev2-usdc-busd",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: banana-ada-eth",
+    "type": "synced"
+  },
+  {
+    "id": "bsc: auto-btcb-eth",
+    "type": "synced"
+  },
+  {
+    "id": "fantom: geist-ftm-pause",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-wbtc-pause",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-eth-pause",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-fusdt-pause",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-usdc-pause",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-dai-pause",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-ftm",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: geist-wbtc",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: geist-eth",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: geist-fusdt",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: geist-usdc",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: geist-dai",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: kyber-usdc-jgbp",
+    "type": "synced"
+  },
+  {
+    "id": "polygon: kyber-usdc-jchf",
+    "type": "synced"
+  },
+  {
+    "id": "avax: blizz-avax-pause",
+    "type": "Added"
+  },
+  {
+    "id": "avax: blizz-eth-pause",
+    "type": "Added"
+  },
+  {
+    "id": "avax: blizz-wbtc-pause",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-usdc.e-usdt.e-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc: cake-btd-busd-eol",
+    "id": "avax: joe-usdc.e-dai.e-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc: cake-arpa-bnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: boo-wftm-ooe",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: boo-wftm-wshec",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: boo-wftm-wsspa",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: boo-wftm-yoshi",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: pearzap-fpear-ftm-eol",
+    "id": "avax: joe-wavax-dai.e-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom: pearzap-fpear-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom: boo-wftm-shade-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom: stakesteak-fusd-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom: boo-steak-wftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom: curve-ftm-fusdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom: boo-woofy-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom: boo-cream-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon: jarvis-4eur",
-    "type": "Added"
-  },
-  {
-    "id": "polygon: quick-dpi-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon: quick-uni-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon: quick-nexo-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon: sushi-frax-fxs-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon: sushi-frax-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax: joe-awool-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax: joe-klo-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax: joe-craft-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax: joe-melt-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax: joe-usdt.e-dai.e-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax: pangolin-png-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-usdc.e-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-png-qi-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-qi-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-uni.e-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-yfi.e-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-aave.e-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-sushi.e-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-wavax-xava-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-png-usdt.e-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-weth.e-png-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-wavax-dai.e-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-link.e-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-weth.e-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-wavax-usdt.e-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-wbtc.e-wavax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: png-bnb-avax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: com-com-avax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax: png-png-avax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax: pangolin-png",
+    "id": "avax: blizz-avax",
     "type": "REMOVED"
   },
   {
-    "id": "avax: pangolin-usdc.e-wavax",
+    "id": "avax: blizz-eth",
     "type": "REMOVED"
   },
   {
-    "id": "avax: pangolin-png-qi",
+    "id": "avax: blizz-wbtc",
     "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-qi-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-uni.e-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-yfi.e-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-aave.e-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-sushi.e-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-wavax-xava",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-png-usdt.e",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-weth.e-png",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-wavax-dai.e",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-link.e-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-weth.e-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-wavax-usdt.e",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: pangolin-wbtc.e-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: png-bnb-avax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: png-png-avax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "arbitrum: sushi-arb-magic-weth",
-    "type": "Added"
-  },
-  {
-    "id": "arbitrum: sushi-arb-weth-gohm",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-mim-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-frax-rome",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-wmovr-mai",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver: solarbeam-mimatic-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver: solarbeam-solar-rib-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver: solarbeam-frax-wmovr-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "moonriver: solarbeam-frax-arome-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "cronos: vvs-cro-doge",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-wbtc-eth",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-usdc-eth",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-wbtc-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "cronos: crona-usdt-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "cronos: crona-usdt-avax-eol",
-    "type": "synced",
-    "EOLd": true
   }
 ]
