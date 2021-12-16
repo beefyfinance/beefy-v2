@@ -137,6 +137,9 @@ export const config = {
       'jEUR',
       'jGBP',
       'jCHF',
+      'EURt',
+      'PAR',
+      'EURS',
     ],
   },
   fantom: {
@@ -158,7 +161,7 @@ export const config = {
       rpcUrls: ['https://rpcapi.fantom.network'],
       blockExplorerUrls: ['https://ftmscan.com/'],
     },
-    stableCoins: ['USDC', 'USDT', 'DAI', 'fUSDT', 'MIM', 'FRAX', 'MAI', 'DOLA', 'TUSD'],
+    stableCoins: ['USDC', 'USDT', 'DAI', 'fUSDT', 'MIM', 'FRAX', 'MAI', 'DOLA', 'TUSD', 'UST'],
   },
   harmony: {
     name: 'Harmony',
