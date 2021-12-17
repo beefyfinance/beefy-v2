@@ -139,7 +139,7 @@ const getBoosts = async (items, state, dispatch) => {
     });
 
     if (pool.isMooStaked) {
-      const mooContract = new web3[pool.network].eth.Contract(vaultAbi, pool.tokenAddress);
+      const mooContract = new web3[pool.network].eth.Contract(vaultAbi, pool.vaultAddress);
       moos[pool.network].push({
         id: pool.id,
         pricePerFullShare: mooContract.methods.getPricePerFullShare(),

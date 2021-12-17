@@ -11,10 +11,12 @@ const fetchPrices = (reducer?: any) => {
   const cache = new Date();
   cache.setMinutes(0, 0, 0);
 
+  const cacheBuster = Math.trunc(Date.now() / (1000 * 60));
+
   return async (dispatch, getState) => {
     const updatePrices = async () => {
       try {
-        const request = await axios.get('https://api.beefy.finance/prices?_=' + cache.getTime());
+        const request = await axios.get('https://api.beefy.finance/prices?_=' + cacheBuster);
         return request.status === 200 ? request.data : await updatePrices();
       } catch (err) {
         return await updatePrices();
@@ -23,7 +25,7 @@ const fetchPrices = (reducer?: any) => {
 
     const updateLps = async () => {
       try {
-        const request = await axios.get('https://api.beefy.finance/lps?_=' + cache.getTime());
+        const request = await axios.get('https://api.beefy.finance/lps?_=' + cacheBuster);
         return request.status === 200 ? request.data : await updateLps();
       } catch (err) {
         return await updateLps();
