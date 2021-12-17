@@ -41,6 +41,8 @@ const initialBoosts = () => {
       boost['tokenOracle'] = pool.oracle;
       boost['tokenOracleId'] = pool.oracleId;
       boost['assets'] = pool.assets;
+      boost['isMooStaked'] = boost.id.toLocaleLowerCase().startsWith('moo_');
+
 
       boosts[boost.id] = boost;
     } //for (const key in data.pools)

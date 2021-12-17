@@ -1209,5 +1209,42 @@ export const pools = [
     addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0x765277EebeCA2e31912C9946eAe1021199B39C61",
     network: "cronos",
     retireReason: "rewards"
+  },
+  {
+    id: "vvs-cro-atom",
+    name: "ATOM-CRO",
+    token: "ATOM-CRO LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x9e5bd780dff875Dd85848a65549791445AE25De0",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsCRO-ATOM",
+    earnedTokenAddress: "0x36ca23aa859dd66486619ae7150C842F035a5c51",
+    earnContractAddress: "0x36ca23aa859dd66486619ae7150C842F035a5c51",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-cro-atom",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "VVS",
+    assets: [
+      "ATOM",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
+    addLiquidityUrl: "https://vvs.finance/add/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
+    network: "cronos"
   }
 ];

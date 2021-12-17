@@ -18171,5 +18171,41 @@ export const pools = [
     stratType: "StratLP",
     network: "bsc",
     retireReason: "rewards"
+  },
+  {
+    id: "banana-crush-wbnb",
+    name: "CRUSH-BNB LP",
+    token: "CRUSH-BNB BLP",
+    tokenDescription: "ApeSwap",
+    tokenAddress: "0x8A10489f1255fb63217Be4cc96B8F4CD4D42a469",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooApeCRUSH-BNB",
+    earnedTokenAddress: "0x566b68521968569aC04873c4CCFfa45C8d653463",
+    earnContractAddress: "0x566b68521968569aC04873c4CCFfa45C8d653463",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "banana-crush-wbnb",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "ApeSwap",
+    assets: [
+      "CRUSH",
+      "BNB"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://dex.apeswap.finance/#/add/ETH/0x0Ef0626736c2d484A792508e99949736D0AF807e",
+    buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x0Ef0626736c2d484A792508e99949736D0AF807e",
+    network: "bsc"
   }
 ];
