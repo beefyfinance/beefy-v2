@@ -63,6 +63,13 @@ export const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       margin: '16px',
     },
+    '& a': {
+      textDecoration: 'none',
+      color: theme.palette.text.disabled,
+      '&:hover': {
+        color: theme.palette.text.primary,
+      },
+    },
   },
   navMobile: {
     display: 'flex',

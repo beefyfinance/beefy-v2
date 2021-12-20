@@ -110,7 +110,7 @@ export const Portfolio = () => {
               <Typography variant="h3" className={classes.title}>
                 {t('Portfolio-Portfolio')}
               </Typography>
-              <Button className={classes.btnHide} onClick={updateHideBalance}>
+              <Button size="small" className={classes.btnHide} onClick={updateHideBalance}>
                 {hideBalance ? (
                   <VisibilityOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
                 ) : (
