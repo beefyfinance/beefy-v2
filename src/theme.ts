@@ -3,10 +3,11 @@ import { createTheme } from '@material-ui/core/styles';
 const theme = createTheme({
   palette: {
     type: 'dark',
-    primary: { main: '#59A662' },
+    primary: { main: '#59A662', light: '#CDF7D2', dark: '#004708' },
     background: {
       default: '#232743',
       paper: '#232743',
+      light: '#313759',
       header: '#121212',
       cta: '#59A662',
       tags: {

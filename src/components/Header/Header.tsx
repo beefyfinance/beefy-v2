@@ -41,6 +41,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
   const navLinks = [
     { title: t('Header-Vote'), path: 'https://vote.beefy.finance/' },
     { title: t('Header-Stats'), path: 'https://dashboard.beefy.finance/' },
+    { title: t('Header-Blog'), path: 'https://blog.beefy.finance/articles/' },
     { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
   ];
 
@@ -61,8 +62,8 @@ export const Header = ({ isNightMode, setNightMode }) => {
           {t('Header-Explore')}
         </NavLink>
         {navLinks.map(({ title, path }) => (
-          <Typography variant="body1">
-            <a target="_blank" rel="noreferrer" className={classes.navLink} href={path} key={title}>
+          <Typography variant="body1" className={classes.navLink}>
+            <a target="_blank" rel="noreferrer" href={path} key={title}>
               {title}
             </a>
           </Typography>
