@@ -4,10 +4,16 @@ export const styles = theme => ({
     padding: '30px 0 30px 0',
   },
   title: {
-    fontSize: '36px',
-    fontWeight: 600,
-    lineHeight: '42px',
-    paddingBottom: '16px',
+    color: theme.palette.text.secondary,
+  },
+  title2: {
+    color: theme.palette.text.secondary,
+    paddingBottom: theme.spacing(2),
+  },
+  titles: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingBottom: theme.spacing(2),
   },
   btnHide: {
     marginTop: '8px',

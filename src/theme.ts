@@ -3,6 +3,7 @@ import { createTheme } from '@material-ui/core/styles';
 const theme = createTheme({
   palette: {
     type: 'dark',
+    primary: { main: '#59A662' },
     background: {
       default: '#232743',
       paper: '#232743',
@@ -37,27 +38,27 @@ const theme = createTheme({
     h1: {
       fontSize: '45px',
       lineHeight: '56px',
-      fontStyle: 'semibold',
+      fontWeight: 600,
     },
     h2: {
       fontSize: '32px',
       lineHeight: '40px',
-      fontStyle: 'semibold',
+      fontWeight: 600,
     },
     h3: {
       fontSize: '24px',
       lineHeight: '32px',
-      fontStyle: 'semibold',
+      fontWeight: 600,
     },
     h4: {
       fontSize: '21px',
       lineHeight: '24px',
-      fontStyle: 'semibold',
+      fontWeight: 600,
     },
     h5: {
       fontSize: '18px',
       lineHeight: '28px',
-      fontStyle: 'semibold',
+      fontWeight: 600,
     },
     body1: {
       fontSize: '15px',

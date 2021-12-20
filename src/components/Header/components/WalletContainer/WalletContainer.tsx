@@ -57,7 +57,7 @@ export const WalletContainer = () => {
           ) : (
             <React.Fragment>
               {walletReducer.address ? <Avatar src={dataUrl} /> : ''}
-              <Typography noWrap={true}>
+              <Typography variant="body1" noWrap={true}>
                 {walletReducer.address
                   ? formatAddress(walletReducer.address)
                   : t('Network-ConnectWallet')}
