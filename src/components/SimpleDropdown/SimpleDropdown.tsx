@@ -28,7 +28,7 @@ export const SimpleDropdown: React.FC<SimpleDropdownProps> = ({
         onChange={handler}
         disableUnderline={true}
         IconComponent={ExpandMore}
-        // renderValue={renderValue} // TODO: renable
+        renderValue={renderValue} // TODO: renable
         fullWidth
       >
         {Object.keys(list).map(val => (

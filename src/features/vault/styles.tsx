@@ -1,7 +1,7 @@
 export const styles = theme => ({
   vaultContainer: {
     padding: '48px 0',
-    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
+    backgroundColor: theme.palette.background.header,
   },
   title: {
     display: 'flex',

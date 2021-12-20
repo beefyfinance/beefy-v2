@@ -2,12 +2,11 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import { createTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { reduxActions } from './features/redux/actions';
 import { ScrollToTop } from './components/ScrollToTop';
 import { HideBalanceProvider } from './components/HideBalancesContext';
-
+import { theme } from './theme';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
@@ -22,38 +21,6 @@ export const App = () => {
   const { wallet } = useSelector((state: any) => ({
     wallet: state.walletReducer,
   }));
-
-  const theme = createTheme({
-    palette: {
-      type: isNightMode ? 'dark' : 'light',
-      background: {
-        dark: '#1B203A',
-        default: '#232743',
-        paper: isNightMode ? '#272B4A' : '#FFFFFF',
-        light: '#313759',
-        tags: {
-          bifi: '#5C499D',
-          stable: '#3D8F61',
-          blueChip: '#3E5FA7',
-          lowRisk: '#4683AA',
-          boost: '#E88225',
-          eol: '#313A68',
-        },
-      } as any, // TODO: fix any
-    },
-    overrides: {
-      MuiCssBaseline: {
-        '@global': {
-          body: {
-            backgroundColor: isNightMode ? '#1B203A' : '#fff',
-          },
-        },
-      },
-    },
-    typography: {
-      fontFamily: ['Proxima Nova', 'sans-serif'].join(','),
-    },
-  });
 
   React.useEffect(() => {
     const updateBalances = async () => {
