@@ -3488,5 +3488,113 @@ export const pools = [
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     network: "avax"
+  },
+  {
+    id: "joe-usdc.e-usdc",
+    name: "USDC-USDC.e LP",
+    token: "USDC-USDC.e JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0x2A8A315e82F85D1f0658C5D66A452Bbdd9356783",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeUSDC.e-USDC",
+    earnedTokenAddress: "0x42ab5A790E99dF1b5d46f1C5C3e61d0Cd63D1f6E",
+    earnContractAddress: "0x42ab5A790E99dF1b5d46f1C5C3e61d0Cd63D1f6E",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-usdc.e-usdc",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "USDC",
+      "USDCe"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/#/pool/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    network: "avax"
+  },
+  {
+    id: "joe-wavax-cly",
+    name: "CLY-AVAX LP",
+    token: "CLY-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0x0B2777b0c55AEaAeb56E86B6eEFa6cC2Cfa00e07",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeAVAX-CLY",
+    earnedTokenAddress: "0x374DC1BaF7a05e2D47f8D169FB9c8c862A9082CA",
+    earnContractAddress: "0x374DC1BaF7a05e2D47f8D169FB9c8c862A9082CA",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-wavax-cly",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "CLY",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
+    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
+    network: "avax"
+  },
+  {
+    id: "joe-ptp-wavax",
+    name: "PTP-AVAX LP",
+    token: "PTP-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0xCDFD91eEa657cc2701117fe9711C9a4F61FEED23",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoePTP-AVAX",
+    earnedTokenAddress: "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
+    earnContractAddress: "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-ptp-wavax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "PTP",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x22d4002028f537599bE9f666d1c4Fa138522f9c8",
+    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x22d4002028f537599bE9f666d1c4Fa138522f9c8",
+    network: "avax"
   }
 ];

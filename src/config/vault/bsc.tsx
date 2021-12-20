@@ -9676,35 +9676,6 @@ export const pools = [
     network: "bsc"
   },
   {
-    id: "cakev2-pcws-bnb-eol",
-    logo: "bnb-pairs/pCWS-BNB.svg",
-    name: "pCWS-BNB LP",
-    token: "pCWS-BNB LP2",
-    tokenDescription: "PancakeSwap",
-    tokenAddress: "0x6615CE60D71513aA4849269dD63821D324A23F8C",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCakeV2pCWS-BNB",
-    earnedTokenAddress: "0x15cd0fd4c1A67EADDe83654be450C0EC61769169",
-    earnContractAddress: "0x15cd0fd4c1A67EADDe83654be450C0EC61769169",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cakev2-pcws-bnb",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "PancakeSwap",
-    assets: [
-      "pCWS",
-      "BNB"
-    ],
-    retireReason: "rewards",
-    addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0xbcf39f0edda668c58371e519af37ca705f2bfcbd",
-    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xbcf39f0edda668c58371e519af37ca705f2bfcbd",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
     id: "cakev2-trade-bnb",
     logo: "bnb-pairs/TRADE-BNB.svg",
     name: "TRADE-BNB LP",

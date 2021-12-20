@@ -1,34 +1,103 @@
 [
   {
-    "id": "bsc: banana-crush-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "avax: blizz-avax",
-    "type": "Added"
-  },
-  {
-    "id": "avax: blizz-eth",
-    "type": "Added"
-  },
-  {
-    "id": "avax: blizz-wbtc",
-    "type": "Added"
-  },
-  {
-    "id": "avax: blizz-avax-pause",
+    "id": "bsc: cakev2-pcws-bnb-eol",
     "type": "REMOVED"
   },
   {
-    "id": "avax: blizz-eth-pause",
+    "id": "fantom: geist-crv",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-wftm-avax",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-wftm-woo",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-wbtc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-eth",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-fusdt",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: geist-dai",
+    "type": "Added"
+  },
+  {
+    "id": "fantom: boo-usdc-woo-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom: geist-ftm-pause",
     "type": "REMOVED"
   },
   {
-    "id": "avax: blizz-wbtc-pause",
+    "id": "fantom: geist-wbtc-pause",
     "type": "REMOVED"
   },
   {
-    "id": "cronos: vvs-cro-atom",
+    "id": "fantom: geist-eth-pause",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: geist-fusdt-pause",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: geist-usdc-pause",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom: geist-dai-pause",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon: sushi-eth-gohm",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-usdc-tusd",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-eth2x-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: sushi-fxs-frax",
+    "type": "Added"
+  },
+  {
+    "id": "polygon: dfyn-link-dfyn-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax: joe-usdc.e-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-wavax-cly",
+    "type": "Added"
+  },
+  {
+    "id": "avax: joe-ptp-wavax",
     "type": "Added"
   }
 ]

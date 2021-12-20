@@ -1966,42 +1966,6 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "boo-usdc-woo",
-    name: "WOO-USDC LP",
-    token: "WOO-USDC LP",
-    tokenDescription: "SpookySwap",
-    tokenAddress: "0x7d4CdDAB6774Ff47D62253067958dbD749Cb7F06",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBooWOO-USDC",
-    earnedTokenAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
-    earnContractAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "boo-usdc-woo",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SpookySwap",
-    assets: [
-      "WOO",
-      "USDC"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://spookyswap.finance/add/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    buyTokenUrl: "https://spookyswap.finance/swap",
-    network: "fantom"
-  },
-  {
     id: "boo-wftm-treeb",
     name: "TREEB-FTM LP",
     token: "TREEB-FTM LP",
@@ -4118,7 +4082,117 @@ export const pools = [
     retireReason: "rewards"
   },
   {
-    id: "geist-ftm-pause",
+    id: "geist-crv",
+    logo: "single-assets/CRV.png",
+    name: "CRV",
+    token: "CRV",
+    tokenDescription: "Geist",
+    tokenAddress: "0x1E4F97b9f9F913c46F1632781732927B9019C68b",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooGeistCRV",
+    earnedTokenAddress: "0xedEb044BC7Ce11Dfa436CFA8Be43e6eB0d601814",
+    earnContractAddress: "0xedEb044BC7Ce11Dfa436CFA8Be43e6eB0d601814",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "CRV",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Geist",
+    assets: [
+      "CRV"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0.01%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b",
+    network: "fantom"
+  },
+  {
+    id: "boo-wftm-avax",
+    name: "AVAX-FTM LP",
+    token: "AVAX-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x5DF809e410d9CC577f0d01b4E623C567C7aD56c1",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooAVAX-FTM",
+    earnedTokenAddress: "0x6e08721cE0eB1a6776E7965beb5441267D1742c7",
+    earnContractAddress: "0x6e08721cE0eB1a6776E7965beb5441267D1742c7",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-wftm-avax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "AVAX",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0x511D35c52a3C244E7b8bd92c0C297755FbD89212",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom"
+  },
+  {
+    id: "boo-wftm-woo",
+    name: "WOO-FTM LP",
+    token: "WOO-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0xa7010b3ba9efb1AF9Fa8a30efe74C16A93891775",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooWOO-FTM",
+    earnedTokenAddress: "0xddb3F5F56AeA6B8cE12e2f603Fac6b8f0D99b78a",
+    earnContractAddress: "0xddb3F5F56AeA6B8cE12e2f603Fac6b8f0D99b78a",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-wftm-woo",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "WOO",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom"
+  },
+  {
+    id: "geist-ftm",
     logo: "single-assets/FTM.png",
     name: "FTM",
     token: "FTM",
@@ -4133,7 +4207,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "FTM",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "FTM"
@@ -4152,7 +4227,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-wbtc-pause",
+    id: "geist-wbtc",
     logo: "single-assets/WBTC.svg",
     name: "WBTC",
     token: "WBTC",
@@ -4168,7 +4243,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "WBTC",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "WBTC"
@@ -4187,7 +4263,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-eth-pause",
+    id: "geist-eth",
     logo: "single-assets/ETH.svg",
     name: "ETH",
     token: "ETH",
@@ -4203,7 +4279,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "ETH",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "ETH"
@@ -4222,7 +4299,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-fusdt-pause",
+    id: "geist-fusdt",
     logo: "single-assets/USDT.svg",
     name: "fUSDT",
     token: "fUSDT",
@@ -4238,7 +4315,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "fUSDT",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "fUSDT"
@@ -4257,7 +4335,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-usdc-pause",
+    id: "geist-usdc",
     logo: "single-assets/USDC.svg",
     name: "USDC",
     token: "USDC",
@@ -4273,7 +4351,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "USDC",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "USDC"
@@ -4292,7 +4371,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-dai-pause",
+    id: "geist-dai",
     logo: "single-assets/DAI.svg",
     name: "DAI",
     token: "DAI",
@@ -4308,7 +4387,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "DAI",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "DAI"
@@ -4325,5 +4405,42 @@ export const pools = [
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     network: "fantom"
+  },
+  {
+    id: "boo-usdc-woo-eol",
+    name: "WOO-USDC LP",
+    token: "WOO-USDC LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x7d4CdDAB6774Ff47D62253067958dbD749Cb7F06",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooWOO-USDC",
+    earnedTokenAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
+    earnContractAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-usdc-woo",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SpookySwap",
+    assets: [
+      "WOO",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom",
+    retireReason: "rewards"
   }
 ];
