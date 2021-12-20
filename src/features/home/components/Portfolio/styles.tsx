@@ -1,6 +1,6 @@
 export const styles = theme => ({
   portfolio: {
-    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
+    backgroundColor: theme.palette.background.header,
     padding: '30px 0 30px 0',
   },
   title: {
@@ -12,7 +12,7 @@ export const styles = theme => ({
   btnHide: {
     marginTop: '8px',
     textTransform: 'capitalize',
-    color: theme.palette.type === 'dark' ? '#484F7F' : '#ff0000',
+    color: '#484F7F',
     fontSize: '16px',
     fontWeight: '600',
     '& .MuiSvgIcon-root': {
@@ -23,7 +23,7 @@ export const styles = theme => ({
     },
     '&:hover': {
       backgroundColor: 'transparent',
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+      color: '#6B7199',
     },
   },
   vaults: {

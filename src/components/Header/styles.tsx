@@ -12,11 +12,11 @@ export const styles = theme => ({
     alignItem: 'center',
   },
   hasPortfolio: {
-    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
+    backgroundColor: theme.palette.background.header,
   },
   mobileMenu: {
     width: 250,
-    backgroundColor: theme.palette.type === 'dark' ? '#14161F' : '#FEFAF4',
+    backgroundColor: theme.palette.background.header,
   },
   beefy: {
     display: 'flex',
@@ -46,7 +46,7 @@ export const styles = theme => ({
   navLink: {
     textDecoration: 'none',
     textTransform: 'capitalize',
-    color: theme.palette.type === 'dark' ? '#6B7199' : '#000000',
+    color: '#6B7199',
     fontSize: 16,
     fontWeight: 'bold',
     lineHeight: '24px',
@@ -86,11 +86,11 @@ export const styles = theme => ({
     '& .MuiTypography-root': {
       fontWeight: '600',
       fontSize: 16,
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+      color: '#6B7199',
     },
   },
   drawerBlack: {
-    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
+    backgroundColor: '#0D0E14',
   },
   hide: {
     display: 'none',
