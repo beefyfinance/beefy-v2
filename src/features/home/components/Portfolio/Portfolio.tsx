@@ -12,10 +12,12 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { useHideBalanceCtx } from '../../../../components/HideBalancesContext';
 import { useVaults } from '../../hooks/useFilteredVaults';
 import { isEmpty } from '../../../../helpers/utils';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(styles as any);
 export const Portfolio = () => {
   const classes = useStyles();
+  const theme = useTheme();
   const { hideBalance, setHideBalance } = useHideBalanceCtx();
 
   const [globalStats, setGlobalStats] = useState({
@@ -104,25 +106,25 @@ export const Portfolio = () => {
       <Container maxWidth="lg">
         <Grid container>
           <Grid item xs={12} lg={6}>
-            <Typography className={classes.title}>{t('Portfolio-Portfolio')}</Typography>
+            <Box className={classes.titles}>
+              <Typography variant="h3" className={classes.title}>
+                {t('Portfolio-Portfolio')}
+              </Typography>
+              <Button className={classes.btnHide} onClick={updateHideBalance}>
+                {hideBalance ? (
+                  <VisibilityOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
+                ) : (
+                  <VisibilityOffOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
+                )}
+              </Button>
+            </Box>
             <Stats stats={globalStats} blurred={hideBalance} />
-            <Button className={classes.btnHide} onClick={updateHideBalance}>
-              {hideBalance ? (
-                <React.Fragment>
-                  <VisibilityOutlinedIcon />
-                  {t('Portfolio-BalanceShow')}
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <VisibilityOffOutlinedIcon />
-                  {t('Portfolio-BalanceHide')}
-                </React.Fragment>
-              )}
-            </Button>
           </Grid>
           <Grid item xs={12} lg={6}>
             <Box className={classes.vaults}>
-              <Typography className={classes.title}>{t('Vault-platform')}</Typography>
+              <Typography variant="h3" className={classes.title2}>
+                {t('Vault-platform')}
+              </Typography>
               <Box>
                 <VaultsStats {...({} as any)} />
               </Box>

@@ -9,7 +9,8 @@ export const styles = theme => ({
   },
   flex: {
     display: 'flex',
-    alignItem: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
   hasPortfolio: {
     backgroundColor: theme.palette.background.header,
@@ -46,13 +47,11 @@ export const styles = theme => ({
   navLink: {
     textDecoration: 'none',
     textTransform: 'capitalize',
-    color: '#6B7199',
-    fontSize: 16,
+    color: theme.palette.text.disabled,
     fontWeight: 'bold',
-    lineHeight: '24px',
     margin: '12px',
     '&:hover': {
-      color: 'white',
+      color: theme.palette.text.primary,
     },
     [theme.breakpoints.up('md')]: {
       '&:hover': {
@@ -70,7 +69,7 @@ export const styles = theme => ({
     flexDirection: 'column',
   },
   active: {
-    color: '#fff',
+    color: theme.palette.text.primary,
   },
   bifiPrice: {
     display: 'flex',
@@ -84,9 +83,8 @@ export const styles = theme => ({
       marginRight: '5px',
     },
     '& .MuiTypography-root': {
-      fontWeight: '600',
-      fontSize: 16,
-      color: '#6B7199',
+      fontWeight: 700,
+      color: theme.palette.text.disabled,
     },
   },
   drawerBlack: {

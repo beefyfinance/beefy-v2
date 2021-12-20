@@ -18,19 +18,14 @@ export const styles = theme => ({
     },
   },
   value: {
-    fontSize: '24px',
-    fontWeight: '600',
-    lineHeight: '30px',
-    color: theme.palette.type === 'dark' ? '#ffffff' : '#ff0000',
+    color: theme.palette.text.primary,
   },
   label: {
+    letterSpacing: '0.5px',
     textTransform: 'uppercase',
-    letterSpacing: '1px',
-    fontSize: '14px',
-    fontWeight: '600',
-    lineHeight: '18px',
     display: 'inline-flex',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
+    fontWeight: 600,
+    color: theme.palette.text.disabled,
   },
   obscured: {
     color: '#424866',
