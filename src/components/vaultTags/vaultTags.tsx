@@ -2,7 +2,6 @@ import React, { memo, useMemo } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import clsx from 'clsx';
 
 const useStyles = makeStyles(styles as any);
 const _DisplayTags = ({ tags, isBoosted }) => {
@@ -23,14 +22,14 @@ const _DisplayTags = ({ tags, isBoosted }) => {
     <>
       {tags.map(item => (
         <div className={classes.spacingMobile} key={item}>
-          <Typography className={clsx(classes.tags, classes[item + 'Tag'])} display={'inline'}>
+          <Typography className={classes.tags} display={'inline'}>
             {item in labels ? labels[item] : item}
           </Typography>
         </div>
       ))}
       {isBoosted && (
         <div className={classes.spacingMobile} key={'boost'}>
-          <Typography className={clsx(classes.tags, classes['boostTag'])} display={'inline'}>
+          <Typography className={classes.tags} display={'inline'}>
             {t('VaultTag-Boost')}
           </Typography>
         </div>

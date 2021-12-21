@@ -11,13 +11,14 @@ import {
   makeStyles,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton,
 } from '@material-ui/core';
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { getAvailableNetworks } from '../../../../helpers/utils';
 import { ToggleButton } from '@material-ui/lab';
-import { Search } from '@material-ui/icons';
+import { Search, Close } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { FilterProps } from './FilterProps';
 import { FilterCategories } from './FilterCategories';
@@ -102,18 +103,29 @@ const _Filter: React.FC<FilterProps> = ({
             label={t('Filter-Search')}
             value={sortConfig.keyword}
             onChange={e => handleChange('keyword', e.target.value)}
-            InputProps={{ className: classes.input }}
+            InputProps={{
+              className: classes.input,
+              endAdornment: (
+                <>
+                  <InputAdornment position="end">
+                    {sortConfig.keyword.length > 3 ? (
+                      <IconButton
+                        className={classes.iconSearch}
+                        size="small"
+                        onClick={() => handleChange('keyword', '')}
+                      >
+                        <Close />
+                      </IconButton>
+                    ) : (
+                      <IconButton className={classes.iconSearch} size="small">
+                        <Search />
+                      </IconButton>
+                    )}
+                  </InputAdornment>
+                </>
+              ),
+            }}
           />
-          <Search className={classes.iconSearch} />
-          {sortConfig.keyword.length > 3 && (
-            <Button
-              onClick={() => handleChange('keyword', '')}
-              size="small"
-              className={classes.btnClearSearch}
-            >
-              X
-            </Button>
-          )}
         </Box>
         {/*All/My Switch*/}
         <Box className={classes.toggleSwitchContainer}>
@@ -149,24 +161,21 @@ const _Filter: React.FC<FilterProps> = ({
           />
         </Box>
         {/*All Filters Button*/}
-        <Box className={classes.btnFilter}>
-          <ToggleButton
-            className={classes.blockBtn}
-            value={filterOpen}
-            selected={filterOpen}
-            onChange={() => {
-              setFilterOpen(!filterOpen);
-            }}
-          >
-            <img
-              src={require(`../../../../images/filter.svg`).default}
-              alt=""
-              className={classes.filterIcon}
-            />
-            {t('Filter-Btn')}
-            {filterOpen ? <ArrowDropDownIcon /> : ''}
-          </ToggleButton>
-        </Box>
+        <ToggleButton
+          className={classes.btnFilter}
+          value={filterOpen}
+          selected={filterOpen}
+          onChange={() => {
+            setFilterOpen(!filterOpen);
+          }}
+        >
+          <img
+            src={require(`../../../../images/filter.svg`).default}
+            alt=""
+            className={classes.filterIcon}
+          />
+          {t('Filter-Btn')}
+        </ToggleButton>
       </Box>
       <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
         <Box className={classes.filters}>
@@ -197,18 +206,6 @@ const _Filter: React.FC<FilterProps> = ({
                     />
                   }
                 />
-                {/* <FormControlLabel
-                  className={classes.checkboxContainer}
-                  label={t('Filter-Deposited')}
-                  control={
-                    <Checkbox
-                      checked={sortConfig.deposited}
-                      onChange={handleCheckbox}
-                      name="deposited"
-                      color="primary"
-                    />
-                  }
-                /> */}
                 <FormControlLabel
                   className={classes.checkboxContainer}
                   label={

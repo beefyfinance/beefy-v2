@@ -3,34 +3,26 @@ export const styles = theme => ({
     height: '44px',
     position: 'relative',
     '& .MuiSelect-select': {
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
-      fontWeight: '600',
-      fontSize: 18,
+      color: theme.palette.text.secondary,
+      backgroundColor: theme.palette.background.filters.inactive,
+      fontWeight: 700,
+      fontSize: 15,
       padding: '11px 29px 0 15px',
-      border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #ff0000',
-      borderRadius: '30px',
+      border: `2px solid ${theme.palette.background.filters.outline}`,
+      borderRadius: '8px',
       height: '29px',
       textAlign: 'right',
-      [theme.breakpoints.up('md')]: {
-        minWidth: '200px',
-      },
     },
     '& .MuiSelect-icon': {
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
-      right: '8px',
+      color: theme.palette.text.secondary,
+      right: '12px',
     },
     '& .MuiTypography-root': {
-      fontWeight: '600',
-      color: theme.palette.type === 'dark' ? 'white' : '#ff0000',
+      fontWeight: 700,
+      color: theme.palette.text.secondary,
       position: 'absolute',
       top: '10px',
       left: '23px',
-    },
-    '&:hover': {
-      borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
-    },
-    '&:hover .MuiSelect-select': {
-      color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
     },
     [theme.breakpoints.down('md')]: {
       '& .MuiSelect-select': {
@@ -45,9 +37,9 @@ export const styles = theme => ({
     },
   },
   selectList: {
-    color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
-    border: theme.palette.type === 'dark' ? '2px solid #313759' : '2px solid #6B7199',
-    backgroundColor: theme.palette.type === 'dark' ? '#1B203A' : '#faf6f1',
+    color: theme.palette.text.disabled,
+    border: `2px solid ${theme.palette.background.filters.outline}`,
+    backgroundColor: theme.palette.background.filters.disabled,
     padding: '0px',
     margin: '0px',
     '& .label': {
@@ -55,6 +47,6 @@ export const styles = theme => ({
     },
   },
   label: {
-    color: '#6B7199',
+    color: theme.palette.text.disabled,
   },
 });
