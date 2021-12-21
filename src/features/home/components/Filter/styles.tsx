@@ -51,12 +51,12 @@ export const styles = theme => ({
   },
   input: {
     fontSize: '15px',
-    fontWeight: '600',
+    fontWeight: '700',
     borderWidth: '2px',
     borderRadius: '8px',
     color: theme.palette.text.secondary,
     [theme.breakpoints.up('sm')]: {
-      width: 300,
+      width: 275,
     },
     [theme.breakpoints.down(725)]: {
       width: '100%',
@@ -81,7 +81,7 @@ export const styles = theme => ({
     height: 43,
     [theme.breakpoints.down(725)]: {
       display: 'flex',
-      width: '40%',
+      width: '30%',
       margin: '0 0 18px 0',
     },
     '&.MuiToggleButton-root.Mui-selected': {
@@ -223,7 +223,6 @@ export const styles = theme => ({
     [theme.breakpoints.down(725)]: {
       width: '100%',
       marginRight: '0',
-      order: '5',
       margin: '0 0 18px 0',
     },
   },
@@ -267,7 +266,7 @@ export const styles = theme => ({
       width: '170px',
     },
     [theme.breakpoints.down(725)]: {
-      width: '60%',
+      width: '70%',
       display: 'flex',
       margin: '0 0 18px 0',
       paddingRight: '16px',
