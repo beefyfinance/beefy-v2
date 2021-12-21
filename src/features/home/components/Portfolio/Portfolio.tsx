@@ -105,7 +105,7 @@ export const Portfolio = () => {
     <Box className={classes.portfolio}>
       <Container maxWidth="lg">
         <Grid container>
-          <Grid item xs={12} lg={6}>
+          <Grid className={classes.separator} item xs={12} lg={6}>
             <Box className={classes.titles}>
               <Typography variant="h3" className={classes.title}>
                 {t('Portfolio-Portfolio')}

@@ -8,12 +8,23 @@ export const styles = theme => ({
   },
   title2: {
     color: theme.palette.text.secondary,
-    paddingBottom: 20,
+    paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down('md')]: {
+      paddingBottom: theme.spacing(1),
+    },
+  },
+  separator: {
+    [theme.breakpoints.down('md')]: {
+      marginBottom: theme.spacing(4),
+    },
   },
   titles: {
     display: 'flex',
     alignItems: 'center',
     paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down('md')]: {
+      paddingBottom: theme.spacing(1),
+    },
   },
   btnHide: {
     textTransform: 'capitalize',
