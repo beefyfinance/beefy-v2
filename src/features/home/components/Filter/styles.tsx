@@ -168,12 +168,16 @@ export const styles = theme => ({
   iconSearch: {
     borderRadius: 8,
   },
-  checkboxes: {
-    color: '#6B7199',
-    '& .MuiSvgIcon-root': {
-      color: '#6B7199',
+  checkbox: {
+    color: theme.palette.text.disabled,
+    '&.MuiCheckbox-root': {
+      color: theme.palette.text.disabled,
+    },
+    '&.Mui-checked': {
+      color: theme.palette.text.primary,
     },
   },
+
   selectors: {
     [theme.breakpoints.down('xs')]: {
       width: '100%',
@@ -312,5 +316,24 @@ export const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  badge: {
+    backgroundColor: '#DB5932',
+    width: '20px',
+    height: '20px',
+    borderRadius: 60,
+    color: '#fff',
+    fontWeight: 700,
+    fontSize: 12,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: theme.spacing(1),
+  },
+  label: {
+    color: theme.palette.text.disabled,
+  },
+  value: {
+    textTransform: 'capitalize',
   },
 });

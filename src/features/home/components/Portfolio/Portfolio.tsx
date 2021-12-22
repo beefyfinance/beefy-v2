@@ -40,7 +40,6 @@ export const Portfolio = () => {
       monthly: new BigNumber(0),
     };
 
-    console.log(userVaults);
     if (userAddress && userVaults) {
       Object.keys(userVaults).map(_vault => {
         const vault = userVaults[_vault];

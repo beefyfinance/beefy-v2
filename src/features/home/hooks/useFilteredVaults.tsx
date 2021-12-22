@@ -18,7 +18,7 @@ export const FILTER_DEFAULT = {
   boost: false,
   platform: 'all',
   vault: 'all',
-  blockchain: 'all',
+  blockchain: ['all'],
   category: 'all',
 };
 
@@ -180,7 +180,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   // hide network does not match
-  if (config.blockchain !== 'all' && vault.network !== config.blockchain) {
+  if (!config.blockchain.includes('all') && !config.blockchain.includes(vault.network)) {
     return false;
   }
 
