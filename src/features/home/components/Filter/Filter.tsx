@@ -1,10 +1,10 @@
 import React, { memo, useCallback, useMemo, useState } from 'react';
-import AnimateHeight from 'react-animate-height';
 import { useTranslation } from 'react-i18next';
 import {
   Avatar,
   Box,
   Button,
+  Popover,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -17,7 +17,6 @@ import {
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { getAvailableNetworks } from '../../../../helpers/utils';
-import { ToggleButton } from '@material-ui/lab';
 import { Search, Close } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { FilterProps } from './FilterProps';
@@ -33,7 +32,7 @@ const _Filter: React.FC<FilterProps> = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [filterOpen, setFilterOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleCheckbox = useCallback(
     event => {
@@ -87,6 +86,17 @@ const _Filter: React.FC<FilterProps> = ({
       safetyScore: t('Filter-SortSafety'),
     };
   }, [t]);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   const handleSortChange = useCallback(e => handleChange('key', e.target.value), [handleChange]);
 
@@ -161,23 +171,125 @@ const _Filter: React.FC<FilterProps> = ({
           />
         </Box>
         {/*All Filters Button*/}
-        <ToggleButton
-          className={classes.btnFilter}
-          value={filterOpen}
-          selected={filterOpen}
-          onChange={() => {
-            setFilterOpen(!filterOpen);
-          }}
-        >
+        <Button onClick={handleClick} className={classes.btnFilter}>
           <img
             src={require(`../../../../images/filter.svg`).default}
             alt=""
             className={classes.filterIcon}
           />
           {t('Filter-Btn')}
-        </ToggleButton>
+        </Button>
       </Box>
-      <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        className={classes.filter}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Box className={classes.filterContent}>
+          <Typography variant="body1">
+            {t('Filter-Showing', {
+              number: filteredCount,
+              count: allCount,
+            })}
+          </Typography>
+
+          <Box className={classes.checkboxes}>
+            <FormGroup>
+              <FormControlLabel
+                className={classes.checkboxContainer}
+                label={t('Filter-HideZero')}
+                control={
+                  <Checkbox
+                    checked={sortConfig.zero}
+                    onChange={handleCheckbox}
+                    name="zero"
+                    color="primary"
+                  />
+                }
+              />
+              <FormControlLabel
+                className={classes.checkboxContainer}
+                label={t('Filter-Retired')}
+                control={
+                  <Checkbox
+                    checked={sortConfig.retired}
+                    onChange={handleCheckbox}
+                    name="retired"
+                    color="primary"
+                  />
+                }
+              />
+              <FormControlLabel
+                className={classes.checkboxContainer}
+                label={
+                  <span className={classes.boostFilterLabel}>
+                    <Avatar
+                      alt="Fire"
+                      src={require('../../../../images/fire.png').default}
+                      imgProps={{
+                        style: { objectFit: 'contain' },
+                      }}
+                    />
+                    <Typography style={{ margin: 'auto' }}>{t('Filter-Boost')}</Typography>
+                  </span>
+                }
+                control={
+                  <Checkbox
+                    checked={sortConfig.boost}
+                    onChange={handleCheckbox}
+                    name="boost"
+                    color="primary"
+                  />
+                }
+              />
+            </FormGroup>
+          </Box>
+
+          <Box className={classes.selectors}>
+            <Box className={classes.selector}>
+              <LabeledDropdown
+                fullWidth={true}
+                list={platformTypes}
+                selected={sortConfig.platform}
+                handler={e => handleChange('platform', e.target.value)}
+                label={t('Filter-Platform')}
+              />
+            </Box>
+            <Box className={classes.selector}>
+              <LabeledDropdown
+                fullWidth={true}
+                list={vaultTypes}
+                selected={sortConfig.vault}
+                handler={e => handleChange('vault', e.target.value)}
+                label={t('Filter-Type')}
+              />
+            </Box>
+            <Box className={classes.selector}>
+              <LabeledDropdown
+                fullWidth={true}
+                list={networkTypes}
+                selected={sortConfig.blockchain}
+                handler={e => handleChange('blockchain', e.target.value)}
+                label={t('Filter-Blockchn')}
+              />
+            </Box>
+          </Box>
+        </Box>
+        <Box className={classes.filterFooter}>
+          <Button className={classes.btnApplyFilters}>{t('Filter-Apply')}</Button>
+          <Button className={classes.btnReset} onClick={handleReset}>
+            {t('Filter-Reset')}
+          </Button>
+        </Box>
+      </Popover>
+
+      {/* <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
         <Box className={classes.filters}>
           <Box className={classes.filtersInner}>
             <Box className={classes.checkboxes}>
@@ -273,7 +385,7 @@ const _Filter: React.FC<FilterProps> = ({
             </Box>
           </Box>
         </Box>
-      </AnimateHeight>
+      </AnimateHeight> */}
     </>
   );
 };

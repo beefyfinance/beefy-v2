@@ -108,28 +108,31 @@ export const styles = theme => ({
       minWidth: 'fit-content',
     },
   },
-  filtersInner: {
-    display: 'flex',
-  },
   btnReset: {
-    color: theme.palette.type === 'dark' ? '#ffffff' : '#000000',
-    fontWeight: '600',
-    borderWidth: '2px',
-    borderRadius: '30px',
-    borderStyle: 'solid',
-    borderColor: theme.palette.type === 'dark' ? '#313759' : '#ff0000',
-    backgroundColor: theme.palette.type === 'dark' ? '#313759' : '#ff0000',
+    textTransform: 'none',
+    color: theme.palette.text.disabled,
+    fontWeight: 700,
+    borderRadius: '8px',
+    fontSize: '15px',
+    padding: '8px 24px',
+    backgroundColor: theme.palette.background.filters.inactive,
     height: 43,
     '&:hover': {
-      borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
-      backgroundColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',
+      color: theme.palette.text.primary,
     },
-    [theme.breakpoints.down('xs')]: {
-      width: '100%',
-      margin: '10px 0 0 0',
-    },
-    [theme.breakpoints.down('sm')]: {
-      minWidth: 'none',
+  },
+  btnApplyFilters: {
+    textTransform: 'none',
+    color: theme.palette.text.primary,
+    fontWeight: 700,
+    borderRadius: '8px',
+    fontSize: '15px',
+    padding: '8px 24px',
+    backgroundColor: theme.palette.primary.main,
+    height: 43,
+    '&:hover': {
+      color: theme.palette.text.secondary,
+      backgroundColor: theme.palette.background.filters.inactive,
     },
   },
   searchInput: {
@@ -172,9 +175,6 @@ export const styles = theme => ({
     },
   },
   selectors: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    flexGrow: 1,
     [theme.breakpoints.down('xs')]: {
       width: '100%',
     },
@@ -297,5 +297,20 @@ export const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       width: '100%',
     },
+  },
+  filter: {
+    '& .MuiPopover-paper': {
+      minWidth: '350px',
+      backgroundColor: theme.palette.background.filters.inactive,
+      border: `2px solid ${theme.palette.background.filters.outline}`,
+    },
+  },
+  filterContent: { padding: 24 },
+  filterFooter: {
+    padding: '24px',
+    backgroundColor: theme.palette.background.filters.footer,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
 });

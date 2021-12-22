@@ -14,6 +14,7 @@ const theme = createTheme({
         active: '#4C5480',
         inactive: '#262A40',
         outline: '#303550',
+        footer: '#191C29',
       },
     } as any, // TODO: fix any
     text: {

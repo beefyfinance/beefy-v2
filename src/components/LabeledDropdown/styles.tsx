@@ -31,7 +31,7 @@ export const styles = theme => ({
     },
   },
   select: {
-    minWidth: 210,
+    minWidth: props => (props.fullWidth ? '100%' : 210),
     [theme.breakpoints.down('sm')]: {
       minWidth: 'none',
     },
