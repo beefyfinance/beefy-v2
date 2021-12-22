@@ -1,8 +1,8 @@
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect y="16" width="20" height="2" rx="1" fill="white"/>
-<rect y="9" width="20" height="2" rx="1" fill="white"/>
-<rect y="2" width="20" height="2" rx="1" fill="white"/>
-<rect x="14.5" y="0.5" width="1" height="5" rx="0.5" fill="#313759" stroke="white"/>
-<rect x="4.5" y="7.5" width="1" height="5" rx="0.5" fill="#313759" stroke="white"/>
-<rect x="12.5" y="14.5" width="1" height="5" rx="0.5" fill="#313759" stroke="white"/>
+<rect y="16" width="20" height="2" rx="1" fill="#F5F5FF"/>
+<rect y="9" width="20" height="2" rx="1" fill="#F5F5FF"/>
+<rect y="2" width="20" height="2" rx="1" fill="#F5F5FF"/>
+<rect x="14.5" y="0.5" width="1" height="5" rx="0.5" fill="#F5F5FF" stroke="#F5F5FF"/>
+<rect x="4.5" y="7.5" width="1" height="5" rx="0.5" fill="#F5F5FF" stroke="#F5F5FF"/>
+<rect x="12.5" y="14.5" width="1" height="5" rx="0.5" fill="#F5F5FF" stroke="#F5F5FF"/>
 </svg>

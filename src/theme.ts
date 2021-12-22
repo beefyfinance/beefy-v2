@@ -10,13 +10,11 @@ const theme = createTheme({
       light: '#313759',
       header: '#121212',
       cta: '#59A662',
-      tags: {
-        bifi: '#5C499D',
-        stable: '#3D8F61',
-        blueChip: '#3E5FA7',
-        lowRisk: '#4683AA',
-        boost: '#E88225',
-        eol: '#313A68',
+      filters: {
+        active: '#4C5480',
+        inactive: '#262A40',
+        outline: '#303550',
+        footer: '#191C29',
       },
     } as any, // TODO: fix any
     text: {

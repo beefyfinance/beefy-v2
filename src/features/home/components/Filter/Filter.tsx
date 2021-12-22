@@ -1,23 +1,23 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
-import AnimateHeight from 'react-animate-height';
+import React, { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Avatar,
   Box,
   Button,
+  Popover,
   Checkbox,
   FormControlLabel,
   FormGroup,
   makeStyles,
   TextField,
   Typography,
+  InputAdornment,
+  IconButton,
 } from '@material-ui/core';
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { getAvailableNetworks } from '../../../../helpers/utils';
-import { ToggleButton } from '@material-ui/lab';
-import { Search } from '@material-ui/icons';
+import { Search, Close } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { FilterProps } from './FilterProps';
 import { FilterCategories } from './FilterCategories';
@@ -32,29 +32,29 @@ const _Filter: React.FC<FilterProps> = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [filterOpen, setFilterOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [config, setConfig] = React.useState(sortConfig);
 
-  const handleCheckbox = useCallback(
-    event => {
-      setSortConfig(current => ({
-        ...current,
-        [event.target.name]: event.target.checked,
-      }));
-    },
-    [setSortConfig]
-  );
+  const handleCheckbox = useCallback(event => {
+    setConfig(current => ({
+      ...current,
+      [event.target.name]: event.target.checked,
+    }));
+  }, []);
 
-  const handleChange = useCallback(
-    (name, value) => {
-      console.log(value);
-      setSortConfig(current => ({ ...current, [name]: value }));
-    },
-    [setSortConfig]
-  );
+  const handleChange = useCallback((name, value) => {
+    console.log(value);
+    setConfig(current => ({ ...current, [name]: value }));
+  }, []);
 
   const handleReset = useCallback(() => {
+    setConfig(FILTER_DEFAULT);
     setSortConfig(FILTER_DEFAULT);
   }, [setSortConfig]);
+
+  const applyFilters = useCallback(() => {
+    setSortConfig(config);
+  }, [config, setSortConfig]);
 
   const platformTypes = useMemo(() => {
     return {
@@ -87,6 +87,17 @@ const _Filter: React.FC<FilterProps> = ({
     };
   }, [t]);
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   const handleSortChange = useCallback(e => handleChange('key', e.target.value), [handleChange]);
 
   return (
@@ -102,18 +113,29 @@ const _Filter: React.FC<FilterProps> = ({
             label={t('Filter-Search')}
             value={sortConfig.keyword}
             onChange={e => handleChange('keyword', e.target.value)}
-            InputProps={{ className: classes.input }}
+            InputProps={{
+              className: classes.input,
+              endAdornment: (
+                <>
+                  <InputAdornment position="end">
+                    {sortConfig.keyword.length > 3 ? (
+                      <IconButton
+                        className={classes.iconSearch}
+                        size="small"
+                        onClick={() => handleChange('keyword', '')}
+                      >
+                        <Close />
+                      </IconButton>
+                    ) : (
+                      <IconButton className={classes.iconSearch} size="small">
+                        <Search />
+                      </IconButton>
+                    )}
+                  </InputAdornment>
+                </>
+              ),
+            }}
           />
-          <Search className={classes.iconSearch} />
-          {sortConfig.keyword.length > 3 && (
-            <Button
-              onClick={() => handleChange('keyword', '')}
-              size="small"
-              className={classes.btnClearSearch}
-            >
-              X
-            </Button>
-          )}
         </Box>
         {/*All/My Switch*/}
         <Box className={classes.toggleSwitchContainer}>
@@ -149,134 +171,125 @@ const _Filter: React.FC<FilterProps> = ({
           />
         </Box>
         {/*All Filters Button*/}
-        <Box className={classes.btnFilter}>
-          <ToggleButton
-            className={classes.blockBtn}
-            value={filterOpen}
-            selected={filterOpen}
-            onChange={() => {
-              setFilterOpen(!filterOpen);
-            }}
-          >
-            <img
-              src={require(`../../../../images/filter.svg`).default}
-              alt=""
-              className={classes.filterIcon}
-            />
-            {t('Filter-Btn')}
-            {filterOpen ? <ArrowDropDownIcon /> : ''}
-          </ToggleButton>
-        </Box>
+        <Button onClick={handleClick} className={classes.btnFilter}>
+          <img
+            src={require(`../../../../images/filter.svg`).default}
+            alt=""
+            className={classes.filterIcon}
+          />
+          {t('Filter-Btn')}
+        </Button>
       </Box>
-      <AnimateHeight duration={500} height={filterOpen ? 'auto' : 0}>
-        <Box className={classes.filters}>
-          <Box className={classes.filtersInner}>
-            <Box className={classes.checkboxes}>
-              <FormGroup row>
-                <FormControlLabel
-                  className={classes.checkboxContainer}
-                  label={t('Filter-HideZero')}
-                  control={
-                    <Checkbox
-                      checked={sortConfig.zero}
-                      onChange={handleCheckbox}
-                      name="zero"
-                      color="primary"
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        className={classes.filter}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Box className={classes.filterContent}>
+          <Typography variant="body1">
+            {t('Filter-Showing', {
+              number: filteredCount,
+              count: allCount,
+            })}
+          </Typography>
+
+          <Box className={classes.checkboxes}>
+            <FormGroup>
+              <FormControlLabel
+                className={classes.checkboxContainer}
+                label={t('Filter-HideZero')}
+                control={
+                  <Checkbox
+                    checked={config.zero}
+                    onChange={handleCheckbox}
+                    name="zero"
+                    color="primary"
+                  />
+                }
+              />
+              <FormControlLabel
+                className={classes.checkboxContainer}
+                label={t('Filter-Retired')}
+                control={
+                  <Checkbox
+                    checked={config.retired}
+                    onChange={handleCheckbox}
+                    name="retired"
+                    color="primary"
+                  />
+                }
+              />
+              <FormControlLabel
+                className={classes.checkboxContainer}
+                label={
+                  <span className={classes.boostFilterLabel}>
+                    <Avatar
+                      alt="Fire"
+                      src={require('../../../../images/fire.png').default}
+                      imgProps={{
+                        style: { objectFit: 'contain' },
+                      }}
                     />
-                  }
-                />
-                <FormControlLabel
-                  className={classes.checkboxContainer}
-                  label={t('Filter-Retired')}
-                  control={
-                    <Checkbox
-                      checked={sortConfig.retired}
-                      onChange={handleCheckbox}
-                      name="retired"
-                      color="primary"
-                    />
-                  }
-                />
-                {/* <FormControlLabel
-                  className={classes.checkboxContainer}
-                  label={t('Filter-Deposited')}
-                  control={
-                    <Checkbox
-                      checked={sortConfig.deposited}
-                      onChange={handleCheckbox}
-                      name="deposited"
-                      color="primary"
-                    />
-                  }
-                /> */}
-                <FormControlLabel
-                  className={classes.checkboxContainer}
-                  label={
-                    <span className={classes.boostFilterLabel}>
-                      <Avatar
-                        alt="Fire"
-                        src={require('../../../../images/fire.png').default}
-                        imgProps={{
-                          style: { objectFit: 'contain' },
-                        }}
-                      />
-                      <Typography style={{ margin: 'auto' }}>{t('Filter-Boost')}</Typography>
-                    </span>
-                  }
-                  control={
-                    <Checkbox
-                      checked={sortConfig.boost}
-                      onChange={handleCheckbox}
-                      name="boost"
-                      color="primary"
-                    />
-                  }
-                />
-              </FormGroup>
-            </Box>
-            <Box className={classes.lblShowing}>
-              {t('Filter-Showing', {
-                number: filteredCount,
-                count: allCount,
-              })}
-            </Box>
+                    <Typography style={{ margin: 'auto' }}>{t('Filter-Boost')}</Typography>
+                  </span>
+                }
+                control={
+                  <Checkbox
+                    checked={config.boost}
+                    onChange={handleCheckbox}
+                    name="boost"
+                    color="primary"
+                  />
+                }
+              />
+            </FormGroup>
           </Box>
 
-          <Box className={classes.filtersContainer}>
-            <Box className={classes.selectors}>
-              <Box className={classes.selector}>
-                <LabeledDropdown
-                  list={platformTypes}
-                  selected={sortConfig.platform}
-                  handler={e => handleChange('platform', e.target.value)}
-                  label={t('Filter-Platform')}
-                />
-              </Box>
-              <Box className={classes.selector}>
-                <LabeledDropdown
-                  list={vaultTypes}
-                  selected={sortConfig.vault}
-                  handler={e => handleChange('vault', e.target.value)}
-                  label={t('Filter-Type')}
-                />
-              </Box>
-              <Box className={classes.selector}>
-                <LabeledDropdown
-                  list={networkTypes}
-                  selected={sortConfig.blockchain}
-                  handler={e => handleChange('blockchain', e.target.value)}
-                  label={t('Filter-Blockchn')}
-                />
-              </Box>
-              <Box className={classes.selector}>
-                <Button className={classes.btnReset} variant={'contained'} onClick={handleReset}>
-                  {t('Filter-Reset')}
-                </Button>
-              </Box>
+          <Box className={classes.selectors}>
+            <Box className={classes.selector}>
+              <LabeledDropdown
+                fullWidth={true}
+                list={platformTypes}
+                selected={config.platform}
+                handler={e => handleChange('platform', e.target.value)}
+                label={t('Filter-Platform')}
+              />
+            </Box>
+            <Box className={classes.selector}>
+              <LabeledDropdown
+                fullWidth={true}
+                list={vaultTypes}
+                selected={config.vault}
+                handler={e => handleChange('vault', e.target.value)}
+                label={t('Filter-Type')}
+              />
+            </Box>
+            <Box className={classes.selector}>
+              <LabeledDropdown
+                fullWidth={true}
+                list={networkTypes}
+                selected={config.blockchain}
+                handler={e => handleChange('blockchain', e.target.value)}
+                label={t('Filter-Blockchn')}
+              />
             </Box>
           </Box>
         </Box>
-      </AnimateHeight>
+        <Box className={classes.filterFooter}>
+          <Button onClick={applyFilters} className={classes.btnApplyFilters}>
+            {t('Filter-Apply')}
+          </Button>
+          <Button className={classes.btnReset} onClick={handleReset}>
+            {t('Filter-Reset')}
+          </Button>
+        </Box>
+      </Popover>
     </>
   );
 };
