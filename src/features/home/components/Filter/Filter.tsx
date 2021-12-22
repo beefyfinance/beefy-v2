@@ -16,11 +16,21 @@ import {
 } from '@material-ui/core';
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
+import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';
 import { getAvailableNetworks } from '../../../../helpers/utils';
 import { Search, Close } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { FilterProps } from './FilterProps';
 import { FilterCategories } from './FilterCategories';
+
+const FILTER_DEFAULT_LOCAL = {
+  blockchain: ['all'],
+  vault: 'all',
+  platform: 'all',
+  boost: false,
+  retired: false,
+  zero: false,
+};
 
 const useStyles = makeStyles(styles as any);
 const _Filter: React.FC<FilterProps> = ({
@@ -33,28 +43,92 @@ const _Filter: React.FC<FilterProps> = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-  const [config, setConfig] = React.useState(sortConfig);
+  const [config, setConfig] = React.useState({
+    blockchain: sortConfig.blockchain,
+    vault: sortConfig.vault,
+    platform: sortConfig.platform,
+    boost: sortConfig.boost,
+    retired: sortConfig.retired,
+    zero: sortConfig.zero,
+  });
 
-  const handleCheckbox = useCallback(event => {
-    setConfig(current => ({
-      ...current,
-      [event.target.name]: event.target.checked,
-    }));
-  }, []);
+  const [filtersCount, setFiltersCount] = React.useState<number>(0);
+  const [blockchain, setBlockchain] = React.useState<string[]>(config.blockchain);
 
-  const handleChange = useCallback((name, value) => {
-    console.log(value);
-    setConfig(current => ({ ...current, [name]: value }));
-  }, []);
+  const handleChangeBlockchain = event => {
+    let {
+      target: { value },
+    } = event;
+    if (value.length === 0) {
+      setBlockchain(['all']);
+    } else {
+      if (value.includes('all')) {
+        value = value.filter(value => value !== 'all');
+      }
+      setBlockchain(value);
+    }
+  };
+
+  const handleCheckbox = useCallback(
+    event => {
+      setConfig(current => ({
+        ...current,
+        [event.target.name]: event.target.checked,
+      }));
+      if (event.target.checked !== false) {
+        setFiltersCount(current => current + 1);
+      }
+
+      if (event.target.checked === false && filtersCount >= 1) {
+        setFiltersCount(current => current - 1);
+      }
+    },
+    [filtersCount]
+  );
+
+  const handleChangeLocal = useCallback(
+    (name, value) => {
+      setConfig(current => ({ ...current, [name]: value }));
+      if (value !== 'all') {
+        setFiltersCount(current => current + 1);
+      }
+
+      if (value === 'all' && filtersCount >= 1) {
+        setFiltersCount(current => current - 1);
+      }
+    },
+    [filtersCount]
+  );
+
+  //Update or downgrade filter Count
+
+  const handleChange = useCallback(
+    (name, value) => {
+      setSortConfig(current => ({ ...current, [name]: value }));
+    },
+    [setSortConfig]
+  );
 
   const handleReset = useCallback(() => {
-    setConfig(FILTER_DEFAULT);
+    setBlockchain(['all']);
+    setConfig(FILTER_DEFAULT_LOCAL);
     setSortConfig(FILTER_DEFAULT);
+    setFiltersCount(0);
   }, [setSortConfig]);
 
   const applyFilters = useCallback(() => {
-    setSortConfig(config);
-  }, [config, setSortConfig]);
+    console.log(blockchain);
+    if (blockchain.length >= 1 && !blockchain.includes('all')) {
+      setFiltersCount(current => current + 1);
+    }
+
+    if (blockchain.includes('all') && blockchain.length === 1 && filtersCount >= 1) {
+      setFiltersCount(current => current - 1);
+    }
+
+    setSortConfig(current => ({ ...current, ...config, blockchain }));
+    setAnchorEl(null);
+  }, [blockchain, config, filtersCount, setSortConfig]);
 
   const platformTypes = useMemo(() => {
     return {
@@ -172,11 +246,15 @@ const _Filter: React.FC<FilterProps> = ({
         </Box>
         {/*All Filters Button*/}
         <Button onClick={handleClick} className={classes.btnFilter}>
-          <img
-            src={require(`../../../../images/filter.svg`).default}
-            alt=""
-            className={classes.filterIcon}
-          />
+          {filtersCount >= 1 ? (
+            <Box className={classes.badge}>{filtersCount}</Box>
+          ) : (
+            <img
+              src={require(`../../../../images/filter.svg`).default}
+              alt=""
+              className={classes.filterIcon}
+            />
+          )}
           {t('Filter-Btn')}
         </Button>
       </Box>
@@ -199,52 +277,53 @@ const _Filter: React.FC<FilterProps> = ({
             })}
           </Typography>
 
-          <Box className={classes.checkboxes}>
+          <Box>
             <FormGroup>
               <FormControlLabel
                 className={classes.checkboxContainer}
-                label={t('Filter-HideZero')}
+                label={
+                  <Typography className={classes.label} variant="body1">
+                    {t('Filter-HideZero')}
+                  </Typography>
+                }
                 control={
                   <Checkbox
                     checked={config.zero}
                     onChange={handleCheckbox}
                     name="zero"
-                    color="primary"
-                  />
-                }
-              />
-              <FormControlLabel
-                className={classes.checkboxContainer}
-                label={t('Filter-Retired')}
-                control={
-                  <Checkbox
-                    checked={config.retired}
-                    onChange={handleCheckbox}
-                    name="retired"
-                    color="primary"
+                    className={classes.checkbox}
                   />
                 }
               />
               <FormControlLabel
                 className={classes.checkboxContainer}
                 label={
-                  <span className={classes.boostFilterLabel}>
-                    <Avatar
-                      alt="Fire"
-                      src={require('../../../../images/fire.png').default}
-                      imgProps={{
-                        style: { objectFit: 'contain' },
-                      }}
-                    />
-                    <Typography style={{ margin: 'auto' }}>{t('Filter-Boost')}</Typography>
-                  </span>
+                  <Typography className={classes.label} variant="body1">
+                    {t('Filter-Retired')}
+                  </Typography>
+                }
+                control={
+                  <Checkbox
+                    checked={config.retired}
+                    onChange={handleCheckbox}
+                    name="retired"
+                    className={classes.checkbox}
+                  />
+                }
+              />
+              <FormControlLabel
+                className={classes.checkboxContainer}
+                label={
+                  <Typography className={classes.label} variant="body1">
+                    {t('Filter-Boost')}
+                  </Typography>
                 }
                 control={
                   <Checkbox
                     checked={config.boost}
                     onChange={handleCheckbox}
                     name="boost"
-                    color="primary"
+                    className={classes.checkbox}
                   />
                 }
               />
@@ -257,7 +336,7 @@ const _Filter: React.FC<FilterProps> = ({
                 fullWidth={true}
                 list={platformTypes}
                 selected={config.platform}
-                handler={e => handleChange('platform', e.target.value)}
+                handler={e => handleChangeLocal('platform', e.target.value)}
                 label={t('Filter-Platform')}
               />
             </Box>
@@ -266,17 +345,24 @@ const _Filter: React.FC<FilterProps> = ({
                 fullWidth={true}
                 list={vaultTypes}
                 selected={config.vault}
-                handler={e => handleChange('vault', e.target.value)}
+                handler={e => handleChangeLocal('vault', e.target.value)}
                 label={t('Filter-Type')}
               />
             </Box>
             <Box className={classes.selector}>
-              <LabeledDropdown
+              <MultipleLabeledDropdown
                 fullWidth={true}
                 list={networkTypes}
-                selected={config.blockchain}
-                handler={e => handleChange('blockchain', e.target.value)}
+                selected={blockchain}
+                handler={handleChangeBlockchain}
+                renderValue={selected => (
+                  <Typography className={classes.value}>
+                    <span className={`${classes.label} label`}>{t('Filter-Blockchn')}</span>{' '}
+                    {blockchain.length > 1 ? t('Filter-BlockchnMultiple') : selected.join('')}
+                  </Typography>
+                )}
                 label={t('Filter-Blockchn')}
+                multiple={true}
               />
             </Box>
           </Box>
