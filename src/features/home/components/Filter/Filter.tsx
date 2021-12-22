@@ -1,7 +1,6 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Avatar,
   Box,
   Button,
   Popover,
