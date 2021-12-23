@@ -7,7 +7,7 @@ export const styles = theme => ({
     borderRadius: '5px',
     margin: '2px 0 0 6px',
     textTransform: 'uppercase',
-    color: '#FFF',
+    color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.filters.active,
     [theme.breakpoints.down('md')]: {
       wordBreak: 'none',

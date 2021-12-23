@@ -116,7 +116,6 @@ const _Filter: React.FC<FilterProps> = ({
   }, [setSortConfig]);
 
   const applyFilters = useCallback(() => {
-    console.log(blockchain);
     if (blockchain.length >= 1 && !blockchain.includes('all')) {
       setFiltersCount(current => current + 1);
     }
