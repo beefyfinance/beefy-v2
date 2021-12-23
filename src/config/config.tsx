@@ -16,6 +16,7 @@ export const config = {
       'custom-math',
       'custom-twt',
       'custom-safepal',
+      'custom-coinbase'
     ],
     providerName: 'binance',
     walletSettings: {
@@ -76,7 +77,7 @@ export const config = {
     rpc: ['https://api.avax.network/ext/bc/C/rpc'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-coinbase'],
     providerName: 'avalanche',
     walletSettings: {
       chainId: `0x${parseInt('43114', 10).toString(16)}`,
@@ -110,7 +111,7 @@ export const config = {
     rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
-    supportedWallets: ['injected', 'walletconnect'],
+    supportedWallets: ['injected', 'walletconnect', 'custom-coinbase'],
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
@@ -148,7 +149,7 @@ export const config = {
     rpc: ['https://rpcapi.fantom.network'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-coinbase'],
     providerName: 'fantom',
     walletSettings: {
       chainId: `0x${parseInt('250', 10).toString(16)}`,
@@ -190,7 +191,7 @@ export const config = {
     rpc: ['https://arb1.arbitrum.io/rpc'],
     explorerUrl: 'https://arbiscan.io/',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-coinbase'],
     providerName: 'Arbitrum',
     walletSettings: {
       chainId: `0x${parseInt('42161', 10).toString(16)}`,
