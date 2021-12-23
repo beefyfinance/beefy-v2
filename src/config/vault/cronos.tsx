@@ -1246,5 +1246,42 @@ export const pools = [
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     network: "cronos"
+  },
+  {
+    id: "liq-liq-cro",
+    name: "LIQ-CRO",
+    token: "LIQ-CRO LP",
+    tokenDescription: "CronaSwap (Liquidus)",
+    tokenAddress: "0x3295007761C290741B6b363b86dF9ba3467F0754",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooLiquidusLIQ-CRO",
+    earnedTokenAddress: "0x9E75f8298e458B76382870982788988A0799195b",
+    earnContractAddress: "0x9E75f8298e458B76382870982788988A0799195b",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "liq-liq-cro",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Liquidus",
+    assets: [
+      "LIQ",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
+    addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
+    network: "cronos"
   }
 ];

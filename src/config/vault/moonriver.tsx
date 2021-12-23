@@ -936,41 +936,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "finn-finn",
-    logo: "single-assets/FINN.png",
-    name: "FINN",
-    token: "FINN",
-    tokenDescription: "Huckleberry",
-    tokenAddress: "0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooFinn",
-    earnedTokenAddress: "0xe173782e5Cc62f1C3277749EEa9c5Daf182d7C66",
-    earnContractAddress: "0xe173782e5Cc62f1C3277749EEa9c5Daf182d7C66",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "FINN",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Huckleberry",
-    assets: [
-      "FINN"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    network: "moonriver"
-  },
-  {
     id: "finn-wmovr-usdt",
     name: "MOVR-USDT",
     token: "MOVR-USDT FLP",
@@ -1658,5 +1623,41 @@ export const pools = [
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     network: "moonriver",
     retireReason: "rewards"
+  },
+  {
+    id: "finn-finn-eol",
+    logo: "single-assets/FINN.png",
+    name: "FINN",
+    token: "FINN",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinn",
+    earnedTokenAddress: "0xe173782e5Cc62f1C3277749EEa9c5Daf182d7C66",
+    earnContractAddress: "0xe173782e5Cc62f1C3277749EEa9c5Daf182d7C66",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "FINN",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Huckleberry",
+    assets: [
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    network: "moonriver",
+    retireReason: "noReason"
   }
 ];

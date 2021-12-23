@@ -1,103 +1,58 @@
 [
   {
-    "id": "bsc: cakev2-pcws-bnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: geist-crv",
+    "id": "fantom: spirit-dai-usdc",
     "type": "Added"
   },
   {
-    "id": "fantom: boo-wftm-avax",
+    "id": "fantom: geist-mim",
     "type": "Added"
   },
   {
-    "id": "fantom: boo-wftm-woo",
+    "id": "fantom: beets-battle-bands",
     "type": "Added"
   },
   {
-    "id": "fantom: geist-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: geist-wbtc",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: geist-eth",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: geist-fusdt",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: geist-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: geist-dai",
-    "type": "Added"
-  },
-  {
-    "id": "fantom: boo-usdc-woo-eol",
+    "id": "fantom: beets-symphony-nr-10-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom: geist-ftm-pause",
-    "type": "REMOVED"
+    "id": "fantom: boo-zoo-ftm-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "fantom: geist-wbtc-pause",
-    "type": "REMOVED"
+    "id": "fantom: boo-snx-ftm-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "fantom: geist-eth-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: geist-fusdt-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: geist-usdc-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom: geist-dai-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon: sushi-eth-gohm",
+    "id": "polygon: quick-tomb-mimatic",
     "type": "Added"
   },
   {
-    "id": "polygon: sushi-usdc-tusd",
+    "id": "polygon: quick-hbar[0x]-mimatic",
     "type": "Added"
   },
   {
-    "id": "polygon: sushi-eth2x-eth",
+    "id": "polygon: quick-mimatic-clam",
     "type": "Added"
   },
   {
-    "id": "polygon: sushi-fxs-frax",
+    "id": "polygon: sushi-bct-klima",
     "type": "Added"
   },
   {
-    "id": "polygon: dfyn-link-dfyn-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax: joe-usdc.e-usdc",
+    "id": "polygon: sushi-usdc-bct",
     "type": "Added"
   },
   {
-    "id": "avax: joe-wavax-cly",
-    "type": "Added"
+    "id": "moonriver: finn-finn-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "avax: joe-ptp-wavax",
+    "id": "cronos: liq-liq-cro",
     "type": "Added"
   }
 ]
