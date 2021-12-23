@@ -988,6 +988,24 @@ const generateProviderOptions = (wallet, clients) => {
             return provider;
         },
       },
+      'custom-wallet-connect': {
+        display: {
+          logo: require(`../../../images/wallets/wallet-connect.svg`).default,
+          name: 'Wallet Connect',
+            description: 'Scan your WalletConnect to Connect',
+        },
+        options: {
+          rpc: { networkId: networkRpc },
+        },
+        package: WalletConnectProvider,
+        connector: async (ProviderPackage, options) => {
+          const provider = new ProviderPackage(options);
+
+          await provider.enable();
+
+          return provider;
+        },
+      },
       'custom-math': {
         display: {
           name: 'Math',
