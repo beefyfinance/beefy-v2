@@ -16,6 +16,15 @@ const theme = createTheme({
         outline: '#303550',
         footer: '#191C29',
       },
+      vaults: {
+        default: '#2D3153',
+        defaultOutline: '#363B63',
+        boostOutline: '#DB8332',
+        gov: '#342763',
+        govOutline: '#42477B',
+        inactive: '#111321',
+        inactiveOutline: '#762C2C',
+      },
     } as any, // TODO: fix any
     text: {
       primary: '#F5F5FF',

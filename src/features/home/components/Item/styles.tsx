@@ -9,9 +9,9 @@ export const styles = theme => ({
     borderRadius: '20px',
     padding: '24px',
     width: '100%',
-    border: '2px solid #383E6B',
+    border: `2px solid ${theme.palette.background.vaults.defaultOutline}`,
     boxShadow: '0px 1px 8px rgba(0,0,0,0.1)',
-    background: theme.palette.type === 'dark' ? '#272B4A' : '#FFF',
+    background: theme.palette.background.vaults.default,
     '&.hasDeposit': {
       background: '#313759',
       '&:hover': {
@@ -28,7 +28,6 @@ export const styles = theme => ({
       height: '470px',
     },
   },
-  dataGrid: {},
   badges: {
     display: 'flex',
     alignItems: 'center',
@@ -91,18 +90,8 @@ export const styles = theme => ({
     },
   },
   vaultName: {
-    fontWeight: 600,
-    fontSize: '24px',
-    lineHeight: '36px',
-    margin: 0,
-    padding: 0,
+    marginBottom: theme.spacing(1),
     cursor: 'pointer',
-    [theme.breakpoints.up('md')]: {
-      fontSize: '15px',
-    },
-    [theme.breakpoints.up('lg')]: {
-      fontSize: '27px',
-    },
   },
   value: {
     fontWeight: 600,
@@ -120,16 +109,11 @@ export const styles = theme => ({
       textAlign: 'left',
     },
   },
-  platformValue: {
+  label: {
     fontWeight: 600,
     fontSize: '12px',
-    textTransform: 'uppercase',
-  },
-  label: {
-    fontWeight: 400,
-    fontSize: '12px',
     lineHeight: '20px',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+    color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     textAlign: 'left',
@@ -138,7 +122,7 @@ export const styles = theme => ({
     },
   },
   price: {
-    color: '#9595B2',
+    color: theme.palette.text.primary,
     letterSpacing: '0.2px',
     fontSize: '14px',
     lineHeight: '18px',
@@ -147,14 +131,20 @@ export const styles = theme => ({
   platformLabel: {
     fontWeight: 600,
     fontSize: '12px',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+    color: theme.palette.text.disabled,
+    '& span': {
+      fontWeight: 600,
+      fontSize: '12px',
+      color: theme.palette.text.primary,
+      textTransform: 'uppercase',
+    },
   },
   safetyLabel: {
     whiteSpace: 'nowrap',
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: '12px',
     lineHeight: '24px',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+    color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     textAlign: 'left',
@@ -208,8 +198,8 @@ export const styles = theme => ({
     filter: 'blur(.5rem)',
   },
   depositButton: {
-    border: 'solid 2px #54995C',
-    backgroundColor: '#54995C',
+    border: `solid 2px ${theme.palette.primary.main}`,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: '8px',
     color: 'white',
     fontSize: '16px',
@@ -220,7 +210,7 @@ export const styles = theme => ({
     minWidth: '64px',
     '&:hover': {
       cursor: 'pointer',
-      backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
+      backgroundColor: 'transparent',
     },
     [theme.breakpoints.up('md')]: {
       marginLeft: 'auto',
@@ -318,8 +308,8 @@ export const styles = theme => ({
     },
   },
   withMuted: {
-    background: '#14182B',
-    border: '2px solid #762C2C',
+    background: theme.palette.background.vaults.inactive,
+    border: `2px solid ${theme.palette.background.vaults.inactiveOutline}`,
     '&:hover': {
       background: '#14182B',
     },
@@ -332,7 +322,6 @@ export const styles = theme => ({
   },
   withIsLongName: {
     '& $vaultName': {
-      fontSize: '18px',
       [theme.breakpoints.up('md')]: {
         fontSize: '15px',
       },
@@ -342,11 +331,11 @@ export const styles = theme => ({
     },
   },
   withBoosted: {
-    border: '2px solid #DB8332',
+    border: `2px solid ${theme.palette.background.vaults.boostOutline}`,
   },
   withGovVault: {
-    background: '#291E4D',
-    border: '2px solid #3C2D71',
+    background: theme.palette.background.vaults.gov,
+    border: `2px solid ${theme.palette.background.vaults.govOutline}`,
   },
   govVaultTitle: {
     fontSize: '15px',
@@ -387,7 +376,7 @@ export const styles = theme => ({
   },
   platformContainer: {
     display: 'flex',
-    marginTop: '8px',
+    marginTop: theme.spacing(1),
     [theme.breakpoints.down('sm')]: {
       margin: '0 -40px',
     },

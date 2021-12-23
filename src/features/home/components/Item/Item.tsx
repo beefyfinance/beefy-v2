@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { Button, Grid, makeStyles, Typography, useMediaQuery } from '@material-ui/core';
+import { Button, Grid, makeStyles, Typography, useMediaQuery, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -200,7 +200,9 @@ const _Item = ({ vault }) => {
                 ) : null}
                 <div className={classes.infoContainer}>
                   {/*Vault Name*/}
-                  <Typography className={classes.vaultName}>{item.name}</Typography>
+                  <Typography variant="h4" className={classes.vaultName}>
+                    {item.name}
+                  </Typography>
                 </div>
                 <div className={classes.badgesContainter}>
                   <div className={classes.badges}>
@@ -218,8 +220,16 @@ const _Item = ({ vault }) => {
                 </div>
               </Link>
               <span className={classes.platformContainer}>
-                <Typography className={classes.platformLabel}>{t('PLATFORM')}:&nbsp;</Typography>
-                <Typography className={classes.platformValue}>{item.platform}</Typography>
+                <Box sx={{ marginRight: '8px' }}>
+                  <Typography className={classes.platformLabel}>
+                    {t('Chain')}: <span className={classes.platformValue}>{item.network}</span>
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography className={classes.platformLabel}>
+                    {t('PLATFORM')}: <span className={classes.platformValue}>{item.platform}</span>
+                  </Typography>
+                </Box>
               </span>
             </Grid>
           </Grid>
