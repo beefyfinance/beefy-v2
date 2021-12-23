@@ -45,7 +45,7 @@ export const Portfolio = () => {
         const vault = userVaults[_vault];
         let symbol = vault.isGovVault ? `${vault.token}GovVault` : vault.earnedToken;
         let balance = new BigNumber(0);
-        if (vault.isGovPool) {
+        if (vault.isGovVault) {
           balance = byDecimals(
             balanceReducer.tokens[vault.network][symbol].balance,
             vault.tokenDecimals
@@ -55,7 +55,7 @@ export const Portfolio = () => {
           );
         } else {
           balance = byDecimals(
-            new BigNumber(balanceReducer.tokens[vault.network][vault.earnedToken].balance)
+            new BigNumber(balanceReducer.tokens[vault.network][symbol].balance)
               .multipliedBy(byDecimals(vault.pricePerFullShare))
               .toFixed(8),
             vault.tokenDecimals
