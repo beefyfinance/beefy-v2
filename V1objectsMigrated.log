@@ -1,0 +1,502 @@
+[
+  {
+    "id": "bsc boost: moo_baby-usdt-milk-babyswap",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-banana-busd-bitcrush",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-crush-wbnb-bitcrush",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-nfty-wbnb-nfty-3",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_ellipsis-renbtc-charge",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-bnb-stars-mogul2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_1INCH-blockmine",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_BANANA-bishares",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bison-bison-wbnb-bishares",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt-beltbtc-betu",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-oasis-wbnb-oasis",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-banana-bnb-oasis",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_alpaca-ibalpaca-nfty",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-nfty-wbnb-nfty-2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-bnb-stars-mogul",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-wbnb-ceek-ceek-2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-banana-bnb-ceek",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_ellipsis-renbtc-gamexchange",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-exp-wbnb-gamexchange",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt-beltbtc-wsg",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-banana-bnb-playmining",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_BANANA-ceek",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-wbnb-ceek-ceek",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt-beltbnb-babyswap",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt-belteth-nfty",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-nfty-wbnb-nfty",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi_bnb-cafeswap",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi_usdt-singular",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana_bnb-pacoca",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_beltbtc-annex",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belteth-pearzap",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_beltbnb-czodiac",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-bnb-long",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_4belt-honeymoon",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_pots_busd-moonpot",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_pots_bnb-moonpot",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_4belt-viralata",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-elk",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_beltbtc-omnifarm",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_beltbnb-tosdis",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_eth-yel",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-bhc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_4belt-caps",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_cake_bnb-guard",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-moonpot",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-honeyfarm",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-land",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-moonpot",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-honeyfarm2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_banana-pera",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-farmhero",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-fruits",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_cake-krown",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_cake-cakev2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_merlin-merlin",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_steel_iron-merlin",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_1inch_1inch-ten",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_mdex_mdx-panther",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_dop_lp-dop",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_jetswap-wings",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_dumpling-sdump",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_grandbanks-grand",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bhc-hps2",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_btc-iron",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_4belt-tofy",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_btc-xbtc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_eth-icarus",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_eth-satis",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bhc-hps",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_auto_eth-apys",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_venus-mash",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_mdx_bnb-palm",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_auto_btc-typh",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi-biti",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_venus-palm",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_cake_bnb-bingo",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_auto_wbnb-thunder",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_auto_cake-swirl",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_ellipsis_3pool-zefi",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_1inch-hps",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_auto_wbnb-naut",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_cake_bnb-space",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bifi_wbnb-nuts",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_venus_eth-ape",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_belt_venus-slime",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_venus_eth-brew",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_venus_btc-ramen",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_auto_cake-salt",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_venus_ada-crow",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_auto_wbnb-banana",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_auto_beth-soups",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: moo_beets-guqin-qi-2-qidao",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: moo_curve-ftm-geist-pearzap",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: moo_bifi-scream",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: moo_boo_ftm-tomb",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: boo-bifi-ftm-bifi",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: moo_usdc-ftm-ester",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_kyber-usdc-jeur-jarvis",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_curve-am3crv-jarvis",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_BIFI-jarvis",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_QUICK-polysage",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_bifi-usdc-cafe",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_curve-ren-tetu",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_banana_matic-polywise",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_curve-tricrypto-polyalpha",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_curve-poly-sandman",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_bifi-yieldwatch",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_bifi-pearzap",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_bifi-polypup",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_bifi-polyfarm",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_bifi-lithium",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_polyyeld-xyeld",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_jetswap-pwings",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_mai_usdc_matic-qidao",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_poly_usdc-bone",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_atricrypto-bone",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_curve-poly-ren",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_matic_yeld-yeld",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_aave-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon boost: moo_aave-btc",
+    "type": "Added"
+  },
+  {
+    "id": "avax boost: moo_bifi_avax-singular",
+    "type": "Added"
+  },
+  {
+    "id": "avax boost: moo_joe-bifi",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver boost: moo_finn-wmovr-finn-huckleberry",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver boost: moo_solarbeam-frax-wmovr-2-huckleberry",
+    "type": "Added"
+  },
+  {
+    "id": "cronos boost: moo_vvs-cro-btc-liquidus",
+    "type": "Added"
+  }
+]

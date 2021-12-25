@@ -1283,5 +1283,42 @@ export const pools = [
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     network: "cronos"
+  },
+  {
+    id: "vvs-tonic-usdc",
+    name: "TONIC-USDC",
+    token: "TONIC-USDC LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x2f12D47Fe49B907d7a5Df8159C1CE665187F15c4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsTONIC-USDC",
+    earnedTokenAddress: "0x15c0a37ee6fDA217f0f10dC88df02e7A52e377CA",
+    earnContractAddress: "0x15c0a37ee6fDA217f0f10dC88df02e7A52e377CA",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-tonic-usdc",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "VVS",
+    assets: [
+      "TONIC",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
+    addLiquidityUrl: "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
+    network: "cronos"
   }
 ];

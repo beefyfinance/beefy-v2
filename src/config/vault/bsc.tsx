@@ -18178,5 +18178,41 @@ export const pools = [
     addLiquidityUrl: "https://dex.apeswap.finance/#/add/ETH/0x0Ef0626736c2d484A792508e99949736D0AF807e",
     buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x0Ef0626736c2d484A792508e99949736D0AF807e",
     network: "bsc"
+  },
+  {
+    id: "baby-usdt-milk",
+    name: "MILK-USDT LP",
+    token: "MILK-USDT LP",
+    tokenDescription: "BabySwap",
+    tokenAddress: "0xDB6c248902AD2722A5E01E9689824c28bd0A5f75",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBabyUSDT-MILK",
+    earnedTokenAddress: "0xBBEfaf1f7585EDc59180fDdc5bAf46b8A5D7A206",
+    earnContractAddress: "0xBBEfaf1f7585EDc59180fDdc5bAf46b8A5D7A206",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "baby-usdt-milk",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "MILK",
+      "USDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0xBf37f781473f3b50E82C668352984865eac9853f",
+    buyTokenUrl: "https://exchange.babyswap.finance/#/swap?outputCurrency=0xBf37f781473f3b50E82C668352984865eac9853f",
+    network: "bsc"
   }
 ];
