@@ -1,6 +1,27 @@
 import { BigNumber } from 'bignumber.js';
 import { ApyStatLoader } from '../components/ApyStatLoader';
 
+(BigNumber.prototype as any).significant = function (digits) {
+  const number = this.toFormat({
+    prefix: '',
+    decimalSeparator: '.',
+    groupSeparator: '',
+    groupSize: 0,
+    secondaryGroupSize: 0,
+  });
+  if (number.length <= digits + 1) {
+    return number;
+  }
+  const [wholes, decimals] = number.split('.');
+  if (wholes.length >= digits) {
+    return wholes;
+  }
+  const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
+  return `${wholes}.${decimals.match(pattern)[0]}`;
+};
+
+export const BIG_ZERO = new BigNumber(0);
+
 export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => {
   if (!apy) return placeholder;
 
