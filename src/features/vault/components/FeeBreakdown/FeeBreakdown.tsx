@@ -1,9 +1,9 @@
 import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover';
-
+import { Loader } from '../../../../components/loader';
 const useStyles = makeStyles(styles as any);
 const BreakdownTooltip = memo(({ rows }: any) => {
   const classes = useStyles();
@@ -106,38 +106,46 @@ export const FeeBreakdown = ({ item, formData, type }) => {
             <Typography className={classes.title} style={{ marginBottom: '12px' }}>
               {t('Zap-Title')}
             </Typography>
-            {type === 'deposit' ? (
+            {type === 'deposit' && (
               <>
-                <ol className={classes.ol}>
-                  <li>
-                    <Typography className={classes.zapStep}>
-                      {/* TODO: Fill zap estimate */}
-                      {t('Zap-Step-Deposit-1', {
-                        valueFrom: formData.deposit.amount.toFixed(2),
-                        tokenFrom: formData.deposit.token,
-                        valueTo: '0.00',
-                        tokenTo: 'TOKEN',
-                      })}
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography className={classes.zapStep}>
-                      {t('Zap-Step-Deposit-2', { lpToken: item.token })}
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography className={classes.zapStep}>
-                      {t('Zap-Step-Deposit-3', { lpToken: item.token })}
-                    </Typography>
-                  </li>
-                  <li>
-                    <Typography className={classes.zapStep}>
-                      {t('Zap-Step-Deposit-4', { token0: item.assets[0], token1: item.assets[1] })}
-                    </Typography>
-                  </li>
-                </ol>
+                {formData.deposit.zapEstimate.isLoading ? (
+                  <Loader message={'Loading swap estimate...'} line={true} />
+                ) : (
+                  <ol className={classes.ol}>
+                    <li>
+                      <Typography className={classes.zapStep}>
+                        {t('Zap-Step-Deposit-1', {
+                          valueFrom: formData.deposit.zapEstimate.amountIn.significant(6),
+                          tokenFrom: formData.deposit.zapEstimate.tokenIn.symbol,
+                          valueTo: formData.deposit.zapEstimate.amountOut.significant(6),
+                          tokenTo: formData.deposit.zapEstimate.tokenOut.symbol,
+                          slippageTolerancePercentage: formData.slippageTolerance * 100,
+                        })}
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography className={classes.zapStep}>
+                        {t('Zap-Step-Deposit-2', { lpToken: item.token })}
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography className={classes.zapStep}>
+                        {t('Zap-Step-Deposit-3', { lpToken: item.token })}
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography className={classes.zapStep}>
+                        {t('Zap-Step-Deposit-4', {
+                          token0: item.assets[0],
+                          token1: item.assets[1],
+                        })}
+                      </Typography>
+                    </li>
+                  </ol>
+                )}
               </>
-            ) : (
+            )}
+            {type === 'withdraw' && (
               <>
                 <ol className={classes.ol}>
                   <li>
@@ -178,7 +186,6 @@ export const FeeBreakdown = ({ item, formData, type }) => {
                 </ol>
               </>
             )}
-
             <Divider className={classes.divider} />
           </Grid>
         ) : null}

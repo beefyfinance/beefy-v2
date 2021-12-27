@@ -18,7 +18,7 @@ import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
 import { Graph } from './components/Graph';
 import { getEligibleZap } from '../../helpers/zap';
-import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../helpers/format';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
@@ -45,9 +45,19 @@ export const Vault = () => {
   const vaultBoosts = vault.pools[id].boosts;
 
   const [formData, setFormData] = React.useState({
-    deposit: { input: '', amount: new BigNumber(0), max: false, token: null, isZap: false },
-    withdraw: { input: '', amount: new BigNumber(0), max: false, token: null, isZap: false },
+    deposit: {
+      input: '',
+      amount: BIG_ZERO,
+      max: false,
+      token: null,
+      isZap: false,
+      zapEstimate: {
+        isLoading: true,
+      },
+    },
+    withdraw: { input: '', amount: BIG_ZERO, max: false, token: null, isZap: false },
     zap: null,
+    slippageTolerance: 0.01,
   });
 
   const resetFormData = () => {
@@ -56,13 +66,13 @@ export const Vault = () => {
       deposit: {
         ...formData.deposit,
         input: '',
-        amount: new BigNumber(0),
+        amount: BIG_ZERO,
         max: false,
       },
       withdraw: {
         ...formData.withdraw,
         input: '',
-        amount: new BigNumber(0),
+        amount: BIG_ZERO,
         max: false,
       },
     });
@@ -108,6 +118,18 @@ export const Vault = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [item]);
+
+  React.useEffect(() => {
+    if (formData.deposit.isZap) {
+      reduxActions.vault.estimateZapDeposit({
+        web3: wallet.rpc,
+        vault: item,
+        formData,
+        setFormData,
+      });
+    }
+    // eslint-disable-next-line
+  }, [formData.deposit.amount, formData.deposit.isZap, wallet.rpc, item]);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = '#1B203A';

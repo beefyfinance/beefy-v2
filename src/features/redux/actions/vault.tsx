@@ -9,9 +9,10 @@ import {
 import BigNumber from 'bignumber.js';
 import { config } from '../../../config/config';
 import { isEmpty } from '../../../helpers/utils';
-
-const vaultAbi = require('../../../config/abi/vault.json');
-const boostAbi = require('../../../config/abi/boost.json');
+import { BIG_ZERO, byDecimals, convertAmountToRawNumber } from '../../../helpers/format';
+import vaultAbi from '../../../config/abi/vault.json';
+import boostAbi from '../../../config/abi/boost.json';
+import zapAbi from '../../../config/abi/zap.json';
 
 const getPools = async (items, state, dispatch) => {
   console.log('redux getPools() processing...');
@@ -279,8 +280,62 @@ const linkVaultBoosts = () => {
   };
 };
 
+const estimateZapDeposit = ({ web3, vault, formData, setFormData }) => {
+  const tokenIn = formData.zap.tokens.find(t => t.symbol === formData.deposit.token);
+  const tokenOut = formData.zap.tokens.find(t => t.symbol !== formData.deposit.token);
+
+  const zapEstimate = {
+    tokenIn: tokenIn,
+    tokenOut: tokenOut,
+    amountIn: BIG_ZERO,
+    amountOut: BIG_ZERO,
+    isLoading: false,
+  };
+
+  if (formData.deposit.amount.isZero()) {
+    return setFormData(prevFormData => {
+      prevFormData.deposit.zapEstimate = zapEstimate;
+      return { ...prevFormData };
+    });
+  }
+
+  const zapAddress = formData.zap.address;
+  const vaultAddress = vault.earnContractAddress;
+  const tokenAmount = convertAmountToRawNumber(formData.deposit.amount, tokenIn.decimals);
+
+  setFormData(prevFormData => {
+    console.log('isLoading', true);
+    if (prevFormData.deposit.zapEstimate.isLoading) {
+      return prevFormData;
+    }
+    prevFormData.deposit.zapEstimate.isLoading = true;
+    return { ...prevFormData };
+  });
+
+  const contract = new web3[vault.network].eth.Contract(zapAbi, zapAddress);
+
+  return contract.methods
+    .estimateSwap(vaultAddress, tokenIn.address, tokenAmount)
+    .call()
+    .then(response => {
+      setFormData(prevFormData => {
+        if (formData.deposit.amount === prevFormData.deposit.amount) {
+          console.log('isLoading', false);
+          prevFormData.deposit.zapEstimate = {
+            ...zapEstimate,
+            amountIn: byDecimals(response.swapAmountIn, tokenIn.decimals),
+            amountOut: byDecimals(response.swapAmountOut, tokenOut.decimals),
+          };
+          return { ...prevFormData };
+        }
+        return prevFormData;
+      });
+    });
+};
+
 export const vault = {
   fetchPools,
   fetchBoosts,
   linkVaultBoosts,
+  estimateZapDeposit,
 };

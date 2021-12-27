@@ -979,20 +979,20 @@ const generateProviderOptions = (wallet, clients) => {
         },
         package: WalletLink,
         connector: async (ProviderPackage, options) => {
-            const walletLink = new ProviderPackage(options);
+          const walletLink = new ProviderPackage(options);
 
-            const provider = walletLink.makeWeb3Provider(networkRpc, networkId);
+          const provider = walletLink.makeWeb3Provider(networkRpc, networkId);
 
-            await provider.enable();
+          await provider.enable();
 
-            return provider;
+          return provider;
         },
       },
       'custom-wallet-connect': {
         display: {
           logo: require(`../../../images/wallets/wallet-connect.svg`).default,
           name: 'Wallet Connect',
-            description: 'Scan your WalletConnect to Connect',
+          description: 'Scan your WalletConnect to Connect',
         },
         options: {
           rpc: { networkId: networkRpc },
