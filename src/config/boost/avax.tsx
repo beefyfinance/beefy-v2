@@ -14,7 +14,7 @@ const beefy = {
 export const pools = [
   {
     id: "moo_bifi_avax-singular",
-    poolId: "joe-wavax-bifi",
+    poolId: "joe-wavax-bifi-eol",
     name: "Singular",
     assets: [
       "BIFI",
@@ -57,7 +57,17 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      beefy
+      {
+        logo: "stake/beefy/beefyfinance.png",
+        logoNight: "stake/beefy/beefyfinance_night.png",
+        background: "stake/beefy/background.png",
+        text: "Beefy Finance is The Multi-Chain Yield Optimizer across many blockchains, enabling users to earn autocompounded yield on their crypto. Did you know also that you can own a piece of Beefy itself? Beefy runs on its governance token, BIFI. The token has a set supply of 80,000 across all chains; no more may be minted, ever! As a holder of BIFI you may create and vote on important DAO proposals, and you become dividend-eligible to earn a share of every compounding harvest on Beefy vaults, hour by hour. Here on Avalanche, you just need to stake BIFI in this reward pool, or in the autocompounding BIFI Maxi vault on the main page. For this pool, AVAX dividends are gathered and sent proportionally to each staker. Stake here, return later to claim the AVAX you've earned.",
+        website: "https://app.beefy.finance",
+        social: {
+          telegram: "http://t.me/beefyfinance",
+          twitter: "https://twitter.com/beefyfinance"
+        }
+      }
     ]
   }
 ];

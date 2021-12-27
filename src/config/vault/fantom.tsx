@@ -1035,7 +1035,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x82f0B8B456c1A451378467398982d4834b6829c1/0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
     network: "fantom"
   },
   {
@@ -1180,7 +1180,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
     network: "fantom"
   },
   {
@@ -1216,7 +1216,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
     network: "fantom"
   },
   {
@@ -1325,7 +1325,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     network: "fantom"
   },
   {
@@ -1361,7 +1361,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x049d68029688eAbF473097a2fC38ef61633A3C7A/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     network: "fantom"
   },
   {
@@ -1397,7 +1397,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x82f0b8b456c1a451378467398982d4834b6829c1",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x82f0B8B456c1A451378467398982d4834b6829c1",
     network: "fantom"
   },
   {
@@ -1433,7 +1433,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x1E4F97b9f9F913c46F1632781732927B9019C68b/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
     network: "fantom"
   },
   {
@@ -1468,7 +1468,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
     network: "fantom"
   },
   {
@@ -1488,7 +1488,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "spirit-ftm-ice",
     oraclePrice: 0,
-    status: "active",
+    status: "eol",
     platform: "SpiritSwap",
     assets: [
       "ICE",
@@ -1505,8 +1505,9 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0xf16e81dce15B08F326220742020379B855B87DF9/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xf16e81dce15B08F326220742020379B855B87DF9",
-    network: "fantom"
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xf16e81dce15B08F326220742020379B855B87DF9",
+    network: "fantom",
+    retireReason: "rewards"
   },
   {
     id: "jetswap-fantom-eth-btc",
@@ -1854,7 +1855,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x37C045bE4641328DFEB625f1Dde610D061613497/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x37C045bE4641328DFEB625f1Dde610D061613497",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x37C045bE4641328DFEB625f1Dde610D061613497",
     network: "fantom"
   },
   {
@@ -1890,7 +1891,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
     network: "fantom"
   },
   {
@@ -1926,7 +1927,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x468003B688943977e6130F4F68F23aad939a1040",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x468003B688943977e6130F4F68F23aad939a1040",
     network: "fantom"
   },
   {
@@ -2812,7 +2813,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap?outputCurrency=0x181f3f22c9a751e2ce673498a03e1fdfc0ebbfb6",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
     network: "fantom"
   },
   {
@@ -2846,7 +2847,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "SingleStake",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap?outputCurrency=0x181f3f22c9a751e2ce673498a03e1fdfc0ebbfb6",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
     network: "fantom"
   },
   {
@@ -3307,7 +3308,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
     network: "fantom"
   },
   {
@@ -3710,7 +3711,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x7C10108d4B7f4bd659ee57A53b30dF928244b354",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
     network: "fantom",
     retireReason: "rewards"
   },
@@ -3746,7 +3747,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x7C10108d4B7f4bd659ee57A53b30dF928244b354",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
     network: "fantom",
     retireReason: "rewards"
   },
@@ -4370,7 +4371,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     network: "fantom"
   },
   {
@@ -4559,5 +4560,42 @@ export const pools = [
     buyTokenUrl: "https://spookyswap.finance/swap",
     network: "fantom",
     retireReason: "rewards"
+  },
+  {
+    id: "spirit-yfi-ftm",
+    name: "YFI-FTM LP",
+    token: "YFI-FTM SLP",
+    tokenDescription: "SpiritSwap",
+    tokenAddress: "0x4fc38a2735C7da1d71ccAbf6DeC235a7DA4Ec52C",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSpiritWFTM-YFI",
+    earnedTokenAddress: "0xDe0f8aBF5077AD155dC99F5693AceE20C2689ba8",
+    earnContractAddress: "0xDe0f8aBF5077AD155dC99F5693AceE20C2689ba8",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "spirit-yfi-ftm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpiritSwap",
+    assets: [
+      "YFI",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x29b0Da86e484E1C0029B56e817912d778aC0EC69/FTM",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x29b0Da86e484E1C0029B56e817912d778aC0EC69",
+    network: "fantom"
   }
 ];

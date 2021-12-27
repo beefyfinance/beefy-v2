@@ -4618,34 +4618,6 @@ export const pools = [
     network: "bsc"
   },
   {
-    id: "banana-typh-bnb",
-    logo: "bnb-pairs/typh-bnb.svg",
-    name: "TYPH-BNB LP",
-    token: "TYPH-BNB ApeLP",
-    tokenDescription: "ApeSwap",
-    tokenAddress: "0xFEaf192c2662E5700bDa860c58d2686d9cc12Ec8",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooApeTYPH-BNB",
-    earnedTokenAddress: "0xdAfE6095F8e2509CfF05E489eE971dB0EdED8d6f",
-    earnContractAddress: "0xdAfE6095F8e2509CfF05E489eE971dB0EdED8d6f",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "banana-typh-bnb",
-    oraclePrice: 0,
-    status: "active",
-    platform: "ApeSwap",
-    assets: [
-      "TYPH",
-      "BNB"
-    ],
-    addLiquidityUrl: "https://dex.apeswap.finance/#/add/ETH/0x4090e535f2e251f5f88518998b18b54d26b3b07c",
-    buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x4090e535f2e251f5f88518998b18b54d26b3b07c",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
     id: "tenfi-tenfi-bnb",
     logo: "single-assets/TENFI.png",
     name: "TENFI-BNB LP",
@@ -13949,33 +13921,6 @@ export const pools = [
     network: "bsc"
   },
   {
-    id: "cake-bts-busd",
-    logo: "single-assets/BTS.png",
-    name: "BTS-BUSD LP",
-    token: "BTS-BUSD LP",
-    tokenDescription: "PancakeSwap (Bolt)",
-    tokenAddress: "0xE86493D416EEB7800F08787de759d179B61dB921",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBoltDollarBTS-BUSD",
-    earnedTokenAddress: "0x6b40106ebEDaA719B14cfbA606b89954EaeeaE9D",
-    earnContractAddress: "0x6b40106ebEDaA719B14cfbA606b89954EaeeaE9D",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cake-bts-busd",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "BTS",
-      "BUSD"
-    ],
-    buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xc2e1acef50ae55661855e8dcb72adb182a3cc259&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
     id: "auto-btc-eol",
     logo: "single-assets/BTCB.svg",
     name: "BTCB",
@@ -18214,5 +18159,62 @@ export const pools = [
     addLiquidityUrl: "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0xBf37f781473f3b50E82C668352984865eac9853f",
     buyTokenUrl: "https://exchange.babyswap.finance/#/swap?outputCurrency=0xBf37f781473f3b50E82C668352984865eac9853f",
     network: "bsc"
+  },
+  {
+    id: "banana-typh-bnb-eol",
+    logo: "bnb-pairs/typh-bnb.svg",
+    name: "TYPH-BNB LP",
+    token: "TYPH-BNB ApeLP",
+    tokenDescription: "ApeSwap",
+    tokenAddress: "0xFEaf192c2662E5700bDa860c58d2686d9cc12Ec8",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooApeTYPH-BNB",
+    earnedTokenAddress: "0xdAfE6095F8e2509CfF05E489eE971dB0EdED8d6f",
+    earnContractAddress: "0xdAfE6095F8e2509CfF05E489eE971dB0EdED8d6f",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "banana-typh-bnb",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "ApeSwap",
+    assets: [
+      "TYPH",
+      "BNB"
+    ],
+    addLiquidityUrl: "https://dex.apeswap.finance/#/add/ETH/0x4090e535f2e251f5f88518998b18b54d26b3b07c",
+    buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x4090e535f2e251f5f88518998b18b54d26b3b07c",
+    stratType: "StratLP",
+    network: "bsc",
+    retireReason: "rewards"
+  },
+  {
+    id: "cake-bts-busd-eol",
+    logo: "single-assets/BTS.png",
+    name: "BTS-BUSD LP",
+    token: "BTS-BUSD LP",
+    tokenDescription: "PancakeSwap (Bolt)",
+    tokenAddress: "0xE86493D416EEB7800F08787de759d179B61dB921",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBoltDollarBTS-BUSD",
+    earnedTokenAddress: "0x6b40106ebEDaA719B14cfbA606b89954EaeeaE9D",
+    earnContractAddress: "0x6b40106ebEDaA719B14cfbA606b89954EaeeaE9D",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "cake-bts-busd",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "BTS",
+      "BUSD"
+    ],
+    buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xc2e1acef50ae55661855e8dcb72adb182a3cc259&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    stratType: "StratLP",
+    network: "bsc",
+    retireReason: "rewards"
   }
 ];
