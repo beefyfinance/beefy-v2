@@ -116,6 +116,11 @@ const _Filter: React.FC<FilterProps> = ({
   }, [setSortConfig]);
 
   const applyFilters = useCallback(() => {
+    setSortConfig(current => ({ ...current, ...config, blockchain }));
+    setAnchorEl(null);
+  }, [blockchain, config, setSortConfig]);
+
+  React.useEffect(() => {
     if (blockchain.length >= 1 && !blockchain.includes('all')) {
       setFiltersCount(current => current + 1);
     }
@@ -123,10 +128,8 @@ const _Filter: React.FC<FilterProps> = ({
     if (blockchain.includes('all') && blockchain.length === 1 && filtersCount >= 1) {
       setFiltersCount(current => current - 1);
     }
-
-    setSortConfig(current => ({ ...current, ...config, blockchain }));
-    setAnchorEl(null);
-  }, [blockchain, config, filtersCount, setSortConfig]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blockchain]);
 
   const platformTypes = useMemo(() => {
     return {
