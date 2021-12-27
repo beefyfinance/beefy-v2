@@ -12,19 +12,6 @@ export const styles = theme => ({
       height: '48px',
       borderRadius: '8px',
       margin: '0',
-      backgroundBlendMode: 'soft-light, normal',
-      '&:hover': {
-        '& .MuiTypography-root': {
-          opacity: 1,
-          transition: 'opacity 0.2s ease-in-out',
-        },
-      },
-    },
-    '& .MuiButton-root.Mui-disabled': {
-      color: '#ffffff',
-      '& .MuiTypography-root': {
-        opacity: 1,
-      },
     },
     [theme.breakpoints.down('sm')]: {
       paddingBottom: '20px',
