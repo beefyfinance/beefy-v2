@@ -122,7 +122,8 @@ export const styles = theme => ({
     },
   },
   price: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.disabled,
+    fontWeight: 400,
     letterSpacing: '0.2px',
     fontSize: '14px',
     lineHeight: '18px',
