@@ -116,6 +116,7 @@ const getBoosts = async (items, state, dispatch) => {
   console.log('redux getBoosts() processing...');
   const web3 = state.walletReducer.rpc;
   const prices = state.pricesReducer.prices;
+	const pools = state.vaultReducer.pools;
   const boosts = { ...state.vaultReducer.boosts };
 
   const multicall = [];
@@ -139,7 +140,8 @@ const getBoosts = async (items, state, dispatch) => {
     });
 
     if (pool.isMooStaked) {
-      const mooContract = new web3[pool.network].eth.Contract(vaultAbi, pool.vaultAddress);
+			const mooContract = new web3[pool.network].eth.Contract(vaultAbi, pools[ 
+																												pool.poolId].earnContractAddress);
       moos[pool.network].push({
         id: pool.id,
         pricePerFullShare: mooContract.methods.getPricePerFullShare(),
