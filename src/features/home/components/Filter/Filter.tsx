@@ -58,11 +58,22 @@ const _Filter: React.FC<FilterProps> = ({
     let {
       target: { value },
     } = event;
+
     if (value.length === 0) {
+      if (filteredCount >= 1) {
+        setFiltersCount(current => current - 1);
+      }
       setBlockchain(['all']);
     } else {
       if (value.includes('all')) {
         value = value.filter(value => value !== 'all');
+      }
+      if (value.length >= blockchain.length && !value.includes('all')) {
+        setFiltersCount(current => current + 1);
+      }
+
+      if (value !== blockchain && value.length < blockchain.length) {
+        setFiltersCount(current => current - 1);
       }
       setBlockchain(value);
     }
@@ -99,8 +110,6 @@ const _Filter: React.FC<FilterProps> = ({
     [filtersCount]
   );
 
-  //Update or downgrade filter Count
-
   const handleChange = useCallback(
     (name, value) => {
       setSortConfig(current => ({ ...current, [name]: value }));
@@ -119,17 +128,6 @@ const _Filter: React.FC<FilterProps> = ({
     setSortConfig(current => ({ ...current, ...config, blockchain }));
     setAnchorEl(null);
   }, [blockchain, config, setSortConfig]);
-
-  React.useEffect(() => {
-    if (blockchain.length >= 1 && !blockchain.includes('all')) {
-      setFiltersCount(current => current + 1);
-    }
-
-    if (blockchain.includes('all') && blockchain.length === 1 && filtersCount >= 1) {
-      setFiltersCount(current => current - 1);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockchain]);
 
   const platformTypes = useMemo(() => {
     return {
