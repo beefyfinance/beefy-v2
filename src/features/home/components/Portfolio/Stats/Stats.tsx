@@ -24,20 +24,26 @@ export const Stats = ({ stats, blurred }) => {
   return (
     <Grid container className={classes.stats}>
       <Box className={classes.stat}>
-        <Typography className={classes.label}>{t('Portfolio-Deposited')}</Typography>
-        <Typography className={classes.value}>
+        <Typography variant="body1" className={classes.label}>
+          {t('Portfolio-Deposited')}
+        </Typography>
+        <Typography variant="h3" className={classes.value}>
           <BlurredText value={formatStat(stats.deposited)} />
         </Typography>
       </Box>
       <Box className={classes.stat}>
-        <Typography className={classes.label}>{t('Portfolio-YieldMnth')}</Typography>
-        <Typography className={classes.value}>
+        <Typography variant="body1" className={classes.label}>
+          {t('Portfolio-YieldMnth')}
+        </Typography>
+        <Typography variant="h3" className={classes.value}>
           <BlurredText value={formatStat(stats.monthly)} />
         </Typography>
       </Box>
       <Box className={classes.stat}>
-        <Typography className={classes.label}>{t('Portfolio-YieldDay')}</Typography>
-        <Typography className={classes.value}>
+        <Typography variant="body1" className={classes.label}>
+          {t('Portfolio-YieldDay')}
+        </Typography>
+        <Typography variant="h3" className={classes.value}>
           <BlurredText value={formatStat(stats.daily)} />
         </Typography>
       </Box>

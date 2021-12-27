@@ -23,12 +23,23 @@ export const SimpleDropdown: React.FC<SimpleDropdownProps> = ({
   return (
     <Box className={classes.select}>
       <Select
-        MenuProps={{ classes: { list: classes.selectList } }}
+        MenuProps={{
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'left',
+          },
+          transformOrigin: {
+            vertical: 'top',
+            horizontal: 'left',
+          },
+          getContentAnchorEl: null,
+          classes: { list: classes.selectList },
+        }}
         value={selected}
         onChange={handler}
         disableUnderline={true}
         IconComponent={ExpandMore}
-        // renderValue={renderValue} // TODO: renable
+        renderValue={renderValue} // TODO: renable
         fullWidth
       >
         {Object.keys(list).map(val => (

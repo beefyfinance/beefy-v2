@@ -12,10 +12,12 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { useHideBalanceCtx } from '../../../../components/HideBalancesContext';
 import { useVaults } from '../../hooks/useFilteredVaults';
 import { isEmpty } from '../../../../helpers/utils';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(styles as any);
 export const Portfolio = () => {
   const classes = useStyles();
+  const theme = useTheme();
   const { hideBalance, setHideBalance } = useHideBalanceCtx();
 
   const [globalStats, setGlobalStats] = useState({
@@ -38,13 +40,12 @@ export const Portfolio = () => {
       monthly: new BigNumber(0),
     };
 
-    console.log(userVaults);
     if (userAddress && userVaults) {
       Object.keys(userVaults).map(_vault => {
         const vault = userVaults[_vault];
         let symbol = vault.isGovVault ? `${vault.token}GovVault` : vault.earnedToken;
         let balance = new BigNumber(0);
-        if (vault.isGovPool) {
+        if (vault.isGovVault) {
           balance = byDecimals(
             balanceReducer.tokens[vault.network][symbol].balance,
             vault.tokenDecimals
@@ -54,7 +55,7 @@ export const Portfolio = () => {
           );
         } else {
           balance = byDecimals(
-            new BigNumber(balanceReducer.tokens[vault.network][vault.earnedToken].balance)
+            new BigNumber(balanceReducer.tokens[vault.network][symbol].balance)
               .multipliedBy(byDecimals(vault.pricePerFullShare))
               .toFixed(8),
             vault.tokenDecimals
@@ -103,26 +104,26 @@ export const Portfolio = () => {
     <Box className={classes.portfolio}>
       <Container maxWidth="lg">
         <Grid container>
-          <Grid item xs={12} lg={6}>
-            <Typography className={classes.title}>{t('Portfolio-Portfolio')}</Typography>
+          <Grid className={classes.separator} item xs={12} lg={6}>
+            <Box className={classes.titles}>
+              <Typography variant="h3" className={classes.title}>
+                {t('Portfolio-Portfolio')}
+              </Typography>
+              <Button size="small" className={classes.btnHide} onClick={updateHideBalance}>
+                {hideBalance ? (
+                  <VisibilityOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
+                ) : (
+                  <VisibilityOffOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
+                )}
+              </Button>
+            </Box>
             <Stats stats={globalStats} blurred={hideBalance} />
-            <Button className={classes.btnHide} onClick={updateHideBalance}>
-              {hideBalance ? (
-                <React.Fragment>
-                  <VisibilityOutlinedIcon />
-                  {t('Portfolio-BalanceShow')}
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <VisibilityOffOutlinedIcon />
-                  {t('Portfolio-BalanceHide')}
-                </React.Fragment>
-              )}
-            </Button>
           </Grid>
           <Grid item xs={12} lg={6}>
             <Box className={classes.vaults}>
-              <Typography className={classes.title}>{t('Vault-platform')}</Typography>
+              <Typography variant="h3" className={classes.title2}>
+                {t('Vault-platform')}
+              </Typography>
               <Box>
                 <VaultsStats {...({} as any)} />
               </Box>

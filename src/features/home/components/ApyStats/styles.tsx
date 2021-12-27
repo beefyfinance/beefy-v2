@@ -3,10 +3,10 @@ export const styles = theme => ({
     fontSize: 14,
   },
   label: {
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: '12px',
     lineHeight: '20px',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+    color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     textAlign: 'left',
@@ -18,7 +18,7 @@ export const styles = theme => ({
     fontWeight: 400,
     fontSize: '14px',
     lineHeight: '18px',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+    color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     textAlign: 'left',

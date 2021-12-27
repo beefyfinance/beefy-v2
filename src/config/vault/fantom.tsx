@@ -824,42 +824,6 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "beets-symphony-nr-10",
-    logo: "fantom/Symphony Nr 10.png",
-    name: "Symphony Nr 10. Opus 138",
-    token: "Symphony Nr 10. Opus 138",
-    tokenDescription: "Beethoven X",
-    tokenAddress: "0x03c6B3f09D2504606936b1A4DeCeFaD204687890",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBeetSymphonyNr10",
-    earnedTokenAddress: "0x3bfd79fF14a4B1BA024DEc0A778Edc3fe53B237a",
-    earnContractAddress: "0x3bfd79fF14a4B1BA024DEc0A778Edc3fe53B237a",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "beets-symphony-nr-10",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Beethoven X",
-    assets: [
-      "USDC",
-      "BEETS"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "NEW_STRAT",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratMultiLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015",
-    network: "fantom"
-  },
-  {
     id: "beets-grand-orchestra",
     logo: "fantom/The Grand Orchestra.png",
     name: "The Grand Orchestra",
@@ -1071,7 +1035,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x82f0B8B456c1A451378467398982d4834b6829c1/0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
     network: "fantom"
   },
   {
@@ -1216,7 +1180,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
     network: "fantom"
   },
   {
@@ -1252,7 +1216,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
     network: "fantom"
   },
   {
@@ -1361,7 +1325,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     network: "fantom"
   },
   {
@@ -1397,7 +1361,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x049d68029688eAbF473097a2fC38ef61633A3C7A/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     network: "fantom"
   },
   {
@@ -1433,7 +1397,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x82f0b8b456c1a451378467398982d4834b6829c1",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x82f0B8B456c1A451378467398982d4834b6829c1",
     network: "fantom"
   },
   {
@@ -1469,7 +1433,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x1E4F97b9f9F913c46F1632781732927B9019C68b/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
     network: "fantom"
   },
   {
@@ -1504,7 +1468,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
     network: "fantom"
   },
   {
@@ -1524,7 +1488,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "spirit-ftm-ice",
     oraclePrice: 0,
-    status: "active",
+    status: "eol",
     platform: "SpiritSwap",
     assets: [
       "ICE",
@@ -1541,8 +1505,9 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0xf16e81dce15B08F326220742020379B855B87DF9/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xf16e81dce15B08F326220742020379B855B87DF9",
-    network: "fantom"
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xf16e81dce15B08F326220742020379B855B87DF9",
+    network: "fantom",
+    retireReason: "rewards"
   },
   {
     id: "jetswap-fantom-eth-btc",
@@ -1890,7 +1855,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x37C045bE4641328DFEB625f1Dde610D061613497/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x37C045bE4641328DFEB625f1Dde610D061613497",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x37C045bE4641328DFEB625f1Dde610D061613497",
     network: "fantom"
   },
   {
@@ -1926,7 +1891,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
     network: "fantom"
   },
   {
@@ -1962,43 +1927,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x468003B688943977e6130F4F68F23aad939a1040",
-    network: "fantom"
-  },
-  {
-    id: "boo-usdc-woo",
-    name: "WOO-USDC LP",
-    token: "WOO-USDC LP",
-    tokenDescription: "SpookySwap",
-    tokenAddress: "0x7d4CdDAB6774Ff47D62253067958dbD749Cb7F06",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBooWOO-USDC",
-    earnedTokenAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
-    earnContractAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "boo-usdc-woo",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SpookySwap",
-    assets: [
-      "WOO",
-      "USDC"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://spookyswap.finance/add/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    buyTokenUrl: "https://spookyswap.finance/swap",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x468003B688943977e6130F4F68F23aad939a1040",
     network: "fantom"
   },
   {
@@ -2197,41 +2126,6 @@ export const pools = [
     platform: "SpookySwap",
     assets: [
       "SCREAM",
-      "FTM"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://spookyswap.finance/add",
-    buyTokenUrl: "https://spookyswap.finance/swap",
-    network: "fantom"
-  },
-  {
-    id: "boo-zoo-ftm",
-    name: "ZOO-FTM LP",
-    token: "ZOO-FTM LP",
-    tokenDescription: "SpookySwap",
-    tokenAddress: "0x3Cceb477Fcb6cDE90180983642486E68148D7b27",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBooZOO-FTM",
-    earnedTokenAddress: "0xe87d98ce222435455706529c8Ff8E12973792acb",
-    earnContractAddress: "0xe87d98ce222435455706529c8Ff8E12973792acb",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "boo-zoo-ftm",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SpookySwap",
-    assets: [
-      "ZOO",
       "FTM"
     ],
     risks: [
@@ -2919,7 +2813,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap?outputCurrency=0x181f3f22c9a751e2ce673498a03e1fdfc0ebbfb6",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
     network: "fantom"
   },
   {
@@ -2953,7 +2847,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "SingleStake",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap?outputCurrency=0x181f3f22c9a751e2ce673498a03e1fdfc0ebbfb6",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
     network: "fantom"
   },
   {
@@ -3127,42 +3021,6 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add",
     buyTokenUrl: "https://spookyswap.finance/swap",
     stratType: "StratLP",
-    network: "fantom"
-  },
-  {
-    id: "boo-snx-ftm",
-    logo: "fantom/SNX-FTM.png",
-    name: "SNX-FTM LP",
-    token: "SNX-FTM LP",
-    tokenDescription: "SpookySwap",
-    tokenAddress: "0x06d173628bE105fE81F1C82c9979bA79eBCAfCB7",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBooSNX-FTM",
-    earnedTokenAddress: "0x74907ad4E79b1Ce415caB26FEf526ae017598cEe",
-    earnContractAddress: "0x74907ad4E79b1Ce415caB26FEf526ae017598cEe",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "boo-snx-ftm",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SpookySwap",
-    assets: [
-      "SNX",
-      "FTM"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://spookyswap.finance/add",
-    buyTokenUrl: "https://spookyswap.finance/swap",
     network: "fantom"
   },
   {
@@ -3450,7 +3308,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
     network: "fantom"
   },
   {
@@ -3853,7 +3711,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x7C10108d4B7f4bd659ee57A53b30dF928244b354",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
     network: "fantom",
     retireReason: "rewards"
   },
@@ -3889,7 +3747,7 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x7C10108d4B7f4bd659ee57A53b30dF928244b354",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
     network: "fantom",
     retireReason: "rewards"
   },
@@ -4118,7 +3976,117 @@ export const pools = [
     retireReason: "rewards"
   },
   {
-    id: "geist-ftm-pause",
+    id: "geist-crv",
+    logo: "single-assets/CRV.png",
+    name: "CRV",
+    token: "CRV",
+    tokenDescription: "Geist",
+    tokenAddress: "0x1E4F97b9f9F913c46F1632781732927B9019C68b",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooGeistCRV",
+    earnedTokenAddress: "0xedEb044BC7Ce11Dfa436CFA8Be43e6eB0d601814",
+    earnContractAddress: "0xedEb044BC7Ce11Dfa436CFA8Be43e6eB0d601814",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "CRV",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Geist",
+    assets: [
+      "CRV"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0.01%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b",
+    network: "fantom"
+  },
+  {
+    id: "boo-wftm-avax",
+    name: "AVAX-FTM LP",
+    token: "AVAX-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x5DF809e410d9CC577f0d01b4E623C567C7aD56c1",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooAVAX-FTM",
+    earnedTokenAddress: "0x6e08721cE0eB1a6776E7965beb5441267D1742c7",
+    earnContractAddress: "0x6e08721cE0eB1a6776E7965beb5441267D1742c7",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-wftm-avax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "AVAX",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0x511D35c52a3C244E7b8bd92c0C297755FbD89212",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom"
+  },
+  {
+    id: "boo-wftm-woo",
+    name: "WOO-FTM LP",
+    token: "WOO-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0xa7010b3ba9efb1AF9Fa8a30efe74C16A93891775",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooWOO-FTM",
+    earnedTokenAddress: "0xddb3F5F56AeA6B8cE12e2f603Fac6b8f0D99b78a",
+    earnContractAddress: "0xddb3F5F56AeA6B8cE12e2f603Fac6b8f0D99b78a",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-wftm-woo",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "WOO",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom"
+  },
+  {
+    id: "geist-ftm",
     logo: "single-assets/FTM.png",
     name: "FTM",
     token: "FTM",
@@ -4133,7 +4101,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "FTM",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "FTM"
@@ -4152,7 +4121,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-wbtc-pause",
+    id: "geist-wbtc",
     logo: "single-assets/WBTC.svg",
     name: "WBTC",
     token: "WBTC",
@@ -4168,7 +4137,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "WBTC",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "WBTC"
@@ -4187,7 +4157,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-eth-pause",
+    id: "geist-eth",
     logo: "single-assets/ETH.svg",
     name: "ETH",
     token: "ETH",
@@ -4203,7 +4173,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "ETH",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "ETH"
@@ -4222,7 +4193,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-fusdt-pause",
+    id: "geist-fusdt",
     logo: "single-assets/USDT.svg",
     name: "fUSDT",
     token: "fUSDT",
@@ -4238,7 +4209,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "fUSDT",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "fUSDT"
@@ -4257,7 +4229,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-usdc-pause",
+    id: "geist-usdc",
     logo: "single-assets/USDC.svg",
     name: "USDC",
     token: "USDC",
@@ -4273,7 +4245,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "USDC",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "USDC"
@@ -4292,7 +4265,7 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "geist-dai-pause",
+    id: "geist-dai",
     logo: "single-assets/DAI.svg",
     name: "DAI",
     token: "DAI",
@@ -4308,7 +4281,8 @@ export const pools = [
     oracle: "tokens",
     oracleId: "DAI",
     oraclePrice: 0,
-    status: "paused",
+    depositsPaused: false,
+    status: "active",
     platform: "Geist",
     assets: [
       "DAI"
@@ -4324,6 +4298,304 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+    network: "fantom"
+  },
+  {
+    id: "boo-usdc-woo-eol",
+    name: "WOO-USDC LP",
+    token: "WOO-USDC LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x7d4CdDAB6774Ff47D62253067958dbD749Cb7F06",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooWOO-USDC",
+    earnedTokenAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
+    earnContractAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-usdc-woo",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SpookySwap",
+    assets: [
+      "WOO",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom",
+    retireReason: "rewards"
+  },
+  {
+    id: "spirit-dai-usdc",
+    name: "DAI-USDC LP",
+    token: "DAI-USDC SLP",
+    tokenDescription: "SpiritSwap",
+    tokenAddress: "0x9606D683d03f012DDa296eF0ae9261207C4A5847",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSpiritUSDC-DAI",
+    earnedTokenAddress: "0x5d2EF803D6e255eF4D1c66762CBc8845051B54dB",
+    earnContractAddress: "0x5d2EF803D6e255eF4D1c66762CBc8845051B54dB",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "spirit-dai-usdc",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpiritSwap",
+    assets: [
+      "DAI",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+    network: "fantom"
+  },
+  {
+    id: "geist-mim",
+    logo: "single-assets/MIM.png",
+    name: "MIM",
+    token: "MIM",
+    tokenDescription: "Geist",
+    tokenAddress: "0x82f0B8B456c1A451378467398982d4834b6829c1",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooGeistMIM",
+    earnedTokenAddress: "0xE7E08D82853dcf1057B2f8BCeF781d904602B6a0",
+    earnContractAddress: "0xE7E08D82853dcf1057B2f8BCeF781d904602B6a0",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "MIM",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Geist",
+    assets: [
+      "MIM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0.01%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
+    network: "fantom"
+  },
+  {
+    id: "beets-battle-bands",
+    logo: "fantom/Battle Bands.png",
+    name: "Battle Of The Bands",
+    token: "Battle Of The Bands",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0x9af1F0e9aC9C844A4a4439d446c1437807183075",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetBattleBands",
+    earnedTokenAddress: "0x0139C853539bF1EDf221cf9d665F282C2701335a",
+    earnContractAddress: "0x0139C853539bF1EDf221cf9d665F282C2701335a",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-battle-bands",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "FTM",
+      "MATIC",
+      "SOL",
+      "AVAX",
+      "LUNA",
+      "BNB"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beets.fi/#/pool/0x9af1f0e9ac9c844a4a4439d446c14378071830750001000000000000000000da",
+    network: "fantom"
+  },
+  {
+    id: "beets-symphony-nr-10-eol",
+    logo: "fantom/Symphony Nr 10.png",
+    name: "Symphony Nr 10. Opus 138",
+    token: "Symphony Nr 10. Opus 138",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0x03c6B3f09D2504606936b1A4DeCeFaD204687890",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetSymphonyNr10",
+    earnedTokenAddress: "0x3bfd79fF14a4B1BA024DEc0A778Edc3fe53B237a",
+    earnContractAddress: "0x3bfd79fF14a4B1BA024DEc0A778Edc3fe53B237a",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-symphony-nr-10",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Beethoven X",
+    assets: [
+      "USDC",
+      "BEETS"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015",
+    network: "fantom",
+    retireReason: "rewards"
+  },
+  {
+    id: "boo-zoo-ftm-eol",
+    name: "ZOO-FTM LP",
+    token: "ZOO-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x3Cceb477Fcb6cDE90180983642486E68148D7b27",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooZOO-FTM",
+    earnedTokenAddress: "0xe87d98ce222435455706529c8Ff8E12973792acb",
+    earnContractAddress: "0xe87d98ce222435455706529c8Ff8E12973792acb",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-zoo-ftm",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SpookySwap",
+    assets: [
+      "ZOO",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://spookyswap.finance/add",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom",
+    retireReason: "rewards"
+  },
+  {
+    id: "boo-snx-ftm-eol",
+    logo: "fantom/SNX-FTM.png",
+    name: "SNX-FTM LP",
+    token: "SNX-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x06d173628bE105fE81F1C82c9979bA79eBCAfCB7",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooSNX-FTM",
+    earnedTokenAddress: "0x74907ad4E79b1Ce415caB26FEf526ae017598cEe",
+    earnContractAddress: "0x74907ad4E79b1Ce415caB26FEf526ae017598cEe",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-snx-ftm",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SpookySwap",
+    assets: [
+      "SNX",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://spookyswap.finance/add",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom",
+    retireReason: "rewards"
+  },
+  {
+    id: "spirit-yfi-ftm",
+    name: "YFI-FTM LP",
+    token: "YFI-FTM SLP",
+    tokenDescription: "SpiritSwap",
+    tokenAddress: "0x4fc38a2735C7da1d71ccAbf6DeC235a7DA4Ec52C",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSpiritWFTM-YFI",
+    earnedTokenAddress: "0xDe0f8aBF5077AD155dC99F5693AceE20C2689ba8",
+    earnContractAddress: "0xDe0f8aBF5077AD155dC99F5693AceE20C2689ba8",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "spirit-yfi-ftm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpiritSwap",
+    assets: [
+      "YFI",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x29b0Da86e484E1C0029B56e817912d778aC0EC69/FTM",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x29b0Da86e484E1C0029B56e817912d778aC0EC69",
     network: "fantom"
   }
 ];

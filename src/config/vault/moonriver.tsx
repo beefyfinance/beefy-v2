@@ -860,7 +860,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x98878B06940aE243284CA214f92Bb71a2b032B8A/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     network: "moonriver"
   },
   {
@@ -936,41 +936,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "finn-finn",
-    logo: "single-assets/FINN.png",
-    name: "FINN",
-    token: "FINN",
-    tokenDescription: "Huckleberry",
-    tokenAddress: "0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooFinn",
-    earnedTokenAddress: "0xe173782e5Cc62f1C3277749EEa9c5Daf182d7C66",
-    earnContractAddress: "0xe173782e5Cc62f1C3277749EEa9c5Daf182d7C66",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "FINN",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Huckleberry",
-    assets: [
-      "FINN"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    network: "moonriver"
-  },
-  {
     id: "finn-wmovr-usdt",
     name: "MOVR-USDT",
     token: "MOVR-USDT FLP",
@@ -1003,7 +968,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x98878B06940aE243284CA214f92Bb71a2b032B8A/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7",
     network: "moonriver"
   },
   {
@@ -1039,7 +1004,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x98878B06940aE243284CA214f92Bb71a2b032B8A/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111",
     network: "moonriver"
   },
   {
@@ -1075,7 +1040,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x98878B06940aE243284CA214f92Bb71a2b032B8A/0x78F811A431D248c1EDcF6d95ec8551879B2897C3",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0x78F811A431D248c1EDcF6d95ec8551879B2897C3",
     network: "moonriver"
   },
   {
@@ -1147,79 +1112,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x98878B06940aE243284CA214f92Bb71a2b032B8A/0x41562ae242d194247389152aCAa7a9397136b09F",
-    network: "moonriver"
-  },
-  {
-    id: "finn-eth-finn",
-    name: "ETH-FINN",
-    token: "ETH-FINN FLP",
-    tokenDescription: "Huckleberry",
-    tokenAddress: "0x03bF745884513869AFE685af099e8c738F3697E3",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooFinnETH-FINN",
-    earnedTokenAddress: "0x7e95e7b74AF3d966baBD44aa6229fA4a3F0Ad286",
-    earnContractAddress: "0x7e95e7b74AF3d966baBD44aa6229fA4a3F0Ad286",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "finn-eth-finn",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Huckleberry",
-    assets: [
-      "ETH",
-      "FINN"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver"
-  },
-  {
-    id: "finn-wbtc-finn",
-    name: "WBTC-FINN",
-    token: "WBTC-FINN FLP",
-    tokenDescription: "Huckleberry",
-    tokenAddress: "0x0A1Af960473e170773a33012bf2C291e6f7e3E2C",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooFinnWBTC-FINN",
-    earnedTokenAddress: "0x8A9Ad76449781BeF39ae4dA70944fbbADdEB6852",
-    earnContractAddress: "0x8A9Ad76449781BeF39ae4dA70944fbbADdEB6852",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "finn-wbtc-finn",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Huckleberry",
-    assets: [
-      "WBTC",
-      "FINN"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x78F811A431D248c1EDcF6d95ec8551879B2897C3/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0x41562ae242d194247389152aCAa7a9397136b09F",
     network: "moonriver"
   },
   {
@@ -1403,42 +1296,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "finn-wan-finn",
-    name: "WAN-FINN",
-    token: "WAN-FINN FLP",
-    tokenDescription: "Huckleberry",
-    tokenAddress: "0xF3d89313F508f877f086b7FFA8BeA6926b886B5f",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooFinnWAN-FINN",
-    earnedTokenAddress: "0x3d91f38Abb9abEdd87099faF48eb2B3230f4f259",
-    earnContractAddress: "0x3d91f38Abb9abEdd87099faF48eb2B3230f4f259",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "finn-wan-finn",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Huckleberry",
-    assets: [
-      "WAN",
-      "FINN"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x41562ae242d194247389152aCAa7a9397136b09F/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver"
-  },
-  {
     id: "finn-finn-doge",
     name: "DOGE-FINN",
     token: "DOGE-FINN FLP",
@@ -1508,7 +1365,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=0x98878B06940aE243284CA214f92Bb71a2b032B8A&outputCurrency=0x0caE51e1032e8461f4806e26332c030E34De3aDb",
-    addLiquidityUrl: "https://app.solarbeam.io/exchange/add/0x98878B06940aE243284CA214f92Bb71a2b032B8A/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
+    addLiquidityUrl: "https://app.solarbeam.io/exchange/add/ETH/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
     network: "moonriver"
   },
   {
@@ -1582,7 +1439,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=0x98878B06940aE243284CA214f92Bb71a2b032B8A&outputCurrency=0xFb2019DfD635a03cfFF624D210AEe6AF2B00fC2C",
-    addLiquidityUrl: "https://app.solarbeam.io/exchange/add/0x98878B06940aE243284CA214f92Bb71a2b032B8A/0xFb2019DfD635a03cfFF624D210AEe6AF2B00fC2C",
+    addLiquidityUrl: "https://app.solarbeam.io/exchange/add/ETH/0xFb2019DfD635a03cfFF624D210AEe6AF2B00fC2C",
     network: "moonriver"
   },
   {
@@ -1656,6 +1513,153 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B&outputCurrency=0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
+    network: "moonriver",
+    retireReason: "rewards"
+  },
+  {
+    id: "finn-finn-eol",
+    logo: "single-assets/FINN.png",
+    name: "FINN",
+    token: "FINN",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinn",
+    earnedTokenAddress: "0xe173782e5Cc62f1C3277749EEa9c5Daf182d7C66",
+    earnContractAddress: "0xe173782e5Cc62f1C3277749EEa9c5Daf182d7C66",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "FINN",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Huckleberry",
+    assets: [
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    network: "moonriver",
+    retireReason: "noReason"
+  },
+  {
+    id: "finn-eth-finn-eol",
+    name: "ETH-FINN",
+    token: "ETH-FINN FLP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0x03bF745884513869AFE685af099e8c738F3697E3",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnETH-FINN",
+    earnedTokenAddress: "0x7e95e7b74AF3d966baBD44aa6229fA4a3F0Ad286",
+    earnContractAddress: "0x7e95e7b74AF3d966baBD44aa6229fA4a3F0Ad286",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-eth-finn",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Huckleberry",
+    assets: [
+      "ETH",
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    network: "moonriver",
+    retireReason: "rewards"
+  },
+  {
+    id: "finn-wbtc-finn-eol",
+    name: "WBTC-FINN",
+    token: "WBTC-FINN FLP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0x0A1Af960473e170773a33012bf2C291e6f7e3E2C",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnWBTC-FINN",
+    earnedTokenAddress: "0x8A9Ad76449781BeF39ae4dA70944fbbADdEB6852",
+    earnContractAddress: "0x8A9Ad76449781BeF39ae4dA70944fbbADdEB6852",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-wbtc-finn",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Huckleberry",
+    assets: [
+      "WBTC",
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x78F811A431D248c1EDcF6d95ec8551879B2897C3/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    network: "moonriver",
+    retireReason: "rewards"
+  },
+  {
+    id: "finn-wan-finn-eol",
+    name: "WAN-FINN",
+    token: "WAN-FINN FLP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0xF3d89313F508f877f086b7FFA8BeA6926b886B5f",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnWAN-FINN",
+    earnedTokenAddress: "0x3d91f38Abb9abEdd87099faF48eb2B3230f4f259",
+    earnContractAddress: "0x3d91f38Abb9abEdd87099faF48eb2B3230f4f259",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-wan-finn",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Huckleberry",
+    assets: [
+      "WAN",
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x41562ae242d194247389152aCAa7a9397136b09F/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     network: "moonriver",
     retireReason: "rewards"
   }

@@ -16,6 +16,7 @@ export const config = {
       'custom-math',
       'custom-twt',
       'custom-safepal',
+      'custom-coinbase'
     ],
     providerName: 'binance',
     walletSettings: {
@@ -55,7 +56,7 @@ export const config = {
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
     multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
-    supportedWallets: ['injected', 'custom-math'],
+    supportedWallets: ['injected', 'custom-math', 'custom-wallet-connect'],
     providerName: 'heco',
     walletSettings: {
       chainId: `0x${parseInt('128', 10).toString(16)}`,
@@ -76,7 +77,7 @@ export const config = {
     rpc: ['https://api.avax.network/ext/bc/C/rpc'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'avalanche',
     walletSettings: {
       chainId: `0x${parseInt('43114', 10).toString(16)}`,
@@ -110,7 +111,7 @@ export const config = {
     rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
-    supportedWallets: ['injected', 'walletconnect'],
+    supportedWallets: ['injected', 'walletconnect', 'custom-coinbase'],
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
@@ -148,7 +149,7 @@ export const config = {
     rpc: ['https://rpcapi.fantom.network'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'fantom',
     walletSettings: {
       chainId: `0x${parseInt('250', 10).toString(16)}`,
@@ -169,7 +170,7 @@ export const config = {
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one/',
     multicallAddress: '0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'harmony',
     walletSettings: {
       chainId: `0x${parseInt('1666600000', 10).toString(16)}`,
@@ -190,7 +191,7 @@ export const config = {
     rpc: ['https://arb1.arbitrum.io/rpc'],
     explorerUrl: 'https://arbiscan.io/',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'Arbitrum',
     walletSettings: {
       chainId: `0x${parseInt('42161', 10).toString(16)}`,
@@ -211,7 +212,7 @@ export const config = {
     rpc: ['https://forno.celo.org'],
     explorerUrl: 'https://explorer.celo.org/',
     multicallAddress: '0xa9E6E271b27b20F65394914f8784B3B860dBd259',
-    supportedWallets: ['injected', 'walletconnect'],
+    supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'Celo',
     walletSettings: {
       chainId: `0x${parseInt('42220', 10).toString(16)}`,
@@ -232,7 +233,7 @@ export const config = {
     rpc: ['https://rpc.moonriver.moonbeam.network'],
     explorerUrl: 'https://blockscout.moonriver.moonbeam.network/',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'Moonriver',
     walletSettings: {
       chainId: `0x${parseInt('1285', 10).toString(16)}`,
@@ -253,7 +254,7 @@ export const config = {
     rpc: ['https://evm-cronos.crypto.org'],
     explorerUrl: 'https://cronos.crypto.org/explorer/',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
-    supportedWallets: ['injected'],
+    supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'Cronos',
     walletSettings: {
       chainId: `0x${parseInt('25', 10).toString(16)}`,

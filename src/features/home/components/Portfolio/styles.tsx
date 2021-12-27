@@ -1,29 +1,42 @@
 export const styles = theme => ({
   portfolio: {
-    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
+    backgroundColor: theme.palette.background.header,
     padding: '30px 0 30px 0',
   },
   title: {
-    fontSize: '36px',
-    fontWeight: 600,
-    lineHeight: '42px',
-    paddingBottom: '16px',
+    color: theme.palette.text.secondary,
+  },
+  title2: {
+    color: theme.palette.text.secondary,
+    paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down('md')]: {
+      paddingBottom: theme.spacing(1),
+    },
+  },
+  separator: {
+    [theme.breakpoints.down('md')]: {
+      marginBottom: theme.spacing(4),
+    },
+  },
+  titles: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down('md')]: {
+      paddingBottom: theme.spacing(1),
+    },
   },
   btnHide: {
-    marginTop: '8px',
     textTransform: 'capitalize',
-    color: theme.palette.type === 'dark' ? '#484F7F' : '#ff0000',
+    color: '#484F7F',
     fontSize: '16px',
     fontWeight: '600',
     '& .MuiSvgIcon-root': {
       marginRight: '5px',
     },
-    '&.MuiButton-text': {
-      padding: '6px 0px',
-    },
     '&:hover': {
       backgroundColor: 'transparent',
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+      color: '#6B7199',
     },
   },
   vaults: {

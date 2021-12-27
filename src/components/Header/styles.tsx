@@ -9,14 +9,15 @@ export const styles = theme => ({
   },
   flex: {
     display: 'flex',
-    alignItem: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
   hasPortfolio: {
-    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
+    backgroundColor: theme.palette.background.header,
   },
   mobileMenu: {
     width: 250,
-    backgroundColor: theme.palette.type === 'dark' ? '#14161F' : '#FEFAF4',
+    backgroundColor: theme.palette.background.header,
   },
   beefy: {
     display: 'flex',
@@ -46,13 +47,11 @@ export const styles = theme => ({
   navLink: {
     textDecoration: 'none',
     textTransform: 'capitalize',
-    color: theme.palette.type === 'dark' ? '#6B7199' : '#000000',
-    fontSize: 16,
+    color: theme.palette.text.disabled,
     fontWeight: 'bold',
-    lineHeight: '24px',
     margin: '12px',
     '&:hover': {
-      color: 'white',
+      color: theme.palette.text.primary,
     },
     [theme.breakpoints.up('md')]: {
       '&:hover': {
@@ -64,13 +63,20 @@ export const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       margin: '16px',
     },
+    '& a': {
+      textDecoration: 'none',
+      color: theme.palette.text.disabled,
+      '&:hover': {
+        color: theme.palette.text.primary,
+      },
+    },
   },
   navMobile: {
     display: 'flex',
     flexDirection: 'column',
   },
   active: {
-    color: '#fff',
+    color: theme.palette.text.primary,
   },
   bifiPrice: {
     display: 'flex',
@@ -84,13 +90,12 @@ export const styles = theme => ({
       marginRight: '5px',
     },
     '& .MuiTypography-root': {
-      fontWeight: '600',
-      fontSize: 16,
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+      fontWeight: 700,
+      color: theme.palette.text.disabled,
     },
   },
   drawerBlack: {
-    backgroundColor: theme.palette.type === 'dark' ? '#0D0E14' : '#fff',
+    backgroundColor: '#0D0E14',
   },
   hide: {
     display: 'none',

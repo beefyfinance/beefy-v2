@@ -62,9 +62,11 @@ export const Header = ({ isNightMode, setNightMode }) => {
           {t('Header-Explore')}
         </NavLink>
         {navLinks.map(({ title, path }) => (
-          <a target="_blank" rel="noreferrer" className={classes.navLink} href={path} key={title}>
-            {title}
-          </a>
+          <Typography variant="body1" className={classes.navLink}>
+            <a target="_blank" rel="noreferrer" href={path} key={title}>
+              {title}
+            </a>
+          </Typography>
         ))}
       </>
     );
@@ -77,18 +79,18 @@ export const Header = ({ isNightMode, setNightMode }) => {
     const price = new BigNumber(pricesReducer['BIFI']);
 
     return (
-      <Box className={classes.bifiPrice}>
-        <a
-          className={classes.bifiPrice}
-          style={{ textDecoration: 'none' }}
-          href="https://app.1inch.io/#/56/swap/BNB/BIFI"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img alt="BIFI" src={require(`../../images/BIFI-TOKEN.svg`).default} />
-          <Typography noWrap={true}>{formatUsd(price.toNumber())}</Typography>
-        </a>
-      </Box>
+      <a
+        className={classes.bifiPrice}
+        style={{ textDecoration: 'none' }}
+        href="https://app.1inch.io/#/56/swap/BNB/BIFI"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img alt="BIFI" src={require(`../../images/BIFI-TOKEN.svg`).default} />
+        <Typography variant="body1" noWrap={true}>
+          {formatUsd(price.toNumber())}
+        </Typography>
+      </a>
     );
   });
 

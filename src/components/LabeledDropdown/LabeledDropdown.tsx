@@ -14,8 +14,12 @@ export const LabeledDropdown: React.FC<LabeledDropdownProps> = ({
   label,
   renderValue,
   selectStyle,
+  fullWidth,
 }) => {
-  const classes = useStyles();
+  const props = {
+    fullWidth,
+  };
+  const classes = useStyles(props);
 
   let sortedList = Object.keys(list).sort((a, b) => (a > b ? 1 : -1));
   if (sortedList.includes('all')) {

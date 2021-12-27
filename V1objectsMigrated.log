@@ -1,0 +1,204 @@
+[
+  {
+    "id": "bsc vault: banana-typh-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: cake-bts-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: spirit-dai-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-yfi-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: spirit-spell-sspell",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: pearzap-fpear-ftm-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: pearzap-fpear-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-wmemo-mim",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-link-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-any-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-ftm-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-fusdt-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-ftm-mim",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-crv-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-zoo-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-ftm-ice",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-ftm-just",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-ftm-sushi",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-fusdt-spell",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: ester-est-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: ester-est",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: quick-mai-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-eth-rendoge-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: dinoswap-dfyn-route-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: dinoswap-dfyn-ust-usdt-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: dinoswap-dfyn-eth-dfyn-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: dinoswap-xmark-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-usdc-rusd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: sushi-eth-wfil-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: sushi-wmatic-woofy-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: sushi-snx-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: mai-avax-mai-crv",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: joe-wavax-bifi-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: joe-syn-wavax-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "moonriver vault: solarbeam-mim-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: solarbeam-wmovr-mai",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: finn-wmovr-finn",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: finn-wmovr-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: finn-eth-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: finn-wbtc-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: finn-wan-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: finn-eth-finn-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "moonriver vault: finn-wbtc-finn-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "moonriver vault: finn-wan-finn-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "cronos vault: crona-cro-dai-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax boost: moo_bifi_avax-singular",
+    "type": "synced"
+  }
+]

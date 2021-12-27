@@ -2,7 +2,6 @@ import { Grid, Typography, Button, makeStyles } from '@material-ui/core';
 import { useMemo, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScrollContainer from 'react-indiana-drag-scroll';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import { CATEGORY_LABELS } from './CategoryLabels';
 import { styles } from './styles';
 
@@ -29,13 +28,14 @@ const _FilterCategories = ({ category, handleChange }) => {
           {Object.entries(labels).map(([key, label]) => (
             <div key={key} className={classes.filterItem}>
               <Button
-                className={category === key ? classes.selected : classes[key]}
+                className={category === key ? classes.selected : classes.inactive}
                 fullWidth={true}
                 disabled={category === key}
                 onClick={() => handleChange('category', key)}
               >
-                <Typography className={classes.text}>{label}</Typography>
-                {category === key ? <ArrowDropDownIcon /> : ''}
+                <Typography variant="body1" className={classes.text}>
+                  {label}
+                </Typography>
               </Button>
             </div>
           ))}

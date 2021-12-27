@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
 import { Loader } from '../../../../components/loader';
-import { byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
+import { BIG_ZERO, byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { reduxActions } from '../../../redux/actions';
 import { Steps } from '../../../../components/Steps';
@@ -26,25 +26,6 @@ import { FeeBreakdown } from '../FeeBreakdown';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { DepositProps } from './DepositProps';
 import { config } from '../../../../config/config';
-
-(BigNumber.prototype as any).significant = function (digits) {
-  const number = this.toFormat({
-    prefix: '',
-    decimalSeparator: '.',
-    groupSeparator: '',
-    groupSize: 0,
-    secondaryGroupSize: 0,
-  });
-  if (number.length <= digits + 1) {
-    return number;
-  }
-  const [wholes, decimals] = number.split('.');
-  if (wholes.length >= digits) {
-    return wholes;
-  }
-  const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
-  return `${wholes}.${decimals.match(pattern)[0]}`;
-};
 
 const useStyles = makeStyles(styles as any);
 export const Deposit: React.FC<DepositProps> = ({
@@ -68,8 +49,8 @@ export const Deposit: React.FC<DepositProps> = ({
   const t = useTranslation().t;
 
   const [state, setState] = React.useState({
-    balance: new BigNumber(0),
-    allowance: new BigNumber(0),
+    balance: BIG_ZERO,
+    allowance: BIG_ZERO,
   });
   const [steps, setSteps] = React.useState({
     modal: false,
@@ -89,7 +70,7 @@ export const Deposit: React.FC<DepositProps> = ({
     );
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-      value = new BigNumber(0);
+      value = BIG_ZERO;
     }
 
     if (value.isGreaterThanOrEqualTo(state.balance)) {
@@ -121,7 +102,7 @@ export const Deposit: React.FC<DepositProps> = ({
       deposit: {
         ...formData.deposit,
         input: '',
-        amount: new BigNumber(0),
+        amount: BIG_ZERO,
         max: false,
         token: tokenSymbol,
         isZap: item.token !== tokenSymbol,
@@ -130,7 +111,7 @@ export const Deposit: React.FC<DepositProps> = ({
   };
 
   const handleMax = () => {
-    if (state.balance > new BigNumber(0)) {
+    if (state.balance > BIG_ZERO) {
       setFormData({
         ...formData,
         deposit: {
@@ -175,6 +156,11 @@ export const Deposit: React.FC<DepositProps> = ({
       }
 
       if (true === formData.deposit.isZap) {
+        const swapAmountOutMin = convertAmountToRawNumber(
+          formData.deposit.zapEstimate.amountOut.times(1 - formData.slippageTolerance),
+          formData.deposit.zapEstimate.tokenOut.decimals
+        );
+        console.log({ swapAmountOutMin, slippageTolerance: formData.slippageTolerance });
         steps.push({
           step: 'deposit',
           message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
@@ -187,7 +173,7 @@ export const Deposit: React.FC<DepositProps> = ({
                 tokens[formData.deposit.token].address,
                 amount,
                 formData.zap.address,
-                1000 // swapAmountOutMin
+                swapAmountOutMin
               )
             ),
           token: tokens[formData.deposit.token],
@@ -252,8 +238,8 @@ export const Deposit: React.FC<DepositProps> = ({
   };
 
   React.useEffect(() => {
-    let amount = new BigNumber(0);
-    let approved = new BigNumber(0);
+    let amount = BIG_ZERO;
+    let approved = BIG_ZERO;
     if (wallet.address && !isEmpty(tokens[formData.deposit.token])) {
       amount = byDecimals(
         new BigNumber(tokens[formData.deposit.token].balance),

@@ -535,41 +535,6 @@ export const pools = [
     network: "cronos"
   },
   {
-    id: "crona-cro-dai",
-    name: "DAI-CRO",
-    token: "DAI-CRO LP",
-    tokenDescription: "CronaSwap",
-    tokenAddress: "0xDA2FC0fE4B03deFf09Fd8CFb92d14e7ebC1F9690",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCronaCRO-DAI",
-    earnedTokenAddress: "0x38002A6456D995AAc598bf59049151631D37689F",
-    earnContractAddress: "0x38002A6456D995AAc598bf59049151631D37689F",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "crona-cro-dai",
-    oraclePrice: 0,
-    status: "active",
-    platform: "CronaSwap",
-    assets: [
-      "DAI",
-      "CRO"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
-    addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
-    network: "cronos"
-  },
-  {
     id: "crona-usdt-busd",
     name: "BUSD-USDT",
     token: "BUSD-USDT LP",
@@ -1246,5 +1211,115 @@ export const pools = [
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     network: "cronos"
+  },
+  {
+    id: "liq-liq-cro",
+    name: "LIQ-CRO",
+    token: "LIQ-CRO LP",
+    tokenDescription: "CronaSwap (Liquidus)",
+    tokenAddress: "0x3295007761C290741B6b363b86dF9ba3467F0754",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooLiquidusLIQ-CRO",
+    earnedTokenAddress: "0x9E75f8298e458B76382870982788988A0799195b",
+    earnContractAddress: "0x9E75f8298e458B76382870982788988A0799195b",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "liq-liq-cro",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Liquidus",
+    assets: [
+      "LIQ",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
+    addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
+    network: "cronos"
+  },
+  {
+    id: "vvs-tonic-usdc",
+    name: "TONIC-USDC",
+    token: "TONIC-USDC LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x2f12D47Fe49B907d7a5Df8159C1CE665187F15c4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsTONIC-USDC",
+    earnedTokenAddress: "0x15c0a37ee6fDA217f0f10dC88df02e7A52e377CA",
+    earnContractAddress: "0x15c0a37ee6fDA217f0f10dC88df02e7A52e377CA",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-tonic-usdc",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "VVS",
+    assets: [
+      "TONIC",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
+    addLiquidityUrl: "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
+    network: "cronos"
+  },
+  {
+    id: "crona-cro-dai-eol",
+    name: "DAI-CRO",
+    token: "DAI-CRO LP",
+    tokenDescription: "CronaSwap",
+    tokenAddress: "0xDA2FC0fE4B03deFf09Fd8CFb92d14e7ebC1F9690",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCronaCRO-DAI",
+    earnedTokenAddress: "0x38002A6456D995AAc598bf59049151631D37689F",
+    earnContractAddress: "0x38002A6456D995AAc598bf59049151631D37689F",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "crona-cro-dai",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "CronaSwap",
+    assets: [
+      "DAI",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
+    addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
+    network: "cronos",
+    retireReason: "rewards"
   }
 ];

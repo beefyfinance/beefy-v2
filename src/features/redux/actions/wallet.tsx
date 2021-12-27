@@ -1,5 +1,6 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal, { connectors } from 'web3modal';
+import WalletLink from 'walletlink';
 import Web3 from 'web3';
 
 import { config } from '../../../config/config';
@@ -934,6 +935,7 @@ const createWeb3Modal = () => {
 const generateProviderOptions = (wallet, clients) => {
   const networkId = config[wallet.network].chainId;
   const supported = config[wallet.network].supportedWallets;
+  const networkRpc = config[wallet.network].rpc;
 
   const generateCustomConnectors = () => {
     const list = {
@@ -961,6 +963,46 @@ const generateProviderOptions = (wallet, clients) => {
         connector: async (ProviderPackage, options) => {
           const provider = (window as any).BinanceChain;
           await provider.enable();
+          return provider;
+        },
+      },
+      'custom-coinbase': {
+        display: {
+          logo: require(`../../../images/wallets/coinbase.png`).default,
+          name: 'Coinbase Wallet',
+          description: 'Connect your Coinbase Wallet',
+        },
+        options: {
+          appName: 'Beefy Finance',
+          appLogoUrl: 'https://app.beefy.finance/static/media/BIFI.e797b2e4.png',
+          darkMode: false,
+        },
+        package: WalletLink,
+        connector: async (ProviderPackage, options) => {
+          const walletLink = new ProviderPackage(options);
+
+          const provider = walletLink.makeWeb3Provider(networkRpc, networkId);
+
+          await provider.enable();
+
+          return provider;
+        },
+      },
+      'custom-wallet-connect': {
+        display: {
+          logo: require(`../../../images/wallets/wallet-connect.svg`).default,
+          name: 'Wallet Connect',
+          description: 'Scan your WalletConnect to Connect',
+        },
+        options: {
+          rpc: { networkId: networkRpc },
+        },
+        package: WalletConnectProvider,
+        connector: async (ProviderPackage, options) => {
+          const provider = new ProviderPackage(options);
+
+          await provider.enable();
+
           return provider;
         },
       },

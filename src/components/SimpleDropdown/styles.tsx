@@ -1,14 +1,13 @@
 export const styles = theme => ({
   select: {
-    height: '44px',
     marginLeft: '24px',
     [theme.breakpoints.down('lg')]: {
       marginLeft: 0,
     },
     '& .MuiSelect-select': {
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
-      fontWeight: '600',
-      fontSize: 16,
+      color: theme.palette.text.disabled,
+      fontWeight: 700,
+      fontSize: 15,
       padding: '12px 30px 0px 15px',
       [theme.breakpoints.down('md')]: {
         padding: '12px 30px 0px 11px',
@@ -19,7 +18,7 @@ export const styles = theme => ({
           : theme.palette.type === 'dark'
           ? '2px solid #313759'
           : '2px solid #ff0000',
-      borderRadius: '30px',
+      borderRadius: '8px',
       height: '29px',
       textAlign: 'right',
       display: 'flex',
@@ -29,11 +28,11 @@ export const styles = theme => ({
       },
     },
     '& .MuiSelect-icon': {
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+      color: theme.palette.text.disabled,
       right: '8px',
     },
     '& .MuiTypography-root': {
-      color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
+      color: theme.palette.text.disabled,
     },
     '&:hover': {
       borderColor: theme.palette.type === 'dark' ? '#3F466D' : '#ff0000',

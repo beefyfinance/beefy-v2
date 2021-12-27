@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { reduxActions } from '../../../../features/redux/actions';
 import { ApyStatLoader } from '../../../ApyStatLoader';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(styles as any);
 const formatAddress = addr => {
@@ -14,6 +15,7 @@ const formatAddress = addr => {
 };
 
 export const WalletContainer = () => {
+  const theme = useTheme();
   const classes = useStyles();
   const walletReducer = useSelector((state: any) => state.walletReducer);
   const dispatch = useDispatch();
@@ -52,12 +54,15 @@ export const WalletContainer = () => {
         <Grid container direction="row" alignItems="center">
           {walletReducer.pending ? (
             <Box className={classes.loading}>
-              <ApyStatLoader />
+              <ApyStatLoader
+                foregroundColor={theme.palette.primary.light}
+                backgroundColor={theme.palette.primary.dark}
+              />
             </Box>
           ) : (
             <React.Fragment>
               {walletReducer.address ? <Avatar src={dataUrl} /> : ''}
-              <Typography noWrap={true}>
+              <Typography variant="body1" noWrap={true}>
                 {walletReducer.address
                   ? formatAddress(walletReducer.address)
                   : t('Network-ConnectWallet')}
