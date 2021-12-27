@@ -37,12 +37,12 @@ const _EmptyStates: React.FC<EmptyStatesProps> = ({ setFilterConfig }) => {
         <img height={120} alt="BIFI" src={require(`../../../../images/empty-state.svg`).default} />
       </Box>
       <Box>
-        <Typography className={classes.bold} component="h5">
+        <Typography className={classes.bold} variant="h5">
           {t('EmptyStates-OhSnap')}
         </Typography>
       </Box>
       <Box>
-        <Typography className={classes.text}>
+        <Typography variant="body2" className={classes.text}>
           {isConnected ? t('EmptyStates-NoDeposited') : t('EmptyStates-NoConnected')}
         </Typography>
       </Box>

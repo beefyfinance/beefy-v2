@@ -72,6 +72,10 @@ const theme = createTheme({
       fontSize: '15px',
       lineHeight: '24px',
     },
+    body2: {
+      fontSize: '12px',
+      lineHeight: '18px',
+    },
   },
 });
 
