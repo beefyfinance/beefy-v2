@@ -759,9 +759,9 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 											Object.assign( o, O_PTNR[ mS_PRPNM_SOCL]);
 										Object.assign( o_trgt[ S_PROP][ I], O_PTNR);
 										if (o)
-											O_trgt[ S_PROP][ I][ mS_PRPNM_SOCL] = o;
+											o_trgt[ S_PROP][ I][ mS_PRPNM_SOCL] = o;
 									}else
-										O_trgt[ S_PROP][ I] = O_PTNR;
+										o_trgt[ S_PROP][ I] = O_PTNR;
 
 									//note that change to the boost descriptor has been identified and loop 
 									//	for the next partner
