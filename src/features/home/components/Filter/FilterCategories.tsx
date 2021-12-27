@@ -30,7 +30,6 @@ const _FilterCategories = ({ category, handleChange }) => {
               <Button
                 className={category === key ? classes.selected : classes.inactive}
                 fullWidth={true}
-                disabled={category === key}
                 onClick={() => handleChange('category', key)}
               >
                 <Typography variant="body1" className={classes.text}>
