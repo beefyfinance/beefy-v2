@@ -137,7 +137,8 @@ export const Deposit: React.FC<DepositProps> = ({
         tokens[formData.deposit.token].decimals
       );
 
-      const isNative = item.token === config[item.network].walletSettings.nativeCurrency.symbol;
+      const isNative =
+        formData.deposit.token === config[item.network].walletSettings.nativeCurrency.symbol;
 
       if (!isNative && state.allowance.isLessThan(amount)) {
         steps.push({
@@ -169,7 +170,7 @@ export const Deposit: React.FC<DepositProps> = ({
               reduxActions.wallet.beefIn(
                 item.network,
                 item.earnContractAddress,
-                false, // isETH
+                isNative,
                 tokens[formData.deposit.token].address,
                 amount,
                 formData.zap.address,
@@ -342,18 +343,18 @@ export const Deposit: React.FC<DepositProps> = ({
               )}
             </Box>
           </div>
-          {formData.zap?.tokens[0] && (
+          {formData.zap?.tokens.map(zapToken => (
             <FormControlLabel
               className={classes.depositTokenContainer}
-              value={formData.zap.tokens[0].symbol}
+              value={zapToken.symbol}
               control={<Radio />}
               label={
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
                     <AssetsImage
                       {...({
-                        assets: [formData.zap.tokens[0].symbol],
-                        alt: formData.zap.tokens[0].name,
+                        assets: [zapToken.symbol],
+                        alt: zapToken.name,
                       } as any)}
                     />
                   </Box>
@@ -363,53 +364,16 @@ export const Deposit: React.FC<DepositProps> = ({
                     ) : (
                       <Typography variant={'body1'}>
                         {(
-                          byDecimals(
-                            tokens[formData.zap.tokens[0].symbol].balance,
-                            formData.zap.tokens[0].decimals
-                          ) as any
+                          byDecimals(tokens[zapToken.symbol].balance, zapToken.decimals) as any
                         ).significant(6)}{' '}
-                        {formData.zap.tokens[0].symbol}
+                        {zapToken.symbol}
                       </Typography>
                     )}
                   </Box>
                 </Box>
               }
             />
-          )}
-          {formData.zap?.tokens[1] && (
-            <FormControlLabel
-              className={classes.depositTokenContainer}
-              value={formData.zap.tokens[1].symbol}
-              control={<Radio />}
-              label={
-                <Box className={classes.balanceContainer} display="flex" alignItems="center">
-                  <Box lineHeight={0}>
-                    <AssetsImage
-                      {...({
-                        assets: [formData.zap.tokens[1].symbol],
-                        alt: formData.zap.tokens[1].name,
-                      } as any)}
-                    />
-                  </Box>
-                  <Box flexGrow={1} pl={1} lineHeight={0}>
-                    {isLoading ? (
-                      <Loader message={''} line={true} />
-                    ) : (
-                      <Typography variant={'body1'}>
-                        {(
-                          byDecimals(
-                            tokens[formData.zap.tokens[1].symbol].balance,
-                            formData.zap.tokens[1].decimals
-                          ) as any
-                        ).significant(6)}{' '}
-                        {formData.zap.tokens[1].symbol}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              }
-            />
-          )}
+          ))}
         </RadioGroup>
         {item.buyTokenUrl && item.addLiquidityUrl && (
           <Box className={classes.btnContaniner}>

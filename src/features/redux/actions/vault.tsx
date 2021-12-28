@@ -117,7 +117,7 @@ const getBoosts = async (items, state, dispatch) => {
   console.log('redux getBoosts() processing...');
   const web3 = state.walletReducer.rpc;
   const prices = state.pricesReducer.prices;
-	const pools = state.vaultReducer.pools;
+  const pools = state.vaultReducer.pools;
   const boosts = { ...state.vaultReducer.boosts };
 
   const multicall = [];
@@ -141,8 +141,10 @@ const getBoosts = async (items, state, dispatch) => {
     });
 
     if (pool.isMooStaked) {
-			const mooContract = new web3[pool.network].eth.Contract(vaultAbi, pools[ 
-																												pool.poolId].earnContractAddress);
+      const mooContract = new web3[pool.network].eth.Contract(
+        vaultAbi,
+        pools[pool.poolId].earnContractAddress
+      );
       moos[pool.network].push({
         id: pool.id,
         pricePerFullShare: mooContract.methods.getPricePerFullShare(),
@@ -304,7 +306,6 @@ const estimateZapDeposit = ({ web3, vault, formData, setFormData }) => {
   const tokenAmount = convertAmountToRawNumber(formData.deposit.amount, tokenIn.decimals);
 
   setFormData(prevFormData => {
-    console.log('isLoading', true);
     if (prevFormData.deposit.zapEstimate.isLoading) {
       return prevFormData;
     }
@@ -320,7 +321,6 @@ const estimateZapDeposit = ({ web3, vault, formData, setFormData }) => {
     .then(response => {
       setFormData(prevFormData => {
         if (formData.deposit.amount === prevFormData.deposit.amount) {
-          console.log('isLoading', false);
           prevFormData.deposit.zapEstimate = {
             ...zapEstimate,
             amountIn: byDecimals(response.swapAmountIn, tokenIn.decimals),
