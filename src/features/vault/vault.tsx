@@ -120,7 +120,7 @@ export const Vault = () => {
   }, [item]);
 
   React.useEffect(() => {
-    if (formData.deposit.isZap) {
+    if (formData.deposit.isZap && formData.deposit.token) {
       reduxActions.vault.estimateZapDeposit({
         web3: wallet.rpc,
         vault: item,
@@ -129,7 +129,7 @@ export const Vault = () => {
       });
     }
     // eslint-disable-next-line
-  }, [formData.deposit.amount, formData.deposit.isZap, wallet.rpc, item]);
+  }, [formData.deposit.amount, formData.deposit.isZap, formData.deposit.token, wallet.rpc, item]);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = '#1B203A';

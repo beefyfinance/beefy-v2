@@ -23,10 +23,23 @@ export const getEligibleZap = pool => {
   });
   if (!zap) return undefined;
 
+  const zapOptions = [tokenA, tokenB];
+
+  const wrappedToken = [tokenA, tokenB].find(
+    t => t.address === addressBook[pool.network].tokens.WNATIVE.address
+  );
+  if (wrappedToken) {
+    zapOptions.push({
+      ...wrappedToken,
+      symbol: config[pool.network].walletSettings.nativeCurrency.symbol,
+      isNative: true,
+    });
+  }
+
   return {
     address: zap.zapAddress,
     router: zap.ammRouter,
-    tokens: [tokenA, tokenB],
+    tokens: zapOptions,
   };
 };
 
