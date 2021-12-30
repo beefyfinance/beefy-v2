@@ -941,8 +941,7 @@ const generateProviderOptions = (wallet, clients) => {
     const list = {
       injected: {
         display: {
-          name: 'Injected',
-          description: 'Home-BrowserWallet',
+          name: 'MetaMask',
         },
       },
       walletconnect: {
