@@ -1,204 +1,250 @@
 [
   {
-    "id": "bsc vault: banana-typh-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cake-bts-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-dai-usdc",
+    "id": "bsc vault: 1inch-1inch-eol",
     "type": "synced"
   },
   {
-    "id": "fantom vault: spirit-yfi-ftm",
+    "id": "bsc vault: wex-wusd-dep-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-wusd-wex-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-bnb-ont-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-wusd-busd-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-bnb-dep-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-tusd-usdt-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-krown-bnb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-wex-btcb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-watch-bnb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-eth-beth-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-eth-bnb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-usdt-alpaca-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-usdt-matic-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-ada-busd-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-xrp-busd-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-alpaca-bnb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-usdt-wex-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: wex-wex-bnb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-eth-v2-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-btc-v2-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-sxp-v2-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-ada-v2-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-wbnb-v2-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-busd-v2-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-usdt-v2-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-usdc-v2-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-cake-bnb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-auto-bnb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-cake-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-beth-eth",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-busd-bnb",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-btc-bnb",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: 1inch-1inch-bnb-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-btc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-eth-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-busd-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-usdt-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-cake-old-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: auto-busd-old-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: cakev2-idia-busd",
     "type": "Added"
   },
   {
-    "id": "fantom vault: spirit-spell-sspell",
-    "type": "synced"
+    "id": "bsc vault: cakev2-xcv-busd",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: pearzap-fpear-ftm-eol",
-    "type": "synced"
+    "id": "fantom vault: popsicle-ice-ftm",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: pearzap-fpear-usdc-eol",
-    "type": "synced"
+    "id": "fantom vault: beets-variation-theme",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: spirit-wmemo-mim",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-link-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-any-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-fusdt-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-mim",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-crv-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-zoo-ftm",
-    "type": "synced"
+    "id": "fantom vault: scream-spell",
+    "type": "Added"
   },
   {
     "id": "fantom vault: spirit-ftm-ice",
     "type": "synced"
   },
   {
-    "id": "fantom vault: spirit-ftm-just",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-sushi",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-fusdt-spell",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: ester-est-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: ester-est",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: quick-mai-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-eth-rendoge-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: dinoswap-dfyn-route-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: dinoswap-dfyn-ust-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: dinoswap-dfyn-eth-dfyn-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: dinoswap-xmark-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-usdc-rusd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-eth-wfil-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-wmatic-woofy-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-snx-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: mai-avax-mai-crv",
+    "id": "polygon vault: jarvis-5eur",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-wavax-bifi-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-syn-wavax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-mim-wmovr",
+    "id": "avax vault: gondola-usdt-zusdt-eol",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: solarbeam-wmovr-mai",
+    "id": "avax vault: snob-3pool-eol",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: finn-wmovr-finn",
+    "id": "avax vault: com-eth-avax-eol",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: finn-wmovr-usdt",
+    "id": "avax vault: com-png-avax-eol",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: finn-eth-wmovr",
+    "id": "avax vault: snob-snob-avax-eol",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: finn-wbtc-wmovr",
+    "id": "avax vault: com-com-avax-eol",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: finn-wan-wmovr",
+    "id": "avax vault: com-dai-avax-eol",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: finn-eth-finn-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "moonriver vault: sushi-mr-eth-usdt",
+    "type": "Added"
   },
   {
-    "id": "moonriver vault: finn-wbtc-finn-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "moonriver vault: sushi-mr-mim-wmovr",
+    "type": "Added"
   },
   {
-    "id": "moonriver vault: finn-wan-finn-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "moonriver vault: sushi-mr-frax-usdc",
+    "type": "Added"
   },
   {
-    "id": "cronos vault: crona-cro-dai-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "moonriver vault: sushi-mr-eth-wmovr",
+    "type": "Added"
   },
   {
-    "id": "avax boost: moo_bifi_avax-singular",
-    "type": "synced"
+    "id": "moonriver vault: sushi-mr-usdt-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-wbtc",
+    "type": "Added"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-dai",
+    "type": "Added"
   }
 ]

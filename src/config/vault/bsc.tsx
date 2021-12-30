@@ -2197,7 +2197,7 @@ export const pools = [
     oraclePrice: 0,
     retireReason: "rewards",
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "ONT",
       "BNB"
@@ -3058,7 +3058,7 @@ export const pools = [
     oraclePrice: 0,
     status: "eol",
     retireReason: "rewards",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "DEP",
       "BNB"
@@ -3389,7 +3389,7 @@ export const pools = [
     oraclePrice: 0,
     status: "eol",
     retireReason: "rewards",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "TUSD",
       "USDT"
@@ -3500,7 +3500,7 @@ export const pools = [
     oracleId: "wex-krown-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "KRW",
       "BNB"
@@ -3886,7 +3886,7 @@ export const pools = [
     oracleId: "wex-watch-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "WATCH",
       "BNB"
@@ -4549,7 +4549,7 @@ export const pools = [
     oracleId: "wex-xrp-busd",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "XRP",
       "BUSD"
@@ -10438,7 +10438,7 @@ export const pools = [
     oracleId: "ETH",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "ETH"
     ],
@@ -10522,7 +10522,7 @@ export const pools = [
     oracleId: "BTCB",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BTCB"
     ],
@@ -11115,7 +11115,7 @@ export const pools = [
     oracleId: "SXP",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "SXP"
     ],
@@ -11140,7 +11140,7 @@ export const pools = [
     oracleId: "ADA",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "ADA"
     ],
@@ -11165,7 +11165,7 @@ export const pools = [
     oracleId: "WBNB",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BNB"
     ],
@@ -11191,7 +11191,7 @@ export const pools = [
     oracleId: "BUSD",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BUSD"
     ],
@@ -11216,7 +11216,7 @@ export const pools = [
     oracleId: "USDT",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "USDT"
     ],
@@ -11241,7 +11241,7 @@ export const pools = [
     oracleId: "USDC",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "USDC"
     ],
@@ -11509,7 +11509,7 @@ export const pools = [
     oracleId: "auto-cake-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "CAKE",
       "BNB"
@@ -11563,7 +11563,7 @@ export const pools = [
     oracleId: "auto-auto-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "AUTO",
       "BNB"
@@ -11756,7 +11756,7 @@ export const pools = [
     oracleId: "Cake",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "CAKE"
     ],
@@ -12823,7 +12823,7 @@ export const pools = [
     oracleId: "auto-beth-eth",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BETH",
       "ETH"
@@ -12904,7 +12904,7 @@ export const pools = [
     oracleId: "auto-busd-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BUSD",
       "BNB"
@@ -12931,7 +12931,7 @@ export const pools = [
     oracleId: "auto-btc-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BTCB",
       "BNB"
@@ -13310,7 +13310,7 @@ export const pools = [
     oracleId: "1inch-1inch-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "1Inch",
+    platform: "Other",
     assets: [
       "1INCH",
       "BNB"
@@ -13938,7 +13938,7 @@ export const pools = [
     oracleId: "BTCB",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BTCB"
     ],
@@ -13964,7 +13964,7 @@ export const pools = [
     oracleId: "ETH",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "ETH"
     ],
@@ -13990,7 +13990,7 @@ export const pools = [
     oracleId: "BUSD",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BUSD"
     ],
@@ -14016,7 +14016,7 @@ export const pools = [
     oracleId: "USDT",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "USDT"
     ],
@@ -14187,7 +14187,7 @@ export const pools = [
     oracleId: "Cake",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "CAKE"
     ],
@@ -14213,7 +14213,7 @@ export const pools = [
     oracleId: "BUSD",
     oraclePrice: 0,
     status: "eol",
-    platform: "Autofarm",
+    platform: "Other",
     assets: [
       "BUSD"
     ],
@@ -17203,7 +17203,7 @@ export const pools = [
     oracleId: "wex-wusd-dep",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "DEP",
       "WUSD"
@@ -17239,7 +17239,7 @@ export const pools = [
     oracleId: "wex-wusd-wex",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "WUSD",
       "WEX"
@@ -17267,7 +17267,7 @@ export const pools = [
     oracleId: "wex-wusd-busd",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "WUSD",
       "BUSD"
@@ -17295,7 +17295,7 @@ export const pools = [
     oracleId: "wex-wex-btcb",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "WEX",
       "BTCB"
@@ -17324,7 +17324,7 @@ export const pools = [
     oracleId: "wex-eth-beth",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "ETH",
       "BETH"
@@ -17353,7 +17353,7 @@ export const pools = [
     oracleId: "wex-eth-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "ETH",
       "BNB"
@@ -17382,7 +17382,7 @@ export const pools = [
     oracleId: "wex-usdt-alpaca",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "USDT",
       "ALPACA"
@@ -17411,7 +17411,7 @@ export const pools = [
     oracleId: "wex-usdt-matic",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "USDT",
       "MATIC"
@@ -17440,7 +17440,7 @@ export const pools = [
     oracleId: "wex-ada-busd",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "ADA",
       "BUSD"
@@ -17469,7 +17469,7 @@ export const pools = [
     oracleId: "wex-alpaca-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "ALPACA",
       "BNB"
@@ -17498,7 +17498,7 @@ export const pools = [
     oracleId: "wex-usdt-wex",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "USDT",
       "WEX"
@@ -17527,7 +17527,7 @@ export const pools = [
     oracleId: "wex-wex-bnb",
     oraclePrice: 0,
     status: "eol",
-    platform: "WaultFinance",
+    platform: "Other",
     assets: [
       "WEX",
       "BNB"
@@ -17696,7 +17696,7 @@ export const pools = [
     oracleId: "1INCH",
     oraclePrice: 0,
     status: "eol",
-    platform: "1Inch",
+    platform: "Other",
     assets: [
       "1INCH"
     ],
@@ -18216,5 +18216,77 @@ export const pools = [
     stratType: "StratLP",
     network: "bsc",
     retireReason: "rewards"
+  },
+  {
+    id: "cakev2-idia-busd",
+    name: "IDIA-BUSD LP",
+    token: "IDIA-BUSD LP2",
+    tokenDescription: "PancakeSwap",
+    tokenAddress: "0x71E6de81381eFE0Aa98f56b3B43eB3727D640715",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCakeV2IDIA-BUSD",
+    earnedTokenAddress: "0x9D91E206639FF4A3Aac5C9112D874BC1be2A098b",
+    earnContractAddress: "0x9D91E206639FF4A3Aac5C9112D874BC1be2A098b",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "cakev2-idia-busd",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "PancakeSwap",
+    assets: [
+      "IDIA",
+      "BUSD"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89",
+    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89",
+    network: "bsc"
+  },
+  {
+    id: "cakev2-xcv-busd",
+    name: "XCV-BUSD LP",
+    token: "XCV-BUSD LP2",
+    tokenDescription: "PancakeSwap",
+    tokenAddress: "0xD39F05AB936Aa201235005c47B83268f2d9833f8",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCakeV2XCV-BUSD",
+    earnedTokenAddress: "0x4E9aAC9a233b7E15F2730274D9fFAaD264b45190",
+    earnContractAddress: "0x4E9aAC9a233b7E15F2730274D9fFAaD264b45190",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "cakev2-xcv-busd",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "PancakeSwap",
+    assets: [
+      "XCV",
+      "BUSD"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x4be63a9b26EE89b9a3a13fd0aA1D0b2427C135f8",
+    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x4be63a9b26EE89b9a3a13fd0aA1D0b2427C135f8",
+    network: "bsc"
   }
 ];

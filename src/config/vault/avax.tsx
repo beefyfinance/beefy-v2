@@ -1568,7 +1568,7 @@ export const pools = [
     oraclePrice: 0,
     status: "eol",
     retireReason: "rewards",
-    platform: "Gondola",
+    platform: "Other",
     assets: [
       "zUSDT",
       "USDT"
@@ -1718,7 +1718,7 @@ export const pools = [
     oraclePrice: 0,
     status: "eol",
     retireReason: "rewards",
-    platform: "Snowball",
+    platform: "Other",
     assets: [
       "USDT",
       "BUSD",
@@ -1747,7 +1747,7 @@ export const pools = [
     oraclePrice: 0,
     status: "eol",
     retireReason: "rewards",
-    platform: "Complus",
+    platform: "Other",
     assets: [
       "ETH",
       "AVAX"
@@ -1775,7 +1775,7 @@ export const pools = [
     oracleId: "com-png-avax",
     oraclePrice: 0,
     status: "eol",
-    platform: "Complus",
+    platform: "Other",
     assets: [
       "PNG",
       "AVAX"
@@ -1804,7 +1804,7 @@ export const pools = [
     oraclePrice: 0,
     status: "eol",
     retireReason: "rewards",
-    platform: "Snowball",
+    platform: "Other",
     assets: [
       "SNOB",
       "AVAX"
@@ -1833,7 +1833,7 @@ export const pools = [
     oraclePrice: 0,
     status: "eol",
     retireReason: "rewards",
-    platform: "Complus",
+    platform: "Other",
     assets: [
       "DAI",
       "AVAX"
@@ -3158,7 +3158,7 @@ export const pools = [
     oracleId: "com-com-avax",
     oraclePrice: 0,
     status: "eol",
-    platform: "Complus",
+    platform: "Other",
     assets: [
       "COM",
       "AVAX"
