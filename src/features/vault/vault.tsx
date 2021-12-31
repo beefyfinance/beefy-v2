@@ -55,7 +55,17 @@ export const Vault = () => {
         isLoading: true,
       },
     },
-    withdraw: { input: '', amount: BIG_ZERO, max: false, token: null, isZap: false },
+    withdraw: {
+      input: '',
+      amount: BIG_ZERO,
+      max: false,
+      token: null,
+      isZap: false,
+      isZapSwap: false,
+      zapEstimate: {
+        isLoading: true,
+      },
+    },
     zap: null,
     slippageTolerance: 0.01,
   });

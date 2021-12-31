@@ -54,7 +54,6 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
   }
   const prefix = '$';
 
-  console.log();
   return num < 999
     ? prefix + num.toFixed(2) + unitToDisplay
     : tvl.toLocaleString('en-US', {

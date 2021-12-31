@@ -29,10 +29,12 @@ export const getEligibleZap = pool => {
     t => t.address === addressBook[pool.network].tokens.WNATIVE.address
   );
   if (wrappedToken) {
-    zapOptions.push({
+    wrappedToken.isWrapped = true;
+    zapOptions.unshift({
       ...wrappedToken,
       symbol: config[pool.network].walletSettings.nativeCurrency.symbol,
       isNative: true,
+      isWrapped: false,
     });
   }
 
