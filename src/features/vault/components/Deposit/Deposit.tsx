@@ -161,7 +161,6 @@ export const Deposit: React.FC<DepositProps> = ({
           formData.deposit.zapEstimate.amountOut.times(1 - formData.slippageTolerance),
           formData.deposit.zapEstimate.tokenOut.decimals
         );
-        console.log({ swapAmountOutMin, slippageTolerance: formData.slippageTolerance });
         steps.push({
           step: 'deposit',
           message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
@@ -439,7 +438,10 @@ export const Deposit: React.FC<DepositProps> = ({
                 onClick={handleDeposit}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                disabled={formData.deposit.amount.isLessThanOrEqualTo(0)}
+                disabled={
+                  formData.deposit.amount.isLessThanOrEqualTo(0) ||
+                  formData.deposit.zapEstimate.isLoading
+                }
               >
                 {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
               </Button>

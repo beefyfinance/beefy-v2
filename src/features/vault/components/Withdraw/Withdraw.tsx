@@ -53,10 +53,7 @@ export const Withdraw = ({
 
     let max = false;
 
-    let value = new BigNumber(input).decimalPlaces(
-      balance.tokens[item.network][symbol].decimals,
-      BigNumber.ROUND_DOWN
-    );
+    let value = new BigNumber(input).decimalPlaces(tokens[symbol].decimals, BigNumber.ROUND_DOWN);
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
       value = new BigNumber(0);
@@ -101,6 +98,7 @@ export const Withdraw = ({
 
   const handleWithdrawOptions = (event, tokenSymbol) => {
     if (!tokenSymbol) return false;
+    const isZapSwap = formData.zap.tokens.some(t => t.symbol === tokenSymbol);
     setFormData(prevFormData => {
       return {
         ...prevFormData,
@@ -108,7 +106,11 @@ export const Withdraw = ({
           ...prevFormData.withdraw,
           token: tokenSymbol,
           isZap: item.token !== tokenSymbol,
-          isZapSwap: prevFormData.zap.tokens.some(t => t.symbol === tokenSymbol),
+          isZapSwap: isZapSwap,
+          zapEstimate: {
+            ...prevFormData.withdraw.zapEstimate,
+            isLoading: isZapSwap,
+          },
         },
       };
     });
@@ -142,10 +144,6 @@ export const Withdraw = ({
 
       const isNative = item.token === config[item.network].walletSettings.nativeCurrency.symbol;
 
-      // const amount = new BigNumber(formData.withdraw.amount)
-      //   .dividedBy(byDecimals(item.pricePerFullShare, item.tokenDecimals))
-      //   .toFixed(8);
-
       if (item.isGovVault) {
         steps.push({
           step: 'withdraw',
@@ -159,14 +157,16 @@ export const Withdraw = ({
               )
             ),
           pending: false,
-          token: balance.tokens[item.network][item.token],
+          token: tokens[item.token],
         });
       } else {
-        const shares = formData.withdraw.amount
+        let shares = formData.withdraw.amount
           .dividedBy(byDecimals(item.pricePerFullShare))
           .decimalPlaces(item.tokenDecimals, BigNumber.ROUND_DOWN);
-        const sharesBalance = byDecimals(balance.tokens[item.network][item.earnedToken].balance);
+        const sharesBalance = byDecimals(tokens[item.earnedToken].balance);
+
         if (shares.times(100).dividedBy(sharesBalance).isGreaterThan(99)) {
+          shares = sharesBalance;
           formData.withdraw.max = true;
           setFormData({
             ...formData,
@@ -179,38 +179,84 @@ export const Withdraw = ({
           });
         }
 
-        if (isNative) {
+        const rawShares = convertAmountToRawNumber(shares);
+
+        if (formData.withdraw.isZap) {
+          const approved = new BigNumber(tokens[item.earnedToken].allowance[formData.zap.address]);
+          if (approved.isLessThan(rawShares)) {
+            steps.push({
+              step: 'approve',
+              message: t('Vault-ApproveMsg'),
+              action: () =>
+                dispatch(
+                  reduxActions.wallet.approval(
+                    item.network,
+                    tokens[item.earnedToken].address,
+                    formData.zap.address
+                  )
+                ),
+              pending: false,
+            });
+          }
+
+          let swapAmountOutMin;
+          if (formData.withdraw.isZapSwap) {
+            swapAmountOutMin = convertAmountToRawNumber(
+              formData.withdraw.zapEstimate.amountOut.times(1 - formData.slippageTolerance),
+              formData.withdraw.zapEstimate.tokenOut.decimals
+            );
+          }
+
           steps.push({
             step: 'withdraw',
             message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
             action: () =>
-              dispatch(
-                reduxActions.wallet.withdrawNative(
-                  item.network,
-                  item.earnContractAddress,
-                  convertAmountToRawNumber(shares, item.tokenDecimals),
-                  formData.withdraw.max
-                )
-              ),
+              formData.withdraw.isZapSwap
+                ? dispatch(
+                    reduxActions.wallet.beefOutAndSwap(
+                      item.network,
+                      item.earnContractAddress,
+                      rawShares,
+                      formData.zap.address,
+                      formData.withdraw.zapEstimate.tokenOut.address,
+                      swapAmountOutMin
+                    )
+                  )
+                : dispatch(
+                    reduxActions.wallet.beefOut(
+                      item.network,
+                      item.earnContractAddress,
+                      rawShares,
+                      formData.zap.address
+                    )
+                  ),
             pending: false,
-            token: balance.tokens[item.network][item.token],
+            token: tokens[item.token],
           });
         } else {
           steps.push({
             step: 'withdraw',
             message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
             action: () =>
-              dispatch(
-                reduxActions.wallet.withdraw(
-                  item.network,
-                  item.earnContractAddress,
-                  // convertAmountToRawNumber(formData.withdraw.amount, item.tokenDecimals),
-                  convertAmountToRawNumber(shares, item.tokenDecimals),
-                  formData.withdraw.max
-                )
-              ),
+              isNative
+                ? dispatch(
+                    reduxActions.wallet.withdrawNative(
+                      item.network,
+                      item.earnContractAddress,
+                      rawShares,
+                      formData.withdraw.max
+                    )
+                  )
+                : dispatch(
+                    reduxActions.wallet.withdraw(
+                      item.network,
+                      item.earnContractAddress,
+                      rawShares,
+                      formData.withdraw.max
+                    )
+                  ),
             pending: false,
-            token: balance.tokens[item.network][item.token],
+            token: tokens[item.token],
           });
         }
       }
@@ -239,7 +285,7 @@ export const Withdraw = ({
             )
           ),
         pending: false,
-        token: balance.tokens[item.network][item.token],
+        token: tokens[item.token],
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
@@ -266,7 +312,7 @@ export const Withdraw = ({
             )
           ),
         pending: false,
-        token: balance.tokens[item.network][item.token],
+        token: tokens[item.token],
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
@@ -284,16 +330,13 @@ export const Withdraw = ({
 
     if (item.isGovVault) {
       let symbol = `${item.token}GovVault`;
-      if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
-        amount = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].balance),
-          item.tokenDecimals
-        );
+      if (wallet.address && !isEmpty(tokens[symbol])) {
+        amount = byDecimals(new BigNumber(tokens[symbol].balance), item.tokenDecimals);
       }
     } else {
-      if (wallet.address && !isEmpty(balance.tokens[item.network][item.earnedToken])) {
+      if (wallet.address && !isEmpty(tokens[item.earnedToken])) {
         amount = byDecimals(
-          new BigNumber(balance.tokens[item.network][item.earnedToken].balance).multipliedBy(
+          new BigNumber(tokens[item.earnedToken].balance).multipliedBy(
             byDecimals(item.pricePerFullShare)
           ),
           item.tokenDecimals
@@ -474,7 +517,10 @@ export const Withdraw = ({
                     onClick={handleWithdraw}
                     className={classes.btnSubmit}
                     fullWidth={true}
-                    disabled={formData.withdraw.amount <= 0}
+                    disabled={
+                      formData.withdraw.amount.isLessThanOrEqualTo(0) ||
+                      formData.withdraw.zapEstimate.isLoading
+                    }
                   >
                     {formData.withdraw.max ? t('Withdraw-All') : t('Withdraw-Verb')}
                   </Button>
