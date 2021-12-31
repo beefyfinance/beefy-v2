@@ -344,7 +344,7 @@ export const Withdraw = ({
       }
     }
     setState({ balance: amount });
-  }, [wallet.address, item, balance]);
+  }, [wallet.address, item, tokens]);
 
   React.useEffect(() => {
     setIsLoading(balance.isBalancesLoading);
