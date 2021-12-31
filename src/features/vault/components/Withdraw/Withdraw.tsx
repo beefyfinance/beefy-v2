@@ -32,9 +32,10 @@ export const Withdraw = ({
   const classes = useStyles();
   const dispatch = useDispatch();
   const t = useTranslation().t;
-  const { wallet, balance } = useSelector((state: any) => ({
+  const { wallet, balance, tokens } = useSelector((state: any) => ({
     wallet: state.walletReducer,
     balance: state.balanceReducer,
+    tokens: state.balanceReducer.tokens[item.network],
   }));
   const [state, setState] = React.useState({ balance: new BigNumber(0) });
   const [steps, setSteps] = React.useState({
@@ -100,7 +101,6 @@ export const Withdraw = ({
 
   const handleWithdrawOptions = (event, tokenSymbol) => {
     if (!tokenSymbol) return false;
-    console.log(item.token, tokenSymbol, item.token !== tokenSymbol);
     setFormData(prevFormData => {
       return {
         ...prevFormData,
@@ -163,20 +163,22 @@ export const Withdraw = ({
         });
       } else {
         const shares = formData.withdraw.amount
-          .dividedBy(byDecimals(item.pricePerFullShare, 18))
-          .decimalPlaces(item.tokenDecimals, BigNumber.ROUND_UP);
-        const sharesByDecimals = byDecimals(state.balance, item.tokenDecimals);
-        if (shares.times(100).dividedBy(sharesByDecimals).isGreaterThan(99)) {
+          .dividedBy(byDecimals(item.pricePerFullShare))
+          .decimalPlaces(item.tokenDecimals, BigNumber.ROUND_DOWN);
+        const sharesBalance = byDecimals(balance.tokens[item.network][item.earnedToken].balance);
+        if (shares.times(100).dividedBy(sharesBalance).isGreaterThan(99)) {
+          formData.withdraw.max = true;
           setFormData({
             ...formData,
             withdraw: {
               ...formData.withdraw,
               input: (state.balance as any).significant(6),
-              amount: state.balance.toNumber(),
+              amount: state.balance,
               max: true,
             },
           });
         }
+
         if (isNative) {
           steps.push({
             step: 'withdraw',
