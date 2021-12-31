@@ -1,4 +1,5 @@
 import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
+import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -96,6 +97,40 @@ export const Withdraw = ({
       });
     }
   };
+
+  const handleWithdrawOptions = (event, tokenSymbol) => {
+    if (!tokenSymbol) return false;
+    console.log(item.token, tokenSymbol, item.token !== tokenSymbol);
+    setFormData(prevFormData => {
+      return {
+        ...prevFormData,
+        withdraw: {
+          ...prevFormData.withdraw,
+          token: tokenSymbol,
+          isZap: item.token !== tokenSymbol,
+          isZapSwap: prevFormData.zap.tokens.some(t => t.symbol === tokenSymbol),
+        },
+      };
+    });
+  };
+
+  React.useEffect(() => {
+    if (formData.withdraw.isZapSwap) {
+      reduxActions.vault.estimateZapWithdraw({
+        web3: wallet.rpc,
+        vault: item,
+        formData,
+        setFormData,
+      });
+    }
+    // eslint-disable-next-line
+  }, [
+    formData.withdraw.amount,
+    formData.withdraw.isZapSwap,
+    formData.withdraw.token,
+    wallet.rpc,
+    item,
+  ]);
 
   const handleWithdraw = () => {
     const steps = [];
@@ -369,6 +404,27 @@ export const Withdraw = ({
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
           </Paper>
         </Box>
+        {formData.zap && (
+          <Box className={classes.btnContaniner}>
+            <Typography className={classes.balanceText}>Withdraw options:</Typography>
+            <ToggleButtonGroup
+              exclusive
+              onChange={handleWithdrawOptions}
+              value={formData.withdraw.token}
+              size="small"
+            >
+              <ToggleButton value={item.token}>{item.token}</ToggleButton>
+              <ToggleButton value={item.assets.join('+')}>{item.assets.join('+')}</ToggleButton>
+              {formData.zap.tokens.map(zapToken => {
+                return (
+                  !zapToken.isWrapped && (
+                    <ToggleButton value={zapToken.symbol}>{zapToken.symbol}</ToggleButton>
+                  )
+                );
+              })}
+            </ToggleButtonGroup>
+          </Box>
+        )}
         <FeeBreakdown item={item} formData={formData} type={'withdraw'} />
         <Box mt={2}>
           {wallet.address ? (
