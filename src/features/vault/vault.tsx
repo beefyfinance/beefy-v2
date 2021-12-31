@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { addressBook } from 'blockchain-addressbook';
+import { addressBook as _addressBook } from 'blockchain-addressbook';
 import { reduxActions } from '../redux/actions';
 import { isEmpty } from '../../helpers/utils';
 import { Loader } from '../../components/loader';
@@ -23,7 +23,13 @@ import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 
-const useStyles = makeStyles(styles as any);
+//allow the Harmony-blockchain entries in the address-book to be accessed via the normal  
+//  "network" property values used in our core vault-object schema
+const addressBook = {..._addressBook, harmony: _addressBook.one};
+
+const useStyles = makeStyles( styles as any);
+
+
 export const Vault = () => {
   const history = useHistory();
   const classes = useStyles();
