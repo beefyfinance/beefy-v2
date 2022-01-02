@@ -4709,5 +4709,42 @@ export const pools = [
     warning: "liquidity",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x468003B688943977e6130F4F68F23aad939a1040",
     network: "fantom"
+  },
+  {
+    id: "boo-wftm-matic",
+    name: "MATIC-FTM LP",
+    token: "MATIC-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x7051C6F0C1F1437498505521a3bD949654923fE1",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooFTM-MATIC",
+    earnedTokenAddress: "0x6709B167f862e2AeD920C2D98BC89E976DbD0615",
+    earnContractAddress: "0x6709B167f862e2AeD920C2D98BC89E976DbD0615",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-wftm-matic",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "MATIC",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3",
+    buyTokenUrl: "https://spookyswap.finance/swap",
+    network: "fantom"
   }
 ];
