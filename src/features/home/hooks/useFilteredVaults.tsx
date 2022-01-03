@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
+import { featuredPools } from '../../../config/vault/featured';
 
 const FILTER_STORAGE_KEY = 'homeSortConfig';
 export const FILTER_DEFAULT = {
@@ -185,8 +186,12 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   // hide when category/tag does not match
-  if (config.category !== 'all' && !vault.tags.includes(config.category)) {
+  if (config.category !== 'all' && config.category !== 'featured' && !vault.tags.includes(config.category)) {
     return false;
+  }
+
+  if (config.category === 'featured') {
+    return featuredPools[vault.id] ?? false;
   }
 
   // hide when name does not include keyword
@@ -269,17 +274,19 @@ function useUserVaults() {
           [pool.id]: pool,
         };
       }
-      if (pool.isBoosted) {
-        const boost = pool.boostData;
-        let symbol = `${boost.token}${boost.id}Boost`;
-        if (!isEmpty(balance.tokens[pool.network][symbol])) {
-          balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
-          if (balanceSingle.isGreaterThan(0)) {
-            newUserVaults = {
-              ...newUserVaults,
-              [pool.id]: pool,
-            };
-          }
+      if (pool.vaultBoosts?.length > 0) {
+        for (const boost of pool.vaultBoosts) {
+          let symbol = `${boost.token}${boost.id}Boost`;
+            if (!isEmpty(balance.tokens[pool.network][symbol])) {
+              balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
+              if (balanceSingle.isGreaterThan(0)) {
+                newUserVaults = {
+                  ...newUserVaults,
+                  [pool.id]: pool,
+                };
+                break;
+              }
+            }
         }
       }
     }

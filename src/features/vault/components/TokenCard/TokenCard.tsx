@@ -24,7 +24,7 @@ export const TokenCard = ({ token, network }) => {
         <div className={classes.cardActions}>
           {website ? (
             <div className={classes.cardAction}>
-              <LinkButton href={website} text={t('Token-Site')} />
+              <LinkButton type="link" href={website} text={t('Token-Site')} />
             </div>
           ) : null}
           <div className={classes.cardAction}>
@@ -32,12 +32,13 @@ export const TokenCard = ({ token, network }) => {
               href={`${config[network].explorerUrl}/token/${address}`}
               className={classes.cardAction}
               text={t('Token-Contract')}
+              type="code"
             />
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.text}>
+        <Typography variant="body1" className={classes.text}>
           {description ? description : t('Token-NoDescrip')}
         </Typography>
       </CardContent>

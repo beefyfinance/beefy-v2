@@ -13,6 +13,8 @@ import { BIG_ZERO, byDecimals, convertAmountToRawNumber } from '../../../helpers
 import vaultAbi from '../../../config/abi/vault.json';
 import boostAbi from '../../../config/abi/boost.json';
 import zapAbi from '../../../config/abi/zap.json';
+import uniswapV2PairABI from '../../../config/abi/uniswapV2Pair.json';
+import uniswapV2RouterABI from '../../../config/abi/uniswapV2Router.json';
 
 const getPools = async (items, state, dispatch) => {
   console.log('redux getPools() processing...');
@@ -117,7 +119,7 @@ const getBoosts = async (items, state, dispatch) => {
   console.log('redux getBoosts() processing...');
   const web3 = state.walletReducer.rpc;
   const prices = state.pricesReducer.prices;
-	const pools = state.vaultReducer.pools;
+  const pools = state.vaultReducer.pools;
   const boosts = { ...state.vaultReducer.boosts };
 
   const multicall = [];
@@ -141,8 +143,10 @@ const getBoosts = async (items, state, dispatch) => {
     });
 
     if (pool.isMooStaked) {
-			const mooContract = new web3[pool.network].eth.Contract(vaultAbi, pools[ 
-																												pool.poolId].earnContractAddress);
+      const mooContract = new web3[pool.network].eth.Contract(
+        vaultAbi,
+        pools[pool.poolId].earnContractAddress
+      );
       moos[pool.network].push({
         id: pool.id,
         pricePerFullShare: mooContract.methods.getPricePerFullShare(),
@@ -194,6 +198,7 @@ const getBoosts = async (items, state, dispatch) => {
     const item = response[key],
       boost = boosts[item.id];
     const tokenDecimals = new BigNumber(10).exponentiatedBy(boost.tokenDecimals);
+    const earnedDecimals = new BigNumber(10).exponentiatedBy(boost.earnedTokenDecimals);
     const tokenPrice = boost.tokenOracleId in prices ? prices[boost.tokenOracleId] : 0;
     const earnPrice = boost.earnedOracleId in prices ? prices[boost.earnedOracleId] : 0;
     const totalStaked = boost.isMooStaked
@@ -205,7 +210,7 @@ const getBoosts = async (items, state, dispatch) => {
       .times(24)
       .times(365)
       .times(earnPrice)
-      .dividedBy(tokenDecimals);
+      .dividedBy(earnedDecimals);
 
     boost.apr = Number(yearlyRewardsInUsd.dividedBy(totalStakedInUsd));
     boost.staked = totalStaked.dividedBy(tokenDecimals);
@@ -304,7 +309,6 @@ const estimateZapDeposit = ({ web3, vault, formData, setFormData }) => {
   const tokenAmount = convertAmountToRawNumber(formData.deposit.amount, tokenIn.decimals);
 
   setFormData(prevFormData => {
-    console.log('isLoading', true);
     if (prevFormData.deposit.zapEstimate.isLoading) {
       return prevFormData;
     }
@@ -320,7 +324,6 @@ const estimateZapDeposit = ({ web3, vault, formData, setFormData }) => {
     .then(response => {
       setFormData(prevFormData => {
         if (formData.deposit.amount === prevFormData.deposit.amount) {
-          console.log('isLoading', false);
           prevFormData.deposit.zapEstimate = {
             ...zapEstimate,
             amountIn: byDecimals(response.swapAmountIn, tokenIn.decimals),
@@ -333,9 +336,91 @@ const estimateZapDeposit = ({ web3, vault, formData, setFormData }) => {
     });
 };
 
+const estimateZapWithdraw = ({ web3, vault, formData, setFormData }) => {
+  const tokenOut = formData.zap.tokens.find(t => t.symbol === formData.withdraw.token);
+  const tokenIn = formData.zap.tokens.find(t => t.symbol !== formData.withdraw.token);
+
+  const zapEstimate = {
+    tokenIn: tokenIn,
+    tokenOut: tokenOut,
+    amountIn: BIG_ZERO,
+    amountOut: BIG_ZERO,
+    isLoading: false,
+  };
+
+  if (formData.withdraw.amount.isZero()) {
+    return setFormData(prevFormData => {
+      prevFormData.withdraw.zapEstimate = zapEstimate;
+      return { ...prevFormData };
+    });
+  }
+
+  setFormData(prevFormData => {
+    if (prevFormData.withdraw.zapEstimate.isLoading) {
+      return prevFormData;
+    }
+    prevFormData.withdraw.zapEstimate.isLoading = true;
+    return { ...prevFormData };
+  });
+
+  const multicall = new MultiCall(web3[vault.network], config[vault.network].multicallAddress);
+  const pairContract = new web3[vault.network].eth.Contract(uniswapV2PairABI, vault.tokenAddress);
+
+  const multicallPromise = multicall
+    .all([
+      [
+        {
+          totalSupply: pairContract.methods.totalSupply(),
+          decimals: pairContract.methods.decimals(),
+          token0: pairContract.methods.token0(),
+          token1: pairContract.methods.token1(),
+          reserves: pairContract.methods.getReserves(),
+        },
+      ],
+    ])
+    .then(([[pair]]) => {
+      const reserveIn = tokenIn.address === pair.token0 ? pair.reserves[0] : pair.reserves[1];
+      const reserveOut = tokenOut.address === pair.token1 ? pair.reserves[1] : pair.reserves[0];
+
+      const tokenAmount = formData.withdraw.amount.times(
+        new BigNumber('10').pow(vault.tokenDecimals)
+      );
+      const equity = tokenAmount.dividedBy(pair.totalSupply);
+      const amountIn = equity
+        .multipliedBy(reserveIn)
+        .decimalPlaces(0, BigNumber.ROUND_DOWN)
+        .toString(10);
+
+      const routerContract = new web3[vault.network].eth.Contract(
+        uniswapV2RouterABI,
+        formData.zap.router
+      );
+
+      return routerContract.methods
+        .getAmountOut(amountIn, reserveIn, reserveOut)
+        .call()
+        .then(amountOut => {
+          setFormData(prevFormData => {
+            if (formData.withdraw.amount === prevFormData.withdraw.amount) {
+              prevFormData.withdraw.zapEstimate = {
+                ...zapEstimate,
+                amountIn: byDecimals(amountIn, tokenIn.decimals),
+                amountOut: byDecimals(amountOut, tokenOut.decimals),
+              };
+              return { ...prevFormData };
+            }
+            return prevFormData;
+          });
+        });
+    });
+
+  return multicallPromise;
+};
+
 export const vault = {
   fetchPools,
   fetchBoosts,
   linkVaultBoosts,
   estimateZapDeposit,
+  estimateZapWithdraw,
 };

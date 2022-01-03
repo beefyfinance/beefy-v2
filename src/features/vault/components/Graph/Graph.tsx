@@ -53,7 +53,7 @@ export const Graph: React.FC<GraphProps> = ({ oracleId, vaultId, network }) => {
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={label => {
-                  return (stat === 2 ? formatApy(label) : formatUsd(label)) as any
+                  return (stat === 2 ? formatApy(label) : formatUsd(label)) as any;
                 }}
                 tickCount={4}
                 width={50}
@@ -61,9 +61,9 @@ export const Graph: React.FC<GraphProps> = ({ oracleId, vaultId, network }) => {
               <Tooltip content={<CustomTooltip stat={stat} />} />
               <Area
                 dataKey="v"
-                stroke="#6E6399"
+                stroke="#F5F5FF"
                 strokeWidth={4}
-                fill="rgba(98, 84, 153, 0.13)"
+                fill="rgba(245, 245, 255, 0.1)"
                 fillOpacity={100}
               />
             </AreaChart>

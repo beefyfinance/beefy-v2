@@ -222,12 +222,12 @@ const _Item = ({ vault }) => {
               <span className={classes.platformContainer}>
                 <Box sx={{ marginRight: '8px' }}>
                   <Typography className={classes.platformLabel}>
-                    {t('Chain')}: <span className={classes.platformValue}>{item.network}</span>
+                    {t('Chain')}: <span>{item.network}</span>
                   </Typography>
                 </Box>
                 <Box>
                   <Typography className={classes.platformLabel}>
-                    {t('PLATFORM')}: <span className={classes.platformValue}>{item.platform}</span>
+                    {t('PLATFORM')}: <span>{item.platform}</span>
                   </Typography>
                 </Box>
               </span>

@@ -8,6 +8,7 @@ const theme = createTheme({
       default: '#232743',
       paper: '#232743',
       light: '#313759',
+      content: '#2D3153',
       header: '#121212',
       cta: '#59A662',
       filters: {

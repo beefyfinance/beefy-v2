@@ -408,6 +408,134 @@ const beefIn = (
   };
 };
 
+const beefOut = (network, vaultAddress, amount, zapAddress) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = state.walletReducer.address;
+    const provider = await state.walletReducer.web3modal.connect();
+
+    if (address && provider) {
+      const web3 = await new Web3(provider);
+      const contract = new web3.eth.Contract(zapAbi as any, zapAddress);
+
+      const transaction = (() => {
+        return contract.methods.beefOut(vaultAddress, amount).send({
+          from: address,
+        });
+      })();
+
+      transaction
+        .on('transactionHash', function (hash) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'success_pending',
+              data: {
+                spender: zapAddress,
+                amount: amount,
+                hash: hash,
+              },
+            },
+          });
+        })
+        .on('receipt', function (receipt) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'success',
+              data: {
+                spender: zapAddress,
+                amount: amount,
+                receipt: receipt,
+              },
+            },
+          });
+        })
+        .on('error', function (error) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'error',
+              data: {
+                spender: zapAddress,
+                error: error.message,
+              },
+            },
+          });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
+};
+
+const beefOutAndSwap = (network, vaultAddress, amount, zapAddress, tokenOut, swapAmountOutMin) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = state.walletReducer.address;
+    const provider = await state.walletReducer.web3modal.connect();
+
+    if (address && provider) {
+      const web3 = await new Web3(provider);
+      const contract = new web3.eth.Contract(zapAbi as any, zapAddress);
+
+      const transaction = (() => {
+        return contract.methods
+          .beefOutAndSwap(vaultAddress, amount, tokenOut, swapAmountOutMin)
+          .send({
+            from: address,
+          });
+      })();
+
+      transaction
+        .on('transactionHash', function (hash) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'success_pending',
+              data: {
+                spender: zapAddress,
+                amount: amount,
+                hash: hash,
+              },
+            },
+          });
+        })
+        .on('receipt', function (receipt) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'success',
+              data: {
+                spender: zapAddress,
+                amount: amount,
+                receipt: receipt,
+              },
+            },
+          });
+        })
+        .on('error', function (error) {
+          dispatch({
+            type: WALLET_ACTION,
+            payload: {
+              result: 'error',
+              data: {
+                spender: zapAddress,
+                error: error.message,
+              },
+            },
+          });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
+};
+
 const withdraw = (network, contractAddr, amount, max) => {
   return async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -941,8 +1069,7 @@ const generateProviderOptions = (wallet, clients) => {
     const list = {
       injected: {
         display: {
-          name: 'Injected',
-          description: 'Home-BrowserWallet',
+          name: 'MetaMask',
         },
       },
       walletconnect: {
@@ -1060,6 +1187,8 @@ export const wallet = {
   approval,
   deposit,
   beefIn,
+  beefOut,
+  beefOutAndSwap,
   withdraw,
   stake,
   unstake,

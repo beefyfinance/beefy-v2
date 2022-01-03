@@ -11,7 +11,7 @@ export const styles = theme => ({
     margin: 'auto auto 3px 10px',
   },
   label: {
-    color: '#424866',
+    color: theme.palette.primary.main,
     fontFamily: 'Proxima Nova',
     fontStyle: 'normal',
     fontWeight: 600,
@@ -21,7 +21,7 @@ export const styles = theme => ({
     letterSpacing: '-0.1px',
   },
   bar: {
-    backgroundColor: theme.palette.type === 'dark' ? '#424866' : '#A69885',
+    backgroundColor: theme.palette.type === 'dark' ? theme.palette.primary.main : '#A69885',
     width: '5px',
     borderRadius: '2px',
     '& + $bar': {
@@ -42,9 +42,22 @@ export const styles = theme => ({
     '& $label': {
       fontSize: '36px',
       lineHeight: '30px',
-      [theme.breakpoints.up('lg')]: {
-        fontSize: '36px',
-      },
+    },
+    '& $sm': {
+      height: '13px',
+    },
+    '& $md': {
+      height: '21px',
+    },
+    '& $lg': {
+      height: '29px',
+    },
+  },
+  withSizeMedium: {
+    marginBottom: '5px',
+    '& $label': {
+      fontSize: '24px',
+      lineHeight: '24px',
     },
     '& $sm': {
       height: '13px',
@@ -77,16 +90,16 @@ export const styles = theme => ({
   },
   withScoreHigh: {
     '& $label': {
-      color: '#4A9252',
+      color: theme.palette.primary.main,
     },
     '& $sm': {
-      backgroundColor: '#4A9252',
+      backgroundColor: theme.palette.primary.main,
     },
     '& $md': {
-      backgroundColor: '#4A9252',
+      backgroundColor: theme.palette.primary.main,
     },
     '& $lg': {
-      backgroundColor: '#4A9252',
+      backgroundColor: theme.palette.primary.main,
     },
   },
   withWhiteLabel: {

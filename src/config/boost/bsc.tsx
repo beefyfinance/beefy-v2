@@ -149,7 +149,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      nfty
+      {
+        logo: "stake/nfty/logo.png",
+        background: "stake/nfty/bg.png",
+        text: "NFTYLabs envisions a world where NFTs function as a medium of access, bringing a means of utility and privilege to NFT holders in a secure and confidential manner. NFTY will act as a cross-chain and interoperable bridge between enterprise, private content, and VIP communities; further strengthening the bond in ways never before imagined.",
+        website: "https://nftynetwork.io/",
+        social: {
+          telegram: "https://t.me/NFTYNetwork",
+          twitter: "https://twitter.com/NFTYNetwork"
+        }
+      }
     ]
   },
   {
@@ -197,7 +206,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      mogul
+      {
+        logo: "stake/mogul/logo.png",
+        background: "stake/mogul/bg.png",
+        text: "Mogul is an NFT and DeFi platform for film and entertainment, bridging Hollywood and blockchain technology. The STARS token powers the Mogul platform and offers rewards from movies. The Mogul platform has an NFT auction house, marketplace, and other products in the metaverse to bring movie fans closer to the action.",
+        website: "https://www.mogulproductions.com/",
+        social: {
+          telegram: "https://t.me/mogulproductions",
+          twitter: "https://twitter.com/mogulofficial_"
+        }
+      }
     ]
   },
   {
@@ -383,7 +401,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      nfty
+      {
+        logo: "stake/nfty/logo.png",
+        background: "stake/nfty/bg.png",
+        text: "NFTYLabs envisions a world where NFTs function as a medium of access, bringing a means of utility and privilege to NFT holders in a secure and confidential manner. NFTY will act as a cross-chain and interoperable bridge between enterprise, private content, and VIP communities; further strengthening the bond in ways never before imagined.",
+        website: "https://nftynetwork.io/",
+        social: {
+          telegram: "https://t.me/NFTYNetwork",
+          twitter: "https://twitter.com/NFTYNetwork"
+        }
+      }
     ]
   },
   {
@@ -404,7 +431,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      nfty
+      {
+        logo: "stake/nfty/logo.png",
+        background: "stake/nfty/bg.png",
+        text: "NFTYLabs envisions a world where NFTs function as a medium of access, bringing a means of utility and privilege to NFT holders in a secure and confidential manner. NFTY will act as a cross-chain and interoperable bridge between enterprise, private content, and VIP communities; further strengthening the bond in ways never before imagined.",
+        website: "https://nftynetwork.io/",
+        social: {
+          telegram: "https://t.me/NFTYNetwork",
+          twitter: "https://twitter.com/NFTYNetwork"
+        }
+      }
     ]
   },
   {
@@ -425,7 +461,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      mogul
+      {
+        logo: "stake/mogul/logo.png",
+        background: "stake/mogul/bg.png",
+        text: "Mogul is an NFT and DeFi platform for film and entertainment, bridging Hollywood and blockchain technology. The STARS token powers the Mogul platform and offers rewards from movies. The Mogul platform has an NFT auction house, marketplace, and other products in the metaverse to bring movie fans closer to the action.",
+        website: "https://www.mogulproductions.com/",
+        social: {
+          telegram: "https://t.me/mogulproductions",
+          twitter: "https://twitter.com/mogulofficial_"
+        }
+      }
     ]
   },
   {
@@ -446,7 +491,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      ceek
+      {
+        logo: "stake/ceek/logo.png",
+        background: "stake/ceek/bg.png",
+        text: "CEEK (CEEK) is a decentralized platform featuring global superstars like Lady Gaga, Katy Perry, Ziggy Marley, Bon Jovi, UFC Champion Francis Ngannou, 3x NBA Champion Dwyane Wade and more. CEEK enables music artists, sports athletes and digital content creators to directly connect with their fans. CEEK tracks digital media assets on the blockchain, and makes fast, efficient secure payments for entertainment and education via smart contracts.",
+        website: "https://www.ceek.io/",
+        social: {
+          telegram: "https://t.me/ceekvrtokensale",
+          twitter: "https://twitter.com/ceek"
+        }
+      }
     ]
   },
   {
@@ -464,7 +518,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      ceek
+      {
+        logo: "stake/ceek/logo.png",
+        background: "stake/ceek/bg.png",
+        text: "CEEK (CEEK) is a decentralized platform featuring global superstars like Lady Gaga, Katy Perry, Ziggy Marley, Bon Jovi, UFC Champion Francis Ngannou, 3x NBA Champion Dwyane Wade and more. CEEK enables music artists, sports athletes and digital content creators to directly connect with their fans. CEEK tracks digital media assets on the blockchain, and makes fast, efficient secure payments for entertainment and education via smart contracts.",
+        website: "https://www.ceek.io/",
+        social: {
+          telegram: "https://t.me/ceekvrtokensale",
+          twitter: "https://twitter.com/ceek"
+        }
+      }
     ]
   },
   {
@@ -956,7 +1019,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      moonpot
+      {
+        logo: "stake/moonpot/logo.png",
+        background: "stake/moonpot/bg.png",
+        text: "Moonpot is a win-win savings game on Binance Smart Chain powered by Beefy Finance. By depositing crypto into a Moonpot, users gain interest on their assets and enter into a prize draw at the same time. There’s a chance to win weekly prizes paid out in crypto from each Moonpot entered — as well as an exclusive monthly prize draw for $POTS stakers.",
+        website: "https://moonpot.com/",
+        social: {
+          telegram: "https://t.me/moonpotdotcom",
+          twitter: "https://twitter.com/moonpotdotcom"
+        }
+      }
     ]
   },
   {
@@ -977,7 +1049,16 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      moonpot
+      {
+        logo: "stake/moonpot/logo.png",
+        background: "stake/moonpot/bg.png",
+        text: "Moonpot is a win-win savings game on Binance Smart Chain powered by Beefy Finance. By depositing crypto into a Moonpot, users gain interest on their assets and enter into a prize draw at the same time. There’s a chance to win weekly prizes paid out in crypto from each Moonpot entered — as well as an exclusive monthly prize draw for $POTS stakers.",
+        website: "https://moonpot.com/",
+        social: {
+          telegram: "https://t.me/moonpotdotcom",
+          twitter: "https://twitter.com/moonpotdotcom"
+        }
+      }
     ]
   },
   {
@@ -2464,6 +2545,36 @@ export const pools = [
         social: {
           telegram: "https://t.me/soup_community",
           twitter: "https://twitter.com/soupingGood"
+        }
+      }
+    ]
+  },
+  {
+    id: "moo_baby-aot-usdt-ageoftanks",
+    poolId: "baby-aot-usdt",
+    name: "AgeOfTanks",
+    assets: [
+      "AOT",
+      "USDT"
+    ],
+    earnedToken: "A.O.T",
+    earnedTokenDecimals: 6,
+    earnedTokenAddress: "0x9589014F7a8547B89A6331eEEe32b7fBd5852af9",
+    earnContractAddress: "0xDd94124a02Be4fb6d1a12141E107eEA524C111FF",
+    earnedOracle: "tokens",
+    earnedOracleId: "AOT",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/tanks/logo.png",
+        background: "stake/tanks/bg.png",
+        text: "If you’re tired of NFT games that are only based on the technology but are not good games.\nIf you’re tired of spending thousands of hours and not getting anything out of it. Look no further…\n\nWELCOME TO EARTH ZERO METAVERSE YEAR 23100\nThe ozone layer that protectively embraced the planet no longer exists. Exposed to harsh solar storms the skies\nrage with turbulent winds. This is an age without oceans. This is an age without flight. This is an age where the\nfight for supremacy hinges on having the Ultimate Armoured Vehicle.\n\nFor who controls the tanks control A.O.T. And who controls the A.O.T, controls the Metaverse!\n\nMine resources, build your NFT tanks, and defend your territory against thousands of other players that will try to\noutsmart you! Are you ready to Assemble.Outwit.Triumph?\n",
+        website: "https://ageoftanks.io/",
+        social: {
+          telegram: "https://t.me/ageoftanksdiscussion",
+          twitter: "https://twitter.com/AgeOfTanksNFT?s=09"
         }
       }
     ]

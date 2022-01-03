@@ -22,12 +22,13 @@ export const styles = theme => ({
   beefy: {
     display: 'flex',
     paddingTop: '4px',
+    alignItems: 'center',
     letterSpacing: 'unset',
     '& div': {
       color: 'white',
       marginLeft: '10px',
       fontSize: '20px',
-      fontWeight: '700',
+      fontWeight: '900',
       textDecoration: 'none',
     },
     '&,& .MuiButton-root': {
@@ -49,6 +50,9 @@ export const styles = theme => ({
     textTransform: 'capitalize',
     color: theme.palette.text.disabled,
     fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    letterSpacing: '0.1px',
     margin: '12px',
     '&:hover': {
       color: theme.palette.text.primary,

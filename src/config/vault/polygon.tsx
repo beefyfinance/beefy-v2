@@ -7751,5 +7751,79 @@ export const pools = [
     buyTokenUrl: "https://app.sushi.com/#/swap?inputCurrency=0x50B728D8D964fd00C2d0AAD81718b71311feF68a&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     network: "polygon",
     retireReason: "rewards"
+  },
+  {
+    id: "jarvis-5eur",
+    name: "agEUR-4EUR",
+    token: "ag5eur",
+    tokenDescription: "Curve (Jarvis)",
+    tokenAddress: "0x81212149b983602474fcD0943E202f38b38d7484",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJarvisag5eur",
+    earnedTokenAddress: "0xf3Eac1e5A81A732b002691E1f96cE5A43BfBb929",
+    earnContractAddress: "0xf3Eac1e5A81A732b002691E1f96cE5A43BfBb929",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "jarvis-5eur",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "agEUR",
+      "4EUR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://polygon.curve.fi/factory/72/deposit",
+    network: "polygon"
+  },
+  {
+    id: "jarvis-2jpy",
+    name: "jJPY-JPYC",
+    token: "2jpy",
+    tokenDescription: "Curve (Jarvis)",
+    tokenAddress: "0xE8dCeA7Fb2Baf7a9F4d9af608F06d78a687F8d9A",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJarvis2jpy",
+    earnedTokenAddress: "0x94F64bb5046Ee377bFBb664736547B7f78e5AE06",
+    earnContractAddress: "0x94F64bb5046Ee377bFBb664736547B7f78e5AE06",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "jarvis-2jpy",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "jJPY",
+      "JPYC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://polygon.curve.fi/factory/85/deposit",
+    network: "polygon"
   }
 ];

@@ -2,8 +2,8 @@ export const styles = theme => ({
   container: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: '20px 20px 0 0',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '12px 12px 0 0',
     padding: '24px',
   },
 });

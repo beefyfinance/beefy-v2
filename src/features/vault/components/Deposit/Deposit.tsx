@@ -137,7 +137,8 @@ export const Deposit: React.FC<DepositProps> = ({
         tokens[formData.deposit.token].decimals
       );
 
-      const isNative = item.token === config[item.network].walletSettings.nativeCurrency.symbol;
+      const isNative =
+        formData.deposit.token === config[item.network].walletSettings.nativeCurrency.symbol;
 
       if (!isNative && state.allowance.isLessThan(amount)) {
         steps.push({
@@ -160,7 +161,6 @@ export const Deposit: React.FC<DepositProps> = ({
           formData.deposit.zapEstimate.amountOut.times(1 - formData.slippageTolerance),
           formData.deposit.zapEstimate.tokenOut.decimals
         );
-        console.log({ swapAmountOutMin, slippageTolerance: formData.slippageTolerance });
         steps.push({
           step: 'deposit',
           message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
@@ -169,7 +169,7 @@ export const Deposit: React.FC<DepositProps> = ({
               reduxActions.wallet.beefIn(
                 item.network,
                 item.earnContractAddress,
-                false, // isETH
+                isNative,
                 tokens[formData.deposit.token].address,
                 amount,
                 formData.zap.address,
@@ -286,6 +286,16 @@ export const Deposit: React.FC<DepositProps> = ({
   return (
     <React.Fragment>
       <Box p={3}>
+        {formData.zap && (
+          <Typography variant="body1" className={classes.zapPromotion}>
+            {t('Zap-Promotion', {
+              action: 'Deposit',
+              token1: item.assets[0],
+              token2: item.assets[1],
+            })}
+          </Typography>
+        )}
+
         <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
         <RadioGroup
           value={formData.deposit.token}
@@ -308,7 +318,7 @@ export const Deposit: React.FC<DepositProps> = ({
                     {isLoading ? (
                       <Loader message={''} line={true} />
                     ) : (
-                      <Typography variant={'body1'}>
+                      <Typography className={classes.assetCount} variant={'body1'}>
                         {(
                           byDecimals(tokens[item.token].balance, tokens[item.token].decimals) as any
                         ).significant(6)}{' '}
@@ -327,7 +337,9 @@ export const Deposit: React.FC<DepositProps> = ({
                   rel="noreferrer"
                   className={classes.btnSecondary}
                 >
-                  <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+                  <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
+                    {t('Transact-BuyTkn')}
+                  </Button>
                 </a>
               )}
               {item.addLiquidityUrl && !item.buyTokenUrl && (
@@ -337,23 +349,25 @@ export const Deposit: React.FC<DepositProps> = ({
                   rel="noreferrer"
                   className={classes.btnSecondary}
                 >
-                  <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-AddLiquidity')}</Button>
+                  <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
+                    {t('Transact-AddLiquidity')}
+                  </Button>
                 </a>
               )}
             </Box>
           </div>
-          {formData.zap?.tokens[0] && (
+          {formData.zap?.tokens.map(zapToken => (
             <FormControlLabel
               className={classes.depositTokenContainer}
-              value={formData.zap.tokens[0].symbol}
+              value={zapToken.symbol}
               control={<Radio />}
               label={
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
                     <AssetsImage
                       {...({
-                        assets: [formData.zap.tokens[0].symbol],
-                        alt: formData.zap.tokens[0].name,
+                        assets: [zapToken.symbol],
+                        alt: zapToken.name,
                       } as any)}
                     />
                   </Box>
@@ -361,55 +375,18 @@ export const Deposit: React.FC<DepositProps> = ({
                     {isLoading ? (
                       <Loader message={''} line={true} />
                     ) : (
-                      <Typography variant={'body1'}>
+                      <Typography className={classes.assetCount} variant={'body1'}>
                         {(
-                          byDecimals(
-                            tokens[formData.zap.tokens[0].symbol].balance,
-                            formData.zap.tokens[0].decimals
-                          ) as any
+                          byDecimals(tokens[zapToken.symbol].balance, zapToken.decimals) as any
                         ).significant(6)}{' '}
-                        {formData.zap.tokens[0].symbol}
+                        {zapToken.symbol}
                       </Typography>
                     )}
                   </Box>
                 </Box>
               }
             />
-          )}
-          {formData.zap?.tokens[1] && (
-            <FormControlLabel
-              className={classes.depositTokenContainer}
-              value={formData.zap.tokens[1].symbol}
-              control={<Radio />}
-              label={
-                <Box className={classes.balanceContainer} display="flex" alignItems="center">
-                  <Box lineHeight={0}>
-                    <AssetsImage
-                      {...({
-                        assets: [formData.zap.tokens[1].symbol],
-                        alt: formData.zap.tokens[1].name,
-                      } as any)}
-                    />
-                  </Box>
-                  <Box flexGrow={1} pl={1} lineHeight={0}>
-                    {isLoading ? (
-                      <Loader message={''} line={true} />
-                    ) : (
-                      <Typography variant={'body1'}>
-                        {(
-                          byDecimals(
-                            tokens[formData.zap.tokens[1].symbol].balance,
-                            formData.zap.tokens[1].decimals
-                          ) as any
-                        ).significant(6)}{' '}
-                        {formData.zap.tokens[1].symbol}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              }
-            />
-          )}
+          ))}
         </RadioGroup>
         {item.buyTokenUrl && item.addLiquidityUrl && (
           <Box className={classes.btnContaniner}>
@@ -419,7 +396,10 @@ export const Deposit: React.FC<DepositProps> = ({
               rel="noreferrer"
               className={classes.btnSecondary}
             >
-              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+              <Button
+                size="small"
+                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+              >
                 {t('Transact-BuyTkn')}
               </Button>
             </a>
@@ -430,7 +410,10 @@ export const Deposit: React.FC<DepositProps> = ({
               rel="noreferrer"
               className={classes.btnSecondary}
             >
-              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+              <Button
+                size="small"
+                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+              >
                 {t('Transact-AddLiquidity')}
               </Button>
             </a>
@@ -475,7 +458,10 @@ export const Deposit: React.FC<DepositProps> = ({
                 onClick={handleDeposit}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                disabled={formData.deposit.amount.isLessThanOrEqualTo(0)}
+                disabled={
+                  formData.deposit.amount.isLessThanOrEqualTo(0) ||
+                  formData.deposit.zapEstimate.isLoading
+                }
               >
                 {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
               </Button>

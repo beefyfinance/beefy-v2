@@ -1,10 +1,6 @@
 export const styles = theme => ({
   title: {
-    fontFamily: 'Proxima Nova',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '30px',
-    lineHeight: '42px',
+    color: theme.palette.text.primary,
   },
   subtitle: {
     fontFamily: 'Proxima Nova',

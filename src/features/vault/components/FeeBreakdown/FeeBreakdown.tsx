@@ -101,56 +101,60 @@ export const FeeBreakdown = ({ item, formData, type }) => {
   return (
     <Box mt={2} p={2} className={classes.feeContainer}>
       <Grid container>
-        {formData.deposit.isZap ? (
-          <Grid item xs={12}>
-            <Typography className={classes.title} style={{ marginBottom: '12px' }}>
-              {t('Zap-Title')}
-            </Typography>
-            {type === 'deposit' && (
-              <>
-                {formData.deposit.zapEstimate.isLoading ? (
-                  <Loader message={'Loading swap estimate...'} line={true} />
-                ) : (
-                  <ol className={classes.ol}>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-1', {
-                          valueFrom: formData.deposit.zapEstimate.amountIn.significant(6),
-                          tokenFrom: formData.deposit.zapEstimate.tokenIn.symbol,
-                          valueTo: formData.deposit.zapEstimate.amountOut.significant(6),
-                          tokenTo: formData.deposit.zapEstimate.tokenOut.symbol,
-                          slippageTolerancePercentage: formData.slippageTolerance * 100,
-                        })}
-                      </Typography>
-                    </li>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-2', { lpToken: item.token })}
-                      </Typography>
-                    </li>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-3', { lpToken: item.token })}
-                      </Typography>
-                    </li>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-4', {
-                          token0: item.assets[0],
-                          token1: item.assets[1],
-                        })}
-                      </Typography>
-                    </li>
-                  </ol>
-                )}
-              </>
-            )}
-            {type === 'withdraw' && (
-              <>
+        <Grid item xs={12}>
+          {type === 'deposit' && formData.deposit.isZap && (
+            <>
+              <Typography className={classes.title} style={{ marginBottom: '12px' }}>
+                {t('Zap-Title')}
+              </Typography>
+              {formData.deposit.zapEstimate.isLoading ? (
+                <Loader message={'Loading swap estimate...'} line={true} />
+              ) : (
                 <ol className={classes.ol}>
                   <li>
                     <Typography className={classes.zapStep}>
-                      {/* TODO: Fill zap estimate */}
+                      {t('Zap-Step-Deposit-1', {
+                        valueFrom: formData.deposit.zapEstimate.amountIn.significant(6),
+                        tokenFrom: formData.deposit.zapEstimate.tokenIn.symbol,
+                        valueTo: formData.deposit.zapEstimate.amountOut.significant(6),
+                        tokenTo: formData.deposit.zapEstimate.tokenOut.symbol,
+                        slippageTolerancePercentage: formData.slippageTolerance * 100,
+                      })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-2', { lpToken: item.token })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-3', { lpToken: item.token })}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-4', {
+                        token0: item.assets[0],
+                        token1: item.assets[1],
+                      })}
+                    </Typography>
+                  </li>
+                </ol>
+              )}
+            </>
+          )}
+          {type === 'withdraw' && formData.withdraw.isZap && (
+            <>
+              <Typography className={classes.title} style={{ marginBottom: '12px' }}>
+                {t('Zap-Title')}
+              </Typography>
+              {formData.withdraw.zapEstimate.isLoading ? (
+                <Loader message={'Loading swap estimate...'} line={true} />
+              ) : (
+                <ol className={classes.ol}>
+                  <li>
+                    <Typography className={classes.zapStep}>
                       {t('Zap-Step-Withdraw-1', {
                         mooToken: item.earnedToken,
                         lpToken: item.token,
@@ -166,70 +170,38 @@ export const FeeBreakdown = ({ item, formData, type }) => {
                       })}
                     </Typography>
                   </li>
-                  <li>
-                    {/* TODO: hook up dynamic values */}
-                    <Typography className={classes.zapStep}>
-                      {t('Zap-Step-Withdraw-3', {
-                        valueFrom: formData.withdraw.amount.toFixed(2),
-                        tokenFrom: formData.withdraw.token,
-                        valueTo: '0.00',
-                        tokenTo: 'TOKEN',
-                      })}
-                    </Typography>
-                  </li>
-                  <li>
-                    {/* TODO: hook up dynamic values */}
-                    <Typography className={classes.zapStep}>
-                      {t('Zap-Step-Withdraw-4', { balance: '0.00', token: 'TOKEN' })}
-                    </Typography>
-                  </li>
+                  {formData.withdraw.isZapSwap && (
+                    <li>
+                      <Typography className={classes.zapStep}>
+                        {t('Zap-Step-Withdraw-3', {
+                          valueFrom: formData.withdraw.zapEstimate.amountIn.significant(6),
+                          tokenFrom: formData.withdraw.zapEstimate.tokenIn.symbol,
+                          valueTo: formData.withdraw.zapEstimate.amountOut.significant(6),
+                          tokenTo: formData.withdraw.zapEstimate.tokenOut.symbol,
+                          slippageTolerancePercentage: formData.slippageTolerance * 100,
+                        })}
+                      </Typography>
+                    </li>
+                  )}
+                  {formData.withdraw.isZapSwap && (
+                    <li>
+                      <Typography className={classes.zapStep}>
+                        {t('Zap-Step-Withdraw-4', {
+                          balance: formData.withdraw.zapEstimate.amountOut.times(2).significant(6),
+                          token: formData.withdraw.zapEstimate.tokenOut.symbol,
+                        })}
+                      </Typography>
+                    </li>
+                  )}
                 </ol>
-              </>
-            )}
-            <Divider className={classes.divider} />
-          </Grid>
-        ) : null}
+              )}
+            </>
+          )}
+          {formData.deposit.isZap && <Divider className={classes.divider} />}
+        </Grid>
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between">
             <Typography className={classes.title}>{t('Fee-Title')}</Typography>
-            {/*<Popover title={t('Fee-Tagline')} solid size="md">
-              <div className={classes.feeBreakdownBlock}>
-                <Typography className={classes.feeBreakdownBold}>
-                  {t('Fee-DepositAmt', {
-                    amt: formattedDepositFee,
-                  })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetail}>
-                  {t('Fee-DepositTrgt')}
-                </Typography>
-              </div>
-              <div className={classes.feeBreakdownBlock}>
-                <Typography className={classes.feeBreakdownBold}>
-                  {t('Fee-WithdrawAmt', {
-                    amt: formattedWithdrawalFee,
-                  })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetail}>
-                  {t('Fee-WithdrawTrgt', {
-                    amt: formattedWithdrawalFee,
-                  })}
-                </Typography>
-              </div>
-              <div className={classes.feeBreakdownBlock}>
-                <Typography className={classes.feeBreakdownBold}>
-                  {t('Fee-Perform', { amt: '4.5%' })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetailPerf}>
-                  {t('Fee-PerformHodler', { amt: '2.5%' })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetailPerf}>
-                  {t('Fee-PerformTreas', { amt: '1.5%' })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetailPerf}>
-                  {t('Fee-PerformStrat', { amt: '0.5%' })}
-                </Typography>
-              </div>
-                </Popover>*/}
           </Box>
         </Grid>
         <Grid item xs={6}>
@@ -256,7 +228,9 @@ export const FeeBreakdown = ({ item, formData, type }) => {
         </Grid>
         <Grid item xs={12}>
           <Box pt={1}>
-            <Typography className={classes.text}>{t('Fee-PerformExt')}</Typography>
+            <Typography variant="body2" className={classes.text}>
+              {t('Fee-PerformExt')}
+            </Typography>
           </Box>
         </Grid>
       </Grid>

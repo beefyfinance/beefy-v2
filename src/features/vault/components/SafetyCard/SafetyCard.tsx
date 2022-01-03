@@ -1,7 +1,6 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../../../../components/LinkButton/LinkButton';
 import { Popover } from '../../../../components/Popover';
 import { RISKS } from '../../../../config/risk';
 import { SafetyScore } from '../../../../components/SafetyScore';
@@ -21,12 +20,19 @@ export const SafetyCard = ({ vaultRisks, score }) => {
   return (
     <Card>
       <CardHeader className={classes.cardHeader}>
-        <CardTitle title={<SafetyScore score={score} /> as any} />
-        <div className={classes.cardActions}>
-          <LinkButton
-            href="https://docs.beefy.finance/beefyfinance/faq/beefy-safety-score"
-            text={t('Safety-Score')}
-          />
+        <CardTitle title={(<SafetyScore score={score} size="md" />) as any} />
+        <div className={classes.tooltipLabel}>
+          <Typography variant="body1" className={classes.safetyLabel}>
+            {t('Safety-Score1')}
+          </Typography>
+          <div className={classes.tooltipHolder}>
+            <Popover
+              {...({
+                title: t('Safety-ScoreWhat'),
+                content: t('Safety-ScoreExpl'),
+              } as any)}
+            />
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -43,13 +49,15 @@ export const SafetyCard = ({ vaultRisks, score }) => {
                     )}
                     <div>
                       <div className={classes.moreInfoContainer}>
-                        <Typography className={classes.risk}>{t(RISKS[risk].title)}</Typography>
+                        <Typography variant="h5" className={classes.risk}>
+                          {t(RISKS[risk].title)}
+                        </Typography>
                         <Popover
                           title={t(RISKS[risk].title)}
                           content={t(RISKS[risk].explanation)}
                         />
                       </div>
-                      <Typography className={classes.riskCategory}>
+                      <Typography variant="body1" className={classes.riskCategory}>
                         {t(RISKS[risk].category)}
                       </Typography>
                     </div>
@@ -60,8 +68,8 @@ export const SafetyCard = ({ vaultRisks, score }) => {
           ))}
         </div>
         <div className={classes.notes}>
-          <Typography>{t('Safety-HigherSafer')}</Typography>
-          <Typography>{t('Safety-BeefySecure')}</Typography>
+          <Typography variant="body1">{t('Safety-HigherSafer')}</Typography>
+          <Typography variant="body1">{t('Safety-BeefySecure')}</Typography>
         </div>
       </CardContent>
     </Card>

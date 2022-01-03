@@ -22,22 +22,20 @@ export const styles = theme => ({
     fontSize: '18px',
     fontWeight: 600,
     letterSpacing: '0.2px',
-    color: '#ffffff',
+    color: theme.palette.text.secondary,
     paddingTop: '0',
   },
   label: {
-    ...regularText,
     paddingTop: 5,
     fontSize: '12px',
     fontWeight: 600,
     lineHeight: '20px',
+    color: theme.palette.text.disabled,
     textTransform: 'uppercase',
   },
   text: {
-    ...regularText,
     paddingTop: 5,
-    fontSize: '14px',
-    lineHeight: '18px',
+    color: theme.palette.text.disabled,
   },
   feeBreakdownBlock: {
     marginBottom: 10,
@@ -54,9 +52,10 @@ export const styles = theme => ({
     tabSize: 10,
   },
   zapStep: {
-    fontSize: '14px',
-    lineHeight: '18px',
+    fontSize: '15px',
+    lineHeight: '24px',
     marginBottom: '12px',
+    color: theme.palette.text.secondary,
   },
   divider: {
     height: '2px',

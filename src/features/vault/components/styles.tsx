@@ -2,9 +2,9 @@ export const styles = theme => ({
   balanceText: {
     fontSize: '14px',
     fontWeight: 400,
-    color: '#8585A6',
+    color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
-    lineHeight: '14px',
+    lineHeight: '18px',
   },
   balanceContainer: {
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
@@ -15,16 +15,15 @@ export const styles = theme => ({
       fontSize: '14px',
       fontWeight: '600',
       textTransform: 'inherit',
-      color: '#ffffff',
+      color: theme.palette.text.primary,
     },
   },
   inputContainer: {
-    paddingTop: '10px',
+    paddingTop: '24px',
     '& .MuiPaper-root': {
       position: 'relative',
-      backgroundColor: '#14182B',
-      border: 'solid 2px #3F466D',
-      borderRadius: '30px',
+      backgroundColor: theme.palette.background.vaults.inactive,
+      borderRadius: '8px',
       padding: 0,
       margin: 0,
       boxShadow: 'none',
@@ -35,18 +34,17 @@ export const styles = theme => ({
       },
     },
     '& .MuiTextField-root': {
-      backgroundColor: '#14182B',
-      border: 'solid 2px #3F466D',
-      borderRadius: '30px',
+      backgroundColor: theme.palette.background.vaults.inactive,
+      borderRadius: '8px',
       padding: '3px 10px',
     },
     '& .MuiButton-root': {
       fontSize: '12px',
-      fontWeight: 600,
+      fontWeight: 400,
       letterSpacing: '0.5px',
-      color: '#ffffff',
-      backgroundColor: '#313759',
-      borderRadius: '30px',
+      color: theme.palette.text.primary,
+      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      borderRadius: '8px',
       margin: 0,
       padding: '5px 12px',
       position: 'absolute',
@@ -72,8 +70,8 @@ export const styles = theme => ({
     fontWeight: 700,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
-    color: '#ffffff',
-    backgroundColor: '#54995C',
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: '8px',
     '&:hover': {
       backgroundColor: '#389D44',
@@ -85,11 +83,11 @@ export const styles = theme => ({
     fontWeight: 700,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
-    color: '#ffffff',
-    backgroundColor: '#30345A',
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.primary.main,
     borderRadius: '8px',
     '&:hover': {
-      backgroundColor: '#30345A',
+      backgroundColor: theme.palette.primary.main,
     },
   },
   btnContaniner: {
@@ -98,19 +96,18 @@ export const styles = theme => ({
   btnSecondary: {
     textDecoration: 'none',
     '& .MuiButton-root': {
-      fontSize: '16px',
+      fontSize: '15px',
       lineHeight: '24px',
-      fontWeight: 600,
-      color: '#6B7199',
-      backgroundColor: '#232743',
-      borderRadius: '20px',
+      fontWeight: 400,
+      color: theme.palette.text.secondary,
+      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      borderRadius: '4px',
       textTransform: 'capitalize',
       letterSpacing: '0.1px',
-      padding: '3px 15px 4px',
       transition: 'color 0.2s',
       width: 'max-content',
       '&:hover': {
-        color: '#ffffff',
+        color: theme.palette.text.primary,
         backgroundColor: '#3F466D',
         transition: 'color 0.1s',
       },
@@ -126,5 +123,13 @@ export const styles = theme => ({
         color: '#FFF',
       },
     },
+  },
+  assetCount: {
+    color: theme.palette.text.primary,
+    fontWeight: 700,
+  },
+  zapPromotion: {
+    color: theme.palette.text.secondary,
+    marginBottom: theme.spacing(2),
   },
 });

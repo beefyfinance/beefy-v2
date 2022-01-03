@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { addressBook } from 'blockchain-addressbook';
+import { addressBook as _addressBook } from 'blockchain-addressbook';
 import { reduxActions } from '../redux/actions';
 import { isEmpty } from '../../helpers/utils';
 import { Loader } from '../../components/loader';
@@ -23,7 +23,13 @@ import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 
-const useStyles = makeStyles(styles as any);
+//allow the Harmony-blockchain entries in the address-book to be accessed via the normal  
+//  "network" property values used in our core vault-object schema
+const addressBook = {..._addressBook, harmony: _addressBook.one};
+
+const useStyles = makeStyles( styles as any);
+
+
 export const Vault = () => {
   const history = useHistory();
   const classes = useStyles();
@@ -55,7 +61,17 @@ export const Vault = () => {
         isLoading: true,
       },
     },
-    withdraw: { input: '', amount: BIG_ZERO, max: false, token: null, isZap: false },
+    withdraw: {
+      input: '',
+      amount: BIG_ZERO,
+      max: false,
+      token: null,
+      isZap: false,
+      isZapSwap: false,
+      zapEstimate: {
+        isLoading: true,
+      },
+    },
     zap: null,
     slippageTolerance: 0.01,
   });
@@ -120,7 +136,7 @@ export const Vault = () => {
   }, [item]);
 
   React.useEffect(() => {
-    if (formData.deposit.isZap) {
+    if (formData.deposit.isZap && formData.deposit.token) {
       reduxActions.vault.estimateZapDeposit({
         web3: wallet.rpc,
         vault: item,
@@ -129,7 +145,7 @@ export const Vault = () => {
       });
     }
     // eslint-disable-next-line
-  }, [formData.deposit.amount, formData.deposit.isZap, wallet.rpc, item]);
+  }, [formData.deposit.amount, formData.deposit.isZap, formData.deposit.token, wallet.rpc, item]);
 
   React.useEffect(() => {
     document.body.style.backgroundColor = '#1B203A';
@@ -143,24 +159,32 @@ export const Vault = () => {
             <Loader message={t('Vault-GetData')} />
           ) : (
             <>
-              <Box className={classes.title}>
-                <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-                <Typography variant={'h1'}>
-                  {item.name} {!item.isGovVault ? t('Vault-vault') : ''}
-                </Typography>
-              </Box>
-              <Box className={classes.badges}>
-                <img
-                  alt={item.network}
-                  src={require(`../../images/networks/${item.network}.svg`).default}
-                />
-                <DisplayTags isBoosted={isBoosted} tags={item.tags} />
-              </Box>
-              <Box>
-                <span className={classes.platformContainer}>
-                  <Typography className={classes.platformLabel}>{t('PLATFORM')}:&nbsp;</Typography>
-                  <Typography className={classes.platformValue}>{item.platform}</Typography>
-                </span>
+              <Box className={classes.header}>
+                <Box className={classes.title}>
+                  <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+                  <Typography variant="h2">
+                    {item.name} {!item.isGovVault ? t('Vault-vault') : ''}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Box className={classes.badges}>
+                    <DisplayTags isBoosted={isBoosted} tags={item.tags} />
+                  </Box>
+                  <Box>
+                    <span className={classes.platformContainer}>
+                      <Box className={classes.chainContainer}>
+                        <Typography className={classes.platformLabel}>
+                          {t('Chain')}: <span>{item.network}</span>
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Typography className={classes.platformLabel}>
+                          {t('PLATFORM')}: <span>{item.platform}</span>
+                        </Typography>
+                      </Box>
+                    </span>
+                  </Box>
+                </Box>
               </Box>
               <VaultsStats
                 item={item}

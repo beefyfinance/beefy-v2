@@ -1,17 +1,15 @@
 export const styles = theme => ({
   vaultContainer: {
-    padding: '48px 0',
-    backgroundColor: theme.palette.background.header,
+    padding: '42px 0px 16px 0px',
   },
   title: {
     display: 'flex',
     marginBottom: '8px',
-    '& .MuiTypography-h1': {
-      fontSize: '36px',
-      lineHeight: '52px',
-      fontWeight: 600,
+    alignItems: 'center',
+    flexGrow: 1,
+    '& .MuiTypography-h2': {
+      color: theme.palette.text.secondary,
       paddingLeft: '12px',
-      letterSpacing: '-0.1px',
     },
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
       width: 48,
@@ -61,17 +59,20 @@ export const styles = theme => ({
     backgroundColor: '#272B4A',
     marginTop: '20px',
     padding: '20px',
-    borderRadius: '20px',
+    borderRadius: '12px',
   },
   dw: {
     backgroundColor: '#272B4A',
-    borderRadius: '20px',
+    borderRadius: '12px',
   },
   customOrder: {
     [theme.breakpoints.up('md')]: {
       order: 1,
     },
-    marginTop: 24,
+    marginTop: theme.spacing(3),
+    [theme.breakpoints.down('md')]: {
+      marginTop: 0,
+    },
   },
   customOrder2: {
     [theme.breakpoints.down('sm')]: {
@@ -79,22 +80,22 @@ export const styles = theme => ({
     },
   },
   tabs: {
-    backgroundColor: '#14182B',
-    borderTopLeftRadius: '20px',
-    borderTopRightRadius: '20px',
+    backgroundColor: theme.palette.background.vaults.inactive,
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
     '& .MuiButton-root': {
       fontSize: '16px',
       fontWeight: 600,
       letterSpacing: '0.1px',
       textTransform: 'capitalize',
-      color: '#6B7199',
+      color: theme.palette.text.disabled,
       background: 'none',
       width: '50%',
       padding: 0,
       margin: 0,
       height: '60px',
-      borderTopLeftRadius: '20px',
-      borderTopRightRadius: '20px',
+      borderTopLeftRadius: '12px',
+      borderTopRightRadius: '12px',
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
       '&:hover': {
@@ -103,16 +104,22 @@ export const styles = theme => ({
     },
   },
   selected: {
-    color: '#ffffff !important',
-    borderBottom: 'solid 3px #3F466D',
+    color: `${theme.palette.text.primary} !important`,
+    borderBottom: `solid 2px ${theme.palette.text.disabled}`,
   },
   badges: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     '& img': {
       height: '24px',
       marginRight: '4px',
+    },
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'flex-start',
+      '& p': {
+        margin: '2px 6px 0px 0px',
+      },
     },
   },
   platformContainer: {
@@ -127,6 +134,21 @@ export const styles = theme => ({
   platformLabel: {
     fontWeight: 600,
     fontSize: '12px',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
+    color: theme.palette.text.disabled,
+    '& span': {
+      fontWeight: 600,
+      fontSize: '12px',
+      color: theme.palette.text.primary,
+      textTransform: 'uppercase',
+    },
+  },
+  header: {
+    display: 'flex',
+    [theme.breakpoints.down('md')]: {
+      display: 'block',
+    },
+  },
+  chainContainer: {
+    marginRight: theme.spacing(4),
   },
 });
