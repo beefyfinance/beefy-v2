@@ -1083,7 +1083,7 @@ export const pools = [
     oracleId: "cafev2-brew-bnb",
     oraclePrice: 0,
     status: "active",
-    platform: "CafeSwap",
+    platform: "Other",
     assets: [
       "BREW",
       "BNB"
@@ -1110,7 +1110,7 @@ export const pools = [
     oracleId: "cafev2-brew-busd",
     oraclePrice: 0,
     status: "active",
-    platform: "CafeSwap",
+    platform: "Other",
     assets: [
       "BREW",
       "BUSD"
@@ -1414,33 +1414,6 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0x5317fA16f8603bE9C461DeF5D5A1Bf28DfE42d55",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x5317fA16f8603bE9C461DeF5D5A1Bf28DfE42d55",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
-    id: "cakev2-wbnb-gnt-eol",
-    name: "GNT-BNB LP",
-    token: "GNT-BNB LP2",
-    tokenDescription: "PancakeSwap",
-    tokenAddress: "0x3747e3e107223539FD09bb730b055A1f11F78Adf",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCakeV2GNT-BNB",
-    earnedTokenAddress: "0xB3D26C518558F10283C7870B8c97a786EC1B9098",
-    earnContractAddress: "0xB3D26C518558F10283C7870B8c97a786EC1B9098",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cakev2-wbnb-gnt",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "PancakeSwap",
-    assets: [
-      "GNT",
-      "BNB"
-    ],
-    addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0xF750A26EB0aCf95556e8529E72eD530f3b60f348",
-    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xF750A26EB0aCf95556e8529E72eD530f3b60f348",
     stratType: "StratLP",
     network: "bsc"
   },
@@ -2981,34 +2954,6 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0xA58950F05FeA2277d2608748412bf9F802eA4901/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xA58950F05FeA2277d2608748412bf9F802eA4901&outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
-    id: "cakev2-wbnb-babycak-eol",
-    name: "BABYCAKE-BNB LP",
-    token: "BABYCAKE-BNB LP2",
-    tokenDescription: "PancakeSwap",
-    tokenAddress: "0xb5e33fE13a821e55ED33C884589a804B1b4F6fD8",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCakeV2WBNB-BABYCAKE",
-    earnedTokenAddress: "0xf8fCa72E4f6276bA05bbC25f66Aa029723dbB235",
-    earnContractAddress: "0xf8fCa72E4f6276bA05bbC25f66Aa029723dbB235",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cakev2-wbnb-babycake",
-    oraclePrice: 0,
-    status: "eol",
-    retireReason: "rewards",
-    platform: "PancakeSwap",
-    assets: [
-      "BABYCAKE",
-      "BNB"
-    ],
-    addLiquidityUrl: "https://pancakeswap.finance/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0xdB8D30b74bf098aF214e862C90E647bbB1fcC58c",
-    buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c&outputCurrency=0xdB8D30b74bf098aF214e862C90E647bbB1fcC58c",
     stratType: "StratLP",
     network: "bsc"
   },
@@ -13649,33 +13594,6 @@ export const pools = [
     network: "bsc"
   },
   {
-    id: "cafe-brew-bnb",
-    logo: "degens/brew-bnb.svg",
-    name: "BREW-BNB LP",
-    token: "BREW-BNB LP",
-    tokenDescription: "CafeSwap",
-    tokenAddress: "0x723203E821f1fF2d0e396d5DD2EA390f3C9d42cF",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCafeBREW-BNB",
-    earnedTokenAddress: "0xEE24B014422a53dA2190a64C0477a300590677f2",
-    earnContractAddress: "0xEE24B014422a53dA2190a64C0477a300590677f2",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cafe-brew-bnb",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "Other",
-    assets: [
-      "BREW",
-      "BNB"
-    ],
-    removeLiquidityUrl: "https://exchange.cafeswap.finance/#/remove/0x790Be81C3cA0e53974bE2688cDb954732C9862e1/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
     id: "cafe-bifi-bnb",
     logo: "degens/BIFI-BNB.svg",
     name: "BIFI-BNB LP",
@@ -18287,6 +18205,42 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x4be63a9b26EE89b9a3a13fd0aA1D0b2427C135f8",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x4be63a9b26EE89b9a3a13fd0aA1D0b2427C135f8",
+    network: "bsc"
+  },
+  {
+    id: "baby-aot-usdt",
+    name: "A.O.T.-USDT LP",
+    token: "AOT-USDT LP",
+    tokenDescription: "BabySwap",
+    tokenAddress: "0x0866Bbea720FBFE4B22e39B8fd318982Bf6DD448",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBabyAOT-USDT",
+    earnedTokenAddress: "0xC9215F674876da17A671f22C2083E200eD78D0C8",
+    earnContractAddress: "0xC9215F674876da17A671f22C2083E200eD78D0C8",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "baby-aot-usdt",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "AOT",
+      "USDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://exchange.babyswap.finance/#/add/0x9589014F7a8547B89A6331eEEe32b7fBd5852af9/0x55d398326f99059fF775485246999027B3197955",
+    buyTokenUrl: "https://exchange.babyswap.finance/#/swap?outputCurrency=0x9589014F7a8547B89A6331eEEe32b7fBd5852af9",
     network: "bsc"
   }
 ];

@@ -1,59 +1,58 @@
 [
   {
-    "id": "fantom vault: boo-wftm-matic",
+    "id": "bsc vault: baby-aot-usdt",
     "type": "Added"
   },
   {
-    "id": "celo vault: sushi-celo-celo-mobi",
+    "id": "bsc vault: cafev2-brew-bnb",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: cafev2-brew-busd",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: cakev2-wbnb-gnt-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc vault: cakev2-wbnb-babycak-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc vault: cafe-brew-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon vault: jarvis-2jpy",
     "type": "Added"
   },
   {
-    "id": "celo vault: sushi-celo-weth-usdt",
+    "id": "avax vault: olive-dai.e-usdt.e",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: olive-busd.e-usdt.e",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: olive-olive-avax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: com-dai-avax-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax vault: png-bifi-png-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "moonriver vault: solarbeam-mimatic-usdc-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc boost: moo_baby-aot-usdt-ageoftanks",
     "type": "Added"
-  },
-  {
-    "id": "celo vault: sushi-celo-weth-daiv2",
-    "type": "Added"
-  },
-  {
-    "id": "celo vault: sushi-celo-cusd-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "celo vault: sushi-celo-wethv2-celo",
-    "type": "Added"
-  },
-  {
-    "id": "celo vault: sushi-celo-wethv2-cusd",
-    "type": "Added"
-  },
-  {
-    "id": "celo vault: sushi-celo-cusd-ceurv2",
-    "type": "Added"
-  },
-  {
-    "id": "celo vault: sushi-celo-celo-weth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "celo vault: sushi-celo-cusd-dai-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "celo vault: sushi-celo-ceur-weth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "celo vault: sushi-celo-cusd-weth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "celo vault: sushi-celo-cusd-ceur-eol",
-    "type": "synced",
-    "EOLd": true
   }
 ]

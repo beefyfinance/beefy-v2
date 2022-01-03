@@ -1443,43 +1443,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "solarbeam-mimatic-usdc-eol",
-    name: "MAI-USDC",
-    token: "MAI-USDC LP",
-    tokenDescription: "SolarBeam",
-    tokenAddress: "0x55Ee073B38BF1069D5F1Ed0AA6858062bA42F5A9",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSolarMAI-USDC",
-    earnedTokenAddress: "0x283D442e2B4561804204dB01eE7e34f74366A01d",
-    earnContractAddress: "0x283D442e2B4561804204dB01eE7e34f74366A01d",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "solarbeam-mimatic-usdc",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "SolarBeam",
-    assets: [
-      "MAI",
-      "USDC"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LOW",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=0x7f5a79576620C046a293F54FFCdbd8f2468174F1&outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
-    addLiquidityUrl: "https://app.solarbeam.io/exchange/add/0x7f5a79576620C046a293F54FFCdbd8f2468174F1/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
-    network: "moonriver",
-    retireReason: "rewards"
-  },
-  {
     id: "solarbeam-solar-rib-eol",
     name: "RIB-SOLAR",
     token: "RIB-SOLAR LP",
