@@ -274,17 +274,19 @@ function useUserVaults() {
           [pool.id]: pool,
         };
       }
-      if (pool.isBoosted) {
-        const boost = pool.boostData;
-        let symbol = `${boost.token}${boost.id}Boost`;
-        if (!isEmpty(balance.tokens[pool.network][symbol])) {
-          balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
-          if (balanceSingle.isGreaterThan(0)) {
-            newUserVaults = {
-              ...newUserVaults,
-              [pool.id]: pool,
-            };
-          }
+      if (pool.vaultBoosts?.length > 0) {
+        for (const boost of pool.vaultBoosts) {
+          let symbol = `${boost.token}${boost.id}Boost`;
+            if (!isEmpty(balance.tokens[pool.network][symbol])) {
+              balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
+              if (balanceSingle.isGreaterThan(0)) {
+                newUserVaults = {
+                  ...newUserVaults,
+                  [pool.id]: pool,
+                };
+                break;
+              }
+            }
         }
       }
     }
