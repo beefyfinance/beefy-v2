@@ -1,6 +1,6 @@
 export const styles = theme => ({
   vaultContainer: {
-    padding: '48px 0',
+    padding: '42px 0px 16px 0px',
   },
   title: {
     display: 'flex',
@@ -69,7 +69,10 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       order: 1,
     },
-    marginTop: 24,
+    marginTop: theme.spacing(3),
+    [theme.breakpoints.down('md')]: {
+      marginTop: 0,
+    },
   },
   customOrder2: {
     [theme.breakpoints.down('sm')]: {

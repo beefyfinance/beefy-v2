@@ -2,10 +2,12 @@ export const styles = theme => ({
   cardActions: {
     marginTop: theme.spacing(1),
     display: 'flex',
-    flexWrap: 'wrap',
   },
   cardAction: {
-    marginRight: '15px',
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.down('md')]: {
+      marginRight: theme.spacing(1),
+    },
   },
   text: {
     color: theme.palette.text.secondary,
