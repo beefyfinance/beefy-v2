@@ -650,6 +650,7 @@ export const pools = [
   },
   {
     id: "movr-bifi-maxi",
+    featured: true,
     logo: "single-assets/BIFI.png",
     name: "BIFI Maxi",
     token: "BIFI",

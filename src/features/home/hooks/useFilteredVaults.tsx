@@ -185,8 +185,12 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   // hide when category/tag does not match
-  if (config.category !== 'all' && !vault.tags.includes(config.category)) {
+  if (config.category !== 'all' && config.category !== 'featured' && !vault.tags.includes(config.category)) {
     return false;
+  }
+
+  if (config.category === 'featured') {
+    return vault.featured ?? false;
   }
 
   // hide when name does not include keyword
