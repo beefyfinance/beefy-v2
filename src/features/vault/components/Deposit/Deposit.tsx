@@ -309,7 +309,7 @@ export const Deposit: React.FC<DepositProps> = ({
                     {isLoading ? (
                       <Loader message={''} line={true} />
                     ) : (
-                      <Typography variant={'body1'}>
+                      <Typography className={classes.assetCount} variant={'body1'}>
                         {(
                           byDecimals(tokens[item.token].balance, tokens[item.token].decimals) as any
                         ).significant(6)}{' '}
@@ -328,7 +328,9 @@ export const Deposit: React.FC<DepositProps> = ({
                   rel="noreferrer"
                   className={classes.btnSecondary}
                 >
-                  <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+                  <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
+                    {t('Transact-BuyTkn')}
+                  </Button>
                 </a>
               )}
               {item.addLiquidityUrl && !item.buyTokenUrl && (
@@ -338,7 +340,9 @@ export const Deposit: React.FC<DepositProps> = ({
                   rel="noreferrer"
                   className={classes.btnSecondary}
                 >
-                  <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-AddLiquidity')}</Button>
+                  <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
+                    {t('Transact-AddLiquidity')}
+                  </Button>
                 </a>
               )}
             </Box>
@@ -362,7 +366,7 @@ export const Deposit: React.FC<DepositProps> = ({
                     {isLoading ? (
                       <Loader message={''} line={true} />
                     ) : (
-                      <Typography variant={'body1'}>
+                      <Typography className={classes.assetCount} variant={'body1'}>
                         {(
                           byDecimals(tokens[zapToken.symbol].balance, zapToken.decimals) as any
                         ).significant(6)}{' '}
@@ -383,7 +387,10 @@ export const Deposit: React.FC<DepositProps> = ({
               rel="noreferrer"
               className={classes.btnSecondary}
             >
-              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+              <Button
+                size="small"
+                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+              >
                 {t('Transact-BuyTkn')}
               </Button>
             </a>
@@ -394,7 +401,10 @@ export const Deposit: React.FC<DepositProps> = ({
               rel="noreferrer"
               className={classes.btnSecondary}
             >
-              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+              <Button
+                size="small"
+                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+              >
                 {t('Transact-AddLiquidity')}
               </Button>
             </a>

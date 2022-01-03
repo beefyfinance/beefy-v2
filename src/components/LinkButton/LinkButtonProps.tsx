@@ -1,5 +1,6 @@
 export interface LinkButtonProps {
-    href?: string; 
-    text?: string;
-    className?: string;
+  href?: string;
+  text?: string;
+  type?: string;
+  className?: string;
 }

@@ -303,7 +303,7 @@ export const Withdraw = ({
             {isLoading ? (
               <Loader line={true} />
             ) : (
-              <Typography variant={'body1'}>
+              <Typography className={classes.assetCount} variant={'body1'}>
                 {(state.balance as any).significant(6)} {item.token}
               </Typography>
             )}
@@ -316,7 +316,9 @@ export const Withdraw = ({
                 rel="noreferrer"
                 className={classes.btnSecondary}
               >
-                <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-BuyTkn')}</Button>
+                <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
+                  {t('Transact-BuyTkn')}
+                </Button>
               </a>
             )}
             {item.addLiquidityUrl && !item.buyTokenUrl && (
@@ -326,7 +328,9 @@ export const Withdraw = ({
                 rel="noreferrer"
                 className={classes.btnSecondary}
               >
-                <Button endIcon={<OpenInNewRoundedIcon />}>{t('Transact-AddLiquidity')}</Button>
+                <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
+                  {t('Transact-AddLiquidity')}
+                </Button>
               </a>
             )}
           </Box>
@@ -339,7 +343,10 @@ export const Withdraw = ({
               rel="noreferrer"
               className={classes.btnSecondary}
             >
-              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+              <Button
+                size="small"
+                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+              >
                 {t('Transact-BuyTkn')}
               </Button>
             </a>
@@ -350,7 +357,10 @@ export const Withdraw = ({
               rel="noreferrer"
               className={classes.btnSecondary}
             >
-              <Button size="small" endIcon={<OpenInNewRoundedIcon />}>
+              <Button
+                size="small"
+                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+              >
                 {t('Transact-AddLiquidity')}
               </Button>
             </a>

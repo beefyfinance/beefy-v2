@@ -23,26 +23,20 @@ export const styles = theme => ({
     display: 'flex',
   },
   apyTitle: {
-    ...bold,
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginBottom: '12px',
-    fontWeight: '700',
+    color: theme.palette.text.secondary,
   },
   apy: {
     marginRight: '24px',
   },
   apyValue: {
-    ...bold,
-    fontSize: '18px',
-    lineHeight: '24px',
+    fontWeight: 700,
+    color: theme.palette.text.secondary,
   },
   apyLabel: {
-    ...defaultFont,
     fontSize: '12px',
     lineHeight: '20px',
-    letterSpacing: '0.2px',
-    color: '#8585A6',
+    letterSpacing: '0.5px',
+    color: theme.palette.text.disabled,
   },
   audits: {
     display: 'flex',
@@ -59,11 +53,7 @@ export const styles = theme => ({
     ...bold,
   },
   text: {
-    fontFamily: 'Proxima Nova',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '16px',
-    lineHeight: '24px',
+    color: theme.palette.text.secondary,
     marginBottom: '28px',
   },
 });
