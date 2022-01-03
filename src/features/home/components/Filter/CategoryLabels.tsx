@@ -1,7 +1,7 @@
 export const CATEGORY_LABELS = {
-    all: 'Filter-CatgryAll',
-    stable: 'Filter-CatgryStabl',
-    beefy: 'Filter-CatgryBeefy',
-    bluechip: 'Filter-CatgryBlue',
-    low: 'Filter-CatgryLowRsk',
+  all: 'Filter-CatgryAll',
+  featured: 'Filter-CatgryFeatured',
+  stable: 'Filter-CatgryStabl',
+  bluechip: 'Filter-CatgryBlue',
+  beefy: 'Filter-CatgryBeefy',
 } as const;
