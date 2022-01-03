@@ -13,7 +13,9 @@ export const CardTitle: React.FC<CardTitleProps> = ({ title, subtitle, titleClas
       {typeof title === 'object' ? (
         <>{title}</>
       ) : (
-        <Typography className={titleClassName ?? classes.title}>{title}</Typography>
+        <Typography variant="h3" className={titleClassName ?? classes.title}>
+          {title}
+        </Typography>
       )}
       {subtitle && <Typography className={classes.subtitle}>{subtitle}</Typography>}
     </>

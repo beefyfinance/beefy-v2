@@ -159,24 +159,32 @@ export const Vault = () => {
             <Loader message={t('Vault-GetData')} />
           ) : (
             <>
-              <Box className={classes.title}>
-                <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-                <Typography variant={'h1'}>
-                  {item.name} {!item.isGovVault ? t('Vault-vault') : ''}
-                </Typography>
-              </Box>
-              <Box className={classes.badges}>
-                <img
-                  alt={item.network}
-                  src={require(`../../images/networks/${item.network}.svg`).default}
-                />
-                <DisplayTags isBoosted={isBoosted} tags={item.tags} />
-              </Box>
-              <Box>
-                <span className={classes.platformContainer}>
-                  <Typography className={classes.platformLabel}>{t('PLATFORM')}:&nbsp;</Typography>
-                  <Typography className={classes.platformValue}>{item.platform}</Typography>
-                </span>
+              <Box className={classes.header}>
+                <Box className={classes.title}>
+                  <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+                  <Typography variant="h2">
+                    {item.name} {!item.isGovVault ? t('Vault-vault') : ''}
+                  </Typography>
+                </Box>
+                <Box>
+                  <Box className={classes.badges}>
+                    <DisplayTags isBoosted={isBoosted} tags={item.tags} />
+                  </Box>
+                  <Box>
+                    <span className={classes.platformContainer}>
+                      <Box className={classes.chainContainer}>
+                        <Typography className={classes.platformLabel}>
+                          {t('Chain')}: <span>{item.network}</span>
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Typography className={classes.platformLabel}>
+                          {t('PLATFORM')}: <span>{item.platform}</span>
+                        </Typography>
+                      </Box>
+                    </span>
+                  </Box>
+                </Box>
               </Box>
               <VaultsStats
                 item={item}

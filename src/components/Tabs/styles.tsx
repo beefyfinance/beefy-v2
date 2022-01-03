@@ -1,8 +1,9 @@
 export const styles = theme => ({
   container: {},
   tabs: {
-    backgroundColor: '#14182B',
-    borderRadius: 40,
+    backgroundColor: theme.palette.background.default,
+    borderRadius: 8,
+    border: `2px solid ${theme.palette.background.vaults.defaultOutline}`,
     '& .MuiTabs-indicator': {
       display: 'none',
       color: 'transparent',
@@ -11,16 +12,16 @@ export const styles = theme => ({
       minWidth: 70,
     },
     '& .MuiTab-textColorPrimary': {
-      fontWeight: 600,
-      letterSpacing: 0.2,
-      color: '#484F7F',
+      color: theme.palette.text.disabled,
     },
     '& .Mui-selected': {
-      backgroundColor: '#484F7F',
-      borderRadius: 40,
-      color: 'white',
-      border: '3px solid #14182B',
+      backgroundColor: theme.palette.primary.main,
+      borderRadius: 8,
+      color: theme.palette.text.primary,
       padding: '5px',
+    },
+    '& .MuiTab-wrapper': {
+      fontWeight: 700,
     },
   },
   basicTabs: {
@@ -36,10 +37,10 @@ export const styles = theme => ({
     '& .MuiTab-textColorPrimary': {
       fontWeight: 600,
       letterSpacing: 0.2,
-      color: '#484F7F',
+      color: theme.palette.text.disabled,
     },
     '& .Mui-selected': {
-      color: 'white',
+      color: theme.palette.text.primary,
     },
   },
 });

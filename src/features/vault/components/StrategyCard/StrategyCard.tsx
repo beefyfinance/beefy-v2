@@ -71,12 +71,14 @@ export const StrategyCard: React.FC<StrategyCardProps> = ({
         <div className={classes.cardActions}>
           <div className={classes.cardAction}>
             <LinkButton
+              type="code"
               href={`${config[network].explorerUrl}/address/${stratAddr}`}
               text={t('Strat-Address')}
             />
           </div>
           <div className={classes.cardAction}>
             <LinkButton
+              type="code"
               href={`${config[network].explorerUrl}/address/${vaultAddr}`}
               text={t('Strat-AddressVault')}
             />
@@ -84,34 +86,42 @@ export const StrategyCard: React.FC<StrategyCardProps> = ({
         </div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.text}>
+        <Typography variant="body1" className={classes.text}>
           {stratText(stratType, platform, assets, want, vamp, t)}
         </Typography>
         <div className={classes.apysContainer}>
-          <Typography className={classes.apyTitle}>{t('Vault-ApyBreakdown')}</Typography>
+          <Typography variant="h5" className={classes.apyTitle}>
+            {t('Vault-ApyBreakdown')}
+          </Typography>
           <div className={classes.apys}>
             <div className={classes.apy}>
               <Typography className={classes.apyLabel}>{t('Vault-ApyTotal')}</Typography>
-              <Typography className={classes.apyValue}>
+              <Typography variant="h5" className={classes.apyValue}>
                 {isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
               </Typography>
             </div>
             {apy.vaultApr && (
               <div className={classes.apy}>
                 <Typography className={classes.apyLabel}>{t('Vault-VaultApr')}</Typography>
-                <Typography className={classes.apyValue}>{formatted.vaultApr}</Typography>
+                <Typography variant="h5" className={classes.apyValue}>
+                  {formatted.vaultApr}
+                </Typography>
               </div>
             )}
             {apy.tradingApr > 0 && (
               <div className={classes.apy}>
                 <Typography className={classes.apyLabel}>{t('Vault-AprTrading')}</Typography>
-                <Typography className={classes.apyValue}>{formatted.tradingApr}</Typography>
+                <Typography variant="h5" className={classes.apyValue}>
+                  {formatted.tradingApr}
+                </Typography>
               </div>
             )}
             {isBoosted && (
               <div className={classes.apy}>
                 <Typography className={classes.apyLabel}>{t('Vault-AprBoost')}</Typography>
-                <Typography className={classes.apyValue}>{formatted.boostApr}</Typography>
+                <Typography variant="h5" className={classes.apyValue}>
+                  {formatted.boostApr}
+                </Typography>
               </div>
             )}
           </div>

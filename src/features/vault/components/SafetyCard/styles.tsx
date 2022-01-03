@@ -9,11 +9,7 @@ const boldFont = {
 };
 
 export const styles = theme => ({
-  cardActions: {
-    fontSize: '18px',
-  },
   cardSubtitle: {
-    ...boldFont,
     fontSize: '18px',
     lineHeight: '24px',
     color: '#8585A6',
@@ -29,19 +25,11 @@ export const styles = theme => ({
     marginBottom: '18px',
   },
   risk: {
-    ...boldFont,
-    fontSize: '18px',
-    lineHeight: '28px',
-    color: '#FFFFFF',
-    fontWeight: 700,
+    color: theme.palette.text.secondary,
     marginRight: 8,
   },
   riskCategory: {
-    ...defaultFont,
-    fontSize: '15px',
-    lineHeight: '24px',
-    letterSpacing: '0.2px',
-    color: '#8585A6',
+    color: theme.palette.text.disabled,
   },
   infoContainer: {
     display: 'flex',
@@ -61,10 +49,7 @@ export const styles = theme => ({
   },
   notes: {
     '& p': {
-      ...defaultFont,
-      fontSize: '14px',
-      lineHeight: '20px',
-      letterSpacing: '0.2px',
+      color: theme.palette.text.secondary,
     },
     '& p:first-child': {
       marginBottom: '12px',
@@ -73,5 +58,19 @@ export const styles = theme => ({
   arrow: {
     marginTop: '5px',
     marginRight: '8px',
+  },
+  tooltipLabel: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  safetyLabel: {
+    whiteSpace: 'nowrap',
+    fontWeight: 400,
+    color: theme.palette.text.disabled,
+    textTransform: 'none', //'capitalize' no good due to localization
+    textAlign: 'left',
+  },
+  tooltipHolder: {
+    marginLeft: theme.spacing(0.5),
   },
 });

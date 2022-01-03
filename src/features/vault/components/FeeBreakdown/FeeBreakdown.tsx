@@ -202,44 +202,6 @@ export const FeeBreakdown = ({ item, formData, type }) => {
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between">
             <Typography className={classes.title}>{t('Fee-Title')}</Typography>
-            {/*<Popover title={t('Fee-Tagline')} solid size="md">
-              <div className={classes.feeBreakdownBlock}>
-                <Typography className={classes.feeBreakdownBold}>
-                  {t('Fee-DepositAmt', {
-                    amt: formattedDepositFee,
-                  })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetail}>
-                  {t('Fee-DepositTrgt')}
-                </Typography>
-              </div>
-              <div className={classes.feeBreakdownBlock}>
-                <Typography className={classes.feeBreakdownBold}>
-                  {t('Fee-WithdrawAmt', {
-                    amt: formattedWithdrawalFee,
-                  })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetail}>
-                  {t('Fee-WithdrawTrgt', {
-                    amt: formattedWithdrawalFee,
-                  })}
-                </Typography>
-              </div>
-              <div className={classes.feeBreakdownBlock}>
-                <Typography className={classes.feeBreakdownBold}>
-                  {t('Fee-Perform', { amt: '4.5%' })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetailPerf}>
-                  {t('Fee-PerformHodler', { amt: '2.5%' })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetailPerf}>
-                  {t('Fee-PerformTreas', { amt: '1.5%' })}
-                </Typography>
-                <Typography className={classes.feeBreakdownDetailPerf}>
-                  {t('Fee-PerformStrat', { amt: '0.5%' })}
-                </Typography>
-              </div>
-                </Popover>*/}
           </Box>
         </Grid>
         <Grid item xs={6}>
@@ -266,7 +228,9 @@ export const FeeBreakdown = ({ item, formData, type }) => {
         </Grid>
         <Grid item xs={12}>
           <Box pt={1}>
-            <Typography className={classes.text}>{t('Fee-PerformExt')}</Typography>
+            <Typography variant="body2" className={classes.text}>
+              {t('Fee-PerformExt')}
+            </Typography>
           </Box>
         </Grid>
       </Grid>

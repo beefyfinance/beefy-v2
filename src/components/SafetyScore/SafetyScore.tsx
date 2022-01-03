@@ -13,13 +13,16 @@ const _SafetyScore: React.FC<SafetyScoreProps> = ({ score, whiteLabel, size = 'l
     <div
       className={clsx(classes.container, {
         [classes.withSizeLarge]: size === 'lg',
+        [classes.withSizeMedium]: size === 'md',
         [classes.withWhiteLabel]: whiteLabel,
         [classes.withScoreHigh]: score > 7.5,
         [classes.withScoreMed]: score > 4 && score <= 7.5,
         [classes.withScoreLow]: score > 0 && score <= 4,
       })}
     >
-      <Typography className={classes.label}>{scoreText}</Typography>
+      <Typography variant="h3" className={classes.label}>
+        {scoreText}
+      </Typography>
       <div className={classes.barsContainer}>
         <div className={clsx(classes.bar, classes.sm)} />
         <div className={clsx(classes.bar, classes.md)} />
@@ -27,6 +30,6 @@ const _SafetyScore: React.FC<SafetyScoreProps> = ({ score, whiteLabel, size = 'l
       </div>
     </div>
   );
-}
+};
 
 export const SafetyScore = memo(_SafetyScore);
