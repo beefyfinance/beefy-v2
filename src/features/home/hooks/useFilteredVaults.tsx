@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
 import lodash from 'lodash';
+import { featuredPools } from '../../../config/vault/featured';
 
 const FILTER_STORAGE_KEY = 'homeSortConfig';
 export const FILTER_DEFAULT = {
@@ -190,7 +191,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   if (config.category === 'featured') {
-    return vault.featured ?? false;
+    return featuredPools[vault.id] ?? false;
   }
 
   // hide when name does not include keyword

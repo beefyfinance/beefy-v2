@@ -1,7 +1,6 @@
 export const pools = [
   {
     id: "cronos-bifi-gov",
-    featured: true,
     logo: "single-assets/BIFI.png",
     name: "BIFI Earnings Pool",
     token: "BIFI",
