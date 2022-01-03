@@ -176,112 +176,124 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
     <>
       {item && (
         <Box className={classes.container}>
-          <Grid spacing={4} container>
+          <Grid spacing={6} container>
             <Grid item lg={8} xs={12}>
               <Box className={classes.stats}>
                 {/**TVL */}
-                <Box className={classes.stat}>
+                <Box width={'33%'}>
                   <Typography className={classes.label}>{t('TVL')}</Typography>
                   <Typography>
                     <ValueText value={item ? formatUsd(item.tvl.toNumber()) : formatUsd(0)} />
                   </Typography>
                 </Box>
-                <Divider flexItem className={classes.divider} orientation="vertical" />
                 {/*APY-APR */}
                 <Box className={classes.stat}>
-                  <Typography className={classes.label}>
-                    {!item.isGovVault ? t('APY') : t('APR')}
-                  </Typography>
-                  {isBoosted ? (
-                    <>
-                      {' '}
-                      <Typography>
-                        <ValueText value={formatted.boostedTotalApy} />
-                      </Typography>
-                      <Typography>
-                        <ValueTached value={formatApy(item.apy.totalApy)} />
-                      </Typography>{' '}
-                    </>
-                  ) : (
-                    <>
+                  <Divider className={classes.divider} orientation="vertical" />
+                  <Box>
+                    <Typography className={classes.label}>
+                      {!item.isGovVault ? t('APY') : t('APR')}
+                    </Typography>
+                    {isBoosted ? (
+                      <>
+                        {' '}
+                        <Typography>
+                          <ValueText value={formatted.boostedTotalApy} />
+                        </Typography>
+                        <Typography>
+                          <ValueTached value={formatApy(item.apy.totalApy)} />
+                        </Typography>{' '}
+                      </>
+                    ) : (
+                      <>
+                        <Typography>
+                          <ValueText
+                            value={
+                              item.isGovVault
+                                ? formatApy(values.totalApy)
+                                : formatApy(item.apy.totalApy)
+                            }
+                          />
+                        </Typography>
+                      </>
+                    )}
+                  </Box>
+                </Box>
+                {/* DAILY */}
+                <Box display="flex">
+                  <Divider className={classes.divider} orientation="vertical" />
+                  <Box>
+                    <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
+                    {isBoosted ? (
+                      <>
+                        <Typography>
+                          <ValueText value={formatted.boostedTotalDaily} />
+                        </Typography>
+                        <Typography>
+                          <ValueTached value={item ? calcDaily(item.apy.totalApy) : 0} />
+                        </Typography>
+                      </>
+                    ) : (
                       <Typography>
                         <ValueText
                           value={
                             item.isGovVault
-                              ? formatApy(values.totalApy)
-                              : formatApy(item.apy.totalApy)
+                              ? formatApy(values.totalDaily)
+                              : calcDaily(item.apy.totalApy)
                           }
                         />
+                        {/* <ValueText value={item ? calcDaily(item.apy.totalApy) : 0} /> */}
                       </Typography>
-                    </>
-                  )}
-                </Box>
-                {/* DAILY */}
-                <Divider flexItem className={classes.divider} orientation="vertical" />
-                <Box>
-                  <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
-                  {isBoosted ? (
-                    <>
-                      <Typography>
-                        <ValueText value={formatted.boostedTotalDaily} />
-                      </Typography>
-                      <Typography>
-                        <ValueTached value={item ? calcDaily(item.apy.totalApy) : 0} />
-                      </Typography>
-                    </>
-                  ) : (
-                    <Typography>
-                      <ValueText
-                        value={
-                          item.isGovVault
-                            ? formatApy(values.totalDaily)
-                            : calcDaily(item.apy.totalApy)
-                        }
-                      />
-                      {/* <ValueText value={item ? calcDaily(item.apy.totalApy) : 0} /> */}
-                    </Typography>
-                  )}
+                    )}
+                  </Box>
                 </Box>
               </Box>
             </Grid>
             <Grid item lg={4} xs={12}>
               <Box className={classes.stats2}>
                 <Box className={classes.stat1}>
-                  <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
-                  <Typography>
-                    <ValueText value={_deposited} />
-                  </Typography>
-                  {deposited.balance.isGreaterThan(0) && (
+                  <Box>
+                    <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
                     <Typography>
-                      <ValuePrice value={depositedUsd} />
+                      <ValueText value={_deposited} />
                     </Typography>
+                    {deposited.balance.isGreaterThan(0) && (
+                      <Typography>
+                        <ValuePrice value={depositedUsd} />
+                      </Typography>
+                    )}
+                  </Box>
+                  {(item.isGovVault || lastHarvest !== 'never') && (
+                    <Divider className={classes.divider1} orientation="vertical" />
                   )}
                 </Box>
-                {(item.isGovVault || lastHarvest !== 'never') && (
-                  <Divider flexItem className={classes.divider1} orientation="vertical" />
-                )}
                 {!item.isGovVault ? (
                   <>
                     {lastHarvest !== 'never' && (
-                      <Box className={classes.stat1}>
-                        <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>
-                        <Typography>
-                          <ValueText value={lastHarvest} />
-                        </Typography>
+                      <Box className={classes.stat2}>
+                        <Box>
+                          <Typography className={classes.label}>
+                            {t('Vault-LastHarvest')}
+                          </Typography>
+                          <Typography>
+                            <ValueText value={lastHarvest} />
+                          </Typography>
+                        </Box>
                       </Box>
                     )}
                   </>
                 ) : (
-                  <Box className={classes.stat1}>
-                    <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
-                    <Typography>
-                      <ValueText value={formatDecimals(rewardsEarned)} />
-                    </Typography>
-                    {deposited.balance.isGreaterThan(0) && (
+                  <Box className={classes.stat2}>
+                    <Box>
+                      <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
                       <Typography>
-                        <ValuePrice value={rewardPrice} />
+                        <ValueText value={formatDecimals(rewardsEarned)} />
                       </Typography>
-                    )}
+                      {deposited.balance.isGreaterThan(0) && (
+                        <Typography>
+                          <ValuePrice value={rewardPrice} />
+                        </Typography>
+                      )}
+                    </Box>
                   </Box>
                 )}
               </Box>

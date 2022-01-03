@@ -33,6 +33,8 @@ export const styles = theme => ({
     },
   },
   stat: {
+    display: 'flex',
+    width: '33%',
     paddingTop: 0,
     paddingBottom: 0,
     marginRight: theme.spacing(4),
@@ -43,10 +45,19 @@ export const styles = theme => ({
   stat1: {
     paddingTop: 0,
     paddingBottom: 0,
+    display: 'flex',
+    width: '50%',
     marginLeft: theme.spacing(4),
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
       marginRight: theme.spacing(4),
+    },
+  },
+  stat2: {
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+      marginRight: theme.spacing(4),
+      width: '50%',
     },
   },
 
@@ -79,20 +90,22 @@ export const styles = theme => ({
     color: '#424866',
   },
   divider: {
-    marginRight: theme.spacing(4),
+    marginRight: theme.spacing(3),
     width: 2,
     color: theme.palette.background.vaults.defaultOutline,
-    [theme.breakpoints.down('md')]: {
-      marginRight: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      marginRight: theme.spacing(2.5),
     },
   },
   divider1: {
-    marginLeft: theme.spacing(4),
+    marginLeft: theme.spacing(3),
     width: 2,
     color: theme.palette.background.vaults.defaultOutline,
     [theme.breakpoints.down('md')]: {
-      marginLeft: 0,
-      marginRight: theme.spacing(4),
+      marginLeft: 'auto',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: theme.spacing(2.5),
     },
   },
 });
