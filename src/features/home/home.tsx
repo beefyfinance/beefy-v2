@@ -34,7 +34,6 @@ function createVaultRenderer(vaults, columns, cache) {
     if (!vault) {
       console.log(rowIndex, columnIndex, index);
     }
-
     return (
       <CellMeasurer
         cache={cache}
@@ -53,53 +52,29 @@ function createVaultRenderer(vaults, columns, cache) {
   };
 }
 
-function createVaultHeightCache(vaults, columns) {
+function createVaultHeightCache() {
   return new CellMeasurerCache({
     fixedWidth: true,
     defaultHeight: 140,
-    keyMapper: function (rowIndex, columnIndex) {
-      const index = rowIndex * columns + columnIndex;
+    keyMapper: function () {
       const orientation =
         (screen.orientation || {}).type ||
         (screen as any).mozOrientation ||
         (screen as any).msOrientation ||
         'undefined';
 
-      if (index in vaults) {
-        return (
-          vaults[index].id +
-          ':' +
-          rowIndex +
-          ':' +
-          columnIndex +
-          ':' +
-          orientation +
-          ':' +
-          window.innerWidth
-        );
-      }
-
-      return rowIndex + ':' + columnIndex + ':' + orientation + ':' + window.innerWidth;
+      return orientation + ':' + window.innerWidth;
     },
   });
 }
 
-function useVaultRenderer(vaults, isTwoColumns) {
-  const cache = useMemo(
-    () => createVaultHeightCache(vaults, isTwoColumns ? 2 : 1),
-    [isTwoColumns, vaults]
-  );
+const VirtualVaultsList = memo(({ vaults }: any) => {
+  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
+  const cache = useMemo(() => createVaultHeightCache(), []);
   const renderer = useMemo(
     () => createVaultRenderer(vaults, isTwoColumns ? 2 : 1, cache),
     [vaults, isTwoColumns, cache]
   );
-
-  return { renderer, cache };
-}
-
-const VirtualVaultsList = memo(({ vaults }: any) => {
-  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
-  const { renderer, cache } = useVaultRenderer(vaults, isTwoColumns);
 
   return (
     <WindowScroller>
