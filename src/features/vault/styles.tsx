@@ -59,11 +59,11 @@ export const styles = theme => ({
     backgroundColor: '#272B4A',
     marginTop: '20px',
     padding: '20px',
-    borderRadius: '20px',
+    borderRadius: '12px',
   },
   dw: {
     backgroundColor: '#272B4A',
-    borderRadius: '20px',
+    borderRadius: '12px',
   },
   customOrder: {
     [theme.breakpoints.up('md')]: {
@@ -81,8 +81,8 @@ export const styles = theme => ({
   },
   tabs: {
     backgroundColor: theme.palette.background.vaults.inactive,
-    borderTopLeftRadius: '20px',
-    borderTopRightRadius: '20px',
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
     '& .MuiButton-root': {
       fontSize: '16px',
       fontWeight: 600,
@@ -94,8 +94,8 @@ export const styles = theme => ({
       padding: 0,
       margin: 0,
       height: '60px',
-      borderTopLeftRadius: '20px',
-      borderTopRightRadius: '20px',
+      borderTopLeftRadius: '12px',
+      borderTopRightRadius: '12px',
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
       '&:hover': {

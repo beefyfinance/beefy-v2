@@ -7,7 +7,7 @@ export const styles = theme => ({
     textDecoration: 'none',
     backgroundColor: theme.palette.background.vaults.defaultOutline,
     padding: '2px 8px',
-    borderRadius: '8px',
+    borderRadius: '4px',
     [theme.breakpoints.down('md')]: {
       margin: '4px 0px',
     },

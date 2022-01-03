@@ -19,7 +19,7 @@ export const styles = theme => ({
     },
   },
   inputContainer: {
-    paddingTop: '10px',
+    paddingTop: '24px',
     '& .MuiPaper-root': {
       position: 'relative',
       backgroundColor: theme.palette.background.vaults.inactive,
@@ -101,10 +101,9 @@ export const styles = theme => ({
       fontWeight: 400,
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
-      borderRadius: '8px',
+      borderRadius: '4px',
       textTransform: 'capitalize',
       letterSpacing: '0.1px',
-      padding: '3px 15px 4px',
       transition: 'color 0.2s',
       width: 'max-content',
       '&:hover': {
@@ -131,6 +130,6 @@ export const styles = theme => ({
   },
   zapPromotion: {
     color: theme.palette.text.secondary,
-    margin: `${theme.spacing(2)}px 0px`,
+    marginBottom: theme.spacing(2),
   },
 });
