@@ -12,6 +12,7 @@ export const styles = theme => ({
   cardActions: {
     display: 'flex',
     flexWrap: 'wrap',
+    marginTop: theme.spacing(1),
   },
   cardAction: {
     marginRight: '15px',

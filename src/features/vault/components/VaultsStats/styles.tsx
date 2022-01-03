@@ -6,16 +6,19 @@ export const styles = theme => ({
     },
   },
   stats: {
-    marginTop: '32px',
+    marginTop: theme.spacing(4),
     height: 96,
     display: 'flex',
     justifyContent: 'flex-start',
     backgroundColor: theme.palette.background.default,
     borderRadius: '8px',
-    padding: '16px 24px',
+    padding: '16px 16px',
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(3),
+    },
   },
   stats2: {
-    marginTop: '32px',
+    marginTop: theme.spacing(4),
     height: 96,
     display: 'flex',
     justifyContent: 'flex-end',
@@ -26,12 +29,16 @@ export const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
       textAlign: 'start',
+      marginTop: 0,
     },
   },
   stat: {
     paddingTop: 0,
     paddingBottom: 0,
     marginRight: theme.spacing(4),
+    [theme.breakpoints.down('md')]: {
+      marginRight: theme.spacing(2),
+    },
   },
   stat1: {
     paddingTop: 0,
@@ -75,6 +82,9 @@ export const styles = theme => ({
     marginRight: theme.spacing(4),
     width: 2,
     color: theme.palette.background.vaults.defaultOutline,
+    [theme.breakpoints.down('md')]: {
+      marginRight: theme.spacing(2),
+    },
   },
   divider1: {
     marginLeft: theme.spacing(4),

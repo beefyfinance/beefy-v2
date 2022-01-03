@@ -8,6 +8,9 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.vaults.defaultOutline,
     padding: '2px 8px',
     borderRadius: '8px',
+    [theme.breakpoints.down('md')]: {
+      margin: '4px 0px',
+    },
   },
   text: {
     fontStyle: 'normal',

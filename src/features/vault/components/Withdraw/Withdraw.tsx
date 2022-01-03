@@ -449,34 +449,60 @@ export const Withdraw = ({
               )}
             </Box>
           </div>
-          {formData.zap?.tokens.map(zapToken => (
+          {formData.zap && (
             <FormControlLabel
               className={classes.depositTokenContainer}
-              value={zapToken.symbol}
+              value={item.assets.join('+')}
               control={<Radio />}
               label={
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
-                    <AssetsImage
-                      {...({
-                        assets: [zapToken.symbol],
-                        alt: zapToken.name,
-                      } as any)}
-                    />
+                    <AssetsImage img={item.logo} assets={item.assets} alt={item.assets.join('+')} />
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
                     {isLoading ? (
                       <Loader message={''} line={true} />
                     ) : (
                       <Typography className={classes.assetCount} variant={'body1'}>
-                        {zapToken.symbol}
+                        {item.assets.join('+')}
                       </Typography>
                     )}
                   </Box>
                 </Box>
               }
             />
-          ))}
+          )}
+          {formData.zap?.tokens.map(
+            zapToken =>
+              !zapToken.isWrapped && (
+                <FormControlLabel
+                  className={classes.depositTokenContainer}
+                  value={zapToken.symbol}
+                  control={<Radio />}
+                  label={
+                    <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                      <Box lineHeight={0}>
+                        <AssetsImage
+                          {...({
+                            assets: [zapToken.symbol],
+                            alt: zapToken.name,
+                          } as any)}
+                        />
+                      </Box>
+                      <Box flexGrow={1} pl={1} lineHeight={0}>
+                        {isLoading ? (
+                          <Loader message={''} line={true} />
+                        ) : (
+                          <Typography className={classes.assetCount} variant={'body1'}>
+                            {zapToken.symbol}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                  }
+                />
+              )
+          )}
         </RadioGroup>
         {item.buyTokenUrl && item.addLiquidityUrl && (
           <Box className={classes.btnContaniner}>
