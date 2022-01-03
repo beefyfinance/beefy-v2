@@ -52,9 +52,10 @@ export const styles = theme => ({
     tabSize: 10,
   },
   zapStep: {
-    fontSize: '14px',
-    lineHeight: '18px',
+    fontSize: '15px',
+    lineHeight: '24px',
     marginBottom: '12px',
+    color: theme.palette.text.secondary,
   },
   divider: {
     height: '2px',

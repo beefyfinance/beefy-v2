@@ -129,4 +129,8 @@ export const styles = theme => ({
     color: theme.palette.text.primary,
     fontWeight: 700,
   },
+  zapPromotion: {
+    color: theme.palette.text.secondary,
+    margin: `${theme.spacing(2)}px 0px`,
+  },
 });

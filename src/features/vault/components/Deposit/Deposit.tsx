@@ -286,6 +286,16 @@ export const Deposit: React.FC<DepositProps> = ({
   return (
     <React.Fragment>
       <Box p={3}>
+        {formData.zap && (
+          <Typography variant="body1" className={classes.zapPromotion}>
+            {t('Zap-Promotion', {
+              action: 'Deposit',
+              token1: item.assets[0],
+              token2: item.assets[1],
+            })}
+          </Typography>
+        )}
+
         <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
         <RadioGroup
           value={formData.deposit.token}

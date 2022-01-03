@@ -134,6 +134,7 @@
   "Fee-HarvestFee": "Harvest Fee",
   "Fee-TotalFee": "Total Performance Fee",
   "Fee-Title": "Beefy Fees",
+  "Zap-Promotion": "{{action}} your LP or️ ZAP⚡ in {{token1}} or {{token2}}",
   "Zap-Title": "Zap Transaction",
   "Zap-Step-Deposit-1": "To balance a liquidity pair, swap {{valueFrom}} {{tokenFrom}} for {{valueTo}} {{tokenTo}} (±{{slippageTolerancePercentage}}% slippage and deposit fee, if any)",
   "Zap-Step-Deposit-2": "Add liquidty to receive {{lpToken}}",
