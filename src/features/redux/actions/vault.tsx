@@ -198,6 +198,7 @@ const getBoosts = async (items, state, dispatch) => {
     const item = response[key],
       boost = boosts[item.id];
     const tokenDecimals = new BigNumber(10).exponentiatedBy(boost.tokenDecimals);
+    const earnedDecimals = new BigNumber(10).exponentiatedBy(boost.earnedTokenDecimals);
     const tokenPrice = boost.tokenOracleId in prices ? prices[boost.tokenOracleId] : 0;
     const earnPrice = boost.earnedOracleId in prices ? prices[boost.earnedOracleId] : 0;
     const totalStaked = boost.isMooStaked
@@ -209,7 +210,7 @@ const getBoosts = async (items, state, dispatch) => {
       .times(24)
       .times(365)
       .times(earnPrice)
-      .dividedBy(tokenDecimals);
+      .dividedBy(earnedDecimals);
 
     boost.apr = Number(yearlyRewardsInUsd.dividedBy(totalStakedInUsd));
     boost.staked = totalStaked.dividedBy(tokenDecimals);
