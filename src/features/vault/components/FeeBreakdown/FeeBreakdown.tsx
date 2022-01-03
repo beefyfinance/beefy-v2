@@ -197,7 +197,7 @@ export const FeeBreakdown = ({ item, formData, type }) => {
               )}
             </>
           )}
-          <Divider className={classes.divider} />
+          {formData.deposit.isZap && <Divider className={classes.divider} />}
         </Grid>
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between">

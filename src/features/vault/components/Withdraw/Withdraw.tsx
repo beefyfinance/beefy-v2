@@ -1,5 +1,14 @@
-import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
-import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
+import {
+  Box,
+  Button,
+  InputBase,
+  makeStyles,
+  Paper,
+  Typography,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+} from '@material-ui/core';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -374,47 +383,101 @@ export const Withdraw = ({
   return (
     <React.Fragment>
       <Box p={3}>
+        {formData.zap && (
+          <Typography variant="body1" className={classes.zapPromotion}>
+            {t('Zap-Promotion', {
+              action: 'Withdraw',
+              token1: item.assets[0],
+              token2: item.assets[1],
+            })}
+          </Typography>
+        )}
         <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
-        <Box className={classes.balanceContainer} display="flex" alignItems="center">
-          <Box lineHeight={0}>
-            <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-          </Box>
-          <Box flexGrow={1} pl={1} lineHeight={0}>
-            {isLoading ? (
-              <Loader line={true} />
-            ) : (
-              <Typography className={classes.assetCount} variant={'body1'}>
-                {(state.balance as any).significant(6)} {item.token}
-              </Typography>
-            )}
-          </Box>
-          <Box>
-            {item.buyTokenUrl && !item.addLiquidityUrl && (
-              <a
-                href={item.buyTokenUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={classes.btnSecondary}
-              >
-                <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
-                  {t('Transact-BuyTkn')}
-                </Button>
-              </a>
-            )}
-            {item.addLiquidityUrl && !item.buyTokenUrl && (
-              <a
-                href={item.addLiquidityUrl}
-                target="_blank"
-                rel="noreferrer"
-                className={classes.btnSecondary}
-              >
-                <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
-                  {t('Transact-AddLiquidity')}
-                </Button>
-              </a>
-            )}
-          </Box>
-        </Box>
+        <RadioGroup
+          value={formData.withdraw.token}
+          aria-label="deposit-asset"
+          name="deposit-asset"
+          onChange={handleWithdrawOptions}
+        >
+          <div style={{ display: 'flex' }}>
+            <FormControlLabel
+              className={classes.depositTokenContainer}
+              value={item.token}
+              control={formData.zap ? <Radio /> : <div style={{ width: 12 }} />}
+              label={
+                /*TODO: wrap label content into component */
+                <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                  <Box lineHeight={0}>
+                    <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+                  </Box>
+                  <Box flexGrow={1} pl={1} lineHeight={0}>
+                    {isLoading ? (
+                      <Loader message={''} line={true} />
+                    ) : (
+                      <Typography className={classes.assetCount} variant={'body1'}>
+                        {!formData.zap && (state.balance as any).significant(6)} {item.token}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+              }
+            />
+            <Box>
+              {item.buyTokenUrl && !item.addLiquidityUrl && (
+                <a
+                  href={item.buyTokenUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={classes.btnSecondary}
+                >
+                  <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
+                    {t('Transact-BuyTkn')}
+                  </Button>
+                </a>
+              )}
+              {item.addLiquidityUrl && !item.buyTokenUrl && (
+                <a
+                  href={item.addLiquidityUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={classes.btnSecondary}
+                >
+                  <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
+                    {t('Transact-AddLiquidity')}
+                  </Button>
+                </a>
+              )}
+            </Box>
+          </div>
+          {formData.zap?.tokens.map(zapToken => (
+            <FormControlLabel
+              className={classes.depositTokenContainer}
+              value={zapToken.symbol}
+              control={<Radio />}
+              label={
+                <Box className={classes.balanceContainer} display="flex" alignItems="center">
+                  <Box lineHeight={0}>
+                    <AssetsImage
+                      {...({
+                        assets: [zapToken.symbol],
+                        alt: zapToken.name,
+                      } as any)}
+                    />
+                  </Box>
+                  <Box flexGrow={1} pl={1} lineHeight={0}>
+                    {isLoading ? (
+                      <Loader message={''} line={true} />
+                    ) : (
+                      <Typography className={classes.assetCount} variant={'body1'}>
+                        {zapToken.symbol}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+              }
+            />
+          ))}
+        </RadioGroup>
         {item.buyTokenUrl && item.addLiquidityUrl && (
           <Box className={classes.btnContaniner}>
             <a
@@ -459,27 +522,7 @@ export const Withdraw = ({
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
           </Paper>
         </Box>
-        {formData.zap && (
-          <Box className={classes.btnContaniner}>
-            <Typography className={classes.balanceText}>Withdraw options:</Typography>
-            <ToggleButtonGroup
-              exclusive
-              onChange={handleWithdrawOptions}
-              value={formData.withdraw.token}
-              size="small"
-            >
-              <ToggleButton value={item.token}>{item.token}</ToggleButton>
-              <ToggleButton value={item.assets.join('+')}>{item.assets.join('+')}</ToggleButton>
-              {formData.zap.tokens.map(zapToken => {
-                return (
-                  !zapToken.isWrapped && (
-                    <ToggleButton value={zapToken.symbol}>{zapToken.symbol}</ToggleButton>
-                  )
-                );
-              })}
-            </ToggleButtonGroup>
-          </Box>
-        )}
+
         <FeeBreakdown item={item} formData={formData} type={'withdraw'} />
         <Box mt={2}>
           {wallet.address ? (
