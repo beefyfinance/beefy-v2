@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { memo, useMemo, useEffect } from 'react';
+import React, { memo, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, useMediaQuery } from '@material-ui/core';
@@ -167,11 +167,6 @@ const VaultsList = memo(function HomeVaultsList() {
 
 export const Home = () => {
   const classes = useStyles();
-
-  useEffect(() => {
-    document.body.style.backgroundColor = '#1B203A';
-  }, []);
-
   return (
     <React.Fragment>
       <Portfolio />
