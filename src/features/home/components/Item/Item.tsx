@@ -174,172 +174,170 @@ const _Item = ({ vault }) => {
         [classes.withGovVault]: isGovVault,
       })}
     >
-      <Grid container className={classes.dataGrid}>
-        {/*Title*/}
-        <div className={classes.titleContainer}>
-          <Grid container>
-            <Grid
-              item
-              className={classes.infoContainer}
-              style={{ marginRight: '8px', cursor: 'pointer' }}
-            >
-              <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
-                {/*Vault Image*/}
-                <AssetsImage
-                  img={item.logo}
-                  assets={item.assets}
-                  alt={item.name}
-                  {...({ size: '60px' } as any)}
-                />
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
-                {isGovVault ? (
-                  <Typography className={classes.govVaultTitle}>EARN {item.earnedToken}</Typography>
-                ) : null}
-                <div className={classes.infoContainer}>
-                  {/*Vault Name*/}
-                  <Typography variant="h4" className={classes.vaultName}>
-                    {item.name}
-                  </Typography>
-                </div>
-                <div className={classes.badgesContainter}>
-                  <div className={classes.badges}>
-                    {/*Network Image*/}
-                    <div className={classes.spacingMobile}>
-                      <img
-                        alt={item.network}
-                        src={require(`../../../../images/networks/${item.network}.svg`).default}
-                        width={24}
-                        height={24}
-                        style={{ width: '24px', height: '24px' }}
-                      />
-                    </div>
-                    {/*Vault Tags*/}
-                    <DisplayTags isBoosted={isBoosted} tags={item.tags} />
-                  </div>
-                </div>
-              </Link>
-              <span className={classes.platformContainer}>
-                <Box sx={{ marginRight: '8px' }}>
-                  <Typography className={classes.platformLabel}>
-                    {t('Chain')}: <span>{item.network}</span>
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography className={classes.platformLabel}>
-                    {t('PLATFORM')}: <span>{item.platform}</span>
-                  </Typography>
-                </Box>
-              </span>
-            </Grid>
+      {/*Title*/}
+      <div className={classes.titleContainer}>
+        <Grid container>
+          <Grid
+            item
+            className={classes.infoContainer}
+            style={{ marginRight: '8px', cursor: 'pointer' }}
+          >
+            <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+              {/*Vault Image*/}
+              <AssetsImage
+                img={item.logo}
+                assets={item.assets}
+                alt={item.name}
+                {...({ size: '60px' } as any)}
+              />
+            </Link>
           </Grid>
-        </div>
-        <div className={classes.statsContainer}>
-          <Grid container>
-            {/*BOOSTED BY*/}
-            {/* {isBoosted && parseInt(priceInDolar.balance) === 0 && ( */}
-            {isBoosted && userStaked && (
-              <div className={classes.centerSpace}>
-                <div className={classes.stat}>
-                  <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-                  <ValueText value={boostedData.name} />
-                  <Typography className={classes.label}>
-                    <ValuePrice value={t('BOOST')} />
-                  </Typography>
+          <Grid item>
+            <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+              {isGovVault ? (
+                <Typography className={classes.govVaultTitle}>EARN {item.earnedToken}</Typography>
+              ) : null}
+              <div className={classes.infoContainer}>
+                {/*Vault Name*/}
+                <Typography variant="h4" className={classes.vaultName}>
+                  {item.name}
+                </Typography>
+              </div>
+              <div className={classes.badgesContainter}>
+                <div className={classes.badges}>
+                  {/*Network Image*/}
+                  <div className={classes.spacingMobile}>
+                    <img
+                      alt={item.network}
+                      src={require(`../../../../images/networks/${item.network}.svg`).default}
+                      width={24}
+                      height={24}
+                      style={{ width: '24px', height: '24px' }}
+                    />
+                  </div>
+                  {/*Vault Tags*/}
+                  <DisplayTags isBoosted={isBoosted} tags={item.tags} />
                 </div>
               </div>
-            )}
-            {/*DEPOSIT*/}
-            {(!isBoosted || !userStaked) && (
-              <div className={classes.centerSpace}>
-                <div className={classes.stat}>
-                  <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-
-                  <ValueText blurred={blurred} value={_deposited} />
-
-                  {deposited.balance.isGreaterThan(0) && (
-                    <Typography className={classes.label}>
-                      <ValuePrice blurred={blurred} value={depositedUsd} />
-                    </Typography>
-                  )}
-                  {/* {parseInt(priceInDolar.balance) > 0 ? (
-                    <div className={classes.boostSpacer} />
-                  ) : null} */}
-                </div>
-              </div>
-            )}
-            {/*TVL*/}
+            </Link>
+            <span className={classes.platformContainer}>
+              <Box sx={{ marginRight: '8px' }}>
+                <Typography className={classes.platformLabel}>
+                  {t('Chain')}: <span>{item.network}</span>
+                </Typography>
+              </Box>
+              <Box>
+                <Typography className={classes.platformLabel}>
+                  {t('PLATFORM')}: <span>{item.platform}</span>
+                </Typography>
+              </Box>
+            </span>
+          </Grid>
+        </Grid>
+      </div>
+      <div className={classes.statsContainer}>
+        <Grid container>
+          {/*BOOSTED BY*/}
+          {/* {isBoosted && parseInt(priceInDolar.balance) === 0 && ( */}
+          {isBoosted && userStaked && (
             <div className={classes.centerSpace}>
               <div className={classes.stat}>
-                <Typography className={classes.label}>{t('TVL')}</Typography>
-                <Typography className={classes.value}>{formattedTVL}</Typography>
+                <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
+                <ValueText value={boostedData.name} />
+                <Typography className={classes.label}>
+                  <ValuePrice value={t('BOOST')} />
+                </Typography>
+              </div>
+            </div>
+          )}
+          {/*DEPOSIT*/}
+          {(!isBoosted || !userStaked) && (
+            <div className={classes.centerSpace}>
+              <div className={classes.stat}>
+                <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
+
+                <ValueText blurred={blurred} value={_deposited} />
+
+                {deposited.balance.isGreaterThan(0) && (
+                  <Typography className={classes.label}>
+                    <ValuePrice blurred={blurred} value={depositedUsd} />
+                  </Typography>
+                )}
+                {/* {parseInt(priceInDolar.balance) > 0 ? (
+                    <div className={classes.boostSpacer} />
+                  ) : null} */}
+              </div>
+            </div>
+          )}
+          {/*TVL*/}
+          <div className={classes.centerSpace}>
+            <div className={classes.stat}>
+              <Typography className={classes.label}>{t('TVL')}</Typography>
+              <Typography className={classes.value}>{formattedTVL}</Typography>
+              {isTwoColumns || isBoosted || deposited.balance.isGreaterThan(0) ? (
+                <div className={classes.boostSpacer} />
+              ) : null}
+            </div>
+          </div>
+          {/*APY STATS*/}
+          <ApyStats
+            {...({
+              isBoosted: isBoosted,
+              launchpoolApr: boostedData,
+              apy: item.apy,
+              spacer: isTwoColumns || (!isBoosted && deposited.balance.isGreaterThan(0)),
+              isGovVault: item.isGovVault ?? false,
+            } as any)}
+          />
+          {/*Rewards/Safety Score*/}
+          {isGovVault ? (
+            <div className={classes.centerSpace}>
+              <div className={classes.stat}>
+                <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
+
+                <ValueText
+                  blurred={blurred}
+                  value={(formatDecimals(rewardsEarned) ?? '') + ` ${item.earnedToken}`}
+                />
+                {deposited.balance.isGreaterThan(0) && (
+                  <Typography className={classes.label}>
+                    <ValuePrice blurred={blurred} value={rewardPrice} />
+                  </Typography>
+                )}
+                {isTwoColumns ? <div className={classes.boostSpacer} /> : null}
+              </div>
+            </div>
+          ) : (
+            <div className={classes.centerSpace}>
+              <div className={classes.stat}>
+                <div className={classes.tooltipLabel}>
+                  <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
+                  <div className={classes.tooltipHolder}>
+                    <Popover
+                      {...({
+                        title: t('Safety-ScoreWhat'),
+                        content: t('Safety-ScoreExpl'),
+                      } as any)}
+                    />
+                  </div>
+                </div>
+                <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
                 {isTwoColumns || isBoosted || deposited.balance.isGreaterThan(0) ? (
                   <div className={classes.boostSpacer} />
                 ) : null}
               </div>
             </div>
-            {/*APY STATS*/}
-            <ApyStats
-              {...({
-                isBoosted: isBoosted,
-                launchpoolApr: boostedData,
-                apy: item.apy,
-                spacer: isTwoColumns || (!isBoosted && deposited.balance.isGreaterThan(0)),
-                isGovVault: item.isGovVault ?? false,
-              } as any)}
-            />
-            {/*Rewards/Safety Score*/}
-            {isGovVault ? (
-              <div className={classes.centerSpace}>
-                <div className={classes.stat}>
-                  <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
-
-                  <ValueText
-                    blurred={blurred}
-                    value={(formatDecimals(rewardsEarned) ?? '') + ` ${item.earnedToken}`}
-                  />
-                  {deposited.balance.isGreaterThan(0) && (
-                    <Typography className={classes.label}>
-                      <ValuePrice blurred={blurred} value={rewardPrice} />
-                    </Typography>
-                  )}
-                  {isTwoColumns ? <div className={classes.boostSpacer} /> : null}
-                </div>
-              </div>
-            ) : (
-              <div className={classes.centerSpace}>
-                <div className={classes.stat}>
-                  <div className={classes.tooltipLabel}>
-                    <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
-                    <div className={classes.tooltipHolder}>
-                      <Popover
-                        {...({
-                          title: t('Safety-ScoreWhat'),
-                          content: t('Safety-ScoreExpl'),
-                        } as any)}
-                      />
-                    </div>
-                  </div>
-                  <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
-                  {isTwoColumns || isBoosted || deposited.balance.isGreaterThan(0) ? (
-                    <div className={classes.boostSpacer} />
-                  ) : null}
-                </div>
-              </div>
-            )}
-            {/*Open Vault*/}
-            <div className={classes.centerSpaceOpen} style={{ padding: 0 }}>
-              <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
-                <Button size="large" className={classes.depositButton}>
-                  {isGovVault ? t('Vault-Open-Pool') : t('Vault-Open')}
-                </Button>
-              </Link>
-            </div>
-          </Grid>
-        </div>
-      </Grid>
+          )}
+          {/*Open Vault*/}
+          <div className={classes.centerSpaceOpen} style={{ padding: 0 }}>
+            <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+              <Button size="large" className={classes.depositButton}>
+                {isGovVault ? t('Vault-Open-Pool') : t('Vault-Open')}
+              </Button>
+            </Link>
+          </div>
+        </Grid>
+      </div>
     </div>
   );
 };
