@@ -13,7 +13,8 @@ import {
   Typography,
   Divider,
 } from '@material-ui/core';
-import { Menu, Close } from '@material-ui/icons';
+import Menu from '@material-ui/icons/Menu';
+import Close from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { WalletContainer } from './components/WalletContainer';
 import { useTranslation } from 'react-i18next';

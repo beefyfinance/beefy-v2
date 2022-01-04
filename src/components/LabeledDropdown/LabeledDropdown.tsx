@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { makeStyles, Box, MenuItem, Select, Typography } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import { LabeledDropdownProps } from './LabeledDropdownProps';
 
 import { styles } from './styles';

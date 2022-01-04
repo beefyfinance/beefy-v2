@@ -17,7 +17,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Loader } from '../../components/loader';
-import { ArrowLeft, Language, Telegram, Twitter } from '@material-ui/icons';
+import ArrowLeft from '@material-ui/icons/ArrowLeft';
+import Language from '@material-ui/icons/Language';
+import Telegram from '@material-ui/icons/Telegram';
+import Twitter from '@material-ui/icons/Twitter';
 import { styles } from './styles';
 import { isEmpty } from '../../helpers/utils';
 import { useTranslation } from 'react-i18next';
