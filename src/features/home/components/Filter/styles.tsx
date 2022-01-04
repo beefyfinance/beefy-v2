@@ -122,6 +122,9 @@ export const styles = theme => ({
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.background.filters.inactive,
     },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '0.875rem',
+    },
   },
   searchInput: {
     borderRadius: 8,
