@@ -247,7 +247,7 @@ const _Filter: React.FC<FilterProps> = ({
           />
         </Box>
         {/*All Filters Button*/}
-        <Button onClick={handleClick} className={classes.btnFilter}>
+        <Button aria-describedby={id} onClick={handleClick} className={classes.btnFilter}>
           {filtersCount >= 1 ? (
             <Box className={classes.badge}>{filtersCount}</Box>
           ) : (
@@ -269,6 +269,10 @@ const _Filter: React.FC<FilterProps> = ({
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
         }}
       >
         <Box className={classes.filterContent}>

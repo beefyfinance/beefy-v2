@@ -117,6 +117,7 @@ export const styles = theme => ({
     padding: '8px 24px',
     backgroundColor: theme.palette.primary.main,
     height: 43,
+    marginRight: theme.spacing(2),
     '&:hover': {
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.background.filters.inactive,
@@ -291,9 +292,12 @@ export const styles = theme => ({
   },
   filter: {
     '& .MuiPopover-paper': {
-      minWidth: '350px',
+      maxWidth: '400px',
       backgroundColor: theme.palette.background.filters.inactive,
       border: `2px solid ${theme.palette.background.filters.outline}`,
+      [theme.breakpoints.down('md')]: {
+        maxWidth: '300px',
+      },
     },
   },
   filterContent: { padding: 24 },
