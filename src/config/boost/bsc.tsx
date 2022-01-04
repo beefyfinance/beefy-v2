@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const nfty = {
   logo: "stake/nfty/logo.png",
   background: "stake/nfty/bg.png",
@@ -9,6 +10,7 @@ const nfty = {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mogul = {
   logo: "stake/mogul/logo.png",
   background: "stake/mogul/bg.png",
@@ -20,6 +22,7 @@ const mogul = {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ceek = {
   logo: "stake/ceek/logo.png",
   background: "stake/ceek/bg.png",
@@ -31,6 +34,7 @@ const ceek = {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const moonpot = {
   logo: "stake/moonpot/logo.png",
   background: "stake/moonpot/bg.png",
