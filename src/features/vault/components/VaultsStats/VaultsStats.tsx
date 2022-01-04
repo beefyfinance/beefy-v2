@@ -14,7 +14,7 @@ import { styles } from './styles';
 import { useLastHarvest } from '../../hooks/useLastHarvest';
 
 const useStyles = makeStyles(styles as any);
-export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
+function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
   const lastHarvest = useLastHarvest(item.id);
   const classes = useStyles();
@@ -307,4 +307,6 @@ export const VaultsStats = ({ item, boostedData, isBoosted, vaultBoosts }) => {
       )}
     </>
   );
-};
+}
+
+export const VaultsStats = React.memo(VaultsStatsComponent);

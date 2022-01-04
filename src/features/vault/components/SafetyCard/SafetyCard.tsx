@@ -15,7 +15,7 @@ import up from './up.svg';
 import down from './down.svg';
 
 const useStyles = makeStyles(styles as any);
-export const SafetyCard = ({ vaultRisks, score }) => {
+function SafetyCardComponent({ vaultRisks, score }) {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -76,4 +76,6 @@ export const SafetyCard = ({ vaultRisks, score }) => {
       </CardContent>
     </Card>
   ); //return
-}; //const SafetyCard
+} //const SafetyCard
+
+export const SafetyCard = React.memo(SafetyCardComponent);

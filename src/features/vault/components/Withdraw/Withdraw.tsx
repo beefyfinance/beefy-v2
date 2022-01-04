@@ -547,7 +547,14 @@ export const Withdraw = ({
           </Paper>
         </Box>
 
-        <FeeBreakdown item={item} formData={formData} type={'withdraw'} />
+        <FeeBreakdown
+          item={item}
+          slippageTolerance={formData.slippageTolerance}
+          zapEstimate={formData.withdraw.zapEstimate}
+          isZapSwap={formData.withdraw.isZapSwap}
+          isZap={formData.withdraw.isZap}
+          type={'withdraw'}
+        />
         <Box mt={2}>
           {wallet.address ? (
             item.network !== wallet.network ? (

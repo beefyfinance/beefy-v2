@@ -14,10 +14,13 @@ import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatUsd, formatApy } from '../../../../helpers/format';
 import { styles } from './styles';
-import { GraphProps } from './GraphProps';
-
+interface GraphProps {
+  oracleId: any;
+  vaultId: any;
+  network: any;
+}
 const useStyles = makeStyles(styles as any);
-export const Graph: React.FC<GraphProps> = ({ oracleId, vaultId, network }) => {
+function GraphComponent({ oracleId, vaultId, network }: GraphProps) {
   const classes = useStyles();
   const [stat, setStat] = useState(2);
   const [period, setPeriod] = useState(2);
@@ -80,4 +83,6 @@ export const Graph: React.FC<GraphProps> = ({ oracleId, vaultId, network }) => {
       </CardContent>
     </Card>
   );
-};
+}
+
+export const Graph = React.memo(GraphComponent);
