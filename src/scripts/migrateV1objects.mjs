@@ -32,6 +32,7 @@ run. To cut down onrepository pollution, the maintainer may avoid pushing this f
 the staging repository.
 
 Development
++ v0.7.0.1 AllTrades: small bugfix to preserve common-partner references
 + v0.7 AllTrades: migrate boosts as well as vaults
 + v0.5.6.0.1 AllTrades: small bugfix
 + v0.5.6.0.0 AllTrades: fix bug where v1 deposits-paused property was not being reflected 
@@ -705,10 +706,18 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 									//change the target's partner reference to the newly formed  
 									//	common-partner descriptor
 									o_trgt[ S_PROP][ I] = O;
-								//else if this counterpart common-partner descriptor on the target's side 
-								//	has not yet been vetted for change, do it now
-								}else if (!O_ctxTrgt[ mS_PRPNM_CHKD])
-									vetCommonPartner( O_PTNR, O_ctxTrgt, S_ID, O_hit);
+								//else the target side has a matching common-partner descriptor, so...
+								}else	{
+									//mark this partner constituent of the target boost descriptor as tied to 
+									//	the target-side common-partner descriptor, if only in case the 
+									//	target's array of vaults needs to be persisted
+									o_trgt[ S_PROP][ I] = O_ctxTrgt;
+
+									//if the counterpart common-partner descriptor on the target's side has 
+									//	not yet been vetted for change, do it now
+									if (!O_ctxTrgt[ mS_PRPNM_CHKD])
+										vetCommonPartner( O_PTNR, O_ctxTrgt, S_ID, O_hit);
+								} //if (!O_ctxTrgt)
 
 								//if no change to the boost descriptor has been located yet but some was in 
 								//	the common-partner descriptor, flow that note of change through onto 
