@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, useMediaQuery } from '@material-ui/core';
@@ -27,17 +27,72 @@ export function notifyResize() {
   window.dispatchEvent(event);
 }
 
-function createVaultRenderer(vaults, columns, cache) {
-  return function vaultRenderer({ rowIndex, columnIndex, parent, key, style }) {
-    const index = rowIndex * columns + columnIndex;
-    const vault = vaults[index] ?? null;
+interface VirtualVaultsListProps {
+  vaults: any[];
+  columns: number;
+}
+
+class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
+  cache: CellMeasurerCache;
+  constructor(props: VirtualVaultsListProps) {
+    super(props);
+    this.cache = new CellMeasurerCache({
+      fixedWidth: true,
+      defaultHeight: 140,
+      keyMapper: function () {
+        const orientation =
+          (screen.orientation || {}).type ||
+          (screen as any).mozOrientation ||
+          (screen as any).msOrientation ||
+          'undefined';
+
+        return orientation + ':' + window.innerWidth;
+      },
+    });
+
+    this._renderVault = this._renderVault.bind(this);
+  }
+
+  render() {
+    return (
+      <WindowScroller>
+        {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
+          <AutoSizer disableHeight>
+            {({ width }) => (
+              <div ref={registerChild}>
+                <GridVirtualized
+                  autoHeight
+                  height={height}
+                  isScrolling={isScrolling}
+                  onScroll={onChildScroll}
+                  overscanRowCount={2}
+                  rowCount={ceil(this.props.vaults.length / this.props.columns)}
+                  rowHeight={this.cache.rowHeight}
+                  cellRenderer={this._renderVault}
+                  scrollTop={scrollTop}
+                  width={width}
+                  deferredMeasurementCache={this.cache}
+                  columnCount={this.props.columns}
+                  columnWidth={width / this.props.columns}
+                  style={{ outline: 'none' }}
+                />
+              </div>
+            )}
+          </AutoSizer>
+        )}
+      </WindowScroller>
+    );
+  }
+
+  _renderVault({ rowIndex, columnIndex, parent, key, style }) {
+    const index = rowIndex * this.props.columns + columnIndex;
+    const vault = this.props.vaults[index] ?? null;
     if (!vault) {
       console.log(rowIndex, columnIndex, index);
     }
-
     return (
       <CellMeasurer
-        cache={cache}
+        cache={this.cache}
         key={key}
         columnIndex={columnIndex}
         rowIndex={rowIndex}
@@ -50,90 +105,13 @@ function createVaultRenderer(vaults, columns, cache) {
         )}
       </CellMeasurer>
     );
-  };
+  }
 }
-
-function createVaultHeightCache(vaults, columns) {
-  return new CellMeasurerCache({
-    fixedWidth: true,
-    defaultHeight: 140,
-    keyMapper: function (rowIndex, columnIndex) {
-      const index = rowIndex * columns + columnIndex;
-      const orientation =
-        (screen.orientation || {}).type ||
-        (screen as any).mozOrientation ||
-        (screen as any).msOrientation ||
-        'undefined';
-
-      if (index in vaults) {
-        return (
-          vaults[index].id +
-          ':' +
-          rowIndex +
-          ':' +
-          columnIndex +
-          ':' +
-          orientation +
-          ':' +
-          window.innerWidth
-        );
-      }
-
-      return rowIndex + ':' + columnIndex + ':' + orientation + ':' + window.innerWidth;
-    },
-  });
-}
-
-function useVaultRenderer(vaults, isTwoColumns) {
-  const cache = useMemo(
-    () => createVaultHeightCache(vaults, isTwoColumns ? 2 : 1),
-    [isTwoColumns, vaults]
-  );
-  const renderer = useMemo(
-    () => createVaultRenderer(vaults, isTwoColumns ? 2 : 1, cache),
-    [vaults, isTwoColumns, cache]
-  );
-
-  return { renderer, cache };
-}
-
-const VirtualVaultsList = memo(({ vaults }: any) => {
-  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
-  const { renderer, cache } = useVaultRenderer(vaults, isTwoColumns);
-
-  return (
-    <WindowScroller>
-      {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
-        <AutoSizer disableHeight>
-          {({ width }) => (
-            <div ref={registerChild}>
-              <GridVirtualized
-                autoHeight
-                height={height}
-                isScrolling={isScrolling}
-                onScroll={onChildScroll}
-                overscanRowCount={2}
-                rowCount={isTwoColumns ? ceil(vaults.length / 2) : vaults.length}
-                rowHeight={cache.rowHeight}
-                cellRenderer={renderer}
-                scrollTop={scrollTop}
-                width={width}
-                deferredMeasurementCache={cache}
-                columnCount={isTwoColumns ? 2 : 1}
-                columnWidth={isTwoColumns ? width / 2 : width}
-                style={{ outline: 'none' }}
-              />
-            </div>
-          )}
-        </AutoSizer>
-      )}
-    </WindowScroller>
-  );
-});
 
 const VaultsList = memo(function HomeVaultsList() {
   const classes = useStyles();
   const { t } = useTranslation();
+  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
   const isPoolsLoading = useSelector((state: any) => state.vaultReducer.isPoolsLoading);
   const platforms = useSelector((state: any) => state.vaultReducer.platforms);
   const { sortedVaults, filterConfig, setFilterConfig, filteredVaultsCount, allVaultsCount } =
@@ -159,7 +137,7 @@ const VaultsList = memo(function HomeVaultsList() {
           <EmptyStates setFilterConfig={setFilterConfig} />
         )}
         {filterConfig.deposited && !address && <EmptyStates setFilterConfig={setFilterConfig} />}
-        <VirtualVaultsList vaults={sortedVaults} />
+        <VirtualVaultsList vaults={sortedVaults} columns={isTwoColumns ? 2 : 1} />
       </div>
     </>
   );
