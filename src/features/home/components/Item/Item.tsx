@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, ReactNode, useMemo } from 'react';
 import { Button, Grid, makeStyles, Typography, useMediaQuery, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -16,96 +16,98 @@ import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
 import { useHideBalanceCtx } from '../../../../components/HideBalancesContext';
 
-const useStyles = makeStyles(styles as any);
-const _Item = ({ vault }) => {
-  const item = vault;
-
-  const isBoosted = vault.isBoosted;
-  const boostedData = vault.boostData;
-  const vaultBoosts = vault.boosts;
-  const isGovVault = item.isGovVault;
-  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
-
-  const { hideBalance } = useHideBalanceCtx();
-
-  const { t } = useTranslation();
-  const { wallet, balance } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-    balance: state.balanceReducer,
-  }));
-  const pricesReducer = useSelector((state: any) => state.pricesReducer);
-  const [deposited, setDeposited] = React.useState({
-    balance: new BigNumber(0),
-    shares: new BigNumber(0),
-  });
-  const [poolRewards, setPoolRewards] = React.useState({
-    balance: new BigNumber(0),
-    shares: new BigNumber(0),
-  });
-  const [userStaked, setUserStaked] = React.useState(false);
-  const formattedTVL = useMemo(() => formatUsd(item.tvl.toNumber()), [item.tvl]);
-
-  const blurred = deposited.balance.isGreaterThan(0) && hideBalance;
-
-  const styleProps = {
-    marginStats: isTwoColumns && !isGovVault && !isBoosted,
-    removeMarginButton: isGovVault && poolRewards.balance.isGreaterThan(0),
+interface InitialVaultData {
+  deposited: {
+    balance: BigNumber;
+    shares: BigNumber;
   };
-  const classes = useStyles(styleProps as any);
+  poolRewards: {
+    balance: BigNumber;
+    shares: BigNumber;
+  };
+  userStaked: boolean;
+}
 
-  React.useEffect(() => {
-    let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
+function getDepositedAndPoolRewards({ vault: item, wallet, balance }): InitialVaultData {
+  let res: InitialVaultData = {
+    deposited: {
+      balance: new BigNumber(0),
+      shares: new BigNumber(0),
+    },
+    poolRewards: {
+      balance: new BigNumber(0),
+      shares: new BigNumber(0),
+    },
+    userStaked: false,
+  };
+  let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
 
-    let balanceSingle = new BigNumber(0);
-    let rewardsBalance = new BigNumber(0);
-    let sharesBalance = new BigNumber(0);
-    let rewardsSharesBalance = new BigNumber(0);
+  let balanceSingle = new BigNumber(0);
+  let rewardsBalance = new BigNumber(0);
+  let sharesBalance = new BigNumber(0);
+  let rewardsSharesBalance = new BigNumber(0);
 
-    if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
-      if (item.isGovVault) {
+  if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
+    if (item.isGovVault) {
+      balanceSingle = byDecimals(balance.tokens[item.network][symbol].balance, item.tokenDecimals);
+      rewardsBalance = byDecimals(
+        new BigNumber(balance.tokens[item.network][symbol].rewards),
+        item.tokenDecimals
+      );
+      sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
+      rewardsSharesBalance = byDecimals(
+        new BigNumber(balance.tokens[item.network][symbol].rewards)
+      );
+    } else {
+      balanceSingle = byDecimals(
+        new BigNumber(balance.tokens[item.network][item.earnedToken].balance)
+          .multipliedBy(byDecimals(item.pricePerFullShare))
+          .toFixed(8),
+        item.tokenDecimals
+      );
+      sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
+    }
+    if (item.isBoosted) {
+      const boost = item.boostData;
+      let symbol = `${boost.token}${boost.id}Boost`;
+      if (!isEmpty(balance.tokens[item.network][symbol])) {
         balanceSingle = byDecimals(
-          balance.tokens[item.network][symbol].balance,
-          item.tokenDecimals
-        );
-        rewardsBalance = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].rewards),
+          new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+            byDecimals(item.pricePerFullShare)
+          ),
           item.tokenDecimals
         );
         sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-        rewardsSharesBalance = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].rewards)
-        );
-      } else {
-        balanceSingle = byDecimals(
-          new BigNumber(balance.tokens[item.network][item.earnedToken].balance)
-            .multipliedBy(byDecimals(item.pricePerFullShare))
-            .toFixed(8),
-          item.tokenDecimals
-        );
-        sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-      }
-      if (item.isBoosted) {
-        const boost = item.boostData;
-        let symbol = `${boost.token}${boost.id}Boost`;
-        if (!isEmpty(balance.tokens[item.network][symbol])) {
-          balanceSingle = byDecimals(
-            new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-              byDecimals(item.pricePerFullShare)
-            ),
-            item.tokenDecimals
-          );
-          sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-          if (balanceSingle.isGreaterThan(0)) {
-            setUserStaked(true);
-          }
+        if (balanceSingle.isGreaterThan(0)) {
+          res.userStaked = true;
         }
       }
     }
-    setDeposited({ balance: balanceSingle, shares: sharesBalance });
-    setPoolRewards({ balance: rewardsBalance, shares: rewardsSharesBalance });
-  }, [wallet.address, item, balance, vaultBoosts]);
+  }
+  res.deposited = { balance: balanceSingle, shares: sharesBalance };
+  res.poolRewards = { balance: rewardsBalance, shares: rewardsSharesBalance };
+  return res;
+}
 
-  const ValueText = ({ value, blurred = false }) => (
+const formatDecimals = number => {
+  return number.isGreaterThanOrEqualTo(0)
+    ? number.toFixed(4)
+    : number.isEqualTo(0)
+    ? 0
+    : number.toFixed(8);
+};
+
+function ValueText({
+  styleProps,
+  value,
+  blurred = false,
+}: {
+  styleProps: StyleProps;
+  value: ReactNode | null;
+  blurred?: boolean;
+}) {
+  const classes = useStyles(styleProps as any);
+  return (
     <>
       {value ? (
         <span
@@ -121,8 +123,19 @@ const _Item = ({ vault }) => {
       )}
     </>
   );
+}
 
-  const ValuePrice = ({ value, blurred = false }) => (
+function ValuePrice({
+  styleProps,
+  value,
+  blurred = false,
+}: {
+  styleProps: StyleProps;
+  value: ReactNode | null;
+  blurred?: boolean;
+}) {
+  const classes = useStyles(styleProps as any);
+  return (
     <>
       {value ? (
         <span
@@ -138,6 +151,42 @@ const _Item = ({ vault }) => {
       )}
     </>
   );
+}
+
+interface StyleProps {
+  marginStats: boolean;
+  removeMarginButton: boolean;
+}
+const useStyles = makeStyles(styles as any);
+const _Item = ({ vault }) => {
+  const item = vault;
+
+  const isBoosted = vault.isBoosted;
+  const boostedData = vault.boostData;
+  const isGovVault = item.isGovVault;
+  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
+
+  const { hideBalance } = useHideBalanceCtx();
+
+  const { t } = useTranslation();
+  const { wallet, balance } = useSelector((state: any) => ({
+    wallet: state.walletReducer,
+    balance: state.balanceReducer,
+  }));
+  const { deposited, poolRewards, userStaked } = React.useMemo(
+    () => getDepositedAndPoolRewards({ vault: item, wallet, balance }),
+    [wallet, item, balance]
+  );
+  const pricesReducer = useSelector((state: any) => state.pricesReducer);
+  const formattedTVL = useMemo(() => formatUsd(item.tvl.toNumber()), [item.tvl]);
+
+  const blurred = deposited.balance.isGreaterThan(0) && hideBalance;
+
+  const styleProps = {
+    marginStats: isTwoColumns && !isGovVault && !isBoosted,
+    removeMarginButton: isGovVault && poolRewards.balance.isGreaterThan(0),
+  };
+  const classes = useStyles(styleProps as any);
 
   const _deposited = deposited.balance.isGreaterThan(0)
     ? deposited.balance.toFixed(8)
@@ -154,14 +203,6 @@ const _Item = ({ vault }) => {
   const rewardPrice = poolRewards.balance.isGreaterThan(0)
     ? formatUsd(poolRewards.balance, pricesReducer.prices[item.earnedToken])
     : formatUsd(0);
-
-  const formatDecimals = number => {
-    return number.isGreaterThanOrEqualTo(0)
-      ? number.toFixed(4)
-      : number.isEqualTo(0)
-      ? 0
-      : number.toFixed(8);
-  };
 
   return (
     <div
@@ -242,9 +283,9 @@ const _Item = ({ vault }) => {
               <div className={classes.centerSpace}>
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-                  <ValueText value={boostedData.name} />
+                  <ValueText value={boostedData.name} styleProps={styleProps} />
                   <Typography className={classes.label}>
-                    <ValuePrice value={t('BOOST')} />
+                    <ValuePrice value={t('BOOST')} styleProps={styleProps} />
                   </Typography>
                 </div>
               </div>
@@ -255,11 +296,11 @@ const _Item = ({ vault }) => {
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
 
-                  <ValueText blurred={blurred} value={_deposited} />
+                  <ValueText blurred={blurred} value={_deposited} styleProps={styleProps} />
 
                   {deposited.balance.isGreaterThan(0) && (
                     <Typography className={classes.label}>
-                      <ValuePrice blurred={blurred} value={depositedUsd} />
+                      <ValuePrice blurred={blurred} value={depositedUsd} styleProps={styleProps} />
                     </Typography>
                   )}
                   {/* {parseInt(priceInDolar.balance) > 0 ? (
@@ -297,10 +338,11 @@ const _Item = ({ vault }) => {
                   <ValueText
                     blurred={blurred}
                     value={(formatDecimals(rewardsEarned) ?? '') + ` ${item.earnedToken}`}
+                    styleProps={styleProps}
                   />
                   {deposited.balance.isGreaterThan(0) && (
                     <Typography className={classes.label}>
-                      <ValuePrice blurred={blurred} value={rewardPrice} />
+                      <ValuePrice blurred={blurred} value={rewardPrice} styleProps={styleProps} />
                     </Typography>
                   )}
                   {isTwoColumns ? <div className={classes.boostSpacer} /> : null}
