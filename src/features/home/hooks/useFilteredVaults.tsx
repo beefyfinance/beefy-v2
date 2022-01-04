@@ -4,7 +4,7 @@ import { byDecimals } from '../../../helpers/format';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
-import filter from 'lodash/filter';
+import lodash from 'lodash';
 import { featuredPools } from '../../../config/vault/featured';
 
 const FILTER_STORAGE_KEY = 'homeSortConfig';
@@ -116,7 +116,7 @@ function hasWalletBalance(token, tokenBalances, network, isGovVault) {
 
 const isBoosted = (item, boostVaults) => {
   var ts = Date.now() / 1000;
-  const boostedVault = filter(boostVaults, function (vault) {
+  const boostedVault = lodash.filter(boostVaults, function (vault) {
     return (
       vault.poolId === item.id && vault.status === 'active' && parseInt(vault.periodFinish) > ts
     );
@@ -186,11 +186,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   // hide when category/tag does not match
-  if (
-    config.category !== 'all' &&
-    config.category !== 'featured' &&
-    !vault.tags.includes(config.category)
-  ) {
+  if (config.category !== 'all' && config.category !== 'featured' && !vault.tags.includes(config.category)) {
     return false;
   }
 
@@ -284,19 +280,16 @@ function useUserVaults() {
       if (pool.boosts?.length > 0) {
         for (const boost of pool.boosts) {
           let symbol = `${boost.token}${boost.id}Boost`;
-          if (!isEmpty(balance.tokens[pool.network][symbol])) {
-            balanceSingle = byDecimals(
-              balance.tokens[pool.network][symbol].balance,
-              boost.decimals
-            );
-            if (balanceSingle.isGreaterThan(0)) {
-              newUserVaults = {
-                ...newUserVaults,
-                [pool.id]: pool,
-              };
-              break;
+            if (!isEmpty(balance.tokens[pool.network][symbol])) {
+              balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
+              if (balanceSingle.isGreaterThan(0)) {
+                newUserVaults = {
+                  ...newUserVaults,
+                  [pool.id]: pool,
+                };
+                break;
+              }
             }
-          }
         }
       }
     }

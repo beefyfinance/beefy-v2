@@ -1,5 +1,5 @@
 import React from 'react';
-import find from 'lodash/find';
+import lodash from 'lodash';
 import moment from 'moment';
 import { getVaults } from '../../../helpers/api';
 
@@ -10,7 +10,7 @@ export const useLastHarvest = (vaultId: string) => {
     async function fetchData() {
       const data = await getVaults();
       // const vault = data.filter(vault => vault.id.includes(vaultId));
-      const vault = find(data, function (i) {
+      const vault = lodash.find(data, function (i) {
         return i.id === vaultId;
       });
 
