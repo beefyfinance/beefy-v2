@@ -4,7 +4,7 @@ import { byDecimals } from '../../../helpers/format';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
-import lodash from 'lodash';
+import filter from 'lodash/filter';
 import { featuredPools } from '../../../config/vault/featured';
 
 const FILTER_STORAGE_KEY = 'homeSortConfig';
@@ -116,7 +116,7 @@ function hasWalletBalance(token, tokenBalances, network, isGovVault) {
 
 const isBoosted = (item, boostVaults) => {
   var ts = Date.now() / 1000;
-  const boostedVault = lodash.filter(boostVaults, function (vault) {
+  const boostedVault = filter(boostVaults, function (vault) {
     return (
       vault.poolId === item.id && vault.status === 'active' && parseInt(vault.periodFinish) > ts
     );

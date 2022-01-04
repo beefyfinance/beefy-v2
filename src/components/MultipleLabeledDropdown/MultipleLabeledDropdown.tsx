@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash';
+import remove from 'lodash/remove';
 import { makeStyles, Box, MenuItem, Select, Typography, Checkbox } from '@material-ui/core';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
@@ -25,11 +25,11 @@ export const MultipleLabeledDropdown: React.FC<MultipleLabeledDropdownProps> = (
 
   let sortedList = Object.keys(list).sort((a, b) => (a > b ? 1 : -1));
   if (sortedList.includes('all')) {
-    _.remove(sortedList, n => n === 'all');
+    remove(sortedList, n => n === 'all');
     sortedList = ['all', ...sortedList];
   }
   if (sortedList.includes('default')) {
-    _.remove(sortedList, n => n === 'default');
+    remove(sortedList, n => n === 'default');
     sortedList = ['default', ...sortedList];
   }
 

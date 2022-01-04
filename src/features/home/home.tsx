@@ -16,7 +16,7 @@ import {
   WindowScroller,
 } from 'react-virtualized';
 import { Item } from './components/Item';
-import { ceil } from 'lodash';
+import ceil from 'lodash/ceil';
 import { CowLoader } from '../../components/CowLoader';
 
 const useStyles = makeStyles(styles as any);
