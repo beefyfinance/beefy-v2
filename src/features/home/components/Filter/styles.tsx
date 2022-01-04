@@ -69,7 +69,7 @@ export const styles = theme => ({
     [theme.breakpoints.down(725)]: {
       display: 'flex',
       width: '30%',
-      margin: '0 0 18px 0',
+      margin: '0 0 0 0',
     },
     '&.MuiToggleButton-root.Mui-selected': {
       backgroundColor: theme.palette.background.filters.active,
@@ -263,7 +263,7 @@ export const styles = theme => ({
     [theme.breakpoints.down(725)]: {
       width: '70%',
       display: 'flex',
-      margin: '0 0 18px 0',
+      margin: '0 0 0 0',
       paddingRight: '16px',
     },
   },

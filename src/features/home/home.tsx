@@ -167,11 +167,6 @@ const VaultsList = memo(function HomeVaultsList() {
 
 export const Home = () => {
   const classes = useStyles();
-
-  useEffect(() => {
-    document.body.style.backgroundColor = '#1B203A';
-  }, []);
-
   return (
     <React.Fragment>
       <Portfolio />
