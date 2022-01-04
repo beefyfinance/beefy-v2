@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { memo } from 'react';
+import React, { memo, RefObject, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import makeStyles from '@material-ui/styles/makeStyles';
@@ -36,8 +36,11 @@ interface VirtualVaultsListProps {
 
 class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
   cache: CellMeasurerCache;
+  gridRef: RefObject<any>;
   constructor(props: VirtualVaultsListProps) {
     super(props);
+
+    this.gridRef = React.createRef();
     this.cache = new CellMeasurerCache({
       fixedWidth: true,
       defaultHeight: 140,
@@ -79,6 +82,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
                   columnCount={this.props.columns}
                   columnWidth={width / this.props.columns}
                   style={{ outline: 'none' }}
+                  ref={this.gridRef}
                 />
               </div>
             )}
@@ -109,6 +113,22 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
         )}
       </CellMeasurer>
     );
+  }
+
+  componentDidUpdate(prevProps: Readonly<VirtualVaultsListProps>): void {
+    if (prevProps.vaults !== this.props.vaults) {
+      // we need to clear the cache on props change because react-virtualized
+      // uses an internal style cache that doesn't uses the keyMapper of our cache
+      // see: https://stackoverflow.com/a/65324840
+      // other methods include creating a cellRange renderer but it's way more complex
+      // see: https://github.com/bvaughn/react-virtualized/issues/1310
+      this.cache.clearAll();
+      // tell the grid about the updated data
+      // this method is way faster than unmounting and remounting the component
+      if (this.gridRef.current) {
+        this.gridRef.current.forceUpdate();
+      }
+    }
   }
 }
 
