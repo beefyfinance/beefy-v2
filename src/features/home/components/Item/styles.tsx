@@ -400,4 +400,9 @@ export const styles = theme => ({
       height: 20,
     },
   },
+  spacingMobile: {
+    [theme.breakpoints.down('sm')]: {
+      padding: '5px 0',
+    },
+  },
 });

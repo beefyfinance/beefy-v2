@@ -207,13 +207,15 @@ const _Item = ({ vault }) => {
                 <div className={classes.badgesContainter}>
                   <div className={classes.badges}>
                     {/*Network Image*/}
-                    <img
-                      alt={item.network}
-                      src={require(`../../../../images/networks/${item.network}.svg`).default}
-                      width={24}
-                      height={24}
-                      style={{ width: '24px', height: '24px' }}
-                    />
+                    <div className={classes.spacingMobile}>
+                      <img
+                        alt={item.network}
+                        src={require(`../../../../images/networks/${item.network}.svg`).default}
+                        width={24}
+                        height={24}
+                        style={{ width: '24px', height: '24px' }}
+                      />
+                    </div>
                     {/*Vault Tags*/}
                     <DisplayTags isBoosted={isBoosted} tags={item.tags} />
                   </div>
