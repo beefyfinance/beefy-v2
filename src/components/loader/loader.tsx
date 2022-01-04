@@ -1,4 +1,5 @@
-import { Box, makeStyles } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import makeStyles from '@material-ui/styles/makeStyles';
 import React from 'react';
 import { LoaderProps } from './LoaderProps';
 import { styles } from './styles';

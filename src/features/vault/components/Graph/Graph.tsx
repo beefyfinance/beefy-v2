@@ -1,4 +1,5 @@
-import { makeStyles, Box } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Box from '@material-ui/core/Box';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AreaChart, Area, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';

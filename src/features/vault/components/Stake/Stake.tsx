@@ -1,13 +1,11 @@
-import {
-  Box,
-  Button,
-  makeStyles,
-  Typography,
-  IconButton,
-  FormControl,
-  InputAdornment,
-  InputBase,
-} from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import FormControl from '@material-ui/core/FormControl';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import InputBase from '@material-ui/core/InputBase';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, makeStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/styles/makeStyles';
 import { styles } from './styles';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import CodeRoundedIcon from '@material-ui/icons/CodeRounded';

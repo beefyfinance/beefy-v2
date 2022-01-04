@@ -2,20 +2,18 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Avatar,
-  Backdrop,
-  Box,
-  Button,
-  Container,
-  Fade,
-  Grid,
-  Link,
-  makeStyles,
-  Modal,
-  Paper,
-  Typography,
-} from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Avatar from '@material-ui/core/Avatar';
+import Backdrop from '@material-ui/core/Backdrop';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Fade from '@material-ui/core/Fade';
+import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
+import Modal from '@material-ui/core/Modal';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { Loader } from '../../components/loader';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
 import Language from '@material-ui/icons/Language';

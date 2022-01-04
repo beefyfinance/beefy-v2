@@ -1,7 +1,8 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { useDispatch, useSelector } from 'react-redux';
 import { reduxActions } from './features/redux/actions';
 import { ScrollToTop } from './components/ScrollToTop';

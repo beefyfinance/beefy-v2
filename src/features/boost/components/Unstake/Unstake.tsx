@@ -1,9 +1,18 @@
-import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import InputBase from '@material-ui/core/InputBase';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Loader } from '../../../../components/loader';
-import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from '../../../../helpers/format';
+import {
+  byDecimals,
+  convertAmountToRawNumber,
+  stripExtraDecimals,
+} from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { reduxActions } from '../../../redux/actions';
@@ -136,7 +145,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
         <Box className={classes.balanceContainer} display="flex" alignItems="center">
           <Box flexGrow={1} pl={1} lineHeight={0}>
             {isLoading ? (
-              <Loader message={""} line={true} />
+              <Loader message={''} line={true} />
             ) : (
               <Typography variant={'body1'}>
                 {state.wallet} {item.token}
@@ -146,7 +155,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
           </Box>
           <Box>
             {isLoading ? (
-              <Loader message={""} line={true} />
+              <Loader message={''} line={true} />
             ) : (
               <Typography variant={'body1'}>{state.balance}</Typography>
             )}

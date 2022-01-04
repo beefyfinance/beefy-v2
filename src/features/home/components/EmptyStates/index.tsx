@@ -1,5 +1,8 @@
 import React, { memo } from 'react';
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';

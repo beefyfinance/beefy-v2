@@ -1,13 +1,9 @@
-import {
-  makeStyles,
-  Typography,
-  Popper,
-  Box,
-  BoxProps,
-  PopperPlacementType,
-} from '@material-ui/core';
 import React, { memo, useState } from 'react';
+import makeStyles from '@material-ui/styles/makeStyles';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Typography from '@material-ui/core/Typography';
+import Popper, { PopperPlacementType } from '@material-ui/core/Popper';
+import Box, { BoxProps } from '@material-ui/core/Box';
 import { PopoverProps } from './PopoverProps';
 
 import { styles } from './styles';

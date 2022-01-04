@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { SafetyScoreProps } from './SafetyScoreProps';

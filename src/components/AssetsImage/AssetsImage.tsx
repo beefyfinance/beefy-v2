@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { styles } from './styles';
-import { Avatar, makeStyles } from '@material-ui/core';
-import { AvatarGroup } from '@material-ui/lab';
+import Avatar from '@material-ui/core/Avatar';
+import makeStyles from '@material-ui/styles/makeStyles';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
 
 const useStyles = makeStyles(styles as any);

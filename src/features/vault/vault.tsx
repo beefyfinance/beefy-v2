@@ -1,4 +1,9 @@
-import { Container, makeStyles, Grid, Typography, Box, Button } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
@@ -23,12 +28,11 @@ import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 
-//allow the Harmony-blockchain entries in the address-book to be accessed via the normal  
+//allow the Harmony-blockchain entries in the address-book to be accessed via the normal
 //  "network" property values used in our core vault-object schema
-const addressBook = {..._addressBook, harmony: _addressBook.one};
+const addressBook = { ..._addressBook, harmony: _addressBook.one };
 
-const useStyles = makeStyles( styles as any);
-
+const useStyles = makeStyles(styles as any);
 
 export const Vault = () => {
   const history = useHistory();

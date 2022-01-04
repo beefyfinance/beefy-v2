@@ -1,4 +1,5 @@
-import { makeStyles, Paper } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Paper from '@material-ui/core/Paper';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
