@@ -1,6 +1,6 @@
 import { Backdrop, Box, Button, Fade, makeStyles, Modal, Typography } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import ArrowRight from '@material-ui/icons/ArrowRight';
+import { ArrowRight } from '@material-ui/icons';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
