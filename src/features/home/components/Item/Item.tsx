@@ -84,22 +84,25 @@ const _Item = ({ vault }) => {
         );
         sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
       }
-      if (item.isBoosted) {
-        const boost = item.boostData;
+      for (const boost of vaultBoosts) {
         let symbol = `${boost.token}${boost.id}Boost`;
         if (!isEmpty(balance.tokens[item.network][symbol])) {
-          balanceSingle = byDecimals(
+          balanceSingle = balanceSingle.plus(byDecimals(
             new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
               byDecimals(item.pricePerFullShare)
             ),
             item.tokenDecimals
-          );
-          sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-          if (balanceSingle.isGreaterThan(0)) {
+          ));
+          sharesBalance = sharesBalance.plus(new BigNumber(balance.tokens[item.network][symbol].balance));
+          if (balanceSingle.isGreaterThan(0) && boost.id === item.boostData?.id) {
             setUserStaked(true);
           }
         }
+        
       }
+      // if (item.isBoosted) {
+      //   const boost = item.boostData;
+      // }
     }
     setDeposited({ balance: balanceSingle, shares: sharesBalance });
     setPoolRewards({ balance: rewardsBalance, shares: rewardsSharesBalance });
