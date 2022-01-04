@@ -16,7 +16,7 @@ import {
   WindowScroller,
 } from 'react-virtualized';
 import { Item } from './components/Item';
-import { ceil } from 'lodash';
+import { ceil, debounce } from 'lodash';
 import { CowLoader } from '../../components/CowLoader';
 
 const useStyles = makeStyles(styles as any);
@@ -35,6 +35,7 @@ interface VirtualVaultsListProps {
 class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
   cache: CellMeasurerCache;
   gridRef: RefObject<any>;
+
   constructor(props: VirtualVaultsListProps) {
     super(props);
 
@@ -56,13 +57,15 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     });
 
     this._renderVault = this._renderVault.bind(this);
+    // debounce to avoid constant reloading on resize
+    this._onResize = debounce(this._onResize.bind(this), 100);
   }
 
   render() {
     return (
       <WindowScroller>
         {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
-          <AutoSizer disableHeight>
+          <AutoSizer disableHeight onResize={this._onResize}>
             {({ width }) => (
               <div ref={registerChild}>
                 <GridVirtualized
@@ -121,11 +124,25 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
       // other methods include creating a cellRange renderer but it's way more complex
       // see: https://github.com/bvaughn/react-virtualized/issues/1310
       this.cache.clearAll();
-      // tell the grid about the updated data
+      // tell the grid about the updated height data
       // this method is way faster than unmounting and remounting the component
       if (this.gridRef.current) {
         this.gridRef.current.forceUpdate();
       }
+    }
+  }
+
+  _onResize() {
+    // we need to reset height cache on resize due to the WindowScroller
+    // and AutoSizer interaction. Changing orientation makes the WindowScroller
+    // trigger a render when the AutoSizer didn't have time to trigger yet
+    // so rows render with less width, making the height higher due to content overflow
+    // and this height is put inside the various height caches
+    this.cache.clearAll();
+    // tell the grid about the updated height data
+    // this method is way faster than unmounting and remounting the component
+    if (this.gridRef.current) {
+      this.gridRef.current.forceUpdate();
     }
   }
 }
