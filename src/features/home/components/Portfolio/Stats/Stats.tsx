@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Box, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 import { formatUsd } from '../../../../../helpers/format';

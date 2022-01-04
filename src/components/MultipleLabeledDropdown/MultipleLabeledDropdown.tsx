@@ -1,11 +1,6 @@
 import React from 'react';
 import remove from 'lodash/remove';
-import Box from '@material-ui/core/Box';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Typography from '@material-ui/core/Typography';
-import Checkbox from '@material-ui/core/Checkbox';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { makeStyles, Box, MenuItem, Select, Typography, Checkbox } from '@material-ui/core';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import { MultipleLabeledDropdownProps } from './MultipleLabeledDropdownProps';

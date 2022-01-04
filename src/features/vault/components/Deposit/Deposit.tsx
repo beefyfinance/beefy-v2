@@ -1,12 +1,14 @@
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
+import {
+  Box,
+  Button,
+  InputBase,
+  makeStyles,
+  Paper,
+  Typography,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+} from '@material-ui/core';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,6 +1,5 @@
 import React from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import { CardHeaderProps } from '@material-ui/core/CardHeader';
+import { CardHeaderProps, makeStyles } from '@material-ui/core';
 
 import { styles } from './styles';
 

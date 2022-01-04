@@ -1,14 +1,13 @@
 import React, { useMemo } from 'react';
 import { Area, AreaChart, Dot, XAxis, YAxis } from 'recharts';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { makeStyles } from '@material-ui/core';
 import { styles } from '../../styles';
 import { formatApy } from '../../../../helpers/format';
 import { useSelector } from 'react-redux';
 import { buildChartData } from '../../../../helpers/buildChartData';
 
 export const HistoricalRateChart = ({ id }) => {
-  const useStyles = makeStyles(styles as any);
-  const classes = useStyles();
+  const useStyles = makeStyles(styles as any);  const classes = useStyles();
   const historicalApy = useSelector((state: any) => state.pricesReducer.historicalApy);
   const ApyStatLoader = useSelector((state: any) => state.pricesReducer.ApyStatLoader);
   const chartData = useMemo(
@@ -29,7 +28,7 @@ export const HistoricalRateChart = ({ id }) => {
   const renderLabel = props => {
     const { index, x, y } = props;
     const { apy } = chartData[index];
-    const labelValue = formatApy(apy /*, '0%'*/); // TODO: fix formatApy
+    const labelValue = formatApy(apy/*, '0%'*/); // TODO: fix formatApy
     const first = index === 0;
     const last = index === chartData.length - 1;
     const textStyle = { fontSize: '12px' };

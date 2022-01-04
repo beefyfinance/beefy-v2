@@ -1,8 +1,5 @@
 import React from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useVaults } from '../../../hooks/useFilteredVaults';
 import { useSelector } from 'react-redux';

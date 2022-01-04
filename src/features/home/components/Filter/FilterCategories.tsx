@@ -1,7 +1,4 @@
-import makeStyles from '@material-ui/styles/makeStyles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Grid, Typography, Button, makeStyles } from '@material-ui/core';
 import { useMemo, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import ScrollContainer from 'react-indiana-drag-scroll';

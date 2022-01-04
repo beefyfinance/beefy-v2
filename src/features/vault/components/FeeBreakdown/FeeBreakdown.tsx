@@ -1,8 +1,4 @@
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';

@@ -1,7 +1,5 @@
 import React from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import MuiTabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import { makeStyles, Tabs as MuiTabs, Tab } from '@material-ui/core';
 
 import { styles } from './styles';
 

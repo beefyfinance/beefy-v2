@@ -1,8 +1,5 @@
 import * as React from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Box, Typography, Button, makeStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
 
@@ -25,7 +22,7 @@ export const UnsupportedNetwork = () => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Box mr={4}>
-        <Typography {...({ color: 'red' } as any)}>We do not support this network.</Typography>
+        <Typography {...({color:"red"} as any)}>We do not support this network.</Typography>
       </Box>
       <Box>
         <Button className={classes.btn} onClick={handleWalletConnect} size="small">
@@ -34,4 +31,4 @@ export const UnsupportedNetwork = () => {
       </Box>
     </Box>
   );
-};
+}

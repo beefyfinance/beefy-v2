@@ -2,9 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { useHistory } from 'react-router-dom';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/styles';
+import { Button, Typography } from '@material-ui/core';
 import image from '../../images/404image.svg';
 
 const useStyles = makeStyles(styles as any);

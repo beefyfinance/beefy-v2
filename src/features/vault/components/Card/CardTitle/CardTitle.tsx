@@ -1,6 +1,5 @@
 import React from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles, Typography } from '@material-ui/core';
 import { CardTitleProps } from './CardTitleProps';
 
 import { styles } from './styles';

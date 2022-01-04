@@ -1,16 +1,18 @@
 import React, { memo, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Hidden from '@material-ui/core/Hidden';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import makeStyles from '@material-ui/styles/makeStyles';
+import {
+  makeStyles,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Hidden,
+  Drawer,
+  Box,
+  Container,
+  Typography,
+  Divider,
+} from '@material-ui/core';
 import Menu from '@material-ui/icons/Menu';
 import Close from '@material-ui/icons/Close';
 import { styles } from './styles';

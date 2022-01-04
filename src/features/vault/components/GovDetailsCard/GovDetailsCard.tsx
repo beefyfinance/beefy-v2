@@ -1,5 +1,4 @@
-import makeStyles from '@material-ui/styles/makeStyles';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
@@ -10,7 +9,7 @@ import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
-export const GovDetailsCard = earnedToken => {
+export const GovDetailsCard = (earnedToken) => {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -28,13 +27,7 @@ export const GovDetailsCard = earnedToken => {
         </div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.text}>
-          {t('Gov-Info1') +
-            earnedToken.earnedToken +
-            t('Gov-Info2') +
-            earnedToken.earnedToken +
-            t('Gov-Info3')}
-        </Typography>
+        <Typography className={classes.text}>{t('Gov-Info1') + earnedToken.earnedToken + t('Gov-Info2') + earnedToken.earnedToken + t('Gov-Info3')}</Typography>
       </CardContent>
     </Card>
   );

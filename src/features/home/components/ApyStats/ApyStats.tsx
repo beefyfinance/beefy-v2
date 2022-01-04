@@ -1,9 +1,8 @@
 import React, { memo } from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 import { LabeledStat } from '../LabeledStat';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';

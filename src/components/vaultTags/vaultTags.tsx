@@ -1,6 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 

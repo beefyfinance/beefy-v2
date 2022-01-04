@@ -1,8 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { makeStyles, Box, MenuItem, Select } from '@material-ui/core';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { SimpleDropdownProps } from './SimpleDropdownProps';
 

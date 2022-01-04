@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Modal from '@material-ui/core/Modal';
+import { Box, Button, makeStyles, Typography, Grid, Modal } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';

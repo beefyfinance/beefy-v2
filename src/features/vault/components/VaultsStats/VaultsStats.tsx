@@ -1,9 +1,5 @@
 import React from 'react';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
+import { Box, makeStyles, Typography, Divider, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
 import { useSelector } from 'react-redux';

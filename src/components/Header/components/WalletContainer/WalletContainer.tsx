@@ -1,10 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
-import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { makeStyles, Box, Avatar, FormControl, Typography, Grid } from '@material-ui/core';
 import { renderIcon } from '@download/blockies';
 import { createCanvas } from 'canvas';
 import { styles } from './styles';
@@ -12,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { reduxActions } from '../../../../features/redux/actions';
 import { ApyStatLoader } from '../../../ApyStatLoader';
-import useTheme from '@material-ui/core/styles/useTheme';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(styles as any);
 const formatAddress = addr => {

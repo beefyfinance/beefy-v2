@@ -1,16 +1,18 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Popover from '@material-ui/core/Popover';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
+import {
+  Box,
+  Button,
+  Popover,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  makeStyles,
+  TextField,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from '@material-ui/core';
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';

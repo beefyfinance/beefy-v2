@@ -1,6 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import makeStyles from '@material-ui/styles/makeStyles';
+import { Box, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);

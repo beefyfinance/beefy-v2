@@ -2,9 +2,7 @@
 import React, { memo, RefObject, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import makeStyles from '@material-ui/styles/makeStyles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import Container from '@material-ui/core/Container';
+import { Container, makeStyles, useMediaQuery } from '@material-ui/core';
 import { Filter } from './components/Filter';
 import { Portfolio } from './components/Portfolio';
 import { useVaults } from './hooks/useFilteredVaults';

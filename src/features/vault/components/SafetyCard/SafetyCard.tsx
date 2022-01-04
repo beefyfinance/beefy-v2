@@ -1,6 +1,4 @@
-import makeStyles from '@material-ui/styles/makeStyles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Popover } from '../../../../components/Popover';

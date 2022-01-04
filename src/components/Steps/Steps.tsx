@@ -1,12 +1,5 @@
-import Backdrop from '@material-ui/core/Backdrop';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Fade from '@material-ui/core/Fade';
-import Modal from '@material-ui/core/Modal';
-import Typography from '@material-ui/core/Typography';
-import makeStyles from '@material-ui/styles/makeStyles';
-import Alert from '@material-ui/lab/Alert';
-import AlertTitle from '@material-ui/lab/AlertTitle';
+import { Backdrop, Box, Button, Fade, makeStyles, Modal, Typography } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import ArrowRight from '@material-ui/icons/ArrowRight';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
