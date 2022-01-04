@@ -39,14 +39,25 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     this.cache = new CellMeasurerCache({
       fixedWidth: true,
       defaultHeight: 140,
-      keyMapper: function () {
+      keyMapper: (rowIndex: number, columnIndex: number) => {
         const orientation =
           (screen.orientation || {}).type ||
           (screen as any).mozOrientation ||
           (screen as any).msOrientation ||
           'undefined';
 
-        return orientation + ':' + window.innerWidth;
+        // gov vault are bigger when using 1 column mode
+        // so we need a specific key including this information
+        const vault = this.props.vaults[rowIndex];
+        return (
+          (vault.isGovVault ? 'gov' : 'nogov') +
+          ':' +
+          this.props.columns +
+          ':' +
+          orientation +
+          ':' +
+          window.innerWidth
+        );
       },
     });
 
