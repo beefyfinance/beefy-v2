@@ -48,18 +48,9 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
           (screen as any).msOrientation ||
           'undefined';
 
-        // gov vault are bigger when using 1 column mode
-        // so we need a specific key including this information
+        // due to dynamic content, vaults can take various height
         const vault = this.props.vaults[rowIndex];
-        return (
-          (vault.isGovVault ? 'gov' : 'nogov') +
-          ':' +
-          this.props.columns +
-          ':' +
-          orientation +
-          ':' +
-          window.innerWidth
-        );
+        return vault.id + ':' + this.props.columns + ':' + orientation + ':' + window.innerWidth;
       },
     });
 
