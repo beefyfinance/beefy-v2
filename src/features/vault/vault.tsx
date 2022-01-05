@@ -22,13 +22,15 @@ import { BIG_ZERO } from '../../helpers/format';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
+import { QiDao } from './components/QiDaoCard';
+import { Insurace } from './components/InsuraceCard';
+import { Moonpot } from './components/MoonportCard';
 
-//allow the Harmony-blockchain entries in the address-book to be accessed via the normal  
+//allow the Harmony-blockchain entries in the address-book to be accessed via the normal
 //  "network" property values used in our core vault-object schema
-const addressBook = {..._addressBook, harmony: _addressBook.one};
+const addressBook = { ..._addressBook, harmony: _addressBook.one };
 
-const useStyles = makeStyles( styles as any);
-
+const useStyles = makeStyles(styles as any);
 
 export const Vault = () => {
   const history = useHistory();
@@ -243,6 +245,15 @@ export const Vault = () => {
                       resetFormData={resetFormData}
                     />
                   )}
+                </Box>
+                <Box>
+                  <Moonpot name={item.token} />
+                </Box>
+                <Box>
+                  <Insurace />
+                </Box>
+                <Box>
+                  <QiDao mooToken={item.earnedToken} />
                 </Box>
               </Grid>
               <Grid item xs={12} md={8} className={classes.customOrder2}>
