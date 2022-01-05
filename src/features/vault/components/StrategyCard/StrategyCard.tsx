@@ -11,10 +11,24 @@ import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import shield from './shield.svg';
 import { stratText } from './stratText';
-import { StrategyCardProps } from './StrategyCardProps';
+interface StrategyCardProps {
+  stratType?: any;
+  stratAddr?: any;
+  vaultAddr?: any;
+  apy?: any;
+  audit?: any;
+  network?: any;
+  platform?: any;
+  assets?: any;
+  want?: any;
+  vamp?: any;
+  isBoosted?: any;
+  boostedData?: any;
+  isGovVault?: any;
+}
 
 const useStyles = makeStyles(styles as any);
-export const StrategyCard: React.FC<StrategyCardProps> = ({
+function StrategyCardComponent({
   stratType,
   stratAddr,
   vaultAddr,
@@ -28,7 +42,7 @@ export const StrategyCard: React.FC<StrategyCardProps> = ({
   boostedData,
   isBoosted,
   isGovVault,
-}) => {
+}: StrategyCardProps) {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -142,4 +156,6 @@ export const StrategyCard: React.FC<StrategyCardProps> = ({
       </CardContent>
     </Card>
   );
-};
+}
+
+export const StrategyCard = React.memo(StrategyCardComponent);

@@ -186,11 +186,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   // hide when category/tag does not match
-  if (
-    config.category !== 'all' &&
-    config.category !== 'featured' &&
-    !vault.tags.includes(config.category)
-  ) {
+  if (config.category !== 'all' && config.category !== 'featured' && !vault.tags.includes(config.category)) {
     return false;
   }
 
@@ -284,19 +280,16 @@ function useUserVaults() {
       if (pool.boosts?.length > 0) {
         for (const boost of pool.boosts) {
           let symbol = `${boost.token}${boost.id}Boost`;
-          if (!isEmpty(balance.tokens[pool.network][symbol])) {
-            balanceSingle = byDecimals(
-              balance.tokens[pool.network][symbol].balance,
-              boost.decimals
-            );
-            if (balanceSingle.isGreaterThan(0)) {
-              newUserVaults = {
-                ...newUserVaults,
-                [pool.id]: pool,
-              };
-              break;
+            if (!isEmpty(balance.tokens[pool.network][symbol])) {
+              balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
+              if (balanceSingle.isGreaterThan(0)) {
+                newUserVaults = {
+                  ...newUserVaults,
+                  [pool.id]: pool,
+                };
+                break;
+              }
             }
-          }
         }
       }
     }

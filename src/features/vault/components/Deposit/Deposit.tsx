@@ -438,7 +438,14 @@ export const Deposit: React.FC<DepositProps> = ({
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
           </Paper>
         </Box>
-        <FeeBreakdown item={item} formData={formData} type={'deposit'} />
+        <FeeBreakdown
+          item={item}
+          slippageTolerance={formData.slippageTolerance}
+          zapEstimate={formData.deposit.zapEstimate}
+          isZapSwap={formData.deposit.isZapSwap}
+          isZap={formData.deposit.isZap}
+          type={'deposit'}
+        />
         <Box mt={2}>
           {item.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
