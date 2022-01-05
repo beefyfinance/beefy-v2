@@ -261,42 +261,6 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "boo-dola-inv",
-    name: "DOLA-INV",
-    token: "DOLA-INV LP",
-    tokenDescription: "SpookySwap",
-    tokenAddress: "0x26519b547416E4f53f3A4b05b95Ef859C3BD89Fe",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBooDOLA-INV",
-    earnedTokenAddress: "0xe80A521b5999ae27562a199CC3976646D8C78744",
-    earnContractAddress: "0xe80A521b5999ae27562a199CC3976646D8C78744",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "boo-dola-inv",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SpookySwap",
-    assets: [
-      "DOLA",
-      "INV"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
-    addLiquidityUrl: "https://spookyswap.finance/add/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
-    network: "fantom"
-  },
-  {
     id: "scream-dola",
     logo: "single-assets/DOLA.png",
     name: "DOLA",
@@ -4746,5 +4710,42 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3",
     buyTokenUrl: "https://spookyswap.finance/swap",
     network: "fantom"
+  },
+  {
+    id: "boo-dola-inv-eol",
+    name: "DOLA-INV",
+    token: "DOLA-INV LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x26519b547416E4f53f3A4b05b95Ef859C3BD89Fe",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooDOLA-INV",
+    earnedTokenAddress: "0xe80A521b5999ae27562a199CC3976646D8C78744",
+    earnContractAddress: "0xe80A521b5999ae27562a199CC3976646D8C78744",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-dola-inv",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SpookySwap",
+    assets: [
+      "DOLA",
+      "INV"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
+    network: "fantom",
+    retireReason: "rewards"
   }
 ];

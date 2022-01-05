@@ -64,7 +64,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-1eth-1aave",
@@ -93,7 +101,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0xcF323Aad9E522B93F11c352CaA519Ad0E14eB40F",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-1axs-1eth",
@@ -122,7 +138,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x14A7B318fED66FfDcc80C1517C172c13852865De",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x14A7B318fED66FfDcc80C1517C172c13852865De",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-1eth-1dai",
@@ -151,7 +175,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-1usdt-1eth",
@@ -180,7 +212,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-1eth-1frax",
@@ -209,7 +249,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0xeB6C08ccB4421b6088e581ce04fcFBed15893aC3",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0xeB6C08ccB4421b6088e581ce04fcFBed15893aC3",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-ust-1eth",
@@ -238,7 +286,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x224e64ec1BDce3870a6a6c777eDd450454068FEC",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x224e64ec1BDce3870a6a6c777eDd450454068FEC",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-1wbtc-1eth",
@@ -267,7 +323,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x3095c7557bCb296ccc6e363DE01b760bA031F2d9",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x3095c7557bCb296ccc6e363DE01b760bA031F2d9",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-1usdt-1usdc",
@@ -296,7 +360,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0x985458E523dB3d53125813eD68c274899e9DfAb4/0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x985458E523dB3d53125813eD68c274899e9DfAb4&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-1usdt-wone",
@@ -325,7 +397,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-sushi-one",
@@ -354,7 +434,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-busd-one",
@@ -383,7 +471,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0xe176ebe47d621b984a73036b9da5d834411ef734",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xe176ebe47d621b984a73036b9da5d834411ef734",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-bscbusd-busd",
@@ -412,7 +508,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/0xe176ebe47d621b984a73036b9da5d834411ef734/0x0ab43550a6915f9f67d0c454c2e90385e6497eaa",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0xe176ebe47d621b984a73036b9da5d834411ef734&outputCurrency=0x0ab43550a6915f9f67d0c454c2e90385e6497eaa",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-eth-one",
@@ -441,12 +545,20 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0x6983d1e6def3690c4d616b13597a09e6193ea013",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x6983d1e6def3690c4d616b13597a09e6193ea013",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-btc-one",
-    name: "1BTC-ONE LP",
-    token: "1BTC-ONE LP",
+    name: "1WBTC-ONE LP",
+    token: "1WBTC-ONE LP",
     tokenDescription: "Sushi",
     tokenAddress: "0xc3670b927eF42eed252e483e2446352C238D9905",
     tokenDecimals: 18,
@@ -470,7 +582,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0x3095c7557bcb296ccc6e363de01b760ba031f2d9",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x3095c7557bcb296ccc6e363de01b760ba031f2d9",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "sushi-one-usdc-one",
@@ -499,7 +619,15 @@ export const pools = [
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0x985458e523db3d53125813ed68c274899e9dfab4",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x985458e523db3d53125813ed68c274899e9dfab4",
     stratType: "StratLP",
-    network: "harmony"
+    network: "harmony",
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ]
   },
   {
     id: "one-bifi-maxi",
@@ -612,6 +740,82 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://harmony.curve.fi/3pool/deposit",
+    network: "harmony"
+  },
+  {
+    id: "sushi-one-bifi-wone",
+    name: "BIFI-ONE LP",
+    token: "BIFI-ONE LP",
+    tokenDescription: "Sushi",
+    tokenAddress: "0x27f3b2Df4a81382202E87EE40429e0212ecc7d3F",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSushiBIFI-ONE",
+    earnedTokenAddress: "0x06A1f520555222758eaE4dA0573351FdaD1e7843",
+    earnContractAddress: "0x06A1f520555222758eaE4dA0573351FdaD1e7843",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "sushi-one-bifi-wone",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Sushi",
+    assets: [
+      "BIFI",
+      "ONE"
+    ],
+    callFee: 0.25,
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.sushi.com/add/ETH/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
+    network: "harmony"
+  },
+  {
+    id: "sushi-one-wone-1btc",
+    name: "1BTC-ONE LP",
+    token: "1BTC-ONE LP",
+    tokenDescription: "Sushi",
+    tokenAddress: "0x4F3d9ac088CDF31b1831db3AaF5803aB35c200c4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSushi1BTC-ONE",
+    earnedTokenAddress: "0x942aa6324E5D0C102d3Ad6607495ac5e798a991a",
+    earnContractAddress: "0x942aa6324E5D0C102d3Ad6607495ac5e798a991a",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "sushi-one-wone-1btc",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Sushi",
+    assets: [
+      "BTC",
+      "ONE"
+    ],
+    callFee: 0.25,
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0.01%",
+    addLiquidityUrl: "https://app.sushi.com/add/ETH/0xdc54046c0451f9269FEe1840aeC808D36015697d",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xdc54046c0451f9269FEe1840aeC808D36015697d",
     network: "harmony"
   }
 ];

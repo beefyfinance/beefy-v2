@@ -1,58 +1,107 @@
 [
   {
-    "id": "bsc vault: baby-aot-usdt",
+    "id": "fantom vault: boo-dola-inv-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "harmony vault: sushi-one-bifi-wone",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cafev2-brew-bnb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: cafev2-brew-busd",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: cakev2-wbnb-gnt-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc vault: cakev2-wbnb-babycak-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc vault: cafe-brew-bnb",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: jarvis-2jpy",
+    "id": "harmony vault: sushi-one-wone-1btc",
     "type": "Added"
   },
   {
-    "id": "avax vault: olive-dai.e-usdt.e",
+    "id": "harmony vault: sushi-one-1ygg-1eth",
     "type": "synced"
   },
   {
-    "id": "avax vault: olive-busd.e-usdt.e",
+    "id": "harmony vault: sushi-one-1eth-1aave",
     "type": "synced"
   },
   {
-    "id": "avax vault: olive-olive-avax",
+    "id": "harmony vault: sushi-one-1axs-1eth",
     "type": "synced"
   },
   {
-    "id": "avax vault: com-dai-avax-eol",
-    "type": "REMOVED"
+    "id": "harmony vault: sushi-one-1eth-1dai",
+    "type": "synced"
   },
   {
-    "id": "avax vault: png-bifi-png-eol",
-    "type": "REMOVED"
+    "id": "harmony vault: sushi-one-1usdt-1eth",
+    "type": "synced"
   },
   {
-    "id": "moonriver vault: solarbeam-mimatic-usdc-eol",
-    "type": "REMOVED"
+    "id": "harmony vault: sushi-one-1eth-1frax",
+    "type": "synced"
   },
   {
-    "id": "bsc boost: moo_baby-aot-usdt-ageoftanks",
+    "id": "harmony vault: sushi-one-ust-1eth",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1wbtc-1eth",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1usdt-1usdc",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1usdt-wone",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-sushi-one",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-busd-one",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-bscbusd-busd",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-eth-one",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-btc-one",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-usdc-one",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: fusefi-wfuse-weth",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: fusefi-wfuse-g$",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: fusefi-fusd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: fusefi-wfuse-busd",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: fusefi-wfuse-fusd",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: fusefi-wbtc-weth",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: fusefi-wfuse-usdc",
     "type": "Added"
   }
 ]
