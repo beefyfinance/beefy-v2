@@ -253,40 +253,43 @@ function useUserVaults() {
     let balanceSingle = new BigNumber(0);
     const pool = vaultReducer.pools[poolKey];
     let symbol = pool.isGovVault ? `${pool.token}GovVault` : pool.earnedToken;
-    if (userAddress && !isEmpty(balance.tokens[pool.network][symbol])) {
-      if (pool.isGovVault) {
-        const _balance = byDecimals(
-          balance.tokens[pool.network][symbol].balance,
-          pool.tokenDecimals
-        );
-
-        if (_balance.isGreaterThan(0)) {
+    if (userAddress) {
+      if (!isEmpty(balance.tokens[pool.network][symbol])) {
+      
+        if (pool.isGovVault) {
+          const _balance = byDecimals(
+            balance.tokens[pool.network][symbol].balance,
+            pool.tokenDecimals
+          );
+  
+          if (_balance.isGreaterThan(0)) {
+            newUserVaults = {
+              ...newUserVaults,
+              [pool.id]: pool,
+            };
+          }
+        }
+        balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, pool.tokenDecimals);
+        if (balanceSingle.isGreaterThan(0)) {
           newUserVaults = {
             ...newUserVaults,
             [pool.id]: pool,
           };
         }
       }
-      balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, pool.tokenDecimals);
-      if (balanceSingle.isGreaterThan(0)) {
-        newUserVaults = {
-          ...newUserVaults,
-          [pool.id]: pool,
-        };
-      }
-      if (pool.vaultBoosts?.length > 0) {
-        for (const boost of pool.vaultBoosts) {
+      if (pool.boosts?.length > 0) {
+        for (const boost of pool.boosts) {
           let symbol = `${boost.token}${boost.id}Boost`;
-            if (!isEmpty(balance.tokens[pool.network][symbol])) {
-              balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
-              if (balanceSingle.isGreaterThan(0)) {
-                newUserVaults = {
-                  ...newUserVaults,
-                  [pool.id]: pool,
-                };
-                break;
-              }
+          if (!isEmpty(balance.tokens[pool.network][symbol])) {
+            balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
+            if (balanceSingle.isGreaterThan(0)) {
+              newUserVaults = {
+                ...newUserVaults,
+                [pool.id]: pool,
+              };
+              break;
             }
+          }
         }
       }
     }

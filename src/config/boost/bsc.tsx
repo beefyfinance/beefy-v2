@@ -149,16 +149,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/nfty/logo.png",
-        background: "stake/nfty/bg.png",
-        text: "NFTYLabs envisions a world where NFTs function as a medium of access, bringing a means of utility and privilege to NFT holders in a secure and confidential manner. NFTY will act as a cross-chain and interoperable bridge between enterprise, private content, and VIP communities; further strengthening the bond in ways never before imagined.",
-        website: "https://nftynetwork.io/",
-        social: {
-          telegram: "https://t.me/NFTYNetwork",
-          twitter: "https://twitter.com/NFTYNetwork"
-        }
-      }
+      nfty
     ]
   },
   {
@@ -206,16 +197,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/mogul/logo.png",
-        background: "stake/mogul/bg.png",
-        text: "Mogul is an NFT and DeFi platform for film and entertainment, bridging Hollywood and blockchain technology. The STARS token powers the Mogul platform and offers rewards from movies. The Mogul platform has an NFT auction house, marketplace, and other products in the metaverse to bring movie fans closer to the action.",
-        website: "https://www.mogulproductions.com/",
-        social: {
-          telegram: "https://t.me/mogulproductions",
-          twitter: "https://twitter.com/mogulofficial_"
-        }
-      }
+      mogul
     ]
   },
   {
@@ -401,16 +383,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/nfty/logo.png",
-        background: "stake/nfty/bg.png",
-        text: "NFTYLabs envisions a world where NFTs function as a medium of access, bringing a means of utility and privilege to NFT holders in a secure and confidential manner. NFTY will act as a cross-chain and interoperable bridge between enterprise, private content, and VIP communities; further strengthening the bond in ways never before imagined.",
-        website: "https://nftynetwork.io/",
-        social: {
-          telegram: "https://t.me/NFTYNetwork",
-          twitter: "https://twitter.com/NFTYNetwork"
-        }
-      }
+      nfty
     ]
   },
   {
@@ -431,16 +404,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/nfty/logo.png",
-        background: "stake/nfty/bg.png",
-        text: "NFTYLabs envisions a world where NFTs function as a medium of access, bringing a means of utility and privilege to NFT holders in a secure and confidential manner. NFTY will act as a cross-chain and interoperable bridge between enterprise, private content, and VIP communities; further strengthening the bond in ways never before imagined.",
-        website: "https://nftynetwork.io/",
-        social: {
-          telegram: "https://t.me/NFTYNetwork",
-          twitter: "https://twitter.com/NFTYNetwork"
-        }
-      }
+      nfty
     ]
   },
   {
@@ -461,16 +425,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/mogul/logo.png",
-        background: "stake/mogul/bg.png",
-        text: "Mogul is an NFT and DeFi platform for film and entertainment, bridging Hollywood and blockchain technology. The STARS token powers the Mogul platform and offers rewards from movies. The Mogul platform has an NFT auction house, marketplace, and other products in the metaverse to bring movie fans closer to the action.",
-        website: "https://www.mogulproductions.com/",
-        social: {
-          telegram: "https://t.me/mogulproductions",
-          twitter: "https://twitter.com/mogulofficial_"
-        }
-      }
+      mogul
     ]
   },
   {
@@ -491,16 +446,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/ceek/logo.png",
-        background: "stake/ceek/bg.png",
-        text: "CEEK (CEEK) is a decentralized platform featuring global superstars like Lady Gaga, Katy Perry, Ziggy Marley, Bon Jovi, UFC Champion Francis Ngannou, 3x NBA Champion Dwyane Wade and more. CEEK enables music artists, sports athletes and digital content creators to directly connect with their fans. CEEK tracks digital media assets on the blockchain, and makes fast, efficient secure payments for entertainment and education via smart contracts.",
-        website: "https://www.ceek.io/",
-        social: {
-          telegram: "https://t.me/ceekvrtokensale",
-          twitter: "https://twitter.com/ceek"
-        }
-      }
+      ceek
     ]
   },
   {
@@ -518,16 +464,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/ceek/logo.png",
-        background: "stake/ceek/bg.png",
-        text: "CEEK (CEEK) is a decentralized platform featuring global superstars like Lady Gaga, Katy Perry, Ziggy Marley, Bon Jovi, UFC Champion Francis Ngannou, 3x NBA Champion Dwyane Wade and more. CEEK enables music artists, sports athletes and digital content creators to directly connect with their fans. CEEK tracks digital media assets on the blockchain, and makes fast, efficient secure payments for entertainment and education via smart contracts.",
-        website: "https://www.ceek.io/",
-        social: {
-          telegram: "https://t.me/ceekvrtokensale",
-          twitter: "https://twitter.com/ceek"
-        }
-      }
+      ceek
     ]
   },
   {
@@ -1019,16 +956,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/moonpot/logo.png",
-        background: "stake/moonpot/bg.png",
-        text: "Moonpot is a win-win savings game on Binance Smart Chain powered by Beefy Finance. By depositing crypto into a Moonpot, users gain interest on their assets and enter into a prize draw at the same time. There’s a chance to win weekly prizes paid out in crypto from each Moonpot entered — as well as an exclusive monthly prize draw for $POTS stakers.",
-        website: "https://moonpot.com/",
-        social: {
-          telegram: "https://t.me/moonpotdotcom",
-          twitter: "https://twitter.com/moonpotdotcom"
-        }
-      }
+      moonpot
     ]
   },
   {
@@ -1049,16 +977,7 @@ export const pools = [
     status: "active",
     isMooStaked: true,
     partners: [
-      {
-        logo: "stake/moonpot/logo.png",
-        background: "stake/moonpot/bg.png",
-        text: "Moonpot is a win-win savings game on Binance Smart Chain powered by Beefy Finance. By depositing crypto into a Moonpot, users gain interest on their assets and enter into a prize draw at the same time. There’s a chance to win weekly prizes paid out in crypto from each Moonpot entered — as well as an exclusive monthly prize draw for $POTS stakers.",
-        website: "https://moonpot.com/",
-        social: {
-          telegram: "https://t.me/moonpotdotcom",
-          twitter: "https://twitter.com/moonpotdotcom"
-        }
-      }
+      moonpot
     ]
   },
   {

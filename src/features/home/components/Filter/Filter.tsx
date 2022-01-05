@@ -21,6 +21,7 @@ import { Search, Close } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { FilterProps } from './FilterProps';
 import { FilterCategories } from './FilterCategories';
+import { useLocalStorage } from '../../../../hooks/useLocalStorage';
 
 const FILTER_DEFAULT_LOCAL = {
   blockchain: ['all'],
@@ -30,6 +31,8 @@ const FILTER_DEFAULT_LOCAL = {
   retired: false,
   zero: false,
 };
+
+const FILTER_COUNT_KEY = 'filteresCount';
 
 const useStyles = makeStyles(styles as any);
 const _Filter: React.FC<FilterProps> = ({
@@ -51,7 +54,7 @@ const _Filter: React.FC<FilterProps> = ({
     zero: sortConfig.zero,
   });
 
-  const [filtersCount, setFiltersCount] = React.useState<number>(0);
+  const [filtersCount, setFiltersCount] = useLocalStorage(FILTER_COUNT_KEY, 0);
   const [blockchain, setBlockchain] = React.useState<string[]>(config.blockchain);
 
   const handleChangeBlockchain = event => {
@@ -93,7 +96,7 @@ const _Filter: React.FC<FilterProps> = ({
         setFiltersCount(current => current - 1);
       }
     },
-    [filtersCount]
+    [filtersCount, setFiltersCount]
   );
 
   const handleChangeLocal = useCallback(
@@ -107,7 +110,7 @@ const _Filter: React.FC<FilterProps> = ({
         setFiltersCount(current => current - 1);
       }
     },
-    [filtersCount]
+    [filtersCount, setFiltersCount]
   );
 
   const handleChange = useCallback(
@@ -122,7 +125,7 @@ const _Filter: React.FC<FilterProps> = ({
     setConfig(FILTER_DEFAULT_LOCAL);
     setSortConfig(FILTER_DEFAULT);
     setFiltersCount(0);
-  }, [setSortConfig]);
+  }, [setFiltersCount, setSortConfig]);
 
   const applyFilters = useCallback(() => {
     setSortConfig(current => ({ ...current, ...config, blockchain }));
@@ -244,7 +247,7 @@ const _Filter: React.FC<FilterProps> = ({
           />
         </Box>
         {/*All Filters Button*/}
-        <Button onClick={handleClick} className={classes.btnFilter}>
+        <Button aria-describedby={id} onClick={handleClick} className={classes.btnFilter}>
           {filtersCount >= 1 ? (
             <Box className={classes.badge}>{filtersCount}</Box>
           ) : (
@@ -266,6 +269,10 @@ const _Filter: React.FC<FilterProps> = ({
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
         }}
       >
         <Box className={classes.filterContent}>

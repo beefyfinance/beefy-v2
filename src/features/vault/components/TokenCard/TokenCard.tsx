@@ -10,7 +10,7 @@ import { config } from '../../../../config/config';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
-export const TokenCard = ({ token, network }) => {
+function TokenCardComponent({ token, network }) {
   const classes = useStyles();
   const t = useTranslation().t;
 
@@ -44,4 +44,6 @@ export const TokenCard = ({ token, network }) => {
       </CardContent>
     </Card>
   );
-};
+}
+
+export const TokenCard = React.memo(TokenCardComponent);

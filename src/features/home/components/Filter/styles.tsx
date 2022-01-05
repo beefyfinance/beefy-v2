@@ -69,7 +69,7 @@ export const styles = theme => ({
     [theme.breakpoints.down(725)]: {
       display: 'flex',
       width: '30%',
-      margin: '0 0 18px 0',
+      margin: '0 0 0 0',
     },
     '&.MuiToggleButton-root.Mui-selected': {
       backgroundColor: theme.palette.background.filters.active,
@@ -117,9 +117,13 @@ export const styles = theme => ({
     padding: '8px 24px',
     backgroundColor: theme.palette.primary.main,
     height: 43,
+    marginRight: theme.spacing(2),
     '&:hover': {
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.background.filters.inactive,
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '0.875rem',
     },
   },
   searchInput: {
@@ -259,7 +263,7 @@ export const styles = theme => ({
     [theme.breakpoints.down(725)]: {
       width: '70%',
       display: 'flex',
-      margin: '0 0 18px 0',
+      margin: '0 0 0 0',
       paddingRight: '16px',
     },
   },
@@ -291,9 +295,12 @@ export const styles = theme => ({
   },
   filter: {
     '& .MuiPopover-paper': {
-      minWidth: '350px',
+      maxWidth: '400px',
       backgroundColor: theme.palette.background.filters.inactive,
       border: `2px solid ${theme.palette.background.filters.outline}`,
+      [theme.breakpoints.down('md')]: {
+        maxWidth: '300px',
+      },
     },
   },
   filterContent: { padding: 24 },
