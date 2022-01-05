@@ -598,7 +598,7 @@ export const Withdraw = ({
                     fullWidth={true}
                     disabled={
                       formData.withdraw.amount.isLessThanOrEqualTo(0) ||
-                      formData.withdraw.zapEstimate.isLoading
+                      formData.withdraw.isZap && formData.withdraw.zapEstimate.isLoading
                     }
                   >
                     {formData.withdraw.max ? t('Withdraw-All') : t('Withdraw-Verb')}

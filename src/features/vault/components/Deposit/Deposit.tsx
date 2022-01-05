@@ -460,7 +460,7 @@ export const Deposit: React.FC<DepositProps> = ({
                 fullWidth={true}
                 disabled={
                   formData.deposit.amount.isLessThanOrEqualTo(0) ||
-                  formData.deposit.zapEstimate.isLoading
+                  formData.deposit.isZap && formData.deposit.zapEstimate.isLoading
                 }
               >
                 {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
