@@ -78,18 +78,18 @@ function getDepositedAndPoolRewards({
       sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
     }
     for (const boost of vaultBoosts) {
-      let symbol = `${boost.token}${boost.id}Boost`;
-      if (!isEmpty(balance.tokens[item.network][symbol])) {
+      let boostSymbol = `${boost.token}${boost.id}Boost`;
+      if (!isEmpty(balance.tokens[item.network][boostSymbol])) {
         balanceSingle = balanceSingle.plus(
           byDecimals(
-            new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+            new BigNumber(balance.tokens[item.network][boostSymbol].balance).multipliedBy(
               byDecimals(item.pricePerFullShare)
             ),
             item.tokenDecimals
           )
         );
         sharesBalance = sharesBalance.plus(
-          new BigNumber(balance.tokens[item.network][symbol].balance)
+          new BigNumber(balance.tokens[item.network][boostSymbol].balance)
         );
         if (balanceSingle.isGreaterThan(0) && boost.id === item.boostData?.id) {
           res.userStaked = true;
