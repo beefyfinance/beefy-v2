@@ -77,40 +77,24 @@ function getDepositedAndPoolRewards({
       );
       sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
     }
-    if (item.isBoosted) {
-      const boost = item.boostData;
+    for (const boost of vaultBoosts) {
       let symbol = `${boost.token}${boost.id}Boost`;
       if (!isEmpty(balance.tokens[item.network][symbol])) {
-        balanceSingle = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-            byDecimals(item.pricePerFullShare)
-          ),
-          item.tokenDecimals
+        balanceSingle = balanceSingle.plus(
+          byDecimals(
+            new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
+              byDecimals(item.pricePerFullShare)
+            ),
+            item.tokenDecimals
+          )
         );
-        sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-      }
-      for (const boost of vaultBoosts) {
-        let symbol = `${boost.token}${boost.id}Boost`;
-        if (!isEmpty(balance.tokens[item.network][symbol])) {
-          balanceSingle = balanceSingle.plus(
-            byDecimals(
-              new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-                byDecimals(item.pricePerFullShare)
-              ),
-              item.tokenDecimals
-            )
-          );
-          sharesBalance = sharesBalance.plus(
-            new BigNumber(balance.tokens[item.network][symbol].balance)
-          );
-          if (balanceSingle.isGreaterThan(0) && boost.id === item.boostData?.id) {
-            res.userStaked = true;
-          }
+        sharesBalance = sharesBalance.plus(
+          new BigNumber(balance.tokens[item.network][symbol].balance)
+        );
+        if (balanceSingle.isGreaterThan(0) && boost.id === item.boostData?.id) {
+          res.userStaked = true;
         }
       }
-      // if (item.isBoosted) {
-      //   const boost = item.boostData;
-      // }
     }
   }
   res.deposited = { balance: balanceSingle, shares: sharesBalance };
