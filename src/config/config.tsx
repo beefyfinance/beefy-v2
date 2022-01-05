@@ -16,7 +16,7 @@ export const config = {
       'custom-math',
       'custom-twt',
       'custom-safepal',
-      'custom-coinbase'
+      'custom-coinbase',
     ],
     providerName: 'binance',
     walletSettings: {
@@ -268,5 +268,26 @@ export const config = {
       blockExplorerUrls: ['https://cronos.crypto.org/explorer/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
+  },
+  fuse: {
+    name: 'Fuse',
+    chainId: 122,
+    rpc: ['https://rpc.fuse.io'],
+    explorerUrl: 'https://explorer.fuse.io/',
+    multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
+    supportedWallets: ['injected', 'custom-wallet-connect'],
+    providerName: 'Fuse',
+    walletSettings: {
+      chainId: `0x${parseInt('122', 10).toString(16)}`,
+      chainName: 'Fuse',
+      nativeCurrency: {
+        name: 'FUSE',
+        symbol: 'FUSE',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.fuse.io'],
+      blockExplorerUrls: ['https://explorer.fuse.io/'],
+    },
+    stableCoins: ['fUSD', 'BUSD', 'USDC'],
   },
 };
