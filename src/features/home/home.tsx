@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { memo, RefObject, useEffect } from 'react';
+import React, { memo, RefObject } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, useMediaQuery } from '@material-ui/core';
