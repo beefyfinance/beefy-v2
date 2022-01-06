@@ -194,7 +194,7 @@ const _Filter: React.FC<FilterProps> = ({
               endAdornment: (
                 <>
                   <InputAdornment position="end">
-                    {sortConfig.keyword.length > 3 ? (
+                    {sortConfig.keyword.length >= 1 ? (
                       <IconButton
                         className={classes.iconSearch}
                         size="small"
