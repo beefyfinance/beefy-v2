@@ -12,6 +12,12 @@ const useStyles = makeStyles(styles as any);
 const InsuraceCard = () => {
   const classes = useStyles();
   const { t } = useTranslation();
+
+  function RedirectToInsurace() {
+    window.location.href =
+      'https://app.insurace.io/Insurance/Cart?id=110&chain=BSC&referrer=95244279533280151623141934507761661103282646845';
+  }
+
   return (
     <Card>
       <CardHeader className={classes.header}>
@@ -24,7 +30,9 @@ const InsuraceCard = () => {
         <Typography className={classes.content} variant="body1">
           {t('Insurance-Content')}
         </Typography>
-        <Button className={classes.btn}>{t('Insurance-Btn')}</Button>
+        <Button onClick={RedirectToInsurace} className={classes.btn}>
+          {t('Insurance-Btn')}
+        </Button>
       </CardContent>
     </Card>
   );

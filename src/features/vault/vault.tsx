@@ -24,7 +24,7 @@ import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
-import { Moonpot } from './components/MoonportCard';
+// import { Moonpot } from './components/MoonportCard';
 
 //allow the Harmony-blockchain entries in the address-book to be accessed via the normal
 //  "network" property values used in our core vault-object schema
@@ -155,6 +155,7 @@ export const Vault = () => {
 
   return (
     <>
+      {console.log(item)}
       <Box className={classes.vaultContainer}>
         <Container maxWidth="lg">
           {isLoading ? (
@@ -246,15 +247,19 @@ export const Vault = () => {
                     />
                   )}
                 </Box>
-                <Box>
-                  <Moonpot name={item.token} />
-                </Box>
-                <Box>
-                  <Insurace />
-                </Box>
-                <Box>
-                  <QiDao mooToken={item.earnedToken} />
-                </Box>
+                {/*QiDao card */}
+                {item.isQidao && (
+                  <Box>
+                    {' '}
+                    <QiDao mooToken={item.earnedToken} />
+                  </Box>
+                )}
+                {/* Insurace card */}
+                {item.isInsurace && (
+                  <Box>
+                    <Insurace />
+                  </Box>
+                )}
               </Grid>
               <Grid item xs={12} md={8} className={classes.customOrder2}>
                 {/* TODO: Show only for boosts */}

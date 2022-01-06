@@ -13,6 +13,11 @@ const useStyles = makeStyles(styles as any);
 const QiDaoCard: React.FC<QiDaoProps> = ({ mooToken }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+
+  function RedirectToQidao() {
+    window.location.href = 'https://app.mai.finance/vaults';
+  }
+
   return (
     <Card>
       <CardHeader className={classes.header}>
@@ -25,7 +30,9 @@ const QiDaoCard: React.FC<QiDaoProps> = ({ mooToken }) => {
         <Typography className={classes.content} variant="body1">
           {t('QiDao-Content')}
         </Typography>
-        <Button className={classes.btn}>{t('QiDao-Btn', { mooToken: mooToken })}</Button>
+        <Button onClick={RedirectToQidao} className={classes.btn}>
+          {t('QiDao-Btn', { mooToken: mooToken })}
+        </Button>
       </CardContent>
     </Card>
   );
