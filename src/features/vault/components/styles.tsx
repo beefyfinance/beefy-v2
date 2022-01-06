@@ -44,7 +44,7 @@ export const styles = theme => ({
       letterSpacing: '0.5px',
       color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
-      borderRadius: '8px',
+      borderRadius: '4px',
       margin: 0,
       padding: '5px 12px',
       position: 'absolute',

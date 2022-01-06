@@ -8,6 +8,7 @@ import {
 import { config } from '../../../config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
 import { safetyScore } from '../../../helpers/safetyScore';
+import { QiDao, Insurace } from '../../../helpers/partners';
 import BigNumber from 'bignumber.js';
 
 let initPlatforms = {};
@@ -43,7 +44,6 @@ const initialBoosts = () => {
       boost['assets'] = pool.assets;
       boost['isMooStaked'] = boost.id.toLocaleLowerCase().startsWith('moo_');
 
-
       boosts[boost.id] = boost;
     } //for (const key in data.pools)
   } //for (let net in config)
@@ -72,6 +72,8 @@ const initialPools = () => {
       pool['boosts'] = [];
       pool['isBoosted'] = false;
       pool['boostData'] = null;
+      pool['isQidao'] = QiDao.includes(pool.id);
+      pool['isInsurace'] = Insurace.includes(net);
 
       if (!isEmpty(pool.platform)) {
         if (!platforms.includes(pool.platform)) {
