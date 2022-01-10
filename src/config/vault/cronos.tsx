@@ -1140,42 +1140,6 @@ export const pools = [
     retireReason: "rewards"
   },
   {
-    id: "crona-usdt-avax-eol",
-    name: "AVAX-USDT",
-    token: "AVAX-USDT LP",
-    tokenDescription: "CronaSwap",
-    tokenAddress: "0x193add22b0a333956C2Cb13F4D574aF129629c5f",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCronaUSDT-AVAX",
-    earnedTokenAddress: "0x0b3d82ef5b3De82F12899eB85a65CeE2617f4198",
-    earnContractAddress: "0x0b3d82ef5b3De82F12899eB85a65CeE2617f4198",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "crona-usdt-avax",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "CronaSwap",
-    assets: [
-      "AVAX",
-      "USDT"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0x765277EebeCA2e31912C9946eAe1021199B39C61",
-    addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0x765277EebeCA2e31912C9946eAe1021199B39C61",
-    network: "cronos",
-    retireReason: "rewards"
-  },
-  {
     id: "vvs-cro-atom",
     name: "ATOM-CRO",
     token: "ATOM-CRO LP",
@@ -1321,5 +1285,42 @@ export const pools = [
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     network: "cronos",
     retireReason: "rewards"
+  },
+  {
+    id: "vvs-tonic-cro",
+    name: "TONIC-CRO",
+    token: "TONIC-CRO LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x4B377121d968Bf7a62D51B96523d59506e7c2BF0",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsTONIC-CRO",
+    earnedTokenAddress: "0xF498483a3603DcA611eb5142f06632037217cEF9",
+    earnContractAddress: "0xF498483a3603DcA611eb5142f06632037217cEF9",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-tonic-cro",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "VVS",
+    assets: [
+      "TONIC",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
+    addLiquidityUrl: "https://vvs.finance/add/CRO/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
+    network: "cronos"
   }
 ];
