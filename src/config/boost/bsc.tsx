@@ -370,7 +370,7 @@ export const pools = [
   },
   {
     id: "moo_alpaca-ibalpaca-nfty",
-    poolId: "alpaca-ibalpaca",
+    poolId: "alpaca-ibalpaca-eol",
     name: "NFTY",
     logo: "single-assets/ALPACA.png",
     earnedToken: "mooNfty",
@@ -2494,6 +2494,36 @@ export const pools = [
         social: {
           telegram: "https://t.me/ageoftanksdiscussion",
           twitter: "https://twitter.com/AgeOfTanksNFT?s=09"
+        }
+      }
+    ]
+  },
+  {
+    id: "moo_cakev2-cake-bnb-dibs",
+    poolId: "cakev2-cake-bnb",
+    name: "DibsMoney",
+    assets: [
+      "CAKE",
+      "BNB"
+    ],
+    earnedToken: "DSHARE",
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: "0x26d3163b165BE95137CEe97241E716b2791a7572",
+    earnContractAddress: "0x5e0D12A2AD1E74afB435F8EF2750Ed5885a08FEB",
+    earnedOracle: "tokens",
+    earnedOracleId: "DSHARE",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/dibs/logo.png",
+        background: "stake/dibs/bg.png",
+        text: "DibsMoney - not just another Tomb fork! dibs.money is a multi-token DeFi protocol pegged to the price of BNB, and with multiple use cases that will drive demand in the short term pipeline, as an example a launch partnership with one of the largest NFT-platforms on the Binance smart chain. \n\n$DIBS is a unique token in that it tracks the price of BNB, all while earning super high APY's. $DSHARE on the other hand is your ticket to earn the freshly minted $DIBS from the dibs.money Piggybank. Whether you're bullish on BNB or on Dshare - dibs.money has an option for you.\n",
+        website: "https://www.dibs.money/farm",
+        social: {
+          telegram: "https://t.me/dibsmoney",
+          twitter: "https://twitter.com/DibsMoney"
         }
       }
     ]

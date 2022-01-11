@@ -7825,5 +7825,42 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://polygon.curve.fi/factory/85/deposit",
     network: "polygon"
+  },
+  {
+    id: "quick-gns-dai",
+    name: "GNS-DAI LP",
+    token: "GNS-DAI LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x6E53cB6942e518376E9e763554dB1A45DDCd25c4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickGNS-DAI",
+    earnedTokenAddress: "0x5E55f1f68c3a708C1A47a6FCFd6D0ADaEf7380d7",
+    earnContractAddress: "0x5E55f1f68c3a708C1A47a6FCFd6D0ADaEf7380d7",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-gns-dai",
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "GNS",
+      "DAI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MICRO",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063&outputCurrency=0xE5417Af564e4bFDA1c483642db72007871397896",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0xE5417Af564e4bFDA1c483642db72007871397896/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    network: "polygon"
   }
 ];

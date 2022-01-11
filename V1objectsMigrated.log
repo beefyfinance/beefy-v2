@@ -1,107 +1,10 @@
 [
   {
-    "id": "fantom vault: boo-dola-inv-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "harmony vault: sushi-one-bifi-wone",
+    "id": "polygon vault: quick-gns-dai",
     "type": "Added"
   },
   {
-    "id": "harmony vault: sushi-one-wone-1btc",
-    "type": "Added"
-  },
-  {
-    "id": "harmony vault: sushi-one-1ygg-1eth",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1eth-1aave",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1axs-1eth",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1eth-1dai",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1usdt-1eth",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1eth-1frax",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-ust-1eth",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1wbtc-1eth",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1usdt-1usdc",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1usdt-wone",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-sushi-one",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-busd-one",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-bscbusd-busd",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-eth-one",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-btc-one",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-usdc-one",
-    "type": "synced"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-weth",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-g$",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: fusefi-fusd-bnb",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-busd",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-fusd",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: fusefi-wbtc-weth",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-usdc",
+    "id": "fuse vault: fuse-fuse",
     "type": "Added"
   }
 ]
