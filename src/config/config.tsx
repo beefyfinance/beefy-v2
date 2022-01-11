@@ -141,6 +141,8 @@ export const config = {
       'EURt',
       'PAR',
       'EURS',
+			'jJPY', 
+			'JPYC'
     ],
   },
   fantom: {
