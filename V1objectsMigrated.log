@@ -1,105 +1,10 @@
 [
   {
-    "id": "bsc vault: baby-aot-usdt",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: dibs-dibs-bnb",
+    "id": "polygon vault: quick-gns-dai",
     "type": "Added"
   },
   {
-    "id": "bsc vault: dibs-dshare-bnb",
+    "id": "fuse vault: fuse-fuse",
     "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-insur-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-wbnb-gm",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-woop-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-high-busd",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-ccar-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-wbnb-dpt",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-thg-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: alpaca-ibalpaca-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-tusd-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-bhc-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-caps-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-etc-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-hnd-wftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spartacadabra-lambda-crv",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spartacadabra-charm-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-mim-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-ftm-ice-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "cronos vault: vvs-tonic-cro",
-    "type": "Added"
-  },
-  {
-    "id": "cronos vault: crona-usdt-avax-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc boost: moo_cakev2-cake-bnb-dibs",
-    "type": "Added"
-  },
-  {
-    "id": "bsc boost: moo_alpaca-ibalpaca-nfty",
-    "type": "synced"
   }
 ]
