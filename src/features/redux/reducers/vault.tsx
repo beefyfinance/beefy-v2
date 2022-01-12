@@ -8,7 +8,7 @@ import {
 import { config } from '../../../config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
 import { safetyScore } from '../../../helpers/safetyScore';
-import { QiDao, Insurace } from '../../../helpers/partners';
+import { QiDao, Insurace, LaCucina } from '../../../helpers/partners';
 import BigNumber from 'bignumber.js';
 
 let initPlatforms = {};
@@ -74,6 +74,7 @@ const initialPools = () => {
       pool['boostData'] = null;
       pool['isQidao'] = QiDao.includes(pool.id);
       pool['isInsurace'] = Insurace.includes(net);
+      pool['isLaCucina'] = LaCucina.includes(pool.id);
 
       if (!isEmpty(pool.platform)) {
         if (!platforms.includes(pool.platform)) {

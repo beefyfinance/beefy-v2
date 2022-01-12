@@ -24,6 +24,7 @@ import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
+import { LaCucina } from './components/LaCucinaCard';
 // import { Moonpot } from './components/MoonportCard';
 
 //allow the Harmony-blockchain entries in the address-book to be accessed via the normal
@@ -258,6 +259,12 @@ export const Vault = () => {
                 {item.isInsurace && (
                   <Box>
                     <Insurace />
+                  </Box>
+                )}
+                {/*LaCucina Card */}
+                {item.isLaCucina && (
+                  <Box>
+                    <LaCucina />
                   </Box>
                 )}
               </Grid>
