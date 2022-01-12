@@ -194,8 +194,10 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
     return featuredPools[vault.id] ?? false;
   }
 
-  // hide when name does not include keyword
-  if (!vault.name.toLowerCase().includes(config.keyword.toLowerCase())) {
+  // hide when neither name includes keyword nor keyword matches its tokens
+	const S = config.keyword.toLowerCase();
+	if (!( vault.name.toLowerCase().includes( S) || vault.assets.find( S_TKN => 
+																														S_TKN.toLowerCase() === S))) {
     return false;
   }
 
