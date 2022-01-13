@@ -861,42 +861,6 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "beets-steady-beets",
-    logo: "fantom/Steady Beets.png",
-    name: "Steady Beets",
-    token: "Steady Beets",
-    tokenDescription: "Beethoven X",
-    tokenAddress: "0xd41bF724b6e31311Db582c5388Af6B316e812Fe4",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBeetSteadyBeets",
-    earnedTokenAddress: "0x6BE9170485a3DA49DA422002cb02161a123A1422",
-    earnContractAddress: "0x6BE9170485a3DA49DA422002cb02161a123A1422",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "beets-steady-beets",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Beethoven X",
-    assets: [
-      "USDC",
-      "DAI"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "NEW_STRAT",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratMultiLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
-    network: "fantom"
-  },
-  {
     id: "scream-frax",
     logo: "single-assets/FRAX.svg",
     name: "FRAX",
@@ -1077,8 +1041,8 @@ export const pools = [
   },
   {
     id: "boo-wftm-spell",
-    name: "SPELL-WFTM LP",
-    token: "SPELL-WFTM LP",
+    name: "SPELL-FTM LP",
+    token: "SPELL-FTM LP",
     tokenDescription: "SpookySwap",
     tokenAddress: "0x78f82c16992932EfDd18d93f889141CcF326DBc2",
     tokenDecimals: 18,
@@ -1928,7 +1892,7 @@ export const pools = [
   },
   {
     id: "boo-boo",
-    logo: "fantom/BOO.png",
+    logo: "single-assets/BOO.png",
     name: "BOO",
     token: "BOO",
     tokenDescription: "SpookySwap",
@@ -1962,8 +1926,8 @@ export const pools = [
   },
   {
     id: "boo-wftm-foo",
-    name: "FTM-FOO LP",
-    token: "FTM-FOO LP",
+    name: "FOO-FTM LP",
+    token: "FOO-FTM LP",
     tokenDescription: "SpookySwap",
     tokenAddress: "0x157f913Ed0961a8D0d06a258019840919111D9B9",
     tokenDecimals: 18,
@@ -2210,8 +2174,8 @@ export const pools = [
   {
     id: "scream-eth",
     logo: "single-assets/ETH.svg",
-    name: "wETH",
-    token: "wETH",
+    name: "ETH",
+    token: "ETH",
     tokenDescription: "Scream",
     tokenAddress: "0x74b23882a30290451A17c44f4F05243b6b58C76d",
     tokenDecimals: 18,
@@ -2403,8 +2367,8 @@ export const pools = [
     status: "active",
     platform: "SpookySwap",
     assets: [
-      "FTM",
-      "MIM"
+      "MIM",
+      "FTM"
     ],
     risks: [
       "COMPLEXITY_LOW",
@@ -2438,8 +2402,8 @@ export const pools = [
     status: "active",
     platform: "SpookySwap",
     assets: [
-      "FTM",
-      "BOO"
+      "BOO",
+      "FTM"
     ],
     risks: [
       "COMPLEXITY_LOW",
@@ -2510,8 +2474,8 @@ export const pools = [
     status: "active",
     platform: "SpookySwap",
     assets: [
-      "FTM",
-      "ICE"
+      "ICE",
+      "FTM"
     ],
     risks: [
       "COMPLEXITY_LOW",
@@ -2546,8 +2510,8 @@ export const pools = [
     status: "active",
     platform: "SpookySwap",
     assets: [
-      "FTM",
-      "SUSHI"
+      "SUSHI",
+      "FTM"
     ],
     risks: [
       "COMPLEXITY_LOW",
@@ -2565,8 +2529,8 @@ export const pools = [
   {
     id: "boo-ftm-usdc",
     logo: "fantom/USDC-FTM.png",
-    name: "FTM-USDC LP",
-    token: "FTM-USDC LP",
+    name: "USDC-FTM LP",
+    token: "USDC-FTM LP",
     tokenDescription: "SpookySwap",
     tokenAddress: "0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c",
     tokenDecimals: 18,
@@ -2582,8 +2546,8 @@ export const pools = [
     status: "active",
     platform: "SpookySwap",
     assets: [
-      "FTM",
-      "USDC"
+      "USDC",
+      "FTM"
     ],
     risks: [
       "COMPLEXITY_LOW",
@@ -2708,7 +2672,7 @@ export const pools = [
   },
   {
     id: "ester-est",
-    logo: "fantom/EST.png",
+    logo: "single-assets/EST.png",
     name: "EST",
     token: "EST",
     tokenDescription: "Ester",
@@ -3131,8 +3095,8 @@ export const pools = [
   },
   {
     id: "boo-wftm-joe",
-    name: "JOE-WFTM LP",
-    token: "JOE-WFTM LP",
+    name: "JOE-FTM LP",
+    token: "JOE-FTM LP",
     tokenDescription: "SpookySwap",
     tokenAddress: "0xd518737Ff601c2A7C67F55EbbEb0a4e3fF5C0C35",
     tokenDecimals: 18,
@@ -4191,43 +4155,6 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "boo-usdc-woo-eol",
-    name: "WOO-USDC LP",
-    token: "WOO-USDC LP",
-    tokenDescription: "SpookySwap",
-    tokenAddress: "0x7d4CdDAB6774Ff47D62253067958dbD749Cb7F06",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBooWOO-USDC",
-    earnedTokenAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
-    earnContractAddress: "0x45A75B80D92a172F8b940AC1da4568BD2ee4A4C7",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "boo-usdc-woo",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "SpookySwap",
-    assets: [
-      "WOO",
-      "USDC"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://spookyswap.finance/add/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    buyTokenUrl: "https://spookyswap.finance/swap",
-    network: "fantom",
-    retireReason: "rewards"
-  },
-  {
     id: "spirit-dai-usdc",
     name: "DAI-USDC LP",
     token: "DAI-USDC SLP",
@@ -4857,6 +4784,236 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0xf16e81dce15B08F326220742020379B855B87DF9/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xf16e81dce15B08F326220742020379B855B87DF9",
+    network: "fantom",
+    retireReason: "rewards"
+  },
+  {
+    id: "beets-steady-beets-2",
+    logo: "fantom/Steady Beets.png",
+    name: "Steady Beets 2",
+    token: "Steady Beets 2",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0xeCAa1cBd28459d34B766F9195413Cb20122Fb942",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetSteadyBeets2",
+    earnedTokenAddress: "0xF08134f99EcBfdf7543BF56873324F697bA2a858",
+    earnContractAddress: "0xF08134f99EcBfdf7543BF56873324F697bA2a858",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-steady-beets-2",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "USDC",
+      "DAI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://beets.fi/#/pool/0xecaa1cbd28459d34b766f9195413cb20122fb942000200000000000000000120",
+    network: "fantom"
+  },
+  {
+    id: "beets-two-became-one",
+    logo: "fantom/When Two Became One.png",
+    name: "When Two Became One (Hundred)",
+    token: "When Two Became One (Hundred)",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0xD57Cda2caEBb9B64BB88905C4dE0F0Da217a77d7",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetTwoBecameOne",
+    earnedTokenAddress: "0xe48d1b1074e1B51c970674DB05669d3C50269108",
+    earnContractAddress: "0xe48d1b1074e1B51c970674DB05669d3C50269108",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-two-became-one",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "USDC",
+      "HND",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beets.fi/#/pool/0x2c580c6f08044d6dfaca8976a66c8fadddbd9901000000000000000000000038",
+    network: "fantom"
+  },
+  {
+    id: "beets-dante-symphony",
+    logo: "fantom/Dante Symphony.png",
+    name: "Dante Symphony",
+    token: "Dante Symphony",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0xc042EF6cA08576BdFb57d3055A7654344fd153E4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetDanteSymphony",
+    earnedTokenAddress: "0xDc1b4e4Ff41bC392f1BBCdcE699d5aB3E3de9E66",
+    earnContractAddress: "0xDc1b4e4Ff41bC392f1BBCdcE699d5aB3E3de9E66",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-dante-symphony",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "FTM",
+      "WBTC",
+      "ETH",
+      "WSTA",
+      "BEETS"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beets.fi/#/pool/0xc042ef6ca08576bdfb57d3055a7654344fd153e400010000000000000000003a",
+    network: "fantom"
+  },
+  {
+    id: "beets-ode-to-joy",
+    logo: "fantom/Ode To Joy.png",
+    name: "Ode To Joy",
+    token: "Ode To Joy",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0x5dD0D5D6c13E9302271Be0DfAde2b9Fd708E5dDB",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetOdeToJoy",
+    earnedTokenAddress: "0x5C4d01b3d77C50278684b8b275874E2232706FE2",
+    earnContractAddress: "0x5C4d01b3d77C50278684b8b275874E2232706FE2",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-ode-to-joy",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "WBTC",
+      "ETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beets.fi/#/pool/0x5dd0d5d6c13e9302271be0dfade2b9fd708e5ddb0002000000000000000000e7",
+    network: "fantom"
+  },
+  {
+    id: "beets-wagmi-index",
+    logo: "fantom/WAGMI Index.png",
+    name: "WAGMI Index",
+    token: "WAGMI Index",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0x713ee620a7702b79eA5413096A90702244FE4532",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetWAGMIIndex",
+    earnedTokenAddress: "0xf845a4bf053020AA9826b130248E921Ad0eb1037",
+    earnContractAddress: "0xf845a4bf053020AA9826b130248E921Ad0eb1037",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-wagmi-index",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "FTM",
+      "SPELL",
+      "MIM",
+      "SUSHI",
+      "wMEMO",
+      "ICE"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beets.fi/#/pool/0x713ee620a7702b79ea5413096a90702244fe4532000100000000000000000105",
+    network: "fantom"
+  },
+  {
+    id: "beets-steady-beets-eol",
+    logo: "fantom/Steady Beets.png",
+    name: "Steady Beets",
+    token: "Steady Beets",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0xd41bF724b6e31311Db582c5388Af6B316e812Fe4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetSteadyBeets",
+    earnedTokenAddress: "0x6BE9170485a3DA49DA422002cb02161a123A1422",
+    earnContractAddress: "0x6BE9170485a3DA49DA422002cb02161a123A1422",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-steady-beets",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Beethoven X",
+    assets: [
+      "USDC",
+      "DAI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
     network: "fantom",
     retireReason: "rewards"
   }
