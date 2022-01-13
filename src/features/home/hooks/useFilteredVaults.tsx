@@ -190,8 +190,8 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
     return false;
   }
 
-  if (config.category === 'featured') {
-    return featuredPools[vault.id] ?? false;
+  if (config.category === 'featured' && !featuredPools[vault.id]) {
+    return false;
   }
 
   // hide when neither name includes keyword nor keyword matches its tokens
