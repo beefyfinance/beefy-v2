@@ -937,42 +937,6 @@ export const pools = [
     network: "polygon"
   },
   {
-    id: "quick-qi-eth",
-    name: "QI-ETH LP",
-    token: "QI-ETH LP",
-    tokenDescription: "QuickSwap",
-    tokenAddress: "0x8C1b40Ea78081B70F661C3286c74E71b4602C9C0",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooQuickQI-ETH",
-    earnedTokenAddress: "0x8c864B1FD2BbB20F614661ddD992eFaeEeF0b2Ac",
-    earnContractAddress: "0x8c864B1FD2BbB20F614661ddD992eFaeEeF0b2Ac",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "quick-qi-eth",
-    status: "active",
-    platform: "QuickSwap",
-    assets: [
-      "QI",
-      "ETH"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://quickswap.exchange/#/add/0x580A84C73811E1839F75d86d75d88cCa0c241fF4/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
-    network: "polygon"
-  },
-  {
     id: "quick-mai-usdt",
     name: "MAI-USDT LP",
     token: "MAI-USDT LP",
@@ -7862,5 +7826,42 @@ export const pools = [
     buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063&outputCurrency=0xE5417Af564e4bFDA1c483642db72007871397896",
     addLiquidityUrl: "https://quickswap.exchange/#/add/0xE5417Af564e4bFDA1c483642db72007871397896/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     network: "polygon"
+  },
+  {
+    id: "quick-qi-eth-eol",
+    name: "QI-ETH LP",
+    token: "QI-ETH LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x8C1b40Ea78081B70F661C3286c74E71b4602C9C0",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickQI-ETH",
+    earnedTokenAddress: "0x8c864B1FD2BbB20F614661ddD992eFaeEeF0b2Ac",
+    earnContractAddress: "0x8c864B1FD2BbB20F614661ddD992eFaeEeF0b2Ac",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-qi-eth",
+    status: "eol",
+    platform: "QuickSwap",
+    assets: [
+      "QI",
+      "ETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x580A84C73811E1839F75d86d75d88cCa0c241fF4/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
+    network: "polygon",
+    retireReason: "rewards"
   }
 ];
