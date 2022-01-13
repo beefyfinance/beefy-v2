@@ -1,5 +1,6 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal, { connectors } from 'web3modal';
+import { CloverConnector } from '@clover-network/clover-connector';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
 
@@ -1091,6 +1092,22 @@ const generateProviderOptions = (wallet, clients) => {
           const provider = (window as any).BinanceChain;
           await provider.enable();
           return provider;
+        },
+      },
+      'custom-clover': {
+        display: {
+          logo: require(`../../../images/wallets/clover.png`).default,
+          name: 'Clover Wallet',
+          description: 'Connect with your Clover wallet and earn CLV',
+        },
+        options: {
+          supportedChainIds: [networkId],
+        },
+        package: CloverConnector,
+        connector: async (ProviderPackage, options) => {
+          const provider = new ProviderPackage(options);
+          await provider.activate();
+          return provider.getProvider();
         },
       },
       'custom-coinbase': {

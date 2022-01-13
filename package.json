@@ -5,6 +5,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@clover-network/clover-connector": "^1.0.0",
     "@download/blockies": "^1.0.3",
     "@ethersproject/address": "^5.4.0",
     "@ethersproject/solidity": "^5.4.0",
