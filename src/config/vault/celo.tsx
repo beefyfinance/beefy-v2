@@ -443,43 +443,6 @@ export const pools = [
     retireReason: "rewards"
   },
   {
-    id: "sushi-celo-cusd-weth-eol",
-    name: "cUSD-WETH LP",
-    token: "cUSD-WETH LP",
-    tokenDescription: "Sushi",
-    tokenAddress: "0xD7cb7686Ed438c55149ded0D4762c70AF3D9923a",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSushicUSD-WETH",
-    earnedTokenAddress: "0xf6fD90FE8f057a63F0368B0B551D5e52C7Ae821F",
-    earnContractAddress: "0xf6fD90FE8f057a63F0368B0B551D5e52C7Ae821F",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "sushi-celo-cusd-weth",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "Sushi",
-    withdrawalFee: "0%",
-    assets: [
-      "cUSD",
-      "WETH"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.sushi.com/add/0x765DE816845861e75A25fCA122bb6898B8B1282a/0xE919F65739c26a42616b7b8eedC6b5524d1e3aC4",
-    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x765DE816845861e75A25fCA122bb6898B8B1282a&outputCurrency=0xE919F65739c26a42616b7b8eedC6b5524d1e3aC4",
-    network: "celo",
-    retireReason: "rewards"
-  },
-  {
     id: "sushi-celo-cusd-ceur-eol",
     name: "cUSD-cEUR LP",
     token: "cUSD-cEUR LP",
