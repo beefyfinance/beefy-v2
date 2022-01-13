@@ -256,5 +256,11 @@
   "LaCucina-Btn": "Claim LAC",
   "LaCucina-Ends": "ENDS",
   "LaCucina-Apr": "APR",
-  "LaCucina-Earn": "EARN"
+  "LaCucina-Earn": "EARN",
+  "Spirit-Title": "Mint binSPIRIT",
+  "Spirit-Content": "Lock your SPIRIT to get binSPIRIT and earn in our vault.",
+  "Spirit-From": "FROM: ",
+  "Spirit-To": "TO: ",
+  "Spirit-Available": "AVAILABLE: ",
+  "Spirit-Btn": "Mint binSPIRIT"
 }
