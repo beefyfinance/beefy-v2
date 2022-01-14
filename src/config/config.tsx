@@ -186,7 +186,7 @@ export const config = {
       rpcUrls: ['https://api.s0.t.hmny.io/'],
       blockExplorerUrls: ['https://explorer.harmony.one/'],
     },
-    stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX'],
+    stableCoins: ['BUSD', 'bscBUSD', 'USDC', 'USDT', 'UST', 'DAI', 'FRAX', 'cUSD'],
   },
   arbitrum: {
     name: 'Arbitrum',
