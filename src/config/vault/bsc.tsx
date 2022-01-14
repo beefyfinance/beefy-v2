@@ -5246,35 +5246,6 @@ export const pools = [
     network: "bsc"
   },
   {
-    id: "cakev2-popen-bnb-eol",
-    logo: "bnb-pairs/POPEN-BNB.svg",
-    name: "pOPEN-BNB LP",
-    token: "pOPEN-BNB LP2",
-    tokenDescription: "PancakeSwap",
-    tokenAddress: "0x1090c996Fd1490D15dD7906322eE676A5cC3cF82",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCakeV2POPEN-BNB",
-    earnedTokenAddress: "0xC1D74e394ed525A780f3a02d6b3716803035e6bE",
-    earnContractAddress: "0xC1D74e394ed525A780f3a02d6b3716803035e6bE",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cakev2-popen-bnb",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "PancakeSwap",
-    assets: [
-      "pOPEN",
-      "BNB"
-    ],
-    retireReason: "rewards",
-    addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0xaBaE871B7E3b67aEeC6B46AE9FE1A91660AadAC5",
-    buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=BNB&outputCurrency=0xaBaE871B7E3b67aEeC6B46AE9FE1A91660AadAC5",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
     id: "cakev2-well-busd-eol",
     logo: "busd-pairs/WELL-BUSD.svg",
     name: "WELL-BUSD LP",

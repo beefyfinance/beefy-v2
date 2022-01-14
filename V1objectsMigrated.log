@@ -1,7 +1,42 @@
 [
   {
-    "id": "polygon vault: quick-qi-eth-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc vault: cakev2-popen-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: 2omb-2omb-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: 2omb-2share-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: boo-kek-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "polygon vault: quick-psp-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon vault: quick-wmatic-ht-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom boost: moo_WFTM-2omb",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: moo_boo_ftm-tomb",
+    "type": "synced"
+  },
+  {
+    "id": "fantom boost: boo-bifi-ftm-bifi",
+    "type": "synced"
+  },
+  {
+    "id": "fantom boost: moo_usdc-ftm-ester",
+    "type": "synced"
   }
 ]
