@@ -1415,35 +1415,6 @@ export const pools = [
     network: "polygon"
   },
   {
-    id: "quick-wmatic-ht-eol",
-    name: "HT-MATIC LP",
-    token: "HT-MATIC LP",
-    tokenDescription: "Quickswap",
-    tokenAddress: "0x20e28214946B4e0F18B2c1aA7C976dF087695a5d",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooQuickHT-WMATIC",
-    earnedTokenAddress: "0x69df355fD685d87b44e86728f3A0b92D01341E40",
-    earnContractAddress: "0x69df355fD685d87b44e86728f3A0b92D01341E40",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "quick-wmatic-ht",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "QuickSwap",
-    assets: [
-      "HT",
-      "MATIC"
-    ],
-    withdrawalFee: "0%",
-    retireReason: "rewards",
-    removeLiquidityUrl: "https://quickswap.exchange/#/remove/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0xa731349fa468614c1698fc46ebf06da6f380239e",
-    buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0xa731349fa468614c1698fc46ebf06da6f380239e",
-    stratType: "StratLP",
-    network: "polygon"
-  },
-  {
     id: "pearzap-pear-usdc",
     name: "PEAR-USDC LP",
     token: "PEAR-USDC LP",
@@ -7863,5 +7834,42 @@ export const pools = [
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
     network: "polygon",
     retireReason: "rewards"
+  },
+  {
+    id: "quick-psp-matic",
+    name: "PSP-MATIC LP",
+    token: "PSP-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x7AfC060acCA7ec6985d982dD85cC62B111CAc7a7",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickSwapPSP-MATIC",
+    earnedTokenAddress: "0x051aBa342824Ba03519694774B4e9297618Fa818",
+    earnContractAddress: "0x051aBa342824Ba03519694774B4e9297618Fa818",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-psp-matic",
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "PSP",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MICRO",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x42d61D766B85431666B39B89C43011f24451bFf6",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x42d61D766B85431666B39B89C43011f24451bFf6/ETH",
+    network: "polygon"
   }
 ];
