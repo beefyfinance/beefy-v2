@@ -104,6 +104,7 @@ const connect = () => {
     };
 
     try {
+      console.log(`conneeccttinng`);
       const provider = await state.walletReducer.web3modal.connect();
       const web3 = await new Web3(provider);
       web3.eth.extend({
@@ -115,7 +116,7 @@ const connect = () => {
           },
         ],
       });
-
+      console.log('heheheh');
       subscribeProvider(provider, web3);
 
       let networkId = await web3.eth.getChainId();
@@ -124,6 +125,8 @@ const connect = () => {
         networkId = 56;
       }
 
+      console.log(state.walletReducer);
+      console.log(state.walletReducer.network);
       if (networkId === config[state.walletReducer.network].chainId) {
         const accounts = await web3.eth.getAccounts();
         // console.log(accounts);
@@ -133,17 +136,23 @@ const connect = () => {
           payload: { address: accounts[0] },
         });
       } else {
-        await close();
-        if (provider) {
-          await provider.request({
-            method: 'wallet_addEthereumChain',
-            params: [config[state.walletReducer.network].walletSettings],
-          });
-          dispatch(connect());
+        console.log('connecting to another chain');
+        if (!checkNetworkSupport(networkId)) {
+          await close();
+          if (provider) {
+            await provider.request({
+              method: 'wallet_addEthereumChain',
+              params: [config[state.walletReducer.network].walletSettings],
+            });
+            dispatch(connect());
+          } else {
+            const accounts = await web3.eth.getAccounts();
+            dispatch({ type: UNSUPPORTED_NETWORK, payload: { address: accounts[0] } });
+            throw Error('Network not supported, check chainId.');
+          }
         } else {
-          const accounts = await web3.eth.getAccounts();
-          dispatch({ type: UNSUPPORTED_NETWORK, payload: { address: accounts[0] } });
-          throw Error('Network not supported, check chainId.');
+          const net = getNetworkAbbr(networkId);
+          dispatch(setNetwork(net));
         }
       }
     } catch (err) {
