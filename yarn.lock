@@ -3748,9 +3748,15 @@ blakejs@^1.1.0:
   integrity sha512-bLG6PHOCZJKNshTjGRBvET0vTciwQE6zFKOKKXPDJfwFBd4Ac0yBfPZqcGvGJap50l7ktvlpFqc2jGVaUgbJgg==
 
 blockchain-addressbook@^0.5.22:
+<<<<<<< HEAD
   version "0.5.36"
   resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.5.36.tgz#60f13e5905e77a1525de4558a6dcf2c7551f16ec"
   integrity sha512-XHTprXeApjEKaxJ/bGW9lyPe1ROFGFd2Tx7PqaB3cyckgrXrokmwvgo7I73h1th1R8K3U4OBHrVBtc9zoPobfg==
+=======
+  version "0.5.30"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.5.30.tgz#87a5de9214eef96b7ae3647ccbe305557523ee70"
+  integrity sha512-rdszNxZGXDctuf45+or58DrAYT6pvo+aWfzjtXXjm3j0t00kOQgl8glIyJj6njw9uebwRr3fJJ00lbrlXPAHeg==
+>>>>>>> f30606d (Add fuse reward pool)
 
 bluebird@^3.5.0, bluebird@^3.5.5:
   version "3.7.2"
