@@ -32,7 +32,8 @@ run. To cut down onrepository pollution, the maintainer may avoid pushing this f
 the staging repository.
 
 Development
-+ v0.7.0.2 AllTrades: add fuse blockchain
++ v0.7.0.3 AllTrades: add Metis blockchain
++ v0.7.0.2 AllTrades: add Fuse blockchain
 + v0.7.0.1 AllTrades: small bugfix to preserve common-partner references
 + v0.7 AllTrades: migrate boosts as well as vaults
 + v0.5.6.0.1 AllTrades: small bugfix
@@ -69,7 +70,8 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 									{S_SRC: "celo"}, 
 									{S_SRC: "moonriver", S_GVPOOL_SFX_ALIAS: "moonriver"},
 									{S_SRC: "cronos", S_GVPOOL_SFX_ALIAS: "cronos"},
-									{S_SRC: "fuse"}],
+									{S_SRC: "fuse"}, 
+									{S_SRC: "metis"}],
 			mS_PRPNM_ID = "id", mS_PRPNM_ASSTS = "assets", mS_PRPNM_STRAT_TYP = "stratType", 
 			mS_PRPNM_CHAIN = "network", mS_PRPNM_LOGO = "logo", mS_PRPNM_RISKS = "risks",
 			mS_PRPNM_CTRCT = "earnContractAddress", mS_PRPNM_TYP = "type", 
