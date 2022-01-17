@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tokens slice tests should update state on fulfilled vault list 1`] = `
+Object {
+  "implems": Object {
+    "allIds": Array [
+      "harmony-ONE",
+      "sushi-one-1ygg-1eth",
+      "harmony-mooSushiYGG-ETH",
+    ],
+    "byChainId": Object {},
+    "byId": Object {
+      "harmony-ONE": Object {
+        "buyUrl": null,
+        "chainId": "harmony",
+        "contractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
+        "decimals": 18,
+        "id": "harmony-ONE",
+        "tokenId": "ONE",
+        "type": "erc20",
+      },
+      "harmony-mooSushiYGG-ETH": Object {
+        "buyUrl": null,
+        "chainId": "harmony",
+        "contractAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+        "decimals": 18,
+        "id": "harmony-mooSushiYGG-ETH",
+        "tokenId": "mooSushiYGG-ETH",
+        "type": "erc20",
+      },
+      "sushi-one-1ygg-1eth": Object {
+        "buyUrl": null,
+        "chainId": "harmony",
+        "contractAddress": "0x40112850EFd90e9e17b56de35d86BdFf9f4d07Fd",
+        "decimals": 18,
+        "id": "sushi-one-1ygg-1eth",
+        "tokenId": "mooSushiYGG-ETH",
+        "type": "erc20",
+      },
+    },
+  },
+  "tokens": Object {
+    "allIds": Array [
+      "BIFI",
+      "ONE",
+      "1YGG-1ETH LP",
+      "mooSushiYGG-ETH",
+    ],
+    "byId": Object {
+      "1YGG-1ETH LP": Object {
+        "id": "1YGG-1ETH LP",
+        "isBoost": false,
+        "symbol": "1YGG-1ETH LP",
+        "tokenDescription": "Sushi",
+        "tokenDescriptionUrl": "#",
+      },
+      "BIFI": Object {
+        "id": "BIFI",
+        "isBoost": false,
+        "symbol": "BIFI",
+        "tokenDescription": "Beefy.Finance",
+        "tokenDescriptionUrl": "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
+      },
+      "ONE": Object {
+        "id": "ONE",
+        "isBoost": false,
+        "symbol": "ONE",
+        "tokenDescription": null,
+        "tokenDescriptionUrl": null,
+      },
+      "mooSushiYGG-ETH": Object {
+        "id": "mooSushiYGG-ETH",
+        "isBoost": false,
+        "symbol": "mooSushiYGG-ETH",
+        "tokenDescription": null,
+        "tokenDescriptionUrl": null,
+      },
+    },
+  },
+}
+`;

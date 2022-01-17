@@ -1,3 +1,4 @@
+import { ChainEntity } from './chain';
 import { TokenEntity, TokenImplemEntity } from './token';
 
 // maybe a RiskAnalysis type would be better
@@ -40,10 +41,12 @@ enum VaultTag {
  *
  * Sometimes also named "pool"
  */
-interface VaultStandard {
+export interface VaultStandard {
   id: string;
   name: string;
   logoUri: string;
+
+  chainId: ChainEntity['id'];
 
   /**
    * each vault has an underlying token which is what you stake in it we identify it with the oracleId
@@ -99,7 +102,7 @@ interface VaultStandard {
 }
 
 // TODO: WIP
-interface VaultGov {
+export interface VaultGov {
   id: string;
 
   // address of the vault?

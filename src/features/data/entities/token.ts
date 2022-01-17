@@ -11,15 +11,9 @@ export type TokenEntity = TokenStandard | TokenBoost;
 interface TokenStandard {
   id: string;
   symbol: string;
-  description: string;
-  descriptionUrl: string;
-  project: {
-    url: string; // "https://ageoftanks.io/"
-    telegram: string | null;
-    twitter: string | null;
-    discord: string | null;
-  } | null; // some tokens don't have a "project"
   isBoost: false;
+  tokenDescription: string | null;
+  tokenDescriptionUrl: string | null;
 }
 interface TokenBoost {
   id: string;
@@ -44,7 +38,7 @@ export interface TokenImplemErc20 {
   chainId: ChainEntity['id'];
   contractAddress: string;
   decimals: number;
-  buyUrl: string; // link to 1inch/pancake/...
+  buyUrl: string | null; // link to 1inch/pancake/...
   type: 'erc20';
 }
 
@@ -59,7 +53,7 @@ interface TokenImplemNative {
   tokenId: TokenEntity['id'];
   chainId: ChainEntity['id'];
   decimals: number;
-  buyUrl: string; // link to 1inch/pancake/...
+  buyUrl: string | null; // link to 1inch/pancake/...
   type: 'native';
 }
 

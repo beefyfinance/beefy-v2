@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchVaultListAction } from '../actions/prices';
-import { VaultEntity } from '../entities/vault';
+import { fetchVaultByChainIdAction } from '../actions/vaults';
+import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
@@ -22,17 +22,15 @@ export const vaultsSlice = createSlice({
   },
   extraReducers: builder => {
     // TODO: WIP
-    builder.addCase(fetchVaultListAction.fulfilled, (state, action) => {
+    builder.addCase(fetchVaultByChainIdAction.fulfilled, (state, action) => {
       for (const apiVault of action.payload.pools) {
         if (apiVault.isGovVault) {
-          // @ts-ignore
           const vault: VaultGov = {
             id: apiVault.id,
-            //...
+            isGovVault: true,
+            poolAddress: apiVault.poolAddress,
           };
 
-          // redux toolkit uses immer by default so we can
-          // directly modify the state as usual
           state.byId[vault.id] = vault;
           state.allIds.push(vault.id);
           if (apiVault.depositsPaused) {
@@ -41,9 +39,11 @@ export const vaultsSlice = createSlice({
             state.allActiveIds.push(vault.id);
           }
         } else {
-          // @ts-ignore
-          const vault: VaultLP = {
-            //...
+          const vault: VaultStandard = {
+            id: apiVault.id,
+            name: apiVault.name,
+            logoUri: apiVault.logo,
+            chainId: action.
           };
           // redux toolkit uses immer by default so we can
           // directly modify the state as usual

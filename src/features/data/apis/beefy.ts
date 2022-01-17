@@ -2,22 +2,25 @@ import axios, { AxiosInstance } from 'axios';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
 
-// maybe "short" and "long" is not the smartest choice of words
-interface BeefyAPIBreakdownShort {
+interface ApyGovVault {
   vaultApr: number;
 }
-interface BeefyAPIBreakdownLong {
-  beefyPerformanceFee: number;
-  compoundingsPerYear: number;
-  lpFee: number;
+interface ApyMaxiVault {
   totalApy: number;
-  tradingApr: number;
-  vaultApr: number;
-  vaultApy: number;
 }
+interface ApyStandard {
+  vaultApr: number;
+  compoundingsPerYear: number;
+  vaultApy: Number;
+  tradingApr?: number;
+  totalApy: number;
+  // todo: does it make sense to have fees and apy in the same entities?
+  lpFee: number;
+}
+export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard;
 
 type BeefyAPIBreakdownResponse = {
-  [vaultId: VaultEntity['id']]: BeefyAPIBreakdownShort | BeefyAPIBreakdownLong;
+  [vaultId: VaultEntity['id']]: ApyData;
 };
 
 // I'm not sure what those keys are

@@ -1,5 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchPricesAction, fetchVaultListAction } from '../actions/prices';
+import { ActionReducerMapBuilder, AsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { fetchApyAction, fetchHistoricalApy } from '../actions/apy';
+import { fetchLPPricesAction, fetchPricesAction } from '../actions/prices';
+import { fetchVaultByChainIdAction } from '../actions/vaults';
 
 /**
  * because we want to be smart about data loading
@@ -46,12 +48,38 @@ export interface DataLoaderState {
   vaultsLoading: LoaderState;
   pricesLoading: LoaderState;
   tvlLoading: LoaderState;
+  apyLoading: LoaderState;
+  historicalApyLoading: LoaderState;
 }
 const dataLoaderInitialState: DataLoaderState = {
   vaultsLoading: dataLoaderStateInit,
   pricesLoading: dataLoaderStateInit,
   tvlLoading: dataLoaderStateInit,
+  apyLoading: dataLoaderStateInit,
+  historicalApyLoading: dataLoaderStateInit,
 };
+
+/**
+ * Handling those async actions is very generic
+ * Use a helper function to handle each action state
+ */
+function addAsyncThunkActions(
+  builder: ActionReducerMapBuilder<DataLoaderState>,
+  action: AsyncThunk<unknown, unknown, unknown>,
+  stateKey: keyof DataLoaderState
+) {
+  builder.addCase(action.pending, state => {
+    state[stateKey] = dataLoaderStatePending;
+  });
+  builder.addCase(action.rejected, (state, action) => {
+    // here, maybe put an error message
+    state[stateKey] = { status: 'rejected', error: action.error + '' };
+  });
+  builder.addCase(action.fulfilled, state => {
+    state[stateKey] = dataLoaderStateFulfilled;
+  });
+}
+
 export const dataLoaderSlice = createSlice({
   name: 'dataLoader',
   initialState: dataLoaderInitialState,
@@ -60,30 +88,9 @@ export const dataLoaderSlice = createSlice({
   },
   extraReducers: builder => {
     // TODO: WIP
-    // this could be abstracted away in a function
-    // keeping it here so we can understand this code without much headhache
-    builder.addCase(fetchPricesAction.pending, state => {
-      state.pricesLoading = dataLoaderStatePending;
-    });
-    builder.addCase(fetchPricesAction.rejected, (state, action) => {
-      // here, maybe put an error message
-      state.pricesLoading = { status: 'rejected', error: action.error + '' };
-    });
-    builder.addCase(fetchPricesAction.fulfilled, state => {
-      state.pricesLoading = dataLoaderStateFulfilled;
-    });
-
-    // handle all 3 cases for each action
-    // or just replace these with a smarter loop ^^
-    builder.addCase(fetchVaultListAction.pending, state => {
-      state.vaultsLoading = dataLoaderStatePending;
-    });
-    builder.addCase(fetchVaultListAction.rejected, (state, action) => {
-      // here, maybe put an error message
-      state.vaultsLoading = { status: 'rejected', error: action.error + '' };
-    });
-    builder.addCase(fetchVaultListAction.fulfilled, state => {
-      state.vaultsLoading = dataLoaderStateFulfilled;
-    });
+    addAsyncThunkActions(builder, fetchPricesAction, 'pricesLoading');
+    addAsyncThunkActions(builder, fetchVaultByChainIdAction, 'vaultsLoading');
+    addAsyncThunkActions(builder, fetchApyAction, 'apyLoading');
+    addAsyncThunkActions(builder, fetchHistoricalApy, 'historicalApyLoading');
   },
 });

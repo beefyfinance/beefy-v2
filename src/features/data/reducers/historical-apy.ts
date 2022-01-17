@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchHistoricalApy } from '../actions/apy';
 import { VaultEntity } from '../entities/vault';
 
 /**
@@ -20,6 +21,10 @@ export const historicalApySlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    // todo: handle actions
+    builder.addCase(fetchHistoricalApy.fulfilled, (state, action) => {
+      for (const [vaultId, apyPoints] of Object.entries(action.payload)) {
+        state.byVaultId[vaultId] = apyPoints.map(v => parseFloat(v));
+      }
+    });
   },
 });

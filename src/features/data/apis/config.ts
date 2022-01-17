@@ -34,6 +34,14 @@ interface VaultConfig {
   id: string;
   logo?: string | null;
   name: string;
+  token: string;
+  tokenDescription: string;
+  tokenAddress: string;
+  tokenDecimals: number;
+  tokenDescriptionUrl: string;
+  earnedToken: string;
+  earnedTokenAddress: string;
+  earnContractAddress: string;
   pricePerFullShare: number;
   tvl: number;
   oraclePrice?: number | null; // pulled afterward
@@ -52,6 +60,7 @@ interface VaultConfig {
   callFee?: number | null;
   createdAt?: number | null;
   addLiquidityUrl?: string | null;
+  buyTokenUrl?: string | null;
   retireReason?: string | null;
   removeLiquidityUrl?: string | null;
   depositFee?: string | null;
