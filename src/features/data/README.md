@@ -53,3 +53,9 @@
   - The cake vault: https://beta.beefy.finance/#/bsc/vault/cake-cakev2
   - A featured vault: https://beta.beefy.finance/#/fantom/vault/scream-wbtc
   - A single asset vault: https://beta.beefy.finance/#/polygon/vault/aave-eth
+
+# WEIRD STUFF / QUESTIONS
+
+- why is there a token.isGovVault in the balance.tsx action?
+- what is the gov vault pool address?
+- what are allowances used for?

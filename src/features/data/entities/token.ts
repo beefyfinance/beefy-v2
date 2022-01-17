@@ -6,7 +6,9 @@ import { ChainEntity } from './chain';
  *  - An LP token
  *  - A fake "unique token identifier" for boosts virtual earned token
  */
-export interface TokenEntity {
+export type TokenEntity = TokenStandard | TokenBoost;
+
+interface TokenStandard {
   id: string;
   symbol: string;
   description: string;
@@ -17,6 +19,17 @@ export interface TokenEntity {
     twitter: string | null;
     discord: string | null;
   } | null; // some tokens don't have a "project"
+  isBoost: false;
+}
+interface TokenBoost {
+  id: string;
+  symbol: string;
+  isBoost: true;
+}
+
+// provide type guards
+export function isBoostToken(token: TokenEntity): token is TokenBoost {
+  return token.isBoost === true;
 }
 
 /**
@@ -24,7 +37,7 @@ export interface TokenEntity {
  * We need this because tokens can have different implementations
  * On multiple chains
  */
-interface TokenImplemContract {
+export interface TokenImplemErc20 {
   id: string;
 
   tokenId: TokenEntity['id'];
@@ -32,6 +45,7 @@ interface TokenImplemContract {
   contractAddress: string;
   decimals: number;
   buyUrl: string; // link to 1inch/pancake/...
+  type: 'erc20';
 }
 
 // todo decide if this is really needed
@@ -39,13 +53,38 @@ interface TokenImplemContract {
  * The gas token of the base chain
  * Doesn't have a contract address
  */
-interface TokenImplemGas {
+interface TokenImplemNative {
   id: string;
 
   tokenId: TokenEntity['id'];
   chainId: ChainEntity['id'];
   decimals: number;
   buyUrl: string; // link to 1inch/pancake/...
+  type: 'native';
 }
 
-export type TokenImplem = TokenImplemContract | TokenImplemGas;
+interface TokenImplemBoost {
+  id: string;
+  tokenId: TokenEntity['id'];
+  chainId: ChainEntity['id'];
+  symbol: string;
+  type: 'boost';
+}
+
+export type TokenImplemEntity = TokenImplemErc20 | TokenImplemNative | TokenImplemBoost;
+
+export function isTokenImplemErc20(
+  tokenImplem: TokenImplemEntity
+): tokenImplem is TokenImplemErc20 {
+  return tokenImplem.type === 'erc20';
+}
+export function isTokenImplemNative(
+  tokenImplem: TokenImplemEntity
+): tokenImplem is TokenImplemNative {
+  return tokenImplem.type === 'native';
+}
+export function isTokenImplemBoost(
+  tokenImplem: TokenImplemEntity
+): tokenImplem is TokenImplemBoost {
+  return tokenImplem.type === 'boost';
+}

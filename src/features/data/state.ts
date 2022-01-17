@@ -1,4 +1,5 @@
 import { combineReducers, createStore } from 'redux';
+import { allowanceSlice, AllowanceState } from './reducers/allowance';
 import { apySlice, ApyState } from './reducers/apy';
 import { balanceSlice, BalanceState } from './reducers/balance';
 import { boostsSlice, BoostsState } from './reducers/boosts';
@@ -19,9 +20,10 @@ export interface BeefyState {
     apy: ApyState;
     historicalApy: HistoricalApyState;
     balance: BalanceState;
+    allowance: AllowanceState;
     boosts: BoostsState;
   };
-  
+
   ui: {
     dataLoader: DataLoaderState;
   };
@@ -35,6 +37,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   apy: apySlice.reducer,
   historicalApy: historicalApySlice.reducer,
   balance: balanceSlice.reducer,
+  allowance: allowanceSlice.reducer,
   boosts: boostsSlice.reducer,
 });
 const uiReducer = combineReducers<BeefyState['ui']>({

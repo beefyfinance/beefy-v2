@@ -1,4 +1,4 @@
-import { TokenEntity, TokenImplem } from './token';
+import { TokenEntity, TokenImplemEntity } from './token';
 
 // maybe a RiskAnalysis type would be better
 enum VaultRiskTag {
@@ -52,13 +52,13 @@ interface VaultStandard {
    * identify a token in all apis, and "token" is the name that should be displayed to
    * the user (like "AAVE.e-AVAXLP")
    **/
-  oracleId: TokenImplem['id'];
+  oracleId: TokenImplemEntity['id'];
 
   /**
    * "Earned" token is the token you get back for staking into a vault
    * Staking into a standard vault "earns" mooTokens
    */
-  earnedToken: TokenImplem['id'];
+  earnedToken: TokenImplemEntity['id'];
 
   /**
    * pricePerFullShare is how you find out how much your mooTokens
@@ -82,6 +82,8 @@ interface VaultStandard {
   // for display purpose only
   strategyType: 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
 
+  isGovVault: false;
+
   // TODO: WIP
   tags: VaultTag[];
   safetyAnalysis: {
@@ -99,10 +101,15 @@ interface VaultStandard {
 // TODO: WIP
 interface VaultGov {
   id: string;
-  tokens: {
-    earnedToken: TokenEntity['id'];
-    tokens: TokenEntity['id'][];
-  };
+
+  // address of the vault?
+  poolAddress: string;
+
+  isGovVault: true;
+}
+
+export function isGovVault(vault: VaultEntity): vault is VaultGov {
+  return vault.isGovVault === true;
 }
 
 // TODO: type guards
