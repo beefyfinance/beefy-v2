@@ -34,6 +34,7 @@ export const tokensSlice = createSlice({
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchVaultByChainIdAction.fulfilled, (state, action) => {
       for (const vault of action.payload.pools) {
+        const chainId = vault.network;
         // add vault token data
         if (state.tokens.byId[vault.token] === undefined) {
           const token: TokenEntity = {
@@ -49,7 +50,7 @@ export const tokensSlice = createSlice({
         if (state.tokens.byId[vault.oracleId] === undefined) {
           const tokenImplem: TokenImplemEntity = {
             id: vault.oracleId,
-            chainId: vault.network,
+            chainId: chainId,
             contractAddress: vault.tokenAddress,
             decimals: vault.tokenDecimals,
             tokenId: vault.earnedToken,
@@ -58,6 +59,10 @@ export const tokensSlice = createSlice({
           };
           state.implems.byId[tokenImplem.id] = tokenImplem;
           state.implems.allIds.push(tokenImplem.id);
+          if (state.implems.byChainId[chainId] === undefined) {
+            state.implems.byChainId[chainId] = { byTokenId: {} };
+          }
+          state.implems.byChainId[chainId].byTokenId[vault.token] = tokenImplem.id;
         }
 
         // add earned token data
@@ -72,11 +77,11 @@ export const tokensSlice = createSlice({
           state.tokens.byId[token.id] = token;
           state.tokens.allIds.push(token.id);
         }
-        const earnedTokenImplemId = vault.network + '-' + vault.earnedToken;
+        const earnedTokenImplemId = chainId + '-' + vault.earnedToken;
         if (state.implems.byId[earnedTokenImplemId] === undefined) {
           const tokenImplem: TokenImplemEntity = {
             id: earnedTokenImplemId,
-            chainId: vault.network,
+            chainId: chainId,
             contractAddress: vault.earnedTokenAddress,
             decimals: 18, // TODO: not sure about that
             tokenId: vault.earnedToken,
@@ -85,6 +90,10 @@ export const tokensSlice = createSlice({
           };
           state.implems.byId[tokenImplem.id] = tokenImplem;
           state.implems.allIds.push(tokenImplem.id);
+          if (state.implems.byChainId[chainId] === undefined) {
+            state.implems.byChainId[chainId] = { byTokenId: {} };
+          }
+          state.implems.byChainId[chainId].byTokenId[vault.earnedToken] = tokenImplem.id;
         }
       }
     });

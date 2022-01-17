@@ -18,6 +18,7 @@ describe('Tokens slice tests', () => {
     const payload: FulfilledPayload = {
       chainId: 'harmony',
       pools: [
+        // have one gov vault
         {
           id: 'one-bifi-gov',
           logo: 'single-assets/BIFI.png',
@@ -55,6 +56,8 @@ describe('Tokens slice tests', () => {
           createdAt: 1623706144,
           network: 'harmony',
         },
+
+        // have one lp vault
         {
           id: 'sushi-one-1ygg-1eth',
           name: '1YGG-1ETH LP',

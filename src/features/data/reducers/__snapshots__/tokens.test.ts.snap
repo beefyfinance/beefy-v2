@@ -8,7 +8,15 @@ Object {
       "sushi-one-1ygg-1eth",
       "harmony-mooSushiYGG-ETH",
     ],
-    "byChainId": Object {},
+    "byChainId": Object {
+      "harmony": Object {
+        "byTokenId": Object {
+          "1YGG-1ETH LP": "sushi-one-1ygg-1eth",
+          "ONE": "harmony-ONE",
+          "mooSushiYGG-ETH": "harmony-mooSushiYGG-ETH",
+        },
+      },
+    },
     "byId": Object {
       "harmony-ONE": Object {
         "buyUrl": null,
