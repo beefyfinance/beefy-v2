@@ -34,7 +34,7 @@ describe('Boosts slice tests', () => {
           earnedOracle: 'tokens',
           earnedOracleId: 'PERA',
           partnership: true,
-          status: 'closed',
+          status: 'active',
           isMooStaked: true,
           partners: [
             {

@@ -30,17 +30,25 @@ Object {
       "partnerIds": Array [
         "https://pera.finance/",
       ],
-      "status": "closed",
+      "status": "active",
       "vaultId": "banana-banana-eol",
     },
   },
   "byVaultId": Object {
-    "aave-wbtc": Array [
-      "moo_aave-btc",
-    ],
-    "banana-banana-eol": Array [
-      "moo_banana-pera",
-    ],
+    "aave-wbtc": Object {
+      "activeBoostsIds": Array [],
+      "allBoostsIds": Array [
+        "moo_aave-btc",
+      ],
+    },
+    "banana-banana-eol": Object {
+      "activeBoostsIds": Array [
+        "moo_banana-pera",
+      ],
+      "allBoostsIds": Array [
+        "moo_banana-pera",
+      ],
+    },
   },
 }
 `;

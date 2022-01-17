@@ -36,5 +36,9 @@ export interface BoostEntity {
   partnerIds: PartnerEntity['id'][];
 
   // boosts are active for a limited time
-  status: 'active' | 'eol';
+  status: 'active' | 'closed';
+}
+
+export function isBoostActive(boost: BoostEntity) {
+  return boost.status === 'active';
 }

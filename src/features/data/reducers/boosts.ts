@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchBoostsByChainIdAction } from '../actions/boosts';
-import { BoostEntity } from '../entities/boost';
+import { BoostEntity, isBoostActive } from '../entities/boost';
 import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
@@ -8,9 +8,11 @@ import { NormalizedEntity } from '../utils/normalized-entity';
  * State containing Vault infos
  */
 export type BoostsState = NormalizedEntity<BoostEntity> & {
-  // maybe make this only active boosts
   byVaultId: {
-    [vaultId: VaultEntity['id']]: BoostEntity['id'][];
+    [vaultId: VaultEntity['id']]: {
+      allBoostsIds: BoostEntity['id'][];
+      activeBoostsIds: BoostEntity['id'][];
+    };
   };
 };
 export const initialBoostsState: BoostsState = { byId: {}, allIds: [], byVaultId: {} };
@@ -42,9 +44,12 @@ export const boostsSlice = createSlice({
           state.byId[boost.id] = boost;
           state.allIds.push(boost.id);
           if (state.byVaultId[boost.vaultId] === undefined) {
-            state.byVaultId[boost.vaultId] = [];
+            state.byVaultId[boost.vaultId] = { allBoostsIds: [], activeBoostsIds: [] };
           }
-          state.byVaultId[boost.vaultId].push(boost.id);
+          state.byVaultId[boost.vaultId].allBoostsIds.push(boost.id);
+          if (isBoostActive(boost)) {
+            state.byVaultId[boost.vaultId].activeBoostsIds.push(boost.id);
+          }
         }
       }
     });
