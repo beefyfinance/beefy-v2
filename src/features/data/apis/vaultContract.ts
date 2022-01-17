@@ -1,6 +1,6 @@
 import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
-import { isTokenImplemErc20 } from '../entities/token';
+import { isTokenErc20 } from '../entities/token';
 import { ChainConfig } from './config';
 import _erc20Abi from '../../../config/abi/erc20.json';
 import _multicallAbi from '../../../config/abi/multicall.json';
@@ -9,7 +9,7 @@ import _vaultAbi from '../../../config/abi/vault.json';
 import Web3 from 'web3';
 import { isGovVault, VaultEntity } from '../entities/vault';
 import { BeefyState } from '../state';
-import { tokenByIdSelector, tokenImplemByIdSelector } from '../selectors/tokens';
+import { tokenByIdSelector } from '../selectors/tokens';
 
 // fix TS typings
 const vaultAbi = _vaultAbi as AbiItem[];
@@ -51,11 +51,11 @@ export class VaultContractAPI {
           totalStaked: tokenContract.methods.totalSupply(),
         });
       } else {
-        const tokenImplem = tokenImplemByIdSelector(state, vault.earnedToken, vault.chainId);
-        if (!isTokenImplemErc20(tokenImplem)) {
+        const token = tokenByIdSelector(state, vault.oracleId);
+        if (!isTokenErc20(token)) {
           continue;
         }
-        const tokenContract = new this.rpc.eth.Contract(vaultAbi, tokenImplem.contractAddress);
+        const tokenContract = new this.rpc.eth.Contract(vaultAbi, token.contractAddress);
         calls.push({
           id: vault.id,
           balance: tokenContract.methods.balance(),

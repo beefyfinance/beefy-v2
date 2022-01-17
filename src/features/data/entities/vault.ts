@@ -1,5 +1,5 @@
 import { ChainEntity } from './chain';
-import { TokenEntity, TokenImplemEntity } from './token';
+import { TokenEntity, TokenEntity } from './token';
 
 // maybe a RiskAnalysis type would be better
 enum VaultRiskTag {
@@ -55,13 +55,13 @@ export interface VaultStandard {
    * identify a token in all apis, and "token" is the name that should be displayed to
    * the user (like "AAVE.e-AVAXLP")
    **/
-  oracleId: TokenImplemEntity['id'];
+  oracleId: TokenEntity['id'];
 
   /**
    * "Earned" token is the token you get back for staking into a vault
    * Staking into a standard vault "earns" mooTokens
    */
-  earnedToken: TokenImplemEntity['id'];
+  earnedToken: TokenEntity['id'];
 
   /**
    * pricePerFullShare is how you find out how much your mooTokens

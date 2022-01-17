@@ -25,7 +25,7 @@ import { pools as polygonBoosts } from '../../../config/boost/polygon';
 import { config as chainConfigs } from '../../../config/config';
 
 import { ChainEntity } from '../entities/chain';
-import { TokenEntity, TokenImplemEntity } from '../entities/token';
+import { TokenEntity } from '../entities/token';
 import { PlatformEntity } from '../entities/platform';
 import { VaultEntity } from '../entities/vault';
 
@@ -36,9 +36,9 @@ interface VaultConfig {
   name: string;
   token: string;
   tokenDescription: string;
-  tokenAddress: string;
+  tokenAddress?: string | null;
   tokenDecimals: number;
-  tokenDescriptionUrl: string;
+  tokenDescriptionUrl?: string | null;
   earnedToken: string;
   earnedTokenAddress: string;
   earnContractAddress: string;
@@ -46,7 +46,7 @@ interface VaultConfig {
   tvl: number;
   oraclePrice?: number | null; // pulled afterward
   oracle: string; // 'tokens' | 'lp';
-  oracleId: TokenImplemEntity['id'];
+  oracleId: TokenEntity['id'];
   status: string; // 'active' | 'eol';
   platform: PlatformEntity['id'];
   assets?: TokenEntity['id'][];

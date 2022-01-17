@@ -1,28 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
-import { TokenEntity, TokenImplemEntity } from '../entities/token';
+import { TokenEntity } from '../entities/token';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
  * State containing Vault infos
  */
-export type TokensState = {
-  tokens: NormalizedEntity<TokenEntity>;
-  implems: NormalizedEntity<TokenImplemEntity> & {
-    byChainId: {
-      [chainId: ChainEntity['id']]: {
-        byTokenId: {
-          [tokenId: TokenEntity['id']]: TokenImplemEntity['id'];
-        };
+export type TokensState = NormalizedEntity<TokenEntity> & {
+  byChainId: {
+    [chainId: ChainEntity['id']]: {
+      byTokenId: {
+        [tokenId: TokenEntity['id']]: TokenEntity['id'];
       };
     };
   };
 };
-export const initialTokensState: TokensState = {
-  tokens: { byId: {}, allIds: [] },
-  implems: { byId: {}, allIds: [], byChainId: {} },
-};
+export const initialTokensState: TokensState = { byId: {}, allIds: [], byChainId: {} };
 
 export const tokensSlice = createSlice({
   name: 'tokens',
@@ -35,65 +29,42 @@ export const tokensSlice = createSlice({
     builder.addCase(fetchVaultByChainIdAction.fulfilled, (state, action) => {
       for (const vault of action.payload.pools) {
         const chainId = vault.network;
-        // add vault token data
-        if (state.tokens.byId[vault.token] === undefined) {
+        if (state.byId[vault.oracleId] === undefined) {
           const token: TokenEntity = {
-            id: vault.token,
-            symbol: vault.token,
-            tokenDescription: vault.tokenDescription,
-            tokenDescriptionUrl: vault.tokenDescriptionUrl,
-            isBoost: false,
-          };
-          state.tokens.byId[token.id] = token;
-          state.tokens.allIds.push(token.id);
-        }
-        if (state.tokens.byId[vault.oracleId] === undefined) {
-          const tokenImplem: TokenImplemEntity = {
             id: vault.oracleId,
             chainId: chainId,
             contractAddress: vault.tokenAddress,
             decimals: vault.tokenDecimals,
-            tokenId: vault.earnedToken,
+            symbol: vault.token,
             buyUrl: null,
             type: 'erc20',
           };
-          state.implems.byId[tokenImplem.id] = tokenImplem;
-          state.implems.allIds.push(tokenImplem.id);
-          if (state.implems.byChainId[chainId] === undefined) {
-            state.implems.byChainId[chainId] = { byTokenId: {} };
+          state.byId[token.id] = token;
+          state.allIds.push(token.id);
+          if (state.byChainId[chainId] === undefined) {
+            state.byChainId[chainId] = { byTokenId: {} };
           }
-          state.implems.byChainId[chainId].byTokenId[vault.token] = tokenImplem.id;
+          state.byChainId[chainId].byTokenId[vault.token] = token.id;
         }
 
         // add earned token data
-        if (state.tokens.byId[vault.earnedToken] === undefined) {
+        const earnedTokenId = chainId + '-' + vault.earnedToken;
+        if (state.byId[earnedTokenId] === undefined) {
           const token: TokenEntity = {
-            id: vault.earnedToken,
-            symbol: vault.earnedToken,
-            isBoost: false,
-            tokenDescription: null,
-            tokenDescriptionUrl: null,
-          };
-          state.tokens.byId[token.id] = token;
-          state.tokens.allIds.push(token.id);
-        }
-        const earnedTokenImplemId = chainId + '-' + vault.earnedToken;
-        if (state.implems.byId[earnedTokenImplemId] === undefined) {
-          const tokenImplem: TokenImplemEntity = {
-            id: earnedTokenImplemId,
+            id: earnedTokenId,
             chainId: chainId,
             contractAddress: vault.earnedTokenAddress,
             decimals: 18, // TODO: not sure about that
-            tokenId: vault.earnedToken,
+            symbol: vault.earnedToken,
             buyUrl: null,
             type: 'erc20',
           };
-          state.implems.byId[tokenImplem.id] = tokenImplem;
-          state.implems.allIds.push(tokenImplem.id);
-          if (state.implems.byChainId[chainId] === undefined) {
-            state.implems.byChainId[chainId] = { byTokenId: {} };
+          state.byId[token.id] = token;
+          state.allIds.push(token.id);
+          if (state.byChainId[chainId] === undefined) {
+            state.byChainId[chainId] = { byTokenId: {} };
           }
-          state.implems.byChainId[chainId].byTokenId[vault.earnedToken] = tokenImplem.id;
+          state.byChainId[chainId].byTokenId[vault.earnedToken] = token.id;
         }
       }
     });

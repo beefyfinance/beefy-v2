@@ -12,11 +12,11 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
   allActiveIds: VaultEntity['id'][];
   allRetiredIds: VaultEntity['id'][];
 };
-const initialState: VaultsState = { byId: {}, allIds: [], allActiveIds: [], allRetiredIds: [] };
+export const initialVaultsState: VaultsState = { byId: {}, allIds: [], allActiveIds: [], allRetiredIds: [] };
 
 export const vaultsSlice = createSlice({
   name: 'vaults',
-  initialState: initialState,
+  initialState: initialVaultsState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },

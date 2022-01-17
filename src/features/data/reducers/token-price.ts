@@ -8,7 +8,6 @@ import { TokenEntity } from '../entities/token';
  * We only want to track one price per token, not token implem for now
  */
 export interface TokenPriceState {
-  // todo: should this be a TokenImplem instead?
   // todo: Do we really need a BigNumber
   [tokenId: TokenEntity['id']]: BigNumber;
 }

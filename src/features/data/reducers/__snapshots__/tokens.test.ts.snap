@@ -2,87 +2,58 @@
 
 exports[`Tokens slice tests should update state on fulfilled vault list 1`] = `
 Object {
-  "implems": Object {
-    "allIds": Array [
-      "harmony-ONE",
-      "sushi-one-1ygg-1eth",
-      "harmony-mooSushiYGG-ETH",
-    ],
-    "byChainId": Object {
-      "harmony": Object {
-        "byTokenId": Object {
-          "1YGG-1ETH LP": "sushi-one-1ygg-1eth",
-          "ONE": "harmony-ONE",
-          "mooSushiYGG-ETH": "harmony-mooSushiYGG-ETH",
-        },
-      },
-    },
-    "byId": Object {
-      "harmony-ONE": Object {
-        "buyUrl": null,
-        "chainId": "harmony",
-        "contractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
-        "decimals": 18,
-        "id": "harmony-ONE",
-        "tokenId": "ONE",
-        "type": "erc20",
-      },
-      "harmony-mooSushiYGG-ETH": Object {
-        "buyUrl": null,
-        "chainId": "harmony",
-        "contractAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
-        "decimals": 18,
-        "id": "harmony-mooSushiYGG-ETH",
-        "tokenId": "mooSushiYGG-ETH",
-        "type": "erc20",
-      },
-      "sushi-one-1ygg-1eth": Object {
-        "buyUrl": null,
-        "chainId": "harmony",
-        "contractAddress": "0x40112850EFd90e9e17b56de35d86BdFf9f4d07Fd",
-        "decimals": 18,
-        "id": "sushi-one-1ygg-1eth",
-        "tokenId": "mooSushiYGG-ETH",
-        "type": "erc20",
+  "allIds": Array [
+    "BIFI",
+    "harmony-ONE",
+    "sushi-one-1ygg-1eth",
+    "harmony-mooSushiYGG-ETH",
+  ],
+  "byChainId": Object {
+    "harmony": Object {
+      "byTokenId": Object {
+        "1YGG-1ETH LP": "sushi-one-1ygg-1eth",
+        "BIFI": "BIFI",
+        "ONE": "harmony-ONE",
+        "mooSushiYGG-ETH": "harmony-mooSushiYGG-ETH",
       },
     },
   },
-  "tokens": Object {
-    "allIds": Array [
-      "BIFI",
-      "ONE",
-      "1YGG-1ETH LP",
-      "mooSushiYGG-ETH",
-    ],
-    "byId": Object {
-      "1YGG-1ETH LP": Object {
-        "id": "1YGG-1ETH LP",
-        "isBoost": false,
-        "symbol": "1YGG-1ETH LP",
-        "tokenDescription": "Sushi",
-        "tokenDescriptionUrl": "#",
-      },
-      "BIFI": Object {
-        "id": "BIFI",
-        "isBoost": false,
-        "symbol": "BIFI",
-        "tokenDescription": "Beefy.Finance",
-        "tokenDescriptionUrl": "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
-      },
-      "ONE": Object {
-        "id": "ONE",
-        "isBoost": false,
-        "symbol": "ONE",
-        "tokenDescription": null,
-        "tokenDescriptionUrl": null,
-      },
-      "mooSushiYGG-ETH": Object {
-        "id": "mooSushiYGG-ETH",
-        "isBoost": false,
-        "symbol": "mooSushiYGG-ETH",
-        "tokenDescription": null,
-        "tokenDescriptionUrl": null,
-      },
+  "byId": Object {
+    "BIFI": Object {
+      "buyUrl": null,
+      "chainId": "harmony",
+      "contractAddress": "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
+      "decimals": 18,
+      "id": "BIFI",
+      "symbol": "BIFI",
+      "type": "erc20",
+    },
+    "harmony-ONE": Object {
+      "buyUrl": null,
+      "chainId": "harmony",
+      "contractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
+      "decimals": 18,
+      "id": "harmony-ONE",
+      "symbol": "ONE",
+      "type": "erc20",
+    },
+    "harmony-mooSushiYGG-ETH": Object {
+      "buyUrl": null,
+      "chainId": "harmony",
+      "contractAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+      "decimals": 18,
+      "id": "harmony-mooSushiYGG-ETH",
+      "symbol": "mooSushiYGG-ETH",
+      "type": "erc20",
+    },
+    "sushi-one-1ygg-1eth": Object {
+      "buyUrl": null,
+      "chainId": "harmony",
+      "contractAddress": "0x40112850EFd90e9e17b56de35d86BdFf9f4d07Fd",
+      "decimals": 18,
+      "id": "sushi-one-1ygg-1eth",
+      "symbol": "1YGG-1ETH LP",
+      "type": "erc20",
     },
   },
 }

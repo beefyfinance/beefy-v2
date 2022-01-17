@@ -2,10 +2,10 @@ import { MultiCall } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
 import {
   isBoostToken,
-  isTokenImplemErc20,
-  isTokenImplemNative,
-  TokenImplemEntity,
-  TokenImplemErc20,
+  isTokenErc20,
+  isTokenNative,
+  TokenEntity,
+  TokenErc20,
 } from '../entities/token';
 import { ChainConfig } from './config';
 
@@ -24,12 +24,12 @@ const boostAbi = _boostAbi as AbiItem[];
 
 interface NativeCurrencyBalance {
   amount: Promise<number>; // not sure about this
-  token: TokenImplemEntity['id'];
+  token: TokenEntity['id'];
 }
 interface Erc20CurrencyBalance {
   amount: Promise<number>; // not sure about this
-  token: TokenImplemEntity['id'];
-  contractAddress: TokenImplemErc20['contractAddress'];
+  token: TokenEntity['id'];
+  contractAddress: TokenErc20['contractAddress'];
 }
 
 type BalanceResult = NativeCurrencyBalance | Erc20CurrencyBalance;
@@ -42,32 +42,30 @@ export class BalanceAPI {
   public async fetchTokensBalance(
     state: BeefyState,
     chainConfig: ChainConfig,
-    tokenImplems: TokenImplemEntity[],
+    tokens: TokenEntity[],
     walletAddress: string
   ): Promise<BalanceResult[]> {
     const mc = new MultiCall(this.rpc, chainConfig.multicallAddress);
     const calls: BalanceResult[] = [];
-    for (const tokenImplem of tokenImplems) {
-      const token = tokenByIdSelector(state, tokenImplem.tokenId);
-
+    for (const token of tokens) {
       // skip virtual boost tokens
       if (isBoostToken(token)) {
         continue;
       }
 
       // token.symbol === chainConfig.walletSettings.nativeCurrency.symbol
-      if (isTokenImplemNative(tokenImplem)) {
+      if (isTokenNative(token)) {
         const tokenContract = new this.rpc.eth.Contract(multicallAbi, mc.contract);
         calls.push({
           amount: tokenContract.methods.getEthBalance(walletAddress),
           token: token.symbol,
         });
-      } else if (isTokenImplemErc20(tokenImplem)) {
+      } else if (isTokenErc20(token)) {
         const tokenContract = new this.rpc.eth.Contract(erc20Abi, walletAddress);
         calls.push({
           amount: tokenContract.methods.balanceOf(walletAddress),
           token: token.symbol,
-          contractAddress: tokenImplem.contractAddress,
+          contractAddress: token.contractAddress,
         });
         /*
         for (let spender in token.allowance) {

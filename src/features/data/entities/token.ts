@@ -6,35 +6,16 @@ import { ChainEntity } from './chain';
  *  - An LP token
  *  - A fake "unique token identifier" for boosts virtual earned token
  */
-export type TokenEntity = TokenStandard | TokenBoost;
-
-interface TokenStandard {
-  id: string;
-  symbol: string;
-  isBoost: false;
-  tokenDescription: string | null;
-  tokenDescriptionUrl: string | null;
-}
-interface TokenBoost {
-  id: string;
-  symbol: string;
-  isBoost: true;
-}
-
-// provide type guards
-export function isBoostToken(token: TokenEntity): token is TokenBoost {
-  return token.isBoost === true;
-}
+export type TokenEntity = TokenErc20 | TokenNative | TokenBoost;
 
 /**
  * This represents a token implementation in a specific chain
  * We need this because tokens can have different implementations
  * On multiple chains
  */
-export interface TokenImplemErc20 {
+export interface TokenErc20 {
   id: string;
-
-  tokenId: TokenEntity['id'];
+  symbol: string;
   chainId: ChainEntity['id'];
   contractAddress: string;
   decimals: number;
@@ -42,43 +23,37 @@ export interface TokenImplemErc20 {
   type: 'erc20';
 }
 
-// todo decide if this is really needed
 /**
  * The gas token of the base chain
  * Doesn't have a contract address
  */
-interface TokenImplemNative {
+interface TokenNative {
   id: string;
-
-  tokenId: TokenEntity['id'];
+  symbol: string;
   chainId: ChainEntity['id'];
   decimals: number;
   buyUrl: string | null; // link to 1inch/pancake/...
   type: 'native';
 }
 
-interface TokenImplemBoost {
+/**
+ * A fake "unique token identifier" for boosts virtual earned token
+ */
+interface TokenBoost {
   id: string;
-  tokenId: TokenEntity['id'];
-  chainId: ChainEntity['id'];
   symbol: string;
+  chainId: ChainEntity['id'];
   type: 'boost';
 }
 
-export type TokenImplemEntity = TokenImplemErc20 | TokenImplemNative | TokenImplemBoost;
+// provide type guards
 
-export function isTokenImplemErc20(
-  tokenImplem: TokenImplemEntity
-): tokenImplem is TokenImplemErc20 {
-  return tokenImplem.type === 'erc20';
+export function isTokenErc20(token: TokenEntity): token is TokenErc20 {
+  return token.type === 'erc20';
 }
-export function isTokenImplemNative(
-  tokenImplem: TokenImplemEntity
-): tokenImplem is TokenImplemNative {
-  return tokenImplem.type === 'native';
+export function isTokenNative(token: TokenEntity): token is TokenNative {
+  return token.type === 'native';
 }
-export function isTokenImplemBoost(
-  tokenImplem: TokenImplemEntity
-): tokenImplem is TokenImplemBoost {
-  return tokenImplem.type === 'boost';
+export function isTokenBoost(token: TokenEntity): token is TokenBoost {
+  return token.type === 'boost';
 }

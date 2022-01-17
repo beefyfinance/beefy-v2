@@ -22,6 +22,10 @@
 [ ] Code reviews & fixes
 [ ] Regression Testing & fixes
 
+BONUS:
+
+[ ] Currently, when the wallet is connected, Memory usage goes steadily up, It’d be ideal if we could prevent memory leaks from existing once this is over
+
 # REGRESSION TESTING BOOK
 
 - Test contexts
