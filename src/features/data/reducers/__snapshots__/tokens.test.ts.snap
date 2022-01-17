@@ -1,5 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Tokens slice tests should update state on fulfilled boosts list 1`] = `
+Object {
+  "allIds": Array [
+    "PERA",
+    "BIFI",
+  ],
+  "byId": Object {
+    "BIFI": Object {
+      "buyUrl": null,
+      "chainId": "harmony",
+      "contractAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+      "decimals": 18,
+      "id": "BIFI",
+      "symbol": "mooPolygonBIFI",
+      "type": "erc20",
+    },
+    "PERA": Object {
+      "buyUrl": null,
+      "chainId": "harmony",
+      "contractAddress": "0xb9D8592E16A9c1a3AE6021CDDb324EaC1Cbc70d6",
+      "decimals": 18,
+      "id": "PERA",
+      "symbol": "PERA",
+      "type": "erc20",
+    },
+  },
+}
+`;
+
 exports[`Tokens slice tests should update state on fulfilled vault list 1`] = `
 Object {
   "allIds": Array [
@@ -8,16 +37,6 @@ Object {
     "sushi-one-1ygg-1eth",
     "harmony-mooSushiYGG-ETH",
   ],
-  "byChainId": Object {
-    "harmony": Object {
-      "byTokenId": Object {
-        "1YGG-1ETH LP": "sushi-one-1ygg-1eth",
-        "BIFI": "BIFI",
-        "ONE": "harmony-ONE",
-        "mooSushiYGG-ETH": "harmony-mooSushiYGG-ETH",
-      },
-    },
-  },
   "byId": Object {
     "BIFI": Object {
       "buyUrl": null,

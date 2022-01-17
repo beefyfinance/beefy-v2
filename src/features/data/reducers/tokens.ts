@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchBoostsByChainIdAction } from '../actions/boosts';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
@@ -7,16 +8,8 @@ import { NormalizedEntity } from '../utils/normalized-entity';
 /**
  * State containing Vault infos
  */
-export type TokensState = NormalizedEntity<TokenEntity> & {
-  byChainId: {
-    [chainId: ChainEntity['id']]: {
-      byTokenId: {
-        [tokenId: TokenEntity['id']]: TokenEntity['id'];
-      };
-    };
-  };
-};
-export const initialTokensState: TokensState = { byId: {}, allIds: [], byChainId: {} };
+export type TokensState = NormalizedEntity<TokenEntity>;
+export const initialTokensState: TokensState = { byId: {}, allIds: [] };
 
 export const tokensSlice = createSlice({
   name: 'tokens',
@@ -41,10 +34,6 @@ export const tokensSlice = createSlice({
           };
           state.byId[token.id] = token;
           state.allIds.push(token.id);
-          if (state.byChainId[chainId] === undefined) {
-            state.byChainId[chainId] = { byTokenId: {} };
-          }
-          state.byChainId[chainId].byTokenId[vault.token] = token.id;
         }
 
         // add earned token data
@@ -61,10 +50,26 @@ export const tokensSlice = createSlice({
           };
           state.byId[token.id] = token;
           state.allIds.push(token.id);
-          if (state.byChainId[chainId] === undefined) {
-            state.byChainId[chainId] = { byTokenId: {} };
-          }
-          state.byChainId[chainId].byTokenId[vault.earnedToken] = token.id;
+        }
+      }
+    });
+
+    // when boost list is fetched, add all new tokens
+    builder.addCase(fetchBoostsByChainIdAction.fulfilled, (state, action) => {
+      const chainId = action.payload.chainId;
+      for (const boost of action.payload.boosts) {
+        if (state.byId[boost.earnedOracleId] === undefined) {
+          const token: TokenEntity = {
+            id: boost.earnedOracleId,
+            chainId: chainId,
+            contractAddress: boost.earnedTokenAddress,
+            decimals: boost.earnedTokenDecimals,
+            symbol: boost.earnedToken,
+            buyUrl: null,
+            type: 'erc20',
+          };
+          state.byId[token.id] = token;
+          state.allIds.push(token.id);
         }
       }
     });
