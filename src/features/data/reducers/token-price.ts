@@ -8,14 +8,16 @@ import { TokenEntity } from '../entities/token';
  * We only want to track one price per token, not token implem for now
  */
 export interface TokenPriceState {
-  // todo: Do we really need a BigNumber
-  [tokenId: TokenEntity['id']]: BigNumber;
+  byTokenId: {
+    // todo: Do we really need a BigNumber
+    [tokenId: TokenEntity['id']]: BigNumber;
+  };
 }
-const initialState: TokenPriceState = {};
+export const initialTokenPriceState: TokenPriceState = { byTokenId: {} };
 
 export const tokenPriceSlice = createSlice({
   name: 'token_price',
-  initialState: initialState,
+  initialState: initialTokenPriceState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },

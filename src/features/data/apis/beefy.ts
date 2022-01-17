@@ -19,7 +19,7 @@ interface ApyStandard {
 }
 export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard;
 
-export interface BeefyAPITolenPricesResponse {
+export interface BeefyAPITokenPricesResponse {
   [tokenId: TokenEntity['id']]: number;
 }
 export interface BeefyAPIBreakdownResponse {
@@ -49,13 +49,13 @@ export class BeefyAPI {
   }
 
   // here we can nicely type the responses
-  public async getPrices(): Promise<BeefyAPITolenPricesResponse> {
+  public async getPrices(): Promise<BeefyAPITokenPricesResponse> {
     return this.api.get('/prices', { params: { _: this.getCacheBuster() } });
   }
 
   // i'm not 100% certain about the return type
   // are those token ids ?
-  public async getLPs(): Promise<BeefyAPITolenPricesResponse> {
+  public async getLPs(): Promise<BeefyAPITokenPricesResponse> {
     return this.api.get('/lps', { params: { _: this.getCacheBuster() } });
   }
 

@@ -9,6 +9,7 @@ import { pools as fantomVaults } from '../../../config/vault/fantom';
 import { pools as fuseVaults } from '../../../config/vault/fuse';
 import { pools as harmonyVaults } from '../../../config/vault/harmony';
 import { pools as hecoVaults } from '../../../config/vault/heco';
+import { pools as metisVaults } from '../../../config/vault/metis';
 import { pools as moonriverVaults } from '../../../config/vault/moonriver';
 import { pools as polygonVaults } from '../../../config/vault/polygon';
 import { pools as arbitrumBoosts } from '../../../config/boost/arbitrum';
@@ -140,6 +141,7 @@ const vaultsByChainId: {
   fuse: fuseVaults,
   harmony: harmonyVaults,
   heco: hecoVaults,
+  metis: metisVaults,
   moonriver: moonriverVaults,
   polygon: polygonVaults,
 };

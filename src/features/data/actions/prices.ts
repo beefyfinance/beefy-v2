@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyAPI, BeefyAPITolenPricesResponse } from '../apis/beefy';
+import { BeefyAPITokenPricesResponse } from '../apis/beefy';
 import { getBeefyApi } from '../apis/instances';
 
-export const fetchPricesAction = createAsyncThunk<BeefyAPITolenPricesResponse, {}>(
+export const fetchPricesAction = createAsyncThunk<BeefyAPITokenPricesResponse, {}>(
   'prices/fetchPrices',
   async () => {
     const api = await getBeefyApi();
@@ -11,7 +11,7 @@ export const fetchPricesAction = createAsyncThunk<BeefyAPITolenPricesResponse, {
   }
 );
 
-export const fetchLPPricesAction = createAsyncThunk<BeefyAPITolenPricesResponse, {}>(
+export const fetchLPPricesAction = createAsyncThunk<BeefyAPITokenPricesResponse, {}>(
   'prices/fetchPrices',
   async () => {
     const api = await getBeefyApi();
