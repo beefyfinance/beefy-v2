@@ -1,3 +1,4 @@
+import { ChainEntity } from './chain';
 import { PartnerEntity } from './partner';
 import { TokenEntity } from './token';
 import { VaultEntity } from './vault';
@@ -14,6 +15,8 @@ export interface BoostEntity {
   // a boost always works on top of a vault, so it has a poolId that is an id for a vault
   vaultId: VaultEntity['id'];
 
+  chainId: ChainEntity['id'];
+
   /**
    * "Earned" token is the token you get back for staking into a boost
    * you stake in boosts but they don't give you anything in return
@@ -21,7 +24,7 @@ export interface BoostEntity {
    * and for boosts we do: boostSymbol = ${boost.token}${boost.id}Boost;
    */
   // todo: is this useful?
-  earnedToken: TokenEntity['id'];
+  earnedTokenId: TokenEntity['id'];
 
   /**
    * ASSETS are basically the assets that are in that boost
@@ -30,7 +33,7 @@ export interface BoostEntity {
    */
   assets: TokenEntity['id'][];
 
-  partners: PartnerEntity['id'][];
+  partnerIds: PartnerEntity['id'][];
 
   // boosts are active for a limited time
   status: 'active' | 'eol';

@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Boosts slice tests should update state on fulfilled boosts list 1`] = `
+Object {
+  "allIds": Array [
+    "moo_banana-pera",
+    "moo_aave-btc",
+  ],
+  "byId": Object {
+    "moo_aave-btc": Object {
+      "assets": undefined,
+      "chainId": "harmony",
+      "contractAddress": "0x20948Cad130c3D7B24d27CC66163b4aaed4684F0",
+      "earnedTokenId": "BIFI",
+      "id": "moo_aave-btc",
+      "logo": "single-assets/BTCB.svg",
+      "name": "Iron / Garuda / Fanatics",
+      "partnerIds": Array [],
+      "status": "closed",
+      "vaultId": "aave-wbtc",
+    },
+    "moo_banana-pera": Object {
+      "assets": undefined,
+      "chainId": "harmony",
+      "contractAddress": "0x38247fCE28480A7BEF2CB7aD134ce091Bd2E1a82",
+      "earnedTokenId": "PERA",
+      "id": "moo_banana-pera",
+      "logo": "degens/BANANA.svg",
+      "name": "Pera",
+      "partnerIds": Array [
+        "https://pera.finance/",
+      ],
+      "status": "closed",
+      "vaultId": "banana-banana-eol",
+    },
+  },
+  "byVaultId": Object {
+    "aave-wbtc": Array [
+      "moo_aave-btc",
+    ],
+    "banana-banana-eol": Array [
+      "moo_banana-pera",
+    ],
+  },
+}
+`;
