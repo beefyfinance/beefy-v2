@@ -1,4 +1,5 @@
 // todo: load these asynchronously
+import { featuredPools as featuredVaults } from '../../../config/vault/featured';
 import { pools as arbitrumVaults } from '../../../config/vault/arbitrum';
 import { pools as avaxVaults } from '../../../config/vault/avax';
 import { pools as bscVaults } from '../../../config/vault/bsc';
@@ -10,9 +11,117 @@ import { pools as harmonyVaults } from '../../../config/vault/harmony';
 import { pools as hecoVaults } from '../../../config/vault/heco';
 import { pools as moonriverVaults } from '../../../config/vault/moonriver';
 import { pools as polygonVaults } from '../../../config/vault/polygon';
-import { ChainEntity } from '../entities/chain';
+import { pools as arbitrumBoosts } from '../../../config/boost/arbitrum';
+import { pools as avaxBoosts } from '../../../config/boost/avax';
+import { pools as bscBoosts } from '../../../config/boost/bsc';
+import { pools as celoBoosts } from '../../../config/boost/celo';
+import { pools as cronosBoosts } from '../../../config/boost/cronos';
+import { pools as fantomBoosts } from '../../../config/boost/fantom';
+import { pools as fuseBoosts } from '../../../config/boost/fuse';
+import { pools as harmonyBoosts } from '../../../config/boost/harmony';
+import { pools as hecoBoosts } from '../../../config/boost/heco';
+import { pools as moonriverBoosts } from '../../../config/boost/moonriver';
+import { pools as polygonBoosts } from '../../../config/boost/polygon';
+import { config as chainConfigs } from '../../../config/config';
 
-const vaultsByChainId = {
+import { ChainEntity } from '../entities/chain';
+import { TokenEntity, TokenImplem } from '../entities/token';
+import { PlatformEntity } from '../entities/platform';
+import { VaultEntity } from '../entities/vault';
+
+// generated from config data with https://jvilk.com/MakeTypes/
+interface VaultConfig {
+  id: string;
+  logo?: string | null;
+  name: string;
+  pricePerFullShare: number;
+  tvl: number;
+  oraclePrice?: number | null; // pulled afterward
+  oracle: string; // 'tokens' | 'lp';
+  oracleId: TokenImplem['id'];
+  status: string; // 'active' | 'eol';
+  platform: PlatformEntity['id'];
+  assets?: TokenEntity['id'][];
+  risks?: string[] | null;
+  stratType: string; // 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
+  withdrawalFee?: string | null;
+  network: string;
+  poolAddress?: string | null;
+  excluded?: string | null;
+  isGovVault?: boolean | null;
+  callFee?: number | null;
+  createdAt?: number | null;
+  addLiquidityUrl?: string | null;
+  retireReason?: string | null;
+  removeLiquidityUrl?: string | null;
+  depositFee?: string | null;
+  refund?: boolean | null;
+  refundContractAddress?: string | null;
+  depositsPaused?: boolean | null;
+  showWarning?: boolean | null;
+  warning?: string | null;
+}
+
+interface FeaturedVaultConfig {
+  [vaultId: VaultEntity['id']]: boolean;
+}
+
+interface BoostPartnerConfig {
+  logo: string;
+  background: string;
+  text: string;
+  website: string;
+  social: {
+    telegram: string;
+    twitter: string;
+    discord?: string | null;
+  };
+  logoNight?: string | null;
+}
+interface BoostConfig {
+  id: string;
+  poolId: string;
+  name: string;
+  assets?: string[] | null;
+  earnedToken: string;
+  earnedTokenDecimals: number;
+  earnedTokenAddress: string;
+  earnContractAddress: string;
+  earnedOracle: string;
+  earnedOracleId: string;
+  partnership: boolean;
+  status: string;
+  isMooStaked: boolean;
+  partners?: BoostPartnerConfig[] | null;
+  logo?: string | null;
+  fixedStatus?: boolean | null;
+}
+
+export interface ChainConfig {
+  name: string;
+  chainId: number;
+  rpc?: string[] | null;
+  explorerUrl: string;
+  multicallAddress: string;
+  supportedWallets?: string[] | null;
+  providerName: string;
+  walletSettings: {
+    chainId: string;
+    chainName: string;
+    nativeCurrency: {
+      name: string;
+      symbol: string;
+      decimals: number;
+    };
+    rpcUrls?: string[] | null;
+    blockExplorerUrls?: string[] | null;
+  };
+  stableCoins?: string[] | null;
+}
+
+const vaultsByChainId: {
+  [chainId: ChainEntity['id']]: VaultConfig[];
+} = {
   arbitrum: arbitrumVaults,
   avax: avaxVaults,
   bsc: bscVaults,
@@ -26,15 +135,51 @@ const vaultsByChainId = {
   polygon: polygonVaults,
 };
 
+const boostsByChainId: {
+  [chainId: ChainEntity['id']]: BoostConfig[];
+} = {
+  arbitrum: arbitrumBoosts,
+  avax: avaxBoosts,
+  bsc: bscBoosts,
+  celo: celoBoosts,
+  cronos: cronosBoosts,
+  fantom: fantomBoosts,
+  fuse: fuseBoosts,
+  harmony: harmonyBoosts,
+  heco: hecoBoosts,
+  moonriver: moonriverBoosts,
+  polygon: polygonBoosts,
+};
+
 /**
  * A class to access beefy configuration
  * Access to vaults, boosts, featured items, etc
  * TODO: this class loads unnecessary data from the start of the app. Make it so only required data is fetched
  */
 export class ConfigAPI {
-  public async fetchVaultByChainId(chainId: ChainEntity['id']) {
+  public async fetchChainConfigByChainId(chainId: ChainEntity['id']): Promise<ChainConfig> {
+    if (chainConfigs[chainId] !== undefined) {
+      return chainConfigs[chainId];
+    } else {
+      throw Error(`Chain ${chainId} not supported`);
+    }
+  }
+
+  public async fetchFeaturedVaults(): Promise<FeaturedVaultConfig> {
+    return featuredVaults;
+  }
+
+  public async fetchVaultByChainId(chainId: ChainEntity['id']): Promise<VaultConfig[]> {
     if (vaultsByChainId[chainId] !== undefined) {
       return vaultsByChainId[chainId];
+    } else {
+      throw Error(`Chain ${chainId} not supported`);
+    }
+  }
+
+  public async fetchBoostsByChainId(chainId: ChainEntity['id']): Promise<BoostConfig[]> {
+    if (boostsByChainId[chainId] !== undefined) {
+      return boostsByChainId[chainId];
     } else {
       throw Error(`Chain ${chainId} not supported`);
     }

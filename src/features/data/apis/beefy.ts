@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { TokenEntity } from '../entities/token';
+import { VaultEntity } from '../entities/vault';
 
 // maybe "short" and "long" is not the smartest choice of words
 interface BeefyAPIBreakdownShort {
@@ -15,17 +16,15 @@ interface BeefyAPIBreakdownLong {
   vaultApy: number;
 }
 
-// I'm not sure what those keys are
 type BeefyAPIBreakdownResponse = {
-  [someKey: string]: BeefyAPIBreakdownShort | BeefyAPIBreakdownLong;
+  [vaultId: VaultEntity['id']]: BeefyAPIBreakdownShort | BeefyAPIBreakdownLong;
 };
 
 // I'm not sure what those keys are
 type BeefyAPIHistoricalAPYResponse = {
   // those are of type string but they represent numbers
   // also for some reason there is 7 items on each array
-  // idk why though
-  [someKey: string]: string[];
+  [vaultId: VaultEntity['id']]: string[];
 };
 
 export class BeefyAPI {
