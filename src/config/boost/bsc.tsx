@@ -940,7 +940,7 @@ export const pools = [
   },
   {
     id: "moo_pots_busd-moonpot",
-    poolId: "cakev2-pots-busd",
+    poolId: "cakev2-pots-busd-eol",
     name: "Moonpot",
     assets: [
       "POTS",
