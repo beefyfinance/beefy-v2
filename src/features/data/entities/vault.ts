@@ -1,4 +1,4 @@
-import { Token, TokenImplem } from './token';
+import { TokenEntity, TokenImplem } from './token';
 
 // maybe a RiskAnalysis type would be better
 enum VaultRiskTag {
@@ -32,12 +32,14 @@ enum VaultTag {
   BOOST,
 }
 
-// we put too much data in here for simplicity sake
-// but maybe it's smarter to put it in separate entities
-// If this can be in a state where half of the data is loaded,
-// it is definitely needed to split this, but you get the idea
-// we definitly want to have a clear separation between gov vaults and other types of vaults
-// this is because they are handled very differently
+/**
+ * A vault is anything you can stake stuff into
+ * - could be a single token vault
+ * - could be an LP vault
+ * - could be a bifi boost (gov vault)
+ *
+ * Sometimes also named "pool"
+ */
 interface VaultStandard {
   id: string;
   name: string;
@@ -75,7 +77,7 @@ interface VaultStandard {
    * So if you go into a BIFI vault, the assets is of course only BIFI
    * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
    */
-  assets: Token['id'][];
+  assets: TokenEntity['id'][];
 
   // for display purpose only
   strategyType: 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
@@ -98,11 +100,11 @@ interface VaultStandard {
 interface VaultGov {
   id: string;
   tokens: {
-    earnedToken: Token['id'];
-    tokens: Token['id'][];
+    earnedToken: TokenEntity['id'];
+    tokens: TokenEntity['id'][];
   };
 }
 
 // TODO: type guards
 
-export type Vault = VaultStandard | VaultGov;
+export type VaultEntity = VaultStandard | VaultGov;

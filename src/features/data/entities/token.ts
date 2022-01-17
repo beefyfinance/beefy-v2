@@ -1,4 +1,4 @@
-import { Chain } from './chain';
+import { ChainEntity } from './chain';
 
 /**
  * A token can be anything erc20-like
@@ -6,7 +6,7 @@ import { Chain } from './chain';
  *  - An LP token
  *  - A fake "unique token identifier" for boosts virtual earned token
  */
-export interface Token {
+export interface TokenEntity {
   id: string;
   symbol: string;
   description: string;
@@ -27,8 +27,8 @@ export interface Token {
 interface TokenImplemContract {
   id: string;
 
-  tokenId: Token['id'];
-  chainId: Chain['id'];
+  tokenId: TokenEntity['id'];
+  chainId: ChainEntity['id'];
   contractAddress: string;
   decimals: number;
   buyUrl: string; // link to 1inch/pancake/...
@@ -42,8 +42,8 @@ interface TokenImplemContract {
 interface TokenImplemGas {
   id: string;
 
-  tokenId: Token['id'];
-  chainId: Chain['id'];
+  tokenId: TokenEntity['id'];
+  chainId: ChainEntity['id'];
   decimals: number;
   buyUrl: string; // link to 1inch/pancake/...
 }

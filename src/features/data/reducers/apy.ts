@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Boost } from '../entities/boost';
-import { Vault } from '../entities/vault';
+import { BoostEntity } from '../entities/boost';
+import { VaultEntity } from '../entities/vault';
 
 interface ApyGovVault {
   vaultApr: number;
@@ -30,10 +30,10 @@ interface AprData {
  */
 export interface ApyState {
   byVaultId: {
-    [vaultId: Vault['id']]: ApyData;
+    [vaultId: VaultEntity['id']]: ApyData;
   };
   byBoostId: {
-    [boostId: Boost['id']]: AprData;
+    [boostId: BoostEntity['id']]: AprData;
   };
 }
 const initialState: ApyState = { byVaultId: {}, byBoostId: {} };

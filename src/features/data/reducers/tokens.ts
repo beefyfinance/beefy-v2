@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchVaultListAction } from '../actions/prices';
-import { Token } from '../entities/token';
+import { TokenEntity } from '../entities/token';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
  * State containing Vault infos
  */
-export type TokensState = NormalizedEntity<Token>;
+export type TokensState = NormalizedEntity<TokenEntity>;
 const initialState: TokensState = { byId: {}, allIds: [] };
 
 export const tokensSlice = createSlice({
@@ -21,7 +21,7 @@ export const tokensSlice = createSlice({
     builder.addCase(fetchVaultListAction.fulfilled, (state, action) => {
       for (const vault of action.payload.pools) {
         if (state.byId[vault.earnedToken] === undefined) {
-          const token: Token = {
+          const token: TokenEntity = {
             id: vault.earnedToken,
             symbol: vault.earnedToken,
             //chainId: action.payload.chainId,
@@ -40,7 +40,7 @@ export const tokensSlice = createSlice({
         }
 
         if (state.byId[vault.token] === undefined) {
-          const token: Token = {
+          const token: TokenEntity = {
             id: vault.token,
             symbol: vault.token,
             //chainId: action.payload.chainId,

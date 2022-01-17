@@ -6,7 +6,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyAPI } from '../apis/beefy';
 import { ConfigAPI } from '../apis/config';
-import { Chain } from '../entities/chain';
+import { ChainEntity } from '../entities/chain';
 
 // todo: don't instanciate here
 const beefyApi = new BeefyAPI();
@@ -25,8 +25,8 @@ export const fetchPricesAction = createAsyncThunk<Awaited<ReturnType<BeefyAPI['g
 // we use the api to create an action
 // this action should return just enough data for the state to work with
 export const fetchVaultListAction = createAsyncThunk<
-  { chainId: Chain['id']; pools: Awaited<ReturnType<ConfigAPI['fetchVaultByChainId']>> },
-  { chainId: Chain['id'] }
+  { chainId: ChainEntity['id']; pools: Awaited<ReturnType<ConfigAPI['fetchVaultByChainId']>> },
+  { chainId: ChainEntity['id'] }
 >('vaults/fetchVaultListForChain', async ({ chainId }) => {
   const pools = await configApi.fetchVaultByChainId(chainId);
   return { chainId, pools };

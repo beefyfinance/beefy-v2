@@ -2,7 +2,7 @@
  * Boosts can be done in partnership with
  * a company or project
  */
-export interface Partner {
+export interface PartnerEntity {
   id: string;
   logo: string;
   background: string;

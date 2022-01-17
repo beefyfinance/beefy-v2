@@ -3,8 +3,8 @@
 [ ] Define TS types for business entities
 
     [x] Basic types based on configuration files
-    [ ] Analyse current redux state and complete types
-    [ ] Re-read all chebiN detailed explaination to make sure nothing is missing
+    [x] Analyse current redux state and complete types
+    [x] Re-read all chebiN detailed explaination to make sure nothing is missing
 
 [ ] Compile a list of each type of vault/boost to create a regression testing book
 [ ] Extract API code

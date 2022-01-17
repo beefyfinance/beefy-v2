@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchVaultListAction } from '../actions/prices';
-import { Vault } from '../entities/vault';
+import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
  * State containing Vault infos
  */
-export type VaultsState = NormalizedEntity<Vault> & {
+export type VaultsState = NormalizedEntity<VaultEntity> & {
   // add quick access arrays
   // todo: this probably should be split by chain
-  allActiveIds: Vault['id'][];
-  allRetiredIds: Vault['id'][];
+  allActiveIds: VaultEntity['id'][];
+  allRetiredIds: VaultEntity['id'][];
 };
 const initialState: VaultsState = { byId: {}, allIds: [], allActiveIds: [], allRetiredIds: [] };
 

@@ -21,6 +21,7 @@ export interface BeefyState {
     balance: BalanceState;
     boosts: BoostsState;
   };
+  
   ui: {
     dataLoader: DataLoaderState;
   };

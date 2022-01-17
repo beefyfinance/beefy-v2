@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Chain } from '../entities/chain';
-import { Token } from '../entities/token';
+import { ChainEntity } from '../entities/chain';
+import { TokenEntity } from '../entities/token';
 
 /**
  * State containing user balances state
  */
 export interface BalanceState {
   byChainId: {
-    [chainId: Chain['id']]: {
+    [chainId: ChainEntity['id']]: {
       byTokenId: {
-        [tokenId: Token['id']]: number; // big number?
+        [tokenId: TokenEntity['id']]: number; // big number?
       };
     };
   };

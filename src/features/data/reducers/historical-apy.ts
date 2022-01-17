@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Vault } from '../entities/vault';
+import { VaultEntity } from '../entities/vault';
 
 /**
  * State containing APY historical infos indexed by vault id
@@ -8,7 +8,7 @@ import { Vault } from '../entities/vault';
  */
 export interface HistoricalApyState {
   byVaultId: {
-    [vaultId: Vault['id']]: number[];
+    [vaultId: VaultEntity['id']]: number[];
   };
 }
 const initialState: HistoricalApyState = { byVaultId: {} };

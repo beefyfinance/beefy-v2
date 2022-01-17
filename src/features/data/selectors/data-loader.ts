@@ -1,13 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { Chain } from '../entities/chain';
-import { Vault } from '../entities/vault';
+import { ChainEntity } from '../entities/chain';
+import { VaultEntity } from '../entities/vault';
 import { isPending } from '../reducers/data-loader';
 import { BeefyState } from '../state';
 
 export const isVaultLoadingSelector = createSelector(
   (store: BeefyState) => store.entities.vaults.byId, // could be reused
   (store: BeefyState) => store.ui.dataLoader.pricesLoading,
-  (_: BeefyState, vaultId: Vault['id']) => vaultId,
+  (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   (vaultsByIds, pricesLoading, vaultId) => {
     // find out if vault is here
     if (vaultsByIds[vaultId]) {
@@ -22,7 +22,7 @@ export const isVaultLoadingSelector = createSelector(
 export const isChainLoadingSelector = createSelector(
   [
     // it's weird but this is how reselect defines params
-    (_: BeefyState, chainId: Chain['id']) => chainId,
+    (_: BeefyState, chainId: ChainEntity['id']) => chainId,
   ],
   (chainId): boolean => {
     // todo

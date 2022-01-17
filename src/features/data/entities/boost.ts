@@ -1,9 +1,9 @@
-import { Partner } from './partner';
-import { Token } from './token';
-import { Vault } from './vault';
+import { PartnerEntity } from './partner';
+import { TokenEntity } from './token';
+import { VaultEntity } from './vault';
 
 // TODO: WIP
-export interface Boost {
+export interface BoostEntity {
   id: string;
   name: string;
   logo: string | null;
@@ -12,7 +12,7 @@ export interface Boost {
   contractAddress: string;
 
   // a boost always works on top of a vault, so it has a poolId that is an id for a vault
-  vaultId: Vault['id'];
+  vaultId: VaultEntity['id'];
 
   /**
    * "Earned" token is the token you get back for staking into a boost
@@ -21,16 +21,16 @@ export interface Boost {
    * and for boosts we do: boostSymbol = ${boost.token}${boost.id}Boost;
    */
   // todo: is this useful?
-  earnedToken: Token['id'];
+  earnedToken: TokenEntity['id'];
 
   /**
    * ASSETS are basically the assets that are in that boost
    * So if you go into a BIFI vault, the assets is of course only BIFI
    * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
    */
-  assets: Token['id'][];
+  assets: TokenEntity['id'][];
 
-  partners: Partner['id'][];
+  partners: PartnerEntity['id'][];
 
   // boosts are active for a limited time
   status: 'active' | 'eol';

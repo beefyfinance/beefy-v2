@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { Vault } from '../entities/vault';
+import { VaultEntity } from '../entities/vault';
 import { BeefyState } from '../state';
 
 export const vaultByIdSelector = createSelector(
   // get a tiny bit of the data
   (store: BeefyState) => store.entities.vaults.byId,
   // get the user passed ID
-  (_: BeefyState, vaultId: Vault['id']) => vaultId,
+  (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   // last function receives previous function outputs as parameters
   (vaultsByIds, vaultId) => vaultsByIds[vaultId]
 );

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { fetchPricesAction } from '../actions/prices';
-import { Token } from '../entities/token';
+import { TokenEntity } from '../entities/token';
 
 /**
  * State containing price infos indexed by token id
@@ -10,7 +10,7 @@ import { Token } from '../entities/token';
 export interface TokenPriceState {
   // todo: should this be a TokenImplem instead?
   // todo: Do we really need a BigNumber
-  [tokenId: Token['id']]: BigNumber;
+  [tokenId: TokenEntity['id']]: BigNumber;
 }
 const initialState: TokenPriceState = {};
 

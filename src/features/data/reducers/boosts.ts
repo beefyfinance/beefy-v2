@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Boost } from '../entities/boost';
-import { Vault } from '../entities/vault';
+import { BoostEntity } from '../entities/boost';
+import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
  * State containing Vault infos
  */
-export type BoostsState = NormalizedEntity<Boost> & {
+export type BoostsState = NormalizedEntity<BoostEntity> & {
   // maybe make this only active boosts
   byVaultId: {
-    [vaultId: Vault['id']]: Boost['id'];
+    [vaultId: VaultEntity['id']]: BoostEntity['id'];
   };
 };
 const initialState: BoostsState = { byId: {}, allIds: [], byVaultId: {} };

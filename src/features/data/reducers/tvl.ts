@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Boost } from '../entities/boost';
-import { Token } from '../entities/token';
-import { Vault } from '../entities/vault';
+import { BoostEntity } from '../entities/boost';
+import { TokenEntity } from '../entities/token';
+import { VaultEntity } from '../entities/vault';
 
 // todo: entity WIP
 interface VaultTvl {
-  token: Token['id'];
+  token: TokenEntity['id'];
   // no need for big numbers here
   amount: number;
 }
@@ -20,11 +20,12 @@ interface BoostTvl {
  * State containing APY infos indexed by vault id
  */
 export interface TvlState {
+  totalTvl: number;
   byVaultId: {
-    [vaultId: Vault['id']]: VaultTvl;
+    [vaultId: VaultEntity['id']]: VaultTvl;
   };
   byBoostId: {
-    [boostId: Boost['id']]: BoostTvl;
+    [boostId: BoostEntity['id']]: BoostTvl;
   };
 
   /**
@@ -38,10 +39,10 @@ export interface TvlState {
    * we must exclude/substract the tvl from the maxi vault
    */
   exclusions: {
-    [vaultId: Vault['id']]: Vault['id'];
+    [vaultId: VaultEntity['id']]: VaultEntity['id'];
   };
 }
-const initialState: TvlState = { byVaultId: {}, byBoostId: {}, exclusions: {} };
+const initialState: TvlState = { totalTvl: 0, byVaultId: {}, byBoostId: {}, exclusions: {} };
 
 export const tvlSlice = createSlice({
   name: 'tvl',

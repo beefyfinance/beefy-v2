@@ -10,7 +10,7 @@ import { pools as harmonyVaults } from '../../../config/vault/harmony';
 import { pools as hecoVaults } from '../../../config/vault/heco';
 import { pools as moonriverVaults } from '../../../config/vault/moonriver';
 import { pools as polygonVaults } from '../../../config/vault/polygon';
-import { Chain } from '../entities/chain';
+import { ChainEntity } from '../entities/chain';
 
 const vaultsByChainId = {
   arbitrum: arbitrumVaults,
@@ -32,7 +32,7 @@ const vaultsByChainId = {
  * TODO: this class loads unnecessary data from the start of the app. Make it so only required data is fetched
  */
 export class ConfigAPI {
-  public async fetchVaultByChainId(chainId: Chain['id']) {
+  public async fetchVaultByChainId(chainId: ChainEntity['id']) {
     if (vaultsByChainId[chainId] !== undefined) {
       return vaultsByChainId[chainId];
     } else {

@@ -1,8 +1,9 @@
 /**
  * The chain entity as you know it
  * bsc, harmony, avax, etc
+ * Sometimes named "network"
  */
-export interface Chain {
+export interface ChainEntity {
   id: string;
   name: string;
 

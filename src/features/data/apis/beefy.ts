@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Token } from '../entities/token';
+import { TokenEntity } from '../entities/token';
 
 // maybe "short" and "long" is not the smartest choice of words
 interface BeefyAPIBreakdownShort {
@@ -45,13 +45,13 @@ export class BeefyAPI {
   }
 
   // here we can nicely type the responses
-  public async getPrices(): Promise<{ [tokenId: Token['id']]: number }> {
+  public async getPrices(): Promise<{ [tokenId: TokenEntity['id']]: number }> {
     return this.api.get('/prices', { params: { _: this.getCacheBuster() } });
   }
 
   // i'm not 100% certain about the return type
   // are those token ids ?
-  public async getLPs(): Promise<{ [tokenId: Token['id']]: number }> {
+  public async getLPs(): Promise<{ [tokenId: TokenEntity['id']]: number }> {
     return this.api.get('/lps', { params: { _: this.getCacheBuster() } });
   }
 
