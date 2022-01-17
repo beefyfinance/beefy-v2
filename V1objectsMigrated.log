@@ -1,42 +1,123 @@
 [
   {
-    "id": "bsc vault: cakev2-popen-bnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: 2omb-2omb-ftm",
+    "id": "bsc vault: mdex-lac-busd",
     "type": "Added"
   },
   {
-    "id": "fantom vault: 2omb-2share-ftm",
+    "id": "bsc vault: cakev2-mcb-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: cakev2-pots-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: cakev2-tlos-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: cakev2-pmon-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: cakev2-tpt-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: narwhal-gold-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: boo-inv-wftm",
     "type": "Added"
   },
   {
-    "id": "fantom vault: boo-kek-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-psp-matic",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-wmatic-ht-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom boost: moo_WFTM-2omb",
-    "type": "Added"
-  },
-  {
-    "id": "fantom boost: moo_boo_ftm-tomb",
+    "id": "fantom vault: boo-hnd-wftm",
     "type": "synced"
   },
   {
-    "id": "fantom boost: boo-bifi-ftm-bifi",
+    "id": "fantom vault: spirit-zoo-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: spirit-fusdt-spell-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-kiro-matic",
+    "type": "Added"
+  },
+  {
+    "id": "polygon vault: quick-ustw-matic",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: mai-avax-mai-crv",
     "type": "synced"
   },
   {
-    "id": "fantom boost: moo_usdc-ftm-ester",
+    "id": "avax vault: joe-awool-wavax-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: pangolin-sushi.e-wavax-pause",
+    "type": "REMOVED"
+  },
+  {
+    "id": "metis vault: netswap-nett-m.usdt",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-nett-metis",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-nett-m.usdc",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-bnb-nett",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-weth-nett",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-weth-metis",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-m.usdt-metis",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-metis-m.usdc",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-weth-m.usdt",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-weth-m.usdc",
+    "type": "Added"
+  },
+  {
+    "id": "metis vault: netswap-m.usdt-m.usdc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_pots_busd-moonpot",
     "type": "synced"
   }
 ]

@@ -115,7 +115,6 @@ const connect = () => {
           },
         ],
       });
-
       subscribeProvider(provider, web3);
 
       let networkId = await web3.eth.getChainId();
@@ -133,17 +132,22 @@ const connect = () => {
           payload: { address: accounts[0] },
         });
       } else {
-        await close();
-        if (provider) {
-          await provider.request({
-            method: 'wallet_addEthereumChain',
-            params: [config[state.walletReducer.network].walletSettings],
-          });
-          dispatch(connect());
+        if (!checkNetworkSupport(networkId)) {
+          await close();
+          if (provider) {
+            await provider.request({
+              method: 'wallet_addEthereumChain',
+              params: [config[state.walletReducer.network].walletSettings],
+            });
+            dispatch(connect());
+          } else {
+            const accounts = await web3.eth.getAccounts();
+            dispatch({ type: UNSUPPORTED_NETWORK, payload: { address: accounts[0] } });
+            throw Error('Network not supported, check chainId.');
+          }
         } else {
-          const accounts = await web3.eth.getAccounts();
-          dispatch({ type: UNSUPPORTED_NETWORK, payload: { address: accounts[0] } });
-          throw Error('Network not supported, check chainId.');
+          const net = getNetworkAbbr(networkId);
+          dispatch(setNetwork(net));
         }
       }
     } catch (err) {

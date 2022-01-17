@@ -57,7 +57,7 @@ export const config = {
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
     multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
-    supportedWallets: ['injected', 'custom-clover',  'custom-math', 'custom-wallet-connect'],
+    supportedWallets: ['injected', 'custom-clover', 'custom-math', 'custom-wallet-connect'],
     providerName: 'heco',
     walletSettings: {
       chainId: `0x${parseInt('128', 10).toString(16)}`,
@@ -112,7 +112,7 @@ export const config = {
     rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
-    supportedWallets: ['injected','custom-clover', 'walletconnect', 'custom-coinbase'],
+    supportedWallets: ['injected', 'custom-clover', 'walletconnect', 'custom-coinbase'],
     providerName: 'polygon',
     walletSettings: {
       chainId: `0x${parseInt('137', 10).toString(16)}`,
@@ -152,7 +152,7 @@ export const config = {
     rpc: ['https://rpcapi.fantom.network'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
-    supportedWallets: ['injected','custom-clover', 'custom-coinbase', 'custom-wallet-connect'],
+    supportedWallets: ['injected', 'custom-clover', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'fantom',
     walletSettings: {
       chainId: `0x${parseInt('250', 10).toString(16)}`,
@@ -292,5 +292,26 @@ export const config = {
       blockExplorerUrls: ['https://explorer.fuse.io/'],
     },
     stableCoins: ['fUSD', 'BUSD', 'USDC'],
+  },
+  metis: {
+    name: 'Metis',
+    chainId: 1088,
+    rpc: ['https://andromeda.metis.io/?owner=1088'],
+    explorerUrl: 'https://andromeda-explorer.metis.io',
+    multicallAddress: '0x4fd2e1c2395dc088F36cab06DCe47F88A912fC85',
+    supportedWallets: ['injected', 'custom-wallet-connect'],
+    providerName: 'Metis',
+    walletSettings: {
+      chainId: `0x${parseInt('1088', 10).toString(16)}`,
+      chainName: 'Metis',
+      nativeCurrency: {
+        name: 'METIS',
+        symbol: 'METIS',
+        decimals: 18,
+      },
+      rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
+      blockExplorerUrls: ['https://andromeda-explorer.metis.io/'],
+    },
+    stableCoins: ['mUSDT', 'mUSDC'],
   },
 };

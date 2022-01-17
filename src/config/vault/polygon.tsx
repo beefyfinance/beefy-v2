@@ -7871,5 +7871,79 @@ export const pools = [
     buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x42d61D766B85431666B39B89C43011f24451bFf6",
     addLiquidityUrl: "https://quickswap.exchange/#/add/0x42d61D766B85431666B39B89C43011f24451bFf6/ETH",
     network: "polygon"
+  },
+  {
+    id: "quick-kiro-matic",
+    name: "KIRO-MATIC LP",
+    token: "KIRO-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x3f245C6f18442Bd6198d964C567a01BD4202e290",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickSwapKIRO-MATIC",
+    earnedTokenAddress: "0x0A9e464D6939D37a78d7B2a32e8B8F75f15c3C25",
+    earnContractAddress: "0x0A9e464D6939D37a78d7B2a32e8B8F75f15c3C25",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-kiro-matic",
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "KIRO",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_LOW",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D&inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D/ETH",
+    network: "polygon"
+  },
+  {
+    id: "quick-ustw-matic",
+    name: "USTw-MATIC LP",
+    token: "USTw-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x9b7e966fe005d616b5560E4BaA7cFA8747d6cBb9",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickUST-MATIC",
+    earnedTokenAddress: "0x21280954C4F99747757076A0cC56ba594037075d",
+    earnContractAddress: "0x21280954C4F99747757076A0cC56ba594037075d",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-ustw-matic",
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "USTw",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59&inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    network: "polygon"
   }
 ];

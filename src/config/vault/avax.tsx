@@ -2303,42 +2303,6 @@ export const pools = [
     network: "avax"
   },
   {
-    id: "joe-awool-wavax",
-    name: "aWOOL-AVAX LP",
-    token: "aWOOL-AVAX JLP",
-    tokenDescription: "Trader Joe",
-    tokenAddress: "0xf895E6588585912e60b0131fa173e986859f69D5",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooJoeaWOOL-AVAX",
-    earnedTokenAddress: "0xCefB5D22477394222F5C683E917Aa7c65847262C",
-    earnContractAddress: "0xCefB5D22477394222F5C683E917Aa7c65847262C",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "joe-awool-wavax",
-    oraclePrice: 0,
-    depositsPaused: false,
-    status: "active",
-    platform: "Trader Joe",
-    assets: [
-      "aWOOL",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
-    network: "avax"
-  },
-  {
     id: "joe-klo-wavax",
     name: "KLO-AVAX LP",
     token: "KLO-AVAX JLP",
@@ -2725,41 +2689,6 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
     buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
-    network: "avax"
-  },
-  {
-    id: "pangolin-sushi.e-wavax-pause",
-    name: "SUSHI.e-AVAX LP",
-    token: "SUSHI.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xF62381AFFdfd27Dba91A1Ea2aCf57d426E28c341",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinSUSHI.e-AVAX",
-    earnedTokenAddress: "0xFa7767Cf402a6D198cC136FED32550ABA70C3e02",
-    earnContractAddress: "0xFa7767Cf402a6D198cC136FED32550ABA70C3e02",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-sushi.e-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "SUSHIe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MEDIUM",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x37B608519F91f70F2EeB0e5Ed9AF4061722e4F76",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x37B608519F91f70F2EeB0e5Ed9AF4061722e4F76",
     network: "avax"
   },
   {
@@ -3501,7 +3430,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://avax.curve.fi/factory/7/deposit",
-    network: "avax"
+    network: "avax",
+    depositFee: "0.5%"
   },
   {
     id: "joe-wavax-bifi-eol",
@@ -3572,6 +3502,43 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
     buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    network: "avax",
+    retireReason: "rewards"
+  },
+  {
+    id: "joe-awool-wavax-eol",
+    name: "aWOOL-AVAX LP",
+    token: "aWOOL-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0xf895E6588585912e60b0131fa173e986859f69D5",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeaWOOL-AVAX",
+    earnedTokenAddress: "0xCefB5D22477394222F5C683E917Aa7c65847262C",
+    earnContractAddress: "0xCefB5D22477394222F5C683E917Aa7c65847262C",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-awool-wavax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "eol",
+    platform: "Trader Joe",
+    assets: [
+      "aWOOL",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
+    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
     network: "avax",
     retireReason: "rewards"
   }

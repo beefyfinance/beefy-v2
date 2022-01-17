@@ -1329,41 +1329,6 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "spirit-zoo-ftm",
-    name: "ZOO-FTM LP",
-    token: "ZOO-FTM SLP",
-    tokenDescription: "SpiritSwap",
-    tokenAddress: "0xDF18DD2631f02D930071DF7d6FF89bbc3718C62F",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSpiritZOO-WFTM",
-    earnedTokenAddress: "0x9F0d2c24BB2F4b6024F9A266Aa95536481D78ABe",
-    earnContractAddress: "0x9F0d2c24BB2F4b6024F9A266Aa95536481D78ABe",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "spirit-zoo-ftm",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SpiritSwap",
-    assets: [
-      "ZOO",
-      "FTM"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
-    network: "fantom"
-  },
-  {
     id: "jetswap-fantom-eth-btc",
     name: "ETH-WBTC LP",
     token: "ETH-WBTC LP",
@@ -1746,42 +1711,6 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
-    network: "fantom"
-  },
-  {
-    id: "spirit-fusdt-spell",
-    name: "SPELL-fUSDT LP",
-    token: "SPELL-fUSDT SLP",
-    tokenDescription: "SpiritSwap",
-    tokenAddress: "0x31c0385DDE956f95D43Dac80Bd74FEE149961f4c",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSpiritfUSDT-SPELL",
-    earnedTokenAddress: "0x01760EA1e63aA89b5E567ED616E104220B4E2e9B",
-    earnContractAddress: "0x01760EA1e63aA89b5E567ED616E104220B4E2e9B",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "spirit-fusdt-spell",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SpiritSwap",
-    assets: [
-      "SPELL",
-      "fUSDT"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x468003B688943977e6130F4F68F23aad939a1040",
     network: "fantom"
   },
   {
@@ -4635,7 +4564,7 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0x10010078a54396F62c96dF8532dc2B4847d47ED3",
-    buyTokenUrl: "https://spookyswap.finance/swap",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x10010078a54396F62c96dF8532dc2B4847d47ED3",
     network: "fantom"
   },
   {
@@ -5127,5 +5056,115 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x627524d78B4fC840C887ffeC90563c7A42b671fD",
     buyTokenUrl: "https://spookyswap.finance/swap",
     network: "fantom"
+  },
+  {
+    id: "boo-inv-wftm",
+    name: "INV-FTM LP",
+    token: "INV-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x9380485d65Fb628Ccd87Ddec4854F5306554d9d9",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooINV-FTM",
+    earnedTokenAddress: "0xFE0FC1710d9d723eA0876315437bD140fc952a2c",
+    earnContractAddress: "0xFE0FC1710d9d723eA0876315437bD140fc952a2c",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-inv-wftm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "INV",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
+    network: "fantom"
+  },
+  {
+    id: "spirit-zoo-ftm-eol",
+    name: "ZOO-FTM LP",
+    token: "ZOO-FTM SLP",
+    tokenDescription: "SpiritSwap",
+    tokenAddress: "0xDF18DD2631f02D930071DF7d6FF89bbc3718C62F",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSpiritZOO-WFTM",
+    earnedTokenAddress: "0x9F0d2c24BB2F4b6024F9A266Aa95536481D78ABe",
+    earnContractAddress: "0x9F0d2c24BB2F4b6024F9A266Aa95536481D78ABe",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "spirit-zoo-ftm",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SpiritSwap",
+    assets: [
+      "ZOO",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
+    network: "fantom",
+    retireReason: "tvl"
+  },
+  {
+    id: "spirit-fusdt-spell-eol",
+    name: "SPELL-fUSDT LP",
+    token: "SPELL-fUSDT SLP",
+    tokenDescription: "SpiritSwap",
+    tokenAddress: "0x31c0385DDE956f95D43Dac80Bd74FEE149961f4c",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSpiritfUSDT-SPELL",
+    earnedTokenAddress: "0x01760EA1e63aA89b5E567ED616E104220B4E2e9B",
+    earnContractAddress: "0x01760EA1e63aA89b5E567ED616E104220B4E2e9B",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "spirit-fusdt-spell",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SpiritSwap",
+    assets: [
+      "SPELL",
+      "fUSDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x468003B688943977e6130F4F68F23aad939a1040",
+    network: "fantom",
+    retireReason: "rewards"
   }
 ];
