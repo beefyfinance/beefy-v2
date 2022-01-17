@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Boost } from '../entities/boost';
 import { Vault } from '../entities/vault';
 
 interface ApyGovVault {
@@ -18,6 +19,10 @@ interface ApyStandard {
 }
 type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard;
 
+// boost is expressed as APR
+interface AprData {
+  apr: number;
+}
 // todo: create type guards to simplify usage
 
 /**
@@ -27,8 +32,11 @@ export interface ApyState {
   byVaultId: {
     [vaultId: Vault['id']]: ApyData;
   };
+  byBoostId: {
+    [boostId: Boost['id']]: AprData;
+  };
 }
-const initialState: ApyState = { byVaultId: {} };
+const initialState: ApyState = { byVaultId: {}, byBoostId: {} };
 
 export const apySlice = createSlice({
   name: 'apy',

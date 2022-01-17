@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Boost } from '../entities/boost';
 import { Token } from '../entities/token';
 import { Vault } from '../entities/vault';
 
 // todo: entity WIP
-interface Tvl {
+interface VaultTvl {
   token: Token['id'];
   // no need for big numbers here
   amount: number;
+}
+
+interface BoostTvl {
+  // TODO: how are these different?
+  stacked: number;
+  tvl: number;
 }
 
 /**
@@ -14,7 +21,10 @@ interface Tvl {
  */
 export interface TvlState {
   byVaultId: {
-    [vaultId: Vault['id']]: Tvl;
+    [vaultId: Vault['id']]: VaultTvl;
+  };
+  byBoostId: {
+    [boostId: Boost['id']]: BoostTvl;
   };
 
   /**
@@ -31,7 +41,7 @@ export interface TvlState {
     [vaultId: Vault['id']]: Vault['id'];
   };
 }
-const initialState: TvlState = { byVaultId: {}, exclusions: {} };
+const initialState: TvlState = { byVaultId: {}, byBoostId: {}, exclusions: {} };
 
 export const tvlSlice = createSlice({
   name: 'tvl',

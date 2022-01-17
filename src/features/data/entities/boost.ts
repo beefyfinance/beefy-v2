@@ -3,7 +3,7 @@ import { Token } from './token';
 import { Vault } from './vault';
 
 // TODO: WIP
-interface Boost {
+export interface Boost {
   id: string;
   name: string;
   logo: string | null;
@@ -31,4 +31,7 @@ interface Boost {
   assets: Token['id'][];
 
   partners: Partner['id'][];
+
+  // boosts are active for a limited time
+  status: 'active' | 'eol';
 }
