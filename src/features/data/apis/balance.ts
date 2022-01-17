@@ -1,7 +1,7 @@
 import { MultiCall } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
 import {
-  isBoostToken,
+  isTokenBoost,
   isTokenErc20,
   isTokenNative,
   TokenEntity,
@@ -13,9 +13,7 @@ import _erc20Abi from '../../../config/abi/erc20.json';
 import _multicallAbi from '../../../config/abi/multicall.json';
 import _boostAbi from '../../../config/abi/boost.json';
 import Web3 from 'web3';
-import { VaultEntity } from '../entities/vault';
 import { BeefyState } from '../state';
-import { tokenByIdSelector } from '../selectors/tokens';
 
 // fix TS typings
 const erc20Abi = _erc20Abi as AbiItem[];
@@ -49,7 +47,7 @@ export class BalanceAPI {
     const calls: BalanceResult[] = [];
     for (const token of tokens) {
       // skip virtual boost tokens
-      if (isBoostToken(token)) {
+      if (isTokenBoost(token)) {
         continue;
       }
 

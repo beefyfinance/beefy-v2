@@ -54,6 +54,7 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "tsc": "tsc",
+    "tsc-watch": "tsc --watch",
     "ts-node": "ts-node"
   },
   "eslintConfig": {

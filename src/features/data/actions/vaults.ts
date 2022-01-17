@@ -1,5 +1,5 @@
-import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
-import { ConfigAPI } from '../apis/config';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { VaultConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 
@@ -9,7 +9,7 @@ import { ChainEntity } from '../entities/chain';
 
 export interface FulfilledPayload {
   chainId: ChainEntity['id'];
-  pools: Awaited<ReturnType<ConfigAPI['fetchVaultByChainId']>>;
+  pools: VaultConfig[];
 }
 interface ActionParams {
   chainId: ChainEntity['id'];

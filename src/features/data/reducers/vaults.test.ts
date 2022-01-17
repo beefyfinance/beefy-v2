@@ -94,6 +94,33 @@ describe('Vaults slice tests', () => {
             'CONTRACTS_VERIFIED',
           ],
         },
+
+        // one retired vault
+        {
+          id: 'banana-banana-eol',
+          logo: 'degens/BANANA.svg',
+          name: 'BANANA',
+          token: 'BANANA',
+          tokenDescription: 'ApeSwap',
+          tokenAddress: '0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95',
+          tokenDecimals: 18,
+          tokenDescriptionUrl: '#',
+          earnedToken: 'mooApeBANANA',
+          earnedTokenAddress: '0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786',
+          earnContractAddress: '0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786',
+          pricePerFullShare: 1,
+          tvl: 0,
+          oracle: 'tokens',
+          oracleId: 'BANANA',
+          oraclePrice: 0,
+          status: 'eol',
+          platform: 'ApeSwap',
+          assets: ['BANANA'],
+          buyTokenUrl:
+            'https://dex.apeswap.finance/#/swap?inputCurrency=0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95&outputCurrency=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+          stratType: 'SingleStake',
+          network: 'bsc',
+        },
       ],
     };
     const action = { type: fetchVaultByChainIdAction.fulfilled, payload: payload };

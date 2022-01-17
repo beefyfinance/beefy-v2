@@ -1,5 +1,5 @@
 import { ChainEntity } from './chain';
-import { TokenEntity, TokenEntity } from './token';
+import { TokenEntity } from './token';
 
 // maybe a RiskAnalysis type would be better
 enum VaultRiskTag {
@@ -61,7 +61,7 @@ export interface VaultStandard {
    * "Earned" token is the token you get back for staking into a vault
    * Staking into a standard vault "earns" mooTokens
    */
-  earnedToken: TokenEntity['id'];
+  earnedTokenId: TokenEntity['id'];
 
   /**
    * pricePerFullShare is how you find out how much your mooTokens
@@ -73,7 +73,7 @@ export interface VaultStandard {
    * That value is fetched from the smart contract upon loading
    **/
   // todo: move this elsewhere
-  pricePerFullShare: number;
+  //pricePerFullShare: number;
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -88,6 +88,7 @@ export interface VaultStandard {
   isGovVault: false;
 
   // TODO: WIP
+  /*
   tags: VaultTag[];
   safetyAnalysis: {
     score: number;
@@ -99,11 +100,14 @@ export interface VaultStandard {
     performanceFee: number;
     withdrawalFee: number;
   };
+  */
 }
 
 // TODO: WIP
 export interface VaultGov {
   id: string;
+  name: string;
+  chainId: ChainEntity['id'];
 
   // address of the vault?
   poolAddress: string;

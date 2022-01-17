@@ -12,7 +12,12 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
   allActiveIds: VaultEntity['id'][];
   allRetiredIds: VaultEntity['id'][];
 };
-export const initialVaultsState: VaultsState = { byId: {}, allIds: [], allActiveIds: [], allRetiredIds: [] };
+export const initialVaultsState: VaultsState = {
+  byId: {},
+  allIds: [],
+  allActiveIds: [],
+  allRetiredIds: [],
+};
 
 export const vaultsSlice = createSlice({
   name: 'vaults',
@@ -24,16 +29,19 @@ export const vaultsSlice = createSlice({
     // TODO: WIP
     builder.addCase(fetchVaultByChainIdAction.fulfilled, (state, action) => {
       for (const apiVault of action.payload.pools) {
+        const chainId = apiVault.network;
         if (apiVault.isGovVault) {
           const vault: VaultGov = {
             id: apiVault.id,
+            name: apiVault.name,
             isGovVault: true,
             poolAddress: apiVault.poolAddress,
+            chainId: chainId,
           };
 
           state.byId[vault.id] = vault;
           state.allIds.push(vault.id);
-          if (apiVault.depositsPaused) {
+          if (apiVault.status === 'eol') {
             state.allRetiredIds.push(vault.id);
           } else {
             state.allActiveIds.push(vault.id);
@@ -43,13 +51,18 @@ export const vaultsSlice = createSlice({
             id: apiVault.id,
             name: apiVault.name,
             logoUri: apiVault.logo,
-            chainId: action.
+            isGovVault: false,
+            assets: apiVault.assets,
+            earnedTokenId: apiVault.earnedToken,
+            oracleId: apiVault.oracleId,
+            strategyType: apiVault.stratType as VaultStandard['strategyType'],
+            chainId: chainId,
           };
           // redux toolkit uses immer by default so we can
           // directly modify the state as usual
           state.byId[vault.id] = vault;
           state.allIds.push(vault.id);
-          if (apiVault.depositsPaused) {
+          if (apiVault.status === 'eol') {
             state.allRetiredIds.push(vault.id);
           } else {
             state.allActiveIds.push(vault.id);

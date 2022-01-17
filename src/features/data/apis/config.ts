@@ -30,7 +30,7 @@ import { PlatformEntity } from '../entities/platform';
 import { VaultEntity } from '../entities/vault';
 
 // generated from config data with https://jvilk.com/MakeTypes/
-interface VaultConfig {
+export interface VaultConfig {
   id: string;
   logo?: string | null;
   name: string;

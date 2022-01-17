@@ -19,16 +19,18 @@ interface ApyStandard {
 }
 export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard;
 
-type BeefyAPIBreakdownResponse = {
+export interface BeefyAPITolenPricesResponse {
+  [tokenId: TokenEntity['id']]: number;
+}
+export interface BeefyAPIBreakdownResponse {
   [vaultId: VaultEntity['id']]: ApyData;
-};
+}
 
-// I'm not sure what those keys are
-type BeefyAPIHistoricalAPYResponse = {
+export interface BeefyAPIHistoricalAPYResponse {
   // those are of type string but they represent numbers
   // also for some reason there is 7 items on each array
   [vaultId: VaultEntity['id']]: string[];
-};
+}
 
 export class BeefyAPI {
   public api: AxiosInstance;
@@ -47,13 +49,13 @@ export class BeefyAPI {
   }
 
   // here we can nicely type the responses
-  public async getPrices(): Promise<{ [tokenId: TokenEntity['id']]: number }> {
+  public async getPrices(): Promise<BeefyAPITolenPricesResponse> {
     return this.api.get('/prices', { params: { _: this.getCacheBuster() } });
   }
 
   // i'm not 100% certain about the return type
   // are those token ids ?
-  public async getLPs(): Promise<{ [tokenId: TokenEntity['id']]: number }> {
+  public async getLPs(): Promise<BeefyAPITolenPricesResponse> {
     return this.api.get('/lps', { params: { _: this.getCacheBuster() } });
   }
 
