@@ -1,4 +1,11 @@
-import { fetchVaultByChainIdAction, FulfilledPayload } from '../actions/vaults';
+import {
+  fetchBoostsByChainIdAction,
+  FulfilledPayload as FetchBoostsActionPayload,
+} from '../actions/boosts';
+import {
+  fetchVaultByChainIdAction,
+  FulfilledPayload as FetchVaultsActionPayload,
+} from '../actions/vaults';
 import { tokensSlice, initialTokensState } from './tokens';
 
 describe('Tokens slice tests', () => {
@@ -15,7 +22,7 @@ describe('Tokens slice tests', () => {
   });
 
   it('should update state on fulfilled vault list', () => {
-    const payload: FulfilledPayload = {
+    const payload: FetchVaultsActionPayload = {
       chainId: 'harmony',
       pools: [
         // have one gov vault
@@ -97,6 +104,28 @@ describe('Tokens slice tests', () => {
       ],
     };
     const action = { type: fetchVaultByChainIdAction.fulfilled, payload: payload };
+    const state = tokensSlice.reducer(initialTokensState, action);
+    expect(state).toMatchSnapshot();
+  });
+
+  it('should do nothing on pending boosts list', () => {
+    const action = { type: fetchBoostsByChainIdAction.pending };
+    const state = tokensSlice.reducer(initialTokensState, action);
+    expect(state).toEqual(initialTokensState);
+  });
+
+  it('should do nothing on rejected boosts list', () => {
+    const action = { type: fetchBoostsByChainIdAction.rejected };
+    const state = tokensSlice.reducer(initialTokensState, action);
+    expect(state).toEqual(initialTokensState);
+  });
+
+  it('should update state on fulfilled vault list', () => {
+    const payload: FetchBoostsActionPayload = {
+      chainId: 'harmony',
+      boosts: [],
+    };
+    const action = { type: fetchBoostsByChainIdAction.fulfilled, payload: payload };
     const state = tokensSlice.reducer(initialTokensState, action);
     expect(state).toMatchSnapshot();
   });

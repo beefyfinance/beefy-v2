@@ -88,7 +88,7 @@ interface BoostPartnerConfig {
   };
   logoNight?: string | null;
 }
-interface BoostConfig {
+export interface BoostConfig {
   id: string;
   poolId: string;
   name: string;

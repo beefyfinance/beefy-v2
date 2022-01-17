@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyAPI, BeefyAPIBreakdownResponse, BeefyAPIHistoricalAPYResponse } from '../apis/beefy';
+import { BeefyAPIBreakdownResponse, BeefyAPIHistoricalAPYResponse } from '../apis/beefy';
 import { getBeefyApi } from '../apis/instances';
 
 export const fetchApyAction = createAsyncThunk<BeefyAPIBreakdownResponse, {}>(
