@@ -74,6 +74,41 @@ export const pools = [
     network: "fantom"
   },
   {
+    id: "beefy-binspirit",
+    logo: "single-assets/binSPIRIT.svg",
+    name: "binSPIRIT",
+    token: "binSPIRIT",
+    tokenDescription: "Beefy.Finance",
+    tokenAddress: "0xe1908Ab7e03F0699773ceCc4Dc5D38893E532cd1",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "moobinSPIRIT",
+    earnedTokenAddress: "0xb2B0D702Df2Bcc31c3a9f9980C384f98F8259237",
+    earnContractAddress: "0xb2B0D702Df2Bcc31c3a9f9980C384f98F8259237",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "binSPIRIT",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Beefy.Finance",
+    assets: [
+      "binSPIRIT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.spiritswap.finance/#/",
+    network: "fantom"
+  },
+  {
     id: "beets-song-ice-fire",
     logo: "fantom/Song Of Ice And Fire.png",
     name: "Song Of Ice And Fire",
