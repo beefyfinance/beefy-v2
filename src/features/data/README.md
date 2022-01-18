@@ -10,6 +10,8 @@
 [ ] Extract API code
 
     [x] Config
+    [x] Vault contract data
+    [ ] Boost contract data
     [ ] APY
     [ ] Balances
     [ ] Allowances
@@ -67,11 +69,22 @@ BONUS:
   - The cake vault: https://beta.beefy.finance/#/bsc/vault/cake-cakev2
   - A featured vault: https://beta.beefy.finance/#/fantom/vault/scream-wbtc
   - A single asset vault: https://beta.beefy.finance/#/polygon/vault/aave-eth
+- Other Critical features
+  - Wallet Connection
+  - Wallet boost/vault balance
+  - Wallet portfolio
+  - Platform tvl/buyback
+  - Allowances
+  - Deposit
+  - Withdraw
+  - Zap
+  - BIFI token price
 
 # WEIRD STUFF / QUESTIONS
 
 - Why not use https://api.beefy.finance/vaults and https://api.beefy.finance/boosts?
 - why is there an api.beefy.finance and a data.beefy.finance?
+- Boost.isMooStaked: is this always "true"?
 
 # ANSWERED
 

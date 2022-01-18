@@ -58,6 +58,7 @@ const getPools = async (items, state, dispatch) => {
 
   const promises = [];
   for (const key in multicall) {
+    console.log({ mcAll: multicall[key].all([calls[key]]) });
     promises.push(multicall[key].all([calls[key]]));
   }
   const results = await Promise.allSettled(promises);
@@ -86,9 +87,9 @@ const getPools = async (items, state, dispatch) => {
       tvl = totalStaked
         .times(price)
         .dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
-			const S = pools[ item.id].excluded;
-      if (S && pools[ S]) {
-        tvl = tvl.minus( pools[ S].tvl);
+      const S = pools[item.id].excluded;
+      if (S && pools[S]) {
+        tvl = tvl.minus(pools[S].tvl);
       }
     } else {
       const balance = new BigNumber(item.balance);

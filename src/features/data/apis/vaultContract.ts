@@ -1,13 +1,10 @@
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
+import { MultiCall } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
 import { isTokenErc20 } from '../entities/token';
 import { ChainConfig } from './config';
-import _erc20Abi from '../../../config/abi/erc20.json';
-import _multicallAbi from '../../../config/abi/multicall.json';
-import _boostAbi from '../../../config/abi/boost.json';
 import _vaultAbi from '../../../config/abi/vault.json';
 import Web3 from 'web3';
-import { isGovVault, VaultEntity } from '../entities/vault';
+import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { BeefyState } from '../state';
 import { tokenByIdSelector } from '../selectors/tokens';
 
@@ -22,58 +19,82 @@ interface StandardVaultContractData {
   id: VaultEntity['id'];
   balance: number;
   pricePerFullShare: number;
+
+  /**
+   * The strategy address
+   */
   strategy: string;
 }
 
-type VaultContractResult = GovVaultContractData | StandardVaultContractData;
-
-type PromisifyObjectType<T> = {
-  [key in keyof T]: Promise<T[key]> | T[key];
+type AllValuesAsString<T> = {
+  [key in keyof T]: string;
 };
 
+/**
+ * Get vault contract data
+ */
 export class VaultContractAPI {
   constructor(protected rpc: Web3) {}
 
   // maybe we want to re-render more often, we could make
   // this a generator instead
-  public async fetchVaultsContractData(
+  public async fetchGovVaultsContractData(
+    chainConfig: ChainConfig,
+    vaults: VaultGov[]
+  ): Promise<GovVaultContractData[]> {
+    const mc = new MultiCall(this.rpc, chainConfig.multicallAddress);
+    const calls = vaults.map(vault => {
+      const tokenContract = new this.rpc.eth.Contract(vaultAbi, vault.poolAddress);
+      return {
+        id: vault.id,
+        totalStaked: tokenContract.methods.totalSupply(),
+      };
+    });
+
+    const [results] = (await mc.all([calls])) as AllValuesAsString<GovVaultContractData>[][];
+
+    // format strings as numbers
+    return results.map(result => {
+      return {
+        id: result.id,
+        totalStaked: parseFloat(result.totalStaked),
+      } as GovVaultContractData;
+    });
+  }
+
+  // maybe we want to re-render more often, we could make
+  // this a generator instead
+  public async fetchStandardVaultsContractData(
     state: BeefyState,
     chainConfig: ChainConfig,
-    vaults: VaultEntity[]
-  ): Promise<VaultContractResult[]> {
+    vaults: VaultStandard[]
+  ): Promise<StandardVaultContractData[]> {
     const mc = new MultiCall(this.rpc, chainConfig.multicallAddress);
-    const calls: ShapeWithLabel[] = [];
-    for (const vault of vaults) {
-      if (isGovVault(vault)) {
-        const tokenContract = new this.rpc.eth.Contract(vaultAbi, vault.poolAddress);
-        calls.push({
-          id: vault.id,
-          totalStaked: tokenContract.methods.totalSupply(),
-        });
-      } else {
-        const token = tokenByIdSelector(state, vault.oracleId);
-        if (!isTokenErc20(token)) {
-          continue;
-        }
-        const tokenContract = new this.rpc.eth.Contract(vaultAbi, token.contractAddress);
-        calls.push({
-          id: vault.id,
-          balance: tokenContract.methods.balance(),
-          pricePerFullShare: tokenContract.methods.getPricePerFullShare(),
-          strategy: tokenContract.methods.strategy(),
-        });
-      }
-    }
 
-    return new Promise<VaultContractResult[]>(async (resolve, reject) => {
-      try {
-        const result = await mc.all([calls]);
-        resolve(result[0]);
-      } catch (e) {
-        console.warn('fetchVaultsContractData error', e);
-        // FIXME: queue chain retry?
-        reject(e);
+    const calls = vaults.map(vault => {
+      const token = tokenByIdSelector(state, vault.oracleId);
+      if (!isTokenErc20(token)) {
+        return;
       }
+      const tokenContract = new this.rpc.eth.Contract(vaultAbi, token.contractAddress);
+      return {
+        id: vault.id,
+        balance: tokenContract.methods.balance(),
+        pricePerFullShare: tokenContract.methods.getPricePerFullShare(),
+        strategy: tokenContract.methods.strategy(),
+      };
+    });
+
+    const [results] = (await mc.all([calls])) as AllValuesAsString<StandardVaultContractData>[][];
+
+    // format strings as numbers
+    return results.map(result => {
+      return {
+        id: result.id,
+        balance: parseFloat(result.balance),
+        pricePerFullShare: parseFloat(result.balance),
+        strategy: result.strategy,
+      } as StandardVaultContractData;
     });
   }
 }
