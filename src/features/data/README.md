@@ -9,10 +9,20 @@
 [x] Compile a list of each type of vault/boost to create a regression testing book
 [ ] Extract API code
 
-    [ ] Create api classes and input types, create output types when needed
-    [ ] Wrap in methods and actions
+    [x] Config
+    [ ] APY
+    [ ] Balances
+    [ ] Allowances
+    [ ] TVL?
 
 [ ] Create new reducers using new TS types
+
+    [x] Config
+    [ ] APY
+    [ ] Balances
+    [ ] Allowances
+    [ ] TVL?
+
 [ ] Rework components to use new reducers
 [ ] Rework search to handle partially loaded data
 [ ] Create unit tests for critical business cases
@@ -60,6 +70,16 @@ BONUS:
 
 # WEIRD STUFF / QUESTIONS
 
+- Why not use https://api.beefy.finance/vaults and https://api.beefy.finance/boosts?
+- why is there an api.beefy.finance and a data.beefy.finance?
+
+# ANSWERED
+
 - why is there a token.isGovVault in the balance.tsx action?
+  When fetching the balance for the govVault, since it resembles a boost and doesn't, we must also fetch the rewards for it
+  So as to know how much pending rewards we have to be claimed
+  this isn't a pretty design by any means and can be rethought
 - what is the gov vault pool address?
+  can be removed, same as contractAddress
 - what are allowances used for?
+  ui uses it to tell user if he needs to allow more token

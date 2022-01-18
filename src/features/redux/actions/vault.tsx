@@ -61,6 +61,7 @@ const getPools = async (items, state, dispatch) => {
     promises.push(multicall[key].all([calls[key]]));
   }
   const results = await Promise.allSettled(promises);
+  console.log({ what: 'getPools', results });
 
   let response = [];
   results.forEach(result => {
@@ -71,6 +72,7 @@ const getPools = async (items, state, dispatch) => {
     }
     response = [...response, ...result.value[0]];
   });
+  console.log({ what: 'getPools', response });
 
   let totalTvl = new BigNumber(0);
   for (let i = 0; i < response.length; i++) {
@@ -161,6 +163,8 @@ const getBoosts = async (items, state, dispatch) => {
     promises.push(multicall[key].all([moos[key]]));
   }
   const results = await Promise.allSettled(promises);
+  console.log({ what: 'getBoosts', results });
+
   const response = [];
 
   results.forEach(result => {
@@ -194,6 +198,8 @@ const getBoosts = async (items, state, dispatch) => {
       }); //result.value[0].forEach( item
     } //if (!isEmpty( result.value[0]))
   }); //results.forEach( result =>
+
+  console.log({ what: 'getBoosts', response });
 
   for (const key in response) {
     const item = response[key],
