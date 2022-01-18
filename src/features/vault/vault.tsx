@@ -269,7 +269,7 @@ export const Vault = () => {
                   </Box>
                 )}
                 {/*Spirit Card */}
-                {item.isSpirit && (
+                {item.isBinSpirit && (
                   <Box>
                     <Spirit item={item} />
                   </Box>

@@ -75,6 +75,7 @@ const initialPools = () => {
       pool['isQidao'] = QiDao.includes(pool.id);
       pool['isInsurace'] = Insurace.includes(net);
       pool['isLaCucina'] = LaCucina.includes(pool.id);
+      pool['isBinSpirit'] = pool.id === 'beefy-binspirit';
 
       if (!isEmpty(pool.platform)) {
         if (!platforms.includes(pool.platform)) {
