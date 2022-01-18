@@ -1,5 +1,45 @@
 export const pools = [
   {
+    id: 'metis-bifi-gov',
+    name: 'BIFI Earnings Pool',
+    logo: 'single-assets/BIFI.png',
+    token: 'BIFI',
+    tokenDescription: "Beefy.Finance",
+    tokenDecimals: 18,
+    tokenAddress: '0xe6801928061CDbE32AC5AD0634427E140EFd05F9',
+    tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
+    earnedToken: 'METIS',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x2a30C5e0d577108F694d2A96179cd73611Ee069b',
+    earnContractAddress: '0x2a30C5e0d577108F694d2A96179cd73611Ee069b',
+    poolAddress: "0x2a30C5e0d577108F694d2A96179cd73611Ee069b",
+    excluded: "metis-bifi-maxi",
+    pricePerFullShare: 1,
+    isGovVault: true,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "BIFI",
+    oraclePrice: 0,
+    status: 'active',
+    platform: "Beefy.Finance",
+    assets: [
+      "BIFI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    callFee: 0.5,
+    withdrawalFee: "0%",
+    createdAt: 1623706144,
+    network: "metis"
+  },
+  {
     id: "netswap-nett-m.usdt",
     name: "m.USDT-NETT LP",
     token: "m.USDT-NETT LP",

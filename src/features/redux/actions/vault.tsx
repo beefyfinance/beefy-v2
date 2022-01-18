@@ -84,8 +84,9 @@ const getPools = async (items, state, dispatch) => {
       tvl = totalStaked
         .times(price)
         .dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
-      if (pools[item.id].excluded) {
-        tvl = tvl.minus(pools[pools[item.id].excluded].tvl);
+			const S = pools[ item.id].excluded;
+      if (S && pools[ S]) {
+        tvl = tvl.minus( pools[ S].tvl);
       }
     } else {
       const balance = new BigNumber(item.balance);
