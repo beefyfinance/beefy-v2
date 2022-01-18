@@ -1,3 +1,7 @@
+# To decide
+
+- Have a unique reducer for apy/apr/tvl/staked amount? -> "boost on chain data" and "vault on chain data"
+
 # TODO:
 
 [x] Define TS types Draft for business entities
@@ -11,7 +15,7 @@
 
     [x] Config
     [x] Vault contract data
-    [ ] Boost contract data
+    [x] Boost contract data
     [ ] APY
     [ ] Balances
     [ ] Allowances
