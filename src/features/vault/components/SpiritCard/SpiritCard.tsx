@@ -166,7 +166,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
               formData.deposit.max
             )
           ),
-        token: tokens[formData.deposit.token],
+        token: SpiritToken,
         pending: false,
       });
 
