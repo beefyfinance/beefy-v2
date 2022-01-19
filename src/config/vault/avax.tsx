@@ -2622,41 +2622,6 @@ export const pools = [
     network: "avax"
   },
   {
-    id: "pangolin-yfi.e-wavax-pause",
-    name: "YFI.e-AVAX LP",
-    token: "YFI.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x9a634CE657681200B8c5fb3Fa1aC59Eb0662f45C",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinYFI.e-AVAX",
-    earnedTokenAddress: "0xa640E017Fc01dD39F6b7B07b0460B04E218c0a01",
-    earnContractAddress: "0xa640E017Fc01dD39F6b7B07b0460B04E218c0a01",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-yfi.e-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "YFIe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x9eAaC1B23d935365bD7b542Fe22cEEe2922f52dc",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x9eAaC1B23d935365bD7b542Fe22cEEe2922f52dc",
-    network: "avax"
-  },
-  {
     id: "pangolin-aave.e-wavax-pause",
     name: "AAVE.e-AVAX LP",
     token: "AAVE.e-AVAXLP",
