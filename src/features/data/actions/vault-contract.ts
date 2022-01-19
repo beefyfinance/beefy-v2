@@ -1,0 +1,56 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getVaultContractApi } from '../apis/instances';
+import { GovVaultContractData, StandardVaultContractData } from '../apis/vaultContract';
+import { ChainEntity } from '../entities/chain';
+import { isGovVault, VaultStandard } from '../entities/vault';
+import { selectChainById } from '../selectors/chains';
+import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
+import { BeefyState } from '../state';
+
+export interface FetchGovVaultFulfilledPayload {
+  chainId: ChainEntity['id'];
+  data: GovVaultContractData[];
+}
+export interface FetchStandardVaultFulfilledPayload {
+  chainId: ChainEntity['id'];
+  data: StandardVaultContractData[];
+}
+interface ActionParams {
+  chainId: ChainEntity['id'];
+}
+export const fetchGovVaultContractDataAction = createAsyncThunk<
+  FetchGovVaultFulfilledPayload,
+  ActionParams,
+  { state: BeefyState }
+>('vaults-contracts/fetchGovVaultContractData', async ({ chainId }, { getState }) => {
+  const state = getState();
+  const chain = selectChainById(state, chainId);
+  const api = await getVaultContractApi(chain);
+  // maybe have a way to retrieve those easily
+  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+  const vaults = allVaults.filter(isGovVault);
+
+  const data = await api.fetchGovVaultsContractData(vaults);
+  return { chainId, data };
+});
+
+export const fetchVaultContractDataAction = createAsyncThunk<
+  FetchStandardVaultFulfilledPayload,
+  ActionParams,
+  { state: BeefyState }
+>('vaults-contracts/fetchStandardVaultContractData', async ({ chainId }, { getState }) => {
+  const state = getState();
+  const chain = selectChainById(state, chainId);
+  const api = await getVaultContractApi(chain);
+
+  // maybe have a way to retrieve those easily
+  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+  const vaults = allVaults.filter(v => !isGovVault) as VaultStandard[];
+
+  const data = await api.fetchStandardVaultsContractData(state, vaults);
+  return { chainId, data };
+});

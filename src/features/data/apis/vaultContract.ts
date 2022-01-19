@@ -5,17 +5,18 @@ import _vaultAbi from '../../../config/abi/vault.json';
 import Web3 from 'web3';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { BeefyState } from '../state';
-import { tokenByIdSelector } from '../selectors/tokens';
+import { selectTokenById } from '../selectors/tokens';
 import { ChainEntity } from '../entities/chain';
+import BigNumber from 'bignumber.js';
 
 // fix TS typings
 const vaultAbi = _vaultAbi as AbiItem[];
 
-interface GovVaultContractData {
+export interface GovVaultContractData {
   id: VaultEntity['id'];
-  totalStaked: number;
+  totalStaked: BigNumber;
 }
-interface StandardVaultContractData {
+export interface StandardVaultContractData {
   id: VaultEntity['id'];
   balance: number;
   pricePerFullShare: number;
@@ -54,7 +55,7 @@ export class VaultContractAPI {
     return results.map(result => {
       return {
         id: result.id,
-        totalStaked: parseFloat(result.totalStaked),
+        totalStaked: new BigNumber(result.totalStaked),
       } as GovVaultContractData;
     });
   }
@@ -68,7 +69,7 @@ export class VaultContractAPI {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
     const calls = vaults.map(vault => {
-      const token = tokenByIdSelector(state, vault.oracleId);
+      const token = selectTokenById(state, vault.oracleId);
       if (!isTokenErc20(token)) {
         return;
       }

@@ -2,18 +2,26 @@
 
 exports[`Vaults slice tests should update state on fulfilled vault list 1`] = `
 Object {
-  "allActiveIds": Array [
-    "one-bifi-gov",
-    "sushi-one-1ygg-1eth",
-  ],
   "allIds": Array [
     "one-bifi-gov",
     "sushi-one-1ygg-1eth",
     "banana-banana-eol",
   ],
-  "allRetiredIds": Array [
-    "banana-banana-eol",
-  ],
+  "byChainId": Object {
+    "bsc": Object {
+      "allActiveIds": Array [],
+      "allRetiredIds": Array [
+        "banana-banana-eol",
+      ],
+    },
+    "harmony": Object {
+      "allActiveIds": Array [
+        "one-bifi-gov",
+        "sushi-one-1ygg-1eth",
+      ],
+      "allRetiredIds": Array [],
+    },
+  },
   "byId": Object {
     "banana-banana-eol": Object {
       "assets": Array [

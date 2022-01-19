@@ -3,6 +3,7 @@
 - Have a unique reducer for apy/apr/tvl/staked amount? -> "boost on chain data" and "vault on chain data"
 - Review wording
 - Review file structure, every file has the same name, it's driving me nuts
+- Is there any reason why the config data (chain, vaults, etc) should be in the redux state? Why not have just a local global variable storing those?
 
 # TODO:
 

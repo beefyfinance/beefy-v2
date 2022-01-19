@@ -109,8 +109,29 @@ export interface VaultGov {
   name: string;
   chainId: ChainEntity['id'];
 
+  /**
+   * each vault has an underlying token which is what you stake in it we identify it with the oracleId
+   *
+   * "oracleId" is the technical token ID (like "pangolin-aave.e-wavax") used to uniquely
+   * identify a token in all apis, and "token" is the name that should be displayed to
+   * the user (like "AAVE.e-AVAXLP")
+   **/
+  oracleId: TokenEntity['id'];
+
   // address of the vault?
   poolAddress: string;
+
+  /**
+   * so bifi-gov and bifi-maxi, are very special
+   * those are the way in which we distribute platform revenue back to bifi holders
+   * bifi-gov is stake BIFI earn NATIVE (gas token) without autocompounding
+   * bifi-maxi is stake BIFI earn BIFI with autocompounding
+   * bifi-maxi basically uses bifi-gov underneath
+   * so all the money in BIFI-MAXI is actually inside the BIFI-GOV of that chain
+   * so in order not to count TVL twice. when we count the tvl of the gov pools
+   * we must exclude/substract the tvl from the maxi vault
+   */
+  excludedId: VaultEntity['id'];
 
   isGovVault: true;
 }

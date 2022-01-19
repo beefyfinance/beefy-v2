@@ -4,7 +4,7 @@ import { isTokenErc20 } from '../entities/token';
 import _boostAbi from '../../../config/abi/boost.json';
 import Web3 from 'web3';
 import { BeefyState } from '../state';
-import { tokenByIdSelector } from '../selectors/tokens';
+import { selectTokenById } from '../selectors/tokens';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 
@@ -34,7 +34,7 @@ export class BoostContractAPI {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
     const calls = boosts.map(boost => {
-      const earnedToken = tokenByIdSelector(state, boost.earnedTokenId);
+      const earnedToken = selectTokenById(state, boost.earnedTokenId);
       if (!isTokenErc20(earnedToken)) {
         return;
       }

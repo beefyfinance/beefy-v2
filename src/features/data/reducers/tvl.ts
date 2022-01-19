@@ -1,8 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import { fetchGovVaultContractDataAction } from '../actions/vault-contract';
 import { BoostEntity } from '../entities/boost';
 import { TokenEntity } from '../entities/token';
-import { VaultEntity } from '../entities/vault';
+import { VaultEntity, VaultGov } from '../entities/vault';
+import { selectTokenPriceByTokenId } from '../selectors/token-prices';
+import { selectTokenById } from '../selectors/tokens';
+import { selectVaultById } from '../selectors/vaults';
 
 // todo: entity WIP
 interface VaultTvl {
@@ -28,17 +32,6 @@ export interface TvlState {
   byBoostId: {
     [boostId: BoostEntity['id']]: BoostTvl;
   };
-
-  /**
-   * so bifi-gov and bifi-maxi, are very special
-   * those are the way in which we distribute platform revenue back to bifi holders
-   * bifi-gov is stake BIFI earn NATIVE (gas token) without autocompounding
-   * bifi-maxi is stake BIFI earn BIFI with autocompounding
-   * bifi-maxi basically uses bifi-gov underneath
-   * so all the money in BIFI-MAXI is actually inside the BIFI-GOV of that chain
-   * so in order not to count TVL twice. when we count the tvl of the gov pools
-   * we must exclude/substract the tvl from the maxi vault
-   */
   exclusions: {
     [vaultId: VaultEntity['id']]: VaultEntity['id'];
   };
@@ -57,6 +50,35 @@ export const tvlSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    // todo: handle actions
+    builder.addCase(fetchGovVaultContractDataAction.fulfilled, (state, action) => {
+      for (const govVaultContractData of action.payload.data) {
+        const totalStaked = govVaultContractData.totalStaked;
+
+        const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
+        const oracleToken = selectTokenById(state, vault.oracleId);
+        const price = selectTokenPriceByTokenId(state, oracleToken);
+
+        let vaultTvl = totalStaked
+          .times(price)
+          .dividedBy(new BigNumber(10).exponentiatedBy(oracleToken.decimals));
+
+        // now remove excluded vault tvl from vault tvl
+        const excludedVault = selectVaultById(state, vault.excludedId);
+        vaultTvl = vaultTvl.minus();
+        const S = pools[item.id].excluded;
+        if (S && pools[S]) {
+          tvl = tvl.minus(pools[S].tvl);
+        }
+      }
+    });
   },
 });
+
+function getVaultRawTvl(state: BeefyState, vaultId: VaultEntity['id']) {
+  const vault = selectVaultById(state, vaultId);
+  const oracleToken = selectTokenById(state, vault.oracleId);
+  const price = selectTokenPriceByTokenId(state, oracleToken.id);
+  return totalStaked
+    .times(price)
+    .dividedBy(new BigNumber(10).exponentiatedBy(oracleToken.decimals));
+}

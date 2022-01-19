@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { VaultConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
-import { BeefyState } from '../state';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action
@@ -23,13 +22,3 @@ export const fetchVaultByChainIdAction = createAsyncThunk<FulfilledPayload, Acti
     return { chainId, pools };
   }
 );
-
-export const fetchVaultContractDataAction = createAsyncThunk<
-  FulfilledPayload,
-  ActionParams,
-  { state: BeefyState }
->('vaults/fetchVaultListForChain', async ({ chainId }, { getState }) => {
-  const api = await getConfigApi();
-  const pools = await api.fetchVaultByChainId(chainId);
-  return { chainId, pools };
-});

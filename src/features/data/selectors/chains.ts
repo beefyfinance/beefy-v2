@@ -1,13 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
 import { BeefyState } from '../state';
 
-export const selectTokenById = createSelector(
+export const selectChainById = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.tokens.byId,
+  (store: BeefyState) => store.entities.chains.byId,
   // get the user passed ID
-  (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,
+  (_: BeefyState, chainId: ChainEntity['id']) => chainId,
   // last function receives previous function outputs as parameters
-  (tokensById, tokenId) => tokensById[tokenId]
+  (chainsById, chainId) => chainsById[chainId]
 );

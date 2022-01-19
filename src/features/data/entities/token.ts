@@ -43,6 +43,7 @@ interface TokenBoost {
   id: string;
   symbol: string;
   chainId: ChainEntity['id'];
+  decimals: number;
   type: 'boost';
 }
 

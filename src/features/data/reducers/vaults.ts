@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
+import { ChainEntity } from '../entities/chain';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
@@ -9,14 +10,17 @@ import { NormalizedEntity } from '../utils/normalized-entity';
 export type VaultsState = NormalizedEntity<VaultEntity> & {
   // add quick access arrays
   // todo: this probably should be split by chain
-  allActiveIds: VaultEntity['id'][];
-  allRetiredIds: VaultEntity['id'][];
+  byChainId: {
+    [chainId: ChainEntity['id']]: {
+      allActiveIds: VaultEntity['id'][];
+      allRetiredIds: VaultEntity['id'][];
+    };
+  };
 };
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
-  allActiveIds: [],
-  allRetiredIds: [],
+  byChainId: {},
 };
 
 export const vaultsSlice = createSlice({
@@ -45,10 +49,13 @@ export const vaultsSlice = createSlice({
 
           state.byId[vault.id] = vault;
           state.allIds.push(vault.id);
+          if (state.byChainId[vault.chainId] === undefined) {
+            state.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
+          }
           if (apiVault.status === 'eol') {
-            state.allRetiredIds.push(vault.id);
+            state.byChainId[vault.chainId].allRetiredIds.push(vault.id);
           } else {
-            state.allActiveIds.push(vault.id);
+            state.byChainId[vault.chainId].allActiveIds.push(vault.id);
           }
         } else {
           const vault: VaultStandard = {
@@ -66,10 +73,13 @@ export const vaultsSlice = createSlice({
           // directly modify the state as usual
           state.byId[vault.id] = vault;
           state.allIds.push(vault.id);
+          if (state.byChainId[vault.chainId] === undefined) {
+            state.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
+          }
           if (apiVault.status === 'eol') {
-            state.allRetiredIds.push(vault.id);
+            state.byChainId[vault.chainId].allRetiredIds.push(vault.id);
           } else {
-            state.allActiveIds.push(vault.id);
+            state.byChainId[vault.chainId].allActiveIds.push(vault.id);
           }
         }
       }

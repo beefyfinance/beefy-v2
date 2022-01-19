@@ -4,7 +4,7 @@ import { VaultEntity } from '../entities/vault';
 import { isPending } from '../reducers/data-loader';
 import { BeefyState } from '../state';
 
-export const isVaultLoadingSelector = createSelector(
+export const selectIsVaultLoading = createSelector(
   (store: BeefyState) => store.entities.vaults.byId, // could be reused
   (store: BeefyState) => store.ui.dataLoader.pricesLoading,
   (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
@@ -19,7 +19,7 @@ export const isVaultLoadingSelector = createSelector(
   }
 );
 
-export const isChainLoadingSelector = createSelector(
+export const selectIsChainLoading = createSelector(
   [
     // it's weird but this is how reselect defines params
     (_: BeefyState, chainId: ChainEntity['id']) => chainId,
