@@ -50,9 +50,8 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
     finished: false,
   });
 
-  const { wallet, tokens } = useSelector((state: any) => ({
+  const { wallet } = useSelector((state: any) => ({
     wallet: state.walletReducer,
-    tokens: state.balanceReducer.tokens[item.network],
   }));
 
   const [formData, setFormData] = React.useState({
