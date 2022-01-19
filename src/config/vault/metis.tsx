@@ -1,17 +1,17 @@
 export const pools = [
   {
-    id: 'metis-bifi-gov',
-    name: 'BIFI Earnings Pool',
-    logo: 'single-assets/BIFI.png',
-    token: 'BIFI',
+    id: "metis-bifi-gov",
+    name: "BIFI Earnings Pool",
+    logo: "single-assets/BIFI.png",
+    token: "BIFI",
     tokenDescription: "Beefy.Finance",
     tokenDecimals: 18,
-    tokenAddress: '0xe6801928061CDbE32AC5AD0634427E140EFd05F9',
+    tokenAddress: "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
-    earnedToken: 'METIS',
+    earnedToken: "METIS",
     earnedTokenDecimals: 18,
-    earnedTokenAddress: '0x2a30C5e0d577108F694d2A96179cd73611Ee069b',
-    earnContractAddress: '0x2a30C5e0d577108F694d2A96179cd73611Ee069b',
+    earnedTokenAddress: "0x2a30C5e0d577108F694d2A96179cd73611Ee069b",
+    earnContractAddress: "0x2a30C5e0d577108F694d2A96179cd73611Ee069b",
     poolAddress: "0x2a30C5e0d577108F694d2A96179cd73611Ee069b",
     excluded: "metis-bifi-maxi",
     pricePerFullShare: 1,
@@ -20,7 +20,7 @@ export const pools = [
     oracle: "tokens",
     oracleId: "BIFI",
     oraclePrice: 0,
-    status: 'active',
+    status: "active",
     platform: "Beefy.Finance",
     assets: [
       "BIFI"
@@ -433,6 +433,42 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://netswap.io/#/add/0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
     buyTokenUrl: "https://netswap.io/#/swap?inputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
+    network: "metis"
+  },
+  {
+    id: "metis-bifi-maxi",
+    logo: "single-assets/BIFI.png",
+    name: "BIFI Maxi",
+    token: "BIFI",
+    tokenDescription: "Beefy.Finance",
+    tokenAddress: "0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooMetisBIFI",
+    earnedTokenAddress: "0xEA01ca0423acb8476E1D3Bae572021c2aA9bd410",
+    earnContractAddress: "0xEA01ca0423acb8476E1D3Bae572021c2aA9bd410",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "BIFI",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beefy.Finance",
+    assets: [
+      "BIFI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "Maxi",
+    withdrawalFee: "0.05%",
+    buyTokenUrl: "https://netswap.io/#/swap?outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
     network: "metis"
   }
 ];
