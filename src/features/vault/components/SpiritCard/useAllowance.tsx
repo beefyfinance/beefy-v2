@@ -66,7 +66,7 @@ export function useAllowance(tokenAddress, decimals, vaultAddress, network) {
     return () => {
       isCancelled = true;
     };
-  }, [tokenAddress, web3, decimals, account]);
+  }, [tokenAddress, web3, decimals, account, vaultAddress]);
 
   return [allowance];
 }
