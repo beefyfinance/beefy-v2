@@ -31,11 +31,11 @@ export const vaultsSlice = createSlice({
   },
   extraReducers: builder => {
     // TODO: WIP
-    builder.addCase(fetchVaultByChainIdAction.fulfilled, (state, action) => {
+    builder.addCase(fetchVaultByChainIdAction.fulfilled, (sliceState, action) => {
       for (const apiVault of action.payload.pools) {
         const chainId = apiVault.network;
         // we already know this vault
-        if (apiVault.id in state.byId) {
+        if (apiVault.id in sliceState.byId) {
           continue;
         }
         if (apiVault.isGovVault) {
@@ -44,18 +44,20 @@ export const vaultsSlice = createSlice({
             name: apiVault.name,
             isGovVault: true,
             poolAddress: apiVault.poolAddress,
+            excludedId: apiVault.excluded,
+            oracleId: apiVault.oracleId,
             chainId: chainId,
           };
 
-          state.byId[vault.id] = vault;
-          state.allIds.push(vault.id);
-          if (state.byChainId[vault.chainId] === undefined) {
-            state.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
+          sliceState.byId[vault.id] = vault;
+          sliceState.allIds.push(vault.id);
+          if (sliceState.byChainId[vault.chainId] === undefined) {
+            sliceState.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
           }
           if (apiVault.status === 'eol') {
-            state.byChainId[vault.chainId].allRetiredIds.push(vault.id);
+            sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
           } else {
-            state.byChainId[vault.chainId].allActiveIds.push(vault.id);
+            sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
           }
         } else {
           const vault: VaultStandard = {
@@ -71,15 +73,15 @@ export const vaultsSlice = createSlice({
           };
           // redux toolkit uses immer by default so we can
           // directly modify the state as usual
-          state.byId[vault.id] = vault;
-          state.allIds.push(vault.id);
-          if (state.byChainId[vault.chainId] === undefined) {
-            state.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
+          sliceState.byId[vault.id] = vault;
+          sliceState.allIds.push(vault.id);
+          if (sliceState.byChainId[vault.chainId] === undefined) {
+            sliceState.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
           }
           if (apiVault.status === 'eol') {
-            state.byChainId[vault.chainId].allRetiredIds.push(vault.id);
+            sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
           } else {
-            state.byChainId[vault.chainId].allActiveIds.push(vault.id);
+            sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
           }
         }
       }

@@ -20,18 +20,18 @@ export const chainsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchChainConfigs.fulfilled, (state, action) => {
+    builder.addCase(fetchChainConfigs.fulfilled, (sliceState, action) => {
       for (const chainConfig of action.payload.chainConfigs) {
         const chainId = chainConfig.id;
         // we already know this chain
-        if (chainConfig.id in state.byId) {
+        if (chainConfig.id in sliceState.byId) {
           continue;
         }
         // for now, both ChainEntity and ChainConfig have compatible types
         const chain: ChainEntity = chainConfig;
 
-        state.byId[chain.id] = chain;
-        state.allIds.push(chain.id);
+        sliceState.byId[chain.id] = chain;
+        sliceState.allIds.push(chain.id);
       }
     });
   },

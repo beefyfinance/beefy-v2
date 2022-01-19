@@ -18,7 +18,7 @@ export interface GovVaultContractData {
 }
 export interface StandardVaultContractData {
   id: VaultEntity['id'];
-  balance: number;
+  balance: BigNumber;
   pricePerFullShare: number;
 
   /**
@@ -88,7 +88,7 @@ export class VaultContractAPI {
     return results.map(result => {
       return {
         id: result.id,
-        balance: parseFloat(result.balance),
+        balance: new BigNumber(result.balance),
         pricePerFullShare: parseFloat(result.balance),
         strategy: result.strategy,
       } as StandardVaultContractData;

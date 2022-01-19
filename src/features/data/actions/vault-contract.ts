@@ -10,10 +10,14 @@ import { BeefyState } from '../state';
 export interface FetchGovVaultFulfilledPayload {
   chainId: ChainEntity['id'];
   data: GovVaultContractData[];
+  // Reducers handling this action need access to the full state
+  state: BeefyState;
 }
 export interface FetchStandardVaultFulfilledPayload {
   chainId: ChainEntity['id'];
   data: StandardVaultContractData[];
+  // Reducers handling this action need access to the full state
+  state: BeefyState;
 }
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -33,10 +37,10 @@ export const fetchGovVaultContractDataAction = createAsyncThunk<
   const vaults = allVaults.filter(isGovVault);
 
   const data = await api.fetchGovVaultsContractData(vaults);
-  return { chainId, data };
+  return { chainId, data, state };
 });
 
-export const fetchVaultContractDataAction = createAsyncThunk<
+export const fetchStandardVaultContractDataAction = createAsyncThunk<
   FetchStandardVaultFulfilledPayload,
   ActionParams,
   { state: BeefyState }
@@ -52,5 +56,5 @@ export const fetchVaultContractDataAction = createAsyncThunk<
   const vaults = allVaults.filter(v => !isGovVault) as VaultStandard[];
 
   const data = await api.fetchStandardVaultsContractData(state, vaults);
-  return { chainId, data };
+  return { chainId, data, state };
 });

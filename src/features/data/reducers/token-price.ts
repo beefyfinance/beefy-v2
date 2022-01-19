@@ -25,16 +25,16 @@ export const tokenPriceSlice = createSlice({
     // when prices are changed, update prices
     // this could also just be a a super quick drop in replacement
     // if we are OK to not use BigNumber, which I don't think we are
-    builder.addCase(fetchPricesAction.fulfilled, (state, action) => {
+    builder.addCase(fetchPricesAction.fulfilled, (sliceState, action) => {
       for (const tokenId of Object.keys(action.payload)) {
         const tokenPrice = action.payload[tokenId];
         // new price, add it
-        if (state.byTokenId[tokenId] === undefined) {
-          state.byTokenId[tokenId] = new BigNumber(tokenPrice);
+        if (sliceState.byTokenId[tokenId] === undefined) {
+          sliceState.byTokenId[tokenId] = new BigNumber(tokenPrice);
 
           // price exists, update it if it changed
-        } else if (state.byTokenId[tokenId].comparedTo(tokenPrice) === 0) {
-          state.byTokenId[tokenId] = new BigNumber(tokenPrice);
+        } else if (sliceState.byTokenId[tokenId].comparedTo(tokenPrice) === 0) {
+          sliceState.byTokenId[tokenId] = new BigNumber(tokenPrice);
         }
       }
     });

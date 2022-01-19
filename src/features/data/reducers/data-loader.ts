@@ -51,7 +51,7 @@ export interface DataLoaderState {
   apyLoading: LoaderState;
   historicalApyLoading: LoaderState;
 }
-const dataLoaderInitialState: DataLoaderState = {
+export const initialDataLoaderState: DataLoaderState = {
   vaultsLoading: dataLoaderStateInit,
   pricesLoading: dataLoaderStateInit,
   tvlLoading: dataLoaderStateInit,
@@ -68,21 +68,21 @@ function addAsyncThunkActions(
   action: AsyncThunk<unknown, unknown, unknown>,
   stateKey: keyof DataLoaderState
 ) {
-  builder.addCase(action.pending, state => {
-    state[stateKey] = dataLoaderStatePending;
+  builder.addCase(action.pending, sliceState => {
+    sliceState[stateKey] = dataLoaderStatePending;
   });
-  builder.addCase(action.rejected, (state, action) => {
+  builder.addCase(action.rejected, (sliceState, action) => {
     // here, maybe put an error message
-    state[stateKey] = { status: 'rejected', error: action.error + '' };
+    sliceState[stateKey] = { status: 'rejected', error: action.error + '' };
   });
-  builder.addCase(action.fulfilled, state => {
-    state[stateKey] = dataLoaderStateFulfilled;
+  builder.addCase(action.fulfilled, sliceState => {
+    sliceState[stateKey] = dataLoaderStateFulfilled;
   });
 }
 
 export const dataLoaderSlice = createSlice({
   name: 'dataLoader',
-  initialState: dataLoaderInitialState,
+  initialState: initialDataLoaderState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },

@@ -14,11 +14,11 @@ export interface BalanceState {
     };
   };
 }
-const initialState: BalanceState = { byChainId: {} };
+export const initialBalanceState: BalanceState = { byChainId: {} };
 
 export const balanceSlice = createSlice({
   name: 'balance',
-  initialState: initialState,
+  initialState: initialBalanceState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },

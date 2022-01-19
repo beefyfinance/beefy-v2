@@ -16,11 +16,11 @@ export interface AllowanceState {
     };
   };
 }
-const initialState: AllowanceState = { byChainId: {} };
+export const initialAllowanceState: AllowanceState = { byChainId: {} };
 
 export const allowanceSlice = createSlice({
   name: 'allowance',
-  initialState: initialState,
+  initialState: initialAllowanceState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },

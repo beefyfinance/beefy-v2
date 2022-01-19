@@ -12,18 +12,18 @@ export interface HistoricalApyState {
     [vaultId: VaultEntity['id']]: number[];
   };
 }
-const initialState: HistoricalApyState = { byVaultId: {} };
+export const initialHistoricalApyState: HistoricalApyState = { byVaultId: {} };
 
 export const historicalApySlice = createSlice({
   name: 'historical_apy',
-  initialState: initialState,
+  initialState: initialHistoricalApyState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchHistoricalApy.fulfilled, (state, action) => {
+    builder.addCase(fetchHistoricalApy.fulfilled, (sliceState, action) => {
       for (const [vaultId, apyPoints] of Object.entries(action.payload)) {
-        state.byVaultId[vaultId] = apyPoints.map(v => parseFloat(v));
+        sliceState.byVaultId[vaultId] = apyPoints.map(v => parseFloat(v));
       }
     });
   },

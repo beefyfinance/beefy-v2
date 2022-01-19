@@ -38,9 +38,11 @@ Object {
     },
     "one-bifi-gov": Object {
       "chainId": "harmony",
+      "excludedId": undefined,
       "id": "one-bifi-gov",
       "isGovVault": true,
       "name": "BIFI Earnings Pool",
+      "oracleId": "BIFI",
       "poolAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
     },
     "sushi-one-1ygg-1eth": Object {

@@ -25,10 +25,10 @@ export const boostsSlice = createSlice({
   },
   extraReducers: builder => {
     // when boost list is fetched, add all new tokens
-    builder.addCase(fetchBoostsByChainIdAction.fulfilled, (state, action) => {
+    builder.addCase(fetchBoostsByChainIdAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
       for (const apiBoost of action.payload.boosts) {
-        if (apiBoost.id in state.byId) {
+        if (apiBoost.id in sliceState.byId) {
           continue;
         }
 
@@ -44,14 +44,14 @@ export const boostsSlice = createSlice({
           status: apiBoost.status as BoostEntity['status'],
           vaultId: apiBoost.poolId,
         };
-        state.byId[boost.id] = boost;
-        state.allIds.push(boost.id);
-        if (state.byVaultId[boost.vaultId] === undefined) {
-          state.byVaultId[boost.vaultId] = { allBoostsIds: [], activeBoostsIds: [] };
+        sliceState.byId[boost.id] = boost;
+        sliceState.allIds.push(boost.id);
+        if (sliceState.byVaultId[boost.vaultId] === undefined) {
+          sliceState.byVaultId[boost.vaultId] = { allBoostsIds: [], activeBoostsIds: [] };
         }
-        state.byVaultId[boost.vaultId].allBoostsIds.push(boost.id);
+        sliceState.byVaultId[boost.vaultId].allBoostsIds.push(boost.id);
         if (isBoostActive(boost)) {
-          state.byVaultId[boost.vaultId].activeBoostsIds.push(boost.id);
+          sliceState.byVaultId[boost.vaultId].activeBoostsIds.push(boost.id);
         }
       }
     });

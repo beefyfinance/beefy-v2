@@ -1,19 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { fetchGovVaultContractDataAction } from '../actions/vault-contract';
+import {
+  fetchGovVaultContractDataAction,
+  fetchStandardVaultContractDataAction,
+} from '../actions/vault-contract';
 import { BoostEntity } from '../entities/boost';
-import { TokenEntity } from '../entities/token';
-import { VaultEntity, VaultGov } from '../entities/vault';
+import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { selectTokenPriceByTokenId } from '../selectors/token-prices';
 import { selectTokenById } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 
 // todo: entity WIP
-interface VaultTvl {
-  token: TokenEntity['id'];
-  // no need for big numbers here
-  amount: number;
-}
 
 interface BoostTvl {
   // TODO: how are these different?
@@ -27,7 +24,7 @@ interface BoostTvl {
 export interface TvlState {
   totalTvl: BigNumber;
   byVaultId: {
-    [vaultId: VaultEntity['id']]: VaultTvl;
+    [vaultId: VaultEntity['id']]: BigNumber;
   };
   byBoostId: {
     [boostId: BoostEntity['id']]: BoostTvl;
@@ -36,7 +33,7 @@ export interface TvlState {
     [vaultId: VaultEntity['id']]: VaultEntity['id'];
   };
 }
-const initialState: TvlState = {
+export const initialTvlState: TvlState = {
   totalTvl: new BigNumber(0),
   byVaultId: {},
   byBoostId: {},
@@ -45,40 +42,69 @@ const initialState: TvlState = {
 
 export const tvlSlice = createSlice({
   name: 'tvl',
-  initialState: initialState,
+  initialState: initialTvlState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchGovVaultContractDataAction.fulfilled, (state, action) => {
+    builder.addCase(fetchGovVaultContractDataAction.fulfilled, (sliceState, action) => {
+      const state = action.payload.state;
+      const rawTvlByVaultId: { [vaultId: VaultEntity['id']]: BigNumber } = {};
       for (const govVaultContractData of action.payload.data) {
         const totalStaked = govVaultContractData.totalStaked;
 
         const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
         const oracleToken = selectTokenById(state, vault.oracleId);
-        const price = selectTokenPriceByTokenId(state, oracleToken);
+        const price = selectTokenPriceByTokenId(state, oracleToken.id);
 
-        let vaultTvl = totalStaked
+        const vaultRawTvl = totalStaked
           .times(price)
           .dividedBy(new BigNumber(10).exponentiatedBy(oracleToken.decimals));
-
-        // now remove excluded vault tvl from vault tvl
-        const excludedVault = selectVaultById(state, vault.excludedId);
-        vaultTvl = vaultTvl.minus();
-        const S = pools[item.id].excluded;
-        if (S && pools[S]) {
-          tvl = tvl.minus(pools[S].tvl);
-        }
+        rawTvlByVaultId[vault.id] = vaultRawTvl;
       }
+
+      // handle exclusions
+      for (const govVaultContractData of action.payload.data) {
+        // now remove excluded vault tvl from vault tvl
+        const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
+        const excludedVault = selectVaultById(state, vault.excludedId);
+        rawTvlByVaultId[vault.id] = rawTvlByVaultId[vault.id].minus(
+          rawTvlByVaultId[excludedVault.id]
+        );
+      }
+
+      let totalTvl = sliceState.totalTvl;
+      for (const [vaultId, vaultTvl] of Object.entries(rawTvlByVaultId)) {
+        // add vault tvl to total tvl state
+        totalTvl = totalTvl.plus(vaultTvl);
+        // add vault tvl to state
+        sliceState.byVaultId[vaultId] = vaultTvl;
+      }
+      sliceState.totalTvl = totalTvl;
+    });
+
+    builder.addCase(fetchStandardVaultContractDataAction.fulfilled, (sliceState, action) => {
+      const state = action.payload.state;
+      const rawTvlByVaultId: { [vaultId: VaultEntity['id']]: BigNumber } = {};
+      for (const vaultContractData of action.payload.data) {
+        const vault = selectVaultById(state, vaultContractData.id) as VaultStandard;
+        const oracleToken = selectTokenById(state, vault.oracleId);
+        const price = selectTokenPriceByTokenId(state, oracleToken.id);
+
+        const vaultRawTvl = vaultContractData.balance
+          .times(price)
+          .dividedBy(new BigNumber(10).exponentiatedBy(oracleToken.decimals));
+        rawTvlByVaultId[vault.id] = vaultRawTvl;
+      }
+
+      let totalTvl = sliceState.totalTvl;
+      for (const [vaultId, vaultTvl] of Object.entries(rawTvlByVaultId)) {
+        // add vault tvl to total tvl state
+        totalTvl = totalTvl.plus(vaultTvl);
+        // add vault tvl to state
+        sliceState.byVaultId[vaultId] = vaultTvl;
+      }
+      sliceState.totalTvl = totalTvl;
     });
   },
 });
-
-function getVaultRawTvl(state: BeefyState, vaultId: VaultEntity['id']) {
-  const vault = selectVaultById(state, vaultId);
-  const oracleToken = selectTokenById(state, vault.oracleId);
-  const price = selectTokenPriceByTokenId(state, oracleToken.id);
-  return totalStaked
-    .times(price)
-    .dividedBy(new BigNumber(10).exponentiatedBy(oracleToken.decimals));
-}

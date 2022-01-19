@@ -19,10 +19,10 @@ export const tokensSlice = createSlice({
   },
   extraReducers: builder => {
     // when vault list is fetched, add all new tokens
-    builder.addCase(fetchVaultByChainIdAction.fulfilled, (state, action) => {
+    builder.addCase(fetchVaultByChainIdAction.fulfilled, (sliceState, action) => {
       for (const vault of action.payload.pools) {
         const chainId = vault.network;
-        if (state.byId[vault.oracleId] === undefined) {
+        if (sliceState.byId[vault.oracleId] === undefined) {
           const token: TokenEntity = {
             id: vault.oracleId,
             chainId: chainId,
@@ -32,13 +32,13 @@ export const tokensSlice = createSlice({
             buyUrl: null,
             type: 'erc20',
           };
-          state.byId[token.id] = token;
-          state.allIds.push(token.id);
+          sliceState.byId[token.id] = token;
+          sliceState.allIds.push(token.id);
         }
 
         // add earned token data
         const earnedTokenId = chainId + '-' + vault.earnedToken;
-        if (state.byId[earnedTokenId] === undefined) {
+        if (sliceState.byId[earnedTokenId] === undefined) {
           const token: TokenEntity = {
             id: earnedTokenId,
             chainId: chainId,
@@ -48,17 +48,17 @@ export const tokensSlice = createSlice({
             buyUrl: null,
             type: 'erc20',
           };
-          state.byId[token.id] = token;
-          state.allIds.push(token.id);
+          sliceState.byId[token.id] = token;
+          sliceState.allIds.push(token.id);
         }
       }
     });
 
     // when boost list is fetched, add all new tokens
-    builder.addCase(fetchBoostsByChainIdAction.fulfilled, (state, action) => {
+    builder.addCase(fetchBoostsByChainIdAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
       for (const boost of action.payload.boosts) {
-        if (state.byId[boost.earnedOracleId] === undefined) {
+        if (sliceState.byId[boost.earnedOracleId] === undefined) {
           const token: TokenEntity = {
             id: boost.earnedOracleId,
             chainId: chainId,
@@ -68,8 +68,8 @@ export const tokensSlice = createSlice({
             buyUrl: null,
             type: 'erc20',
           };
-          state.byId[token.id] = token;
-          state.allIds.push(token.id);
+          sliceState.byId[token.id] = token;
+          sliceState.allIds.push(token.id);
         }
       }
     });

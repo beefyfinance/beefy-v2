@@ -22,18 +22,18 @@ export interface ApyState {
     [boostId: BoostEntity['id']]: AprData;
   };
 }
-const initialState: ApyState = { byVaultId: {}, byBoostId: {} };
+export const initialApyState: ApyState = { byVaultId: {}, byBoostId: {} };
 
 export const apySlice = createSlice({
   name: 'apy',
-  initialState: initialState,
+  initialState: initialApyState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchApyAction.fulfilled, (state, action) => {
+    builder.addCase(fetchApyAction.fulfilled, (sliceState, action) => {
       for (const [vaultId, apy] of Object.entries(action.payload)) {
-        state.byVaultId[vaultId] = apy;
+        sliceState.byVaultId[vaultId] = apy;
       }
     });
   },
