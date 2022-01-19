@@ -157,7 +157,6 @@ export const Vault = () => {
 
   return (
     <>
-      {console.log(item)}
       <Box className={classes.vaultContainer}>
         <Container maxWidth="lg">
           {isLoading ? (
@@ -256,6 +255,12 @@ export const Vault = () => {
                     <QiDao mooToken={item.earnedToken} />
                   </Box>
                 )}
+                {/*Spirit Card */}
+                {item.isBinSpirit && (
+                  <Box>
+                    <Spirit item={item} />
+                  </Box>
+                )}
                 {/* Insurace card */}
                 {item.isInsurace && (
                   <Box>
@@ -266,12 +271,6 @@ export const Vault = () => {
                 {item.isLaCucina && (
                   <Box>
                     <LaCucina />
-                  </Box>
-                )}
-                {/*Spirit Card */}
-                {item.isBinSpirit && (
-                  <Box>
-                    <Spirit item={item} />
                   </Box>
                 )}
               </Grid>
