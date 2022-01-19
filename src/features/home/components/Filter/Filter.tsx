@@ -217,13 +217,29 @@ const _Filter: React.FC<FilterProps> = ({
         <Box className={classes.toggleSwitchContainer}>
           <Button
             className={
-              sortConfig.deposited === false
+              sortConfig.deposited === false && sortConfig.zero === false
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
-            onClick={() => handleChange('deposited', false)}
+            onClick={() => {
+              handleChange('zero', false);
+              handleChange('deposited', false);
+            }}
           >
             {t('Filter-AllVaults')}
+          </Button>
+          <Button
+            className={
+              sortConfig.zero === true
+                ? classes.toggleSwitchButtonActive
+                : classes.toggleSwitchButton
+            }
+            onClick={() => {
+              handleChange('deposited', false);
+              handleChange('zero', true);
+            }}
+          >
+            {t('Filter-Eligible')}
           </Button>
           <Button
             className={
@@ -231,7 +247,10 @@ const _Filter: React.FC<FilterProps> = ({
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
-            onClick={() => handleChange('deposited', true)}
+            onClick={() => {
+              handleChange('zero', false);
+              handleChange('deposited', true);
+            }}
           >
             {t('Filter-MyVaults')}
           </Button>
@@ -285,22 +304,6 @@ const _Filter: React.FC<FilterProps> = ({
 
           <Box>
             <FormGroup>
-              <FormControlLabel
-                className={classes.checkboxContainer}
-                label={
-                  <Typography className={classes.label} variant="body1">
-                    {t('Filter-HideZero')}
-                  </Typography>
-                }
-                control={
-                  <Checkbox
-                    checked={config.zero}
-                    onChange={handleCheckbox}
-                    name="zero"
-                    className={classes.checkbox}
-                  />
-                }
-              />
               <FormControlLabel
                 className={classes.checkboxContainer}
                 label={
