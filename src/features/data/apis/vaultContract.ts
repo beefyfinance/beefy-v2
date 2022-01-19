@@ -1,12 +1,12 @@
 import { MultiCall } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
 import { isTokenErc20 } from '../entities/token';
-import { ChainConfig } from './config';
 import _vaultAbi from '../../../config/abi/vault.json';
 import Web3 from 'web3';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { BeefyState } from '../state';
 import { tokenByIdSelector } from '../selectors/tokens';
+import { ChainEntity } from '../entities/chain';
 
 // fix TS typings
 const vaultAbi = _vaultAbi as AbiItem[];
@@ -34,17 +34,14 @@ type AllValuesAsString<T> = {
  * Get vault contract data
  */
 export class VaultContractAPI {
-  constructor(protected rpc: Web3) {}
+  constructor(protected web3: Web3, protected chain: ChainEntity) {}
 
   // maybe we want to re-render more often, we could make
   // this a generator instead
-  public async fetchGovVaultsContractData(
-    chainConfig: ChainConfig,
-    vaults: VaultGov[]
-  ): Promise<GovVaultContractData[]> {
-    const mc = new MultiCall(this.rpc, chainConfig.multicallAddress);
+  public async fetchGovVaultsContractData(vaults: VaultGov[]): Promise<GovVaultContractData[]> {
+    const mc = new MultiCall(this.web3, this.chain.multicallAddress);
     const calls = vaults.map(vault => {
-      const tokenContract = new this.rpc.eth.Contract(vaultAbi, vault.poolAddress);
+      const tokenContract = new this.web3.eth.Contract(vaultAbi, vault.poolAddress);
       return {
         id: vault.id,
         totalStaked: tokenContract.methods.totalSupply(),
@@ -66,17 +63,16 @@ export class VaultContractAPI {
   // this a generator instead
   public async fetchStandardVaultsContractData(
     state: BeefyState,
-    chainConfig: ChainConfig,
     vaults: VaultStandard[]
   ): Promise<StandardVaultContractData[]> {
-    const mc = new MultiCall(this.rpc, chainConfig.multicallAddress);
+    const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
     const calls = vaults.map(vault => {
       const token = tokenByIdSelector(state, vault.oracleId);
       if (!isTokenErc20(token)) {
         return;
       }
-      const tokenContract = new this.rpc.eth.Contract(vaultAbi, token.contractAddress);
+      const tokenContract = new this.web3.eth.Contract(vaultAbi, token.contractAddress);
       return {
         id: vault.id,
         balance: tokenContract.methods.balance(),

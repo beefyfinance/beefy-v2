@@ -37,8 +37,6 @@ export interface BoostEntity {
 
   // boosts are active for a limited time
   status: 'active' | 'closed';
-
-  isMooStaked: boolean;
 }
 
 export function isBoostActive(boost: BoostEntity) {

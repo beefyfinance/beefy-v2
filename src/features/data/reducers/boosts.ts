@@ -28,28 +28,30 @@ export const boostsSlice = createSlice({
     builder.addCase(fetchBoostsByChainIdAction.fulfilled, (state, action) => {
       const chainId = action.payload.chainId;
       for (const apiBoost of action.payload.boosts) {
-        if (state.byId[apiBoost.id] === undefined) {
-          const boost: BoostEntity = {
-            id: apiBoost.id,
-            chainId: chainId,
-            assets: apiBoost.assets,
-            contractAddress: apiBoost.earnContractAddress,
-            earnedTokenId: apiBoost.earnedOracleId,
-            logo: apiBoost.logo,
-            name: apiBoost.name,
-            partnerIds: apiBoost.partners.map(p => p.website),
-            status: apiBoost.status as BoostEntity['status'],
-            vaultId: apiBoost.poolId,
-          };
-          state.byId[boost.id] = boost;
-          state.allIds.push(boost.id);
-          if (state.byVaultId[boost.vaultId] === undefined) {
-            state.byVaultId[boost.vaultId] = { allBoostsIds: [], activeBoostsIds: [] };
-          }
-          state.byVaultId[boost.vaultId].allBoostsIds.push(boost.id);
-          if (isBoostActive(boost)) {
-            state.byVaultId[boost.vaultId].activeBoostsIds.push(boost.id);
-          }
+        if (apiBoost.id in state.byId) {
+          continue;
+        }
+
+        const boost: BoostEntity = {
+          id: apiBoost.id,
+          chainId: chainId,
+          assets: apiBoost.assets,
+          contractAddress: apiBoost.earnContractAddress,
+          earnedTokenId: apiBoost.earnedOracleId,
+          logo: apiBoost.logo,
+          name: apiBoost.name,
+          partnerIds: apiBoost.partners.map(p => p.website),
+          status: apiBoost.status as BoostEntity['status'],
+          vaultId: apiBoost.poolId,
+        };
+        state.byId[boost.id] = boost;
+        state.allIds.push(boost.id);
+        if (state.byVaultId[boost.vaultId] === undefined) {
+          state.byVaultId[boost.vaultId] = { allBoostsIds: [], activeBoostsIds: [] };
+        }
+        state.byVaultId[boost.vaultId].allBoostsIds.push(boost.id);
+        if (isBoostActive(boost)) {
+          state.byVaultId[boost.vaultId].activeBoostsIds.push(boost.id);
         }
       }
     });

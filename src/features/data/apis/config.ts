@@ -108,12 +108,13 @@ export interface BoostConfig {
 }
 
 export interface ChainConfig {
+  id: string;
   name: string;
   chainId: number;
-  rpc?: string[] | null;
+  rpc: string[];
   explorerUrl: string;
   multicallAddress: string;
-  supportedWallets?: string[] | null;
+  supportedWallets: string[];
   providerName: string;
   walletSettings: {
     chainId: string;
@@ -123,10 +124,10 @@ export interface ChainConfig {
       symbol: string;
       decimals: number;
     };
-    rpcUrls?: string[] | null;
-    blockExplorerUrls?: string[] | null;
+    rpcUrls: string[];
+    blockExplorerUrls: string[];
   };
-  stableCoins?: string[] | null;
+  stableCoins: string[];
 }
 
 const vaultsByChainId: {
@@ -168,12 +169,8 @@ const boostsByChainId: {
  * TODO: this class loads unnecessary data from the start of the app. Make it so only required data is fetched
  */
 export class ConfigAPI {
-  public async fetchChainConfigByChainId(chainId: ChainEntity['id']): Promise<ChainConfig> {
-    if (chainConfigs[chainId] !== undefined) {
-      return chainConfigs[chainId];
-    } else {
-      throw Error(`Chain ${chainId} not supported`);
-    }
+  public async fetchChainConfigs(): Promise<ChainConfig[]> {
+    return Object.entries(chainConfigs).map(([id, chain]) => ({ id, ...chain }));
   }
 
   public async fetchFeaturedVaults(): Promise<FeaturedVaultConfig> {

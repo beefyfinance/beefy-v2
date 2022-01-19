@@ -126,5 +126,11 @@ describe('Vaults slice tests', () => {
     const action = { type: fetchVaultByChainIdAction.fulfilled, payload: payload };
     const state = vaultsSlice.reducer(initialVaultsState, action);
     expect(state).toMatchSnapshot();
+
+    // getting the same vaults don't update the state object
+    const beforeReDispatch = Object.values(state.byId)[0];
+    const newState = vaultsSlice.reducer(state, action);
+    const afterReDispatch = newState.byId[beforeReDispatch.id];
+    expect(beforeReDispatch).toBe(afterReDispatch);
   });
 });

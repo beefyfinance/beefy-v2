@@ -1,6 +1,8 @@
 # To decide
 
 - Have a unique reducer for apy/apr/tvl/staked amount? -> "boost on chain data" and "vault on chain data"
+- Review wording
+- Review file structure, every file has the same name, it's driving me nuts
 
 # TODO:
 

@@ -1,12 +1,12 @@
 import { MultiCall } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
 import { isTokenErc20 } from '../entities/token';
-import { ChainConfig } from './config';
 import _boostAbi from '../../../config/abi/boost.json';
 import Web3 from 'web3';
 import { BeefyState } from '../state';
 import { tokenByIdSelector } from '../selectors/tokens';
 import { BoostEntity } from '../entities/boost';
+import { ChainEntity } from '../entities/chain';
 
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];
@@ -24,22 +24,21 @@ type AllValuesAsString<T> = {
 /**
  * Get vault contract data
  */
-export class VaultContractAPI {
-  constructor(protected rpc: Web3) {}
+export class BoostContractAPI {
+  constructor(protected web3: Web3, protected chain: ChainEntity) {}
 
   public async fetchBoostContractData(
     state: BeefyState,
-    chainConfig: ChainConfig,
     boosts: BoostEntity[]
   ): Promise<BoostContractData[]> {
-    const mc = new MultiCall(this.rpc, chainConfig.multicallAddress);
+    const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
     const calls = boosts.map(boost => {
       const earnedToken = tokenByIdSelector(state, boost.earnedTokenId);
       if (!isTokenErc20(earnedToken)) {
         return;
       }
-      const tokenContract = new this.rpc.eth.Contract(boostAbi, earnedToken.contractAddress);
+      const tokenContract = new this.web3.eth.Contract(boostAbi, earnedToken.contractAddress);
       return {
         id: boost.id,
         totalStaked: tokenContract.methods.totalSupply(),

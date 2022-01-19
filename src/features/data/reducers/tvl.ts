@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
 import { BoostEntity } from '../entities/boost';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
@@ -20,7 +21,7 @@ interface BoostTvl {
  * State containing APY infos indexed by vault id
  */
 export interface TvlState {
-  totalTvl: number;
+  totalTvl: BigNumber;
   byVaultId: {
     [vaultId: VaultEntity['id']]: VaultTvl;
   };
@@ -42,7 +43,12 @@ export interface TvlState {
     [vaultId: VaultEntity['id']]: VaultEntity['id'];
   };
 }
-const initialState: TvlState = { totalTvl: 0, byVaultId: {}, byBoostId: {}, exclusions: {} };
+const initialState: TvlState = {
+  totalTvl: new BigNumber(0),
+  byVaultId: {},
+  byBoostId: {},
+  exclusions: {},
+};
 
 export const tvlSlice = createSlice({
   name: 'tvl',

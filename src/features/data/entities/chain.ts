@@ -1,17 +1,9 @@
+import { ChainConfig } from '../apis/config';
+
 /**
  * The chain entity as you know it
  * bsc, harmony, avax, etc
  * Sometimes named "network"
+ * todo: for now ChainEntity is the same as the ChainConfig, but they might want to diverge
  */
-export interface ChainEntity {
-  id: string;
-  name: string;
-
-  // todo: is this really necessary
-  rpcEndpoint: string; // maybe not
-  urlTemplates: {
-    // maybe not
-    contract: string; // "https://bscscan.com/token/{address}"
-    address: string; // "https://bscscan.com/address/{address}"
-  };
-}
+export type ChainEntity = ChainConfig;

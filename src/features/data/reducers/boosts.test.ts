@@ -72,5 +72,11 @@ describe('Boosts slice tests', () => {
     const action = { type: fetchBoostsByChainIdAction.fulfilled, payload: payload };
     const state = boostsSlice.reducer(initialBoostsState, action);
     expect(state).toMatchSnapshot();
+
+    // getting the same vaults don't update the state object
+    const beforeReDispatch = Object.values(state.byId)[0];
+    const newState = boostsSlice.reducer(state, action);
+    const afterReDispatch = newState.byId[beforeReDispatch.id];
+    expect(beforeReDispatch).toBe(afterReDispatch);
   });
 });

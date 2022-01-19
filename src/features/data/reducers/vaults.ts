@@ -30,6 +30,10 @@ export const vaultsSlice = createSlice({
     builder.addCase(fetchVaultByChainIdAction.fulfilled, (state, action) => {
       for (const apiVault of action.payload.pools) {
         const chainId = apiVault.network;
+        // we already know this vault
+        if (apiVault.id in state.byId) {
+          continue;
+        }
         if (apiVault.isGovVault) {
           const vault: VaultGov = {
             id: apiVault.id,

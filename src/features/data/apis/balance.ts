@@ -7,13 +7,12 @@ import {
   TokenEntity,
   TokenErc20,
 } from '../entities/token';
-import { ChainConfig } from './config';
 
 import _erc20Abi from '../../../config/abi/erc20.json';
 import _multicallAbi from '../../../config/abi/multicall.json';
 import _boostAbi from '../../../config/abi/boost.json';
 import Web3 from 'web3';
-import { BeefyState } from '../state';
+import { ChainEntity } from '../entities/chain';
 
 // fix TS typings
 const erc20Abi = _erc20Abi as AbiItem[];
@@ -38,12 +37,11 @@ export class BalanceAPI {
   // maybe we want to re-render more often, we could make
   // this a generator instead
   public async fetchTokensBalance(
-    state: BeefyState,
-    chainConfig: ChainConfig,
+    chain: ChainEntity,
     tokens: TokenEntity[],
     walletAddress: string
   ): Promise<BalanceResult[]> {
-    const mc = new MultiCall(this.rpc, chainConfig.multicallAddress);
+    const mc = new MultiCall(this.rpc, chain.multicallAddress);
     const calls: BalanceResult[] = [];
     for (const token of tokens) {
       // skip virtual boost tokens
@@ -80,17 +78,4 @@ export class BalanceAPI {
     // @ts-ignore
     return mc.all([calls]);
   }
-
-  // TODO
-  /*
-  public async fetchVaultBalance(
-    chainConfig: ChainConfig,
-    vaults: VaultEntity[],
-    walletAddress: string
-  ): Promise<> {
-    const mc = new MultiCall(this.rpc, chainConfig.multicallAddress);
-    const calls: BalanceResult[] = [];
-    for (const token of vaults) {
-    }
-  }*/
 }
