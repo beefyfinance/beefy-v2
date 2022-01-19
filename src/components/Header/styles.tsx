@@ -42,7 +42,7 @@ export const styles = theme => ({
       marginLeft: '10px',
     },
     '& img': {
-      height: '24px',
+      height: '34px',
     },
   },
   navLink: {
