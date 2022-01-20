@@ -4,6 +4,7 @@
 - Review wording
 - Review file structure, every file has the same name, it's driving me nuts
 - Is there any reason why the config data (chain, vaults, etc) should be in the redux state? Why not have just a local global variable storing those?
+- Is this really necessary to test that rejected and pending do nothing on all reducers?
 
 # TODO:
 
@@ -25,7 +26,7 @@
 [ ] Create new reducers using new TS types
 
     [x] Config (chains, vaults, boosts)
-    [~] TVL? (need some unit tests to make sure I didn't fuck it up)
+    [x] TVL? (need some unit tests to make sure I didn't fuck it up)
     [ ] APY
     [ ] Balances
     [ ] Allowances
@@ -38,6 +39,8 @@
 [ ] State persistence on reload
 [ ] Code reviews & fixes
 [ ] Regression Testing & fixes
+
+    [ ] Make sure TVL is properly computed (compare with current bêta)
 
 BONUS:
 

@@ -39,6 +39,8 @@ describe('TVL slice tests', () => {
     expect(newState).toMatchSnapshot();
   });
 
+  // TODO: have a test for testing exclusions
+
   it('should do nothing on pending standard vault contract data', () => {
     const action = { type: fetchStandardVaultContractDataAction.pending };
     const state = tvlSlice.reducer(initialTvlState, action);
