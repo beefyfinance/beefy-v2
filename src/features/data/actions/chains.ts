@@ -5,9 +5,8 @@ import { getConfigApi } from '../apis/instances';
 export interface FulfilledPayload {
   chainConfigs: ChainConfig[];
 }
-interface ActionParams {}
 
-export const fetchChainConfigs = createAsyncThunk<FulfilledPayload, ActionParams>(
+export const fetchChainConfigs = createAsyncThunk<FulfilledPayload>(
   'chains/fetchChainConfigs',
   async () => {
     const api = await getConfigApi();

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { fetchPricesAction } from '../actions/prices';
+import { fetchLPPricesAction, fetchPricesAction } from '../actions/prices';
 import { TokenEntity } from '../entities/token';
 
 /**
@@ -26,6 +26,25 @@ export const tokenPriceSlice = createSlice({
     // this could also just be a a super quick drop in replacement
     // if we are OK to not use BigNumber, which I don't think we are
     builder.addCase(fetchPricesAction.fulfilled, (sliceState, action) => {
+      for (const tokenId of Object.keys(action.payload)) {
+        const tokenPrice = action.payload[tokenId];
+        // new price, add it
+        if (sliceState.byTokenId[tokenId] === undefined) {
+          sliceState.byTokenId[tokenId] = new BigNumber(tokenPrice);
+
+          // price exists, update it if it changed
+        } else if (sliceState.byTokenId[tokenId].comparedTo(tokenPrice) === 0) {
+          sliceState.byTokenId[tokenId] = new BigNumber(tokenPrice);
+        }
+      }
+    });
+
+    /**
+     * Same thing for LP prices
+     * Might be smart to not have a single state where all prices
+     * are stored, but for now it's ok
+     */
+    builder.addCase(fetchLPPricesAction.fulfilled, (sliceState, action) => {
       for (const tokenId of Object.keys(action.payload)) {
         const tokenPrice = action.payload[tokenId];
         // new price, add it

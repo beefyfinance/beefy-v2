@@ -1,37 +1,58 @@
-import { initialAllowanceState } from '../reducers/allowance';
-import { initialApyState } from '../reducers/apy';
-import { initialBalanceState } from '../reducers/balance';
-import { initialBoostsState } from '../reducers/boosts';
-import { initialChainsState } from '../reducers/chains';
-import { initialDataLoaderState } from '../reducers/data-loader';
-import { initialHistoricalApyState } from '../reducers/historical-apy';
-import { initialTokenPriceState } from '../reducers/token-price';
-import { initialTokensState } from '../reducers/tokens';
-import { initialTvlState } from '../reducers/tvl';
-import { initialVaultsState } from '../reducers/vaults';
-import { BeefyState } from '../state';
+import { configureStore } from '@reduxjs/toolkit';
+import { fetchBoostsByChainIdAction } from '../actions/boosts';
+import { fetchChainConfigs } from '../actions/chains';
+import { fetchPricesAction } from '../actions/prices';
+import { fetchVaultByChainIdAction } from '../actions/vaults';
+import { selectAllChains } from '../selectors/chains';
+import { BeefyState, dataReducer } from '../state';
+import mockPrices from './mock-prices.json';
+import mockLPPrices from './mock-lp-prices.json';
 
+let _initialTestStateCache: BeefyState | null = null;
 /**
  * Create a new BeefyState with some data included
  * This is used in tests to get a decent starting state
  * when doing things like TVL or APY computation
+ * TODO: maybe memoize that, we have to deep freeze the output for that
  */
-export function getBeefyInitialState(): BeefyState {
-  return {
-    entities: {
-      allowance: initialAllowanceState,
-      apy: initialApyState,
-      balance: initialBalanceState,
-      boosts: initialBoostsState,
-      chains: initialChainsState,
-      historicalApy: initialHistoricalApyState,
-      prices: initialTokenPriceState,
-      tokens: initialTokensState,
-      tvl: initialTvlState,
-      vaults: initialVaultsState,
-    },
-    ui: {
-      dataLoader: initialDataLoaderState,
-    },
-  };
+export async function getBeefyTestingInitialState(): Promise<BeefyState> {
+  if (_initialTestStateCache !== null) {
+    return _initialTestStateCache;
+  }
+
+  // here, the store has all the proper TS typings
+  const store = configureStore({
+    reducer: dataReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        // because we use BigNumber which is not serializable by default
+        // we disable rerialization altogether
+        // a better solution would be to allow serialization of the store
+        serializableCheck: false,
+      }),
+  });
+
+  let state = store.getState();
+
+  // trigger all configs actions
+  await store.dispatch(fetchChainConfigs());
+  state = store.getState();
+  const chains = selectAllChains(state);
+  for (const chain of chains) {
+    await store.dispatch(fetchVaultByChainIdAction({ chainId: chain.id }));
+    await store.dispatch(fetchBoostsByChainIdAction({ chainId: chain.id }));
+  }
+
+  // mock token prices
+  await store.dispatch({ type: fetchPricesAction.fulfilled, payload: mockPrices });
+  await store.dispatch({ type: fetchPricesAction.fulfilled, payload: mockLPPrices });
+
+  state = store.getState();
+
+  // freeze the state to make sure we always return the
+  // same initial state even in the presence of buggy code
+  // that modifies our cached state
+  Object.freeze(state);
+  _initialTestStateCache = state;
+  return _initialTestStateCache;
 }

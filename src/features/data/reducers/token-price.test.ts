@@ -38,7 +38,7 @@ describe('Token price slice tests', () => {
     expect(state).toEqual(initialTokenPriceState);
   });
 
-  it('should update state on fulfilled vault list', () => {
+  it('should update state on fulfilled lp price list', () => {
     const payload: BeefyAPITokenPricesResponse = {
       '1inch-1inch-bnb': 0,
       '2omb-2omb-ftm': 16.710317081168196,

@@ -3,9 +3,11 @@
 exports[`TVL slice tests should update state on fulfilled gov vault contract data 1`] = `
 Object {
   "byBoostId": Object {},
-  "byVaultId": Object {},
+  "byVaultId": Object {
+    "bifi-gov": "3.83973164e-12",
+  },
   "exclusions": Object {},
-  "totalTvl": "0",
+  "totalTvl": "3.83973164e-12",
 }
 `;
 

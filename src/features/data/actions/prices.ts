@@ -3,7 +3,7 @@ import { BeefyAPITokenPricesResponse } from '../apis/beefy';
 import { getBeefyApi } from '../apis/instances';
 
 export const fetchPricesAction = createAsyncThunk<BeefyAPITokenPricesResponse, {}>(
-  'prices/fetchPrices',
+  'prices/fetchTokenPrices',
   async () => {
     const api = await getBeefyApi();
     const prices = await api.getPrices();
@@ -12,7 +12,7 @@ export const fetchPricesAction = createAsyncThunk<BeefyAPITokenPricesResponse, {
 );
 
 export const fetchLPPricesAction = createAsyncThunk<BeefyAPITokenPricesResponse, {}>(
-  'prices/fetchPrices',
+  'prices/fetchLPPrices',
   async () => {
     const api = await getBeefyApi();
     const prices = await api.getLPs();

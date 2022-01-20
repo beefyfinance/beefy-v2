@@ -8,5 +8,10 @@ export const selectTokenPriceByTokenId = createSelector(
   // get the user passed ID
   (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,
   // last function receives previous function outputs as parameters
-  (pricesByTokenId, tokenId) => pricesByTokenId[tokenId]
+  (pricesByTokenId, tokenId) => {
+    if (pricesByTokenId[tokenId] === undefined) {
+      throw new Error(`Could not find price for token id ${tokenId}`);
+    }
+    return pricesByTokenId[tokenId];
+  }
 );

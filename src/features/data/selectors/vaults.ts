@@ -9,7 +9,12 @@ export const selectVaultById = createSelector(
   // get the user passed ID
   (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   // last function receives previous function outputs as parameters
-  (vaultsByIds, vaultId) => vaultsByIds[vaultId]
+  (vaultsByIds, vaultId) => {
+    if (vaultsByIds[vaultId] === undefined) {
+      throw new Error(`Unknown vault id ${vaultId}`);
+    }
+    return vaultsByIds[vaultId];
+  }
 );
 
 export const selectVaultByChainId = createSelector(

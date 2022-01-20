@@ -10,5 +10,13 @@ export const selectAllowanceByTokenId = createSelector(
   (_: BeefyState, chainId: ChainEntity['id']) => chainId,
   (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,
   // last function receives previous function outputs as parameters
-  (allowanceByChainId, chainId, tokenId) => allowanceByChainId[chainId].byTokenId[tokenId]
+  (allowanceByChainId, chainId, tokenId) => {
+    if (allowanceByChainId[chainId] === undefined) {
+      throw new Error(`Could not find allowances for chain id ${chainId}`);
+    }
+    if (allowanceByChainId[chainId].byTokenId[tokenId] === undefined) {
+      throw new Error(`Could not find allowances for chain id ${chainId} for token ${tokenId}`);
+    }
+    return allowanceByChainId[chainId].byTokenId[tokenId];
+  }
 );

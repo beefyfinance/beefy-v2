@@ -16,21 +16,19 @@
 [x] Compile a list of each type of vault/boost to create a regression testing book
 [ ] Extract API code
 
-    [x] Config
+    [x] Config (chains, vaults, boosts)
     [x] Vault contract data
     [x] Boost contract data
-    [ ] APY
     [ ] Balances
     [ ] Allowances
-    [ ] TVL?
 
 [ ] Create new reducers using new TS types
 
-    [x] Config
+    [x] Config (chains, vaults, boosts)
+    [~] TVL? (need some unit tests to make sure I didn't fuck it up)
     [ ] APY
     [ ] Balances
     [ ] Allowances
-    [ ] TVL?
 
 [ ] Rework components to use new reducers
 [ ] Rework search to handle partially loaded data

@@ -5,7 +5,7 @@ import {
   fetchStandardVaultContractDataAction,
   FetchStandardVaultFulfilledPayload,
 } from '../actions/vault-contract';
-import { getBeefyInitialState } from '../utils/test-utils';
+import { getBeefyTestingInitialState } from '../utils/test-utils';
 import { tvlSlice, initialTvlState } from './tvl';
 
 describe('TVL slice tests', () => {
@@ -21,15 +21,15 @@ describe('TVL slice tests', () => {
     expect(state).toEqual(initialTvlState);
   });
 
-  it('should update state on fulfilled gov vault contract data', () => {
+  it('should update state on fulfilled gov vault contract data', async () => {
     // we have loaded some entities already
-    const state = getBeefyInitialState();
+    const state = await getBeefyTestingInitialState();
     const payload: FetchGovVaultFulfilledPayload = {
-      chainId: 'harmony',
+      chainId: 'bsc',
       data: [
         {
           id: 'bifi-gov',
-          totalStaked: new BigNumber(123),
+          totalStaked: new BigNumber(123).times(18),
         },
       ],
       state,
@@ -51,13 +51,18 @@ describe('TVL slice tests', () => {
     expect(state).toEqual(initialTvlState);
   });
 
-  it('should update state on fulfilled standard vault contract data', () => {
+  it('should update state on fulfilled standard vault contract data', async () => {
     // we have loaded some entities already
-    const state = getBeefyInitialState();
+    const state = await getBeefyTestingInitialState();
     const payload: FetchStandardVaultFulfilledPayload = {
       chainId: 'harmony',
       data: [
-        { id: 'bnb-eth-lp', balance: new BigNumber(123), pricePerFullShare: 12, strategy: 'test' },
+        {
+          id: 'banana-cyt-bnb',
+          balance: new BigNumber(123).times(18),
+          pricePerFullShare: 12,
+          strategy: 'test',
+        },
       ],
       state,
     };

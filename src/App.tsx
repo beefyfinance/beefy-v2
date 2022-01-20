@@ -7,6 +7,7 @@ import { reduxActions } from './features/redux/actions';
 import { ScrollToTop } from './components/ScrollToTop';
 import { HideBalanceProvider } from './components/HideBalancesContext';
 import { theme } from './theme';
+import { getBeefyTestingInitialState } from './features/data/utils/test-utils';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
@@ -17,7 +18,7 @@ export const App = () => {
   // const storage = localStorage.getItem('nightMode');
   //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
   const [isNightMode, setNightMode] = React.useState(true);
-
+  /*
   const { wallet } = useSelector((state: any) => ({
     wallet: state.walletReducer,
   }));
@@ -69,6 +70,13 @@ export const App = () => {
       dispatch(reduxActions.wallet.createWeb3Modal());
     }
   }, [dispatch, wallet.web3modal]);
+*/
+  React.useEffect(() => {
+    (async () => {
+      const state = await getBeefyTestingInitialState();
+      console.log(state);
+    })();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

@@ -9,5 +9,10 @@ export const selectTokenById = createSelector(
   // get the user passed ID
   (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,
   // last function receives previous function outputs as parameters
-  (tokensById, tokenId) => tokensById[tokenId]
+  (tokensById, tokenId) => {
+    if (tokensById[tokenId] === undefined) {
+      throw new Error(`Unknown token id ${tokenId}`);
+    }
+    return tokensById[tokenId];
+  }
 );
