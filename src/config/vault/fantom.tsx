@@ -4788,7 +4788,7 @@ export const pools = [
     ],
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.beets.fi/#/pool/0x2c580c6f08044d6dfaca8976a66c8fadddbd9901000000000000000000000038",
+    addLiquidityUrl: "https://beets.fi/#/pool/0xd57cda2caebb9b64bb88905c4de0f0da217a77d7000100000000000000000073",
     network: "fantom"
   },
   {
@@ -5314,6 +5314,43 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x85dec8c4B2680793661bCA91a8F129607571863d",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x85dec8c4B2680793661bCA91a8F129607571863d",
+    network: "fantom"
+  },
+  {
+    id: "boo-wftm-beets",
+    name: "BEETS-FTM LP",
+    token: "BEETS-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x648a7452DA25B4fB4BDB79bADf374a8f8a5ea2b5",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooFTM-BEETS",
+    earnedTokenAddress: "0xBdd229d2bcf8f31Fa90FD04c314078dAF4e2A0A4",
+    earnContractAddress: "0xBdd229d2bcf8f31Fa90FD04c314078dAF4e2A0A4",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-wftm-beets",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "BEETS",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
     network: "fantom"
   }
 ];
