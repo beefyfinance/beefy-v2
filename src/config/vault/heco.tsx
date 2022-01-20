@@ -21,7 +21,7 @@ export const pools = [
     assets: [
       "BIFI"
     ],
-    withdrawalFee: "0.05%",
+    withdrawalFee: "0%",
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",

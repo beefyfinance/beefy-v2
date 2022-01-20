@@ -68,7 +68,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "Maxi",
-    withdrawalFee: "0.05%",
+    withdrawalFee: "0%",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     network: "celo"
   },
