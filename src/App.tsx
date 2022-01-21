@@ -18,7 +18,7 @@ export const App = () => {
   // const storage = localStorage.getItem('nightMode');
   //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
   const [isNightMode, setNightMode] = React.useState(true);
-  /*
+
   const { wallet } = useSelector((state: any) => ({
     wallet: state.walletReducer,
   }));
@@ -70,14 +70,15 @@ export const App = () => {
       dispatch(reduxActions.wallet.createWeb3Modal());
     }
   }, [dispatch, wallet.web3modal]);
-*/
+  /*
+   // my own real life test
   React.useEffect(() => {
     (async () => {
       const state = await getBeefyTestingInitialState();
       console.log(state);
     })();
   }, []);
-
+  */
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
