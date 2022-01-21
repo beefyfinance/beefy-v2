@@ -249,8 +249,8 @@ function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
               </Box>
             </Grid>
             <Grid item lg={4} xs={12}>
-              <Box className={classes.stats2}>
-                <Box className={classes.stat1}>
+              <Grid container className={classes.stats2}>
+                <Grid item xs={6} className={classes.stat1}>
                   <Box>
                     <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
                     <Typography>
@@ -262,14 +262,14 @@ function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
                       </Typography>
                     )}
                   </Box>
-                  {(item.isGovVault || lastHarvest !== 'never') && (
-                    <Divider className={classes.divider1} orientation="vertical" />
-                  )}
-                </Box>
+                </Grid>
+                {(item.isGovVault || lastHarvest !== 'never') && (
+                  <Divider flexItem={true} className={classes.divider1} orientation="vertical" />
+                )}
                 {!item.isGovVault ? (
                   <>
                     {lastHarvest !== 'never' && (
-                      <Box className={classes.stat2}>
+                      <Grid item xs={6}>
                         <Box>
                           <Typography className={classes.label}>
                             {t('Vault-LastHarvest')}
@@ -278,11 +278,11 @@ function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
                             <ValueText value={lastHarvest} />
                           </Typography>
                         </Box>
-                      </Box>
+                      </Grid>
                     )}
                   </>
                 ) : (
-                  <Box className={classes.stat2}>
+                  <Grid item xs={6}>
                     <Box>
                       <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
                       <Typography>
@@ -294,9 +294,9 @@ function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
                         </Typography>
                       )}
                     </Box>
-                  </Box>
+                  </Grid>
                 )}
-              </Box>
+              </Grid>
             </Grid>
           </Grid>
         </Box>

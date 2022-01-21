@@ -7,4 +7,5 @@ export interface MultipleLabeledDropdownProps {
   selectStyle?: any;
   fullWidth?: boolean;
   multiple?: boolean;
+  noBorder?: boolean;
 }

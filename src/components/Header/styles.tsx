@@ -44,6 +44,11 @@ export const styles = theme => ({
     '& img': {
       height: '34px',
     },
+    [theme.breakpoints.down('sm')]: {
+      '& img': {
+        height: '24px',
+      },
+    },
   },
   navLink: {
     textDecoration: 'none',
