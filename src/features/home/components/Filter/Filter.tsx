@@ -12,25 +12,19 @@ import {
   Typography,
   InputAdornment,
   IconButton,
+  Hidden,
 } from '@material-ui/core';
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';
 import { getAvailableNetworks } from '../../../../helpers/utils';
-import { Search, Close } from '@material-ui/icons';
+import { Search, CloseRounded } from '@material-ui/icons';
 import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { FilterProps } from './FilterProps';
 import { FilterCategories } from './FilterCategories';
 import { useLocalStorage } from '../../../../hooks/useLocalStorage';
 
-const FILTER_DEFAULT_LOCAL = {
-  blockchain: ['all'],
-  vault: 'all',
-  platform: 'all',
-  boost: false,
-  retired: false,
-  zero: false,
-};
+import clsx from 'clsx';
 
 const FILTER_COUNT_KEY = 'filteresCount';
 
@@ -45,17 +39,7 @@ const _Filter: React.FC<FilterProps> = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-  const [config, setConfig] = React.useState({
-    blockchain: sortConfig.blockchain,
-    vault: sortConfig.vault,
-    platform: sortConfig.platform,
-    boost: sortConfig.boost,
-    retired: sortConfig.retired,
-    zero: sortConfig.zero,
-  });
-
   const [filtersCount, setFiltersCount] = useLocalStorage(FILTER_COUNT_KEY, 0);
-  const [blockchain, setBlockchain] = React.useState<string[]>(config.blockchain);
 
   const handleChangeBlockchain = event => {
     let {
@@ -66,25 +50,24 @@ const _Filter: React.FC<FilterProps> = ({
       if (filteredCount >= 1) {
         setFiltersCount(current => current - 1);
       }
-      setBlockchain(['all']);
+      setSortConfig(current => ({ ...current, blockchain: ['all'] }));
     } else {
       if (value.includes('all')) {
         value = value.filter(value => value !== 'all');
       }
-      if (value.length >= blockchain.length && !value.includes('all')) {
+      if (value.length >= sortConfig.blockchain.length && !value.includes('all')) {
         setFiltersCount(current => current + 1);
       }
-
-      if (value !== blockchain && value.length < blockchain.length) {
+      if (value !== sortConfig.blockchain && value.length < sortConfig.blockchain.length) {
         setFiltersCount(current => current - 1);
       }
-      setBlockchain(value);
+      setSortConfig(current => ({ ...current, blockchain: value }));
     }
   };
 
   const handleCheckbox = useCallback(
     event => {
-      setConfig(current => ({
+      setSortConfig(current => ({
         ...current,
         [event.target.name]: event.target.checked,
       }));
@@ -96,21 +79,7 @@ const _Filter: React.FC<FilterProps> = ({
         setFiltersCount(current => current - 1);
       }
     },
-    [filtersCount, setFiltersCount]
-  );
-
-  const handleChangeLocal = useCallback(
-    (name, value) => {
-      setConfig(current => ({ ...current, [name]: value }));
-      if (value !== 'all') {
-        setFiltersCount(current => current + 1);
-      }
-
-      if (value === 'all' && filtersCount >= 1) {
-        setFiltersCount(current => current - 1);
-      }
-    },
-    [filtersCount, setFiltersCount]
+    [filtersCount, setFiltersCount, setSortConfig]
   );
 
   const handleChange = useCallback(
@@ -120,17 +89,25 @@ const _Filter: React.FC<FilterProps> = ({
     [setSortConfig]
   );
 
+  const handleInputChange = useCallback(
+    (name, value) => {
+      setSortConfig(current => ({ ...current, [name]: value }));
+      if (value !== 'all') {
+        setFiltersCount(current => current + 1);
+      }
+
+      if (value === 'all' && filtersCount >= 1) {
+        setFiltersCount(current => current - 1);
+      }
+    },
+    [filtersCount, setFiltersCount, setSortConfig]
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleReset = useCallback(() => {
-    setBlockchain(['all']);
-    setConfig(FILTER_DEFAULT_LOCAL);
     setSortConfig(FILTER_DEFAULT);
     setFiltersCount(0);
   }, [setFiltersCount, setSortConfig]);
-
-  const applyFilters = useCallback(() => {
-    setSortConfig(current => ({ ...current, ...config, blockchain }));
-    setAnchorEl(null);
-  }, [blockchain, config, setSortConfig]);
 
   const platformTypes = useMemo(() => {
     return {
@@ -200,7 +177,7 @@ const _Filter: React.FC<FilterProps> = ({
                         size="small"
                         onClick={() => handleChange('keyword', '')}
                       >
-                        <Close />
+                        <CloseRounded />
                       </IconButton>
                     ) : (
                       <IconButton className={classes.iconSearch} size="small">
@@ -213,6 +190,28 @@ const _Filter: React.FC<FilterProps> = ({
             }}
           />
         </Box>
+        <Hidden lgUp={true}>
+          {/*All Filters Button*/}
+          <Button
+            aria-describedby={id}
+            onClick={handleClick}
+            className={clsx({
+              [classes.btnFilter]: true,
+              [classes.btnFilterActive]: filtersCount >= 1,
+            })}
+          >
+            {filtersCount >= 1 ? (
+              <Box className={classes.badge}>{filtersCount}</Box>
+            ) : (
+              <img
+                src={require(`../../../../images/filter.svg`).default}
+                alt=""
+                className={classes.filterIcon}
+              />
+            )}
+            {t('Filter-Btn')}
+          </Button>
+        </Hidden>
         {/*All/My Switch*/}
         <Box className={classes.toggleSwitchContainer}>
           <Button
@@ -265,18 +264,32 @@ const _Filter: React.FC<FilterProps> = ({
             selectStyle={{ width: '100%', minWidth: 'auto' }}
           />
         </Box>
-        {/*All Filters Button*/}
-        <Button aria-describedby={id} onClick={handleClick} className={classes.btnFilter}>
-          {filtersCount >= 1 ? (
-            <Box className={classes.badge}>{filtersCount}</Box>
-          ) : (
-            <img
-              src={require(`../../../../images/filter.svg`).default}
-              alt=""
-              className={classes.filterIcon}
-            />
-          )}
-          {t('Filter-Btn')}
+        <Hidden mdDown>
+          {/*All Filters Button*/}
+          <Button
+            aria-describedby={id}
+            onClick={handleClick}
+            className={clsx({
+              [classes.btnFilter]: true,
+              [classes.btnFilterActive]: filtersCount >= 1,
+            })}
+          >
+            {filtersCount >= 1 ? (
+              <Box className={classes.badge}>{filtersCount}</Box>
+            ) : (
+              <img
+                src={require(`../../../../images/filter.svg`).default}
+                alt=""
+                className={classes.filterIcon}
+              />
+            )}
+            {t('Filter-Btn')}
+          </Button>
+        </Hidden>
+        {/* Clear Filter Button */}
+        <Button className={classes.btnReset} disabled={filtersCount < 1} onClick={handleReset}>
+          <CloseRounded />
+          {t('Filter-Reset')}
         </Button>
       </Box>
       <Popover
@@ -287,7 +300,7 @@ const _Filter: React.FC<FilterProps> = ({
         className={classes.filter}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'right',
         }}
         transformOrigin={{
           vertical: 'top',
@@ -313,7 +326,7 @@ const _Filter: React.FC<FilterProps> = ({
                 }
                 control={
                   <Checkbox
-                    checked={config.retired}
+                    checked={sortConfig.retired}
                     onChange={handleCheckbox}
                     name="retired"
                     className={classes.checkbox}
@@ -329,7 +342,7 @@ const _Filter: React.FC<FilterProps> = ({
                 }
                 control={
                   <Checkbox
-                    checked={config.boost}
+                    checked={sortConfig.boost}
                     onChange={handleCheckbox}
                     name="boost"
                     className={classes.checkbox}
@@ -338,51 +351,47 @@ const _Filter: React.FC<FilterProps> = ({
               />
             </FormGroup>
           </Box>
-
           <Box className={classes.selectors}>
-            <Box className={classes.selector}>
-              <LabeledDropdown
-                fullWidth={true}
-                list={platformTypes}
-                selected={config.platform}
-                handler={e => handleChangeLocal('platform', e.target.value)}
-                label={t('Filter-Platform')}
-              />
-            </Box>
-            <Box className={classes.selector}>
-              <LabeledDropdown
-                fullWidth={true}
-                list={vaultTypes}
-                selected={config.vault}
-                handler={e => handleChangeLocal('vault', e.target.value)}
-                label={t('Filter-Type')}
-              />
-            </Box>
             <Box className={classes.selector}>
               <MultipleLabeledDropdown
                 fullWidth={true}
+                noBorder={true}
                 list={networkTypes}
-                selected={blockchain}
+                selected={sortConfig.blockchain}
                 handler={handleChangeBlockchain}
                 renderValue={selected => (
                   <Typography className={classes.value}>
                     <span className={`${classes.label} label`}>{t('Filter-Blockchn')}</span>{' '}
-                    {blockchain.length > 1 ? t('Filter-BlockchnMultiple') : selected.join('')}
+                    {sortConfig.blockchain.length > 1
+                      ? t('Filter-BlockchnMultiple')
+                      : selected.join('')}
                   </Typography>
                 )}
                 label={t('Filter-Blockchn')}
                 multiple={true}
               />
             </Box>
+            <Box className={classes.selector}>
+              <LabeledDropdown
+                fullWidth={true}
+                noBorder={true}
+                list={platformTypes}
+                selected={sortConfig.platform}
+                handler={e => handleInputChange('platform', e.target.value)}
+                label={t('Filter-Platform')}
+              />
+            </Box>
+            <Box className={classes.selector}>
+              <LabeledDropdown
+                noBorder={true}
+                fullWidth={true}
+                list={vaultTypes}
+                selected={sortConfig.vault}
+                handler={e => handleInputChange('vault', e.target.value)}
+                label={t('Filter-Type')}
+              />
+            </Box>
           </Box>
-        </Box>
-        <Box className={classes.filterFooter}>
-          <Button onClick={applyFilters} className={classes.btnApplyFilters}>
-            {t('Filter-Apply')}
-          </Button>
-          <Button className={classes.btnReset} onClick={handleReset}>
-            {t('Filter-Reset')}
-          </Button>
         </Box>
       </Popover>
     </>

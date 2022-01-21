@@ -16,9 +16,11 @@ export const MultipleLabeledDropdown: React.FC<MultipleLabeledDropdownProps> = (
   selectStyle,
   fullWidth,
   multiple,
+  noBorder,
 }) => {
   const props = {
     fullWidth,
+    noBorder,
   };
   const classes = useStyles(props);
 
