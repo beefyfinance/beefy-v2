@@ -8,6 +8,7 @@ import { selectTokenById } from '../selectors/tokens';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import BigNumber from 'bignumber.js';
+import { AllValuesAsString } from '../utils/types-utils';
 
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];
@@ -18,9 +19,6 @@ export interface BoostContractData {
   rewardRate: BigNumber;
   periodFinish: number;
 }
-type AllValuesAsString<T> = {
-  [key in keyof T]: string;
-};
 
 /**
  * Get vault contract data
@@ -37,6 +35,9 @@ export class BoostContractAPI {
     const calls = boosts.map(boost => {
       const earnedToken = selectTokenById(state, boost.earnedTokenId);
       if (!isTokenErc20(earnedToken)) {
+        console.info(
+          `BoostContractAPI.fetchBoostContractData: Skipping non erc20 token ${earnedToken.id}`
+        );
         return;
       }
       const tokenContract = new this.web3.eth.Contract(boostAbi, earnedToken.contractAddress);

@@ -93,8 +93,7 @@ BONUS:
 
 - Why not use https://api.beefy.finance/vaults and https://api.beefy.finance/boosts?
 - why is there an api.beefy.finance and a data.beefy.finance?
-- Boost.isMooStaked: is this always "true"?
-  this is the boolean that tells us if the thing is a boost or a vault when both are in the same list, got it
+- Is the balance reducer really used? seems like it's empty
 
 # ANSWERED
 
@@ -108,3 +107,5 @@ BONUS:
   ui uses it to tell user if he needs to allow more token
 - What is boost.tokenDecimals in vault.tsx?
   it's the vault token
+- Boost.isMooStaked: is this always "true"?
+  this is the boolean that tells us if the thing is a boost or a vault when both are in the same list, got it

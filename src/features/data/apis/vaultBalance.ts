@@ -1,7 +1,9 @@
-import { MultiCall } from 'eth-multicall';
+import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
-import { isTokenErc20 } from '../entities/token';
+import { isTokenBoost, isTokenErc20 } from '../entities/token';
 import _vaultAbi from '../../../config/abi/vault.json';
+import _boostAbi from '../../../config/abi/boost.json';
+import _erc20Abi from '../../../config/abi/erc20.json';
 import Web3 from 'web3';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { BeefyState } from '../state';
@@ -11,13 +13,16 @@ import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../utils/types-utils';
 
 // fix TS typings
+const boostAbi = _boostAbi as AbiItem[];
 const vaultAbi = _vaultAbi as AbiItem[];
+const erc20Abi = _erc20Abi as AbiItem[];
 
-export interface GovVaultContractData {
-  id: VaultEntity['id'];
-  totalStaked: BigNumber;
+export interface GovVaultBalance {
+  vaultId: VaultEntity['id'];
+  balance: BigNumber;
+  rewards: BigNumber;
 }
-export interface StandardVaultContractData {
+export interface StandardVaultBalance {
   id: VaultEntity['id'];
 
   balance: BigNumber;
@@ -44,33 +49,39 @@ export class VaultContractAPI {
 
   // maybe we want to re-render more often, we could make
   // this a generator instead
-  public async fetchGovVaultsContractData(vaults: VaultGov[]): Promise<GovVaultContractData[]> {
+  public async fetchGovVaultsBalance(
+    vaults: VaultGov[],
+    walletAddress: string
+  ): Promise<GovVaultBalance[]> {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
-    const calls = vaults.map(vault => {
-      const tokenContract = new this.web3.eth.Contract(vaultAbi, vault.poolAddress);
+    const calls: ShapeWithLabel[] = vaults.map(vault => {
+      const poolContract = new this.web3.eth.Contract(vaultAbi, vault.poolAddress);
+
       return {
-        id: vault.id,
-        totalStaked: tokenContract.methods.totalSupply(),
+        vaultId: vault.id,
+        balance: poolContract.methods.balanceOf(walletAddress),
+        rewards: poolContract.methods.earned(walletAddress),
       };
     });
 
-    const [results] = (await mc.all([calls])) as AllValuesAsString<GovVaultContractData>[][];
+    const [results] = (await mc.all([calls])) as AllValuesAsString<GovVaultBalance>[][];
 
     // format strings as numbers
     return results.map(result => {
       return {
-        id: result.id,
-        totalStaked: new BigNumber(result.totalStaked),
-      } as GovVaultContractData;
+        vaultId: result.vaultId,
+        balance: new BigNumber(result.balance),
+        rewards: new BigNumber(result.rewards),
+      } as GovVaultBalance;
     });
   }
-
+  /*
   // maybe we want to re-render more often, we could make
   // this a generator instead
   public async fetchStandardVaultsContractData(
     state: BeefyState,
     vaults: VaultStandard[]
-  ): Promise<StandardVaultContractData[]> {
+  ): Promise<StandardVaultBalance[]> {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
     const calls = vaults.map(vault => {
@@ -90,16 +101,13 @@ export class VaultContractAPI {
       };
     });
 
-    const [results] = (await mc.all([calls])) as AllValuesAsString<StandardVaultContractData>[][];
+    const [results] = (await mc.all([calls])) as AllValuesAsString<StandardVaultBalance>[][];
 
     // format strings as numbers
     return results.map(result => {
       return {
-        id: result.id,
-        balance: new BigNumber(result.balance),
-        pricePerFullShare: new BigNumber(result.balance),
-        strategy: result.strategy,
-      } as StandardVaultContractData;
+        vaultId: result.vaultId,
+      } as StandardVaultBalance;
     });
-  }
+  }*/
 }

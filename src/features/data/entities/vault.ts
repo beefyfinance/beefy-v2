@@ -118,7 +118,9 @@ export interface VaultGov {
    **/
   oracleId: TokenEntity['id'];
 
-  // address of the vault?
+  /**
+   * Vault address "treasury", we ask this address about user balances
+   */
   poolAddress: string;
 
   /**
