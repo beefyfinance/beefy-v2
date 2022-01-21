@@ -197,7 +197,7 @@ const _Filter: React.FC<FilterProps> = ({
             onClick={handleClick}
             className={clsx({
               [classes.btnFilter]: true,
-              [classes.btnFilterActive]: filtersCount >= 1,
+              [classes.btnFilterActive]: open || filtersCount >= 1,
             })}
           >
             {filtersCount >= 1 ? (
@@ -212,7 +212,7 @@ const _Filter: React.FC<FilterProps> = ({
             {t('Filter-Btn')}
           </Button>
         </Hidden>
-        {/*All/My Switch*/}
+        {/*All/Eligible/My Switch*/}
         <Box className={classes.toggleSwitchContainer}>
           <Button
             className={
@@ -271,7 +271,7 @@ const _Filter: React.FC<FilterProps> = ({
             onClick={handleClick}
             className={clsx({
               [classes.btnFilter]: true,
-              [classes.btnFilterActive]: filtersCount >= 1,
+              [classes.btnFilterActive]: open || filtersCount >= 1,
             })}
           >
             {filtersCount >= 1 ? (
@@ -287,7 +287,11 @@ const _Filter: React.FC<FilterProps> = ({
           </Button>
         </Hidden>
         {/* Clear Filter Button */}
-        <Button className={classes.btnReset} disabled={filtersCount < 1} onClick={handleReset}>
+        <Button
+          className={classes.btnReset}
+          disabled={sortConfig === FILTER_DEFAULT}
+          onClick={handleReset}
+        >
           <CloseRounded />
           {t('Filter-Reset')}
         </Button>

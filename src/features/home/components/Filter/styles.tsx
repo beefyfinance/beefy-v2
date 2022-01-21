@@ -212,10 +212,10 @@ export const styles = theme => ({
   toggleSwitchButton: {
     height: '40px',
     borderRadius: '6px',
-    padding: '6px 16px',
+    padding: '4px 16px',
     textTransform: 'none',
     fontSize: '15px',
-    lineHeight: '24px',
+    lineHeight: '15px',
     fontWeight: 700,
     color: theme.palette.text.secondary,
     width: 'calc(100% / 3)',
@@ -227,7 +227,7 @@ export const styles = theme => ({
     padding: '6px 16px',
     textTransform: 'none',
     fontSize: '15px',
-    lineHeight: '24px',
+    lineHeight: '15px',
     fontWeight: 700,
     color: theme.palette.text.primary,
     backgroundColor: `${theme.palette.primary.main} !important`,
@@ -284,6 +284,7 @@ export const styles = theme => ({
   filter: {
     '& .MuiPopover-paper': {
       marginTop: theme.spacing(1),
+      borderRadius: '8px',
       width: '350px',
       backgroundColor: theme.palette.background.vaults.default,
       border: `2px solid ${theme.palette.background.vaults.default}`,

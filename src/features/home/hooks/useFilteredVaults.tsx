@@ -186,7 +186,11 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   // hide when category/tag does not match
-  if (config.category !== 'all' && config.category !== 'featured' && !vault.tags.includes(config.category)) {
+  if (
+    config.category !== 'all' &&
+    config.category !== 'featured' &&
+    !vault.tags.includes(config.category)
+  ) {
     return false;
   }
 
@@ -195,14 +199,20 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   // hide when neither name includes keyword nor keyword matches its tokens
-	const S = config.keyword.toLowerCase();
-	if (!( vault.name.toLowerCase().includes( S) || vault.assets.find( S_TKN => 
-																														S_TKN.toLowerCase() === S))) {
+  const S = config.keyword.toLowerCase();
+  if (
+    !(vault.name.toLowerCase().includes(S) || vault.assets.find(S_TKN => S_TKN.toLowerCase() === S))
+  ) {
     return false;
   }
 
   //hide when wallet no connected and my vaults = true
   if (!address && config.deposited) {
+    return false;
+  }
+
+  //hide when wallet no connected and zero = true
+  if (!address && config.zero) {
     return false;
   }
 
@@ -257,13 +267,12 @@ function useUserVaults() {
     let symbol = pool.isGovVault ? `${pool.token}GovVault` : pool.earnedToken;
     if (userAddress) {
       if (!isEmpty(balance.tokens[pool.network][symbol])) {
-      
         if (pool.isGovVault) {
           const _balance = byDecimals(
             balance.tokens[pool.network][symbol].balance,
             pool.tokenDecimals
           );
-  
+
           if (_balance.isGreaterThan(0)) {
             newUserVaults = {
               ...newUserVaults,
@@ -271,7 +280,10 @@ function useUserVaults() {
             };
           }
         }
-        balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, pool.tokenDecimals);
+        balanceSingle = byDecimals(
+          balance.tokens[pool.network][symbol].balance,
+          pool.tokenDecimals
+        );
         if (balanceSingle.isGreaterThan(0)) {
           newUserVaults = {
             ...newUserVaults,
@@ -283,7 +295,10 @@ function useUserVaults() {
         for (const boost of pool.boosts) {
           let symbol = `${boost.token}${boost.id}Boost`;
           if (!isEmpty(balance.tokens[pool.network][symbol])) {
-            balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
+            balanceSingle = byDecimals(
+              balance.tokens[pool.network][symbol].balance,
+              boost.decimals
+            );
             if (balanceSingle.isGreaterThan(0)) {
               newUserVaults = {
                 ...newUserVaults,

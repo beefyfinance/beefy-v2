@@ -176,6 +176,7 @@ const VaultsList = memo(function HomeVaultsList() {
           <EmptyStates setFilterConfig={setFilterConfig} />
         )}
         {filterConfig.deposited && !address && <EmptyStates setFilterConfig={setFilterConfig} />}
+        {filterConfig.zero && !address && <EmptyStates setFilterConfig={setFilterConfig} />}
         <VirtualVaultsList vaults={sortedVaults} columns={isTwoColumns ? 2 : 1} />
       </div>
     </>
