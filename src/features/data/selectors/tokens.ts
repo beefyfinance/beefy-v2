@@ -11,7 +11,7 @@ export const selectTokenById = createSelector(
   // last function receives previous function outputs as parameters
   (tokensById, tokenId) => {
     if (tokensById[tokenId] === undefined) {
-      throw new Error(`Unknown token id ${tokenId}`);
+      throw new Error(`selectTokenById: Unknown token id ${tokenId}`);
     }
     return tokensById[tokenId];
   }

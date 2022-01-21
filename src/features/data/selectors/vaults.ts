@@ -11,7 +11,7 @@ export const selectVaultById = createSelector(
   // last function receives previous function outputs as parameters
   (vaultsByIds, vaultId) => {
     if (vaultsByIds[vaultId] === undefined) {
-      throw new Error(`Unknown vault id ${vaultId}`);
+      throw new Error(`selectVaultById: Unknown vault id ${vaultId}`);
     }
     return vaultsByIds[vaultId];
   }

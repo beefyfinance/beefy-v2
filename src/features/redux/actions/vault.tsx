@@ -58,7 +58,6 @@ const getPools = async (items, state, dispatch) => {
 
   const promises = [];
   for (const key in multicall) {
-    console.log({ mcAll: multicall[key].all([calls[key]]) });
     promises.push(multicall[key].all([calls[key]]));
   }
   const results = await Promise.allSettled(promises);

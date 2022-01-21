@@ -10,7 +10,7 @@ export const selectChainById = createSelector(
   // last function receives previous function outputs as parameters
   (chainsById, chainId) => {
     if (chainsById[chainId] === undefined) {
-      throw new Error(`Unknown chain id ${chainId}`);
+      throw new Error(`selectChainById: Unknown chain id ${chainId}`);
     }
     return chainsById[chainId];
   }

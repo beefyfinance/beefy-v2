@@ -5,6 +5,7 @@
 - Review file structure, every file has the same name, it's driving me nuts
 - Is there any reason why the config data (chain, vaults, etc) should be in the redux state? Why not have just a local global variable storing those?
 - Is this really necessary to test that rejected and pending do nothing on all reducers?
+- Do we query contract data of active vaults/boosts first? Maybe user staked in there. But how many users really
 
 # TODO:
 
@@ -93,6 +94,7 @@ BONUS:
 - Why not use https://api.beefy.finance/vaults and https://api.beefy.finance/boosts?
 - why is there an api.beefy.finance and a data.beefy.finance?
 - Boost.isMooStaked: is this always "true"?
+  this is the boolean that tells us if the thing is a boost or a vault when both are in the same list, got it
 
 # ANSWERED
 
@@ -104,3 +106,5 @@ BONUS:
   can be removed, same as contractAddress
 - what are allowances used for?
   ui uses it to tell user if he needs to allow more token
+- What is boost.tokenDecimals in vault.tsx?
+  it's the vault token

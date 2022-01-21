@@ -10,7 +10,7 @@ export const selectTokenPriceByTokenId = createSelector(
   // last function receives previous function outputs as parameters
   (pricesByTokenId, tokenId) => {
     if (pricesByTokenId[tokenId] === undefined) {
-      throw new Error(`Could not find price for token id ${tokenId}`);
+      throw new Error(`selectTokenPriceByTokenId: Could not find price for token id ${tokenId}`);
     }
     return pricesByTokenId[tokenId];
   }

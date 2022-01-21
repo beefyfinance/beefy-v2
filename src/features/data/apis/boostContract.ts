@@ -11,7 +11,7 @@ import { ChainEntity } from '../entities/chain';
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];
 
-interface BoostContractData {
+export interface BoostContractData {
   id: BoostEntity['id'];
   totalStaked: number;
   rewardRate: number;

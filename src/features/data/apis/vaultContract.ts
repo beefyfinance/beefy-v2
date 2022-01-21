@@ -18,8 +18,16 @@ export interface GovVaultContractData {
 }
 export interface StandardVaultContractData {
   id: VaultEntity['id'];
+
   balance: BigNumber;
-  pricePerFullShare: number;
+
+  /**
+   * pricePerFullShare is how you find out how much your mooTokens (shares)
+   * represent in term of the underlying asset
+   * So if you deposit 1 BNB you will get, for example 0.95 mooBNB,
+   * with a ppfs of X. if you multiply your mooBNB * ppfs you get your amount in BNB
+   */
+  pricePerFullShare: BigNumber;
 
   /**
    * The strategy address
@@ -89,7 +97,7 @@ export class VaultContractAPI {
       return {
         id: result.id,
         balance: new BigNumber(result.balance),
-        pricePerFullShare: parseFloat(result.balance),
+        pricePerFullShare: new BigNumber(result.balance),
         strategy: result.strategy,
       } as StandardVaultContractData;
     });
