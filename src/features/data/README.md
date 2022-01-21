@@ -21,15 +21,15 @@
     [x] Config (chains, vaults, boosts)
     [x] Vault contract data
     [x] Boost contract data
-    [ ] Balances
+    [x] Balances
     [ ] Allowances
 
 [ ] Create new reducers using new TS types
 
     [x] Config (chains, vaults, boosts)
     [x] TVL? (need some unit tests to make sure I didn't fuck it up)
-    [ ] APY
-    [ ] Balances
+    [x] APY
+    [x] Balances
     [ ] Allowances
 
 [ ] Rework components to use new reducers
