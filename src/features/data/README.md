@@ -94,6 +94,11 @@ BONUS:
 - Why not use https://api.beefy.finance/vaults and https://api.beefy.finance/boosts?
 - why is there an api.beefy.finance and a data.beefy.finance?
 - Is the balance reducer really used? seems like it's empty
+- Gov Vaults are erc20 tokens?
+- What would be the most effective way to fetch balances?
+- What is a reward?
+- Allowances are fetched aggressively, is this necessary? Can't we just fetch allowances when looking at a vault?
+- Only some of the gov vaults have excluded links, is this normal?
 
 # ANSWERED
 

@@ -8,6 +8,7 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { HideBalanceProvider } from './components/HideBalancesContext';
 import { theme } from './theme';
 import { getBeefyTestingInitialState } from './features/data/utils/test-utils';
+import { initHomeData } from './features/data/actions/scenarios';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
@@ -79,6 +80,10 @@ export const App = () => {
     })();
   }, []);
   */
+
+  React.useEffect(() => {
+    initHomeData();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

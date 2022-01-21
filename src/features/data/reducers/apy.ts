@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
 import { fetchApyAction } from '../actions/apy';
 import { fetchBoostContractDataAction } from '../actions/boost-contract';
 import { ApyData } from '../apis/beefy';
@@ -8,7 +7,6 @@ import { VaultEntity } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenPriceByTokenId } from '../selectors/token-prices';
 import { selectTokenById } from '../selectors/tokens';
-import { selectVaultPricePerFullShare } from '../selectors/tvl';
 import { selectVaultById } from '../selectors/vaults';
 
 // boost is expressed as APR

@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { BeefyState } from '../../redux/reducers';
 import { getVaultContractApi } from '../apis/instances';
 import { GovVaultContractData, StandardVaultContractData } from '../apis/vaultContract';
 import { ChainEntity } from '../entities/chain';
 import { isGovVault, VaultStandard } from '../entities/vault';
 import { selectChainById } from '../selectors/chains';
 import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
-import { BeefyState } from '../state';
 
 export interface FetchGovVaultFulfilledPayload {
   chainId: ChainEntity['id'];

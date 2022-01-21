@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchBoostsByChainIdAction } from '../actions/boosts';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
-import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { NormalizedEntity } from '../utils/normalized-entity';
 

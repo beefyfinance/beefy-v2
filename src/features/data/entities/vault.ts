@@ -133,7 +133,7 @@ export interface VaultGov {
    * so in order not to count TVL twice. when we count the tvl of the gov pools
    * we must exclude/substract the tvl from the maxi vault
    */
-  excludedId: VaultEntity['id'];
+  excludedId: null | VaultEntity['id'];
 
   isGovVault: true;
 }

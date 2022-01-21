@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { BeefyState } from '../../redux/reducers';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
-import { BeefyState } from '../state';
 
 export const selectAllowanceByTokenId = createSelector(
   // get a tiny bit of the data

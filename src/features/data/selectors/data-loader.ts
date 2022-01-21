@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { BeefyState } from '../../redux/reducers';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { isPending } from '../reducers/data-loader';
-import { BeefyState } from '../state';
 
 export const selectIsVaultLoading = createSelector(
   (store: BeefyState) => store.entities.vaults.byId, // could be reused

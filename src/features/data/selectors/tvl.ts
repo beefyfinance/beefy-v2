@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { BeefyState } from '../../redux/reducers';
 import { VaultEntity } from '../entities/vault';
-import { BeefyState } from '../state';
 
 export const selectVaultPricePerFullShare = createSelector(
   // get a tiny bit of the data

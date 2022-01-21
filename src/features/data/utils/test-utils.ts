@@ -4,9 +4,9 @@ import { fetchChainConfigs } from '../actions/chains';
 import { fetchPricesAction } from '../actions/prices';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
 import { selectAllChains } from '../selectors/chains';
-import { BeefyState, dataReducer } from '../state';
 import mockPrices from './mock-prices.json';
 import mockLPPrices from './mock-lp-prices.json';
+import { BeefyState, rootReducer } from '../../redux/reducers';
 
 let _initialTestStateCache: BeefyState | null = null;
 /**
@@ -22,7 +22,7 @@ export async function getBeefyTestingInitialState(): Promise<BeefyState> {
 
   // here, the store has all the proper TS typings
   const store = configureStore({
-    reducer: dataReducer,
+    reducer: rootReducer,
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware({
         // because we use BigNumber which is not serializable by default

@@ -73,11 +73,14 @@ export const tvlSlice = createSlice({
       for (const govVaultContractData of action.payload.data) {
         // now remove excluded vault tvl from vault tvl
         const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
-        const excludedVault = selectVaultById(state, vault.excludedId);
-        if (rawTvlByVaultId[excludedVault.id] !== undefined) {
-          rawTvlByVaultId[vault.id] = rawTvlByVaultId[vault.id].minus(
-            rawTvlByVaultId[excludedVault.id]
-          );
+
+        if (vault.excludedId) {
+          const excludedVault = selectVaultById(state, vault.excludedId);
+          if (rawTvlByVaultId[excludedVault.id] !== undefined) {
+            rawTvlByVaultId[vault.id] = rawTvlByVaultId[vault.id].minus(
+              rawTvlByVaultId[excludedVault.id]
+            );
+          }
         }
       }
 

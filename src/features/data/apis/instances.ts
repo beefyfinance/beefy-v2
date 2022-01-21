@@ -21,25 +21,29 @@ export async function getConfigApi(): Promise<ConfigAPI> {
   return configApi;
 }
 
+const vaultContractApiByChainId: { [chainId: ChainEntity['id']]: VaultContractAPI } = {};
 export async function getVaultContractApi(chain: ChainEntity): Promise<VaultContractAPI> {
-  const web3 = await getWeb3Instance(chain);
+  if (vaultContractApiByChainId[chain.id] === undefined) {
+    const web3 = await getWeb3Instance(chain);
+    console.debug(`Instanciating VaultContractAPI for chain ${chain.id}`);
+    vaultContractApiByChainId[chain.id] = new VaultContractAPI(web3, chain);
+  }
 
-  // todo: maybe cache this?
-  console.debug('Instanciating VaultContractAPI');
-  return new VaultContractAPI(web3, chain);
+  return vaultContractApiByChainId[chain.id];
 }
 
+const boostContractApiByChainId: { [chainId: ChainEntity['id']]: BoostContractAPI } = {};
 export async function getBoostContractApi(chain: ChainEntity): Promise<BoostContractAPI> {
-  const web3 = await getWeb3Instance(chain);
-
-  // todo: maybe cache this?
-  console.debug('Instanciating VaultContractAPI');
-  return new BoostContractAPI(web3, chain);
+  if (boostContractApiByChainId[chain.id] === undefined) {
+    const web3 = await getWeb3Instance(chain);
+    console.debug(`Instanciating BoostContractAPI for chain ${chain.id}`);
+    boostContractApiByChainId[chain.id] = new BoostContractAPI(web3, chain);
+  }
+  return boostContractApiByChainId[chain.id];
 }
 
 // have a local cache of Web3 objects
 const web3InstancesByChainId: { [chainId: ChainEntity['id']]: Web3 } = {};
-
 async function getWeb3Instance(chain: ChainEntity): Promise<Web3> {
   const chainId = chain.id;
 

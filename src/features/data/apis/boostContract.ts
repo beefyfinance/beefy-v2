@@ -1,14 +1,14 @@
-import { MultiCall } from 'eth-multicall';
+import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
 import { isTokenErc20 } from '../entities/token';
 import _boostAbi from '../../../config/abi/boost.json';
 import Web3 from 'web3';
-import { BeefyState } from '../state';
 import { selectTokenById } from '../selectors/tokens';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../utils/types-utils';
+import { BeefyState } from '../../redux/reducers';
 
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];
@@ -32,22 +32,23 @@ export class BoostContractAPI {
   ): Promise<BoostContractData[]> {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
-    const calls = boosts.map(boost => {
+    const calls: ShapeWithLabel[] = [];
+    for (const boost of boosts) {
       const earnedToken = selectTokenById(state, boost.earnedTokenId);
       if (!isTokenErc20(earnedToken)) {
         console.info(
           `BoostContractAPI.fetchBoostContractData: Skipping non erc20 token ${earnedToken.id}`
         );
-        return;
+        continue;
       }
       const tokenContract = new this.web3.eth.Contract(boostAbi, earnedToken.contractAddress);
-      return {
+      calls.push({
         id: boost.id,
         totalStaked: tokenContract.methods.totalSupply(),
         rewardRate: tokenContract.methods.rewardRate(),
         periodFinish: tokenContract.methods.periodFinish(),
-      };
-    });
+      });
+    }
 
     const [results] = (await mc.all([calls])) as AllValuesAsString<BoostContractData>[][];
 

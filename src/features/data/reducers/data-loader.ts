@@ -1,6 +1,6 @@
 import { ActionReducerMapBuilder, AsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchApyAction, fetchHistoricalApy } from '../actions/apy';
-import { fetchLPPricesAction, fetchPricesAction } from '../actions/prices';
+import {  fetchPricesAction } from '../actions/prices';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
 
 /**

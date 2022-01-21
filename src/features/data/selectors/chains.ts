@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { BeefyState } from '../../redux/reducers';
 import { ChainEntity } from '../entities/chain';
-import { BeefyState } from '../state';
 
 export const selectChainById = createSelector(
   // get a tiny bit of the data

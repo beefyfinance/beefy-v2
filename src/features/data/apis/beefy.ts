@@ -49,39 +49,45 @@ export class BeefyAPI {
     // this could be mocked by passing mock axios to the constructor
     this.api = axios.create({
       baseURL: 'https://api.beefy.finance',
-      timeout: 1000,
+      timeout: 30 * 1000,
     });
     this.data = axios.create({
       baseURL: 'https://data.beefy.finance',
-      timeout: 1000,
+      timeout: 30 * 1000,
     });
   }
 
   // here we can nicely type the responses
   public async getPrices(): Promise<BeefyAPITokenPricesResponse> {
-    return this.api.get('/prices', { params: { _: this.getCacheBuster() } });
+    const res = await this.api.get('/prices', { params: { _: this.getCacheBuster('hour') } });
+    return res.data;
   }
 
   // i'm not 100% certain about the return type
   // are those token ids ?
   public async getLPs(): Promise<BeefyAPITokenPricesResponse> {
-    return this.api.get('/lps', { params: { _: this.getCacheBuster() } });
+    const res = await this.api.get('/lps', { params: { _: this.getCacheBuster('hour') } });
+    return res.data;
   }
 
   public async getBreakdown(): Promise<BeefyAPIBreakdownResponse> {
-    return this.api.get('/apy/breakdown', { params: { _: this.getCacheBuster() } });
+    const res = await this.api.get('/apy/breakdown', { params: { _: this.getCacheBuster() } });
+    return res.data;
   }
 
   public async getHistoricalAPY(): Promise<BeefyAPIHistoricalAPYResponse> {
-    return this.data.get('/bulk', { params: { _: this.getCacheBuster() } });
+    const res = await this.data.get('/bulk', { params: { _: this.getCacheBuster() } });
+    return res.data;
   }
 
   public async getBuyBack(): Promise<BeefyAPIBuybackResponse> {
-    return this.api.get('/bifibuyback', { params: { _: this.getCacheBuster('hour') } });
+    const res = await this.api.get('/bifibuyback', { params: { _: this.getCacheBuster('hour') } });
+    return res.data;
   }
 
   public async getVaults(): Promise<BeefyAPIVaultsResponse> {
-    return this.api.get('/vaults', { params: { _: this.getCacheBuster('hour') } });
+    const res = await this.api.get('/vaults', { params: { _: this.getCacheBuster('hour') } });
+    return res.data;
   }
 
   // maybe have a local cache instead of this cache busting

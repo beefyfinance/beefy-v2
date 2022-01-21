@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
+import { BeefyState } from '../../redux/reducers';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
-import { BeefyState } from '../state';
 
 export const selectBoostById = createSelector(
   // get a tiny bit of the data

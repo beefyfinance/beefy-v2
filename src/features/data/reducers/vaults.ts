@@ -44,7 +44,7 @@ export const vaultsSlice = createSlice({
             name: apiVault.name,
             isGovVault: true,
             poolAddress: apiVault.poolAddress,
-            excludedId: apiVault.excluded,
+            excludedId: apiVault.excluded || null,
             oracleId: apiVault.oracleId,
             chainId: chainId,
           };

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { chain } from 'lodash';
 import { fetchChainConfigs } from '../actions/chains';
 import { ChainEntity } from '../entities/chain';
 import { NormalizedEntity } from '../utils/normalized-entity';
@@ -22,7 +21,6 @@ export const chainsSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchChainConfigs.fulfilled, (sliceState, action) => {
       for (const chainConfig of action.payload.chainConfigs) {
-        const chainId = chainConfig.id;
         // we already know this chain
         if (chainConfig.id in sliceState.byId) {
           continue;

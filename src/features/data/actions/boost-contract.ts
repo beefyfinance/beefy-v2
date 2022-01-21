@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { BeefyState } from '../../redux/reducers';
 import { BoostContractData } from '../apis/boostContract';
 import { getBoostContractApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { BeefyState } from '../state';
 
 export interface FulfilledPayload {
   chainId: ChainEntity['id'];
