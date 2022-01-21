@@ -1,5 +1,4 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { BeefyState } from '../state';
 

@@ -117,8 +117,8 @@ describe('TVL slice tests', () => {
         {
           id: 'moo_banana-banana-busd-bitcrush',
           periodFinish: 1234,
-          rewardRate: 0.4,
-          totalStaked: 12345,
+          rewardRate: new BigNumber(0.4),
+          totalStaked: new BigNumber(12345),
         },
       ],
       // replace new state in the full state

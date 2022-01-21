@@ -7,14 +7,15 @@ import { BeefyState } from '../state';
 import { selectTokenById } from '../selectors/tokens';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
+import BigNumber from 'bignumber.js';
 
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];
 
 export interface BoostContractData {
   id: BoostEntity['id'];
-  totalStaked: number;
-  rewardRate: number;
+  totalStaked: BigNumber;
+  rewardRate: BigNumber;
   periodFinish: number;
 }
 type AllValuesAsString<T> = {
@@ -53,8 +54,8 @@ export class BoostContractAPI {
     return results.map(result => {
       return {
         id: result.id,
-        totalStaked: parseFloat(result.totalStaked),
-        rewardRate: parseFloat(result.rewardRate),
+        totalStaked: new BigNumber(result.totalStaked),
+        rewardRate: new BigNumber(result.rewardRate),
         periodFinish: parseFloat(result.periodFinish),
       } as BoostContractData;
     });

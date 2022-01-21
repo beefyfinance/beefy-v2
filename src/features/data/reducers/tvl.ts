@@ -149,9 +149,7 @@ export const tvlSlice = createSlice({
         const tokenPrice = selectTokenPriceByTokenId(state, token.id);
         const ppfs = selectVaultPricePerFullShare(state, vault.id);
 
-        const totalStaked = new BigNumber(boostContractData.totalStaked)
-          .times(ppfs)
-          .dividedBy(token.decimals);
+        const totalStaked = boostContractData.totalStaked.times(ppfs).dividedBy(token.decimals);
         const staked = totalStaked.dividedBy(token.decimals);
         const tvl = totalStaked.times(tokenPrice).dividedBy(token.decimals);
 
