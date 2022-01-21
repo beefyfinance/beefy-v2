@@ -115,7 +115,7 @@ export const styles = theme => ({
   },
   searchInput: {
     borderRadius: 8,
-    height: '40px',
+    height: '44px',
     position: 'relative',
     color: theme.palette.text.secondary,
     background: theme.palette.background.filters.inactive,
@@ -133,7 +133,7 @@ export const styles = theme => ({
     '& .MuiFormLabel-root': {
       fontWeight: 700,
       fontSize: 15,
-      lineHeight: '16px',
+      lineHeight: '24px',
       color: theme.palette.text.secondary,
     },
     '& .MuiInputBase-root': {
@@ -145,6 +145,9 @@ export const styles = theme => ({
   },
   iconSearch: {
     borderRadius: 8,
+    '&:Hover': {
+      backgroundColor: 'transparent',
+    },
   },
   checkbox: {
     color: theme.palette.text.disabled,
