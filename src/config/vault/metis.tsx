@@ -467,7 +467,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "Maxi",
-    withdrawalFee: "0.05%",
+    withdrawalFee: "0%",
     buyTokenUrl: "https://netswap.io/#/swap?outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
     network: "metis"
   },
