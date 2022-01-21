@@ -1,41 +1,43 @@
 [
   {
-    "id": "bsc vault: banana-bake-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-tape-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-blz-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-wftm-beets",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-two-became-one",
+    "id": "bsc vault: bifi-maxi",
     "type": "synced"
   },
   {
-    "id": "metis vault: tethys-tethys-metis",
+    "id": "heco vault: heco-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: fantom-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: polygon-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: jarvis-2cad",
     "type": "Added"
   },
   {
-    "id": "metis vault: tethys-m.usdt-metis",
-    "type": "Added"
+    "id": "polygon vault: jarvis-2jpy",
+    "type": "synced",
+    "logo-copied": "logo"
   },
   {
-    "id": "metis vault: tethys-metis-m.usdc",
-    "type": "Added"
+    "id": "avax vault: avax-bifi-maxi",
+    "type": "synced"
   },
   {
-    "id": "metis vault: tethys-weth-metis",
-    "type": "Added"
+    "id": "arbitrum vault: arbi-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: celo-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "metis vault: metis-bifi-maxi",
+    "type": "synced"
   }
 ]

@@ -21,7 +21,7 @@ export const pools = [
     assets: [
       "BIFI"
     ],
-    withdrawalFee: "0%",
+    withdrawalFee: "0.05%",
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -7759,7 +7759,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://polygon.curve.fi/factory/85/deposit",
-    network: "polygon"
+    network: "polygon",
+    logo: "single-assets/2JPY.svg"
   },
   {
     id: "quick-gns-dai",
@@ -7944,6 +7945,44 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://quickswap.exchange/#/add/0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59&inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    network: "polygon"
+  },
+  {
+    id: "jarvis-2cad",
+    logo: "single-assets/2CAD.svg",
+    name: "jCAD-CADC",
+    token: "2cad",
+    tokenDescription: "Curve (Jarvis)",
+    tokenAddress: "0xA69b0D5c0C401BBA2d5162138613B5E38584F63F",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJarvis2Cad",
+    earnedTokenAddress: "0xcf9Dd1de1D02158B3d422779bd5184032674A6D1",
+    earnContractAddress: "0xcf9Dd1de1D02158B3d422779bd5184032674A6D1",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "jarvis-2cad",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "jCAD",
+      "CADC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://polygon.curve.fi/factory/23/deposit",
     network: "polygon"
   }
 ];

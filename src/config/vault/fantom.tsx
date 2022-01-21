@@ -30,7 +30,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "Maxi",
-    withdrawalFee: "0%",
+    withdrawalFee: "0.05%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     network: "fantom"
   },
