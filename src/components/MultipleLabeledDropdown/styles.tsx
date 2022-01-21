@@ -8,7 +8,8 @@ export const styles = theme => ({
       fontWeight: 700,
       fontSize: 15,
       padding: '11px 29px 0 15px',
-      border: `2px solid ${theme.palette.background.filters.outline}`,
+      border: props =>
+        props.noBorder ? 'none' : `2px solid ${theme.palette.background.filters.outline}`,
       borderRadius: '8px',
       height: '29px',
       textAlign: 'right',
