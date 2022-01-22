@@ -3506,5 +3506,40 @@ export const pools = [
     buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
     network: "avax",
     retireReason: "rewards"
+  },
+  {
+    id: "png-png",
+    logo: "single-assets/PNG.svg",
+    name: "PNG",
+    token: "PNG",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x60781C2586D68229fde47564546784ab3fACA982",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinV2PNG",
+    earnedTokenAddress: "0x808D5f0A62336917Da14fA9A10E9575B1040f71c",
+    earnContractAddress: "0x808D5f0A62336917Da14fA9A10E9575B1040f71c",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "PNG",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Pangolin",
+    assets: [
+      "PNG"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
+    network: "avax"
   }
 ];

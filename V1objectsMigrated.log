@@ -1,43 +1,42 @@
 [
   {
-    "id": "bsc vault: bifi-maxi",
-    "type": "synced"
-  },
-  {
-    "id": "heco vault: heco-bifi-maxi",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: fantom-bifi-maxi",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: polygon-bifi-maxi",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: jarvis-2cad",
+    "id": "bsc vault: cakev2-fuse-wbnb",
     "type": "Added"
   },
   {
-    "id": "polygon vault: jarvis-2jpy",
-    "type": "synced",
-    "logo-copied": "logo"
+    "id": "fantom vault: 0xdao-mim",
+    "type": "Added"
   },
   {
-    "id": "avax vault: avax-bifi-maxi",
-    "type": "synced"
+    "id": "fantom vault: 0xdao-tomb",
+    "type": "Added"
   },
   {
-    "id": "arbitrum vault: arbi-bifi-maxi",
-    "type": "synced"
+    "id": "fantom vault: 0xdao-wbtc",
+    "type": "Added"
   },
   {
-    "id": "celo vault: celo-bifi-maxi",
-    "type": "synced"
+    "id": "fantom vault: 0xdao-weth",
+    "type": "Added"
   },
   {
-    "id": "metis vault: metis-bifi-maxi",
-    "type": "synced"
+    "id": "fantom vault: oxd-oxd-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-spooky-tempered-clavier",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-paint-it-black",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: boo-btc-eth",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: png-png",
+    "type": "Added"
   }
 ]
