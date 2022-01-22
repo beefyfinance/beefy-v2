@@ -198,15 +198,22 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
     return false;
   }
 
-  // hide when neither name includes keyword nor keyword matches its tokens
-  const S = config.keyword.toLowerCase();
-  if (
-    !(vault.name.toLowerCase().includes(S) || vault.assets.find(S_TKN => S_TKN.toLowerCase() === S))
-  ) {
-    return false;
-  }
+	// hide when the given searchword is found neither in the vault's name nor among its 
+	// tokens or those of an involved boost (and accounting also along the way for the 
+	// standardly named wrapped version of the token)
+	const S = config.keyword?.toLowerCase();
+	if (S && !vault.name.toLowerCase().includes( S))	{
+		if (S.length < 3)
+			return false;
+		const O_TST = new RegExp( `^w?${S}$`);
+		if (!(vault.assets.find( S_TKN => S_TKN.toLowerCase().match( O_TST)) || 
+											vault.isGovVault && vault.earnedToken.toLowerCase().match( O_TST) || 
+											vault.isBoosted && vault.boosts.some( O => "active" === O.status && 
+											O.earnedToken.toLowerCase().match( O_TST))))
+			return false;
+	}
 
-  //hide when wallet no connected and my vaults = true
+  // hide when wallet not connected and my vaults = true
   if (!address && config.deposited) {
     return false;
   }
@@ -218,7 +225,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
 
   // default show
   return true;
-}
+} //function keepVault(
 
 function useSortedVaults(vaults, key, direction) {
   return useMemo(() => {
