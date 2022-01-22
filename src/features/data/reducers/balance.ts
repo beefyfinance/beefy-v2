@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import { fetchTokenBalanceAction } from '../actions/token-balance';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 
@@ -9,7 +11,7 @@ export interface BalanceState {
   byChainId: {
     [chainId: ChainEntity['id']]: {
       byTokenId: {
-        [tokenId: TokenEntity['id']]: number; // big number?
+        [tokenId: TokenEntity['id']]: BigNumber;
       };
     };
   };
@@ -23,6 +25,16 @@ export const balanceSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    // todo: handle actions
+    builder.addCase(fetchTokenBalanceAction.fulfilled, (sliceState, action) => {
+      const chainId = action.payload.chainId;
+
+      for (const tokenBalance of action.payload.data) {
+        if (sliceState.byChainId[chainId] === undefined) {
+          sliceState.byChainId[chainId] = { byTokenId: {} };
+        }
+
+        sliceState.byChainId[chainId].byTokenId[tokenBalance.tokenId] = tokenBalance.amount;
+      }
+    });
   },
 });

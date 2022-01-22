@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers';
-import { BoostContractData } from '../apis/boostContract';
+import { BoostContractData } from '../apis/boost-contract';
 import { getBoostContractApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';

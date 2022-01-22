@@ -1,9 +1,11 @@
 import { BeefyAPI } from './beefy';
 import { ConfigAPI } from './config';
-import { VaultContractAPI } from './vaultContract';
-import { BoostContractAPI } from './boostContract';
+import { VaultContractAPI } from './vault-contract';
+import { BoostContractAPI } from './boost-contract';
 import { ChainEntity } from '../entities/chain';
 import Web3 from 'web3';
+import { TokenBalanceAPI } from './token-balance';
+import { BoostBalanceAPI } from './boost-balance';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -21,39 +23,51 @@ export async function getConfigApi(): Promise<ConfigAPI> {
   return configApi;
 }
 
-const vaultContractApiByChainId: { [chainId: ChainEntity['id']]: VaultContractAPI } = {};
-export async function getVaultContractApi(chain: ChainEntity): Promise<VaultContractAPI> {
-  if (vaultContractApiByChainId[chain.id] === undefined) {
-    const web3 = await getWeb3Instance(chain);
-    console.debug(`Instanciating VaultContractAPI for chain ${chain.id}`);
-    vaultContractApiByChainId[chain.id] = new VaultContractAPI(web3, chain);
-  }
+export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {
+  // pick one RPC endpoint at random
+  // todo: not the smartest thing to do but good enough yet
+  const rpc = chain.rpc[~~(chain.rpc.length * Math.random())];
+  console.debug(`Instanciating Web3 for chain ${chain.id}`);
+  return new Web3(rpc);
+});
 
-  return vaultContractApiByChainId[chain.id];
-}
+export const getVaultContractApi = createFactoryWithCacheByChain(async chain => {
+  const web3 = await getWeb3Instance(chain);
+  console.debug(`Instanciating VaultContractAPI for chain ${chain.id}`);
+  return new VaultContractAPI(web3, chain);
+});
 
-const boostContractApiByChainId: { [chainId: ChainEntity['id']]: BoostContractAPI } = {};
-export async function getBoostContractApi(chain: ChainEntity): Promise<BoostContractAPI> {
-  if (boostContractApiByChainId[chain.id] === undefined) {
-    const web3 = await getWeb3Instance(chain);
-    console.debug(`Instanciating BoostContractAPI for chain ${chain.id}`);
-    boostContractApiByChainId[chain.id] = new BoostContractAPI(web3, chain);
-  }
-  return boostContractApiByChainId[chain.id];
-}
+export const getBoostContractApi = createFactoryWithCacheByChain(async chain => {
+  const web3 = await getWeb3Instance(chain);
+  console.debug(`Instanciating BoostContractAPI for chain ${chain.id}`);
+  return new BoostContractAPI(web3, chain);
+});
 
-// have a local cache of Web3 objects
-const web3InstancesByChainId: { [chainId: ChainEntity['id']]: Web3 } = {};
-async function getWeb3Instance(chain: ChainEntity): Promise<Web3> {
-  const chainId = chain.id;
+export const getTokenBalanceApi = createFactoryWithCacheByChain(async chain => {
+  const web3 = await getWeb3Instance(chain);
+  console.debug(`Instanciating TokenBalanceAPI for chain ${chain.id}`);
+  return new TokenBalanceAPI(web3, chain);
+});
 
-  // todo: do something with web3 modal
-  if (web3InstancesByChainId[chainId] === undefined) {
-    // pick one RPC endpoint at random
-    // todo: not the smartest thing to do but good enough yet
-    const rpc = chain.rpc[~~(chain.rpc.length * Math.random())];
-    console.debug(`Instanciating Web3 for chain ${chainId}`);
-    web3InstancesByChainId[chainId] = new Web3(rpc);
-  }
-  return web3InstancesByChainId[chainId];
+export const getBoostBalanceApi = createFactoryWithCacheByChain(async chain => {
+  const web3 = await getWeb3Instance(chain);
+  console.debug(`Instanciating BoostBalanceAPI for chain ${chain.id}`);
+  return new BoostBalanceAPI(web3, chain);
+});
+
+/**
+ * Creates a new factory function based on the input factory function
+ * Adds an instance cache by chain to have exactly one instance by chain
+ */
+function createFactoryWithCacheByChain<T>(
+  factoryFn: (chainId: ChainEntity) => Promise<T>
+): (chainId: ChainEntity) => Promise<T> {
+  const cacheByChainId: { [chainId: ChainEntity['id']]: T } = {};
+
+  return async (chain: ChainEntity): Promise<T> => {
+    if (cacheByChainId[chain.id] === undefined) {
+      cacheByChainId[chain.id] = await factoryFn(chain);
+    }
+    return cacheByChainId[chain.id];
+  };
 }

@@ -124,8 +124,8 @@ describe('TVL slice tests', () => {
       // replace new state in the full state
       state: {
         ...state,
-        entities: {
-          ...state.entities,
+        biz: {
+          ...state.biz,
           tvl: initiatedTvlState,
         },
       },

@@ -14,6 +14,7 @@ import { balanceSlice, BalanceState } from '../../data/reducers/balance';
 import { allowanceSlice, AllowanceState } from '../../data/reducers/allowance';
 import { boostsSlice, BoostsState } from '../../data/reducers/boosts';
 import { dataLoaderSlice, DataLoaderState } from '../../data/reducers/data-loader';
+import { walletSlice, WalletState } from '../../data/reducers/wallet';
 
 // TODO: WIP we can organise reducers in different categories, define what makes sense later
 export interface BeefyState {
@@ -23,15 +24,20 @@ export interface BeefyState {
   balanceReducer: any;
   entities: {
     chains: ChainsState;
-    prices: TokenPriceState;
-    vaults: VaultsState;
     tokens: TokensState;
+    vaults: VaultsState;
+    boosts: BoostsState;
+  };
+  biz: {
+    prices: TokenPriceState;
     tvl: TvlState;
     apy: ApyState;
     historicalApy: HistoricalApyState;
+  };
+  user: {
+    wallet: WalletState;
     balance: BalanceState;
     allowance: AllowanceState;
-    boosts: BoostsState;
   };
   ui: {
     dataLoader: DataLoaderState;
@@ -40,15 +46,20 @@ export interface BeefyState {
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
-  prices: tokenPriceSlice.reducer,
   vaults: vaultsSlice.reducer,
   tokens: tokensSlice.reducer,
+  boosts: boostsSlice.reducer,
+});
+const bizReducer = combineReducers<BeefyState['biz']>({
+  prices: tokenPriceSlice.reducer,
   tvl: tvlSlice.reducer,
   apy: apySlice.reducer,
   historicalApy: historicalApySlice.reducer,
+});
+const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,
   allowance: allowanceSlice.reducer,
-  boosts: boostsSlice.reducer,
+  wallet: walletSlice.reducer,
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
   dataLoader: dataLoaderSlice.reducer,
@@ -60,5 +71,7 @@ export const rootReducer = combineReducers<BeefyState>({
   pricesReducer,
   balanceReducer,
   entities: entitiesReducer,
+  biz: bizReducer,
+  user: userReducer,
   ui: uiReducer,
 });

@@ -3,6 +3,20 @@ import { BeefyState } from '../../redux/reducers';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 
+export const selectAllTokenByChain = createSelector(
+  // get a tiny bit of the data
+  (store: BeefyState) => store.entities.tokens.byChainId,
+  // get the user params
+  (_: BeefyState, chainId: ChainEntity['id']) => chainId,
+  // last function receives previous function outputs as parameters
+  (byChainId, chainId) => {
+    if (byChainId[chainId] === undefined) {
+      throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
+    }
+    return byChainId[chainId].allIds;
+  }
+);
+
 export const selectTokenById = createSelector(
   // get a tiny bit of the data
   (store: BeefyState) => store.entities.tokens.byChainId,

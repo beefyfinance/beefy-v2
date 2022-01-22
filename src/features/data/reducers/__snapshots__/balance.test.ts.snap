@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Balance slice tests should update state on fulfilled chain config list 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byTokenId": Object {
+        "BIFI": "10",
+        "banana-nfty-wbnb": "10",
+      },
+    },
+  },
+}
+`;

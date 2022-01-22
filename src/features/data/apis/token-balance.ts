@@ -13,22 +13,21 @@ import BigNumber from 'bignumber.js';
 const erc20Abi = _erc20Abi as AbiItem[];
 const multicallAbi = _multicallAbi as AbiItem[];
 
-interface TokenBalance {
+export interface TokenBalance {
   tokenId: TokenEntity['id'];
   amount: BigNumber;
 }
 
 export class TokenBalanceAPI {
-  constructor(protected rpc: Web3) {}
+  constructor(protected rpc: Web3, protected chain: ChainEntity) {}
 
   // maybe we want to re-render more often, we could make
   // this a generator instead
-  public async fetchTokenBalanceByChain(
-    chain: ChainEntity,
+  public async fetchTokenBalances(
     tokens: TokenEntity[],
     walletAddress: string
   ): Promise<TokenBalance[]> {
-    const mc = new MultiCall(this.rpc, chain.multicallAddress);
+    const mc = new MultiCall(this.rpc, this.chain.multicallAddress);
 
     const calls = tokens.map(token => {
       // skip virtual boost tokens

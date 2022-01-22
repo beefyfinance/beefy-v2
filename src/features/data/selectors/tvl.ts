@@ -4,7 +4,7 @@ import { VaultEntity } from '../entities/vault';
 
 export const selectVaultPricePerFullShare = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.tvl.byVaultId,
+  (store: BeefyState) => store.biz.tvl.byVaultId,
   // get the user passed ID
   (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   // last function receives previous function outputs as parameters
