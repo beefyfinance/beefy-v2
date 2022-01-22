@@ -38,7 +38,7 @@ Object {
     },
     "one-bifi-gov": Object {
       "chainId": "harmony",
-      "excludedId": undefined,
+      "excludedId": null,
       "id": "one-bifi-gov",
       "isGovVault": true,
       "name": "BIFI Earnings Pool",

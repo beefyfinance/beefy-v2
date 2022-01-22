@@ -29,6 +29,9 @@ export async function getBeefyTestingInitialState(): Promise<BeefyState> {
         // we disable rerialization altogether
         // a better solution would be to allow serialization of the store
         serializableCheck: false,
+
+        // this makes the old code bug
+        immutableCheck: false,
       }),
   });
 

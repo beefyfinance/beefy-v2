@@ -1,6 +1,7 @@
 import { store } from '../../../store';
 import { ChainEntity } from '../entities/chain';
 import { selectAllChains } from '../selectors/chains';
+import { poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchBoostContractDataAction } from './boost-contract';
 import { fetchBoostsByChainIdAction } from './boosts';
@@ -11,6 +12,8 @@ import {
   fetchStandardVaultContractDataAction,
 } from './vault-contract';
 import { fetchVaultByChainIdAction } from './vaults';
+
+let pollStopFns: PollStop[] = [];
 
 /**
  * Fetch all necessary information for the home page
@@ -61,5 +64,35 @@ export async function initHomeData() {
         store.dispatch(fetchStandardVaultContractDataAction({ chainId: chain.id })),
       ]);
     })();
+  }
+
+  // cancel regular polls if we already have some
+  for (const stop of pollStopFns) {
+    stop();
+  }
+  pollStopFns = [];
+
+  // now set regular calls to update prices
+  pollStopFns.push(
+    poll(async () => {
+      return Promise.all([
+        store.dispatch(fetchPricesAction({})),
+        store.dispatch(fetchLPPricesAction({})),
+        store.dispatch(fetchApyAction({})),
+      ]);
+    }, 45 * 1000)
+  );
+
+  // now set regular calls to update contract data
+  for (const chain of chains) {
+    pollStopFns.push(
+      poll(async () => {
+        return Promise.all([
+          store.dispatch(fetchBoostContractDataAction({ chainId: chain.id })),
+          store.dispatch(fetchGovVaultContractDataAction({ chainId: chain.id })),
+          store.dispatch(fetchStandardVaultContractDataAction({ chainId: chain.id })),
+        ]);
+      }, 60 * 1000)
+    );
   }
 }
