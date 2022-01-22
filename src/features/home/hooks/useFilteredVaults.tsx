@@ -203,7 +203,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
 	// for the standardly named wrapped version of a token.
 	const S = config.keyword?.toLowerCase();
 	if (S && !vault.name.toLowerCase().includes( S))	{
-		if (S.length < 3)
+		if (S.length < 2)
 			return false;
 		const O_TST = new RegExp( `^w?${S}$`), 
 					O_NOW = Date.now() / 1000;
