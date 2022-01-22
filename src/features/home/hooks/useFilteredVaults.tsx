@@ -198,27 +198,29 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
     return false;
   }
 
-	// hide when the given searchword is found neither in the vault's name nor among its 
-	// tokens or those of an involved boost (and accounting also along the way for the 
-	// standardly named wrapped version of the token)
+	// Hide when the given searchword is found neither in the vault's name nor among its 
+	// tokens or those of an involved, active boost. "Fuzzily" account also along the way 
+	// for the standardly named wrapped version of a token.
 	const S = config.keyword?.toLowerCase();
 	if (S && !vault.name.toLowerCase().includes( S))	{
 		if (S.length < 3)
 			return false;
-		const O_TST = new RegExp( `^w?${S}$`);
+		const O_TST = new RegExp( `^w?${S}$`), 
+					O_NOW = Date.now() / 1000;
 		if (!(vault.assets.find( S_TKN => S_TKN.toLowerCase().match( O_TST)) || 
 											vault.isGovVault && vault.earnedToken.toLowerCase().match( O_TST) || 
 											vault.isBoosted && vault.boosts.some( O => "active" === O.status && 
-											O.earnedToken.toLowerCase().match( O_TST))))
+																							O_NOW < parseInt( O.periodFinish) && 
+																							O.earnedToken.toLowerCase().match( O_TST))))
 			return false;
-	}
+	} //if (S &&
 
   // hide when wallet not connected and my vaults = true
   if (!address && config.deposited) {
     return false;
   }
 
-  //hide when wallet no connected and zero = true
+  // hide when wallet no connected and zero = true
   if (!address && config.zero) {
     return false;
   }
