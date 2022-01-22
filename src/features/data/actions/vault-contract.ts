@@ -53,7 +53,7 @@ export const fetchStandardVaultContractDataAction = createAsyncThunk<
   const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
     selectVaultById(state, vaultId)
   );
-  const vaults = allVaults.filter(v => !isGovVault) as VaultStandard[];
+  const vaults = allVaults.filter(v => !isGovVault(v)) as VaultStandard[];
 
   const data = await api.fetchStandardVaultsContractData(state, vaults);
   return { chainId, data, state };

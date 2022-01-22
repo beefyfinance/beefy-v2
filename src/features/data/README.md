@@ -99,6 +99,7 @@ BONUS:
 - What is a reward?
 - Allowances are fetched aggressively, is this necessary? Can't we just fetch allowances when looking at a vault?
 - Only some of the gov vaults have excluded links, is this normal?
+- Is this normal behavior that rewardRate and periodFinish returns undefined? or am I querying the wrong address?
 
 # ANSWERED
 

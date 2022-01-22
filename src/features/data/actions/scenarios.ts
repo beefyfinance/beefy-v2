@@ -13,6 +13,38 @@ import {
 } from './vault-contract';
 import { fetchVaultByChainIdAction } from './vaults';
 
+/**
+ * This is just for reference and help developing the fetch methods
+ */
+const actionTypeDependencies: { [actionType: string]: string[] } = {
+  // config actions don't have any dependencies
+  [fetchChainConfigs.typePrefix]: [],
+  [fetchVaultByChainIdAction.typePrefix]: [fetchChainConfigs.typePrefix],
+  [fetchBoostsByChainIdAction.typePrefix]: [fetchChainConfigs.typePrefix],
+
+  // fetching prices from beefy api don't have dependencies
+  [fetchPricesAction.typePrefix]: [],
+  [fetchLPPricesAction.typePrefix]: [],
+  [fetchApyAction.typePrefix]: [],
+
+  // if we want to process contract data we need chains, prices, and vault data
+  [fetchStandardVaultContractDataAction.typePrefix]: [
+    fetchVaultByChainIdAction.typePrefix,
+    fetchBoostsByChainIdAction.typePrefix,
+    fetchPricesAction.typePrefix,
+    fetchLPPricesAction.typePrefix,
+  ],
+
+  // for gov vaults it's the same as standard vaults, but we need to handle exclusions so we also need standard vaults
+  [fetchGovVaultContractDataAction.typePrefix]: [fetchStandardVaultContractDataAction.typePrefix],
+
+  // for boost contracts, we need all vaults contract data to be loaded
+  [fetchBoostContractDataAction.typePrefix]: [
+    fetchStandardVaultContractDataAction.typePrefix,
+    fetchGovVaultContractDataAction.typePrefix,
+  ],
+};
+
 let pollStopFns: PollStop[] = [];
 
 /**
@@ -22,21 +54,25 @@ let pollStopFns: PollStop[] = [];
  * TODO: handle errors
  */
 export async function initHomeData() {
+  // start fetching chain config
   const chainsConfigPromise = store.dispatch(fetchChainConfigs());
 
   // we can start fetching prices right now and await them later
   const pricesPromise = Promise.all([
     store.dispatch(fetchPricesAction({})),
     store.dispatch(fetchLPPricesAction({})),
-    store.dispatch(fetchApyAction({})),
   ]);
+
+  // we can start fetching apy, it will arrive when it wants, nothing depends on it
+  store.dispatch(fetchApyAction({}));
 
   // first, we need our chains
   await chainsConfigPromise;
 
   // then, we work by chain
   const state = store.getState();
-  const chains = selectAllChains(state);
+  //const chains = selectAllChains(state);
+  const chains = [{ id: 'cronos' }];
 
   const vaultBoostPromisesByChain: { [chainId: ChainEntity['id']]: Promise<any> } = {};
   for (const chain of chains) {
@@ -57,14 +93,17 @@ export async function initHomeData() {
       // we need all data for a chain to work
       await vaultBoostPromisesByChain[chain.id];
 
-      // now we can fetch contract data
-      await Promise.all([
-        store.dispatch(fetchBoostContractDataAction({ chainId: chain.id })),
-        store.dispatch(fetchGovVaultContractDataAction({ chainId: chain.id })),
-        store.dispatch(fetchStandardVaultContractDataAction({ chainId: chain.id })),
-      ]);
+      // we need to load standard vault data first
+      await store.dispatch(fetchStandardVaultContractDataAction({ chainId: chain.id }));
+      // then we can fetch gov vault data
+      await store.dispatch(fetchGovVaultContractDataAction({ chainId: chain.id }));
+      // finally we can fetch boost data
+      await store.dispatch(fetchBoostContractDataAction({ chainId: chain.id }));
     })();
   }
+
+  // disable for now, debugging stuff
+  //return;
 
   // cancel regular polls if we already have some
   for (const stop of pollStopFns) {
@@ -87,11 +126,12 @@ export async function initHomeData() {
   for (const chain of chains) {
     pollStopFns.push(
       poll(async () => {
-        return Promise.all([
-          store.dispatch(fetchBoostContractDataAction({ chainId: chain.id })),
-          store.dispatch(fetchGovVaultContractDataAction({ chainId: chain.id })),
-          store.dispatch(fetchStandardVaultContractDataAction({ chainId: chain.id })),
-        ]);
+        // we need to load standard vault data first
+        await store.dispatch(fetchStandardVaultContractDataAction({ chainId: chain.id }));
+        // then we can fetch gov vault data
+        await store.dispatch(fetchGovVaultContractDataAction({ chainId: chain.id }));
+        // finally we can fetch boost data
+        await store.dispatch(fetchBoostContractDataAction({ chainId: chain.id }));
       }, 60 * 1000)
     );
   }

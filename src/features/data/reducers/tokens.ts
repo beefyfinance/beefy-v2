@@ -36,7 +36,7 @@ export const tokensSlice = createSlice({
         }
 
         // add earned token data
-        const earnedTokenId = chainId + '-' + vault.earnedToken;
+        const earnedTokenId = vault.earnedToken;
         if (sliceState.byId[earnedTokenId] === undefined) {
           const token: TokenEntity = {
             id: earnedTokenId,

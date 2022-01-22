@@ -19,7 +19,13 @@ export const selectBoostById = createSelector(
 
 export const selectBoostsByChainId = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState, chainId: ChainEntity['id']) => store.entities.boosts.byChainId[chainId],
+  (store: BeefyState, chainId: ChainEntity['id']) => {
+    if (store.entities.boosts.byChainId[chainId] === undefined) {
+      throw new Error(`selectBoostsByChainId: Could not find boost data for chain ${chainId}`);
+    }
+
+    return store.entities.boosts.byChainId[chainId];
+  },
   // last function receives previous function outputs as parameters
   vaultsChainId => vaultsChainId.allBoostsIds
 );

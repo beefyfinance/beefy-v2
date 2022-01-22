@@ -52,6 +52,7 @@ export class BoostContractAPI {
 
     const [results] = (await mc.all([calls])) as AllValuesAsString<BoostContractData>[][];
 
+    console.log({ results });
     // format strings as numbers
     return results.map(result => {
       return {

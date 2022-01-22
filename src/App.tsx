@@ -23,7 +23,7 @@ export const App = () => {
   const { wallet } = useSelector((state: any) => ({
     wallet: state.walletReducer,
   }));
-
+  /*
   React.useEffect(() => {
     const updateBalances = async () => {
       await dispatch(reduxActions.balance.fetchBalances());
@@ -60,7 +60,7 @@ export const App = () => {
       console.log(`Load time is ${(end - now) / 1000}s`);
     };
     initiate();
-  }, [dispatch]);
+  }, [dispatch]);*/
 
   React.useEffect(() => {
     localStorage.setItem('nightMode', JSON.stringify(isNightMode));

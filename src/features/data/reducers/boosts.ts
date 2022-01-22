@@ -69,12 +69,12 @@ export const boostsSlice = createSlice({
         }
 
         // add to chain id index
-        if (sliceState.byChainId[boost.vaultId] === undefined) {
-          sliceState.byChainId[boost.vaultId] = { allBoostsIds: [], activeBoostsIds: [] };
+        if (sliceState.byChainId[chainId] === undefined) {
+          sliceState.byChainId[chainId] = { allBoostsIds: [], activeBoostsIds: [] };
         }
-        sliceState.byChainId[boost.vaultId].allBoostsIds.push(boost.id);
+        sliceState.byChainId[chainId].allBoostsIds.push(boost.id);
         if (isBoostActive(boost)) {
-          sliceState.byChainId[boost.vaultId].activeBoostsIds.push(boost.id);
+          sliceState.byChainId[chainId].activeBoostsIds.push(boost.id);
         }
       }
     });

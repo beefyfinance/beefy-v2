@@ -21,6 +21,7 @@ import { pools as fantomBoosts } from '../../../config/boost/fantom';
 import { pools as fuseBoosts } from '../../../config/boost/fuse';
 import { pools as harmonyBoosts } from '../../../config/boost/harmony';
 import { pools as hecoBoosts } from '../../../config/boost/heco';
+import { pools as metisBoosts } from '../../../config/boost/metis';
 import { pools as moonriverBoosts } from '../../../config/boost/moonriver';
 import { pools as polygonBoosts } from '../../../config/boost/polygon';
 import { config as chainConfigs } from '../../../config/config';
@@ -159,6 +160,7 @@ const boostsByChainId: {
   fuse: fuseBoosts,
   harmony: harmonyBoosts,
   heco: hecoBoosts,
+  metis: metisBoosts,
   moonriver: moonriverBoosts,
   polygon: polygonBoosts,
 };

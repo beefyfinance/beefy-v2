@@ -77,7 +77,7 @@ export class VaultContractAPI {
 
     const calls: ShapeWithLabel[] = [];
     for (const vault of vaults) {
-      const token = selectTokenById(state, vault.oracleId);
+      const token = selectTokenById(state, vault.earnedTokenId);
       if (!isTokenErc20(token)) {
         console.info(
           `VaultContractAPI.fetchStandardVaultsContractData: skipping non erc20 token ${token.id}`

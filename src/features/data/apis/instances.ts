@@ -52,7 +52,7 @@ async function getWeb3Instance(chain: ChainEntity): Promise<Web3> {
     // pick one RPC endpoint at random
     // todo: not the smartest thing to do but good enough yet
     const rpc = chain.rpc[~~(chain.rpc.length * Math.random())];
-    console.debug('Instanciating Web3');
+    console.debug(`Instanciating Web3 for chain ${chainId}`);
     web3InstancesByChainId[chainId] = new Web3(rpc);
   }
   return web3InstancesByChainId[chainId];
