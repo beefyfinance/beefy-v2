@@ -18562,5 +18562,41 @@ export const pools = [
     stratType: "StratLP",
     network: "bsc",
     retireReason: "rewards"
+  },
+  {
+    id: "cakev2-fuse-wbnb",
+    name: "FUSE-BNB LP",
+    token: "FUSE-BNB LP",
+    tokenDescription: "PancakeSwap",
+    tokenAddress: "0x6483F166b9E4310A165a55FEa04F867499aded06",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCakeV2FUSE-BNB",
+    earnedTokenAddress: "0x834DdeE66c381811ce0233B4669ddC3b97fd08cd",
+    earnContractAddress: "0x834DdeE66c381811ce0233B4669ddC3b97fd08cd",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "cakev2-fuse-wbnb",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "PancakeSwap",
+    assets: [
+      "FUSE",
+      "BNB"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://pancakeswap.finance/add/0x5857c96DaE9cF8511B08Cb07f85753C472D36Ea3/BNB",
+    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x5857c96DaE9cF8511B08Cb07f85753C472D36Ea3",
+    network: "bsc"
   }
 ];
