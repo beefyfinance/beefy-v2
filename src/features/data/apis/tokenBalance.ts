@@ -4,7 +4,6 @@ import { isTokenBoost, isTokenErc20, isTokenNative, TokenEntity } from '../entit
 
 import _erc20Abi from '../../../config/abi/erc20.json';
 import _multicallAbi from '../../../config/abi/multicall.json';
-import _boostAbi from '../../../config/abi/boost.json';
 import Web3 from 'web3';
 import { ChainEntity } from '../entities/chain';
 import { AllValuesAsString } from '../utils/types-utils';
@@ -16,7 +15,7 @@ const multicallAbi = _multicallAbi as AbiItem[];
 
 interface TokenBalance {
   tokenId: TokenEntity['id'];
-  walletBalance: BigNumber;
+  amount: BigNumber;
 }
 
 export class BalanceAPI {
@@ -42,13 +41,13 @@ export class BalanceAPI {
         const tokenContract = new this.rpc.eth.Contract(multicallAbi, mc.contract);
         return {
           tokenId: token.id,
-          walletBalance: tokenContract.methods.getEthBalance(walletAddress),
+          amount: tokenContract.methods.getEthBalance(walletAddress),
         };
       } else if (isTokenErc20(token)) {
         const tokenContract = new this.rpc.eth.Contract(erc20Abi, token.contractAddress);
         return {
           tokenId: token.id,
-          walletBalance: tokenContract.methods.balanceOf(walletAddress),
+          amount: tokenContract.methods.balanceOf(walletAddress),
         };
       } else {
         throw new Error(
@@ -63,7 +62,7 @@ export class BalanceAPI {
     return results.map(result => {
       return {
         tokenId: result.tokenId,
-        walletBalance: new BigNumber(result.walletBalance),
+        amount: new BigNumber(result.amount),
       } as TokenBalance;
     });
   }

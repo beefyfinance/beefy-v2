@@ -72,7 +72,18 @@ export async function initHomeData() {
   // then, we work by chain
   const state = store.getState();
   //const chains = selectAllChains(state);
-  const chains = [{ id: 'cronos' }];
+  //const chains = [{ id: 'arbitrum' }]; // ok
+  //const chains = [{ id: 'avax' }]; // ok
+  const chains = [{ id: 'bsc' }];
+  //const chains = [{ id: 'celo' }]; // ok
+  //const chains = [{ id: 'cronos' }]; // ok
+  //const chains = [{ id: 'fantom' }]; // ok
+  //const chains = [{ id: 'fuse' }]; // ok
+  //const chains = [{ id: 'harmony' }]; // ok
+  //const chains = [{ id: 'heco' }]; // ok
+  //const chains = [{ id: 'metis' }]; // ok
+  //const chains = [{ id: 'moonriver' }]; // ok
+  //const chains = [{ id: 'polygon' }]; // ok
 
   const vaultBoostPromisesByChain: { [chainId: ChainEntity['id']]: Promise<any> } = {};
   for (const chain of chains) {
@@ -103,7 +114,7 @@ export async function initHomeData() {
   }
 
   // disable for now, debugging stuff
-  //return;
+  return;
 
   // cancel regular polls if we already have some
   for (const stop of pollStopFns) {

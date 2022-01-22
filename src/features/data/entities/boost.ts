@@ -23,8 +23,12 @@ export interface BoostEntity {
    * so we created a fake "unique token identifier"
    * and for boosts we do: boostSymbol = ${boost.token}${boost.id}Boost;
    */
-  // todo: is this useful?
   earnedTokenId: TokenEntity['id'];
+
+  /**
+   * IDK what this is, but we query it
+   */
+  earnContractAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that boost

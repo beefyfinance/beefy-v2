@@ -15,9 +15,7 @@ export const fetchLPPricesAction = createAsyncThunk<BeefyAPITokenPricesResponse,
   'prices/fetchLPPrices',
   async () => {
     const api = await getBeefyApi();
-    console.info('Fetching lp token prices');
     const prices = await api.getLPs();
-    console.log({ prices });
     return prices;
   }
 );

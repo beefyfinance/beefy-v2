@@ -22,7 +22,7 @@ export interface GovVaultBalance {
 /**
  * Get vault contract data
  */
-export class VaultContractAPI {
+export class VaultBalanceAPI {
   constructor(protected web3: Web3, protected chain: ChainEntity) {}
 
   // maybe we want to re-render more often, we could make

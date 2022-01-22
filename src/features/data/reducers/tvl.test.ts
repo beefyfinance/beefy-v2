@@ -61,7 +61,7 @@ describe('TVL slice tests', () => {
     // we have loaded some entities already
     const state = await getBeefyTestingInitialState();
     const payload: FetchStandardVaultFulfilledPayload = {
-      chainId: 'harmony',
+      chainId: 'bsc',
       data: [
         {
           id: 'banana-cyt-bnb',

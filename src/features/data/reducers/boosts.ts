@@ -50,6 +50,7 @@ export const boostsSlice = createSlice({
           assets: apiBoost.assets,
           contractAddress: apiBoost.earnContractAddress,
           earnedTokenId: apiBoost.earnedOracleId,
+          earnContractAddress: apiBoost.earnContractAddress,
           logo: apiBoost.logo,
           name: apiBoost.name,
           partnerIds: apiBoost.partners.map(p => p.website),

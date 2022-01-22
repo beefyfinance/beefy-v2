@@ -1,15 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchBoostsByChainIdAction } from '../actions/boosts';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
+import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
  * State containing Vault infos
  */
-export type TokensState = NormalizedEntity<TokenEntity>;
-export const initialTokensState: TokensState = { byId: {}, allIds: [] };
-
+export type TokensState = {
+  // we need to split by chain because tokens from different chains have the same ids
+  byChainId: {
+    [chainId: ChainEntity['id']]: {
+      byId: {
+        [id: string]: TokenEntity;
+      };
+      allIds: string[];
+    };
+  };
+};
+export const initialTokensState: TokensState = { byChainId: {} };
 export const tokensSlice = createSlice({
   name: 'tokens',
   initialState: initialTokensState,
@@ -21,7 +31,11 @@ export const tokensSlice = createSlice({
     builder.addCase(fetchVaultByChainIdAction.fulfilled, (sliceState, action) => {
       for (const vault of action.payload.pools) {
         const chainId = vault.network;
-        if (sliceState.byId[vault.oracleId] === undefined) {
+        if (sliceState.byChainId[chainId] === undefined) {
+          sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
+        }
+
+        if (sliceState.byChainId[chainId].byId[vault.oracleId] === undefined) {
           const token: TokenEntity = {
             id: vault.oracleId,
             chainId: chainId,
@@ -31,13 +45,13 @@ export const tokensSlice = createSlice({
             buyUrl: null,
             type: 'erc20',
           };
-          sliceState.byId[token.id] = token;
-          sliceState.allIds.push(token.id);
+          sliceState.byChainId[chainId].byId[token.id] = token;
+          sliceState.byChainId[chainId].allIds.push(token.id);
         }
 
         // add earned token data
         const earnedTokenId = vault.earnedToken;
-        if (sliceState.byId[earnedTokenId] === undefined) {
+        if (sliceState.byChainId[chainId].byId[earnedTokenId] === undefined) {
           const token: TokenEntity = {
             id: earnedTokenId,
             chainId: chainId,
@@ -47,8 +61,8 @@ export const tokensSlice = createSlice({
             buyUrl: null,
             type: 'erc20',
           };
-          sliceState.byId[token.id] = token;
-          sliceState.allIds.push(token.id);
+          sliceState.byChainId[chainId].byId[token.id] = token;
+          sliceState.byChainId[chainId].allIds.push(token.id);
         }
       }
     });
@@ -57,7 +71,11 @@ export const tokensSlice = createSlice({
     builder.addCase(fetchBoostsByChainIdAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
       for (const boost of action.payload.boosts) {
-        if (sliceState.byId[boost.earnedOracleId] === undefined) {
+        if (sliceState.byChainId[chainId] === undefined) {
+          sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
+        }
+
+        if (sliceState.byChainId[chainId].byId[boost.earnedOracleId] === undefined) {
           const token: TokenEntity = {
             id: boost.earnedOracleId,
             chainId: chainId,
@@ -67,8 +85,8 @@ export const tokensSlice = createSlice({
             buyUrl: null,
             type: 'erc20',
           };
-          sliceState.byId[token.id] = token;
-          sliceState.allIds.push(token.id);
+          sliceState.byChainId[chainId].byId[token.id] = token;
+          sliceState.byChainId[chainId].allIds.push(token.id);
         }
       }
     });

@@ -100,6 +100,8 @@ BONUS:
 - Allowances are fetched aggressively, is this necessary? Can't we just fetch allowances when looking at a vault?
 - Only some of the gov vaults have excluded links, is this normal?
 - Is this normal behavior that rewardRate and periodFinish returns undefined? or am I querying the wrong address?
+- What is the expected behavior when price is not returned by /lp api or /prices. Ex: pool blizzard-blzd-bnb-eol has oracleId of blizzard-blzd-bnb, which is not present in the api. Current behavior: I think it's because they rug, so token price is 0 by default, but we log a console warning.
+- What is boost.earnContractAddress
 
 # ANSWERED
 

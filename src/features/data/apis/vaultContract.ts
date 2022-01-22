@@ -77,14 +77,14 @@ export class VaultContractAPI {
 
     const calls: ShapeWithLabel[] = [];
     for (const vault of vaults) {
-      const token = selectTokenById(state, vault.earnedTokenId);
-      if (!isTokenErc20(token)) {
+      const earnedToken = selectTokenById(state, this.chain.id, vault.earnedTokenId);
+      if (!isTokenErc20(earnedToken)) {
         console.info(
-          `VaultContractAPI.fetchStandardVaultsContractData: skipping non erc20 token ${token.id}`
+          `VaultContractAPI.fetchStandardVaultsContractData: skipping non erc20 token ${earnedToken.id}`
         );
         continue;
       }
-      const tokenContract = new this.web3.eth.Contract(vaultAbi, token.contractAddress);
+      const tokenContract = new this.web3.eth.Contract(vaultAbi, earnedToken.contractAddress);
       calls.push({
         id: vault.id,
         balance: tokenContract.methods.balance(),

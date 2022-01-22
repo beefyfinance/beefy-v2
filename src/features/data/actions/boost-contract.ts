@@ -24,10 +24,11 @@ export const fetchBoostContractDataAction = createAsyncThunk<
   const state = getState();
   const chain = selectChainById(state, chainId);
   const api = await getBoostContractApi(chain);
+
   // maybe have a way to retrieve those easily
   const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>
     selectBoostById(state, vaultId)
   );
-  const data = await api.fetchBoostContractData(state, boosts);
+  const data = await api.fetchBoostContractData(boosts);
   return { chainId, data, state };
 });

@@ -60,7 +60,7 @@ export const tvlSlice = createSlice({
         const totalStaked = govVaultContractData.totalStaked;
 
         const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
-        const oracleToken = selectTokenById(state, vault.oracleId);
+        const oracleToken = selectTokenById(state, action.payload.chainId, vault.oracleId);
         const price = selectTokenPriceByTokenId(state, oracleToken.id);
 
         const vaultRawTvl = totalStaked
@@ -103,7 +103,7 @@ export const tvlSlice = createSlice({
       let totalTvl = sliceState.totalTvl;
       for (const vaultContractData of action.payload.data) {
         const vault = selectVaultById(state, vaultContractData.id) as VaultStandard;
-        const oracleToken = selectTokenById(state, vault.oracleId);
+        const oracleToken = selectTokenById(state, action.payload.chainId, vault.oracleId);
         const price = selectTokenPriceByTokenId(state, oracleToken.id);
 
         const vaultTvl = vaultContractData.balance
@@ -148,7 +148,7 @@ export const tvlSlice = createSlice({
         const boost = selectBoostById(state, boostContractData.id);
         const vault = selectVaultById(state, boost.vaultId);
 
-        const token = selectTokenById(state, vault.oracleId);
+        const token = selectTokenById(state, action.payload.chainId, vault.oracleId);
         const tokenPrice = selectTokenPriceByTokenId(state, token.id);
         const ppfs = selectVaultPricePerFullShare(state, vault.id);
 

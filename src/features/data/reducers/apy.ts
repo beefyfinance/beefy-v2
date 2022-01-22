@@ -49,9 +49,9 @@ export const apySlice = createSlice({
         const boost = selectBoostById(state, boostContractData.id);
         const vault = selectVaultById(state, boost.vaultId);
 
-        const token = selectTokenById(state, vault.oracleId);
+        const token = selectTokenById(state, action.payload.chainId, vault.oracleId);
         const tokenPrice = selectTokenPriceByTokenId(state, token.id);
-        const earnedToken = selectTokenById(state, boost.earnedTokenId);
+        const earnedToken = selectTokenById(state, action.payload.chainId, boost.earnedTokenId);
         const earnedTokenPrice = selectTokenPriceByTokenId(state, earnedToken.id);
 
         const totalStakedInUsd = boostContractData.totalStaked

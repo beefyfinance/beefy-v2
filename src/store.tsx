@@ -4,7 +4,17 @@ import { rootReducer } from './features/redux/reducers';
 // https://coderwall.com/p/pafnew/redux-middleware-logger
 // debug middleware for when redux browser extension is not helpful
 const loggerMiddleware = store => next => action => {
-  console.group(action.type);
+  let prefix = '';
+
+  if (action.type.endsWith('/rejected')) {
+    prefix = '❌❌❌ ';
+  } else if (action.type.endsWith('/fulfilled')) {
+    prefix = '✅ ';
+  } else if (action.type.endsWith('/pending')) {
+    prefix = '👀 ';
+  }
+
+  console.group(prefix + action.type);
   try {
     const oldState = store.getState();
     console.log('current state', oldState);
