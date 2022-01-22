@@ -5427,12 +5427,12 @@ export const pools = [
   },
   {
     id: "0xdao-wbtc",
-    logo: "single-assets/BTC.svg",
+    logo: "single-assets/WBTC.svg",
     name: "WBTC",
     token: "WBTC",
     tokenDescription: "0xDAO",
     tokenAddress: "0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    tokenDecimals: 18,
+    tokenDecimals: 8,
     tokenDescriptionUrl: "#",
     earnedToken: "mooOXDBTC",
     earnedTokenAddress: "0xa8dCAEd8C1eb9c37653Ac7f9060e90BdA0256553",
@@ -5453,7 +5453,7 @@ export const pools = [
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
-      "AUDIT",
+      "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
     stratType: "SingleStake",
@@ -5557,7 +5557,7 @@ export const pools = [
     assets: [
       "BOO",
       "USDC",
-      "WFTM"
+      "FTM"
     ],
     risks: [
       "COMPLEXITY_LOW",
@@ -5595,7 +5595,7 @@ export const pools = [
     assets: [
       "BEETS",
       "BRUSH",
-      "WFTM"
+      "FTM"
     ],
     risks: [
       "COMPLEXITY_LOW",
@@ -5612,8 +5612,8 @@ export const pools = [
   },
   {
     id: "boo-btc-eth",
-    name: "BTC-ETH LP",
-    token: "BTC-ETH LP",
+    name: "WBTC-ETH LP",
+    token: "WBTC-ETH LP",
     tokenDescription: "SpookySwap",
     tokenAddress: "0xEc454EdA10accdD66209C57aF8C12924556F3aBD",
     tokenDecimals: 18,
@@ -5630,7 +5630,7 @@ export const pools = [
     status: "active",
     platform: "SpookySwap",
     assets: [
-      "BTC",
+      "WBTC",
       "ETH"
     ],
     risks: [
@@ -5645,6 +5645,113 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d&outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
+    network: "fantom"
+  },
+  {
+    id: "0xdao-wftm",
+    logo: "single-assets/FTM.png",
+    name: "FTM",
+    token: "FTM",
+    tokenDescription: "0xDAO",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDFTM",
+    earnedTokenAddress: "0x3D6AA308a59311D57456c2E968AdC1Dd3628869a",
+    earnContractAddress: "0x3D6AA308a59311D57456c2E968AdC1Dd3628869a",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "WFTM",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Others",
+    assets: [
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=FTM",
+    network: "fantom"
+  },
+  {
+    id: "0xdao-usdc",
+    logo: "single-assets/USDC.svg",
+    name: "USDC",
+    token: "USDC",
+    tokenDescription: "0xDAO",
+    tokenAddress: "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    tokenDecimals: 6,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDUSDC",
+    earnedTokenAddress: "0xc27bF3Bbafee07a8d91048a6bF665286461F07c2",
+    earnContractAddress: "0xc27bF3Bbafee07a8d91048a6bF665286461F07c2",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "USDC",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Others",
+    assets: [
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    network: "fantom"
+  },
+  {
+    id: "0xdao-dai",
+    logo: "single-assets/DAI.svg",
+    name: "DAI",
+    token: "DAI",
+    tokenDescription: "0xDAO",
+    tokenAddress: "0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDDAI",
+    earnedTokenAddress: "0x80274861F0EB0a3dad0688040DBEA74b850C6b8c",
+    earnContractAddress: "0x80274861F0EB0a3dad0688040DBEA74b850C6b8c",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "DAI",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Others",
+    assets: [
+      "DAI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     network: "fantom"
   }
 ];

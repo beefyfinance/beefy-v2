@@ -1,42 +1,31 @@
 [
   {
-    "id": "bsc vault: cakev2-fuse-wbnb",
+    "id": "fantom vault: 0xdao-wftm",
     "type": "Added"
   },
   {
-    "id": "fantom vault: 0xdao-mim",
+    "id": "fantom vault: 0xdao-usdc",
     "type": "Added"
   },
   {
-    "id": "fantom vault: 0xdao-tomb",
+    "id": "fantom vault: 0xdao-dai",
     "type": "Added"
   },
   {
     "id": "fantom vault: 0xdao-wbtc",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: 0xdao-weth",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: oxd-oxd-usdc",
-    "type": "Added"
+    "type": "synced",
+    "logo-copied": "logo"
   },
   {
     "id": "fantom vault: beets-spooky-tempered-clavier",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: beets-paint-it-black",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: boo-btc-eth",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-png",
-    "type": "Added"
+    "type": "synced"
   }
 ]
