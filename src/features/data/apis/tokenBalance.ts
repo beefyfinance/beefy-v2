@@ -18,7 +18,7 @@ interface TokenBalance {
   amount: BigNumber;
 }
 
-export class BalanceAPI {
+export class TokenBalanceAPI {
   constructor(protected rpc: Web3) {}
 
   // maybe we want to re-render more often, we could make
