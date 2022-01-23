@@ -21,22 +21,36 @@
     [x] Config (chains, vaults, boosts)
     [x] Vault contract data
     [x] Boost contract data
-    [~] Balances
+    [x] Balances
     [ ] Allowances
+    [ ] Wallet
 
 [ ] Create new reducers using new TS types
 
     [x] Config (chains, vaults, boosts)
     [x] TVL? (need some unit tests to make sure I didn't fuck it up)
     [x] APY
-    [~] Balances
+    [x] Balances
     [ ] Allowances
+    [ ] Wallet
 
-[ ] Code cleanup
+[ ] Fetch scenario for the home page
 
-    [ ] remove unused price mocks
+    [x] prices
+    [x] Config (chains, vaults, boosts)
+    [x] Chain data (vaults, boosts)
+    [ ] Balances
+    [ ] Allowances
+    [ ] Wallet
+
+[ ] Code cleanup & Testing
+
+    [x] remove unused price mocks
     [ ] reorganize files
     [ ] remove unnecessary comments
+    [ ] ensure TVL and APY is computed properly
+    [ ] ensure user balance is computed properly
+    [ ] ensure user allowances are computed properly
 
 [ ] Rework components to use new reducers
 [ ] Rework search to handle partially loaded data
