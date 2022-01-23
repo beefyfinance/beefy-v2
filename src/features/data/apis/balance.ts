@@ -3,15 +3,24 @@ import { AbiItem } from 'web3-utils';
 import _vaultAbi from '../../../config/abi/vault.json';
 import _boostAbi from '../../../config/abi/boost.json';
 import _erc20Abi from '../../../config/abi/erc20.json';
+import _multicallAbi from '../../../config/abi/multicall.json';
 import Web3 from 'web3';
 import { VaultEntity, VaultGov } from '../entities/vault';
 import { ChainEntity } from '../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../utils/types-utils';
 import { BoostEntity } from '../entities/boost';
+import { isTokenBoost, isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];
+const erc20Abi = _erc20Abi as AbiItem[];
+const multicallAbi = _multicallAbi as AbiItem[];
+
+export interface TokenBalance {
+  tokenId: TokenEntity['id'];
+  amount: BigNumber;
+}
 
 export interface GovVaultPoolBalance {
   vaultId: VaultEntity['id'];
@@ -27,8 +36,53 @@ export interface BoostBalance {
 /**
  * Get vault contract data
  */
-export class BoostBalanceAPI {
+export class BalanceAPI {
   constructor(protected web3: Web3, protected chain: ChainEntity) {}
+
+  // maybe we want to re-render more often, we could make
+  // this a generator instead
+  public async fetchTokenBalances(
+    tokens: TokenEntity[],
+    walletAddress: string
+  ): Promise<TokenBalance[]> {
+    const mc = new MultiCall(this.web3, this.chain.multicallAddress);
+
+    const calls = tokens.map(token => {
+      // skip virtual boost tokens
+      if (isTokenBoost(token)) {
+        console.info(`BalanceAPI.fetchTokenBalanceByChain: Skipping boost token ${token.id}`);
+        return;
+      }
+
+      if (isTokenNative(token)) {
+        const tokenContract = new this.web3.eth.Contract(multicallAbi, mc.contract);
+        return {
+          tokenId: token.id,
+          amount: tokenContract.methods.getEthBalance(walletAddress),
+        };
+      } else if (isTokenErc20(token)) {
+        const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
+        return {
+          tokenId: token.id,
+          amount: tokenContract.methods.balanceOf(walletAddress),
+        };
+      } else {
+        throw new Error(
+          "BalanceAPI.fetchTokenBalanceByChain: I don't know how to fetch token balance"
+        );
+      }
+    });
+
+    const [results] = (await mc.all([calls])) as AllValuesAsString<TokenBalance>[][];
+
+    // format strings as numbers
+    return results.map(result => {
+      return {
+        tokenId: result.tokenId,
+        amount: new BigNumber(result.amount),
+      } as TokenBalance;
+    });
+  }
 
   public async fetchGovVaultPoolsBalance(
     vaults: VaultGov[],

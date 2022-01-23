@@ -4,8 +4,7 @@ import { VaultContractAPI } from './vault-contract';
 import { BoostContractAPI } from './boost-contract';
 import { ChainEntity } from '../entities/chain';
 import Web3 from 'web3';
-import { TokenBalanceAPI } from './token-balance';
-import { BoostBalanceAPI } from './boost-balance';
+import { BalanceAPI } from './balance';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -43,16 +42,10 @@ export const getBoostContractApi = createFactoryWithCacheByChain(async chain => 
   return new BoostContractAPI(web3, chain);
 });
 
-export const getTokenBalanceApi = createFactoryWithCacheByChain(async chain => {
+export const getBalanceApi = createFactoryWithCacheByChain(async chain => {
   const web3 = await getWeb3Instance(chain);
-  console.debug(`Instanciating TokenBalanceAPI for chain ${chain.id}`);
-  return new TokenBalanceAPI(web3, chain);
-});
-
-export const getBoostBalanceApi = createFactoryWithCacheByChain(async chain => {
-  const web3 = await getWeb3Instance(chain);
-  console.debug(`Instanciating BoostBalanceAPI for chain ${chain.id}`);
-  return new BoostBalanceAPI(web3, chain);
+  console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
+  return new BalanceAPI(web3, chain);
 });
 
 /**

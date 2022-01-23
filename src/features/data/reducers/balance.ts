@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { fetchBoostBalanceAction, fetchGovVaultPoolsBalanceAction } from '../actions/boost-balance';
-import { fetchTokenBalanceAction } from '../actions/token-balance';
+import {
+  fetchBoostBalanceAction,
+  fetchGovVaultPoolsBalanceAction,
+  fetchTokenBalanceAction,
+} from '../actions/balance';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';

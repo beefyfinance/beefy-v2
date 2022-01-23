@@ -4,16 +4,14 @@ import {
   FetchBoostBalanceFulfilledPayload,
   fetchGovVaultPoolsBalanceAction,
   FetchGovVaultPoolsBalanceFulfilledPayload,
-} from '../actions/boost-balance';
-import {
   fetchTokenBalanceAction,
-  FulfilledPayload as FetchTokenBalanceActionPayload,
-} from '../actions/token-balance';
+  FetchTokenBalanceFulfilledPayload,
+} from '../actions/balance';
 import { balanceSlice, initialBalanceState } from './balance';
 
 describe('Balance slice tests', () => {
   it('should update state on fulfilled token balance', () => {
-    const payload: FetchTokenBalanceActionPayload = {
+    const payload: FetchTokenBalanceFulfilledPayload = {
       chainId: 'bsc',
       data: [
         { tokenId: 'banana-nfty-wbnb', amount: new BigNumber(10) },

@@ -99,9 +99,9 @@ export async function initHomeData() {
 
   // now fetch contract data
   for (const chain of chains) {
-    // make is so we don't wait for one chain to finoish to fetch another chain
+    // make it so we don't wait for one chain to finish to fetch another chain
     (async () => {
-      // we need all data for a chain to work
+      // we need all this data for a chain to work
       await vaultBoostPromisesByChain[chain.id];
 
       // we need to load standard vault data first
