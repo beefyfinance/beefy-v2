@@ -20,7 +20,7 @@
 [ ] Code review changes
 
     [x] remove duplicate boost contractAddress and earnContractAddress
-    [ ] Store ppfs in the vault reducer, this is a vault property
+    [x] Store ppfs in the vault reducer, this is a vault property
     [ ] remove comments "like maybe we want to re-render more often, we could make this a generator instead" or explain
     [ ] we can remove poolAddress from govVaults and use earnContractAddress instead it's the same in the end
     [ ] break dependencies between actions to fetch everything asap.
@@ -29,6 +29,7 @@
     [ ] have a list of deprecated tokens (tokens not listed in the api) for development so we can have a clear exception when requesting an unknown token id. In prod, just set price to 0 to avoid breaking the app
     [ ] fix the balance api to add regular tokens (cf. answers section)
     [ ] double check that undefined isn't returned while fetching rewardRate and periodFinish
+    [ ] merge token and token-price reducers
 
 [ ] Extract API code
 

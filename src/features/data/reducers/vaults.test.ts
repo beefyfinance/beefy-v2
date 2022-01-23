@@ -1,5 +1,11 @@
 import { fetchVaultByChainIdAction, FulfilledPayload } from '../actions/vaults';
+import {
+  fetchStandardVaultContractDataAction,
+  FetchStandardVaultFulfilledPayload,
+} from '../actions/vault-contract';
 import { vaultsSlice, initialVaultsState } from './vaults';
+import { getBeefyTestingInitialState } from '../utils/test-utils';
+import BigNumber from 'bignumber.js';
 
 describe('Vaults slice tests', () => {
   it('should update state on fulfilled vault list', () => {
@@ -119,6 +125,38 @@ describe('Vaults slice tests', () => {
     const beforeReDispatch = Object.values(state.byId)[0];
     const newState = vaultsSlice.reducer(state, action);
     const afterReDispatch = newState.byId[beforeReDispatch.id];
+    expect(beforeReDispatch).toBe(afterReDispatch);
+  });
+
+  it('should update state on fulfilled vault list', async () => {
+    const state = await getBeefyTestingInitialState();
+    const payload: FetchStandardVaultFulfilledPayload = {
+      chainId: 'harmony',
+      data: [
+        {
+          id: 'one-bifi-gov',
+          balance: new BigNumber(12),
+          pricePerFullShare: new BigNumber(123),
+          strategy: 'test',
+        },
+        {
+          id: 'sushi-one-1ygg-1eth',
+          balance: new BigNumber(24),
+          pricePerFullShare: new BigNumber(456),
+          strategy: 'test',
+        },
+      ],
+      state,
+    };
+    const action = { type: fetchStandardVaultContractDataAction.fulfilled, payload: payload };
+    const sliceState = vaultsSlice.reducer(state.entities.vaults, action);
+    // don't snapshot all vaults from the test state
+    expect(sliceState.pricePerFullShare).toMatchSnapshot();
+
+    // getting the same vaults don't update the state object
+    const beforeReDispatch = sliceState.pricePerFullShare;
+    const newState = vaultsSlice.reducer(sliceState, action);
+    const afterReDispatch = newState.pricePerFullShare;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 });

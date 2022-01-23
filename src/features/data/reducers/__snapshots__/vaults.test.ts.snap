@@ -60,5 +60,17 @@ Object {
       "strategyType": "StratLP",
     },
   },
+  "pricePerFullShare": Object {
+    "byVaultId": Object {},
+  },
+}
+`;
+
+exports[`Vaults slice tests should update state on fulfilled vault list 2`] = `
+Object {
+  "byVaultId": Object {
+    "one-bifi-gov": "123",
+    "sushi-one-1ygg-1eth": "456",
+  },
 }
 `;

@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import { fetchStandardVaultContractDataAction } from '../actions/vault-contract';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
@@ -9,11 +11,15 @@ import { NormalizedEntity } from '../utils/normalized-entity';
  */
 export type VaultsState = NormalizedEntity<VaultEntity> & {
   // add quick access arrays
-  // todo: this probably should be split by chain
   byChainId: {
     [chainId: ChainEntity['id']]: {
       allActiveIds: VaultEntity['id'][];
       allRetiredIds: VaultEntity['id'][];
+    };
+  };
+  pricePerFullShare: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: BigNumber;
     };
   };
 };
@@ -21,6 +27,7 @@ export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
   byChainId: {},
+  pricePerFullShare: { byVaultId: {} },
 };
 
 export const vaultsSlice = createSlice({
@@ -30,7 +37,6 @@ export const vaultsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    // TODO: WIP
     builder.addCase(fetchVaultByChainIdAction.fulfilled, (sliceState, action) => {
       for (const apiVault of action.payload.pools) {
         const chainId = apiVault.network;
@@ -83,6 +89,17 @@ export const vaultsSlice = createSlice({
           } else {
             sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
           }
+        }
+      }
+    });
+
+    builder.addCase(fetchStandardVaultContractDataAction.fulfilled, (sliceState, action) => {
+      for (const vaultContractData of action.payload.data) {
+        const vaultId = vaultContractData.id;
+
+        // only update it if needed
+        if (sliceState.pricePerFullShare.byVaultId[vaultId] === undefined) {
+          sliceState.pricePerFullShare.byVaultId[vaultId] = vaultContractData.pricePerFullShare;
         }
       }
     });

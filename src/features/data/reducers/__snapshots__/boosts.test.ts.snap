@@ -21,7 +21,6 @@ Object {
     "moo_aave-btc": Object {
       "assets": undefined,
       "chainId": "harmony",
-      "contractAddress": "0x20948Cad130c3D7B24d27CC66163b4aaed4684F0",
       "earnContractAddress": "0x20948Cad130c3D7B24d27CC66163b4aaed4684F0",
       "earnedTokenId": "BIFI",
       "id": "moo_aave-btc",
@@ -34,7 +33,6 @@ Object {
     "moo_banana-pera": Object {
       "assets": undefined,
       "chainId": "harmony",
-      "contractAddress": "0x38247fCE28480A7BEF2CB7aD134ce091Bd2E1a82",
       "earnContractAddress": "0x38247fCE28480A7BEF2CB7aD134ce091Bd2E1a82",
       "earnedTokenId": "PERA",
       "id": "moo_banana-pera",
