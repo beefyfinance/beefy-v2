@@ -37,7 +37,9 @@ export const fetchGovVaultContractDataAction = createAsyncThunk<
   const vaults = allVaults.filter(isGovVault);
 
   const data = await api.fetchGovVaultsContractData(vaults);
-  return { chainId, data, state };
+
+  // always re-fetch the latest state
+  return { chainId, data, state: getState() };
 });
 
 export const fetchStandardVaultContractDataAction = createAsyncThunk<
@@ -56,5 +58,7 @@ export const fetchStandardVaultContractDataAction = createAsyncThunk<
   const vaults = allVaults.filter(v => !isGovVault(v)) as VaultStandard[];
 
   const data = await api.fetchStandardVaultsContractData(state, vaults);
-  return { chainId, data, state };
+
+  // always re-fetch the latest state
+  return { chainId, data, state: getState() };
 });

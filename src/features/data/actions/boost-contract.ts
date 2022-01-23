@@ -30,5 +30,7 @@ export const fetchBoostContractDataAction = createAsyncThunk<
     selectBoostById(state, vaultId)
   );
   const data = await api.fetchBoostContractData(boosts);
-  return { chainId, data, state };
+
+  // always re-fetch the latest state
+  return { chainId, data, state: getState() };
 });
