@@ -9,18 +9,6 @@ import {
 import { tokensSlice, initialTokensState } from './tokens';
 
 describe('Tokens slice tests', () => {
-  it('should do nothing on pending vault list', () => {
-    const action = { type: fetchVaultByChainIdAction.pending };
-    const state = tokensSlice.reducer(initialTokensState, action);
-    expect(state).toEqual(initialTokensState);
-  });
-
-  it('should do nothing on rejected vault list', () => {
-    const action = { type: fetchVaultByChainIdAction.rejected };
-    const state = tokensSlice.reducer(initialTokensState, action);
-    expect(state).toEqual(initialTokensState);
-  });
-
   it('should update state on fulfilled vault list', () => {
     const payload: FetchVaultsActionPayload = {
       chainId: 'harmony',
@@ -106,18 +94,6 @@ describe('Tokens slice tests', () => {
     const action = { type: fetchVaultByChainIdAction.fulfilled, payload: payload };
     const state = tokensSlice.reducer(initialTokensState, action);
     expect(state).toMatchSnapshot();
-  });
-
-  it('should do nothing on pending boosts list', () => {
-    const action = { type: fetchBoostsByChainIdAction.pending };
-    const state = tokensSlice.reducer(initialTokensState, action);
-    expect(state).toEqual(initialTokensState);
-  });
-
-  it('should do nothing on rejected boosts list', () => {
-    const action = { type: fetchBoostsByChainIdAction.rejected };
-    const state = tokensSlice.reducer(initialTokensState, action);
-    expect(state).toEqual(initialTokensState);
   });
 
   it('should update state on fulfilled boosts list', () => {

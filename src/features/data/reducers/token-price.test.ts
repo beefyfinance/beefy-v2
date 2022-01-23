@@ -3,18 +3,6 @@ import { BeefyAPITokenPricesResponse } from '../apis/beefy';
 import { tokenPriceSlice, initialTokenPriceState } from './token-price';
 
 describe('Token price slice tests', () => {
-  it('should do nothing on pending price list', () => {
-    const action = { type: fetchPricesAction.pending };
-    const state = tokenPriceSlice.reducer(initialTokenPriceState, action);
-    expect(state).toEqual(initialTokenPriceState);
-  });
-
-  it('should do nothing on rejected price list', () => {
-    const action = { type: fetchPricesAction.rejected };
-    const state = tokenPriceSlice.reducer(initialTokenPriceState, action);
-    expect(state).toEqual(initialTokenPriceState);
-  });
-
   it('should update state on fulfilled vault list', () => {
     const payload: BeefyAPITokenPricesResponse = {
       '1AAVE': 238.16568740268866,
@@ -24,18 +12,6 @@ describe('Token price slice tests', () => {
     const action = { type: fetchPricesAction.fulfilled, payload: payload };
     const state = tokenPriceSlice.reducer(initialTokenPriceState, action);
     expect(state).toMatchSnapshot();
-  });
-
-  it('should do nothing on pending lp price list', () => {
-    const action = { type: fetchLPPricesAction.pending };
-    const state = tokenPriceSlice.reducer(initialTokenPriceState, action);
-    expect(state).toEqual(initialTokenPriceState);
-  });
-
-  it('should do nothing on rejected lp price list', () => {
-    const action = { type: fetchLPPricesAction.rejected };
-    const state = tokenPriceSlice.reducer(initialTokenPriceState, action);
-    expect(state).toEqual(initialTokenPriceState);
   });
 
   it('should update state on fulfilled lp price list', () => {

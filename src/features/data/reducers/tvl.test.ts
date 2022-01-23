@@ -13,18 +13,6 @@ import { getBeefyTestingInitialState } from '../utils/test-utils';
 import { tvlSlice, initialTvlState } from './tvl';
 
 describe('TVL slice tests', () => {
-  it('should do nothing on pending gov vault contract data', () => {
-    const action = { type: fetchGovVaultContractDataAction.pending };
-    const state = tvlSlice.reducer(initialTvlState, action);
-    expect(state).toEqual(initialTvlState);
-  });
-
-  it('should do nothing on rejected gov vault contract data', () => {
-    const action = { type: fetchGovVaultContractDataAction.rejected };
-    const state = tvlSlice.reducer(initialTvlState, action);
-    expect(state).toEqual(initialTvlState);
-  });
-
   it('should update state on fulfilled gov vault contract data', async () => {
     // we have loaded some entities already
     const state = await getBeefyTestingInitialState();
@@ -45,18 +33,6 @@ describe('TVL slice tests', () => {
 
   // TODO: have a test for testing exclusions
 
-  it('should do nothing on pending standard vault contract data', () => {
-    const action = { type: fetchStandardVaultContractDataAction.pending };
-    const state = tvlSlice.reducer(initialTvlState, action);
-    expect(state).toEqual(initialTvlState);
-  });
-
-  it('should do nothing on rejected standard vault contract data', () => {
-    const action = { type: fetchStandardVaultContractDataAction.rejected };
-    const state = tvlSlice.reducer(initialTvlState, action);
-    expect(state).toEqual(initialTvlState);
-  });
-
   it('should update state on fulfilled standard vault contract data', async () => {
     // we have loaded some entities already
     const state = await getBeefyTestingInitialState();
@@ -75,18 +51,6 @@ describe('TVL slice tests', () => {
     const action = { type: fetchStandardVaultContractDataAction.fulfilled, payload: payload };
     const newState = tvlSlice.reducer(initialTvlState, action);
     expect(newState).toMatchSnapshot();
-  });
-
-  it('should do nothing on pending boost contract data', () => {
-    const action = { type: fetchBoostContractDataAction.pending };
-    const state = tvlSlice.reducer(initialTvlState, action);
-    expect(state).toEqual(initialTvlState);
-  });
-
-  it('should do nothing on rejected boost contract data', () => {
-    const action = { type: fetchBoostContractDataAction.rejected };
-    const state = tvlSlice.reducer(initialTvlState, action);
-    expect(state).toEqual(initialTvlState);
   });
 
   it('should update state on fulfilled boost contract data', async () => {

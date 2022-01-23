@@ -5,18 +5,6 @@ import {
 import { boostsSlice, initialBoostsState } from './boosts';
 
 describe('Boosts slice tests', () => {
-  it('should do nothing on pending boosts list', () => {
-    const action = { type: fetchBoostsByChainIdAction.pending };
-    const state = boostsSlice.reducer(initialBoostsState, action);
-    expect(state).toEqual(initialBoostsState);
-  });
-
-  it('should do nothing on rejected boosts list', () => {
-    const action = { type: fetchBoostsByChainIdAction.rejected };
-    const state = boostsSlice.reducer(initialBoostsState, action);
-    expect(state).toEqual(initialBoostsState);
-  });
-
   it('should update state on fulfilled boosts list', () => {
     const payload: FetchBoostsActionPayload = {
       chainId: 'harmony',

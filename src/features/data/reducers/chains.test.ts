@@ -5,18 +5,6 @@ import {
 import { chainsSlice, initialChainsState } from './chains';
 
 describe('Chains slice tests', () => {
-  it('should do nothing on pending chain config list', () => {
-    const action = { type: fetchChainConfigs.pending };
-    const state = chainsSlice.reducer(initialChainsState, action);
-    expect(state).toEqual(initialChainsState);
-  });
-
-  it('should do nothing on rejected chain config list', () => {
-    const action = { type: fetchChainConfigs.rejected };
-    const state = chainsSlice.reducer(initialChainsState, action);
-    expect(state).toEqual(initialChainsState);
-  });
-
   it('should update state on fulfilled chain config list', () => {
     const payload: FetchConfigsActionPayload = {
       chainConfigs: [

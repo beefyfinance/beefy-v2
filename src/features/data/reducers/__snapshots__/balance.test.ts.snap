@@ -1,13 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Balance slice tests should update state on fulfilled chain config list 1`] = `
+exports[`Balance slice tests should update state on fulfilled boost balance 1`] = `
 Object {
   "byChainId": Object {
     "bsc": Object {
-      "byTokenId": Object {
-        "BIFI": "10",
-        "banana-nfty-wbnb": "10",
+      "byBoostId": Object {
+        "moo_beltbnb-czodiac": Object {
+          "balance": "100",
+          "rewards": "10",
+        },
+        "moo_ellipsis-renbtc-charge": Object {
+          "balance": "100",
+          "rewards": "10",
+        },
       },
+      "byTokenId": Object {},
+      "byVaultId": Object {},
+    },
+  },
+}
+`;
+
+exports[`Balance slice tests should update state on fulfilled gov boost pools 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byBoostId": Object {},
+      "byTokenId": Object {},
+      "byVaultId": Object {
+        "banana-nfty-wbnb": Object {
+          "rewards": "100",
+        },
+        "belt-beltbnb": Object {
+          "rewards": "10",
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`Balance slice tests should update state on fulfilled token balance 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byBoostId": Object {},
+      "byTokenId": Object {
+        "BIFI": Object {
+          "balance": "10",
+        },
+        "banana-nfty-wbnb": Object {
+          "balance": "10",
+        },
+      },
+      "byVaultId": Object {},
     },
   },
 }

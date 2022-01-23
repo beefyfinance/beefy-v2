@@ -2,18 +2,6 @@ import { fetchVaultByChainIdAction, FulfilledPayload } from '../actions/vaults';
 import { vaultsSlice, initialVaultsState } from './vaults';
 
 describe('Vaults slice tests', () => {
-  it('should do nothing on pending vault list', () => {
-    const action = { type: fetchVaultByChainIdAction.pending };
-    const state = vaultsSlice.reducer(initialVaultsState, action);
-    expect(state).toEqual(initialVaultsState);
-  });
-
-  it('should do nothing on rejected vault list', () => {
-    const action = { type: fetchVaultByChainIdAction.rejected };
-    const state = vaultsSlice.reducer(initialVaultsState, action);
-    expect(state).toEqual(initialVaultsState);
-  });
-
   it('should update state on fulfilled vault list', () => {
     const payload: FulfilledPayload = {
       chainId: 'harmony',
