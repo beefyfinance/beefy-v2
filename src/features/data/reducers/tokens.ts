@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
 import { fetchBoostsByChainIdAction } from '../actions/boosts';
+import { fetchLPPricesAction, fetchPricesAction } from '../actions/prices';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
-import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
  * State containing Vault infos
@@ -18,8 +19,13 @@ export type TokensState = {
       allIds: string[];
     };
   };
+  prices: {
+    byTokenId: {
+      [tokenId: TokenEntity['id']]: BigNumber;
+    };
+  };
 };
-export const initialTokensState: TokensState = { byChainId: {} };
+export const initialTokensState: TokensState = { byChainId: {}, prices: { byTokenId: {} } };
 export const tokensSlice = createSlice({
   name: 'tokens',
   initialState: initialTokensState,
@@ -87,6 +93,42 @@ export const tokensSlice = createSlice({
           };
           sliceState.byChainId[chainId].byId[token.id] = token;
           sliceState.byChainId[chainId].allIds.push(token.id);
+        }
+      }
+    });
+
+    // when prices are changed, update prices
+    // this could also just be a a super quick drop in replacement
+    // if we are OK to not use BigNumber, which I don't think we are
+    builder.addCase(fetchPricesAction.fulfilled, (sliceState, action) => {
+      for (const tokenId of Object.keys(action.payload)) {
+        const tokenPrice = action.payload[tokenId];
+        // new price, add it
+        if (sliceState.prices.byTokenId[tokenId] === undefined) {
+          sliceState.prices.byTokenId[tokenId] = new BigNumber(tokenPrice);
+
+          // price exists, update it if it changed
+        } else if (sliceState.prices.byTokenId[tokenId].comparedTo(tokenPrice) === 0) {
+          sliceState.prices.byTokenId[tokenId] = new BigNumber(tokenPrice);
+        }
+      }
+    });
+
+    /**
+     * Same thing for LP prices
+     * Might be smart to not have a single state where all prices
+     * are stored, but for now it's ok
+     */
+    builder.addCase(fetchLPPricesAction.fulfilled, (sliceState, action) => {
+      for (const tokenId of Object.keys(action.payload)) {
+        const tokenPrice = action.payload[tokenId];
+        // new price, add it
+        if (sliceState.prices.byTokenId[tokenId] === undefined) {
+          sliceState.prices.byTokenId[tokenId] = new BigNumber(tokenPrice);
+
+          // price exists, update it if it changed
+        } else if (sliceState.prices.byTokenId[tokenId].comparedTo(tokenPrice) === 0) {
+          sliceState.prices.byTokenId[tokenId] = new BigNumber(tokenPrice);
         }
       }
     });

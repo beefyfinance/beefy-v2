@@ -4,7 +4,6 @@ import { pricesReducer } from './prices';
 import { balanceReducer } from './balance';
 import { combineReducers } from 'redux';
 import { chainsSlice, ChainsState } from '../../data/reducers/chains';
-import { tokenPriceSlice, TokenPriceState } from '../../data/reducers/token-price';
 import { vaultsSlice, VaultsState } from '../../data/reducers/vaults';
 import { tokensSlice, TokensState } from '../../data/reducers/tokens';
 import { tvlSlice, TvlState } from '../../data/reducers/tvl';
@@ -29,7 +28,6 @@ export interface BeefyState {
     boosts: BoostsState;
   };
   biz: {
-    prices: TokenPriceState;
     tvl: TvlState;
     apy: ApyState;
     historicalApy: HistoricalApyState;
@@ -51,7 +49,6 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   boosts: boostsSlice.reducer,
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
-  prices: tokenPriceSlice.reducer,
   tvl: tvlSlice.reducer,
   apy: apySlice.reducer,
   historicalApy: historicalApySlice.reducer,
