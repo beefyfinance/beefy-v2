@@ -1,6 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
+import { fetchBoostAllowanceAction, fetchGovVaultPoolsAllowanceAction } from '../actions/allowance';
+import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
+import { VaultEntity } from '../entities/vault';
+
+interface Allowance {
+  allowance: BigNumber; // amount allowed
+  spenderAddress: string;
+}
 
 /**
  * State containing user allowances state
@@ -11,7 +20,13 @@ export interface AllowanceState {
   byChainId: {
     [chainId: ChainEntity['id']]: {
       byTokenId: {
-        [tokenId: TokenEntity['id']]: number; // big number?
+        [tokenId: TokenEntity['id']]: Allowance;
+      };
+      byVaultId: {
+        [vaultId: VaultEntity['id']]: Allowance;
+      };
+      byBoostId: {
+        [boostId: BoostEntity['id']]: Allowance;
       };
     };
   };
@@ -25,6 +40,50 @@ export const allowanceSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    // todo: handle actions
+    builder.addCase(fetchGovVaultPoolsAllowanceAction.fulfilled, (sliceState, action) => {
+      const chainId = action.payload.chainId;
+
+      if (sliceState.byChainId[chainId] === undefined) {
+        sliceState.byChainId[chainId] = { byBoostId: {}, byTokenId: {}, byVaultId: {} };
+      }
+
+      for (const vaultAllowance of action.payload.data) {
+        // only update data if necessary
+        const stateForVault = sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId];
+        if (
+          stateForVault === undefined ||
+          !stateForVault.allowance.isEqualTo(vaultAllowance.allowance) ||
+          stateForVault.spenderAddress !== vaultAllowance.spenderAddress
+        ) {
+          sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId] = {
+            allowance: vaultAllowance.allowance,
+            spenderAddress: vaultAllowance.spenderAddress,
+          };
+        }
+      }
+    });
+
+    builder.addCase(fetchBoostAllowanceAction.fulfilled, (sliceState, action) => {
+      const chainId = action.payload.chainId;
+
+      if (sliceState.byChainId[chainId] === undefined) {
+        sliceState.byChainId[chainId] = { byBoostId: {}, byTokenId: {}, byVaultId: {} };
+      }
+
+      for (const boostAllowance of action.payload.data) {
+        // only update data if necessary
+        const stateForBoost = sliceState.byChainId[chainId].byBoostId[boostAllowance.boostId];
+        if (
+          stateForBoost === undefined ||
+          !stateForBoost.allowance.isEqualTo(boostAllowance.allowance) ||
+          stateForBoost.spenderAddress !== boostAllowance.spenderAddress
+        ) {
+          sliceState.byChainId[chainId].byBoostId[boostAllowance.boostId] = {
+            allowance: boostAllowance.allowance,
+            spenderAddress: boostAllowance.spenderAddress,
+          };
+        }
+      }
+    });
   },
 });

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Allowance slice tests should update state on fulfilled boost allowance 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byBoostId": Object {
+        "moo_beltbnb-czodiac": Object {
+          "allowance": "100",
+          "spenderAddress": "0x000",
+        },
+        "moo_ellipsis-renbtc-charge": Object {
+          "allowance": "100",
+          "spenderAddress": "0x000",
+        },
+      },
+      "byTokenId": Object {},
+      "byVaultId": Object {},
+    },
+  },
+}
+`;
+
+exports[`Allowance slice tests should update state on fulfilled gov pool allowance 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byBoostId": Object {},
+      "byTokenId": Object {},
+      "byVaultId": Object {
+        "banana-nfty-wbnb": Object {
+          "allowance": "10",
+          "spenderAddress": "0x000",
+        },
+        "belt-beltbnb": Object {
+          "allowance": "5",
+          "spenderAddress": "0x000",
+        },
+      },
+    },
+  },
+}
+`;

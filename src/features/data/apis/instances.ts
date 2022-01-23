@@ -5,6 +5,7 @@ import { BoostContractAPI } from './boost-contract';
 import { ChainEntity } from '../entities/chain';
 import Web3 from 'web3';
 import { BalanceAPI } from './balance';
+import { AllowanceAPI } from './allowance';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -46,6 +47,12 @@ export const getBalanceApi = createFactoryWithCacheByChain(async chain => {
   const web3 = await getWeb3Instance(chain);
   console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
   return new BalanceAPI(web3, chain);
+});
+
+export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
+  const web3 = await getWeb3Instance(chain);
+  console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
+  return new AllowanceAPI(web3, chain);
 });
 
 /**

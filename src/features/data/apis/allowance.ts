@@ -5,19 +5,17 @@ import _boostAbi from '../../../config/abi/boost.json';
 import _erc20Abi from '../../../config/abi/erc20.json';
 import _multicallAbi from '../../../config/abi/multicall.json';
 import Web3 from 'web3';
-import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import { VaultEntity, VaultGov } from '../entities/vault';
 import { ChainEntity } from '../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../utils/types-utils';
 import { BoostEntity } from '../entities/boost';
-import { isTokenBoost, isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
+import { isTokenErc20 } from '../entities/token';
 import { BeefyState } from '../../redux/reducers';
 import { selectTokenById } from '../selectors/tokens';
 
 // fix TS typings
-const boostAbi = _boostAbi as AbiItem[];
 const erc20Abi = _erc20Abi as AbiItem[];
-const multicallAbi = _multicallAbi as AbiItem[];
 
 export interface VaultAllowance {
   vaultId: VaultEntity['id'];

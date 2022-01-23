@@ -22,7 +22,7 @@
     [x] Vault contract data
     [x] Boost contract data
     [x] Balances
-    [ ] Allowances
+    [x] Allowances
     [ ] Wallet
 
 [ ] Create new reducers using new TS types
