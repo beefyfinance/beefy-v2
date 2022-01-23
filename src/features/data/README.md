@@ -21,7 +21,7 @@
 
     [x] remove duplicate boost contractAddress and earnContractAddress
     [x] Store ppfs in the vault reducer, this is a vault property
-    [ ] remove comments "like maybe we want to re-render more often, we could make this a generator instead" or explain
+    [x] remove comments "like maybe we want to re-render more often, we could make this a generator instead" or explain
     [ ] we can remove poolAddress from govVaults and use earnContractAddress instead it's the same in the end
     [ ] break dependencies between actions to fetch everything asap.
         For home we need TVL, APY, user deposited amount both in usd and token amount, for gov vaults => rewards

@@ -42,8 +42,6 @@ export interface StandardVaultContractData {
 export class VaultContractAPI {
   constructor(protected web3: Web3, protected chain: ChainEntity) {}
 
-  // maybe we want to re-render more often, we could make
-  // this a generator instead
   public async fetchGovVaultsContractData(vaults: VaultGov[]): Promise<GovVaultContractData[]> {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
@@ -67,8 +65,6 @@ export class VaultContractAPI {
     });
   }
 
-  // maybe we want to re-render more often, we could make
-  // this a generator instead
   public async fetchStandardVaultsContractData(
     state: BeefyState,
     vaults: VaultStandard[]

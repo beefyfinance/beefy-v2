@@ -39,8 +39,6 @@ export interface BoostBalance {
 export class BalanceAPI {
   constructor(protected web3: Web3, protected chain: ChainEntity) {}
 
-  // maybe we want to re-render more often, we could make
-  // this a generator instead
   public async fetchTokenBalances(
     tokens: TokenEntity[],
     walletAddress: string
