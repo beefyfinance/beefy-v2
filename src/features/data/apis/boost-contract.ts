@@ -47,7 +47,7 @@ export class BoostContractAPI {
         id: result.id,
         totalStaked: new BigNumber(result.totalStaked),
         rewardRate: new BigNumber(result.rewardRate),
-        periodFinish: parseFloat(result.periodFinish),
+        periodFinish: parseInt(result.periodFinish),
       } as BoostContractData;
     });
   }

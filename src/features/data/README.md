@@ -22,14 +22,14 @@
     [x] remove duplicate boost contractAddress and earnContractAddress
     [x] Store ppfs in the vault reducer, this is a vault property
     [x] remove comments "like maybe we want to re-render more often, we could make this a generator instead" or explain
-    [ ] we can remove poolAddress from govVaults and use earnContractAddress instead it's the same in the end
-    [ ] break dependencies between actions to fetch everything asap.
-        For home we need TVL, APY, user deposited amount both in usd and token amount, for gov vaults => rewards
+    [x] we can remove poolAddress from govVaults and use earnContractAddress instead it's the same in the end
     [ ] periodFinish could be parsed as an int, it's a timestamp. we use it to know if there's an active one, we know that if current timestamp is less than that
     [ ] have a list of deprecated tokens (tokens not listed in the api) for development so we can have a clear exception when requesting an unknown token id. In prod, just set price to 0 to avoid breaking the app
     [ ] fix the balance api to add regular tokens (cf. answers section)
     [ ] double check that undefined isn't returned while fetching rewardRate and periodFinish
     [ ] merge token and token-price reducers
+    [ ] break dependencies between actions to fetch everything asap.
+        For home we need TVL, APY, user deposited amount both in usd and token amount, for gov vaults => rewards
 
 [ ] Extract API code
 
