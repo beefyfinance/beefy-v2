@@ -49,8 +49,8 @@ let pollStopFns: PollStop[] = [];
 
 /**
  * Fetch all necessary information for the home page
- * TODO: this could still be improved as we don't need to wait for some calls to end before starting new calls we could start calls asap and handle the result only when we have all the data
- * TODO: we need to inject the store in parameters somehow
+ * TODO: this could still be improved as we don't have to dispatch action results right await. We could fetch some data and dispatch it when all relevant dispatch have been done
+ * TODO: we need to inject the store in parameters somehow and not get if from a global import
  * TODO: handle errors
  */
 export async function initHomeData() {

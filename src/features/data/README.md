@@ -122,6 +122,13 @@ BONUS:
 - Is this normal behavior that rewardRate and periodFinish returns undefined? or am I querying the wrong address?
 - What is the expected behavior when price is not returned by /lp api or /prices. Ex: pool blizzard-blzd-bnb-eol has oracleId of blizzard-blzd-bnb, which is not present in the api. Current behavior: I think it's because they rug, so token price is 0 by default, but we log a console warning.
 - What is boost.earnContractAddress
+- What is queried here? (balance.tsx). Where do we get the initial list of spenders?
+
+  ```
+    for (let spender in token.allowance) {
+      calls[net].push({
+        allowance: tokenContract.methods.allowance(address, spender),
+  ```
 
 # ANSWERED
 
