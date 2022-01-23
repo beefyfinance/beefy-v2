@@ -101,7 +101,6 @@ export const styles = theme => ({
     fontWeight: 700,
     borderRadius: '8px',
     fontSize: '15px',
-    padding: '8px 24px',
     backgroundColor: 'transparent',
     height: 43,
     '&:hover': {
@@ -133,7 +132,6 @@ export const styles = theme => ({
     '& .MuiFormLabel-root': {
       fontWeight: 700,
       fontSize: 15,
-      lineHeight: '24px',
       color: theme.palette.text.secondary,
     },
     '& .MuiInputBase-root': {
