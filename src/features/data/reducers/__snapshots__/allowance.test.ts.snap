@@ -41,3 +41,24 @@ Object {
   },
 }
 `;
+
+exports[`Allowance slice tests should update state on fulfilled standard pool allowance 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byBoostId": Object {},
+      "byTokenId": Object {},
+      "byVaultId": Object {
+        "banana-nfty-wbnb": Object {
+          "allowance": "10",
+          "spenderAddress": "0x000",
+        },
+        "belt-beltbnb": Object {
+          "allowance": "5",
+          "spenderAddress": "0x000",
+        },
+      },
+    },
+  },
+}
+`;

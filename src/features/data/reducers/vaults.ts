@@ -17,6 +17,16 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
       allRetiredIds: VaultEntity['id'][];
     };
   };
+
+  /**
+   * pricePerFullShare is how you find out how much your mooTokens
+   * (shares) represent in term of the underlying asset
+   *
+   * So if you deposit 1 BIFI you will get, for example 0.95 mooBIFI,
+   * with a ppfs of X, if you multiply your mooBIIFI * ppfs you get your amount in BIFI
+   *
+   * That value is fetched from the smart contract upon loading
+   **/
   pricePerFullShare: {
     byVaultId: {
       [vaultId: VaultEntity['id']]: BigNumber;
@@ -71,6 +81,7 @@ export const vaultsSlice = createSlice({
             name: apiVault.name,
             logoUri: apiVault.logo,
             isGovVault: false,
+            contractAddress: apiVault.earnContractAddress,
             assets: apiVault.assets,
             earnedTokenId: apiVault.earnedToken,
             oracleId: apiVault.oracleId,

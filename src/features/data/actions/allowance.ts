@@ -3,13 +3,17 @@ import { BeefyState } from '../../redux/reducers';
 import { BoostAllowance, VaultAllowance } from '../apis/allowance';
 import { getAllowanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
-import { isGovVault, VaultGov } from '../entities/vault';
+import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
 export interface FetchGovVaultPoolsAllowanceFulfilledPayload {
+  chainId: ChainEntity['id'];
+  data: VaultAllowance[];
+}
+export interface FetchStandardVaultAllowanceFulfilledPayload {
   chainId: ChainEntity['id'];
   data: VaultAllowance[];
 }
@@ -41,6 +45,28 @@ export const fetchGovVaultPoolsAllowanceAction = createAsyncThunk<
 
   // always re-fetch state as late as possible
   const data = await api.fetchGovVaultPoolAllowance(getState(), govVaults, walletAddress);
+  return { chainId, data };
+});
+
+export const fetchStandardVaultAllowanceAction = createAsyncThunk<
+  FetchStandardVaultAllowanceFulfilledPayload,
+  ActionParams,
+  { state: BeefyState }
+>('allowance/fetchStandardVaultAllowanceAction', async ({ chainId }, { getState }) => {
+  const state = getState();
+
+  const walletAddress = selectWalletAddress(state);
+  const chain = selectChainById(state, chainId);
+  const api = await getAllowanceApi(chain);
+
+  // maybe have a way to retrieve those easily
+  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+  const standardVaults = allVaults.filter(v => !isGovVault(v)) as VaultStandard[];
+
+  // always re-fetch state as late as possible
+  const data = await api.fetchStandardVaultAllowance(getState(), standardVaults, walletAddress);
   return { chainId, data };
 });
 

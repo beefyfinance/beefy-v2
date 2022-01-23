@@ -64,16 +64,9 @@ export interface VaultStandard {
   earnedTokenId: TokenEntity['id'];
 
   /**
-   * pricePerFullShare is how you find out how much your mooTokens
-   * (shares) represent in term of the underlying asset
-   *
-   * So if you deposit 1 BIFI you will get, for example 0.95 mooBIFI,
-   * with a ppfs of X, if you multiply your mooBIIFI * ppfs you get your amount in BIFI
-   *
-   * That value is fetched from the smart contract upon loading
-   **/
-  // todo: move this elsewhere
-  //pricePerFullShare: number;
+   * The vault contract address
+   */
+  contractAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that vault

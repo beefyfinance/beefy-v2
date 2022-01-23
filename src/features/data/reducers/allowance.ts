@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { fetchBoostAllowanceAction, fetchGovVaultPoolsAllowanceAction } from '../actions/allowance';
+import {
+  fetchBoostAllowanceAction,
+  fetchGovVaultPoolsAllowanceAction,
+  fetchStandardVaultAllowanceAction,
+} from '../actions/allowance';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
@@ -41,6 +45,29 @@ export const allowanceSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchGovVaultPoolsAllowanceAction.fulfilled, (sliceState, action) => {
+      const chainId = action.payload.chainId;
+
+      if (sliceState.byChainId[chainId] === undefined) {
+        sliceState.byChainId[chainId] = { byBoostId: {}, byTokenId: {}, byVaultId: {} };
+      }
+
+      for (const vaultAllowance of action.payload.data) {
+        // only update data if necessary
+        const stateForVault = sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId];
+        if (
+          stateForVault === undefined ||
+          !stateForVault.allowance.isEqualTo(vaultAllowance.allowance) ||
+          stateForVault.spenderAddress !== vaultAllowance.spenderAddress
+        ) {
+          sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId] = {
+            allowance: vaultAllowance.allowance,
+            spenderAddress: vaultAllowance.spenderAddress,
+          };
+        }
+      }
+    });
+
+    builder.addCase(fetchStandardVaultAllowanceAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
 
       if (sliceState.byChainId[chainId] === undefined) {

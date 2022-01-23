@@ -4,6 +4,7 @@ import {
   FetchBoostAllowanceFulfilledPayload,
   fetchGovVaultPoolsAllowanceAction,
   FetchGovVaultPoolsAllowanceFulfilledPayload,
+  fetchStandardVaultAllowanceAction,
 } from '../actions/allowance';
 import { allowanceSlice, initialAllowanceState } from './allowance';
 
@@ -17,6 +18,25 @@ describe('Allowance slice tests', () => {
       ],
     };
     const action = { type: fetchGovVaultPoolsAllowanceAction.fulfilled, payload: payload };
+    const state = allowanceSlice.reducer(initialAllowanceState, action);
+    expect(state).toMatchSnapshot();
+
+    // getting the same vaults don't update the state object
+    const beforeReDispatch = state.byChainId['bsc'].byVaultId;
+    const newState = allowanceSlice.reducer(state, action);
+    const afterReDispatch = newState.byChainId['bsc'].byVaultId;
+    expect(beforeReDispatch).toBe(afterReDispatch);
+  });
+
+  it('should update state on fulfilled standard pool allowance', () => {
+    const payload: FetchGovVaultPoolsAllowanceFulfilledPayload = {
+      chainId: 'bsc',
+      data: [
+        { vaultId: 'banana-nfty-wbnb', spenderAddress: '0x000', allowance: new BigNumber(10) },
+        { vaultId: 'belt-beltbnb', spenderAddress: '0x000', allowance: new BigNumber(5) },
+      ],
+    };
+    const action = { type: fetchStandardVaultAllowanceAction.fulfilled, payload: payload };
     const state = allowanceSlice.reducer(initialAllowanceState, action);
     expect(state).toMatchSnapshot();
 

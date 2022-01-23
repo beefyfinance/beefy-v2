@@ -2,7 +2,7 @@ import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
 import _erc20Abi from '../../../config/abi/erc20.json';
 import Web3 from 'web3';
-import { VaultEntity, VaultGov } from '../entities/vault';
+import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { ChainEntity } from '../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../utils/types-utils';
@@ -55,6 +55,57 @@ export class AllowanceAPI {
         vaultId: vault.id, // not sure about this
         spenderAddress: vault.earnContractAddress,
         allowance: tokenContract.methods.allowance(walletAddress, vault.earnContractAddress),
+      });
+    }
+
+    const [results] = (await mc.all([calls])) as AllValuesAsString<VaultAllowance>[][];
+
+    // format strings as numbers
+    return results.map(result => {
+      return {
+        vaultId: result.vaultId,
+        spenderAddress: result.spenderAddress,
+        allowance: new BigNumber(result.allowance || 0),
+      } as VaultAllowance;
+    });
+  }
+
+  public async fetchStandardVaultAllowance(
+    state: BeefyState,
+    vaults: VaultStandard[],
+    walletAddress: string
+  ): Promise<VaultAllowance[]> {
+    const mc = new MultiCall(this.web3, this.chain.multicallAddress);
+
+    const calls: ShapeWithLabel[] = [];
+
+    // add calls for oracle tokens
+    for (const vault of vaults) {
+      const token = selectTokenById(state, this.chain.id, vault.oracleId);
+      if (!isTokenErc20(token)) {
+        console.warn(`Token ${token.id} is not erc20, can't fetch allowance`);
+        continue;
+      }
+      const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
+      calls.push({
+        vaultId: vault.id, // not sure about this
+        spenderAddress: vault.contractAddress,
+        allowance: tokenContract.methods.allowance(walletAddress, vault.contractAddress),
+      });
+    }
+
+    // add calls for earned tokens
+    for (const vault of vaults) {
+      const earnedToken = selectTokenById(state, this.chain.id, vault.earnedTokenId);
+      if (!isTokenErc20(earnedToken)) {
+        console.warn(`Token ${earnedToken.id} is not erc20, can't fetch allowance`);
+        continue;
+      }
+      const earnedTokenContract = new this.web3.eth.Contract(erc20Abi, earnedToken.contractAddress);
+      calls.push({
+        vaultId: vault.id, // not sure about this
+        spenderAddress: vault.contractAddress,
+        allowance: earnedTokenContract.methods.allowance(walletAddress, vault.contractAddress),
       });
     }
 

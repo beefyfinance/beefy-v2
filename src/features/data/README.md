@@ -26,8 +26,8 @@
     [x] periodFinish could be parsed as an int, it's a timestamp. we use it to know if there's an active one, we know that if current timestamp is less than that
     [x] merge token and token-price reducers
     [x] have a list of deprecated tokens (tokens not listed in the api) for development so we can have a clear exception when requesting an unknown token id. In prod, just set price to 0 to avoid breaking the app
-    [ ] fix the balance api to add regular tokens (cf. answers section)
-    [ ] double check that undefined isn't returned while fetching rewardRate and periodFinish
+    [x] double check that undefined isn't returned while fetching rewardRate and periodFinish
+    [ ] fix the allowance api to add regular tokens (cf. answers section)
     [ ] break dependencies between actions to fetch everything asap.
         For home we need TVL, APY, user deposited amount both in usd and token amount, for gov vaults => rewards
 
