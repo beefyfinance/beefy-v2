@@ -8,8 +8,7 @@ import {
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
-import { selectTokenPriceByTokenId } from '../selectors/token-prices';
-import { selectTokenById } from '../selectors/tokens';
+import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
 import { selectVaultPricePerFullShare } from '../selectors/tvl';
 import { selectVaultById } from '../selectors/vaults';
 

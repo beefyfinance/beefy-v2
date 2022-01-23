@@ -5,8 +5,7 @@ import { ApyData } from '../apis/beefy';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
-import { selectTokenPriceByTokenId } from '../selectors/token-prices';
-import { selectTokenById } from '../selectors/tokens';
+import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 
 // boost is expressed as APR

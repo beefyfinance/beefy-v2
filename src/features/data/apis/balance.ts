@@ -1,6 +1,5 @@
 import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
-import _vaultAbi from '../../../config/abi/vault.json';
 import _boostAbi from '../../../config/abi/boost.json';
 import _erc20Abi from '../../../config/abi/erc20.json';
 import _multicallAbi from '../../../config/abi/multicall.json';
@@ -45,31 +44,32 @@ export class BalanceAPI {
   ): Promise<TokenBalance[]> {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
-    const calls = tokens.map(token => {
+    const calls: ShapeWithLabel[] = [];
+    for (const token of tokens) {
       // skip virtual boost tokens
       if (isTokenBoost(token)) {
         console.info(`BalanceAPI.fetchTokenBalanceByChain: Skipping boost token ${token.id}`);
-        return;
+        continue;
       }
 
       if (isTokenNative(token)) {
         const tokenContract = new this.web3.eth.Contract(multicallAbi, mc.contract);
-        return {
+        calls.push({
           tokenId: token.id,
           amount: tokenContract.methods.getEthBalance(walletAddress),
-        };
+        });
       } else if (isTokenErc20(token)) {
         const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
-        return {
+        calls.push({
           tokenId: token.id,
           amount: tokenContract.methods.balanceOf(walletAddress),
-        };
+        });
       } else {
         throw new Error(
           "BalanceAPI.fetchTokenBalanceByChain: I don't know how to fetch token balance"
         );
       }
-    });
+    }
 
     const [results] = (await mc.all([calls])) as AllValuesAsString<TokenBalance>[][];
 

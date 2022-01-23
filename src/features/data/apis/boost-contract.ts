@@ -6,7 +6,6 @@ import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../utils/types-utils';
-import { BeefyState } from '../../redux/reducers';
 
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];

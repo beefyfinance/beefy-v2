@@ -71,10 +71,10 @@ export async function initHomeData() {
 
   // then, we work by chain
   const state = store.getState();
-  //const chains = selectAllChains(state);
+  const chains = selectAllChains(state);
   //const chains = [{ id: 'arbitrum' }]; // ok
   //const chains = [{ id: 'avax' }]; // ok
-  const chains = [{ id: 'bsc' }];
+  //const chains = [{ id: 'bsc' }]; // ok
   //const chains = [{ id: 'celo' }]; // ok
   //const chains = [{ id: 'cronos' }]; // ok
   //const chains = [{ id: 'fantom' }]; // ok

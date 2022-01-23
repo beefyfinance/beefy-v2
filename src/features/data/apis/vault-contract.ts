@@ -74,6 +74,7 @@ export class VaultContractAPI {
     const calls: ShapeWithLabel[] = [];
     for (const vault of vaults) {
       const earnedToken = selectTokenById(state, this.chain.id, vault.earnedTokenId);
+      // do this check to please the TypeScript gods
       if (!isTokenErc20(earnedToken)) {
         console.info(
           `VaultContractAPI.fetchStandardVaultsContractData: skipping non erc20 token ${earnedToken.id}`

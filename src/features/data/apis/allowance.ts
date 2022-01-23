@@ -1,9 +1,6 @@
 import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
-import _vaultAbi from '../../../config/abi/vault.json';
-import _boostAbi from '../../../config/abi/boost.json';
 import _erc20Abi from '../../../config/abi/erc20.json';
-import _multicallAbi from '../../../config/abi/multicall.json';
 import Web3 from 'web3';
 import { VaultEntity, VaultGov } from '../entities/vault';
 import { ChainEntity } from '../entities/chain';
