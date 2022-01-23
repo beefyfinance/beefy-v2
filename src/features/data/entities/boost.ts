@@ -9,9 +9,6 @@ export interface BoostEntity {
   name: string;
   logo: string | null;
 
-  // the boost's address
-  contractAddress: string;
-
   // a boost always works on top of a vault, so it has a poolId that is an id for a vault
   vaultId: VaultEntity['id'];
 
@@ -26,7 +23,7 @@ export interface BoostEntity {
   earnedTokenId: TokenEntity['id'];
 
   /**
-   * IDK what this is, but we query it
+   * This is the boost's contract address
    */
   earnContractAddress: string;
 

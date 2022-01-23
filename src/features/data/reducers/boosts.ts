@@ -48,7 +48,6 @@ export const boostsSlice = createSlice({
           id: apiBoost.id,
           chainId: chainId,
           assets: apiBoost.assets,
-          contractAddress: apiBoost.earnContractAddress,
           earnedTokenId: apiBoost.earnedOracleId,
           earnContractAddress: apiBoost.earnContractAddress,
           logo: apiBoost.logo,
