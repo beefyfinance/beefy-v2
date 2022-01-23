@@ -1,31 +1,58 @@
 [
   {
-    "id": "fantom vault: 0xdao-wftm",
+    "id": "fantom vault: sushi-usdc-wftm",
     "type": "Added"
+  },
+  {
+    "id": "fantom vault: sushi-wftm-eth",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: sushi-fusdt-wftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: sushi-eth-dai",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: sushi-usdc-mim",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: sushi-btc-eth",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: sushi-wftm-sushi",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: 0xdao-wftm",
+    "type": "synced"
   },
   {
     "id": "fantom vault: 0xdao-usdc",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: 0xdao-dai",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: 0xdao-wbtc",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "fantom vault: beets-spooky-tempered-clavier",
     "type": "synced"
   },
   {
-    "id": "fantom vault: beets-paint-it-black",
+    "id": "fantom vault: 0xdao-mim",
     "type": "synced"
   },
   {
-    "id": "fantom vault: boo-btc-eth",
+    "id": "fantom vault: 0xdao-tomb",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: 0xdao-weth",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: oxd-oxd-usdc",
     "type": "synced"
   }
 ]
