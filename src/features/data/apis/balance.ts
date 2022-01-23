@@ -91,7 +91,7 @@ export class BalanceAPI {
 
     for (const vault of vaults) {
       // we fetch a gov vault data with boostAbi, poker face *-*
-      const poolContract = new this.web3.eth.Contract(boostAbi, vault.poolAddress);
+      const poolContract = new this.web3.eth.Contract(boostAbi, vault.earnContractAddress);
       calls.push({
         vaultId: vault.id,
         balance: poolContract.methods.balanceOf(walletAddress),

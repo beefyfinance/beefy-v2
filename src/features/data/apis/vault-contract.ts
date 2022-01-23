@@ -47,7 +47,7 @@ export class VaultContractAPI {
 
     const calls: ShapeWithLabel[] = [];
     for (const vault of vaults) {
-      const tokenContract = new this.web3.eth.Contract(vaultAbi, vault.poolAddress);
+      const tokenContract = new this.web3.eth.Contract(vaultAbi, vault.earnContractAddress);
       calls.push({
         id: vault.id,
         totalStaked: tokenContract.methods.totalSupply(),

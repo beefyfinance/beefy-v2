@@ -56,8 +56,8 @@ export class AllowanceAPI {
       const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
       calls.push({
         vaultId: vault.id, // not sure about this
-        spenderAddress: vault.poolAddress,
-        allowance: tokenContract.methods.allowance(walletAddress, vault.poolAddress),
+        spenderAddress: vault.earnContractAddress,
+        allowance: tokenContract.methods.allowance(walletAddress, vault.earnContractAddress),
       });
     }
 

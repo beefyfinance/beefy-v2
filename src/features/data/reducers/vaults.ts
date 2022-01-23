@@ -49,7 +49,7 @@ export const vaultsSlice = createSlice({
             id: apiVault.id,
             name: apiVault.name,
             isGovVault: true,
-            poolAddress: apiVault.poolAddress,
+            earnContractAddress: apiVault.poolAddress,
             excludedId: apiVault.excluded || null,
             oracleId: apiVault.oracleId,
             chainId: chainId,

@@ -121,7 +121,7 @@ export interface VaultGov {
   /**
    * Vault address "treasury", we ask this address about user balances
    */
-  poolAddress: string;
+  earnContractAddress: string;
 
   /**
    * so bifi-gov and bifi-maxi, are very special
