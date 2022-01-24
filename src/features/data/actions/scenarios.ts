@@ -15,71 +15,6 @@ import {
 import { fetchVaultByChainIdAction } from './vaults';
 
 /**
- * This is just for reference and help developing the fetch methods
- */
-const actionTypeDependencies: { [actionType: string]: string[] } = {
-  // config actions don't have any dependencies
-  [fetchChainConfigs.typePrefix]: [],
-  [fetchVaultByChainIdAction.typePrefix]: [fetchChainConfigs.typePrefix],
-  [fetchBoostsByChainIdAction.typePrefix]: [fetchChainConfigs.typePrefix],
-
-  // fetching prices from beefy api don't have dependencies
-  [fetchPricesAction.typePrefix]: [],
-  [fetchLPPricesAction.typePrefix]: [],
-  [fetchApyAction.typePrefix]: [],
-
-  // if we want to process contract data we need chains, prices, and vault data
-  [fetchStandardVaultContractDataAction.typePrefix]: [
-    fetchVaultByChainIdAction.typePrefix,
-    fetchBoostsByChainIdAction.typePrefix,
-    fetchPricesAction.typePrefix,
-    fetchLPPricesAction.typePrefix,
-  ],
-
-  // for gov vaults it's the same as standard vaults, but we need to handle exclusions so we also need standard vaults
-  [fetchGovVaultContractDataAction.typePrefix]: [fetchStandardVaultContractDataAction.typePrefix],
-
-  // for boost contracts, we need all vaults contract data to be loaded
-  [fetchBoostContractDataAction.typePrefix]: [
-    fetchStandardVaultContractDataAction.typePrefix,
-    fetchGovVaultContractDataAction.typePrefix,
-  ],
-};
-
-/**
- * Challenge:
- *  We want to start fetching data as soon as possible
- *  But some reducers depends on some previous state to have been fetched, like the TVL depends on token prices to be in the store
- *  Async thunks by redux toolkit don't allow us to delay the fulfilled dispatch until needed
- *
- * Solutions:
- *
- * 👀 Middleware: have a middleware that delay dispatches until all call dependencies have been met
- *  - could be weird when debugging
- *  - have to be smart about action parameters (chain params), etc
- *  - could be a mess to debug -> have some test
- *  - people will forget about it and make annoying mistakes?
- *  - the dependency tree encodes reducer dependencies, which is completely separate code
- *
- * 👀 Custom Scenario: Have a scenario that call the payloadCreator function and dispatch only when needed
- *  - easy to understand, complexity will be in a single place (the scenario)
- *  - keep the state reducers simple, but keep implicit dependencies between reducers
- *  - have to separate payloadCreator function from the async action (that's ok)
- *  - will be hard to use async thunk actions without dispatching them
- *     - maybe pass a custom store and re-dispatch this store actions?
- *
- * 👀 Make reducers smarter:
- *  - each reducer handles data when it can
- *  - we may need to hack a new action to trigger computations
- *  - will make reducers more complex many will have to handle partial data
- *     - having to handle partial data looks "ok" from a dev perspective
- *  - we could encode dependencies directly in the reducer: in tvl, we say we depend on this and this action to be fulfilled and dispatched
- *  - we could "wrap" a reducer in some generic sauce that put "actions to be processed" in the state
- *  - but we will have to wait for 1 dispatch cycle to be able to use selectors like normal
- *  - this would be the "proper" way
- */
-
-/**
  * Fetch all necessary information for the home page
  * TODO: we need to inject the store in parameters somehow and not get if from a global import
  */
@@ -134,7 +69,7 @@ export async function initHomeDataV2() {
   } = {};
   for (const chain of chains) {
     (async () => {
-      // we need config data with contract addresses to start querying the rest
+      // we need config data (for contract addresses) to start querying the rest
       await vaultBoostPromisesByChain[chain.id];
 
       // begin fetching all contract-related data at the same time

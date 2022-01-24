@@ -1,5 +1,6 @@
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { Action, Store } from 'redux';
+import { BeefyState } from '../../redux/reducers';
 
 /**
  * allows us to do
@@ -38,7 +39,65 @@ export function poll(fn: () => Promise<any>, ms: number): PollStop {
   };
 }
 
+/**
+ * Challenge:
+ *  We want to start fetching data as soon as possible
+ *  But some reducers depends on some previous state to have been fetched, like the TVL depends on token prices to be in the store
+ *  Async thunks by redux toolkit don't allow us to delay the fulfilled dispatch until needed
+ *
+ * Solutions:
+ *
+ * ❌ Middleware: have a middleware that delay dispatches until all call dependencies have been met
+ *  - could be weird when debugging
+ *  - have to be smart about action parameters (chain params), etc
+ *  - could be a mess to debug -> have some test
+ *  - people will forget about it and make annoying mistakes?
+ *  - the dependency tree encodes reducer dependencies, which is completely separate code
+ *
+ * ❌ Make reducers smarter:
+ *  - each reducer handles data when it can
+ *  - we may need to hack a new action to trigger computations
+ *  - will make reducers more complex many will have to handle partial data
+ *     - having to handle partial data looks "ok" from a dev perspective
+ *  - we could encode dependencies directly in the reducer: in tvl, we say we depend on this and this action to be fulfilled and dispatched
+ *  - we could "wrap" a reducer in some generic sauce that put "actions to be processed" in the state
+ *  - but we will have to wait for 1 dispatch cycle to be able to use selectors like normal
+ *  - this would be the "proper" way
+ *
+ * ✅ Delay dispatch of fulfilled actions: Have a scenario that call the payloadCreator function and dispatch only when needed
+ *  - easy to understand, complexity will be in a single place (the scenario)
+ *  - keep the state reducers simple, but keep implicit dependencies between reducers
+ *  - have to separate payloadCreator function from the async action (that's ok)
+ *  - will be hard to use async thunk actions without dispatching them
+ *     - maybe pass a custom store and re-dispatch this store actions?
+ *
+ * Feel free to implement any other solution if you find it better
+ */
 export function createFulfilledActionCapturer(store: Store) {
+  type CustomAction<T> = Action<string> & { payload: T & { state?: BeefyState } };
+
+  /**
+   * Some actions include the state in their payload
+   * As we are delaying those actions from being dispatched we need
+   * to update the state in this payload according to the latest state
+   */
+  function prepareAction(action: CustomAction<any>): () => CustomAction<any> {
+    return () => {
+      // replace the action state with the latest available state
+      if (action.payload && action.payload.state) {
+        return {
+          ...action,
+          payload: {
+            ...action.payload,
+            state: store.getState(),
+          },
+        };
+      } else {
+        return action;
+      }
+    };
+  }
+
   /**
    * This function allow us to dispatch AsyncActions as soon as needed
    * We "capture" the fulfilled action to be able to dispatch it later on
@@ -56,21 +115,7 @@ export function createFulfilledActionCapturer(store: Store) {
             // we don't dispatch it to the store, just pass it to our caller
             // the caller is supposed to dispatch it later on
             console.debug(`Fulfilled action: ${action.type}`);
-            return resolve(() => {
-              // replace the action state with the latest available state
-              if (action.payload && action.payload.state) {
-                return {
-                  ...action,
-                  //@ts-ignore I could not find a proper TS type here
-                  payload: {
-                    ...action.payload,
-                    state: store.getState(),
-                  },
-                };
-              } else {
-                return action;
-              }
-            });
+            return resolve(prepareAction(action));
           } else if (action.type.endsWith('/error')) {
             // dispatch the error to the store reducers as normal
             // we reject to avoid being stuck on awaiting the returned promise

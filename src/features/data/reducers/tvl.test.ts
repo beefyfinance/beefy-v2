@@ -9,13 +9,15 @@ import {
   fetchBoostContractDataAction,
   FulfilledPayload as FetchBoostFulfilledPayload,
 } from '../actions/boost-contract';
-import { getBeefyTestingInitialState } from '../utils/test-utils';
+import { getBeefyTestingStore } from '../utils/test-utils';
 import { tvlSlice, initialTvlState } from './tvl';
 
 describe('TVL slice tests', () => {
   it('should update state on fulfilled gov vault contract data', async () => {
     // we have loaded some entities already
-    const state = await getBeefyTestingInitialState();
+    const store = await getBeefyTestingStore();
+    const state = store.getState();
+
     const payload: FetchGovVaultFulfilledPayload = {
       chainId: 'bsc',
       data: [
@@ -35,7 +37,9 @@ describe('TVL slice tests', () => {
 
   it('should update state on fulfilled standard vault contract data', async () => {
     // we have loaded some entities already
-    const state = await getBeefyTestingInitialState();
+    const store = await getBeefyTestingStore();
+    const state = store.getState();
+
     const payload: FetchStandardVaultFulfilledPayload = {
       chainId: 'bsc',
       data: [
@@ -55,24 +59,26 @@ describe('TVL slice tests', () => {
 
   it('should update state on fulfilled boost contract data', async () => {
     // we have loaded some entities already
-    const state = await getBeefyTestingInitialState();
+    const store = await getBeefyTestingStore();
+    let state = store.getState();
+
     // given we already have ppfs for the target vault
-    const initPayload: FetchStandardVaultFulfilledPayload = {
-      chainId: 'bsc',
-      data: [
-        {
-          id: 'banana-banana-busd',
-          balance: new BigNumber(123).times(new BigNumber(10).exponentiatedBy(18)),
-          pricePerFullShare: new BigNumber(12).times(new BigNumber(10).exponentiatedBy(18)),
-          strategy: '0x00000000000000000000000',
-        },
-      ],
-      state,
-    };
-    const initiatedTvlState = tvlSlice.reducer(initialTvlState, {
+    store.dispatch({
       type: fetchStandardVaultContractDataAction.fulfilled,
-      payload: initPayload,
+      payload: {
+        chainId: 'bsc',
+        data: [
+          {
+            id: 'banana-banana-busd',
+            balance: new BigNumber(123).times(new BigNumber(10).exponentiatedBy(18)),
+            pricePerFullShare: new BigNumber(12).times(new BigNumber(10).exponentiatedBy(18)),
+            strategy: '0x00000000000000000000000',
+          },
+        ],
+        state,
+      } as FetchStandardVaultFulfilledPayload,
     });
+    state = store.getState();
 
     // We want to make sure we handle the action properly
     const payload: FetchBoostFulfilledPayload = {
@@ -85,17 +91,10 @@ describe('TVL slice tests', () => {
           totalStaked: new BigNumber(12345),
         },
       ],
-      // replace new state in the full state
-      state: {
-        ...state,
-        biz: {
-          ...state.biz,
-          tvl: initiatedTvlState,
-        },
-      },
+      state,
     };
     const action = { type: fetchBoostContractDataAction.fulfilled, payload: payload };
-    const newState = tvlSlice.reducer(initiatedTvlState, action);
+    const newState = tvlSlice.reducer(state.biz.tvl, action);
     expect(newState).toMatchSnapshot();
   });
 });

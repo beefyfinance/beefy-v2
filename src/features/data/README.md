@@ -31,6 +31,8 @@
     [x] break dependencies between actions to fetch everything asap.
         For home we need TVL, APY, user deposited amount both in usd and token amount, for gov vaults => rewards
 
+        [ ] add tests for createFulfilledActionCapturer
+
 [ ] Extract API code
 
     [x] Config (chains, vaults, boosts)

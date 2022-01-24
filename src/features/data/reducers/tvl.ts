@@ -144,9 +144,6 @@ export const tvlSlice = createSlice({
 
         const token = selectTokenById(state, action.payload.chainId, vault.oracleId);
         const tokenPrice = selectTokenPriceByTokenId(state, token.id);
-        if (vault.id === 'joe-wavax-bifi-eol') {
-          console.log({ state });
-        }
         const ppfs = selectVaultPricePerFullShare(state, vault.id);
 
         const totalStaked = boostContractData.totalStaked.times(ppfs).dividedBy(token.decimals);

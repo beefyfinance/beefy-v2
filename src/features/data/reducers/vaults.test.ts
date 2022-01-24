@@ -4,7 +4,7 @@ import {
   FetchStandardVaultFulfilledPayload,
 } from '../actions/vault-contract';
 import { vaultsSlice, initialVaultsState } from './vaults';
-import { getBeefyTestingInitialState } from '../utils/test-utils';
+import { getBeefyTestingStore } from '../utils/test-utils';
 import BigNumber from 'bignumber.js';
 
 describe('Vaults slice tests', () => {
@@ -129,7 +129,9 @@ describe('Vaults slice tests', () => {
   });
 
   it('should update state on fulfilled vault list', async () => {
-    const state = await getBeefyTestingInitialState();
+    const store = await getBeefyTestingStore();
+    const state = store.getState();
+
     const payload: FetchStandardVaultFulfilledPayload = {
       chainId: 'harmony',
       data: [

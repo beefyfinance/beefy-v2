@@ -10,7 +10,6 @@ Object {
   },
   "byVaultId": Object {
     "banana-banana-busd": Object {
-      "pricePerFullShare": "12000000000000000000",
       "tvl": "257.4977769932194791",
     },
   },
