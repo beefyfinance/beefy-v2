@@ -73,6 +73,7 @@
     [ ] ensure TVL and APY is computed properly
     [ ] ensure user balance is computed properly
     [ ] ensure user allowances are computed properly
+    [ ] make tests run in CI
 
 [ ] Rework components to use new reducers
 [ ] Rework search to handle partially loaded data

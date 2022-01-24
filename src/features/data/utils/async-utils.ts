@@ -107,35 +107,39 @@ export function createFulfilledActionCapturer(store: Store) {
   ): Promise<() => Action<any>> {
     const extra = {};
     return new Promise((resolve, reject) => {
-      asyncAction(
-        // @ts-ignore I could not find a proper TS type here
-        (action: Action<string> & { payload: any }) => {
-          // if this is the fulfilled action
-          if (action.type.endsWith('/fulfilled')) {
-            // we don't dispatch it to the store, just pass it to our caller
-            // the caller is supposed to dispatch it later on
-            console.debug(`Fulfilled action: ${action.type}`);
-            return resolve(prepareAction(action));
-          } else if (action.type.endsWith('/error')) {
-            // dispatch the error to the store reducers as normal
-            // we reject to avoid being stuck on awaiting the returned promise
-            console.debug(`Error action: ${action.type}`);
-            store.dispatch(action);
-            return reject(action);
-          } else if (action.type.endsWith('/pending')) {
-            // dispatch the action to the store reducers as normal
-            // but we don't warn our caller yet
-            console.debug(`Pending action: ${action.type}`);
-            store.dispatch(action);
-          } else {
-            // this is not supposed to happen
-            console.warn(`Unknown async action type provided: ${action.type}`);
-            store.dispatch(action);
-          }
-        },
-        () => store.getState(),
-        extra
-      );
+      try {
+        asyncAction(
+          // @ts-ignore I could not find a proper TS type here
+          (action: Action<string> & { payload: any }) => {
+            // if this is the fulfilled action
+            if (action.type.endsWith('/fulfilled')) {
+              // we don't dispatch it to the store, just pass it to our caller
+              // the caller is supposed to dispatch it later on
+              console.debug(`Fulfilled action: ${action.type}`);
+              return resolve(prepareAction(action));
+            } else if (action.type.endsWith('/rejected')) {
+              // dispatch the error to the store reducers as normal
+              // we reject to avoid being stuck on awaiting the returned promise
+              console.debug(`Rejected action: ${action.type}`);
+              store.dispatch(action);
+              return reject(action);
+            } else if (action.type.endsWith('/pending')) {
+              // dispatch the action to the store reducers as normal
+              // but we don't warn our caller yet
+              console.debug(`Pending action: ${action.type}`);
+              store.dispatch(action);
+            } else {
+              // this is not supposed to happen
+              console.warn(`Unknown async action type provided: ${action.type}`);
+              store.dispatch(action);
+            }
+          },
+          () => store.getState(),
+          extra
+        );
+      } catch (e) {
+        reject(e);
+      }
     });
   };
 }
