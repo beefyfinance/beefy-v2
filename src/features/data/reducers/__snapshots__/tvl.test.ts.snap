@@ -24,7 +24,6 @@ Object {
   "byBoostId": Object {},
   "byVaultId": Object {
     "bifi-gov": Object {
-      "pricePerFullShare": "1",
       "tvl": "3.83973164e-12",
     },
   },
@@ -38,7 +37,6 @@ Object {
   "byBoostId": Object {},
   "byVaultId": Object {
     "banana-cyt-bnb": Object {
-      "pricePerFullShare": "12000000000000000000",
       "tvl": "817.047632700577131",
     },
   },

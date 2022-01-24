@@ -17,7 +17,7 @@ interface ActionParams {
 export const fetchBoostsByChainIdAction = createAsyncThunk<FulfilledPayload, ActionParams>(
   'boosts/fetchBoostsListForChain',
   async ({ chainId }) => {
-    const api = await getConfigApi();
+    const api = getConfigApi();
     const boosts = await api.fetchBoostsByChainId(chainId);
     return { chainId, boosts };
   }

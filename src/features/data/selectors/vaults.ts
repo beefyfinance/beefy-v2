@@ -23,3 +23,19 @@ export const selectVaultByChainId = createSelector(
   // last function receives previous function outputs as parameters
   vaultsChainId => vaultsChainId.allActiveIds.concat(vaultsChainId.allRetiredIds)
 );
+
+export const selectVaultPricePerFullShare = createSelector(
+  // get a tiny bit of the data
+  (store: BeefyState) => store.entities.vaults.pricePerFullShare.byVaultId,
+  // get the user passed ID
+  (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  // last function receives previous function outputs as parameters
+  (byVaultId, vaultId) => {
+    if (byVaultId[vaultId] === undefined) {
+      throw new Error(
+        `selectVaultPricePerFullShare: Could not find contract data for vault id ${vaultId}`
+      );
+    }
+    return byVaultId[vaultId];
+  }
+);

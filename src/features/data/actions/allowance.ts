@@ -35,7 +35,7 @@ export const fetchGovVaultPoolsAllowanceAction = createAsyncThunk<
 
   const walletAddress = selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
-  const api = await getAllowanceApi(chain);
+  const api = getAllowanceApi(chain);
 
   // maybe have a way to retrieve those easily
   const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
@@ -57,7 +57,7 @@ export const fetchStandardVaultAllowanceAction = createAsyncThunk<
 
   const walletAddress = selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
-  const api = await getAllowanceApi(chain);
+  const api = getAllowanceApi(chain);
 
   // maybe have a way to retrieve those easily
   const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
@@ -79,7 +79,7 @@ export const fetchBoostAllowanceAction = createAsyncThunk<
 
   const walletAddress = selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
-  const api = await getAllowanceApi(chain);
+  const api = getAllowanceApi(chain);
 
   // maybe have a way to retrieve those easily
   const boosts = selectBoostsByChainId(state, chainId).map(boostId =>

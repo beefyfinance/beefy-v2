@@ -7,8 +7,7 @@ import { reduxActions } from './features/redux/actions';
 import { ScrollToTop } from './components/ScrollToTop';
 import { HideBalanceProvider } from './components/HideBalancesContext';
 import { theme } from './theme';
-import { getBeefyTestingInitialState } from './features/data/utils/test-utils';
-import { initHomeData } from './features/data/actions/scenarios';
+import { initHomeDataV1, initHomeDataV2 } from './features/data/actions/scenarios';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
@@ -71,19 +70,12 @@ export const App = () => {
       dispatch(reduxActions.wallet.createWeb3Modal());
     }
   }, [dispatch, wallet.web3modal]);
-  /*
-   // my own real life test
-  React.useEffect(() => {
-    (async () => {
-      const state = await getBeefyTestingInitialState();
-      console.log(state);
-    })();
-  }, []);
-  */
 
   React.useEffect(() => {
-    initHomeData();
+    //initHomeDataV1();
+    initHomeDataV2();
   }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -9,8 +9,7 @@ import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
-import { selectVaultPricePerFullShare } from '../selectors/tvl';
-import { selectVaultById } from '../selectors/vaults';
+import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
 
 /**
  * State containing APY infos indexed by vault id
@@ -20,9 +19,6 @@ export interface TvlState {
   byVaultId: {
     [vaultId: VaultEntity['id']]: {
       tvl: BigNumber;
-
-      // TODO: this doesn't make sense for gov vaults
-      pricePerFullShare: BigNumber;
     };
   };
   byBoostId: {
@@ -88,7 +84,7 @@ export const tvlSlice = createSlice({
         // add vault tvl to total tvl state
         totalTvl = totalTvl.plus(vaultTvl);
         // add vault tvl to state
-        sliceState.byVaultId[vaultId] = { tvl: vaultTvl, pricePerFullShare: new BigNumber(1) };
+        sliceState.byVaultId[vaultId] = { tvl: vaultTvl };
       }
       sliceState.totalTvl = totalTvl;
     });
@@ -115,7 +111,6 @@ export const tvlSlice = createSlice({
         // save for vault
         sliceState.byVaultId[vault.id] = {
           tvl: vaultTvl,
-          pricePerFullShare: vaultContractData.pricePerFullShare,
         };
       }
       sliceState.totalTvl = totalTvl;
@@ -149,6 +144,9 @@ export const tvlSlice = createSlice({
 
         const token = selectTokenById(state, action.payload.chainId, vault.oracleId);
         const tokenPrice = selectTokenPriceByTokenId(state, token.id);
+        if (vault.id === 'joe-wavax-bifi-eol') {
+          console.log({ state });
+        }
         const ppfs = selectVaultPricePerFullShare(state, vault.id);
 
         const totalStaked = boostContractData.totalStaked.times(ppfs).dividedBy(token.decimals);

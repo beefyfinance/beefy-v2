@@ -82,7 +82,6 @@ const getBalances = async (state, dispatch) => {
   for (let key in multicall) {
     const response = (await multicall[key].all([calls[key]]))[0];
 
-    console.log({ response });
     for (let index in response) {
       const item = response[index];
 

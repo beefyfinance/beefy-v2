@@ -4,17 +4,34 @@ import { rootReducer } from './features/redux/reducers';
 // https://coderwall.com/p/pafnew/redux-middleware-logger
 // debug middleware for when redux browser extension is not helpful
 const loggerMiddleware = store => next => action => {
-  let prefix = '';
+  let prefix = '[' + new Date().toISOString().slice(11, 11 + 8 + 4) + '] ';
+  let suffix = '';
 
   if (action.type.endsWith('/rejected')) {
-    prefix = '❌❌❌ ';
+    prefix += '❌❌❌ ';
   } else if (action.type.endsWith('/fulfilled')) {
-    prefix = '✅ ';
+    prefix += '✅ ';
   } else if (action.type.endsWith('/pending')) {
-    prefix = '👀 ';
+    prefix += '👀 ';
   }
 
-  console.group(prefix + action.type);
+  // add action arguments in the log groups for our sanity
+  if (action.meta && action.meta.arg) {
+    // don't use JSON.stringify to avoid implosion is args are large
+    suffix +=
+      ' { ' +
+      Object.entries(action.meta.arg)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join(', ') +
+      ' }';
+  }
+
+  // expand errors by default otherwise, collapse
+  if (action.type.endsWith('/error')) {
+    console.group(prefix + action.type + suffix);
+  } else {
+    console.groupCollapsed(prefix + action.type + suffix);
+  }
   try {
     const oldState = store.getState();
     console.log('current state', oldState);

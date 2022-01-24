@@ -16,14 +16,14 @@ const configApi = new ConfigAPI();
  * about creating those API objects
  */
 
-export async function getBeefyApi(): Promise<BeefyAPI> {
+export function getBeefyApi(): BeefyAPI {
   return beefyApi;
 }
-export async function getConfigApi(): Promise<ConfigAPI> {
+export function getConfigApi(): ConfigAPI {
   return configApi;
 }
 
-export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {
+export const getWeb3Instance = createFactoryWithCacheByChain(chain => {
   // pick one RPC endpoint at random
   // todo: not the smartest thing to do but good enough yet
   const rpc = chain.rpc[~~(chain.rpc.length * Math.random())];
@@ -31,26 +31,26 @@ export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {
   return new Web3(rpc);
 });
 
-export const getVaultContractApi = createFactoryWithCacheByChain(async chain => {
-  const web3 = await getWeb3Instance(chain);
+export const getVaultContractApi = createFactoryWithCacheByChain(chain => {
+  const web3 = getWeb3Instance(chain);
   console.debug(`Instanciating VaultContractAPI for chain ${chain.id}`);
   return new VaultContractAPI(web3, chain);
 });
 
-export const getBoostContractApi = createFactoryWithCacheByChain(async chain => {
-  const web3 = await getWeb3Instance(chain);
+export const getBoostContractApi = createFactoryWithCacheByChain(chain => {
+  const web3 = getWeb3Instance(chain);
   console.debug(`Instanciating BoostContractAPI for chain ${chain.id}`);
   return new BoostContractAPI(web3, chain);
 });
 
-export const getBalanceApi = createFactoryWithCacheByChain(async chain => {
-  const web3 = await getWeb3Instance(chain);
+export const getBalanceApi = createFactoryWithCacheByChain(chain => {
+  const web3 = getWeb3Instance(chain);
   console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
   return new BalanceAPI(web3, chain);
 });
 
-export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
-  const web3 = await getWeb3Instance(chain);
+export const getAllowanceApi = createFactoryWithCacheByChain(chain => {
+  const web3 = getWeb3Instance(chain);
   console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
   return new AllowanceAPI(web3, chain);
 });
@@ -60,13 +60,13 @@ export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
  * Adds an instance cache by chain to have exactly one instance by chain
  */
 function createFactoryWithCacheByChain<T>(
-  factoryFn: (chainId: ChainEntity) => Promise<T>
-): (chainId: ChainEntity) => Promise<T> {
+  factoryFn: (chainId: ChainEntity) => T
+): (chainId: ChainEntity) => T {
   const cacheByChainId: { [chainId: ChainEntity['id']]: T } = {};
 
-  return async (chain: ChainEntity): Promise<T> => {
+  return (chain: ChainEntity): T => {
     if (cacheByChainId[chain.id] === undefined) {
-      cacheByChainId[chain.id] = await factoryFn(chain);
+      cacheByChainId[chain.id] = factoryFn(chain);
     }
     return cacheByChainId[chain.id];
   };

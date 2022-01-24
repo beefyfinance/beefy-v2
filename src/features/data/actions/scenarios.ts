@@ -1,7 +1,8 @@
+import { Action } from 'redux';
 import { store } from '../../../store';
 import { ChainEntity } from '../entities/chain';
 import { selectAllChains } from '../selectors/chains';
-import { poll, PollStop } from '../utils/async-utils';
+import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchBoostContractDataAction } from './boost-contract';
 import { fetchBoostsByChainIdAction } from './boosts';
@@ -45,15 +46,133 @@ const actionTypeDependencies: { [actionType: string]: string[] } = {
   ],
 };
 
+/**
+ * Challenge:
+ *  We want to start fetching data as soon as possible
+ *  But some reducers depends on some previous state to have been fetched, like the TVL depends on token prices to be in the store
+ *  Async thunks by redux toolkit don't allow us to delay the fulfilled dispatch until needed
+ *
+ * Solutions:
+ *
+ * 👀 Middleware: have a middleware that delay dispatches until all call dependencies have been met
+ *  - could be weird when debugging
+ *  - have to be smart about action parameters (chain params), etc
+ *  - could be a mess to debug -> have some test
+ *  - people will forget about it and make annoying mistakes?
+ *  - the dependency tree encodes reducer dependencies, which is completely separate code
+ *
+ * 👀 Custom Scenario: Have a scenario that call the payloadCreator function and dispatch only when needed
+ *  - easy to understand, complexity will be in a single place (the scenario)
+ *  - keep the state reducers simple, but keep implicit dependencies between reducers
+ *  - have to separate payloadCreator function from the async action (that's ok)
+ *  - will be hard to use async thunk actions without dispatching them
+ *     - maybe pass a custom store and re-dispatch this store actions?
+ *
+ * 👀 Make reducers smarter:
+ *  - each reducer handles data when it can
+ *  - we may need to hack a new action to trigger computations
+ *  - will make reducers more complex many will have to handle partial data
+ *     - having to handle partial data looks "ok" from a dev perspective
+ *  - we could encode dependencies directly in the reducer: in tvl, we say we depend on this and this action to be fulfilled and dispatched
+ *  - we could "wrap" a reducer in some generic sauce that put "actions to be processed" in the state
+ *  - but we will have to wait for 1 dispatch cycle to be able to use selectors like normal
+ *  - this would be the "proper" way
+ */
+
+/**
+ * Fetch all necessary information for the home page
+ * TODO: we need to inject the store in parameters somehow and not get if from a global import
+ */
+export async function initHomeDataV2() {
+  const captureFulfilledAction = createFulfilledActionCapturer(store);
+
+  // start fetching chain config
+  store.dispatch(fetchChainConfigs());
+
+  // we can start fetching prices right now and await them later
+  const pricesPromise = Promise.all([
+    store.dispatch(fetchPricesAction({})),
+    store.dispatch(fetchLPPricesAction({})),
+  ]);
+
+  // we can start fetching apy, it will arrive when it wants, nothing depends on it
+  store.dispatch(fetchApyAction({}));
+
+  // then, we work by chain
+  // todo: put this in a config
+  const chains = [
+    'arbitrum',
+    'avax',
+    'bsc',
+    'celo',
+    'cronos',
+    'fantom',
+    'fuse',
+    'harmony',
+    'heco',
+    'metis',
+    'moonriver',
+    'polygon',
+  ].map(id => ({ id }));
+
+  // we fetch the configuration for each chain
+  const vaultBoostPromisesByChain: { [chainId: ChainEntity['id']]: Promise<any> } = {};
+  for (const chain of chains) {
+    vaultBoostPromisesByChain[chain.id] = Promise.all([
+      store.dispatch(fetchVaultByChainIdAction({ chainId: chain.id })),
+      store.dispatch(fetchBoostsByChainIdAction({ chainId: chain.id })),
+    ]);
+  }
+
+  // now we start fetching all data for all chains
+  const rpcFulfilledCapturesByChain: {
+    [cahinId: ChainEntity['id']]: {
+      standardVaultContracts: Promise<() => Action>;
+      govVaultContracts: Promise<() => Action>;
+      boostContracts: Promise<() => Action>;
+    };
+  } = {};
+  for (const chain of chains) {
+    (async () => {
+      // we need config data with contract addresses to start querying the rest
+      await vaultBoostPromisesByChain[chain.id];
+
+      // begin fetching all contract-related data at the same time
+      rpcFulfilledCapturesByChain[chain.id] = {
+        standardVaultContracts: captureFulfilledAction(
+          fetchStandardVaultContractDataAction({ chainId: chain.id })
+        ),
+        govVaultContracts: captureFulfilledAction(
+          fetchGovVaultContractDataAction({ chainId: chain.id })
+        ),
+        boostContracts: captureFulfilledAction(fetchBoostContractDataAction({ chainId: chain.id })),
+      };
+    })();
+  }
+
+  // ok now we started all calls, it's just a matter of ordering fulfill actions
+
+  // before doing anything else, we need our prices
+  await pricesPromise;
+
+  for (const chain of chains) {
+    (async () => {
+      // dispatch fulfills in order
+      await store.dispatch((await rpcFulfilledCapturesByChain[chain.id].standardVaultContracts)());
+      await store.dispatch((await rpcFulfilledCapturesByChain[chain.id].govVaultContracts)());
+      await store.dispatch((await rpcFulfilledCapturesByChain[chain.id].boostContracts)());
+    })();
+  }
+}
+
 let pollStopFns: PollStop[] = [];
 
 /**
  * Fetch all necessary information for the home page
  * TODO: this could still be improved as we don't have to dispatch action results right await. We could fetch some data and dispatch it when all relevant dispatch have been done
  * TODO: we need to inject the store in parameters somehow and not get if from a global import
- * TODO: handle errors
  */
-export async function initHomeData() {
+export async function initHomeDataV1() {
   // start fetching chain config
   const chainsConfigPromise = store.dispatch(fetchChainConfigs());
 

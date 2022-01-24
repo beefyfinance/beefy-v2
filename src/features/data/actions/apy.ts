@@ -5,7 +5,7 @@ import { getBeefyApi } from '../apis/instances';
 export const fetchApyAction = createAsyncThunk<BeefyAPIBreakdownResponse, {}>(
   'prices/fetchApy',
   async () => {
-    const api = await getBeefyApi();
+    const api = getBeefyApi();
     const prices = await api.getBreakdown();
     return prices;
   }
@@ -14,7 +14,7 @@ export const fetchApyAction = createAsyncThunk<BeefyAPIBreakdownResponse, {}>(
 export const fetchHistoricalApy = createAsyncThunk<BeefyAPIHistoricalAPYResponse, {}>(
   'prices/fetchHistoricalApy',
   async () => {
-    const api = await getBeefyApi();
+    const api = getBeefyApi();
     const prices = await api.getHistoricalAPY();
     return prices;
   }

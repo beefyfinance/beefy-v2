@@ -29,7 +29,7 @@ export const fetchGovVaultContractDataAction = createAsyncThunk<
 >('vaults-contracts/fetchGovVaultContractData', async ({ chainId }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
-  const api = await getVaultContractApi(chain);
+  const api = getVaultContractApi(chain);
   // maybe have a way to retrieve those easily
   const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
     selectVaultById(state, vaultId)
@@ -49,7 +49,7 @@ export const fetchStandardVaultContractDataAction = createAsyncThunk<
 >('vaults-contracts/fetchStandardVaultContractData', async ({ chainId }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
-  const api = await getVaultContractApi(chain);
+  const api = getVaultContractApi(chain);
 
   // maybe have a way to retrieve those easily
   const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>

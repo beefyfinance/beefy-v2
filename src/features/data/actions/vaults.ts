@@ -17,7 +17,7 @@ interface ActionParams {
 export const fetchVaultByChainIdAction = createAsyncThunk<FulfilledPayload, ActionParams>(
   'vaults/fetchVaultListForChain',
   async ({ chainId }) => {
-    const api = await getConfigApi();
+    const api = getConfigApi();
     const pools = await api.fetchVaultByChainId(chainId);
     return { chainId, pools };
   }
