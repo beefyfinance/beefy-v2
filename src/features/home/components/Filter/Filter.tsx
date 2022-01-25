@@ -353,6 +353,23 @@ const _Filter: React.FC<FilterProps> = ({
                   />
                 }
               />
+              <FormControlLabel
+                className={classes.checkboxContainer}
+                label={
+                  <Typography className={classes.labelMoonpot} variant="body1">
+                    <img src={require('../../../../images/pots.svg').default} alt="pots" />{' '}
+                    {t('Filter-Moonpot')}
+                  </Typography>
+                }
+                control={
+                  <Checkbox
+                    checked={sortConfig.moonpot}
+                    onChange={handleCheckbox}
+                    name="moonpot"
+                    className={classes.checkbox}
+                  />
+                }
+              />
             </FormGroup>
           </Box>
           <Box className={classes.selectors}>

@@ -311,6 +311,15 @@ export const styles = theme => ({
   label: {
     color: theme.palette.text.disabled,
   },
+  labelMoonpot: {
+    color: theme.palette.text.disabled,
+    display: 'flex',
+    alignItems: 'center',
+    '& img': {
+      height: '16px !important',
+      marginRight: 4,
+    },
+  },
   value: {
     textTransform: 'capitalize',
   },
