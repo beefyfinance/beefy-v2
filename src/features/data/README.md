@@ -17,7 +17,7 @@
 
 [x] Compile a list of each type of vault/boost to create a regression testing book
 
-[ ] Code review changes
+[x] Code review n°1 changes
 
     [x] remove duplicate boost contractAddress and earnContractAddress
     [x] Store ppfs in the vault reducer, this is a vault property
@@ -30,8 +30,6 @@
     [x] fix the allowance api to add regular tokens (cf. answers section)
     [x] break dependencies between actions to fetch everything asap.
         For home we need TVL, APY, user deposited amount both in usd and token amount, for gov vaults => rewards
-
-        [ ] add tests for createFulfilledActionCapturer
 
 [ ] Extract API code
 
@@ -48,7 +46,7 @@
     [x] TVL? (need some unit tests to make sure I didn't fuck it up)
     [x] APY
     [x] Balances
-    [ ] Allowances
+    [x] Allowances
     [ ] Wallet
 
 [ ] Fetch scenario for the home page
