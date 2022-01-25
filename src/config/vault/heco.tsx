@@ -316,7 +316,7 @@ export const pools = [
     oracleId: "hfi-hfi-ht",
     oraclePrice: 0,
     status: "eol",
-    platform: "HFI",
+    platform: "Other",
     assets: [
       "HFI",
       "WHT"
@@ -346,7 +346,7 @@ export const pools = [
     oracleId: "hfi-hfi-husd",
     oraclePrice: 0,
     status: "eol",
-    platform: "HFI",
+    platform: "Other",
     assets: [
       "HFI",
       "HUSD"
@@ -375,7 +375,7 @@ export const pools = [
     oracleId: "LAVA",
     oraclePrice: 0,
     status: "eol",
-    platform: "Lavaswap",
+    platform: "Other",
     assets: [
       "LAVA"
     ],
@@ -401,7 +401,7 @@ export const pools = [
     oracleId: "lava-lava-usdt",
     oraclePrice: 0,
     status: "eol",
-    platform: "Lavaswap",
+    platform: "Other",
     assets: [
       "LAVA",
       "USDT"
@@ -429,7 +429,7 @@ export const pools = [
     oracleId: "lava-lava-wht",
     oraclePrice: 0,
     status: "eol",
-    platform: "Lavaswap",
+    platform: "Other",
     assets: [
       "LAVA",
       "WHT"

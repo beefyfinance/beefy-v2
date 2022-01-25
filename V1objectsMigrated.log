@@ -1,58 +1,296 @@
 [
   {
+    "id": "heco vault: hfi-hfi-ht-eol",
+    "type": "synced"
+  },
+  {
+    "id": "heco vault: hfi-hfi-husd-eol",
+    "type": "synced"
+  },
+  {
+    "id": "heco vault: lava-lava-eol",
+    "type": "synced"
+  },
+  {
+    "id": "heco vault: lava-lava-usdt-eol",
+    "type": "synced"
+  },
+  {
+    "id": "heco vault: lava-lava-wht-eol",
+    "type": "synced"
+  },
+  {
     "id": "fantom vault: sushi-usdc-wftm",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: sushi-wftm-eth",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: sushi-fusdt-wftm",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: sushi-eth-dai",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: sushi-usdc-mim",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: sushi-btc-eth",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: sushi-wftm-sushi",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: 0xdao-wftm",
     "type": "synced"
   },
   {
-    "id": "fantom vault: 0xdao-usdc",
-    "type": "synced"
+    "id": "fantom vault: 0xdao-wftm-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "fantom vault: 0xdao-dai",
-    "type": "synced"
+    "id": "fantom vault: 0xdao-usdc-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "fantom vault: 0xdao-mim",
-    "type": "synced"
+    "id": "fantom vault: 0xdao-dai-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: 0xdao-mim-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
     "id": "fantom vault: 0xdao-tomb",
     "type": "synced"
   },
   {
-    "id": "fantom vault: 0xdao-weth",
-    "type": "synced"
+    "id": "fantom vault: 0xdao-wbtc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: 0xdao-weth-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
     "id": "fantom vault: oxd-oxd-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: stakesteak-fusd-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: popsicle-ice-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon vault: ironswap-ice-iron",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dfyn-ice-dfyn-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: ironswap-ice-eth",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: ironswap-ice-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-bifi-wone",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-wone-1btc",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1ygg-1eth",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1eth-1aave",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1axs-1eth",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1eth-1dai",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1usdt-1eth",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1eth-1frax",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-ust-1eth",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1wbtc-1eth",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1usdt-1usdc",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-1usdt-wone",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-sushi-one",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-busd-one",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-bscbusd-busd",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-eth-one",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-btc-one",
+    "type": "synced"
+  },
+  {
+    "id": "harmony vault: sushi-one-usdc-one",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-magic-weth",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-weth-gohm",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-spell-weth",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-weth-mim",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-weth-link",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-eth-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-wbtc-weth",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-sushi-eth",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-weth-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-celo-mobi",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-weth-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-weth-daiv2",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-cusd-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-wethv2-celo",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-wethv2-cusd",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-cusd-ceurv2",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-celo-weth-eol",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-cusd-dai-eol",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-ceur-weth-eol",
+    "type": "synced"
+  },
+  {
+    "id": "celo vault: sushi-celo-cusd-ceur-eol",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-mim-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-frax-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-usdt-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-bnb",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-wbtc",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-dai",
     "type": "synced"
   }
 ]

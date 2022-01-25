@@ -8,7 +8,7 @@ import {
 import { config } from '../../../config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
 import { safetyScore } from '../../../helpers/safetyScore';
-import { QiDao, Insurace } from '../../../helpers/partners';
+import { QiDao, Insurace, Moonpot } from '../../../helpers/partners';
 import BigNumber from 'bignumber.js';
 
 let initPlatforms = {};
@@ -74,6 +74,10 @@ const initialPools = () => {
       pool['boostData'] = null;
       pool['isQidao'] = QiDao.includes(pool.id);
       pool['isInsurace'] = Insurace.includes(net);
+      pool['moonpot'] =
+        Moonpot.filter(vault => vault.id === pool.id).length >= 1
+          ? { isMoonpot: true, data: Moonpot.filter(vault => vault.id === pool.id)[0] }
+          : { isMoonpot: false, data: {} };
 
       if (!isEmpty(pool.platform)) {
         if (!platforms.includes(pool.platform)) {
