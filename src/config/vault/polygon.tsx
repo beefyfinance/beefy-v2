@@ -1135,7 +1135,7 @@ export const pools = [
     status: "active",
     platform: "IronFinance",
     assets: [
-      "ICE",
+      "ironICE",
       "IRON"
     ],
     addLiquidityUrl: "https://exchange.dfyn.network/#/add/0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef/0xD86b5923F3AD7b585eD81B448170ae026c65ae9a",
@@ -2482,7 +2482,7 @@ export const pools = [
     status: "eol",
     platform: "Other",
     assets: [
-      "ICE",
+      "ironICE",
       "DFYN"
     ],
     retireReason: "rewards",
@@ -2510,7 +2510,7 @@ export const pools = [
     status: "active",
     platform: "IronFinance",
     assets: [
-      "ICE",
+      "ironICE",
       "ETH"
     ],
     addLiquidityUrl: "https://app.firebird.finance/add/0xf1ee78544a1118f2efb87f7eacd9f1e6e80e1ea5",
@@ -2537,7 +2537,7 @@ export const pools = [
     status: "active",
     platform: "IronFinance",
     assets: [
-      "ICE",
+      "ironICE",
       "USDC"
     ],
     addLiquidityUrl: "https://exchange.dfyn.network/#/add/0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -7983,6 +7983,42 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://polygon.curve.fi/factory/23/deposit",
+    network: "polygon"
+  },
+  {
+    id: "popsicle-ice-eth",
+    name: "ICE-ETH LP",
+    token: "ICE-ETH SLP",
+    tokenDescription: "SushiSwap (Popsicle)",
+    tokenAddress: "0x941eb28e750C441AEF465a89E43DDfec2561830b",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPopsicleICE-WETH",
+    earnedTokenAddress: "0x2109361Ed6759296A70A3f025fBce9744E5BC406",
+    earnContractAddress: "0x2109361Ed6759296A70A3f025fBce9744E5BC406",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "popsicle-ice-eth",
+    depositsPaused: false,
+    status: "active",
+    platform: "Popsicle",
+    assets: [
+      "ICE",
+      "ETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "MCAP_MICRO",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
+    addLiquidityUrl: "https://app.sushi.com/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
     network: "polygon"
   }
 ];

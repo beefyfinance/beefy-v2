@@ -90,7 +90,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "CELO",
@@ -127,7 +127,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "USDT",
@@ -164,7 +164,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "DAI",
@@ -201,7 +201,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "cUSD",
@@ -238,7 +238,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "CELO",
@@ -275,7 +275,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "cUSD",
@@ -312,7 +312,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "cUSD",
@@ -348,7 +348,7 @@ export const pools = [
     oracleId: "sushi-celo-celo-weth",
     oraclePrice: 0,
     status: "eol",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "CELO",
@@ -385,7 +385,7 @@ export const pools = [
     oracleId: "sushi-celo-cusd-dai",
     oraclePrice: 0,
     status: "eol",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "cUSD",
@@ -422,7 +422,7 @@ export const pools = [
     oracleId: "sushi-celo-ceur-weth",
     oraclePrice: 0,
     status: "eol",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "cEUR",
@@ -459,7 +459,7 @@ export const pools = [
     oracleId: "sushi-celo-cusd-ceur",
     oraclePrice: 0,
     status: "eol",
-    platform: "Sushi",
+    platform: "SushiSwap",
     withdrawalFee: "0%",
     assets: [
       "cUSD",

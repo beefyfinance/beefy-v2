@@ -54,7 +54,7 @@ export const pools = [
     oracleId: "sushi-one-1ygg-1eth",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "YGG",
       "ETH"
@@ -91,7 +91,7 @@ export const pools = [
     oracleId: "sushi-one-1eth-1aave",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "AAVE",
       "ETH"
@@ -128,7 +128,7 @@ export const pools = [
     oracleId: "sushi-one-1axs-1eth",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "AXS",
       "ETH"
@@ -165,7 +165,7 @@ export const pools = [
     oracleId: "sushi-one-1eth-1dai",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "DAI",
       "ETH"
@@ -202,7 +202,7 @@ export const pools = [
     oracleId: "sushi-one-1usdt-1eth",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "USDT",
       "ETH"
@@ -239,7 +239,7 @@ export const pools = [
     oracleId: "sushi-one-1eth-1frax",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "FRAX",
       "ETH"
@@ -276,7 +276,7 @@ export const pools = [
     oracleId: "sushi-one-ust-1eth",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "UST",
       "ETH"
@@ -313,7 +313,7 @@ export const pools = [
     oracleId: "sushi-one-1wbtc-1eth",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "WBTC",
       "ETH"
@@ -350,7 +350,7 @@ export const pools = [
     oracleId: "sushi-one-1usdt-1usdc",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "USDT",
       "USDC"
@@ -387,7 +387,7 @@ export const pools = [
     oracleId: "sushi-one-1usdt-wone",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "USDT",
       "ONE"
@@ -424,7 +424,7 @@ export const pools = [
     oracleId: "sushi-one-sushi-one",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "SUSHI",
       "ONE"
@@ -461,7 +461,7 @@ export const pools = [
     oracleId: "sushi-one-busd-one",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "BUSD",
       "ONE"
@@ -498,7 +498,7 @@ export const pools = [
     oracleId: "sushi-one-bscbusd-busd",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "BUSD",
       "bscBUSD"
@@ -535,7 +535,7 @@ export const pools = [
     oracleId: "sushi-one-eth-one",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "ETH",
       "ONE"
@@ -572,7 +572,7 @@ export const pools = [
     oracleId: "sushi-one-btc-one",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "WBTC",
       "ONE"
@@ -609,7 +609,7 @@ export const pools = [
     oracleId: "sushi-one-usdc-one",
     oraclePrice: 0,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "USDC",
       "ONE"
@@ -760,7 +760,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "BIFI",
       "ONE"
@@ -798,7 +798,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "BTC",
       "ONE"
