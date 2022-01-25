@@ -401,6 +401,8 @@ export const styles = theme => ({
     },
   },
   spacingMobile: {
+    display: 'flex',
+    alingItems: 'center',
     [theme.breakpoints.down('sm')]: {
       padding: '5px 0',
     },

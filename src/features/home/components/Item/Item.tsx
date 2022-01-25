@@ -271,7 +271,11 @@ const _Item = ({ vault }) => {
                     />
                   </div>
                   {/*Vault Tags*/}
-                  <DisplayTags isBoosted={isBoosted} tags={item.tags} />
+                  <DisplayTags
+                    isBoosted={isBoosted}
+                    tags={item.tags}
+                    isMoonpot={item.moonpot.isMoonpot}
+                  />
                 </div>
               </div>
             </Link>
