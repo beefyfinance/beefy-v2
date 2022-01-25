@@ -246,11 +246,8 @@
   "Insurance-Title": "Insure your deposit",
   "Insurance-Content": "InsurAce.io is a decentralized, multi-chain insurance protocol that protects users against smart contracts risk. Guarantee your deposits in return for a fee.",
   "Insurance-Btn": "Insure Vaults",
-  "Moonpot-Title": "Win {{price}}",
+  "Moonpot-Title": "Win {{name}} & earn interest",
   "Moonpot-Stake": "Stake {{name}}",
-  "Moonpot-Earn": "Earn APY",
-  "Moonpot-NextDraw": "Next Draw",
-  "Moonpot-Winners": "Winners",
   "Moonpot-Content": "Moonpot is our win-win savings game on BSC. Deposit your crypto into a Moonpot, earn interest & enter a prize draw at the same time.",
   "Moonpot-Btn": "Play with Moonpot"
 }
