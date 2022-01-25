@@ -79,6 +79,11 @@ const Moonpot = [
     img: 'partners/moonpot/cakebnb.svg',
     link: 'https://play.moonpot.com/#/pot/cake-bnb',
   },
+  {
+    id: 'belt-4belt',
+    img: 'partners/moonpot/4belt.svg',
+    link: 'https://play.moonpot.com/#/pot/4belt',
+  },
 ];
 
 export { QiDao, Insurace, Moonpot, LaCucina };
