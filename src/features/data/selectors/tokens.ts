@@ -44,6 +44,7 @@ const deprecatedTokenIds = [
   'blizzard-blzd-busd',
   'BLZD',
   'nyanswop-nyas-usdt',
+  'boo-wftm-dola',
 ];
 
 export const selectTokenPriceByTokenId = createSelector(

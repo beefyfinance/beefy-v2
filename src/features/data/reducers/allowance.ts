@@ -9,6 +9,7 @@ import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
+import { accountHasChanged, walletHasDisconnected } from './wallet';
 
 interface Allowance {
   allowance: BigNumber; // amount allowed
@@ -44,6 +45,14 @@ export const allowanceSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
+    // reset state on user disconnect or address change
+    builder.addCase(accountHasChanged, sliceState => {
+      sliceState.byChainId = {};
+    });
+    builder.addCase(walletHasDisconnected, sliceState => {
+      sliceState.byChainId = {};
+    });
+
     builder.addCase(fetchGovVaultPoolsAllowanceAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
 

@@ -25,8 +25,13 @@ export const chainsSlice = createSlice({
         if (chainConfig.id in sliceState.byId) {
           continue;
         }
-        // for now, both ChainEntity and ChainConfig have compatible types
-        const chain: ChainEntity = chainConfig;
+        // for now, both ChainEntity and ChainConfig have somewhat compatible types
+        // we just rename the chainId to networkChainId to avoid confusion
+        const { chainId: _, ...chainConfigData } = chainConfig;
+        const chain: ChainEntity = {
+          ...chainConfigData,
+          networkChainId: chainConfig.chainId,
+        };
 
         sliceState.byId[chain.id] = chain;
         sliceState.allIds.push(chain.id);

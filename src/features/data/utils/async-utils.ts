@@ -35,6 +35,7 @@ export function poll(fn: () => Promise<any>, ms: number): PollStop {
   doPoll();
 
   return () => {
+    console.debug('Poll stopped');
     stop = true;
   };
 }

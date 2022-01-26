@@ -7,7 +7,7 @@ import { reduxActions } from './features/redux/actions';
 import { ScrollToTop } from './components/ScrollToTop';
 import { HideBalanceProvider } from './components/HideBalancesContext';
 import { theme } from './theme';
-import { initHomeDataV1, initHomeDataV2 } from './features/data/actions/scenarios';
+import { initHomeData } from './features/data/actions/scenarios';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
@@ -72,8 +72,7 @@ export const App = () => {
   }, [dispatch, wallet.web3modal]);
 
   React.useEffect(() => {
-    //initHomeDataV1();
-    initHomeDataV2();
+    initHomeData();
   }, []);
 
   return (

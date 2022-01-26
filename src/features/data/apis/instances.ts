@@ -6,6 +6,8 @@ import { ChainEntity } from '../entities/chain';
 import Web3 from 'web3';
 import { BalanceAPI } from './balance';
 import { AllowanceAPI } from './allowance';
+import { WalletConnect, WalletConnectOptions } from './wallet-connect';
+import { sample } from 'lodash';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -26,7 +28,7 @@ export function getConfigApi(): ConfigAPI {
 export const getWeb3Instance = createFactoryWithCacheByChain(chain => {
   // pick one RPC endpoint at random
   // todo: not the smartest thing to do but good enough yet
-  const rpc = chain.rpc[~~(chain.rpc.length * Math.random())];
+  const rpc = sample(chain.rpc);
   console.debug(`Instanciating Web3 for chain ${chain.id}`);
   return new Web3(rpc);
 });
@@ -54,6 +56,14 @@ export const getAllowanceApi = createFactoryWithCacheByChain(chain => {
   console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
   return new AllowanceAPI(web3, chain);
 });
+
+let walletCo: WalletConnect | null = null;
+export function getWalletConnectInstance(options: WalletConnectOptions): WalletConnect {
+  if (!walletCo) {
+    walletCo = new WalletConnect(options);
+  }
+  return walletCo;
+}
 
 /**
  * Creates a new factory function based on the input factory function
