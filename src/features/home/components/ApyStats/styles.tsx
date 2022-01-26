@@ -65,6 +65,8 @@ export const styles = theme => ({
       flexBasis: '15%',
     },
     [theme.breakpoints.down('sm')]: {
+      height: 60,
+      margin: '8px 0',
       flexGrow: '0',
       maxWidth: '50%',
       flexBasis: '50%',
@@ -77,6 +79,9 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: 'auto',
       alignItems: 'center',
+    },
+    [theme.breakpoints.down('md')]: {
+      margin: `${theme.spacing(0.5)}`,
     },
   },
   tooltipLabel: {

@@ -25,7 +25,7 @@ export const styles = theme => ({
       marginRight: '10px',
       marginLeft: '10px',
       width: 'calc(100% - 20px)',
-      height: '470px',
+      height: '400px',
     },
   },
   badges: {
@@ -46,26 +46,16 @@ export const styles = theme => ({
     flexDirection: 'row',
     alignItems: 'space-around',
     justifyContent: 'center',
-    flexGrow: '0',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
-      maxWidth: '33%',
-      flexBasis: '33%',
-    },
-    [theme.breakpoints.down(1050)]: {
-      alignItems: 'flex-start',
-      maxWidth: '35%',
-      flexBasis: '35%',
-    },
-    [theme.breakpoints.down(1000)]: {
-      alignItems: 'flex-start',
-      maxWidth: '37%',
-      flexBasis: '37%',
+      maxWidth: '30%',
+      flexBasis: '30%',
     },
     [theme.breakpoints.down('sm')]: {
+      padding: 0,
       alignItems: 'flex-start',
       maxWidth: '100%',
-      flexBasis: '100%',
+      marginBottom: theme.spacing(3),
     },
   },
   imageContainer: {
@@ -166,6 +156,8 @@ export const styles = theme => ({
       flexBasis: '15%',
     },
     [theme.breakpoints.down('sm')]: {
+      height: 60,
+      margin: '8px 0',
       flexGrow: '0',
       maxWidth: '50%',
       flexBasis: '50%',
@@ -287,6 +279,9 @@ export const styles = theme => ({
       width: 'auto',
       alignItems: 'center',
     },
+    [theme.breakpoints.down('md')]: {
+      margin: `${theme.spacing(0.5)}`,
+    },
   },
   tooltipLabel: {
     display: 'flex',
@@ -355,24 +350,15 @@ export const styles = theme => ({
     textDecoration: 'line-through',
   },
   statsContainer: {
-    margin: props => (props.marginStats ? '16px 0px 0px 0px' : 'auto'),
-    alignItems: 'flex-start',
-    flexGrow: '0',
+    margin: 'auto',
     [theme.breakpoints.up('md')]: {
-      maxWidth: '67%',
-      flexBasis: '67%',
-    },
-    [theme.breakpoints.down(1050)]: {
-      maxWidth: '65%',
-      flexBasis: '65%',
-    },
-    [theme.breakpoints.down(1000)]: {
-      maxWidth: '63%',
-      flexBasis: '63%',
+      alignItems: 'flex-start',
+      maxWidth: '70%',
+      flexBasis: '70%',
     },
     [theme.breakpoints.down('sm')]: {
+      alignItems: 'flex-start',
       maxWidth: '100%',
-      flexBasis: '100%',
     },
   },
   platformContainer: {
@@ -385,9 +371,6 @@ export const styles = theme => ({
   boostSpacer: {
     [theme.breakpoints.up('md')]: {
       height: 18,
-    },
-    [theme.breakpoints.down('sm')]: {
-      height: 20,
     },
   },
   boostSpacerSm: {
@@ -406,5 +389,8 @@ export const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       padding: '5px 0',
     },
+  },
+  spaceAround: {
+    justifyContent: 'space-around',
   },
 });
