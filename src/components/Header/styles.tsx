@@ -20,34 +20,14 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.header,
   },
   beefy: {
-    display: 'flex',
-    paddingTop: '4px',
-    alignItems: 'center',
-    letterSpacing: 'unset',
-    '& div': {
-      color: 'white',
-      marginLeft: '10px',
-      fontSize: '20px',
-      fontWeight: '900',
-      textDecoration: 'none',
-    },
-    '&,& .MuiButton-root': {
-      textDecoration: 'none',
-      '&:hover, &:focus': {
-        color: theme.palette.text.primary,
-        background: 'transparent',
-      },
-    },
     '& a': {
       marginLeft: '10px',
+      [theme.breakpoints.down('md')]: {
+        marginLeft: '5px',
+      },
     },
     '& img': {
       height: '34px',
-    },
-    [theme.breakpoints.down('sm')]: {
-      '& img': {
-        height: '24px',
-      },
     },
   },
   navLink: {
