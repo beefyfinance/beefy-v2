@@ -1,14 +1,10 @@
-import {
-  fetchBoostsByChainIdAction,
-  FulfilledPayload as FetchBoostsActionPayload,
-} from '../actions/boosts';
+import { fetchAllBoosts, FulfilledAllBoostsPayload } from '../actions/boosts';
 import { boostsSlice, initialBoostsState } from './boosts';
 
 describe('Boosts slice tests', () => {
   it('should update state on fulfilled boosts list', () => {
-    const payload: FetchBoostsActionPayload = {
-      chainId: 'harmony',
-      boosts: [
+    const payload: FulfilledAllBoostsPayload = {
+      harmony: [
         // one with a partnership
         {
           id: 'moo_banana-pera',
@@ -57,7 +53,7 @@ describe('Boosts slice tests', () => {
         },
       ],
     };
-    const action = { type: fetchBoostsByChainIdAction.fulfilled, payload: payload };
+    const action = { type: fetchAllBoosts.fulfilled, payload: payload };
     const state = boostsSlice.reducer(initialBoostsState, action);
     expect(state).toMatchSnapshot();
 

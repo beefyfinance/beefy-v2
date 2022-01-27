@@ -8,18 +8,14 @@ Object {
     "banana-banana-eol",
   ],
   "byChainId": Object {
-    "bsc": Object {
-      "allActiveIds": Array [],
-      "allRetiredIds": Array [
-        "banana-banana-eol",
-      ],
-    },
     "harmony": Object {
       "allActiveIds": Array [
         "one-bifi-gov",
         "sushi-one-1ygg-1eth",
       ],
-      "allRetiredIds": Array [],
+      "allRetiredIds": Array [
+        "banana-banana-eol",
+      ],
     },
   },
   "byId": Object {
@@ -27,7 +23,7 @@ Object {
       "assets": Array [
         "BANANA",
       ],
-      "chainId": "bsc",
+      "chainId": "harmony",
       "contractAddress": "0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786",
       "earnedTokenId": "mooApeBANANA",
       "id": "banana-banana-eol",

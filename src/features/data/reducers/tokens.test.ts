@@ -1,20 +1,13 @@
-import {
-  fetchBoostsByChainIdAction,
-  FulfilledPayload as FetchBoostsActionPayload,
-} from '../actions/boosts';
+import { fetchAllBoosts, FulfilledAllBoostsPayload } from '../actions/boosts';
 import { fetchLPPricesAction, fetchPricesAction } from '../actions/prices';
-import {
-  fetchVaultByChainIdAction,
-  FulfilledPayload as FetchVaultsActionPayload,
-} from '../actions/vaults';
+import { fetchAllVaults, FulfilledAllVaultsPayload } from '../actions/vaults';
 import { BeefyAPITokenPricesResponse } from '../apis/beefy';
 import { tokensSlice, initialTokensState } from './tokens';
 
 describe('Tokens slice tests', () => {
   it('should update state on fulfilled vault list', () => {
-    const payload: FetchVaultsActionPayload = {
-      chainId: 'harmony',
-      pools: [
+    const payload: FulfilledAllVaultsPayload = {
+      harmony: [
         // have one gov vault
         {
           id: 'one-bifi-gov',
@@ -93,15 +86,14 @@ describe('Tokens slice tests', () => {
         },
       ],
     };
-    const action = { type: fetchVaultByChainIdAction.fulfilled, payload: payload };
+    const action = { type: fetchAllVaults.fulfilled, payload: payload };
     const state = tokensSlice.reducer(initialTokensState, action);
     expect(state).toMatchSnapshot();
   });
 
   it('should update state on fulfilled boosts list', () => {
-    const payload: FetchBoostsActionPayload = {
-      chainId: 'harmony',
-      boosts: [
+    const payload: FulfilledAllBoostsPayload = {
+      harmony: [
         // one with a partnership
         {
           id: 'moo_banana-pera',
@@ -150,7 +142,7 @@ describe('Tokens slice tests', () => {
         },
       ],
     };
-    const action = { type: fetchBoostsByChainIdAction.fulfilled, payload: payload };
+    const action = { type: fetchAllBoosts.fulfilled, payload: payload };
     const state = tokensSlice.reducer(initialTokensState, action);
     expect(state).toMatchSnapshot();
   });

@@ -12,10 +12,6 @@ Object {
         "error": null,
         "status": "pending",
       },
-      "boostConfig": Object {
-        "error": null,
-        "status": "init",
-      },
       "boostContractData": Object {
         "error": null,
         "status": "init",
@@ -44,14 +40,14 @@ Object {
         "error": null,
         "status": "init",
       },
-      "vaultConfig": Object {
-        "error": null,
-        "status": "init",
-      },
     },
   },
   "global": Object {
     "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
       "error": null,
       "status": "init",
     },
@@ -64,6 +60,10 @@ Object {
       "status": "init",
     },
     "prices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "vaults": Object {
       "error": null,
       "status": "init",
     },
@@ -83,10 +83,6 @@ Object {
         "error": null,
         "status": "fulfilled",
       },
-      "boostConfig": Object {
-        "error": null,
-        "status": "init",
-      },
       "boostContractData": Object {
         "error": null,
         "status": "init",
@@ -115,14 +111,14 @@ Object {
         "error": null,
         "status": "init",
       },
-      "vaultConfig": Object {
-        "error": null,
-        "status": "init",
-      },
     },
   },
   "global": Object {
     "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
       "error": null,
       "status": "init",
     },
@@ -135,6 +131,10 @@ Object {
       "status": "init",
     },
     "prices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "vaults": Object {
       "error": null,
       "status": "init",
     },
@@ -154,10 +154,6 @@ Object {
         "error": "fatality",
         "status": "rejected",
       },
-      "boostConfig": Object {
-        "error": null,
-        "status": "init",
-      },
       "boostContractData": Object {
         "error": null,
         "status": "init",
@@ -186,14 +182,14 @@ Object {
         "error": null,
         "status": "init",
       },
-      "vaultConfig": Object {
-        "error": null,
-        "status": "init",
-      },
     },
   },
   "global": Object {
     "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
       "error": null,
       "status": "init",
     },
@@ -206,6 +202,10 @@ Object {
       "status": "init",
     },
     "prices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "vaults": Object {
       "error": null,
       "status": "init",
     },
@@ -221,6 +221,10 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boosts": Object {
+      "error": null,
+      "status": "init",
+    },
     "chainConfig": Object {
       "error": null,
       "status": "init",
@@ -233,6 +237,10 @@ Object {
       "error": null,
       "status": "pending",
     },
+    "vaults": Object {
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -242,6 +250,10 @@ Object {
   "byChainId": Object {},
   "global": Object {
     "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
       "error": null,
       "status": "init",
     },
@@ -257,6 +269,10 @@ Object {
       "error": null,
       "status": "fulfilled",
     },
+    "vaults": Object {
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -266,6 +282,10 @@ Object {
   "byChainId": Object {},
   "global": Object {
     "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
       "error": null,
       "status": "init",
     },
@@ -280,6 +300,10 @@ Object {
     "prices": Object {
       "error": "fatality",
       "status": "rejected",
+    },
+    "vaults": Object {
+      "error": null,
+      "status": "init",
     },
   },
 }

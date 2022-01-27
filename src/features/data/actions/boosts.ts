@@ -7,18 +7,13 @@ import { ChainEntity } from '../entities/chain';
 // we use the api to create an action
 // this action should return just enough data for the state to work with
 
-export interface FulfilledPayload {
-  chainId: ChainEntity['id'];
-  boosts: BoostConfig[];
+export interface FulfilledAllBoostsPayload {
+  [chainId: ChainEntity['id']]: BoostConfig[];
 }
-interface ActionParams {
-  chainId: ChainEntity['id'];
-}
-export const fetchBoostsByChainIdAction = createAsyncThunk<FulfilledPayload, ActionParams>(
-  'boosts/fetchBoostsListForChain',
-  async ({ chainId }) => {
+export const fetchAllBoosts = createAsyncThunk<FulfilledAllBoostsPayload>(
+  'boosts/fetchAllBoosts',
+  async () => {
     const api = getConfigApi();
-    const boosts = await api.fetchBoostsByChainId(chainId);
-    return { chainId, boosts };
+    return api.fetchAllBoosts();
   }
 );

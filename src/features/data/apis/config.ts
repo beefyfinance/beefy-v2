@@ -179,19 +179,11 @@ export class ConfigAPI {
     return featuredVaults;
   }
 
-  public async fetchVaultByChainId(chainId: ChainEntity['id']): Promise<VaultConfig[]> {
-    if (vaultsByChainId[chainId] !== undefined) {
-      return vaultsByChainId[chainId];
-    } else {
-      throw Error(`Chain ${chainId} not supported`);
-    }
+  public async fetchAllVaults(): Promise<{ [chainId: ChainEntity['id']]: VaultConfig[] }> {
+    return vaultsByChainId;
   }
 
-  public async fetchBoostsByChainId(chainId: ChainEntity['id']): Promise<BoostConfig[]> {
-    if (boostsByChainId[chainId] !== undefined) {
-      return boostsByChainId[chainId];
-    } else {
-      throw Error(`Chain ${chainId} not supported`);
-    }
+  public async fetchAllBoosts(): Promise<{ [chainId: ChainEntity['id']]: BoostConfig[] }> {
+    return boostsByChainId;
   }
 }

@@ -7,18 +7,13 @@ import { ChainEntity } from '../entities/chain';
 // we use the api to create an action
 // this action should return just enough data for the state to work with
 
-export interface FulfilledPayload {
-  chainId: ChainEntity['id'];
-  pools: VaultConfig[];
+export interface FulfilledAllVaultsPayload {
+  [chainId: ChainEntity['id']]: VaultConfig[];
 }
-interface ActionParams {
-  chainId: ChainEntity['id'];
-}
-export const fetchVaultByChainIdAction = createAsyncThunk<FulfilledPayload, ActionParams>(
-  'vaults/fetchVaultListForChain',
-  async ({ chainId }) => {
+export const fetchAllVaults = createAsyncThunk<FulfilledAllVaultsPayload>(
+  'boosts/fetchAllVaults',
+  async () => {
     const api = getConfigApi();
-    const pools = await api.fetchVaultByChainId(chainId);
-    return { chainId, pools };
+    return api.fetchAllVaults();
   }
 );

@@ -16,18 +16,9 @@ export const selectIsPriceLoading = createSelector(
 );
 
 export const selectIsConfigLoading = createSelector(
-  [
-    (state: BeefyState) => state.ui.dataLoader.global,
-    (state: BeefyState) => state.ui.dataLoader.byChainId,
-  ],
-  (glob, byChainId): boolean => {
-    return (
-      isPending(glob.chainConfig) ||
-      Object.keys(byChainId).some(
-        chainId =>
-          isPending(byChainId[chainId].vaultConfig) || isPending(byChainId[chainId].boostConfig)
-      )
-    );
+  [(state: BeefyState) => state.ui.dataLoader.global],
+  (glob): boolean => {
+    return isPending(glob.chainConfig) || isPending(glob.vaults) || isPending(glob.boosts);
   }
 );
 

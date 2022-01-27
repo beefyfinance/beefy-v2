@@ -13,14 +13,14 @@ import { selectCurrentChainId, selectIsWalletConnected } from '../selectors/wall
 import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchBoostContractDataAction } from './boost-contract';
-import { fetchBoostsByChainIdAction } from './boosts';
+import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchLPPricesAction, fetchPricesAction } from './prices';
 import {
   fetchGovVaultContractDataAction,
   fetchStandardVaultContractDataAction,
 } from './vault-contract';
-import { fetchVaultByChainIdAction } from './vaults';
+import { fetchAllVaults } from './vaults';
 import {
   fetchBoostBalanceAction,
   fetchGovVaultPoolsBalanceAction,
@@ -52,25 +52,28 @@ let pollStopFns: PollStop[] = [];
 
 // todo: put this in a config
 const chains = [
-  //'arbitrum',
-  //'avax',
-  //'bsc',
-  //'celo',
-  //'cronos',
+  'arbitrum',
+  'avax',
+  'bsc',
+  'celo',
+  'cronos',
   'fantom',
-  //'fuse',
-  //'harmony',
-  //'heco',
-  //'metis',
-  //'moonriver',
-  //'polygon',
+  'fuse',
+  'harmony',
+  'heco',
+  'metis',
+  'moonriver',
+  'polygon',
 ].map(id => ({ id }));
 
 /**
  * Fetch all necessary information for the home page
  * TODO: we need to inject the store in parameters somehow and not get if from a global import
  */
-export async function initHomeData() {
+export async function initHomeDataV3() {
+  console.time('From scenario start');
+  console.timeLog('From scenario start');
+
   const captureFulfill = createFulfilledActionCapturer(store);
 
   // start fetching chain config
@@ -79,6 +82,8 @@ export async function initHomeData() {
   // create the wallet instance as soon as we get the chain list
   (async () => {
     await chainListPromise;
+    console.timeLog('From scenario start');
+    console.log('Chain Config Loaded');
 
     const state = store.getState();
     const chains = selectAllChains(state);
@@ -109,13 +114,10 @@ export async function initHomeData() {
   // then, we work by chain
 
   // we fetch the configuration for each chain
-  const vaultBoostPromisesByNet: { [chainId: ChainEntity['id']]: Promise<any> } = {};
-  for (const chain of chains) {
-    vaultBoostPromisesByNet[chain.id] = Promise.all([
-      store.dispatch(fetchVaultByChainIdAction({ chainId: chain.id })),
-      store.dispatch(fetchBoostsByChainIdAction({ chainId: chain.id })),
-    ]);
-  }
+  // we need config data (for contract addresses) to start querying the rest
+  await Promise.all([store.dispatch(fetchAllBoosts()), store.dispatch(fetchAllVaults())]);
+  console.timeLog('From scenario start');
+  console.log(`Vaults and boost list for all chains OK`);
 
   // now we start fetching all data for all chains
   const fulfillsByNet: {
@@ -123,9 +125,6 @@ export async function initHomeData() {
   } = {};
   for (const chain of chains) {
     (async () => {
-      // we need config data (for contract addresses) to start querying the rest
-      await vaultBoostPromisesByNet[chain.id];
-
       // if user is connected, start fetching balances and allowances
       let userFullfills: CapturedFulfilledActions['user'] = null;
       if (selectIsWalletConnected(store.getState())) {
@@ -139,6 +138,8 @@ export async function initHomeData() {
         boosts: captureFulfill(fetchBoostContractDataAction({ chainId: chain.id })),
         user: userFullfills,
       };
+      console.timeLog('From scenario start');
+      console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
     })().catch(err => {
       // as we still dispatch network errors, for reducers to handle
       // there is not much to do here, this is just to avoid
@@ -159,6 +160,9 @@ export async function initHomeData() {
       await store.dispatch((await chainFfs.standardVaults)());
       await store.dispatch((await chainFfs.govVaults)());
       await store.dispatch((await chainFfs.boosts)());
+
+      console.timeLog('From scenario start');
+      console.log(`Vaults and boost contract for chain ${chain.id} OK`);
 
       // user ffs can be dispatched in any order after that
       if (chainFfs.user !== null) {

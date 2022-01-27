@@ -8,7 +8,7 @@ export interface FulfilledPayload {
 
 export const fetchChainConfigs = createAsyncThunk<FulfilledPayload>(
   'chains/fetchChainConfigs',
-  async (params, config) => {
+  async () => {
     const api = getConfigApi();
     const chainConfigs = await api.fetchChainConfigs();
     return { chainConfigs };

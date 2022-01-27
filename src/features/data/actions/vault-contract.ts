@@ -19,7 +19,7 @@ export interface FetchStandardVaultFulfilledPayload {
   // Reducers handling this action need access to the full state
   state: BeefyState;
 }
-interface ActionParams {
+export interface ActionParams {
   chainId: ChainEntity['id'];
 }
 export const fetchGovVaultContractDataAction = createAsyncThunk<

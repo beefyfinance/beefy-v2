@@ -1,4 +1,4 @@
-import { fetchVaultByChainIdAction, FulfilledPayload } from '../actions/vaults';
+import { fetchAllVaults, FulfilledAllVaultsPayload } from '../actions/vaults';
 import {
   fetchStandardVaultContractDataAction,
   FetchStandardVaultFulfilledPayload,
@@ -9,9 +9,8 @@ import BigNumber from 'bignumber.js';
 
 describe('Vaults slice tests', () => {
   it('should update state on fulfilled vault list', () => {
-    const payload: FulfilledPayload = {
-      chainId: 'harmony',
-      pools: [
+    const payload: FulfilledAllVaultsPayload = {
+      harmony: [
         // have one gov vault
         {
           id: 'one-bifi-gov',
@@ -117,7 +116,7 @@ describe('Vaults slice tests', () => {
         },
       ],
     };
-    const action = { type: fetchVaultByChainIdAction.fulfilled, payload: payload };
+    const action = { type: fetchAllVaults.fulfilled, payload: payload };
     const state = vaultsSlice.reducer(initialVaultsState, action);
     expect(state).toMatchSnapshot();
 

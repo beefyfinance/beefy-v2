@@ -1,9 +1,9 @@
 import { Action } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { fetchBoostsByChainIdAction } from '../actions/boosts';
+import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchPricesAction } from '../actions/prices';
-import { fetchVaultByChainIdAction } from '../actions/vaults';
+import { fetchAllVaults } from '../actions/vaults';
 import { selectAllChains } from '../selectors/chains';
 import mockPrices from './mock-prices.json';
 import mockLPPrices from './mock-lp-prices.json';
@@ -37,10 +37,8 @@ export async function getBeefyTestingStore() {
   await store.dispatch(fetchChainConfigs());
   state = store.getState();
   const chains = selectAllChains(state);
-  for (const chain of chains) {
-    await store.dispatch(fetchVaultByChainIdAction({ chainId: chain.id }));
-    await store.dispatch(fetchBoostsByChainIdAction({ chainId: chain.id }));
-  }
+  await store.dispatch(fetchAllVaults());
+  await store.dispatch(fetchAllBoosts());
 
   // mock token prices
   store.dispatch({ type: fetchPricesAction.fulfilled, payload: mockPrices });

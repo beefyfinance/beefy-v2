@@ -11,14 +11,14 @@ import {
   fetchTokenBalanceAction,
 } from '../actions/balance';
 import { fetchBoostContractDataAction } from '../actions/boost-contract';
-import { fetchBoostsByChainIdAction } from '../actions/boosts';
+import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchLPPricesAction, fetchPricesAction } from '../actions/prices';
 import {
   fetchGovVaultContractDataAction,
   fetchStandardVaultContractDataAction,
 } from '../actions/vault-contract';
-import { fetchVaultByChainIdAction } from '../actions/vaults';
+import { fetchAllVaults } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
 
 /**
@@ -62,8 +62,6 @@ const dataLoaderStateInit: LoaderState = { status: 'init', error: null };
 const dataLoaderStateFulfilled: LoaderState = { status: 'fulfilled', error: null };
 const dataLoaderStatePending: LoaderState = { status: 'pending', error: null };
 const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
-  vaultConfig: dataLoaderStateInit,
-  boostConfig: dataLoaderStateInit,
   govVaultContractData: dataLoaderStateInit,
   standardVaultContractData: dataLoaderStateInit,
   boostContractData: dataLoaderStateInit,
@@ -81,12 +79,12 @@ export interface DataLoaderState {
     prices: LoaderState;
     lpPrices: LoaderState;
     apy: LoaderState;
+    vaults: LoaderState;
+    boosts: LoaderState;
   };
 
   byChainId: {
     [chainId: ChainEntity['id']]: {
-      vaultConfig: LoaderState;
-      boostConfig: LoaderState;
       govVaultContractData: LoaderState;
       standardVaultContractData: LoaderState;
       boostContractData: LoaderState;
@@ -105,6 +103,8 @@ export const initialDataLoaderState: DataLoaderState = {
     prices: dataLoaderStateInit,
     lpPrices: dataLoaderStateInit,
     apy: dataLoaderStateInit,
+    boosts: dataLoaderStateInit,
+    vaults: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -138,14 +138,14 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
   builder.addCase(action.pending, (sliceState, action) => {
     const chainId = action.meta.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
-      sliceState.byChainId[chainId] = dataLoaderStateInitByChainId;
+      sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
     sliceState.byChainId[chainId][stateKey] = dataLoaderStatePending;
   });
   builder.addCase(action.rejected, (sliceState, action) => {
     const chainId = action.meta.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
-      sliceState.byChainId[chainId] = dataLoaderStateInitByChainId;
+      sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
     // here, maybe put an error message
     sliceState.byChainId[chainId][stateKey] = { status: 'rejected', error: action.error + '' };
@@ -153,7 +153,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
   builder.addCase(action.fulfilled, (sliceState, action) => {
     const chainId = action.meta.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
-      sliceState.byChainId[chainId] = dataLoaderStateInitByChainId;
+      sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
     // here, maybe put an error message
     sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
@@ -167,13 +167,13 @@ export const dataLoaderSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    // TODO: WIP
     addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig');
     addGlobalAsyncThunkActions(builder, fetchPricesAction, 'prices');
     addGlobalAsyncThunkActions(builder, fetchLPPricesAction, 'lpPrices');
-    addGlobalAsyncThunkActions(builder, fetchApyAction, 'lpPrices');
-    addByChainAsyncThunkActions(builder, fetchBoostsByChainIdAction, 'vaultConfig');
-    addByChainAsyncThunkActions(builder, fetchVaultByChainIdAction, 'boostConfig');
+    addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
+    addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
+    addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
+
     addByChainAsyncThunkActions(builder, fetchGovVaultContractDataAction, 'govVaultContractData');
     addByChainAsyncThunkActions(
       builder,

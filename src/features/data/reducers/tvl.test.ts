@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {
+  ActionParams,
   fetchGovVaultContractDataAction,
   FetchGovVaultFulfilledPayload,
   fetchStandardVaultContractDataAction,
@@ -11,6 +12,9 @@ import {
 } from '../actions/boost-contract';
 import { getBeefyTestingStore } from '../utils/test-utils';
 import { tvlSlice, initialTvlState } from './tvl';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { AsyncThunkFulfilledActionCreator } from '@reduxjs/toolkit/dist/createAsyncThunk';
+import { BeefyState } from '../../redux/reducers';
 
 describe('TVL slice tests', () => {
   it('should update state on fulfilled gov vault contract data', async () => {
@@ -65,6 +69,11 @@ describe('TVL slice tests', () => {
     // given we already have ppfs for the target vault
     store.dispatch({
       type: fetchStandardVaultContractDataAction.fulfilled,
+      meta: {
+        arg: {
+          chainId: 'bsc',
+        },
+      },
       payload: {
         chainId: 'bsc',
         data: [

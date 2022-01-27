@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import { WritableDraft } from 'immer/dist/internal';
 import { fetchStandardVaultContractDataAction } from '../actions/vault-contract';
-import { fetchVaultByChainIdAction } from '../actions/vaults';
+import { fetchAllVaults } from '../actions/vaults';
+import { VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
@@ -47,59 +49,10 @@ export const vaultsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
-    builder.addCase(fetchVaultByChainIdAction.fulfilled, (sliceState, action) => {
-      for (const apiVault of action.payload.pools) {
-        const chainId = apiVault.network;
-        // we already know this vault
-        if (apiVault.id in sliceState.byId) {
-          continue;
-        }
-        if (apiVault.isGovVault) {
-          const vault: VaultGov = {
-            id: apiVault.id,
-            name: apiVault.name,
-            isGovVault: true,
-            earnContractAddress: apiVault.poolAddress,
-            excludedId: apiVault.excluded || null,
-            oracleId: apiVault.oracleId,
-            chainId: chainId,
-          };
-
-          sliceState.byId[vault.id] = vault;
-          sliceState.allIds.push(vault.id);
-          if (sliceState.byChainId[vault.chainId] === undefined) {
-            sliceState.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
-          }
-          if (apiVault.status === 'eol') {
-            sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
-          } else {
-            sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
-          }
-        } else {
-          const vault: VaultStandard = {
-            id: apiVault.id,
-            name: apiVault.name,
-            logoUri: apiVault.logo,
-            isGovVault: false,
-            contractAddress: apiVault.earnContractAddress,
-            assets: apiVault.assets,
-            earnedTokenId: apiVault.earnedToken,
-            oracleId: apiVault.oracleId,
-            strategyType: apiVault.stratType as VaultStandard['strategyType'],
-            chainId: chainId,
-          };
-          // redux toolkit uses immer by default so we can
-          // directly modify the state as usual
-          sliceState.byId[vault.id] = vault;
-          sliceState.allIds.push(vault.id);
-          if (sliceState.byChainId[vault.chainId] === undefined) {
-            sliceState.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
-          }
-          if (apiVault.status === 'eol') {
-            sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
-          } else {
-            sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
-          }
+    builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
+      for (const [chainId, vaults] of Object.entries(action.payload)) {
+        for (const vault of vaults) {
+          addVaultToState(sliceState, chainId, vault);
         }
       }
     });
@@ -116,3 +69,61 @@ export const vaultsSlice = createSlice({
     });
   },
 });
+
+function addVaultToState(
+  sliceState: WritableDraft<VaultsState>,
+  chainId: ChainEntity['id'],
+  apiVault: VaultConfig
+) {
+  // we already know this vault
+  if (apiVault.id in sliceState.byId) {
+    return;
+  }
+  if (apiVault.isGovVault) {
+    const vault: VaultGov = {
+      id: apiVault.id,
+      name: apiVault.name,
+      isGovVault: true,
+      earnContractAddress: apiVault.poolAddress,
+      excludedId: apiVault.excluded || null,
+      oracleId: apiVault.oracleId,
+      chainId: chainId,
+    };
+
+    sliceState.byId[vault.id] = vault;
+    sliceState.allIds.push(vault.id);
+    if (sliceState.byChainId[vault.chainId] === undefined) {
+      sliceState.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
+    }
+    if (apiVault.status === 'eol') {
+      sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
+    } else {
+      sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
+    }
+  } else {
+    const vault: VaultStandard = {
+      id: apiVault.id,
+      name: apiVault.name,
+      logoUri: apiVault.logo,
+      isGovVault: false,
+      contractAddress: apiVault.earnContractAddress,
+      assets: apiVault.assets,
+      earnedTokenId: apiVault.earnedToken,
+      oracleId: apiVault.oracleId,
+      strategyType: apiVault.stratType as VaultStandard['strategyType'],
+      chainId: chainId,
+    };
+    // redux toolkit uses immer by default so we can
+    // directly modify the state as usual
+    sliceState.byId[vault.id] = vault;
+    sliceState.allIds.push(vault.id);
+    if (sliceState.byChainId[vault.chainId] === undefined) {
+      sliceState.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
+    }
+    if (apiVault.status === 'eol') {
+      sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
+    } else {
+      sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
+    }
+  }
+}
