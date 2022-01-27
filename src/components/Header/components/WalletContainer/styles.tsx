@@ -25,6 +25,7 @@ export const styles = theme => ({
     background: theme.palette.background.cta,
     '& .MuiTypography-root': {
       color: theme.palette.text.primary,
+      textOverflow: 'clip',
     },
   },
   connected: {
