@@ -60,8 +60,8 @@
 
 [ ] Smarter data loading
 
-    [ ] handle errors
-    [ ] handle loading
+    [x] handle errors
+    [x] handle loading
     [ ] handle canceling ongoing requests
 
 [ ] Code cleanup & Testing
