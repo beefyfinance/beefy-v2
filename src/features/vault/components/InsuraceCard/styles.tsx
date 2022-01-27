@@ -24,5 +24,10 @@ export const styles = theme => ({
     padding: '12px 24px',
     backgroundColor: theme.palette.background.default,
     textTransform: 'none',
+    width: '100%',
+  },
+  link: {
+    textDecoration: 'none',
+    width: '100%',
   },
 });

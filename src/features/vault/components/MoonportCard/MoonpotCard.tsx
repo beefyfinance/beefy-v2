@@ -13,10 +13,6 @@ const MoonpotCard: React.FC<MoonpotProps> = ({ name, item }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  function RedirectToMoonpot() {
-    window.location.href = item.link;
-  }
-
   return (
     <Card>
       <CardHeader className={classes.header}>
@@ -38,9 +34,9 @@ const MoonpotCard: React.FC<MoonpotProps> = ({ name, item }) => {
         <Typography className={classes.content} variant="body1">
           {t('Moonpot-Content')}
         </Typography>
-        <Button onClick={RedirectToMoonpot} className={classes.btn}>
-          {t('Moonpot-Btn')}
-        </Button>
+        <a className={classes.link} target="_blank" rel="noreferrer" href={item.link}>
+          <Button className={classes.btn}>{t('Moonpot-Btn')}</Button>
+        </a>
       </CardContent>
     </Card>
   );
