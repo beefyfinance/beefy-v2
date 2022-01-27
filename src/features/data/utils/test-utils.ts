@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
-import { fetchPricesAction } from '../actions/prices';
+import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAllVaults } from '../actions/vaults';
 import { selectAllChains } from '../selectors/chains';
 import mockPrices from './mock-prices.json';
@@ -41,8 +41,10 @@ export async function getBeefyTestingStore() {
   await store.dispatch(fetchAllBoosts());
 
   // mock token prices
-  store.dispatch({ type: fetchPricesAction.fulfilled, payload: mockPrices });
-  store.dispatch({ type: fetchPricesAction.fulfilled, payload: mockLPPrices });
+  store.dispatch({
+    type: fetchAllPricesAction.fulfilled,
+    payload: { ...mockPrices, ...mockLPPrices },
+  });
 
   return store;
 }

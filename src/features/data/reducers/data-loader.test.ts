@@ -1,19 +1,19 @@
 import { fetchBoostBalanceAction } from '../actions/balance';
-import { fetchPricesAction } from '../actions/prices';
+import { fetchAllPricesAction } from '../actions/prices';
 import { dataLoaderSlice, initialDataLoaderState } from './data-loader';
 
 describe('Data Loader slice tests', () => {
   it('should update state on fulfilled global action', () => {
     let sliceState = initialDataLoaderState;
 
-    sliceState = dataLoaderSlice.reducer(sliceState, { type: fetchPricesAction.pending });
+    sliceState = dataLoaderSlice.reducer(sliceState, { type: fetchAllPricesAction.pending });
     expect(sliceState).toMatchSnapshot();
 
-    sliceState = dataLoaderSlice.reducer(sliceState, { type: fetchPricesAction.fulfilled });
+    sliceState = dataLoaderSlice.reducer(sliceState, { type: fetchAllPricesAction.fulfilled });
     expect(sliceState).toMatchSnapshot();
 
     sliceState = dataLoaderSlice.reducer(sliceState, {
-      type: fetchPricesAction.rejected,
+      type: fetchAllPricesAction.rejected,
       error: 'fatality',
     });
     expect(sliceState).toMatchSnapshot();

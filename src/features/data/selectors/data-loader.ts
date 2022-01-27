@@ -6,12 +6,9 @@ import { isPending } from '../reducers/data-loader';
 import { selectVaultById } from './vaults';
 
 export const selectIsPriceLoading = createSelector(
-  [
-    (state: BeefyState) => state.ui.dataLoader.global.prices,
-    (state: BeefyState) => state.ui.dataLoader.global.lpPrices,
-  ],
-  (prices, lpPrices): boolean => {
-    return isPending(prices) || isPending(lpPrices);
+  [(state: BeefyState) => state.ui.dataLoader.global.prices],
+  (prices): boolean => {
+    return isPending(prices);
   }
 );
 

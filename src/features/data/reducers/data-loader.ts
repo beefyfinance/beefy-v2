@@ -13,7 +13,7 @@ import {
 import { fetchBoostContractDataAction } from '../actions/boost-contract';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
-import { fetchLPPricesAction, fetchPricesAction } from '../actions/prices';
+import { fetchAllPricesAction } from '../actions/prices';
 import {
   fetchGovVaultContractDataAction,
   fetchStandardVaultContractDataAction,
@@ -77,7 +77,6 @@ export interface DataLoaderState {
   global: {
     chainConfig: LoaderState;
     prices: LoaderState;
-    lpPrices: LoaderState;
     apy: LoaderState;
     vaults: LoaderState;
     boosts: LoaderState;
@@ -101,7 +100,6 @@ export const initialDataLoaderState: DataLoaderState = {
   global: {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
-    lpPrices: dataLoaderStateInit,
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
@@ -168,8 +166,7 @@ export const dataLoaderSlice = createSlice({
   },
   extraReducers: builder => {
     addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig');
-    addGlobalAsyncThunkActions(builder, fetchPricesAction, 'prices');
-    addGlobalAsyncThunkActions(builder, fetchLPPricesAction, 'lpPrices');
+    addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices');
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');

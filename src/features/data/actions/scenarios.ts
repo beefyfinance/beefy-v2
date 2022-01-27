@@ -15,7 +15,7 @@ import { fetchApyAction } from './apy';
 import { fetchBoostContractDataAction } from './boost-contract';
 import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
-import { fetchLPPricesAction, fetchPricesAction } from './prices';
+import { fetchAllPricesAction } from './prices';
 import {
   fetchGovVaultContractDataAction,
   fetchStandardVaultContractDataAction,
@@ -80,7 +80,7 @@ export async function initHomeDataV3() {
   const chainListPromise = store.dispatch(fetchChainConfigs());
 
   // create the wallet instance as soon as we get the chain list
-  (async () => {
+  setTimeout(async () => {
     await chainListPromise;
     console.timeLog('From scenario start');
     console.log('Chain Config Loaded');
@@ -100,14 +100,10 @@ export async function initHomeDataV3() {
     // todo: take it from local storage
     //const defaultChainId = 'bsc';
     //return walletCo.askUserToConnectIfNeeded(defaultChainId);
-  })();
+  });
 
   // we can start fetching prices right now and await them later
-  const pricesPromise = Promise.all([
-    store.dispatch(fetchPricesAction({})),
-    store.dispatch(fetchLPPricesAction({})),
-  ]);
-
+  const pricesPromise = store.dispatch(fetchAllPricesAction({}));
   // we can start fetching apy, it will arrive when it wants, nothing depends on it
   store.dispatch(fetchApyAction({}));
 
@@ -124,28 +120,32 @@ export async function initHomeDataV3() {
     [chainId: ChainEntity['id']]: CapturedFulfilledActions;
   } = {};
   for (const chain of chains) {
-    (async () => {
-      // if user is connected, start fetching balances and allowances
-      let userFullfills: CapturedFulfilledActions['user'] = null;
-      if (selectIsWalletConnected(store.getState())) {
-        userFullfills = fetchCaptureUserData(chain.id);
-      }
+    setTimeout(() =>
+      (async () => {
+        // if user is connected, start fetching balances and allowances
+        let userFullfills: CapturedFulfilledActions['user'] = null;
+        if (selectIsWalletConnected(store.getState())) {
+          userFullfills = fetchCaptureUserData(chain.id);
+        }
 
-      // startfetching all contract-related data at the same time
-      fulfillsByNet[chain.id] = {
-        standardVaults: captureFulfill(fetchStandardVaultContractDataAction({ chainId: chain.id })),
-        govVaults: captureFulfill(fetchGovVaultContractDataAction({ chainId: chain.id })),
-        boosts: captureFulfill(fetchBoostContractDataAction({ chainId: chain.id })),
-        user: userFullfills,
-      };
-      console.timeLog('From scenario start');
-      console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
-    })().catch(err => {
-      // as we still dispatch network errors, for reducers to handle
-      // there is not much to do here, this is just to avoid
-      // "unhandled promise exception" messages in the console
-      console.warn(err);
-    });
+        // startfetching all contract-related data at the same time
+        fulfillsByNet[chain.id] = {
+          standardVaults: captureFulfill(
+            fetchStandardVaultContractDataAction({ chainId: chain.id })
+          ),
+          govVaults: captureFulfill(fetchGovVaultContractDataAction({ chainId: chain.id })),
+          boosts: captureFulfill(fetchBoostContractDataAction({ chainId: chain.id })),
+          user: userFullfills,
+        };
+        console.timeLog('From scenario start');
+        console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
+      })().catch(err => {
+        // as we still dispatch network errors, for reducers to handle
+        // there is not much to do here, this is just to avoid
+        // "unhandled promise exception" messages in the console
+        console.warn(err);
+      })
+    );
   }
 
   // ok now we started all calls, it's just a matter of ordering fulfill actions
@@ -154,26 +154,28 @@ export async function initHomeDataV3() {
   await pricesPromise;
 
   for (const chain of chains) {
-    (async () => {
-      const chainFfs = fulfillsByNet[chain.id];
-      // dispatch fulfills in order
-      await store.dispatch((await chainFfs.standardVaults)());
-      await store.dispatch((await chainFfs.govVaults)());
-      await store.dispatch((await chainFfs.boosts)());
+    setTimeout(() =>
+      (async () => {
+        const chainFfs = fulfillsByNet[chain.id];
+        // dispatch fulfills in order
+        await store.dispatch((await chainFfs.standardVaults)());
+        await store.dispatch((await chainFfs.govVaults)());
+        await store.dispatch((await chainFfs.boosts)());
 
-      console.timeLog('From scenario start');
-      console.log(`Vaults and boost contract for chain ${chain.id} OK`);
+        console.timeLog('From scenario start');
+        console.log(`Vaults and boost contract for chain ${chain.id} OK`);
 
-      // user ffs can be dispatched in any order after that
-      if (chainFfs.user !== null) {
-        dispatchUserFfs(chainFfs.user);
-      }
-    })().catch(err => {
-      // as we still dispatch network errors, for reducers to handle
-      // there is not much to do here, this is just to avoid
-      // "unhandled promise exception" messages in the console
-      console.warn(err);
-    });
+        // user ffs can be dispatched in any order after that
+        if (chainFfs.user !== null) {
+          dispatchUserFfs(chainFfs.user);
+        }
+      })().catch(err => {
+        // as we still dispatch network errors, for reducers to handle
+        // there is not much to do here, this is just to avoid
+        // "unhandled promise exception" messages in the console
+        console.warn(err);
+      })
+    );
   }
 
   // ok all data is fetched, now we start the poll functions
@@ -190,8 +192,7 @@ export async function initHomeDataV3() {
   // now set regular calls to update prices
   const pollStop = poll(async () => {
     return Promise.all([
-      store.dispatch(fetchPricesAction({})),
-      store.dispatch(fetchLPPricesAction({})),
+      store.dispatch(fetchAllPricesAction({})),
       store.dispatch(fetchApyAction({})),
     ]);
   }, 45 * 1000 /* every 45s */);
