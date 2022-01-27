@@ -1,0 +1,286 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Data Loader slice tests should update state on fulfilled action by chain id 1`] = `
+Object {
+  "byChainId": Object {
+    "test": Object {
+      "boostAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "boostBalance": Object {
+        "error": null,
+        "status": "pending",
+      },
+      "boostConfig": Object {
+        "error": null,
+        "status": "init",
+      },
+      "boostContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultBalance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "standardVaultAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "standardVaultContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "tokenBalance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "vaultConfig": Object {
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": Object {
+    "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "error": null,
+      "status": "init",
+    },
+    "lpPrices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled action by chain id 2`] = `
+Object {
+  "byChainId": Object {
+    "test": Object {
+      "boostAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "boostBalance": Object {
+        "error": null,
+        "status": "fulfilled",
+      },
+      "boostConfig": Object {
+        "error": null,
+        "status": "init",
+      },
+      "boostContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultBalance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "standardVaultAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "standardVaultContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "tokenBalance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "vaultConfig": Object {
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": Object {
+    "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "error": null,
+      "status": "init",
+    },
+    "lpPrices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled action by chain id 3`] = `
+Object {
+  "byChainId": Object {
+    "test": Object {
+      "boostAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "boostBalance": Object {
+        "error": "fatality",
+        "status": "rejected",
+      },
+      "boostConfig": Object {
+        "error": null,
+        "status": "init",
+      },
+      "boostContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultBalance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "govVaultContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "standardVaultAllowance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "standardVaultContractData": Object {
+        "error": null,
+        "status": "init",
+      },
+      "tokenBalance": Object {
+        "error": null,
+        "status": "init",
+      },
+      "vaultConfig": Object {
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": Object {
+    "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "error": null,
+      "status": "init",
+    },
+    "lpPrices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 1`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "error": null,
+      "status": "init",
+    },
+    "lpPrices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "error": null,
+      "status": "pending",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 2`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "error": null,
+      "status": "init",
+    },
+    "lpPrices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "error": null,
+      "status": "fulfilled",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 3`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "error": null,
+      "status": "init",
+    },
+    "lpPrices": Object {
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "error": "fatality",
+      "status": "rejected",
+    },
+  },
+}
+`;

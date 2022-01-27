@@ -225,8 +225,8 @@ export async function initHomeData() {
 }
 
 // when some wallet actions are triggered, do trigger balance and allowance lookups
-export const walletActionsMiddleware =
-  store => next => async (action: { type: string; payload: { chainId?: ChainEntity['id'] } }) => {
+export function walletActionsMiddleware(store) {
+  return next => async (action: { type: string; payload: { chainId?: ChainEntity['id'] } }) => {
     await next(action);
 
     let userFfs: CapturedFulfilledActions['user'] = null;
@@ -244,6 +244,7 @@ export const walletActionsMiddleware =
       await dispatchUserFfs(userFfs);
     }
   };
+}
 
 function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActions['user'] {
   const captureFulfill = createFulfilledActionCapturer(store);

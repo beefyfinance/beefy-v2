@@ -1,7 +1,25 @@
 import { ActionReducerMapBuilder, AsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  fetchBoostAllowanceAction,
+  fetchGovVaultPoolsAllowanceAction,
+  fetchStandardVaultAllowanceAction,
+} from '../actions/allowance';
 import { fetchApyAction, fetchHistoricalApy } from '../actions/apy';
-import {  fetchPricesAction } from '../actions/prices';
+import {
+  fetchBoostBalanceAction,
+  fetchGovVaultPoolsBalanceAction,
+  fetchTokenBalanceAction,
+} from '../actions/balance';
+import { fetchBoostContractDataAction } from '../actions/boost-contract';
+import { fetchBoostsByChainIdAction } from '../actions/boosts';
+import { fetchChainConfigs } from '../actions/chains';
+import { fetchLPPricesAction, fetchPricesAction } from '../actions/prices';
+import {
+  fetchGovVaultContractDataAction,
+  fetchStandardVaultContractDataAction,
+} from '../actions/vault-contract';
 import { fetchVaultByChainIdAction } from '../actions/vaults';
+import { ChainEntity } from '../entities/chain';
 
 /**
  * because we want to be smart about data loading
@@ -43,40 +61,102 @@ export function isPending(state: LoaderState): state is LoaderStatePending {
 const dataLoaderStateInit: LoaderState = { status: 'init', error: null };
 const dataLoaderStateFulfilled: LoaderState = { status: 'fulfilled', error: null };
 const dataLoaderStatePending: LoaderState = { status: 'pending', error: null };
+const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
+  vaultConfig: dataLoaderStateInit,
+  boostConfig: dataLoaderStateInit,
+  govVaultContractData: dataLoaderStateInit,
+  standardVaultContractData: dataLoaderStateInit,
+  boostContractData: dataLoaderStateInit,
+  govVaultBalance: dataLoaderStateInit,
+  tokenBalance: dataLoaderStateInit,
+  boostBalance: dataLoaderStateInit,
+  boostAllowance: dataLoaderStateInit,
+  govVaultAllowance: dataLoaderStateInit,
+  standardVaultAllowance: dataLoaderStateInit,
+};
 
 export interface DataLoaderState {
-  vaultsLoading: LoaderState;
-  pricesLoading: LoaderState;
-  tvlLoading: LoaderState;
-  apyLoading: LoaderState;
-  historicalApyLoading: LoaderState;
+  global: {
+    chainConfig: LoaderState;
+    prices: LoaderState;
+    lpPrices: LoaderState;
+    apy: LoaderState;
+  };
+
+  byChainId: {
+    [chainId: ChainEntity['id']]: {
+      vaultConfig: LoaderState;
+      boostConfig: LoaderState;
+      govVaultContractData: LoaderState;
+      standardVaultContractData: LoaderState;
+      boostContractData: LoaderState;
+      govVaultBalance: LoaderState;
+      tokenBalance: LoaderState;
+      boostBalance: LoaderState;
+      boostAllowance: LoaderState;
+      govVaultAllowance: LoaderState;
+      standardVaultAllowance: LoaderState;
+    };
+  };
 }
 export const initialDataLoaderState: DataLoaderState = {
-  vaultsLoading: dataLoaderStateInit,
-  pricesLoading: dataLoaderStateInit,
-  tvlLoading: dataLoaderStateInit,
-  apyLoading: dataLoaderStateInit,
-  historicalApyLoading: dataLoaderStateInit,
+  global: {
+    chainConfig: dataLoaderStateInit,
+    prices: dataLoaderStateInit,
+    lpPrices: dataLoaderStateInit,
+    apy: dataLoaderStateInit,
+  },
+  byChainId: {},
 };
 
 /**
  * Handling those async actions is very generic
  * Use a helper function to handle each action state
  */
-function addAsyncThunkActions(
+function addGlobalAsyncThunkActions(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, unknown, unknown>,
-  stateKey: keyof DataLoaderState
+  stateKey: keyof DataLoaderState['global']
 ) {
   builder.addCase(action.pending, sliceState => {
-    sliceState[stateKey] = dataLoaderStatePending;
+    sliceState.global[stateKey] = dataLoaderStatePending;
   });
   builder.addCase(action.rejected, (sliceState, action) => {
     // here, maybe put an error message
-    sliceState[stateKey] = { status: 'rejected', error: action.error + '' };
+    sliceState.global[stateKey] = { status: 'rejected', error: action.error + '' };
   });
   builder.addCase(action.fulfilled, sliceState => {
-    sliceState[stateKey] = dataLoaderStateFulfilled;
+    sliceState.global[stateKey] = dataLoaderStateFulfilled;
+  });
+}
+
+function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
+  builder: ActionReducerMapBuilder<DataLoaderState>,
+  action: AsyncThunk<unknown, ActionParams, unknown>,
+  stateKey: keyof DataLoaderState['byChainId']['bsc']
+) {
+  builder.addCase(action.pending, (sliceState, action) => {
+    const chainId = action.meta.arg.chainId;
+    if (sliceState.byChainId[chainId] === undefined) {
+      sliceState.byChainId[chainId] = dataLoaderStateInitByChainId;
+    }
+    sliceState.byChainId[chainId][stateKey] = dataLoaderStatePending;
+  });
+  builder.addCase(action.rejected, (sliceState, action) => {
+    const chainId = action.meta.arg.chainId;
+    if (sliceState.byChainId[chainId] === undefined) {
+      sliceState.byChainId[chainId] = dataLoaderStateInitByChainId;
+    }
+    // here, maybe put an error message
+    sliceState.byChainId[chainId][stateKey] = { status: 'rejected', error: action.error + '' };
+  });
+  builder.addCase(action.fulfilled, (sliceState, action) => {
+    const chainId = action.meta.arg.chainId;
+    if (sliceState.byChainId[chainId] === undefined) {
+      sliceState.byChainId[chainId] = dataLoaderStateInitByChainId;
+    }
+    // here, maybe put an error message
+    sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
   });
 }
 
@@ -88,9 +168,28 @@ export const dataLoaderSlice = createSlice({
   },
   extraReducers: builder => {
     // TODO: WIP
-    addAsyncThunkActions(builder, fetchPricesAction, 'pricesLoading');
-    addAsyncThunkActions(builder, fetchVaultByChainIdAction, 'vaultsLoading');
-    addAsyncThunkActions(builder, fetchApyAction, 'apyLoading');
-    addAsyncThunkActions(builder, fetchHistoricalApy, 'historicalApyLoading');
+    addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig');
+    addGlobalAsyncThunkActions(builder, fetchPricesAction, 'prices');
+    addGlobalAsyncThunkActions(builder, fetchLPPricesAction, 'lpPrices');
+    addGlobalAsyncThunkActions(builder, fetchApyAction, 'lpPrices');
+    addByChainAsyncThunkActions(builder, fetchBoostsByChainIdAction, 'vaultConfig');
+    addByChainAsyncThunkActions(builder, fetchVaultByChainIdAction, 'boostConfig');
+    addByChainAsyncThunkActions(builder, fetchGovVaultContractDataAction, 'govVaultContractData');
+    addByChainAsyncThunkActions(
+      builder,
+      fetchStandardVaultContractDataAction,
+      'standardVaultContractData'
+    );
+    addByChainAsyncThunkActions(builder, fetchBoostContractDataAction, 'boostContractData');
+    addByChainAsyncThunkActions(builder, fetchGovVaultPoolsBalanceAction, 'govVaultBalance');
+    addByChainAsyncThunkActions(builder, fetchTokenBalanceAction, 'tokenBalance');
+    addByChainAsyncThunkActions(builder, fetchBoostBalanceAction, 'boostBalance');
+    addByChainAsyncThunkActions(builder, fetchBoostAllowanceAction, 'boostAllowance');
+    addByChainAsyncThunkActions(builder, fetchGovVaultPoolsAllowanceAction, 'govVaultAllowance');
+    addByChainAsyncThunkActions(
+      builder,
+      fetchStandardVaultAllowanceAction,
+      'standardVaultAllowance'
+    );
   },
 });

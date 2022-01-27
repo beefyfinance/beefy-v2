@@ -31,32 +31,32 @@
     [x] break dependencies between actions to fetch everything asap.
         For home we need TVL, APY, user deposited amount both in usd and token amount, for gov vaults => rewards
 
-[ ] Extract API code
+[x] Extract API code
 
     [x] Config (chains, vaults, boosts)
     [x] Vault contract data
     [x] Boost contract data
     [x] Balances
     [x] Allowances
-    [ ] Wallet
+    [x] Wallet
 
-[ ] Create new reducers using new TS types
+[x] Create new reducers using new TS types
 
     [x] Config (chains, vaults, boosts)
     [x] TVL? (need some unit tests to make sure I didn't fuck it up)
     [x] APY
     [x] Balances
     [x] Allowances
-    [ ] Wallet
+    [x] Wallet
 
-[ ] Fetch scenario for the home page
+[x] Fetch scenario for the home page
 
     [x] prices
     [x] Config (chains, vaults, boosts)
     [x] Chain data (vaults, boosts)
-    [ ] Balances
-    [ ] Allowances
-    [ ] Wallet
+    [x] Balances
+    [x] Allowances
+    [x] Wallet
 
 [ ] Smarter data loading
 
