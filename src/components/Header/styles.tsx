@@ -61,6 +61,7 @@ export const styles = theme => ({
     margin: '12px',
     '&:hover': {
       color: theme.palette.text.primary,
+      cursor: 'pointer',
     },
     [theme.breakpoints.up('md')]: {
       '&:hover': {
