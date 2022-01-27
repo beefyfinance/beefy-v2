@@ -62,6 +62,7 @@
 
     [ ] handle errors
     [ ] handle loading
+    [ ] handle canceling ongoing requests
 
 [ ] Code cleanup & Testing
 

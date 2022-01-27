@@ -1,7 +1,5 @@
 import { Action } from 'redux';
 import { store } from '../../../store';
-import { BeefyState } from '../../redux/reducers';
-import { WalletConnect } from '../apis/wallet-connect';
 import { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
@@ -11,7 +9,7 @@ import {
   walletHasDisconnected,
 } from '../reducers/wallet';
 import { selectAllChains } from '../selectors/chains';
-import { selectIsWalletConnected } from '../selectors/wallet';
+import { selectCurrentChainId, selectIsWalletConnected } from '../selectors/wallet';
 import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchBoostContractDataAction } from './boost-contract';
@@ -68,16 +66,6 @@ const chains = [
   //'polygon',
 ].map(id => ({ id }));
 
-// when some wallet actions are triggered, do trigger balance and allowance lookups
-export const walletActionsMiddleware = store => next => async action => {
-  await next(action);
-
-  switch (action.type) {
-    case userDidConnect.type:
-    case accountHasChanged.type:
-  }
-};
-
 /**
  * Fetch all necessary information for the home page
  * TODO: we need to inject the store in parameters somehow and not get if from a global import
@@ -88,7 +76,7 @@ export async function initHomeData() {
   // start fetching chain config
   const chainListPromise = store.dispatch(fetchChainConfigs());
 
-  // connect wallet as soon as we get the chain list
+  // create the wallet instance as soon as we get the chain list
   (async () => {
     await chainListPromise;
 
@@ -141,19 +129,7 @@ export async function initHomeData() {
       // if user is connected, start fetching balances and allowances
       let userFullfills: CapturedFulfilledActions['user'] = null;
       if (selectIsWalletConnected(store.getState())) {
-        userFullfills = {
-          govVaultBalance: captureFulfill(fetchGovVaultPoolsBalanceAction({ chainId: chain.id })),
-          tokenBalance: captureFulfill(fetchTokenBalanceAction({ chainId: chain.id })),
-          boostBalance: captureFulfill(fetchBoostBalanceAction({ chainId: chain.id })),
-          // TODO: do we really need to fetch allowances right now?
-          boostAllowance: captureFulfill(fetchBoostAllowanceAction({ chainId: chain.id })),
-          govVaultAllowance: captureFulfill(
-            fetchGovVaultPoolsAllowanceAction({ chainId: chain.id })
-          ),
-          standardVaultAllowance: captureFulfill(
-            fetchStandardVaultAllowanceAction({ chainId: chain.id })
-          ),
-        };
+        userFullfills = fetchCaptureUserData(chain.id);
       }
 
       // startfetching all contract-related data at the same time
@@ -186,12 +162,7 @@ export async function initHomeData() {
 
       // user ffs can be dispatched in any order after that
       if (chainFfs.user !== null) {
-        await store.dispatch((await chainFfs.user.tokenBalance)());
-        await store.dispatch((await chainFfs.user.govVaultBalance)());
-        await store.dispatch((await chainFfs.user.boostBalance)());
-        await store.dispatch((await chainFfs.user.boostAllowance)());
-        await store.dispatch((await chainFfs.user.govVaultAllowance)());
-        await store.dispatch((await chainFfs.user.standardVaultAllowance)());
+        dispatchUserFfs(chainFfs.user);
       }
     })().catch(err => {
       // as we still dispatch network errors, for reducers to handle
@@ -244,25 +215,54 @@ export async function initHomeData() {
   for (const chain of chains) {
     const pollStop = poll(async () => {
       // trigger all calls at the same time
-      const fulfills: Exclude<CapturedFulfilledActions['user'], null> = {
-        govVaultBalance: captureFulfill(fetchGovVaultPoolsBalanceAction({ chainId: chain.id })),
-        tokenBalance: captureFulfill(fetchTokenBalanceAction({ chainId: chain.id })),
-        boostBalance: captureFulfill(fetchBoostBalanceAction({ chainId: chain.id })),
-        boostAllowance: captureFulfill(fetchBoostAllowanceAction({ chainId: chain.id })),
-        govVaultAllowance: captureFulfill(fetchGovVaultPoolsAllowanceAction({ chainId: chain.id })),
-        standardVaultAllowance: captureFulfill(
-          fetchStandardVaultAllowanceAction({ chainId: chain.id })
-        ),
-      };
+      const fulfills = fetchCaptureUserData(chain.id);
 
       // dispatch fulfills in order
-      await store.dispatch((await fulfills.tokenBalance)());
-      await store.dispatch((await fulfills.govVaultBalance)());
-      await store.dispatch((await fulfills.boostBalance)());
-      await store.dispatch((await fulfills.boostAllowance)());
-      await store.dispatch((await fulfills.govVaultAllowance)());
-      await store.dispatch((await fulfills.standardVaultAllowance)());
+      await dispatchUserFfs(fulfills);
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
+}
+
+// when some wallet actions are triggered, do trigger balance and allowance lookups
+export const walletActionsMiddleware =
+  store => next => async (action: { type: string; payload: { chainId?: ChainEntity['id'] } }) => {
+    await next(action);
+
+    let userFfs: CapturedFulfilledActions['user'] = null;
+    switch (action.type) {
+      case userDidConnect.type:
+        userFfs = fetchCaptureUserData(action.payload.chainId);
+        break;
+      case accountHasChanged.type:
+        const chainId = selectCurrentChainId(store.getState());
+        userFfs = fetchCaptureUserData(chainId);
+        break;
+    }
+
+    if (userFfs) {
+      await dispatchUserFfs(userFfs);
+    }
+  };
+
+function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActions['user'] {
+  const captureFulfill = createFulfilledActionCapturer(store);
+  return {
+    govVaultBalance: captureFulfill(fetchGovVaultPoolsBalanceAction({ chainId })),
+    tokenBalance: captureFulfill(fetchTokenBalanceAction({ chainId })),
+    boostBalance: captureFulfill(fetchBoostBalanceAction({ chainId })),
+    // TODO: do we really need to fetch allowances right now?
+    boostAllowance: captureFulfill(fetchBoostAllowanceAction({ chainId })),
+    govVaultAllowance: captureFulfill(fetchGovVaultPoolsAllowanceAction({ chainId })),
+    standardVaultAllowance: captureFulfill(fetchStandardVaultAllowanceAction({ chainId })),
+  };
+}
+
+async function dispatchUserFfs(userFfs: CapturedFulfilledActions['user']) {
+  await store.dispatch((await userFfs.tokenBalance)());
+  await store.dispatch((await userFfs.govVaultBalance)());
+  await store.dispatch((await userFfs.boostBalance)());
+  await store.dispatch((await userFfs.boostAllowance)());
+  await store.dispatch((await userFfs.govVaultAllowance)());
+  await store.dispatch((await userFfs.standardVaultAllowance)());
 }

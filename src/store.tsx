@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { walletActionsMiddleware } from './features/data/actions/scenarios';
 import { rootReducer } from './features/redux/reducers';
 
 // https://coderwall.com/p/pafnew/redux-middleware-logger
@@ -55,5 +56,5 @@ export const store = configureStore({
       serializableCheck: false,
       // this makes the old code bug
       immutableCheck: false,
-    }).concat([loggerMiddleware]),
+    }).concat([loggerMiddleware, walletActionsMiddleware]),
 });
