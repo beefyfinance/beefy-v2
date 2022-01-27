@@ -3,11 +3,11 @@ import transakSDK from '@transak/transak-sdk';
 import { Typography } from '@material-ui/core';
 
 const TransakNav = ({ className, children }) => {
-  const { REACT_APP_TRANSAK_API_KEY, REACT_APP_ENVIROMENT } = process.env;
+  const { REACT_APP_TRANSAK_API_KEY, REACT_APP_ENVIRONMENT } = process.env;
 
   let transak = new transakSDK({
     apiKey: REACT_APP_TRANSAK_API_KEY,
-    environment: REACT_APP_ENVIROMENT, // STAGING/PRODUCTION (Required)
+    environment: REACT_APP_ENVIRONMENT, // STAGING/PRODUCTION (Required)
     walletAddress: '',
     themeColor: '#59A662',
     email: '',
