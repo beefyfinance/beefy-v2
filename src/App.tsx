@@ -72,7 +72,8 @@ export const App = () => {
   }, [dispatch, wallet.web3modal]);
 */
   React.useEffect(() => {
-    initHomeDataV4();
+    // give some time to the app to render a loader before doing this
+    setTimeout(initHomeDataV4, 50);
   }, []);
 
   return (

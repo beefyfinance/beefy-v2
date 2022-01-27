@@ -5,7 +5,7 @@ import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
+import { selectVaultById } from '../selectors/vaults';
 
 /**
  * State containing APY infos indexed by vault id

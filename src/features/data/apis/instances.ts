@@ -1,7 +1,6 @@
 import { BeefyAPI } from './beefy';
 import { ConfigAPI } from './config';
-import { VaultContractAPI } from './vault-contract';
-import { BoostContractAPI } from './boost-contract';
+import { ContractDataAPI } from './contract-data';
 import { ChainEntity } from '../entities/chain';
 import Web3 from 'web3';
 import { BalanceAPI } from './balance';
@@ -33,16 +32,10 @@ export const getWeb3Instance = createFactoryWithCacheByChain(chain => {
   return new Web3(rpc);
 });
 
-export const getVaultContractApi = createFactoryWithCacheByChain(chain => {
+export const getContractDataApi = createFactoryWithCacheByChain(chain => {
   const web3 = getWeb3Instance(chain);
   console.debug(`Instanciating VaultContractAPI for chain ${chain.id}`);
-  return new VaultContractAPI(web3, chain);
-});
-
-export const getBoostContractApi = createFactoryWithCacheByChain(chain => {
-  const web3 = getWeb3Instance(chain);
-  console.debug(`Instanciating BoostContractAPI for chain ${chain.id}`);
-  return new BoostContractAPI(web3, chain);
+  return new ContractDataAPI(web3, chain);
 });
 
 export const getBalanceApi = createFactoryWithCacheByChain(chain => {

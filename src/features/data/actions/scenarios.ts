@@ -48,7 +48,6 @@ let pollStopFns: PollStop[] = [];
 const chains = [
   'arbitrum',
   'avax',
-  'bsc',
   'celo',
   'cronos',
   'fantom',
@@ -58,6 +57,10 @@ const chains = [
   'metis',
   'moonriver',
   'polygon',
+  // fetch BSC last, his multicall split in multiple calls
+  // and that takes up all 6 simulatneous network calls
+  // putting it last allow all other data to arrive faster
+  'bsc',
 ].map(id => ({ id }));
 
 /**
@@ -96,46 +99,42 @@ export async function initHomeDataV4() {
     //return walletCo.askUserToConnectIfNeeded(defaultChainId);
   });
 
+  // we fetch the configuration for all chain
+  const boostsAndVaults = Promise.all([
+    store.dispatch(fetchAllBoosts()),
+    store.dispatch(fetchAllVaults()),
+  ]);
+
   // we can start fetching prices right now and await them later
   const pricesPromise = store.dispatch(fetchAllPricesAction({}));
   // we can start fetching apy, it will arrive when it wants, nothing depends on it
   store.dispatch(fetchApyAction({}));
 
-  // then, we work by chain
-
-  // we fetch the configuration for each chain
   // we need config data (for contract addresses) to start querying the rest
-  await Promise.all([store.dispatch(fetchAllBoosts()), store.dispatch(fetchAllVaults())]);
+  await boostsAndVaults;
   console.timeLog('From scenario start');
   console.log(`Vaults and boost list for all chains OK`);
+
+  // then, we work by chain
 
   // now we start fetching all data for all chains
   const fulfillsByNet: {
     [chainId: ChainEntity['id']]: CapturedFulfilledActions;
   } = {};
   for (const chain of chains) {
-    setTimeout(() =>
-      (async () => {
-        // if user is connected, start fetching balances and allowances
-        let userFullfills: CapturedFulfilledActions['user'] = null;
-        if (selectIsWalletConnected(store.getState())) {
-          userFullfills = fetchCaptureUserData(chain.id);
-        }
+    // if user is connected, start fetching balances and allowances
+    let userFullfills: CapturedFulfilledActions['user'] = null;
+    if (selectIsWalletConnected(store.getState())) {
+      userFullfills = fetchCaptureUserData(chain.id);
+    }
 
-        // startfetching all contract-related data at the same time
-        fulfillsByNet[chain.id] = {
-          contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
-          user: userFullfills,
-        };
-        console.timeLog('From scenario start');
-        console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
-      })().catch(err => {
-        // as we still dispatch network errors, for reducers to handle
-        // there is not much to do here, this is just to avoid
-        // "unhandled promise exception" messages in the console
-        console.warn(err);
-      })
-    );
+    // startfetching all contract-related data at the same time
+    fulfillsByNet[chain.id] = {
+      contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
+      user: userFullfills,
+    };
+    console.timeLog('From scenario start');
+    console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
   }
 
   // ok now we started all calls, it's just a matter of ordering fulfill actions

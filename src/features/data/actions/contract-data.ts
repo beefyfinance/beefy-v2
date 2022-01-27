@@ -1,8 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers';
-import { BoostContractData } from '../apis/boost-contract';
-import { getBoostContractApi, getVaultContractApi } from '../apis/instances';
-import { GovVaultContractData, StandardVaultContractData } from '../apis/vault-contract';
+import { getContractDataApi } from '../apis/instances';
+import {
+  BoostContractData,
+  GovVaultContractData,
+  StandardVaultContractData,
+} from '../apis/contract-data';
 import { ChainEntity } from '../entities/chain';
 import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
@@ -31,8 +34,7 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
 >('contract-data/fetchAllContractDataByChainAction', async ({ chainId }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
-  const vaultApi = getVaultContractApi(chain);
-  const boostApi = getBoostContractApi(chain);
+  const contractApi = getContractDataApi(chain);
 
   // maybe have a way to retrieve those easily
   const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>
@@ -50,20 +52,12 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
       standardVaults.push(vault);
     }
   }
-  const [boostData, standardVaultData, govVaultData] = await Promise.all([
-    boostApi.fetchBoostContractData(boosts),
-    vaultApi.fetchStandardVaultsContractData(state, standardVaults),
-    vaultApi.fetchGovVaultsContractData(govVaults),
-  ]);
+  const res = await contractApi.fetchAllContractData(state, standardVaults, govVaults, boosts);
 
   // always re-fetch the latest state
   return {
     chainId,
-    data: {
-      boosts: boostData,
-      govVaults: govVaultData,
-      standardVaults: standardVaultData,
-    },
+    data: res,
     state: getState(),
   };
 });

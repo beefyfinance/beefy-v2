@@ -1,0 +1,88 @@
+[HMR] Waiting for update signal from WDS...
+scenarios.ts:69 From scenario start: 0.00390625 ms
+store.tsx:34 [20:58:08.227] 👀 chains/fetchChainConfigs/pending
+store.tsx:34 [20:58:08.244] 👀 prices/fetchAllPricesAction/pending {  }
+store.tsx:34 [20:58:08.290] 👀 prices/fetchApy/pending {  }
+store.tsx:34 [20:58:08.314] 👀 boosts/fetchAllBoosts/pending
+store.tsx:34 [20:58:08.327] 👀 boosts/fetchAllVaults/pending
+store.tsx:34 [20:58:08.478] ✅ chains/fetchChainConfigs/fulfilled
+store.tsx:34 [20:58:08.574] ✅ boosts/fetchAllBoosts/fulfilled
+store.tsx:34 [20:58:08.603] ✅ boosts/fetchAllVaults/fulfilled
+scenarios.ts:109 From scenario start: 658.85400390625 ms
+scenarios.ts:110 Vaults and boost list for all chains OK
+scenarios.ts:79 From scenario start: 757.843994140625 ms
+scenarios.ts:80 Chain Config Loaded
+store.tsx:34 [20:58:08.980] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: arbitrum }
+scenarios.ts:130 From scenario start: 1109.73193359375 ms
+scenarios.ts:131 Vaults and boost contract for chain arbitrum FETCHING
+store.tsx:34 [20:58:09.333] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: avax }
+scenarios.ts:130 From scenario start: 2016.7939453125 ms
+scenarios.ts:131 Vaults and boost contract for chain avax FETCHING
+store.tsx:34 [20:58:10.240] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: bsc }
+scenarios.ts:130 From scenario start: 6563.890869140625 ms
+scenarios.ts:131 Vaults and boost contract for chain bsc FETCHING
+store.tsx:34 [20:58:14.791] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: celo }
+scenarios.ts:130 From scenario start: 6757.592041015625 ms
+scenarios.ts:131 Vaults and boost contract for chain celo FETCHING
+store.tsx:34 [20:58:14.979] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: cronos }
+scenarios.ts:130 From scenario start: 7083.98291015625 ms
+scenarios.ts:131 Vaults and boost contract for chain cronos FETCHING
+store.tsx:34 [20:58:15.309] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: fantom }
+scenarios.ts:130 From scenario start: 8145.822998046875 ms
+scenarios.ts:131 Vaults and boost contract for chain fantom FETCHING
+store.tsx:34 [20:58:16.367] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: fuse }
+scenarios.ts:130 From scenario start: 8340.73583984375 ms
+scenarios.ts:131 Vaults and boost contract for chain fuse FETCHING
+store.tsx:34 [20:58:16.562] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: harmony }
+scenarios.ts:130 From scenario start: 8592.657958984375 ms
+scenarios.ts:131 Vaults and boost contract for chain harmony FETCHING
+store.tsx:34 [20:58:16.814] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: heco }
+scenarios.ts:130 From scenario start: 8920.948974609375 ms
+scenarios.ts:131 Vaults and boost contract for chain heco FETCHING
+store.tsx:34 [20:58:17.145] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: metis }
+scenarios.ts:130 From scenario start: 9134.529052734375 ms
+scenarios.ts:131 Vaults and boost contract for chain metis FETCHING
+store.tsx:34 [20:58:17.356] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: moonriver }
+scenarios.ts:130 From scenario start: 9545.919921875 ms
+scenarios.ts:131 Vaults and boost contract for chain moonriver FETCHING
+store.tsx:34 [20:58:17.769] 👀 contract-data/fetchAllContractDataByChainAction/pending { chainId: polygon }
+scenarios.ts:130 From scenario start: 11261.177978515625 ms
+scenarios.ts:131 Vaults and boost contract for chain polygon FETCHING
+store.tsx:34 [20:58:19.644] ✅ prices/fetchAllPricesAction/fulfilled {  }
+store.tsx:34 [20:58:20.072] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: arbitrum }
+scenarios.ts:153 From scenario start: 11930.8369140625 ms
+scenarios.ts:154 Vaults and boost contract for chain arbitrum OK
+store.tsx:34 [20:58:20.149] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: celo }
+scenarios.ts:153 From scenario start: 12000.159912109375 ms
+scenarios.ts:154 Vaults and boost contract for chain celo OK
+store.tsx:34 [20:58:20.219] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: fuse }
+scenarios.ts:153 From scenario start: 12075.328125 ms
+scenarios.ts:154 Vaults and boost contract for chain fuse OK
+store.tsx:34 [20:58:20.809] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: avax }
+scenarios.ts:153 From scenario start: 12666.615966796875 ms
+scenarios.ts:154 Vaults and boost contract for chain avax OK
+store.tsx:34 [20:58:21.147] ✅ prices/fetchApy/fulfilled {  }
+store.tsx:34 [20:58:21.892] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: metis }
+scenarios.ts:153 From scenario start: 13783.044921875 ms
+scenarios.ts:154 Vaults and boost contract for chain metis OK
+store.tsx:34 [20:58:23.642] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: cronos }
+scenarios.ts:153 From scenario start: 15563.451904296875 ms
+scenarios.ts:154 Vaults and boost contract for chain cronos OK
+store.tsx:34 [20:58:23.999] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: harmony }
+scenarios.ts:153 From scenario start: 15908.055908203125 ms
+scenarios.ts:154 Vaults and boost contract for chain harmony OK
+store.tsx:34 [20:58:24.630] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: heco }
+scenarios.ts:153 From scenario start: 16565.5341796875 ms
+scenarios.ts:154 Vaults and boost contract for chain heco OK
+store.tsx:34 [20:58:28.092] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: moonriver }
+scenarios.ts:153 From scenario start: 20011.14208984375 ms
+scenarios.ts:154 Vaults and boost contract for chain moonriver OK
+store.tsx:34 [20:58:30.706] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: bsc }
+scenarios.ts:153 From scenario start: 22824.29296875 ms
+scenarios.ts:154 Vaults and boost contract for chain bsc OK
+store.tsx:34 [20:58:31.576] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: fantom }
+scenarios.ts:153 From scenario start: 23912.410888671875 ms
+scenarios.ts:154 Vaults and boost contract for chain fantom OK
+store.tsx:34 [20:58:32.796] ✅ contract-data/fetchAllContractDataByChainAction/fulfilled { chainId: polygon }
+scenarios.ts:153 From scenario start: 24920.248046875 ms
+scenarios.ts:154 Vaults and boost contract for chain polygon OK
