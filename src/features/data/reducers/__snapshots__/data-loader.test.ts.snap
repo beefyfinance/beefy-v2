@@ -12,7 +12,7 @@ Object {
         "error": null,
         "status": "pending",
       },
-      "boostContractData": Object {
+      "contractData": Object {
         "error": null,
         "status": "init",
       },
@@ -24,15 +24,7 @@ Object {
         "error": null,
         "status": "init",
       },
-      "govVaultContractData": Object {
-        "error": null,
-        "status": "init",
-      },
       "standardVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "standardVaultContractData": Object {
         "error": null,
         "status": "init",
       },
@@ -52,10 +44,6 @@ Object {
       "status": "init",
     },
     "chainConfig": Object {
-      "error": null,
-      "status": "init",
-    },
-    "lpPrices": Object {
       "error": null,
       "status": "init",
     },
@@ -83,7 +71,7 @@ Object {
         "error": null,
         "status": "fulfilled",
       },
-      "boostContractData": Object {
+      "contractData": Object {
         "error": null,
         "status": "init",
       },
@@ -95,15 +83,7 @@ Object {
         "error": null,
         "status": "init",
       },
-      "govVaultContractData": Object {
-        "error": null,
-        "status": "init",
-      },
       "standardVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "standardVaultContractData": Object {
         "error": null,
         "status": "init",
       },
@@ -123,10 +103,6 @@ Object {
       "status": "init",
     },
     "chainConfig": Object {
-      "error": null,
-      "status": "init",
-    },
-    "lpPrices": Object {
       "error": null,
       "status": "init",
     },
@@ -154,7 +130,7 @@ Object {
         "error": "fatality",
         "status": "rejected",
       },
-      "boostContractData": Object {
+      "contractData": Object {
         "error": null,
         "status": "init",
       },
@@ -166,15 +142,7 @@ Object {
         "error": null,
         "status": "init",
       },
-      "govVaultContractData": Object {
-        "error": null,
-        "status": "init",
-      },
       "standardVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "standardVaultContractData": Object {
         "error": null,
         "status": "init",
       },
@@ -194,10 +162,6 @@ Object {
       "status": "init",
     },
     "chainConfig": Object {
-      "error": null,
-      "status": "init",
-    },
-    "lpPrices": Object {
       "error": null,
       "status": "init",
     },
@@ -229,10 +193,6 @@ Object {
       "error": null,
       "status": "init",
     },
-    "lpPrices": Object {
-      "error": null,
-      "status": "init",
-    },
     "prices": Object {
       "error": null,
       "status": "pending",
@@ -261,10 +221,6 @@ Object {
       "error": null,
       "status": "init",
     },
-    "lpPrices": Object {
-      "error": null,
-      "status": "init",
-    },
     "prices": Object {
       "error": null,
       "status": "fulfilled",
@@ -290,10 +246,6 @@ Object {
       "status": "init",
     },
     "chainConfig": Object {
-      "error": null,
-      "status": "init",
-    },
-    "lpPrices": Object {
       "error": null,
       "status": "init",
     },

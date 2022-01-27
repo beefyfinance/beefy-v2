@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
-import { fetchStandardVaultContractDataAction } from '../actions/vault-contract';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { fetchAllVaults } from '../actions/vaults';
 import { VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
@@ -57,8 +57,8 @@ export const vaultsSlice = createSlice({
       }
     });
 
-    builder.addCase(fetchStandardVaultContractDataAction.fulfilled, (sliceState, action) => {
-      for (const vaultContractData of action.payload.data) {
+    builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
+      for (const vaultContractData of action.payload.data.standardVaults) {
         const vaultId = vaultContractData.id;
 
         // only update it if needed

@@ -26,12 +26,7 @@ export const selectIsChainLoading = createSelector(
     (state: BeefyState, chainId: ChainEntity['id']) => state.ui.dataLoader.byChainId[chainId],
   ],
   (configLoading, chainLoadingDetails): boolean => {
-    return (
-      configLoading ||
-      isPending(chainLoadingDetails.standardVaultContractData) ||
-      isPending(chainLoadingDetails.govVaultContractData) ||
-      isPending(chainLoadingDetails.boostContractData)
-    );
+    return configLoading || isPending(chainLoadingDetails.contractData);
   }
 );
 

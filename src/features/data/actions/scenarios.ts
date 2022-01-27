@@ -12,14 +12,10 @@ import { selectAllChains } from '../selectors/chains';
 import { selectCurrentChainId, selectIsWalletConnected } from '../selectors/wallet';
 import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
-import { fetchBoostContractDataAction } from './boost-contract';
 import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction } from './prices';
-import {
-  fetchGovVaultContractDataAction,
-  fetchStandardVaultContractDataAction,
-} from './vault-contract';
+import { fetchAllContractDataByChainAction } from './contract-data';
 import { fetchAllVaults } from './vaults';
 import {
   fetchBoostBalanceAction,
@@ -35,9 +31,7 @@ import { getWalletConnectInstance } from '../apis/instances';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 interface CapturedFulfilledActions {
-  standardVaults: CapturedFulfilledActionGetter;
-  govVaults: CapturedFulfilledActionGetter;
-  boosts: CapturedFulfilledActionGetter;
+  contractData: CapturedFulfilledActionGetter;
   user: {
     tokenBalance: CapturedFulfilledActionGetter;
     govVaultBalance: CapturedFulfilledActionGetter;
@@ -70,7 +64,7 @@ const chains = [
  * Fetch all necessary information for the home page
  * TODO: we need to inject the store in parameters somehow and not get if from a global import
  */
-export async function initHomeDataV3() {
+export async function initHomeDataV4() {
   console.time('From scenario start');
   console.timeLog('From scenario start');
 
@@ -130,11 +124,7 @@ export async function initHomeDataV3() {
 
         // startfetching all contract-related data at the same time
         fulfillsByNet[chain.id] = {
-          standardVaults: captureFulfill(
-            fetchStandardVaultContractDataAction({ chainId: chain.id })
-          ),
-          govVaults: captureFulfill(fetchGovVaultContractDataAction({ chainId: chain.id })),
-          boosts: captureFulfill(fetchBoostContractDataAction({ chainId: chain.id })),
+          contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
           user: userFullfills,
         };
         console.timeLog('From scenario start');
@@ -158,9 +148,7 @@ export async function initHomeDataV3() {
       (async () => {
         const chainFfs = fulfillsByNet[chain.id];
         // dispatch fulfills in order
-        await store.dispatch((await chainFfs.standardVaults)());
-        await store.dispatch((await chainFfs.govVaults)());
-        await store.dispatch((await chainFfs.boosts)());
+        await store.dispatch((await chainFfs.contractData)());
 
         console.timeLog('From scenario start');
         console.log(`Vaults and boost contract for chain ${chain.id} OK`);
@@ -203,15 +191,11 @@ export async function initHomeDataV3() {
     const pollStop = poll(async () => {
       // trigger all calls at the same time
       const fulfills: Omit<CapturedFulfilledActions, 'user'> = {
-        standardVaults: captureFulfill(fetchStandardVaultContractDataAction({ chainId: chain.id })),
-        govVaults: captureFulfill(fetchGovVaultContractDataAction({ chainId: chain.id })),
-        boosts: captureFulfill(fetchBoostContractDataAction({ chainId: chain.id })),
+        contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
       };
 
       // dispatch fulfills in order
-      await store.dispatch((await fulfills.standardVaults)());
-      await store.dispatch((await fulfills.govVaults)());
-      await store.dispatch((await fulfills.boosts)());
+      await store.dispatch((await fulfills.contractData)());
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchApyAction } from '../actions/apy';
-import { fetchBoostContractDataAction } from '../actions/boost-contract';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { ApyData } from '../apis/beefy';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity } from '../entities/vault';
@@ -41,10 +41,10 @@ export const apySlice = createSlice({
       }
     });
 
-    builder.addCase(fetchBoostContractDataAction.fulfilled, (sliceState, action) => {
+    builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       const state = action.payload.state;
 
-      for (const boostContractData of action.payload.data) {
+      for (const boostContractData of action.payload.data.boosts) {
         const boost = selectBoostById(state, boostContractData.id);
         const vault = selectVaultById(state, boost.vaultId);
 

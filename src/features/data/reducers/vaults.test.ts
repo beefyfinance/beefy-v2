@@ -1,8 +1,8 @@
 import { fetchAllVaults, FulfilledAllVaultsPayload } from '../actions/vaults';
 import {
-  fetchStandardVaultContractDataAction,
-  FetchStandardVaultFulfilledPayload,
-} from '../actions/vault-contract';
+  fetchAllContractDataByChainAction,
+  FetchAllContractDataFulfilledPayload,
+} from '../actions/contract-data';
 import { vaultsSlice, initialVaultsState } from './vaults';
 import { getBeefyTestingStore } from '../utils/test-utils';
 import BigNumber from 'bignumber.js';
@@ -131,25 +131,29 @@ describe('Vaults slice tests', () => {
     const store = await getBeefyTestingStore();
     const state = store.getState();
 
-    const payload: FetchStandardVaultFulfilledPayload = {
+    const payload: FetchAllContractDataFulfilledPayload = {
       chainId: 'harmony',
-      data: [
-        {
-          id: 'one-bifi-gov',
-          balance: new BigNumber(12),
-          pricePerFullShare: new BigNumber(123),
-          strategy: 'test',
-        },
-        {
-          id: 'sushi-one-1ygg-1eth',
-          balance: new BigNumber(24),
-          pricePerFullShare: new BigNumber(456),
-          strategy: 'test',
-        },
-      ],
+      data: {
+        boosts: [],
+        govVaults: [],
+        standardVaults: [
+          {
+            id: 'one-bifi-gov',
+            balance: new BigNumber(12),
+            pricePerFullShare: new BigNumber(123),
+            strategy: 'test',
+          },
+          {
+            id: 'sushi-one-1ygg-1eth',
+            balance: new BigNumber(24),
+            pricePerFullShare: new BigNumber(456),
+            strategy: 'test',
+          },
+        ],
+      },
       state,
     };
-    const action = { type: fetchStandardVaultContractDataAction.fulfilled, payload: payload };
+    const action = { type: fetchAllContractDataByChainAction.fulfilled, payload: payload };
     const sliceState = vaultsSlice.reducer(state.entities.vaults, action);
     // don't snapshot all vaults from the test state
     expect(sliceState.pricePerFullShare).toMatchSnapshot();

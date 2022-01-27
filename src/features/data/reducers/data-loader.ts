@@ -10,14 +10,10 @@ import {
   fetchGovVaultPoolsBalanceAction,
   fetchTokenBalanceAction,
 } from '../actions/balance';
-import { fetchBoostContractDataAction } from '../actions/boost-contract';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
-import {
-  fetchGovVaultContractDataAction,
-  fetchStandardVaultContractDataAction,
-} from '../actions/vault-contract';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { fetchAllVaults } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
 
@@ -62,9 +58,7 @@ const dataLoaderStateInit: LoaderState = { status: 'init', error: null };
 const dataLoaderStateFulfilled: LoaderState = { status: 'fulfilled', error: null };
 const dataLoaderStatePending: LoaderState = { status: 'pending', error: null };
 const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
-  govVaultContractData: dataLoaderStateInit,
-  standardVaultContractData: dataLoaderStateInit,
-  boostContractData: dataLoaderStateInit,
+  contractData: dataLoaderStateInit,
   govVaultBalance: dataLoaderStateInit,
   tokenBalance: dataLoaderStateInit,
   boostBalance: dataLoaderStateInit,
@@ -84,9 +78,7 @@ export interface DataLoaderState {
 
   byChainId: {
     [chainId: ChainEntity['id']]: {
-      govVaultContractData: LoaderState;
-      standardVaultContractData: LoaderState;
-      boostContractData: LoaderState;
+      contractData: LoaderState;
       govVaultBalance: LoaderState;
       tokenBalance: LoaderState;
       boostBalance: LoaderState;
@@ -170,14 +162,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
-
-    addByChainAsyncThunkActions(builder, fetchGovVaultContractDataAction, 'govVaultContractData');
-    addByChainAsyncThunkActions(
-      builder,
-      fetchStandardVaultContractDataAction,
-      'standardVaultContractData'
-    );
-    addByChainAsyncThunkActions(builder, fetchBoostContractDataAction, 'boostContractData');
+    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, 'contractData');
     addByChainAsyncThunkActions(builder, fetchGovVaultPoolsBalanceAction, 'govVaultBalance');
     addByChainAsyncThunkActions(builder, fetchTokenBalanceAction, 'tokenBalance');
     addByChainAsyncThunkActions(builder, fetchBoostBalanceAction, 'boostBalance');
