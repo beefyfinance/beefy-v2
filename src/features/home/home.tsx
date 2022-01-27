@@ -170,7 +170,6 @@ const VaultsList = memo(function HomeVaultsList() {
         allCount={allVaultsCount}
         filteredCount={filteredVaultsCount}
       />
-
       <div className={classes.vaultsList}>
         {filterConfig.deposited && address && sortedVaults.length === 0 && (
           <EmptyStates setFilterConfig={setFilterConfig} />
