@@ -26,6 +26,7 @@ import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
 import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
 import { reduxActions } from '../../features/redux/actions';
+import { Transak } from '../Transak';
 
 const useStyles = makeStyles(styles as any);
 export const Header = ({ isNightMode, setNightMode }) => {
@@ -68,6 +69,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
             </a>
           </Typography>
         ))}
+        <Transak className={classes.navLink}>{t('Header-Buy')}</Transak>
       </>
     );
   };
