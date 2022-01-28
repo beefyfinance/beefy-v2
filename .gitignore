@@ -1,9 +1,10 @@
 /node_modules/
 /.idea/
 .eslintcache
+.env
 .*.sw[m-p]
 .vscode
 .DS_Store
 /tmp
 /build
-.env
+
