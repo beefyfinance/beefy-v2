@@ -4005,7 +4005,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
     network: "polygon"
@@ -4041,7 +4041,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     network: "polygon"
@@ -4807,7 +4807,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     network: "polygon"
@@ -4843,7 +4843,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B",
     network: "polygon"
@@ -4879,7 +4879,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
     network: "polygon"
@@ -4915,7 +4915,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
     network: "polygon"
@@ -8019,6 +8019,43 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
     addLiquidityUrl: "https://app.sushi.com/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
+    network: "polygon"
+  },
+  {
+    id: "quick-sand-matic",
+    name: "SAND-MATIC LP",
+    token: "SAND-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x369582d2010B6eD950B571F4101e3bB9b554876F",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickSwapSAND-MATIC",
+    earnedTokenAddress: "0x6d212Dd38aD0811d30AABf08fB78018133F8417E",
+    earnContractAddress: "0x6d212Dd38aD0811d30AABf08fB78018133F8417E",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-sand-matic",
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "SAND",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_LARGE",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683&inputCurrency=ETH",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683/ETH",
     network: "polygon"
   }
 ];

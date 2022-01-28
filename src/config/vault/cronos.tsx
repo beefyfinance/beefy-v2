@@ -465,41 +465,6 @@ export const pools = [
     network: "cronos"
   },
   {
-    id: "crona-cro-eth",
-    name: "ETH-CRO",
-    token: "ETH-CRO LP",
-    tokenDescription: "CronaSwap",
-    tokenAddress: "0x8232aA9C3EFf79cd845FcDa109B461849Bf1Be83",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCronaCRO-ETH",
-    earnedTokenAddress: "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
-    earnContractAddress: "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "crona-cro-eth",
-    oraclePrice: 0,
-    status: "active",
-    platform: "CronaSwap",
-    assets: [
-      "ETH",
-      "CRO"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
-    addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
-    network: "cronos"
-  },
-  {
     id: "crona-wbtc-cro",
     name: "WBTC-CRO",
     token: "WBTC-CRO LP",
@@ -567,41 +532,6 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
-    network: "cronos"
-  },
-  {
-    id: "crona-usdt-ftm",
-    name: "FTM-USDT",
-    token: "FTM-USDT LP",
-    tokenDescription: "CronaSwap",
-    tokenAddress: "0xDee7A79bb414FFB248EF4d4c5560AdC91F547F41",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCronaUSDT-FTM",
-    earnedTokenAddress: "0xc07E03eE5E7c61F7EeCB5FF6FaBE2eA307433bD7",
-    earnContractAddress: "0xc07E03eE5E7c61F7EeCB5FF6FaBE2eA307433bD7",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "crona-usdt-ftm",
-    oraclePrice: 0,
-    status: "active",
-    platform: "CronaSwap",
-    assets: [
-      "FTM",
-      "USDT"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
-    addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
     network: "cronos"
   },
   {
@@ -1322,5 +1252,77 @@ export const pools = [
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     network: "cronos"
+  },
+  {
+    id: "crona-cro-eth-eol",
+    name: "ETH-CRO",
+    token: "ETH-CRO LP",
+    tokenDescription: "CronaSwap",
+    tokenAddress: "0x8232aA9C3EFf79cd845FcDa109B461849Bf1Be83",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCronaCRO-ETH",
+    earnedTokenAddress: "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
+    earnContractAddress: "0x40324434a0b53dd1ED167Ba30dcB6B4bd7a9536d",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "crona-cro-eth",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "CronaSwap",
+    assets: [
+      "ETH",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
+    addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
+    network: "cronos",
+    retireReason: "rewards"
+  },
+  {
+    id: "crona-usdt-ftm-eol",
+    name: "FTM-USDT",
+    token: "FTM-USDT LP",
+    tokenDescription: "CronaSwap",
+    tokenAddress: "0xDee7A79bb414FFB248EF4d4c5560AdC91F547F41",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCronaUSDT-FTM",
+    earnedTokenAddress: "0xc07E03eE5E7c61F7EeCB5FF6FaBE2eA307433bD7",
+    earnContractAddress: "0xc07E03eE5E7c61F7EeCB5FF6FaBE2eA307433bD7",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "crona-usdt-ftm",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "CronaSwap",
+    assets: [
+      "FTM",
+      "USDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
+    addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
+    network: "cronos",
+    retireReason: "rewards"
   }
 ];
