@@ -3852,34 +3852,6 @@ export const pools = [
     network: "bsc"
   },
   {
-    id: "cakev2-dg-bnb-eol",
-    name: "DG-BNB LP",
-    token: "DG-BNB LP",
-    tokenDescription: "PancakeSwap",
-    tokenAddress: "0x8B2824D57eebf07f5AfF5C91Fa67eD7C501A9f43",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCakeV2DG-BNB",
-    earnedTokenAddress: "0x5e2e8875FBe70F1A55f53F6fd8ca042C3F6E0Af9",
-    earnContractAddress: "0x5e2e8875FBe70F1A55f53F6fd8ca042C3F6E0Af9",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cakev2-dg-bnb",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "PancakeSwap",
-    assets: [
-      "DG",
-      "BNB"
-    ],
-    retireReason: "rewards",
-    addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0x9Fdc3ae5c814b79dcA2556564047C5e7e5449C19",
-    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x9Fdc3ae5c814b79dcA2556564047C5e7e5449C19",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
     id: "cakev2-woo-bnb",
     name: "WOO-BNB LP",
     token: "WOO-BNB LP",
@@ -5062,35 +5034,6 @@ export const pools = [
     ],
     addLiquidityUrl: "https://dex.apeswap.finance/#/add/0x9Ac983826058b8a9C7Aa1C9171441191232E8404/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
     buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x9Ac983826058b8a9C7Aa1C9171441191232E8404",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
-    id: "cakev2-well-busd-eol",
-    logo: "busd-pairs/WELL-BUSD.svg",
-    name: "WELL-BUSD LP",
-    token: "WELL-BUSD LP2",
-    tokenDescription: "PancakeSwap",
-    tokenAddress: "0x1d94cb25895AbD6ccFeF863c53372bb462AA6b86",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCakeV2WELL-BUSD",
-    earnedTokenAddress: "0x78B8AfFA682ef34ac92b800715C3AdfF7E2D3879",
-    earnContractAddress: "0x78B8AfFA682ef34ac92b800715C3AdfF7E2D3879",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cakev2-well-busd",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "PancakeSwap",
-    assets: [
-      "WELL",
-      "BUSD"
-    ],
-    retireReason: "rewards",
-    addLiquidityUrl: "https://pancakeswap.finance/add/0xf07a32eb035b786898c00bb1c64d8c6f8e7a46d5/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0xf07a32eb035b786898c00bb1c64d8c6f8e7a46d5",
     stratType: "StratLP",
     network: "bsc"
   },
@@ -15090,7 +15033,7 @@ export const pools = [
       "BNB"
     ],
     withdrawalFee: "0.05%",
-    stratType: "SingleStake",
+    stratType: "Lending",
     network: "bsc",
     risks: [
       "COMPLEXITY_LOW",
@@ -15125,7 +15068,7 @@ export const pools = [
     ],
     withdrawalFee: "0.05%",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    stratType: "SingleStake",
+    stratType: "Lending",
     network: "bsc",
     risks: [
       "COMPLEXITY_LOW",
@@ -18597,6 +18540,42 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://pancakeswap.finance/add/0x5857c96DaE9cF8511B08Cb07f85753C472D36Ea3/BNB",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x5857c96DaE9cF8511B08Cb07f85753C472D36Ea3",
+    network: "bsc"
+  },
+  {
+    id: "cakev2-ertha-wbnb",
+    name: "ERTHA-BNB LP",
+    token: "ERTHA-BNB LP",
+    tokenDescription: "PancakeSwap",
+    tokenAddress: "0x70531B39E2Bb4d8dA59E2Ce41a98eBA2990F8497",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCakeV2ERTHA-BNB",
+    earnedTokenAddress: "0x74aAA646a7ccCCE0e58a6C3137266a227F12b6F9",
+    earnContractAddress: "0x74aAA646a7ccCCE0e58a6C3137266a227F12b6F9",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "cakev2-ertha-wbnb",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "PancakeSwap",
+    assets: [
+      "ERTHA",
+      "BNB"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://pancakeswap.finance/add/0x62823659d09F9F9D2222058878f89437425eB261/BNB",
+    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x62823659d09F9F9D2222058878f89437425eB261",
     network: "bsc"
   }
 ];

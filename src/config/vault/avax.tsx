@@ -31,7 +31,7 @@ export const pools = [
     ],
     stratType: "SingleStake",
     withdrawalFee: "0.05%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     network: "avax"
   },
   {
@@ -103,9 +103,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     network: "avax"
   },
   {
@@ -138,9 +138,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     network: "avax"
   },
   {
@@ -173,9 +173,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     network: "avax"
   },
   {
@@ -208,9 +208,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     network: "avax"
   },
   {
@@ -243,9 +243,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     network: "avax"
   },
   {
@@ -278,9 +278,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
     network: "avax"
   },
   {
@@ -313,9 +313,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D",
     network: "avax"
   },
   {
@@ -350,8 +350,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     withdrawalFee: "0%",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
-    buyTokenUrl: "https://traderjoexyz.com/#/trade?outputCurrency=0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
+    buyTokenUrl: "https://traderjoexyz.com/trade?outputCurrency=0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
     network: "avax"
   },
   {
@@ -461,8 +461,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -496,8 +496,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -522,8 +522,8 @@ export const pools = [
       "SING",
       "USDTe"
     ],
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     stratType: "StratLP",
     network: "avax"
   },
@@ -558,8 +558,8 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+    stratType: "Lending",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     network: "avax"
   },
   {
@@ -593,9 +593,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     network: "avax"
   },
   {
@@ -629,9 +629,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     network: "avax"
   },
   {
@@ -665,9 +665,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     network: "avax"
   },
   {
@@ -701,9 +701,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     network: "avax"
   },
   {
@@ -737,9 +737,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     network: "avax"
   },
   {
@@ -773,9 +773,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
     network: "avax"
   },
   {
@@ -810,7 +810,7 @@ export const pools = [
     ],
     stratType: "SingleStake",
     withdrawalFee: "0%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -844,8 +844,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -879,8 +879,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0x63a72806098bd3d9520cc43356dd78afe5d386d9/AVAX",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0x63a72806098bd3d9520cc43356dd78afe5d386d9/AVAX",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -914,8 +914,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0x3b55e45fd6bd7d4724f5c47e0d1bcaedd059263e/AVAX",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0x3b55e45fd6bd7d4724f5c47e0d1bcaedd059263e/AVAX",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -949,8 +949,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -984,8 +984,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0x50b7545627a5162f82a992c33b87adc75187b218/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0x50b7545627a5162f82a992c33b87adc75187b218/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1019,8 +1019,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0x264c1383ea520f73dd837f915ef3a732e204a493/AVAX",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0x264c1383ea520f73dd837f915ef3a732e204a493/AVAX",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1054,8 +1054,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0xc7198437980c041c805a1edcba50c1ce5db95118",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0xc7198437980c041c805a1edcba50c1ce5db95118",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1089,8 +1089,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0x5947bb275c521040051d82396192181b413227a3/AVAX",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0x5947bb275c521040051d82396192181b413227a3/AVAX",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1124,8 +1124,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1160,8 +1160,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     retireReason: "rewards",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb54f16fB19478766A268F172C9480f8da1a7c9C3",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xb54f16fB19478766A268F172C9480f8da1a7c9C3",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1196,8 +1196,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     retireReason: "rewards",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0x3b55e45fd6bd7d4724f5c47e0d1bcaedd059263e/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0x3b55e45fd6bd7d4724f5c47e0d1bcaedd059263e/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1231,8 +1231,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1266,8 +1266,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1301,8 +1301,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x130966628846BFd36ff31a822705796e8cb8C18D",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0x130966628846BFd36ff31a822705796e8cb8C18D",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1336,8 +1336,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1372,8 +1372,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     retireReason: "rewards",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0xc7198437980c041c805A1EDcbA50c1Ce5db95118/0x50b7545627a5162F82A992c33b87aDc75187B218",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xc7198437980c041c805A1EDcbA50c1Ce5db95118/0x50b7545627a5162F82A992c33b87aDc75187B218",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1407,8 +1407,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1442,8 +1442,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -1477,8 +1477,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax"
   },
   {
@@ -2042,9 +2042,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     network: "avax",
     retireReason: "rewards"
   },
@@ -2081,8 +2081,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0xA56F9A54880afBc30CF29bB66d2D9ADCdcaEaDD6",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xA56F9A54880afBc30CF29bB66d2D9ADCdcaEaDD6",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0xA56F9A54880afBc30CF29bB66d2D9ADCdcaEaDD6",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xA56F9A54880afBc30CF29bB66d2D9ADCdcaEaDD6",
     network: "avax"
   },
   {
@@ -2116,8 +2116,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0xA32608e873F9DdEF944B24798db69d80Bbb4d1ed",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xA32608e873F9DdEF944B24798db69d80Bbb4d1ed",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0xA32608e873F9DdEF944B24798db69d80Bbb4d1ed",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xA32608e873F9DdEF944B24798db69d80Bbb4d1ed",
     network: "avax"
   },
   {
@@ -2151,45 +2151,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0xbD83010eB60F12112908774998F65761cf9f6f9a",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xbD83010eB60F12112908774998F65761cf9f6f9a",
-    network: "avax"
-  },
-  {
-    id: "spell-avax-mim-crv",
-    logo: "uncategorized/MIM2CRV.svg",
-    name: "MIM/USDC/USDT",
-    token: "MIM-3PoolV2",
-    tokenDescription: "Curve (MIM)",
-    tokenAddress: "0xAEA2E71b631fA93683BCF256A8689dFa0e094fcD",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooAbrcdbrMIM-3PoolV2",
-    earnedTokenAddress: "0x275eF36E6097c68bE8765c238100BF061B38A922",
-    earnContractAddress: "0x275eF36E6097c68bE8765c238100BF061B38A922",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "curve-avax-mim",
-    oraclePrice: 0,
-    status: "active",
-    platform: "MIM",
-    assets: [
-      "MIM",
-      "USDCe",
-      "USDTe"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratMultiLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://avax.curve.fi/factory/4/deposit",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0xbD83010eB60F12112908774998F65761cf9f6f9a",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xbD83010eB60F12112908774998F65761cf9f6f9a",
     network: "avax"
   },
   {
@@ -2223,8 +2186,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xDC42728B0eA910349ed3c6e1c9Dc06b5FB591f98",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/0xDC42728B0eA910349ed3c6e1c9Dc06b5FB591f98",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax",
     retireReason: "rewards"
   },
@@ -2298,8 +2261,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x321E7092a180BB43555132ec53AaA65a5bF84251",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x321E7092a180BB43555132ec53AaA65a5bF84251",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x321E7092a180BB43555132ec53AaA65a5bF84251",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x321E7092a180BB43555132ec53AaA65a5bF84251",
     network: "avax"
   },
   {
@@ -2334,8 +2297,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
     network: "avax"
   },
   {
@@ -2370,8 +2333,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x8aE8be25C23833e0A01Aa200403e826F611f9CD2",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x8aE8be25C23833e0A01Aa200403e826F611f9CD2",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x8aE8be25C23833e0A01Aa200403e826F611f9CD2",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x8aE8be25C23833e0A01Aa200403e826F611f9CD2",
     network: "avax"
   },
   {
@@ -2406,8 +2369,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x47EB6F7525C1aA999FBC9ee92715F5231eB1241D",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x47EB6F7525C1aA999FBC9ee92715F5231eB1241D",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x47EB6F7525C1aA999FBC9ee92715F5231eB1241D",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x47EB6F7525C1aA999FBC9ee92715F5231eB1241D",
     network: "avax"
   },
   {
@@ -2441,535 +2404,10 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax",
     retireReason: "rewards"
-  },
-  {
-    id: "pangolin-png-pause",
-    logo: "single-assets/PNG.svg",
-    name: "PNG",
-    token: "PNG",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x60781C2586D68229fde47564546784ab3fACA982",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinPNG",
-    earnedTokenAddress: "0x670AF270FeE3BbC89e32DDd7B8ec43663A910793",
-    earnContractAddress: "0x670AF270FeE3BbC89e32DDd7B8ec43663A910793",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "PNG",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "PNG"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
-    network: "avax"
-  },
-  {
-    id: "pangolin-usdc.e-wavax-pause",
-    name: "USDC.e-AVAX LP",
-    token: "USDC.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xbd918Ed441767fe7924e99F6a0E0B568ac1970D9",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinUSDC.e-AVAX",
-    earnedTokenAddress: "0x8eb23a3010795574eE3DD101843dC90bD63b5099",
-    earnContractAddress: "0x8eb23a3010795574eE3DD101843dC90bD63b5099",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-usdc.e-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "USDCe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
-    network: "avax"
-  },
-  {
-    id: "pangolin-png-qi-pause",
-    name: "QI-PNG LP",
-    token: "QI-PNG LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x50E7e19281a80E3C24a07016eDB87EbA9fe8C6cA",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinQI-PNG",
-    earnedTokenAddress: "0xB297EC6eb512d646f558F6514e85aa59cD583a1F",
-    earnContractAddress: "0xB297EC6eb512d646f558F6514e85aa59cD583a1F",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-png-qi",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "aQI",
-      "PNG"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
-    network: "avax"
-  },
-  {
-    id: "pangolin-qi-wavax-pause",
-    name: "QI-AVAX LP",
-    token: "QI-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xE530dC2095Ef5653205CF5ea79F8979a7028065c",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinQI-AVAX",
-    earnedTokenAddress: "0x052B006A2CfB2523042b3041f15adC7fa5356312",
-    earnContractAddress: "0x052B006A2CfB2523042b3041f15adC7fa5356312",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-qi-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "aQI",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MEDIUM",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
-    network: "avax"
-  },
-  {
-    id: "pangolin-uni.e-wavax-pause",
-    name: "UNI.e-AVAX LP",
-    token: "UNI.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x99dD520748eB0355c69DAE2692E4615C8Ab031ce",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinUNI.e-AVAX",
-    earnedTokenAddress: "0x48cc86214C58d7EaA78C100156c55DD45A676Ed1",
-    earnContractAddress: "0x48cc86214C58d7EaA78C100156c55DD45A676Ed1",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-uni.e-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "UNIe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x8eBAf22B6F053dFFeaf46f4Dd9eFA95D89ba8580",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x8eBAf22B6F053dFFeaf46f4Dd9eFA95D89ba8580",
-    network: "avax"
-  },
-  {
-    id: "pangolin-aave.e-wavax-pause",
-    name: "AAVE.e-AVAX LP",
-    token: "AAVE.e-AVAXLP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x5944f135e4F1E3fA2E5550d4B5170783868cc4fE",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinAAVE.e-AVAX",
-    earnedTokenAddress: "0xd9fe7Ff89C5303E439a14a5155F7F48E34F28518",
-    earnContractAddress: "0xd9fe7Ff89C5303E439a14a5155F7F48E34F28518",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-aave.e-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "AAVEe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
-    network: "avax"
-  },
-  {
-    id: "pangolin-wavax-xava-pause",
-    name: "XAVA-AVAX LP",
-    token: "XAVA-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x42152bDD72dE8d6767FE3B4E17a221D6985E8B25",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinXAVA-AVAX",
-    earnedTokenAddress: "0xC556387AEA8B0E55f672edf15FEc3acbcF45dC17",
-    earnContractAddress: "0xC556387AEA8B0E55f672edf15FEc3acbcF45dC17",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-wavax-xava",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "XAVA",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x5947BB275c521040051D82396192181b413227A3",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
-    network: "avax"
-  },
-  {
-    id: "pangolin-png-usdt.e-pause",
-    name: "USDT.e-PNG LP",
-    token: "USDT.e-PNG LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x1fFB6ffC629f5D820DCf578409c2d26A2998a140",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinUSDT.e-PNG",
-    earnedTokenAddress: "0x97e860CE03ae3da20Ba9740b8dA90036EE891f81",
-    earnContractAddress: "0x97e860CE03ae3da20Ba9740b8dA90036EE891f81",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-png-usdt.e",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "USDTe",
-      "PNG"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/0x60781c2586d68229fde47564546784ab3faca982/0xc7198437980c041c805a1edcba50c1ce5db95118",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    network: "avax"
-  },
-  {
-    id: "pangolin-weth.e-png-pause",
-    name: "WETH.e-PNG LP",
-    token: "WETH.e-PNG LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xcf35400A595EFCF0Af591D3Aeb5a35cBCD120d54",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinWETH.e-PNG",
-    earnedTokenAddress: "0xa66DfCBdAfbe4B4D62535f64f1C2Fb50FF42E4C6",
-    earnContractAddress: "0xa66DfCBdAfbe4B4D62535f64f1C2Fb50FF42E4C6",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-weth.e-png",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "WETHe",
-      "PNG"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    network: "avax"
-  },
-  {
-    id: "pangolin-wavax-dai.e-pause",
-    name: "DAI.e-AVAX LP",
-    token: "DAI.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xbA09679Ab223C6bdaf44D45Ba2d7279959289AB0",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinDAI.e-AVAX",
-    earnedTokenAddress: "0x97102bAdf07DA7af61594b686fe311d06930B76e",
-    earnContractAddress: "0x97102bAdf07DA7af61594b686fe311d06930B76e",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-wavax-dai.e",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "DAIe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
-    network: "avax"
-  },
-  {
-    id: "pangolin-link.e-wavax-pause",
-    name: "LINK.e-AVAX LP",
-    token: "LINK.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x5875c368Cddd5FB9Bf2f410666ca5aad236DAbD4",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinLINK.e-AVAX",
-    earnedTokenAddress: "0x2bAe08Cf46867b6c29d6bcA000Dc43dFCCAc73E3",
-    earnContractAddress: "0x2bAe08Cf46867b6c29d6bcA000Dc43dFCCAc73E3",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-link.e-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "LINKe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x5947BB275c521040051D82396192181b413227A3",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
-    network: "avax"
-  },
-  {
-    id: "pangolin-weth.e-wavax-pause",
-    name: "WETH.e-AVAX LP",
-    token: "WETH.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x7c05d54fc5CB6e4Ad87c6f5db3b807C94bB89c52",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinWETH.e-AVAX",
-    earnedTokenAddress: "0xc98fF20bB8cd7C68C483c7C66f36e3F69ad81B47",
-    earnContractAddress: "0xc98fF20bB8cd7C68C483c7C66f36e3F69ad81B47",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-weth.e-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "WETHe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    network: "avax"
-  },
-  {
-    id: "pangolin-wavax-usdt.e-pause",
-    name: "USDT.e-AVAX LP",
-    token: "USDT.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xe28984e1EE8D431346D32BeC9Ec800Efb643eef4",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinUSDT.e-AVAX",
-    earnedTokenAddress: "0xC24c73C256d527726a7a012e1360c78d0cc02eEA",
-    earnContractAddress: "0xC24c73C256d527726a7a012e1360c78d0cc02eEA",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-wavax-usdt.e",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "USDTe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    network: "avax"
-  },
-  {
-    id: "pangolin-wbtc.e-wavax-pause",
-    name: "WBTC.e-AVAX LP",
-    token: "WBTC.e-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0x5764b8D8039C6E32f1e5d8DE8Da05DdF974EF5D3",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinWBTC.e-AVAX",
-    earnedTokenAddress: "0xBBBe0fA93c8ced0614351bAF74979aB1243cF9c8",
-    earnContractAddress: "0xBBBe0fA93c8ced0614351bAF74979aB1243cF9c8",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "pangolin-wbtc.e-wavax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "WBTCe",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
-    network: "avax"
-  },
-  {
-    id: "png-bnb-avax-pause",
-    name: "BNB-AVAX LP",
-    token: "BNB-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xF776Ef63c2E7A81d03e2c67673fd5dcf53231A3f",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinBNB-AVAX",
-    earnedTokenAddress: "0x0E97d2E7DdD8708b99C7dd57C68B490B511b12Da",
-    earnContractAddress: "0x0E97d2E7DdD8708b99C7dd57C68B490B511b12Da",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "png-bnb-avax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "BNB",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/0x264c1383EA520f73dd837F915ef3a732e204a493",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB",
-    network: "avax"
   },
   {
     id: "com-com-avax-eol",
@@ -2999,41 +2437,6 @@ export const pools = [
     stratType: "StratLP",
     network: "avax",
     retireReason: "tvl"
-  },
-  {
-    id: "png-png-avax-pause",
-    name: "PNG-AVAX LP",
-    token: "PNG-AVAX LP",
-    tokenDescription: "Pangolin",
-    tokenAddress: "0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooPangolinPNG-AVAX",
-    earnedTokenAddress: "0x71b5852857b85D5096d4288AD6d293F217d8e162",
-    earnContractAddress: "0x71b5852857b85D5096d4288AD6d293F217d8e162",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "png-png-avax",
-    oraclePrice: 0,
-    status: "paused",
-    platform: "Pangolin",
-    assets: [
-      "PNG",
-      "AVAX"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
-    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
-    network: "avax"
   },
   {
     id: "joe-usdc.e-usdt.e-eol",
@@ -3066,8 +2469,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xc7198437980c041c805a1edcba50c1ce5db95118",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664/0xc7198437980c041c805a1edcba50c1ce5db95118",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax",
     retireReason: "rewards"
   },
@@ -3102,8 +2505,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax",
     retireReason: "rewards"
   },
@@ -3138,8 +2541,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax",
     retireReason: "rewards"
   },
@@ -3173,9 +2576,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     network: "avax"
   },
   {
@@ -3209,9 +2612,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     network: "avax"
   },
   {
@@ -3245,9 +2648,9 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     network: "avax"
   },
   {
@@ -3282,8 +2685,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664/0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     network: "avax"
   },
   {
@@ -3318,8 +2721,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xec3492a2508DDf4FDc0cD76F31f340b30d1793e6",
     network: "avax"
   },
   {
@@ -3354,8 +2757,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x22d4002028f537599bE9f666d1c4Fa138522f9c8",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x22d4002028f537599bE9f666d1c4Fa138522f9c8",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x22d4002028f537599bE9f666d1c4Fa138522f9c8",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x22d4002028f537599bE9f666d1c4Fa138522f9c8",
     network: "avax"
   },
   {
@@ -3429,8 +2832,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0xd6070ae98b8069de6b494332d1a1a81b6179d960",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0xd6070ae98b8069de6b494332d1a1a81b6179d960",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax",
     retireReason: "rewards"
   },
@@ -3465,8 +2868,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://www.traderjoexyz.com/#/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade",
+    addLiquidityUrl: "https://www.traderjoexyz.com/pool/AVAX/0x1f1E7c893855525b303f99bDF5c3c05Be09ca251",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade",
     network: "avax",
     retireReason: "rewards"
   },
@@ -3502,8 +2905,8 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    addLiquidityUrl: "https://traderjoexyz.com/#/pool/AVAX/0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
-    buyTokenUrl: "https://www.traderjoexyz.com/#/trade?outputCurrency=0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x5eDE350E84223fb50775fD91a723F2ca71034cf7",
     network: "avax",
     retireReason: "rewards"
   },
@@ -3539,6 +2942,800 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "SingleStake",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
+    network: "avax"
+  },
+  {
+    id: "joe-ust-wavax",
+    name: "UST-AVAX LP",
+    token: "UST-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0x7BF98BD74E19AD8eB5e14076140Ee0103F8F872B",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeUST-AVAX",
+    earnedTokenAddress: "0xe6f6466E1cA56ab02eBb909C8228eD76534686D7",
+    earnContractAddress: "0xe6f6466E1cA56ab02eBb909C8228eD76534686D7",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-ust-wavax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "UST",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11/AVAX",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x260Bbf5698121EB85e7a74f2E45E16Ce762EbE11",
+    network: "avax"
+  },
+  {
+    id: "joe-wavax-more",
+    name: "MORE-AVAX LP",
+    token: "MORE-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0xb8361D0E3F3B0fc5e6071f3a3C3271223C49e3d9",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeMORE-AVAX",
+    earnedTokenAddress: "0xA413a9a99F2681c89369Fe1e5F91d209C8bc7d53",
+    earnContractAddress: "0xA413a9a99F2681c89369Fe1e5F91d209C8bc7d53",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-wavax-more",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "MORE",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/0xd9D90f882CDdD6063959A9d837B05Cb748718A05/AVAX",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xd9D90f882CDdD6063959A9d837B05Cb748718A05",
+    network: "avax"
+  },
+  {
+    id: "joe-gmx-wavax",
+    name: "GMX-AVAX LP",
+    token: "GMX-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0x0c91a070f862666bBcce281346BE45766d874D98",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeGMX-AVAX",
+    earnedTokenAddress: "0x682d9fB30cfe4Ced14a307F57AAbE9B27E05CC56",
+    earnContractAddress: "0x682d9fB30cfe4Ced14a307F57AAbE9B27E05CC56",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-gmx-wavax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "GMX",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/0x62edc0692BD897D2295872a9FFCac5425011c661/AVAX",
+    buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x62edc0692BD897D2295872a9FFCac5425011c661",
+    network: "avax"
+  },
+  {
+    id: "joe-usdt-usdt.e",
+    name: "USDT-USDT.e LP",
+    token: "USDt-USDT.e JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0x74B651Eff97871eA99fcc14423E611d85Eb0EA93",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeUSDT-USDTe",
+    earnedTokenAddress: "0x258e9884c111E2e3e0273372521982bd57ef29Bd",
+    earnContractAddress: "0x258e9884c111E2e3e0273372521982bd57ef29Bd",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-usdt-usdt.e",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "USDT",
+      "USDTe"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7/0xc7198437980c041c805a1edcba50c1ce5db95118",
+    buyTokenUrl: "https://traderjoexyz.com/trade?outputCurrency=0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7#/",
+    network: "avax"
+  },
+  {
+    id: "joe-wavax-frax",
+    name: "FRAX-AVAX LP",
+    token: "FRAX-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0x862905a82382Db9405a40DCAa8Ee9e8F4af52C89",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeAvax-FRAX",
+    earnedTokenAddress: "0xd2D0Cf1675961357AfC934856421D2C5ffd87b1e",
+    earnContractAddress: "0xd2D0Cf1675961357AfC934856421D2C5ffd87b1e",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-wavax-frax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "FRAX",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0xd24c2ad096400b6fbcd2ad8b24e7acbc21a1da64",
+    buyTokenUrl: "https://traderjoexyz.com/trade?outputCurrency=0xd24c2ad096400b6fbcd2ad8b24e7acbc21a1da64#/",
+    network: "avax"
+  },
+  {
+    id: "spell-avax-mim-crv-eol",
+    logo: "uncategorized/MIM2CRV.svg",
+    name: "MIM/USDC/USDT",
+    token: "MIM-3PoolV2",
+    tokenDescription: "Curve (MIM)",
+    tokenAddress: "0xAEA2E71b631fA93683BCF256A8689dFa0e094fcD",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooAbrcdbrMIM-3PoolV2",
+    earnedTokenAddress: "0x275eF36E6097c68bE8765c238100BF061B38A922",
+    earnContractAddress: "0x275eF36E6097c68bE8765c238100BF061B38A922",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "curve-avax-mim",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "MIM",
+    assets: [
+      "MIM",
+      "USDCe",
+      "USDTe"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://avax.curve.fi/factory/4/deposit",
+    network: "avax",
+    retireReason: "rewards"
+  },
+  {
+    id: "pangolin-png-pause-eol",
+    logo: "single-assets/PNG.svg",
+    name: "PNG",
+    token: "PNG",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x60781C2586D68229fde47564546784ab3fACA982",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinPNG",
+    earnedTokenAddress: "0x670AF270FeE3BbC89e32DDd7B8ec43663A910793",
+    earnContractAddress: "0x670AF270FeE3BbC89e32DDd7B8ec43663A910793",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "PNG",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Pangolin",
+    assets: [
+      "PNG"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
+    network: "avax",
+    retireReason: "rewards"
+  },
+  {
+    id: "pangolin-usdc.e-wavax-eol",
+    name: "USDC.e-AVAX LP",
+    token: "USDC.e-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0xbd918Ed441767fe7924e99F6a0E0B568ac1970D9",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinUSDC.e-AVAX",
+    earnedTokenAddress: "0x8eb23a3010795574eE3DD101843dC90bD63b5099",
+    earnContractAddress: "0x8eb23a3010795574eE3DD101843dC90bD63b5099",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-usdc.e-wavax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "USDCe",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
+    network: "avax"
+  },
+  {
+    id: "pangolin-png-qi-eol",
+    name: "QI-PNG LP",
+    token: "QI-PNG LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x50E7e19281a80E3C24a07016eDB87EbA9fe8C6cA",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinQI-PNG",
+    earnedTokenAddress: "0xB297EC6eb512d646f558F6514e85aa59cD583a1F",
+    earnContractAddress: "0xB297EC6eb512d646f558F6514e85aa59cD583a1F",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-png-qi",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "aQI",
+      "PNG"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/0x60781C2586D68229fde47564546784ab3fACA982/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
+    network: "avax"
+  },
+  {
+    id: "pangolin-qi-wavax-eol",
+    name: "QI-AVAX LP",
+    token: "QI-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0xE530dC2095Ef5653205CF5ea79F8979a7028065c",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinQI-AVAX",
+    earnedTokenAddress: "0x052B006A2CfB2523042b3041f15adC7fa5356312",
+    earnContractAddress: "0x052B006A2CfB2523042b3041f15adC7fa5356312",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-qi-wavax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "aQI",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
+    network: "avax"
+  },
+  {
+    id: "pangolin-uni.e-wavax-eol",
+    name: "UNI.e-AVAX LP",
+    token: "UNI.e-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x99dD520748eB0355c69DAE2692E4615C8Ab031ce",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinUNI.e-AVAX",
+    earnedTokenAddress: "0x48cc86214C58d7EaA78C100156c55DD45A676Ed1",
+    earnContractAddress: "0x48cc86214C58d7EaA78C100156c55DD45A676Ed1",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-uni.e-wavax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "UNIe",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x8eBAf22B6F053dFFeaf46f4Dd9eFA95D89ba8580",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x8eBAf22B6F053dFFeaf46f4Dd9eFA95D89ba8580",
+    network: "avax"
+  },
+  {
+    id: "pangolin-aave.e-wavax-eol",
+    name: "AAVE.e-AVAX LP",
+    token: "AAVE.e-AVAXLP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x5944f135e4F1E3fA2E5550d4B5170783868cc4fE",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinAAVE.e-AVAX",
+    earnedTokenAddress: "0xd9fe7Ff89C5303E439a14a5155F7F48E34F28518",
+    earnContractAddress: "0xd9fe7Ff89C5303E439a14a5155F7F48E34F28518",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-aave.e-wavax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "AAVEe",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
+    network: "avax"
+  },
+  {
+    id: "pangolin-wavax-xava-eol",
+    name: "XAVA-AVAX LP",
+    token: "XAVA-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x42152bDD72dE8d6767FE3B4E17a221D6985E8B25",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinXAVA-AVAX",
+    earnedTokenAddress: "0xC556387AEA8B0E55f672edf15FEc3acbcF45dC17",
+    earnContractAddress: "0xC556387AEA8B0E55f672edf15FEc3acbcF45dC17",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-wavax-xava",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "XAVA",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x5947BB275c521040051D82396192181b413227A3",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
+    network: "avax"
+  },
+  {
+    id: "pangolin-png-usdt.e-eol",
+    name: "USDT.e-PNG LP",
+    token: "USDT.e-PNG LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x1fFB6ffC629f5D820DCf578409c2d26A2998a140",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinUSDT.e-PNG",
+    earnedTokenAddress: "0x97e860CE03ae3da20Ba9740b8dA90036EE891f81",
+    earnContractAddress: "0x97e860CE03ae3da20Ba9740b8dA90036EE891f81",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-png-usdt.e",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "USDTe",
+      "PNG"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/0x60781c2586d68229fde47564546784ab3faca982/0xc7198437980c041c805a1edcba50c1ce5db95118",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    network: "avax"
+  },
+  {
+    id: "pangolin-weth.e-png-eol",
+    name: "WETH.e-PNG LP",
+    token: "WETH.e-PNG LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0xcf35400A595EFCF0Af591D3Aeb5a35cBCD120d54",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinWETH.e-PNG",
+    earnedTokenAddress: "0xa66DfCBdAfbe4B4D62535f64f1C2Fb50FF42E4C6",
+    earnContractAddress: "0xa66DfCBdAfbe4B4D62535f64f1C2Fb50FF42E4C6",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-weth.e-png",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "WETHe",
+      "PNG"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    network: "avax"
+  },
+  {
+    id: "pangolin-wavax-dai.e-eol",
+    name: "DAI.e-AVAX LP",
+    token: "DAI.e-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0xbA09679Ab223C6bdaf44D45Ba2d7279959289AB0",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinDAI.e-AVAX",
+    earnedTokenAddress: "0x97102bAdf07DA7af61594b686fe311d06930B76e",
+    earnContractAddress: "0x97102bAdf07DA7af61594b686fe311d06930B76e",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-wavax-dai.e",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "DAIe",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
+    network: "avax"
+  },
+  {
+    id: "pangolin-link.e-wavax-eol",
+    name: "LINK.e-AVAX LP",
+    token: "LINK.e-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x5875c368Cddd5FB9Bf2f410666ca5aad236DAbD4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinLINK.e-AVAX",
+    earnedTokenAddress: "0x2bAe08Cf46867b6c29d6bcA000Dc43dFCCAc73E3",
+    earnContractAddress: "0x2bAe08Cf46867b6c29d6bcA000Dc43dFCCAc73E3",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-link.e-wavax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "LINKe",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x5947BB275c521040051D82396192181b413227A3",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
+    network: "avax"
+  },
+  {
+    id: "pangolin-weth.e-wavax-eol",
+    name: "WETH.e-AVAX LP",
+    token: "WETH.e-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x7c05d54fc5CB6e4Ad87c6f5db3b807C94bB89c52",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinWETH.e-AVAX",
+    earnedTokenAddress: "0xc98fF20bB8cd7C68C483c7C66f36e3F69ad81B47",
+    earnContractAddress: "0xc98fF20bB8cd7C68C483c7C66f36e3F69ad81B47",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-weth.e-wavax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "WETHe",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    network: "avax"
+  },
+  {
+    id: "pangolin-wavax-usdt.e-eol",
+    name: "USDT.e-AVAX LP",
+    token: "USDT.e-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0xe28984e1EE8D431346D32BeC9Ec800Efb643eef4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinUSDT.e-AVAX",
+    earnedTokenAddress: "0xC24c73C256d527726a7a012e1360c78d0cc02eEA",
+    earnContractAddress: "0xC24c73C256d527726a7a012e1360c78d0cc02eEA",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-wavax-usdt.e",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "USDTe",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+    network: "avax"
+  },
+  {
+    id: "pangolin-wbtc.e-wavax-eol",
+    name: "WBTC.e-AVAX LP",
+    token: "WBTC.e-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x5764b8D8039C6E32f1e5d8DE8Da05DdF974EF5D3",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinWBTC.e-AVAX",
+    earnedTokenAddress: "0xBBBe0fA93c8ced0614351bAF74979aB1243cF9c8",
+    earnContractAddress: "0xBBBe0fA93c8ced0614351bAF74979aB1243cF9c8",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "pangolin-wbtc.e-wavax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "WBTCe",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x50b7545627a5162F82A992c33b87aDc75187B218",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
+    network: "avax"
+  },
+  {
+    id: "png-bnb-avax-eol",
+    name: "BNB-AVAX LP",
+    token: "BNB-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0xF776Ef63c2E7A81d03e2c67673fd5dcf53231A3f",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinBNB-AVAX",
+    earnedTokenAddress: "0x0E97d2E7DdD8708b99C7dd57C68B490B511b12Da",
+    earnContractAddress: "0x0E97d2E7DdD8708b99C7dd57C68B490B511b12Da",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "png-bnb-avax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "BNB",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7/0x264c1383EA520f73dd837F915ef3a732e204a493",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x408D4cD0ADb7ceBd1F1A1C33A0Ba2098E1295bAB",
+    network: "avax"
+  },
+  {
+    id: "png-png-avax-eol",
+    name: "PNG-AVAX LP",
+    token: "PNG-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0xd7538cABBf8605BdE1f4901B47B8D42c61DE0367",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinPNG-AVAX",
+    earnedTokenAddress: "0x71b5852857b85D5096d4288AD6d293F217d8e162",
+    earnContractAddress: "0x71b5852857b85D5096d4288AD6d293F217d8e162",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "png-png-avax",
+    oraclePrice: 0,
+    status: "eol",
+    retireReason: "rewards",
+    platform: "Pangolin",
+    assets: [
+      "PNG",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x60781C2586D68229fde47564546784ab3fACA982",
     buyTokenUrl: "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
     network: "avax"
   }
