@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../utils/types-utils';
 import { BoostEntity } from '../entities/boost';
 import { isTokenErc20 } from '../entities/token';
-import { BeefyState } from '../../redux/reducers';
+import { BeefyState } from '../../redux/reducers/storev2';
 import { selectTokenById } from '../selectors/tokens';
 
 // fix TS typings

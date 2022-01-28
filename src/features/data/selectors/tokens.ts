@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../redux/reducers';
+import { BeefyState } from '../../redux/reducers/storev2';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 

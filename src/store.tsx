@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { walletActionsMiddleware } from './features/data/actions/scenarios';
-import { rootReducer } from './features/redux/reducers';
+import { rootReducer } from './features/redux/reducers/storev2';
 
 // https://coderwall.com/p/pafnew/redux-middleware-logger
 // debug middleware for when redux browser extension is not helpful

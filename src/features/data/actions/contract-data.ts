@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers';
+import { BeefyState } from '../../redux/reducers/storev2';
 import {
   BoostContractData,
   GovVaultContractData,

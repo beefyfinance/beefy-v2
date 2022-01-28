@@ -4,7 +4,7 @@ import {
   fetchGovVaultPoolsAllowanceAction,
   fetchStandardVaultAllowanceAction,
 } from '../actions/allowance';
-import { fetchApyAction, fetchHistoricalApy } from '../actions/apy';
+import { fetchApyAction } from '../actions/apy';
 import {
   fetchBoostBalanceAction,
   fetchGovVaultPoolsBalanceAction,
@@ -12,8 +12,8 @@ import {
 } from '../actions/balance';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
-import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
+import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAllVaults } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
 

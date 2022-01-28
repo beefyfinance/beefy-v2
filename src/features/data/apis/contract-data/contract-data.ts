@@ -8,7 +8,7 @@ import { selectTokenById } from '../../selectors/tokens';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
-import { BeefyState } from '../../../redux/reducers';
+import { BeefyState } from '../../../redux/reducers/storev2';
 import { BoostEntity } from '../../entities/boost';
 import { sortBy } from 'lodash';
 import { getBoostContractInstance, getVaultContractInstance } from './worker/instances';

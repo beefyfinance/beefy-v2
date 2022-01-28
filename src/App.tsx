@@ -22,7 +22,7 @@ export const App = () => {
   const { wallet } = useSelector((state: any) => ({
     wallet: state.walletReducer,
   }));
-  /*
+
   React.useEffect(() => {
     const updateBalances = async () => {
       await dispatch(reduxActions.balance.fetchBalances());
@@ -70,10 +70,10 @@ export const App = () => {
       dispatch(reduxActions.wallet.createWeb3Modal());
     }
   }, [dispatch, wallet.web3modal]);
-*/
+
   React.useEffect(() => {
     // give some time to the app to render a loader before doing this
-    setTimeout(initHomeDataV4, 50);
+    //setTimeout(initHomeDataV4, 50);
   }, []);
 
   return (

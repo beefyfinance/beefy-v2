@@ -15,7 +15,6 @@ import { fetchApyAction } from './apy';
 import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction } from './prices';
-import { fetchAllContractDataByChainAction } from './contract-data';
 import { fetchAllVaults } from './vaults';
 import {
   fetchBoostBalanceAction,
@@ -28,6 +27,7 @@ import {
   fetchStandardVaultAllowanceAction,
 } from './allowance';
 import { getWalletConnectInstance } from '../apis/instances';
+import { fetchAllContractDataByChainAction } from './contract-data';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 interface CapturedFulfilledActions {
@@ -95,8 +95,8 @@ export async function initHomeDataV4() {
     });
 
     // todo: take it from local storage
-    //const defaultChainId = 'bsc';
-    //return walletCo.askUserToConnectIfNeeded(defaultChainId);
+    const defaultChainId = 'bsc';
+    return walletCo.askUserToConnectIfNeeded(defaultChainId);
   });
 
   // we fetch the configuration for all chain
@@ -169,7 +169,7 @@ export async function initHomeDataV4() {
   // ok all data is fetched, now we start the poll functions
 
   // disable for debugging
-  return;
+  //return;
 
   // cancel regular polls if we already have some
   for (const stop of pollStopFns) {
