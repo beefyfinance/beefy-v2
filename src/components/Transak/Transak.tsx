@@ -15,8 +15,8 @@ const TransakNav = ({ className, children }) => {
     widgetHeight: '550px',
     widgetWidth: '450px',
     networks: 'arbitrum,avaxcchain,polygon,bsc,celo,fantom,moonriver',
-    defaultNetwork: 'bsc',
-    defaultCryptoCurrency: 'bifi',
+    defaultNetwork: 'polygon',
+    defaultCryptoCurrency: 'usdc',
     defaultCryptoAmount: 1,
   });
 
