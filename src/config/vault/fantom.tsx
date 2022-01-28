@@ -290,7 +290,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c",
     network: "fantom"
@@ -890,7 +890,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.frax.finance/crosschain",
     network: "fantom"
@@ -925,7 +925,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
     network: "fantom"
@@ -1779,7 +1779,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b",
     network: "fantom"
@@ -1814,7 +1814,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
     network: "fantom"
@@ -1990,7 +1990,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=FTM",
     network: "fantom"
@@ -2025,7 +2025,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     network: "fantom"
@@ -2060,7 +2060,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
     network: "fantom"
@@ -2095,7 +2095,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     network: "fantom"
@@ -2130,7 +2130,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     network: "fantom"
@@ -2165,7 +2165,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     network: "fantom"
@@ -3059,42 +3059,6 @@ export const pools = [
     network: "fantom"
   },
   {
-    id: "spirit-spell-sspell",
-    name: "sSPELL-SPELL",
-    token: "sSPELL-SPELL LP",
-    tokenDescription: "SpiritSwap",
-    tokenAddress: "0x4f41D03631Ea4dC14016CcF90690d6D22b24C12D",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSpiritsSPELL-SPELL",
-    earnedTokenAddress: "0xC90c00Dd1E53D56Ca4a0FdcA7940C33C0fcf02e5",
-    earnContractAddress: "0xC90c00Dd1E53D56Ca4a0FdcA7940C33C0fcf02e5",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "spirit-spell-sspell",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SpiritSwap",
-    assets: [
-      "sSPELL",
-      "SPELL"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
-    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
-    network: "fantom"
-  },
-  {
     id: "beets-baron-von-binance",
     logo: "fantom/baron-von-binance.png",
     name: "Baron von Binance",
@@ -3233,7 +3197,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
     network: "fantom",
@@ -3789,7 +3753,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b",
     network: "fantom"
@@ -3898,7 +3862,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=FTM",
     network: "fantom"
@@ -3934,7 +3898,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
     network: "fantom"
@@ -3970,7 +3934,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     network: "fantom"
@@ -4006,7 +3970,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     network: "fantom"
@@ -4042,7 +4006,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     network: "fantom"
@@ -4078,7 +4042,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     network: "fantom"
@@ -4151,7 +4115,7 @@ export const pools = [
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
     network: "fantom"
@@ -4449,7 +4413,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0%",
     showWarning: false,
     warning: "liquidity",
@@ -6053,6 +6017,80 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x5dd0d5d6c13e9302271be0dfade2b9fd708e5ddb0002000000000000000000e7",
+    network: "fantom",
+    retireReason: "rewards"
+  },
+  {
+    id: "0xdao-xboo",
+    logo: "single-assets/xBOO.png",
+    name: "xBOO",
+    token: "xBOO",
+    tokenDescription: "0xDAO",
+    tokenAddress: "0xa48d959AE2E88f1dAA7D5F611E01908106dE7598",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDxBOO",
+    earnedTokenAddress: "0xE95f98631895bB9657e37906ea4c61b272BddeB0",
+    earnContractAddress: "0xE95f98631895bB9657e37906ea4c61b272BddeB0",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "xBOO",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "xBOO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/pools",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
+    network: "fantom"
+  },
+  {
+    id: "spirit-spell-sspell-eol",
+    name: "sSPELL-SPELL",
+    token: "sSPELL-SPELL LP",
+    tokenDescription: "SpiritSwap",
+    tokenAddress: "0x4f41D03631Ea4dC14016CcF90690d6D22b24C12D",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSpiritsSPELL-SPELL",
+    earnedTokenAddress: "0xC90c00Dd1E53D56Ca4a0FdcA7940C33C0fcf02e5",
+    earnContractAddress: "0xC90c00Dd1E53D56Ca4a0FdcA7940C33C0fcf02e5",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "spirit-spell-sspell",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SpiritSwap",
+    assets: [
+      "sSPELL",
+      "SPELL"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
     network: "fantom",
     retireReason: "rewards"
   }
