@@ -9,7 +9,7 @@ const TransakNav = ({ className, children }) => {
     apiKey: REACT_APP_TRANSAK_API_KEY,
     environment: REACT_APP_ENVIRONMENT, // STAGING/PRODUCTION (Required)
     walletAddress: '',
-    themeColor: '#59A662',
+    themeColor: '59A662',
     email: '',
     hostURL: window.location.origin,
     widgetHeight: '550px',
