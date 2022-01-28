@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers';
-import { getContractDataApi } from '../apis/instances';
 import {
   BoostContractData,
   GovVaultContractData,
   StandardVaultContractData,
-} from '../apis/contract-data';
+} from '../apis/contract-data/worker/shared-worker-types';
+import { getContractDataApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';

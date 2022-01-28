@@ -1,56 +1,23 @@
 import { MultiCall, ShapeWithLabel } from 'eth-multicall';
-import { AbiItem } from 'web3-utils';
-import { isTokenErc20 } from '../entities/token';
-import _vaultAbi from '../../../config/abi/vault.json';
-import _boostAbi from '../../../config/abi/boost.json';
+import { isTokenErc20 } from '../../entities/token';
+import _vaultAbi from '../../../../config/abi/vault.json';
+import _boostAbi from '../../../../config/abi/boost.json';
 import Web3 from 'web3';
-import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import { selectTokenById } from '../selectors/tokens';
-import { ChainEntity } from '../entities/chain';
+import { VaultGov, VaultStandard } from '../../entities/vault';
+import { selectTokenById } from '../../selectors/tokens';
+import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import { AllValuesAsString } from '../utils/types-utils';
-import { BeefyState } from '../../redux/reducers';
-import { BoostEntity } from '../entities/boost';
-
-// fix TS typings
-const vaultAbi = _vaultAbi as AbiItem[];
-const boostAbi = _boostAbi as AbiItem[];
-
-export interface GovVaultContractData {
-  id: VaultEntity['id'];
-  totalStaked: BigNumber;
-}
-export interface StandardVaultContractData {
-  id: VaultEntity['id'];
-
-  balance: BigNumber;
-
-  /**
-   * pricePerFullShare is how you find out how much your mooTokens (shares)
-   * represent in term of the underlying asset
-   * So if you deposit 1 BNB you will get, for example 0.95 mooBNB,
-   * with a ppfs of X. if you multiply your mooBNB * ppfs you get your amount in BNB
-   */
-  pricePerFullShare: BigNumber;
-
-  /**
-   * The strategy address
-   */
-  strategy: string;
-}
-
-export interface BoostContractData {
-  id: BoostEntity['id'];
-  totalStaked: BigNumber;
-  rewardRate: BigNumber;
-  periodFinish: number;
-}
-
-interface FetchAllResult {
-  boosts: BoostContractData[];
-  standardVaults: StandardVaultContractData[];
-  govVaults: GovVaultContractData[];
-}
+import { AllValuesAsString } from '../../utils/types-utils';
+import { BeefyState } from '../../../redux/reducers';
+import { BoostEntity } from '../../entities/boost';
+import { sortBy } from 'lodash';
+import { getBoostContractInstance, getVaultContractInstance } from './worker/instances';
+import {
+  BoostContractData,
+  FetchAllResult,
+  GovVaultContractData,
+  StandardVaultContractData,
+} from './worker/shared-worker-types';
 
 /**
  * Get vault contract data
@@ -132,12 +99,31 @@ export class ContractDataAPI {
         throw new Error(`Could not identify type`);
       }
     }
+    //@ts-ignore
+    if (!window._res) {
+      // @ts-ignore
+      window._res = { boosts: [], govVaults: [], standardVaults: [] };
+    }
+    // @ts-ignore
+    window._res.boosts = window._res.boosts.concat(res.boosts);
+    // @ts-ignore
+    window._res.govVaults = window._res.govVaults.concat(res.govVaults);
+    // @ts-ignore
+    window._res.standardVaults = window._res.standardVaults.concat(res.standardVaults);
+    // @ts-ignore
+    window._res.boosts = sortBy(window._res.boosts, ['id']);
+    // @ts-ignore
+    window._res.govVaults = sortBy(window._res.govVaults, ['id']);
+    // @ts-ignore
+    window._res.standardVaults = sortBy(window._res.standardVaults, ['id']);
+    console.log({ res });
     // format strings as numbers
     return res;
   }
 
   protected _getStandardVaultCallsAndFormatter(state: BeefyState, vaults: VaultStandard[]) {
     const calls: ShapeWithLabel[] = [];
+
     for (const vault of vaults) {
       const earnedToken = selectTokenById(state, this.chain.id, vault.earnedTokenId);
       // do this check to please the TypeScript gods
@@ -147,13 +133,13 @@ export class ContractDataAPI {
         );
         continue;
       }
-      const tokenContract = new this.web3.eth.Contract(vaultAbi, earnedToken.contractAddress);
+      const vaultContract = getVaultContractInstance(earnedToken.contractAddress);
       calls.push({
         type: 'vault-standard',
         id: vault.id,
-        balance: tokenContract.methods.balance(),
-        pricePerFullShare: tokenContract.methods.getPricePerFullShare(),
-        strategy: tokenContract.methods.strategy(),
+        balance: vaultContract.methods.balance(),
+        pricePerFullShare: vaultContract.methods.getPricePerFullShare(),
+        strategy: vaultContract.methods.strategy(),
       });
     }
     return {
@@ -171,12 +157,13 @@ export class ContractDataAPI {
 
   protected _getGovVaultCallsAndFormatter(vaults: VaultGov[]) {
     const calls: ShapeWithLabel[] = [];
+
     for (const vault of vaults) {
-      const tokenContract = new this.web3.eth.Contract(vaultAbi, vault.earnContractAddress);
+      const vaultContract = getVaultContractInstance(vault.earnContractAddress);
       calls.push({
         type: 'vault-gov',
         id: vault.id,
-        totalStaked: tokenContract.methods.totalSupply(),
+        totalStaked: vaultContract.methods.totalSupply(),
       });
     }
     return {
@@ -192,15 +179,17 @@ export class ContractDataAPI {
 
   protected _getBoostCallsAndFormatter(boosts: BoostEntity[]) {
     const calls: ShapeWithLabel[] = [];
+
     for (const boost of boosts) {
-      const earnContract = new this.web3.eth.Contract(boostAbi, boost.earnContractAddress);
+      // set a new address
+      const boostContract = getBoostContractInstance(boost.earnContractAddress);
 
       calls.push({
         type: 'boost',
         id: boost.id,
-        totalStaked: earnContract.methods.totalSupply(),
-        rewardRate: earnContract.methods.rewardRate(),
-        periodFinish: earnContract.methods.periodFinish(),
+        totalStaked: boostContract.methods.totalSupply(),
+        rewardRate: boostContract.methods.rewardRate(),
+        periodFinish: boostContract.methods.periodFinish(),
       });
     }
     return {
