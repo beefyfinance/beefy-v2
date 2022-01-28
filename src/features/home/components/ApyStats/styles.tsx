@@ -75,13 +75,25 @@ export const styles = theme => ({
   stat: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'left',
+    alignItems: 'flex-start',
     [theme.breakpoints.up('md')]: {
-      width: 'auto',
       alignItems: 'center',
     },
     [theme.breakpoints.down('md')]: {
-      margin: `${theme.spacing(0.5)}`,
+      alignItems: 'flex-start',
+      margin: '10px 0',
+    },
+  },
+  stat1: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    [theme.breakpoints.up('md')]: {
+      alignItems: 'center',
+    },
+    [theme.breakpoints.down('md')]: {
+      marginTop: '10px',
+      alignItems: 'flex-start',
     },
   },
   tooltipLabel: {

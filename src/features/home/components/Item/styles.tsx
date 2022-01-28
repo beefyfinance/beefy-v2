@@ -12,12 +12,6 @@ export const styles = theme => ({
     border: `2px solid ${theme.palette.background.vaults.defaultOutline}`,
     boxShadow: '0px 1px 8px rgba(0,0,0,0.1)',
     background: theme.palette.background.vaults.default,
-    '&.hasDeposit': {
-      background: '#313759',
-      '&:hover': {
-        background: '#313759',
-      },
-    },
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     },
@@ -25,7 +19,7 @@ export const styles = theme => ({
       marginRight: '10px',
       marginLeft: '10px',
       width: 'calc(100% - 20px)',
-      height: '400px',
+      height: 380,
     },
   },
   badges: {
@@ -34,9 +28,6 @@ export const styles = theme => ({
     flexWrap: 'wrap',
     '& img': {
       height: '24px',
-    },
-    [theme.breakpoints.down('sm')]: {
-      margin: '0 -40px',
     },
     width: 'fit-content',
   },
@@ -65,19 +56,21 @@ export const styles = theme => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      alignItems: 'baseline',
-    },
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
+      cursor: 'pointer',
       marginRight: '8px',
       height: 60,
       width: 60,
       [theme.breakpoints.down('sm')]: {
         height: 32,
         width: 32,
-        marginRight: '0',
+        marginRight: '8px',
       },
     },
+  },
+  flexCenter: {
+    display: 'flex',
+    alingItems: 'center',
   },
   vaultName: {
     marginBottom: theme.spacing(1),
@@ -144,7 +137,6 @@ export const styles = theme => ({
     },
   },
   centerSpace: {
-    padding: '0.5rem 0',
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
@@ -157,28 +149,10 @@ export const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       height: 60,
-      margin: '8px 0',
+      margin: '10px 0',
       flexGrow: '0',
       maxWidth: '50%',
       flexBasis: '50%',
-    },
-  },
-  centerSpaceOpen: {
-    padding: '0.5rem 0',
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    [theme.breakpoints.up('md')]: {
-      padding: '0.5rem 32px 0.5rem 32px',
-      justifyContent: 'space-around',
-      flexGrow: '0',
-      maxWidth: '25%',
-      flexBasis: '25%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      flexGrow: '0',
-      maxWidth: '100%',
-      flexBasis: '100%',
     },
   },
   chart: {
@@ -259,11 +233,6 @@ export const styles = theme => ({
   badgesContainter: {
     display: 'block',
     margin: '0',
-    [theme.breakpoints.down('sm')]: {
-      margin: '0',
-      display: 'flex',
-      alignItems: 'center',
-    },
   },
   leftCenter: {
     textAlign: 'left',
@@ -274,13 +243,30 @@ export const styles = theme => ({
   stat: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'left',
+    alignItems: 'flex-start',
     [theme.breakpoints.up('md')]: {
-      width: 'auto',
       alignItems: 'center',
     },
     [theme.breakpoints.down('md')]: {
-      margin: `${theme.spacing(0.5)}`,
+      margin: '10px 0',
+      alignItems: 'flex-start',
+    },
+  },
+  stat1: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    [theme.breakpoints.up('md')]: {
+      alignItems: 'center',
+    },
+    [theme.breakpoints.down('md')]: {
+      marginTop: '10px',
+      alignItems: 'flex-start',
+    },
+  },
+  marginBottom: {
+    [theme.breakpoints.down('md')]: {
+      margin: '0 0 10px 0',
     },
   },
   tooltipLabel: {
@@ -297,11 +283,6 @@ export const styles = theme => ({
   },
   tooltipHolder: {
     marginLeft: theme.spacing(0.5),
-  },
-  withHasDeposit: {
-    '& $apyContainer': {
-      background: theme.palette.type === 'dark' ? '#3F466D' : '#faf6f1',
-    },
   },
   withMuted: {
     background: theme.palette.background.vaults.inactive,
@@ -364,24 +345,6 @@ export const styles = theme => ({
   platformContainer: {
     display: 'flex',
     marginTop: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
-      margin: '0 -40px',
-    },
-  },
-  boostSpacer: {
-    [theme.breakpoints.up('md')]: {
-      height: 18,
-    },
-  },
-  boostSpacerSm: {
-    [theme.breakpoints.up('md')]: {
-      height: 10,
-    },
-  },
-  mobileSpacer: {
-    [theme.breakpoints.down('sm')]: {
-      height: 20,
-    },
   },
   spacingMobile: {
     display: 'flex',
@@ -390,7 +353,11 @@ export const styles = theme => ({
       padding: '5px 0',
     },
   },
-  spaceAround: {
-    justifyContent: 'space-around',
+  contentContainer: {
+    margin: 'auto',
+    [theme.breakpoints.down('md')]: {
+      margin: 0,
+      marginTop: theme.spacing(3),
+    },
   },
 });
