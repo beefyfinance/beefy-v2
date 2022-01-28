@@ -100,8 +100,8 @@ function StrategyCardComponent({
         </div>
       </CardHeader>
       <CardContent>
-        <Typography variant="body1" className={classes.text}>
-          {stratText(stratType, platform, assets, want, vamp, t)}
+        <Typography variant="body1" className={classes.text} style={{whiteSpace: 'pre-line'}}>
+					{stratText(stratType, platform, assets, want, vamp, t)}
         </Typography>
         <div className={classes.apysContainer}>
           <Typography variant="h5" className={classes.apyTitle}>
