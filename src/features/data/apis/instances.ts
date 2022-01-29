@@ -57,11 +57,18 @@ export const getContractDataApi = createFactoryWithCacheByChain((chain): IContra
     featureFlag_getContractDataApiImplem() === 'new-multicall' &&
     chain.fetchContractDataAddress
   ) {
-    console.debug(`Instanciating ContractDataMcV2API for chain ${chain.id}`);
-    return new ContractDataMcV2API(
-      web3,
-      chain as ChainEntity & { fetchContractDataAddress: string }
-    );
+    if (chain.fetchContractDataAddress) {
+      console.debug(`Instanciating ContractDataMcV2API for chain ${chain.id}`);
+      return new ContractDataMcV2API(
+        web3,
+        chain as ChainEntity & { fetchContractDataAddress: string }
+      );
+    } else {
+      console.debug(
+        `Couldn't find chain.fetchContractDataAddress, Instanciating ContractDataAPI for chain ${chain.id}`
+      );
+      return new ContractDataAPI(web3, chain);
+    }
   } else if (featureFlag_getContractDataApiImplem() === 'webworker-eth-multicall') {
     console.debug(`Instanciating ContractDataInWebWorkerAPI for chain ${chain.id}`);
 
