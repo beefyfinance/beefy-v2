@@ -195,8 +195,6 @@ const _Item = ({ vault }) => {
   const pricesReducer = useSelector((state: any) => state.pricesReducer);
   const formattedTVL = useMemo(() => formatUsd(item.tvl.toNumber()), [item.tvl]);
 
-  const blurred = deposited.balance.isGreaterThan(0) && hideBalance;
-
   const styleProps = {
     marginStats: isTwoColumns,
     removeMarginButton: isGovVault && poolRewards.balance.isGreaterThan(0),
@@ -224,6 +222,8 @@ const _Item = ({ vault }) => {
   const walletUsd = _wallet.isGreaterThan(0)
     ? formatUsd(_wallet, pricesReducer.prices[item.oracleId])
     : formatUsd(0);
+
+  const blurred = (deposited.balance.isGreaterThan(0) || _wallet.isGreaterThan(0)) && hideBalance;
 
   return (
     <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
