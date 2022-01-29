@@ -4,7 +4,7 @@ import {
   BoostContractData,
   GovVaultContractData,
   StandardVaultContractData,
-} from '../apis/contract-data/worker/shared-worker-types';
+} from '../apis/contract-data/contract-data-types';
 import { getContractDataApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';

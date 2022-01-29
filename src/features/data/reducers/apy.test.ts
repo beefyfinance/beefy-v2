@@ -23,7 +23,7 @@ describe('APY slice tests', () => {
             id: 'moo_banana-banana-busd-bitcrush',
             periodFinish: 1234,
             rewardRate: new BigNumber(0.4),
-            totalStaked: new BigNumber(12345),
+            totalSupply: new BigNumber(12345),
           },
         ],
       },

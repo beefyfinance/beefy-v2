@@ -12,7 +12,7 @@ import {
   MinimalEntity,
   StandardVaultContractData,
   WorkerChainEntity,
-} from './shared-worker-types';
+} from '../contract-data-types';
 import { getBoostContractInstance, getVaultContractInstance } from './instances';
 
 class ContractDataAPIV2WebWorker {
@@ -80,7 +80,7 @@ class ContractDataAPIV2WebWorker {
       calls.push({
         type: 'vault-gov',
         id: vault.id,
-        totalStaked: vaultContract.methods.totalSupply(),
+        totalSupply: vaultContract.methods.totalSupply(),
       });
     }
     return calls;
@@ -96,7 +96,7 @@ class ContractDataAPIV2WebWorker {
       calls.push({
         type: 'boost',
         id: boost.id,
-        totalStaked: boostContract.methods.totalSupply(),
+        totalSupply: boostContract.methods.totalSupply(),
         rewardRate: boostContract.methods.rewardRate(),
         periodFinish: boostContract.methods.periodFinish(),
       });

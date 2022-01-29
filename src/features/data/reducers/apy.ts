@@ -53,7 +53,7 @@ export const apySlice = createSlice({
         const earnedToken = selectTokenById(state, action.payload.chainId, boost.earnedTokenId);
         const earnedTokenPrice = selectTokenPriceByTokenId(state, earnedToken.id);
 
-        const totalStakedInUsd = boostContractData.totalStaked
+        const totalStakedInUsd = boostContractData.totalSupply
           .times(tokenPrice)
           .dividedBy(token.decimals);
 

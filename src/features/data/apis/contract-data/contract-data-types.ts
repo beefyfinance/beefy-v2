@@ -1,4 +1,16 @@
 import BigNumber from 'bignumber.js';
+import { BeefyState } from '../../../redux/reducers/storev2';
+import { BoostEntity } from '../../entities/boost';
+import { VaultGov, VaultStandard } from '../../entities/vault';
+
+export interface IContractDataApi {
+  fetchAllContractData(
+    state: BeefyState,
+    standardVaults: VaultStandard[],
+    govVaults: VaultGov[],
+    boosts: BoostEntity[]
+  ): Promise<FetchAllResult>;
+}
 
 export interface MinimalEntity {
   id: string;
@@ -26,7 +38,7 @@ export type FetchAllContractDataWorkerResults = {
 
 export interface GovVaultContractData {
   id: string;
-  totalStaked: BigNumber;
+  totalSupply: BigNumber;
 }
 export interface StandardVaultContractData {
   id: string;
@@ -49,7 +61,7 @@ export interface StandardVaultContractData {
 
 export interface BoostContractData {
   id: string;
-  totalStaked: BigNumber;
+  totalSupply: BigNumber;
   rewardRate: BigNumber;
   periodFinish: number;
 }

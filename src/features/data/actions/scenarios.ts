@@ -28,6 +28,7 @@ import {
 } from './allowance';
 import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
+import { featureFlag_dataPolling } from '../utils/feature-flags';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 interface CapturedFulfilledActions {
@@ -95,8 +96,8 @@ export async function initHomeDataV4() {
     });
 
     // todo: take it from local storage
-    const defaultChainId = 'bsc';
-    return walletCo.askUserToConnectIfNeeded(defaultChainId);
+    //const defaultChainId = 'bsc';
+    //return walletCo.askUserToConnectIfNeeded(defaultChainId);
   });
 
   // we fetch the configuration for all chain
@@ -168,8 +169,9 @@ export async function initHomeDataV4() {
 
   // ok all data is fetched, now we start the poll functions
 
-  // disable for debugging
-  //return;
+  if (!featureFlag_dataPolling()) {
+    return;
+  }
 
   // cancel regular polls if we already have some
   for (const stop of pollStopFns) {

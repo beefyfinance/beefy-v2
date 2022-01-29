@@ -20,7 +20,7 @@ describe('TVL slice tests', () => {
         govVaults: [
           {
             id: 'bifi-gov',
-            totalStaked: new BigNumber(123).times(18),
+            totalSupply: new BigNumber(123).times(18),
           },
         ],
       },
@@ -73,7 +73,7 @@ describe('TVL slice tests', () => {
             id: 'moo_banana-banana-busd-bitcrush',
             periodFinish: 1234,
             rewardRate: new BigNumber(0.4),
-            totalStaked: new BigNumber(12345),
+            totalSupply: new BigNumber(12345),
           },
         ],
         govVaults: [],

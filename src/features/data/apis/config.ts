@@ -115,6 +115,7 @@ export interface ChainConfig {
   rpc: string[];
   explorerUrl: string;
   multicallAddress: string;
+  fetchContractDataAddress?: string;
   supportedWallets: string[];
   providerName: string;
   walletSettings: {

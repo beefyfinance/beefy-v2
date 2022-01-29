@@ -69,7 +69,7 @@ export const tvlSlice = createSlice({
 
       const rawTvlByVaultId: { [vaultId: VaultEntity['id']]: BigNumber } = {};
       for (const govVaultContractData of action.payload.data.govVaults) {
-        const totalStaked = govVaultContractData.totalStaked;
+        const totalStaked = govVaultContractData.totalSupply;
 
         const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
         const oracleToken = selectTokenById(state, action.payload.chainId, vault.oracleId);
@@ -141,7 +141,7 @@ export const tvlSlice = createSlice({
           throw new Error(`Could not find ppfs for vault id ${vault.id}`);
         }
 
-        const totalStaked = boostContractData.totalStaked.times(ppfs).dividedBy(token.decimals);
+        const totalStaked = boostContractData.totalSupply.times(ppfs).dividedBy(token.decimals);
         const staked = totalStaked.dividedBy(token.decimals);
         const tvl = totalStaked.times(tokenPrice).dividedBy(token.decimals);
 

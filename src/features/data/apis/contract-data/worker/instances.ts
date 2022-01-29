@@ -5,7 +5,7 @@ import { Contract } from 'web3-eth-contract';
 import _vaultAbi from '../../../../../config/abi/vault.json';
 import _boostAbi from '../../../../../config/abi/boost.json';
 import { sample } from 'lodash';
-import { WorkerChainEntity } from './shared-worker-types';
+import { WorkerChainEntity } from '../contract-data-types';
 
 // fix TS typings
 const vaultAbi = _vaultAbi as AbiItem[];

@@ -1,19 +1,21 @@
 import { BeefyAPI } from './beefy';
 import { ConfigAPI } from './config';
 import Web3 from 'web3';
+import * as Comlink from 'comlink';
 import { BalanceAPI } from './balance';
 import { AllowanceAPI } from './allowance';
 import { WalletConnect, WalletConnectOptions } from './wallet-connect';
 import { sample } from 'lodash';
-import { ContractDataAPIV2 } from './contract-data/contract-data-v2';
+import { ContractDataInWebWorkerAPI } from './contract-data/contract-data-webworker';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
-
-import * as Comlink from 'comlink';
-
+import { ContractDataAPI } from './contract-data/contract-data';
+import { ContractDataMcV2API } from './contract-data/contract-data-multicallv2';
+import { ChainEntity } from '../entities/chain';
+import { IContractDataApi } from './contract-data/contract-data-types';
+import { featureFlag_getContractDataApiImplem } from '../utils/feature-flags';
 // @ts-ignore
 // eslint-disable-next-line
-import ContractDataWorker from 'worker-loader!./contract-data/worker/contract-data-v2.webworker.ts';
-import { ContractDataAPI } from './contract-data/contract-data';
+import ContractDataWorker from 'worker-loader!./contract-data/worker/contract-data.webworker.ts';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -38,26 +40,38 @@ export const getWeb3Instance = createFactoryWithCacheByChain(chain => {
   console.debug(`Instanciating Web3 for chain ${chain.id}`);
   return new Web3(rpc);
 });
-/*
-const worker1 = Comlink.wrap(new ContractDataWorker()) as Comlink.Remote<Worker>;
-const worker2 = Comlink.wrap(new ContractDataWorker()) as Comlink.Remote<Worker>;
 
-export const getContractDataApi = createFactoryWithCacheByChain(chain => {
-  console.debug(`Instanciating ContractDataAPIV2 for chain ${chain.id}`);
-
-  // bsc has many data, gets his own worker
-  if (chain.id === 'bsc') {
-    return new ContractDataAPIV2(chain, worker2);
-  } else {
-    return new ContractDataAPIV2(chain, worker1);
-  }
-});*/
-export const getContractDataApi = createFactoryWithCacheByChain(chain => {
+let webWorker1 = null;
+let webWorker2 = null;
+if (featureFlag_getContractDataApiImplem() === 'webworker-eth-multicall') {
+  webWorker1 = Comlink.wrap(new ContractDataWorker()) as Comlink.Remote<Worker>;
+  webWorker2 = Comlink.wrap(new ContractDataWorker()) as Comlink.Remote<Worker>;
+}
+export const getContractDataApi = createFactoryWithCacheByChain((chain): IContractDataApi => {
   const web3 = getWeb3Instance(chain);
-  console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
 
-  // bsc has many data, gets his own worker
-  return new ContractDataAPI(web3, chain);
+  if (featureFlag_getContractDataApiImplem() === 'eth-multicall') {
+    console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
+    return new ContractDataAPI(web3, chain);
+  } else if (
+    featureFlag_getContractDataApiImplem() === 'new-multicall' &&
+    chain.fetchContractDataAddress
+  ) {
+    console.debug(`Instanciating ContractDataMcV2API for chain ${chain.id}`);
+    return new ContractDataMcV2API(
+      web3,
+      chain as ChainEntity & { fetchContractDataAddress: string }
+    );
+  } else if (featureFlag_getContractDataApiImplem() === 'webworker-eth-multicall') {
+    console.debug(`Instanciating ContractDataInWebWorkerAPI for chain ${chain.id}`);
+
+    // bsc has many data, gets his own worker
+    if (chain.id === 'bsc') {
+      return new ContractDataInWebWorkerAPI(chain, webWorker2);
+    } else {
+      return new ContractDataInWebWorkerAPI(chain, webWorker1);
+    }
+  }
 });
 
 export const getBalanceApi = createFactoryWithCacheByChain(chain => {

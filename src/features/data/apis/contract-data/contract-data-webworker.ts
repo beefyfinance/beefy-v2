@@ -12,14 +12,14 @@ import {
   FetchAllContractDataWorkerResults,
   FetchAllResult,
   GovVaultContractData,
+  IContractDataApi,
   StandardVaultContractData,
-} from './worker/shared-worker-types';
-import { sortBy } from 'lodash';
+} from './contract-data-types';
 
 /**
  * Get vault contract data
  */
-export class ContractDataAPIV2 {
+export class ContractDataInWebWorkerAPI implements IContractDataApi {
   constructor(protected chain: ChainEntity, protected worker: Comlink.Remote<Worker>) {}
 
   public async fetchAllContractData(
@@ -59,7 +59,7 @@ export class ContractDataAPIV2 {
       boosts: strRes.boosts.map(result => {
         return {
           id: result.id,
-          totalStaked: new BigNumber(result.totalStaked),
+          totalSupply: new BigNumber(result.totalSupply),
           rewardRate: new BigNumber(result.rewardRate),
           periodFinish: parseInt(result.periodFinish),
         } as BoostContractData;
@@ -67,7 +67,7 @@ export class ContractDataAPIV2 {
       govVaults: strRes.govVaults.map(result => {
         return {
           id: result.id,
-          totalStaked: new BigNumber(result.totalStaked),
+          totalSupply: new BigNumber(result.totalSupply),
         } as GovVaultContractData;
       }),
       standardVaults: strRes.standardVaults.map(result => {
@@ -79,17 +79,6 @@ export class ContractDataAPIV2 {
         } as StandardVaultContractData;
       }),
     };
-
-    if (!globalThis._res) {
-      globalThis._res = { boosts: [], govVaults: [], standardVaults: [] };
-    }
-    globalThis._res.boosts = globalThis._res.boosts.concat(res.boosts);
-    globalThis._res.govVaults = globalThis._res.govVaults.concat(res.govVaults);
-    globalThis._res.standardVaults = globalThis._res.standardVaults.concat(res.standardVaults);
-    globalThis._res.boosts = sortBy(globalThis._res.boosts, ['id']);
-    globalThis._res.govVaults = sortBy(globalThis._res.govVaults, ['id']);
-    globalThis._res.standardVaults = sortBy(globalThis._res.standardVaults, ['id']);
-    console.log({ res });
     return res;
   }
 }
