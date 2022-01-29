@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { walletActionsMiddleware } from './features/data/actions/scenarios';
-import { rootReducer } from './features/redux/reducers/storev2';
+import { rootReducer as rootReducerV2 } from './features/redux/reducers/storev2';
+import { rootReducer as rootReducerV1 } from './features/redux/reducers/index';
+import { featureFlag_isDataLoaderV2Enabled } from './features/data/utils/feature-flags';
 
 // https://coderwall.com/p/pafnew/redux-middleware-logger
 // debug middleware for when redux browser extension is not helpful
@@ -47,7 +49,20 @@ const loggerMiddleware = store => next => action => {
 };
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: rootReducerV1,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      // because we use BigNumber which is not serializable by default
+      // we disable rerialization altogether
+      // a better solution would be to allow serialization of the store
+      serializableCheck: false,
+      // this makes the old code bug
+      immutableCheck: false,
+    }).concat([loggerMiddleware, walletActionsMiddleware]),
+});
+
+export const storeV2 = configureStore({
+  reducer: rootReducerV2,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       // because we use BigNumber which is not serializable by default

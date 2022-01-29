@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { store } from '../../../store';
+import { store as storeV1, storeV2 } from '../../../store';
 import { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
@@ -29,6 +29,8 @@ import {
 import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_dataPolling } from '../utils/feature-flags';
+
+const store = storeV2;
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 interface CapturedFulfilledActions {

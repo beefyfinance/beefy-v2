@@ -108,5 +108,10 @@
   },
   "lint-staged": {
     "*.{js,css,json}": "prettier --write"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^worker-loader!.+$": "<rootDir>/src/features/data/utils/mock-worker-loader.js"
+    }
   }
 }
