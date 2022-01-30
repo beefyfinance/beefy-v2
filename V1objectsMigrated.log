@@ -1,559 +1,62 @@
 [
   {
-    "id": "bsc vault: cakev2-ertha-wbnb",
+    "id": "bsc vault: banana-sushi-eth",
     "type": "Added"
   },
   {
-    "id": "bsc vault: venus-bnb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: venus-wbnb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: cakev2-dg-bnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc vault: cakev2-well-busd-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: scream-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: 0xdao-xboo",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: scream-spell",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: geist-mim",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: geist-crv",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-tusd",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-spell-sspell-eol",
+    "id": "bsc vault: bison-bison-bnb-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom vault: geist-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: geist-wbtc",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: geist-eth",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: geist-fusdt",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: geist-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: geist-dai",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-dola",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-frax",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-mim",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-crv",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-link",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-wbtc",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-dai",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-eth",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-fusdt",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: quick-sand-matic",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: aave-wbtc",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: aave-eth",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: aave-matic",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: aave-aave",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: aave-dai",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: aave-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: avax-bifi-maxi",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-ust-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-wavax-more",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-gmx-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-usdc.e-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-usdt-usdt.e",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-wavax-frax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-wavax-cly",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-ptp-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-awool-wavax-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-klo-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-craft-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-melt-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-gohm-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: mai-qi-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: blizz-avax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: blizz-eth",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: blizz-wbtc",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: blizz-blzz-avax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-cra-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wavax-boo",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: spell-avax-mim-crv-eol",
+    "id": "bsc vault: bison-bison-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "avax vault: bankerjoe-avax",
-    "type": "synced"
+    "id": "avax vault: joe-wavax-xava",
+    "type": "Added"
   },
   {
-    "id": "avax vault: bankerjoe-weth.e",
-    "type": "synced"
+    "id": "avax vault: joe-wavax-cook",
+    "type": "Added"
   },
   {
-    "id": "avax vault: bankerjoe-wbtc.e",
-    "type": "synced"
+    "id": "avax vault: joe-wavax-dcau",
+    "type": "Added"
   },
   {
-    "id": "avax vault: bankerjoe-usdc.e",
-    "type": "synced"
+    "id": "avax vault: joe-wavax-hec",
+    "type": "Added"
   },
   {
-    "id": "avax vault: bankerjoe-usdt.e",
-    "type": "synced"
+    "id": "avax vault: png-wavax-frax",
+    "type": "Added"
   },
   {
-    "id": "avax vault: bankerjoe-dai.e-eol",
-    "type": "synced"
+    "id": "avax vault: png-link.e-wavax",
+    "type": "Added"
   },
   {
-    "id": "avax vault: bankerjoe-link.e",
-    "type": "synced"
+    "id": "avax vault: png-jewel-wavax",
+    "type": "Added"
   },
   {
-    "id": "avax vault: bankerjoe-mim",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wavax-bifi-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-mai-wavax-v2",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-ampl-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: sing-usdt.e-sing",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: aave-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: aave-dai.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: aave-usdc.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: aave-usdt.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: aave-weth.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: aave-wbtc.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: aave-aave.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-joe",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-joe-usdc.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wavax-aave.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-mai-wavax-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-weth.e-usdc.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wbtc.e-usdc.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-bnb-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-usdc.e-usdt.e-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-usdt.e-dai.e-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wavax-usdt.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-link.e-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wavax-spell",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-frax-wavax-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-time-wavax-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: pangolin-png-pause-eol",
+    "id": "moonriver vault: finn-finn-doge-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "avax vault: joe-mai-usdc.e-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-joe-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-joe-usdt.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-mim-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-qi-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-syn-wavax-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wbtc.e-usdt.e-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wbtc.e-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-weth.e-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-usdc.e-dai.e-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-usdc.e-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-wavax-dai.e-eol",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: pangolin-usdc.e-wavax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-png-qi-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-qi-wavax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-uni.e-wavax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-aave.e-wavax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-wavax-xava-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-png-usdt.e-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-weth.e-png-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-wavax-dai.e-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-link.e-wavax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-weth.e-wavax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-wavax-usdt.e-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-wbtc.e-wavax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-bnb-avax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-png-avax-eol",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: pangolin-usdc.e-wavax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-png-qi-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-qi-wavax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-uni.e-wavax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-aave.e-wavax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-wavax-xava-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-png-usdt.e-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-weth.e-png-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-wavax-dai.e-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-link.e-wavax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-weth.e-wavax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-wavax-usdt.e-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: pangolin-wbtc.e-wavax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: png-bnb-avax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: png-png-avax-pause",
-    "type": "REMOVED"
-  },
-  {
-    "id": "moonriver vault: finn-finn-xcrmrk",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver vault: finn-finn-xcksm",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver vault: finn-usdc.m-wmovr",
-    "type": "Added"
-  },
-  {
-    "id": "cronos vault: crona-cro-eth-eol",
+    "id": "moonriver vault: solarbeam-solar-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "cronos vault: crona-usdt-ftm-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fuse vault: sushi-wfuse-weth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_bison-bison-wbnb-bishares",
+    "type": "synced"
   }
 ]

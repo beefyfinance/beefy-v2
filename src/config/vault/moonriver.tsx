@@ -38,41 +38,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "solarbeam-solar",
-    logo: "single-assets/SOLAR.png",
-    name: "SOLAR",
-    token: "SOLAR",
-    tokenDescription: "SolarBeam",
-    tokenAddress: "0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSolarSOLAR",
-    earnedTokenAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
-    earnContractAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "SOLAR",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SolarBeam",
-    assets: [
-      "SOLAR"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
-    network: "moonriver"
-  },
-  {
     id: "solarbeam-solar-wmovr",
     name: "SOLAR-MOVR",
     token: "SOLAR-MOVR LP",
@@ -1296,42 +1261,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "finn-finn-doge",
-    name: "DOGE-FINN",
-    token: "DOGE-FINN FLP",
-    tokenDescription: "Huckleberry",
-    tokenAddress: "0xB4939f65f27cac1e220D8A86E0274860aDa9d825",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooFinnFINN-DOGE",
-    earnedTokenAddress: "0x16508967D3F7693DD1D023Dbd442Bdb2304f8289",
-    earnContractAddress: "0x16508967D3F7693DD1D023Dbd442Bdb2304f8289",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "finn-finn-doge",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Huckleberry",
-    assets: [
-      "DOGE",
-      "FINN"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xb668Cd490a4421F993f93be2819A922DBbB32804/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver"
-  },
-  {
     id: "solarbeam-mim-wmovr",
     name: "MIM-MOVR",
     token: "MIM-MOVR LP",
@@ -2024,5 +1953,78 @@ export const pools = [
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
     addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0x748134b5F553F2bcBD78c6826De99a70274bDEb3",
     network: "moonriver"
+  },
+  {
+    id: "finn-finn-doge-eol",
+    name: "DOGE-FINN",
+    token: "DOGE-FINN FLP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0xB4939f65f27cac1e220D8A86E0274860aDa9d825",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnFINN-DOGE",
+    earnedTokenAddress: "0x16508967D3F7693DD1D023Dbd442Bdb2304f8289",
+    earnContractAddress: "0x16508967D3F7693DD1D023Dbd442Bdb2304f8289",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-finn-doge",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Huckleberry",
+    assets: [
+      "DOGE",
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xb668Cd490a4421F993f93be2819A922DBbB32804/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    network: "moonriver",
+    retireReason: "rewards"
+  },
+  {
+    id: "solarbeam-solar-eol",
+    logo: "single-assets/SOLAR.png",
+    name: "SOLAR",
+    token: "SOLAR",
+    tokenDescription: "SolarBeam",
+    tokenAddress: "0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSolarSOLAR",
+    earnedTokenAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
+    earnContractAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "SOLAR",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SolarBeam",
+    assets: [
+      "SOLAR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
+    network: "moonriver",
+    retireReason: "rewards"
   }
 ];
