@@ -5,7 +5,7 @@ import { TokenEntity } from '../entities/token';
 
 export const selectAllowanceByTokenId = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.user.allowance.byChainId,
+  (state: BeefyState) => state.user.allowance.byChainId,
   // get the user parameters
   (_: BeefyState, chainId: ChainEntity['id']) => chainId,
   (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,

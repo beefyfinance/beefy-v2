@@ -18,18 +18,22 @@ import { ChainEntity } from '../entities/chain';
  * maybe it's dumb though, but it can be refactored
  **/
 interface LoaderStateInit {
+  alreadyLoadedOnce: boolean;
   status: 'init';
   error: null;
 }
 interface LoaderStatePending {
+  alreadyLoadedOnce: boolean;
   status: 'pending';
   error: null;
 }
 interface LoaderStateRejected {
+  alreadyLoadedOnce: boolean;
   status: 'rejected';
   error: string;
 }
 interface LoaderStateFulfilled {
+  alreadyLoadedOnce: boolean;
   status: 'fulfilled';
   error: null;
 }
@@ -46,9 +50,21 @@ export function isPending(state: LoaderState): state is LoaderStatePending {
   return state.status === 'pending';
 }
 
-const dataLoaderStateInit: LoaderState = { status: 'init', error: null };
-const dataLoaderStateFulfilled: LoaderState = { status: 'fulfilled', error: null };
-const dataLoaderStatePending: LoaderState = { status: 'pending', error: null };
+const dataLoaderStateInit: LoaderState = {
+  alreadyLoadedOnce: false,
+  status: 'init',
+  error: null,
+};
+const dataLoaderStateFulfilled: LoaderState = {
+  alreadyLoadedOnce: true,
+  status: 'fulfilled',
+  error: null,
+};
+const dataLoaderStatePending: LoaderState = {
+  alreadyLoadedOnce: false,
+  status: 'pending',
+  error: null,
+};
 const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
   contractData: dataLoaderStateInit,
   balance: dataLoaderStateInit,
@@ -93,11 +109,18 @@ function addGlobalAsyncThunkActions(
   stateKey: keyof DataLoaderState['global']
 ) {
   builder.addCase(action.pending, sliceState => {
-    sliceState.global[stateKey] = dataLoaderStatePending;
+    sliceState.global[stateKey] = {
+      ...dataLoaderStatePending,
+      alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
+    };
   });
   builder.addCase(action.rejected, (sliceState, action) => {
     // here, maybe put an error message
-    sliceState.global[stateKey] = { status: 'rejected', error: action.error + '' };
+    sliceState.global[stateKey] = {
+      status: 'rejected',
+      error: action.error + '',
+      alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
+    };
   });
   builder.addCase(action.fulfilled, sliceState => {
     sliceState.global[stateKey] = dataLoaderStateFulfilled;
@@ -114,7 +137,10 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
-    sliceState.byChainId[chainId][stateKey] = dataLoaderStatePending;
+    sliceState.byChainId[chainId][stateKey] = {
+      ...dataLoaderStatePending,
+      alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
+    };
   });
   builder.addCase(action.rejected, (sliceState, action) => {
     const chainId = action.meta.arg.chainId;
@@ -122,7 +148,11 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
     // here, maybe put an error message
-    sliceState.byChainId[chainId][stateKey] = { status: 'rejected', error: action.error + '' };
+    sliceState.byChainId[chainId][stateKey] = {
+      alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
+      status: 'rejected',
+      error: action.error + '',
+    };
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
     const chainId = action.meta.arg.chainId;

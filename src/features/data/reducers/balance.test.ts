@@ -14,6 +14,7 @@ describe('Balance slice tests', () => {
           { tokenId: 'BIFI', amount: new BigNumber(10) },
         ],
       },
+      state: {} as any,
     };
     const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
     const state = balanceSlice.reducer(initialBalanceState, action);
@@ -37,15 +38,16 @@ describe('Balance slice tests', () => {
           { vaultId: 'belt-beltbnb', rewards: new BigNumber(10), balance: new BigNumber(5) },
         ],
       },
+      state: {} as any,
     };
     const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
     const state = balanceSlice.reducer(initialBalanceState, action);
     expect(state).toMatchSnapshot();
 
     // getting the same vaults don't update the state object
-    const beforeReDispatch = state.byChainId['bsc'].byVaultId;
+    const beforeReDispatch = state.byChainId['bsc'].byGovVaultId;
     const newState = balanceSlice.reducer(state, action);
-    const afterReDispatch = newState.byChainId['bsc'].byVaultId;
+    const afterReDispatch = newState.byChainId['bsc'].byGovVaultId;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 
@@ -68,6 +70,7 @@ describe('Balance slice tests', () => {
           },
         ],
       },
+      state: {} as any,
     };
     const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
     const state = balanceSlice.reducer(initialBalanceState, action);

@@ -4,7 +4,7 @@ import { ChainEntity } from '../entities/chain';
 
 export const selectChainById = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.chains.byId,
+  (state: BeefyState) => state.entities.chains.byId,
   // get the user passed ID
   (_: BeefyState, chainId: ChainEntity['id']) => chainId,
   // last function receives previous function outputs as parameters
@@ -18,9 +18,9 @@ export const selectChainById = createSelector(
 
 export const selectAllChains = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.chains.allIds,
+  (state: BeefyState) => state.entities.chains.allIds,
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.chains.byId,
+  (state: BeefyState) => state.entities.chains.byId,
   // last function receives previous function outputs as parameters
   (allIds, byId) => allIds.map(id => byId[id])
 );

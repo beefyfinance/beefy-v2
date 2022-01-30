@@ -20,6 +20,8 @@ export interface FetchAllBalanceFulfilledPayload {
     boosts: BoostBalance[];
     govVaults: GovVaultPoolBalance[];
   };
+  // reducers need the state (balance)
+  state: BeefyState;
 }
 
 export const fetchAllBalanceAction = createAsyncThunk<

@@ -37,21 +37,21 @@ let pollStopFns: PollStop[] = [];
 
 // todo: put this in a config
 const chains = [
-  'arbitrum',
-  'avax',
-  'celo',
-  'cronos',
+  //'arbitrum',
+  //'avax',
+  //'celo',
+  //'cronos',
   'fantom',
-  'fuse',
+  //'fuse',
   'harmony',
-  'heco',
-  'metis',
-  'moonriver',
+  //'heco',
+  //'metis',
+  //'moonriver',
   'polygon',
   // fetch BSC last, his multicall split in multiple calls
   // and that takes up all 6 simulatneous network calls
   // putting it last allow all other data to arrive faster
-  'bsc',
+  //'bsc',
 ].map(id => ({ id }));
 
 /**
@@ -90,8 +90,8 @@ export async function initHomeDataV4() {
     });
 
     // todo: take it from local storage
-    //const defaultChainId = 'bsc';
-    //return walletCo.askUserToConnectIfNeeded(defaultChainId);
+    const defaultChainId = 'bsc';
+    return walletCo.askUserToConnectIfNeeded(defaultChainId);
   });
 
   // we fetch the configuration for all chain
@@ -123,6 +123,7 @@ export async function initHomeDataV4() {
     // if user is connected, start fetching balances and allowances
     let userFullfills: CapturedFulfilledActions['user'] = null;
     if (selectIsWalletConnected(store.getState())) {
+      console.log({ chain: chain.id });
       userFullfills = fetchCaptureUserData(chain.id);
     }
 
@@ -170,6 +171,7 @@ export async function initHomeDataV4() {
   // ok all data is fetched, now we start the poll functions
 
   if (!featureFlag_dataPolling()) {
+    console.debug('Polling disabled');
     return;
   }
 
@@ -215,30 +217,38 @@ export async function initHomeDataV4() {
   }
 }
 
-// when some wallet actions are triggered, do trigger balance and allowance lookups
+// when some wallet actions are triggered (like connection or account changed)
+// fetch balance and allowance again
 export function walletActionsMiddleware(store) {
   return next => async (action: { type: string; payload: { chainId?: ChainEntity['id'] } }) => {
     await next(action);
 
-    let userFfs: CapturedFulfilledActions['user'] = null;
+    let userFfsByChain: { [chainId: ChainEntity['id']]: CapturedFulfilledActions['user'] } | null =
+      null;
     switch (action.type) {
       case userDidConnect.type:
-        userFfs = fetchCaptureUserData(action.payload.chainId);
-        break;
       case accountHasChanged.type:
-        const chainId = selectCurrentChainId(store.getState());
-        userFfs = fetchCaptureUserData(chainId);
+        userFfsByChain = {};
+        for (const chain of chains) {
+          userFfsByChain[chain.id] = fetchCaptureUserData(chain.id);
+        }
         break;
     }
 
-    if (userFfs) {
-      await dispatchUserFfs(userFfs);
+    if (userFfsByChain !== null) {
+      for (const chain of chains) {
+        dispatchUserFfs(userFfsByChain[chain.id]);
+      }
     }
   };
 }
 
 function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActions['user'] {
   const captureFulfill = createFulfilledActionCapturer(store);
+  if (featureFlag_scenarioTimings()) {
+    console.timeLog('From scenario start');
+    console.log(`balance and allowance for chain ${chainId} FETCHING`);
+  }
   return {
     balance: captureFulfill(fetchAllBalanceAction({ chainId })),
     // TODO: do we really need to fetch allowances right now?
@@ -249,4 +259,8 @@ function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActi
 async function dispatchUserFfs(userFfs: CapturedFulfilledActions['user']) {
   await store.dispatch((await userFfs.balance)());
   await store.dispatch((await userFfs.allowance)());
+  if (featureFlag_scenarioTimings()) {
+    console.timeLog('From scenario start');
+    console.log(`balance and allowance for FETCHED`);
+  }
 }

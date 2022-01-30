@@ -6,7 +6,7 @@ import { TokenEntity } from '../entities/token';
 
 export const selectAllTokenByChain = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.tokens.byChainId,
+  (state: BeefyState) => state.entities.tokens.byChainId,
   // get the user params
   (_: BeefyState, chainId: ChainEntity['id']) => chainId,
   // last function receives previous function outputs as parameters
@@ -20,7 +20,7 @@ export const selectAllTokenByChain = createSelector(
 
 export const selectTokenById = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.tokens.byChainId,
+  (state: BeefyState) => state.entities.tokens.byChainId,
   // get the user params
   (_: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => ({ chainId, tokenId }),
   // last function receives previous function outputs as parameters
@@ -49,7 +49,7 @@ const deprecatedTokenIds = [
 
 export const selectTokenPriceByTokenId = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.tokens.prices.byTokenId,
+  (state: BeefyState) => state.entities.tokens.prices.byTokenId,
   // get the user passed ID
   (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,
   // last function receives previous function outputs as parameters

@@ -1,45 +1,45 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers/storev2';
-import { ChainEntity } from '../entities/chain';
-import { VaultEntity } from '../entities/vault';
-import { isPending } from '../reducers/data-loader';
-import { selectVaultById } from './vaults';
 
-export const selectIsPriceLoading = createSelector(
+export const selectIsPriceAvailable = createSelector(
   [(state: BeefyState) => state.ui.dataLoader.global.prices],
   (prices): boolean => {
-    return isPending(prices);
+    return prices.alreadyLoadedOnce;
   }
 );
 
-export const selectIsConfigLoading = createSelector(
+export const selectIsConfigAvailable = createSelector(
   [(state: BeefyState) => state.ui.dataLoader.global],
   (glob): boolean => {
-    return isPending(glob.chainConfig) || isPending(glob.vaults) || isPending(glob.boosts);
+    return (
+      glob.chainConfig.alreadyLoadedOnce &&
+      glob.vaults.alreadyLoadedOnce &&
+      glob.boosts.alreadyLoadedOnce
+    );
   }
 );
 
-export const selectIsChainLoading = createSelector(
+export const selectIsUserBalanceAvailable = createSelector(
   [
-    selectIsConfigLoading,
-    // it's weird but this is how reselect defines params
-    (state: BeefyState, chainId: ChainEntity['id']) => state.ui.dataLoader.byChainId[chainId],
+    selectIsConfigAvailable,
+    selectIsPriceAvailable,
+    (state: BeefyState) => state.ui.dataLoader.byChainId,
   ],
-  (configLoading, chainLoadingDetails): boolean => {
-    return configLoading || isPending(chainLoadingDetails.contractData);
-  }
-);
-
-export const selectIsVaultLoading = createSelector(
-  [
-    selectIsConfigLoading,
-    selectIsPriceLoading,
-    (state: BeefyState, vaultId: VaultEntity['id']) => {
-      const vault = selectVaultById(state, vaultId);
-      return selectIsChainLoading(state, vault.chainId);
-    },
-  ],
-  (configLoading, pricesLoading, vaultChainLoading) => {
-    return configLoading || pricesLoading || vaultChainLoading;
+  (configAvailable, pricesAvailable, byChainId) => {
+    if (!configAvailable || !pricesAvailable) {
+      return false;
+    }
+    for (const chainId in byChainId) {
+      // if any chain has balance data, then balance data is available
+      if (
+        byChainId[chainId].contractData.alreadyLoadedOnce &&
+        byChainId[chainId].balance.alreadyLoadedOnce
+      ) {
+        return true;
+      }
+    }
+    // if no chain has balance data
+    // then balance data is unavailable
+    return false;
   }
 );

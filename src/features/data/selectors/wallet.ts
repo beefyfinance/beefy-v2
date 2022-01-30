@@ -3,14 +3,14 @@ import { BeefyState } from '../../redux/reducers/storev2';
 
 export const selectIsWalletConnected = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.user.wallet.address,
+  (state: BeefyState) => state.user.wallet.address,
   // last function receives previous function outputs as parameters
   address => address !== null
 );
 
 export const selectWalletAddress = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.user.wallet.address,
+  (state: BeefyState) => state.user.wallet.address,
   // last function receives previous function outputs as parameters
   address => {
     if (address === null) {
@@ -22,7 +22,7 @@ export const selectWalletAddress = createSelector(
 
 export const selectCurrentChainId = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.user.wallet.selectedChainId,
+  (state: BeefyState) => state.user.wallet.selectedChainId,
   // last function receives previous function outputs as parameters
   chainId => {
     if (chainId === null) {

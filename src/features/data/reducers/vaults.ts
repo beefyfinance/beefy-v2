@@ -5,6 +5,7 @@ import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { fetchAllVaults } from '../actions/vaults';
 import { VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
+import { TokenEntity } from '../entities/token';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
@@ -17,6 +18,14 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
     [chainId: ChainEntity['id']]: {
       allActiveIds: VaultEntity['id'][];
       allRetiredIds: VaultEntity['id'][];
+
+      // used to find a vault by it's token for balance stuff
+      byOracleId: {
+        [tokenId: TokenEntity['id']]: VaultEntity['id'];
+      };
+      byEarnTokenId: {
+        [tokenId: TokenEntity['id']]: VaultEntity['id'];
+      };
     };
   };
 
@@ -93,7 +102,12 @@ function addVaultToState(
     sliceState.byId[vault.id] = vault;
     sliceState.allIds.push(vault.id);
     if (sliceState.byChainId[vault.chainId] === undefined) {
-      sliceState.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
+      sliceState.byChainId[vault.chainId] = {
+        allActiveIds: [],
+        allRetiredIds: [],
+        byOracleId: {},
+        byEarnTokenId: {},
+      };
     }
     if (apiVault.status === 'eol') {
       sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
@@ -118,12 +132,20 @@ function addVaultToState(
     sliceState.byId[vault.id] = vault;
     sliceState.allIds.push(vault.id);
     if (sliceState.byChainId[vault.chainId] === undefined) {
-      sliceState.byChainId[vault.chainId] = { allActiveIds: [], allRetiredIds: [] };
+      sliceState.byChainId[vault.chainId] = {
+        allActiveIds: [],
+        allRetiredIds: [],
+        byOracleId: {},
+        byEarnTokenId: {},
+      };
     }
+    const vaultState = sliceState.byChainId[vault.chainId];
     if (apiVault.status === 'eol') {
-      sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
+      vaultState.allRetiredIds.push(vault.id);
     } else {
-      sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
+      vaultState.allActiveIds.push(vault.id);
     }
+    vaultState.byOracleId[vault.oracleId] = vault.id;
+    vaultState.byEarnTokenId[vault.earnedTokenId] = vault.id;
   }
 }

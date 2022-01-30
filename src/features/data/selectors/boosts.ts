@@ -5,7 +5,7 @@ import { VaultEntity } from '../entities/vault';
 
 export const selectBoostById = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState) => store.entities.boosts.byId,
+  (state: BeefyState) => state.entities.boosts.byId,
   // get the user passed ID
   (_: BeefyState, boostId: VaultEntity['id']) => boostId,
   // last function receives previous function outputs as parameters
@@ -19,13 +19,32 @@ export const selectBoostById = createSelector(
 
 export const selectBoostsByChainId = createSelector(
   // get a tiny bit of the data
-  (store: BeefyState, chainId: ChainEntity['id']) => {
-    if (store.entities.boosts.byChainId[chainId] === undefined) {
+  (state: BeefyState, chainId: ChainEntity['id']) => {
+    if (state.entities.boosts.byChainId[chainId] === undefined) {
       return [];
     }
 
-    return store.entities.boosts.byChainId[chainId].allBoostsIds;
+    return state.entities.boosts.byChainId[chainId].allBoostsIds;
   },
   // last function receives previous function outputs as parameters
   allBoostsIds => allBoostsIds
+);
+
+export const selectIsVaultBoosted = createSelector(
+  [(state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId]],
+  vaultIdBoost => vaultIdBoost !== undefined && vaultIdBoost.activeBoostsIds.length > 0
+);
+
+export const selectActiveVaultBoostId = createSelector(
+  [(state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId]],
+  vaultIdBoost => {
+    const boosts = vaultIdBoost.activeBoostsIds;
+    if (boosts.length > 1) {
+      throw new Error('Vault has more than one active boost');
+    }
+    if (boosts.length <= 0) {
+      throw new Error('Vault has no active boost');
+    }
+    return boosts[0];
+  }
 );

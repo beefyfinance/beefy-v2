@@ -5,12 +5,18 @@ import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
+import { selectIsStandardVaultEarnTokenId, selectVaultByEarnTokenId } from '../selectors/vaults';
 import { accountHasChanged, walletHasDisconnected } from './wallet';
 
 /**
  * State containing user balances state
  */
 export interface BalanceState {
+  depositedVaultIds: {
+    govVaults: { chainId: ChainEntity['id']; vaultId: VaultEntity['id'] }[];
+    standardVaults: { chainId: ChainEntity['id']; vaultId: VaultEntity['id'] }[];
+  };
+
   byChainId: {
     [chainId: ChainEntity['id']]: {
       byTokenId: {
@@ -24,15 +30,19 @@ export interface BalanceState {
           rewards: BigNumber;
         };
       };
-      byVaultId: {
+      byGovVaultId: {
         [vaultId: VaultEntity['id']]: {
+          balance: BigNumber;
           rewards: BigNumber;
         };
       };
     };
   };
 }
-export const initialBalanceState: BalanceState = { byChainId: {} };
+export const initialBalanceState: BalanceState = {
+  byChainId: {},
+  depositedVaultIds: { govVaults: [], standardVaults: [] },
+};
 
 export const balanceSlice = createSlice({
   name: 'balance',
@@ -43,9 +53,11 @@ export const balanceSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(accountHasChanged, sliceState => {
       sliceState.byChainId = {};
+      sliceState.depositedVaultIds = { govVaults: [], standardVaults: [] };
     });
     builder.addCase(walletHasDisconnected, sliceState => {
       sliceState.byChainId = {};
+      sliceState.depositedVaultIds = { govVaults: [], standardVaults: [] };
     });
 
     builder.addCase(fetchAllBalanceAction.fulfilled, (sliceState, action) => {
@@ -53,25 +65,46 @@ export const balanceSlice = createSlice({
 
       for (const tokenBalance of action.payload.data.tokens) {
         if (sliceState.byChainId[chainId] === undefined) {
-          sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byVaultId: {} };
+          sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byGovVaultId: {} };
         }
 
         // only update data if necessary
         const stateForToken = sliceState.byChainId[chainId].byTokenId[tokenBalance.tokenId];
-        if (stateForToken === undefined || !stateForToken.balance.isEqualTo(tokenBalance.amount)) {
+        if (
+          // only if balance is non-zero
+          !tokenBalance.amount.isZero() &&
+          // and state isn't already there
+          // if it's there, only if amount differ
+          (stateForToken === undefined || !stateForToken.balance.isEqualTo(tokenBalance.amount))
+        ) {
           sliceState.byChainId[chainId].byTokenId[tokenBalance.tokenId] = {
             balance: tokenBalance.amount,
           };
+
+          // now, if this is a vault token, we want to mark this vault as deposited
+          if (
+            selectIsStandardVaultEarnTokenId(action.payload.state, chainId, tokenBalance.tokenId)
+          ) {
+            const vaultId = selectVaultByEarnTokenId(
+              action.payload.state,
+              chainId,
+              tokenBalance.tokenId
+            );
+            sliceState.depositedVaultIds.standardVaults.push({ chainId, vaultId });
+          }
         }
       }
 
       for (const boostBalance of action.payload.data.boosts) {
         if (sliceState.byChainId[chainId] === undefined) {
-          sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byVaultId: {} };
+          sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byGovVaultId: {} };
         }
 
         // only update data if necessary
         const stateForBoost = sliceState.byChainId[chainId].byBoostId[boostBalance.boostId];
+        if (stateForBoost !== undefined && stateForBoost.balance === undefined) {
+          debugger;
+        }
         if (
           stateForBoost === undefined ||
           !stateForBoost.balance.isEqualTo(boostBalance.balance) ||
@@ -85,15 +118,27 @@ export const balanceSlice = createSlice({
 
       for (const vaultBalance of action.payload.data.govVaults) {
         if (sliceState.byChainId[chainId] === undefined) {
-          sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byVaultId: {} };
+          sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byGovVaultId: {} };
         }
 
         // only update data if necessary
-        const stateForVault = sliceState.byChainId[chainId].byVaultId[vaultBalance.vaultId];
-        if (stateForVault === undefined || !stateForVault.rewards.isEqualTo(vaultBalance.rewards)) {
-          sliceState.byChainId[chainId].byVaultId[vaultBalance.vaultId] = {
+        const stateForVault = sliceState.byChainId[chainId].byGovVaultId[vaultBalance.vaultId];
+        if (
+          // only if balance is non-zero
+          !vaultBalance.rewards.isZero() &&
+          // and state isn't already there
+          // if it's there, only if amount differ
+          (stateForVault === undefined || !stateForVault.rewards.isEqualTo(vaultBalance.rewards))
+        ) {
+          const vaultState = {
             rewards: vaultBalance.rewards,
+            balance: vaultBalance.balance,
           };
+          sliceState.byChainId[chainId].byGovVaultId[vaultBalance.vaultId] = vaultState;
+          sliceState.depositedVaultIds.govVaults.push({
+            chainId,
+            vaultId: vaultBalance.vaultId,
+          });
         }
       }
     });
