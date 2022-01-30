@@ -50,13 +50,12 @@ if (featureFlag_getContractDataApiImplem() === 'webworker-eth-multicall') {
 export const getContractDataApi = createFactoryWithCacheByChain((chain): IContractDataApi => {
   const web3 = getWeb3Instance(chain);
 
-  if (featureFlag_getContractDataApiImplem() === 'eth-multicall') {
+  const targetImplem = featureFlag_getContractDataApiImplem();
+  if (targetImplem === 'eth-multicall') {
     console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
     return new ContractDataAPI(web3, chain);
-  } else if (
-    featureFlag_getContractDataApiImplem() === 'new-multicall' &&
-    chain.fetchContractDataAddress
-  ) {
+  } else if (targetImplem === 'new-multicall' && chain.fetchContractDataAddress) {
+    // only if we have a contract to work with
     if (chain.fetchContractDataAddress) {
       console.debug(`Instanciating ContractDataMcV2API for chain ${chain.id}`);
       return new ContractDataMcV2API(
@@ -64,12 +63,11 @@ export const getContractDataApi = createFactoryWithCacheByChain((chain): IContra
         chain as ChainEntity & { fetchContractDataAddress: string }
       );
     } else {
-      console.debug(
-        `Couldn't find chain.fetchContractDataAddress, Instanciating ContractDataAPI for chain ${chain.id}`
-      );
+      console.debug(`Couldn't find chain.fetchContractDataAddress`);
+      console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
       return new ContractDataAPI(web3, chain);
     }
-  } else if (featureFlag_getContractDataApiImplem() === 'webworker-eth-multicall') {
+  } else if (targetImplem === 'webworker-eth-multicall') {
     console.debug(`Instanciating ContractDataInWebWorkerAPI for chain ${chain.id}`);
 
     // bsc has many data, gets his own worker

@@ -3,76 +3,30 @@ import { BeefyState } from '../../redux/reducers/storev2';
 import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../apis/balance';
 import { getBalanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
-import { isGovVault, VaultGov } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectAllTokenByChain, selectTokenById } from '../selectors/tokens';
-import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
+import { selectAllGovVaultsByChainId } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
-
-export interface FetchGovVaultPoolsBalanceFulfilledPayload {
-  chainId: ChainEntity['id'];
-  data: GovVaultPoolBalance[];
-}
-export interface FetchBoostBalanceFulfilledPayload {
-  chainId: ChainEntity['id'];
-  data: BoostBalance[];
-}
-export interface FetchTokenBalanceFulfilledPayload {
-  chainId: ChainEntity['id'];
-  data: TokenBalance[];
-}
 
 interface ActionParams {
   chainId: ChainEntity['id'];
 }
 
-export const fetchGovVaultPoolsBalanceAction = createAsyncThunk<
-  FetchGovVaultPoolsBalanceFulfilledPayload,
+export interface FetchAllBalanceFulfilledPayload {
+  chainId: ChainEntity['id'];
+  data: {
+    tokens: TokenBalance[];
+    boosts: BoostBalance[];
+    govVaults: GovVaultPoolBalance[];
+  };
+}
+
+export const fetchAllBalanceAction = createAsyncThunk<
+  FetchAllBalanceFulfilledPayload,
   ActionParams,
   { state: BeefyState }
->('balance/fetchGovVaultPoolsBalanceAction', async ({ chainId }, { getState }) => {
-  const state = getState();
-
-  const walletAddress = selectWalletAddress(state);
-  const chain = selectChainById(state, chainId);
-  const api = getBalanceApi(chain);
-
-  // maybe have a way to retrieve those easily
-  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
-    selectVaultById(state, vaultId)
-  );
-  const govVaults = allVaults.filter(v => isGovVault(v)) as VaultGov[];
-
-  const data = await api.fetchGovVaultPoolsBalance(govVaults, walletAddress);
-  return { chainId, data };
-});
-
-export const fetchBoostBalanceAction = createAsyncThunk<
-  FetchBoostBalanceFulfilledPayload,
-  ActionParams,
-  { state: BeefyState }
->('balance/fetchBoostBalanceAction', async ({ chainId }, { getState }) => {
-  const state = getState();
-
-  const walletAddress = selectWalletAddress(state);
-  const chain = selectChainById(state, chainId);
-  const api = getBalanceApi(chain);
-
-  // maybe have a way to retrieve those easily
-  const boosts = selectBoostsByChainId(state, chainId).map(boostId =>
-    selectBoostById(state, boostId)
-  );
-
-  const data = await api.fetchBoostBalance(boosts, walletAddress);
-  return { chainId, data };
-});
-
-export const fetchTokenBalanceAction = createAsyncThunk<
-  FetchTokenBalanceFulfilledPayload,
-  ActionParams,
-  { state: BeefyState }
->('balance/fetchTokenBalanceAction', async ({ chainId }, { getState }) => {
+>('balance/fetchAllBalanceAction', async ({ chainId }, { getState }) => {
   const state = getState();
 
   const walletAddress = selectWalletAddress(state);
@@ -82,6 +36,22 @@ export const fetchTokenBalanceAction = createAsyncThunk<
   const tokens = selectAllTokenByChain(state, chainId).map(tokenId =>
     selectTokenById(state, chain.id, tokenId)
   );
-  const data = await api.fetchTokenBalances(tokens, walletAddress);
-  return { chainId, data };
+  // maybe have a way to retrieve those easily
+  const boosts = selectBoostsByChainId(state, chainId).map(boostId =>
+    selectBoostById(state, boostId)
+  );
+  const govVaults = selectAllGovVaultsByChainId(state, chain.id);
+
+  const tokenBalance = await api.fetchTokenBalances(tokens, walletAddress);
+  const govVaultBalance = await api.fetchGovVaultPoolsBalance(govVaults, walletAddress);
+  const boostBalance = await api.fetchBoostBalance(boosts, walletAddress);
+  return {
+    chainId,
+    data: {
+      boosts: boostBalance,
+      tokens: tokenBalance,
+      govVaults: govVaultBalance,
+    },
+    state: getState(),
+  };
 });

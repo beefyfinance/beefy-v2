@@ -4,13 +4,13 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "balance": Object {
+        "error": null,
+        "status": "pending",
+      },
       "boostAllowance": Object {
         "error": null,
         "status": "init",
-      },
-      "boostBalance": Object {
-        "error": null,
-        "status": "pending",
       },
       "contractData": Object {
         "error": null,
@@ -20,15 +20,7 @@ Object {
         "error": null,
         "status": "init",
       },
-      "govVaultBalance": Object {
-        "error": null,
-        "status": "init",
-      },
       "standardVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "tokenBalance": Object {
         "error": null,
         "status": "init",
       },
@@ -63,13 +55,13 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "balance": Object {
+        "error": null,
+        "status": "fulfilled",
+      },
       "boostAllowance": Object {
         "error": null,
         "status": "init",
-      },
-      "boostBalance": Object {
-        "error": null,
-        "status": "fulfilled",
       },
       "contractData": Object {
         "error": null,
@@ -79,15 +71,7 @@ Object {
         "error": null,
         "status": "init",
       },
-      "govVaultBalance": Object {
-        "error": null,
-        "status": "init",
-      },
       "standardVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "tokenBalance": Object {
         "error": null,
         "status": "init",
       },
@@ -122,13 +106,13 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "balance": Object {
+        "error": "fatality",
+        "status": "rejected",
+      },
       "boostAllowance": Object {
         "error": null,
         "status": "init",
-      },
-      "boostBalance": Object {
-        "error": "fatality",
-        "status": "rejected",
       },
       "contractData": Object {
         "error": null,
@@ -138,15 +122,7 @@ Object {
         "error": null,
         "status": "init",
       },
-      "govVaultBalance": Object {
-        "error": null,
-        "status": "init",
-      },
       "standardVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "tokenBalance": Object {
         "error": null,
         "status": "init",
       },

@@ -1,4 +1,4 @@
-import { fetchBoostBalanceAction } from '../actions/balance';
+import { fetchAllBalanceAction } from '../actions/balance';
 import { fetchAllPricesAction } from '../actions/prices';
 import { dataLoaderSlice, initialDataLoaderState } from './data-loader';
 
@@ -23,19 +23,19 @@ describe('Data Loader slice tests', () => {
     let sliceState = initialDataLoaderState;
 
     sliceState = dataLoaderSlice.reducer(sliceState, {
-      type: fetchBoostBalanceAction.pending,
+      type: fetchAllBalanceAction.pending,
       meta: { arg: { chainId: 'test' } },
     });
     expect(sliceState).toMatchSnapshot();
 
     sliceState = dataLoaderSlice.reducer(sliceState, {
-      type: fetchBoostBalanceAction.fulfilled,
+      type: fetchAllBalanceAction.fulfilled,
       meta: { arg: { chainId: 'test' } },
     });
     expect(sliceState).toMatchSnapshot();
 
     sliceState = dataLoaderSlice.reducer(sliceState, {
-      type: fetchBoostBalanceAction.rejected,
+      type: fetchAllBalanceAction.rejected,
       error: 'fatality',
       meta: { arg: { chainId: 'test' } },
     });

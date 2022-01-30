@@ -5,11 +5,7 @@ import {
   fetchStandardVaultAllowanceAction,
 } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
-import {
-  fetchBoostBalanceAction,
-  fetchGovVaultPoolsBalanceAction,
-  fetchTokenBalanceAction,
-} from '../actions/balance';
+import { fetchAllBalanceAction } from '../actions/balance';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -59,9 +55,7 @@ const dataLoaderStateFulfilled: LoaderState = { status: 'fulfilled', error: null
 const dataLoaderStatePending: LoaderState = { status: 'pending', error: null };
 const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
   contractData: dataLoaderStateInit,
-  govVaultBalance: dataLoaderStateInit,
-  tokenBalance: dataLoaderStateInit,
-  boostBalance: dataLoaderStateInit,
+  balance: dataLoaderStateInit,
   boostAllowance: dataLoaderStateInit,
   govVaultAllowance: dataLoaderStateInit,
   standardVaultAllowance: dataLoaderStateInit,
@@ -79,9 +73,7 @@ export interface DataLoaderState {
   byChainId: {
     [chainId: ChainEntity['id']]: {
       contractData: LoaderState;
-      govVaultBalance: LoaderState;
-      tokenBalance: LoaderState;
-      boostBalance: LoaderState;
+      balance: LoaderState;
       boostAllowance: LoaderState;
       govVaultAllowance: LoaderState;
       standardVaultAllowance: LoaderState;
@@ -163,9 +155,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, 'contractData');
-    addByChainAsyncThunkActions(builder, fetchGovVaultPoolsBalanceAction, 'govVaultBalance');
-    addByChainAsyncThunkActions(builder, fetchTokenBalanceAction, 'tokenBalance');
-    addByChainAsyncThunkActions(builder, fetchBoostBalanceAction, 'boostBalance');
+    addByChainAsyncThunkActions(builder, fetchAllBalanceAction, 'balance');
     addByChainAsyncThunkActions(builder, fetchBoostAllowanceAction, 'boostAllowance');
     addByChainAsyncThunkActions(builder, fetchGovVaultPoolsAllowanceAction, 'govVaultAllowance');
     addByChainAsyncThunkActions(

@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers/storev2';
 import { ChainEntity } from '../entities/chain';
-import { VaultEntity } from '../entities/vault';
+import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 
 export const selectVaultById = createSelector(
   // get a tiny bit of the data
@@ -37,5 +37,21 @@ export const selectVaultPricePerFullShare = createSelector(
       );
     }
     return byVaultId[vaultId];
+  }
+);
+
+export const selectAllGovVaultsByChainId = createSelector(
+  [(store: BeefyState) => store.entities.vaults.byId, selectVaultByChainId],
+  (byIds, vaultIds): VaultGov[] => {
+    const allVaults = vaultIds.map(id => byIds[id]);
+    return allVaults.filter(isGovVault) as VaultGov[];
+  }
+);
+
+export const selectAllStandardVaultsByChainId = createSelector(
+  [(store: BeefyState) => store.entities.vaults.byId, selectVaultByChainId],
+  (byIds, vaultIds): VaultStandard[] => {
+    const allVaults = vaultIds.map(id => byIds[id]);
+    return allVaults.filter(vault => !isGovVault(vault)) as VaultStandard[];
   }
 );

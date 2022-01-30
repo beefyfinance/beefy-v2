@@ -16,11 +16,7 @@ import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction } from './prices';
 import { fetchAllVaults } from './vaults';
-import {
-  fetchBoostBalanceAction,
-  fetchGovVaultPoolsBalanceAction,
-  fetchTokenBalanceAction,
-} from './balance';
+import { fetchAllBalanceAction } from './balance';
 import {
   fetchBoostAllowanceAction,
   fetchGovVaultPoolsAllowanceAction,
@@ -36,9 +32,7 @@ type CapturedFulfilledActionGetter = Promise<() => Action>;
 interface CapturedFulfilledActions {
   contractData: CapturedFulfilledActionGetter;
   user: {
-    tokenBalance: CapturedFulfilledActionGetter;
-    govVaultBalance: CapturedFulfilledActionGetter;
-    boostBalance: CapturedFulfilledActionGetter;
+    balance: CapturedFulfilledActionGetter;
     boostAllowance: CapturedFulfilledActionGetter;
     govVaultAllowance: CapturedFulfilledActionGetter;
     standardVaultAllowance: CapturedFulfilledActionGetter;
@@ -241,9 +235,7 @@ export function walletActionsMiddleware(store) {
 function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActions['user'] {
   const captureFulfill = createFulfilledActionCapturer(store);
   return {
-    govVaultBalance: captureFulfill(fetchGovVaultPoolsBalanceAction({ chainId })),
-    tokenBalance: captureFulfill(fetchTokenBalanceAction({ chainId })),
-    boostBalance: captureFulfill(fetchBoostBalanceAction({ chainId })),
+    balance: captureFulfill(fetchAllBalanceAction({ chainId })),
     // TODO: do we really need to fetch allowances right now?
     boostAllowance: captureFulfill(fetchBoostAllowanceAction({ chainId })),
     govVaultAllowance: captureFulfill(fetchGovVaultPoolsAllowanceAction({ chainId })),
@@ -252,9 +244,7 @@ function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActi
 }
 
 async function dispatchUserFfs(userFfs: CapturedFulfilledActions['user']) {
-  await store.dispatch((await userFfs.tokenBalance)());
-  await store.dispatch((await userFfs.govVaultBalance)());
-  await store.dispatch((await userFfs.boostBalance)());
+  await store.dispatch((await userFfs.balance)());
   await store.dispatch((await userFfs.boostAllowance)());
   await store.dispatch((await userFfs.govVaultAllowance)());
   await store.dispatch((await userFfs.standardVaultAllowance)());

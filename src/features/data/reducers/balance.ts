@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import {
-  fetchBoostBalanceAction,
-  fetchGovVaultPoolsBalanceAction,
-  fetchTokenBalanceAction,
-} from '../actions/balance';
+import { fetchAllBalanceAction } from '../actions/balance';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
@@ -52,10 +48,10 @@ export const balanceSlice = createSlice({
       sliceState.byChainId = {};
     });
 
-    builder.addCase(fetchTokenBalanceAction.fulfilled, (sliceState, action) => {
+    builder.addCase(fetchAllBalanceAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
 
-      for (const tokenBalance of action.payload.data) {
+      for (const tokenBalance of action.payload.data.tokens) {
         if (sliceState.byChainId[chainId] === undefined) {
           sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byVaultId: {} };
         }
@@ -68,12 +64,8 @@ export const balanceSlice = createSlice({
           };
         }
       }
-    });
 
-    builder.addCase(fetchBoostBalanceAction.fulfilled, (sliceState, action) => {
-      const chainId = action.payload.chainId;
-
-      for (const boostBalance of action.payload.data) {
+      for (const boostBalance of action.payload.data.boosts) {
         if (sliceState.byChainId[chainId] === undefined) {
           sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byVaultId: {} };
         }
@@ -90,12 +82,8 @@ export const balanceSlice = createSlice({
             rewards: boostBalance.rewards,
           };
       }
-    });
 
-    builder.addCase(fetchGovVaultPoolsBalanceAction.fulfilled, (sliceState, action) => {
-      const chainId = action.payload.chainId;
-
-      for (const vaultBalance of action.payload.data) {
+      for (const vaultBalance of action.payload.data.govVaults) {
         if (sliceState.byChainId[chainId] === undefined) {
           sliceState.byChainId[chainId] = { byTokenId: {}, byBoostId: {}, byVaultId: {} };
         }

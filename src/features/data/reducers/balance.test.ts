@@ -1,24 +1,21 @@
 import BigNumber from 'bignumber.js';
-import {
-  fetchBoostBalanceAction,
-  FetchBoostBalanceFulfilledPayload,
-  fetchGovVaultPoolsBalanceAction,
-  FetchGovVaultPoolsBalanceFulfilledPayload,
-  fetchTokenBalanceAction,
-  FetchTokenBalanceFulfilledPayload,
-} from '../actions/balance';
+import { fetchAllBalanceAction, FetchAllBalanceFulfilledPayload } from '../actions/balance';
 import { balanceSlice, initialBalanceState } from './balance';
 
 describe('Balance slice tests', () => {
   it('should update state on fulfilled token balance', () => {
-    const payload: FetchTokenBalanceFulfilledPayload = {
+    const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
-      data: [
-        { tokenId: 'banana-nfty-wbnb', amount: new BigNumber(10) },
-        { tokenId: 'BIFI', amount: new BigNumber(10) },
-      ],
+      data: {
+        boosts: [],
+        govVaults: [],
+        tokens: [
+          { tokenId: 'banana-nfty-wbnb', amount: new BigNumber(10) },
+          { tokenId: 'BIFI', amount: new BigNumber(10) },
+        ],
+      },
     };
-    const action = { type: fetchTokenBalanceAction.fulfilled, payload: payload };
+    const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
     const state = balanceSlice.reducer(initialBalanceState, action);
     expect(state).toMatchSnapshot();
 
@@ -30,14 +27,18 @@ describe('Balance slice tests', () => {
   });
 
   it('should update state on fulfilled gov boost pools', () => {
-    const payload: FetchGovVaultPoolsBalanceFulfilledPayload = {
+    const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
-      data: [
-        { vaultId: 'banana-nfty-wbnb', rewards: new BigNumber(100), balance: new BigNumber(10) },
-        { vaultId: 'belt-beltbnb', rewards: new BigNumber(10), balance: new BigNumber(5) },
-      ],
+      data: {
+        boosts: [],
+        tokens: [],
+        govVaults: [
+          { vaultId: 'banana-nfty-wbnb', rewards: new BigNumber(100), balance: new BigNumber(10) },
+          { vaultId: 'belt-beltbnb', rewards: new BigNumber(10), balance: new BigNumber(5) },
+        ],
+      },
     };
-    const action = { type: fetchGovVaultPoolsBalanceAction.fulfilled, payload: payload };
+    const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
     const state = balanceSlice.reducer(initialBalanceState, action);
     expect(state).toMatchSnapshot();
 
@@ -49,22 +50,26 @@ describe('Balance slice tests', () => {
   });
 
   it('should update state on fulfilled boost balance', () => {
-    const payload: FetchBoostBalanceFulfilledPayload = {
+    const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
-      data: [
-        {
-          boostId: 'moo_ellipsis-renbtc-charge',
-          balance: new BigNumber(100),
-          rewards: new BigNumber(10),
-        },
-        {
-          boostId: 'moo_beltbnb-czodiac',
-          balance: new BigNumber(100),
-          rewards: new BigNumber(10),
-        },
-      ],
+      data: {
+        govVaults: [],
+        tokens: [],
+        boosts: [
+          {
+            boostId: 'moo_ellipsis-renbtc-charge',
+            balance: new BigNumber(100),
+            rewards: new BigNumber(10),
+          },
+          {
+            boostId: 'moo_beltbnb-czodiac',
+            balance: new BigNumber(100),
+            rewards: new BigNumber(10),
+          },
+        ],
+      },
     };
-    const action = { type: fetchBoostBalanceAction.fulfilled, payload: payload };
+    const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
     const state = balanceSlice.reducer(initialBalanceState, action);
     expect(state).toMatchSnapshot();
 
