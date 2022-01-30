@@ -28,3 +28,8 @@ export function featureFlag_dataPolling() {
   const params = new URLSearchParams(window.location.search);
   return params.has('__polling');
 }
+
+export function featureFlag_scenarioTimings() {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__scenario_timings');
+}

@@ -54,7 +54,7 @@ export const getContractDataApi = createFactoryWithCacheByChain((chain): IContra
   if (targetImplem === 'eth-multicall') {
     console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
     return new ContractDataAPI(web3, chain);
-  } else if (targetImplem === 'new-multicall' && chain.fetchContractDataAddress) {
+  } else if (targetImplem === 'new-multicall') {
     // only if we have a contract to work with
     if (chain.fetchContractDataAddress) {
       console.debug(`Instanciating ContractDataMcV2API for chain ${chain.id}`);

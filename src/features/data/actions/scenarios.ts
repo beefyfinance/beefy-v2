@@ -19,7 +19,7 @@ import { fetchAllVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
-import { featureFlag_dataPolling } from '../utils/feature-flags';
+import { featureFlag_dataPolling, featureFlag_scenarioTimings } from '../utils/feature-flags';
 import { fetchAllAllowanceAction } from './allowance';
 
 const store = storeV2;
@@ -59,8 +59,10 @@ const chains = [
  * TODO: we need to inject the store in parameters somehow and not get if from a global import
  */
 export async function initHomeDataV4() {
-  console.time('From scenario start');
-  console.timeLog('From scenario start');
+  if (featureFlag_scenarioTimings()) {
+    console.time('From scenario start');
+    console.timeLog('From scenario start');
+  }
 
   const captureFulfill = createFulfilledActionCapturer(store);
 
@@ -70,8 +72,10 @@ export async function initHomeDataV4() {
   // create the wallet instance as soon as we get the chain list
   setTimeout(async () => {
     await chainListPromise;
-    console.timeLog('From scenario start');
-    console.log('Chain Config Loaded');
+    if (featureFlag_scenarioTimings()) {
+      console.timeLog('From scenario start');
+      console.log('Chain Config Loaded');
+    }
 
     const state = store.getState();
     const chains = selectAllChains(state);
@@ -103,8 +107,11 @@ export async function initHomeDataV4() {
 
   // we need config data (for contract addresses) to start querying the rest
   await boostsAndVaults;
-  console.timeLog('From scenario start');
-  console.log(`Vaults and boost list for all chains OK`);
+
+  if (featureFlag_scenarioTimings()) {
+    console.timeLog('From scenario start');
+    console.log(`Vaults and boost list for all chains OK`);
+  }
 
   // then, we work by chain
 
@@ -124,8 +131,10 @@ export async function initHomeDataV4() {
       contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
       user: userFullfills,
     };
-    console.timeLog('From scenario start');
-    console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
+    if (featureFlag_scenarioTimings()) {
+      console.timeLog('From scenario start');
+      console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
+    }
   }
 
   // ok now we started all calls, it's just a matter of ordering fulfill actions
@@ -140,8 +149,10 @@ export async function initHomeDataV4() {
         // dispatch fulfills in order
         await store.dispatch((await chainFfs.contractData)());
 
-        console.timeLog('From scenario start');
-        console.log(`Vaults and boost contract for chain ${chain.id} OK`);
+        if (featureFlag_scenarioTimings()) {
+          console.timeLog('From scenario start');
+          console.log(`Vaults and boost contract for chain ${chain.id} OK`);
+        }
 
         // user ffs can be dispatched in any order after that
         if (chainFfs.user !== null) {
