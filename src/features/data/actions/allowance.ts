@@ -9,69 +9,21 @@ import { selectChainById } from '../selectors/chains';
 import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
-export interface FetchGovVaultPoolsAllowanceFulfilledPayload {
-  chainId: ChainEntity['id'];
-  data: VaultAllowance[];
-}
-export interface FetchStandardVaultAllowanceFulfilledPayload {
-  chainId: ChainEntity['id'];
-  data: VaultAllowance[];
-}
-export interface FetchBoostAllowanceFulfilledPayload {
-  chainId: ChainEntity['id'];
-  data: BoostAllowance[];
-}
-
 interface ActionParams {
   chainId: ChainEntity['id'];
 }
 
-export const fetchGovVaultPoolsAllowanceAction = createAsyncThunk<
-  FetchGovVaultPoolsAllowanceFulfilledPayload,
-  ActionParams,
-  { state: BeefyState }
->('allowance/fetchGovVaultPoolsAllowanceAction', async ({ chainId }, { getState }) => {
-  const state = getState();
+export interface FetchAllAllowanceFulfilledPayload {
+  chainId: ChainEntity['id'];
+  data: {
+    boosts: BoostAllowance[];
+    govVaults: VaultAllowance[];
+    standardVaults: VaultAllowance[];
+  };
+}
 
-  const walletAddress = selectWalletAddress(state);
-  const chain = selectChainById(state, chainId);
-  const api = getAllowanceApi(chain);
-
-  // maybe have a way to retrieve those easily
-  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
-    selectVaultById(state, vaultId)
-  );
-  const govVaults = allVaults.filter(v => isGovVault(v)) as VaultGov[];
-
-  // always re-fetch state as late as possible
-  const data = await api.fetchGovVaultPoolAllowance(getState(), govVaults, walletAddress);
-  return { chainId, data };
-});
-
-export const fetchStandardVaultAllowanceAction = createAsyncThunk<
-  FetchStandardVaultAllowanceFulfilledPayload,
-  ActionParams,
-  { state: BeefyState }
->('allowance/fetchStandardVaultAllowanceAction', async ({ chainId }, { getState }) => {
-  const state = getState();
-
-  const walletAddress = selectWalletAddress(state);
-  const chain = selectChainById(state, chainId);
-  const api = getAllowanceApi(chain);
-
-  // maybe have a way to retrieve those easily
-  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
-    selectVaultById(state, vaultId)
-  );
-  const standardVaults = allVaults.filter(v => !isGovVault(v)) as VaultStandard[];
-
-  // always re-fetch state as late as possible
-  const data = await api.fetchStandardVaultAllowance(getState(), standardVaults, walletAddress);
-  return { chainId, data };
-});
-
-export const fetchBoostAllowanceAction = createAsyncThunk<
-  FetchBoostAllowanceFulfilledPayload,
+export const fetchAllAllowanceAction = createAsyncThunk<
+  FetchAllAllowanceFulfilledPayload,
   ActionParams,
   { state: BeefyState }
 >('allowance/fetchBoostAllowanceAction', async ({ chainId }, { getState }) => {
@@ -82,11 +34,40 @@ export const fetchBoostAllowanceAction = createAsyncThunk<
   const api = getAllowanceApi(chain);
 
   // maybe have a way to retrieve those easily
-  const boosts = selectBoostsByChainId(state, chainId).map(boostId =>
-    selectBoostById(state, boostId)
+  const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>
+    selectBoostById(state, vaultId)
   );
+  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+  const standardVaults: VaultStandard[] = [];
+  const govVaults: VaultGov[] = [];
+  for (const vault of allVaults) {
+    if (isGovVault(vault)) {
+      govVaults.push(vault);
+    } else {
+      standardVaults.push(vault);
+    }
+  }
 
   // always re-fetch state as late as possible
-  const data = await api.fetchBoostAllowance(getState(), boosts, walletAddress);
-  return { chainId, data };
+  const boostAllowance = await api.fetchBoostAllowance(getState(), boosts, walletAddress);
+  const standardVaultAllowance = await api.fetchStandardVaultAllowance(
+    getState(),
+    standardVaults,
+    walletAddress
+  );
+  const govVaultAllowance = await api.fetchGovVaultPoolAllowance(
+    getState(),
+    govVaults,
+    walletAddress
+  );
+  return {
+    chainId,
+    data: {
+      boosts: boostAllowance,
+      govVaults: govVaultAllowance,
+      standardVaults: standardVaultAllowance,
+    },
+  };
 });

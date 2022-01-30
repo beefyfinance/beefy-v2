@@ -1,9 +1,5 @@
 import { ActionReducerMapBuilder, AsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  fetchBoostAllowanceAction,
-  fetchGovVaultPoolsAllowanceAction,
-  fetchStandardVaultAllowanceAction,
-} from '../actions/allowance';
+import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction } from '../actions/balance';
 import { fetchAllBoosts } from '../actions/boosts';
@@ -56,9 +52,7 @@ const dataLoaderStatePending: LoaderState = { status: 'pending', error: null };
 const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
   contractData: dataLoaderStateInit,
   balance: dataLoaderStateInit,
-  boostAllowance: dataLoaderStateInit,
-  govVaultAllowance: dataLoaderStateInit,
-  standardVaultAllowance: dataLoaderStateInit,
+  allowance: dataLoaderStateInit,
 };
 
 export interface DataLoaderState {
@@ -74,9 +68,7 @@ export interface DataLoaderState {
     [chainId: ChainEntity['id']]: {
       contractData: LoaderState;
       balance: LoaderState;
-      boostAllowance: LoaderState;
-      govVaultAllowance: LoaderState;
-      standardVaultAllowance: LoaderState;
+      allowance: LoaderState;
     };
   };
 }
@@ -156,12 +148,6 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, 'contractData');
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, 'balance');
-    addByChainAsyncThunkActions(builder, fetchBoostAllowanceAction, 'boostAllowance');
-    addByChainAsyncThunkActions(builder, fetchGovVaultPoolsAllowanceAction, 'govVaultAllowance');
-    addByChainAsyncThunkActions(
-      builder,
-      fetchStandardVaultAllowanceAction,
-      'standardVaultAllowance'
-    );
+    addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, 'allowance');
   },
 });

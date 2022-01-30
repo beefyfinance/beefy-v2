@@ -4,23 +4,15 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "allowance": Object {
+        "error": null,
+        "status": "init",
+      },
       "balance": Object {
         "error": null,
         "status": "pending",
       },
-      "boostAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
       "contractData": Object {
-        "error": null,
-        "status": "init",
-      },
-      "govVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "standardVaultAllowance": Object {
         "error": null,
         "status": "init",
       },
@@ -55,23 +47,15 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "allowance": Object {
+        "error": null,
+        "status": "init",
+      },
       "balance": Object {
         "error": null,
         "status": "fulfilled",
       },
-      "boostAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
       "contractData": Object {
-        "error": null,
-        "status": "init",
-      },
-      "govVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "standardVaultAllowance": Object {
         "error": null,
         "status": "init",
       },
@@ -106,23 +90,15 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "allowance": Object {
+        "error": null,
+        "status": "init",
+      },
       "balance": Object {
         "error": "fatality",
         "status": "rejected",
       },
-      "boostAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
       "contractData": Object {
-        "error": null,
-        "status": "init",
-      },
-      "govVaultAllowance": Object {
-        "error": null,
-        "status": "init",
-      },
-      "standardVaultAllowance": Object {
         "error": null,
         "status": "init",
       },

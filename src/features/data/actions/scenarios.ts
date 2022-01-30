@@ -17,14 +17,10 @@ import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction } from './prices';
 import { fetchAllVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
-import {
-  fetchBoostAllowanceAction,
-  fetchGovVaultPoolsAllowanceAction,
-  fetchStandardVaultAllowanceAction,
-} from './allowance';
 import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_dataPolling } from '../utils/feature-flags';
+import { fetchAllAllowanceAction } from './allowance';
 
 const store = storeV2;
 
@@ -33,9 +29,7 @@ interface CapturedFulfilledActions {
   contractData: CapturedFulfilledActionGetter;
   user: {
     balance: CapturedFulfilledActionGetter;
-    boostAllowance: CapturedFulfilledActionGetter;
-    govVaultAllowance: CapturedFulfilledActionGetter;
-    standardVaultAllowance: CapturedFulfilledActionGetter;
+    allowance: CapturedFulfilledActionGetter;
   } | null;
 }
 
@@ -237,15 +231,11 @@ function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActi
   return {
     balance: captureFulfill(fetchAllBalanceAction({ chainId })),
     // TODO: do we really need to fetch allowances right now?
-    boostAllowance: captureFulfill(fetchBoostAllowanceAction({ chainId })),
-    govVaultAllowance: captureFulfill(fetchGovVaultPoolsAllowanceAction({ chainId })),
-    standardVaultAllowance: captureFulfill(fetchStandardVaultAllowanceAction({ chainId })),
+    allowance: captureFulfill(fetchAllAllowanceAction({ chainId })),
   };
 }
 
 async function dispatchUserFfs(userFfs: CapturedFulfilledActions['user']) {
   await store.dispatch((await userFfs.balance)());
-  await store.dispatch((await userFfs.boostAllowance)());
-  await store.dispatch((await userFfs.govVaultAllowance)());
-  await store.dispatch((await userFfs.standardVaultAllowance)());
+  await store.dispatch((await userFfs.allowance)());
 }

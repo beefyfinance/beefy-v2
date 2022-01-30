@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import {
-  fetchBoostAllowanceAction,
-  fetchGovVaultPoolsAllowanceAction,
-  fetchStandardVaultAllowanceAction,
-} from '../actions/allowance';
+import { fetchAllAllowanceAction } from '../actions/allowance';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
@@ -53,14 +49,14 @@ export const allowanceSlice = createSlice({
       sliceState.byChainId = {};
     });
 
-    builder.addCase(fetchGovVaultPoolsAllowanceAction.fulfilled, (sliceState, action) => {
+    builder.addCase(fetchAllAllowanceAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
 
       if (sliceState.byChainId[chainId] === undefined) {
         sliceState.byChainId[chainId] = { byBoostId: {}, byTokenId: {}, byVaultId: {} };
       }
 
-      for (const vaultAllowance of action.payload.data) {
+      for (const vaultAllowance of action.payload.data.govVaults) {
         // only update data if necessary
         const stateForVault = sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId];
         if (
@@ -74,16 +70,8 @@ export const allowanceSlice = createSlice({
           };
         }
       }
-    });
 
-    builder.addCase(fetchStandardVaultAllowanceAction.fulfilled, (sliceState, action) => {
-      const chainId = action.payload.chainId;
-
-      if (sliceState.byChainId[chainId] === undefined) {
-        sliceState.byChainId[chainId] = { byBoostId: {}, byTokenId: {}, byVaultId: {} };
-      }
-
-      for (const vaultAllowance of action.payload.data) {
+      for (const vaultAllowance of action.payload.data.standardVaults) {
         // only update data if necessary
         const stateForVault = sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId];
         if (
@@ -97,16 +85,8 @@ export const allowanceSlice = createSlice({
           };
         }
       }
-    });
 
-    builder.addCase(fetchBoostAllowanceAction.fulfilled, (sliceState, action) => {
-      const chainId = action.payload.chainId;
-
-      if (sliceState.byChainId[chainId] === undefined) {
-        sliceState.byChainId[chainId] = { byBoostId: {}, byTokenId: {}, byVaultId: {} };
-      }
-
-      for (const boostAllowance of action.payload.data) {
+      for (const boostAllowance of action.payload.data.boosts) {
         // only update data if necessary
         const stateForBoost = sliceState.byChainId[chainId].byBoostId[boostAllowance.boostId];
         if (

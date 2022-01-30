@@ -1,23 +1,21 @@
 import BigNumber from 'bignumber.js';
-import {
-  fetchBoostAllowanceAction,
-  FetchBoostAllowanceFulfilledPayload,
-  fetchGovVaultPoolsAllowanceAction,
-  FetchGovVaultPoolsAllowanceFulfilledPayload,
-  fetchStandardVaultAllowanceAction,
-} from '../actions/allowance';
+import { fetchAllAllowanceAction, FetchAllAllowanceFulfilledPayload } from '../actions/allowance';
 import { allowanceSlice, initialAllowanceState } from './allowance';
 
 describe('Allowance slice tests', () => {
   it('should update state on fulfilled gov pool allowance', () => {
-    const payload: FetchGovVaultPoolsAllowanceFulfilledPayload = {
+    const payload: FetchAllAllowanceFulfilledPayload = {
       chainId: 'bsc',
-      data: [
-        { vaultId: 'banana-nfty-wbnb', spenderAddress: '0x000', allowance: new BigNumber(10) },
-        { vaultId: 'belt-beltbnb', spenderAddress: '0x000', allowance: new BigNumber(5) },
-      ],
+      data: {
+        boosts: [],
+        standardVaults: [],
+        govVaults: [
+          { vaultId: 'banana-nfty-wbnb', spenderAddress: '0x000', allowance: new BigNumber(10) },
+          { vaultId: 'belt-beltbnb', spenderAddress: '0x000', allowance: new BigNumber(5) },
+        ],
+      },
     };
-    const action = { type: fetchGovVaultPoolsAllowanceAction.fulfilled, payload: payload };
+    const action = { type: fetchAllAllowanceAction.fulfilled, payload: payload };
     const state = allowanceSlice.reducer(initialAllowanceState, action);
     expect(state).toMatchSnapshot();
 
@@ -29,14 +27,18 @@ describe('Allowance slice tests', () => {
   });
 
   it('should update state on fulfilled standard pool allowance', () => {
-    const payload: FetchGovVaultPoolsAllowanceFulfilledPayload = {
+    const payload: FetchAllAllowanceFulfilledPayload = {
       chainId: 'bsc',
-      data: [
-        { vaultId: 'banana-nfty-wbnb', spenderAddress: '0x000', allowance: new BigNumber(10) },
-        { vaultId: 'belt-beltbnb', spenderAddress: '0x000', allowance: new BigNumber(5) },
-      ],
+      data: {
+        boosts: [],
+        govVaults: [],
+        standardVaults: [
+          { vaultId: 'banana-nfty-wbnb', spenderAddress: '0x000', allowance: new BigNumber(10) },
+          { vaultId: 'belt-beltbnb', spenderAddress: '0x000', allowance: new BigNumber(5) },
+        ],
+      },
     };
-    const action = { type: fetchStandardVaultAllowanceAction.fulfilled, payload: payload };
+    const action = { type: fetchAllAllowanceAction.fulfilled, payload: payload };
     const state = allowanceSlice.reducer(initialAllowanceState, action);
     expect(state).toMatchSnapshot();
 
@@ -48,22 +50,26 @@ describe('Allowance slice tests', () => {
   });
 
   it('should update state on fulfilled boost allowance', () => {
-    const payload: FetchBoostAllowanceFulfilledPayload = {
+    const payload: FetchAllAllowanceFulfilledPayload = {
       chainId: 'bsc',
-      data: [
-        {
-          boostId: 'moo_ellipsis-renbtc-charge',
-          allowance: new BigNumber(100),
-          spenderAddress: '0x000',
-        },
-        {
-          boostId: 'moo_beltbnb-czodiac',
-          allowance: new BigNumber(100),
-          spenderAddress: '0x000',
-        },
-      ],
+      data: {
+        govVaults: [],
+        standardVaults: [],
+        boosts: [
+          {
+            boostId: 'moo_ellipsis-renbtc-charge',
+            allowance: new BigNumber(100),
+            spenderAddress: '0x000',
+          },
+          {
+            boostId: 'moo_beltbnb-czodiac',
+            allowance: new BigNumber(100),
+            spenderAddress: '0x000',
+          },
+        ],
+      },
     };
-    const action = { type: fetchBoostAllowanceAction.fulfilled, payload: payload };
+    const action = { type: fetchAllAllowanceAction.fulfilled, payload: payload };
     const state = allowanceSlice.reducer(initialAllowanceState, action);
     expect(state).toMatchSnapshot();
 
