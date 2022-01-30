@@ -7,8 +7,7 @@ export const pools = [
     tokenDescription: "Beefy.Finance",
     tokenAddress: "0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c",
     tokenDecimals: 18,
-    tokenDescriptionUrl:
-      "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
+    tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
     earnedToken: "WFUSE",
     earnedTokenAddress: "0x0BE9e53fd7EDaC9F859882AfdDa116645287C629",
     earnContractAddress: "0x60a4DedF7fC45F73d9ca46222B016c2d755C79A8",
@@ -21,14 +20,16 @@ export const pools = [
     oraclePrice: 0,
     status: "active",
     platform: "Beefy.Finance",
-    assets: ["BIFI"],
+    assets: [
+      "BIFI"
+    ],
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_SMALL",
       "AUDIT",
-      "CONTRACTS_VERIFIED",
+      "CONTRACTS_VERIFIED"
     ],
     stratType: "SingleStake",
     callFee: 0.5,
@@ -328,6 +329,43 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    network: "fuse"
+  },
+  {
+    id: "sushi-wfuse-weth",
+    name: "WETH-FUSE LP",
+    token: "WETH-FUSE SLP",
+    tokenDescription: "SushiSwap",
+    tokenAddress: "0x90c3bA00d2F7F15Cd9FDE087538be3A2865E7E2F",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSushiFUSE-WETH",
+    earnedTokenAddress: "0xd4E241053314254e62050aDC84B271F9d2164a16",
+    earnContractAddress: "0xd4E241053314254e62050aDC84B271F9d2164a16",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "sushi-wfuse-weth",
+    oraclePrice: 0,
+    withdrawalFee: "0%",
+    depositsPaused: false,
+    status: "active",
+    platform: "SushiSwap",
+    assets: [
+      "WETH",
+      "FUSE"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.sushi.com/add/0x0BE9e53fd7EDaC9F859882AfdDa116645287C629/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x0BE9e53fd7EDaC9F859882AfdDa116645287C629&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
     network: "fuse"
   }
 ];
