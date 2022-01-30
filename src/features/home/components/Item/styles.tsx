@@ -19,7 +19,16 @@ export const styles = theme => ({
       marginRight: '10px',
       marginLeft: '10px',
       width: 'calc(100% - 20px)',
+    },
+  },
+  nextToBoost: {
+    [theme.breakpoints.only('sm')]: {
       height: 380,
+    },
+  },
+   nextToGov: {
+    [theme.breakpoints.only('sm')]: {
+      height: 370,
     },
   },
   badges: {

@@ -171,7 +171,7 @@ interface StyleProps {
   removeMarginButton: boolean;
 }
 const useStyles = makeStyles(styles as any);
-const _Item = ({ vault }) => {
+const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
   const item = vault;
 
   const isBoosted = vault.isBoosted;
@@ -234,6 +234,8 @@ const _Item = ({ vault }) => {
           [classes.withIsLongName]: item.name.length > 12,
           [classes.withBoosted]: isBoosted,
           [classes.withGovVault]: isGovVault,
+          [classes.nextToBoost]: isTwoColumns && isNextToBoost,
+          [classes.nextToGov]: isTwoColumns && isNextToGov,
         })}
       >
         <Grid container>
