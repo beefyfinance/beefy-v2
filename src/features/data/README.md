@@ -69,7 +69,7 @@
     [x] remove unused price mocks
     [ ] reorganize files?
     [ ] remove unnecessary comments
-    [ ] ensure TVL and APY is computed properly
+    [x] ensure TVL and APY is computed properly
     [ ] ensure user balance is computed properly
     [ ] ensure user allowances are computed properly
     [ ] make tests run in CI

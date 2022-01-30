@@ -3,22 +3,32 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
 
-interface ApyGovVault {
+export interface ApyGovVault {
   vaultApr: number;
 }
-interface ApyMaxiVault {
+export interface ApyMaxiVault {
   totalApy: number;
 }
-interface ApyStandard {
+export interface ApyStandard {
+  beefyPerformanceFee: number;
   vaultApr: number;
   compoundingsPerYear: number;
-  vaultApy: Number;
+  vaultApy: number;
   tradingApr?: number;
   totalApy: number;
   // todo: does it make sense to have fees and apy in the same entities?
   lpFee: number;
 }
 export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard;
+export function isStandardVaultApy(apy: ApyData): apy is ApyStandard {
+  return 'compoundingsPerYear' in apy;
+}
+export function isGovVaultApy(apy: ApyData): apy is ApyGovVault {
+  return 'vaultApr' in apy && !('compoundingsPerYear' in apy);
+}
+export function isMaxiVaultApy(apy: ApyData): apy is ApyMaxiVault {
+  return 'totalApy' in apy && !('compoundingsPerYear' in apy);
+}
 
 export interface BeefyAPITokenPricesResponse {
   [tokenId: TokenEntity['id']]: number;
