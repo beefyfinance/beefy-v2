@@ -1,9 +1,11 @@
 import BigNumber from 'bignumber.js';
 import { fetchAllBalanceAction, FetchAllBalanceFulfilledPayload } from '../actions/balance';
 import { balanceSlice, initialBalanceState } from './balance';
+import { getBeefyTestingStore } from '../utils/test-utils';
 
 describe('Balance slice tests', () => {
-  it('should update state on fulfilled token balance', () => {
+  it('should update state on fulfilled token balance', async () => {
+    const store = await getBeefyTestingStore();
     const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
       data: {
@@ -14,10 +16,10 @@ describe('Balance slice tests', () => {
           { tokenId: 'BIFI', amount: new BigNumber(10) },
         ],
       },
-      state: {} as any,
+      state: store.getState(),
     };
     const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
-    const state = balanceSlice.reducer(initialBalanceState, action);
+    const state = balanceSlice.reducer(store.getState().user.balance, action);
     expect(state).toMatchSnapshot();
 
     // getting the same vaults don't update the state object

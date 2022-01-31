@@ -16,6 +16,14 @@ Object {
       "allRetiredIds": Array [
         "banana-banana-eol",
       ],
+      "byEarnTokenId": Object {
+        "mooApeBANANA": "banana-banana-eol",
+        "mooSushiYGG-ETH": "sushi-one-1ygg-1eth",
+      },
+      "byOracleId": Object {
+        "BANANA": "banana-banana-eol",
+        "sushi-one-1ygg-1eth": "sushi-one-1ygg-1eth",
+      },
     },
   },
   "byId": Object {

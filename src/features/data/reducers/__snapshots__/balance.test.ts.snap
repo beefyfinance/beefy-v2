@@ -14,9 +14,13 @@ Object {
           "rewards": "10",
         },
       },
+      "byGovVaultId": Object {},
       "byTokenId": Object {},
-      "byVaultId": Object {},
     },
+  },
+  "depositedVaultIds": Object {
+    "govVaults": Array [],
+    "standardVaults": Array [],
   },
 }
 `;
@@ -26,16 +30,31 @@ Object {
   "byChainId": Object {
     "bsc": Object {
       "byBoostId": Object {},
-      "byTokenId": Object {},
-      "byVaultId": Object {
+      "byGovVaultId": Object {
         "banana-nfty-wbnb": Object {
+          "balance": "10",
           "rewards": "100",
         },
         "belt-beltbnb": Object {
+          "balance": "5",
           "rewards": "10",
         },
       },
+      "byTokenId": Object {},
     },
+  },
+  "depositedVaultIds": Object {
+    "govVaults": Array [
+      Object {
+        "chainId": "bsc",
+        "vaultId": "banana-nfty-wbnb",
+      },
+      Object {
+        "chainId": "bsc",
+        "vaultId": "belt-beltbnb",
+      },
+    ],
+    "standardVaults": Array [],
   },
 }
 `;
@@ -45,6 +64,7 @@ Object {
   "byChainId": Object {
     "bsc": Object {
       "byBoostId": Object {},
+      "byGovVaultId": Object {},
       "byTokenId": Object {
         "BIFI": Object {
           "balance": "10",
@@ -53,8 +73,11 @@ Object {
           "balance": "10",
         },
       },
-      "byVaultId": Object {},
     },
+  },
+  "depositedVaultIds": Object {
+    "govVaults": Array [],
+    "standardVaults": Array [],
   },
 }
 `;
