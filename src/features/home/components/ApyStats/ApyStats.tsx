@@ -150,7 +150,7 @@ const LabeledStatWithTooltip = memo(
     const classes = useStyles();
 
     return (
-      <div className={spacer ? classes.stat1 : classes.stat}>
+      <div className={classes.stat}>
         <div className={classes.tooltipLabel}>
           <Typography className={classes.label}>{label}</Typography>
           <div className={classes.tooltipHolder}>
@@ -235,7 +235,6 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
           boosted={isBoosted ? formatted.boostedTotalDaily : ''}
           isLoading={isLoading}
           className={`tooltip-toggle ${itemInnerClasses}`}
-          spacer={true}
         >
           <DailyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
         </LabeledStatWithTooltip>

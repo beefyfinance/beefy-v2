@@ -367,7 +367,7 @@ const _Item = ({ vault }) => {
               />
               <Grid item xs={6} md={2} lg={2}>
                 {/*Tvl */}
-                <div className={classes.stat}>
+                <div className={classes.stat1}>
                   <Typography className={classes.label}>{t('TVL')}</Typography>
                   <Typography className={classes.value}>{formattedTVL}</Typography>
                   {isBoosted ||

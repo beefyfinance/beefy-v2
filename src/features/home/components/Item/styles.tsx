@@ -16,9 +16,10 @@ export const styles = theme => ({
       flexDirection: 'row',
     },
     [theme.breakpoints.only('sm')]: {
-      margin: '20px 10px 0px 10px',
+      marginLeft: '10px',
+      marginRight: '10px',
       width: 'calc(100% - 20px)',
-      height: 'calc(100% - 10px)',
+      height: 'calc(100% - 20px)',
     },
   },
   badges: {
@@ -78,7 +79,6 @@ export const styles = theme => ({
   value: {
     fontWeight: 600,
     fontSize: '18px',
-    lineHeight: '24px',
     margin: 0,
     padding: 0,
     whiteSpace: 'nowrap',
@@ -94,7 +94,6 @@ export const styles = theme => ({
   label: {
     fontWeight: 600,
     fontSize: '12px',
-    lineHeight: '20px',
     color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
@@ -108,7 +107,6 @@ export const styles = theme => ({
     fontWeight: 400,
     letterSpacing: '0.2px',
     fontSize: '14px',
-    lineHeight: '18px',
     whiteSpace: 'nowrap',
   },
   platformLabel: {
@@ -126,7 +124,6 @@ export const styles = theme => ({
     whiteSpace: 'nowrap',
     fontWeight: 600,
     fontSize: '12px',
-    lineHeight: '24px',
     color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
@@ -262,6 +259,7 @@ export const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       marginTop: '10px',
       alignItems: 'flex-start',
+      height: '100%',
     },
   },
   marginBottom: {
