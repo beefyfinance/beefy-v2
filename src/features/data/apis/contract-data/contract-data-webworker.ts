@@ -74,7 +74,7 @@ export class ContractDataInWebWorkerAPI implements IContractDataApi {
         return {
           id: result.id,
           balance: new BigNumber(result.balance),
-          pricePerFullShare: new BigNumber(result.balance),
+          pricePerFullShare: new BigNumber(result.pricePerFullShare),
           strategy: result.strategy,
         } as StandardVaultContractData;
       }),

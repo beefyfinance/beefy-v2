@@ -97,7 +97,7 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     return {
       id: standardVault.id,
       balance: new BigNumber(result.balance),
-      pricePerFullShare: new BigNumber(result.balance),
+      pricePerFullShare: new BigNumber(result.pricePerFullShare),
       strategy: result.strategy,
     } as StandardVaultContractData;
   }

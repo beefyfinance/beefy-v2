@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import { memoize } from 'lodash';
 import { byDecimals } from '../../../helpers/format';
 import { BeefyState } from '../../redux/reducers/storev2';
 import { ApyData, isGovVaultApy, isStandardVaultApy } from '../apis/beefy';
@@ -51,7 +52,7 @@ export const selectStandardVaultApy = createSelector(
   }
 );
 
-export function selectUserGlobalStats(state: BeefyState) {
+export const selectUserGlobalStats = memoize((state: BeefyState) => {
   let newGlobalStats = {
     deposited: new BigNumber(0),
     totalYield: new BigNumber(0),
@@ -67,9 +68,6 @@ export function selectUserGlobalStats(state: BeefyState) {
   const userVaults = selectUserDepositedVaults(state).map(vaultId =>
     selectVaultById(state, vaultId)
   );
-  if (userVaults.length > 0) {
-    debugger;
-  }
 
   for (const vault of userVaults) {
     let vaultUsdBalance = new BigNumber(0);
@@ -112,17 +110,17 @@ export function selectUserGlobalStats(state: BeefyState) {
     if (isGovVault(vault)) {
       const apr = selectGovVaultApr(state, vault.id);
       const dailyApr = apr / 365;
-      const dailyUsd = vaultUsdBalance.times(dailyApr).times(oraclePrice);
+      const dailyUsd = vaultUsdBalance.times(dailyApr);
 
       newGlobalStats.daily = newGlobalStats.daily.plus(dailyUsd);
     } else {
       const apy = selectStandardVaultApy(state, vault.id);
       const dailyApr = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
-      const dailyUsd = vaultUsdBalance.times(dailyApr).times(oraclePrice);
+      const dailyUsd = vaultUsdBalance.times(dailyApr);
       newGlobalStats.daily = newGlobalStats.daily.plus(dailyUsd);
     }
   }
 
   newGlobalStats.monthly = newGlobalStats.daily.times(30);
   return newGlobalStats;
-}
+});
