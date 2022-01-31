@@ -368,7 +368,7 @@ const _Item = ({ vault }) => {
                 />
                 <Grid item xs={6} md={2} lg={2}>
                   {/*Tvl */}
-                  <div className={isGovVault ? classes.stat1 : classes.stat}>
+                  <div className={isGovVault || isBoosted ? classes.stat1 : classes.stat}>
                     <Typography className={classes.label}>{t('TVL')}</Typography>
                     <Typography className={classes.value}>{formattedTVL}</Typography>
                     {isBoosted ||
@@ -397,7 +397,7 @@ const _Item = ({ vault }) => {
                       )}
                     </div>
                   ) : (
-                    <div className={classes.stat}>
+                    <div className={isBoosted ? classes.stat1 : classes.stat}>
                       <div className={classes.tooltipLabel}>
                         <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
                         <div className={classes.tooltipHolder}>
