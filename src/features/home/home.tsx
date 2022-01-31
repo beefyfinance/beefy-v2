@@ -96,19 +96,6 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
   _renderVault({ rowIndex, columnIndex, parent, key, style }) {
     const index = rowIndex * this.props.columns + columnIndex;
     const vault = this.props.vaults[index] ?? null;
-    let isNextToBoost = false;
-    let isNextToGov = false;
-
-    if (vault) {
-      let newIndex = columnIndex === 0 ? index + 1 : index - 1;
-      let nextVault = this.props.vaults[newIndex] ?? null;
-      if (nextVault && nextVault.isBoosted) {
-        isNextToBoost = true;
-      }
-      if (nextVault && nextVault.isGovVault) {
-         isNextToGov = true;
-      }
-    }
 
     return (
       <CellMeasurer
@@ -120,9 +107,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
       >
         {({ registerChild }) => (
           <div style={style} ref={registerChild} data-id={vault ? vault.id : 'null'}>
-            {vault ? (
-              <Item vault={vault} isNextToBoost={isNextToBoost} isNextToGov={isNextToGov} />
-            ) : null}
+            {vault ? <Item vault={vault} /> : null}
           </div>
         )}
       </CellMeasurer>

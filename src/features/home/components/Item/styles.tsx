@@ -16,19 +16,9 @@ export const styles = theme => ({
       flexDirection: 'row',
     },
     [theme.breakpoints.only('sm')]: {
-      marginRight: '10px',
-      marginLeft: '10px',
+      margin: '20px 10px 0px 10px',
       width: 'calc(100% - 20px)',
-    },
-  },
-  nextToBoost: {
-    [theme.breakpoints.only('sm')]: {
-      height: 380,
-    },
-  },
-   nextToGov: {
-    [theme.breakpoints.only('sm')]: {
-      height: 370,
+      height: 'calc(100% - 10px)',
     },
   },
   badges: {
@@ -202,6 +192,7 @@ export const styles = theme => ({
     textDecoration: 'none',
     color: '#FFF',
     width: '100%',
+    height: '100%',
   },
   apyContainer: {
     width: '100%',
@@ -256,7 +247,7 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       alignItems: 'center',
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: '10px 0',
       alignItems: 'flex-start',
     },
@@ -268,13 +259,13 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       alignItems: 'center',
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: '10px',
       alignItems: 'flex-start',
     },
   },
   marginBottom: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       margin: '0 0 10px 0',
     },
   },

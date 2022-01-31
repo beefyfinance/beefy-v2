@@ -79,7 +79,7 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       alignItems: 'center',
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       alignItems: 'flex-start',
       margin: '10px 0',
     },
@@ -91,7 +91,7 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       alignItems: 'center',
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: '10px',
       alignItems: 'flex-start',
     },

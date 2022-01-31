@@ -171,7 +171,7 @@ interface StyleProps {
   removeMarginButton: boolean;
 }
 const useStyles = makeStyles(styles as any);
-const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
+const _Item = ({ vault }) => {
   const item = vault;
 
   const isBoosted = vault.isBoosted;
@@ -234,17 +234,15 @@ const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
           [classes.withIsLongName]: item.name.length > 12,
           [classes.withBoosted]: isBoosted,
           [classes.withGovVault]: isGovVault,
-          [classes.nextToBoost]: isTwoColumns && isNextToBoost,
-          [classes.nextToGov]: isTwoColumns && isNextToGov,
         })}
       >
         <Grid container>
           {/* Title Container */}
-          <Grid item xs={12} lg={4}>
+          <Grid item xs={12} md={4} lg={4}>
             <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
               {/*Vault Image */}
               <div className={classes.infoContainer}>
-                <Hidden mdDown>
+                <Hidden smDown>
                   <AssetsImage
                     img={item.logo}
                     assets={item.assets}
@@ -254,7 +252,7 @@ const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
                 </Hidden>
                 <div className={classes.badgesContainter}>
                   <div className={classes.flexCenter}>
-                    <Hidden lgUp>
+                    <Hidden mdUp>
                       <AssetsImage
                         img={item.logo}
                         assets={item.assets}
@@ -308,9 +306,9 @@ const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
             </Link>
           </Grid>
           {/* Content Container */}
-          <Grid item xs={12} lg={8} className={classes.contentContainer}>
+          <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
             <Grid container>
-              <Grid item xs={6} lg={2}>
+              <Grid item xs={6} md={2} lg={2}>
                 <div className={clsx([classes.stat, classes.marginBottom])}>
                   <Typography className={classes.label}>{t('WALLET')}</Typography>
                   <ValueText
@@ -328,7 +326,7 @@ const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
                   )}
                 </div>
               </Grid>
-              <Grid item xs={6} lg={2}>
+              <Grid item xs={6} md={2} lg={2}>
                 {/*Boosted by */}
                 {isBoosted && userStaked && (
                   <div className={clsx([classes.stat, classes.marginBottom])}>
@@ -367,7 +365,7 @@ const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
                   apy: item.apy,
                 } as any)}
               />
-              <Grid item xs={6} lg={2}>
+              <Grid item xs={6} md={2} lg={2}>
                 {/*Tvl */}
                 <div className={classes.stat}>
                   <Typography className={classes.label}>{t('TVL')}</Typography>
@@ -379,7 +377,7 @@ const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
                   ) : null}
                 </div>
               </Grid>
-              <Grid item xs={6} lg={2}>
+              <Grid item xs={6} md={2} lg={2}>
                 {isGovVault ? (
                   <div className={classes.stat1}>
                     <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>

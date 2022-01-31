@@ -217,7 +217,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
 
   return (
     <>
-      <Grid item xs={6} lg={2}>
+      <Grid item xs={6} md={2} lg={2}>
         <LabeledStatWithTooltip
           value={formatted.totalApy}
           label={isGovVault ? t('APR') : t('APY')}
@@ -228,7 +228,7 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
           <YearlyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
         </LabeledStatWithTooltip>
       </Grid>
-      <Grid item xs={6} lg={2}>
+      <Grid item xs={6} md={2} lg={2}>
         <LabeledStatWithTooltip
           value={formatted.totalDaily}
           label={t('Vault-Daily')}
