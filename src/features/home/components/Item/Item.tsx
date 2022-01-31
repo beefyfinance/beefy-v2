@@ -227,191 +227,196 @@ const _Item = ({ vault }) => {
 
   return (
     <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
-      <div
-        className={clsx({
-          [classes.itemContainer]: true,
-          [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
-          [classes.withIsLongName]: item.name.length > 12,
-          [classes.withBoosted]: isBoosted,
-          [classes.withGovVault]: isGovVault,
-        })}
-      >
-        <Grid container>
-          {/* Title Container */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
-              {/*Vault Image */}
-              <div className={classes.infoContainer}>
-                <Hidden smDown>
-                  <AssetsImage
-                    img={item.logo}
-                    assets={item.assets}
-                    alt={item.name}
-                    {...({ size: '60px' } as any)}
-                  />
-                </Hidden>
-                <div className={classes.badgesContainter}>
-                  <div className={classes.flexCenter}>
-                    <Hidden mdUp>
-                      <AssetsImage
-                        img={item.logo}
-                        assets={item.assets}
-                        alt={item.name}
-                        {...({ size: '60px' } as any)}
-                      />
-                    </Hidden>
-                    <div>
-                      {isGovVault ? (
-                        <Typography className={classes.govVaultTitle}>
-                          EARN {item.earnedToken}
-                        </Typography>
-                      ) : null}
-                      <Typography variant="h4" className={classes.vaultName}>
-                        {item.name}
-                      </Typography>
-                    </div>
-                  </div>
-                  <div className={classes.badges}>
-                    {/*Network Image*/}
-                    <div className={classes.spacingMobile}>
-                      <img
-                        alt={item.network}
-                        src={require(`../../../../images/networks/${item.network}.svg`).default}
-                        width={24}
-                        height={24}
-                        style={{ width: '24px', height: '24px' }}
-                      />
-                    </div>
-                    {/* Vault Tags */}
-                    <DisplayTags
-                      isBoosted={isBoosted}
-                      tags={item.tags}
-                      isMoonpot={item.moonpot.isMoonpot}
+      <div className={classes.boosterSpace}>
+        <div
+          className={clsx({
+            [classes.itemContainer]: true,
+            [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
+            [classes.withIsLongName]: item.name.length > 12,
+            [classes.withBoosted]: isBoosted,
+            [classes.withGovVault]: isGovVault,
+          })}
+        >
+          <Grid container>
+            {/* Title Container */}
+            <Grid item xs={12} md={4} lg={4}>
+              <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+                {/*Vault Image */}
+                <div className={classes.infoContainer}>
+                  <Hidden smDown>
+                    <AssetsImage
+                      img={item.logo}
+                      assets={item.assets}
+                      alt={item.name}
+                      {...({ size: '60px' } as any)}
                     />
-                  </div>
-                  <span className={classes.platformContainer}>
-                    <Box sx={{ marginRight: '8px' }}>
-                      <Typography className={classes.platformLabel}>
-                        {t('Chain')}: <span>{item.network}</span>
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography className={classes.platformLabel}>
-                        {t('PLATFORM')}: <span>{item.platform}</span>
-                      </Typography>
-                    </Box>
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </Grid>
-          {/* Content Container */}
-          <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
-            <Grid container>
-              <Grid item xs={6} md={2} lg={2}>
-                <div className={clsx([classes.stat, classes.marginBottom])}>
-                  <Typography className={classes.label}>{t('WALLET')}</Typography>
-                  <ValueText
-                    blurred={blurred}
-                    value={_wallet.isGreaterThan(0) ? _wallet.toFixed(4) : _wallet.toFixed(0)}
-                    styleProps={styleProps}
-                  />
-                  {_wallet.isGreaterThan(0) && (
-                    <Typography className={classes.label}>
-                      <ValuePrice blurred={blurred} value={walletUsd} styleProps={styleProps} />
-                    </Typography>
-                  )}
-                  {deposited.balance.isGreaterThan(0) && _wallet.isLessThanOrEqualTo(0) && (
-                    <div className={classes.boostSpacer} />
-                  )}
-                </div>
-              </Grid>
-              <Grid item xs={6} md={2} lg={2}>
-                {/*Boosted by */}
-                {isBoosted && userStaked && (
-                  <div className={clsx([classes.stat, classes.marginBottom])}>
-                    <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-                    <ValueText value={boostedData.name} styleProps={styleProps} />
-                    <Typography className={classes.label}>
-                      <ValuePrice value={t('BOOST')} styleProps={styleProps} />
-                    </Typography>
-                  </div>
-                )}
-                {/* Deposit */}
-                {(!isBoosted || !userStaked) && (
-                  <div className={clsx([classes.stat, classes.marginBottom])}>
-                    <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-                    <ValueText blurred={blurred} value={_deposited} styleProps={styleProps} />
-                    {deposited.balance.isGreaterThan(0) && (
-                      <Typography className={classes.label}>
-                        <ValuePrice
-                          blurred={blurred}
-                          value={depositedUsd}
-                          styleProps={styleProps}
+                  </Hidden>
+                  <div className={classes.badgesContainter}>
+                    <div className={classes.flexCenter}>
+                      <Hidden mdUp>
+                        <AssetsImage
+                          img={item.logo}
+                          assets={item.assets}
+                          alt={item.name}
+                          {...({ size: '60px' } as any)}
                         />
+                      </Hidden>
+                      <div>
+                        {isGovVault ? (
+                          <Typography className={classes.govVaultTitle}>
+                            EARN {item.earnedToken}
+                          </Typography>
+                        ) : null}
+                        <Typography variant="h4" className={classes.vaultName}>
+                          {item.name}
+                        </Typography>
+                      </div>
+                    </div>
+                    <div className={classes.badges}>
+                      {/*Network Image*/}
+                      <div className={classes.spacingMobile}>
+                        <img
+                          alt={item.network}
+                          src={require(`../../../../images/networks/${item.network}.svg`).default}
+                          width={24}
+                          height={24}
+                          style={{ width: '24px', height: '24px' }}
+                        />
+                      </div>
+                      {/* Vault Tags */}
+                      <DisplayTags
+                        isBoosted={isBoosted}
+                        tags={item.tags}
+                        isMoonpot={item.moonpot.isMoonpot}
+                      />
+                    </div>
+                    <span className={classes.platformContainer}>
+                      <Box sx={{ marginRight: '8px' }}>
+                        <Typography className={classes.platformLabel}>
+                          {t('Chain')}: <span>{item.network}</span>
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Typography className={classes.platformLabel}>
+                          {t('PLATFORM')}: <span>{item.platform}</span>
+                        </Typography>
+                      </Box>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </Grid>
+            {/* Content Container */}
+            <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
+              <Grid container>
+                <Grid item xs={6} md={2} lg={2}>
+                  <div className={clsx([classes.stat, classes.marginBottom])}>
+                    <Typography className={classes.label}>{t('WALLET')}</Typography>
+                    <ValueText
+                      blurred={blurred}
+                      value={_wallet.isGreaterThan(0) ? _wallet.toFixed(4) : _wallet.toFixed(0)}
+                      styleProps={styleProps}
+                    />
+                    {_wallet.isGreaterThan(0) && (
+                      <Typography className={classes.label}>
+                        <ValuePrice blurred={blurred} value={walletUsd} styleProps={styleProps} />
                       </Typography>
                     )}
-                    {_wallet.isGreaterThan(0) && deposited.balance.isLessThan(0) && (
+                    {deposited.balance.isGreaterThan(0) && _wallet.isLessThanOrEqualTo(0) && (
                       <div className={classes.boostSpacer} />
                     )}
                   </div>
-                )}
-              </Grid>
-              {/**APY STATS*/}
-              <ApyStats
-                {...({
-                  isBoosted: isBoosted,
-                  launchpoolApr: boostedData,
-                  apy: item.apy,
-                } as any)}
-              />
-              <Grid item xs={6} md={2} lg={2}>
-                {/*Tvl */}
-                <div className={classes.stat1}>
-                  <Typography className={classes.label}>{t('TVL')}</Typography>
-                  <Typography className={classes.value}>{formattedTVL}</Typography>
-                  {isBoosted ||
-                  (deposited.balance.isGreaterThan(0) && !isTwoColumns) ||
-                  (_wallet.isGreaterThan(0) && !isTwoColumns) ? (
-                    <div className={classes.boostSpacer} />
-                  ) : null}
-                </div>
-              </Grid>
-              <Grid item xs={6} md={2} lg={2}>
-                {isGovVault ? (
-                  <div className={classes.stat1}>
-                    <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
-                    <ValueText
-                      blurred={blurred}
-                      value={(formatDecimals(rewardsEarned) ?? '') + ` ${item.earnedToken}`}
-                      styleProps={styleProps}
-                    />
-                    {deposited.balance.isGreaterThan(0) && (
+                </Grid>
+                <Grid item xs={6} md={2} lg={2}>
+                  {/*Boosted by */}
+                  {isBoosted && userStaked && (
+                    <div className={clsx([classes.stat, classes.marginBottom])}>
+                      <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
+                      <ValueText value={boostedData.name} styleProps={styleProps} />
                       <Typography className={classes.label}>
-                        <ValuePrice blurred={blurred} value={rewardPrice} styleProps={styleProps} />
+                        <ValuePrice value={t('BOOST')} styleProps={styleProps} />
                       </Typography>
-                    )}
-                  </div>
-                ) : (
-                  <div className={classes.stat1}>
-                    <div className={classes.tooltipLabel}>
-                      <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
-                      <div className={classes.tooltipHolder}>
-                        <Popover
-                          {...({
-                            title: t('Safety-ScoreWhat'),
-                            content: t('Safety-ScoreExpl'),
-                          } as any)}
-                        />
-                      </div>
                     </div>
-                    <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
+                  )}
+                  {/* Deposit */}
+                  {(!isBoosted || !userStaked) && (
+                    <div className={clsx([classes.stat, classes.marginBottom])}>
+                      <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
+                      <ValueText blurred={blurred} value={_deposited} styleProps={styleProps} />
+                      {deposited.balance.isGreaterThan(0) && (
+                        <Typography className={classes.label}>
+                          <ValuePrice
+                            blurred={blurred}
+                            value={depositedUsd}
+                            styleProps={styleProps}
+                          />
+                        </Typography>
+                      )}
+                      {_wallet.isGreaterThan(0) && deposited.balance.isLessThan(0) && (
+                        <div className={classes.boostSpacer} />
+                      )}
+                    </div>
+                  )}
+                </Grid>
+                {/**APY STATS*/}
+                <ApyStats
+                  {...({
+                    isBoosted: isBoosted,
+                    launchpoolApr: boostedData,
+                    apy: item.apy,
+                  } as any)}
+                />
+                <Grid item xs={6} md={2} lg={2}>
+                  {/*Tvl */}
+                  <div className={isGovVault ? classes.stat1 : classes.stat}>
+                    <Typography className={classes.label}>{t('TVL')}</Typography>
+                    <Typography className={classes.value}>{formattedTVL}</Typography>
+                    {isBoosted ||
+                    (deposited.balance.isGreaterThan(0) && !isTwoColumns) ||
+                    (_wallet.isGreaterThan(0) && !isTwoColumns) ? (
+                      <div className={classes.boostSpacer} />
+                    ) : null}
                   </div>
-                )}
+                </Grid>
+                <Grid item xs={6} md={2} lg={2}>
+                  {isGovVault ? (
+                    <div className={classes.stat1}>
+                      <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
+                      <Typography className={classes.value}>
+                        {(formatDecimals(rewardsEarned) ?? '') + ` ${item.earnedToken}`}
+                      </Typography>
+
+                      {deposited.balance.isGreaterThan(0) && (
+                        <Typography className={classes.label}>
+                          <ValuePrice
+                            blurred={blurred}
+                            value={rewardPrice}
+                            styleProps={styleProps}
+                          />
+                        </Typography>
+                      )}
+                    </div>
+                  ) : (
+                    <div className={classes.stat}>
+                      <div className={classes.tooltipLabel}>
+                        <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
+                        <div className={classes.tooltipHolder}>
+                          <Popover
+                            {...({
+                              title: t('Safety-ScoreWhat'),
+                              content: t('Safety-ScoreExpl'),
+                            } as any)}
+                          />
+                        </div>
+                      </div>
+                      <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
+                    </div>
+                  )}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </div>
       </div>
     </Link>
   );

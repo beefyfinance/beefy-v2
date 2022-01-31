@@ -16,10 +16,8 @@ export const styles = theme => ({
       flexDirection: 'row',
     },
     [theme.breakpoints.only('sm')]: {
-      marginLeft: '10px',
-      marginRight: '10px',
-      width: 'calc(100% - 20px)',
-      height: 'calc(100% - 20px)',
+      height: '100%',
+      margin: '0',
     },
   },
   badges: {
@@ -110,6 +108,7 @@ export const styles = theme => ({
     whiteSpace: 'nowrap',
   },
   platformLabel: {
+    display: 'flex',
     fontWeight: 600,
     fontSize: '12px',
     color: theme.palette.text.disabled,
@@ -191,6 +190,12 @@ export const styles = theme => ({
     width: '100%',
     height: '100%',
   },
+  removeLinkStylesVault: {
+    textDecoration: 'none',
+    color: '#FFF',
+    width: '100%',
+    height: '100%',
+  },
   apyContainer: {
     width: '100%',
     display: 'flex',
@@ -245,7 +250,7 @@ export const styles = theme => ({
       alignItems: 'center',
     },
     [theme.breakpoints.down('sm')]: {
-      margin: '10px 0',
+      marginTop: '20px',
       alignItems: 'flex-start',
     },
   },
@@ -257,7 +262,8 @@ export const styles = theme => ({
       alignItems: 'center',
     },
     [theme.breakpoints.down('sm')]: {
-      marginTop: '10px',
+      paddingTop: '10px',
+      paddingBottom: '24px',
       alignItems: 'flex-start',
       height: '100%',
     },
@@ -359,6 +365,12 @@ export const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       margin: 0,
       marginTop: theme.spacing(3),
+    },
+  },
+  boosterSpace: {
+    [theme.breakpoints.only('sm')]: {
+      height: '100%',
+      padding: '20px 10px 0px 10px',
     },
   },
 });
