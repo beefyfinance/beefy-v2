@@ -28,36 +28,6 @@ export const Stats = ({ stats, blurred }) => {
 
   const formatStat = value => (empty ? new BigNumber(0).toFixed(0) : formatUsd(value.toNumber()));
 
-  console.log({
-    deposited: stats.deposited.toNumber(),
-    totalYield: stats.totalYield.toNumber(),
-    daily: stats.daily.toNumber(),
-    monthly: stats.monthly.toNumber(),
-  });
-  const portfoliov2 = useSelector((state: BeefyState) => {
-    if (!stats.deposited.isZero()) {
-      //debugger;
-      console.log({
-        selectIsConfigAvailable: selectIsConfigAvailable(state),
-        selectIsPriceAvailable: selectIsPriceAvailable(state),
-      });
-    }
-    return selectUserGlobalStats(state);
-  });
-  console.log({
-    portfoliov1: {
-      deposited: stats.deposited.toNumber(),
-      totalYield: stats.totalYield.toNumber(),
-      daily: stats.daily.toNumber(),
-      monthly: stats.monthly.toNumber(),
-    },
-    postfoliov2: {
-      deposited: portfoliov2.deposited.toNumber(),
-      totalYield: portfoliov2.totalYield.toNumber(),
-      daily: portfoliov2.daily.toNumber(),
-      monthly: portfoliov2.monthly.toNumber(),
-    },
-  });
   return (
     <Grid container className={classes.stats}>
       <Box className={classes.stat}>
