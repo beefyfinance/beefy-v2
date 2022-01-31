@@ -359,6 +359,14 @@ const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
                   </div>
                 )}
               </Grid>
+              {/**APY STATS*/}
+              <ApyStats
+                {...({
+                  isBoosted: isBoosted,
+                  launchpoolApr: boostedData,
+                  apy: item.apy,
+                } as any)}
+              />
               <Grid item xs={6} lg={2}>
                 {/*Tvl */}
                 <div className={classes.stat}>
@@ -371,14 +379,6 @@ const _Item = ({ vault, isNextToBoost, isNextToGov }) => {
                   ) : null}
                 </div>
               </Grid>
-              {/**APY STATS*/}
-              <ApyStats
-                {...({
-                  isBoosted: isBoosted,
-                  launchpoolApr: boostedData,
-                  apy: item.apy,
-                } as any)}
-              />
               <Grid item xs={6} lg={2}>
                 {isGovVault ? (
                   <div className={classes.stat1}>
