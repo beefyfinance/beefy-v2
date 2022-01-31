@@ -27,7 +27,11 @@ const _DisplayTags = ({ tags, isBoosted, isMoonpot }) => {
       {isMoonpot && (
         <div className={classes.spacingMobile} key={'pots'}>
           <Box className={classes.tags}>
-            <img src={require('../../images/pots.svg').default} alt="pots" />{' '}
+            <img
+              className={classes.tagImage}
+              src={require('../../images/pots.svg').default}
+              alt="pots"
+            />{' '}
             <Typography className={classes.text}>{t('VaultTag-Moonpot')}</Typography>
           </Box>
         </div>

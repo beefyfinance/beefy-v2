@@ -23,12 +23,12 @@ export const styles = theme => ({
   },
   nextToBoost: {
     [theme.breakpoints.only('sm')]: {
-      height: 380,
+      //height: 380,
     },
   },
-   nextToGov: {
+  nextToGov: {
     [theme.breakpoints.only('sm')]: {
-      height: 370,
+      //height: 370,
     },
   },
   badges: {

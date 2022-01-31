@@ -59,8 +59,6 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     this._renderVault = this._renderVault.bind(this);
     // debounce to avoid constant reloading on resize
     this._onResize = debounce(this._onResize.bind(this), 100);
-    // debounce to avoid constant reloading on resize
-    this._onScroll = debounce(this._onScroll.bind(this), 250);
   }
 
   render() {
@@ -74,10 +72,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
                   autoHeight
                   height={height}
                   isScrolling={isScrolling}
-                  onScroll={(...params) => {
-                    this._onScroll();
-                    return onChildScroll(...params);
-                  }}
+                  onScroll={onChildScroll}
                   overscanRowCount={2}
                   rowCount={ceil(this.props.vaults.length / this.props.columns)}
                   rowHeight={this.cache.rowHeight}
@@ -86,7 +81,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
                   width={width}
                   deferredMeasurementCache={this.cache}
                   columnCount={this.props.columns}
-                  columnWidth={width / this.props.columns}
+                  columnWidth={Math.floor(width / this.props.columns)}
                   style={{ outline: 'none' }}
                   ref={this.gridRef}
                 />
@@ -125,7 +120,11 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
       >
         {({ registerChild }) => (
           <div
-            style={{ maxWidth: this.props.columns === 2 ? '50%' : undefined, ...style }}
+            // make sure first render occur at 50% width if we have 2 cols
+            style={{
+              ...style,
+              maxWidth: style.width === 'auto' && this.props.columns === 2 ? '50%' : style.maxWidth,
+            }}
             ref={registerChild}
             data-id={vault ? vault.id : 'null'}
           >
@@ -166,13 +165,6 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     if (this.gridRef.current) {
       this.gridRef.current.forceUpdate();
     }
-  }
-
-  _onScroll() {
-    // list need rework, especially in 2 column mode where each cell should correspond
-    // to 2 vaults, hacking 2 column with 1 vault per cell makes everything buggy
-    // so this is a temporary fix until it's fixed
-    this.cache.clearAll();
   }
 }
 
