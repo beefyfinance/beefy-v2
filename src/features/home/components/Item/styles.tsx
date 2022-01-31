@@ -303,6 +303,9 @@ export const styles = theme => ({
       [theme.breakpoints.up('lg')]: {
         fontSize: '18px',
       },
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '15px',
+      },
     },
   },
   withBoosted: {
