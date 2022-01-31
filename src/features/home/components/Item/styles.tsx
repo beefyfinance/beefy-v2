@@ -15,9 +15,12 @@ export const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     },
-    [theme.breakpoints.only('sm')]: {
+    [theme.breakpoints.only('md')]: {
       marginRight: '10px',
       marginLeft: '10px',
+      width: 'auto',
+    },
+    [theme.breakpoints.only('sm')]: {
       width: 'calc(100% - 20px)',
     },
   },

@@ -171,7 +171,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
 const VaultsList = memo(function HomeVaultsList() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
+  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 1279px)');
   const isPoolsLoading = useSelector((state: any) => state.vaultReducer.isPoolsLoading);
   const platforms = useSelector((state: any) => state.vaultReducer.platforms);
   const { sortedVaults, filterConfig, setFilterConfig, filteredVaultsCount, allVaultsCount } =
