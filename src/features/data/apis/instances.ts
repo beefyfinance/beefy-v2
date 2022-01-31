@@ -2,7 +2,7 @@ import { BeefyAPI } from './beefy';
 import { ConfigAPI } from './config';
 import Web3 from 'web3';
 import * as Comlink from 'comlink';
-import { BalanceAPI } from './balance';
+import { BalanceAPI } from './balance/balance';
 import { AllowanceAPI } from './allowance';
 import { WalletConnect, WalletConnectOptions } from './wallet-connect';
 import { sample } from 'lodash';
@@ -12,10 +12,14 @@ import { ContractDataAPI } from './contract-data/contract-data';
 import { ContractDataMcV2API } from './contract-data/contract-data-multicallv2';
 import { ChainEntity } from '../entities/chain';
 import { IContractDataApi } from './contract-data/contract-data-types';
-import { featureFlag_getContractDataApiImplem } from '../utils/feature-flags';
+import {
+  featureFlag_getBalanceApiImplem,
+  featureFlag_getContractDataApiImplem,
+} from '../utils/feature-flags';
 // @ts-ignore
 // eslint-disable-next-line
 import ContractDataWorker from 'worker-loader!./contract-data/worker/contract-data.webworker.ts';
+import { BalanceMcV2API } from './balance/balance-multicallv2';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -51,6 +55,7 @@ export const getContractDataApi = createFactoryWithCacheByChain((chain): IContra
   const web3 = getWeb3Instance(chain);
 
   const targetImplem = featureFlag_getContractDataApiImplem();
+
   if (targetImplem === 'eth-multicall') {
     console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
     return new ContractDataAPI(web3, chain);
@@ -81,8 +86,21 @@ export const getContractDataApi = createFactoryWithCacheByChain((chain): IContra
 
 export const getBalanceApi = createFactoryWithCacheByChain(chain => {
   const web3 = getWeb3Instance(chain);
-  console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
-  return new BalanceAPI(web3, chain);
+
+  const targetImplem = featureFlag_getBalanceApiImplem();
+
+  if (targetImplem === 'eth-multicall') {
+    console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
+    return new BalanceAPI(web3, chain);
+  } else if (targetImplem === 'new-multicall') {
+    if (chain.fetchBalancesAddress) {
+      console.debug(`Instanciating BalanceMcV2API for chain ${chain.id}`);
+      return new BalanceMcV2API(web3, chain as ChainEntity & { fetchBalancesAddress: string });
+    } else {
+      console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
+      return new BalanceAPI(web3, chain);
+    }
+  }
 });
 
 export const getAllowanceApi = createFactoryWithCacheByChain(chain => {

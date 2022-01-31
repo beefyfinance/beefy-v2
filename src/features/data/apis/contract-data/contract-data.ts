@@ -11,7 +11,7 @@ import { BoostEntity } from '../../entities/boost';
 import { getBoostContractInstance, getVaultContractInstance } from './worker/instances';
 import {
   BoostContractData,
-  FetchAllResult,
+  FetchAllContractDataResult,
   GovVaultContractData,
   IContractDataApi,
   StandardVaultContractData,
@@ -28,7 +28,7 @@ export class ContractDataAPI implements IContractDataApi {
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
     boosts: BoostEntity[]
-  ): Promise<FetchAllResult> {
+  ): Promise<FetchAllContractDataResult> {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
     const { calls: standardVaultCalls, formatter: standardVaultFormatter } =
@@ -46,7 +46,7 @@ export class ContractDataAPI implements IContractDataApi {
       | ({ type: 'vault-standard' } & AllValuesAsString<StandardVaultContractData>);
     const [results] = (await mc.all([calls])) as ResultType[][];
 
-    const res: FetchAllResult = {
+    const res: FetchAllContractDataResult = {
       boosts: [],
       govVaults: [],
       standardVaults: [],

@@ -10,7 +10,7 @@ import { isTokenErc20 } from '../../entities/token';
 import {
   BoostContractData,
   FetchAllContractDataWorkerResults,
-  FetchAllResult,
+  FetchAllContractDataResult,
   GovVaultContractData,
   IContractDataApi,
   StandardVaultContractData,
@@ -27,7 +27,7 @@ export class ContractDataInWebWorkerAPI implements IContractDataApi {
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
     boosts: BoostEntity[]
-  ): Promise<FetchAllResult> {
+  ): Promise<FetchAllContractDataResult> {
     // pass as little data as possible to the web worker
     const workerParams /*: FetchAllContractDataWorkerParams*/ = {
       chain: this.chain,
@@ -55,7 +55,7 @@ export class ContractDataInWebWorkerAPI implements IContractDataApi {
     );
 
     // format string results
-    const res: FetchAllResult = {
+    const res: FetchAllContractDataResult = {
       boosts: strRes.boosts.map(result => {
         return {
           id: result.id,

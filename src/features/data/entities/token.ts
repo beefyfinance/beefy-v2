@@ -27,7 +27,7 @@ export interface TokenErc20 {
  * The gas token of the base chain
  * Doesn't have a contract address
  */
-interface TokenNative {
+export interface TokenNative {
   id: string;
   symbol: string;
   chainId: ChainEntity['id'];

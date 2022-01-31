@@ -116,6 +116,7 @@ export interface ChainConfig {
   explorerUrl: string;
   multicallAddress: string;
   fetchContractDataAddress?: string;
+  fetchBalancesAddress?: string;
   supportedWallets: string[];
   providerName: string;
   walletSettings: {

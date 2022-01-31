@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers/storev2';
-import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../apis/balance';
+import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../apis/balance/balance-types';
 import { getBalanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
@@ -44,16 +44,10 @@ export const fetchAllBalanceAction = createAsyncThunk<
   );
   const govVaults = selectAllGovVaultsByChainId(state, chain.id);
 
-  const tokenBalance = await api.fetchTokenBalances(tokens, walletAddress);
-  const govVaultBalance = await api.fetchGovVaultPoolsBalance(govVaults, walletAddress);
-  const boostBalance = await api.fetchBoostBalance(boosts, walletAddress);
+  const data = await api.fetchAllBalances(tokens, govVaults, boosts, walletAddress);
   return {
     chainId,
-    data: {
-      boosts: boostBalance,
-      tokens: tokenBalance,
-      govVaults: govVaultBalance,
-    },
+    data,
     state: getState(),
   };
 });

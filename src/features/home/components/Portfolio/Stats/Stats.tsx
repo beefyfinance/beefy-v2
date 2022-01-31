@@ -27,7 +27,23 @@ export const Stats = ({ stats, blurred }) => {
   );
 
   const formatStat = value => (empty ? new BigNumber(0).toFixed(0) : formatUsd(value.toNumber()));
-
+  useSelector((state: BeefyState) => {
+    const v2 = selectUserGlobalStats(state);
+    console.log({
+      v1: {
+        deposited: stats.deposited.toNumber(),
+        totalYield: stats.totalYield.toNumber(),
+        daily: stats.daily.toNumber(),
+        monthly: stats.monthly.toNumber(),
+      },
+      v2: {
+        deposited: v2.deposited.toNumber(),
+        totalYield: v2.totalYield.toNumber(),
+        daily: v2.daily.toNumber(),
+        monthly: v2.monthly.toNumber(),
+      },
+    });
+  });
   return (
     <Grid container className={classes.stats}>
       <Box className={classes.stat}>

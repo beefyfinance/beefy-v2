@@ -10,7 +10,7 @@ import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
 import {
   BoostContractData,
-  FetchAllResult,
+  FetchAllContractDataResult,
   GovVaultContractData,
   IContractDataApi,
   StandardVaultContractData,
@@ -29,7 +29,7 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
     boosts: BoostEntity[]
-  ): Promise<FetchAllResult> {
+  ): Promise<FetchAllContractDataResult> {
     const mc = new this.web3.eth.Contract(
       BeefyV2AppMulticallAbi,
       this.chain.fetchContractDataAddress
@@ -58,7 +58,7 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
 
     // now reasign results
 
-    const res: FetchAllResult = {
+    const res: FetchAllContractDataResult = {
       boosts: [],
       govVaults: [],
       standardVaults: [],

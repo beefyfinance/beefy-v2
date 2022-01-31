@@ -9,7 +9,7 @@ export interface IContractDataApi {
     standardVaults: VaultStandard[],
     govVaults: VaultGov[],
     boosts: BoostEntity[]
-  ): Promise<FetchAllResult>;
+  ): Promise<FetchAllContractDataResult>;
 }
 
 export interface MinimalEntity {
@@ -66,7 +66,7 @@ export interface BoostContractData {
   periodFinish: number;
 }
 
-export interface FetchAllResult {
+export interface FetchAllContractDataResult {
   boosts: BoostContractData[];
   standardVaults: StandardVaultContractData[];
   govVaults: GovVaultContractData[];
