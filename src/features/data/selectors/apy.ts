@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { memoize } from 'lodash';
 import { byDecimals } from '../../../helpers/format';
 import { BeefyState } from '../../redux/reducers/storev2';
-import { ApyData, isGovVaultApy, isStandardVaultApy } from '../apis/beefy';
+import { ApyData, isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isGovVault, VaultEntity } from '../entities/vault';
 import {
   selectBoostUserBalanceInToken,
@@ -11,7 +11,7 @@ import {
   selectStandardVaultUserBalanceInToken,
   selectGovVaultUserBalance,
 } from './balance';
-import { selectActiveVaultBoostId, selectBoostById, selectIsVaultBoosted } from './boosts';
+import { selectActiveVaultBoostIds, selectBoostById, selectIsVaultBoosted } from './boosts';
 import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
@@ -39,16 +39,16 @@ export const selectGovVaultApr = createSelector(
   }
 );
 
-export const selectStandardVaultApy = createSelector(
+export const selectStandardVaultTotalApy = createSelector(
   [(state: BeefyState, vaultId: VaultEntity['id']) => state.biz.apy.byVaultId[vaultId]],
   vaultApy => {
     if (vaultApy === undefined) {
       return 0;
     }
-    if (!isStandardVaultApy(vaultApy)) {
-      throw new Error('Apy is not a standard vault apy');
+    if (!isStandardVaultApy(vaultApy) && !isMaxiVaultApy(vaultApy)) {
+      throw new Error('Apy is not a standard vault apy and not a maxi vault apy');
     }
-    return vaultApy.vaultApy;
+    return vaultApy.totalApy;
   }
 );
 
@@ -74,7 +74,9 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
     const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
     if (isGovVault(vault)) {
       const tokenBalance = selectGovVaultUserBalance(state, vault.chainId, vault.id);
-      const usdBalance = tokenBalance.times(oraclePrice);
+      const token = selectTokenById(state, vault.chainId, vault.oracleId);
+      const decimaledTokenBalance = byDecimals(tokenBalance, token.decimals);
+      const usdBalance = decimaledTokenBalance.times(oraclePrice);
       vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
     } else {
       const mooTokenBalance = selectStandardVaultUserBalanceInToken(state, vault.chainId, vault.id);
@@ -89,8 +91,8 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
       vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
     }
 
-    if (selectIsVaultBoosted(state, vault.id)) {
-      const boost = selectBoostById(state, selectActiveVaultBoostId(state, vault.id));
+    for (const boostId of selectActiveVaultBoostIds(state, vault.id)) {
+      const boost = selectBoostById(state, boostId);
       const mooTokenBalance = selectBoostUserBalanceInToken(state, vault.chainId, boost.id);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
       const vaultToken = selectTokenById(state, vault.chainId, vault.oracleId);
@@ -114,7 +116,7 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
 
       newGlobalStats.daily = newGlobalStats.daily.plus(dailyUsd);
     } else {
-      const apy = selectStandardVaultApy(state, vault.id);
+      const apy = selectStandardVaultTotalApy(state, vault.id);
       const dailyApr = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
       const dailyUsd = vaultUsdBalance.times(dailyApr);
       newGlobalStats.daily = newGlobalStats.daily.plus(dailyUsd);

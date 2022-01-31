@@ -37,21 +37,21 @@ let pollStopFns: PollStop[] = [];
 
 // todo: put this in a config
 const chains = [
-  //'arbitrum',
-  //'avax',
-  //'celo',
-  //'cronos',
+  'arbitrum',
+  'avax',
+  'celo',
+  'cronos',
   'fantom',
-  //'fuse',
+  'fuse',
   'harmony',
-  //'heco',
-  //'metis',
-  //'moonriver',
+  'heco',
+  'metis',
+  'moonriver',
   'polygon',
   // fetch BSC last, his multicall split in multiple calls
   // and that takes up all 6 simulatneous network calls
   // putting it last allow all other data to arrive faster
-  //'bsc',
+  'bsc',
 ].map(id => ({ id }));
 
 /**

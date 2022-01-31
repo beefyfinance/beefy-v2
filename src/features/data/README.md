@@ -70,7 +70,7 @@
     [ ] reorganize files?
     [ ] remove unnecessary comments
     [x] ensure TVL and APY is computed properly
-    [ ] ensure user balance is computed properly
+    [x] ensure user balance is computed properly
     [ ] ensure user allowances are computed properly
     [ ] make tests run in CI
 
@@ -133,7 +133,9 @@ BONUS:
 
 # WEIRD STUFF / QUESTIONS
 
-nothing for now!
+- scream-ftm and 0xdao-wftm-eol have an oracleId set to "WFTM" but no "tokenAddress" set. I have hardcoded that W+<native> implies native but I'm sure there is something fishy.
+- Why wait to apply decimals if we use big numbers everywhere? Ex: token has 18 decimals, api fetch balance and returns the raw api value. Should the api return a big number with decimal applied to simplify the rest of the app?
+- Is there a good test address? someone who deposited in every single vault and boost on all chains
 
 # ANSWERED
 

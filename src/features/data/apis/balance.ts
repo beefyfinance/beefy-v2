@@ -59,6 +59,11 @@ export class BalanceAPI {
           amount: tokenContract.methods.getEthBalance(walletAddress),
         });
       } else if (isTokenErc20(token)) {
+        // TODO: temporary check until we can sort out the WFTM mystery
+        if (!token.contractAddress) {
+          console.error(`Could not find token contractAddress: ${token.id}`);
+          continue;
+        }
         const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
         calls.push({
           tokenId: token.id,
@@ -70,7 +75,6 @@ export class BalanceAPI {
         );
       }
     }
-
     const [results] = (await mc.all([calls])) as AllValuesAsString<TokenBalance>[][];
 
     // format strings as numbers
@@ -98,6 +102,7 @@ export class BalanceAPI {
         rewards: poolContract.methods.earned(walletAddress),
       });
     }
+
     const [results] = (await mc.all([calls])) as AllValuesAsString<GovVaultPoolBalance>[][];
 
     // format strings as numbers
@@ -126,6 +131,7 @@ export class BalanceAPI {
         rewards: earnContract.methods.earned(walletAddress),
       });
     }
+
     const [results] = (await mc.all([calls])) as AllValuesAsString<BoostBalance>[][];
 
     // format strings as numbers

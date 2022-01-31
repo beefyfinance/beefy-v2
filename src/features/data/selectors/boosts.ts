@@ -35,16 +35,12 @@ export const selectIsVaultBoosted = createSelector(
   vaultIdBoost => vaultIdBoost !== undefined && vaultIdBoost.activeBoostsIds.length > 0
 );
 
-export const selectActiveVaultBoostId = createSelector(
+export const selectActiveVaultBoostIds = createSelector(
   [(state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId]],
   vaultIdBoost => {
-    const boosts = vaultIdBoost.activeBoostsIds;
-    if (boosts.length > 1) {
-      throw new Error('Vault has more than one active boost');
+    if (!vaultIdBoost) {
+      return [];
     }
-    if (boosts.length <= 0) {
-      throw new Error('Vault has no active boost');
-    }
-    return boosts[0];
+    return vaultIdBoost.activeBoostsIds;
   }
 );

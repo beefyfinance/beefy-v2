@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers/storev2';
+import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 
 export const selectIsWalletConnected = createSelector(
   // get a tiny bit of the data
@@ -13,6 +14,7 @@ export const selectWalletAddress = createSelector(
   (state: BeefyState) => state.user.wallet.address,
   // last function receives previous function outputs as parameters
   address => {
+    address = featureFlag_walletAddressOverride(address);
     if (address === null) {
       throw new Error("Wallet isn't connected");
     }

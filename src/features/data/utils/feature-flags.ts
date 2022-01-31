@@ -33,3 +33,12 @@ export function featureFlag_scenarioTimings() {
   const params = new URLSearchParams(window.location.search);
   return params.has('__scenario_timings');
 }
+
+export function featureFlag_walletAddressOverride(walletAddress: string | null | undefined) {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('__view_as')) {
+    return params.get('__view_as');
+  } else {
+    return walletAddress;
+  }
+}

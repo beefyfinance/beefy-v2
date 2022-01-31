@@ -86,6 +86,11 @@ export class AllowanceAPI {
         console.warn(`Token ${token.id} is not erc20, can't fetch allowance`);
         continue;
       }
+      // TODO: temporary check until we can sort out the WFTM mystery
+      if (!token.contractAddress) {
+        console.error(`Could not find token contractAddress: ${token.id}`);
+        continue;
+      }
       const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
       calls.push({
         vaultId: vault.id, // not sure about this
