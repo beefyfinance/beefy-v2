@@ -5654,34 +5654,6 @@ export const pools = [
     network: "polygon"
   },
   {
-    id: "quick-mausdc-usdc-eol",
-    logo: "polygon/maUSDC-USDC.png",
-    name: "maUSDC-USDC LP",
-    token: "maUSDC-USDC QLP",
-    tokenDescription: "QuickSwap",
-    tokenAddress: "0x7295304b10740BA8e037826787d3e9386FD99925",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooQuickmaUSDC-USDC",
-    earnedTokenAddress: "0x8c2d54BA94f4638f1bb91f623F378B66d6023324",
-    earnContractAddress: "0x8c2d54BA94f4638f1bb91f623F378B66d6023324",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "quick-mausdc-usdc",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "QuickSwap",
-    assets: [
-      "maUSDC",
-      "USDC"
-    ],
-    addLiquidityUrl: "https://quickswap.exchange/#/add/0x9719d867A500Ef117cC201206B8ab51e794d3F82/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x9719d867a500ef117cc201206b8ab51e794d3f82",
-    stratType: "StratLP",
-    network: "polygon"
-  },
-  {
     id: "quick-aave-eth",
     logo: "polygon/AAVE-ETH.png",
     name: "AAVE-ETH LP",

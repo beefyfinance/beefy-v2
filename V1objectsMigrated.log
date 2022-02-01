@@ -1,62 +1,46 @@
 [
   {
-    "id": "bsc vault: banana-sushi-eth",
+    "id": "bsc vault: baby-ftm-usdt",
     "type": "Added"
   },
   {
-    "id": "bsc vault: bison-bison-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: bison-bison-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-wavax-xava",
+    "id": "fantom vault: 0xdao-xscream",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-wavax-cook",
+    "id": "polygon vault: quick-mausdc-usdc-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax vault: grape-grape-mim",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-wavax-dcau",
+    "id": "avax vault: grape-wine-mim",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-wavax-hec",
+    "id": "avax vault: png-usdc.e-wavax",
     "type": "Added"
   },
   {
-    "id": "avax vault: png-wavax-frax",
+    "id": "avax vault: png-png-usdc.e",
     "type": "Added"
   },
   {
-    "id": "avax vault: png-link.e-wavax",
+    "id": "avax vault: png-png-wavax",
     "type": "Added"
   },
   {
-    "id": "avax vault: png-jewel-wavax",
+    "id": "fuse vault: sushi-sushi-weth",
     "type": "Added"
   },
   {
-    "id": "moonriver vault: finn-finn-doge-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-solar-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: sushi-wfuse-weth",
+    "id": "fuse vault: sushi-wfuse-usdc",
     "type": "Added"
   },
   {
-    "id": "bsc boost: moo_bison-bison-wbnb-bishares",
-    "type": "synced"
+    "id": "avax boost: moo_AVAX-grape",
+    "type": "Added"
   }
 ]

@@ -6093,5 +6093,42 @@ export const pools = [
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
     network: "fantom",
     retireReason: "rewards"
+  },
+  {
+    id: "0xdao-xscream",
+    logo: "single-assets/xSCREAM.png",
+    name: "xSCREAM",
+    token: "xSCREAM",
+    tokenDescription: "0xDAO",
+    tokenAddress: "0xe3D17C7e840ec140a7A51ACA351a482231760824",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDxSCREAM",
+    earnedTokenAddress: "0x7926eA7aba64AF38297b832DEc713804f99039fD",
+    earnContractAddress: "0x7926eA7aba64AF38297b832DEc713804f99039fD",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "xSCREAM",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "xSCREAM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://scream.sh/stake",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
+    network: "fantom"
   }
 ];

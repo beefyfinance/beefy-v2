@@ -18615,5 +18615,41 @@ export const pools = [
     buyTokenUrl: "https://dex.apeswap.finance/#/swap?outputCurrency=0x19A6Da6e382b85F827088092a3DBe864d9cCba73",
     network: "bsc",
     retireReason: "rewards"
+  },
+  {
+    id: "baby-ftm-usdt",
+    name: "FTM-USDT LP",
+    token: "FTM-USDT LP",
+    tokenDescription: "BabySwap",
+    tokenAddress: "0xc85471a1bC8ae143b29fcDe6539507FBED075b15",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBabyFTM-USDT",
+    earnedTokenAddress: "0x45b37a28d6eFb45C257Fc15d9F08AA7D32568eE7",
+    earnContractAddress: "0x45b37a28d6eFb45C257Fc15d9F08AA7D32568eE7",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "baby-ftm-usdt",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "FTM",
+      "USDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0xAD29AbB318791D579433D831ed122aFeAf29dcfe",
+    buyTokenUrl: "https://exchange.babyswap.finance/#/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0xAD29AbB318791D579433D831ed122aFeAf29dcfe",
+    network: "bsc"
   }
 ];
