@@ -27,7 +27,6 @@ import { Insurace } from './components/InsuraceCard';
 import { Spirit } from './components/SpiritCard';
 import { Moonpot } from './components/MoonportCard';
 
-
 //allow the Harmony-blockchain entries in the address-book to be accessed via the normal
 //  "network" property values used in our core vault-object schema
 const addressBook = { ..._addressBook, harmony: _addressBook.one };
@@ -263,12 +262,12 @@ export const Vault = () => {
                 {item.isBinSpirit && (
                   <Box>
                     <Spirit item={item} />
-
+                  </Box>
+                )}
                 {/*Moonpot Card */}
                 {item.moonpot.isMoonpot && (
                   <Box>
                     <Moonpot name={item.token} item={item.moonpot.data} />
-
                   </Box>
                 )}
                 {/* Insurace card */}
