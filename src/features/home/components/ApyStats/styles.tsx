@@ -81,18 +81,6 @@ export const styles = theme => ({
       margin: '10px 0',
     },
   },
-  stat1: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    [theme.breakpoints.up('md')]: {
-      alignItems: 'center',
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginTop: '10px',
-      alignItems: 'flex-start',
-    },
-  },
   tooltipLabel: {
     display: 'flex',
     alignItems: 'center',

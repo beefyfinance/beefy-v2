@@ -33,4 +33,8 @@ export const styles = theme => ({
     fontWeight: 600,
     color: theme.palette.text.primary,
   },
+  tagImage: {
+    width: '20px',
+    height: '16px',
+  },
 });

@@ -227,89 +227,89 @@ const _Item = ({ vault }) => {
 
   return (
     <div className={classes.boosterSpace}>
-      <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
-        <div
-          className={clsx({
-            [classes.itemContainer]: true,
-            [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
-            [classes.withIsLongName]: item.name.length > 12,
-            [classes.withBoosted]: isBoosted,
-            [classes.withGovVault]: isGovVault,
-          })}
-        >
-          <Grid container>
-            {/* Title Container */}
-            <Grid item xs={12} md={4} lg={4}>
-              <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
-                {/*Vault Image */}
-                <div className={classes.infoContainer}>
-                  <Hidden smDown>
-                    <AssetsImage
-                      img={item.logo}
-                      assets={item.assets}
-                      alt={item.name}
-                      {...({ size: '60px' } as any)}
-                    />
-                  </Hidden>
-                  <div className={classes.badgesContainter}>
-                    <div className={classes.flexCenter}>
-                      <Hidden mdUp>
-                        <AssetsImage
-                          img={item.logo}
-                          assets={item.assets}
-                          alt={item.name}
-                          {...({ size: '60px' } as any)}
-                        />
-                      </Hidden>
-                      <div>
-                        {isGovVault ? (
-                          <Typography className={classes.govVaultTitle}>
-                            EARN {item.earnedToken}
-                          </Typography>
-                        ) : null}
-                        <Typography variant="h4" className={classes.vaultName}>
-                          {item.name}
+      <div
+        className={clsx({
+          [classes.itemContainer]: true,
+          [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
+          [classes.withIsLongName]: item.name.length > 12,
+          [classes.withBoosted]: isBoosted,
+          [classes.withGovVault]: isGovVault,
+        })}
+      >
+        <Grid container>
+          {/* Title Container */}
+          <Grid item xs={12} md={4} lg={4}>
+            <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+              {/*Vault Image */}
+              <div className={classes.infoContainer}>
+                <Hidden smDown>
+                  <AssetsImage
+                    img={item.logo}
+                    assets={item.assets}
+                    alt={item.name}
+                    {...({ size: '60px' } as any)}
+                  />
+                </Hidden>
+                <div className={classes.badgesContainter}>
+                  <div className={classes.flexCenter}>
+                    <Hidden mdUp>
+                      <AssetsImage
+                        img={item.logo}
+                        assets={item.assets}
+                        alt={item.name}
+                        {...({ size: '60px' } as any)}
+                      />
+                    </Hidden>
+                    <div>
+                      {isGovVault ? (
+                        <Typography className={classes.govVaultTitle}>
+                          EARN {item.earnedToken}
                         </Typography>
-                      </div>
+                      ) : null}
+                      <Typography variant="h4" className={classes.vaultName}>
+                        {item.name}
+                      </Typography>
                     </div>
-                    <div className={classes.badges}>
-                      {/*Network Image*/}
-                      <div className={classes.spacingMobile}>
-                        <img
-                          alt={item.network}
-                          src={require(`../../../../images/networks/${item.network}.svg`).default}
-                          width={24}
-                          height={24}
-                          style={{ width: '24px', height: '24px' }}
-                        />
-                      </div>
-                      {/* Vault Tags */}
-                      <DisplayTags
-                        isBoosted={isBoosted}
-                        tags={item.tags}
-                        isMoonpot={item.moonpot.isMoonpot}
+                  </div>
+                  <div className={classes.badges}>
+                    {/*Network Image*/}
+                    <div className={classes.spacingMobile}>
+                      <img
+                        alt={item.network}
+                        src={require(`../../../../images/networks/${item.network}.svg`).default}
+                        width={24}
+                        height={24}
+                        style={{ width: '24px', height: '24px' }}
                       />
                     </div>
-                    <span className={classes.platformContainer}>
-                      <Box sx={{ marginRight: '8px' }}>
-                        <Typography className={classes.platformLabel}>
-                          {t('Chain')}: <span>{item.network}</span>
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography className={classes.platformLabel}>
-                          {t('PLATFORM')}: <span>{item.platform}</span>
-                        </Typography>
-                      </Box>
-                    </span>
+                    {/* Vault Tags */}
+                    <DisplayTags
+                      isBoosted={isBoosted}
+                      tags={item.tags}
+                      isMoonpot={item.moonpot.isMoonpot}
+                    />
                   </div>
+                  <span className={classes.platformContainer}>
+                    <Box sx={{ marginRight: '8px' }}>
+                      <Typography className={classes.platformLabel}>
+                        {t('Chain')}: <span>{item.network}</span>
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography className={classes.platformLabel}>
+                        {t('PLATFORM')}: <span>{item.platform}</span>
+                      </Typography>
+                    </Box>
+                  </span>
                 </div>
-              </Link>
-            </Grid>
-            {/* Content Container */}
-            <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
-              <Grid container>
-                <Grid item xs={6} md={2} lg={2}>
+              </div>
+            </Link>
+          </Grid>
+          {/* Content Container */}
+          <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
+            <Grid container>
+              <Grid item xs={6} md={2} lg={2}>
+                <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
                   <div className={clsx([classes.stat, classes.marginBottom])}>
                     <Typography className={classes.label}>{t('WALLET')}</Typography>
                     <ValueText
@@ -326,8 +326,10 @@ const _Item = ({ vault }) => {
                       <div className={classes.boostSpacer} />
                     )}
                   </div>
-                </Grid>
-                <Grid item xs={6} md={2} lg={2}>
+                </Link>
+              </Grid>
+              <Grid item xs={6} md={2} lg={2}>
+                <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
                   {/*Boosted by */}
                   {isBoosted && userStaked && (
                     <div className={clsx([classes.stat, classes.marginBottom])}>
@@ -357,17 +359,19 @@ const _Item = ({ vault }) => {
                       )}
                     </div>
                   )}
-                </Grid>
-                {/**APY STATS*/}
-                <ApyStats
-                  {...({
-                    isBoosted: isBoosted,
-                    launchpoolApr: boostedData,
-                    apy: item.apy,
-                    isGovVault: item.isGovVault ?? false,
-                  } as any)}
-                />
-                <Grid item xs={6} md={2} lg={2}>
+                </Link>
+              </Grid>
+              {/**APY STATS*/}
+              <ApyStats
+                {...({
+                  isBoosted: isBoosted,
+                  launchpoolApr: boostedData,
+                  apy: item.apy,
+                  isGovVault: item.isGovVault ?? false,
+                } as any)}
+              />
+              <Grid item xs={6} md={2} lg={2}>
+                <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
                   {/*Tvl */}
                   <div className={isGovVault || isBoosted ? classes.stat1 : classes.stat}>
                     <Typography className={classes.label}>{t('TVL')}</Typography>
@@ -378,9 +382,14 @@ const _Item = ({ vault }) => {
                       <div className={classes.boostSpacer} />
                     ) : null}
                   </div>
-                </Grid>
-                <Grid item xs={6} md={2} lg={2}>
-                  {isGovVault ? (
+                </Link>
+              </Grid>
+              <Grid item xs={6} md={2} lg={2}>
+                {isGovVault ? (
+                  <Link
+                    className={classes.removeLinkStyles}
+                    to={`/${item.network}/vault/${item.id}`}
+                  >
                     <div className={classes.stat1}>
                       <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
                       <Typography className={classes.value}>
@@ -397,28 +406,28 @@ const _Item = ({ vault }) => {
                         </Typography>
                       )}
                     </div>
-                  ) : (
-                    <div className={isBoosted ? classes.stat1 : classes.stat}>
-                      <div className={classes.tooltipLabel}>
-                        <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
-                        <div className={classes.tooltipHolder}>
-                          <Popover
-                            {...({
-                              title: t('Safety-ScoreWhat'),
-                              content: t('Safety-ScoreExpl'),
-                            } as any)}
-                          />
-                        </div>
+                  </Link>
+                ) : (
+                  <div className={isBoosted ? classes.stat1 : classes.stat}>
+                    <div className={classes.tooltipLabel}>
+                      <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
+                      <div className={classes.tooltipHolder}>
+                        <Popover
+                          {...({
+                            title: t('Safety-ScoreWhat'),
+                            content: t('Safety-ScoreExpl'),
+                          } as any)}
+                        />
                       </div>
-                      <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
                     </div>
-                  )}
-                </Grid>
+                    <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
+                  </div>
+                )}
               </Grid>
             </Grid>
           </Grid>
-        </div>
-      </Link>
+        </Grid>
+      </div>
     </div>
   );
 };
