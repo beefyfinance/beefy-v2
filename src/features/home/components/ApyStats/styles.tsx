@@ -5,7 +5,6 @@ export const styles = theme => ({
   label: {
     fontWeight: 600,
     fontSize: '12px',
-    lineHeight: '20px',
     color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
@@ -17,7 +16,6 @@ export const styles = theme => ({
   statLabel: {
     fontWeight: 400,
     fontSize: '14px',
-    lineHeight: '18px',
     color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
@@ -29,7 +27,6 @@ export const styles = theme => ({
   value: {
     fontWeight: 400,
     fontSize: '14px',
-    lineHeight: '18px',
     color: theme.palette.type === 'dark' ? '#565B81' : '#A69885',
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
@@ -65,6 +62,8 @@ export const styles = theme => ({
       flexBasis: '15%',
     },
     [theme.breakpoints.down('sm')]: {
+      height: 60,
+      margin: '8px 0',
       flexGrow: '0',
       maxWidth: '50%',
       flexBasis: '50%',
@@ -73,10 +72,13 @@ export const styles = theme => ({
   stat: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'left',
+    alignItems: 'flex-start',
     [theme.breakpoints.up('md')]: {
-      width: 'auto',
       alignItems: 'center',
+    },
+    [theme.breakpoints.down('sm')]: {
+      alignItems: 'flex-start',
+      margin: '10px 0',
     },
   },
   tooltipLabel: {

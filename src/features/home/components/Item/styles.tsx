@@ -12,20 +12,12 @@ export const styles = theme => ({
     border: `2px solid ${theme.palette.background.vaults.defaultOutline}`,
     boxShadow: '0px 1px 8px rgba(0,0,0,0.1)',
     background: theme.palette.background.vaults.default,
-    '&.hasDeposit': {
-      background: '#313759',
-      '&:hover': {
-        background: '#313759',
-      },
-    },
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     },
     [theme.breakpoints.only('sm')]: {
-      marginRight: '10px',
-      marginLeft: '10px',
-      width: 'calc(100% - 20px)',
-      height: '470px',
+      height: '100%',
+      margin: '0',
     },
   },
   badges: {
@@ -35,9 +27,6 @@ export const styles = theme => ({
     '& img': {
       height: '24px',
     },
-    [theme.breakpoints.down('sm')]: {
-      margin: '0 -40px',
-    },
     width: 'fit-content',
   },
   titleContainer: {
@@ -46,26 +35,16 @@ export const styles = theme => ({
     flexDirection: 'row',
     alignItems: 'space-around',
     justifyContent: 'center',
-    flexGrow: '0',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
-      maxWidth: '33%',
-      flexBasis: '33%',
-    },
-    [theme.breakpoints.down(1050)]: {
-      alignItems: 'flex-start',
-      maxWidth: '35%',
-      flexBasis: '35%',
-    },
-    [theme.breakpoints.down(1000)]: {
-      alignItems: 'flex-start',
-      maxWidth: '37%',
-      flexBasis: '37%',
+      maxWidth: '30%',
+      flexBasis: '30%',
     },
     [theme.breakpoints.down('sm')]: {
+      padding: 0,
       alignItems: 'flex-start',
       maxWidth: '100%',
-      flexBasis: '100%',
+      marginBottom: theme.spacing(3),
     },
   },
   imageContainer: {
@@ -75,19 +54,21 @@ export const styles = theme => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      alignItems: 'baseline',
-    },
     '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
+      cursor: 'pointer',
       marginRight: '8px',
       height: 60,
       width: 60,
       [theme.breakpoints.down('sm')]: {
         height: 32,
         width: 32,
-        marginRight: '0',
+        marginRight: '8px',
       },
     },
+  },
+  flexCenter: {
+    display: 'flex',
+    alingItems: 'center',
   },
   vaultName: {
     marginBottom: theme.spacing(1),
@@ -96,7 +77,6 @@ export const styles = theme => ({
   value: {
     fontWeight: 600,
     fontSize: '18px',
-    lineHeight: '24px',
     margin: 0,
     padding: 0,
     whiteSpace: 'nowrap',
@@ -112,7 +92,6 @@ export const styles = theme => ({
   label: {
     fontWeight: 600,
     fontSize: '12px',
-    lineHeight: '20px',
     color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
@@ -126,10 +105,10 @@ export const styles = theme => ({
     fontWeight: 400,
     letterSpacing: '0.2px',
     fontSize: '14px',
-    lineHeight: '18px',
     whiteSpace: 'nowrap',
   },
   platformLabel: {
+    display: 'flex',
     fontWeight: 600,
     fontSize: '12px',
     color: theme.palette.text.disabled,
@@ -144,7 +123,6 @@ export const styles = theme => ({
     whiteSpace: 'nowrap',
     fontWeight: 600,
     fontSize: '12px',
-    lineHeight: '24px',
     color: theme.palette.text.disabled,
     letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
@@ -154,7 +132,6 @@ export const styles = theme => ({
     },
   },
   centerSpace: {
-    padding: '0.5rem 0',
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
@@ -166,27 +143,11 @@ export const styles = theme => ({
       flexBasis: '15%',
     },
     [theme.breakpoints.down('sm')]: {
+      height: 60,
+      margin: '10px 0',
       flexGrow: '0',
       maxWidth: '50%',
       flexBasis: '50%',
-    },
-  },
-  centerSpaceOpen: {
-    padding: '0.5rem 0',
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    [theme.breakpoints.up('md')]: {
-      padding: '0.5rem 32px 0.5rem 32px',
-      justifyContent: 'space-around',
-      flexGrow: '0',
-      maxWidth: '25%',
-      flexBasis: '25%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      flexGrow: '0',
-      maxWidth: '100%',
-      flexBasis: '100%',
     },
   },
   chart: {
@@ -227,6 +188,13 @@ export const styles = theme => ({
     textDecoration: 'none',
     color: '#FFF',
     width: '100%',
+    height: '100%',
+  },
+  removeLinkStylesVault: {
+    textDecoration: 'none',
+    color: '#FFF',
+    width: '100%',
+    height: '100%',
   },
   apyContainer: {
     width: '100%',
@@ -267,11 +235,6 @@ export const styles = theme => ({
   badgesContainter: {
     display: 'block',
     margin: '0',
-    [theme.breakpoints.down('sm')]: {
-      margin: '0',
-      display: 'flex',
-      alignItems: 'center',
-    },
   },
   leftCenter: {
     textAlign: 'left',
@@ -282,10 +245,32 @@ export const styles = theme => ({
   stat: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'left',
+    alignItems: 'flex-start',
     [theme.breakpoints.up('md')]: {
-      width: 'auto',
       alignItems: 'center',
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '20px',
+      alignItems: 'flex-start',
+    },
+  },
+  stat1: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    [theme.breakpoints.up('md')]: {
+      alignItems: 'center',
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: '10px',
+      paddingBottom: '24px',
+      alignItems: 'flex-start',
+      height: '100%',
+    },
+  },
+  marginBottom: {
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 0 10px 0',
     },
   },
   tooltipLabel: {
@@ -302,11 +287,6 @@ export const styles = theme => ({
   },
   tooltipHolder: {
     marginLeft: theme.spacing(0.5),
-  },
-  withHasDeposit: {
-    '& $apyContainer': {
-      background: theme.palette.type === 'dark' ? '#3F466D' : '#faf6f1',
-    },
   },
   withMuted: {
     background: theme.palette.background.vaults.inactive,
@@ -328,6 +308,9 @@ export const styles = theme => ({
       },
       [theme.breakpoints.up('lg')]: {
         fontSize: '18px',
+      },
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '15px',
       },
     },
   },
@@ -355,56 +338,39 @@ export const styles = theme => ({
     textDecoration: 'line-through',
   },
   statsContainer: {
-    margin: props => (props.marginStats ? '16px 0px 0px 0px' : 'auto'),
-    alignItems: 'flex-start',
-    flexGrow: '0',
+    margin: 'auto',
     [theme.breakpoints.up('md')]: {
-      maxWidth: '67%',
-      flexBasis: '67%',
-    },
-    [theme.breakpoints.down(1050)]: {
-      maxWidth: '65%',
-      flexBasis: '65%',
-    },
-    [theme.breakpoints.down(1000)]: {
-      maxWidth: '63%',
-      flexBasis: '63%',
+      alignItems: 'flex-start',
+      maxWidth: '70%',
+      flexBasis: '70%',
     },
     [theme.breakpoints.down('sm')]: {
+      alignItems: 'flex-start',
       maxWidth: '100%',
-      flexBasis: '100%',
     },
   },
   platformContainer: {
     display: 'flex',
     marginTop: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
-      margin: '0 -40px',
-    },
-  },
-  boostSpacer: {
-    [theme.breakpoints.up('md')]: {
-      height: 18,
-    },
-    [theme.breakpoints.down('sm')]: {
-      height: 20,
-    },
-  },
-  boostSpacerSm: {
-    [theme.breakpoints.up('md')]: {
-      height: 10,
-    },
-  },
-  mobileSpacer: {
-    [theme.breakpoints.down('sm')]: {
-      height: 20,
-    },
   },
   spacingMobile: {
     display: 'flex',
     alingItems: 'center',
     [theme.breakpoints.down('sm')]: {
       padding: '5px 0',
+    },
+  },
+  contentContainer: {
+    margin: 'auto',
+    [theme.breakpoints.down('md')]: {
+      margin: 0,
+      marginTop: theme.spacing(3),
+    },
+  },
+  boosterSpace: {
+    [theme.breakpoints.only('sm')]: {
+      height: '100%',
+      padding: '20px 10px 0px 10px',
     },
   },
 });
