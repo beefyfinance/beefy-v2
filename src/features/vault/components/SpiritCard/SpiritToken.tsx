@@ -6,5 +6,5 @@ export const SpiritToken = {
 };
 
 export const binSpiritMintVault = {
-  mintAdress: '0xe1908ab7e03f0699773cecc4dc5d38893e532cd1',
+  mintAdress: '0x44e314190D9E4cE6d4C0903459204F8E21ff940A',
 };
