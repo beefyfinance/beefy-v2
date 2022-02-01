@@ -256,7 +256,7 @@ export const pools = [
   },
   {
     id: "moo_bison-bison-wbnb-bishares",
-    poolId: "bison-bison-bnb",
+    poolId: "bison-bison-bnb-eol",
     name: "BiShares",
     assets: [
       "BISON",

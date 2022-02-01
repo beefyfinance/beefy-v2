@@ -6,4 +6,5 @@ export interface LabeledDropdownProps {
   renderValue?: any;
   selectStyle?: any;
   fullWidth?: boolean;
+  noBorder?: boolean;
 }

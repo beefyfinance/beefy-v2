@@ -24,9 +24,9 @@ import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
-import { LaCucina } from './components/LaCucinaCard';
 import { Spirit } from './components/SpiritCard';
-// import { Moonpot } from './components/MoonportCard';
+import { Moonpot } from './components/MoonportCard';
+
 
 //allow the Harmony-blockchain entries in the address-book to be accessed via the normal
 //  "network" property values used in our core vault-object schema
@@ -172,7 +172,11 @@ export const Vault = () => {
                 </Box>
                 <Box>
                   <Box className={classes.badges}>
-                    <DisplayTags isBoosted={isBoosted} tags={item.tags} />
+                    <DisplayTags
+                      isBoosted={isBoosted}
+                      tags={item.tags}
+                      isMoonpot={item.moonpot.isMoonpot}
+                    />
                   </Box>
                   <Box>
                     <span className={classes.platformContainer}>
@@ -259,18 +263,18 @@ export const Vault = () => {
                 {item.isBinSpirit && (
                   <Box>
                     <Spirit item={item} />
+
+                {/*Moonpot Card */}
+                {item.moonpot.isMoonpot && (
+                  <Box>
+                    <Moonpot name={item.token} item={item.moonpot.data} />
+
                   </Box>
                 )}
                 {/* Insurace card */}
                 {item.isInsurace && (
                   <Box>
                     <Insurace />
-                  </Box>
-                )}
-                {/*LaCucina Card */}
-                {item.isLaCucina && (
-                  <Box>
-                    <LaCucina />
                   </Box>
                 )}
               </Grid>

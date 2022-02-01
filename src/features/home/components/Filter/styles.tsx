@@ -45,7 +45,7 @@ export const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       width: 275,
     },
-    [theme.breakpoints.down(725)]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
@@ -57,6 +57,7 @@ export const styles = theme => ({
     padding: '16px 24px 24px 24px',
   },
   btnFilter: {
+    marginRight: theme.spacing(1),
     textTransform: 'none',
     color: theme.palette.text.secondary,
     fontSize: '15px',
@@ -66,9 +67,9 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.filters.inactive,
     border: `2px solid ${theme.palette.background.filters.outline}`,
     height: 43,
-    [theme.breakpoints.down(725)]: {
+    [theme.breakpoints.down('md')]: {
       display: 'flex',
-      width: '30%',
+      width: '40%',
       margin: '0 0 0 0',
     },
     '&.MuiToggleButton-root.Mui-selected': {
@@ -77,10 +78,9 @@ export const styles = theme => ({
       border: 'none',
     },
   },
-  btnResetContainer: {
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
+  btnFilterActive: {
+    backgroundColor: theme.palette.background.vaults.default,
+    border: `2px solid ${theme.palette.background.vaults.default}`,
   },
   lblShowing: {
     [theme.breakpoints.up('md')]: {
@@ -97,38 +97,24 @@ export const styles = theme => ({
   },
   btnReset: {
     textTransform: 'none',
-    color: theme.palette.text.disabled,
-    fontWeight: 700,
-    borderRadius: '8px',
-    fontSize: '15px',
-    padding: '8px 24px',
-    backgroundColor: theme.palette.background.filters.inactive,
-    height: 43,
-    '&:hover': {
-      color: theme.palette.text.primary,
-    },
-  },
-  btnApplyFilters: {
-    textTransform: 'none',
     color: theme.palette.text.primary,
     fontWeight: 700,
     borderRadius: '8px',
     fontSize: '15px',
-    padding: '8px 24px',
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: 'transparent',
     height: 43,
-    marginRight: theme.spacing(2),
     '&:hover': {
-      color: theme.palette.text.secondary,
-      backgroundColor: theme.palette.background.filters.inactive,
+      color: theme.palette.text.primary,
     },
     [theme.breakpoints.down('md')]: {
-      fontSize: '0.875rem',
+      display: 'flex',
+      width: '40%',
+      margin: '0 0 0 0',
     },
   },
   searchInput: {
     borderRadius: 8,
-    height: '40px',
+    height: '44px',
     position: 'relative',
     color: theme.palette.text.secondary,
     background: theme.palette.background.filters.inactive,
@@ -146,18 +132,20 @@ export const styles = theme => ({
     '& .MuiFormLabel-root': {
       fontWeight: 700,
       fontSize: 15,
-      lineHeight: '16px',
       color: theme.palette.text.secondary,
     },
     '& .MuiInputBase-root': {
       height: '100%',
     },
-    [theme.breakpoints.down(725)]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
   iconSearch: {
     borderRadius: 8,
+    '&:Hover': {
+      backgroundColor: 'transparent',
+    },
   },
   checkbox: {
     color: theme.palette.text.disabled,
@@ -192,7 +180,7 @@ export const styles = theme => ({
   },
   filtersContainer: {
     display: 'flex',
-    [theme.breakpoints.down(725)]: {
+    [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap',
       boxSizing: 'border-box',
     },
@@ -201,12 +189,13 @@ export const styles = theme => ({
     alignItem: 'center',
     flexGrow: 1,
     height: 40,
-    [theme.breakpoints.down(725)]: {
+    [theme.breakpoints.down('md')]: {
       flexGrow: 0,
-      width: '100%',
+      width: '60%',
       display: 'flex',
       justifyContent: 'normal',
       margin: '0 0 18px 0',
+      paddingRight: theme.spacing(1),
     },
   },
   toggleSwitchContainer: {
@@ -214,8 +203,8 @@ export const styles = theme => ({
     borderRadius: '8px',
     marginRight: '10px',
     border: `2px solid ${theme.palette.background.filters.outline}`,
-    width: '210px',
-    [theme.breakpoints.down(725)]: {
+    width: '350px',
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       marginRight: '0',
       margin: '0 0 18px 0',
@@ -223,27 +212,27 @@ export const styles = theme => ({
   },
   toggleSwitchButton: {
     height: '40px',
-    borderRadius: '8px',
-    padding: '0 16px',
-    margin: '0px 1px',
+    borderRadius: '6px',
+    padding: '4px 16px',
     textTransform: 'none',
     fontSize: '15px',
+    lineHeight: '15px',
     fontWeight: 700,
-    color: theme.palette.text.disabled,
-    width: 'calc(50% - 2px)',
+    color: theme.palette.text.secondary,
+    width: 'calc(100% / 3)',
     whiteSpace: 'nowrap',
   },
   toggleSwitchButtonActive: {
     height: '40px',
-    borderRadius: '8px',
-    padding: '0 16px',
-    margin: '0px 1px',
+    borderRadius: '6px',
+    padding: '6px 16px',
     textTransform: 'none',
     fontSize: '15px',
+    lineHeight: '15px',
     fontWeight: 700,
     color: theme.palette.text.primary,
     backgroundColor: `${theme.palette.primary.main} !important`,
-    width: 'calc(50% - 2px)',
+    width: 'calc(100% / 3)',
     whiteSpace: 'nowrap',
   },
   filterIcon: {
@@ -260,8 +249,8 @@ export const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       width: '170px',
     },
-    [theme.breakpoints.down(725)]: {
-      width: '70%',
+    [theme.breakpoints.down('md')]: {
+      width: '60%',
       display: 'flex',
       margin: '0 0 0 0',
       paddingRight: '16px',
@@ -280,7 +269,7 @@ export const styles = theme => ({
     [theme.breakpoints.up(700)]: {
       width: 'calc(20% - 8px) !important',
     },
-    [theme.breakpoints.down(700)]: {
+    [theme.breakpoints.down('md')]: {
       minWidth: '200px',
     },
   },
@@ -295,22 +284,17 @@ export const styles = theme => ({
   },
   filter: {
     '& .MuiPopover-paper': {
-      maxWidth: '400px',
-      backgroundColor: theme.palette.background.filters.inactive,
-      border: `2px solid ${theme.palette.background.filters.outline}`,
+      marginTop: theme.spacing(1),
+      borderRadius: '8px',
+      width: '350px',
+      backgroundColor: theme.palette.background.vaults.default,
+      border: `2px solid ${theme.palette.background.vaults.default}`,
       [theme.breakpoints.down('md')]: {
-        maxWidth: '300px',
+        width: '250px',
       },
     },
   },
   filterContent: { padding: 24 },
-  filterFooter: {
-    padding: '24px',
-    backgroundColor: theme.palette.background.filters.footer,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
   badge: {
     backgroundColor: '#DB5932',
     width: '20px',
@@ -326,6 +310,15 @@ export const styles = theme => ({
   },
   label: {
     color: theme.palette.text.disabled,
+  },
+  labelMoonpot: {
+    color: theme.palette.text.disabled,
+    display: 'flex',
+    alignItems: 'center',
+    '& img': {
+      height: '16px !important',
+      marginRight: 4,
+    },
   },
   value: {
     textTransform: 'capitalize',

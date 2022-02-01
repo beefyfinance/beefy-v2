@@ -26,6 +26,7 @@ import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
 import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
 import { reduxActions } from '../../features/redux/actions';
+import { Transak } from '../Transak';
 
 const useStyles = makeStyles(styles as any);
 export const Header = ({ isNightMode, setNightMode }) => {
@@ -62,12 +63,13 @@ export const Header = ({ isNightMode, setNightMode }) => {
           {t('Header-Explore')}
         </NavLink>
         {navLinks.map(({ title, path }) => (
-          <Typography variant="body1" className={classes.navLink}>
+          <Typography key={title} variant="body1" className={classes.navLink}>
             <a target="_blank" rel="noreferrer" href={path} key={title}>
               {title}
             </a>
           </Typography>
         ))}
+        <Transak className={classes.navLink}>{t('Header-Buy')}</Transak>
       </>
     );
   };
@@ -106,10 +108,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
           <Toolbar disableGutters={true}>
             <Box sx={{ flexGrow: 1 }}>
               <Link className={classes.beefy} to="/">
-                <img alt="BIFI" src={require(`../../images/cow-outlined.svg`).default} />
-                <Hidden mdDown>
-                  <Box>Beefy.Finance</Box>
-                </Hidden>
+                <img alt="BIFI" src={require(`../../images/header-logo.svg`).default} />
               </Link>
             </Box>
             <Hidden mdDown>

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover';
 import { Loader } from '../../../../components/loader';
+import { BifiMaxis } from './BifiMaxis';
 
 const useStyles = makeStyles(styles as any);
 const BreakdownTooltip = memo(({ rows }: any) => {
@@ -112,7 +113,12 @@ export const FeeBreakdown = memo(
     const t = useTranslation().t;
     const formattedDepositFee = item.depositFee;
     const formattedWithdrawalFee = item.withdrawalFee;
-    const performanceFee = item.isGovVault ? '0%' : item.id === 'cake-cakev2' ? '1%' : '4.5%';
+    const performanceFee =
+      item.isGovVault || BifiMaxis.includes(item.id)
+        ? '0%'
+        : item.id === 'cake-cakev2'
+        ? '1%'
+        : '4.5%';
 
     return (
       <Box mt={2} p={2} className={classes.feeContainer}>

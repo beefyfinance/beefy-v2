@@ -28,26 +28,15 @@ export const styles = theme => ({
     padding: '12px 24px',
     backgroundColor: theme.palette.background.default,
     textTransform: 'none',
+    width: '100%',
+  },
+  link: {
+    textDecoration: 'none',
+    width: '100%',
   },
   subtitle: {
     color: theme.palette.text.disabled,
     letterSpacing: '0.5px',
-    fontWeight: 600,
-  },
-  subtitle1: {
-    color: theme.palette.text.disabled,
-    letterSpacing: '0.5px',
-    fontWeight: 400,
-  },
-  info: {
-    display: 'flex',
-    marginBottom: theme.spacing(3),
-  },
-  item: {
-    marginRight: theme.spacing(4),
-  },
-  itemInfo: {
-    color: theme.palette.text.secondary,
     fontWeight: 600,
   },
 });

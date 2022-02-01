@@ -1135,7 +1135,7 @@ export const pools = [
     status: "active",
     platform: "IronFinance",
     assets: [
-      "ICE",
+      "ironICE",
       "IRON"
     ],
     addLiquidityUrl: "https://exchange.dfyn.network/#/add/0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef/0xD86b5923F3AD7b585eD81B448170ae026c65ae9a",
@@ -2482,7 +2482,7 @@ export const pools = [
     status: "eol",
     platform: "Other",
     assets: [
-      "ICE",
+      "ironICE",
       "DFYN"
     ],
     retireReason: "rewards",
@@ -2510,7 +2510,7 @@ export const pools = [
     status: "active",
     platform: "IronFinance",
     assets: [
-      "ICE",
+      "ironICE",
       "ETH"
     ],
     addLiquidityUrl: "https://app.firebird.finance/add/0xf1ee78544a1118f2efb87f7eacd9f1e6e80e1ea5",
@@ -2537,7 +2537,7 @@ export const pools = [
     status: "active",
     platform: "IronFinance",
     assets: [
-      "ICE",
+      "ironICE",
       "USDC"
     ],
     addLiquidityUrl: "https://exchange.dfyn.network/#/add/0x4A81f8796e0c6Ad4877A51C86693B0dE8093F2ef/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
@@ -4005,7 +4005,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
     network: "polygon"
@@ -4041,7 +4041,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     network: "polygon"
@@ -4807,7 +4807,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     network: "polygon"
@@ -4843,7 +4843,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B",
     network: "polygon"
@@ -4879,7 +4879,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
     network: "polygon"
@@ -4915,7 +4915,7 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
     network: "polygon"
@@ -7759,7 +7759,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://polygon.curve.fi/factory/85/deposit",
-    network: "polygon"
+    network: "polygon",
+    logo: "single-assets/2JPY.svg"
   },
   {
     id: "quick-gns-dai",
@@ -7944,6 +7945,117 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://quickswap.exchange/#/add/0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59&inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    network: "polygon"
+  },
+  {
+    id: "jarvis-2cad",
+    logo: "single-assets/2CAD.svg",
+    name: "jCAD-CADC",
+    token: "2cad",
+    tokenDescription: "Curve (Jarvis)",
+    tokenAddress: "0xA69b0D5c0C401BBA2d5162138613B5E38584F63F",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJarvis2Cad",
+    earnedTokenAddress: "0xcf9Dd1de1D02158B3d422779bd5184032674A6D1",
+    earnContractAddress: "0xcf9Dd1de1D02158B3d422779bd5184032674A6D1",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "jarvis-2cad",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "jCAD",
+      "CADC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://polygon.curve.fi/factory/23/deposit",
+    network: "polygon"
+  },
+  {
+    id: "popsicle-ice-eth",
+    name: "ICE-ETH LP",
+    token: "ICE-ETH SLP",
+    tokenDescription: "SushiSwap (Popsicle)",
+    tokenAddress: "0x941eb28e750C441AEF465a89E43DDfec2561830b",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPopsicleICE-WETH",
+    earnedTokenAddress: "0x2109361Ed6759296A70A3f025fBce9744E5BC406",
+    earnContractAddress: "0x2109361Ed6759296A70A3f025fBce9744E5BC406",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "popsicle-ice-eth",
+    depositsPaused: false,
+    status: "active",
+    platform: "Popsicle",
+    assets: [
+      "ICE",
+      "ETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "MCAP_MICRO",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
+    addLiquidityUrl: "https://app.sushi.com/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
+    network: "polygon"
+  },
+  {
+    id: "quick-sand-matic",
+    name: "SAND-MATIC LP",
+    token: "SAND-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x369582d2010B6eD950B571F4101e3bB9b554876F",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickSwapSAND-MATIC",
+    earnedTokenAddress: "0x6d212Dd38aD0811d30AABf08fB78018133F8417E",
+    earnContractAddress: "0x6d212Dd38aD0811d30AABf08fB78018133F8417E",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-sand-matic",
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "SAND",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_LARGE",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683&inputCurrency=ETH",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683/ETH",
     network: "polygon"
   }
 ];

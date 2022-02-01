@@ -17,6 +17,7 @@ export const FILTER_DEFAULT = {
   zero: false,
   deposited: false,
   boost: false,
+  moonpot: false,
   platform: 'all',
   vault: 'all',
   blockchain: ['all'],
@@ -167,6 +168,11 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
     return false;
   }
 
+  //Hide when vault is not moonpot
+  if (config.moonpot && !vault.moonpot.isMoonpot) {
+    return false;
+  }
+
   // hide when selected platform does not match
   if (
     config.platform !== 'all' &&
@@ -180,13 +186,17 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
     return false;
   }
 
-  // hide network does not match
   if (!config.blockchain.includes('all') && !config.blockchain.includes(vault.network)) {
+    // hide network does not match
     return false;
   }
 
   // hide when category/tag does not match
-  if (config.category !== 'all' && config.category !== 'featured' && !vault.tags.includes(config.category)) {
+  if (
+    config.category !== 'all' &&
+    config.category !== 'featured' &&
+    !vault.tags.includes(config.category)
+  ) {
     return false;
   }
 
@@ -194,21 +204,43 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
     return false;
   }
 
-  // hide when neither name includes keyword nor keyword matches its tokens
-	const S = config.keyword.toLowerCase();
-	if (!( vault.name.toLowerCase().includes( S) || vault.assets.find( S_TKN => 
-																														S_TKN.toLowerCase() === S))) {
+  // Hide when the given searchword is found neither in the vault's name nor among its
+  // tokens or those of an involved, active boost. "Fuzzily" account also along the way
+  // for the standardly named wrapped version of a token.
+  const S = config.keyword?.toLowerCase();
+  if (S && !vault.name.toLowerCase().includes(S)) {
+    if (S.length < 2) return false;
+    const O_TST = new RegExp(`^w?${S}$`),
+      O_NOW = Date.now() / 1000;
+    if (
+      !(
+        vault.assets.find(S_TKN => S_TKN.toLowerCase().match(O_TST)) ||
+        (vault.isGovVault && vault.earnedToken.toLowerCase().match(O_TST)) ||
+        (vault.isBoosted &&
+          vault.boosts.some(
+            O =>
+              'active' === O.status &&
+              O_NOW < parseInt(O.periodFinish) &&
+              O.earnedToken.toLowerCase().match(O_TST)
+          ))
+      )
+    )
+      return false;
+  } //if (S &&
+
+  // hide when wallet not connected and my vaults = true
+  if (!address && config.deposited) {
     return false;
   }
 
-  //hide when wallet no connected and my vaults = true
-  if (!address && config.deposited) {
+  // hide when wallet no connected and zero = true
+  if (!address && config.zero) {
     return false;
   }
 
   // default show
   return true;
-}
+} //function keepVault(
 
 function useSortedVaults(vaults, key, direction) {
   return useMemo(() => {
@@ -257,13 +289,12 @@ function useUserVaults() {
     let symbol = pool.isGovVault ? `${pool.token}GovVault` : pool.earnedToken;
     if (userAddress) {
       if (!isEmpty(balance.tokens[pool.network][symbol])) {
-      
         if (pool.isGovVault) {
           const _balance = byDecimals(
             balance.tokens[pool.network][symbol].balance,
             pool.tokenDecimals
           );
-  
+
           if (_balance.isGreaterThan(0)) {
             newUserVaults = {
               ...newUserVaults,
@@ -271,7 +302,10 @@ function useUserVaults() {
             };
           }
         }
-        balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, pool.tokenDecimals);
+        balanceSingle = byDecimals(
+          balance.tokens[pool.network][symbol].balance,
+          pool.tokenDecimals
+        );
         if (balanceSingle.isGreaterThan(0)) {
           newUserVaults = {
             ...newUserVaults,
@@ -283,7 +317,10 @@ function useUserVaults() {
         for (const boost of pool.boosts) {
           let symbol = `${boost.token}${boost.id}Boost`;
           if (!isEmpty(balance.tokens[pool.network][symbol])) {
-            balanceSingle = byDecimals(balance.tokens[pool.network][symbol].balance, boost.decimals);
+            balanceSingle = byDecimals(
+              balance.tokens[pool.network][symbol].balance,
+              boost.decimals
+            );
             if (balanceSingle.isGreaterThan(0)) {
               newUserVaults = {
                 ...newUserVaults,

@@ -8,12 +8,10 @@ export const styles = theme => ({
     borderRadius: '8px',
     marginLeft: '24px',
     '& .MuiTypography-root': {
-      fontSize: 15,
-      lineHeight: '24px',
       fontWeight: 700,
     },
     '& .MuiGrid-container': {
-      flexWrap: 'nowrap',
+      flexWrap: 'inherit',
       padding: '8px 16px',
       cursor: 'pointer',
     },
@@ -27,6 +25,7 @@ export const styles = theme => ({
     background: theme.palette.background.cta,
     '& .MuiTypography-root': {
       color: theme.palette.text.primary,
+      textOverflow: 'clip',
     },
   },
   connected: {

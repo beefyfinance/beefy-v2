@@ -13,11 +13,6 @@ const InsuraceCard = () => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  function RedirectToInsurace() {
-    window.location.href =
-      'https://app.insurace.io/Insurance/Cart?id=110&chain=BSC&referrer=95244279533280151623141934507761661103282646845';
-  }
-
   return (
     <Card>
       <CardHeader className={classes.header}>
@@ -30,9 +25,14 @@ const InsuraceCard = () => {
         <Typography className={classes.content} variant="body1">
           {t('Insurance-Content')}
         </Typography>
-        <Button onClick={RedirectToInsurace} className={classes.btn}>
-          {t('Insurance-Btn')}
-        </Button>
+        <a
+          className={classes.link}
+          target="_blank"
+          rel="noreferrer"
+          href="https://app.insurace.io/Insurance/Cart?id=110&chain=BSC&referrer=95244279533280151623141934507761661103282646845"
+        >
+          <Button className={classes.btn}>{t('Insurance-Btn')}</Button>
+        </a>
       </CardContent>
     </Card>
   );

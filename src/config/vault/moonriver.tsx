@@ -38,41 +38,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "solarbeam-solar",
-    logo: "single-assets/SOLAR.png",
-    name: "SOLAR",
-    token: "SOLAR",
-    tokenDescription: "SolarBeam",
-    tokenAddress: "0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSolarSOLAR",
-    earnedTokenAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
-    earnContractAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "SOLAR",
-    oraclePrice: 0,
-    status: "active",
-    platform: "SolarBeam",
-    assets: [
-      "SOLAR"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
-    network: "moonriver"
-  },
-  {
     id: "solarbeam-solar-wmovr",
     name: "SOLAR-MOVR",
     token: "SOLAR-MOVR LP",
@@ -1296,42 +1261,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "finn-finn-doge",
-    name: "DOGE-FINN",
-    token: "DOGE-FINN FLP",
-    tokenDescription: "Huckleberry",
-    tokenAddress: "0xB4939f65f27cac1e220D8A86E0274860aDa9d825",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooFinnFINN-DOGE",
-    earnedTokenAddress: "0x16508967D3F7693DD1D023Dbd442Bdb2304f8289",
-    earnContractAddress: "0x16508967D3F7693DD1D023Dbd442Bdb2304f8289",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "finn-finn-doge",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Huckleberry",
-    assets: [
-      "DOGE",
-      "FINN"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
-    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xb668Cd490a4421F993f93be2819A922DBbB32804/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver"
-  },
-  {
     id: "solarbeam-mim-wmovr",
     name: "MIM-MOVR",
     token: "MIM-MOVR LP",
@@ -1644,7 +1573,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "ETH",
       "USDT"
@@ -1680,7 +1609,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "MIM",
       "WMOVR_SUSHI"
@@ -1716,7 +1645,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "FRAX",
       "USDC"
@@ -1752,7 +1681,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "ETH",
       "WMOVR_SUSHI"
@@ -1788,7 +1717,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "USDT",
       "USDC"
@@ -1824,7 +1753,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "ETH",
       "BNBbsc"
@@ -1860,7 +1789,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "ETH",
       "WBTCeth"
@@ -1896,7 +1825,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Sushi",
+    platform: "SushiSwap",
     assets: [
       "ETH",
       "DAI"
@@ -1913,5 +1842,189 @@ export const pools = [
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
     stratType: "StratLP",
     network: "moonriver"
+  },
+  {
+    id: "finn-finn-xcrmrk",
+    name: "xcRMRK-FINN LP",
+    token: "xcRMRK-FINN LP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0xd9e98aD7AE9E5612b90cd0bdcD82df4FA5b943b8",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnxcRMRK-FINN",
+    earnedTokenAddress: "0xCde724B9Ab2BcB8c1684883405b657fFb48ce182",
+    earnContractAddress: "0xCde724B9Ab2BcB8c1684883405b657fFb48ce182",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-finn-xcrmrk",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Huckleberry",
+    assets: [
+      "xcRMRK",
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756/0xffffffFF893264794d9d57E1E0E21E0042aF5A0A",
+    network: "moonriver"
+  },
+  {
+    id: "finn-finn-xcksm",
+    name: "xcKSM-FINN LP",
+    token: "xcKSM-FINN LP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0x14BE4d09c5A8237403b83A8A410bAcE16E8667DC",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnxcKSM-FINN",
+    earnedTokenAddress: "0x5768c64CeFFCc776a9B0AA81dF4cB10b290E1c42",
+    earnContractAddress: "0x5768c64CeFFCc776a9B0AA81dF4cB10b290E1c42",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-finn-xcksm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Huckleberry",
+    assets: [
+      "xcKSM",
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
+    network: "moonriver"
+  },
+  {
+    id: "finn-usdc.m-wmovr",
+    name: "USDC.m-MOVR LP",
+    token: "USDC.m-MOVR LP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0x7128C61Da34c27eAD5419B8EB50c71CE0B15CD50",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnUSDC.m-MOVR",
+    earnedTokenAddress: "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+    earnContractAddress: "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-usdc.m-wmovr",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Huckleberry",
+    assets: [
+      "USDC",
+      "MOVR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0x748134b5F553F2bcBD78c6826De99a70274bDEb3",
+    network: "moonriver"
+  },
+  {
+    id: "finn-finn-doge-eol",
+    name: "DOGE-FINN",
+    token: "DOGE-FINN FLP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0xB4939f65f27cac1e220D8A86E0274860aDa9d825",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnFINN-DOGE",
+    earnedTokenAddress: "0x16508967D3F7693DD1D023Dbd442Bdb2304f8289",
+    earnContractAddress: "0x16508967D3F7693DD1D023Dbd442Bdb2304f8289",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-finn-doge",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Huckleberry",
+    assets: [
+      "DOGE",
+      "FINN"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xb668Cd490a4421F993f93be2819A922DBbB32804/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
+    network: "moonriver",
+    retireReason: "rewards"
+  },
+  {
+    id: "solarbeam-solar-eol",
+    logo: "single-assets/SOLAR.png",
+    name: "SOLAR",
+    token: "SOLAR",
+    tokenDescription: "SolarBeam",
+    tokenAddress: "0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSolarSOLAR",
+    earnedTokenAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
+    earnContractAddress: "0xE3fCfF08de3fc40a7fb3674533FDb7a64027BF00",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "SOLAR",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "SolarBeam",
+    assets: [
+      "SOLAR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
+    network: "moonriver",
+    retireReason: "rewards"
   }
 ];

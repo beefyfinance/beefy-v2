@@ -21,6 +21,7 @@ export const styles = theme => ({
     marginTop: theme.spacing(4),
     height: 96,
     display: 'flex',
+    flexWrap: 'nowrap',
     justifyContent: 'flex-end',
     textAlign: 'end',
     backgroundColor: theme.palette.background.default,
@@ -46,21 +47,13 @@ export const styles = theme => ({
     paddingTop: 0,
     paddingBottom: 0,
     display: 'flex',
-    width: '50%',
-    marginLeft: theme.spacing(4),
+    justifyContent: 'flex-end',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
       marginRight: theme.spacing(4),
+      justifyContent: 'flex-start',
     },
   },
-  stat2: {
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: 0,
-      marginRight: theme.spacing(4),
-      width: '50%',
-    },
-  },
-
   value: {
     color: theme.palette.text.secondary,
   },
@@ -98,14 +91,12 @@ export const styles = theme => ({
     },
   },
   divider1: {
-    marginLeft: theme.spacing(3),
     width: 2,
     color: theme.palette.background.vaults.defaultOutline,
+    marginLeft: theme.spacing(3),
     [theme.breakpoints.down('md')]: {
-      marginLeft: 'auto',
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: theme.spacing(2.5),
+      marginLeft: 0,
+      marginRight: theme.spacing(2.5),
     },
   },
 });
