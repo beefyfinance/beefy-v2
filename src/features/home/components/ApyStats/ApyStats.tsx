@@ -169,7 +169,6 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   isLoading = false,
   itemClasses,
   itemInnerClasses,
-  spacer,
   isGovVault,
   isBoosted,
 }) => {

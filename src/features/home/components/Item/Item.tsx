@@ -226,8 +226,8 @@ const _Item = ({ vault }) => {
   const blurred = (deposited.balance.isGreaterThan(0) || _wallet.isGreaterThan(0)) && hideBalance;
 
   return (
-    <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
-      <div className={classes.boosterSpace}>
+    <div className={classes.boosterSpace}>
+      <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
         <div
           className={clsx({
             [classes.itemContainer]: true,
@@ -364,6 +364,7 @@ const _Item = ({ vault }) => {
                     isBoosted: isBoosted,
                     launchpoolApr: boostedData,
                     apy: item.apy,
+                    isGovVault: item.isGovVault ?? false,
                   } as any)}
                 />
                 <Grid item xs={6} md={2} lg={2}>
@@ -417,8 +418,8 @@ const _Item = ({ vault }) => {
             </Grid>
           </Grid>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
