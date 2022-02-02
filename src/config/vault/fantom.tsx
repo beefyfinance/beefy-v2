@@ -6130,5 +6130,40 @@ export const pools = [
     addLiquidityUrl: "https://scream.sh/stake",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
     network: "fantom"
+  },
+  {
+    id: "beefy-binspirit",
+    logo: "single-assets/binSPIRIT.svg",
+    name: "binSPIRIT",
+    token: "binSPIRIT",
+    tokenDescription: "Beefy.Finance",
+    tokenAddress: "0x44e314190D9E4cE6d4C0903459204F8E21ff940A",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "moobinSPIRIT",
+    earnedTokenAddress: "0x7345a537A975d9Ca588eE631BEFdDfEF34fD5e8f",
+    earnContractAddress: "0x7345a537A975d9Ca588eE631BEFdDfEF34fD5e8f",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "binSPIRIT",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Beefy.Finance",
+    assets: [
+      "binSPIRIT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.spiritswap.finance/#/",
+    network: "fantom"
   }
 ];

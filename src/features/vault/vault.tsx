@@ -24,6 +24,7 @@ import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
+import { Spirit } from './components/SpiritCard';
 import { Moonpot } from './components/MoonportCard';
 
 //allow the Harmony-blockchain entries in the address-book to be accessed via the normal
@@ -255,6 +256,12 @@ export const Vault = () => {
                   <Box>
                     {' '}
                     <QiDao mooToken={item.earnedToken} />
+                  </Box>
+                )}
+                {/*Spirit Card */}
+                {item.isBinSpirit && (
+                  <Box>
+                    <Spirit item={item} />
                   </Box>
                 )}
                 {/*Moonpot Card */}

@@ -253,5 +253,16 @@
   "Moonpot-Title": "Win {{name}} & earn interest",
   "Moonpot-Stake": "Stake {{name}}",
   "Moonpot-Content": "Moonpot is our win-win savings game on BSC. Deposit your crypto into a Moonpot, earn interest & enter a prize draw at the same time.",
-  "Moonpot-Btn": "Play with Moonpot"
+  "Moonpot-Btn": "Play with Moonpot",
+  "LaCucina-Content": "LaCucina is a DeFi project launchpad that offers rewards to stakers of supported projects. Through external farming, users can claim their extra rewards on LaCucina without removing their stake from the original pool.",
+  "LaCucina-Btn": "Claim LAC",
+  "LaCucina-Ends": "ENDS",
+  "LaCucina-Apr": "APR",
+  "LaCucina-Earn": "EARN",
+  "Spirit-Title": "Mint binSPIRIT",
+  "Spirit-Content": "Lock your SPIRIT to get binSPIRIT and earn in our vault.",
+  "Spirit-From": "FROM: ",
+  "Spirit-To": "TO: ",
+  "Spirit-Available": "AVAILABLE: ",
+  "Spirit-Btn": "Mint binSPIRIT"
 }
