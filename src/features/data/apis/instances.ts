@@ -3,7 +3,7 @@ import { ConfigAPI } from './config';
 import Web3 from 'web3';
 import * as Comlink from 'comlink';
 import { BalanceAPI } from './balance/balance';
-import { AllowanceAPI } from './allowance';
+import { AllowanceAPI } from './allowance/allowance';
 import { WalletConnect, WalletConnectOptions } from './wallet-connect';
 import { sample } from 'lodash';
 import { ContractDataInWebWorkerAPI } from './contract-data/contract-data-webworker';

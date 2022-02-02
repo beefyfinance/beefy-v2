@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers/storev2';
-import { BoostAllowance, VaultAllowance } from '../apis/allowance';
+import { FetchAllAllowanceResult } from '../apis/allowance/allowance-types';
 import { getAllowanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
@@ -15,11 +15,7 @@ interface ActionParams {
 
 export interface FetchAllAllowanceFulfilledPayload {
   chainId: ChainEntity['id'];
-  data: {
-    boosts: BoostAllowance[];
-    govVaults: VaultAllowance[];
-    standardVaults: VaultAllowance[];
-  };
+  data: FetchAllAllowanceResult;
 }
 
 export const fetchAllAllowanceAction = createAsyncThunk<
@@ -51,23 +47,13 @@ export const fetchAllAllowanceAction = createAsyncThunk<
   }
 
   // always re-fetch state as late as possible
-  const boostAllowance = await api.fetchBoostAllowance(getState(), boosts, walletAddress);
-  const standardVaultAllowance = await api.fetchStandardVaultAllowance(
+  const data = await api.fetchAllAllowances(
+    // always re-fetch state as late as possible
     getState(),
     standardVaults,
-    walletAddress
-  );
-  const govVaultAllowance = await api.fetchGovVaultPoolAllowance(
-    getState(),
     govVaults,
+    boosts,
     walletAddress
   );
-  return {
-    chainId,
-    data: {
-      boosts: boostAllowance,
-      govVaults: govVaultAllowance,
-      standardVaults: standardVaultAllowance,
-    },
-  };
+  return { chainId, data };
 });

@@ -1,10 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers/storev2';
-import {
-  BoostContractData,
-  GovVaultContractData,
-  StandardVaultContractData,
-} from '../apis/contract-data/contract-data-types';
+import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getContractDataApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
@@ -18,11 +14,7 @@ export interface ActionParams {
 
 export interface FetchAllContractDataFulfilledPayload {
   chainId: ChainEntity['id'];
-  data: {
-    boosts: BoostContractData[];
-    standardVaults: StandardVaultContractData[];
-    govVaults: GovVaultContractData[];
-  };
+  data: FetchAllContractDataResult;
   // Reducers handling this action need access to the full state
   state: BeefyState;
 }

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../redux/reducers/storev2';
-import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../apis/balance/balance-types';
+import { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { getBalanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
@@ -15,11 +15,7 @@ interface ActionParams {
 
 export interface FetchAllBalanceFulfilledPayload {
   chainId: ChainEntity['id'];
-  data: {
-    tokens: TokenBalance[];
-    boosts: BoostBalance[];
-    govVaults: GovVaultPoolBalance[];
-  };
+  data: FetchAllBalancesResult;
   // reducers need the state (balance)
   state: BeefyState;
 }

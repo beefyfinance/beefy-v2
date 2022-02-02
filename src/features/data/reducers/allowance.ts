@@ -1,16 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { fetchAllAllowanceAction } from '../actions/allowance';
-import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
-import { VaultEntity } from '../entities/vault';
 import { accountHasChanged, walletHasDisconnected } from './wallet';
-
-interface Allowance {
-  allowance: BigNumber; // amount allowed
-  spenderAddress: string;
-}
 
 /**
  * State containing user allowances state
@@ -21,13 +14,11 @@ export interface AllowanceState {
   byChainId: {
     [chainId: ChainEntity['id']]: {
       byTokenId: {
-        [tokenId: TokenEntity['id']]: Allowance;
-      };
-      byVaultId: {
-        [vaultId: VaultEntity['id']]: Allowance;
-      };
-      byBoostId: {
-        [boostId: BoostEntity['id']]: Allowance;
+        [tokenId: TokenEntity['id']]: {
+          bySpenderAddress: {
+            [spenderAddress: string]: BigNumber;
+          };
+        };
       };
     };
   };
@@ -52,52 +43,23 @@ export const allowanceSlice = createSlice({
     builder.addCase(fetchAllAllowanceAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
 
-      if (sliceState.byChainId[chainId] === undefined) {
-        sliceState.byChainId[chainId] = { byBoostId: {}, byTokenId: {}, byVaultId: {} };
+      let stateForChain = sliceState.byChainId[chainId];
+      if (stateForChain === undefined) {
+        sliceState.byChainId[chainId] = { byTokenId: {} };
+        stateForChain = sliceState.byChainId[chainId];
       }
 
-      for (const vaultAllowance of action.payload.data.govVaults) {
-        // only update data if necessary
-        const stateForVault = sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId];
-        if (
-          stateForVault === undefined ||
-          !stateForVault.allowance.isEqualTo(vaultAllowance.allowance) ||
-          stateForVault.spenderAddress !== vaultAllowance.spenderAddress
-        ) {
-          sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId] = {
-            allowance: vaultAllowance.allowance,
-            spenderAddress: vaultAllowance.spenderAddress,
-          };
+      for (const tokenAllowance of action.payload.data) {
+        let stateForToken = stateForChain.byTokenId[tokenAllowance.tokenId];
+        if (stateForToken === undefined) {
+          stateForChain.byTokenId[tokenAllowance.tokenId] = { bySpenderAddress: {} };
+          stateForToken = stateForChain.byTokenId[tokenAllowance.tokenId];
         }
-      }
 
-      for (const vaultAllowance of action.payload.data.standardVaults) {
         // only update data if necessary
-        const stateForVault = sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId];
-        if (
-          stateForVault === undefined ||
-          !stateForVault.allowance.isEqualTo(vaultAllowance.allowance) ||
-          stateForVault.spenderAddress !== vaultAllowance.spenderAddress
-        ) {
-          sliceState.byChainId[chainId].byVaultId[vaultAllowance.vaultId] = {
-            allowance: vaultAllowance.allowance,
-            spenderAddress: vaultAllowance.spenderAddress,
-          };
-        }
-      }
-
-      for (const boostAllowance of action.payload.data.boosts) {
-        // only update data if necessary
-        const stateForBoost = sliceState.byChainId[chainId].byBoostId[boostAllowance.boostId];
-        if (
-          stateForBoost === undefined ||
-          !stateForBoost.allowance.isEqualTo(boostAllowance.allowance) ||
-          stateForBoost.spenderAddress !== boostAllowance.spenderAddress
-        ) {
-          sliceState.byChainId[chainId].byBoostId[boostAllowance.boostId] = {
-            allowance: boostAllowance.allowance,
-            spenderAddress: boostAllowance.spenderAddress,
-          };
+        let stateForSpender = stateForToken.bySpenderAddress[tokenAllowance.spenderAddress];
+        if (stateForSpender === undefined || !stateForSpender.isEqualTo(tokenAllowance.allowance)) {
+          stateForToken.bySpenderAddress[tokenAllowance.spenderAddress] = tokenAllowance.allowance;
         }
       }
     });
