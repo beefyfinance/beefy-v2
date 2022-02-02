@@ -1,46 +1,26 @@
 [
   {
-    "id": "bsc vault: baby-ftm-usdt",
+    "id": "aurora vault: trisolaris-near-tri",
     "type": "Added"
   },
   {
-    "id": "fantom vault: 0xdao-xscream",
+    "id": "aurora vault: trisolaris-near-wbtc",
     "type": "Added"
   },
   {
-    "id": "polygon vault: quick-mausdc-usdc-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: grape-grape-mim",
+    "id": "aurora vault: trisolaris-usdt-usdc",
     "type": "Added"
   },
   {
-    "id": "avax vault: grape-wine-mim",
+    "id": "aurora vault: trisolaris-usdt-near",
     "type": "Added"
   },
   {
-    "id": "avax vault: png-usdc.e-wavax",
+    "id": "aurora vault: trisolaris-usdc-near",
     "type": "Added"
   },
   {
-    "id": "avax vault: png-png-usdc.e",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-png-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: sushi-sushi-weth",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: sushi-wfuse-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "avax boost: moo_AVAX-grape",
+    "id": "aurora vault: trisolaris-near-weth",
     "type": "Added"
   }
 ]
