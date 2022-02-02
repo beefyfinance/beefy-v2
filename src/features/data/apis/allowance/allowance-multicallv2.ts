@@ -15,7 +15,7 @@ import { selectTokenById } from '../../selectors/tokens';
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
 
-export class MulticallMcV2API<T extends ChainEntity & { fetchBalancesAddress: string }>
+export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: string }>
   implements IAllowanceApi
 {
   constructor(protected web3: Web3, protected chain: T) {}
@@ -40,6 +40,11 @@ export class MulticallMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
       const token = selectTokenById(state, this.chain.id, tokenId);
       if (!isTokenErc20(token)) {
         throw new Error("Can't query allowance of non erc20 token");
+      }
+      // TODO: temporary check until we can sort out the WFTM mystery
+      if (!token.contractAddress) {
+        console.error(`Could not find token contractAddress: ${token.id}`);
+        return;
       }
       if (allowanceCallsByToken[token.contractAddress] === undefined) {
         allowanceCallsByToken[token.contractAddress] = { tokenId: token.id, spenders: new Set() };
@@ -84,7 +89,7 @@ export class MulticallMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
     for (const callBatch of callBatches) {
       const batchResults = results[resultsIdx];
       let resIdx = 0;
-      for (const [_, spendersCalls] of callBatch) {
+      for (const spendersCalls of callBatch.map(c => c[1])) {
         for (const spenderAddress of Array.from(spendersCalls.spenders)) {
           const allowance = batchResults[resIdx];
           if (allowance !== '0') {

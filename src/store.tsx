@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { walletActionsMiddleware } from './features/data/actions/scenarios';
 import { rootReducer as rootReducerV2 } from './features/redux/reducers/storev2';
 import { rootReducer as rootReducerV1 } from './features/redux/reducers/index';
-import { featureFlag_isDataLoaderV2Enabled } from './features/data/utils/feature-flags';
 
 // https://coderwall.com/p/pafnew/redux-middleware-logger
 // debug middleware for when redux browser extension is not helpful

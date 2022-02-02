@@ -37,6 +37,11 @@ export class AllowanceAPI implements IAllowanceApi {
       if (!isTokenErc20(token)) {
         throw new Error("Can't query allowance of non erc20 token");
       }
+      // TODO: temporary check until we can sort out the WFTM mystery
+      if (!token.contractAddress) {
+        console.error(`Could not find token contractAddress: ${token.id}`);
+        return;
+      }
       if (allowanceCallsByToken[token.contractAddress] === undefined) {
         allowanceCallsByToken[token.contractAddress] = { tokenId: token.id, spenders: new Set() };
       }
@@ -46,6 +51,11 @@ export class AllowanceAPI implements IAllowanceApi {
     for (const standardVault of standardVaults) {
       addTokenIdToCalls(standardVault.earnedTokenId, standardVault.contractAddress);
       addTokenIdToCalls(standardVault.oracleId, standardVault.contractAddress);
+      // special case for what seem to be a maxi vault
+      const earnToken = selectTokenById(state, this.chain.id, standardVault.earnedTokenId);
+      if (isTokenErc20(earnToken)) {
+        addTokenIdToCalls(standardVault.oracleId, earnToken.contractAddress);
+      }
     }
     for (const govVault of govVaults) {
       addTokenIdToCalls(govVault.oracleId, govVault.earnContractAddress);
@@ -63,6 +73,7 @@ export class AllowanceAPI implements IAllowanceApi {
         calls.push({
           tokenId: spendersCalls.tokenId, // not sure about this
           spenderAddress: spender,
+          tokenAddress: tokenAddress,
           allowance: tokenContract.methods.allowance(walletAddress, tokenAddress),
         });
       }
@@ -72,14 +83,12 @@ export class AllowanceAPI implements IAllowanceApi {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
     const [results] = (await mc.all([calls])) as ResultType[][];
 
-    return results
-      .filter(result => result.allowance !== '0')
-      .map(
-        (result): TokenAllowance => ({
-          tokenId: result.tokenId,
-          spenderAddress: result.spenderAddress,
-          allowance: new BigNumber(result.allowance),
-        })
-      );
+    return results.map(
+      (result): TokenAllowance => ({
+        tokenId: result.tokenId,
+        spenderAddress: result.spenderAddress,
+        allowance: new BigNumber(result.allowance),
+      })
+    );
   }
 }

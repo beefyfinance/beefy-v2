@@ -102,9 +102,6 @@ export const balanceSlice = createSlice({
 
         // only update data if necessary
         const stateForBoost = sliceState.byChainId[chainId].byBoostId[boostBalance.boostId];
-        if (stateForBoost !== undefined && stateForBoost.balance === undefined) {
-          debugger;
-        }
         if (
           stateForBoost === undefined ||
           !stateForBoost.balance.isEqualTo(boostBalance.balance) ||

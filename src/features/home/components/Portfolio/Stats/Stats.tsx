@@ -4,13 +4,6 @@ import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 import { formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
-import { useSelector } from 'react-redux';
-import { selectUserGlobalStats } from '../../../../data/selectors/apy';
-import { BeefyState } from '../../../../redux/reducers/storev2';
-import {
-  selectIsConfigAvailable,
-  selectIsPriceAvailable,
-} from '../../../../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles as any);
 export const Stats = ({ stats, blurred }) => {
@@ -27,23 +20,7 @@ export const Stats = ({ stats, blurred }) => {
   );
 
   const formatStat = value => (empty ? new BigNumber(0).toFixed(0) : formatUsd(value.toNumber()));
-  useSelector((state: BeefyState) => {
-    const v2 = selectUserGlobalStats(state);
-    console.log({
-      v1: {
-        deposited: stats.deposited.toNumber(),
-        totalYield: stats.totalYield.toNumber(),
-        daily: stats.daily.toNumber(),
-        monthly: stats.monthly.toNumber(),
-      },
-      v2: {
-        deposited: v2.deposited.toNumber(),
-        totalYield: v2.totalYield.toNumber(),
-        daily: v2.daily.toNumber(),
-        monthly: v2.monthly.toNumber(),
-      },
-    });
-  });
+
   return (
     <Grid container className={classes.stats}>
       <Box className={classes.stat}>

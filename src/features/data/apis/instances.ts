@@ -13,6 +13,7 @@ import { ContractDataMcV2API } from './contract-data/contract-data-multicallv2';
 import { ChainEntity } from '../entities/chain';
 import { IContractDataApi } from './contract-data/contract-data-types';
 import {
+  featureFlag_getAllowanceApiImplem,
   featureFlag_getBalanceApiImplem,
   featureFlag_getContractDataApiImplem,
 } from '../utils/feature-flags';
@@ -20,6 +21,7 @@ import {
 // eslint-disable-next-line
 import ContractDataWorker from 'worker-loader!./contract-data/worker/contract-data.webworker.ts';
 import { BalanceMcV2API } from './balance/balance-multicallv2';
+import { AllowanceMcV2API } from './allowance/allowance-multicallv2';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -105,6 +107,21 @@ export const getBalanceApi = createFactoryWithCacheByChain(chain => {
 
 export const getAllowanceApi = createFactoryWithCacheByChain(chain => {
   const web3 = getWeb3Instance(chain);
+
+  const targetImplem = featureFlag_getAllowanceApiImplem();
+
+  if (targetImplem === 'eth-multicall') {
+    console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
+    return new AllowanceAPI(web3, chain);
+  } else if (targetImplem === 'new-multicall') {
+    if (chain.fetchBalancesAddress) {
+      console.debug(`Instanciating AllowanceMcV2API for chain ${chain.id}`);
+      return new AllowanceMcV2API(web3, chain as ChainEntity & { fetchBalancesAddress: string });
+    } else {
+      console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
+      return new AllowanceAPI(web3, chain);
+    }
+  }
   console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
   return new AllowanceAPI(web3, chain);
 });

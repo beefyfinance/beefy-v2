@@ -22,7 +22,7 @@ export const fetchAllAllowanceAction = createAsyncThunk<
   FetchAllAllowanceFulfilledPayload,
   ActionParams,
   { state: BeefyState }
->('allowance/fetchBoostAllowanceAction', async ({ chainId }, { getState }) => {
+>('allowance/fetchAllAllowanceAction', async ({ chainId }, { getState }) => {
   const state = getState();
 
   const walletAddress = selectWalletAddress(state);

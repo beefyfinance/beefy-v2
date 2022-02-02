@@ -38,6 +38,20 @@ export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multic
   return 'eth-multicall';
 }
 
+export function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-multicall' {
+  const params = new URLSearchParams(window.location.search);
+  // default is eth-multicall
+  if (!params.has('__allowance_api')) {
+    return 'eth-multicall';
+  }
+  const implem = params.get('__allowance_api');
+  if (implem === 'eth-multicall' || implem === 'new-multicall') {
+    return implem;
+  }
+  // default is eth-multicall
+  return 'eth-multicall';
+}
+
 export function featureFlag_dataPolling() {
   const params = new URLSearchParams(window.location.search);
   return params.has('__polling');

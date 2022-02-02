@@ -11,7 +11,7 @@ import {
   selectStandardVaultUserBalanceInToken,
   selectGovVaultUserBalance,
 } from './balance';
-import { selectActiveVaultBoostIds, selectBoostById, selectIsVaultBoosted } from './boosts';
+import { selectActiveVaultBoostIds, selectBoostById } from './boosts';
 import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';

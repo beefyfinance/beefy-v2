@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { store as storeV1, storeV2 } from '../../../store';
+import { storeV2 } from '../../../store';
 import { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
@@ -9,7 +9,7 @@ import {
   walletHasDisconnected,
 } from '../reducers/wallet';
 import { selectAllChains } from '../selectors/chains';
-import { selectCurrentChainId, selectIsWalletConnected } from '../selectors/wallet';
+import { selectIsWalletConnected } from '../selectors/wallet';
 import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchAllBoosts } from './boosts';
