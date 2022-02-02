@@ -1,5 +1,45 @@
 export const pools = [
   {
+    id: 'aurora-bifi-gov',
+    name: 'BIFI Earnings Pool',
+    logo: 'single-assets/BIFI.png',
+    token: 'BIFI',
+		tokenDescription: 'Beefy.Finance',
+    tokenDecimals: 18,
+    tokenAddress: '0x218c3c3D49d0E7B37aff0D8bB079de36Ae61A4c0',
+		tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
+    earnedToken: 'ETH',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf',
+    earnContractAddress: '0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf',
+		poolAddress: '0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf',
+		excluded: "aurora-bifi-maxi",
+		pricePerFullShare: 1,
+		isGovVault: true,
+		tvl: 0,
+		oracle: "tokens",
+		oracleId: "BIFI",
+		oraclePrice: 0,
+		status: "active",
+		platform: "Beefy.Finance",
+		assets: [
+			"BIFI"
+		],
+		risks: [
+      "COMPLEXITY_LOW",
+			"BATTLE_TESTED",
+			"IL_NONE",
+			"MCAP_SMALL",
+			"AUDIT",
+			"CONTRACTS_VERIFIED"
+		],
+		stratType: "SingleStake",
+		callFee: 0.5,
+		withdrawalFee: "0%",
+		createdAt: 1623706144,
+		network: "aurora"
+  },
+  {
     id: "trisolaris-near-tri",
     name: "NEAR-TRI LP",
     token: "NEAR-TRI LP",
