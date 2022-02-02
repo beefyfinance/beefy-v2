@@ -1,26 +1,10 @@
 [
   {
-    "id": "aurora vault: trisolaris-near-tri",
-    "type": "Added"
+    "id": "fantom vault: beefy-binspirit",
+    "type": "synced"
   },
   {
-    "id": "aurora vault: trisolaris-near-wbtc",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: trisolaris-usdt-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: trisolaris-usdt-near",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: trisolaris-usdc-near",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: trisolaris-near-weth",
+    "id": "fantom vault: spirit-ftm-spirit",
     "type": "Added"
   }
 ]

@@ -6140,7 +6140,7 @@ export const pools = [
     tokenAddress: "0x44e314190D9E4cE6d4C0903459204F8E21ff940A",
     tokenDecimals: 18,
     tokenDescriptionUrl: "#",
-    earnedToken: "moobinSPIRIT",
+    earnedToken: "mooBinSPIRIT",
     earnedTokenAddress: "0x7345a537A975d9Ca588eE631BEFdDfEF34fD5e8f",
     earnContractAddress: "0x7345a537A975d9Ca588eE631BEFdDfEF34fD5e8f",
     pricePerFullShare: 1,
@@ -6156,14 +6156,52 @@ export const pools = [
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
+      "IL_HIGH",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    stratType: "SingleStake",
+    stratType: "StratLP",
     withdrawalFee: "0%",
-    buyTokenUrl: "https://app.spiritswap.finance/#/",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x44e314190D9E4cE6d4C0903459204F8E21ff940A",
+    network: "fantom",
+    mintTokenUrl: "https://beta.beefy.finance/#/vault/beefy-binspirit"
+  },
+  {
+    id: "spirit-ftm-spirit",
+    name: "SPIRIT-FTM LP",
+    token: "SPIRIT-FTM SLP",
+    tokenDescription: "SpiritSwap",
+    tokenAddress: "0x30748322B6E34545DBe0788C421886AEB5297789",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSpiritFTM-SPIRIT",
+    earnedTokenAddress: "0x415ADafbfBbe183E10c059dEbf283C5428cb6628",
+    earnContractAddress: "0x415ADafbfBbe183E10c059dEbf283C5428cb6628",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "spirit-ftm-spirit",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpiritSwap",
+    assets: [
+      "SPIRIT",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x5Cc61A78F164885776AA610fb0FE1257df78E59B",
+    buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x5Cc61A78F164885776AA610fb0FE1257df78E59B",
     network: "fantom"
   }
 ];
