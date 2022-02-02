@@ -314,4 +314,25 @@ export const config = {
     },
     stableCoins: ['mUSDT', 'mUSDC'],
   },
+  aurora: {
+    name: 'Aurora',
+    chainId: 1313161554,
+    rpc: ['https://mainnet.aurora.dev'],
+    explorerUrl: 'https://explorer.mainnet.aurora.dev',
+    multicallAddress: '0x55f46144bC62e9Af4bAdB71842B62162e2194E90',
+    supportedWallets: ['injected'],
+    providerName: 'Aurora',
+    walletSettings: {
+      chainId: `0x${parseInt('1313161554', 10).toString(16)}`,
+      chainName: 'Aurora Mainnet',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.aurora.dev'],
+      blockExplorerUrls: ['https://explorer.mainnet.aurora.dev/'],
+    },
+    stableCoins: ['USDC', 'USDT'],
+  },
 };
