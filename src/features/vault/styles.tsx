@@ -117,9 +117,6 @@ export const styles = theme => ({
     },
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
-      '& p': {
-        margin: '2px 6px 0px 0px',
-      },
     },
   },
   platformContainer: {

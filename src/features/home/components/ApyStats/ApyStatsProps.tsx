@@ -4,7 +4,6 @@ export interface ApyStatsProps {
   isLoading: boolean;
   itemClasses: any;
   itemInnerClasses: any;
-  spacer: any;
   isGovVault: boolean;
   isBoosted: boolean;
   isFirstVault: boolean;

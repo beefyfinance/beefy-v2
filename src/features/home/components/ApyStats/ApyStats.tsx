@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 import { LabeledStat } from '../LabeledStat';
-import { Typography, Box } from '@material-ui/core';
+import { Typography, Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';
@@ -150,17 +150,14 @@ const LabeledStatWithTooltip = memo(
     const classes = useStyles();
 
     return (
-      <div className={classes.centerSpace}>
-        <div className={classes.stat}>
-          <div className={classes.tooltipLabel}>
-            <Typography className={classes.label}>{label}</Typography>
-            <div className={classes.tooltipHolder}>
-              <Popover {...({} as any)}>{children}</Popover>
-            </div>
+      <div className={classes.stat}>
+        <div className={classes.tooltipLabel}>
+          <Typography className={classes.label}>{label}</Typography>
+          <div className={classes.tooltipHolder}>
+            <Popover {...({} as any)}>{children}</Popover>
           </div>
-          <LabeledStat {...({ boosted } as any)} value={value} />
-          {spacer ? <div className={classes.boostSpacer} /> : null}
         </div>
+        <LabeledStat {...({ boosted } as any)} value={value} />
       </div>
     );
   }
@@ -172,7 +169,6 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
   isLoading = false,
   itemClasses,
   itemInnerClasses,
-  spacer,
   isGovVault,
   isBoosted,
 }) => {
@@ -220,27 +216,28 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
 
   return (
     <>
-      <LabeledStatWithTooltip
-        value={formatted.totalApy}
-        label={isGovVault ? t('APR') : t('APY')}
-        boosted={isBoosted ? formatted.boostedTotalApy : ''}
-        isLoading={isLoading}
-        className={`tooltip-toggle ${itemInnerClasses}`}
-        spacer={spacer}
-      >
-        <YearlyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
-      </LabeledStatWithTooltip>
-
-      <LabeledStatWithTooltip
-        value={formatted.totalDaily}
-        label={t('Vault-Daily')}
-        boosted={isBoosted ? formatted.boostedTotalDaily : ''}
-        isLoading={isLoading}
-        className={`tooltip-toggle ${itemInnerClasses}`}
-        spacer={spacer}
-      >
-        <DailyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
-      </LabeledStatWithTooltip>
+      <Grid item xs={6} md={2} lg={2}>
+        <LabeledStatWithTooltip
+          value={formatted.totalApy}
+          label={isGovVault ? t('APR') : t('APY')}
+          boosted={isBoosted ? formatted.boostedTotalApy : ''}
+          isLoading={isLoading}
+          className={`tooltip-toggle ${itemInnerClasses}`}
+        >
+          <YearlyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
+        </LabeledStatWithTooltip>
+      </Grid>
+      <Grid item xs={6} md={2} lg={2}>
+        <LabeledStatWithTooltip
+          value={formatted.totalDaily}
+          label={t('Vault-Daily')}
+          boosted={isBoosted ? formatted.boostedTotalDaily : ''}
+          isLoading={isLoading}
+          className={`tooltip-toggle ${itemInnerClasses}`}
+        >
+          <DailyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
+        </LabeledStatWithTooltip>
+      </Grid>
     </>
   );
 };

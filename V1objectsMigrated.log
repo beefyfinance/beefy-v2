@@ -1,62 +1,26 @@
 [
   {
-    "id": "bsc vault: banana-sushi-eth",
+    "id": "aurora vault: trisolaris-near-tri",
     "type": "Added"
   },
   {
-    "id": "bsc vault: bison-bison-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: bison-bison-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-wavax-xava",
+    "id": "aurora vault: trisolaris-near-wbtc",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-wavax-cook",
+    "id": "aurora vault: trisolaris-usdt-usdc",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-wavax-dcau",
+    "id": "aurora vault: trisolaris-usdt-near",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-wavax-hec",
+    "id": "aurora vault: trisolaris-usdc-near",
     "type": "Added"
   },
   {
-    "id": "avax vault: png-wavax-frax",
+    "id": "aurora vault: trisolaris-near-weth",
     "type": "Added"
-  },
-  {
-    "id": "avax vault: png-link.e-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-jewel-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver vault: finn-finn-doge-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-solar-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: sushi-wfuse-weth",
-    "type": "Added"
-  },
-  {
-    "id": "bsc boost: moo_bison-bison-wbnb-bishares",
-    "type": "synced"
   }
 ]
