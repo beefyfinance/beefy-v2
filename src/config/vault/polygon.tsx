@@ -8029,5 +8029,42 @@ export const pools = [
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683&inputCurrency=ETH",
     addLiquidityUrl: "https://quickswap.exchange/#/add/0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683/ETH",
     network: "polygon"
+  },
+  {
+    id: "sushi-eth-mana",
+    name: "ETH-MANA LP",
+    token: "ETH-MANA LP",
+    tokenDescription: "SushiSwap",
+    tokenAddress: "0xc48AE82ca34C63887b975F20ABA91a38f2a900B8",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSushiETH-MANA",
+    earnedTokenAddress: "0x18a20abeba0086ac0c564B2bA3a7BaF18568667D",
+    earnContractAddress: "0x18a20abeba0086ac0c564B2bA3a7BaF18568667D",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "sushi-eth-mana",
+    depositsPaused: false,
+    status: "active",
+    platform: "SushiSwap",
+    assets: [
+      "ETH",
+      "MANA"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MEDIUM",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&inputCurrency=0xa1c57f48f0deb89f569dfbe6e2b7f46d33606fd4",
+    addLiquidityUrl: "https://app.sushi.com/add/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0xa1c57f48f0deb89f569dfbe6e2b7f46d33606fd4",
+    network: "polygon"
   }
 ];

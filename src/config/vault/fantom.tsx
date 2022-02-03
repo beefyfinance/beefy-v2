@@ -6165,7 +6165,7 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x44e314190D9E4cE6d4C0903459204F8E21ff940A",
     network: "fantom",
-    mintTokenUrl: "https://beta.beefy.finance/#/vault/beefy-binspirit"
+    mintTokenUrl: "https://beta.beefy.finance/#/fantom/vault/beefy-binspirit"
   },
   {
     id: "spirit-ftm-spirit",
