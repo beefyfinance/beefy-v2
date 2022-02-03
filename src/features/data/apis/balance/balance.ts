@@ -64,11 +64,17 @@ export class BalanceAPI implements IBalanceApi {
     };
     for (const result of results) {
       if (result.type === 'boost') {
-        res.boosts.push(boostsFormatter(result));
+        if (result.balance !== '0' && result.rewards !== '0') {
+          res.boosts.push(boostsFormatter(result));
+        }
       } else if (result.type === 'vault-gov') {
-        res.govVaults.push(govVaultFormatter(result));
+        if (result.balance !== '0' && result.rewards !== '0') {
+          res.govVaults.push(govVaultFormatter(result));
+        }
       } else if (result.type === 'token') {
-        res.tokens.push(tokensFormatter(result));
+        if (result.amount !== '0') {
+          res.tokens.push(tokensFormatter(result));
+        }
       } else {
         console.error(result);
         throw new Error(`Could not identify type`);

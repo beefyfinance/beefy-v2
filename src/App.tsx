@@ -26,7 +26,7 @@ export const App = () => {
 
   React.useEffect(() => {
     if (featureFlag_isDataLoaderV2Enabled()) {
-      return;
+      //return;
     }
     const updateBalances = async () => {
       await dispatch(reduxActions.balance.fetchBalances());
@@ -40,7 +40,7 @@ export const App = () => {
 
   React.useEffect(() => {
     if (featureFlag_isDataLoaderV2Enabled()) {
-      return;
+      //return;
     }
     const initiate = async () => {
       let now = Date.now();
@@ -74,7 +74,7 @@ export const App = () => {
 
   React.useEffect(() => {
     if (featureFlag_isDataLoaderV2Enabled()) {
-      return;
+      //return;
     }
     if (!wallet.web3modal) {
       dispatch(reduxActions.wallet.createWeb3Modal());

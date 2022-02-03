@@ -2,10 +2,33 @@ import BigNumber from 'bignumber.js';
 import { fetchAllBalanceAction, FetchAllBalanceFulfilledPayload } from '../actions/balance';
 import { balanceSlice, initialBalanceState } from './balance';
 import { getBeefyTestingStore } from '../utils/test-utils';
+import {
+  fetchAllContractDataByChainAction,
+  FetchAllContractDataFulfilledPayload,
+} from '../actions/contract-data';
 
 describe('Balance slice tests', () => {
   it('should update state on fulfilled token balance', async () => {
     const store = await getBeefyTestingStore();
+    // given we have some prior info
+    const initPayload: FetchAllContractDataFulfilledPayload = {
+      chainId: 'bsc',
+      data: {
+        boosts: [],
+        govVaults: [],
+        standardVaults: [
+          {
+            id: 'banana-bnb-stars',
+            pricePerFullShare: new BigNumber(5),
+            balance: new BigNumber(123),
+            strategy: 'test',
+          },
+        ],
+      },
+      state: store.getState(),
+    };
+    store.dispatch({ type: fetchAllContractDataByChainAction.fulfilled, payload: initPayload });
+
     const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
       data: {
@@ -14,6 +37,7 @@ describe('Balance slice tests', () => {
         tokens: [
           { tokenId: 'banana-nfty-wbnb', amount: new BigNumber(10) },
           { tokenId: 'BIFI', amount: new BigNumber(10) },
+          { tokenId: 'mooApeBNB-STARS', amount: new BigNumber(10) },
         ],
       },
       state: store.getState(),
@@ -29,18 +53,19 @@ describe('Balance slice tests', () => {
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 
-  it('should update state on fulfilled gov boost pools', () => {
+  it('should update state on fulfilled gov boost pools', async () => {
+    const store = await getBeefyTestingStore();
+    // given we have some prior info
     const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
       data: {
         boosts: [],
         tokens: [],
         govVaults: [
-          { vaultId: 'banana-nfty-wbnb', rewards: new BigNumber(100), balance: new BigNumber(10) },
-          { vaultId: 'belt-beltbnb', rewards: new BigNumber(10), balance: new BigNumber(5) },
+          { vaultId: 'bifi-gov', rewards: new BigNumber(100), balance: new BigNumber(10) },
         ],
       },
-      state: {} as any,
+      state: store.getState(),
     };
     const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
     const state = balanceSlice.reducer(initialBalanceState, action);
@@ -53,7 +78,33 @@ describe('Balance slice tests', () => {
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 
-  it('should update state on fulfilled boost balance', () => {
+  it('should update state on fulfilled boost balance', async () => {
+    const store = await getBeefyTestingStore();
+    // given we have some prior info
+    const initPayload: FetchAllContractDataFulfilledPayload = {
+      chainId: 'bsc',
+      data: {
+        boosts: [],
+        govVaults: [],
+        standardVaults: [
+          {
+            id: 'ellipsis-renbtc',
+            pricePerFullShare: new BigNumber(5),
+            balance: new BigNumber(123),
+            strategy: 'test',
+          },
+          {
+            id: 'belt-beltbnb',
+            pricePerFullShare: new BigNumber(50),
+            balance: new BigNumber(1230),
+            strategy: 'test',
+          },
+        ],
+      },
+      state: store.getState(),
+    };
+    store.dispatch({ type: fetchAllContractDataByChainAction.fulfilled, payload: initPayload });
+
     const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
       data: {
@@ -72,7 +123,7 @@ describe('Balance slice tests', () => {
           },
         ],
       },
-      state: {} as any,
+      state: store.getState(),
     };
     const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
     const state = balanceSlice.reducer(initialBalanceState, action);

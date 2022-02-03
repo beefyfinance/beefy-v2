@@ -133,7 +133,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
   stateKey: keyof DataLoaderState['byChainId']['bsc']
 ) {
   builder.addCase(action.pending, (sliceState, action) => {
-    const chainId = action.meta.arg.chainId;
+    const chainId = action.meta?.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
@@ -143,7 +143,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
     };
   });
   builder.addCase(action.rejected, (sliceState, action) => {
-    const chainId = action.meta.arg.chainId;
+    const chainId = action.meta?.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
@@ -155,7 +155,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
     };
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
-    const chainId = action.meta.arg.chainId;
+    const chainId = action.meta?.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }

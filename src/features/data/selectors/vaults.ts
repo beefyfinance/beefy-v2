@@ -42,7 +42,8 @@ export const selectVaultPricePerFullShare = createSelector(
 );
 
 export const selectAllGovVaultsByChainId = createSelector(
-  [(state: BeefyState) => state.entities.vaults.byId, selectVaultByChainId],
+  (state: BeefyState) => state.entities.vaults.byId,
+  selectVaultByChainId,
   (byIds, vaultIds): VaultGov[] => {
     const allVaults = vaultIds.map(id => byIds[id]);
     return allVaults.filter(isGovVault) as VaultGov[];
@@ -50,7 +51,8 @@ export const selectAllGovVaultsByChainId = createSelector(
 );
 
 export const selectAllStandardVaultsByChainId = createSelector(
-  [(state: BeefyState) => state.entities.vaults.byId, selectVaultByChainId],
+  (state: BeefyState) => state.entities.vaults.byId,
+  selectVaultByChainId,
   (byIds, vaultIds): VaultStandard[] => {
     const allVaults = vaultIds.map(id => byIds[id]);
     return allVaults.filter(vault => !isGovVault(vault)) as VaultStandard[];

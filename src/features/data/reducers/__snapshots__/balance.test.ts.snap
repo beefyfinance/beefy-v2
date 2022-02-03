@@ -18,6 +18,16 @@ Object {
       "byTokenId": Object {},
     },
   },
+  "deposited": Object {
+    "belt-beltbnb": Object {
+      "balance": "0",
+      "shares": "100",
+    },
+    "ellipsis-renbtc": Object {
+      "balance": "0",
+      "shares": "100",
+    },
+  },
   "depositedVaultIds": Object {
     "govVaults": Array [],
     "standardVaults": Array [],
@@ -31,27 +41,25 @@ Object {
     "bsc": Object {
       "byBoostId": Object {},
       "byGovVaultId": Object {
-        "banana-nfty-wbnb": Object {
+        "bifi-gov": Object {
           "balance": "10",
           "rewards": "100",
         },
-        "belt-beltbnb": Object {
-          "balance": "5",
-          "rewards": "10",
-        },
       },
       "byTokenId": Object {},
+    },
+  },
+  "deposited": Object {
+    "bifi-gov": Object {
+      "balance": "1e-17",
+      "shares": "10",
     },
   },
   "depositedVaultIds": Object {
     "govVaults": Array [
       Object {
         "chainId": "bsc",
-        "vaultId": "banana-nfty-wbnb",
-      },
-      Object {
-        "chainId": "bsc",
-        "vaultId": "belt-beltbnb",
+        "vaultId": "bifi-gov",
       },
     ],
     "standardVaults": Array [],
@@ -72,12 +80,26 @@ Object {
         "banana-nfty-wbnb": Object {
           "balance": "10",
         },
+        "mooApeBNB-STARS": Object {
+          "balance": "10",
+        },
       },
+    },
+  },
+  "deposited": Object {
+    "banana-bnb-stars": Object {
+      "balance": "0",
+      "shares": "10",
     },
   },
   "depositedVaultIds": Object {
     "govVaults": Array [],
-    "standardVaults": Array [],
+    "standardVaults": Array [
+      Object {
+        "chainId": "bsc",
+        "vaultId": "banana-bnb-stars",
+      },
+    ],
   },
 }
 `;

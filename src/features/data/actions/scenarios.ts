@@ -123,7 +123,6 @@ export async function initHomeDataV4() {
     // if user is connected, start fetching balances and allowances
     let userFullfills: CapturedFulfilledActions['user'] = null;
     if (selectIsWalletConnected(store.getState())) {
-      console.log({ chain: chain.id });
       userFullfills = fetchCaptureUserData(chain.id);
     }
 
