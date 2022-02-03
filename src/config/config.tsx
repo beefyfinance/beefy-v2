@@ -105,6 +105,7 @@ export const config = {
       'MAI',
       'FRAX',
       'MIM',
+      'nUSD'
     ],
   },
   polygon: {
