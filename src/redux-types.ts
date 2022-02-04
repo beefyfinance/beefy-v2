@@ -9,6 +9,7 @@ import { ChainsState } from './features/data/reducers/chains';
 import { DataLoaderState } from './features/data/reducers/data-loader';
 import { FilteredVaultsState } from './features/data/reducers/filtered-vaults';
 import { HistoricalApyState } from './features/data/reducers/historical-apy';
+import { PlatformsState } from './features/data/reducers/platforms';
 import { TokensState } from './features/data/reducers/tokens';
 import { TvlState } from './features/data/reducers/tvl';
 import { VaultsState } from './features/data/reducers/vaults';
@@ -24,6 +25,7 @@ export interface BeefyState {
     tokens: TokensState;
     vaults: VaultsState;
     boosts: BoostsState;
+    platforms: PlatformsState;
   };
   biz: {
     tvl: TvlState;

@@ -17,12 +17,14 @@ import { walletSlice } from '../../data/reducers/wallet';
 import { BeefyState } from '../../../redux-types';
 import { buybackSlice } from '../../data/reducers/buyback';
 import { filteredVaultsSlice } from '../../data/reducers/filtered-vaults';
+import { platformsSlice } from '../../data/reducers/platforms';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
   vaults: vaultsSlice.reducer,
   tokens: tokensSlice.reducer,
   boosts: boostsSlice.reducer,
+  platforms: platformsSlice.reducer,
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,

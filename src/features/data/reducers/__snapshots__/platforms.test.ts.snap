@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Platforms slice tests should update state on fulfilled boosts list 1`] = `
+Object {
+  "allIds": Array [
+    "Beefy.Finance",
+  ],
+  "byChainId": Object {
+    "harmony": Array [
+      "Beefy.Finance",
+    ],
+  },
+  "byId": Object {
+    "Beefy.Finance": Object {
+      "id": "beefy.finance",
+      "name": "Beefy.Finance",
+    },
+  },
+}
+`;
+
+exports[`Platforms slice tests should update state on fulfilled vault list 1`] = `
+Object {
+  "allIds": Array [
+    "Beefy.Finance",
+    "Sushi",
+  ],
+  "byChainId": Object {
+    "harmony": Array [
+      "Beefy.Finance",
+      "Sushi",
+    ],
+  },
+  "byId": Object {
+    "Beefy.Finance": Object {
+      "id": "beefy.finance",
+      "name": "Beefy.Finance",
+    },
+    "Sushi": Object {
+      "id": "sushi",
+      "name": "Sushi",
+    },
+  },
+}
+`;
