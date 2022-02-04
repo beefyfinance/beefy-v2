@@ -35,6 +35,7 @@ export const platformsSlice = createSlice({
     // when boost list is fetched, add all new tokens
     builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
       for (const [chainId, boosts] of Object.entries(action.payload)) {
+        // eslint-disable-next-line
         for (const boost of boosts) {
           addPlatformToState(sliceState, chainId, 'Beefy.Finance');
         }

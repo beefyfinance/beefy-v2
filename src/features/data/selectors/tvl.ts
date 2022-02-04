@@ -1,15 +1,15 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { VaultEntity } from '../entities/vault';
-import { formatUsd } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
+import BigNumber from 'bignumber.js';
 
-export const selectFormattedVaultTvl = createSelector(
+export const selectVaultTvl = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.tvl.byVaultId[vaultId],
   vaultTvl => {
     if (vaultTvl) {
-      return formatUsd(vaultTvl.tvl.toNumber());
+      return vaultTvl.tvl;
     } else {
-      return formatUsd(0);
+      return new BigNumber(0);
     }
   }
 );

@@ -88,6 +88,24 @@ export function formatBigUsd(value: BigNumber) {
   return prefix + num.toFixed(2) + units[order];
 }
 
+export function formatBigNumber(value: BigNumber) {
+  const order = getBigNumOrder(value);
+
+  if (order < 2) {
+    return value.toNumber().toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    });
+  }
+  const prefix = '$';
+  const units = ['', 'k', 'M', 'B', 'T'];
+  const num = value.shiftedBy(-order * 3).toNumber();
+
+  return prefix + num.toFixed(2) + units[order];
+}
+
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
 
 export const calcDaily = apy => {

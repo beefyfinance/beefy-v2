@@ -29,6 +29,9 @@ export interface BalanceState {
   deposited: {
     [vaultId: VaultEntity['id']]: { balance: BigNumber; shares: BigNumber };
   };
+  rewards: {
+    [vaultId: VaultEntity['id']]: { balance: BigNumber; shares: BigNumber };
+  };
 
   byChainId: {
     [chainId: ChainEntity['id']]: {
@@ -55,6 +58,7 @@ export interface BalanceState {
 export const initialBalanceState: BalanceState = {
   byChainId: {},
   deposited: {},
+  rewards: {},
   depositedVaultIds: { govVaults: [], standardVaults: [] },
 };
 
@@ -193,7 +197,7 @@ export const balanceSlice = createSlice({
           sliceState.byChainId[chainId].byGovVaultId[vaultId] = vaultState;
           sliceState.depositedVaultIds.govVaults.push({ chainId, vaultId });
 
-          // add to total balance
+          // add to vault balance
           const vault = selectVaultById(state, vaultId);
           const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
 
@@ -204,9 +208,21 @@ export const balanceSlice = createSlice({
             };
           }
           const balanceSingle = byDecimals(vaultBalance.balance, oracleToken.decimals);
-          const vaultTotalState = sliceState.deposited[vaultId];
-          vaultTotalState.balance = vaultTotalState.balance.plus(balanceSingle);
-          vaultTotalState.shares = vaultTotalState.shares.plus(vaultBalance.balance);
+          const vaultDeposited = sliceState.deposited[vaultId];
+          vaultDeposited.balance = vaultDeposited.balance.plus(balanceSingle);
+          vaultDeposited.shares = vaultDeposited.shares.plus(vaultBalance.balance);
+
+          // add rewards too for gov vaults
+          if (!sliceState.rewards[vault.id]) {
+            sliceState.rewards[vault.id] = {
+              balance: new BigNumber(0),
+              shares: new BigNumber(0),
+            };
+          }
+          const rewardsBalance = byDecimals(vaultBalance.rewards, oracleToken.decimals);
+          const vaultRewards = sliceState.deposited[vault.id];
+          vaultRewards.balance = vaultRewards.balance.plus(rewardsBalance);
+          vaultRewards.shares = vaultRewards.shares.plus(vaultBalance.rewards);
         }
       }
     });
