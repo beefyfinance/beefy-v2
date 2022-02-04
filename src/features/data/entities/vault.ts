@@ -28,12 +28,14 @@ enum VaultRiskTag {
   PLATFORM_ESTABLISHED = 'PLATFORM_ESTABLISHED',
 }*/
 
-enum VaultTag {
-  BEEFY = 'BEEFY',
-  BLUE_CHIP = 'BLUE_CHIP',
-  LOW_RISK = 'LOW_RISK',
-  BOOST = 'BOOST',
-}
+export type VaultTag =
+  | 'beefy'
+  | 'bluechip'
+  | 'low' /* low risk */
+  | 'boost'
+  | 'stable'
+  | 'eol'
+  | 'paused';
 
 /**
  * A vault is anything you can stake stuff into
@@ -89,9 +91,12 @@ export interface VaultStandard {
   platformId: PlatformEntity['id'];
 
   status: 'active' | 'eol' | 'paused';
-  // TODO: WIP
+
+  type: 'lps' | 'single';
 
   tags: VaultTag[];
+
+  safetyScore: number;
 
   /*safetyAnalysis: {
     score: number;
@@ -123,6 +128,12 @@ export interface VaultGov {
   oracleId: TokenEntity['id'];
 
   /**
+   * "Earned" token is the token you get back for staking into a vault
+   * Staking into a gov vault "earns" native tokens
+   */
+  earnedTokenId: TokenEntity['id'];
+
+  /**
    * Vault address "treasury", we ask this address about user balances
    */
   earnContractAddress: string;
@@ -146,6 +157,8 @@ export interface VaultGov {
   status: 'active' | 'eol' | 'paused';
 
   tags: VaultTag[];
+
+  safetyScore: number;
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {

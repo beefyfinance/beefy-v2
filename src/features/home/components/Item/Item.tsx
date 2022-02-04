@@ -104,7 +104,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
   );
   const vaultTvl = useSelector((state: BeefyState) => selectVaultTvl(state, vault.id));
   const earnedToken = useSelector((state: BeefyState) =>
-    isGovVault(vault) ? selectTokenById(state, chain.id, vault.oracleId) : null
+    selectTokenById(state, chain.id, vault.earnedTokenId)
   );
   const userDeposited = useSelector((state: BeefyState) =>
     selectUserVaultDepositInToken(state, chain.id, vault.id)
@@ -175,13 +175,11 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                       />
                     </Hidden>
                     <div>
-                      {isGovVault(vault)
-                        ? /*
+                      {isGovVault(vault) ? (
                         <Typography className={classes.govVaultTitle}>
-                          EARN {vault.earnedToken}
-                        </Typography>*/
-                          ''
-                        : null}
+                          EARN {earnedToken.symbol}
+                        </Typography>
+                      ) : null}
                       <Typography variant="h4" className={classes.vaultName}>
                         {vault.name}
                       </Typography>
@@ -299,7 +297,6 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
               </Grid>
               <Grid item xs={6} md={2} lg={2}>
                 {isGovVault ? (
-                  '' /*
                   <Link className={classes.removeLinkStyles} to={`/${chain.id}/vault/${vault.id}`}>
                     <div className={classes.stat1}>
                       <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
@@ -317,7 +314,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                         </Typography>
                       )}
                     </div>
-                  </Link>*/
+                  </Link>
                 ) : (
                   <div className={isBoosted ? classes.stat1 : classes.stat}>
                     <div className={classes.tooltipLabel}>
@@ -331,7 +328,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                         />
                       </div>
                     </div>
-                    {/*<SafetyScore score={vault.safetyScore} whiteLabel size="sm" />*/}
+                    <SafetyScore score={vault.safetyScore} whiteLabel size="sm" />
                   </div>
                 )}
               </Grid>
