@@ -43,3 +43,8 @@ export const selectIsUserBalanceAvailable = createSelector(
     return false;
   }
 );
+
+export const selectIsVaultListAvailable = createSelector(
+  selectIsConfigAvailable,
+  configAvailable => configAvailable
+);

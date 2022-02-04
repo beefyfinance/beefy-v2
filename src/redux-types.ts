@@ -7,6 +7,7 @@ import { BoostsState } from './features/data/reducers/boosts';
 import { BuybackState } from './features/data/reducers/buyback';
 import { ChainsState } from './features/data/reducers/chains';
 import { DataLoaderState } from './features/data/reducers/data-loader';
+import { FilteredVaultsState } from './features/data/reducers/filtered-vaults';
 import { HistoricalApyState } from './features/data/reducers/historical-apy';
 import { TokensState } from './features/data/reducers/tokens';
 import { TvlState } from './features/data/reducers/tvl';
@@ -37,6 +38,7 @@ export interface BeefyState {
   };
   ui: {
     dataLoader: DataLoaderState;
+    filteredVaults: FilteredVaultsState;
   };
 }
 
