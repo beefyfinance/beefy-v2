@@ -6,7 +6,6 @@ import { selectTokenById } from '../../selectors/tokens';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
-import { BeefyState } from '../../../redux/reducers/storev2';
 import { BoostEntity } from '../../entities/boost';
 import { getBoostContractInstance, getVaultContractInstance } from './worker/instances';
 import {
@@ -16,6 +15,7 @@ import {
   IContractDataApi,
   StandardVaultContractData,
 } from './contract-data-types';
+import { BeefyState } from '../../../../redux-types';
 
 /**
  * Get vault contract data

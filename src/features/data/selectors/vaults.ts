@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
@@ -108,3 +108,14 @@ export const selectVaultByEarnTokenId = createSelector([_selectVaultIdByEarnToke
   }
   return vaultId;
 });
+
+export const selectTotalActiveVaults = createSelector(
+  (state: BeefyState) => state.entities.vaults.byChainId,
+  byChainId => {
+    let count = 0;
+    for (const chainId in byChainId) {
+      count = count + byChainId[chainId].allActiveIds.length;
+    }
+    return count;
+  }
+);
