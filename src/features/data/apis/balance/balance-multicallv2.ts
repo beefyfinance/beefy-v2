@@ -21,6 +21,7 @@ import {
   TokenErc20,
   TokenNative,
 } from '../../entities/token';
+import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags';
 
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
@@ -42,7 +43,7 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
     );
 
     // if we send too much in a single call, we get "execution reversed"
-    const CHUNK_SIZE = 500;
+    const CHUNK_SIZE = featureFlag_getBalanceApiChunkSize();
 
     const nativeTokens: TokenNative[] = [];
     const erc20Tokens: TokenErc20[] = [];

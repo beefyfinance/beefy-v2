@@ -23,6 +23,14 @@ export function featureFlag_getContractDataApiImplem():
   // default is eth-multicall
   return 'eth-multicall';
 }
+export function featureFlag_getContractDataApiChunkSize(): number {
+  const params = new URLSearchParams(window.location.search);
+  // default is eth-multicall
+  if (params.has('__contract_data_api_chunk_size')) {
+    return parseInt(params.get('__contract_data_api_chunk_size'));
+  }
+  return 512;
+}
 
 export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multicall' {
   const params = new URLSearchParams(window.location.search);
@@ -37,6 +45,14 @@ export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multic
   // default is eth-multicall
   return 'eth-multicall';
 }
+export function featureFlag_getBalanceApiChunkSize(): number {
+  const params = new URLSearchParams(window.location.search);
+  // default is eth-multicall
+  if (params.has('__balance_api_chunk_size')) {
+    return parseInt(params.get('__balance_api_chunk_size'));
+  }
+  return 500;
+}
 
 export function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-multicall' {
   const params = new URLSearchParams(window.location.search);
@@ -50,6 +66,15 @@ export function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-mult
   }
   // default is eth-multicall
   return 'eth-multicall';
+}
+
+export function featureFlag_getAllowanceApiChunkSize(): number {
+  const params = new URLSearchParams(window.location.search);
+  // default is eth-multicall
+  if (params.has('__allowance_api_chunk_size')) {
+    return parseInt(params.get('__allowance_api_chunk_size'));
+  }
+  return 500;
 }
 
 export function featureFlag_dataPolling() {

@@ -11,6 +11,7 @@ import { isTokenErc20, TokenEntity } from '../../entities/token';
 import { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types';
 import { BeefyState } from '../../../redux/reducers/storev2';
 import { selectTokenById } from '../../selectors/tokens';
+import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
 
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
@@ -64,7 +65,7 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
     }
 
     // if we send too much in a single call, we get "execution reversed"
-    const CHUNK_SIZE = 500;
+    const CHUNK_SIZE = featureFlag_getAllowanceApiChunkSize();
 
     const allowanceCalls = Object.entries(allowanceCallsByToken);
     const callBatches = chunk(allowanceCalls, CHUNK_SIZE);

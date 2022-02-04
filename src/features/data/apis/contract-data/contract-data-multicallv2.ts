@@ -15,6 +15,7 @@ import {
   IContractDataApi,
   StandardVaultContractData,
 } from './contract-data-types';
+import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
 
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
@@ -36,7 +37,7 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     );
 
     // if we send too much in a single call, we get "execution reversed"
-    const CHUNK_SIZE = 512;
+    const CHUNK_SIZE = featureFlag_getContractDataApiChunkSize();
 
     const boostBatches = chunk(boosts, CHUNK_SIZE);
     const govVaultBatches = chunk(govVaults, CHUNK_SIZE);
