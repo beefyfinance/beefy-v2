@@ -39,6 +39,7 @@ Object {
       "logoUri": "degens/BANANA.svg",
       "name": "BANANA",
       "oracleId": "BANANA",
+      "platformId": "apeswap",
       "strategyType": "SingleStake",
     },
     "one-bifi-gov": Object {
@@ -63,6 +64,7 @@ Object {
       "logoUri": undefined,
       "name": "1YGG-1ETH LP",
       "oracleId": "sushi-one-1ygg-1eth",
+      "platformId": "sushi",
       "strategyType": "StratLP",
     },
   },

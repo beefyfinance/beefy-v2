@@ -4,7 +4,7 @@ import { memoize } from 'lodash';
 import { byDecimals } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { ApyData, isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
-import { isGovVault, VaultEntity } from '../entities/vault';
+import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
   selectBoostUserBalanceInToken,
   selectUserDepositedVaults,
@@ -27,7 +27,7 @@ export const selectVaultApyInfos = createSelector(
 );
 
 export const selectGovVaultApr = createSelector(
-  [(state: BeefyState, vaultId: VaultEntity['id']) => state.biz.apy.byVaultId[vaultId]],
+  (state: BeefyState, vaultId: VaultGov['id']) => state.biz.apy.byVaultId[vaultId],
   vaultApy => {
     if (vaultApy === undefined) {
       return 0;
@@ -40,7 +40,7 @@ export const selectGovVaultApr = createSelector(
 );
 
 export const selectStandardVaultTotalApy = createSelector(
-  [(state: BeefyState, vaultId: VaultEntity['id']) => state.biz.apy.byVaultId[vaultId]],
+  (state: BeefyState, vaultId: VaultStandard['id']) => state.biz.apy.byVaultId[vaultId],
   vaultApy => {
     if (vaultApy === undefined) {
       return 0;

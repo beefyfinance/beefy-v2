@@ -141,6 +141,7 @@ BONUS:
 - Is there a good test address? someone who deposited in every single vault and boost on all chains
 - can we run unit tests in CI?
 - On fantom boost moo_boo_ftm-tomb, the "earnedOracleId" is "BIFI", but the "earnedTokenAddress" is "0xbF07093ccd6adFC3dEB259C557b61E94c1F66945" where on fantom, BIFI token address is "0xd6070ae98b8069de6b494332d1a1a81b6179d960". The "earnedTokenAddress" points to the mooFantomBIFI token. Is this normal? what's going on?
+- What is "zero" in "sortConfig" => sortConfig.deposited === false && sortConfig.zero === false
 
 # ANSWERED
 
