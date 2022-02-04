@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { FetchAllAllowanceResult } from '../apis/allowance/allowance-types';
 import { getAllowanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';

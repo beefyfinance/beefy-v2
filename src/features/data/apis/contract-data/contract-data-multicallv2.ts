@@ -5,7 +5,6 @@ import { VaultGov, VaultStandard } from '../../entities/vault';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
-import { BeefyState } from '../../../redux/reducers/storev2';
 import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
 import {
@@ -16,6 +15,7 @@ import {
   StandardVaultContractData,
 } from './contract-data-types';
 import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
+import { BeefyState } from '../../../../redux-types';
 
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];

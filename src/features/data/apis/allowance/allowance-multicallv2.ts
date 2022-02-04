@@ -9,9 +9,9 @@ import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
 import { isTokenErc20, TokenEntity } from '../../entities/token';
 import { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types';
-import { BeefyState } from '../../../redux/reducers/storev2';
 import { selectTokenById } from '../../selectors/tokens';
 import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
+import { BeefyState } from '../../../../redux-types';
 
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];

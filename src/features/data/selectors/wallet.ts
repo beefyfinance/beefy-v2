@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 
 export const selectIsWalletConnected = createSelector(
@@ -32,4 +32,9 @@ export const selectCurrentChainId = createSelector(
     }
     return chainId;
   }
+);
+
+export const selectIsBalanceHidden = createSelector(
+  (state: BeefyState) => state.user.wallet.hideBalance,
+  hideBalance => hideBalance
 );

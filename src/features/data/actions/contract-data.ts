@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getContractDataApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';

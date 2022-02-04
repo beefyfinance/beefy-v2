@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import BigNumber from 'bignumber.js';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
@@ -45,7 +46,7 @@ export interface BeefyAPIHistoricalAPYResponse {
 
 export interface BeefyAPIBuybackResponse {
   // those are of type string but they represent numbers
-  [chainId: ChainEntity['id']]: string[];
+  [chainId: ChainEntity['id']]: { buybackTokenAmount: BigNumber; buybackUsdAmount: BigNumber };
 }
 
 // TODO: is this the same as VaultConfig?
@@ -91,8 +92,26 @@ export class BeefyAPI {
   }
 
   public async getBuyBack(): Promise<BeefyAPIBuybackResponse> {
-    const res = await this.api.get('/bifibuyback', { params: { _: this.getCacheBuster('hour') } });
-    return res.data;
+    type ResponseType = {
+      data: {
+        [chainId: ChainEntity['id']]: {
+          buybackTokenAmount: string;
+          buybackUsdAmount: string;
+        };
+      };
+    };
+    const strRes = await this.api.get<ResponseType>('/bifibuyback', {
+      params: { _: this.getCacheBuster('hour') },
+    });
+    // format result with big number as we get strings from the api
+    const res: BeefyAPIBuybackResponse = {};
+    for (const chainId in strRes.data) {
+      res[chainId] = {
+        buybackTokenAmount: new BigNumber(strRes.data[chainId].buybackTokenAmount),
+        buybackUsdAmount: new BigNumber(strRes.data[chainId].buybackUsdAmount),
+      };
+    }
+    return res;
   }
 
   public async getVaults(): Promise<BeefyAPIVaultsResponse> {

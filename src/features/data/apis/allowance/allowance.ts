@@ -8,9 +8,9 @@ import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
 import { isTokenErc20, TokenEntity } from '../../entities/token';
-import { BeefyState } from '../../../redux/reducers/storev2';
 import { selectTokenById } from '../../selectors/tokens';
 import { FetchAllAllowanceResult, IAllowanceApi, TokenAllowance } from './allowance-types';
+import { BeefyState } from '../../../../redux-types';
 
 // fix TS typings
 const erc20Abi = _erc20Abi as AbiItem[];
