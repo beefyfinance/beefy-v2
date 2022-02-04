@@ -18,9 +18,9 @@ import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
 export const selectVaultApyInfos = createSelector(
   [(state: BeefyState, vaultId: VaultEntity['id']) => state.biz.apy.byVaultId[vaultId]],
-  (vaultApy): ApyData | number => {
+  (vaultApy): ApyData => {
     if (vaultApy === undefined) {
-      return 0;
+      return { totalApy: 0 };
     }
     return vaultApy;
   }

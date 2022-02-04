@@ -7,9 +7,15 @@ import { useTranslation } from 'react-i18next';
 import { formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { Popover } from '../../../../components/Popover';
-import { ApyStatsProps } from './ApyStatsProps';
 import { YearlyBreakdownTooltipProps } from './YearlyBreakdownTooltipProps';
 import { DailyBreakdownTooltipProps } from './DailyBreakdownTooltipProps';
+import { useSelector } from 'react-redux';
+import { BeefyState } from '../../../../redux-types';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectVaultApyInfos } from '../../../data/selectors/apy';
+import { isGovVaultApy, isStandardVaultApy } from '../../../data/apis/beefy';
+import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 
 const useStyles = makeStyles(styles as any);
 const yearlyToDaily = apy => {
@@ -163,26 +169,25 @@ const LabeledStatWithTooltip = memo(
   }
 );
 
-export const _ApyStats: React.FC<ApyStatsProps> = ({
-  apy,
-  launchpoolApr,
-  isLoading = false,
-  itemClasses,
-  itemInnerClasses,
-  isGovVault,
-  isBoosted,
-}) => {
+export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
   const values: Record<string, any> = {};
 
-  values.totalApy = apy.totalApy;
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const apy = useSelector((state: BeefyState) => selectVaultApyInfos(state, vaultId));
 
-  if (apy.vaultApr) {
+  // TODO
+  const isLoading = false;
+
+  if (isGovVaultApy(apy)) {
     values.vaultApr = apy.vaultApr;
     values.vaultDaily = apy.vaultApr / 365;
+  } else {
+    values.totalApy = apy.totalApy;
   }
 
-  if (apy.tradingApr) {
+  if (isStandardVaultApy(apy) && apy.tradingApr !== undefined) {
     values.tradingApr = apy.tradingApr;
     values.tradingDaily = apy.tradingApr / 365;
   }
@@ -193,14 +198,15 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
     values.totalDaily = yearlyToDaily(values.totalApy);
   }
 
-  if (isGovVault) {
+  if (isGovVaultApy(apy)) {
     values.totalApy = apy.vaultApr / 1;
     values.totalDaily = apy.vaultApr / 365;
   }
 
   if (isBoosted) {
-    values.boostApr = launchpoolApr.apr;
-    values.boostDaily = launchpoolApr.apr / 365;
+    // TODO
+    //values.boostApr = launchpoolApr.apr;
+    //values.boostDaily = launchpoolApr.apr / 365;
     values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
     values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
   }
@@ -222,9 +228,13 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
           label={isGovVault ? t('APR') : t('APY')}
           boosted={isBoosted ? formatted.boostedTotalApy : ''}
           isLoading={isLoading}
-          className={`tooltip-toggle ${itemInnerClasses}`}
+          className={`tooltip-toggle`}
         >
-          <YearlyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
+          <YearlyBreakdownTooltip
+            isGovVault={isGovVault(vault)}
+            boosted={isBoosted}
+            rates={formatted}
+          />
         </LabeledStatWithTooltip>
       </Grid>
       <Grid item xs={6} md={2} lg={2}>
@@ -233,13 +243,17 @@ export const _ApyStats: React.FC<ApyStatsProps> = ({
           label={t('Vault-Daily')}
           boosted={isBoosted ? formatted.boostedTotalDaily : ''}
           isLoading={isLoading}
-          className={`tooltip-toggle ${itemInnerClasses}`}
+          className={`tooltip-toggle`}
         >
-          <DailyBreakdownTooltip isGovVault={isGovVault} boosted={isBoosted} rates={formatted} />
+          <DailyBreakdownTooltip
+            isGovVault={isGovVault(vault)}
+            boosted={isBoosted}
+            rates={formatted}
+          />
         </LabeledStatWithTooltip>
       </Grid>
     </>
   );
-};
+}
 
 export const ApyStats = memo(_ApyStats);

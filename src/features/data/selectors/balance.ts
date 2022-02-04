@@ -30,7 +30,7 @@ export const selectStandardVaultUserBalanceInToken = createSelector(
 
 export const selectGovVaultUserBalance = createSelector(
   (state: BeefyState, chainId: ChainEntity['id'], vaultId: VaultEntity['id']) =>
-    state.user.balance.byChainId[chainId].byGovVaultId[vaultId],
+    state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId],
   govVaultBalance => {
     if (!govVaultBalance) {
       return new BigNumber(0);
@@ -42,7 +42,7 @@ export const selectGovVaultUserBalance = createSelector(
 // TODO
 export const selectUserVaultDepositInToken = createSelector(
   (state: BeefyState, chainId: ChainEntity['id'], vaultId: VaultEntity['id']) =>
-    state.user.balance.byChainId[chainId].byGovVaultId[vaultId],
+    state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId],
   govVaultBalance => {
     if (!govVaultBalance) {
       return new BigNumber(0);
@@ -59,7 +59,7 @@ export const selectHasUserDepositInVault = createSelector(
 // TODO
 export const selectUserVaultDepositInUsd = createSelector(
   (state: BeefyState, chainId: ChainEntity['id'], vaultId: VaultEntity['id']) =>
-    state.user.balance.byChainId[chainId].byGovVaultId[vaultId],
+    state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId],
   govVaultBalance => {
     if (!govVaultBalance) {
       return new BigNumber(0);
@@ -70,7 +70,7 @@ export const selectUserVaultDepositInUsd = createSelector(
 
 export const selectBoostUserBalanceInToken = createSelector(
   (state: BeefyState, chainId: ChainEntity['id'], boostId: BoostEntity['id']) =>
-    state.user.balance.byChainId[chainId].byBoostId[boostId],
+    state.user.balance.byChainId[chainId]?.byBoostId[boostId],
   boostBalance => {
     if (!boostBalance) {
       return new BigNumber(0);
