@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { formatBigUsd, getBigNumOrder } from './format';
+import { formatBigNumber, formatBigUsd, getBigNumOrder } from './format';
 
 describe('Formatter tests', () => {
   it('should find a big number order of magnitude', () => {
@@ -17,7 +17,7 @@ describe('Formatter tests', () => {
     expect(getBigNumOrder(new BigNumber('1000000000000000000000000000000.0001'))).toBe(10);
   });
 
-  it('format Big numbers properly', () => {
+  it('format Big numbers usd properly', () => {
     expect(formatBigUsd(new BigNumber('0'))).toBe('$0');
     expect(formatBigUsd(new BigNumber('0.0001'))).toBe('$0');
     expect(formatBigUsd(new BigNumber('10.6001'))).toBe('$11');
@@ -32,5 +32,19 @@ describe('Formatter tests', () => {
     expect(formatBigUsd(new BigNumber('100000000000.0001'))).toBe('$100.00B');
     expect(formatBigUsd(new BigNumber('1110000000000.0001'))).toBe('$1.11T');
   });
-  formatBigUsd;
+  it('format Big numbers properly', () => {
+    expect(formatBigNumber(new BigNumber('0'))).toBe('0');
+    expect(formatBigNumber(new BigNumber('0.0001'))).toBe('0');
+    expect(formatBigNumber(new BigNumber('10.6001'))).toBe('11');
+    expect(formatBigNumber(new BigNumber('999.0001'))).toBe('999');
+    expect(formatBigNumber(new BigNumber('999.02001'))).toBe('999');
+    expect(formatBigNumber(new BigNumber('1000.0001'))).toBe('1,000');
+    expect(formatBigNumber(new BigNumber('10000.0001'))).toBe('10,000');
+    expect(formatBigNumber(new BigNumber('1000000.0001'))).toBe('1.00M');
+    expect(formatBigNumber(new BigNumber('1230000.0001'))).toBe('1.23M');
+    expect(formatBigNumber(new BigNumber('1237000.0001'))).toBe('1.24M');
+    expect(formatBigNumber(new BigNumber('1000000000.0001'))).toBe('1.00B');
+    expect(formatBigNumber(new BigNumber('100000000000.0001'))).toBe('100.00B');
+    expect(formatBigNumber(new BigNumber('1110000000000.0001'))).toBe('1.11T');
+  });
 });

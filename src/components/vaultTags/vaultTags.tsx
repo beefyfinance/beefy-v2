@@ -2,11 +2,19 @@ import React, { memo, useMemo } from 'react';
 import { makeStyles, Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
+import { VaultEntity } from '../../features/data/entities/vault';
+import { useSelector } from 'react-redux';
+import { selectVaultById } from '../../features/data/selectors/vaults';
+import { BeefyState } from '../../redux-types';
+import { selectIsVaultBoosted, selectIsVaultMoonpot } from '../../features/data/selectors/boosts';
 
 const useStyles = makeStyles(styles as any);
-const _DisplayTags = ({ tags, isBoosted, isMoonpot }) => {
+const _DisplayTags = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
   const labels = useMemo(
     () => ({
       low: t('VaultTag-LowRisk'),
@@ -36,7 +44,7 @@ const _DisplayTags = ({ tags, isBoosted, isMoonpot }) => {
           </Box>
         </div>
       )}
-      {tags.map(item => (
+      {vault.tags.map(item => (
         <div className={classes.spacingMobile} key={item}>
           <Typography className={classes.tags}>{item in labels ? labels[item] : item}</Typography>
         </div>

@@ -78,8 +78,9 @@ const _Filter = () => {
     [dispatch]
   );
 
-  const handleSearchTextChange = useCallback(
-    debounce(({ target: { value } }) => dispatch(filteredVaultActions.setSearchText(value)), 200),
+  const handleSearchTextChange = useMemo(
+    () =>
+      debounce(({ target: { value } }) => dispatch(filteredVaultActions.setSearchText(value)), 200),
     [dispatch]
   );
   const clearSearchText = useCallback(

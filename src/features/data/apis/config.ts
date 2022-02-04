@@ -49,7 +49,7 @@ export interface VaultConfig {
   oraclePrice?: number | null; // pulled afterward
   oracle: string; // 'tokens' | 'lp';
   oracleId: TokenEntity['id'];
-  status: string; // 'active' | 'eol';
+  status: string; // 'active' | 'eol' | 'paused';
   platform: PlatformEntity['id'];
   assets?: TokenEntity['id'][];
   risks?: string[] | null;

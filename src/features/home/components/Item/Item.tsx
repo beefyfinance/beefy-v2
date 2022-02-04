@@ -1,4 +1,4 @@
-import React, { memo, ReactNode, useMemo } from 'react';
+import { memo, ReactNode } from 'react';
 import { Grid, makeStyles, Typography, useMediaQuery, Box, Hidden } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -7,108 +7,27 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
 import { DisplayTags } from '../../../../components/vaultTags';
 import { Popover } from '../../../../components/Popover';
-import BigNumber from 'bignumber.js';
-import { isEmpty } from '../../../../helpers/utils';
-import { byDecimals, formatUsd } from '../../../../helpers/format';
+import { formatBigNumber, formatBigUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
-import { useHideBalanceCtx } from '../../../../components/HideBalancesContext';
-
-interface InitialVaultData {
-  deposited: {
-    balance: BigNumber;
-    shares: BigNumber;
-  };
-  poolRewards: {
-    balance: BigNumber;
-    shares: BigNumber;
-  };
-  userStaked: boolean;
-}
-
-function getDepositedAndPoolRewards({
-  vault: item,
-  wallet,
-  balance,
-  vaultBoosts,
-}: {
-  vault: any;
-  wallet: any;
-  balance: any;
-  vaultBoosts: any;
-}): InitialVaultData {
-  let res: InitialVaultData = {
-    deposited: {
-      balance: new BigNumber(0),
-      shares: new BigNumber(0),
-    },
-    poolRewards: {
-      balance: new BigNumber(0),
-      shares: new BigNumber(0),
-    },
-    userStaked: false,
-  };
-  let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
-
-  let balanceSingle = new BigNumber(0);
-  let rewardsBalance = new BigNumber(0);
-  let sharesBalance = new BigNumber(0);
-  let rewardsSharesBalance = new BigNumber(0);
-
-  if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
-    if (item.isGovVault) {
-      balanceSingle = byDecimals(balance.tokens[item.network][symbol].balance, item.tokenDecimals);
-      rewardsBalance = byDecimals(
-        new BigNumber(balance.tokens[item.network][symbol].rewards),
-        item.tokenDecimals
-      );
-      sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-      rewardsSharesBalance = byDecimals(
-        new BigNumber(balance.tokens[item.network][symbol].rewards)
-      );
-    } else {
-      balanceSingle = byDecimals(
-        new BigNumber(balance.tokens[item.network][item.earnedToken].balance)
-          .multipliedBy(byDecimals(item.pricePerFullShare))
-          .toFixed(8),
-        item.tokenDecimals
-      );
-      sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-    }
-    for (const boost of vaultBoosts) {
-      let boostSymbol = `${boost.token}${boost.id}Boost`;
-      if (!isEmpty(balance.tokens[item.network][boostSymbol])) {
-        balanceSingle = balanceSingle.plus(
-          byDecimals(
-            new BigNumber(balance.tokens[item.network][boostSymbol].balance).multipliedBy(
-              byDecimals(item.pricePerFullShare)
-            ),
-            item.tokenDecimals
-          )
-        );
-        sharesBalance = sharesBalance.plus(
-          new BigNumber(balance.tokens[item.network][boostSymbol].balance)
-        );
-        if (balanceSingle.isGreaterThan(0) && boost.id === item.boostData?.id) {
-          res.userStaked = true;
-        }
-      }
-    }
-  }
-  res.deposited = { balance: balanceSingle, shares: sharesBalance };
-  res.poolRewards = { balance: rewardsBalance, shares: rewardsSharesBalance };
-  return res;
-}
-
-const formatDecimals = number => {
-  return number.isGreaterThanOrEqualTo(0)
-    ? number.toFixed(4)
-    : number.isEqualTo(0)
-    ? 0
-    : number.toFixed(8);
-};
+import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import { isGovVault, isVaultActive, VaultEntity } from '../../../data/entities/vault';
+import { BeefyState } from '../../../../redux-types';
+import { selectVaultTvl } from '../../../data/selectors/tvl';
+import {
+  selectGovVaultPendingRewardsInToken,
+  selectGovVaultPendingRewardsInUsd,
+  selectHasGovVaultPendingRewards,
+  selectHasUserDepositInVault,
+  selectUserVaultDepositInToken,
+  selectUserVaultDepositInUsd,
+} from '../../../data/selectors/balance';
+import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
+import { selectChainById } from '../../../data/selectors/chains';
+import { selectPlatformById } from '../../../data/selectors/platforms';
+import { selectTokenById } from '../../../data/selectors/tokens';
 
 function ValueText({
   styleProps,
@@ -171,82 +90,74 @@ interface StyleProps {
   removeMarginButton: boolean;
 }
 const useStyles = makeStyles(styles as any);
-const _Item = ({ vault }) => {
-  const item = vault;
 
-  const isBoosted = vault.isBoosted;
-  const boostedData = vault.boostData;
-  const vaultBoosts = vault.boosts;
-  const isGovVault = item.isGovVault;
+const _Item = ({ vault }: { vault: VaultEntity }) => {
   const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
-
-  const { hideBalance } = useHideBalanceCtx();
+  const hasPendingRewards = useSelector((state: BeefyState) =>
+    selectHasGovVaultPendingRewards(state, vault.id)
+  );
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+  const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
+  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vault.id));
+  const vaultTvl = useSelector((state: BeefyState) => selectVaultTvl(state, vault.id));
+  const earnedToken = useSelector((state: BeefyState) =>
+    isGovVault(vault) ? selectTokenById(state, chain.id, vault.oracleId) : null
+  );
+  const userDeposited = useSelector((state: BeefyState) =>
+    selectUserVaultDepositInToken(state, chain.id, vault.id)
+  );
+  const userDepositedUsd = useSelector((state: BeefyState) =>
+    selectUserVaultDepositInUsd(state, chain.id, vault.id)
+  );
+  const userStaked = useSelector((state: BeefyState) =>
+    selectHasUserDepositInVault(state, chain.id, vault.id)
+  );
+  const totalDeposited = useSelector((state: BeefyState) =>
+    selectUserVaultDepositInToken(state, chain.id, vault.id)
+  );
+  const totalDepositedUsd = useSelector((state: BeefyState) =>
+    selectUserVaultDepositInUsd(state, chain.id, vault.id)
+  );
+  const rewardsEarnedToken = useSelector((state: BeefyState) =>
+    selectGovVaultPendingRewardsInToken(state, vault.id)
+  );
+  const rewardsEarnedUsd = useSelector((state: BeefyState) =>
+    selectGovVaultPendingRewardsInUsd(state, vault.id)
+  );
+  const hideBalance = useSelector(selectIsBalanceHidden);
 
   const { t } = useTranslation();
-  const { wallet, balance, tokens } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-    balance: state.balanceReducer,
-    tokens: state.balanceReducer.tokens[item.network],
-  }));
-  const { deposited, poolRewards, userStaked } = React.useMemo(
-    () => getDepositedAndPoolRewards({ vault: item, wallet, balance, vaultBoosts }),
-    [wallet, item, balance, vaultBoosts]
-  );
-  const pricesReducer = useSelector((state: any) => state.pricesReducer);
-  const formattedTVL = useMemo(() => formatUsd(item.tvl.toNumber()), [item.tvl]);
 
   const styleProps = {
     marginStats: isTwoColumns,
-    removeMarginButton: isGovVault && poolRewards.balance.isGreaterThan(0),
+    removeMarginButton: hasPendingRewards,
   };
   const classes = useStyles(styleProps as any);
 
-  const _deposited = deposited.balance.isGreaterThan(0)
-    ? deposited.balance.toFixed(8)
-    : new BigNumber(0).toFixed(0);
-
-  const depositedUsd = deposited.balance.isGreaterThan(0)
-    ? formatUsd(deposited.balance, pricesReducer.prices[item.oracleId])
-    : formatUsd(0);
-
-  const rewardsEarned = poolRewards.balance.isGreaterThan(0)
-    ? poolRewards.shares
-    : new BigNumber(0);
-
-  const rewardPrice = poolRewards.balance.isGreaterThan(0)
-    ? formatUsd(poolRewards.balance, pricesReducer.prices[item.earnedToken])
-    : formatUsd(0);
-
-  const _wallet = byDecimals(tokens[item.token].balance, tokens[item.token].decimals);
-
-  const walletUsd = _wallet.isGreaterThan(0)
-    ? formatUsd(_wallet, pricesReducer.prices[item.oracleId])
-    : formatUsd(0);
-
-  const blurred = (deposited.balance.isGreaterThan(0) || _wallet.isGreaterThan(0)) && hideBalance;
+  const blurred = totalDeposited.isGreaterThan(0) && hideBalance;
 
   return (
     <div className={classes.boosterSpace}>
       <div
         className={clsx({
           [classes.itemContainer]: true,
-          [classes.withMuted]: item.status === 'paused' || item.status === 'eol',
-          [classes.withIsLongName]: item.name.length > 12,
+          [classes.withMuted]: !isVaultActive(vault),
+          [classes.withIsLongName]: vault.name.length > 12,
           [classes.withBoosted]: isBoosted,
-          [classes.withGovVault]: isGovVault,
+          [classes.withGovVault]: isGovVault(vault),
         })}
       >
         <Grid container>
           {/* Title Container */}
           <Grid item xs={12} md={4} lg={4}>
-            <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+            <Link className={classes.removeLinkStyles} to={`/${chain.id}/vault/${vault.id}`}>
               {/*Vault Image */}
               <div className={classes.infoContainer}>
                 <Hidden smDown>
                   <AssetsImage
-                    img={item.logo}
-                    assets={item.assets}
-                    alt={item.name}
+                    img={vault.logoUri}
+                    assets={vault.assetIds}
+                    alt={vault.name}
                     {...({ size: '60px' } as any)}
                   />
                 </Hidden>
@@ -254,20 +165,22 @@ const _Item = ({ vault }) => {
                   <div className={classes.flexCenter}>
                     <Hidden mdUp>
                       <AssetsImage
-                        img={item.logo}
-                        assets={item.assets}
-                        alt={item.name}
+                        img={vault.logoUri}
+                        assets={vault.assetIds}
+                        alt={vault.name}
                         {...({ size: '60px' } as any)}
                       />
                     </Hidden>
                     <div>
-                      {isGovVault ? (
+                      {isGovVault(vault)
+                        ? /*
                         <Typography className={classes.govVaultTitle}>
-                          EARN {item.earnedToken}
-                        </Typography>
-                      ) : null}
+                          EARN {vault.earnedToken}
+                        </Typography>*/
+                          ''
+                        : null}
                       <Typography variant="h4" className={classes.vaultName}>
-                        {item.name}
+                        {vault.name}
                       </Typography>
                     </div>
                   </div>
@@ -275,29 +188,25 @@ const _Item = ({ vault }) => {
                     {/*Network Image*/}
                     <div className={classes.spacingMobile}>
                       <img
-                        alt={item.network}
-                        src={require(`../../../../images/networks/${item.network}.svg`).default}
+                        alt={chain.name}
+                        src={require(`../../../../images/networks/${chain.id}.svg`).default}
                         width={24}
                         height={24}
                         style={{ width: '24px', height: '24px' }}
                       />
                     </div>
                     {/* Vault Tags */}
-                    <DisplayTags
-                      isBoosted={isBoosted}
-                      tags={item.tags}
-                      isMoonpot={item.moonpot.isMoonpot}
-                    />
+                    <DisplayTags vaultId={vault.id} />
                   </div>
                   <span className={classes.platformContainer}>
                     <Box sx={{ marginRight: '8px' }}>
                       <Typography className={classes.platformLabel}>
-                        {t('Chain')}: <span>{item.network}</span>
+                        {t('Chain')}: <span>{chain.name}</span>
                       </Typography>
                     </Box>
                     <Box>
                       <Typography className={classes.platformLabel}>
-                        {t('PLATFORM')}: <span>{item.platform}</span>
+                        {t('PLATFORM')}: <span>{platform.name}</span>
                       </Typography>
                     </Box>
                   </span>
@@ -309,27 +218,31 @@ const _Item = ({ vault }) => {
           <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
             <Grid container>
               <Grid item xs={6} md={2} lg={2}>
-                <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+                <Link className={classes.removeLinkStyles} to={`/${chain.id}/vault/${vault.id}`}>
                   <div className={clsx([classes.stat, classes.marginBottom])}>
                     <Typography className={classes.label}>{t('WALLET')}</Typography>
                     <ValueText
                       blurred={blurred}
-                      value={_wallet.isGreaterThan(0) ? _wallet.toFixed(4) : _wallet.toFixed(0)}
+                      value={formatBigNumber(userDeposited)}
                       styleProps={styleProps}
                     />
-                    {_wallet.isGreaterThan(0) && (
+                    {userStaked && (
                       <Typography className={classes.label}>
-                        <ValuePrice blurred={blurred} value={walletUsd} styleProps={styleProps} />
+                        <ValuePrice
+                          blurred={blurred}
+                          value={userDepositedUsd}
+                          styleProps={styleProps}
+                        />
                       </Typography>
                     )}
-                    {deposited.balance.isGreaterThan(0) && _wallet.isLessThanOrEqualTo(0) && (
+                    {totalDeposited.isGreaterThan(0) && userDeposited.isLessThanOrEqualTo(0) && (
                       <div className={classes.boostSpacer} />
                     )}
                   </div>
                 </Link>
               </Grid>
               <Grid item xs={6} md={2} lg={2}>
-                <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+                <Link className={classes.removeLinkStyles} to={`/${chain.id}/vault/${vault.id}`}>
                   {/*Boosted by */}
                   {isBoosted && userStaked && (
                     <div className={clsx([classes.stat, classes.marginBottom])}>
@@ -344,17 +257,21 @@ const _Item = ({ vault }) => {
                   {(!isBoosted || !userStaked) && (
                     <div className={clsx([classes.stat, classes.marginBottom])}>
                       <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-                      <ValueText blurred={blurred} value={_deposited} styleProps={styleProps} />
-                      {deposited.balance.isGreaterThan(0) && (
+                      <ValueText
+                        blurred={blurred}
+                        value={formatBigNumber(totalDeposited)}
+                        styleProps={styleProps}
+                      />
+                      {totalDepositedUsd.isGreaterThan(0) && (
                         <Typography className={classes.label}>
                           <ValuePrice
                             blurred={blurred}
-                            value={depositedUsd}
+                            value={formatBigUsd(totalDepositedUsd)}
                             styleProps={styleProps}
                           />
                         </Typography>
                       )}
-                      {_wallet.isGreaterThan(0) && deposited.balance.isLessThan(0) && (
+                      {userDeposited.isGreaterThan(0) && totalDeposited.isLessThan(0) && (
                         <div className={classes.boostSpacer} />
                       )}
                     </div>
@@ -366,18 +283,21 @@ const _Item = ({ vault }) => {
                 {...({
                   isBoosted: isBoosted,
                   launchpoolApr: boostedData,
-                  apy: item.apy,
-                  isGovVault: item.isGovVault ?? false,
+                  apy: vault.apy,
+                  isGovVault: vault.isGovVault ?? false,
                 } as any)}
               />
               <Grid item xs={6} md={2} lg={2}>
-                <Link className={classes.removeLinkStyles} to={`/${item.network}/vault/${item.id}`}>
+                <Link
+                  className={classes.removeLinkStyles}
+                  to={`/${vault.network}/vault/${vault.id}`}
+                >
                   {/*Tvl */}
                   <div className={isGovVault || isBoosted ? classes.stat1 : classes.stat}>
                     <Typography className={classes.label}>{t('TVL')}</Typography>
-                    <Typography className={classes.value}>{formattedTVL}</Typography>
+                    <Typography className={classes.value}>{formatBigUsd(vaultTvl)}</Typography>
                     {isBoosted ||
-                    (deposited.balance.isGreaterThan(0) && !isTwoColumns) ||
+                    (totalDeposited.balance.isGreaterThan(0) && !isTwoColumns) ||
                     (_wallet.isGreaterThan(0) && !isTwoColumns) ? (
                       <div className={classes.boostSpacer} />
                     ) : null}
@@ -388,15 +308,15 @@ const _Item = ({ vault }) => {
                 {isGovVault ? (
                   <Link
                     className={classes.removeLinkStyles}
-                    to={`/${item.network}/vault/${item.id}`}
+                    to={`/${vault.network}/vault/${vault.id}`}
                   >
                     <div className={classes.stat1}>
                       <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
                       <Typography className={classes.value}>
-                        {(formatDecimals(rewardsEarned) ?? '') + ` ${item.earnedToken}`}
+                        {(formatDecimals(rewardsEarnedToken) ?? '') + ` ${vault.earnedToken}`}
                       </Typography>
 
-                      {deposited.balance.isGreaterThan(0) && (
+                      {totalDeposited.balance.isGreaterThan(0) && (
                         <Typography className={classes.label}>
                           <ValuePrice
                             blurred={blurred}
@@ -420,7 +340,7 @@ const _Item = ({ vault }) => {
                         />
                       </div>
                     </div>
-                    <SafetyScore score={item.safetyScore} whiteLabel size="sm" />
+                    <SafetyScore score={vault.safetyScore} whiteLabel size="sm" />
                   </div>
                 )}
               </Grid>
