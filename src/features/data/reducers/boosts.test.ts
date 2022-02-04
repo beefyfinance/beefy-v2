@@ -51,6 +51,23 @@ describe('Boosts slice tests', () => {
           isMooStaked: true,
           partners: [],
         },
+
+        // one with pre-staking boost
+        {
+          id: 'moo_aave-eth',
+          poolId: 'aave-eth',
+          name: 'Iron / Garuda / Fanatics',
+          logo: 'single-assets/ETH.svg',
+          earnedToken: 'mooPolygonBIFI',
+          earnedTokenDecimals: 18,
+          earnedTokenAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
+          earnContractAddress: '0x9B508ad657ed5A139D1a7c97fD84d7B7240849Cf',
+          earnedOracle: 'tokens',
+          earnedOracleId: 'BIFI',
+          partnership: true,
+          status: 'prestake',
+          isMooStaked: true,
+        },
       ],
     };
     const action = { type: fetchAllBoosts.fulfilled, payload: payload };

@@ -85,6 +85,8 @@
 
     [ ] Make sure TVL is properly computed (compare with current bêta)
 
+[ ] Apply decimals as soon as possible (in the API classes). We won't loose precision as we return bignumbers only
+
 BONUS:
 
 [ ] Currently, when the wallet is connected, Memory usage goes steadily up, It’d be ideal if we could prevent memory leaks from existing once this is over

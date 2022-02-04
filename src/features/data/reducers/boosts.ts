@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllBoosts } from '../actions/boosts';
 import { BoostConfig } from '../apis/config';
-import { BoostEntity, isBoostActive } from '../entities/boost';
+import { BoostEntity, isBoostActive, isBoostPreStake } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
@@ -14,12 +14,14 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
   byVaultId: {
     [vaultId: VaultEntity['id']]: {
       allBoostsIds: BoostEntity['id'][];
+      prestakeBoostsIds: BoostEntity['id'][];
       activeBoostsIds: BoostEntity['id'][];
     };
   };
   byChainId: {
     [chainId: ChainEntity['id']]: {
       allBoostsIds: BoostEntity['id'][];
+      prestakeBoostsIds: BoostEntity['id'][];
       activeBoostsIds: BoostEntity['id'][];
     };
   };
@@ -66,7 +68,7 @@ function addBoostToState(
     earnContractAddress: apiBoost.earnContractAddress,
     logo: apiBoost.logo,
     name: apiBoost.name,
-    partnerIds: apiBoost.partners.map(p => p.website),
+    partnerIds: apiBoost.partners ? apiBoost.partners.map(p => p.website) : [],
     status: apiBoost.status as BoostEntity['status'],
     vaultId: apiBoost.poolId,
   };
@@ -75,19 +77,33 @@ function addBoostToState(
 
   // add to vault id index
   if (sliceState.byVaultId[boost.vaultId] === undefined) {
-    sliceState.byVaultId[boost.vaultId] = { allBoostsIds: [], activeBoostsIds: [] };
+    sliceState.byVaultId[boost.vaultId] = {
+      allBoostsIds: [],
+      activeBoostsIds: [],
+      prestakeBoostsIds: [],
+    };
   }
   sliceState.byVaultId[boost.vaultId].allBoostsIds.push(boost.id);
   if (isBoostActive(boost)) {
     sliceState.byVaultId[boost.vaultId].activeBoostsIds.push(boost.id);
   }
+  if (isBoostPreStake(boost)) {
+    sliceState.byVaultId[boost.vaultId].prestakeBoostsIds.push(boost.id);
+  }
 
   // add to chain id index
   if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = { allBoostsIds: [], activeBoostsIds: [] };
+    sliceState.byChainId[chainId] = {
+      allBoostsIds: [],
+      activeBoostsIds: [],
+      prestakeBoostsIds: [],
+    };
   }
   sliceState.byChainId[chainId].allBoostsIds.push(boost.id);
   if (isBoostActive(boost)) {
     sliceState.byChainId[chainId].activeBoostsIds.push(boost.id);
+  }
+  if (isBoostPreStake(boost)) {
+    sliceState.byChainId[chainId].prestakeBoostsIds.push(boost.id);
   }
 }

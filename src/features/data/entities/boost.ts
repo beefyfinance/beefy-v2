@@ -37,9 +37,15 @@ export interface BoostEntity {
   partnerIds: PartnerEntity['id'][];
 
   // boosts are active for a limited time
-  status: 'active' | 'closed';
+  // boosts can be in a state prior to active, which we call prestake
+  // Basically it means the state is not active yet but you can already stake there and earn the second it goes live
+  status: 'prestake' | 'active' | 'closed';
 }
 
 export function isBoostActive(boost: BoostEntity) {
   return boost.status === 'active';
+}
+
+export function isBoostPreStake(boost: BoostEntity) {
+  return boost.status === 'prestake';
 }
