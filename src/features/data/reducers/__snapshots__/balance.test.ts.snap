@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Balance slice tests should update state on fulfilled boost balance 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byBoostId": Object {
+        "moo_beltbnb-czodiac": Object {
+          "balance": "100",
+          "rewards": "10",
+        },
+        "moo_ellipsis-renbtc-charge": Object {
+          "balance": "100",
+          "rewards": "10",
+        },
+      },
+      "byGovVaultId": Object {},
+      "byTokenId": Object {},
+    },
+  },
+  "deposited": Object {
+    "belt-beltbnb": Object {
+      "balance": "0",
+      "shares": "100",
+    },
+    "ellipsis-renbtc": Object {
+      "balance": "0",
+      "shares": "100",
+    },
+  },
+  "depositedVaultIds": Object {
+    "govVaults": Array [],
+    "standardVaults": Array [],
+  },
+}
+`;
+
+exports[`Balance slice tests should update state on fulfilled gov boost pools 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byBoostId": Object {},
+      "byGovVaultId": Object {
+        "bifi-gov": Object {
+          "balance": "10",
+          "rewards": "100",
+        },
+      },
+      "byTokenId": Object {},
+    },
+  },
+  "deposited": Object {
+    "bifi-gov": Object {
+      "balance": "1e-17",
+      "shares": "10",
+    },
+  },
+  "depositedVaultIds": Object {
+    "govVaults": Array [
+      Object {
+        "chainId": "bsc",
+        "vaultId": "bifi-gov",
+      },
+    ],
+    "standardVaults": Array [],
+  },
+}
+`;
+
+exports[`Balance slice tests should update state on fulfilled token balance 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byBoostId": Object {},
+      "byGovVaultId": Object {},
+      "byTokenId": Object {
+        "BIFI": Object {
+          "balance": "10",
+        },
+        "banana-nfty-wbnb": Object {
+          "balance": "10",
+        },
+        "mooApeBNB-STARS": Object {
+          "balance": "10",
+        },
+      },
+    },
+  },
+  "deposited": Object {
+    "banana-bnb-stars": Object {
+      "balance": "0",
+      "shares": "10",
+    },
+  },
+  "depositedVaultIds": Object {
+    "govVaults": Array [],
+    "standardVaults": Array [
+      Object {
+        "chainId": "bsc",
+        "vaultId": "banana-bnb-stars",
+      },
+    ],
+  },
+}
+`;

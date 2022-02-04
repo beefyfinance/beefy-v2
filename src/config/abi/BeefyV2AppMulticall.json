@@ -1,0 +1,52 @@
+[
+  {
+    "inputs": [{ "internalType": "address[]", "name": "boosts", "type": "address[]" }],
+    "name": "getBoostInfo",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "totalSupply", "type": "uint256" },
+          { "internalType": "uint256", "name": "rewardRate", "type": "uint256" },
+          { "internalType": "uint256", "name": "periodFinish", "type": "uint256" }
+        ],
+        "internalType": "struct BoostInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address[]", "name": "govVaults", "type": "address[]" }],
+    "name": "getGovVaultInfo",
+    "outputs": [
+      {
+        "components": [{ "internalType": "uint256", "name": "totalSupply", "type": "uint256" }],
+        "internalType": "struct GovVaultInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address[]", "name": "vaults", "type": "address[]" }],
+    "name": "getVaultInfo",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "balance", "type": "uint256" },
+          { "internalType": "uint256", "name": "pricePerFullShare", "type": "uint256" },
+          { "internalType": "address", "name": "strategy", "type": "address" }
+        ],
+        "internalType": "struct VaultInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

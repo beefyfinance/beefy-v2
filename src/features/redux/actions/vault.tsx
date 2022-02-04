@@ -84,9 +84,9 @@ const getPools = async (items, state, dispatch) => {
       tvl = totalStaked
         .times(price)
         .dividedBy(new BigNumber(10).exponentiatedBy(pools[item.id].tokenDecimals));
-			const S = pools[ item.id].excluded;
-      if (S && pools[ S]) {
-        tvl = tvl.minus( pools[ S].tvl);
+      const S = pools[item.id].excluded;
+      if (S && pools[S]) {
+        tvl = tvl.minus(pools[S].tvl);
       }
     } else {
       const balance = new BigNumber(item.balance);
@@ -161,6 +161,7 @@ const getBoosts = async (items, state, dispatch) => {
     promises.push(multicall[key].all([moos[key]]));
   }
   const results = await Promise.allSettled(promises);
+
   const response = [];
 
   results.forEach(result => {

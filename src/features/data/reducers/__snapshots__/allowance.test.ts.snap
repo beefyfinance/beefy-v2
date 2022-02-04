@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Allowance slice tests should update state on fulfilled allowance 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "byTokenId": Object {
+        "token1": Object {
+          "bySpenderAddress": Object {
+            "0x0001": "10",
+          },
+        },
+        "token2": Object {
+          "bySpenderAddress": Object {
+            "0x0001": "5",
+            "0x0002": "5",
+          },
+        },
+      },
+    },
+  },
+}
+`;

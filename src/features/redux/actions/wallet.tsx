@@ -18,6 +18,7 @@ import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
 import boostAbi from '../../../config/abi/boost.json';
 import zapAbi from '../../../config/abi/zap.json';
+import { featureFlag_walletAddressOverride } from '../../data/utils/feature-flags';
 
 const getClientsForNetwork = async net => {
   return config[net].rpc;
@@ -87,7 +88,7 @@ const connect = () => {
         return accounts[0] !== undefined
           ? dispatch({
               type: WALLET_CONNECT_DONE,
-              payload: { address: accounts[0] },
+              payload: { address: featureFlag_walletAddressOverride(accounts[0]) },
             })
           : await close();
       });
@@ -129,7 +130,7 @@ const connect = () => {
         // dispatch({ type: WALLET_RPC, payload: { rpc: state.rpc[state.network] } });
         dispatch({
           type: WALLET_CONNECT_DONE,
-          payload: { address: accounts[0] },
+          payload: { address: featureFlag_walletAddressOverride(accounts[0]) },
         });
       } else {
         if (!checkNetworkSupport(networkId)) {
@@ -142,7 +143,10 @@ const connect = () => {
             dispatch(connect());
           } else {
             const accounts = await web3.eth.getAccounts();
-            dispatch({ type: UNSUPPORTED_NETWORK, payload: { address: accounts[0] } });
+            dispatch({
+              type: UNSUPPORTED_NETWORK,
+              payload: { address: featureFlag_walletAddressOverride(accounts[0]) },
+            });
             throw Error('Network not supported, check chainId.');
           }
         } else {

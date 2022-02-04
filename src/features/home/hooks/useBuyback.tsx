@@ -12,7 +12,11 @@ export const useBuyback = () => {
 
       // eslint-disable-next-line array-callback-return
       Object.keys(data).map(chain => {
-        const number = data[chain].buybackUsdAmount ? parseFloat(data[chain].buybackUsdAmount) : 0;
+        const number = !data[chain]
+          ? 0
+          : data[chain].buybackUsdAmount
+          ? parseFloat(data[chain].buybackUsdAmount)
+          : 0;
         _buyback += number;
       });
 

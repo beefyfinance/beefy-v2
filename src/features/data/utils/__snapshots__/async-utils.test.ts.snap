@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Async utils tests should delay dispatching a /fulfilled action 1`] = `
+Object {
+  "log": Array [
+    Object {
+      "args": Object {
+        "what": "NOT catched async 1",
+      },
+      "payload": undefined,
+      "type": "test/pending",
+    },
+    Object {
+      "args": Object {
+        "what": "NOT catched async 1",
+      },
+      "payload": Object {
+        "what": "NOT catched async 1",
+      },
+      "type": "test/fulfilled",
+    },
+    Object {
+      "args": Object {
+        "what": "Captured Action",
+      },
+      "payload": undefined,
+      "type": "test/pending",
+    },
+    Object {
+      "args": Object {
+        "what": "NOT catched async 2",
+      },
+      "payload": undefined,
+      "type": "test/pending",
+    },
+    Object {
+      "args": Object {
+        "what": "NOT catched async 2",
+      },
+      "payload": Object {
+        "what": "NOT catched async 2",
+      },
+      "type": "test/fulfilled",
+    },
+    Object {
+      "args": Object {
+        "what": "Exception",
+      },
+      "payload": undefined,
+      "type": "test/pending",
+    },
+    Object {
+      "args": Object {
+        "what": "Exception",
+      },
+      "payload": undefined,
+      "type": "test/rejected",
+    },
+    Object {
+      "args": Object {
+        "what": "Captured Action",
+      },
+      "payload": Object {
+        "what": "Captured Action",
+      },
+      "type": "test/fulfilled",
+    },
+  ],
+}
+`;
+
+exports[`Async utils tests should replace action state payload with the latest state 1`] = `
+Object {
+  "state": Object {
+    "log": Array [
+      Object {
+        "args": Object {
+          "state": Object {},
+          "what": "Captured Action",
+        },
+        "payload": undefined,
+        "type": "test/pending",
+      },
+    ],
+  },
+  "what": "Captured Action",
+}
+`;

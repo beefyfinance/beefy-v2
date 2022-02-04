@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`APY slice tests should update state on fulfilled boost contract data 1`] = `
+Object {
+  "byBoostId": Object {
+    "moo_banana-banana-busd-bitcrush": Object {
+      "apr": 16.099658752067988,
+    },
+  },
+  "byVaultId": Object {},
+}
+`;

@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chains slice tests should update state on fulfilled chain config list 1`] = `
+Object {
+  "allIds": Array [
+    "arbitrum",
+    "celo",
+  ],
+  "byId": Object {
+    "arbitrum": Object {
+      "explorerUrl": "https://arbiscan.io",
+      "id": "arbitrum",
+      "multicallAddress": "0x13aD51a6664973EbD0749a7c84939d973F247921",
+      "name": "Arbitrum",
+      "networkChainId": 42161,
+      "providerName": "Arbitrum",
+      "rpc": Array [
+        "https://arb1.arbitrum.io/rpc",
+      ],
+      "stableCoins": Array [
+        "USDC",
+        "USDT",
+        "MIM",
+      ],
+      "supportedWallets": Array [
+        "injected",
+        "custom-coinbase",
+        "custom-wallet-connect",
+      ],
+      "walletSettings": Object {
+        "blockExplorerUrls": Array [
+          "https://arbiscan.io/",
+        ],
+        "chainId": "0xa4b1",
+        "chainName": "Arbitrum One",
+        "nativeCurrency": Object {
+          "decimals": 18,
+          "name": "ETH",
+          "symbol": "ETH",
+        },
+        "rpcUrls": Array [
+          "https://arb1.arbitrum.io/rpc",
+        ],
+      },
+    },
+    "celo": Object {
+      "explorerUrl": "https://explorer.celo.org",
+      "id": "celo",
+      "multicallAddress": "0xa9E6E271b27b20F65394914f8784B3B860dBd259",
+      "name": "Celo",
+      "networkChainId": 42220,
+      "providerName": "Celo",
+      "rpc": Array [
+        "https://forno.celo.org",
+      ],
+      "stableCoins": Array [
+        "cUSD",
+        "cEUR",
+        "DAI",
+      ],
+      "supportedWallets": Array [
+        "injected",
+        "custom-wallet-connect",
+      ],
+      "walletSettings": Object {
+        "blockExplorerUrls": Array [
+          "https://explorer.celo.org/",
+        ],
+        "chainId": "0xa4ec",
+        "chainName": "Celo",
+        "nativeCurrency": Object {
+          "decimals": 18,
+          "name": "CELO",
+          "symbol": "CELO",
+        },
+        "rpcUrls": Array [
+          "https://forno.celo.org",
+        ],
+      },
+    },
+  },
+}
+`;
