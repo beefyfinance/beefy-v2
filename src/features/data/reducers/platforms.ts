@@ -49,9 +49,10 @@ function addPlatformToState(
   chainId: ChainEntity['id'],
   platformId: PlatformEntity['id']
 ) {
+  platformId = platformId.toLowerCase();
   if (sliceState.byId[platformId] === undefined) {
     const platform: PlatformEntity = {
-      id: platformId.toLowerCase(),
+      id: platformId,
       name: platformId, // for now, platforms Id is their name
     };
     sliceState.byId[platformId] = platform;

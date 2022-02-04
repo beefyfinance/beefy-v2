@@ -12,7 +12,7 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
-import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import { selectActiveVaultBoostIds, selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { isGovVault, isVaultActive, VaultEntity } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultTvl } from '../../../data/selectors/tvl';
@@ -99,6 +99,9 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vault.id));
+  const activeBoosts = useSelector((state: BeefyState) =>
+    selectActiveVaultBoostIds(state, vault.id)
+  );
   const vaultTvl = useSelector((state: BeefyState) => selectVaultTvl(state, vault.id));
   const earnedToken = useSelector((state: BeefyState) =>
     isGovVault(vault) ? selectTokenById(state, chain.id, vault.oracleId) : null
@@ -247,7 +250,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                   {isBoosted && userStaked && (
                     <div className={clsx([classes.stat, classes.marginBottom])}>
                       <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-                      <ValueText value={boostedData.name} styleProps={styleProps} />
+                      <ValueText value={activeBoosts.join(', ')} styleProps={styleProps} />
                       <Typography className={classes.label}>
                         <ValuePrice value={t('BOOST')} styleProps={styleProps} />
                       </Typography>
@@ -279,26 +282,16 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                 </Link>
               </Grid>
               {/**APY STATS*/}
-              <ApyStats
-                {...({
-                  isBoosted: isBoosted,
-                  launchpoolApr: boostedData,
-                  apy: vault.apy,
-                  isGovVault: vault.isGovVault ?? false,
-                } as any)}
-              />
+              <ApyStats vaultId={vault.id} />
               <Grid item xs={6} md={2} lg={2}>
-                <Link
-                  className={classes.removeLinkStyles}
-                  to={`/${vault.network}/vault/${vault.id}`}
-                >
+                <Link className={classes.removeLinkStyles} to={`/${chain.id}/vault/${vault.id}`}>
                   {/*Tvl */}
                   <div className={isGovVault || isBoosted ? classes.stat1 : classes.stat}>
                     <Typography className={classes.label}>{t('TVL')}</Typography>
                     <Typography className={classes.value}>{formatBigUsd(vaultTvl)}</Typography>
                     {isBoosted ||
-                    (totalDeposited.balance.isGreaterThan(0) && !isTwoColumns) ||
-                    (_wallet.isGreaterThan(0) && !isTwoColumns) ? (
+                    (totalDeposited.isGreaterThan(0) && !isTwoColumns) ||
+                    (userDeposited.isGreaterThan(0) && !isTwoColumns) ? (
                       <div className={classes.boostSpacer} />
                     ) : null}
                   </div>
@@ -306,10 +299,8 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
               </Grid>
               <Grid item xs={6} md={2} lg={2}>
                 {isGovVault ? (
-                  <Link
-                    className={classes.removeLinkStyles}
-                    to={`/${vault.network}/vault/${vault.id}`}
-                  >
+                  '' /*
+                  <Link className={classes.removeLinkStyles} to={`/${chain.id}/vault/${vault.id}`}>
                     <div className={classes.stat1}>
                       <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
                       <Typography className={classes.value}>
@@ -326,7 +317,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                         </Typography>
                       )}
                     </div>
-                  </Link>
+                  </Link>*/
                 ) : (
                   <div className={isBoosted ? classes.stat1 : classes.stat}>
                     <div className={classes.tooltipLabel}>
@@ -340,7 +331,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                         />
                       </div>
                     </div>
-                    <SafetyScore score={vault.safetyScore} whiteLabel size="sm" />
+                    {/*<SafetyScore score={vault.safetyScore} whiteLabel size="sm" />*/}
                   </div>
                 )}
               </Grid>

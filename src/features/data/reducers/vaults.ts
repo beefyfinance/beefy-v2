@@ -89,8 +89,12 @@ function addVaultToState(
     return;
   }
   if (apiVault.isGovVault) {
+    if (!apiVault.logo) {
+      throw new Error(`Missing logo uri for gov vault ${apiVault.id}`);
+    }
     const vault: VaultGov = {
       id: apiVault.id,
+      logoUri: apiVault.logo,
       name: apiVault.name,
       isGovVault: true,
       earnContractAddress: apiVault.poolAddress,
@@ -98,7 +102,10 @@ function addVaultToState(
       oracleId: apiVault.oracleId,
       chainId: chainId,
       status: apiVault.status as VaultGov['status'],
+      platformId: apiVault.platform.toLowerCase(),
+      // TODO
       tags: [],
+      assetIds: [],
     };
 
     sliceState.byId[vault.id] = vault;
@@ -130,7 +137,9 @@ function addVaultToState(
       chainId: chainId,
       platformId: apiVault.platform.toLowerCase(),
       status: apiVault.status as VaultStandard['status'],
+      // TODO
       tags: [],
+      assetIds: [],
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual
