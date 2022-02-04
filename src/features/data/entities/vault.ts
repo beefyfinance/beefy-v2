@@ -1,4 +1,5 @@
 import { ChainEntity } from './chain';
+import { PlatformEntity } from './platform';
 import { TokenEntity } from './token';
 
 /**
@@ -47,6 +48,11 @@ export interface VaultStandard {
   strategyType: 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
 
   isGovVault: false;
+
+  /**
+   * The protocol this vault rely on (Curve, boo finance, etc)
+   */
+  platformId: PlatformEntity['id'];
 
   // TODO: WIP
   /*

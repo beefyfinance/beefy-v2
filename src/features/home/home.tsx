@@ -18,6 +18,7 @@ import {
 import { Item } from './components/Item';
 import { ceil, debounce } from 'lodash';
 import { CowLoader } from '../../components/CowLoader';
+import { selectIsVaultListAvailable } from '../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles as any);
 
@@ -164,8 +165,8 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
 const VaultsList = memo(function HomeVaultsList() {
   const classes = useStyles();
   const { t } = useTranslation();
-  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 959px)');
-  const isPoolsLoading = useSelector((state: any) => state.vaultReducer.isPoolsLoading);
+  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
+  const isPoolsLoading = useSelector(selectIsVaultListAvailable);
   const platforms = useSelector((state: any) => state.vaultReducer.platforms);
   const { sortedVaults, filterConfig, setFilterConfig, filteredVaultsCount, allVaultsCount } =
     useVaults();

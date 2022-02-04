@@ -16,6 +16,7 @@ import { dataLoaderSlice } from '../../data/reducers/data-loader';
 import { walletSlice } from '../../data/reducers/wallet';
 import { BeefyState } from '../../../redux-types';
 import { buybackSlice } from '../../data/reducers/buyback';
+import { filteredVaultsSlice } from '../../data/reducers/filtered-vaults';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -36,6 +37,7 @@ const userReducer = combineReducers<BeefyState['user']>({
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
   dataLoader: dataLoaderSlice.reducer,
+  filteredVaults: filteredVaultsSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({
