@@ -40,7 +40,6 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
   if (oraclePrice) {
     tvl *= oraclePrice;
   }
-
   const order = Math.floor(Math.log10(tvl) / 3);
 
   const units = ['', 'k', 'M', 'B', 'T'];
@@ -63,6 +62,31 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
         minimumFractionDigits: 0,
       });
 };
+
+export function getBigNumOrder(num: BigNumber): number {
+  const nEstr = num.abs().decimalPlaces(0).toExponential();
+  const parts = nEstr.split('e');
+  const exp = parseInt(parts[1]);
+  return Math.floor(exp / 3);
+}
+
+export function formatBigUsd(value: BigNumber) {
+  const order = getBigNumOrder(value);
+
+  if (order < 2) {
+    return value.toNumber().toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    });
+  }
+  const prefix = '$';
+  const units = ['', 'k', 'M', 'B', 'T'];
+  const num = value.shiftedBy(-order * 3).toNumber();
+
+  return prefix + num.toFixed(2) + units[order];
+}
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
 

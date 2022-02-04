@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 
 export const selectIsPriceAvailable = createSelector(
   [(state: BeefyState) => state.ui.dataLoader.global.prices],

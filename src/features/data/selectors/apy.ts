@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { memoize } from 'lodash';
 import { byDecimals } from '../../../helpers/format';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { ApyData, isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isGovVault, VaultEntity } from '../entities/vault';
 import {

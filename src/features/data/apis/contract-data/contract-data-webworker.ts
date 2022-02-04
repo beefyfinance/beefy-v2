@@ -3,7 +3,6 @@ import * as Comlink from 'comlink';
 import { VaultGov, VaultStandard } from '../../entities/vault';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../../redux/reducers/storev2';
 import { BoostEntity } from '../../entities/boost';
 import { selectTokenById } from '../../selectors/tokens';
 import { isTokenErc20 } from '../../entities/token';
@@ -15,6 +14,7 @@ import {
   IContractDataApi,
   StandardVaultContractData,
 } from './contract-data-types';
+import { BeefyState } from '../../../../redux-types';
 
 /**
  * Get vault contract data

@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../../redux/reducers/storev2';
+import { BeefyState } from '../../../../redux-types';
 import { BoostEntity } from '../../entities/boost';
 import { VaultGov, VaultStandard } from '../../entities/vault';
 

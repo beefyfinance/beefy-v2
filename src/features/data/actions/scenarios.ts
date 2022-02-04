@@ -1,5 +1,4 @@
 import { Action } from 'redux';
-import { storeV2 } from '../../../store';
 import { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
@@ -14,18 +13,17 @@ import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-ut
 import { fetchApyAction } from './apy';
 import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
-import { fetchAllPricesAction } from './prices';
+import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
 import { fetchAllVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_dataPolling, featureFlag_scenarioTimings } from '../utils/feature-flags';
 import { fetchAllAllowanceAction } from './allowance';
-
-const store = storeV2;
+import { BeefyStore } from '../../../redux-types';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
-interface CapturedFulfilledActions {
+export interface CapturedFulfilledActions {
   contractData: CapturedFulfilledActionGetter;
   user: {
     balance: CapturedFulfilledActionGetter;
@@ -36,7 +34,7 @@ interface CapturedFulfilledActions {
 let pollStopFns: PollStop[] = [];
 
 // todo: put this in a config
-const chains = [
+export const chains = [
   'arbitrum',
   'avax',
   'celo',
@@ -58,7 +56,7 @@ const chains = [
  * Fetch all necessary information for the home page
  * TODO: we need to inject the store in parameters somehow and not get if from a global import
  */
-export async function initHomeDataV4() {
+export async function initHomeDataV4(store: BeefyStore) {
   if (featureFlag_scenarioTimings()) {
     console.time('From scenario start');
     console.timeLog('From scenario start');
@@ -105,6 +103,9 @@ export async function initHomeDataV4() {
   // we can start fetching apy, it will arrive when it wants, nothing depends on it
   store.dispatch(fetchApyAction({}));
 
+  // we start fetching buyback
+  store.dispatch(fetchBeefyBuybackAction({}));
+
   // we need config data (for contract addresses) to start querying the rest
   await boostsAndVaults;
 
@@ -123,7 +124,7 @@ export async function initHomeDataV4() {
     // if user is connected, start fetching balances and allowances
     let userFullfills: CapturedFulfilledActions['user'] = null;
     if (selectIsWalletConnected(store.getState())) {
-      userFullfills = fetchCaptureUserData(chain.id);
+      userFullfills = fetchCaptureUserData(store, chain.id);
     }
 
     // startfetching all contract-related data at the same time
@@ -156,7 +157,7 @@ export async function initHomeDataV4() {
 
         // user ffs can be dispatched in any order after that
         if (chainFfs.user !== null) {
-          dispatchUserFfs(chainFfs.user);
+          dispatchUserFfs(store, chainFfs.user);
         }
       })().catch(err => {
         // as we still dispatch network errors, for reducers to handle
@@ -207,42 +208,19 @@ export async function initHomeDataV4() {
   for (const chain of chains) {
     const pollStop = poll(async () => {
       // trigger all calls at the same time
-      const fulfills = fetchCaptureUserData(chain.id);
+      const fulfills = fetchCaptureUserData(store, chain.id);
 
       // dispatch fulfills in order
-      await dispatchUserFfs(fulfills);
+      await dispatchUserFfs(store, fulfills);
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
 }
 
-// when some wallet actions are triggered (like connection or account changed)
-// fetch balance and allowance again
-export function walletActionsMiddleware(store) {
-  return next => async (action: { type: string; payload: { chainId?: ChainEntity['id'] } }) => {
-    await next(action);
-
-    let userFfsByChain: { [chainId: ChainEntity['id']]: CapturedFulfilledActions['user'] } | null =
-      null;
-    switch (action.type) {
-      case userDidConnect.type:
-      case accountHasChanged.type:
-        userFfsByChain = {};
-        for (const chain of chains) {
-          userFfsByChain[chain.id] = fetchCaptureUserData(chain.id);
-        }
-        break;
-    }
-
-    if (userFfsByChain !== null) {
-      for (const chain of chains) {
-        dispatchUserFfs(userFfsByChain[chain.id]);
-      }
-    }
-  };
-}
-
-function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActions['user'] {
+export function fetchCaptureUserData(
+  store: BeefyStore,
+  chainId: ChainEntity['id']
+): CapturedFulfilledActions['user'] {
   const captureFulfill = createFulfilledActionCapturer(store);
   if (featureFlag_scenarioTimings()) {
     console.timeLog('From scenario start');
@@ -255,7 +233,10 @@ function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActi
   };
 }
 
-async function dispatchUserFfs(userFfs: CapturedFulfilledActions['user']) {
+export async function dispatchUserFfs(
+  store: BeefyStore,
+  userFfs: CapturedFulfilledActions['user']
+) {
   await store.dispatch((await userFfs.balance)());
   await store.dispatch((await userFfs.allowance)());
   if (featureFlag_scenarioTimings()) {

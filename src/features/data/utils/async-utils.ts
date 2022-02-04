@@ -1,6 +1,6 @@
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { Action, Store } from 'redux';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 
 /**
  * allows us to do
