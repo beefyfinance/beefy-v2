@@ -146,7 +146,6 @@ export const tvlSlice = createSlice({
         const tvl = totalStaked.times(tokenPrice).dividedBy(token.decimals);
 
         // add data to state
-        sliceState.totalTvl = sliceState.totalTvl.plus(tvl);
         sliceState.byBoostId[boost.id] = { tvl, staked };
       }
     });
