@@ -227,5 +227,35 @@ export const pools = [
         }
       }
     ]
+  },
+  {
+    id: "moo_spirit-binspirit-spirit-spirit",
+    poolId: "spirit-binspirit-spirit",
+    name: "SpiritSwap",
+    assets: [
+      "binSPIRIT",
+      "SPIRIT"
+    ],
+    earnedToken: "mooBinSPIRIT",
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: "0x7345a537A975d9Ca588eE631BEFdDfEF34fD5e8f",
+    earnContractAddress: "0xf5ea5496F26413D1Db47A5B23Bb78263bf4d325d",
+    earnedOracle: "tokens",
+    earnedOracleId: "binSPIRIT",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/spirit/logo.png",
+        background: "stake/spirit/bg.png",
+        text: "The SpiritSwap protocol provides a platform for trading, staking, and farming. SpiritSwap incentivizes Fantom network participation through revenue sharing by locking SPIRIT in return for inSPIRIT. inSPIRIT vests at the end of the lock and is non-transferrable. Lock your SPIRIT on Beefy to mint binSPIRIT, Beefy’s liquid version of inSPIRIT. Stake your binSPIRIT-SPIRIT LP in our vault, and earn high interests on the pair with near-zero impermanent loss. Deposit your mooSpiritBinSPIRIT-SPIRIT (receipt for LP deposited in our vaults) into the boost to earn mooBinSPIRIT.",
+        website: "https://app.spiritswap.finance/",
+        social: {
+          telegram: "https://discord.gg/spiritswap",
+          twitter: "https://twitter.com/Spirit_Swap"
+        }
+      }
+    ]
   }
 ];

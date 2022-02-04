@@ -697,58 +697,6 @@ export const pools = [
     network: "polygon"
   },
   {
-    id: "tetu-tetu-usdc",
-    name: "TETU-USDC LP",
-    token: "TETU-USDC LP",
-    tokenDescription: "QuickSwap (TETU)",
-    tokenAddress: "0x22E2BDaBEbA9b5ff8924275DbE47aDE5cf7b822B",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooTetuTETU-USDC",
-    earnedTokenAddress: "0x4266Cc81D861Fccc37dbe9A24459B6Fc3507039F",
-    earnContractAddress: "0x4266Cc81D861Fccc37dbe9A24459B6Fc3507039F",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "tetu-tetu-usdc",
-    status: "active",
-    platform: "Other",
-    assets: [
-      "TETU",
-      "USDC"
-    ],
-    addLiquidityUrl: "https://quickswap.exchange/#/add/0x255707B70BF90aa112006E1b07B9AeA6De021424/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x255707B70BF90aa112006E1b07B9AeA6De021424",
-    stratType: "StratLP",
-    network: "polygon"
-  },
-  {
-    id: "tetu-matic-tetu",
-    name: "TETU-MATIC LP",
-    token: "TETU-MATIC LP",
-    tokenDescription: "SushiSwap (TETU)",
-    tokenAddress: "0x34dA30D1f8Ef9799F5Ae3B9989e1dEf926052e78",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooTetuWMATIC-TETU",
-    earnedTokenAddress: "0xFbc896588413cEAb25fE80bb9D5322E577Af9536",
-    earnContractAddress: "0xFbc896588413cEAb25fE80bb9D5322E577Af9536",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "tetu-matic-tetu",
-    status: "active",
-    platform: "Other",
-    assets: [
-      "TETU",
-      "MATIC"
-    ],
-    addLiquidityUrl: "https://app.sushi.com/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0x255707B70BF90aa112006E1b07B9AeA6De021424",
-    buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x255707B70BF90aa112006E1b07B9AeA6De021424",
-    stratType: "StratLP",
-    network: "polygon"
-  },
-  {
     id: "polywise-usdc-wise-eol",
     name: "WISE-USDC LP",
     token: "WISE-USDC LP",
@@ -8066,5 +8014,59 @@ export const pools = [
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&inputCurrency=0xa1c57f48f0deb89f569dfbe6e2b7f46d33606fd4",
     addLiquidityUrl: "https://app.sushi.com/add/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0xa1c57f48f0deb89f569dfbe6e2b7f46d33606fd4",
     network: "polygon"
+  },
+  {
+    id: "tetu-tetu-usdc-eol",
+    name: "TETU-USDC LP",
+    token: "TETU-USDC LP",
+    tokenDescription: "QuickSwap (TETU)",
+    tokenAddress: "0x22E2BDaBEbA9b5ff8924275DbE47aDE5cf7b822B",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooTetuTETU-USDC",
+    earnedTokenAddress: "0x4266Cc81D861Fccc37dbe9A24459B6Fc3507039F",
+    earnContractAddress: "0x4266Cc81D861Fccc37dbe9A24459B6Fc3507039F",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "tetu-tetu-usdc",
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "TETU",
+      "USDC"
+    ],
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x255707B70BF90aa112006E1b07B9AeA6De021424/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x255707B70BF90aa112006E1b07B9AeA6De021424",
+    stratType: "StratLP",
+    network: "polygon",
+    retireReason: "rewards"
+  },
+  {
+    id: "tetu-matic-tetu-eol",
+    name: "TETU-MATIC LP",
+    token: "TETU-MATIC LP",
+    tokenDescription: "SushiSwap (TETU)",
+    tokenAddress: "0x34dA30D1f8Ef9799F5Ae3B9989e1dEf926052e78",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooTetuWMATIC-TETU",
+    earnedTokenAddress: "0xFbc896588413cEAb25fE80bb9D5322E577Af9536",
+    earnContractAddress: "0xFbc896588413cEAb25fE80bb9D5322E577Af9536",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "tetu-matic-tetu",
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "TETU",
+      "MATIC"
+    ],
+    addLiquidityUrl: "https://app.sushi.com/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0x255707B70BF90aa112006E1b07B9AeA6De021424",
+    buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x255707B70BF90aa112006E1b07B9AeA6De021424",
+    stratType: "StratLP",
+    network: "polygon",
+    retireReason: "rewards"
   }
 ];

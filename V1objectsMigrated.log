@@ -1,82 +1,32 @@
 [
   {
+    "id": "fantom vault: spirit-binspirit-spirit",
+    "type": "Added"
+  },
+  {
     "id": "fantom vault: beefy-binspirit",
     "type": "synced"
   },
   {
-    "id": "polygon vault: sushi-eth-mana",
+    "id": "polygon vault: tetu-tetu-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: tetu-matic-tetu-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "aurora vault: tri-aurora-tri",
     "type": "Added"
   },
   {
-    "id": "fuse vault: voltage-wfuse-usdc",
+    "id": "aurora vault: tri-aurora-weth",
     "type": "Added"
   },
   {
-    "id": "fuse vault: voltage-wfuse-ust",
+    "id": "fantom boost: moo_spirit-binspirit-spirit-spirit",
     "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-luna-ust",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-weth",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-g$",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-fusd-bnb",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-busd",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-fusd",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-wbtc-weth",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-weth",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-g$",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fuse vault: fusefi-fusd-bnb",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-busd",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-fusd",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fuse vault: fusefi-wbtc-weth",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fuse vault: fusefi-wfuse-usdc",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom boost: moo_binSPIRIT-beefy",
-    "type": "Added"
-  },
-  {
-    "id": "fuse boost: moo_fusefi-wfuse-usdc-fuse",
-    "type": "synced"
   }
 ]
