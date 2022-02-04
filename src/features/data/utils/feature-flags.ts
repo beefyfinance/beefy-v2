@@ -77,11 +77,6 @@ export function featureFlag_dataPolling() {
   return params.has('__polling');
 }
 
-export function featureFlag_scenarioTimings() {
-  const params = new URLSearchParams(window.location.search);
-  return params.has('__scenario_timings');
-}
-
 export function featureFlag_walletAddressOverride(walletAddress: string | null | undefined) {
   const params = new URLSearchParams(window.location.search);
   if (params.has('__view_as')) {

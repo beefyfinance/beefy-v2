@@ -25,7 +25,7 @@ export const platformsSlice = createSlice({
   extraReducers: builder => {
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of Object.entries(action.payload)) {
+      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
         for (const vault of vaults) {
           addPlatformToState(sliceState, chainId, vault.platform);
         }

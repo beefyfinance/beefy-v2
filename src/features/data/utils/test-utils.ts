@@ -37,7 +37,7 @@ export async function getBeefyTestingStore() {
   await store.dispatch(fetchChainConfigs());
   state = store.getState();
   const chains = selectAllChains(state);
-  await store.dispatch(fetchAllVaults());
+  await store.dispatch(fetchAllVaults({}));
   await store.dispatch(fetchAllBoosts());
 
   // mock token prices

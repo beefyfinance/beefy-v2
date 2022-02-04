@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { BeefyState } from '../../../redux-types';
 import { VaultConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
@@ -8,12 +9,17 @@ import { ChainEntity } from '../entities/chain';
 // this action should return just enough data for the state to work with
 
 export interface FulfilledAllVaultsPayload {
-  [chainId: ChainEntity['id']]: VaultConfig[];
+  byChainId: {
+    [chainId: ChainEntity['id']]: VaultConfig[];
+  };
+  state: BeefyState;
 }
-export const fetchAllVaults = createAsyncThunk<FulfilledAllVaultsPayload>(
-  'boosts/fetchAllVaults',
-  async () => {
-    const api = getConfigApi();
-    return api.fetchAllVaults();
-  }
-);
+export const fetchAllVaults = createAsyncThunk<
+  FulfilledAllVaultsPayload,
+  {},
+  { state: BeefyState }
+>('boosts/fetchAllVaults', async (_, { getState }) => {
+  const api = getConfigApi();
+  const vaults = await api.fetchAllVaults();
+  return { byChainId: vaults, state: getState() };
+});

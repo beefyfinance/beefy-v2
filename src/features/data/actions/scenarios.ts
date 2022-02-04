@@ -18,7 +18,7 @@ import { fetchAllVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
-import { featureFlag_dataPolling, featureFlag_scenarioTimings } from '../utils/feature-flags';
+import { featureFlag_dataPolling } from '../utils/feature-flags';
 import { fetchAllAllowanceAction } from './allowance';
 import { BeefyStore } from '../../../redux-types';
 
@@ -54,14 +54,8 @@ export const chains = [
 
 /**
  * Fetch all necessary information for the home page
- * TODO: we need to inject the store in parameters somehow and not get if from a global import
  */
 export async function initHomeDataV4(store: BeefyStore) {
-  if (featureFlag_scenarioTimings()) {
-    console.time('From scenario start');
-    console.timeLog('From scenario start');
-  }
-
   const captureFulfill = createFulfilledActionCapturer(store);
 
   // start fetching chain config
@@ -70,10 +64,6 @@ export async function initHomeDataV4(store: BeefyStore) {
   // create the wallet instance as soon as we get the chain list
   setTimeout(async () => {
     await chainListPromise;
-    if (featureFlag_scenarioTimings()) {
-      console.timeLog('From scenario start');
-      console.log('Chain Config Loaded');
-    }
 
     const state = store.getState();
     const chains = selectAllChains(state);
@@ -93,10 +83,8 @@ export async function initHomeDataV4(store: BeefyStore) {
   });
 
   // we fetch the configuration for all chain
-  const boostsAndVaults = Promise.all([
-    store.dispatch(fetchAllBoosts()),
-    store.dispatch(fetchAllVaults()),
-  ]);
+  const boostListPromise = store.dispatch(fetchAllBoosts());
+  const vaultListFulfill = captureFulfill(fetchAllVaults({}));
 
   // we can start fetching prices right now and await them later
   const pricesPromise = store.dispatch(fetchAllPricesAction({}));
@@ -107,12 +95,10 @@ export async function initHomeDataV4(store: BeefyStore) {
   store.dispatch(fetchBeefyBuybackAction({}));
 
   // we need config data (for contract addresses) to start querying the rest
-  await boostsAndVaults;
-
-  if (featureFlag_scenarioTimings()) {
-    console.timeLog('From scenario start');
-    console.log(`Vaults and boost list for all chains OK`);
-  }
+  await chainListPromise;
+  // we need the chain list to handle the vault list
+  store.dispatch((await vaultListFulfill)());
+  await boostListPromise;
 
   // then, we work by chain
 
@@ -132,10 +118,6 @@ export async function initHomeDataV4(store: BeefyStore) {
       contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
       user: userFullfills,
     };
-    if (featureFlag_scenarioTimings()) {
-      console.timeLog('From scenario start');
-      console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
-    }
   }
 
   // ok now we started all calls, it's just a matter of ordering fulfill actions
@@ -149,11 +131,6 @@ export async function initHomeDataV4(store: BeefyStore) {
         const chainFfs = fulfillsByNet[chain.id];
         // dispatch fulfills in order
         await store.dispatch((await chainFfs.contractData)());
-
-        if (featureFlag_scenarioTimings()) {
-          console.timeLog('From scenario start');
-          console.log(`Vaults and boost contract for chain ${chain.id} OK`);
-        }
 
         // user ffs can be dispatched in any order after that
         if (chainFfs.user !== null) {
@@ -222,10 +199,6 @@ export function fetchCaptureUserData(
   chainId: ChainEntity['id']
 ): CapturedFulfilledActions['user'] {
   const captureFulfill = createFulfilledActionCapturer(store);
-  if (featureFlag_scenarioTimings()) {
-    console.timeLog('From scenario start');
-    console.log(`balance and allowance for chain ${chainId} FETCHING`);
-  }
   return {
     balance: captureFulfill(fetchAllBalanceAction({ chainId })),
     // TODO: do we really need to fetch allowances right now?
@@ -239,8 +212,4 @@ export async function dispatchUserFfs(
 ) {
   await store.dispatch((await userFfs.balance)());
   await store.dispatch((await userFfs.allowance)());
-  if (featureFlag_scenarioTimings()) {
-    console.timeLog('From scenario start');
-    console.log(`balance and allowance for FETCHED`);
-  }
 }

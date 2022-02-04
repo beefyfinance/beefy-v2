@@ -71,39 +71,28 @@ export function getBigNumOrder(num: BigNumber): number {
 }
 
 export function formatBigUsd(value: BigNumber) {
-  const order = getBigNumOrder(value);
-
-  if (order < 2) {
-    return value.toNumber().toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0,
-      minimumFractionDigits: 0,
-    });
-  }
-  const prefix = '$';
-  const units = ['', 'k', 'M', 'B', 'T'];
-  const num = value.shiftedBy(-order * 3).toNumber();
-
-  return prefix + num.toFixed(2) + units[order];
+  return '$' + formatBigNumber(value);
 }
 
 export function formatBigNumber(value: BigNumber) {
-  const order = getBigNumOrder(value);
+  value = value.decimalPlaces(2);
 
-  if (order < 2) {
+  if (value.isZero()) {
+    return '0';
+  }
+  const order = getBigNumOrder(value);
+  if (value.abs().gte(100)) {
+    value = value.decimalPlaces(0);
+  }
+  if (order < 2 && value.abs().gte(100)) {
     return value.toNumber().toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
       maximumFractionDigits: 0,
       minimumFractionDigits: 0,
     });
   }
-  const prefix = '$';
   const units = ['', 'k', 'M', 'B', 'T'];
-  const num = value.shiftedBy(-order * 3).toNumber();
 
-  return prefix + num.toFixed(2) + units[order];
+  return value.shiftedBy(-order * 3).toFixed(2) + units[order];
 }
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
