@@ -1,8 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import { bluechipTokens } from '../../../helpers/utils';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
+import { selectChainById } from './chains';
 
 export const selectAllTokenByChain = createSelector(
   // get a tiny bit of the data
@@ -32,6 +34,35 @@ export const selectTokenById = createSelector(
       throw new Error(`selectTokenById: Unknown token id ${tokenId} for chain ${chainId}`);
     }
     return byChainId[chainId].byId[tokenId];
+  }
+);
+
+export const selectIsTokenStable = createSelector(
+  // get a tiny bit of the data
+  selectChainById,
+  // get the user params
+  (_: BeefyState, __: ChainEntity['id'], tokenId: TokenEntity['id']) => tokenId,
+  // last function receives previous function outputs as parameters
+  (chain, tokenId) => {
+    return chain.stableCoins.includes(tokenId);
+  }
+);
+
+export const selectIsBeefyToken = createSelector(
+  // get the user params
+  (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,
+  // last function receives previous function outputs as parameters
+  tokenId => {
+    return ['BIFI', 'POTS'].includes(tokenId);
+  }
+);
+
+export const selectIsTokenBluechip = createSelector(
+  // get the user params
+  (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,
+  // last function receives previous function outputs as parameters
+  tokenId => {
+    return bluechipTokens.includes(tokenId);
   }
 );
 

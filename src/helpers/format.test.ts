@@ -20,7 +20,7 @@ describe('Formatter tests', () => {
   it('format Big numbers usd properly', () => {
     expect(formatBigUsd(new BigNumber('0'))).toBe('$0');
     expect(formatBigUsd(new BigNumber('0.0001'))).toBe('$0');
-    expect(formatBigUsd(new BigNumber('10.6001'))).toBe('$11');
+    expect(formatBigUsd(new BigNumber('10.6001'))).toBe('$10.60');
     expect(formatBigUsd(new BigNumber('999.0001'))).toBe('$999');
     expect(formatBigUsd(new BigNumber('999.02001'))).toBe('$999');
     expect(formatBigUsd(new BigNumber('1000.0001'))).toBe('$1,000');
@@ -35,9 +35,11 @@ describe('Formatter tests', () => {
   it('format Big numbers properly', () => {
     expect(formatBigNumber(new BigNumber('0'))).toBe('0');
     expect(formatBigNumber(new BigNumber('0.0001'))).toBe('0');
-    expect(formatBigNumber(new BigNumber('10.6001'))).toBe('11');
+    expect(formatBigNumber(new BigNumber('10.6001'))).toBe('10.60');
+    expect(formatBigNumber(new BigNumber('10.6661'))).toBe('10.67');
     expect(formatBigNumber(new BigNumber('999.0001'))).toBe('999');
     expect(formatBigNumber(new BigNumber('999.02001'))).toBe('999');
+    expect(formatBigNumber(new BigNumber('999.99001'))).toBe('1,000');
     expect(formatBigNumber(new BigNumber('1000.0001'))).toBe('1,000');
     expect(formatBigNumber(new BigNumber('10000.0001'))).toBe('10,000');
     expect(formatBigNumber(new BigNumber('1000000.0001'))).toBe('1.00M');

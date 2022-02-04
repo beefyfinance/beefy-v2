@@ -1,12 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
+import { isEmpty } from 'lodash';
+import { safetyScore, safetyScoreNum } from '../../../helpers/safetyScore';
+import { bluechipTokens } from '../../../helpers/utils';
+import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { fetchAllVaults } from '../actions/vaults';
 import { VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
-import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vault';
+import {
+  selectIsBeefyToken,
+  selectIsTokenBluechip,
+  selectIsTokenStable,
+} from '../selectors/tokens';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
@@ -59,9 +68,9 @@ export const vaultsSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of Object.entries(action.payload)) {
+      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
         for (const vault of vaults) {
-          addVaultToState(sliceState, chainId, vault);
+          addVaultToState(action.payload.state, sliceState, chainId, vault);
         }
       }
     });
@@ -80,6 +89,7 @@ export const vaultsSlice = createSlice({
 });
 
 function addVaultToState(
+  state: BeefyState,
   sliceState: WritableDraft<VaultsState>,
   chainId: ChainEntity['id'],
   apiVault: VaultConfig
@@ -88,6 +98,8 @@ function addVaultToState(
   if (apiVault.id in sliceState.byId) {
     return;
   }
+  const { tags, score } = getVaultTagsAndSafetyScore(state, chainId, apiVault);
+
   if (apiVault.isGovVault) {
     if (!apiVault.logo) {
       throw new Error(`Missing logo uri for gov vault ${apiVault.id}`);
@@ -97,15 +109,16 @@ function addVaultToState(
       logoUri: apiVault.logo,
       name: apiVault.name,
       isGovVault: true,
+      earnedTokenId: apiVault.earnedToken,
       earnContractAddress: apiVault.poolAddress,
       excludedId: apiVault.excluded || null,
       oracleId: apiVault.oracleId,
       chainId: chainId,
       status: apiVault.status as VaultGov['status'],
       platformId: apiVault.platform.toLowerCase(),
-      // TODO
-      tags: [],
-      assetIds: [],
+      tags: tags,
+      safetyScore: score,
+      assetIds: apiVault.assets || [],
     };
 
     sliceState.byId[vault.id] = vault;
@@ -137,9 +150,10 @@ function addVaultToState(
       chainId: chainId,
       platformId: apiVault.platform.toLowerCase(),
       status: apiVault.status as VaultStandard['status'],
-      // TODO
-      tags: [],
-      assetIds: [],
+      type: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
+      tags: tags,
+      safetyScore: score,
+      assetIds: apiVault.assets || [],
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual
@@ -162,4 +176,52 @@ function addVaultToState(
     vaultState.byOracleId[vault.oracleId] = vault.id;
     vaultState.byEarnTokenId[vault.earnedTokenId] = vault.id;
   }
+}
+
+function getVaultTagsAndSafetyScore(
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  apiVault: VaultConfig
+): { tags: VaultTag[]; score: number } {
+  const tags: VaultTag[] = [];
+  if (
+    apiVault.assets.every(tokenId => {
+      return selectIsTokenStable(state, chainId, tokenId);
+    })
+  ) {
+    tags.push('stable');
+  }
+
+  if (
+    apiVault.assets.every(tokenId => {
+      return selectIsBeefyToken(state, tokenId);
+    })
+  ) {
+    tags.push('beefy');
+  }
+
+  if (
+    apiVault.assets.every(tokenId => {
+      return selectIsTokenBluechip(state, tokenId);
+    })
+  ) {
+    tags.push('bluechip');
+  }
+
+  let score = 0;
+  if (!isEmpty(apiVault.risks)) {
+    score = safetyScoreNum(apiVault.risks);
+
+    if (score >= 7.5) {
+      tags.push('low');
+    }
+  }
+
+  if (apiVault.status === 'eol') {
+    tags.push('eol');
+  } else if (apiVault.status === 'paused') {
+    tags.push('paused');
+  }
+
+  return { tags, score };
 }

@@ -3,17 +3,17 @@
 exports[`Platforms slice tests should update state on fulfilled boosts list 1`] = `
 Object {
   "allIds": Array [
-    "Beefy.Finance",
+    "beefy.finance",
   ],
   "byChainId": Object {
     "harmony": Array [
-      "Beefy.Finance",
+      "beefy.finance",
     ],
   },
   "byId": Object {
-    "Beefy.Finance": Object {
+    "beefy.finance": Object {
       "id": "beefy.finance",
-      "name": "Beefy.Finance",
+      "name": "beefy.finance",
     },
   },
 }
@@ -22,23 +22,23 @@ Object {
 exports[`Platforms slice tests should update state on fulfilled vault list 1`] = `
 Object {
   "allIds": Array [
-    "Beefy.Finance",
-    "Sushi",
+    "beefy.finance",
+    "sushi",
   ],
   "byChainId": Object {
     "harmony": Array [
-      "Beefy.Finance",
-      "Sushi",
+      "beefy.finance",
+      "sushi",
     ],
   },
   "byId": Object {
-    "Beefy.Finance": Object {
+    "beefy.finance": Object {
       "id": "beefy.finance",
-      "name": "Beefy.Finance",
+      "name": "beefy.finance",
     },
-    "Sushi": Object {
+    "sushi": Object {
       "id": "sushi",
-      "name": "Sushi",
+      "name": "sushi",
     },
   },
 }
