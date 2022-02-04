@@ -1,35 +1,28 @@
-import React, { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
-import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
 import { useDispatch, useSelector } from 'react-redux';
 import { reduxActions } from '../../../redux/actions';
-import { EmptyStatesProps } from './EmptyStatesProps';
+import { selectIsWalletConnected } from '../../../data/selectors/wallet';
+import { actions as filteredVaultActions } from '../../../data/reducers/filtered-vaults';
 
 const useStyles = makeStyles(styles as any);
-const _EmptyStates: React.FC<EmptyStatesProps> = ({ setFilterConfig }) => {
+const _EmptyStates = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
-
-  const walletReducer = useSelector((state: any) => state.walletReducer);
-  const isConnected = React.useMemo(
-    () => (walletReducer.address ? true : false),
-    [walletReducer.address]
-  );
+  const isWalletConnected = useSelector(selectIsWalletConnected);
 
   const handleWalletConnect = () => {
-    if (!walletReducer.address) {
+    if (!isWalletConnected) {
       dispatch(reduxActions.wallet.connect());
     } else {
       dispatch(reduxActions.wallet.disconnect());
     }
   };
 
-  const handleReset = React.useCallback(() => {
-    setFilterConfig(FILTER_DEFAULT);
-  }, [setFilterConfig]);
+  const handleReset = useCallback(() => dispatch(filteredVaultActions.reset()), [dispatch]);
 
   return (
     <Box className={classes.itemContainer}>
@@ -43,11 +36,11 @@ const _EmptyStates: React.FC<EmptyStatesProps> = ({ setFilterConfig }) => {
       </Box>
       <Box>
         <Typography variant="body2" className={classes.text}>
-          {isConnected ? t('EmptyStates-NoDeposited') : t('EmptyStates-NoConnected')}
+          {isWalletConnected ? t('EmptyStates-NoDeposited') : t('EmptyStates-NoConnected')}
         </Typography>
       </Box>
       <Box>
-        {isConnected ? (
+        {isWalletConnected ? (
           <Button className={classes.btn} onClick={handleReset}>
             {t('EmptyStates-Browse')}
           </Button>

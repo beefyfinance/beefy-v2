@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, useMediaQuery } from '@material-ui/core';
 import { Filter } from './components/Filter';
 import { Portfolio } from './components/Portfolio';
-import { useVaults } from './hooks/useFilteredVaults';
 import { EmptyStates } from './components/EmptyStates';
 import { styles } from './styles';
 import {
@@ -19,6 +18,9 @@ import { Item } from './components/Item';
 import { ceil, debounce } from 'lodash';
 import { CowLoader } from '../../components/CowLoader';
 import { selectIsVaultListAvailable } from '../data/selectors/data-loader';
+import { selectIsWalletConnected } from '../data/selectors/wallet';
+import { selectFilteredVaults, selectFilterOptions } from '../data/selectors/filtered-vaults';
+import { VaultEntity } from '../data/entities/vault';
 
 const useStyles = makeStyles(styles as any);
 
@@ -29,7 +31,7 @@ export function notifyResize() {
 }
 
 interface VirtualVaultsListProps {
-  vaults: any[];
+  vaults: VaultEntity[];
   columns: number;
 }
 
@@ -167,10 +169,9 @@ const VaultsList = memo(function HomeVaultsList() {
   const { t } = useTranslation();
   const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
   const isVaultListAvailable = useSelector(selectIsVaultListAvailable);
-  const platforms = useSelector((state: any) => state.vaultReducer.platforms);
-  const { sortedVaults, filterConfig, setFilterConfig, filteredVaultsCount, allVaultsCount } =
-    useVaults();
-  const address = useSelector((state: any) => state.walletReducer.address);
+  const filterOptions = useSelector(selectFilterOptions);
+  const isWalletConnected = useSelector(selectIsWalletConnected);
+  const vaults = useSelector(selectFilteredVaults);
 
   if (!isVaultListAvailable) {
     return <CowLoader text={t('Vaults-LoadingData')} />;
@@ -180,12 +181,12 @@ const VaultsList = memo(function HomeVaultsList() {
     <>
       <Filter />
       <div className={classes.vaultsList}>
-        {filterConfig.deposited && address && sortedVaults.length === 0 && (
-          <EmptyStates setFilterConfig={setFilterConfig} />
+        {filterOptions.userCategory === 'deposited' && isWalletConnected && vaults.length === 0 && (
+          <EmptyStates />
         )}
-        {filterConfig.deposited && !address && <EmptyStates setFilterConfig={setFilterConfig} />}
-        {filterConfig.zero && !address && <EmptyStates setFilterConfig={setFilterConfig} />}
-        <VirtualVaultsList vaults={sortedVaults} columns={isTwoColumns ? 2 : 1} />
+        {filterOptions.userCategory === 'deposited' && !isWalletConnected && <EmptyStates />}
+        {filterOptions.userCategory === 'eligible' && !isWalletConnected && <EmptyStates />}
+        <VirtualVaultsList vaults={vaults} columns={isTwoColumns ? 2 : 1} />
       </div>
     </>
   );

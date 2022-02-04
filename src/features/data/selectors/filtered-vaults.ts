@@ -37,7 +37,7 @@ export const selectVaultCategory = createSelector(
   filterOptions => filterOptions.vaultCategory
 );
 
-export const selectFilteredVaultIds = createSelector(
+export const selectFilteredVaults = createSelector(
   selectFilterOptions,
   (state: BeefyState) => state.entities.vaults.allIds.map(id => selectVaultById(state, id)),
   (state: BeefyState) => state.biz.tvl.byVaultId,
@@ -84,7 +84,7 @@ export const selectFilteredVaultIds = createSelector(
   }
 );
 
-export const selectFilteredVaultCount = createSelector(selectFilteredVaultIds, ids => ids.length);
+export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 
 export const selectTotalVaultCount = createSelector(
   (state: BeefyState) => state.entities.vaults.allIds.length,

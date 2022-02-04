@@ -97,6 +97,8 @@ function addVaultToState(
       excludedId: apiVault.excluded || null,
       oracleId: apiVault.oracleId,
       chainId: chainId,
+      status: apiVault.status as VaultGov['status'],
+      tags: [],
     };
 
     sliceState.byId[vault.id] = vault;
@@ -109,7 +111,7 @@ function addVaultToState(
         byEarnTokenId: {},
       };
     }
-    if (apiVault.status === 'eol') {
+    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
       sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
     } else {
       sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
@@ -127,6 +129,8 @@ function addVaultToState(
       strategyType: apiVault.stratType as VaultStandard['strategyType'],
       chainId: chainId,
       platformId: apiVault.platform.toLowerCase(),
+      status: apiVault.status as VaultStandard['status'],
+      tags: [],
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual
@@ -141,7 +145,7 @@ function addVaultToState(
       };
     }
     const vaultState = sliceState.byChainId[vault.chainId];
-    if (apiVault.status === 'eol') {
+    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
       vaultState.allRetiredIds.push(vault.id);
     } else {
       vaultState.allActiveIds.push(vault.id);

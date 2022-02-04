@@ -31,12 +31,18 @@ export const selectBoostsByChainId = createSelector(
 );
 
 export const selectIsVaultBoosted = createSelector(
-  [(state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId]],
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId],
   vaultIdBoost => vaultIdBoost !== undefined && vaultIdBoost.activeBoostsIds.length > 0
 );
 
+// TODO
+export const selectIsVaultMoonpot = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId],
+  vaultIdBoost => false
+);
+
 export const selectActiveVaultBoostIds = createSelector(
-  [(state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId]],
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId],
   vaultIdBoost => {
     if (!vaultIdBoost) {
       return [];
