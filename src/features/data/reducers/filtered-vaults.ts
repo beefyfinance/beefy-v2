@@ -68,3 +68,5 @@ export const filteredVaultsSlice = createSlice({
     },
   },
 });
+
+export const actions = filteredVaultsSlice.actions;

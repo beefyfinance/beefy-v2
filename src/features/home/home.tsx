@@ -166,25 +166,19 @@ const VaultsList = memo(function HomeVaultsList() {
   const classes = useStyles();
   const { t } = useTranslation();
   const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
-  const isPoolsLoading = useSelector(selectIsVaultListAvailable);
+  const isVaultListAvailable = useSelector(selectIsVaultListAvailable);
   const platforms = useSelector((state: any) => state.vaultReducer.platforms);
   const { sortedVaults, filterConfig, setFilterConfig, filteredVaultsCount, allVaultsCount } =
     useVaults();
   const address = useSelector((state: any) => state.walletReducer.address);
 
-  if (isPoolsLoading) {
+  if (!isVaultListAvailable) {
     return <CowLoader text={t('Vaults-LoadingData')} />;
   }
 
   return (
     <>
-      <Filter
-        sortConfig={filterConfig}
-        setSortConfig={setFilterConfig}
-        platforms={platforms}
-        allCount={allVaultsCount}
-        filteredCount={filteredVaultsCount}
-      />
+      <Filter />
       <div className={classes.vaultsList}>
         {filterConfig.deposited && address && sortedVaults.length === 0 && (
           <EmptyStates setFilterConfig={setFilterConfig} />

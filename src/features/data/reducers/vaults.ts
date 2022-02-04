@@ -126,6 +126,7 @@ function addVaultToState(
       oracleId: apiVault.oracleId,
       strategyType: apiVault.stratType as VaultStandard['strategyType'],
       chainId: chainId,
+      platformId: apiVault.platform.toLowerCase(),
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual
