@@ -171,11 +171,7 @@ export const Vault = () => {
                 </Box>
                 <Box>
                   <Box className={classes.badges}>
-                    <DisplayTags
-                      isBoosted={isBoosted}
-                      tags={item.tags}
-                      isMoonpot={item.moonpot.isMoonpot}
-                    />
+                    <DisplayTags vaultId={item.id} />
                   </Box>
                   <Box>
                     <span className={classes.platformContainer}>

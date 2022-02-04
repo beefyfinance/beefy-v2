@@ -28,6 +28,7 @@ Object {
   },
   "byId": Object {
     "banana-banana-eol": Object {
+      "assetIds": Array [],
       "assets": Array [
         "BANANA",
       ],
@@ -40,18 +41,26 @@ Object {
       "name": "BANANA",
       "oracleId": "BANANA",
       "platformId": "apeswap",
+      "status": "eol",
       "strategyType": "SingleStake",
+      "tags": Array [],
     },
     "one-bifi-gov": Object {
+      "assetIds": Array [],
       "chainId": "harmony",
       "earnContractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
       "excludedId": null,
       "id": "one-bifi-gov",
       "isGovVault": true,
+      "logoUri": "single-assets/BIFI.png",
       "name": "BIFI Earnings Pool",
       "oracleId": "BIFI",
+      "platformId": "beefy.finance",
+      "status": "active",
+      "tags": Array [],
     },
     "sushi-one-1ygg-1eth": Object {
+      "assetIds": Array [],
       "assets": Array [
         "YGG",
         "ETH",
@@ -65,7 +74,9 @@ Object {
       "name": "1YGG-1ETH LP",
       "oracleId": "sushi-one-1ygg-1eth",
       "platformId": "sushi",
+      "status": "active",
       "strategyType": "StratLP",
+      "tags": Array [],
     },
   },
   "pricePerFullShare": Object {
