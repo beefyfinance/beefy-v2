@@ -1,14 +1,26 @@
-import { Container, Box, Grid, Typography, Card, Button, Divider } from '@material-ui/core';
+import {
+  Container,
+  Box,
+  Grid,
+  Typography,
+  Card,
+  Button,
+  Divider,
+  useMediaQuery,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import grass from '../../images/nfts/grass.svg';
+// import BeefyAvatarsAbi from '../../config/abi/BeefyAvatarsAbi.json';
+
 const useStyles = makeStyles(styles as any);
 
 export const BeefyAvatars = () => {
   const props = { bgImage: grass };
   const classes = useStyles(props);
   const { t } = useTranslation();
+  const isMobile = useMediaQuery('(max-width: 960px)');
 
   const traits = [
     { id: 0, generated: 1, percent: '0.01', divier: true },
@@ -29,7 +41,7 @@ export const BeefyAvatars = () => {
         </Box>
         <Box my={5}>
           <Grid container spacing={2}>
-            <Grid className={classes.center} item xs={4}>
+            <Grid className={classes.center} item xs={12} md={4} lg={4}>
               <Card className={classes.card}>
                 <Typography className={classes.title}>
                   {' '}
@@ -45,8 +57,8 @@ export const BeefyAvatars = () => {
                 </Typography>
               </Card>
             </Grid>
-            <Grid className={classes.content} item xs>
-              <Box textAlign="left">
+            <Grid className={classes.content} item xs={12} md={8} lg={8}>
+              <Box className={classes.info}>
                 <Typography className={classes.title2}>{t('Avatars-About-Title')}</Typography>
                 <Typography className={classes.text}>{t('Avatars-About-Content')}</Typography>
               </Box>
@@ -66,8 +78,8 @@ export const BeefyAvatars = () => {
           {traits.map(trait => {
             return (
               <>
-                <Grid key={trait.id} item xs>
-                  <Box textAlign="center">
+                <Grid className={classes.autoGrid} key={trait.id} item xs={6} md="auto" lg="auto">
+                  <Box className={classes.trait}>
                     <Typography className={classes.traitTitle}>
                       {t('Avatars-Trait', { number: trait.id })}
                     </Typography>
@@ -79,7 +91,7 @@ export const BeefyAvatars = () => {
                     </Typography>
                   </Box>
                 </Grid>
-                {trait.divier && (
+                {trait.divier && !isMobile && (
                   <Divider className={classes.divider} orientation="vertical" flexItem />
                 )}
               </>

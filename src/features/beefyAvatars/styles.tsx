@@ -42,9 +42,12 @@ export const styles = theme => ({
     fontSize: '16px',
     lineHeight: '24px',
     textTransform: 'uppercase',
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
+    },
   },
   text: {
-    color: theme.palette.background.muted,
+    color: theme.palette.text.disabled,
     fontSize: '12px',
     lineHeight: '16px',
     letterSpacing: '0.5px',
@@ -62,26 +65,37 @@ export const styles = theme => ({
   buttons: {
     display: 'flex',
     justifyContent: 'flex-end',
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(2),
+      justifyContent: 'center',
+    },
   },
   btnMint: {
     backgroundColor: theme.palette.background.cta,
     fontWeight: 'bold',
-    fontStyle: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
     padding: '8px 24px',
     borderRadius: '8px',
+    textTransform: 'none',
+    [theme.breakpoints.down('sm')]: {
+      width: '50%',
+    },
   },
   btnMore: {
     marginRight: theme.spacing(2),
+    color: theme.palette.text.disabled,
     backgroundColor: 'transparent',
+    textTransform: 'none',
     borderRadius: '8px',
     border: `1px solid ${theme.palette.background.cta}`,
     fontWeight: 'bold',
-    fontStyle: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
     padding: '8px 24px',
+    [theme.breakpoints.down('sm')]: {
+      width: '50%',
+    },
   },
   traitTitle: {
     color: theme.palette.background.cta,
@@ -104,5 +118,22 @@ export const styles = theme => ({
       width: '2px',
       backgroundColor: '#3F466D',
     },
+  },
+  info: {
+    textAlign: 'left',
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center',
+    },
+  },
+  autoGrid: {
+    '&.MuiGrid-grid-lg-auto': {
+      flexGrow: 1,
+    },
+  },
+  trait: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: `${theme.spacing(1)}px 0`,
   },
 });
