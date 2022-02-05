@@ -2,7 +2,13 @@ import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
-import { isGovVault } from '../entities/vault';
+import { isVaultActive } from '../entities/vault';
+import {
+  selectActiveVaultBoostIds,
+  selectBoostById,
+  selectIsVaultBoosted,
+  selectIsVaultMoonpot,
+} from './boosts';
 import { selectVaultById } from './vaults';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
@@ -13,7 +19,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.showRetired ? 1 : 0) +
     (filterOptions.onlyMoonpot ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
-    filterOptions.platformIds.length +
+    (filterOptions.platformId !== null ? 1 : 0) +
     filterOptions.chainIds.length
 );
 
@@ -28,7 +34,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
-    filterOptions.platformIds.length > 0 ||
+    filterOptions.platformId !== null ||
     filterOptions.chainIds.length > 0
 );
 
@@ -38,50 +44,93 @@ export const selectVaultCategory = createSelector(
 );
 
 export const selectFilteredVaults = createSelector(
-  selectFilterOptions,
-  (state: BeefyState) => state.entities.vaults.allIds.map(id => selectVaultById(state, id)),
-  (state: BeefyState) => state.biz.tvl.byVaultId,
-  (state: BeefyState) => state.biz.apy.byVaultId,
-  (filterOptions, vaults, tvlByVaultId, apyByVaultId) => {
+  (state: BeefyState) => {
+    const filterOptions = selectFilterOptions(state);
+    const vaults = state.entities.vaults.allIds.map(id => selectVaultById(state, id));
+    const tvlByVaultId = state.biz.tvl.byVaultId;
+    const apyByVaultId = state.biz.apy.byVaultId;
+
     // apply filtering
     const chainIdMap = createIdMap(filterOptions.chainIds);
-    if (filterOptions.chainIds.length > 0) {
-      vaults = vaults.filter(vault => chainIdMap[vault.chainId]);
-    }
+    const filteredVaults = vaults.filter(vault => {
+      if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
+        return false;
+      }
+      if (filterOptions.platformId !== null && vault.platformId !== filterOptions.platformId) {
+        return false;
+      }
+      if (!filterOptions.showRetired && !isVaultActive(vault)) {
+        return false;
+      }
+      if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
+        return false;
+      }
+      if (filterOptions.onlyBoosted && !selectIsVaultBoosted(state, vault.id)) {
+        return false;
+      }
 
-    const platformIdMap = createIdMap(filterOptions.platformIds);
-    if (filterOptions.platformIds.length > 0) {
-      vaults = vaults.filter(vault => (isGovVault(vault) ? true : platformIdMap[vault.platformId]));
-    }
+      // Hide when the given searchword is found neither in the vault's name nor among its
+      // tokens or those of an involved, active boost. "Fuzzily" account also along the way
+      // for the standardly named wrapped version of a token.
+      const S = filterOptions.searchText.toLowerCase();
+      if (S.length > 0 && !vault.name.toLowerCase().includes(S)) {
+        if (S.length < 2) return false;
+        const O_TST = new RegExp(`^w?${S}$`),
+          O_NOW = Date.now() / 1000;
+        if (
+          !(
+            vault.assetIds.find(S_TKN => S_TKN.toLowerCase().match(O_TST)) ||
+            (vault.isGovVault && vault.earnedTokenId.toLowerCase().match(O_TST)) ||
+            (selectIsVaultBoosted(state, vault.id) &&
+              selectActiveVaultBoostIds(state, vault.id)
+                .map(boostId => selectBoostById(state, boostId))
+                .some(
+                  O =>
+                    'active' === O.status &&
+                    // TODO
+                    //O_NOW < parseInt(O.periodFinish) &&
+                    O.earnedTokenId.toLowerCase().match(O_TST)
+                ))
+          )
+        )
+          return false;
+      }
+
+      return true;
+    });
 
     // apply sort
+    let sortedVaults = filteredVaults;
     if (filterOptions.sort === 'apy') {
-      vaults = sortBy(vaults, vault => {
+      sortedVaults = sortBy(sortedVaults, vault => {
         const apy = apyByVaultId[vault.id];
         if (!apy) {
           return 0;
         }
         if (isStandardVaultApy(apy)) {
-          return apy.totalApy;
+          return -apy.totalApy;
         } else if (isGovVaultApy(apy)) {
-          return apy.vaultApr;
+          return -apy.vaultApr;
         } else if (isMaxiVaultApy(apy)) {
-          return apy.totalApy;
+          return -apy.totalApy;
         } else {
           throw new Error('Apy type not supported');
         }
       });
     } else if (filterOptions.sort === 'tvl') {
-      vaults = sortBy(vaults, vault => {
+      sortedVaults = sortBy(sortedVaults, vault => {
         const tvl = tvlByVaultId[vault.id];
-        return tvl.tvl.toNumber();
+        return -tvl.tvl.toNumber();
       });
-    } else if (filterOptions.sort === 'safety') {
-      throw new Error('Not implemented');
+    } else if (filterOptions.sort === 'safetyScore') {
+      sortedVaults = sortBy(sortedVaults, vault => {
+        return -vault.safetyScore;
+      });
     }
 
-    return vaults;
-  }
+    return sortedVaults;
+  },
+  res => res
 );
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);

@@ -19,7 +19,10 @@ import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';
 import { Search, CloseRounded } from '@material-ui/icons';
 import { FilterCategories } from './FilterCategories';
-import { actions as filteredVaultActions } from '../../../data/reducers/filtered-vaults';
+import {
+  actions as filteredVaultActions,
+  FilteredVaultsState,
+} from '../../../data/reducers/filtered-vaults';
 import { selectAllPlatform } from '../../../data/selectors/platforms';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,7 +49,9 @@ const _Filter = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleChangeBlockchain = useCallback(
-    ({ target: { value } }) => dispatch(filteredVaultActions.setChainIds(value)),
+    ({ target: { value } }) => {
+      dispatch(filteredVaultActions.setChainIds(value.filter(v => v !== 'all')));
+    },
     [dispatch]
   );
 
@@ -64,7 +69,14 @@ const _Filter = () => {
   );
 
   const handlePlatformChange = useCallback(
-    ({ target: { value } }) => dispatch(filteredVaultActions.setPlatformIds(value)),
+    ({ target: { value } }) =>
+      dispatch(filteredVaultActions.setPlatformId(value === 'all' ? null : value)),
+    [dispatch]
+  );
+
+  const handleUserCategoryChange = useCallback(
+    (userCategory: FilteredVaultsState['userCategory']) =>
+      dispatch(filteredVaultActions.setUserCategory(userCategory)),
     [dispatch]
   );
 
@@ -74,7 +86,7 @@ const _Filter = () => {
   );
 
   const handleSortChange = useCallback(
-    sort => dispatch(filteredVaultActions.setSort(sort)),
+    ({ target: { value } }) => dispatch(filteredVaultActions.setSort(value)),
     [dispatch]
   );
 
@@ -209,7 +221,7 @@ const _Filter = () => {
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
-            onClick={() => handleSortChange('all')}
+            onClick={() => handleUserCategoryChange('all')}
           >
             {t('Filter-AllVaults')}
           </Button>
@@ -219,7 +231,7 @@ const _Filter = () => {
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
-            onClick={() => handleSortChange('eligible')}
+            onClick={() => handleUserCategoryChange('eligible')}
           >
             {t('Filter-Eligible')}
           </Button>
@@ -229,7 +241,7 @@ const _Filter = () => {
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
-            onClick={() => handleSortChange('deposited')}
+            onClick={() => handleUserCategoryChange('deposited')}
           >
             {t('Filter-MyVaults')}
           </Button>
@@ -354,7 +366,7 @@ const _Filter = () => {
                 fullWidth={true}
                 noBorder={true}
                 list={chainTypes}
-                selected={filterOptions.chainIds}
+                selected={filterOptions.chainIds.length === 0 ? ['all'] : filterOptions.chainIds}
                 handler={handleChangeBlockchain}
                 renderValue={selected => (
                   <Typography className={classes.value}>
@@ -373,7 +385,7 @@ const _Filter = () => {
                 fullWidth={true}
                 noBorder={true}
                 list={platformTypes}
-                selected={filterOptions.platformIds}
+                selected={filterOptions.platformId === null ? 'all' : filterOptions.platformId}
                 handler={handlePlatformChange}
                 label={t('Filter-Platform')}
               />

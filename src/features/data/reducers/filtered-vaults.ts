@@ -5,13 +5,13 @@ import { PlatformEntity } from '../entities/platform';
  * State containing Vault infos
  */
 export type FilteredVaultsState = {
-  sort: 'tvl' | 'apy' | 'safety' | 'default';
+  sort: 'tvl' | 'apy' | 'safetyScore' | 'default';
   vaultCategory: 'all' | 'featured' | 'stablecoins' | 'blue-chips' | 'beefy';
   userCategory: 'all' | 'eligible' | 'deposited';
   vaultType: 'all' | 'lps' | 'single-asset';
   searchText: string;
   chainIds: ChainEntity['id'][];
-  platformIds: PlatformEntity['id'][];
+  platformId: PlatformEntity['id'] | null;
   showRetired: boolean;
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
@@ -23,7 +23,7 @@ export const initialFilteredVaultsState: FilteredVaultsState = {
   vaultType: 'all',
   searchText: '',
   chainIds: [],
-  platformIds: [],
+  platformId: null,
   showRetired: false,
   onlyMoonpot: false,
   onlyBoosted: false,
@@ -36,8 +36,8 @@ export const filteredVaultsSlice = createSlice({
     reset() {
       return initialFilteredVaultsState;
     },
-    setSort(sliceState, action: PayloadAction<{ sort: FilteredVaultsState['sort'] }>) {
-      sliceState.sort = action.payload.sort;
+    setSort(sliceState, action: PayloadAction<FilteredVaultsState['sort']>) {
+      sliceState.sort = action.payload;
     },
     setVaultCategory(sliceState, action: PayloadAction<FilteredVaultsState['vaultCategory']>) {
       sliceState.vaultCategory = action.payload;
@@ -54,8 +54,8 @@ export const filteredVaultsSlice = createSlice({
     setChainIds(sliceState, action: PayloadAction<FilteredVaultsState['chainIds']>) {
       sliceState.chainIds = action.payload;
     },
-    setPlatformIds(sliceState, action: PayloadAction<FilteredVaultsState['platformIds']>) {
-      sliceState.platformIds = action.payload;
+    setPlatformId(sliceState, action: PayloadAction<FilteredVaultsState['platformId']>) {
+      sliceState.platformId = action.payload;
     },
     setShowRetired(sliceState, action: PayloadAction<FilteredVaultsState['showRetired']>) {
       sliceState.showRetired = action.payload;
