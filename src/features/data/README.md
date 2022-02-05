@@ -68,13 +68,24 @@
 
     [x] remove unused price mocks
     [ ] reorganize files?
-    [ ] remove unnecessary comments
+    [x] remove unnecessary comments
     [x] ensure TVL and APY is computed properly
     [x] ensure user balance is computed properly
     [ ] ensure user allowances are computed properly
     [ ] make tests run in CI
 
 [ ] Rework components to use new reducers
+
+    [ ] Go over left todos
+    [ ] Filters: search box, vault category, user vault category, moonpot
+    [ ] Make sure we can still use the vault page
+    [ ] Prevent wallet popin on startup
+    [ ] Bifi price missing
+    [ ] fix vault TVL (maybe exclusions)
+    [ ] Store last used filters
+    [ ] Do some performance enhancement (scenario + filters)
+    [ ] Remove unused old code
+
 [ ] Rework search to handle partially loaded data
 [ ] Create unit tests for critical business cases
 [ ] Rework error handling
