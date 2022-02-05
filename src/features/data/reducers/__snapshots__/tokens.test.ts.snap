@@ -75,11 +75,10 @@ Object {
         "ONE": Object {
           "buyUrl": null,
           "chainId": "harmony",
-          "contractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
           "decimals": 18,
           "id": "ONE",
           "symbol": "ONE",
-          "type": "erc20",
+          "type": "native",
         },
         "mooSushiYGG-ETH": Object {
           "buyUrl": null,

@@ -1,6 +1,8 @@
 // todo: load these asynchronously
 import { featuredPools as featuredVaults } from '../../../config/vault/featured';
+
 import { pools as arbitrumVaults } from '../../../config/vault/arbitrum';
+import { pools as auroraVaults } from '../../../config/vault/aurora';
 import { pools as avaxVaults } from '../../../config/vault/avax';
 import { pools as bscVaults } from '../../../config/vault/bsc';
 import { pools as celoVaults } from '../../../config/vault/celo';
@@ -12,7 +14,9 @@ import { pools as hecoVaults } from '../../../config/vault/heco';
 import { pools as metisVaults } from '../../../config/vault/metis';
 import { pools as moonriverVaults } from '../../../config/vault/moonriver';
 import { pools as polygonVaults } from '../../../config/vault/polygon';
+
 import { pools as arbitrumBoosts } from '../../../config/boost/arbitrum';
+import { pools as auroraBoosts } from '../../../config/boost/aurora';
 import { pools as avaxBoosts } from '../../../config/boost/avax';
 import { pools as bscBoosts } from '../../../config/boost/bsc';
 import { pools as celoBoosts } from '../../../config/boost/celo';
@@ -24,6 +28,7 @@ import { pools as hecoBoosts } from '../../../config/boost/heco';
 import { pools as metisBoosts } from '../../../config/boost/metis';
 import { pools as moonriverBoosts } from '../../../config/boost/moonriver';
 import { pools as polygonBoosts } from '../../../config/boost/polygon';
+
 import { config as chainConfigs } from '../../../config/config';
 
 import { ChainEntity } from '../entities/chain';
@@ -137,6 +142,7 @@ const vaultsByChainId: {
   [chainId: ChainEntity['id']]: VaultConfig[];
 } = {
   arbitrum: arbitrumVaults,
+  aurora: auroraVaults,
   avax: avaxVaults,
   bsc: bscVaults,
   celo: celoVaults,
@@ -154,6 +160,7 @@ const boostsByChainId: {
   [chainId: ChainEntity['id']]: BoostConfig[];
 } = {
   arbitrum: arbitrumBoosts,
+  aurora: auroraBoosts,
   avax: avaxBoosts,
   bsc: bscBoosts,
   celo: celoBoosts,
