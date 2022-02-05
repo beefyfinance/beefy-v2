@@ -111,7 +111,7 @@ export const config = {
       'MAI',
       'FRAX',
       'MIM',
-      'nUSD'
+      'nUSD',
     ],
   },
   polygon: {
@@ -381,3 +381,5 @@ export const config = {
     stableCoins: ['USDC', 'USDT'],
   },
 };
+
+export const chains: string[] = Object.keys(config);
