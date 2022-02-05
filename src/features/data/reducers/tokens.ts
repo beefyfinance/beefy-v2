@@ -123,16 +123,30 @@ function addVaultToState(
   // add earned token data
   const earnedTokenId = vault.earnedToken;
   if (sliceState.byChainId[chainId].byId[earnedTokenId] === undefined) {
-    const token: TokenEntity = {
-      id: earnedTokenId,
-      chainId: chainId,
-      contractAddress: vault.earnedTokenAddress,
-      decimals: 18, // TODO: not sure about that
-      symbol: vault.earnedToken,
-      buyUrl: null,
-      type: 'erc20',
-    };
-    sliceState.byChainId[chainId].byId[token.id] = token;
-    sliceState.byChainId[chainId].allIds.push(token.id);
+    // gov vaults yield native tokens
+    if (vault.isGovVault) {
+      const token: TokenEntity = {
+        id: earnedTokenId,
+        chainId: chainId,
+        decimals: 18, // TODO: not sure about that
+        symbol: vault.earnedToken,
+        buyUrl: null,
+        type: 'native',
+      };
+      sliceState.byChainId[chainId].byId[token.id] = token;
+      sliceState.byChainId[chainId].allIds.push(token.id);
+    } else {
+      const token: TokenEntity = {
+        id: earnedTokenId,
+        chainId: chainId,
+        contractAddress: vault.earnedTokenAddress,
+        decimals: 18, // TODO: not sure about that
+        symbol: vault.earnedToken,
+        buyUrl: null,
+        type: 'erc20',
+      };
+      sliceState.byChainId[chainId].byId[token.id] = token;
+      sliceState.byChainId[chainId].allIds.push(token.id);
+    }
   }
 }

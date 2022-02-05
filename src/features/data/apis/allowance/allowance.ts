@@ -35,7 +35,8 @@ export class AllowanceAPI implements IAllowanceApi {
     const addTokenIdToCalls = (tokenId: string, spenderAddress: string) => {
       const token = selectTokenById(state, this.chain.id, tokenId);
       if (!isTokenErc20(token)) {
-        throw new Error("Can't query allowance of non erc20 token");
+        console.warn(`Can't query allowance of non erc20 token, skipping ${token.id}`);
+        return;
       }
       // TODO: temporary check until we can sort out the WFTM mystery
       if (!token.contractAddress) {

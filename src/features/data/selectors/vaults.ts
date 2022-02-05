@@ -1,4 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
@@ -23,7 +24,8 @@ export const selectVaultByChainId = createSelector(
   // get a tiny bit of the data
   (state: BeefyState, chainId: ChainEntity['id']) => state.entities.vaults.byChainId[chainId],
   // last function receives previous function outputs as parameters
-  vaultsChainId => vaultsChainId.allActiveIds.concat(vaultsChainId.allRetiredIds)
+  vaultsChainId =>
+    vaultsChainId ? vaultsChainId.allActiveIds.concat(vaultsChainId.allRetiredIds) : []
 );
 
 export const selectVaultPricePerFullShare = createSelector(
@@ -33,10 +35,9 @@ export const selectVaultPricePerFullShare = createSelector(
   (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
   // last function receives previous function outputs as parameters
   (byVaultId, vaultId) => {
+    // ppfs didn't arrive yet
     if (byVaultId[vaultId] === undefined) {
-      throw new Error(
-        `selectVaultPricePerFullShare: Could not find contract data for vault id ${vaultId}`
-      );
+      return new BigNumber(0);
     }
     return byVaultId[vaultId];
   }
@@ -115,7 +116,7 @@ export const selectTotalActiveVaults = createSelector(
   byChainId => {
     let count = 0;
     for (const chainId in byChainId) {
-      count = count + byChainId[chainId].allActiveIds.length;
+      count = count + (byChainId[chainId]?.allActiveIds.length || 0);
     }
     return count;
   }

@@ -15,7 +15,7 @@ const _SafetyScore: React.FC<SafetyScoreProps> = ({
   size: 'lg' | 'md';
 }) => {
   const classes = useStyles();
-  const scoreText = score === 0 ? '-' : score.toFixed(2);
+  const scoreText = score === 0 ? '-' : score.toFixed(1);
 
   return (
     <div

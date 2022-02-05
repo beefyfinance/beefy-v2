@@ -7,12 +7,7 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
 import { DisplayTags } from '../../../../components/vaultTags';
 import { Popover } from '../../../../components/Popover';
-import {
-  formatBigNumber,
-  formatBigUsd,
-  formatBigDecimals,
-  byDecimals,
-} from '../../../../helpers/format';
+import { formatBigUsd, formatBigDecimals, byDecimals } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
@@ -119,20 +114,17 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
     byDecimals(selectWalletBalanceOfToken(state, chain.id, vault.oracleId), oracleToken.decimals)
   );
   const userOracleInWalletUsd = useSelector((state: BeefyState) => {
-    const price = selectTokenPriceByTokenId(state, vault.oracleId);
+    const price = selectTokenPriceByTokenId(state, oracleToken.id);
     return userOracleInWallet.multipliedBy(price);
   });
-  const userDepositedUsd = useSelector((state: BeefyState) =>
-    selectUserVaultDepositInUsd(state, chain.id, vault.id)
-  );
   const userStaked = useSelector((state: BeefyState) =>
-    selectHasUserDepositInVault(state, chain.id, vault.id)
+    selectHasUserDepositInVault(state, vault.id)
   );
   const totalDeposited = useSelector((state: BeefyState) =>
-    selectUserVaultDepositInToken(state, chain.id, vault.id)
+    selectUserVaultDepositInToken(state, vault.id)
   );
   const totalDepositedUsd = useSelector((state: BeefyState) =>
-    selectUserVaultDepositInUsd(state, chain.id, vault.id)
+    selectUserVaultDepositInUsd(state, vault.id)
   );
   const rewardsEarnedToken = useSelector((state: BeefyState) =>
     selectGovVaultPendingRewardsInToken(state, vault.id)
@@ -274,7 +266,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                       <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
                       <ValueText
                         blurred={blurred}
-                        value={formatBigNumber(totalDeposited)}
+                        value={formatBigDecimals(totalDeposited, 8)}
                         styleProps={styleProps}
                       />
                       {totalDepositedUsd.isGreaterThan(0) && (

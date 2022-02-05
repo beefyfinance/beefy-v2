@@ -1,12 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import { byDecimals } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
-import { selectTokenById } from './tokens';
-import { selectVaultById } from './vaults';
+import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
+import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
 export const selectUserDepositedVaults = createSelector(
   (state: BeefyState) => state.user.balance.depositedVaultIds,
@@ -53,19 +54,12 @@ export const selectGovVaultUserBalance = createSelector(
 );
 
 export const selectUserVaultDepositInToken = createSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], vaultId: VaultEntity['id']) => {
-    const vault = selectVaultById(state, vaultId);
-    if (isGovVault(vault)) {
-      return state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId];
-    } else {
-      return state.user.balance.byChainId[chainId]?.byTokenId[vault.earnedTokenId];
-    }
-  },
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.user.balance.deposited[vaultId]?.balance,
   vaultBalance => {
     if (!vaultBalance) {
       return new BigNumber(0);
     }
-    return vaultBalance.balance;
+    return vaultBalance;
   }
 );
 
@@ -74,16 +68,16 @@ export const selectHasUserDepositInVault = createSelector(
   vaultDeposit => vaultDeposit.gt(0)
 );
 
-// TODO
 export const selectUserVaultDepositInUsd = createSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], vaultId: VaultEntity['id']) =>
-    state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId],
-  govVaultBalance => {
-    if (!govVaultBalance) {
-      return new BigNumber(0);
-    }
-    return govVaultBalance.balance;
-  }
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    // TODO: do this in the state
+    const vault = selectVaultById(state, vaultId);
+    const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
+    const vaultTokenDeposit = selectUserVaultDepositInToken(state, vaultId);
+
+    return vaultTokenDeposit.multipliedBy(oraclePrice);
+  },
+  res => res
 );
 
 export const selectBoostUserBalanceInToken = createSelector(
