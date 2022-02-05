@@ -1,5 +1,11 @@
-import { EnhancedStore, CombinedState, MiddlewareArray, AnyAction } from '@reduxjs/toolkit';
-import { ThunkMiddleware } from '@reduxjs/toolkit/node_modules/redux-thunk';
+import {
+  EnhancedStore,
+  CombinedState,
+  MiddlewareArray,
+  AnyAction,
+  AsyncThunkAction,
+} from '@reduxjs/toolkit';
+import { ThunkMiddleware } from 'redux-thunk';
 import { AllowanceState } from './features/data/reducers/allowance';
 import { ApyState } from './features/data/reducers/apy';
 import { BalanceState } from './features/data/reducers/balance';
@@ -49,6 +55,6 @@ export type BeefyStore = EnhancedStore<
   AnyAction,
   MiddlewareArray<
     | ((store: any) => (next: any) => (action: any) => any)
-    | ThunkMiddleware<CombinedState<BeefyState>, AnyAction, null>
+    | ThunkMiddleware<CombinedState<BeefyState>, any, null>
   >
 >;
