@@ -7,7 +7,7 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
 import { DisplayTags } from '../../../../components/vaultTags';
 import { Popover } from '../../../../components/Popover';
-import { formatBigNumber, formatBigUsd } from '../../../../helpers/format';
+import { formatBigNumber, formatBigUsd, formatBigDecimals } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
@@ -296,19 +296,19 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                 </Link>
               </Grid>
               <Grid item xs={6} md={2} lg={2}>
-                {isGovVault ? (
+                {isGovVault(vault) ? (
                   <Link className={classes.removeLinkStyles} to={`/${chain.id}/vault/${vault.id}`}>
                     <div className={classes.stat1}>
                       <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
                       <Typography className={classes.value}>
-                        {(formatDecimals(rewardsEarnedToken) ?? '') + ` ${vault.earnedToken}`}
+                        {formatBigDecimals(rewardsEarnedToken) + ` ${earnedToken.symbol}`}
                       </Typography>
 
-                      {totalDeposited.balance.isGreaterThan(0) && (
+                      {rewardsEarnedUsd.isGreaterThan(0) && (
                         <Typography className={classes.label}>
                           <ValuePrice
                             blurred={blurred}
-                            value={rewardPrice}
+                            value={rewardsEarnedUsd}
                             styleProps={styleProps}
                           />
                         </Typography>

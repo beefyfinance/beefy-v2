@@ -95,6 +95,15 @@ export function formatBigNumber(value: BigNumber) {
   return value.shiftedBy(-order * 3).toFixed(2) + units[order];
 }
 
+export function formatBigDecimals(value: BigNumber, maxPlaces = 8) {
+  if (value.isZero()) {
+    return '0';
+  }
+
+  const places = Math.min(maxPlaces, value.gte(10) ? 4 : 8);
+  return stripTrailingZeros(value.toFixed(places));
+};
+
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
 
 export const calcDaily = apy => {

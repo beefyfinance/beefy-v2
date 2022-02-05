@@ -5,9 +5,17 @@ import clsx from 'clsx';
 import { SafetyScoreProps } from './SafetyScoreProps';
 
 const useStyles = makeStyles(styles as any);
-const _SafetyScore: React.FC<SafetyScoreProps> = ({ score, whiteLabel, size = 'lg' }) => {
+const _SafetyScore: React.FC<SafetyScoreProps> = ({
+  score,
+  whiteLabel,
+  size = 'lg',
+}: {
+  score: number;
+  whiteLabel: boolean;
+  size: 'lg' | 'md';
+}) => {
   const classes = useStyles();
-  const scoreText = score === 0 ? '-' : score;
+  const scoreText = score === 0 ? '-' : score.toFixed(2);
 
   return (
     <div
