@@ -102,7 +102,7 @@ export const selectFilteredVaults = createSelector(
 
       if (
         filterOptions.userCategory === 'deposited' &&
-        !selectHasUserDepositInVault(state, vault.chainId, vault.id)
+        !selectHasUserDepositInVault(state, vault.id)
       ) {
         return false;
       }
