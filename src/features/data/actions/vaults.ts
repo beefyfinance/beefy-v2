@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { VaultConfig } from '../apis/config';
+import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 
@@ -18,8 +18,20 @@ export const fetchAllVaults = createAsyncThunk<
   FulfilledAllVaultsPayload,
   {},
   { state: BeefyState }
->('boosts/fetchAllVaults', async (_, { getState }) => {
+>('vaults/fetchAllVaults', async (_, { getState }) => {
   const api = getConfigApi();
   const vaults = await api.fetchAllVaults();
   return { byChainId: vaults, state: getState() };
 });
+
+export interface FulfilledFeaturedVaultsPayload {
+  byVaultId: FeaturedVaultConfig;
+}
+export const fetchFeaturedVaults = createAsyncThunk<FulfilledFeaturedVaultsPayload>(
+  'vaults/fetchFeaturedVaults',
+  async () => {
+    const api = getConfigApi();
+    const featuredVaults = await api.fetchFeaturedVaults();
+    return { byVaultId: featuredVaults };
+  }
+);

@@ -2,12 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
 import { isEmpty } from 'lodash';
-import { safetyScore, safetyScoreNum } from '../../../helpers/safetyScore';
-import { bluechipTokens } from '../../../helpers/utils';
+import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { fetchAllVaults } from '../actions/vaults';
-import { VaultConfig } from '../apis/config';
+import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
+import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vault';
@@ -52,12 +51,18 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
       [vaultId: VaultEntity['id']]: BigNumber;
     };
   };
+
+  /**
+   * We want to know if the vault is featured or not
+   */
+  featuredVaults: FeaturedVaultConfig;
 };
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
   byChainId: {},
   pricePerFullShare: { byVaultId: {} },
+  featuredVaults: {},
 };
 
 export const vaultsSlice = createSlice({
@@ -67,6 +72,10 @@ export const vaultsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
+    builder.addCase(fetchFeaturedVaults.fulfilled, (sliceState, action) => {
+      sliceState.featuredVaults = action.payload.byVaultId;
+    });
+
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
         for (const vault of vaults) {

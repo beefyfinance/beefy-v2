@@ -73,7 +73,7 @@ export interface VaultConfig {
   warning?: string | null;
 }
 
-interface FeaturedVaultConfig {
+export interface FeaturedVaultConfig {
   [vaultId: VaultEntity['id']]: boolean;
 }
 

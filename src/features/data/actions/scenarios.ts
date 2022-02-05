@@ -14,13 +14,14 @@ import { fetchApyAction } from './apy';
 import { fetchAllBoosts } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
-import { fetchAllVaults } from './vaults';
+import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_dataPolling } from '../utils/feature-flags';
 import { fetchAllAllowanceAction } from './allowance';
 import { BeefyStore } from '../../../redux-types';
+import { chains as chainsConfig } from '../../../config/config';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -33,24 +34,7 @@ export interface CapturedFulfilledActions {
 
 let pollStopFns: PollStop[] = [];
 
-// todo: put this in a config
-export const chains = [
-  'arbitrum',
-  'avax',
-  'celo',
-  'cronos',
-  'fantom',
-  'fuse',
-  'harmony',
-  'heco',
-  'metis',
-  'moonriver',
-  'polygon',
-  // fetch BSC last, his multicall split in multiple calls
-  // and that takes up all 6 simulatneous network calls
-  // putting it last allow all other data to arrive faster
-  'bsc',
-].map(id => ({ id }));
+export const chains = chainsConfig.map(id => ({ id }));
 
 /**
  * Fetch all necessary information for the home page
@@ -93,6 +77,8 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   // we start fetching buyback
   store.dispatch(fetchBeefyBuybackAction({}));
+
+  store.dispatch(fetchFeaturedVaults());
 
   // we need config data (for contract addresses) to start querying the rest
   await chainListPromise;

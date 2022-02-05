@@ -1,4 +1,9 @@
-import { fetchAllVaults, FulfilledAllVaultsPayload } from '../actions/vaults';
+import {
+  fetchAllVaults,
+  fetchFeaturedVaults,
+  FulfilledAllVaultsPayload,
+  FulfilledFeaturedVaultsPayload,
+} from '../actions/vaults';
 import {
   fetchAllContractDataByChainAction,
   FetchAllContractDataFulfilledPayload,
@@ -168,5 +173,18 @@ describe('Vaults slice tests', () => {
     const newState = vaultsSlice.reducer(sliceState, action);
     const afterReDispatch = newState.pricePerFullShare;
     expect(beforeReDispatch).toBe(afterReDispatch);
+  });
+
+  it('should track featured vault list', async () => {
+    const payload: FulfilledFeaturedVaultsPayload = {
+      byVaultId: {
+        'test-vault': true,
+        nope: false,
+      },
+    };
+    const action = { type: fetchFeaturedVaults.fulfilled, payload: payload };
+    const sliceState = vaultsSlice.reducer(initialVaultsState, action);
+    // don't snapshot all vaults from the test state
+    expect(sliceState.featuredVaults).toMatchSnapshot();
   });
 });
