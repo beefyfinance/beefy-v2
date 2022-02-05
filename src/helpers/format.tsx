@@ -102,7 +102,7 @@ export function formatBigDecimals(value: BigNumber, maxPlaces = 8) {
 
   const places = Math.min(maxPlaces, value.gte(10) ? 4 : 8);
   return stripTrailingZeros(value.toFixed(places));
-};
+}
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
 

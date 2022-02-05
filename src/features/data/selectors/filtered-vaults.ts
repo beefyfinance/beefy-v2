@@ -2,7 +2,9 @@ import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
+import { ChainEntity } from '../entities/chain';
 import { isVaultActive } from '../entities/vault';
+import { selectHasUserDepositInVault, selectHasWalletBalanceOfToken } from './balance';
 import {
   selectActiveVaultBoostIds,
   selectBoostById,
@@ -14,8 +16,10 @@ import {
   selectIsVaultBlueChip,
   selectIsVaultFeatured,
   selectIsVaultStable,
+  selectVaultByChainId,
   selectVaultById,
 } from './vaults';
+import { selectIsWalletConnected } from './wallet';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -85,6 +89,21 @@ export const selectFilteredVaults = createSelector(
         return false;
       }
       if (filterOptions.onlyBoosted && !selectIsVaultBoosted(state, vault.id)) {
+        return false;
+      }
+
+      // hide when no wallet balance of deposit token
+      if (
+        filterOptions.userCategory === 'eligible' &&
+        !selectHasWalletBalanceOfToken(state, vault.chainId, vault.oracleId)
+      ) {
+        return false;
+      }
+
+      if (
+        filterOptions.userCategory === 'deposited' &&
+        !selectHasUserDepositInVault(state, vault.chainId, vault.id)
+      ) {
         return false;
       }
 
