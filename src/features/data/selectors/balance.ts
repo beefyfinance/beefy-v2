@@ -3,7 +3,9 @@ import BigNumber from 'bignumber.js';
 import { BeefyState } from '../../../redux-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
+import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
+import { selectTokenById } from './tokens';
 import { selectVaultById } from './vaults';
 
 export const selectUserDepositedVaults = createSelector(
@@ -28,6 +30,17 @@ export const selectStandardVaultUserBalanceInToken = createSelector(
   }
 );
 
+export const selectWalletBalanceOfToken = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) =>
+    state.user.balance.byChainId[chainId]?.byTokenId[tokenId],
+  tokenBalance => (tokenBalance === undefined ? new BigNumber(0) : tokenBalance.balance)
+);
+
+export const selectHasWalletBalanceOfToken = createSelector(
+  selectWalletBalanceOfToken,
+  tokenBalance => tokenBalance.gt(0)
+);
+
 export const selectGovVaultUserBalance = createSelector(
   (state: BeefyState, chainId: ChainEntity['id'], vaultId: VaultEntity['id']) =>
     state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId],
@@ -39,15 +52,20 @@ export const selectGovVaultUserBalance = createSelector(
   }
 );
 
-// TODO
 export const selectUserVaultDepositInToken = createSelector(
-  (state: BeefyState, chainId: ChainEntity['id'], vaultId: VaultEntity['id']) =>
-    state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId],
-  govVaultBalance => {
-    if (!govVaultBalance) {
+  (state: BeefyState, chainId: ChainEntity['id'], vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    if (isGovVault(vault)) {
+      return state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId];
+    } else {
+      return state.user.balance.byChainId[chainId]?.byTokenId[vault.earnedTokenId];
+    }
+  },
+  vaultBalance => {
+    if (!vaultBalance) {
       return new BigNumber(0);
     }
-    return govVaultBalance.balance;
+    return vaultBalance.balance;
   }
 );
 
