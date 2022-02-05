@@ -7,7 +7,12 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
 import { DisplayTags } from '../../../../components/vaultTags';
 import { Popover } from '../../../../components/Popover';
-import { formatBigNumber, formatBigUsd, formatBigDecimals } from '../../../../helpers/format';
+import {
+  formatBigNumber,
+  formatBigUsd,
+  formatBigDecimals,
+  byDecimals,
+} from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
@@ -23,11 +28,12 @@ import {
   selectHasUserDepositInVault,
   selectUserVaultDepositInToken,
   selectUserVaultDepositInUsd,
+  selectWalletBalanceOfToken,
 } from '../../../data/selectors/balance';
 import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectPlatformById } from '../../../data/selectors/platforms';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenById, selectTokenPriceByTokenId } from '../../../data/selectors/tokens';
 
 function ValueText({
   styleProps,
@@ -103,12 +109,19 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
     selectActiveVaultBoostIds(state, vault.id)
   );
   const vaultTvl = useSelector((state: BeefyState) => selectVaultTvl(state, vault.id));
+  const oracleToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, chain.id, vault.oracleId)
+  );
   const earnedToken = useSelector((state: BeefyState) =>
     selectTokenById(state, chain.id, vault.earnedTokenId)
   );
-  const userDeposited = useSelector((state: BeefyState) =>
-    selectUserVaultDepositInToken(state, chain.id, vault.id)
+  const userOracleInWallet = useSelector((state: BeefyState) =>
+    byDecimals(selectWalletBalanceOfToken(state, chain.id, vault.oracleId), oracleToken.decimals)
   );
+  const userOracleInWalletUsd = useSelector((state: BeefyState) => {
+    const price = selectTokenPriceByTokenId(state, vault.oracleId);
+    return userOracleInWallet.multipliedBy(price);
+  });
   const userDepositedUsd = useSelector((state: BeefyState) =>
     selectUserVaultDepositInUsd(state, chain.id, vault.id)
   );
@@ -224,21 +237,22 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                     <Typography className={classes.label}>{t('WALLET')}</Typography>
                     <ValueText
                       blurred={blurred}
-                      value={formatBigNumber(userDeposited)}
+                      value={formatBigDecimals(userOracleInWallet, 4)}
                       styleProps={styleProps}
                     />
-                    {userStaked && (
+                    {userOracleInWallet.gt(0) && (
                       <Typography className={classes.label}>
                         <ValuePrice
                           blurred={blurred}
-                          value={userDepositedUsd}
+                          value={formatBigUsd(userOracleInWalletUsd)}
                           styleProps={styleProps}
                         />
                       </Typography>
                     )}
-                    {totalDeposited.isGreaterThan(0) && userDeposited.isLessThanOrEqualTo(0) && (
-                      <div className={classes.boostSpacer} />
-                    )}
+                    {totalDeposited.isGreaterThan(0) &&
+                      userOracleInWallet.isLessThanOrEqualTo(0) && (
+                        <div className={classes.boostSpacer} />
+                      )}
                   </div>
                 </Link>
               </Grid>
@@ -272,7 +286,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                           />
                         </Typography>
                       )}
-                      {userDeposited.isGreaterThan(0) && totalDeposited.isLessThan(0) && (
+                      {userOracleInWallet.isGreaterThan(0) && totalDeposited.isLessThan(0) && (
                         <div className={classes.boostSpacer} />
                       )}
                     </div>
@@ -289,7 +303,7 @@ const _Item = ({ vault }: { vault: VaultEntity }) => {
                     <Typography className={classes.value}>{formatBigUsd(vaultTvl)}</Typography>
                     {isBoosted ||
                     (totalDeposited.isGreaterThan(0) && !isTwoColumns) ||
-                    (userDeposited.isGreaterThan(0) && !isTwoColumns) ? (
+                    (userOracleInWallet.isGreaterThan(0) && !isTwoColumns) ? (
                       <div className={classes.boostSpacer} />
                     ) : null}
                   </div>
