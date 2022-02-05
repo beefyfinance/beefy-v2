@@ -7,11 +7,11 @@ export const styles = theme => ({
   avatars: {
     minHeight: '100vh',
     position: 'relative',
-    backgroundImage: props =>
-      `url(${props.bgImage}),url(${props.item}), url(${props.item1}), url(${props.item}),url(${props.item1})`,
+    backgroundColor: theme.palette.background.dark,
+    backgroundImage: props => `url(${props.bgImage})`,
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'bottom,1% 10%, 90% 45%, 5% 90%,90% 85%',
-    backgroundSize: '100%,15%,25%,25%,15%',
+    backgroundPosition: 'bottom',
+    backgroundSize: '100%',
     paddingBottom: '200px',
     opacity: 1,
   },
