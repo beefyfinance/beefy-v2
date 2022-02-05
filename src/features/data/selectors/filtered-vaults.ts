@@ -9,7 +9,13 @@ import {
   selectIsVaultBoosted,
   selectIsVaultMoonpot,
 } from './boosts';
-import { selectVaultById } from './vaults';
+import {
+  selectIsVaultBeefy,
+  selectIsVaultBlueChip,
+  selectIsVaultFeatured,
+  selectIsVaultStable,
+  selectVaultById,
+} from './vaults';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -53,6 +59,19 @@ export const selectFilteredVaults = createSelector(
     // apply filtering
     const chainIdMap = createIdMap(filterOptions.chainIds);
     const filteredVaults = vaults.filter(vault => {
+      if (filterOptions.vaultCategory === 'featured' && !selectIsVaultFeatured(state, vault.id)) {
+        return false;
+      }
+      if (filterOptions.vaultCategory === 'bluechip' && !selectIsVaultBlueChip(state, vault.id)) {
+        return false;
+      }
+      if (filterOptions.vaultCategory === 'stable' && !selectIsVaultStable(state, vault.id)) {
+        return false;
+      }
+      if (filterOptions.vaultCategory === 'beefy' && !selectIsVaultBeefy(state, vault.id)) {
+        return false;
+      }
+
       if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
         return false;
       }

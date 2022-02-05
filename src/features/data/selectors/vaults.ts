@@ -3,6 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 
 export const selectVaultById = createSelector(
   // get a tiny bit of the data
@@ -118,4 +119,33 @@ export const selectTotalActiveVaults = createSelector(
     }
     return count;
   }
+);
+
+export const selectIsVaultFeatured = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.featuredVaults[vaultId],
+  isFeatured => isFeatured === true
+);
+
+export const selectIsVaultBlueChip = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return vault.assetIds.every(assetId => selectIsTokenBluechip(state, assetId));
+  },
+  res => res
+);
+
+export const selectIsVaultStable = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return vault.assetIds.some(assetId => selectIsTokenStable(state, vault.chainId, assetId));
+  },
+  res => res
+);
+
+export const selectIsVaultBeefy = createSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => {
+    const vault = selectVaultById(state, vaultId);
+    return vault.assetIds.some(assetId => selectIsBeefyToken(state, assetId));
+  },
+  res => res
 );

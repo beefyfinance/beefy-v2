@@ -425,3 +425,4 @@ blockExplorerUrls: [''],
 },
 stableCoins: [''],
  */
+export const chains: string[] = Object.keys(config);

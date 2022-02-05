@@ -6,7 +6,7 @@ import { PlatformEntity } from '../entities/platform';
  */
 export type FilteredVaultsState = {
   sort: 'tvl' | 'apy' | 'safetyScore' | 'default';
-  vaultCategory: 'all' | 'featured' | 'stablecoins' | 'blue-chips' | 'beefy';
+  vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy';
   userCategory: 'all' | 'eligible' | 'deposited';
   vaultType: 'all' | 'lps' | 'single-asset';
   searchText: string;

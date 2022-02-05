@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -46,6 +46,7 @@ const _Filter = () => {
   const popinFilterCount = useSelector(selectFilterPopinFilterCount);
   const filteredVaultCount = useSelector(selectFilteredVaultCount);
   const totalVaultCount = useSelector(selectTotalVaultCount);
+  const [localSearchText, setLocalSearchText] = useState(filterOptions.searchText);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
   const handleChangeBlockchain = useCallback(
@@ -90,15 +91,21 @@ const _Filter = () => {
     [dispatch]
   );
 
-  const handleSearchTextChange = useMemo(
-    () =>
-      debounce(({ target: { value } }) => dispatch(filteredVaultActions.setSearchText(value)), 200),
+  const syncSearchText = useMemo(
+    () => debounce(value => dispatch(filteredVaultActions.setSearchText(value)), 200),
     [dispatch]
   );
-  const clearSearchText = useCallback(
-    () => dispatch(filteredVaultActions.setSearchText('')),
-    [dispatch]
+  const handleSearchTextChange = useCallback(
+    ({ target: { value } }) => {
+      setLocalSearchText(value);
+      syncSearchText(value);
+    },
+    [setLocalSearchText, syncSearchText]
   );
+  const clearSearchText = useCallback(() => {
+    setLocalSearchText('');
+    dispatch(filteredVaultActions.setSearchText(''));
+  }, [dispatch, setLocalSearchText]);
 
   const handleReset = useCallback(() => {
     dispatch(filteredVaultActions.reset());
@@ -165,7 +172,7 @@ const _Filter = () => {
             size="small"
             variant="outlined"
             label={t('Filter-Search')}
-            value={filterOptions.searchText}
+            value={localSearchText}
             onChange={handleSearchTextChange}
             InputProps={{
               className: classes.input,
