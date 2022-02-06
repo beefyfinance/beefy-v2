@@ -3,9 +3,10 @@ import { ZERO_ADDRESS } from './utils';
 import { getERC20Contract } from '../../../../helpers/getERC20Contract';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
+import { BIG_ZERO } from '../../../../helpers/format';
 
 export function useAllowance(tokenAddress, decimals, vaultAddress, network) {
-  const [allowance, setAllowance] = useState(new BigNumber(0));
+  const [allowance, setAllowance] = useState(BIG_ZERO);
 
   const { wallet } = useSelector((state: any) => ({
     wallet: state.walletReducer,
@@ -20,7 +21,7 @@ export function useAllowance(tokenAddress, decimals, vaultAddress, network) {
     function getAllowance() {
       return new Promise<BigNumber>(resolve => {
         if (!web3 || !tokenAddress) {
-          resolve(new BigNumber(0));
+          resolve(BIG_ZERO);
           return;
         }
 
@@ -33,7 +34,7 @@ export function useAllowance(tokenAddress, decimals, vaultAddress, network) {
               })
               .catch(error => {
                 console.log(error);
-                resolve(new BigNumber(0));
+                resolve(BIG_ZERO);
               });
           } else {
             const contract = getERC20Contract(tokenAddress, web3);
@@ -45,11 +46,11 @@ export function useAllowance(tokenAddress, decimals, vaultAddress, network) {
               })
               .catch(error => {
                 console.log(error);
-                resolve(new BigNumber(0));
+                resolve(BIG_ZERO);
               });
           }
         } catch (error) {
-          resolve(new BigNumber(0));
+          resolve(BIG_ZERO);
         }
       });
     }

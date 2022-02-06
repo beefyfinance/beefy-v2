@@ -21,6 +21,7 @@ import { selectIsVaultListAvailable } from '../data/selectors/data-loader';
 import { selectIsWalletConnected } from '../data/selectors/wallet';
 import { selectFilteredVaults, selectFilterOptions } from '../data/selectors/filtered-vaults';
 import { VaultEntity } from '../data/entities/vault';
+import { useBeefyData } from '../../useBeefyData';
 
 const useStyles = makeStyles(styles as any);
 
@@ -194,6 +195,7 @@ const VaultsList = memo(function HomeVaultsList() {
 
 export const Home = () => {
   const classes = useStyles();
+  useBeefyData('v2');
   return (
     <React.Fragment>
       <Portfolio />

@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/format';
 import { bluechipTokens } from '../../../helpers/utils';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
@@ -91,7 +91,7 @@ export const selectTokenPriceByTokenId = createSelector(
         console.debug(
           `selectTokenPriceByTokenId: querying price for a deprecated token: ${tokenId}`
         );
-        return new BigNumber(0);
+        return BIG_ZERO;
       } else {
         throw new Error(`selectTokenPriceByTokenId: Could not find price for token id ${tokenId}`);
       }

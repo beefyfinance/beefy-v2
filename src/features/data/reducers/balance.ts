@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { byDecimals } from '../../../helpers/format';
+import { BIG_ZERO, byDecimals } from '../../../helpers/format';
 import { fetchAllBalanceAction } from '../actions/balance';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
@@ -116,8 +116,8 @@ export const balanceSlice = createSlice({
 
             if (!sliceState.deposited[vaultId]) {
               sliceState.deposited[vaultId] = {
-                balance: new BigNumber(0),
-                shares: new BigNumber(0),
+                balance: BIG_ZERO,
+                shares: BIG_ZERO,
               };
             }
             const balanceSingle = byDecimals(
@@ -159,8 +159,8 @@ export const balanceSlice = createSlice({
         const ppfs = selectVaultPricePerFullShare(state, vault.id);
         if (!sliceState.deposited[vault.id]) {
           sliceState.deposited[vault.id] = {
-            balance: new BigNumber(0),
-            shares: new BigNumber(0),
+            balance: BIG_ZERO,
+            shares: BIG_ZERO,
           };
         }
         const balanceSingle = byDecimals(
@@ -203,8 +203,8 @@ export const balanceSlice = createSlice({
 
           if (!sliceState.deposited[vaultId]) {
             sliceState.deposited[vaultId] = {
-              balance: new BigNumber(0),
-              shares: new BigNumber(0),
+              balance: BIG_ZERO,
+              shares: BIG_ZERO,
             };
           }
           const balanceSingle = byDecimals(vaultBalance.balance, oracleToken.decimals);
@@ -215,8 +215,8 @@ export const balanceSlice = createSlice({
           // add rewards too for gov vaults
           if (!sliceState.rewards[vault.id]) {
             sliceState.rewards[vault.id] = {
-              balance: new BigNumber(0),
-              shares: new BigNumber(0),
+              balance: BIG_ZERO,
+              shares: BIG_ZERO,
             };
           }
           const rewardsBalance = byDecimals(vaultBalance.rewards, oracleToken.decimals);

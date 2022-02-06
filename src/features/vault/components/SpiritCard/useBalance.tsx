@@ -3,10 +3,10 @@ import { ZERO_ADDRESS, web3BNToFloatString } from './utils';
 import { getERC20Contract } from '../../../../helpers/getERC20Contract';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
-import { byDecimals } from '../../../../helpers/format';
+import { BIG_ZERO, byDecimals } from '../../../../helpers/format';
 
 export function useBalance(tokenAddress, decimals, network) {
-  const [balance, setBalance] = useState(new BigNumber(0));
+  const [balance, setBalance] = useState(BIG_ZERO);
   const [balanceString, setBalanceString] = useState('0');
 
   const { wallet } = useSelector((state: any) => ({
@@ -22,7 +22,7 @@ export function useBalance(tokenAddress, decimals, network) {
     function getBalance() {
       return new Promise<BigNumber>(resolve => {
         if (!web3 || !tokenAddress) {
-          resolve(new BigNumber(0));
+          resolve(BIG_ZERO);
           return;
         }
 
@@ -35,7 +35,7 @@ export function useBalance(tokenAddress, decimals, network) {
               })
               .catch(error => {
                 console.log(error);
-                resolve(new BigNumber(0));
+                resolve(BIG_ZERO);
               });
           } else {
             const contract = getERC20Contract(tokenAddress, web3);
@@ -47,11 +47,11 @@ export function useBalance(tokenAddress, decimals, network) {
               })
               .catch(error => {
                 console.log(error);
-                resolve(new BigNumber(0));
+                resolve(BIG_ZERO);
               });
           }
         } catch (error) {
-          resolve(new BigNumber(0));
+          resolve(BIG_ZERO);
         }
       });
     }

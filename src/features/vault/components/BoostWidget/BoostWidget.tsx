@@ -13,7 +13,7 @@ import { Popover } from '../../../../components/Popover/Popover';
 import { Steps } from '../../../../components/Steps';
 import { StakeCountdown } from '../StakeCountdown';
 import { isEmpty } from '../../../../helpers/utils';
-import { byDecimals } from '../../../../helpers/format';
+import { BIG_ZERO, byDecimals } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
 export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
@@ -30,16 +30,16 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
 
   const [inputModal, setInputModal] = React.useState(false);
   const [state, setState] = React.useState({
-    balance: new BigNumber(0),
-    deposited: new BigNumber(0),
-    allowance: new BigNumber(0),
+    balance: BIG_ZERO,
+    deposited: BIG_ZERO,
+    allowance: BIG_ZERO,
     poolPercentage: '0',
-    rewards: new BigNumber(0),
+    rewards: BIG_ZERO,
   });
 
   const [formData, setFormData] = React.useState({
-    deposit: { token: null, input: '', amount: new BigNumber(0), max: false },
-    withdraw: { token: null, input: '', amount: new BigNumber(0), max: false },
+    deposit: { token: null, input: '', amount: BIG_ZERO, max: false },
+    withdraw: { token: null, input: '', amount: BIG_ZERO, max: false },
   });
 
   React.useEffect(() => {
@@ -68,8 +68,8 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
 
   const resetFormData = () => {
     setFormData({
-      deposit: { ...formData.deposit, input: '', amount: new BigNumber(0), max: false },
-      withdraw: { ...formData.withdraw, input: '', amount: new BigNumber(0), max: false },
+      deposit: { ...formData.deposit, input: '', amount: BIG_ZERO, max: false },
+      withdraw: { ...formData.withdraw, input: '', amount: BIG_ZERO, max: false },
     });
   };
 
@@ -126,11 +126,11 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   }, [wallet.address, vaultBoosts, state.balance, balance.tokens]);
 
   React.useEffect(() => {
-    let amount = new BigNumber(0);
-    let deposited = new BigNumber(0);
-    let approved = new BigNumber(0);
+    let amount = BIG_ZERO;
+    let deposited = BIG_ZERO;
+    let approved = BIG_ZERO;
     let poolPercentage: any = 0;
-    let rewards = new BigNumber(0);
+    let rewards = BIG_ZERO;
 
     if (
       item &&

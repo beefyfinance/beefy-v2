@@ -1,6 +1,6 @@
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { isEmpty, isObject } from '../../../helpers/utils';
-import { byDecimals } from '../../../helpers/format';
+import { BIG_ZERO, byDecimals } from '../../../helpers/format';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import BigNumber from 'bignumber.js';
@@ -279,7 +279,7 @@ function useUserVaults() {
   let newUserVaults = [];
 
   for (const poolKey in vaultReducer.pools) {
-    let balanceSingle = new BigNumber(0);
+    let balanceSingle = BIG_ZERO;
     const pool = vaultReducer.pools[poolKey];
     let symbol = pool.isGovVault ? `${pool.token}GovVault` : pool.earnedToken;
     if (userAddress) {
