@@ -110,6 +110,7 @@ BONUS:
 
 [ ] Currently, when the wallet is connected, Memory usage goes steadily up, It’d be ideal if we could prevent memory leaks from existing once this is over
 [ ] Apply decimals as soon as possible (in the API classes). We won't loose precision as we return bignumbers only
+[ ] Optimize images (large svgs and pngs should be webp or jpg)
 
 # REGRESSION TESTING BOOK
 
