@@ -7,6 +7,7 @@ import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAllVaults } from '../actions/vaults';
+import { askForNetworkChange, askForWalletConnection, doDisconnectWallet } from '../actions/wallet';
 import { ChainEntity } from '../entities/chain';
 
 /**
@@ -78,6 +79,7 @@ export interface DataLoaderState {
     apy: LoaderState;
     vaults: LoaderState;
     boosts: LoaderState;
+    wallet: LoaderState;
   };
 
   byChainId: {
@@ -95,6 +97,7 @@ export const initialDataLoaderState: DataLoaderState = {
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
+    wallet: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -172,6 +175,9 @@ export const dataLoaderSlice = createSlice({
   },
   extraReducers: builder => {
     addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig');
+    addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet');
+    addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet');
+    addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet');
     addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices');
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
