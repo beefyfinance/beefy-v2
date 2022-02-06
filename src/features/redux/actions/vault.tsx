@@ -72,7 +72,7 @@ const getPools = async (items, state, dispatch) => {
     response = [...response, ...result.value[0]];
   });
 
-  let totalTvl = new BigNumber(0);
+  let totalTvl = BIG_ZERO;
   for (let i = 0; i < response.length; i++) {
     const item = response[i];
 

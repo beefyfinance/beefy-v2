@@ -14,7 +14,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Loader } from '../../../../components/loader';
-import { byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
+import { BIG_ZERO, byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { reduxActions } from '../../../redux/actions';
@@ -46,7 +46,7 @@ export const Withdraw = ({
     balance: state.balanceReducer,
     tokens: state.balanceReducer.tokens[item.network],
   }));
-  const [state, setState] = React.useState({ balance: new BigNumber(0) });
+  const [state, setState] = React.useState({ balance: BIG_ZERO });
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
@@ -65,7 +65,7 @@ export const Withdraw = ({
     let value = new BigNumber(input).decimalPlaces(tokens[symbol].decimals, BigNumber.ROUND_DOWN);
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-      value = new BigNumber(0);
+      value = BIG_ZERO;
     }
 
     if (value.isGreaterThanOrEqualTo(state.balance)) {
@@ -335,7 +335,7 @@ export const Withdraw = ({
   };
 
   React.useEffect(() => {
-    let amount = new BigNumber(0);
+    let amount = BIG_ZERO;
 
     if (item.isGovVault) {
       let symbol = `${item.token}GovVault`;
@@ -605,7 +605,7 @@ export const Withdraw = ({
                     fullWidth={true}
                     disabled={
                       formData.withdraw.amount.isLessThanOrEqualTo(0) ||
-                      formData.withdraw.isZap && formData.withdraw.zapEstimate.isLoading
+                      (formData.withdraw.isZap && formData.withdraw.zapEstimate.isLoading)
                     }
                   >
                     {formData.withdraw.max ? t('Withdraw-All') : t('Withdraw-Verb')}

@@ -5,7 +5,6 @@ import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { ScrollToTop } from './components/ScrollToTop';
 import { HideBalanceProvider } from './components/HideBalancesContext';
 import { theme } from './theme';
-import { useBeefyData } from './useBeefyData';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
@@ -35,8 +34,6 @@ export const App = () => {
 };
 
 function RouterContentWithData() {
-  const mode = window.location.hash === '#/' ? 'v2' : 'v1';
-  useBeefyData(mode);
   return (
     <React.Suspense fallback={<div className="loader" />}>
       <Switch>

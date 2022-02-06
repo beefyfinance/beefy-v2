@@ -1,13 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
-import { byDecimals } from '../../../helpers/format';
+import { BIG_ZERO } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
-import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { selectTokenPriceByTokenId } from './tokens';
+import { selectVaultById } from './vaults';
 
 export const selectUserDepositedVaults = createSelector(
   (state: BeefyState) => state.user.balance.depositedVaultIds,
@@ -25,7 +24,7 @@ export const selectStandardVaultUserBalanceInToken = createSelector(
     }
     const tokenBalance = chainBalance.byTokenId[vault.earnedTokenId];
     if (!tokenBalance) {
-      return new BigNumber(0);
+      return BIG_ZERO;
     }
     return tokenBalance.balance;
   }
@@ -34,7 +33,7 @@ export const selectStandardVaultUserBalanceInToken = createSelector(
 export const selectWalletBalanceOfToken = createSelector(
   (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) =>
     state.user.balance.byChainId[chainId]?.byTokenId[tokenId],
-  tokenBalance => (tokenBalance === undefined ? new BigNumber(0) : tokenBalance.balance)
+  tokenBalance => (tokenBalance === undefined ? BIG_ZERO : tokenBalance.balance)
 );
 
 export const selectHasWalletBalanceOfToken = createSelector(
@@ -47,7 +46,7 @@ export const selectGovVaultUserBalance = createSelector(
     state.user.balance.byChainId[chainId]?.byGovVaultId[vaultId],
   govVaultBalance => {
     if (!govVaultBalance) {
-      return new BigNumber(0);
+      return BIG_ZERO;
     }
     return govVaultBalance.balance;
   }
@@ -57,7 +56,7 @@ export const selectUserVaultDepositInToken = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.user.balance.deposited[vaultId]?.balance,
   vaultBalance => {
     if (!vaultBalance) {
-      return new BigNumber(0);
+      return BIG_ZERO;
     }
     return vaultBalance;
   }
@@ -85,7 +84,7 @@ export const selectBoostUserBalanceInToken = createSelector(
     state.user.balance.byChainId[chainId]?.byBoostId[boostId],
   boostBalance => {
     if (!boostBalance) {
-      return new BigNumber(0);
+      return BIG_ZERO;
     }
     return boostBalance.balance;
   }
@@ -98,9 +97,9 @@ export const selectHasGovVaultPendingRewards = createSelector(
 
 export const selectGovVaultPendingRewardsInToken = createSelector(
   (state: BeefyState, vaultId: VaultGov['id']) => state.user.balance.rewards[vaultId],
-  rewards => (rewards ? rewards.shares : new BigNumber(0))
+  rewards => (rewards ? rewards.shares : BIG_ZERO)
 );
 export const selectGovVaultPendingRewardsInUsd = createSelector(
   (state: BeefyState, vaultId: VaultGov['id']) => state.user.balance.rewards[vaultId],
-  rewards => (rewards ? rewards.shares : new BigNumber(0))
+  rewards => (rewards ? rewards.shares : BIG_ZERO)
 );

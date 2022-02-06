@@ -82,6 +82,7 @@
     [x] Fix wallet metric
     [x] Fix safety score metric
     [x] Fix apy metric
+    [ ] delay loading of web3modal
     [ ] fix vault TVL (maybe exclusions)
     [ ] Make sure we can still use the vault page
     [ ] Prevent wallet popin on startup

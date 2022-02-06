@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/format';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
@@ -28,7 +29,7 @@ export interface TvlState {
   };
 }
 export const initialTvlState: TvlState = {
-  totalTvl: new BigNumber(0),
+  totalTvl: BIG_ZERO,
   byVaultId: {},
   byBoostId: {},
   exclusions: {},
