@@ -158,6 +158,9 @@ export const selectFilteredVaults = createSelector(
     } else if (filterOptions.sort === 'tvl') {
       sortedVaults = sortBy(sortedVaults, vault => {
         const tvl = tvlByVaultId[vault.id];
+        if (!tvl) {
+          return 0;
+        }
         return -tvl.tvl.toNumber();
       });
     } else if (filterOptions.sort === 'safetyScore') {
