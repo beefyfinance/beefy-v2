@@ -18,6 +18,7 @@ import { HistoricalApyState } from './features/data/reducers/historical-apy';
 import { PlatformsState } from './features/data/reducers/platforms';
 import { TokensState } from './features/data/reducers/tokens';
 import { TvlState } from './features/data/reducers/tvl';
+import { UIThemeState } from './features/data/reducers/ui-theme';
 import { VaultsState } from './features/data/reducers/vaults';
 import { WalletState } from './features/data/reducers/wallet';
 
@@ -47,6 +48,7 @@ export interface BeefyState {
   ui: {
     dataLoader: DataLoaderState;
     filteredVaults: FilteredVaultsState;
+    theme: UIThemeState;
   };
 }
 
