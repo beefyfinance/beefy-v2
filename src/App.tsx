@@ -11,10 +11,11 @@ const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
-// load our data
-initHomeDataV4(store);
-
 export const App = () => {
+  React.useEffect(() => {
+    // load our data
+    initHomeDataV4(store);
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
