@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
 import { memoize } from 'lodash';
-import { byDecimals } from '../../../helpers/format';
+import { BIG_ZERO, byDecimals } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { ApyData, isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
@@ -54,10 +53,10 @@ export const selectStandardVaultTotalApy = createSelector(
 
 export const selectUserGlobalStats = memoize((state: BeefyState) => {
   let newGlobalStats = {
-    deposited: new BigNumber(0),
-    totalYield: new BigNumber(0),
-    daily: new BigNumber(0),
-    monthly: new BigNumber(0),
+    deposited: BIG_ZERO,
+    totalYield: BIG_ZERO,
+    daily: BIG_ZERO,
+    monthly: BIG_ZERO,
   };
 
   // while loading all necessary data, return 0
@@ -70,7 +69,7 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
   );
 
   for (const vault of userVaults) {
-    let vaultUsdBalance = new BigNumber(0);
+    let vaultUsdBalance = BIG_ZERO;
     const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
     if (isGovVault(vault)) {
       const tokenBalance = selectGovVaultUserBalance(state, vault.chainId, vault.id);

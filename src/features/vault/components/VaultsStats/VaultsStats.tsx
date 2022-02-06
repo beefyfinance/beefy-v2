@@ -3,7 +3,7 @@ import { Box, makeStyles, Typography, Divider, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
 import { useSelector } from 'react-redux';
-import { calcDaily, formatApy, formatUsd, byDecimals } from '../../../../helpers/format';
+import { calcDaily, formatApy, formatUsd, byDecimals, BIG_ZERO } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import BigNumber from 'bignumber.js';
 import { styles } from './styles';
@@ -16,12 +16,12 @@ function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
   const classes = useStyles();
   const t = useTranslation().t;
   const [deposited, setDeposited] = React.useState({
-    balance: new BigNumber(0),
-    shares: new BigNumber(0),
+    balance: BIG_ZERO,
+    shares: BIG_ZERO,
   });
   const [poolRewards, setPoolRewards] = React.useState({
-    balance: new BigNumber(0),
-    shares: new BigNumber(0),
+    balance: BIG_ZERO,
+    shares: BIG_ZERO,
   });
   const { wallet, balance } = useSelector((state: any) => ({
     wallet: state.walletReducer,
@@ -31,10 +31,10 @@ function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
   React.useEffect(() => {
     let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
 
-    let balanceSingle = new BigNumber(0);
-    let rewardsBalance = new BigNumber(0);
-    let sharesBalance = new BigNumber(0);
-    let rewardsSharesBalance = new BigNumber(0);
+    let balanceSingle = BIG_ZERO;
+    let rewardsBalance = BIG_ZERO;
+    let sharesBalance = BIG_ZERO;
+    let rewardsSharesBalance = BIG_ZERO;
 
     if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
       if (item.isGovVault) {
@@ -150,15 +150,13 @@ function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
 
   const _deposited = deposited.balance.isGreaterThan(0)
     ? deposited.balance.toFixed(8)
-    : new BigNumber(0).toFixed(2);
+    : BIG_ZERO.toFixed(2);
 
   const depositedUsd = deposited.balance.isGreaterThan(0)
     ? formatUsd(deposited.balance, pricesReducer.prices[item.oracleId])
     : formatUsd(0);
 
-  const rewardsEarned = poolRewards.balance.isGreaterThan(0)
-    ? poolRewards.shares
-    : new BigNumber(0);
+  const rewardsEarned = poolRewards.balance.isGreaterThan(0) ? poolRewards.shares : BIG_ZERO;
 
   const rewardPrice = poolRewards.balance.isGreaterThan(0)
     ? formatUsd(poolRewards.balance, pricesReducer.prices[item.earnedToken])

@@ -11,7 +11,7 @@ import {
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { convertAmountToRawNumber } from '../../../../helpers/format';
+import { BIG_ZERO, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { reduxActions } from '../../../redux/actions';
 import { Steps } from '../../../../components/Steps';
@@ -95,7 +95,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
     );
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-      value = new BigNumber(0);
+      value = BIG_ZERO;
     }
 
     if (value.isGreaterThanOrEqualTo(balance.deposited)) {

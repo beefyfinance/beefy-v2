@@ -9,8 +9,7 @@ import { config } from '../../../config/config';
 import { getStablesForNetwork, isEmpty, bluechipTokens } from '../../../helpers/utils';
 import { safetyScore } from '../../../helpers/safetyScore';
 import { QiDao, Insurace, Moonpot } from '../../../helpers/partners';
-
-import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/format';
 
 let initPlatforms = {};
 let pools = [];
@@ -64,7 +63,7 @@ const initialPools = () => {
       pool['pricePerFullShare'] = 1;
       pool['daily'] = 0;
       pool['apy'] = 0;
-      pool['tvl'] = new BigNumber(0);
+      pool['tvl'] = BIG_ZERO;
       pool['lastUpdated'] = 0;
       pool['tags'] = [];
       pool['safetyScore'] = 0;
@@ -138,7 +137,7 @@ const initializeTags = (pool, net) => {
 const initialState = {
   pools: initialPools(),
   boosts: initialBoosts(),
-  totalTvl: new BigNumber(0),
+  totalTvl: BIG_ZERO,
   isPoolsLoading: true,
   isBoostsLoading: true,
   isFirstTime: true,

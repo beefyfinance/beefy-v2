@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { VaultEntity } from '../entities/vault';
 import { BeefyState } from '../../../redux-types';
-import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/format';
 
 export const selectVaultTvl = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.biz.tvl.byVaultId[vaultId],
@@ -9,7 +9,7 @@ export const selectVaultTvl = createSelector(
     if (vaultTvl) {
       return vaultTvl.tvl;
     } else {
-      return new BigNumber(0);
+      return BIG_ZERO;
     }
   }
 );

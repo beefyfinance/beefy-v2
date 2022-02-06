@@ -19,7 +19,7 @@ import { fetchAllBalanceAction } from './balance';
 import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
 import { featureFlag_dataPolling } from '../utils/feature-flags';
-import { fetchAllAllowanceAction } from './allowance';
+//import { fetchAllAllowanceAction } from './allowance';
 import { BeefyStore } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
 
