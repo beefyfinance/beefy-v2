@@ -5,11 +5,11 @@ import { ChainEntity } from '../entities/chain';
  * Adds an instance cache by chain to have exactly one instance by chain
  */
 export function createFactoryWithCacheByChain<T>(
-  factoryFn: (chainId: ChainEntity) => T
-): (chainId: ChainEntity) => T {
-  const cacheByChainId: { [chainId: ChainEntity['id']]: T } = {};
+  factoryFn: (chainId: ChainEntity) => Promise<T>
+): (chainId: ChainEntity) => Promise<T> {
+  const cacheByChainId: { [chainId: ChainEntity['id']]: Promise<T> } = {};
 
-  return (chain: ChainEntity): T => {
+  return (chain: ChainEntity): Promise<T> => {
     if (cacheByChainId[chain.id] === undefined) {
       cacheByChainId[chain.id] = factoryFn(chain);
     }

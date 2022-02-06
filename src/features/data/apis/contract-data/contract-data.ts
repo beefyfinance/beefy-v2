@@ -7,7 +7,6 @@ import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
-import { getBoostContractInstance, getVaultContractInstance } from './worker/instances';
 import {
   BoostContractData,
   FetchAllContractDataResult,
@@ -15,7 +14,17 @@ import {
   IContractDataApi,
   StandardVaultContractData,
 } from './contract-data-types';
+import { AbiItem } from 'web3-utils';
 import { BeefyState } from '../../../../redux-types';
+import * as _Web3Contract from 'web3-eth-contract';
+import { Contract } from 'web3-eth-contract';
+import _vaultAbi from '../../../../config/abi/vault.json';
+import _boostAbi from '../../../../config/abi/boost.json';
+
+// fix TS typings
+const vaultAbi = _vaultAbi as AbiItem[];
+const boostAbi = _boostAbi as AbiItem[];
+const Web3Contract = _Web3Contract as any as Contract;
 
 /**
  * Get vault contract data
@@ -150,4 +159,31 @@ export class ContractDataAPI implements IContractDataApi {
       },
     };
   }
+}
+
+// turns out instanciating contracts is CPU heavy
+// so we instanciate them only once and clone them
+const baseContractCache: { vault: Contract | null; boost: Contract | null } = {
+  boost: null,
+  vault: null,
+};
+
+function getVaultContractInstance(address: string) {
+  if (baseContractCache.vault === null) {
+    // @ts-ignore types of 'web3-eth-contract' are badly defined
+    baseContractCache.vault = new Web3Contract(vaultAbi);
+  }
+  const vaultContract = baseContractCache.vault.clone();
+  vaultContract.options.address = address;
+  return vaultContract;
+}
+
+function getBoostContractInstance(address: string) {
+  if (baseContractCache.boost === null) {
+    // @ts-ignore types of 'web3-eth-contract' are badly defined
+    baseContractCache.boost = new Web3Contract(boostAbi);
+  }
+  const boostContract = baseContractCache.boost.clone();
+  boostContract.options.address = address;
+  return boostContract;
 }

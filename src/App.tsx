@@ -3,7 +3,6 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { ScrollToTop } from './components/ScrollToTop';
-import { HideBalanceProvider } from './components/HideBalancesContext';
 import { theme } from './theme';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
@@ -15,11 +14,9 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <HideBalanceProvider>
-          <ScrollToTop />
-          <Header />
-          <RouterContentWithData />
-        </HideBalanceProvider>
+        <ScrollToTop />
+        <Header />
+        <RouterContentWithData />
       </Router>
     </ThemeProvider>
   );

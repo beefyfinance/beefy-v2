@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyStore } from '../../../redux-types';
-import { getWalletConnectInstance } from '../apis/instances';
-import { WalletConnect } from '../apis/wallet-connect';
+import { getWalletConnectApiInstance } from '../apis/instances';
+import { IWalletConnectApi } from '../apis/wallet/wallet-connect-types';
 import { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
@@ -13,13 +13,13 @@ import {
 } from '../reducers/wallet';
 import { selectAllChains } from '../selectors/chains';
 
-let walletCo: WalletConnect | null = null;
+let walletCo: IWalletConnectApi | null = null;
 
 export async function initWallet(store: BeefyStore) {
   const state = store.getState();
   const chains = selectAllChains(state);
   // instanciate and do the proper piping between both worlds
-  walletCo = getWalletConnectInstance({
+  walletCo = await getWalletConnectApiInstance({
     chains,
     onConnect: (chainId, address) => store.dispatch(userDidConnect({ chainId, address })),
     onAccountChanged: address => store.dispatch(accountHasChanged({ address })),

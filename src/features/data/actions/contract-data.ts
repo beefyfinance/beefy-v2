@@ -26,7 +26,7 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
 >('contract-data/fetchAllContractDataByChainAction', async ({ chainId }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
-  const contractApi = getContractDataApi(chain);
+  const contractApi = await getContractDataApi(chain);
 
   // maybe have a way to retrieve those easily
   const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>

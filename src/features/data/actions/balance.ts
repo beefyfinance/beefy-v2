@@ -29,7 +29,7 @@ export const fetchAllBalanceAction = createAsyncThunk<
 
   const walletAddress = selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
-  const api = getBalanceApi(chain);
+  const api = await getBalanceApi(chain);
 
   const tokens = selectAllTokenByChain(state, chainId).map(tokenId =>
     selectTokenById(state, chain.id, tokenId)

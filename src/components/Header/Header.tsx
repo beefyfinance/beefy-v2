@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { Suspense, useCallback, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import {
@@ -15,7 +15,6 @@ import {
 } from '@material-ui/core';
 import { Menu, Close } from '@material-ui/icons';
 import { styles } from './styles';
-import { WalletContainer } from './components/WalletContainer';
 import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
@@ -32,6 +31,8 @@ import {
 import { ChainEntity } from '../../features/data/entities/chain';
 import { selectAllChains } from '../../features/data/selectors/chains';
 import { askForNetworkChange } from '../../features/data/actions/wallet';
+// lazy load web3 related stuff, as libs are quite heavy
+const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
 
 const useStyles = makeStyles(styles as any);
 
@@ -157,7 +158,9 @@ export const Header = connect((state: BeefyState) => {
                     />
                   </Box>
                 </Hidden>
-                <WalletContainer />
+                <Suspense fallback={<>...</>}>
+                  <WalletContainer />
+                </Suspense>
               </Box>
               <Hidden lgUp>
                 <Box ml={2}>
