@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
 import { rootReducer } from './features/redux/reducers';
 import { loggerMiddleware } from './features/data/middlewares/logger';
 import { walletActionsMiddleware } from './features/data/middlewares/wallet';
@@ -15,3 +16,5 @@ export const store = configureStore({
       immutableCheck: false,
     }).concat([loggerMiddleware, walletActionsMiddleware]),
 });
+
+export const persistor = persistStore(store);

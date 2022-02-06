@@ -225,7 +225,7 @@ export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
       <Grid item xs={6} md={2} lg={2}>
         <LabeledStatWithTooltip
           value={formatted.totalApy}
-          label={isGovVault ? t('APR') : t('APY')}
+          label={isGovVault(vault) ? t('APR') : t('APY')}
           boosted={isBoosted ? formatted.boostedTotalApy : ''}
           isLoading={isLoading}
           className={`tooltip-toggle`}
