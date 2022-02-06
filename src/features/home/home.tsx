@@ -195,7 +195,7 @@ const VaultsList = memo(function HomeVaultsList() {
 
 export const Home = () => {
   const classes = useStyles();
-  useBeefyData('v2');
+  useBeefyData();
   return (
     <React.Fragment>
       <Portfolio />

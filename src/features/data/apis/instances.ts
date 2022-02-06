@@ -1,27 +1,14 @@
 import { BeefyAPI } from './beefy';
 import { ConfigAPI } from './config';
-import Web3 from 'web3';
-//import * as Comlink from 'comlink';
-import { BalanceAPI } from './balance/balance';
-import { AllowanceAPI } from './allowance/allowance';
-import { WalletConnect, WalletConnectOptions } from './wallet-connect';
 import { sample } from 'lodash';
-//import { ContractDataInWebWorkerAPI } from './contract-data/contract-data-webworker';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
-import { ContractDataAPI } from './contract-data/contract-data';
-import { ContractDataMcV2API } from './contract-data/contract-data-multicallv2';
 import { ChainEntity } from '../entities/chain';
-import { IContractDataApi } from './contract-data/contract-data-types';
 import {
   featureFlag_getAllowanceApiImplem,
   featureFlag_getBalanceApiImplem,
   featureFlag_getContractDataApiImplem,
 } from '../utils/feature-flags';
-// @ts-ignore
-// eslint-disable-next-line
-//import ContractDataWorker from 'worker-loader!./contract-data/worker/contract-data.webworker.ts';
-import { BalanceMcV2API } from './balance/balance-multicallv2';
-import { AllowanceMcV2API } from './allowance/allowance-multicallv2';
+import { IWalletConnectApi, WalletConnectOptions } from './wallet/wallet-connect-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -39,97 +26,88 @@ export function getConfigApi(): ConfigAPI {
   return configApi;
 }
 
-export const getWeb3Instance = createFactoryWithCacheByChain(chain => {
+const Web3Promise = import('web3');
+export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {
+  const Web3 = await Web3Promise;
+
   // pick one RPC endpoint at random
   // todo: not the smartest thing to do but good enough yet
   const rpc = sample(chain.rpc);
   console.debug(`Instanciating Web3 for chain ${chain.id}`);
-  return new Web3(rpc);
+  return new Web3.default(rpc);
 });
-/*
-let webWorker1 = null;
-let webWorker2 = null;
-if (featureFlag_getContractDataApiImplem() === 'webworker-eth-multicall') {
-  webWorker1 = Comlink.wrap(new ContractDataWorker()) as Comlink.Remote<Worker>;
-  webWorker2 = Comlink.wrap(new ContractDataWorker()) as Comlink.Remote<Worker>;
-}*/
-export const getContractDataApi = createFactoryWithCacheByChain((chain): IContractDataApi => {
-  const web3 = getWeb3Instance(chain);
 
-  const targetImplem = featureFlag_getContractDataApiImplem();
+const ContractDataAPIPromise = import('./contract-data');
+export const getContractDataApi = createFactoryWithCacheByChain(async chain => {
+  const { ContractDataAPI, ContractDataMcV2API } = await ContractDataAPIPromise;
 
-  if (targetImplem === 'eth-multicall') {
-    console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
-    return new ContractDataAPI(web3, chain);
-  } else if (targetImplem === 'new-multicall') {
+  const web3 = await getWeb3Instance(chain);
+
+  let targetImplem = featureFlag_getContractDataApiImplem();
+  if (targetImplem === 'new-multicall' && !chain.fetchBalancesAddress) {
+    targetImplem = 'eth-multicall';
+  }
+  if (targetImplem === 'new-multicall') {
     // only if we have a contract to work with
-    if (chain.fetchContractDataAddress) {
-      console.debug(`Instanciating ContractDataMcV2API for chain ${chain.id}`);
-      return new ContractDataMcV2API(
-        web3,
-        chain as ChainEntity & { fetchContractDataAddress: string }
-      );
-    } else {
-      console.debug(`Couldn't find chain.fetchContractDataAddress`);
-      console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
-      return new ContractDataAPI(web3, chain);
-    }
-  } /* else if (targetImplem === 'webworker-eth-multicall') {
-    console.debug(`Instanciating ContractDataInWebWorkerAPI for chain ${chain.id}`);
-
-    // bsc has many data, gets his own worker
-    if (chain.id === 'bsc') {
-      return new ContractDataInWebWorkerAPI(chain, webWorker2);
-    } else {
-      return new ContractDataInWebWorkerAPI(chain, webWorker1);
-    }
-  }*/
+    console.debug(`Instanciating ContractDataMcV2API for chain ${chain.id}`);
+    return new ContractDataMcV2API(
+      web3,
+      chain as ChainEntity & { fetchContractDataAddress: string }
+    );
+  }
+  console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
+  return new ContractDataAPI(web3, chain);
 });
 
-export const getBalanceApi = createFactoryWithCacheByChain(chain => {
-  const web3 = getWeb3Instance(chain);
+const BalanceAPIPromise = import('./balance');
+export const getBalanceApi = createFactoryWithCacheByChain(async chain => {
+  const { BalanceAPI, BalanceMcV2API } = await BalanceAPIPromise;
 
-  const targetImplem = featureFlag_getBalanceApiImplem();
+  const web3 = await getWeb3Instance(chain);
 
-  if (targetImplem === 'eth-multicall') {
-    console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
-    return new BalanceAPI(web3, chain);
-  } else if (targetImplem === 'new-multicall') {
-    if (chain.fetchBalancesAddress) {
-      console.debug(`Instanciating BalanceMcV2API for chain ${chain.id}`);
-      return new BalanceMcV2API(web3, chain as ChainEntity & { fetchBalancesAddress: string });
-    } else {
-      console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
-      return new BalanceAPI(web3, chain);
-    }
+  let targetImplem = featureFlag_getBalanceApiImplem();
+  if (targetImplem === 'new-multicall' && !chain.fetchBalancesAddress) {
+    targetImplem = 'eth-multicall';
   }
+
+  if (targetImplem === 'new-multicall') {
+    console.debug(`Instanciating BalanceMcV2API for chain ${chain.id}`);
+    return new BalanceMcV2API(web3, chain as ChainEntity & { fetchBalancesAddress: string });
+  }
+
+  console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
+  return new BalanceAPI(web3, chain);
 });
 
-export const getAllowanceApi = createFactoryWithCacheByChain(chain => {
-  const web3 = getWeb3Instance(chain);
+const AllowanceAPIPromise = import('./allowance');
+export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
+  const { AllowanceAPI, AllowanceMcV2API } = await AllowanceAPIPromise;
 
-  const targetImplem = featureFlag_getAllowanceApiImplem();
+  const web3 = await getWeb3Instance(chain);
 
-  if (targetImplem === 'eth-multicall') {
-    console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
-    return new AllowanceAPI(web3, chain);
-  } else if (targetImplem === 'new-multicall') {
-    if (chain.fetchBalancesAddress) {
-      console.debug(`Instanciating AllowanceMcV2API for chain ${chain.id}`);
-      return new AllowanceMcV2API(web3, chain as ChainEntity & { fetchBalancesAddress: string });
-    } else {
-      console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
-      return new AllowanceAPI(web3, chain);
-    }
+  let targetImplem = featureFlag_getAllowanceApiImplem();
+  if (targetImplem === 'new-multicall' && !chain.fetchBalancesAddress) {
+    targetImplem = 'eth-multicall';
   }
+
+  if (targetImplem === 'new-multicall') {
+    console.debug(`Instanciating AllowanceMcV2API for chain ${chain.id}`);
+    return new AllowanceMcV2API(web3, chain as ChainEntity & { fetchBalancesAddress: string });
+  }
+
   console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
   return new AllowanceAPI(web3, chain);
 });
 
-let walletCo: WalletConnect | null = null;
-export function getWalletConnectInstance(options: WalletConnectOptions): WalletConnect {
+let walletCo: IWalletConnectApi | null = null;
+export async function getWalletConnectApiInstance(
+  options: WalletConnectOptions
+): Promise<IWalletConnectApi> {
   if (!walletCo) {
-    walletCo = new WalletConnect(options);
+    // allow code splitting to put all wallet connect stuff
+    // in a separate, non-critical-path js file
+    const { WalletConnectApi } = await import('./wallet/wallet-connect');
+    walletCo = new WalletConnectApi(options);
   }
   return walletCo;
 }

@@ -9,24 +9,11 @@ import Web3Modal, {
 import { CloverConnector } from '@clover-network/clover-connector';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
-import { ChainEntity } from '../entities/chain';
+import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
+import { IWalletConnectApi, WalletConnectOptions } from './wallet-connect-types';
 
-export interface WalletConnectOptions {
-  chains: ChainEntity[];
-  onWalletDisconnected: () => Promise<unknown> | unknown;
-  onConnect: (chainId: ChainEntity['id'], address: string) => Promise<unknown> | unknown;
-  onAccountChanged: (address: string) => Promise<unknown> | unknown;
-  // we also need to pass down the address because sometimes
-  // when user change chain we receive a "disconnect" event before the "chainChanged" event
-  onChainChanged: (chainId: ChainEntity['id'], address: string) => Promise<unknown> | unknown;
-  onUnsupportedChainSelected: (
-    networkChainId: number | string,
-    address: string
-  ) => Promise<unknown> | unknown;
-}
-
-export class WalletConnect {
+export class WalletConnectApi implements IWalletConnectApi {
   protected web3Modal: Web3Modal | null;
 
   constructor(protected options: WalletConnectOptions) {
@@ -199,7 +186,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
       display: {
         name: 'Binance',
         description: 'Binance Chain Wallet',
-        logo: require(`../../../images/wallets/binance-wallet.png`).default,
+        logo: require(`../../../../images/wallets/binance-wallet.png`).default,
       },
       package: 'binance',
       connector: async (ProviderPackage, options) => {
@@ -210,7 +197,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
     },
     'custom-clover': {
       display: {
-        logo: require(`../../../images/wallets/clover.png`).default,
+        logo: require(`../../../../images/wallets/clover.png`).default,
         name: 'Clover Wallet',
         description: 'Connect with your Clover wallet and earn CLV',
       },
@@ -226,7 +213,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
     },
     'custom-coinbase': {
       display: {
-        logo: require(`../../../images/wallets/coinbase.png`).default,
+        logo: require(`../../../../images/wallets/coinbase.png`).default,
         name: 'Coinbase Wallet',
         description: 'Connect your Coinbase Wallet',
       },
@@ -248,7 +235,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
     },
     'custom-wallet-connect': {
       display: {
-        logo: require(`../../../images/wallets/wallet-connect.svg`).default,
+        logo: require(`../../../../images/wallets/wallet-connect.svg`).default,
         name: 'Wallet Connect',
         description: 'Scan your WalletConnect to Connect',
       },
@@ -268,7 +255,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
       display: {
         name: 'Math',
         description: 'Math Wallet',
-        logo: require(`../../../images/wallets/math-wallet.svg`).default,
+        logo: require(`../../../../images/wallets/math-wallet.svg`).default,
       },
       package: 'math',
       connector: connectors.injected,
@@ -277,7 +264,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
       display: {
         name: 'Trust',
         description: 'Trust Wallet',
-        logo: require(`../../../images/wallets/trust-wallet.svg`).default,
+        logo: require(`../../../../images/wallets/trust-wallet.svg`).default,
       },
       package: 'twt',
       connector: connectors.injected,
@@ -286,7 +273,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
       display: {
         name: 'SafePal',
         description: 'SafePal App',
-        logo: require(`../../../images/wallets/safepal-wallet.svg`).default,
+        logo: require(`../../../../images/wallets/safepal-wallet.svg`).default,
       },
       package: 'safepal',
       connector: connectors.injected,
