@@ -67,8 +67,6 @@ export async function initHomeDataV4(store: BeefyStore) {
   store.dispatch((await vaultListFulfill)());
   await boostListPromise;
 
-  //debugging
-  return;
   // then, we work by chain
 
   // now we start fetching all data for all chains

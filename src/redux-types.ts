@@ -23,10 +23,6 @@ import { VaultsState } from './features/data/reducers/vaults';
 import { WalletState } from './features/data/reducers/wallet';
 
 export interface BeefyState {
-  walletReducer: any;
-  vaultReducer: any;
-  pricesReducer: any;
-  balanceReducer: any;
   entities: {
     chains: ChainsState;
     tokens: TokensState;

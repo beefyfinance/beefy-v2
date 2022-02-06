@@ -52,6 +52,17 @@ export const selectGovVaultUserBalance = createSelector(
   }
 );
 
+export const selectTokenUserBalance = createSelector(
+  (state: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) =>
+    state.user.balance.byChainId[chainId]?.byTokenId[tokenId],
+  tokenBalance => {
+    if (!tokenBalance) {
+      return BIG_ZERO;
+    }
+    return tokenBalance.balance;
+  }
+);
+
 export const selectUserVaultDepositInToken = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.user.balance.deposited[vaultId]?.balance,
   vaultBalance => {

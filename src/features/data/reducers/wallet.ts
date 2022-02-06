@@ -1,7 +1,7 @@
+import { renderIcon } from '@download/blockies';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createCanvas } from 'canvas';
 import { ChainEntity } from '../entities/chain';
-import { renderIcon } from '@download/blockies';
 
 /**
  * State containing Vault infos
