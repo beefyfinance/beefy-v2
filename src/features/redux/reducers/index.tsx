@@ -1,3 +1,6 @@
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import { walletReducer } from './wallet';
 import { vaultReducer } from './vault';
 import { pricesReducer } from './prices';
@@ -35,11 +38,11 @@ const bizReducer = combineReducers<BeefyState['biz']>({
 const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,
   allowance: allowanceSlice.reducer,
-  wallet: walletSlice.reducer,
+  wallet: persistReducer({ key: 'wallet', storage }, walletSlice.reducer),
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
   dataLoader: dataLoaderSlice.reducer,
-  filteredVaults: filteredVaultsSlice.reducer,
+  filteredVaults: persistReducer({ key: 'filters', storage }, filteredVaultsSlice.reducer),
 });
 
 export const rootReducer = combineReducers<BeefyState>({
