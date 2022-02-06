@@ -13,7 +13,11 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
-import { selectActiveVaultBoostIds, selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import {
+  selectActiveVaultBoostIds,
+  selectBoostById,
+  selectIsVaultBoosted,
+} from '../../../data/selectors/boosts';
 import {
   isGovVault,
   isVaultActive,
@@ -40,7 +44,6 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { ChainEntity } from '../../../data/entities/chain';
 import { PlatformEntity } from '../../../data/entities/platform';
 import { TokenEntity } from '../../../data/entities/token';
-import { BoostEntity } from '../../../data/entities/boost';
 
 function ValueText({
   vaultId,
@@ -139,16 +142,19 @@ const ItemTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity[
 const ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const vault = selectVaultById(state, vaultId);
   const isBoosted = selectIsVaultBoosted(state, vault.id);
-  const activeBoosts = selectActiveVaultBoostIds(state, vault.id);
+  const stakedIds = selectActiveVaultBoostIds(state, vault.id).map(boostId => {
+    const boost = selectBoostById(state, boostId);
+    return boost.name;
+  });
   const userStaked = selectHasUserDepositInVault(state, vault.id);
   const totalDeposited = selectUserVaultDepositInToken(state, vault.id);
   const totalDepositedUsd = selectUserVaultDepositInUsd(state, vault.id);
   const blurred = selectIsBalanceHidden(state);
-  return { vault, activeBoosts, isBoosted, userStaked, totalDeposited, totalDepositedUsd, blurred };
+  return { vault, stakedIds, isBoosted, userStaked, totalDeposited, totalDepositedUsd, blurred };
 })(
   ({
     vault,
-    activeBoosts,
+    stakedIds,
     isBoosted,
     userStaked,
     totalDeposited,
@@ -156,7 +162,7 @@ const ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: VaultE
     blurred,
   }: {
     vault: VaultEntity;
-    activeBoosts: BoostEntity['id'][];
+    stakedIds: string[];
     isBoosted: boolean;
     userStaked: boolean;
     totalDeposited: BigNumber;
@@ -173,7 +179,7 @@ const ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: VaultE
           {isBoosted && userStaked && (
             <div className={clsx([classes.stat, classes.marginBottom])}>
               <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-              <ValueText value={activeBoosts.join(', ')} vaultId={vault.id} />
+              <ValueText value={stakedIds.join(', ')} vaultId={vault.id} />
               <Typography className={classes.label}>
                 <ValuePrice value={t('BOOST')} vaultId={vault.id} />
               </Typography>
