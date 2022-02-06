@@ -8,7 +8,6 @@ import { initHomeDataV4 } from './features/data/actions/scenarios';
 import { store } from './store';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
-const Boost = React.lazy(() => import(`./features/boost`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
@@ -29,9 +28,6 @@ export const App = () => {
             </Route>
             <Route strict sensitive exact path="/:network/vault/:id">
               <Vault />
-            </Route>
-            <Route strict sensitive exact path="/:network/boosts/:id">
-              <Boost />
             </Route>
             <Route>
               <PageNotFound />
