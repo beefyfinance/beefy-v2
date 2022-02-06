@@ -62,7 +62,7 @@
 
     [x] handle errors
     [x] handle loading
-    [ ] handle canceling ongoing requests
+    [~] handle canceling ongoing requests => not happening
 
 [ ] Code cleanup & Testing
 
@@ -82,13 +82,13 @@
     [x] Fix wallet metric
     [x] Fix safety score metric
     [x] Fix apy metric
-    [ ] delay loading of web3modal
+    [x] delay loading of web3modal
+    [~] Make sure we can still use the vault page => not happening
+    [x] Prevent wallet popin on startup
+    [x] Bifi price missing
+    [x] Remove unused old code
     [ ] fix vault TVL (maybe exclusions)
-    [ ] Make sure we can still use the vault page
-    [ ] Prevent wallet popin on startup
-    [ ] Bifi price missing
     [ ] Do some performance enhancement (scenario + filters)
-    [ ] Remove unused old code
     [ ] too many selectors https://redux.js.org/usage/deriving-data-selectors#balance-selector-usage
     [ ] Go over left todos
     [ ] Add moonpot support
