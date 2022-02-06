@@ -77,11 +77,15 @@
 [ ] Rework components to use new reducers
 
     [x] Filters: search box, vault category, user vault category
+    [x] Store last used filters
+    [x] Fix deposits metric
+    [x] Fix wallet metric
+    [x] Fix safety score metric
+    [x] Fix apy metric
+    [ ] fix vault TVL (maybe exclusions)
     [ ] Make sure we can still use the vault page
     [ ] Prevent wallet popin on startup
     [ ] Bifi price missing
-    [ ] fix vault TVL (maybe exclusions)
-    [ ] Store last used filters
     [ ] Do some performance enhancement (scenario + filters)
     [ ] Remove unused old code
     [ ] too many selectors https://redux.js.org/usage/deriving-data-selectors#balance-selector-usage
