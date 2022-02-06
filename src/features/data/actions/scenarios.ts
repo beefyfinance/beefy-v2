@@ -8,7 +8,7 @@ import {
   walletHasDisconnected,
 } from '../reducers/wallet';
 import { selectAllChains } from '../selectors/chains';
-import { selectIsWalletConnected } from '../selectors/wallet';
+import { selectIsWalletConnected, selectCurrentChainId } from '../selectors/wallet';
 import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchAllBoosts } from './boosts';
@@ -28,7 +28,7 @@ export interface CapturedFulfilledActions {
   contractData: CapturedFulfilledActionGetter;
   user: {
     balance: CapturedFulfilledActionGetter;
-    allowance: CapturedFulfilledActionGetter;
+    //allowance: CapturedFulfilledActionGetter;
   } | null;
 }
 
@@ -45,40 +45,29 @@ export async function initHomeDataV4(store: BeefyStore) {
   // start fetching chain config
   const chainListPromise = store.dispatch(fetchChainConfigs());
 
-  // create the wallet instance as soon as we get the chain list
-  setTimeout(async () => {
-    await chainListPromise;
-
-    const state = store.getState();
-    const chains = selectAllChains(state);
-    // instanciate and do the proper piping between both worlds
-    const walletCo = getWalletConnectInstance({
-      chains,
-      onConnect: (chainId, address) => store.dispatch(userDidConnect({ chainId, address })),
-      onAccountChanged: address => store.dispatch(accountHasChanged({ address })),
-      onChainChanged: chainId => store.dispatch(chainHasChanged({ chainId })),
-      onUnsupportedChainSelected: () => store.dispatch(chainHasChangedToUnsupported()),
-      onWalletDisconnected: () => store.dispatch(walletHasDisconnected()),
-    });
-
-    // todo: take it from local storage
-    const defaultChainId = 'bsc';
-    return walletCo.askUserToConnectIfNeeded(defaultChainId);
-  });
-
   // we fetch the configuration for all chain
   const boostListPromise = store.dispatch(fetchAllBoosts());
   const vaultListFulfill = captureFulfill(fetchAllVaults({}));
 
   // we can start fetching prices right now and await them later
   const pricesPromise = store.dispatch(fetchAllPricesAction({}));
-  // we can start fetching apy, it will arrive when it wants, nothing depends on it
-  store.dispatch(fetchApyAction({}));
 
-  // we start fetching buyback
-  store.dispatch(fetchBeefyBuybackAction({}));
+  // create the wallet instance as soon as we get the chain list
+  setTimeout(async () => {
+    // we can start fetching apy, it will arrive when it wants, nothing depends on it
+    store.dispatch(fetchApyAction({}));
 
-  store.dispatch(fetchFeaturedVaults());
+    // we start fetching buyback
+    store.dispatch(fetchBeefyBuybackAction({}));
+
+    store.dispatch(fetchFeaturedVaults());
+  });
+
+  // create the wallet instance as soon as we get the chain list
+  setTimeout(async () => {
+    await chainListPromise;
+    initWallet(store);
+  });
 
   // we need config data (for contract addresses) to start querying the rest
   await chainListPromise;
@@ -188,7 +177,7 @@ export function fetchCaptureUserData(
   return {
     balance: captureFulfill(fetchAllBalanceAction({ chainId })),
     // TODO: do we really need to fetch allowances right now?
-    allowance: captureFulfill(fetchAllAllowanceAction({ chainId })),
+    //allowance: captureFulfill(fetchAllAllowanceAction({ chainId })),
   };
 }
 
@@ -197,5 +186,25 @@ export async function dispatchUserFfs(
   userFfs: CapturedFulfilledActions['user']
 ) {
   await store.dispatch((await userFfs.balance)());
-  await store.dispatch((await userFfs.allowance)());
+  //await store.dispatch((await userFfs.allowance)());
+}
+
+async function initWallet(store: BeefyStore) {
+  const state = store.getState();
+  const chains = selectAllChains(state);
+  // instanciate and do the proper piping between both worlds
+  const walletCo = getWalletConnectInstance({
+    chains,
+    onConnect: (chainId, address) => store.dispatch(userDidConnect({ chainId, address })),
+    onAccountChanged: address => store.dispatch(accountHasChanged({ address })),
+    onChainChanged: chainId => store.dispatch(chainHasChanged({ chainId })),
+    onUnsupportedChainSelected: () => store.dispatch(chainHasChangedToUnsupported()),
+    onWalletDisconnected: () => store.dispatch(walletHasDisconnected()),
+  });
+
+  // synchronize wallet instance with the redux state
+  // the wallet instance has a cache on it's own
+  if (selectIsWalletConnected(store.getState())) {
+    return walletCo.askUserToConnectIfNeeded(selectCurrentChainId(store.getState()));
+  }
 }
