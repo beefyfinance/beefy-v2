@@ -143,7 +143,6 @@ function addVaultToState(
     if (apiVault.status === 'eol' || apiVault.status === 'paused') {
       sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
     } else {
-      if (sliceState.byChainId[vault.chainId] === undefined) debugger;
       sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
     }
   } else {
@@ -181,7 +180,6 @@ function addVaultToState(
     if (apiVault.status === 'eol' || apiVault.status === 'paused') {
       vaultState.allRetiredIds.push(vault.id);
     } else {
-      if (vaultState === undefined) debugger;
       vaultState.allActiveIds.push(vault.id);
     }
     vaultState.byOracleId[vault.oracleId] = vault.id;

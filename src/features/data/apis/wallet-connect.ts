@@ -1,5 +1,11 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3Modal, { connectors, ICoreOptions, IProviderOptions } from 'web3modal';
+import Web3Modal, {
+  connectors,
+  ICoreOptions,
+  IProviderOptions,
+  CACHED_PROVIDER_KEY,
+  getLocal as getWeb3ModalLocal,
+} from 'web3modal';
 import { CloverConnector } from '@clover-network/clover-connector';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
@@ -11,8 +17,13 @@ export interface WalletConnectOptions {
   onWalletDisconnected: () => Promise<unknown> | unknown;
   onConnect: (chainId: ChainEntity['id'], address: string) => Promise<unknown> | unknown;
   onAccountChanged: (address: string) => Promise<unknown> | unknown;
-  onChainChanged: (chainId: ChainEntity['id']) => Promise<unknown> | unknown;
-  onUnsupportedChainSelected: (networkChainId: number | string) => Promise<unknown> | unknown;
+  // we also need to pass down the address because sometimes
+  // when user change chain we receive a "disconnect" event before the "chainChanged" event
+  onChainChanged: (chainId: ChainEntity['id'], address: string) => Promise<unknown> | unknown;
+  onUnsupportedChainSelected: (
+    networkChainId: number | string,
+    address: string
+  ) => Promise<unknown> | unknown;
 }
 
 export class WalletConnect {
@@ -22,26 +33,59 @@ export class WalletConnect {
     this.web3Modal = null;
   }
 
+  public async initFromLocalCache(): Promise<null | {
+    chainId: ChainEntity['id'] | null;
+    address: string;
+  }> {
+    // we check the local cached provider
+    // if we have a cached value, we want to have a connected web3Modal instance
+    if (hasWeb3ModalCachedProvider()) {
+      // we are already connected so we don't care about the initial chain
+      const initChain = this.options.chains.find(c => c.id === 'bsc');
+      const providerOptions = _generateProviderOptions(initChain);
+      this.web3Modal = new Web3Modal(providerOptions);
+
+      // this shouldn't open a modal
+      const provider = await this.web3Modal.connect();
+      const web3 = _getWeb3FromProvider(provider);
+      this._bindProviderEvents(provider, web3);
+      const networkChainId = await _getNetworkChainId(web3);
+      const accounts = await web3.eth.getAccounts();
+      const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
+      return { chainId: chain ? chain.id : null, address: accounts[0] };
+    } else {
+      return null;
+    }
+  }
+
   /**
    * Ask the user to connect if he isn't already
    * @param suggestedChainId we will use this chain to detect providers but user can be successfully connected to another chain
    */
-  public async askUserToConnectIfNeeded(suggestedChainId: ChainEntity['id']) {
-    const chain = find(this.options.chains, chain => chain.id === suggestedChainId);
-    if (!chain) {
-      throw new Error(`Couldn't find chain by id ${suggestedChainId}`);
-    }
+  public async askUserToConnectIfNeeded() {
     // initialize instances if needed
     if (this.web3Modal === null) {
-      const providerOptions = _generateProviderOptions(chain);
+      const initChain = find(this.options.chains, chain => chain.id === 'bsc');
+      const providerOptions = _generateProviderOptions(initChain);
       this.web3Modal = new Web3Modal(providerOptions);
     }
 
     // open modal if needed to connect
-    await this._openWeb3Modal();
+    const provider = await this.web3Modal.connect();
+    const web3 = _getWeb3FromProvider(provider);
+    this._bindProviderEvents(provider, web3);
+
+    const networkChainId = await _getNetworkChainId(web3);
+    const accounts = await web3.eth.getAccounts();
+    const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
+    if (chain) {
+      return this.options.onConnect(chain.id, accounts[0]);
+    } else {
+      return this.options.onUnsupportedChainSelected(networkChainId, accounts[0]);
+    }
   }
 
-  public askUserForChainChangeIfNeeded(chainId: ChainEntity['id']) {
+  public async askUserForChainChangeIfNeeded(chainId: ChainEntity['id']) {
     const chain = find(this.options.chains, chain => chain.id === chainId);
     if (!chain) {
       throw new Error(`Couldn't find chain by id ${chainId}`);
@@ -51,74 +95,88 @@ export class WalletConnect {
       const providerOptions = _generateProviderOptions(chain);
       this.web3Modal = new Web3Modal(providerOptions);
     }
-    // TODO
-  }
 
-  protected async _openWeb3Modal() {
     const provider = await this.web3Modal.connect();
-    const web3 = await new Web3(provider);
-    web3.eth.extend({
-      methods: [
-        {
-          name: 'chainId',
-          call: 'eth_chainId',
-          outputFormatter: web3.utils.hexToNumber as any,
-        },
-      ],
+    await provider.request({
+      method: 'wallet_addEthereumChain',
+      params: [chain.walletSettings],
     });
 
-    // handle provider events
-    if (provider.on) {
-      provider.on('close', async () => {
-        await this.web3Modal.clearCachedProvider();
-        return this.options.onWalletDisconnected();
-      });
-      provider.on('disconnect', async () => {
-        await this.web3Modal.clearCachedProvider();
-        return this.options.onWalletDisconnected();
-      });
-      provider.on('accountsChanged', async (accounts: Array<string | undefined>) => {
-        const address = accounts[0];
-
-        console.debug(`WalletAPI: account changed: ${address}`);
-
-        if (address === undefined) {
-          await this.web3Modal.clearCachedProvider();
-          return this.options.onWalletDisconnected();
-        } else {
-          return this.options.onAccountChanged(address);
-        }
-      });
-      provider.on('chainChanged', async (chainIdOrHexChainId: string) => {
-        console.debug(`WalletAPI: chain changed: ${chainIdOrHexChainId}`);
-
-        const networkChainId = web3.utils.isHex(chainIdOrHexChainId)
-          ? web3.utils.hexToNumber(chainIdOrHexChainId)
-          : chainIdOrHexChainId;
-
-        const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-        if (chain) {
-          return this.options.onChainChanged(chain.id);
-        } else {
-          return this.options.onUnsupportedChainSelected(networkChainId);
-        }
-      });
-    }
-
-    let networkChainId = await web3.eth.getChainId();
-    if (networkChainId === 86) {
-      // Trust provider returns an incorrect chainId for BSC.
-      networkChainId = 56;
-    }
-
-    const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-    if (chain) {
-      const accounts = await web3.eth.getAccounts();
-      return this.options.onConnect(chain.id, accounts[0]);
-    } else {
-      return this.options.onUnsupportedChainSelected(networkChainId);
-    }
+    const web3 = _getWeb3FromProvider(provider);
+    const accounts = await web3.eth.getAccounts();
+    return this.options.onChainChanged(chain.id, accounts[0]);
   }
+
+  public async disconnect() {
+    await this.web3Modal.clearCachedProvider();
+    return this.options.onWalletDisconnected();
+  }
+
+  protected _bindProviderEvents(provider, web3: Web3) {
+    if (!provider.on) {
+      console.error('Could not bind web3 events');
+      return;
+    }
+
+    provider.on('close', async () => {
+      await this.web3Modal.clearCachedProvider();
+      return this.options.onWalletDisconnected();
+    });
+    provider.on('disconnect', async () => {
+      await this.web3Modal.clearCachedProvider();
+      return this.options.onWalletDisconnected();
+    });
+    provider.on('accountsChanged', async (accounts: Array<string | undefined>) => {
+      const address = accounts[0];
+
+      console.debug(`WalletAPI: account changed: ${address}`);
+
+      if (address === undefined) {
+        await this.web3Modal.clearCachedProvider();
+        return this.options.onWalletDisconnected();
+      } else {
+        return this.options.onAccountChanged(address);
+      }
+    });
+    provider.on('chainChanged', async (chainIdOrHexChainId: string) => {
+      console.debug(`WalletAPI: chain changed: ${chainIdOrHexChainId}`);
+
+      const networkChainId = web3.utils.isHex(chainIdOrHexChainId)
+        ? web3.utils.hexToNumber(chainIdOrHexChainId)
+        : chainIdOrHexChainId;
+
+      const accounts = await web3.eth.getAccounts();
+      const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
+      if (chain) {
+        return this.options.onChainChanged(chain.id, accounts[0]);
+      } else {
+        return this.options.onUnsupportedChainSelected(networkChainId, accounts[0]);
+      }
+    });
+  }
+}
+
+function _getWeb3FromProvider(provider) {
+  const web3 = new Web3(provider);
+  web3.eth.extend({
+    methods: [
+      {
+        name: 'chainId',
+        call: 'eth_chainId',
+        outputFormatter: web3.utils.hexToNumber as any,
+      },
+    ],
+  });
+  return web3;
+}
+
+async function _getNetworkChainId(web3: Web3) {
+  let networkChainId = await web3.eth.getChainId();
+  if (networkChainId === 86) {
+    // Trust provider returns an incorrect chainId for BSC.
+    networkChainId = 56;
+  }
+  return networkChainId;
 }
 
 function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
@@ -248,4 +306,9 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
     cacheProvider: true,
     providerOptions: newlist,
   };
+}
+
+function hasWeb3ModalCachedProvider() {
+  const cacheProviderValue = getWeb3ModalLocal(CACHED_PROVIDER_KEY) || '';
+  return cacheProviderValue !== '';
 }

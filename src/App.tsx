@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
@@ -11,21 +11,13 @@ const Boost = React.lazy(() => import(`./features/boost`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
-  // const storage = localStorage.getItem('nightMode');
-  //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
-  const [isNightMode, setNightMode] = React.useState(true);
-
-  useEffect(() => {
-    localStorage.setItem('nightMode', JSON.stringify(isNightMode));
-  }, [isNightMode]);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <HideBalanceProvider>
           <ScrollToTop />
-          <Header isNightMode={isNightMode} setNightMode={() => setNightMode(!isNightMode)} />
+          <Header />
           <RouterContentWithData />
         </HideBalanceProvider>
       </Router>

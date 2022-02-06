@@ -22,19 +22,7 @@ export const selectWalletAddress = createSelector(
   }
 );
 
-export const selectCurrentChainId = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.user.wallet.selectedChainId,
-  // last function receives previous function outputs as parameters
-  chainId => {
-    if (chainId === null) {
-      throw new Error("Wallet isn't connected");
-    }
-    return chainId;
-  }
-);
-
-export const selectIsBalanceHidden = createSelector(
-  (state: BeefyState) => state.user.wallet.hideBalance,
-  hideBalance => hideBalance
-);
+export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.selectedChainId;
+export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hideBalance;
+export const selectIsNetworkSupported = (state: BeefyState) =>
+  state.user.wallet.error !== 'unsupported chain';
