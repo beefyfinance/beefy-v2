@@ -158,6 +158,7 @@ BONUS:
 
 - What is `launchpoolApr.apr;`
 - On the current beta, I don't see the boost border around the "fantom-bifi-maxi", but we have an active "moo_bifi-scream" boost. Isn't this a boosted vault?
+- `excluded: "aurora-bifi-maxi",` but vault does not seem to exists
 
 # ANSWERED
 

@@ -74,17 +74,13 @@ export async function initHomeDataV4(store: BeefyStore) {
     [chainId: ChainEntity['id']]: CapturedFulfilledActions;
   } = {};
   for (const chain of chains) {
-    // if user is connected, start fetching balances and allowances
-    let userFullfills: CapturedFulfilledActions['user'] = null;
-    if (selectIsWalletConnected(store.getState())) {
-      userFullfills = fetchCaptureUserData(store, chain.id);
-    }
-
-    // startfetching all contract-related data at the same time
     fulfillsByNet[chain.id] = {
       contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
-      user: userFullfills,
+      user: null,
     };
+    if (selectIsWalletConnected(store.getState())) {
+      fulfillsByNet[chain.id].user = fetchCaptureUserData(store, chain.id);
+    }
   }
 
   // ok now we started all calls, it's just a matter of ordering fulfill actions
@@ -93,23 +89,19 @@ export async function initHomeDataV4(store: BeefyStore) {
   await pricesPromise;
 
   for (const chain of chains) {
-    setTimeout(() =>
-      (async () => {
-        const chainFfs = fulfillsByNet[chain.id];
-        // dispatch fulfills in order
-        await store.dispatch((await chainFfs.contractData)());
-
-        // user ffs can be dispatched in any order after that
-        if (chainFfs.user !== null) {
-          dispatchUserFfs(store, chainFfs.user);
-        }
-      })().catch(err => {
-        // as we still dispatch network errors, for reducers to handle
-        // there is not much to do here, this is just to avoid
-        // "unhandled promise exception" messages in the console
-        console.warn(err);
-      })
-    );
+    // run in an async block se we don't wait for a slow chain
+    (async () => {
+      const chainFfs = fulfillsByNet[chain.id];
+      await store.dispatch((await chainFfs.contractData)());
+      if (chainFfs.user !== null) {
+        dispatchUserFfs(store, chainFfs.user);
+      }
+    })().catch(err => {
+      // as we still dispatch network errors, for reducers to handle
+      // there is not much to do here, this is just to avoid
+      // "unhandled promise exception" messages in the console
+      console.warn(err);
+    });
   }
 
   // ok all data is fetched, now we start the poll functions
