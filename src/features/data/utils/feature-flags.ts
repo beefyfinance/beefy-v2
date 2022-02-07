@@ -79,7 +79,7 @@ export function featureFlag_dataPolling() {
 
 export function featureFlag_walletAddressOverride(walletAddress: string | null | undefined) {
   const params = new URLSearchParams(window.location.search);
-  if (params.has('__view_as')) {
+  if (walletAddress && params.has('__view_as')) {
     return params.get('__view_as');
   } else {
     return walletAddress;

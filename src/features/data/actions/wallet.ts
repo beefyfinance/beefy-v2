@@ -12,6 +12,7 @@ import {
   walletHasDisconnected,
 } from '../reducers/wallet';
 import { selectAllChains } from '../selectors/chains';
+import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 
 let walletCo: IWalletConnectApi | null = null;
 
@@ -21,11 +22,23 @@ export async function initWallet(store: BeefyStore) {
   // instanciate and do the proper piping between both worlds
   walletCo = await getWalletConnectApiInstance({
     chains,
-    onConnect: (chainId, address) => store.dispatch(userDidConnect({ chainId, address })),
-    onAccountChanged: address => store.dispatch(accountHasChanged({ address })),
-    onChainChanged: (chainId, address) => store.dispatch(chainHasChanged({ chainId, address })),
+    onConnect: (chainId, address) =>
+      store.dispatch(
+        userDidConnect({ chainId, address: featureFlag_walletAddressOverride(address) })
+      ),
+    onAccountChanged: address =>
+      store.dispatch(accountHasChanged({ address: featureFlag_walletAddressOverride(address) })),
+    onChainChanged: (chainId, address) =>
+      store.dispatch(
+        chainHasChanged({ chainId, address: featureFlag_walletAddressOverride(address) })
+      ),
     onUnsupportedChainSelected: (networkChainId, address) =>
-      store.dispatch(chainHasChangedToUnsupported({ networkChainId, address })),
+      store.dispatch(
+        chainHasChangedToUnsupported({
+          networkChainId,
+          address: featureFlag_walletAddressOverride(address),
+        })
+      ),
     onWalletDisconnected: () => store.dispatch(walletHasDisconnected()),
   });
 
