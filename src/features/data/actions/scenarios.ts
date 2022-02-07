@@ -14,6 +14,7 @@ import { featureFlag_dataPolling } from '../utils/feature-flags';
 import { BeefyStore } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
+import { recomputeBoostStatus } from '../reducers/boosts';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -117,8 +118,14 @@ export async function initHomeDataV4(store: BeefyStore) {
   }
   pollStopFns = [];
 
+  // recompute boost activity status
+  let pollStop = poll(async () => {
+    return store.dispatch(recomputeBoostStatus());
+  }, 5 * 1000 /* every 5s */);
+  pollStopFns.push(pollStop);
+
   // now set regular calls to update prices
-  const pollStop = poll(async () => {
+  pollStop = poll(async () => {
     return Promise.all([
       store.dispatch(fetchAllPricesAction({})),
       store.dispatch(fetchApyAction({})),
