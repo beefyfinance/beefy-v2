@@ -1,4 +1,10 @@
+import BigNumber from 'bignumber.js';
 import { fetchAllBoosts, FulfilledAllBoostsPayload } from '../actions/boosts';
+import {
+  fetchAllContractDataByChainAction,
+  FetchAllContractDataFulfilledPayload,
+} from '../actions/contract-data';
+import { getBeefyTestingStore } from '../utils/test-utils';
 import { boostsSlice, initialBoostsState } from './boosts';
 
 describe('Boosts slice tests', () => {
@@ -79,5 +85,77 @@ describe('Boosts slice tests', () => {
     const newState = boostsSlice.reducer(state, action);
     const afterReDispatch = newState.byId[beforeReDispatch.id];
     expect(beforeReDispatch).toBe(afterReDispatch);
+  });
+
+  it('should update state on fulfilled boost contract data', async () => {
+    // we have loaded some entities already
+    const store = await getBeefyTestingStore();
+    const state = store.getState();
+
+    // given we have received data for some boosts
+    const initPayload: FulfilledAllBoostsPayload = {
+      bsc: [
+        {
+          id: 'moo_banana-banana-busd-bitcrush',
+          poolId: 'aave-wbtc',
+          name: 'Iron / Garuda / Fanatics',
+          logo: 'single-assets/BTCB.svg',
+          earnedToken: 'mooPolygonBIFI',
+          earnedTokenDecimals: 18,
+          earnedTokenAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
+          earnContractAddress: '0x20948Cad130c3D7B24d27CC66163b4aaed4684F0',
+          earnedOracle: 'tokens',
+          earnedOracleId: 'BIFI',
+          partnership: true,
+          status: '',
+          isMooStaked: true,
+          partners: [],
+        },
+        {
+          id: 'moo_banana-bnb-stars-mogul2',
+          poolId: 'aave-eth',
+          name: 'Iron / Garuda / Fanatics',
+          logo: 'single-assets/ETH.svg',
+          earnedToken: 'mooPolygonBIFI',
+          earnedTokenDecimals: 18,
+          earnedTokenAddress: '0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3',
+          earnContractAddress: '0x9B508ad657ed5A139D1a7c97fD84d7B7240849Cf',
+          earnedOracle: 'tokens',
+          earnedOracleId: 'BIFI',
+          partnership: true,
+          status: '',
+          isMooStaked: true,
+        },
+      ],
+    };
+    const initAction = { type: fetchAllBoosts.fulfilled, payload: initPayload };
+    const initState = boostsSlice.reducer(initialBoostsState, initAction);
+
+    // We want to make sure we handle the action properly
+    const payload: FetchAllContractDataFulfilledPayload = {
+      chainId: 'bsc',
+      data: {
+        govVaults: [],
+        standardVaults: [],
+        boosts: [
+          {
+            id: 'moo_banana-banana-busd-bitcrush',
+            periodFinish: new Date(2022, 0, 1, 0, 0, 0), // expired boost
+            rewardRate: new BigNumber(0.4),
+            totalSupply: new BigNumber(12345),
+          },
+          {
+            id: 'moo_banana-bnb-stars-mogul2',
+            periodFinish: new Date(2050, 0, 1, 0, 0, 0), // active boost
+            rewardRate: new BigNumber(0.4),
+            totalSupply: new BigNumber(12345),
+          },
+        ],
+      },
+      state,
+    };
+    const action = { type: fetchAllContractDataByChainAction.fulfilled, payload: payload };
+    const newState = boostsSlice.reducer(initState, action);
+    expect(newState).toMatchSnapshot();
   });
 });
