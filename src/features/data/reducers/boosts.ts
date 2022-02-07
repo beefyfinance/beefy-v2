@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllBoosts } from '../actions/boosts';
+import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostConfig } from '../apis/config';
-import { BoostEntity, isBoostActive, isBoostPreStake } from '../entities/boost';
+import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
@@ -16,6 +17,7 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
       allBoostsIds: BoostEntity['id'][];
       prestakeBoostsIds: BoostEntity['id'][];
       activeBoostsIds: BoostEntity['id'][];
+      expiredBoostsIds: BoostEntity['id'][];
     };
   };
   byChainId: {
@@ -23,7 +25,13 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
       allBoostsIds: BoostEntity['id'][];
       prestakeBoostsIds: BoostEntity['id'][];
       activeBoostsIds: BoostEntity['id'][];
+      expiredBoostsIds: BoostEntity['id'][];
     };
+  };
+  // put the period finish in another part of the state
+  // to avoid re-rendering of non-updateable boost data
+  periodfinish: {
+    [boostId: BoostEntity['id']]: Date;
   };
 };
 export const initialBoostsState: BoostsState = {
@@ -31,13 +39,16 @@ export const initialBoostsState: BoostsState = {
   allIds: [],
   byVaultId: {},
   byChainId: {},
+  periodfinish: {},
 };
 
 export const boostsSlice = createSlice({
   name: 'boosts',
   initialState: initialBoostsState,
   reducers: {
-    // standard reducer logic, with auto-generated action types per reducer
+    recomputeBoostStatus(sliceState) {
+      updateBoostStatus(sliceState);
+    },
   },
   extraReducers: builder => {
     // when boost list is fetched, add all new tokens
@@ -48,8 +59,47 @@ export const boostsSlice = createSlice({
         }
       }
     });
+    // handle period finish data
+    builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
+      for (const boostContractData of action.payload.data.boosts) {
+        if (
+          sliceState.periodfinish[boostContractData.id] === undefined ||
+          sliceState.periodfinish[boostContractData.id].getTime() !==
+            boostContractData.periodFinish.getTime()
+        ) {
+          sliceState.periodfinish[boostContractData.id] = boostContractData.periodFinish;
+        }
+      }
+
+      // we also want to create the list of active and prestake boost ids
+      updateBoostStatus(sliceState);
+    });
   },
 });
+
+function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
+  const nowUTCTime = new Date().getTime();
+
+  for (const boostData of [sliceState.byVaultId, sliceState.byChainId]) {
+    for (const entityData of Object.values(boostData)) {
+      entityData.activeBoostsIds = [];
+      entityData.expiredBoostsIds = [];
+      entityData.prestakeBoostsIds = [];
+
+      for (const boostId of entityData.allBoostsIds) {
+        const periodFinish = sliceState.periodfinish[boostId];
+        if (periodFinish) {
+          const pfUTCTime = periodFinish.getTime();
+          if (nowUTCTime < pfUTCTime) {
+            entityData.activeBoostsIds.push(boostId);
+          } else {
+            entityData.expiredBoostsIds.push(boostId);
+          }
+        }
+      }
+    }
+  }
+}
 
 function addBoostToState(
   sliceState: WritableDraft<BoostsState>,
@@ -69,7 +119,6 @@ function addBoostToState(
     logo: apiBoost.logo,
     name: apiBoost.name,
     partnerIds: apiBoost.partners ? apiBoost.partners.map(p => p.website) : [],
-    status: apiBoost.status as BoostEntity['status'],
     vaultId: apiBoost.poolId,
   };
   sliceState.byId[boost.id] = boost;
@@ -81,15 +130,12 @@ function addBoostToState(
       allBoostsIds: [],
       activeBoostsIds: [],
       prestakeBoostsIds: [],
+      expiredBoostsIds: [],
     };
   }
+  // we don't know yet the status of this boost
+  // we need the contract data
   sliceState.byVaultId[boost.vaultId].allBoostsIds.push(boost.id);
-  if (isBoostActive(boost)) {
-    sliceState.byVaultId[boost.vaultId].activeBoostsIds.push(boost.id);
-  }
-  if (isBoostPreStake(boost)) {
-    sliceState.byVaultId[boost.vaultId].prestakeBoostsIds.push(boost.id);
-  }
 
   // add to chain id index
   if (sliceState.byChainId[chainId] === undefined) {
@@ -97,13 +143,10 @@ function addBoostToState(
       allBoostsIds: [],
       activeBoostsIds: [],
       prestakeBoostsIds: [],
+      expiredBoostsIds: [],
     };
   }
+  // we don't know yet the status of this boost
+  // we need the contract data
   sliceState.byChainId[chainId].allBoostsIds.push(boost.id);
-  if (isBoostActive(boost)) {
-    sliceState.byChainId[chainId].activeBoostsIds.push(boost.id);
-  }
-  if (isBoostPreStake(boost)) {
-    sliceState.byChainId[chainId].prestakeBoostsIds.push(boost.id);
-  }
 }

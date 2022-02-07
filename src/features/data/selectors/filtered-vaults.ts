@@ -119,12 +119,10 @@ export const selectFilteredVaults = createSelector(
             (selectIsVaultBoosted(state, vault.id) &&
               selectActiveVaultBoostIds(state, vault.id)
                 .map(boostId => selectBoostById(state, boostId))
-                .some(
-                  O =>
-                    'active' === O.status &&
-                    // TODO
-                    //O_NOW < parseInt(O.periodFinish) &&
-                    O.earnedTokenId.toLowerCase().match(O_TST)
+                .some(O =>
+                  // TODO
+                  //O_NOW < parseInt(O.periodFinish) &&
+                  O.earnedTokenId.toLowerCase().match(O_TST)
                 ))
           )
         )

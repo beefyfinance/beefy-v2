@@ -47,6 +47,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -94,6 +99,11 @@ Object {
       "status": "init",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -149,6 +159,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -200,6 +215,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -229,6 +249,11 @@ Object {
       "status": "pending",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -266,6 +291,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -299,6 +329,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -328,6 +363,11 @@ Object {
       "status": "pending",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",

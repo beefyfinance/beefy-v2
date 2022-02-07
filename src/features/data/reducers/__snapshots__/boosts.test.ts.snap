@@ -1,5 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Boosts slice tests should update state on fulfilled boost contract data 1`] = `
+Object {
+  "allIds": Array [
+    "moo_banana-banana-busd-bitcrush",
+    "moo_banana-bnb-stars-mogul2",
+  ],
+  "byChainId": Object {
+    "bsc": Object {
+      "activeBoostsIds": Array [
+        "moo_banana-bnb-stars-mogul2",
+      ],
+      "allBoostsIds": Array [
+        "moo_banana-banana-busd-bitcrush",
+        "moo_banana-bnb-stars-mogul2",
+      ],
+      "expiredBoostsIds": Array [
+        "moo_banana-banana-busd-bitcrush",
+      ],
+      "prestakeBoostsIds": Array [],
+    },
+  },
+  "byId": Object {
+    "moo_banana-banana-busd-bitcrush": Object {
+      "assets": undefined,
+      "chainId": "bsc",
+      "earnContractAddress": "0x20948Cad130c3D7B24d27CC66163b4aaed4684F0",
+      "earnedTokenId": "BIFI",
+      "id": "moo_banana-banana-busd-bitcrush",
+      "logo": "single-assets/BTCB.svg",
+      "name": "Iron / Garuda / Fanatics",
+      "partnerIds": Array [],
+      "vaultId": "aave-wbtc",
+    },
+    "moo_banana-bnb-stars-mogul2": Object {
+      "assets": undefined,
+      "chainId": "bsc",
+      "earnContractAddress": "0x9B508ad657ed5A139D1a7c97fD84d7B7240849Cf",
+      "earnedTokenId": "BIFI",
+      "id": "moo_banana-bnb-stars-mogul2",
+      "logo": "single-assets/ETH.svg",
+      "name": "Iron / Garuda / Fanatics",
+      "partnerIds": Array [],
+      "vaultId": "aave-eth",
+    },
+  },
+  "byVaultId": Object {
+    "aave-eth": Object {
+      "activeBoostsIds": Array [
+        "moo_banana-bnb-stars-mogul2",
+      ],
+      "allBoostsIds": Array [
+        "moo_banana-bnb-stars-mogul2",
+      ],
+      "expiredBoostsIds": Array [],
+      "prestakeBoostsIds": Array [],
+    },
+    "aave-wbtc": Object {
+      "activeBoostsIds": Array [],
+      "allBoostsIds": Array [
+        "moo_banana-banana-busd-bitcrush",
+      ],
+      "expiredBoostsIds": Array [
+        "moo_banana-banana-busd-bitcrush",
+      ],
+      "prestakeBoostsIds": Array [],
+    },
+  },
+  "periodfinish": Object {
+    "moo_banana-banana-busd-bitcrush": 2021-12-31T23:00:00.000Z,
+    "moo_banana-bnb-stars-mogul2": 2049-12-31T23:00:00.000Z,
+  },
+}
+`;
+
 exports[`Boosts slice tests should update state on fulfilled boosts list 1`] = `
 Object {
   "allIds": Array [
@@ -9,17 +83,14 @@ Object {
   ],
   "byChainId": Object {
     "harmony": Object {
-      "activeBoostsIds": Array [
-        "moo_banana-pera",
-      ],
+      "activeBoostsIds": Array [],
       "allBoostsIds": Array [
         "moo_banana-pera",
         "moo_aave-btc",
         "moo_aave-eth",
       ],
-      "prestakeBoostsIds": Array [
-        "moo_aave-eth",
-      ],
+      "expiredBoostsIds": Array [],
+      "prestakeBoostsIds": Array [],
     },
   },
   "byId": Object {
@@ -32,7 +103,6 @@ Object {
       "logo": "single-assets/BTCB.svg",
       "name": "Iron / Garuda / Fanatics",
       "partnerIds": Array [],
-      "status": "closed",
       "vaultId": "aave-wbtc",
     },
     "moo_aave-eth": Object {
@@ -44,7 +114,6 @@ Object {
       "logo": "single-assets/ETH.svg",
       "name": "Iron / Garuda / Fanatics",
       "partnerIds": Array [],
-      "status": "prestake",
       "vaultId": "aave-eth",
     },
     "moo_banana-pera": Object {
@@ -58,7 +127,6 @@ Object {
       "partnerIds": Array [
         "https://pera.finance/",
       ],
-      "status": "active",
       "vaultId": "banana-banana-eol",
     },
   },
@@ -68,26 +136,26 @@ Object {
       "allBoostsIds": Array [
         "moo_aave-eth",
       ],
-      "prestakeBoostsIds": Array [
-        "moo_aave-eth",
-      ],
+      "expiredBoostsIds": Array [],
+      "prestakeBoostsIds": Array [],
     },
     "aave-wbtc": Object {
       "activeBoostsIds": Array [],
       "allBoostsIds": Array [
         "moo_aave-btc",
       ],
+      "expiredBoostsIds": Array [],
       "prestakeBoostsIds": Array [],
     },
     "banana-banana-eol": Object {
-      "activeBoostsIds": Array [
-        "moo_banana-pera",
-      ],
+      "activeBoostsIds": Array [],
       "allBoostsIds": Array [
         "moo_banana-pera",
       ],
+      "expiredBoostsIds": Array [],
       "prestakeBoostsIds": Array [],
     },
   },
+  "periodfinish": Object {},
 }
 `;

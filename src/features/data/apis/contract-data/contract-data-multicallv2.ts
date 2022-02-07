@@ -115,7 +115,8 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
       id: boost.id,
       totalSupply: new BigNumber(result.totalSupply),
       rewardRate: new BigNumber(result.rewardRate),
-      periodFinish: parseInt(result.periodFinish),
+      /* assuming period finish is a UTC timestamp in seconds */
+      periodFinish: new Date(parseInt(result.periodFinish) * 1000),
     } as BoostContractData;
   }
 }

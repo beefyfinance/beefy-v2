@@ -87,11 +87,14 @@
     [x] Prevent wallet popin on startup
     [x] Bifi price missing
     [x] Remove unused old code
+    [ ] fix boost status
+    [ ] fix boost APY
     [ ] fix vault TVL (maybe exclusions)
+    [ ] fix filters
+    [ ] Add moonpot support
     [ ] Do some performance enhancement (scenario + filters)
     [ ] too many selectors https://redux.js.org/usage/deriving-data-selectors#balance-selector-usage
     [ ] Go over left todos
-    [ ] Add moonpot support
 
 [ ] Add `tokenAddress` to WFTM and WMATIC tokens
 [ ] Rework search to handle partially loaded data
@@ -157,8 +160,11 @@ BONUS:
 # WEIRD STUFF / QUESTIONS
 
 - What is `launchpoolApr.apr;`
+  launchpoolApr === boost.apr
 - On the current beta, I don't see the boost border around the "fantom-bifi-maxi", but we have an active "moo_bifi-scream" boost. Isn't this a boosted vault?
+  We don't use "status": "active" to know if a boost is active, we use the periodFinish data fetched from the contract
 - `excluded: "aurora-bifi-maxi",` but vault does not seem to exists
+- how do you know if it's a moonpot vault?
 
 # ANSWERED
 
