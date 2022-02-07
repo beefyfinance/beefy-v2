@@ -85,3 +85,23 @@ export function featureFlag_walletAddressOverride(walletAddress: string | null |
     return walletAddress;
   }
 }
+
+export function featureFlag_recordReduxActions() {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return false;
+  }
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__record_redux_actions');
+}
+
+export function featureFlag_replayReduxActions() {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return false;
+  }
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__replay_redux_actions');
+}
