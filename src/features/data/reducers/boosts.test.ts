@@ -5,7 +5,7 @@ import {
   FetchAllContractDataFulfilledPayload,
 } from '../actions/contract-data';
 import { getBeefyTestingStore } from '../utils/test-utils';
-import { boostsSlice, initialBoostsState } from './boosts';
+import { boostsSlice, initialBoostsState, recomputeBoostStatus } from './boosts';
 
 describe('Boosts slice tests', () => {
   it('should update state on fulfilled boosts list', () => {
@@ -146,7 +146,7 @@ describe('Boosts slice tests', () => {
           },
           {
             id: 'moo_banana-bnb-stars-mogul2',
-            periodFinish: new Date(2050, 0, 1, 0, 0, 0), // active boost
+            periodFinish: new Date(2250, 0, 1, 0, 0, 0), // active boost
             rewardRate: new BigNumber(0.4),
             totalSupply: new BigNumber(12345),
           },
@@ -157,5 +157,15 @@ describe('Boosts slice tests', () => {
     const action = { type: fetchAllContractDataByChainAction.fulfilled, payload: payload };
     const newState = boostsSlice.reducer(initState, action);
     expect(newState).toMatchSnapshot();
+
+    // We don't want the state to change reference when recomputing boost status
+    const stateAfterRecompute1 = boostsSlice.reducer(newState, action);
+    expect(stateAfterRecompute1).toBe(newState);
+
+    // We don't want the state to change reference when recomputing boost status
+    const stateAfterRecompute2 = boostsSlice.reducer(stateAfterRecompute1, {
+      type: recomputeBoostStatus,
+    });
+    expect(stateAfterRecompute2).toBe(newState);
   });
 });
