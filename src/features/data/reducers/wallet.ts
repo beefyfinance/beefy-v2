@@ -49,7 +49,7 @@ export const walletSlice = createSlice({
         sliceState.address = action.payload.address;
         // keep local storage chain if any
         sliceState.selectedChainId =
-          action.payload.chainId === null ? sliceState.selectedChainId : null;
+          action.payload.chainId === null ? sliceState.selectedChainId : action.payload.chainId;
         sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
         sliceState.error = action.payload.chainId === null ? 'unsupported chain' : null;
       }
