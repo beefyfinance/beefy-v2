@@ -2,6 +2,7 @@ import { renderIcon } from '@download/blockies';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createCanvas } from 'canvas';
 import { ChainEntity } from '../entities/chain';
+import { memoize } from 'lodash';
 
 /**
  * State containing Vault infos
@@ -22,10 +23,10 @@ export const initialWalletState: WalletState = {
 };
 
 const canvas = createCanvas(24, 24);
-function _generateProfilePictureUrl(address: string) {
+const _generateProfilePictureUrl = memoize((address: string) => {
   renderIcon({ seed: address.toLowerCase() }, canvas);
   return canvas.toDataURL();
-}
+});
 
 export const walletSlice = createSlice({
   name: 'wallet',
@@ -83,6 +84,7 @@ export const walletSlice = createSlice({
       sliceState.address = action.payload.address;
       sliceState.selectedChainId = action.payload.chainId;
       sliceState.error = null;
+      sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
     },
     chainHasChangedToUnsupported(
       sliceState,
@@ -90,6 +92,7 @@ export const walletSlice = createSlice({
     ) {
       sliceState.address = action.payload.address;
       sliceState.error = 'unsupported chain';
+      sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
     },
     /**
      * Display configuration
