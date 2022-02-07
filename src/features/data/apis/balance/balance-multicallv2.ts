@@ -125,14 +125,17 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
     }
 
     for (const nativeToken of nativeTokens) {
-      res.tokens.push(this.nativeTokenFormatter(results[resultsIdx], nativeToken));
+      const formatted = this.nativeTokenFormatter(results[resultsIdx], nativeToken);
+      if (formatted !== null) {
+        res.tokens.push(formatted);
+      }
       resultsIdx++;
     }
 
     return res;
   }
 
-  protected erc20TokenFormatter(result: string, token: TokenEntity): TokenBalance | null {
+  protected erc20TokenFormatter(result: string, token: TokenEntity): null | TokenBalance {
     if (result === '0') {
       return null;
     }
