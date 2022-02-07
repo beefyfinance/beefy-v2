@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
+import { isEqual } from 'lodash';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostConfig } from '../apis/config';
@@ -77,25 +78,43 @@ export const boostsSlice = createSlice({
   },
 });
 
+export const { recomputeBoostStatus } = boostsSlice.actions;
+
 function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
   const nowUTCTime = new Date().getTime();
 
   for (const boostData of [sliceState.byVaultId, sliceState.byChainId]) {
     for (const entityData of Object.values(boostData)) {
-      entityData.activeBoostsIds = [];
-      entityData.expiredBoostsIds = [];
-      entityData.prestakeBoostsIds = [];
+      const activeBoostsIds = [];
+      const expiredBoostsIds = [];
+      const prestakeBoostsIds = [];
 
       for (const boostId of entityData.allBoostsIds) {
         const periodFinish = sliceState.periodfinish[boostId];
         if (periodFinish) {
           const pfUTCTime = periodFinish.getTime();
           if (nowUTCTime < pfUTCTime) {
-            entityData.activeBoostsIds.push(boostId);
+            activeBoostsIds.push(boostId);
           } else {
-            entityData.expiredBoostsIds.push(boostId);
+            expiredBoostsIds.push(boostId);
           }
         }
+      }
+
+      activeBoostsIds.sort();
+      expiredBoostsIds.sort();
+      prestakeBoostsIds.sort();
+
+      // update only if needed
+      // we assume arrays in the state are sorted
+      if (!isEqual(entityData.activeBoostsIds, activeBoostsIds)) {
+        entityData.activeBoostsIds = activeBoostsIds;
+      }
+      if (!isEqual(entityData.expiredBoostsIds, expiredBoostsIds)) {
+        entityData.expiredBoostsIds = expiredBoostsIds;
+      }
+      if (!isEqual(entityData.prestakeBoostsIds, prestakeBoostsIds)) {
+        entityData.prestakeBoostsIds = prestakeBoostsIds;
       }
     }
   }
