@@ -86,7 +86,8 @@ const NavLinks = () => {
 function renderChainListValue(value: string) {
   return (
     <>
-      <img alt={value} src={require(`../../images/networks/${value}.svg`).default} /> {value}
+      <img alt={value} src={require(`../../images/networks/${value}.svg`).default} />{' '}
+      {value.toLocaleUpperCase()}
     </>
   );
 }
