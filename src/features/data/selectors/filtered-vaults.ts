@@ -110,8 +110,7 @@ export const selectFilteredVaults = createSelector(
       const S = filterOptions.searchText.toLowerCase();
       if (S.length > 0 && !vault.name.toLowerCase().includes(S)) {
         if (S.length < 2) return false;
-        const O_TST = new RegExp(`^w?${S}$`),
-          O_NOW = Date.now() / 1000;
+        const O_TST = new RegExp(`^w?${S}$`);
         if (
           !(
             vault.assetIds.find(S_TKN => S_TKN.toLowerCase().match(O_TST)) ||
@@ -119,11 +118,7 @@ export const selectFilteredVaults = createSelector(
             (selectIsVaultBoosted(state, vault.id) &&
               selectActiveVaultBoostIds(state, vault.id)
                 .map(boostId => selectBoostById(state, boostId))
-                .some(O =>
-                  // TODO
-                  //O_NOW < parseInt(O.periodFinish) &&
-                  O.earnedTokenId.toLowerCase().match(O_TST)
-                ))
+                .some(O => O.earnedTokenId.toLowerCase().match(O_TST)))
           )
         )
           return false;
