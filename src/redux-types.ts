@@ -5,6 +5,7 @@ import {
   AnyAction,
   AsyncThunkAction,
 } from '@reduxjs/toolkit';
+import { Dispatch } from 'react';
 import { ThunkMiddleware } from 'redux-thunk';
 import { AllowanceState } from './features/data/reducers/allowance';
 import { ApyState } from './features/data/reducers/apy';
@@ -56,3 +57,5 @@ export type BeefyStore = EnhancedStore<
     | ThunkMiddleware<CombinedState<BeefyState>, any, null>
   >
 >;
+
+export type BeefyDispatch = Dispatch<any>;

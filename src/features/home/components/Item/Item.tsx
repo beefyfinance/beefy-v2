@@ -248,7 +248,11 @@ const ItemGovVaultRewards = connect(
 
           {rewardsEarnedUsd.isGreaterThan(0) && (
             <Typography className={classes.label}>
-              <ValuePrice blurred={blurred} value={rewardsEarnedUsd} vaultId={vault.id} />
+              <ValuePrice
+                blurred={blurred}
+                value={formatBigDecimals(rewardsEarnedUsd)}
+                vaultId={vault.id}
+              />
             </Typography>
           )}
         </div>

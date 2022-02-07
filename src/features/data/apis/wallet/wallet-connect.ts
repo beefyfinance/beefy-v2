@@ -13,12 +13,19 @@ import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
 import { IWalletConnectApi, WalletConnectOptions } from './wallet-connect-types';
 import { featureFlag_walletAddressOverride } from '../../utils/feature-flags';
+import { sleep } from '../../utils/async-utils';
 
 export class WalletConnectApi implements IWalletConnectApi {
   protected web3Modal: Web3Modal | null;
+  protected provider: {
+    on?: (eventName: string, handler: () => {}) => {};
+    removeAllListeners?: () => {};
+    request: (req: { method: string; params: any[] }) => Promise<void>;
+  } | null;
 
   constructor(protected options: WalletConnectOptions) {
     this.web3Modal = null;
+    this.provider = null;
   }
 
   public async initFromLocalCache(): Promise<null | {
@@ -34,9 +41,9 @@ export class WalletConnectApi implements IWalletConnectApi {
       this.web3Modal = new Web3Modal(providerOptions);
 
       // this shouldn't open a modal
-      const provider = await this.web3Modal.connect();
-      const web3 = _getWeb3FromProvider(provider);
-      this._bindProviderEvents(provider, web3);
+      this.provider = await this.web3Modal.connect();
+      this._bindProviderEvents(this.provider);
+      const web3 = _getWeb3FromProvider(this.provider);
       const networkChainId = await _getNetworkChainId(web3);
       const accounts = await web3.eth.getAccounts();
       const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
@@ -62,9 +69,11 @@ export class WalletConnectApi implements IWalletConnectApi {
     }
 
     // open modal if needed to connect
-    const provider = await this.web3Modal.connect();
-    const web3 = _getWeb3FromProvider(provider);
-    this._bindProviderEvents(provider, web3);
+    if (this.provider === null) {
+      this.provider = await this.web3Modal.connect();
+      this._bindProviderEvents(this.provider);
+    }
+    const web3 = _getWeb3FromProvider(this.provider);
 
     const networkChainId = await _getNetworkChainId(web3);
     const accounts = await web3.eth.getAccounts();
@@ -87,51 +96,93 @@ export class WalletConnectApi implements IWalletConnectApi {
       this.web3Modal = new Web3Modal(providerOptions);
     }
 
-    const provider = await this.web3Modal.connect();
-    await provider.request({
+    if (this.provider === null) {
+      this.provider = await this.web3Modal.connect();
+      this._bindProviderEvents(this.provider);
+    }
+    await this.provider.request({
       method: 'wallet_addEthereumChain',
       params: [chain.walletSettings],
     });
 
-    const web3 = _getWeb3FromProvider(provider);
+    const web3 = _getWeb3FromProvider(this.provider);
     const accounts = await web3.eth.getAccounts();
     return this.options.onChainChanged(chain.id, accounts[0]);
   }
 
   public async disconnect() {
     await this.web3Modal.clearCachedProvider();
+    if (this.provider.removeAllListeners) {
+      this.provider.removeAllListeners();
+    }
+    this.provider = null;
+    this.web3Modal = null;
     return this.options.onWalletDisconnected();
   }
 
-  protected _bindProviderEvents(provider, web3: Web3) {
+  protected _bindProviderEvents(provider) {
     if (!provider.on) {
       console.error('Could not bind web3 events');
       return;
     }
 
-    provider.on('close', async () => {
-      await this.web3Modal.clearCachedProvider();
-      return this.options.onWalletDisconnected();
-    });
-    provider.on('disconnect', async () => {
-      await this.web3Modal.clearCachedProvider();
-      return this.options.onWalletDisconnected();
-    });
+    /**
+     * sooooo, sometimes on chain change, we get a quick "disconnect"
+     * event before the chainChanged event. We want to be able to tell the difference
+     * between those 2 events because when we truely disconnect, we want to
+     * remove event listeners. If we don't, there is a bug where the user
+     * disconnects in the UI, then change chains, we will be triggered by the change chain
+     * event in this case while the user is disconnected. And if we remove the
+     * event listeners, right away, we never get the chainChanged event when user
+     * is switching to another chain and we get a disconnect.
+     *
+     * The solution here is to
+     *  - 1: warn the ui about the disconnection
+     *  - 2: wait a bit, to see if we get a chainChanged event right after
+     *  - 3: if no chainChanged, it's a true disconnect and we cleanup
+     *  - 3: if chainChanged, it's a fake disconnect and we don't cleanup
+     *
+     * TODO: find something more reliable than timings
+     */
+    let gotChainChangedEvent = false;
+    const onDisconnectEvent = async () => {
+      gotChainChangedEvent = false;
+
+      // first, warn the ui
+      this.options.onWalletDisconnected();
+
+      // wait a bit
+      await sleep(1000);
+
+      // cleanup if needed
+      if (!gotChainChangedEvent) {
+        this.web3Modal.clearCachedProvider();
+        if (this.provider.removeAllListeners) {
+          this.provider.removeAllListeners();
+        }
+        this.provider = null;
+        this.web3Modal = null;
+      }
+    };
+
+    provider.on('close', onDisconnectEvent);
+    provider.on('disconnect', onDisconnectEvent);
     provider.on('accountsChanged', async (accounts: Array<string | undefined>) => {
       const address = accounts[0];
 
       console.debug(`WalletAPI: account changed: ${address}`);
 
+      // address undefined means user disconnected from his wallet
       if (address === undefined) {
-        await this.web3Modal.clearCachedProvider();
-        return this.options.onWalletDisconnected();
+        return this.disconnect();
       } else {
         return this.options.onAccountChanged(address);
       }
     });
     provider.on('chainChanged', async (chainIdOrHexChainId: string) => {
       console.debug(`WalletAPI: chain changed: ${chainIdOrHexChainId}`);
-
+      gotChainChangedEvent = true;
+      const web3 = _getWeb3FromProvider(this.provider);
       const networkChainId = web3.utils.isHex(chainIdOrHexChainId)
         ? web3.utils.hexToNumber(chainIdOrHexChainId)
         : chainIdOrHexChainId;

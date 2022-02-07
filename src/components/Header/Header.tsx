@@ -23,10 +23,11 @@ import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
 import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
 import { Transak } from '../Transak';
-import { BeefyState } from '../../redux-types';
+import { BeefyDispatch, BeefyState } from '../../redux-types';
 import {
   selectCurrentChainId,
   selectIsNetworkSupported,
+  selectIsWalletConnected,
 } from '../../features/data/selectors/wallet';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { selectAllChains } from '../../features/data/selectors/chains';
@@ -96,13 +97,16 @@ export const Header = connect((state: BeefyState) => {
   const isNetworkSupported = selectIsNetworkSupported(state);
   const currentChainId = selectCurrentChainId(state);
   const chains = selectAllChains(state);
-  return { isNetworkSupported, currentChainId, chains };
+  const isWalletConnected = selectIsWalletConnected(state);
+  return { isWalletConnected, isNetworkSupported, currentChainId, chains };
 })(
   ({
+    isWalletConnected,
     isNetworkSupported,
     currentChainId,
     chains,
   }: {
+    isWalletConnected: boolean;
     isNetworkSupported: boolean;
     currentChainId: ChainEntity['id'] | null;
     chains: ChainEntity[];
@@ -148,16 +152,18 @@ export const Header = connect((state: BeefyState) => {
                   <Box>
                     <LanguageDropdown />
                   </Box>
-                  <Box>
-                    <SimpleDropdown
-                      noBorder={true}
-                      list={chainValues}
-                      selected={currentChainId || ''}
-                      renderValue={renderChainListValue}
-                      handler={updateNetwork}
-                      label={t('Chain')}
-                    />
-                  </Box>
+                  {isWalletConnected && (
+                    <Box>
+                      <SimpleDropdown
+                        noBorder={true}
+                        list={chainValues}
+                        selected={currentChainId || 'bsc'}
+                        renderValue={renderChainListValue}
+                        handler={updateNetwork}
+                        label={t('Chain')}
+                      />
+                    </Box>
+                  )}
                 </Hidden>
                 <Suspense fallback={<>...</>}>
                   <WalletContainer />
@@ -201,14 +207,16 @@ export const Header = connect((state: BeefyState) => {
                       <BifiPrice />
                     </Box>
                     <Box my={1} display="flex">
-                      <SimpleDropdown
-                        noBorder={true}
-                        renderValue={renderChainListValue}
-                        list={chainValues}
-                        selected={currentChainId || ''}
-                        handler={updateNetwork}
-                        label={t('Chain')}
-                      />
+                      {isWalletConnected && (
+                        <SimpleDropdown
+                          noBorder={true}
+                          renderValue={renderChainListValue}
+                          list={chainValues}
+                          selected={currentChainId || 'bsc'}
+                          handler={updateNetwork}
+                          label={t('Chain')}
+                        />
+                      )}
                       <LanguageDropdown />
                     </Box>
                   </Box>
