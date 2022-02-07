@@ -12,6 +12,7 @@ import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
 import { IWalletConnectApi, WalletConnectOptions } from './wallet-connect-types';
+import { featureFlag_walletAddressOverride } from '../../utils/feature-flags';
 
 export class WalletConnectApi implements IWalletConnectApi {
   protected web3Modal: Web3Modal | null;
@@ -39,7 +40,10 @@ export class WalletConnectApi implements IWalletConnectApi {
       const networkChainId = await _getNetworkChainId(web3);
       const accounts = await web3.eth.getAccounts();
       const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-      return { chainId: chain ? chain.id : null, address: accounts[0] };
+      return {
+        chainId: chain ? chain.id : null,
+        address: featureFlag_walletAddressOverride(accounts[0]),
+      };
     } else {
       return null;
     }

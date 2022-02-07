@@ -141,16 +141,13 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
       amount: new BigNumber(result),
     };
   }
-  protected nativeTokenFormatter(
-    result: AllValuesAsString<TokenBalance>,
-    token: TokenNative
-  ): TokenBalance | null {
-    if (result.amount === '0') {
+  protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance | null {
+    if (result === '0') {
       return null;
     }
     return {
       tokenId: token.id,
-      amount: new BigNumber(result.amount),
+      amount: new BigNumber(result),
     };
   }
 
