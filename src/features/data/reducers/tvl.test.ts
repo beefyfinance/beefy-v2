@@ -71,7 +71,7 @@ describe('TVL slice tests', () => {
         boosts: [
           {
             id: 'moo_banana-banana-busd-bitcrush',
-            periodFinish: 1234,
+            periodFinish: new Date(2022, 0, 1, 0, 0, 0),
             rewardRate: new BigNumber(0.4),
             totalSupply: new BigNumber(12345),
           },

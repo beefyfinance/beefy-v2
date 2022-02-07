@@ -63,7 +63,7 @@ export interface BoostContractData {
   id: string;
   totalSupply: BigNumber;
   rewardRate: BigNumber;
-  periodFinish: number;
+  periodFinish: Date;
 }
 
 export interface FetchAllContractDataResult {
