@@ -6,6 +6,8 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { theme } from './theme';
 import { initHomeDataV4 } from './features/data/actions/scenarios';
 import { store } from './store';
+import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
+import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
@@ -13,7 +15,14 @@ const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 export const App = () => {
   React.useEffect(() => {
     // load our data
-    initHomeDataV4(store);
+    if (featureFlag_replayReduxActions()) {
+      console.log(
+        'Please run __replay_action_log(actions)',
+        replayReduxActions /* add it here to make webpack add it to the build */
+      );
+    } else {
+      initHomeDataV4(store);
+    }
   }, []);
   return (
     <ThemeProvider theme={theme}>
