@@ -51,9 +51,9 @@ describe('Balance slice tests', () => {
     expect(state.byAddress['0x00abcdef']).toBeUndefined();
 
     // getting the same vaults don't update the state object
-    const beforeReDispatch = state.byAddress['0x00abc'].byChainId['bsc'].byTokenId;
+    const beforeReDispatch = state.byAddress['0x00abc'].tokenAmount.byChainId['bsc'].byTokenId;
     const newState = balanceSlice.reducer(state, action);
-    const afterReDispatch = newState.byAddress['0x00abc'].byChainId['bsc'].byTokenId;
+    const afterReDispatch = newState.byAddress['0x00abc'].tokenAmount.byChainId['bsc'].byTokenId;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 
@@ -81,9 +81,9 @@ describe('Balance slice tests', () => {
     expect(state.byAddress['0x00abcdef']).toBeUndefined();
 
     // getting the same vaults don't update the state object
-    const beforeReDispatch = state.byAddress['0x00abc'].byChainId['bsc'].byGovVaultId;
+    const beforeReDispatch = state.byAddress['0x00abc'].tokenAmount.byGovVaultId;
     const newState = balanceSlice.reducer(state, action);
-    const afterReDispatch = newState.byAddress['0x00abc'].byChainId['bsc'].byGovVaultId;
+    const afterReDispatch = newState.byAddress['0x00abc'].tokenAmount.byGovVaultId;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 
@@ -143,9 +143,9 @@ describe('Balance slice tests', () => {
     expect(state.byAddress['0x00abcdef']).toBeUndefined();
 
     // getting the same vaults don't update the state object
-    const beforeReDispatch = state.byAddress['0x00abc'].byChainId['bsc'].byBoostId;
+    const beforeReDispatch = state.byAddress['0x00abc'].tokenAmount.byBoostId;
     const newState = balanceSlice.reducer(state, action);
-    const afterReDispatch = newState.byAddress['0x00abc'].byChainId['bsc'].byBoostId;
+    const afterReDispatch = newState.byAddress['0x00abc'].tokenAmount.byBoostId;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 });
