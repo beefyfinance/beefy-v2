@@ -6,18 +6,9 @@ Object {
     "harmony": Object {
       "allIds": Array [
         "PERA",
-        "BIFI",
+        "mooPolygonBIFI",
       ],
       "byId": Object {
-        "BIFI": Object {
-          "buyUrl": null,
-          "chainId": "harmony",
-          "contractAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
-          "decimals": 18,
-          "id": "BIFI",
-          "symbol": "mooPolygonBIFI",
-          "type": "erc20",
-        },
         "PERA": Object {
           "buyUrl": null,
           "chainId": "harmony",
@@ -25,6 +16,15 @@ Object {
           "decimals": 18,
           "id": "PERA",
           "symbol": "PERA",
+          "type": "erc20",
+        },
+        "mooPolygonBIFI": Object {
+          "buyUrl": null,
+          "chainId": "harmony",
+          "contractAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+          "decimals": 18,
+          "id": "mooPolygonBIFI",
+          "symbol": "mooPolygonBIFI",
           "type": "erc20",
         },
       },

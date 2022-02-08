@@ -8,7 +8,7 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
 import { DisplayTags } from '../../../../components/vaultTags';
 import { Popover } from '../../../../components/Popover';
-import { formatBigUsd, formatBigDecimals, byDecimals } from '../../../../helpers/format';
+import { formatBigUsd, formatBigDecimals } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
