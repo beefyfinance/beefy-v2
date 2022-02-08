@@ -15,6 +15,7 @@ interface ActionParams {
 
 export interface FetchAllBalanceFulfilledPayload {
   chainId: ChainEntity['id'];
+  walletAddress: string;
   data: FetchAllBalancesResult;
   // reducers need the state (balance)
   state: BeefyState;
@@ -43,6 +44,7 @@ export const fetchAllBalanceAction = createAsyncThunk<
   const data = await api.fetchAllBalances(tokens, govVaults, boosts, walletAddress);
   return {
     chainId,
+    walletAddress,
     data,
     state: getState(),
   };

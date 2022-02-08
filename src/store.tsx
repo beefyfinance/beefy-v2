@@ -15,10 +15,12 @@ if (featureFlag_recordReduxActions()) {
   middlewares = [debugRecorderMiddleware, ...middlewares];
 }
 
-if (!featureFlag_replayReduxActions) {
+if (!featureFlag_replayReduxActions()) {
   // don't want this to run actions when replaying
-  middlewares.push(walletActionsMiddleware);
+  middlewares = [...middlewares, walletActionsMiddleware];
 }
+
+console.debug('Middlewares', middlewares);
 
 export const store = configureStore({
   reducer: rootReducer,

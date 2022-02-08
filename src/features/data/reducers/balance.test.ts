@@ -31,6 +31,7 @@ describe('Balance slice tests', () => {
 
     const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
+      walletAddress: '0x00ABC',
       data: {
         boosts: [],
         govVaults: [],
@@ -46,18 +47,23 @@ describe('Balance slice tests', () => {
     const state = balanceSlice.reducer(store.getState().user.balance, action);
     expect(state).toMatchSnapshot();
 
+    expect(state.byAddress['0x00abc']).toBeDefined();
+    expect(state.byAddress['0x00abcdef']).toBeUndefined();
+
     // getting the same vaults don't update the state object
-    const beforeReDispatch = state.byChainId['bsc'].byTokenId;
+    const beforeReDispatch = state.byAddress['0x00abc'].byChainId['bsc'].byTokenId;
     const newState = balanceSlice.reducer(state, action);
-    const afterReDispatch = newState.byChainId['bsc'].byTokenId;
+    const afterReDispatch = newState.byAddress['0x00abc'].byChainId['bsc'].byTokenId;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 
   it('should update state on fulfilled gov boost pools', async () => {
     const store = await getBeefyTestingStore();
+
     // given we have some prior info
     const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
+      walletAddress: '0x00ABC',
       data: {
         boosts: [],
         tokens: [],
@@ -71,10 +77,13 @@ describe('Balance slice tests', () => {
     const state = balanceSlice.reducer(initialBalanceState, action);
     expect(state).toMatchSnapshot();
 
+    expect(state.byAddress['0x00abc']).toBeDefined();
+    expect(state.byAddress['0x00abcdef']).toBeUndefined();
+
     // getting the same vaults don't update the state object
-    const beforeReDispatch = state.byChainId['bsc'].byGovVaultId;
+    const beforeReDispatch = state.byAddress['0x00abc'].byChainId['bsc'].byGovVaultId;
     const newState = balanceSlice.reducer(state, action);
-    const afterReDispatch = newState.byChainId['bsc'].byGovVaultId;
+    const afterReDispatch = newState.byAddress['0x00abc'].byChainId['bsc'].byGovVaultId;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 
@@ -107,6 +116,7 @@ describe('Balance slice tests', () => {
 
     const payload: FetchAllBalanceFulfilledPayload = {
       chainId: 'bsc',
+      walletAddress: '0x00ABC',
       data: {
         govVaults: [],
         tokens: [],
@@ -129,10 +139,13 @@ describe('Balance slice tests', () => {
     const state = balanceSlice.reducer(initialBalanceState, action);
     expect(state).toMatchSnapshot();
 
+    expect(state.byAddress['0x00abc']).toBeDefined();
+    expect(state.byAddress['0x00abcdef']).toBeUndefined();
+
     // getting the same vaults don't update the state object
-    const beforeReDispatch = state.byChainId['bsc'].byBoostId;
+    const beforeReDispatch = state.byAddress['0x00abc'].byChainId['bsc'].byBoostId;
     const newState = balanceSlice.reducer(state, action);
-    const afterReDispatch = newState.byChainId['bsc'].byBoostId;
+    const afterReDispatch = newState.byAddress['0x00abc'].byChainId['bsc'].byBoostId;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 });
