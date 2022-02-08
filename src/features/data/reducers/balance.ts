@@ -8,8 +8,9 @@ import { VaultEntity } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import {
   selectIsStandardVaultEarnTokenId,
-  selectVaultByEarnTokenId,
+  selectStandardVaultByEarnTokenId,
   selectVaultById,
+  selectVaultIdsByOracleId,
 } from '../selectors/vaults';
 
 /**
@@ -23,6 +24,8 @@ export interface BalanceState {
       // quick access to all deposited vaults for this address
       // this can include gov, standard, or a boost's target vault
       depositedVaultIds: VaultEntity['id'][];
+      // quick access to all vaults that the user can deposit into
+      eligibleVaultIds: VaultEntity['id'][];
 
       /**
        * all balances below represent token amounts
@@ -87,6 +90,7 @@ export const balanceSlice = createSlice({
       if (sliceState.byAddress[walletAddress] === undefined) {
         sliceState.byAddress[walletAddress] = {
           depositedVaultIds: [],
+          eligibleVaultIds: [],
           tokenAmount: {
             byChainId: {},
             byBoostId: {},
@@ -121,10 +125,17 @@ export const balanceSlice = createSlice({
           // if the token is the earnedToken of a vault
           // this means the user deposited in this vault
           if (selectIsStandardVaultEarnTokenId(state, chainId, tokenBalance.tokenId)) {
-            const vaultId = selectVaultByEarnTokenId(state, chainId, tokenBalance.tokenId);
+            const vaultId = selectStandardVaultByEarnTokenId(state, chainId, tokenBalance.tokenId);
             if (!walletState.depositedVaultIds.includes(vaultId)) {
               walletState.depositedVaultIds.push(vaultId);
             }
+          }
+
+          // if the token is the oracleId of a vault
+          // this means the user can deposit in a vault
+          const vaultIds = selectVaultIdsByOracleId(state, chainId, tokenBalance.tokenId);
+          for (const vaultId of vaultIds) {
+            walletState.eligibleVaultIds.push(vaultId);
           }
         }
       }

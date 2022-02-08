@@ -21,15 +21,17 @@ import { NormalizedEntity } from '../utils/normalized-entity';
  * State containing Vault infos
  */
 export type VaultsState = NormalizedEntity<VaultEntity> & {
-  // add quick access arrays
   byChainId: {
     [chainId: ChainEntity['id']]: {
+      // add quick access arrays
+      // doesn't need to be by chain but it's convenient
+      // for when we load by chain
       allActiveIds: VaultEntity['id'][];
       allRetiredIds: VaultEntity['id'][];
 
       // used to find a vault by it's token for balance stuff
       byOracleId: {
-        [tokenId: TokenEntity['id']]: VaultEntity['id'];
+        [tokenId: TokenEntity['id']]: VaultEntity['id'][];
       };
       byEarnTokenId: {
         [tokenId: TokenEntity['id']]: VaultEntity['id'];
@@ -182,7 +184,11 @@ function addVaultToState(
     } else {
       vaultState.allActiveIds.push(vault.id);
     }
-    vaultState.byOracleId[vault.oracleId] = vault.id;
+
+    if (!vaultState.byOracleId[vault.oracleId]) {
+      vaultState.byOracleId[vault.oracleId] = [];
+    }
+    vaultState.byOracleId[vault.oracleId].push(vault.id);
     vaultState.byEarnTokenId[vault.earnedTokenId] = vault.id;
   }
 }
