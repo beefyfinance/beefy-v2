@@ -21,6 +21,7 @@ import { ApyStatLoader } from '../components/ApyStatLoader';
 };
 
 export const BIG_ZERO = new BigNumber(0);
+export const BIG_ONE = new BigNumber(1);
 
 export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => {
   if (!apy) return placeholder;

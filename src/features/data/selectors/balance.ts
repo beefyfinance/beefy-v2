@@ -5,8 +5,9 @@ import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
-import { selectTokenPriceByTokenId } from './tokens';
-import { selectVaultById } from './vaults';
+import { selectBoostById } from './boosts';
+import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
+import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectIsWalletConnected, selectWalletAddress } from './wallet';
 
 const _selectWalletBalance = (state: BeefyState) => {
@@ -25,30 +26,11 @@ export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddre
 
 export const selectUserDepositedVaults = (state: BeefyState) => {
   const walletBalance = _selectWalletBalance(state);
-  if (walletBalance !== null) {
-    return walletBalance.depositedVaultIds.govVaults
-      .concat(walletBalance.depositedVaultIds.standardVaults)
-      .map(v => v.vaultId);
-  } else {
-    return [];
-  }
+  return walletBalance ? walletBalance.depositedVaultIds : [];
 };
-
-export const selectStandardVaultUserBalanceInToken = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  vaultId: VaultEntity['id']
-) => {
-  const vault = selectVaultById(state, vaultId);
-  if (isGovVault(vault)) {
-    throw new Error(`Trying to get standard vault balance but vault ${vault.id} is a gov vault`);
-  }
+export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);
-  const tokenBalance = walletBalance?.byChainId[chainId]?.byTokenId[vault.earnedTokenId];
-  if (!tokenBalance) {
-    return BIG_ZERO;
-  }
-  return tokenBalance.balance;
+  return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
 };
 
 export const selectWalletBalanceOfToken = (
@@ -57,11 +39,7 @@ export const selectWalletBalanceOfToken = (
   tokenId: TokenEntity['id']
 ) => {
   const walletBalance = _selectWalletBalance(state);
-  if (walletBalance === null) {
-    return BIG_ZERO;
-  }
-  const tokenBalance = walletBalance.byChainId[chainId]?.byTokenId[tokenId];
-  return tokenBalance === undefined ? BIG_ZERO : tokenBalance.balance;
+  return walletBalance?.tokenAmount.byChainId[chainId]?.byTokenId[tokenId]?.balance || BIG_ZERO;
 };
 
 export const selectHasWalletBalanceOfToken = createSelector(
@@ -69,50 +47,50 @@ export const selectHasWalletBalanceOfToken = createSelector(
   tokenBalance => tokenBalance.gt(0)
 );
 
-export const selectGovVaultUserBalance = (
+/**
+ * "User" balance refers to the balance displayed to the user
+ * so we have to do the translation from earnedToken (mooToken) to oracleToken
+ * that the user deposited
+ */
+export const selectStandardVaultUserBalanceInToken = (
   state: BeefyState,
-  chainId: ChainEntity['id'],
   vaultId: VaultEntity['id']
 ) => {
-  const walletBalance = _selectWalletBalance(state);
-  const vaultBalance = walletBalance?.byChainId[chainId]?.byGovVaultId[vaultId];
-
-  if (!vaultBalance) {
-    return BIG_ZERO;
+  const vault = selectVaultById(state, vaultId);
+  if (isGovVault(vault)) {
+    throw new Error(`Trying to get standard vault balance but vault ${vault.id} is a gov vault`);
   }
-  return vaultBalance.balance;
+  const earnedTokenBalance = selectWalletBalanceOfToken(state, vault.chainId, vault.earnedTokenId);
+  const ppfs = selectVaultPricePerFullShare(state, vault.id);
+  return earnedTokenBalance.multipliedBy(ppfs);
 };
 
-export const selectTokenUserBalance = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  vaultId: VaultEntity['id']
-) => {
+export const selectGovVaultUserBalanceInToken = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);
-  const tokenBalance = walletBalance?.byChainId[chainId]?.byTokenId[vaultId];
-  if (!tokenBalance) {
-    return BIG_ZERO;
+  const vault = selectVaultById(state, vaultId);
+  if (!isGovVault(vault)) {
+    throw new Error(`Trying to get gov vault balance but vault ${vault.id} is a not a gov vault`);
   }
-  return tokenBalance.balance;
+  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
 export const selectUserVaultDepositInToken = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const walletBalance = _selectWalletBalance(state);
-  const vaultBalance = walletBalance?.deposited[vaultId]?.balance;
-  if (!vaultBalance) {
-    return BIG_ZERO;
+  const vault = selectVaultById(state, vaultId);
+  if (isGovVault(vault)) {
+    return selectGovVaultUserBalanceInToken(state, vaultId);
+  } else {
+    return selectStandardVaultUserBalanceInToken(state, vaultId);
   }
-  return vaultBalance;
 };
 
-export const selectHasUserDepositInVault = createSelector(
-  selectUserVaultDepositInToken,
-  vaultDeposit => vaultDeposit.gt(0)
-);
+export const selectBoostUserBalanceInToken = (state: BeefyState, boostId: BoostEntity['id']) => {
+  const walletBalance = _selectWalletBalance(state);
+  return walletBalance?.tokenAmount?.byBoostId[boostId].balance || BIG_ZERO;
+};
 
 export const selectUserVaultDepositInUsd = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
-    // TODO: do this in the state
+    // TODO: do this in the state?
     const vault = selectVaultById(state, vaultId);
     const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
     const vaultTokenDeposit = selectUserVaultDepositInToken(state, vaultId);
@@ -122,34 +100,52 @@ export const selectUserVaultDepositInUsd = createSelector(
   res => res
 );
 
-export const selectBoostUserBalanceInToken = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  boostId: BoostEntity['id']
-) => {
-  const walletBalance = _selectWalletBalance(state);
-  const boostBalance = walletBalance?.byChainId[chainId]?.byBoostId[boostId];
-  if (!boostBalance) {
-    return BIG_ZERO;
-  }
-  return boostBalance.balance;
-};
-
-export const selectHasGovVaultPendingRewards = (state: BeefyState, vaultId: VaultGov['id']) => {
-  const walletBalance = _selectWalletBalance(state);
-  const rewards = walletBalance?.rewards[vaultId];
-  return rewards ? rewards.balance.gt(0) : false;
-};
-
 export const selectGovVaultPendingRewardsInToken = (state: BeefyState, vaultId: VaultGov['id']) => {
   const walletBalance = _selectWalletBalance(state);
-  const rewards = walletBalance?.rewards[vaultId];
-  return rewards ? rewards.shares : BIG_ZERO;
+  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards[vaultId] || BIG_ZERO;
+};
+export const selectHasGovVaultPendingRewards = (state: BeefyState, vaultId: VaultGov['id']) => {
+  return !selectGovVaultPendingRewardsInToken(state, vaultId).isZero();
 };
 
 // TODO implement this
 export const selectGovVaultPendingRewardsInUsd = (state: BeefyState, vaultId: VaultGov['id']) => {
-  const walletBalance = _selectWalletBalance(state);
-  const rewards = walletBalance?.rewards[vaultId];
-  return rewards ? rewards.shares : BIG_ZERO;
+  return selectGovVaultPendingRewardsInToken(state, vaultId);
+};
+
+/**
+ * Get the token for which the boost balance is expressed in
+ * for boosts, balance is the amount of earnedToken of the target vault
+ */
+export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
+  const boost = selectBoostById(state, boostId);
+  const boostedVault = selectVaultById(state, boost.vaultId);
+  return selectTokenById(state, boostedVault.chainId, boostedVault.earnedTokenId);
+};
+
+/**
+ * Get the token for which the boost rewards are expressed in
+ * for boosts, rewards is the amount of earnedToken of the boost
+ */
+export const selectBoostRewardsTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
+  const boost = selectBoostById(state, boostId);
+  return selectTokenById(state, boost.chainId, boost.earnedTokenId);
+};
+
+/**
+ * Get the token for which the gov vault balance is expressed in
+ * for gov vault, balance is the amount of oracleId token
+ */
+export const selectGovVaultBalanceTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  return selectTokenById(state, vault.chainId, vault.oracleId);
+};
+
+/**
+ * Get the token for which the gov vault rewards are expressed in
+ * for gov vault, rewards is an amount in earnedTokenId
+ */
+export const selectGovVaultRewardsTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
+  const vault = selectVaultById(state, vaultId);
+  return selectTokenById(state, vault.chainId, vault.earnedTokenId);
 };

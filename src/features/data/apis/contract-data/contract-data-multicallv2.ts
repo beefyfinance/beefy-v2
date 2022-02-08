@@ -98,7 +98,8 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     return {
       id: standardVault.id,
       balance: new BigNumber(result.balance),
-      pricePerFullShare: new BigNumber(result.pricePerFullShare),
+      /** always 18 decimals for PPFS */
+      pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-18),
       strategy: result.strategy,
     } as StandardVaultContractData;
   }

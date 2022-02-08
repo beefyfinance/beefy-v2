@@ -7,3 +7,13 @@ export const mapValuesDeep = (obj: any, fn: (val: any, key: string, obj: any) =>
     : mapValues(obj, (val, key) =>
         isPlainObject(val) || isArray(val) ? mapValuesDeep(val, fn) : fn(val, key, obj)
       );
+
+export function createIdMap<T extends { id: string }>(
+  arr: T[],
+  getId: (item: T) => string = item => item.id
+) {
+  return arr.reduce((agg, item) => {
+    agg[getId(item)] = item;
+    return agg;
+  }, {} as { [id: string]: T });
+}
