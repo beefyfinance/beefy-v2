@@ -23,7 +23,7 @@ import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
 import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
 import { Transak } from '../Transak';
-import { BeefyDispatch, BeefyState } from '../../redux-types';
+import { BeefyState } from '../../redux-types';
 import {
   selectCurrentChainId,
   selectIsNetworkSupported,
