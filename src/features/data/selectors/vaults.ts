@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BIG_ONE, BIG_ZERO } from '../../../helpers/format';
+import { BIG_ONE } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
