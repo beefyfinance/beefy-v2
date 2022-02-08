@@ -82,9 +82,23 @@ function addBoostToState(
     sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
   }
 
-  if (sliceState.byChainId[chainId].byId[boost.earnedOracleId] === undefined) {
+  /**
+   * Fix for old configurations where the "earnedOracleId" is BIFI
+   * when it should be mooXyzBIFI
+   */
+  let tokenId = boost.earnedOracleId;
+  if (
+    tokenId === 'BIFI' &&
+    boost.earnedToken.startsWith('moo') &&
+    boost.earnedToken.endsWith('BIFI')
+  ) {
+    console.debug(`Configuration outdated for boost ${boost.id}`);
+    tokenId = boost.earnedToken;
+  }
+
+  if (sliceState.byChainId[chainId].byId[tokenId] === undefined) {
     const token: TokenEntity = {
-      id: boost.earnedOracleId,
+      id: tokenId,
       chainId: chainId,
       contractAddress: boost.earnedTokenAddress,
       decimals: boost.earnedTokenDecimals,
