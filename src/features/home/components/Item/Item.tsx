@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import BigNumber from 'bignumber.js';
 import { Grid, makeStyles, Typography, useMediaQuery, Box, Hidden } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -101,7 +101,7 @@ function ValuePrice({
   );
 }
 
-const ItemTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
+const _ItemTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const vault = selectVaultById(state, vaultId);
   const isBoosted = selectIsVaultBoosted(state, vaultId);
   const vaultTvl = selectVaultTvl(state, vaultId);
@@ -138,8 +138,9 @@ const ItemTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity[
     );
   }
 );
+const ItemTvl = React.memo(_ItemTvl);
 
-const ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
+const _ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const vault = selectVaultById(state, vaultId);
   const isBoosted = selectIsVaultBoosted(state, vault.id);
   const stakedIds = selectActiveVaultBoostIds(state, vault.id).map(boostId => {
@@ -211,8 +212,9 @@ const ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: VaultE
     );
   }
 );
+const ItemDeposited = React.memo(_ItemDeposited);
 
-const ItemGovVaultRewards = connect(
+const _ItemGovVaultRewards = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }) => {
     const vault = selectVaultById(state, vaultId);
     const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
@@ -260,8 +262,9 @@ const ItemGovVaultRewards = connect(
     );
   }
 );
+const ItemGovVaultRewards = React.memo(_ItemGovVaultRewards);
 
-const ItemStandardVaultSafetyScore = connect(
+const _ItemStandardVaultSafetyScore = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultStandard['id'] }) => {
     const vault = selectVaultById(state, vaultId);
     const isBoosted = selectIsVaultBoosted(state, vaultId);
@@ -288,33 +291,27 @@ const ItemStandardVaultSafetyScore = connect(
     </div>
   );
 });
+const ItemStandardVaultSafetyScore = React.memo(_ItemStandardVaultSafetyScore);
 
-const ItemWalletAmount = connect(
+const _ItemWalletAmount = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-    const userOracleInWallet = byDecimals(
-      selectWalletBalanceOfToken(state, vault.chainId, vault.oracleId),
-      oracleToken.decimals
-    );
-    const price = selectTokenPriceByTokenId(state, oracleToken.id);
+    const userOracleInWallet = selectWalletBalanceOfToken(state, vault.chainId, vault.oracleId);
+    const price = selectTokenPriceByTokenId(state, vault.oracleId);
     const userOracleInWalletUsd = userOracleInWallet.multipliedBy(price);
-    const totalDeposited = selectUserVaultDepositInToken(state, vaultId);
     const blurred = selectIsBalanceHidden(state);
-    return { vault, userOracleInWallet, userOracleInWalletUsd, totalDeposited, blurred };
+    return { vault, userOracleInWallet, userOracleInWalletUsd, blurred };
   }
 )(
   ({
     vault,
     userOracleInWallet,
     userOracleInWalletUsd,
-    totalDeposited,
     blurred,
   }: {
     vault: VaultEntity;
     userOracleInWallet: BigNumber;
     userOracleInWalletUsd: BigNumber;
-    totalDeposited: BigNumber;
     blurred: boolean;
   }) => {
     const classes = useItemStyles(vault.id);
@@ -338,16 +335,15 @@ const ItemWalletAmount = connect(
               />
             </Typography>
           )}
-          {totalDeposited.isGreaterThan(0) && userOracleInWallet.isLessThanOrEqualTo(0) && (
-            <div className={classes.boostSpacer} />
-          )}
+          {userOracleInWallet.isLessThanOrEqualTo(0) && <div className={classes.boostSpacer} />}
         </div>
       </Link>
     );
   }
 );
+const ItemWalletAmount = React.memo(_ItemWalletAmount);
 
-const ItemVaultPresentation = connect(
+const _ItemVaultPresentation = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
     const chain = selectChainById(state, vault.chainId);
@@ -434,8 +430,9 @@ const ItemVaultPresentation = connect(
     );
   }
 );
+const ItemVaultPresentation = React.memo(_ItemVaultPresentation);
 
-export const Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => {
+const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => {
   const isBoosted = selectIsVaultBoosted(state, vault.id);
   const balanceLoaded = state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce;
   const tvlLoaded =
@@ -500,6 +497,7 @@ export const Item = connect((state: BeefyState, { vault }: { vault: VaultEntity 
     );
   }
 );
+export const Item = React.memo(_Item);
 
 function useIsTwoColumns() {
   return useMediaQuery('(min-width: 600px) and (max-width: 960px)');

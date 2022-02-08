@@ -8,7 +8,7 @@ import {
   selectBoostUserBalanceInToken,
   selectUserDepositedVaults,
   selectStandardVaultUserBalanceInToken,
-  selectGovVaultUserBalance,
+  selectGovVaultUserBalanceInToken,
 } from './balance';
 import { selectActiveVaultBoostIds, selectBoostById } from './boosts';
 import { selectIsUserBalanceAvailable } from './data-loader';
@@ -72,13 +72,13 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
     let vaultUsdBalance = BIG_ZERO;
     const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
     if (isGovVault(vault)) {
-      const tokenBalance = selectGovVaultUserBalance(state, vault.chainId, vault.id);
+      const tokenBalance = selectGovVaultUserBalanceInToken(state, vault.id);
       const token = selectTokenById(state, vault.chainId, vault.oracleId);
       const decimaledTokenBalance = byDecimals(tokenBalance, token.decimals);
       const usdBalance = decimaledTokenBalance.times(oraclePrice);
       vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
     } else {
-      const mooTokenBalance = selectStandardVaultUserBalanceInToken(state, vault.chainId, vault.id);
+      const mooTokenBalance = selectStandardVaultUserBalanceInToken(state, vault.id);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
       const earnToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
 
@@ -92,7 +92,7 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
 
     for (const boostId of selectActiveVaultBoostIds(state, vault.id)) {
       const boost = selectBoostById(state, boostId);
-      const mooTokenBalance = selectBoostUserBalanceInToken(state, vault.chainId, boost.id);
+      const mooTokenBalance = selectBoostUserBalanceInToken(state, boost.id);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
       const vaultToken = selectTokenById(state, vault.chainId, vault.oracleId);
 

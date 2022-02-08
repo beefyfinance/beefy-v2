@@ -63,12 +63,9 @@ export const tvlSlice = createSlice({
         totalTvl = totalTvl.plus(vaultTvl);
 
         // save for vault
-        sliceState.byVaultId[vault.id] = {
-          tvl: vaultTvl,
-        };
+        sliceState.byVaultId[vault.id] = { tvl: vaultTvl };
       }
 
-      const rawTvlByVaultId: { [vaultId: VaultEntity['id']]: BigNumber } = {};
       for (const govVaultContractData of action.payload.data.govVaults) {
         const totalStaked = govVaultContractData.totalSupply;
 
@@ -76,33 +73,23 @@ export const tvlSlice = createSlice({
         const oracleToken = selectTokenById(state, action.payload.chainId, vault.oracleId);
         const price = selectTokenPriceByTokenId(state, oracleToken.id);
 
-        const vaultRawTvl = totalStaked
+        let tvl = totalStaked
           .times(price)
           .dividedBy(new BigNumber(10).exponentiatedBy(oracleToken.decimals));
-        rawTvlByVaultId[vault.id] = vaultRawTvl;
-      }
 
-      // handle exclusions
-      for (const govVaultContractData of action.payload.data.govVaults) {
-        // now remove excluded vault tvl from vault tvl
-        const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
-
+        // handle gov vault TVL exclusion
         if (vault.excludedId) {
-          const excludedVault = selectVaultById(state, vault.excludedId);
-          if (rawTvlByVaultId[excludedVault.id] !== undefined) {
-            rawTvlByVaultId[vault.id] = rawTvlByVaultId[vault.id].minus(
-              rawTvlByVaultId[excludedVault.id]
-            );
+          const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
+          if (excludedTVL) {
+            tvl = tvl.minus(excludedTVL);
           }
         }
+        sliceState.byVaultId[vault.id] = { tvl: tvl };
+
+        // add vault tvl to total tvl state
+        totalTvl = totalTvl.plus(tvl);
       }
 
-      for (const [vaultId, vaultTvl] of Object.entries(rawTvlByVaultId)) {
-        // add vault tvl to total tvl state
-        totalTvl = totalTvl.plus(vaultTvl);
-        // add vault tvl to state
-        sliceState.byVaultId[vaultId] = { tvl: vaultTvl };
-      }
       sliceState.totalTvl = totalTvl;
 
       // create an index of ppfs for boost tvl usage

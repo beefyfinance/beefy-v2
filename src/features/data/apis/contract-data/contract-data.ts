@@ -103,7 +103,8 @@ export class ContractDataAPI implements IContractDataApi {
         return {
           id: result.id,
           balance: new BigNumber(result.balance),
-          pricePerFullShare: new BigNumber(result.pricePerFullShare),
+          /** always 18 decimals for PPFS */
+          pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-18),
           strategy: result.strategy,
         } as StandardVaultContractData;
       },
