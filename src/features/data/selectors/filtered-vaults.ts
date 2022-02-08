@@ -3,7 +3,11 @@ import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isVaultActive } from '../entities/vault';
-import { selectHasUserDepositInVault, selectHasWalletBalanceOfToken } from './balance';
+import {
+  selectHasUserDepositInVault,
+  selectHasWalletBalanceOfToken,
+  selectIsUserEligibleForVault,
+} from './balance';
 import {
   selectActiveVaultBoostIds,
   selectBoostById,
@@ -92,7 +96,7 @@ export const selectFilteredVaults = createSelector(
       // hide when no wallet balance of deposit token
       if (
         filterOptions.userCategory === 'eligible' &&
-        !selectHasWalletBalanceOfToken(state, vault.chainId, vault.oracleId)
+        !selectIsUserEligibleForVault(state, vault.id)
       ) {
         return false;
       }
