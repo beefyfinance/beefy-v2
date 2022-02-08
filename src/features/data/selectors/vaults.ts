@@ -61,55 +61,38 @@ export const selectAllStandardVaultsByChainId = createSelector(
   }
 );
 
-// just a common selector to enable caching
-function _selectVaultIdByOracleId(
+export const selectVaultIdsByOracleId = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   tokenId: TokenEntity['id']
-) {
-  const byChainId = state.entities.vaults.byChainId[chainId];
-  if (byChainId === undefined) {
-    throw new Error(`Chain data not loaded for ${chainId}`);
-  }
-  return byChainId.byOracleId[tokenId];
-}
-
+) => {
+  const vaultIds = state.entities.vaults.byChainId[chainId]?.byOracleId[tokenId];
+  return vaultIds || [];
+};
 export const selectIsStandardVaultOracleToken = createSelector(
-  [_selectVaultIdByOracleId],
-  vaultId => vaultId !== undefined
+  [selectVaultIdsByOracleId],
+  vaultIds => vaultIds.length > 0
 );
 
-export const selectVaultByOracleIdTokenId = createSelector([_selectVaultIdByOracleId], vaultId => {
-  if (vaultId === undefined) {
-    throw new Error(`Vault id by oracle id not found`);
-  }
-  return vaultId;
-});
-
-// just a common selector to enable caching
-function _selectVaultIdByEarnTokenId(
+export const selectIsStandardVaultEarnTokenId = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   tokenId: TokenEntity['id']
-) {
-  const byChainId = state.entities.vaults.byChainId[chainId];
-  if (byChainId === undefined) {
-    throw new Error(`Chain data not loaded for ${chainId}`);
-  }
-  return byChainId.byEarnTokenId[tokenId];
-}
+) => {
+  return state.entities.vaults.byChainId[chainId]?.byEarnTokenId[tokenId] !== undefined;
+};
 
-export const selectIsStandardVaultEarnTokenId = createSelector(
-  [_selectVaultIdByEarnTokenId],
-  vaultId => vaultId !== undefined
-);
-
-export const selectVaultByEarnTokenId = createSelector([_selectVaultIdByEarnTokenId], vaultId => {
+export const selectStandardVaultByEarnTokenId = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenId: TokenEntity['id']
+) => {
+  const vaultId = state.entities.vaults.byChainId[chainId]?.byEarnTokenId[tokenId];
   if (vaultId === undefined) {
     throw new Error(`Vault id by earn token id not found`);
   }
   return vaultId;
-});
+};
 
 export const selectTotalActiveVaults = createSelector(
   (state: BeefyState) => state.entities.vaults.byChainId,

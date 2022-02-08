@@ -28,9 +28,15 @@ export const selectUserDepositedVaults = (state: BeefyState) => {
   const walletBalance = _selectWalletBalance(state);
   return walletBalance ? walletBalance.depositedVaultIds : [];
 };
+
 export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
+};
+
+export const selectIsUserEligibleForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const walletBalance = _selectWalletBalance(state);
+  return walletBalance ? walletBalance.eligibleVaultIds.indexOf(vaultId) !== -1 : false;
 };
 
 export const selectWalletBalanceOfToken = (
