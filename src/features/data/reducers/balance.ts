@@ -29,8 +29,6 @@ export interface BalanceState {
 
       /**
        * all balances below represent token amounts
-       * later we will want to have usd amount in another part of
-       * the state (to avoid re-renders when prices change)
        */
       tokenAmount: {
         /**

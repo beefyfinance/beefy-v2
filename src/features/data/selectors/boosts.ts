@@ -17,36 +17,23 @@ export const selectBoostById = createSelector(
   }
 );
 
-export const selectBoostsByChainId = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState, chainId: ChainEntity['id']) => {
-    if (state.entities.boosts.byChainId[chainId] === undefined) {
-      return [];
-    }
+export const selectBoostsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+  return state.entities.boosts.byChainId[chainId]?.allBoostsIds || [];
+};
 
-    return state.entities.boosts.byChainId[chainId].allBoostsIds;
-  },
-  // last function receives previous function outputs as parameters
-  allBoostsIds => allBoostsIds
-);
-
-export const selectIsVaultBoosted = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId],
-  vaultIdBoost => vaultIdBoost !== undefined && vaultIdBoost.activeBoostsIds.length > 0
-);
+export const selectIsVaultBoosted = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds.length > 0 || false;
+};
 
 // TODO
-export const selectIsVaultMoonpot = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId],
-  vaultIdBoost => false
-);
+export const selectIsVaultMoonpot = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return false;
+};
 
-export const selectActiveVaultBoostIds = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId],
-  vaultIdBoost => {
-    if (!vaultIdBoost) {
-      return [];
-    }
-    return vaultIdBoost.activeBoostsIds;
-  }
-);
+export const selectActiveVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds || [];
+};
+
+export const selectAllVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.entities.boosts.byVaultId[vaultId]?.allBoostsIds || [];
+};

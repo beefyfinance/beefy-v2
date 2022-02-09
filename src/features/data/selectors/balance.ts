@@ -10,10 +10,10 @@ import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectIsWalletConnected, selectWalletAddress } from './wallet';
 
-const _selectWalletBalance = (state: BeefyState) => {
+const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletConnected(state)) {
-    const walletAddress = selectWalletAddress(state);
-    const walletBalance = state.user.balance.byAddress[walletAddress.toLocaleLowerCase()];
+    const userAddress = walletAddress || selectWalletAddress(state);
+    const walletBalance = state.user.balance.byAddress[userAddress.toLocaleLowerCase()];
     return walletBalance || null;
   } else {
     return null;
@@ -42,9 +42,10 @@ export const selectIsUserEligibleForVault = (state: BeefyState, vaultId: VaultEn
 export const selectWalletBalanceOfToken = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
+  tokenId: TokenEntity['id'],
+  walletAddress?: string
 ) => {
-  const walletBalance = _selectWalletBalance(state);
+  const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.tokenAmount.byChainId[chainId]?.byTokenId[tokenId]?.balance || BIG_ZERO;
 };
 
@@ -60,19 +61,29 @@ export const selectHasWalletBalanceOfToken = createSelector(
  */
 export const selectStandardVaultUserBalanceInToken = (
   state: BeefyState,
-  vaultId: VaultEntity['id']
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
 ) => {
   const vault = selectVaultById(state, vaultId);
   if (isGovVault(vault)) {
     throw new Error(`Trying to get standard vault balance but vault ${vault.id} is a gov vault`);
   }
-  const earnedTokenBalance = selectWalletBalanceOfToken(state, vault.chainId, vault.earnedTokenId);
+  const earnedTokenBalance = selectWalletBalanceOfToken(
+    state,
+    vault.chainId,
+    vault.earnedTokenId,
+    walletAddress
+  );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   return earnedTokenBalance.multipliedBy(ppfs);
 };
 
-export const selectGovVaultUserBalanceInToken = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const walletBalance = _selectWalletBalance(state);
+export const selectGovVaultUserBalanceInToken = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const walletBalance = _selectWalletBalance(state, walletAddress);
   const vault = selectVaultById(state, vaultId);
   if (!isGovVault(vault)) {
     throw new Error(`Trying to get gov vault balance but vault ${vault.id} is a not a gov vault`);
@@ -80,36 +91,46 @@ export const selectGovVaultUserBalanceInToken = (state: BeefyState, vaultId: Vau
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
-export const selectUserVaultDepositInToken = (state: BeefyState, vaultId: VaultEntity['id']) => {
+export const selectUserVaultDepositInToken = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
   const vault = selectVaultById(state, vaultId);
   if (isGovVault(vault)) {
-    return selectGovVaultUserBalanceInToken(state, vaultId);
+    return selectGovVaultUserBalanceInToken(state, vaultId, walletAddress);
   } else {
-    return selectStandardVaultUserBalanceInToken(state, vaultId);
+    return selectStandardVaultUserBalanceInToken(state, vaultId, walletAddress);
   }
 };
 
-export const selectBoostUserBalanceInToken = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const walletBalance = _selectWalletBalance(state);
-  return walletBalance?.tokenAmount?.byBoostId[boostId].balance || BIG_ZERO;
+export const selectBoostUserBalanceInToken = (
+  state: BeefyState,
+  boostId: BoostEntity['id'],
+  walletAddress?: string
+) => {
+  const walletBalance = _selectWalletBalance(state, walletAddress);
+  return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
 };
 
-export const selectUserVaultDepositInUsd = createSelector(
-  (state: BeefyState, vaultId: VaultEntity['id']) => {
-    // TODO: do this in the state?
-    const vault = selectVaultById(state, vaultId);
-    const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
-    const vaultTokenDeposit = selectUserVaultDepositInToken(state, vaultId);
+export const selectUserVaultDepositInUsd = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  // TODO: do this in the state?
+  const vault = selectVaultById(state, vaultId);
+  const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
+  const vaultTokenDeposit = selectUserVaultDepositInToken(state, vaultId, walletAddress);
 
-    return vaultTokenDeposit.multipliedBy(oraclePrice);
-  },
-  res => res
-);
+  return vaultTokenDeposit.multipliedBy(oraclePrice);
+};
 
 export const selectGovVaultPendingRewardsInToken = (state: BeefyState, vaultId: VaultGov['id']) => {
   const walletBalance = _selectWalletBalance(state);
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards[vaultId] || BIG_ZERO;
 };
+
 export const selectHasGovVaultPendingRewards = (state: BeefyState, vaultId: VaultGov['id']) => {
   return !selectGovVaultPendingRewardsInToken(state, vaultId).isZero();
 };

@@ -1,8 +1,7 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { memoize } from 'lodash';
-import { BIG_ZERO, byDecimals } from '../../../helpers/format';
+import { BIG_ZERO } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
-import { ApyData, isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
+import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
   selectBoostUserBalanceInToken,
@@ -10,46 +9,35 @@ import {
   selectStandardVaultUserBalanceInToken,
   selectGovVaultUserBalanceInToken,
 } from './balance';
-import { selectActiveVaultBoostIds, selectBoostById } from './boosts';
+import { selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { selectIsUserBalanceAvailable } from './data-loader';
-import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
+import { selectTokenPriceByTokenId } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
-export const selectVaultApyInfos = createSelector(
-  [(state: BeefyState, vaultId: VaultEntity['id']) => state.biz.apy.byVaultId[vaultId]],
-  (vaultApy): ApyData => {
-    if (vaultApy === undefined) {
-      return { totalApy: 0 };
-    }
-    return vaultApy;
-  }
-);
+export const selectVaultApyInfos = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.biz.apy.byVaultId[vaultId] || { totalApy: 0 };
 
-export const selectGovVaultApr = createSelector(
-  (state: BeefyState, vaultId: VaultGov['id']) => state.biz.apy.byVaultId[vaultId],
-  vaultApy => {
-    if (vaultApy === undefined) {
-      return 0;
-    }
-    if (!isGovVaultApy(vaultApy)) {
-      throw new Error('Apy is not a gov vault apy');
-    }
-    return vaultApy.vaultApr;
+export const selectGovVaultApr = (state: BeefyState, vaultId: VaultGov['id']) => {
+  const vaultApy = state.biz.apy.byVaultId[vaultId];
+  if (vaultApy === undefined) {
+    return 0;
   }
-);
+  if (!isGovVaultApy(vaultApy)) {
+    throw new Error('Apy is not a gov vault apy');
+  }
+  return vaultApy.vaultApr;
+};
 
-export const selectStandardVaultTotalApy = createSelector(
-  (state: BeefyState, vaultId: VaultStandard['id']) => state.biz.apy.byVaultId[vaultId],
-  vaultApy => {
-    if (vaultApy === undefined) {
-      return 0;
-    }
-    if (!isStandardVaultApy(vaultApy) && !isMaxiVaultApy(vaultApy)) {
-      throw new Error('Apy is not a standard vault apy and not a maxi vault apy');
-    }
-    return vaultApy.totalApy;
+export const selectStandardVaultTotalApy = (state: BeefyState, vaultId: VaultStandard['id']) => {
+  const vaultApy = state.biz.apy.byVaultId[vaultId];
+  if (vaultApy === undefined) {
+    return 0;
   }
-);
+  if (!isStandardVaultApy(vaultApy) && !isMaxiVaultApy(vaultApy)) {
+    throw new Error('Apy is not a standard vault apy and not a maxi vault apy');
+  }
+  return vaultApy.totalApy;
+};
 
 export const selectUserGlobalStats = memoize((state: BeefyState) => {
   let newGlobalStats = {
@@ -73,33 +61,21 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
     const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
     if (isGovVault(vault)) {
       const tokenBalance = selectGovVaultUserBalanceInToken(state, vault.id);
-      const token = selectTokenById(state, vault.chainId, vault.oracleId);
-      const decimaledTokenBalance = byDecimals(tokenBalance, token.decimals);
-      const usdBalance = decimaledTokenBalance.times(oraclePrice);
+      const usdBalance = tokenBalance.times(oraclePrice);
       vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
     } else {
       const mooTokenBalance = selectStandardVaultUserBalanceInToken(state, vault.id);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
-      const earnToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-
-      const oracleTokenBalance = byDecimals(
-        mooTokenBalance.multipliedBy(byDecimals(ppfs)).toFixed(8),
-        earnToken.decimals
-      );
+      const oracleTokenBalance = mooTokenBalance.multipliedBy(ppfs);
       const usdBalance = oracleTokenBalance.times(oraclePrice);
       vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
     }
 
-    for (const boostId of selectActiveVaultBoostIds(state, vault.id)) {
+    for (const boostId of selectAllVaultBoostIds(state, vault.id)) {
       const boost = selectBoostById(state, boostId);
       const mooTokenBalance = selectBoostUserBalanceInToken(state, boost.id);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
-      const vaultToken = selectTokenById(state, vault.chainId, vault.oracleId);
-
-      const originalTokenBalance = byDecimals(
-        mooTokenBalance.multipliedBy(byDecimals(ppfs)),
-        vaultToken.decimals
-      );
+      const originalTokenBalance = mooTokenBalance.multipliedBy(ppfs);
       const usdBalance = originalTokenBalance.times(oraclePrice);
       vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
     }

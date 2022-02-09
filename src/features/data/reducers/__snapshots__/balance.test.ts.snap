@@ -8,6 +8,7 @@ Object {
         "ellipsis-renbtc",
         "belt-beltbnb",
       ],
+      "eligibleVaultIds": Array [],
       "tokenAmount": Object {
         "byBoostId": Object {
           "moo_beltbnb-czodiac": Object {
@@ -34,6 +35,7 @@ Object {
       "depositedVaultIds": Array [
         "bifi-gov",
       ],
+      "eligibleVaultIds": Array [],
       "tokenAmount": Object {
         "byBoostId": Object {},
         "byChainId": Object {},
@@ -55,6 +57,10 @@ Object {
     "0x00abc": Object {
       "depositedVaultIds": Array [
         "banana-bnb-stars",
+      ],
+      "eligibleVaultIds": Array [
+        "banana-nfty-wbnb",
+        "bifi-maxi",
       ],
       "tokenAmount": Object {
         "byBoostId": Object {},

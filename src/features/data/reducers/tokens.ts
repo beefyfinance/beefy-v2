@@ -92,7 +92,7 @@ function addBoostToState(
     boost.earnedToken.startsWith('moo') &&
     boost.earnedToken.endsWith('BIFI')
   ) {
-    console.debug(`Configuration outdated for boost ${boost.id}`);
+    //console.debug(`Configuration outdated for boost ${boost.id}`);
     tokenId = boost.earnedToken;
   }
 
