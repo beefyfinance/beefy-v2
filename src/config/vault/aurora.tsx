@@ -71,7 +71,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    buyTokenUrl: "https://www.trisolaris.io/swap?outputCurrency=0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xFa94348467f64D5A457F75F8bc40495D33c65aBB",
     network: "aurora"
   },
@@ -107,7 +107,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    buyTokenUrl: "https://www.trisolaris.io/swap?outputCurrency=0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
     addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xF4eB217Ba2454613b15dBdea6e5f22276410e89e",
     network: "aurora"
   },
@@ -143,7 +143,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    buyTokenUrl: "https://www.trisolaris.io/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     addLiquidityUrl: "https://www.trisolaris.io/#/add/0x4988a896b1227218e4A686fdE5EabdcAbd91571f/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     network: "aurora"
   },
@@ -179,7 +179,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    buyTokenUrl: "https://www.trisolaris.io/swap?outputCurrency=0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
     addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x4988a896b1227218e4A686fdE5EabdcAbd91571f",
     network: "aurora"
   },
@@ -215,7 +215,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    buyTokenUrl: "https://www.trisolaris.io/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
     network: "aurora"
   },
@@ -251,7 +251,7 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
-    buyTokenUrl: "https://www.trisolaris.io/swap?outputCurrency=0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d",
     addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
     network: "aurora"
   },
@@ -325,6 +325,78 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79",
     addLiquidityUrl: "https://www.trisolaris.io/#/add/0x8BEc47865aDe3B172A928df8f990Bc7f2A3b9f79/0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB",
+    network: "aurora"
+  },
+  {
+    id: "tri-atust-near",
+    name: "atUST-NEAR LP",
+    token: "atUST-NEAR LP",
+    tokenDescription: "Trisolaris",
+    tokenAddress: "0xa9eded3E339b9cd92bB6DEF5c5379d678131fF90",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooTriatUST-NEAR",
+    earnedTokenAddress: "0xd1706A28Bd40EDc85aa11e40eb40f119DDC0A087",
+    earnContractAddress: "0xd1706A28Bd40EDc85aa11e40eb40f119DDC0A087",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "tri-atust-near",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trisolaris",
+    assets: [
+      "UST",
+      "NEAR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0x5ce9F0B6AFb36135b5ddBF11705cEB65E634A9dC",
+    addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x5ce9F0B6AFb36135b5ddBF11705cEB65E634A9dC",
+    network: "aurora"
+  },
+  {
+    id: "tri-near-atluna",
+    name: "atLUNA-NEAR LP",
+    token: "atLUNA-NEAR LP",
+    tokenDescription: "Trisolaris",
+    tokenAddress: "0xdF8CbF89ad9b7dAFdd3e37acEc539eEcC8c47914",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooTriatLUNA-NEAR",
+    earnedTokenAddress: "0x068701701C8C2a11EC5B05a015EdD07d1cee6b9f",
+    earnContractAddress: "0x068701701C8C2a11EC5B05a015EdD07d1cee6b9f",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "tri-near-atluna",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trisolaris",
+    assets: [
+      "LUNA",
+      "NEAR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0xC4bdd27c33ec7daa6fcfd8532ddB524Bf4038096",
+    addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC4bdd27c33ec7daa6fcfd8532ddB524Bf4038096",
     network: "aurora"
   }
 ];

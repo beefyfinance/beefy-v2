@@ -853,42 +853,6 @@ export const pools = [
     network: "cronos"
   },
   {
-    id: "vvs-cro-bifi",
-    name: "BIFI-CRO",
-    token: "BIFI-CRO LP",
-    tokenDescription: "VVS",
-    tokenAddress: "0x1803E360393A472beC6E1A688BDF7048d3076b1A",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooVvsCRO-BIFI",
-    earnedTokenAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
-    earnContractAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "vvs-cro-bifi",
-    oraclePrice: 0,
-    status: "active",
-    platform: "VVS",
-    assets: [
-      "BIFI",
-      "CRO"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
-    addLiquidityUrl: "https://vvs.finance/add/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
-    network: "cronos"
-  },
-  {
     id: "vvs-cro-doge",
     name: "DOGE-CRO",
     token: "DOGE-CRO LP",
@@ -1322,6 +1286,43 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
+    network: "cronos",
+    retireReason: "rewards"
+  },
+  {
+    id: "vvs-cro-bifi-eol",
+    name: "BIFI-CRO",
+    token: "BIFI-CRO LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x1803E360393A472beC6E1A688BDF7048d3076b1A",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsCRO-BIFI",
+    earnedTokenAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
+    earnContractAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-cro-bifi",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "VVS",
+    assets: [
+      "BIFI",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
+    addLiquidityUrl: "https://vvs.finance/add/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     network: "cronos",
     retireReason: "rewards"
   }
