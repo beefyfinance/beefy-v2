@@ -1,4 +1,4 @@
-export const metisZaps = [
+export const zaps = [
   {
     // Netswap
     zapAddress: '0xF439B695bB28c9E9865170C1b3e98F5EB4cE9b48',

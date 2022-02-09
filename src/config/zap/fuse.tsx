@@ -1,4 +1,4 @@
-export const fuseZaps = [
+export const zaps = [
   {
     // FuseFi
     zapAddress: '0xb0F9c6FBcfE226EEAD3AE8b019ce4666cE223a78',

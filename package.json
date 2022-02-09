@@ -17,7 +17,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@walletconnect/web3-provider": "^1.4.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.13.1",
+    "blockchain-addressbook": "^0.13.3",
     "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
     "comlink": "^4.3.1",

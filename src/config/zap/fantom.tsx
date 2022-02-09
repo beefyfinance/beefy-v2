@@ -1,4 +1,4 @@
-export const fantomZaps = [
+export const zaps = [
   {
     // SpookySwap
     zapAddress: '0x8afc0f9BdC5DcA9f0408Df03A03520bFa98A15aF',
