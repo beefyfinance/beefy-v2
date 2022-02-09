@@ -132,4 +132,6 @@ const hat = [
   'None',
 ];
 
-export { background, body, eyes, accsFace, accsBody, hair, hat };
+const avatarsAddress = '0x1AfBeE7be951e98aB4b8f3A52e52b8c84533fa11';
+
+export { background, body, eyes, accsFace, accsBody, hair, hat, avatarsAddress };
