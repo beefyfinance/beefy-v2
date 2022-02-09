@@ -110,42 +110,6 @@ export const pools = [
     network: "fuse"
   },
   {
-    id: "sushi-sushi-weth",
-    name: "SUSHI-WETH LP",
-    token: "SUSHI-WETH LP",
-    tokenDescription: "SushiSwap",
-    tokenAddress: "0xF9C63E6e21d65ba3Cb6B95790F559E8Da1B38764",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSushiSUSHI-WETH",
-    earnedTokenAddress: "0x202D9EA0AeAC4B30f9f4aABd084Fb8C1DE316840",
-    earnContractAddress: "0x202D9EA0AeAC4B30f9f4aABd084Fb8C1DE316840",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "sushi-sushi-weth",
-    oraclePrice: 0,
-    withdrawalFee: "0%",
-    status: "paused",
-    platform: "SushiSwap",
-    assets: [
-      "SUSHI",
-      "WETH"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.sushi.com/add/0x90708b20ccc1eb95a4fa7c8b18fd2c22a0ff9e78/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
-    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x90708b20ccc1eb95a4fa7c8b18fd2c22a0ff9e78&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
-    network: "fuse"
-  },
-  {
     id: "sushi-wfuse-usdc",
     name: "FUSE-USDC LP",
     token: "FUSE-USDC LP",

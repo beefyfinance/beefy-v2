@@ -20,4 +20,11 @@ export const zaps = [
     ammFactory: '0xEF45d134b73241eDa7703fa787148D9C9F4950b0',
     ammPairInitHash: '0xe242e798f6cee26a9cb0bbf24653bf066e5356ffeac160907fe2cc108e238617',
   },
+  {
+    // Sushi
+    zapAddress: '0xFA884e17f04341542790453b1B9A0e6F587768ce',
+    ammRouter: '0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506',
+    ammFactory: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
+    ammPairInitHash: '0xe18a34eb0e04b04f7a0ac29a6e80748dca96319b42c54d679cb821dca90c6303',
+  },
 ];

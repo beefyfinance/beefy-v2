@@ -10701,34 +10701,6 @@ export const pools = [
     network: "bsc"
   },
   {
-    id: "blizzard-xblzd-busd",
-    logo: "degens/BLZD-BUSD.png",
-    name: "xBLZD-BUSD LP",
-    token: "xBLZD-BUSD LP2",
-    tokenDescription: "PancakeSwap",
-    tokenAddress: "0xeDCd99aD43C6911D37780158370ec1913Ee9e7D3",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBlizzardxBLZD-BUSDV2",
-    earnedTokenAddress: "0x17436A6D0ACb7f31D62C7484E5C77eC9A6122837",
-    earnContractAddress: "0x17436A6D0ACb7f31D62C7484E5C77eC9A6122837",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "blizzard-xblzd-busd",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "xBLZD",
-      "BUSD"
-    ],
-    addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
-    buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
-    stratType: "StratLP",
-    network: "bsc"
-  },
-  {
     id: "blizzard-xblzd-bnb-old-eol",
     logo: "degens/BLZD-BNB.png",
     name: "xBLZD-BNB LP",
@@ -10753,7 +10725,8 @@ export const pools = [
     ],
     removeLiquidityUrl: "https://v1exchange.pancakeswap.finance/#/remove/BNB/0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
     stratType: "StratLP",
-    network: "bsc"
+    network: "bsc",
+    retireReason: "rewards"
   },
   {
     id: "blizzard-xblzd-busd-old-eol",
@@ -10780,32 +10753,6 @@ export const pools = [
     ],
     removeLiquidityUrl: "https://v1exchange.pancakeswap.finance/#/remove/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
     stratType: "StratLP",
-    network: "bsc"
-  },
-  {
-    id: "blizzard-xblzd",
-    logo: "degens/BLZD.png",
-    name: "xBLZDv2",
-    token: "xBLZDv2",
-    tokenDescription: "Blizzard",
-    tokenAddress: "0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBlizzardxBLZDv2",
-    earnedTokenAddress: "0x47a27220Db5458DB4b238fefCBb8178232cBFa5D",
-    earnContractAddress: "0x47a27220Db5458DB4b238fefCBb8178232cBFa5D",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "xBLZD",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "xBLZD"
-    ],
-    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
-    stratType: "SingleStake",
     network: "bsc"
   },
   {
@@ -18651,5 +18598,60 @@ export const pools = [
     addLiquidityUrl: "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0xAD29AbB318791D579433D831ed122aFeAf29dcfe",
     buyTokenUrl: "https://exchange.babyswap.finance/#/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0xAD29AbB318791D579433D831ed122aFeAf29dcfe",
     network: "bsc"
+  },
+  {
+    id: "blizzard-xblzd-busd-eol",
+    logo: "degens/BLZD-BUSD.png",
+    name: "xBLZD-BUSD LP",
+    token: "xBLZD-BUSD LP2",
+    tokenDescription: "PancakeSwap",
+    tokenAddress: "0xeDCd99aD43C6911D37780158370ec1913Ee9e7D3",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBlizzardxBLZD-BUSDV2",
+    earnedTokenAddress: "0x17436A6D0ACb7f31D62C7484E5C77eC9A6122837",
+    earnContractAddress: "0x17436A6D0ACb7f31D62C7484E5C77eC9A6122837",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "blizzard-xblzd-busd",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "xBLZD",
+      "BUSD"
+    ],
+    addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
+    buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
+    stratType: "StratLP",
+    network: "bsc"
+  },
+  {
+    id: "blizzard-xblzd-eol2",
+    logo: "degens/BLZD.png",
+    name: "xBLZDv2",
+    token: "xBLZDv2",
+    tokenDescription: "Blizzard",
+    tokenAddress: "0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBlizzardxBLZDv2",
+    earnedTokenAddress: "0x47a27220Db5458DB4b238fefCBb8178232cBFa5D",
+    earnContractAddress: "0x47a27220Db5458DB4b238fefCBb8178232cBFa5D",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "xBLZD",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "xBLZD"
+    ],
+    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x9a946c3Cb16c08334b69aE249690C236Ebd5583E",
+    stratType: "SingleStake",
+    network: "bsc",
+    retireReason: "rewards"
   }
 ];

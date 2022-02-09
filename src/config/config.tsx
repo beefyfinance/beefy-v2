@@ -9,6 +9,8 @@ export const config = {
     ],
     explorerUrl: 'https://bscscan.com',
     multicallAddress: '0xB94858b0bB5437498F5453A16039337e5Fdc269C',
+    fetchContractDataAddress: '0x2e91CfcC1608D4aa278c9D14D6d43C76B43aD42C',
+    fetchBalancesAddress: '0xFBB45a5d064556668ae55A3FDa3ccd78Fc515186',
     supportedWallets: [
       'injected',
       'walletconnect',
@@ -57,6 +59,8 @@ export const config = {
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
     multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
+    fetchContractDataAddress: '0xA624Ac7824c5038AF0aEf333A6Eedc674E45bF56',
+    fetchBalancesAddress: '0xd3C0A4AB6F68e3c12DEc753255b9f769E0bA615b',
     supportedWallets: ['injected', 'custom-clover', 'custom-math', 'custom-wallet-connect'],
     providerName: 'heco',
     walletSettings: {
@@ -78,6 +82,8 @@ export const config = {
     rpc: ['https://api.avax.network/ext/bc/C/rpc'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
+    fetchContractDataAddress: '0xeCD68D935Fd331EbA27381929845737346577943',
+    fetchBalancesAddress: '0x10c096DD0858a577EBC943F3094341def68834c2',
     supportedWallets: ['injected', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'avalanche',
     walletSettings: {
@@ -114,6 +120,9 @@ export const config = {
     rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
+    fetchContractDataAddress: '0x9e369f477F2009394D947ea7571b1E6582Bb0511',
+    // could not make it work for polygon, idk why
+    //fetchBalancesAddress: '0xEF03BC4C3711bb039c85189f536a35f4d72bC415',
     supportedWallets: ['injected', 'custom-clover', 'walletconnect', 'custom-coinbase'],
     providerName: 'polygon',
     walletSettings: {
@@ -159,6 +168,9 @@ export const config = {
     rpc: ['https://rpcapi.fantom.network'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
+    fetchContractDataAddress: '0x37FF9b4612b9e80E4082e3aC3f5149adDA2d2f21',
+    // could not make it work for fantom, idk why
+    //fetchBalancesAddress: '0x6cA0E431678979cB9Ffa317310D5db7131345058',
     supportedWallets: ['injected', 'custom-clover', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'fantom',
     walletSettings: {
@@ -193,6 +205,7 @@ export const config = {
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',
     multicallAddress: '0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5',
+    fetchBalancesAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
     supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'harmony',
     walletSettings: {
@@ -214,6 +227,8 @@ export const config = {
     rpc: ['https://arb1.arbitrum.io/rpc'],
     explorerUrl: 'https://arbiscan.io',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
+    fetchContractDataAddress: '0xe8EeDE3a063AdF991096E317e916d9AF56cb11B2',
+    fetchBalancesAddress: '0xFAC875b16e740c661621fD3A8e3b345ccF3C1eD4',
     supportedWallets: ['injected', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'Arbitrum',
     walletSettings: {
@@ -235,6 +250,8 @@ export const config = {
     rpc: ['https://forno.celo.org'],
     explorerUrl: 'https://explorer.celo.org',
     multicallAddress: '0xa9E6E271b27b20F65394914f8784B3B860dBd259',
+    fetchContractDataAddress: '0xB88a3FbB5136d3F1B96aF208ddce5a103D9EaE7A',
+    fetchBalancesAddress: '0x18cdaD261A96e7b7F4c5742f4400Bf538A9d6F57',
     supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'Celo',
     walletSettings: {
@@ -256,6 +273,8 @@ export const config = {
     rpc: ['https://rpc.moonriver.moonbeam.network'],
     explorerUrl: 'https://blockscout.moonriver.moonbeam.network',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
+    fetchContractDataAddress: '0xfbD63fadb7B13E0599c3643405276f97217147B2',
+    fetchBalancesAddress: '0xA4afDf57663951C6204E5110EE1741e8dfb0F3ec',
     supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'Moonriver',
     walletSettings: {
@@ -277,6 +296,8 @@ export const config = {
     rpc: ['https://evm-cronos.crypto.org'],
     explorerUrl: 'https://cronos.crypto.org/explorer',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
+    fetchContractDataAddress: '0x985024de164CbBd5BCFD0bBE48Ac3e16374c0449',
+    fetchBalancesAddress: '0xbdF080a701C1ee3335d379B5FB946b63C052ef43',
     supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'Cronos',
     walletSettings: {
@@ -298,6 +319,8 @@ export const config = {
     rpc: ['https://rpc.fuse.io'],
     explorerUrl: 'https://explorer.fuse.io',
     multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
+    fetchContractDataAddress: '0x9ba7CF356E12369040E3329a906FaA29C0bd9f1A',
+    fetchBalancesAddress: '0x51b454309B72665f23B7e5e80479d871231002d3',
     supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'Fuse',
     walletSettings: {
@@ -319,6 +342,8 @@ export const config = {
     rpc: ['https://andromeda.metis.io/?owner=1088'],
     explorerUrl: 'https://andromeda-explorer.metis.io',
     multicallAddress: '0x4fd2e1c2395dc088F36cab06DCe47F88A912fC85',
+    fetchContractDataAddress: '0xA624Ac7824c5038AF0aEf333A6Eedc674E45bF56',
+    fetchBalancesAddress: '0xd3C0A4AB6F68e3c12DEc753255b9f769E0bA615b',
     supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'Metis',
     walletSettings: {

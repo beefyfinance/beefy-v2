@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TVL slice tests should update state on fulfilled boost contract data 1`] = `
+Object {
+  "byBoostId": Object {
+    "moo_banana-banana-busd-bitcrush": Object {
+      "staked": "457222222222222222222.22222222222222222222",
+      "tvl": "957184600114813149500",
+    },
+  },
+  "byVaultId": Object {
+    "banana-banana-busd": Object {
+      "tvl": "257.4977769932194791",
+    },
+  },
+  "exclusions": Object {},
+  "totalTvl": "257.4977769932194791",
+}
+`;
+
+exports[`TVL slice tests should update state on fulfilled gov vault contract data 1`] = `
+Object {
+  "byBoostId": Object {},
+  "byVaultId": Object {
+    "bifi-gov": Object {
+      "tvl": "3.83973164e-12",
+    },
+  },
+  "exclusions": Object {},
+  "totalTvl": "3.83973164e-12",
+}
+`;
+
+exports[`TVL slice tests should update state on fulfilled standard vault contract data 1`] = `
+Object {
+  "byBoostId": Object {},
+  "byVaultId": Object {
+    "banana-cyt-bnb": Object {
+      "tvl": "817.047632700577131",
+    },
+  },
+  "exclusions": Object {},
+  "totalTvl": "817.047632700577131",
+}
+`;

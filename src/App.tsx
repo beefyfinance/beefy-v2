@@ -7,6 +7,8 @@ import { reduxActions } from './features/redux/actions';
 import { ScrollToTop } from './components/ScrollToTop';
 import { HideBalanceProvider } from './components/HideBalancesContext';
 import { theme } from './theme';
+import { initHomeDataV4 } from './features/data/actions/scenarios';
+import { featureFlag_isDataLoaderV2Enabled } from './features/data/utils/feature-flags';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const Boost = React.lazy(() => import(`./features/boost`));
@@ -23,6 +25,9 @@ export const App = () => {
   }));
 
   React.useEffect(() => {
+    if (featureFlag_isDataLoaderV2Enabled()) {
+      return;
+    }
     const updateBalances = async () => {
       await dispatch(reduxActions.balance.fetchBalances());
       await dispatch(reduxActions.balance.fetchBoostBalances());
@@ -34,6 +39,9 @@ export const App = () => {
   }, [dispatch, wallet]);
 
   React.useEffect(() => {
+    if (featureFlag_isDataLoaderV2Enabled()) {
+      return;
+    }
     const initiate = async () => {
       let now = Date.now();
 
@@ -65,10 +73,21 @@ export const App = () => {
   }, [isNightMode]);
 
   React.useEffect(() => {
+    if (featureFlag_isDataLoaderV2Enabled()) {
+      return;
+    }
     if (!wallet.web3modal) {
       dispatch(reduxActions.wallet.createWeb3Modal());
     }
   }, [dispatch, wallet.web3modal]);
+
+  React.useEffect(() => {
+    if (!featureFlag_isDataLoaderV2Enabled()) {
+      return;
+    }
+    // give some time to the app to render a loader before doing this
+    setTimeout(initHomeDataV4, 50);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

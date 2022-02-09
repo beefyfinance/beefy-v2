@@ -1,0 +1,337 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Data Loader slice tests should update state on fulfilled action by chain id 1`] = `
+Object {
+  "byChainId": Object {
+    "test": Object {
+      "allowance": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "balance": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "pending",
+      },
+      "contractData": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled action by chain id 2`] = `
+Object {
+  "byChainId": Object {
+    "test": Object {
+      "allowance": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "balance": Object {
+        "alreadyLoadedOnce": true,
+        "error": null,
+        "status": "fulfilled",
+      },
+      "contractData": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled action by chain id 3`] = `
+Object {
+  "byChainId": Object {
+    "test": Object {
+      "allowance": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "balance": Object {
+        "alreadyLoadedOnce": true,
+        "error": "fatality",
+        "status": "rejected",
+      },
+      "contractData": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled action by chain id 4`] = `
+Object {
+  "byChainId": Object {
+    "test": Object {
+      "allowance": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+      "balance": Object {
+        "alreadyLoadedOnce": true,
+        "error": null,
+        "status": "pending",
+      },
+      "contractData": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
+    },
+  },
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 1`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "pending",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 2`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
+      "error": null,
+      "status": "fulfilled",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 3`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
+      "error": "fatality",
+      "status": "rejected",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 4`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
+      "error": null,
+      "status": "pending",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;

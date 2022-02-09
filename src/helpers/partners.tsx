@@ -30,26 +30,6 @@ const Moonpot = [
     link: 'https://play.moonpot.com/#/pot/beltbnb',
   },
   {
-    id: 'banana-hotcross-busd',
-    img: 'partners/moonpot/hotcrossbusd.svg',
-    link: 'https://play.moonpot.com/#/pot/hotcross-busd-lp',
-  },
-  {
-    id: 'jetswap-wings',
-    img: 'partners/moonpot/wings.svg',
-    link: 'https://play.moonpot.com/#/pot/wings',
-  },
-  {
-    id: 'banana-wbnb-dep',
-    img: 'partners/moonpot/depbnb.svg',
-    link: 'https://play.moonpot.com/#/pot/dep-bnb',
-  },
-  {
-    id: 'baby-baby',
-    img: 'partners/moonpot/baby.svg',
-    link: 'https://play.moonpot.com/#/pot/baby',
-  },
-  {
     id: 'pacoca-pacoca',
     img: 'partners/moonpot/pacoca.svg',
     link: 'https://play.moonpot.com/#/pot/pacoca',
@@ -65,19 +45,9 @@ const Moonpot = [
     link: 'https://play.moonpot.com/#/pot/pots-bnb',
   },
   {
-    id: 'blizzard-xblzd',
-    img: 'partners/moonpot/xblzd.svg',
-    link: 'https://play.moonpot.com/#/pot/xblzd',
-  },
-  {
     id: 'bifi-maxi',
     img: 'partners/moonpot/bifi.svg',
     link: 'https://play.moonpot.com/#/pot/bifi',
-  },
-  {
-    id: 'cakev2-cake-bnb',
-    img: 'partners/moonpot/cakebnb.svg',
-    link: 'https://play.moonpot.com/#/pot/cake-bnb',
   },
   {
     id: 'belt-4belt',

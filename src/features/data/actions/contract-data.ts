@@ -1,0 +1,55 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { BeefyState } from '../../redux/reducers/storev2';
+import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
+import { getContractDataApi } from '../apis/instances';
+import { ChainEntity } from '../entities/chain';
+import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
+import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
+import { selectChainById } from '../selectors/chains';
+import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
+
+export interface ActionParams {
+  chainId: ChainEntity['id'];
+}
+
+export interface FetchAllContractDataFulfilledPayload {
+  chainId: ChainEntity['id'];
+  data: FetchAllContractDataResult;
+  // Reducers handling this action need access to the full state
+  state: BeefyState;
+}
+
+export const fetchAllContractDataByChainAction = createAsyncThunk<
+  FetchAllContractDataFulfilledPayload,
+  ActionParams,
+  { state: BeefyState }
+>('contract-data/fetchAllContractDataByChainAction', async ({ chainId }, { getState }) => {
+  const state = getState();
+  const chain = selectChainById(state, chainId);
+  const contractApi = getContractDataApi(chain);
+
+  // maybe have a way to retrieve those easily
+  const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>
+    selectBoostById(state, vaultId)
+  );
+  const allVaults = selectVaultByChainId(state, chainId).map(vaultId =>
+    selectVaultById(state, vaultId)
+  );
+  const standardVaults: VaultStandard[] = [];
+  const govVaults: VaultGov[] = [];
+  for (const vault of allVaults) {
+    if (isGovVault(vault)) {
+      govVaults.push(vault);
+    } else {
+      standardVaults.push(vault);
+    }
+  }
+  const res = await contractApi.fetchAllContractData(state, standardVaults, govVaults, boosts);
+
+  // always re-fetch the latest state
+  return {
+    chainId,
+    data: res,
+    state: getState(),
+  };
+});
