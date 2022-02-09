@@ -3,11 +3,7 @@ import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isVaultActive } from '../entities/vault';
-import {
-  selectHasUserDepositInVault,
-  selectHasWalletBalanceOfToken,
-  selectIsUserEligibleForVault,
-} from './balance';
+import { selectHasUserDepositInVault, selectIsUserEligibleForVault } from './balance';
 import {
   selectActiveVaultBoostIds,
   selectBoostById,
