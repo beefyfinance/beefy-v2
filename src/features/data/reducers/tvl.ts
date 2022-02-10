@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/format';
+import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov } from '../entities/vault';
@@ -49,15 +50,11 @@ export const tvlSlice = createSlice({
       const state = action.payload.state;
 
       // On standard vault contract data, recompute tvl and exclusions
-      let totalTvl = sliceState.totalTvl;
       for (const vaultContractData of action.payload.data.standardVaults) {
         const vault = selectVaultById(state, vaultContractData.id);
         const price = selectTokenPriceByTokenId(state, vault.oracleId);
 
         const vaultTvl = vaultContractData.balance.times(price);
-
-        // add vault tvl to total tvl state
-        totalTvl = totalTvl.plus(vaultTvl);
 
         // save for vault
         sliceState.byVaultId[vault.id] = { tvl: vaultTvl };
@@ -79,12 +76,7 @@ export const tvlSlice = createSlice({
           }
         }
         sliceState.byVaultId[vault.id] = { tvl: tvl };
-
-        // add vault tvl to total tvl state
-        totalTvl = totalTvl.plus(tvl);
       }
-
-      sliceState.totalTvl = totalTvl;
 
       // create an index of ppfs for boost tvl usage
       const ppfsPerVaultId: { [vaultId: VaultEntity['id']]: BigNumber } = {};
@@ -127,6 +119,19 @@ export const tvlSlice = createSlice({
         // add data to state
         sliceState.byBoostId[boost.id] = { tvl, staked: totalStaked };
       }
+
+      recomputeTotalTvl(sliceState);
     });
   },
 });
+
+function recomputeTotalTvl(sliceState: WritableDraft<TvlState>) {
+  let totalTvl = BIG_ZERO;
+  for (const vaultTvl of Object.values(sliceState.byVaultId)) {
+    totalTvl = totalTvl.plus(vaultTvl.tvl);
+  }
+  for (const boostTvl of Object.values(sliceState.byBoostId)) {
+    totalTvl = totalTvl.plus(boostTvl.tvl);
+  }
+  sliceState.totalTvl = totalTvl;
+}
