@@ -1,4 +1,5 @@
 // todo: load these asynchronously
+import { QiDao, Insurace, Moonpot, LaCucina } from '../../../helpers/partners';
 import { featuredPools as featuredVaults } from '../../../config/vault/featured';
 
 import { pools as arbitrumVaults } from '../../../config/vault/arbitrum';
@@ -80,6 +81,18 @@ export interface VaultConfig {
 
 export interface FeaturedVaultConfig {
   [vaultId: VaultEntity['id']]: boolean;
+}
+
+export interface MoonpotConfig {
+  id: VaultEntity['id'];
+  img: string;
+  link: string;
+}
+export interface PartnersConfig {
+  QiDao: VaultEntity['id'][];
+  Insurace: ChainEntity['id'][];
+  Moonpot: MoonpotConfig[];
+  LaCucina: VaultEntity['id'][];
 }
 
 interface BoostPartnerConfig {
@@ -186,6 +199,9 @@ export class ConfigAPI {
 
   public async fetchFeaturedVaults(): Promise<FeaturedVaultConfig> {
     return featuredVaults;
+  }
+  public async fetchPartnersConfig(): Promise<PartnersConfig> {
+    return { QiDao, Insurace, Moonpot, LaCucina };
   }
 
   public async fetchAllVaults(): Promise<{ [chainId: ChainEntity['id']]: VaultConfig[] }> {
