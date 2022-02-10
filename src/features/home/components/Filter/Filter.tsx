@@ -61,7 +61,7 @@ const _Filter = () => {
       if (name === 'boost') {
         dispatch(filteredVaultActions.setOnlyBoosted(checked));
       } else if (name === 'retired') {
-        dispatch(filteredVaultActions.setShowRetired(checked));
+        dispatch(filteredVaultActions.setOnlyRetired(checked));
       } else if (name === 'moonpot') {
         dispatch(filteredVaultActions.setOnlyMoonpot(checked));
       }
@@ -325,7 +325,7 @@ const _Filter = () => {
                 }
                 control={
                   <Checkbox
-                    checked={filterOptions.showRetired}
+                    checked={filterOptions.onlyRetired}
                     onChange={handleCheckbox}
                     name="retired"
                     className={classes.checkbox}

@@ -130,6 +130,7 @@ function addVaultToState(
       tags: tags,
       safetyScore: score,
       assetIds: apiVault.assets || [],
+      type: 'single',
     };
 
     sliceState.byId[vault.id] = vault;

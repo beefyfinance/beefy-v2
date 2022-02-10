@@ -5,7 +5,7 @@ import { ApyData } from '../apis/beefy';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
-import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
+import { selectTokenPriceByTokenId } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 
 // boost is expressed as APR
@@ -48,19 +48,14 @@ export const apySlice = createSlice({
         const boost = selectBoostById(state, boostContractData.id);
         const vault = selectVaultById(state, boost.vaultId);
 
-        const token = selectTokenById(state, action.payload.chainId, vault.oracleId);
-        const tokenPrice = selectTokenPriceByTokenId(state, token.id);
-        const earnedToken = selectTokenById(state, action.payload.chainId, boost.earnedTokenId);
-        const earnedTokenPrice = selectTokenPriceByTokenId(state, earnedToken.id);
+        const tokenPrice = selectTokenPriceByTokenId(state, vault.oracleId);
+        const earnedTokenPrice = selectTokenPriceByTokenId(state, boost.earnedTokenId);
 
-        const totalStakedInUsd = boostContractData.totalSupply
-          .times(tokenPrice)
-          .dividedBy(token.decimals);
+        const totalStakedInUsd = boostContractData.totalSupply.times(tokenPrice);
 
         const yearlyRewardsInUsd = boostContractData.rewardRate
           .times(3600 * 24 * 365)
-          .times(earnedTokenPrice)
-          .dividedBy(earnedToken.decimals);
+          .times(earnedTokenPrice);
 
         const apr = yearlyRewardsInUsd.dividedBy(totalStakedInUsd).toNumber();
 

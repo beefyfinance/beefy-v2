@@ -60,6 +60,9 @@ describe('Formatter tests', () => {
     expect(formatBigDecimals(new BigNumber('0.000000001'))).toBe('0');
     expect(formatBigDecimals(new BigNumber('10.1'))).toBe('10.1');
     expect(formatBigDecimals(new BigNumber('10.6001'))).toBe('10.6001');
-    expect(formatBigDecimals(new BigNumber('10.6000001'))).toBe('10.6');
+    expect(formatBigDecimals(new BigNumber('10.6000001'), 4)).toBe('10.6');
+    expect(formatBigDecimals(new BigNumber('1000.6000001'), 4)).toBe('1000.6');
+
+    expect(formatBigDecimals(new BigNumber('10.6001'), 10, false)).toBe('10.6001000000');
   });
 });

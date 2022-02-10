@@ -2,17 +2,20 @@ import { memoize } from 'lodash';
 import { BIG_ZERO } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
+import { BoostEntity } from '../entities/boost';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
   selectBoostUserBalanceInToken,
   selectUserDepositedVaults,
-  selectStandardVaultUserBalanceInToken,
-  selectGovVaultUserBalanceInToken,
+  selectUserVaultDepositInToken,
 } from './balance';
 import { selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenPriceByTokenId } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
+
+export const selectBoostAprInfos = (state: BeefyState, boostId: BoostEntity['id']) =>
+  state.biz.apy.byBoostId[boostId] || { apr: 0 };
 
 export const selectVaultApyInfos = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.biz.apy.byVaultId[vaultId] || { totalApy: 0 };
@@ -59,17 +62,9 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
   for (const vault of userVaults) {
     let vaultUsdBalance = BIG_ZERO;
     const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
-    if (isGovVault(vault)) {
-      const tokenBalance = selectGovVaultUserBalanceInToken(state, vault.id);
-      const usdBalance = tokenBalance.times(oraclePrice);
-      vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
-    } else {
-      const mooTokenBalance = selectStandardVaultUserBalanceInToken(state, vault.id);
-      const ppfs = selectVaultPricePerFullShare(state, vault.id);
-      const oracleTokenBalance = mooTokenBalance.multipliedBy(ppfs);
-      const usdBalance = oracleTokenBalance.times(oraclePrice);
-      vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
-    }
+    const tokenBalance = selectUserVaultDepositInToken(state, vault.id);
+    const usdBalance = tokenBalance.times(oraclePrice);
+    vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
 
     for (const boostId of selectAllVaultBoostIds(state, vault.id)) {
       const boost = selectBoostById(state, boostId);
@@ -97,7 +92,6 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
       newGlobalStats.daily = newGlobalStats.daily.plus(dailyUsd);
     }
   }
-
   newGlobalStats.monthly = newGlobalStats.daily.times(30);
   return newGlobalStats;
 });

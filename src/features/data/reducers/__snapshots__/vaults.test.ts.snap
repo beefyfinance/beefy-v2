@@ -82,6 +82,7 @@ Object {
         "beefy",
         "low",
       ],
+      "type": "single",
     },
     "sushi-one-1ygg-1eth": Object {
       "assetIds": Array [
