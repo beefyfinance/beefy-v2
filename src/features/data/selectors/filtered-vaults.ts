@@ -39,6 +39,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
+    filterOptions.sort !== 'default' ||
     filterOptions.chainIds.length > 0
 );
 
