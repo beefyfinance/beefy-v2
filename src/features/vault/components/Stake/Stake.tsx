@@ -235,8 +235,8 @@ export const Stake: React.FC<StakeProps> = ({
         <Card>
           <CardHeader className={classes.header}>
             <CardTitle titleClassName={classes.title} title={t('Stake-Modal-Title')} />
-            <IconButton onClick={closeModal} aria-label="settings">
-              <CloseIcon htmlColor="#6B7199" />
+            <IconButton className={classes.removeHover} onClick={closeModal} aria-label="settings">
+              <CloseIcon htmlColor="#8A8EA8" />
             </IconButton>
           </CardHeader>
           <CardContent className={classes.content}>
