@@ -13,7 +13,7 @@ Object {
   "byId": Object {
     "beefy.finance": Object {
       "id": "beefy.finance",
-      "name": "beefy.finance",
+      "name": "Beefy.Finance",
     },
   },
 }
@@ -34,11 +34,11 @@ Object {
   "byId": Object {
     "beefy.finance": Object {
       "id": "beefy.finance",
-      "name": "beefy.finance",
+      "name": "Beefy.Finance",
     },
     "sushi": Object {
       "id": "sushi",
-      "name": "sushi",
+      "name": "Sushi",
     },
   },
 }
