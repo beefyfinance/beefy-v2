@@ -166,16 +166,10 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
 
 const VaultsList = memo(function HomeVaultsList() {
   const classes = useStyles();
-  const { t } = useTranslation();
   const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
-  const isVaultListAvailable = useSelector(selectIsVaultListAvailable);
   const filterOptions = useSelector(selectFilterOptions);
   const isWalletConnected = useSelector(selectIsWalletConnected);
   const vaults = useSelector(selectFilteredVaults);
-
-  if (!isVaultListAvailable) {
-    return <CowLoader text={t('Vaults-LoadingData')} />;
-  }
 
   return (
     <div className={classes.vaultsList}>
@@ -191,6 +185,14 @@ const VaultsList = memo(function HomeVaultsList() {
 
 export const Home = () => {
   const classes = useStyles();
+
+  const { t } = useTranslation();
+  const isVaultListAvailable = useSelector(selectIsVaultListAvailable);
+
+  if (!isVaultListAvailable) {
+    return <CowLoader text={t('Vaults-LoadingData')} />;
+  }
+
   return (
     <React.Fragment>
       <Portfolio />

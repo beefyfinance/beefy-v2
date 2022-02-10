@@ -442,21 +442,18 @@ const ItemVaultPresentation = React.memo(_ItemVaultPresentation);
 
 const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => {
   const isBoosted = selectIsVaultBoosted(state, vault.id);
-  const balanceLoaded = state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce;
   const tvlLoaded =
     state.ui.dataLoader.byChainId[vault.chainId]?.contractData.alreadyLoadedOnce &&
     state.ui.dataLoader.global.prices.alreadyLoadedOnce;
-  return { vault, isBoosted, balanceLoaded, tvlLoaded };
+  return { vault, isBoosted, tvlLoaded };
 })(
   ({
     vault,
     isBoosted,
-    balanceLoaded,
     tvlLoaded,
   }: {
     vault: VaultEntity;
     isBoosted: boolean;
-    balanceLoaded: boolean;
     tvlLoaded: boolean;
   }) => {
     const classes = useItemStyles(vault.id);
@@ -480,11 +477,11 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
             <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
               <Grid container>
                 <Grid item xs={6} md={2} lg={2}>
-                  {balanceLoaded && <ItemWalletAmount vaultId={vault.id} />}
+                  <ItemWalletAmount vaultId={vault.id} />
                 </Grid>
 
                 <Grid item xs={6} md={2} lg={2}>
-                  {balanceLoaded && <ItemDeposited vaultId={vault.id} />}
+                  <ItemDeposited vaultId={vault.id} />
                 </Grid>
                 <ApyStats vaultId={vault.id} />
                 <Grid item xs={6} md={2} lg={2}>
@@ -492,7 +489,7 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
                 </Grid>
                 <Grid item xs={6} md={2} lg={2}>
                   {isGovVault(vault) ? (
-                    balanceLoaded && <ItemGovVaultRewards vaultId={vault.id} />
+                    <ItemGovVaultRewards vaultId={vault.id} />
                   ) : (
                     <ItemStandardVaultSafetyScore vaultId={vault.id} />
                   )}

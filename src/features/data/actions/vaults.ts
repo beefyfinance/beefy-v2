@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
+import { FeaturedVaultConfig, PartnersConfig, VaultConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 
@@ -33,5 +33,13 @@ export const fetchFeaturedVaults = createAsyncThunk<FulfilledFeaturedVaultsPaylo
     const api = getConfigApi();
     const featuredVaults = await api.fetchFeaturedVaults();
     return { byVaultId: featuredVaults };
+  }
+);
+
+export const fetchPartnersConfig = createAsyncThunk<PartnersConfig>(
+  'vaults/fetchPartnersConfig',
+  async () => {
+    const api = getConfigApi();
+    return api.fetchPartnersConfig();
   }
 );
