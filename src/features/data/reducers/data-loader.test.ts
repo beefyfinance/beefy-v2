@@ -23,6 +23,23 @@ describe('Data Loader slice tests', () => {
       error: 'fatality',
     });
     expect(sliceState).toMatchSnapshot();
+    sliceState = dataLoaderSlice.reducer(sliceState, {
+      type: fetchAllPricesAction.rejected,
+      error: { message: 'fatality message' },
+    });
+    expect(sliceState).toMatchSnapshot();
+
+    sliceState = dataLoaderSlice.reducer(sliceState, {
+      type: fetchAllPricesAction.rejected,
+      error: { name: 'fatality name' },
+    });
+    expect(sliceState).toMatchSnapshot();
+
+    sliceState = dataLoaderSlice.reducer(sliceState, {
+      type: fetchAllPricesAction.rejected,
+      error: { code: 1234 },
+    });
+    expect(sliceState).toMatchSnapshot();
 
     expect(sliceState.global.prices.alreadyLoadedOnce).toBe(true);
 

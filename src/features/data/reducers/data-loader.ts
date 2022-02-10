@@ -1,4 +1,10 @@
-import { ActionReducerMapBuilder, AsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  AsyncThunk,
+  createSlice,
+  SerializedError,
+} from '@reduxjs/toolkit';
+import { isString } from 'lodash';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction } from '../actions/balance';
@@ -122,7 +128,7 @@ function addGlobalAsyncThunkActions(
     };
   });
   builder.addCase(action.rejected, (sliceState, action) => {
-    const msg = (action.error?.message || action.error?.name || action.error?.code) + '';
+    const msg = getMessage(action.error);
     // here, maybe put an error message
     sliceState.global[stateKey] = {
       status: 'rejected',
@@ -157,7 +163,7 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
 
-    const msg = (action.error?.message || action.error?.name || action.error?.code) + '';
+    const msg = getMessage(action.error);
     // here, maybe put an error message
     sliceState.byChainId[chainId][stateKey] = {
       alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
@@ -196,3 +202,7 @@ export const dataLoaderSlice = createSlice({
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, 'allowance');
   },
 });
+
+function getMessage(error: SerializedError) {
+  return isString(error) ? error : (error?.message || error?.name || error?.code) + '';
+}
