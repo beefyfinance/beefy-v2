@@ -13,6 +13,9 @@ import { selectIsWalletConnected, selectWalletAddress } from './wallet';
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletConnected(state)) {
     const userAddress = walletAddress || selectWalletAddress(state);
+    if (!userAddress) {
+      return null
+    }
     const walletBalance = state.user.balance.byAddress[userAddress.toLocaleLowerCase()];
     return walletBalance || null;
   } else {
