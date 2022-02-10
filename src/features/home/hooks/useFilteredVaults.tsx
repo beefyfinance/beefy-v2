@@ -106,11 +106,10 @@ function sortVaults(vaults, key, direction) {
 
 //If token = vault.token check if he had balance in the wallet
 //If token = vault.earnedToken check if he had deposited in the vault
-function hasWalletBalance(token, tokenBalances, network, isGovVault) {
-  let symbol = isGovVault ? `${token}GovVault` : token;
-  return tokenBalances[network][symbol] !== undefined &&
-    tokenBalances[network][symbol].balance &&
-    tokenBalances[network][symbol].balance > 0
+function hasWalletBalance(token, tokenBalances, network) {
+  return tokenBalances[network][token] !== undefined &&
+    tokenBalances[network][token].balance &&
+    tokenBalances[network][token].balance > 0
     ? false
     : true;
 }
@@ -149,11 +148,7 @@ function keepVault(vault, config, address, tokenBalances, userVaults, boostVault
   }
 
   // hide when no wallet balance of deposit token
-  if (
-    config.zero &&
-    address &&
-    hasWalletBalance(vault.token, tokenBalances, vault.network, vault.isGovVault)
-  ) {
+  if (config.zero && address && hasWalletBalance(vault.token, tokenBalances, vault.network)) {
     return false;
   }
 

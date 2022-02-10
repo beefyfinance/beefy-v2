@@ -4387,5 +4387,41 @@ export const pools = [
     buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D",
     network: "avax",
     retireReason: "rewards"
+  },
+  {
+    id: "joe-wavax-domi",
+    name: "DOMI-AVAX LP",
+    token: "DOMI-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0x5B9Faf0feA95df4D4cB894Ef920704daFf656f3E",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeAVAX-DOMI",
+    earnedTokenAddress: "0x440F1249349B185748C9aA8dAB26F067A515A68F",
+    earnContractAddress: "0x440F1249349B185748C9aA8dAB26F067A515A68F",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-wavax-domi",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "AVAX",
+      "DOMI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/0xFc6Da929c031162841370af240dEc19099861d3B/AVAX",
+    buyTokenUrl: "https://traderjoexyz.com/trade?outputCurrency=0xFc6Da929c031162841370af240dEc19099861d3B",
+    network: "avax"
   }
 ];

@@ -16,8 +16,7 @@ const TransakNav = ({ className, children }) => {
     widgetWidth: '450px',
     defaultNetwork: 'polygon',
     defaultCryptoCurrency: 'usdc',
-    // networks: 'arbitrum,avaxcchain,polygon,bsc,celo,fantom,moonriver', // NETWORK PREFFERENCES
-    networks: 'ethereum,solana,mainnet,optimism',
+    networks: 'arbitrum,avaxcchain,polygon,bsc,celo,fantom,moonriver', // NETWORK PREFFERENCES
     cryptoCurrencyList:
       'eth,weth,usdt,usdc,matic,dai,qi,bnb,bifi,avax,ftm,cusd,ceur,movr,aave,sushi,busd,quick,celo,wbtc',
     defaultCryptoAmount: 1,
@@ -35,4 +34,3 @@ const TransakNav = ({ className, children }) => {
 };
 
 export const Transak = React.memo(TransakNav);
-
