@@ -143,31 +143,46 @@ const ItemTvl = React.memo(_ItemTvl);
 const _ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const vault = selectVaultById(state, vaultId);
   const isBoosted = selectIsVaultBoosted(state, vault.id);
-  const stakedIds = selectActiveVaultBoostIds(state, vault.id).map(boostId => {
-    const boost = selectBoostById(state, boostId);
-    return boost.name;
-  });
+  const stakedIds = selectActiveVaultBoostIds(state, vault.id)
+    .map(boostId => {
+      const boost = selectBoostById(state, boostId);
+      return boost.name;
+    })
+    .join(', ');
   const userStaked = selectHasUserDepositInVault(state, vault.id);
-  const totalDeposited = selectUserVaultDepositInToken(state, vault.id);
-  const totalDepositedUsd = selectUserVaultDepositInUsd(state, vault.id);
+  const deposit = selectUserVaultDepositInToken(state, vault.id);
+  const hasDeposit = deposit.gt(0);
+  const totalDeposited = formatBigDecimals(deposit, 8, false);
+  const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
   const blurred = selectIsBalanceHidden(state);
-  return { vault, stakedIds, isBoosted, userStaked, totalDeposited, totalDepositedUsd, blurred };
+  return {
+    vault,
+    stakedIds,
+    isBoosted,
+    userStaked,
+    hasDeposit,
+    totalDeposited,
+    totalDepositedUsd,
+    blurred,
+  };
 })(
   ({
     vault,
     stakedIds,
     isBoosted,
     userStaked,
+    hasDeposit,
     totalDeposited,
     totalDepositedUsd,
     blurred,
   }: {
     vault: VaultEntity;
-    stakedIds: string[];
+    stakedIds: string;
     isBoosted: boolean;
     userStaked: boolean;
-    totalDeposited: BigNumber;
-    totalDepositedUsd: BigNumber;
+    hasDeposit: boolean;
+    totalDeposited: string;
+    totalDepositedUsd: string;
     blurred: boolean;
   }) => {
     const classes = useItemStyles(vault.id);
@@ -180,7 +195,7 @@ const _ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: Vault
           {isBoosted && userStaked && (
             <div className={clsx([classes.stat, classes.marginBottom])}>
               <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-              <ValueText value={stakedIds.join(', ')} vaultId={vault.id} />
+              <ValueText value={stakedIds} vaultId={vault.id} />
               <Typography className={classes.label}>
                 <ValuePrice value={t('BOOST')} vaultId={vault.id} />
               </Typography>
@@ -190,21 +205,13 @@ const _ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: Vault
           {(!isBoosted || !userStaked) && (
             <div className={clsx([classes.stat, classes.marginBottom])}>
               <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-              <ValueText
-                blurred={blurred}
-                value={formatBigDecimals(totalDeposited, 8)}
-                vaultId={vault.id}
-              />
-              {totalDepositedUsd.isGreaterThan(0) && (
+              <ValueText blurred={blurred} value={totalDeposited} vaultId={vault.id} />
+              {hasDeposit && (
                 <Typography className={classes.label}>
-                  <ValuePrice
-                    blurred={blurred}
-                    value={formatBigUsd(totalDepositedUsd)}
-                    vaultId={vault.id}
-                  />
+                  <ValuePrice blurred={blurred} value={totalDepositedUsd} vaultId={vault.id} />
                 </Typography>
               )}
-              {totalDeposited.isLessThan(0) && <div className={classes.boostSpacer} />}
+              {hasDeposit && <div className={classes.boostSpacer} />}
             </div>
           )}
         </Link>
@@ -299,19 +306,28 @@ const _ItemWalletAmount = connect(
     const userOracleInWallet = selectWalletBalanceOfToken(state, vault.chainId, vault.oracleId);
     const price = selectTokenPriceByTokenId(state, vault.oracleId);
     const userOracleInWalletUsd = userOracleInWallet.multipliedBy(price);
+
     const blurred = selectIsBalanceHidden(state);
-    return { vault, userOracleInWallet, userOracleInWalletUsd, blurred };
+    return {
+      vault,
+      hasInWallet: userOracleInWallet.gt(0),
+      userOracleInWallet: formatBigDecimals(userOracleInWallet, 4, false),
+      userOracleInWalletUsd: formatBigUsd(userOracleInWalletUsd),
+      blurred,
+    };
   }
 )(
   ({
     vault,
+    hasInWallet,
     userOracleInWallet,
     userOracleInWalletUsd,
     blurred,
   }: {
     vault: VaultEntity;
-    userOracleInWallet: BigNumber;
-    userOracleInWalletUsd: BigNumber;
+    hasInWallet: boolean;
+    userOracleInWallet: string;
+    userOracleInWalletUsd: string;
     blurred: boolean;
   }) => {
     const classes = useItemStyles(vault.id);
@@ -321,21 +337,13 @@ const _ItemWalletAmount = connect(
       <Link className={classes.removeLinkStyles} to={`/${vault.chainId}/vault/${vault.id}`}>
         <div className={clsx([classes.stat, classes.marginBottom])}>
           <Typography className={classes.label}>{t('WALLET')}</Typography>
-          <ValueText
-            blurred={blurred}
-            value={formatBigDecimals(userOracleInWallet, 4)}
-            vaultId={vault.id}
-          />
-          {userOracleInWallet.gt(0) && (
+          <ValueText blurred={blurred} value={userOracleInWallet} vaultId={vault.id} />
+          {hasInWallet && (
             <Typography className={classes.label}>
-              <ValuePrice
-                blurred={blurred}
-                value={formatBigUsd(userOracleInWalletUsd)}
-                vaultId={vault.id}
-              />
+              <ValuePrice blurred={blurred} value={userOracleInWalletUsd} vaultId={vault.id} />
             </Typography>
           )}
-          {userOracleInWallet.isLessThanOrEqualTo(0) && <div className={classes.boostSpacer} />}
+          {hasInWallet && <div className={classes.boostSpacer} />}
         </div>
       </Link>
     );

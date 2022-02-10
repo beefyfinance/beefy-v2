@@ -20,6 +20,8 @@ import * as _Web3Contract from 'web3-eth-contract';
 import { Contract } from 'web3-eth-contract';
 import _vaultAbi from '../../../../config/abi/vault.json';
 import _boostAbi from '../../../../config/abi/boost.json';
+import { selectBoostById } from '../../selectors/boosts';
+import { selectVaultById } from '../../selectors/vaults';
 
 // fix TS typings
 const vaultAbi = _vaultAbi as AbiItem[];
@@ -40,12 +42,48 @@ export class ContractDataAPI implements IContractDataApi {
   ): Promise<FetchAllContractDataResult> {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
-    const { calls: standardVaultCalls, formatter: standardVaultFormatter } =
-      this._getStandardVaultCallsAndFormatter(state, standardVaults);
-    const { calls: govVaultCalls, formatter: govVaultFormatter } =
-      this._getGovVaultCallsAndFormatter(govVaults);
-    const { calls: boostsCalls, formatter: boostsFormatter } =
-      this._getBoostCallsAndFormatter(boosts);
+    const standardVaultCalls: ShapeWithLabel[] = [];
+    for (const vault of standardVaults) {
+      const earnedToken = selectTokenById(state, this.chain.id, vault.earnedTokenId);
+      // do this check to please the TypeScript gods
+      if (!isTokenErc20(earnedToken)) {
+        console.info(
+          `VaultContractAPI.fetchStandardVaultsContractData: skipping non erc20 token ${earnedToken.id}`
+        );
+        continue;
+      }
+      const vaultContract = getVaultContractInstance(earnedToken.contractAddress);
+      standardVaultCalls.push({
+        type: 'vault-standard',
+        id: vault.id,
+        balance: vaultContract.methods.balance(),
+        pricePerFullShare: vaultContract.methods.getPricePerFullShare(),
+        strategy: vaultContract.methods.strategy(),
+      });
+    }
+
+    const govVaultCalls: ShapeWithLabel[] = [];
+    for (const vault of govVaults) {
+      const vaultContract = getVaultContractInstance(vault.earnContractAddress);
+      govVaultCalls.push({
+        type: 'vault-gov',
+        id: vault.id,
+        totalSupply: vaultContract.methods.totalSupply(),
+      });
+    }
+
+    const boostsCalls: ShapeWithLabel[] = [];
+    for (const boost of boosts) {
+      // set a new address
+      const boostContract = getBoostContractInstance(boost.earnContractAddress);
+      boostsCalls.push({
+        type: 'boost',
+        id: boost.id,
+        totalSupply: boostContract.methods.totalSupply(),
+        rewardRate: boostContract.methods.rewardRate(),
+        periodFinish: boostContract.methods.periodFinish(),
+      });
+    }
 
     const calls = [...standardVaultCalls, ...govVaultCalls, ...boostsCalls];
 
@@ -62,11 +100,38 @@ export class ContractDataAPI implements IContractDataApi {
     };
     for (const result of results) {
       if (result.type === 'boost') {
-        res.boosts.push(boostsFormatter(result));
+        const boost = selectBoostById(state, result.id);
+        const earnedToken = selectTokenById(state, boost.chainId, boost.earnedTokenId);
+        const vault = selectVaultById(state, boost.vaultId);
+        const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+        const data = {
+          id: result.id,
+          totalSupply: new BigNumber(result.totalSupply).shiftedBy(-oracleToken.decimals),
+          rewardRate: new BigNumber(result.rewardRate).shiftedBy(-earnedToken.decimals),
+          /* assuming period finish is a UTC timestamp in seconds */
+          periodFinish:
+            result.periodFinish === '0' ? null : new Date(parseInt(result.periodFinish) * 1000),
+        };
+        res.boosts.push(data);
       } else if (result.type === 'vault-gov') {
-        res.govVaults.push(govVaultFormatter(result));
+        const vault = selectVaultById(state, result.id);
+        const token = selectTokenById(state, vault.chainId, vault.oracleId);
+        const data = {
+          id: result.id,
+          totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
+        };
+        res.govVaults.push(data);
       } else if (result.type === 'vault-standard') {
-        res.standardVaults.push(standardVaultFormatter(result));
+        const vault = selectVaultById(state, result.id);
+        const mooToken = selectTokenById(state, vault.chainId, vault.oracleId);
+        const data = {
+          id: result.id,
+          balance: new BigNumber(result.balance).shiftedBy(-mooToken.decimals),
+          /** always 18 decimals for PPFS */
+          pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-18),
+          strategy: result.strategy,
+        };
+        res.standardVaults.push(data);
       } else {
         console.error(result);
         throw new Error(`Could not identify type`);
@@ -74,92 +139,6 @@ export class ContractDataAPI implements IContractDataApi {
     }
     // format strings as numbers
     return res;
-  }
-
-  protected _getStandardVaultCallsAndFormatter(state: BeefyState, vaults: VaultStandard[]) {
-    const calls: ShapeWithLabel[] = [];
-
-    for (const vault of vaults) {
-      const earnedToken = selectTokenById(state, this.chain.id, vault.earnedTokenId);
-      // do this check to please the TypeScript gods
-      if (!isTokenErc20(earnedToken)) {
-        console.info(
-          `VaultContractAPI.fetchStandardVaultsContractData: skipping non erc20 token ${earnedToken.id}`
-        );
-        continue;
-      }
-      const vaultContract = getVaultContractInstance(earnedToken.contractAddress);
-      calls.push({
-        type: 'vault-standard',
-        id: vault.id,
-        balance: vaultContract.methods.balance(),
-        pricePerFullShare: vaultContract.methods.getPricePerFullShare(),
-        strategy: vaultContract.methods.strategy(),
-      });
-    }
-    return {
-      calls,
-      formatter: (result: AllValuesAsString<StandardVaultContractData>) => {
-        return {
-          id: result.id,
-          balance: new BigNumber(result.balance),
-          /** always 18 decimals for PPFS */
-          pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-18),
-          strategy: result.strategy,
-        } as StandardVaultContractData;
-      },
-    };
-  }
-
-  protected _getGovVaultCallsAndFormatter(vaults: VaultGov[]) {
-    const calls: ShapeWithLabel[] = [];
-
-    for (const vault of vaults) {
-      const vaultContract = getVaultContractInstance(vault.earnContractAddress);
-      calls.push({
-        type: 'vault-gov',
-        id: vault.id,
-        totalSupply: vaultContract.methods.totalSupply(),
-      });
-    }
-    return {
-      calls,
-      formatter: (result: AllValuesAsString<GovVaultContractData>) => {
-        return {
-          id: result.id,
-          totalSupply: new BigNumber(result.totalSupply),
-        } as GovVaultContractData;
-      },
-    };
-  }
-
-  protected _getBoostCallsAndFormatter(boosts: BoostEntity[]) {
-    const calls: ShapeWithLabel[] = [];
-
-    for (const boost of boosts) {
-      // set a new address
-      const boostContract = getBoostContractInstance(boost.earnContractAddress);
-
-      calls.push({
-        type: 'boost',
-        id: boost.id,
-        totalSupply: boostContract.methods.totalSupply(),
-        rewardRate: boostContract.methods.rewardRate(),
-        periodFinish: boostContract.methods.periodFinish(),
-      });
-    }
-    return {
-      calls,
-      formatter: (result: AllValuesAsString<BoostContractData>) => {
-        return {
-          id: result.id,
-          totalSupply: new BigNumber(result.totalSupply),
-          rewardRate: new BigNumber(result.rewardRate),
-          /* assuming period finish is a UTC timestamp in seconds */
-          periodFinish: new Date(parseInt(result.periodFinish) * 1000),
-        } as BoostContractData;
-      },
-    };
   }
 }
 

@@ -23,10 +23,11 @@ export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVault
 export const selectFilterPopinFilterCount = createSelector(
   selectFilterOptions,
   filterOptions =>
-    (filterOptions.showRetired ? 1 : 0) +
+    (filterOptions.onlyRetired ? 1 : 0) +
     (filterOptions.onlyMoonpot ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.platformId !== null ? 1 : 0) +
+    (filterOptions.vaultType !== 'all' ? 1 : 0) +
     filterOptions.chainIds.length
 );
 
@@ -37,7 +38,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.userCategory !== 'all' ||
     filterOptions.vaultType !== 'all' ||
     filterOptions.userCategory !== 'all' ||
-    filterOptions.showRetired !== false ||
+    filterOptions.onlyRetired !== false ||
     filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
@@ -79,13 +80,23 @@ export const selectFilteredVaults = createSelector(
       if (filterOptions.platformId !== null && vault.platformId !== filterOptions.platformId) {
         return false;
       }
-      if (!filterOptions.showRetired && !isVaultActive(vault)) {
+      if (filterOptions.onlyRetired && isVaultActive(vault)) {
+        return false;
+      }
+      if (!filterOptions.onlyRetired && !isVaultActive(vault)) {
         return false;
       }
       if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
         return false;
       }
       if (filterOptions.onlyBoosted && !selectIsVaultBoosted(state, vault.id)) {
+        return false;
+      }
+
+      if (filterOptions.vaultType === 'lps' && vault.type !== 'lps') {
+        return false;
+      }
+      if (filterOptions.vaultType === 'single' && vault.type !== 'single') {
         return false;
       }
 

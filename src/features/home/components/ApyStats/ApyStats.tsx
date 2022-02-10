@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { LabeledStat } from '../LabeledStat';
 import { Typography, Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formatApy } from '../../../../helpers/format';
+import {  formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { Popover } from '../../../../components/Popover';
 import { YearlyBreakdownTooltipProps } from './YearlyBreakdownTooltipProps';
@@ -12,10 +12,10 @@ import { DailyBreakdownTooltipProps } from './DailyBreakdownTooltipProps';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectVaultApyInfos } from '../../../data/selectors/apy';
+import { selectBoostAprInfos, selectVaultApyInfos } from '../../../data/selectors/apy';
 import { isGovVaultApy, isStandardVaultApy } from '../../../data/apis/beefy';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
-import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import { selectActiveVaultBoostIds, selectIsVaultBoosted } from '../../../data/selectors/boosts';
 
 const useStyles = makeStyles(styles as any);
 const yearlyToDaily = apy => {
@@ -175,6 +175,14 @@ export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const boostApr = useSelector((state: BeefyState) => {
+    if (isBoosted) {
+      const latestActiveBoost = selectActiveVaultBoostIds(state, vaultId);
+      return selectBoostAprInfos(state, latestActiveBoost[0]).apr;
+    } else {
+      return 0;
+    }
+  });
   const apy = useSelector((state: BeefyState) => selectVaultApyInfos(state, vaultId));
 
   // TODO
@@ -204,9 +212,8 @@ export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   }
 
   if (isBoosted) {
-    // TODO
-    //values.boostApr = launchpoolApr.apr;
-    //values.boostDaily = launchpoolApr.apr / 365;
+    values.boostApr = boostApr;
+    values.boostDaily = values.boostApr / 365;
     values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
     values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
   }

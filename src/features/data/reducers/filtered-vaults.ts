@@ -8,11 +8,11 @@ export type FilteredVaultsState = {
   sort: 'tvl' | 'apy' | 'safetyScore' | 'default';
   vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy';
   userCategory: 'all' | 'eligible' | 'deposited';
-  vaultType: 'all' | 'lps' | 'single-asset';
+  vaultType: 'all' | 'lps' | 'single';
   searchText: string;
   chainIds: ChainEntity['id'][];
   platformId: PlatformEntity['id'] | null;
-  showRetired: boolean;
+  onlyRetired: boolean;
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
 };
@@ -24,7 +24,7 @@ export const initialFilteredVaultsState: FilteredVaultsState = {
   searchText: '',
   chainIds: [],
   platformId: null,
-  showRetired: false,
+  onlyRetired: false,
   onlyMoonpot: false,
   onlyBoosted: false,
 };
@@ -57,8 +57,8 @@ export const filteredVaultsSlice = createSlice({
     setPlatformId(sliceState, action: PayloadAction<FilteredVaultsState['platformId']>) {
       sliceState.platformId = action.payload;
     },
-    setShowRetired(sliceState, action: PayloadAction<FilteredVaultsState['showRetired']>) {
-      sliceState.showRetired = action.payload;
+    setOnlyRetired(sliceState, action: PayloadAction<FilteredVaultsState['onlyRetired']>) {
+      sliceState.onlyRetired = action.payload;
     },
     setOnlyMoonpot(sliceState, action: PayloadAction<FilteredVaultsState['onlyMoonpot']>) {
       sliceState.onlyMoonpot = action.payload;

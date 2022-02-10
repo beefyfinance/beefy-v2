@@ -3,9 +3,9 @@ import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/format';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostEntity } from '../entities/boost';
-import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import { VaultEntity, VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
-import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
+import { selectTokenPriceByTokenId } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 
 /**
@@ -51,13 +51,10 @@ export const tvlSlice = createSlice({
       // On standard vault contract data, recompute tvl and exclusions
       let totalTvl = sliceState.totalTvl;
       for (const vaultContractData of action.payload.data.standardVaults) {
-        const vault = selectVaultById(state, vaultContractData.id) as VaultStandard;
-        const oracleToken = selectTokenById(state, action.payload.chainId, vault.oracleId);
-        const price = selectTokenPriceByTokenId(state, oracleToken.id);
+        const vault = selectVaultById(state, vaultContractData.id);
+        const price = selectTokenPriceByTokenId(state, vault.oracleId);
 
-        const vaultTvl = vaultContractData.balance
-          .times(price)
-          .dividedBy(new BigNumber(10).exponentiatedBy(oracleToken.decimals));
+        const vaultTvl = vaultContractData.balance.times(price);
 
         // add vault tvl to total tvl state
         totalTvl = totalTvl.plus(vaultTvl);
@@ -70,12 +67,9 @@ export const tvlSlice = createSlice({
         const totalStaked = govVaultContractData.totalSupply;
 
         const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
-        const oracleToken = selectTokenById(state, action.payload.chainId, vault.oracleId);
-        const price = selectTokenPriceByTokenId(state, oracleToken.id);
+        const price = selectTokenPriceByTokenId(state, vault.oracleId);
 
-        let tvl = totalStaked
-          .times(price)
-          .dividedBy(new BigNumber(10).exponentiatedBy(oracleToken.decimals));
+        let tvl = totalStaked.times(price);
 
         // handle gov vault TVL exclusion
         if (vault.excludedId) {
@@ -120,21 +114,18 @@ export const tvlSlice = createSlice({
       for (const boostContractData of action.payload.data.boosts) {
         const boost = selectBoostById(state, boostContractData.id);
         const vault = selectVaultById(state, boost.vaultId);
-
-        const token = selectTokenById(state, action.payload.chainId, vault.oracleId);
-        const tokenPrice = selectTokenPriceByTokenId(state, token.id);
+        const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
         // find vault price per full share for the vault
         const ppfs = ppfsPerVaultId[vault.id];
         if (ppfs === undefined) {
           throw new Error(`Could not find ppfs for vault id ${vault.id}`);
         }
 
-        const totalStaked = boostContractData.totalSupply.times(ppfs).dividedBy(token.decimals);
-        const staked = totalStaked.dividedBy(token.decimals);
-        const tvl = totalStaked.times(tokenPrice).dividedBy(token.decimals);
+        const totalStaked = boostContractData.totalSupply.times(ppfs);
+        const tvl = totalStaked.times(oraclePrice);
 
         // add data to state
-        sliceState.byBoostId[boost.id] = { tvl, staked };
+        sliceState.byBoostId[boost.id] = { tvl, staked: totalStaked };
       }
     });
   },
