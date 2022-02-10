@@ -8,6 +8,7 @@ import { initHomeDataV4 } from './features/data/actions/scenarios';
 import { store } from './store';
 import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
+import { ErrorsSnackbar } from './components/Header/components/ErrorsSnackbar';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
@@ -29,6 +30,7 @@ export const App = () => {
       <CssBaseline />
       <Router>
         <ScrollToTop />
+        <ErrorsSnackbar />
         <Header />
         <React.Suspense fallback={<div className="loader" />}>
           <Switch>

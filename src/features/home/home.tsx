@@ -178,17 +178,14 @@ const VaultsList = memo(function HomeVaultsList() {
   }
 
   return (
-    <>
-      <Filter />
-      <div className={classes.vaultsList}>
-        {filterOptions.userCategory === 'deposited' && isWalletConnected && vaults.length === 0 && (
-          <EmptyStates />
-        )}
-        {filterOptions.userCategory === 'deposited' && !isWalletConnected && <EmptyStates />}
-        {filterOptions.userCategory === 'eligible' && !isWalletConnected && <EmptyStates />}
-        <VirtualVaultsList vaults={vaults} columns={isTwoColumns ? 2 : 1} />
-      </div>
-    </>
+    <div className={classes.vaultsList}>
+      {filterOptions.userCategory === 'deposited' && isWalletConnected && vaults.length === 0 && (
+        <EmptyStates />
+      )}
+      {filterOptions.userCategory === 'deposited' && !isWalletConnected && <EmptyStates />}
+      {filterOptions.userCategory === 'eligible' && !isWalletConnected && <EmptyStates />}
+      <VirtualVaultsList vaults={vaults} columns={isTwoColumns ? 2 : 1} />
+    </div>
   );
 });
 
@@ -198,7 +195,7 @@ export const Home = () => {
     <React.Fragment>
       <Portfolio />
       <Container maxWidth="lg" className={classes.vaultContainer}>
-        {/*<VaultsHeader />*/}
+        <Filter />
         <VaultsList />
       </Container>
     </React.Fragment>
