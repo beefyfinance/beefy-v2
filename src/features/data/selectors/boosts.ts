@@ -25,11 +25,6 @@ export const selectIsVaultBoosted = (state: BeefyState, vaultId: VaultEntity['id
   return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds.length > 0 || false;
 };
 
-// TODO
-export const selectIsVaultMoonpot = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  return false;
-};
-
 export const selectActiveVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds || [];
 };
