@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { LabeledStat } from '../LabeledStat';
 import { Typography, Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import {  formatApy } from '../../../../helpers/format';
+import { formatApy } from '../../../../helpers/format';
 import BigNumber from 'bignumber.js';
 import { Popover } from '../../../../components/Popover';
 import { YearlyBreakdownTooltipProps } from './YearlyBreakdownTooltipProps';
@@ -13,9 +13,9 @@ import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectBoostAprInfos, selectVaultApyInfos } from '../../../data/selectors/apy';
-import { isGovVaultApy, isStandardVaultApy } from '../../../data/apis/beefy';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { selectActiveVaultBoostIds, selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import { selectVaultApyAvailable } from '../../../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles as any);
 const yearlyToDaily = apy => {
@@ -183,19 +183,20 @@ export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
       return 0;
     }
   });
-  const apy = useSelector((state: BeefyState) => selectVaultApyInfos(state, vaultId));
+  const apy = useSelector((state: BeefyState) =>
+    selectVaultApyInfos(state, vaultId)
+  ) as any; /* legacy code that should use type guards */
 
-  // TODO
-  const isLoading = false;
+  const isLoading = useSelector((state: BeefyState) => !selectVaultApyAvailable(state, vaultId));
 
-  if (isGovVaultApy(apy)) {
+  values.totalApy = apy.totalApy;
+
+  if (apy.vaultApr) {
     values.vaultApr = apy.vaultApr;
     values.vaultDaily = apy.vaultApr / 365;
-  } else {
-    values.totalApy = apy.totalApy;
   }
 
-  if (isStandardVaultApy(apy) && apy.tradingApr !== undefined) {
+  if (apy.tradingApr) {
     values.tradingApr = apy.tradingApr;
     values.tradingDaily = apy.tradingApr / 365;
   }
@@ -206,14 +207,14 @@ export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
     values.totalDaily = yearlyToDaily(values.totalApy);
   }
 
-  if (isGovVaultApy(apy)) {
+  if (isGovVault(vault)) {
     values.totalApy = apy.vaultApr / 1;
     values.totalDaily = apy.vaultApr / 365;
   }
 
   if (isBoosted) {
     values.boostApr = boostApr;
-    values.boostDaily = values.boostApr / 365;
+    values.boostDaily = boostApr / 365;
     values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
     values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
   }
