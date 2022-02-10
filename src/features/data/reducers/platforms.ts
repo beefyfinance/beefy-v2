@@ -47,13 +47,14 @@ export const platformsSlice = createSlice({
 function addPlatformToState(
   sliceState: WritableDraft<PlatformsState>,
   chainId: ChainEntity['id'],
-  platformId: PlatformEntity['id']
+  platformName: string
 ) {
-  platformId = platformId.toLowerCase();
+  // for now, platforms Id is their name
+  const platformId = platformName.toLowerCase();
   if (sliceState.byId[platformId] === undefined) {
     const platform: PlatformEntity = {
       id: platformId,
-      name: platformId, // for now, platforms Id is their name
+      name: platformName,
     };
     sliceState.byId[platformId] = platform;
     sliceState.allIds.push(platformId);
