@@ -82,7 +82,9 @@ export class BeefyAPI {
   }
 
   public async getBreakdown(): Promise<BeefyAPIBreakdownResponse> {
-    const res = await this.api.get('/apy/breakdown', { params: { _: this.getCacheBuster() } });
+    const res = await this.api.get('/apy/breakdown', {
+      params: { _: this.getCacheBuster('hour') },
+    });
     return res.data;
   }
 

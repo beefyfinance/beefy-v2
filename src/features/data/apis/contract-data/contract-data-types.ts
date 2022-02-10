@@ -63,7 +63,7 @@ export interface BoostContractData {
   id: string;
   totalSupply: BigNumber;
   rewardRate: BigNumber;
-  periodFinish: Date;
+  periodFinish: Date | null; // null means boost is in prestake
 }
 
 export interface FetchAllContractDataResult {

@@ -3,30 +3,6 @@ import { PlatformEntity } from './platform';
 import { TokenEntity } from './token';
 
 // maybe a RiskAnalysis type would be better
-/*
-enum VaultRiskTag {
-  // todo: we use strings for convenience right now but it takes a lot of memory space
-  ALGO_STABLE = 'ALGO_STABLE',
-  AUDIT = 'AUDIT',
-  BATTLE_TESTED = 'BATTLE_TESTED',
-  COMPLEXITY_HIGH = 'COMPLEXITY_HIGH',
-  COMPLEXITY_LOW = 'COMPLEXITY_LOW',
-  COMPLEXITY_MID = 'COMPLEXITY_MID',
-  CONTRACTS_VERIFIED = 'CONTRACTS_VERIFIED',
-  IL_HIGH = 'IL_HIGH',
-  IL_LOW = 'IL_LOW',
-  IL_NONE = 'IL_NONE',
-  MCAP_HIGH = 'MCAP_HIGH',
-  MCAP_LARGE = 'MCAP_LARGE',
-  MCAP_LOW = 'MCAP_LOW',
-  MCAP_MEDIUM = 'MCAP_MEDIUM',
-  MCAP_MICRO = 'MCAP_MICRO',
-  MCAP_MIRO = 'MCAP_MIRO',
-  MCAP_SMALL = 'MCAP_SMALL',
-  NEW_STRAT = 'NEW_STRAT',
-  NO_AUDIT = 'NO_AUDIT',
-  PLATFORM_ESTABLISHED = 'PLATFORM_ESTABLISHED',
-}*/
 
 export type VaultTag =
   | 'beefy'
@@ -157,6 +133,8 @@ export interface VaultGov {
   status: 'active' | 'eol' | 'paused';
 
   tags: VaultTag[];
+
+  type: 'single';
 
   safetyScore: number;
 }
