@@ -112,7 +112,7 @@ export class WalletConnectApi implements IWalletConnectApi {
 
   public async disconnect() {
     await this.web3Modal.clearCachedProvider();
-    if (this.provider.removeAllListeners) {
+    if (this.provider && this.provider.removeAllListeners) {
       this.provider.removeAllListeners();
     }
     this.provider = null;
@@ -157,7 +157,7 @@ export class WalletConnectApi implements IWalletConnectApi {
       // cleanup if needed
       if (!gotChainChangedEvent) {
         this.web3Modal.clearCachedProvider();
-        if (this.provider.removeAllListeners) {
+        if (this.provider && this.provider.removeAllListeners) {
           this.provider.removeAllListeners();
         }
         this.provider = null;

@@ -6,7 +6,7 @@ import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAllVaults } from '../actions/vaults';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
+import { isTokenErc20, TokenEntity } from '../entities/token';
 
 /**
  * State containing Vault infos
@@ -106,6 +106,7 @@ function addBoostToState(
       buyUrl: null,
       type: 'erc20',
     };
+    temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
     sliceState.byChainId[chainId].allIds.push(token.id);
   }
@@ -130,6 +131,7 @@ function addVaultToState(
       buyUrl: null,
       type: 'erc20',
     };
+    temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
     sliceState.byChainId[chainId].allIds.push(token.id);
   }
@@ -147,6 +149,7 @@ function addVaultToState(
         buyUrl: null,
         type: 'native',
       };
+      temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
       sliceState.byChainId[chainId].allIds.push(token.id);
     } else {
@@ -159,8 +162,52 @@ function addVaultToState(
         buyUrl: null,
         type: 'erc20',
       };
+      temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
       sliceState.byChainId[chainId].allIds.push(token.id);
     }
   }
+}
+
+const wrappedTokenFixes = [
+  {
+    chainId: 'fantom',
+    tokenId: 'WFTM',
+    contractAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+  },
+  {
+    chainId: 'polygon',
+    tokenId: 'WMATIC',
+    contractAddress: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
+  },
+];
+
+/**
+ * Some Wrapped tokens do not have a contractAddress set
+ * This is a temporary fix
+ */
+function temporaryWrappedtokenFix(token: TokenEntity) {
+  // only concern erc20 assets
+  if (!isTokenErc20(token)) {
+    return;
+  }
+  // contract address has been set
+  if (token.contractAddress) {
+    return;
+  }
+
+  // not a wrapped token
+  if (!token.id.startsWith('W')) {
+    console.error(`Erc20 token without a contract address: ${token.id} (${token.chainId})`);
+    return;
+  }
+
+  for (const fix of wrappedTokenFixes) {
+    if (token.chainId === fix.chainId && token.id === fix.tokenId) {
+      token.contractAddress = fix.contractAddress;
+      console.warn(`Fixed ${token.id} (${token.chainId}) contract address: ${fix.contractAddress}`);
+      return;
+    }
+  }
+  console.error(`Unfixed wrapped token without a contract address: ${token.id} (${token.chainId})`);
 }
