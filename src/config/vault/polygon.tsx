@@ -150,42 +150,6 @@ export const pools = [
     network: "polygon"
   },
   {
-    id: "quick-shib-matic",
-    name: "SHIB-MATIC LP",
-    token: "SHIB-MATIC LP",
-    tokenDescription: "QuickSwap",
-    tokenAddress: "0x5FB641De2663e8a94C9dea0a539817850d996e99",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooQuickSHIB-MATIC",
-    earnedTokenAddress: "0x72B5Cf05770C9a6A99FB8652825884ee36a4BfdA",
-    earnContractAddress: "0x72B5Cf05770C9a6A99FB8652825884ee36a4BfdA",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "quick-shib-matic",
-    status: "active",
-    platform: "QuickSwap",
-    assets: [
-      "SHIB",
-      "MATIC"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://quickswap.exchange/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x6f8a06447Ff6FcF75d803135a7de15CE88C1d4ec",
-    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x6f8a06447Ff6FcF75d803135a7de15CE88C1d4ec&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
-    network: "polygon"
-  },
-  {
     id: "quick-ftm-matic",
     name: "FTM-MATIC LP",
     token: "FTM-MATIC LP",
@@ -7758,43 +7722,6 @@ export const pools = [
     network: "polygon"
   },
   {
-    id: "quick-kiro-matic",
-    name: "KIRO-MATIC LP",
-    token: "KIRO-MATIC LP",
-    tokenDescription: "QuickSwap",
-    tokenAddress: "0x3f245C6f18442Bd6198d964C567a01BD4202e290",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooQuickSwapKIRO-MATIC",
-    earnedTokenAddress: "0x0A9e464D6939D37a78d7B2a32e8B8F75f15c3C25",
-    earnContractAddress: "0x0A9e464D6939D37a78d7B2a32e8B8F75f15c3C25",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "quick-kiro-matic",
-    depositsPaused: false,
-    status: "active",
-    platform: "QuickSwap",
-    assets: [
-      "KIRO",
-      "MATIC"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_LOW",
-      "IL_HIGH",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratMultiLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D&inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-    addLiquidityUrl: "https://quickswap.exchange/#/add/0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D/ETH",
-    network: "polygon"
-  },
-  {
     id: "quick-ustw-matic",
     name: "USTw-MATIC LP",
     token: "USTw-MATIC LP",
@@ -8188,6 +8115,81 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://quickswap.exchange/#/add/ETH/0x7DfF46370e9eA5f0Bad3C4E29711aD50062EA7A4",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x7DfF46370e9eA5f0Bad3C4E29711aD50062EA7A4",
+    network: "polygon",
+    retireReason: "rewards"
+  },
+  {
+    id: "quick-kiro-matic-eol",
+    name: "KIRO-MATIC LP",
+    token: "KIRO-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x3f245C6f18442Bd6198d964C567a01BD4202e290",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickSwapKIRO-MATIC",
+    earnedTokenAddress: "0x0A9e464D6939D37a78d7B2a32e8B8F75f15c3C25",
+    earnContractAddress: "0x0A9e464D6939D37a78d7B2a32e8B8F75f15c3C25",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-kiro-matic",
+    depositsPaused: false,
+    status: "eol",
+    platform: "QuickSwap",
+    assets: [
+      "KIRO",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_LOW",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D&inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D/ETH",
+    network: "polygon",
+    retireReason: "rewards"
+  },
+  {
+    id: "quick-shib-matic-eol",
+    name: "SHIB-MATIC LP",
+    token: "SHIB-MATIC LP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x5FB641De2663e8a94C9dea0a539817850d996e99",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickSHIB-MATIC",
+    earnedTokenAddress: "0x72B5Cf05770C9a6A99FB8652825884ee36a4BfdA",
+    earnContractAddress: "0x72B5Cf05770C9a6A99FB8652825884ee36a4BfdA",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-shib-matic",
+    status: "eol",
+    platform: "QuickSwap",
+    assets: [
+      "SHIB",
+      "MATIC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x6f8a06447Ff6FcF75d803135a7de15CE88C1d4ec",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0x6f8a06447Ff6FcF75d803135a7de15CE88C1d4ec&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
     network: "polygon",
     retireReason: "rewards"
   }

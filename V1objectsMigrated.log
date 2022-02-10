@@ -1,198 +1,41 @@
 [
   {
-    "id": "bsc vault: blizzard-xblzd-busd-eol",
+    "id": "fantom vault: ripae-pftm-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: ripae-pae-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-paint-it-black-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: blizzard-xblzd-bnb-old-eol",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: blizzard-xblzd-eol2",
+    "id": "polygon vault: quick-kiro-matic-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom vault: beefy-binspirit",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: sushi-yfi-eth",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-dai",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-wshec",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-multi",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: sushi-wftm-link",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-spell",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-jewel",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-pills",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-eth",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: boo-usdc-fs",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-frax",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-mai",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-gohm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: 2omb-2omb-2share",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-demeters-degree",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: boo-btc-eth",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: spirit-yfi-ftm-eol",
+    "id": "polygon vault: quick-shib-matic-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom vault: spirit-any-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-ftm-just-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-boo",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: quick-fodl-matic",
+    "id": "avax vault: joe-wavax-domi",
     "type": "Added"
   },
   {
-    "id": "polygon vault: quick-quick-tel",
+    "id": "aurora vault: solace-solace",
     "type": "Added"
   },
   {
-    "id": "polygon vault: quick-bnb-usdc",
+    "id": "aurora vault: tri-solace-near",
     "type": "Added"
   },
   {
-    "id": "polygon vault: quick-book-matic",
+    "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-sol-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: tetu-tetu-usdc-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: joe-wavax-ime",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-wavax-pefi2",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-link.e-usdc.e",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-mim-usdc.e",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-ust-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-ust-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: bankerjoe-mim-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "cronos vault: vvs-cro-bifi-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: sushi-sushi-weth",
-    "type": "REMOVED"
-  },
-  {
-    "id": "aurora vault: tri-atust-near",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: tri-near-atluna",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: trisolaris-near-tri",
-    "type": "synced"
-  },
-  {
-    "id": "aurora vault: trisolaris-near-wbtc",
-    "type": "synced"
-  },
-  {
-    "id": "aurora vault: trisolaris-usdt-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "aurora vault: trisolaris-usdt-near",
-    "type": "synced"
-  },
-  {
-    "id": "aurora vault: trisolaris-usdc-near",
-    "type": "synced"
-  },
-  {
-    "id": "aurora vault: trisolaris-near-weth",
-    "type": "synced"
   }
 ]

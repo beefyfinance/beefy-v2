@@ -398,5 +398,76 @@ export const pools = [
     buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0xC4bdd27c33ec7daa6fcfd8532ddB524Bf4038096",
     addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0xC4bdd27c33ec7daa6fcfd8532ddB524Bf4038096",
     network: "aurora"
+  },
+  {
+    id: "solace-solace",
+    logo: "single-assets/SOLACE.png",
+    name: "SOLACE",
+    token: "SOLACE",
+    tokenDescription: "Solace",
+    tokenAddress: "0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSOLACE",
+    earnedTokenAddress: "0x6027e8CF9A136FC26c54B0c29A190BE52F8b6872",
+    earnContractAddress: "0x6027e8CF9A136FC26c54B0c29A190BE52F8b6872",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "SOLACE",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Others",
+    assets: [
+      "SOLACE"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
+    network: "aurora"
+  },
+  {
+    id: "tri-solace-near",
+    name: "SOLACE-NEAR LP",
+    token: "SOLACE-NEAR LP",
+    tokenDescription: "Trisolaris",
+    tokenAddress: "0xdDAdf88b007B95fEb42DDbd110034C9a8e9746F2",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooTriSOLACE-NEAR",
+    earnedTokenAddress: "0x6347C23cd6283E619728854D44FF852A462fBaAc",
+    earnContractAddress: "0x6347C23cd6283E619728854D44FF852A462fBaAc",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "tri-solace-near",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trisolaris",
+    assets: [
+      "SOLACE",
+      "NEAR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    buyTokenUrl: "https://www.trisolaris.io/#/swap?outputCurrency=0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
+    addLiquidityUrl: "https://www.trisolaris.io/#/add/0xC42C30aC6Cc15faC9bD938618BcaA1a1FaE8501d/0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
+    network: "aurora"
   }
 ];
