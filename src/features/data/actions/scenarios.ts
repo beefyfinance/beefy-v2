@@ -153,6 +153,9 @@ export async function initHomeDataV4(store: BeefyStore) {
   // now set regular calls to update user data
   for (const chain of chains) {
     const pollStop = poll(async () => {
+      if (!selectIsWalletConnected(store.getState())) {
+        return;
+      }
       // trigger all calls at the same time
       const fulfills = fetchCaptureUserData(store, chain.id);
 
