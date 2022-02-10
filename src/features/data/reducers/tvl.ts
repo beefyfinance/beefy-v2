@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/format';
-import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov } from '../entities/vault';
@@ -120,18 +119,12 @@ export const tvlSlice = createSlice({
         sliceState.byBoostId[boost.id] = { tvl, staked: totalStaked };
       }
 
-      recomputeTotalTvl(sliceState);
+      // recompute total tvl as a whole
+      let totalTvl = BIG_ZERO;
+      for (const vaultTvl of Object.values(sliceState.byVaultId)) {
+        totalTvl = totalTvl.plus(vaultTvl.tvl);
+      }
+      sliceState.totalTvl = totalTvl;
     });
   },
 });
-
-function recomputeTotalTvl(sliceState: WritableDraft<TvlState>) {
-  let totalTvl = BIG_ZERO;
-  for (const vaultTvl of Object.values(sliceState.byVaultId)) {
-    totalTvl = totalTvl.plus(vaultTvl.tvl);
-  }
-  for (const boostTvl of Object.values(sliceState.byBoostId)) {
-    totalTvl = totalTvl.plus(boostTvl.tvl);
-  }
-  sliceState.totalTvl = totalTvl;
-}
