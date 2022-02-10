@@ -24,6 +24,8 @@ import {
 import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags';
 import { BeefyState } from '../../../../redux-types';
 import {
+  selectBoostBalanceTokenEntity,
+  selectBoostRewardsTokenEntity,
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance';
@@ -190,8 +192,8 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
     if (result.balance === '0' && result.rewards === '0') {
       return null;
     }
-    const balanceToken = selectGovVaultBalanceTokenEntity(state, boost.id);
-    const rewardsToken = selectGovVaultRewardsTokenEntity(state, boost.id);
+    const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
+    const rewardsToken = selectBoostRewardsTokenEntity(state, boost.id);
     const rawBalance = new BigNumber(result.balance);
     const rawRewards = new BigNumber(result.rewards);
     return {
