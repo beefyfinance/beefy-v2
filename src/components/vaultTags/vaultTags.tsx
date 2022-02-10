@@ -6,7 +6,8 @@ import { VaultEntity } from '../../features/data/entities/vault';
 import { useSelector } from 'react-redux';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
-import { selectIsVaultBoosted, selectIsVaultMoonpot } from '../../features/data/selectors/boosts';
+import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
+import { selectIsVaultMoonpot } from '../../features/data/selectors/partners';
 
 const useStyles = makeStyles(styles as any);
 const _DisplayTags = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {

@@ -15,6 +15,7 @@ import { BeefyStore } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
+import { fetchPartnersConfig } from './partners';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -54,6 +55,8 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchBeefyBuybackAction({}));
 
     store.dispatch(fetchFeaturedVaults());
+
+    store.dispatch(fetchPartnersConfig());
   });
 
   // create the wallet instance as soon as we get the chain list

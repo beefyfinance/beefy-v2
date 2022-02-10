@@ -17,6 +17,7 @@ import { buybackSlice } from '../../data/reducers/buyback';
 import { filteredVaultsSlice } from '../../data/reducers/filtered-vaults';
 import { platformsSlice } from '../../data/reducers/platforms';
 import { uiThemeSlice } from '../../data/reducers/ui-theme';
+import { partnersSlice } from '../../data/reducers/partners';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -30,6 +31,7 @@ const bizReducer = combineReducers<BeefyState['biz']>({
   apy: apySlice.reducer,
   historicalApy: historicalApySlice.reducer,
   buyback: buybackSlice.reducer,
+  partners: partnersSlice.reducer,
 });
 const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,

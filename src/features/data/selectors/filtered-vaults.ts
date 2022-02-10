@@ -4,12 +4,8 @@ import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isVaultActive } from '../entities/vault';
 import { selectHasUserDepositInVault, selectIsUserEligibleForVault } from './balance';
-import {
-  selectActiveVaultBoostIds,
-  selectBoostById,
-  selectIsVaultBoosted,
-  selectIsVaultMoonpot,
-} from './boosts';
+import { selectActiveVaultBoostIds, selectBoostById, selectIsVaultBoosted } from './boosts';
+import { selectIsVaultMoonpot } from './partners';
 import {
   selectIsVaultBeefy,
   selectIsVaultBlueChip,
