@@ -72,9 +72,9 @@ export function featureFlag_getAllowanceApiChunkSize(): number {
   return 500;
 }
 
-export function featureFlag_dataPolling() {
+export function featureFlag_noDataPolling() {
   const params = new URLSearchParams(window.location.search);
-  return params.has('__polling');
+  return params.has('__no_polling');
 }
 
 export function featureFlag_walletAddressOverride(walletAddress: string | null | undefined) {

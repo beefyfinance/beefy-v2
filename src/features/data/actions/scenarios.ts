@@ -9,7 +9,7 @@ import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
 import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
 import { fetchAllContractDataByChainAction } from './contract-data';
-import { featureFlag_dataPolling } from '../utils/feature-flags';
+import { featureFlag_noDataPolling } from '../utils/feature-flags';
 //import { fetchAllAllowanceAction } from './allowance';
 import { BeefyStore } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
@@ -110,7 +110,7 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   // ok all data is fetched, now we start the poll functions
 
-  if (!featureFlag_dataPolling()) {
+  if (featureFlag_noDataPolling()) {
     console.debug('Polling disabled');
     return;
   }
