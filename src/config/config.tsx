@@ -111,7 +111,7 @@ export const config = {
       'MAI',
       'FRAX',
       'MIM',
-      'nUSD'
+      'nUSD',
     ],
   },
   polygon: {
@@ -380,4 +380,48 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT'],
   },
+  moonbeam: {
+    name: 'Moonbeam',
+    chainId: 1284,
+    rpc: ['https://rpc.api.moonbeam.network'],
+    explorerUrl: 'https://moonscan.io',
+    multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
+    supportedWallets: ['injected'],
+    providerName: 'Moonbeam',
+    walletSettings: {
+      chainId: `0x${parseInt('1284', 10).toString(16)}`,
+      chainName: 'Moonbeam',
+      nativeCurrency: {
+        name: 'GLMR',
+        symbol: 'GLMR',
+        decimals: 18,
+      },
+      rpcUrls: ['https://rpc.api.moonbeam.network'],
+      blockExplorerUrls: ['https://moonscan.io/'],
+    },
+    stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
+  },
 };
+
+/*
+ BOILERPLATE NEW CHAIN
+name: '',
+chainId:0 ,
+rpc: [''],
+explorerUrl: '',
+multicallAddress: '',
+supportedWallets: [''],
+providerName: '',
+walletSettings: {
+chainId: `0x${parseInt('', 10).toString(16)}`,
+chainName: '',
+nativeCurrency: {
+name: '',
+symbol: '',
+decimals: 0,
+},
+rpcUrls: [''],
+blockExplorerUrls: [''],
+},
+stableCoins: [''],
+ */
