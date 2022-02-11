@@ -1,5 +1,45 @@
 export const pools = [
   {
+    id: 'moonbeam-bifi-gov',
+    name: 'BIFI Earnings Pool',
+    logo: 'single-assets/BIFI.png',
+    token: 'BIFI',
+    tokenDecimals: 18,
+		tokenDescription: 'Beefy.Finance',
+    tokenAddress: '0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8',
+		tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
+    earnedToken: 'GLMR',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x1198f78efd67DFc917510aaA07d49545f4B24f11',
+    earnContractAddress: '0x1198f78efd67DFc917510aaA07d49545f4B24f11',
+		poolAddress: "0x1198f78efd67DFc917510aaA07d49545f4B24f11",
+		excluded: "moonbeam-bifi-maxi",
+		pricePerFullShare: 1,
+		isGovVault: true,
+		tvl: 0,
+		oracle: "tokens",
+		oracleId: "BIFI",
+		oraclePrice: 0,
+		status: "active",
+		platform: "Beefy.Finance",
+		assets: [
+			"BIFI"
+		],
+		risks: [
+			"COMPLEXITY_LOW",
+			"BATTLE_TESTED",
+			"IL_NONE",
+			"MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    callFee: 0.5,
+    withdrawalFee: "0%",
+    createdAt: 1623706144,
+    network: "moonbeam"		
+	},
+  {
     id: "beamswap-usdc-wglmr",
     name: "USDC-GLMR LP",
     token: "USDC-GLMR TLP",
