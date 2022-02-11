@@ -1,5 +1,6 @@
 import { memoize } from 'lodash';
 import { BIG_ZERO } from '../../../helpers/format';
+import { mooAmountToOracleAmount } from '../../../helpers/ppfs';
 import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { BoostEntity } from '../entities/boost';
@@ -11,7 +12,7 @@ import {
 } from './balance';
 import { selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { selectIsUserBalanceAvailable } from './data-loader';
-import { selectTokenPriceByTokenId } from './tokens';
+import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
 export const selectBoostAprInfos = (state: BeefyState, boostId: BoostEntity['id']) =>
@@ -70,7 +71,14 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
       const boost = selectBoostById(state, boostId);
       const mooTokenBalance = selectBoostUserBalanceInToken(state, boost.id);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
-      const originalTokenBalance = mooTokenBalance.multipliedBy(ppfs);
+      const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+      const originalTokenBalance = mooAmountToOracleAmount(
+        mooToken,
+        oracleToken,
+        ppfs,
+        mooTokenBalance
+      );
       const usdBalance = originalTokenBalance.times(oraclePrice);
       vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
     }

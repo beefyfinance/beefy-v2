@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BIG_ZERO } from '../../../helpers/format';
+import { mooAmountToOracleAmount } from '../../../helpers/ppfs';
 import { BeefyState } from '../../../redux-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
@@ -14,7 +15,7 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletConnected(state)) {
     const userAddress = walletAddress || selectWalletAddress(state);
     if (!userAddress) {
-      return null
+      return null;
     }
     const walletBalance = state.user.balance.byAddress[userAddress.toLocaleLowerCase()];
     return walletBalance || null;
@@ -71,6 +72,8 @@ export const selectStandardVaultUserBalanceInToken = (
   if (isGovVault(vault)) {
     throw new Error(`Trying to get standard vault balance but vault ${vault.id} is a gov vault`);
   }
+  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+  const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
   const earnedTokenBalance = selectWalletBalanceOfToken(
     state,
     vault.chainId,
@@ -78,7 +81,7 @@ export const selectStandardVaultUserBalanceInToken = (
     walletAddress
   );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
-  return earnedTokenBalance.multipliedBy(ppfs);
+  return mooAmountToOracleAmount(mooToken, oracleToken, ppfs, earnedTokenBalance);
 };
 
 export const selectGovVaultUserBalanceInToken = (

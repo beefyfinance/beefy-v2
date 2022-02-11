@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/format';
+import { mooAmountToOracleAmount } from '../../../helpers/ppfs';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
-import { selectTokenPriceByTokenId } from '../selectors/tokens';
+import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 
 /**
@@ -111,8 +112,14 @@ export const tvlSlice = createSlice({
         if (ppfs === undefined) {
           throw new Error(`Could not find ppfs for vault id ${vault.id}`);
         }
-
-        const totalStaked = boostContractData.totalSupply.times(ppfs);
+        const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+        const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+        const totalStaked = mooAmountToOracleAmount(
+          mooToken,
+          oracleToken,
+          ppfs,
+          boostContractData.totalSupply
+        );
         const tvl = totalStaked.times(oraclePrice);
 
         // add data to state
