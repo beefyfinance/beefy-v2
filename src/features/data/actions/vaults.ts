@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { FeaturedVaultConfig, VaultConfig } from '../../../config/all-config';
 import { BeefyState } from '../../../redux-types';
-import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 

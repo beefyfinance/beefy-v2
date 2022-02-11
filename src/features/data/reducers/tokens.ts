@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
+import { BoostConfig, VaultConfig } from '../../../config/all-config';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAllVaults } from '../actions/vaults';
-import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, TokenEntity } from '../entities/token';
 

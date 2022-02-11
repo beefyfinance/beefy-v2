@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
 import { isEqual } from 'lodash';
+import { BoostConfig } from '../../../config/all-config';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { BoostConfig } from '../apis/config';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';

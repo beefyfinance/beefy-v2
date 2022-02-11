@@ -9,6 +9,7 @@ import { store } from './store';
 import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 import { ErrorsSnackbar } from './components/Header/components/ErrorsSnackbar';
+import { CowLoader } from './components/CowLoader';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
@@ -32,7 +33,7 @@ export const App = () => {
         <ScrollToTop />
         <ErrorsSnackbar />
         <Header />
-        <React.Suspense fallback={<div className="loader" />}>
+        <React.Suspense fallback={<CowLoader text="Loading" />}>
           <Switch>
             <Route exact path="/">
               <Home />

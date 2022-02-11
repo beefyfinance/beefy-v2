@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { MoonpotConfig } from '../../../config/all-config';
 import { fetchPartnersConfig } from '../actions/partners';
-import { MoonpotConfig } from '../apis/config';
 import { VaultEntity } from '../entities/vault';
 
 /**

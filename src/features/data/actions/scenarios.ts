@@ -13,7 +13,6 @@ import { featureFlag_noDataPolling } from '../utils/feature-flags';
 //import { fetchAllAllowanceAction } from './allowance';
 import { BeefyStore } from '../../../redux-types';
 import { chains as chainsConfig } from '../../../config/config';
-import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
 
@@ -37,7 +36,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   const captureFulfill = createFulfilledActionCapturer(store);
 
   // start fetching chain config
-  const chainListPromise = store.dispatch(fetchChainConfigs());
+  await store.dispatch(fetchChainConfigs());
 
   // we fetch the configuration for all chain
   const boostListPromise = store.dispatch(fetchAllBoosts());
@@ -59,14 +58,6 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchPartnersConfig());
   });
 
-  // create the wallet instance as soon as we get the chain list
-  setTimeout(async () => {
-    await chainListPromise;
-    initWallet(store);
-  });
-
-  // we need config data (for contract addresses) to start querying the rest
-  await chainListPromise;
   // we need the chain list to handle the vault list
   store.dispatch((await vaultListFulfill)());
   await boostListPromise;
@@ -77,36 +68,39 @@ export async function initHomeDataV4(store: BeefyStore) {
   const fulfillsByNet: {
     [chainId: ChainEntity['id']]: CapturedFulfilledActions;
   } = {};
-  for (const chain of chains) {
-    fulfillsByNet[chain.id] = {
-      contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
-      user: null,
-    };
-    if (selectIsWalletConnected(store.getState())) {
-      fulfillsByNet[chain.id].user = fetchCaptureUserData(store, chain.id);
-    }
-  }
-
-  // ok now we started all calls, it's just a matter of ordering fulfill actions
-
-  // before doing anything else, we need our prices
-  await pricesPromise;
-
-  for (const chain of chains) {
-    // run in an async block se we don't wait for a slow chain
-    (async () => {
-      const chainFfs = fulfillsByNet[chain.id];
-      await store.dispatch((await chainFfs.contractData)());
-      if (chainFfs.user !== null) {
-        dispatchUserFfs(store, chainFfs.user);
+  // delay cpu intensive contract task so we give react time to render earlier
+  setTimeout(async () => {
+    for (const chain of chains) {
+      fulfillsByNet[chain.id] = {
+        contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
+        user: null,
+      };
+      if (selectIsWalletConnected(store.getState())) {
+        fulfillsByNet[chain.id].user = fetchCaptureUserData(store, chain.id);
       }
-    })().catch(err => {
-      // as we still dispatch network errors, for reducers to handle
-      // there is not much to do here, this is just to avoid
-      // "unhandled promise exception" messages in the console
-      console.warn(err);
-    });
-  }
+    }
+
+    // ok now we started all calls, it's just a matter of ordering fulfill actions
+
+    // before doing anything else, we need our prices
+    await pricesPromise;
+
+    for (const chain of chains) {
+      // run in an async block se we don't wait for a slow chain
+      (async () => {
+        const chainFfs = fulfillsByNet[chain.id];
+        await store.dispatch((await chainFfs.contractData)());
+        if (chainFfs.user !== null) {
+          dispatchUserFfs(store, chainFfs.user);
+        }
+      })().catch(err => {
+        // as we still dispatch network errors, for reducers to handle
+        // there is not much to do here, this is just to avoid
+        // "unhandled promise exception" messages in the console
+        console.warn(err);
+      });
+    }
+  }, 200);
 
   // ok all data is fetched, now we start the poll functions
 
@@ -124,7 +118,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   // recompute boost activity status
   let pollStop = poll(async () => {
     return store.dispatch(recomputeBoostStatus());
-  }, 5 * 1000 /* every 5s */);
+  }, 30 * 1000 /* every 30s */);
   pollStopFns.push(pollStop);
 
   // now set regular calls to update prices

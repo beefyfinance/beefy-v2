@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ChainConfig } from '../apis/config';
+import { ChainConfig } from '../../../config/all-config';
 import { getConfigApi } from '../apis/instances';
 
 export interface FulfilledPayload {

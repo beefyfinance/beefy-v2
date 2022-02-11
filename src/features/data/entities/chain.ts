@@ -1,4 +1,4 @@
-import { ChainConfig } from '../apis/config';
+import { ChainConfig } from '../../../config/all-config';
 
 /**
  * The chain entity as you know it

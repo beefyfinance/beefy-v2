@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BoostConfig } from '../apis/config';
+import { BoostConfig } from '../../../config/all-config';
 import { getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 
