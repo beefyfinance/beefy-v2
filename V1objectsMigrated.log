@@ -1,41 +1,50 @@
 [
   {
-    "id": "fantom vault: ripae-pftm-ftm",
-    "type": "Added"
+    "id": "avax vault: joe-wavax-ime",
+    "type": "synced"
   },
   {
-    "id": "fantom vault: ripae-pae-ftm",
-    "type": "Added"
+    "id": "avax vault: joe-wavax-pefi2",
+    "type": "synced"
   },
   {
-    "id": "fantom vault: beets-paint-it-black-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-kiro-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-shib-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-wavax-domi",
-    "type": "Added"
+    "id": "avax vault: joe-link.e-usdc.e",
+    "type": "synced"
   },
   {
     "id": "aurora vault: solace-solace",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-wglmr",
     "type": "Added"
   },
   {
-    "id": "aurora vault: tri-solace-near",
+    "id": "moonbeam vault: beamswap-dai-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: beamswap-wglmr-glint",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: beamswap-busd-bnb",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-busd",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-eth",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-usdt",
     "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
-    "type": "Added"
+    "type": "synced"
   }
 ]

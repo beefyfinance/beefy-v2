@@ -418,7 +418,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Others",
+    platform: "Other",
     assets: [
       "SOLACE"
     ],
