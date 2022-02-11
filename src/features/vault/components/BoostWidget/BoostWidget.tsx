@@ -16,6 +16,7 @@ import { isEmpty } from '../../../../helpers/utils';
 import { BIG_ZERO, byDecimals } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
+
 export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
   const item = boostedData ?? (vaultBoosts.length > 0 ? vaultBoosts[0] : null);
   const stylesProps = {
@@ -41,7 +42,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     deposit: { token: null, input: '', amount: BIG_ZERO, max: false },
     withdraw: { token: null, input: '', amount: BIG_ZERO, max: false },
   });
-
+  /*
   React.useEffect(() => {
     async function fetchRewards() {
       await dispatch(reduxActions.balance.fetchBoostRewards(item, network));
@@ -50,7 +51,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
       fetchRewards();
     }
   }, [dispatch, isBoosted, item, network]);
-
+*/
   const handleClose = () => {
     resetFormData();
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });

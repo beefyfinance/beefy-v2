@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchPartnersConfig } from '../actions/partners';
 import { MoonpotConfig } from '../apis/config';
+import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 
 /**
@@ -12,9 +13,33 @@ export type PartnersState = {
       [vaultId: VaultEntity['id']]: MoonpotConfig;
     };
   };
+  insurace: {
+    byChainId: {
+      [chainId: ChainEntity['id']]: boolean;
+    };
+  };
+  qidao: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: boolean;
+    };
+  };
+  lacucina: {
+    byVaultId: {
+      [vaultId: VaultEntity['id']]: boolean;
+    };
+  };
 };
 export const initialPartnersState: PartnersState = {
   moonpot: {
+    byVaultId: {},
+  },
+  insurace: {
+    byChainId: {},
+  },
+  qidao: {
+    byVaultId: {},
+  },
+  lacucina: {
     byVaultId: {},
   },
 };
@@ -31,6 +56,21 @@ export const partnersSlice = createSlice({
         const vaultId = moonpotConfig.id;
         if (!sliceState.moonpot.byVaultId[vaultId]) {
           sliceState.moonpot.byVaultId[vaultId] = moonpotConfig;
+        }
+      }
+      for (const chainId of action.payload.Insurace) {
+        if (!sliceState.insurace.byChainId[chainId]) {
+          sliceState.insurace.byChainId[chainId] = true;
+        }
+      }
+      for (const vaultId of action.payload.QiDao) {
+        if (!sliceState.qidao.byVaultId[vaultId]) {
+          sliceState.qidao.byVaultId[vaultId] = true;
+        }
+      }
+      for (const vaultId of action.payload.LaCucina) {
+        if (!sliceState.lacucina.byVaultId[vaultId]) {
+          sliceState.lacucina.byVaultId[vaultId] = true;
         }
       }
     });

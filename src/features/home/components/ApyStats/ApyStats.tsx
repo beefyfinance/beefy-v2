@@ -1,10 +1,10 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
 import { LabeledStat } from '../LabeledStat';
 import { Typography, Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formatApy } from '../../../../helpers/format';
+import { formattedTotalApy } from '../../../../helpers/format';
 import { Popover } from '../../../../components/Popover';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
@@ -172,7 +172,7 @@ const LabeledStatWithTooltip = memo(({ children, boosted, label, value }: any) =
   );
 });
 
-export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
+function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -181,49 +181,60 @@ export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const isLoading = useSelector((state: BeefyState) => !selectVaultApyAvailable(state, vaultId));
   const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
 
-  const formatted = Object.fromEntries(
-    Object.entries(values).map(([key, value]) => {
-      const formattedValue = key.toLowerCase().includes('daily')
-        ? formatApy(value, 2)
-        : formatApy(value);
-      return [key, formattedValue];
-    })
-  );
+  const formatted = formattedTotalApy(values);
 
+  return (
+    <LabeledStatWithTooltip
+      value={formatted.totalApy}
+      label={isGovVault(vault) ? t('APR') : t('APY')}
+      boosted={isBoosted ? formatted.boostedTotalApy : ''}
+      isLoading={isLoading}
+      className={`tooltip-toggle`}
+    >
+      <YearlyBreakdownTooltip
+        isGovVault={isGovVault(vault)}
+        boosted={isBoosted}
+        rates={formatted}
+      />
+    </LabeledStatWithTooltip>
+  );
+}
+export const YearlyApyStats = memo(_YearlyApyStats);
+
+function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
+  const { t } = useTranslation();
+
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+
+  const isLoading = useSelector((state: BeefyState) => !selectVaultApyAvailable(state, vaultId));
+  const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
+
+  const formatted = formattedTotalApy(values);
+
+  return (
+    <LabeledStatWithTooltip
+      value={formatted.totalDaily}
+      label={t('Vault-Daily')}
+      boosted={isBoosted ? formatted.boostedTotalDaily : ''}
+      isLoading={isLoading}
+      className={`tooltip-toggle`}
+    >
+      <DailyBreakdownTooltip isGovVault={isGovVault(vault)} boosted={isBoosted} rates={formatted} />
+    </LabeledStatWithTooltip>
+  );
+}
+export const DailyApyStats = memo(_DailyApyStats);
+
+export function ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   return (
     <>
       <Grid item xs={6} md={2} lg={2}>
-        <LabeledStatWithTooltip
-          value={formatted.totalApy}
-          label={isGovVault(vault) ? t('APR') : t('APY')}
-          boosted={isBoosted ? formatted.boostedTotalApy : ''}
-          isLoading={isLoading}
-          className={`tooltip-toggle`}
-        >
-          <YearlyBreakdownTooltip
-            isGovVault={isGovVault(vault)}
-            boosted={isBoosted}
-            rates={formatted}
-          />
-        </LabeledStatWithTooltip>
+        <YearlyApyStats vaultId={vaultId} />
       </Grid>
       <Grid item xs={6} md={2} lg={2}>
-        <LabeledStatWithTooltip
-          value={formatted.totalDaily}
-          label={t('Vault-Daily')}
-          boosted={isBoosted ? formatted.boostedTotalDaily : ''}
-          isLoading={isLoading}
-          className={`tooltip-toggle`}
-        >
-          <DailyBreakdownTooltip
-            isGovVault={isGovVault(vault)}
-            boosted={isBoosted}
-            rates={formatted}
-          />
-        </LabeledStatWithTooltip>
+        <DailyApyStats vaultId={vaultId} />
       </Grid>
     </>
   );
 }
-
-export const ApyStats = memo(_ApyStats);

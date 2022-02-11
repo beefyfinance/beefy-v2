@@ -23,6 +23,7 @@ import { TvlState } from './features/data/reducers/tvl';
 import { UIThemeState } from './features/data/reducers/ui-theme';
 import { VaultsState } from './features/data/reducers/vaults';
 import { WalletState } from './features/data/reducers/wallet';
+import { ZapsState } from './features/data/reducers/zaps';
 
 export interface BeefyState {
   entities: {
@@ -31,6 +32,7 @@ export interface BeefyState {
     vaults: VaultsState;
     boosts: BoostsState;
     platforms: PlatformsState;
+    zaps: ZapsState;
   };
   biz: {
     tvl: TvlState;

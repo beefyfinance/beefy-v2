@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js';
 import { ApyStatLoader } from '../components/ApyStatLoader';
+import { TotalApy } from '../features/data/reducers/apy';
 
 (BigNumber.prototype as any).significant = function (digits) {
   const number = this.toFormat({
@@ -34,6 +35,17 @@ export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => 
 
   const num = apy / 1000 ** order;
   return `${num.toFixed(dp)}${units[order]}%`;
+};
+
+export const formattedTotalApy = (totalApy: TotalApy) => {
+  return Object.fromEntries(
+    Object.entries(totalApy).map(([key, value]) => {
+      const formattedValue = key.toLowerCase().includes('daily')
+        ? formatApy(value, 4)
+        : formatApy(value);
+      return [key, formattedValue];
+    })
+  );
 };
 
 export const formatUsd = (tvl, oraclePrice = undefined) => {

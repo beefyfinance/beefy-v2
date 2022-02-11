@@ -2,11 +2,10 @@ import { Container, makeStyles, Grid, Typography, Box, Button } from '@material-
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { addressBook as _addressBook } from 'blockchain-addressbook';
 import { reduxActions } from '../redux/actions';
-import { isEmpty } from '../../helpers/utils';
 import { Loader } from '../../components/loader';
 import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
@@ -26,6 +25,26 @@ import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
 import { Spirit } from './components/SpiritCard';
 import { Moonpot } from './components/MoonportCard';
+import { selectVaultById } from '../data/selectors/vaults';
+import { BeefyState } from '../../redux-types';
+import {
+  selectActiveVaultBoostIds,
+  selectBoostById,
+  selectIsVaultBoosted,
+} from '../data/selectors/boosts';
+import { selectIsWalletConnected, selectWalletAddress } from '../data/selectors/wallet';
+import { isGovVault, VaultEntity } from '../data/entities/vault';
+import { selectChainById } from '../data/selectors/chains';
+import { selectVaultEligibleZap } from '../data/selectors/zaps';
+import {
+  selectIsVaultBinSpirit,
+  selectIsVaultInsurace,
+  selectIsVaultMoonpot,
+  selectIsVaultQidao,
+} from '../data/selectors/partners';
+import { TokenEntity } from '../data/entities/token';
+import { selectTokenById } from '../data/selectors/tokens';
+import { selectPlatformById } from '../data/selectors/platforms';
 
 //allow the Harmony-blockchain entries in the address-book to be accessed via the normal
 //  "network" property values used in our core vault-object schema
@@ -39,26 +58,33 @@ export const Vault = () => {
   const t = useTranslation().t;
 
   let { id }: any = useParams();
-  const { vault, wallet } = useSelector((state: any) => ({
-    vault: state.vaultReducer,
-    wallet: state.walletReducer,
-  }));
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, id));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+  const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
+  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, id));
+  const vaultBoosts = useSelector((state: BeefyState) =>
+    selectActiveVaultBoostIds(state, id).map(boostId => selectBoostById(state, boostId))
+  );
+  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const walletAddress = useSelector((state: BeefyState) =>
+    isWalletConnected ? selectWalletAddress(state) : null
+  );
+  const eligibleZap = useSelector((state: BeefyState) => selectVaultEligibleZap(state, id));
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [isGovVault, setIsGovVault] = React.useState(false);
-  const [item, setVaultData] = React.useState(null);
   const [dw, setDw] = React.useState('deposit');
+  const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, id));
+  const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, id));
+  const isBinSpirit = useSelector((state: BeefyState) => selectIsVaultBinSpirit(state, id));
+  const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, id));
 
-  const isBoosted = vault.pools[id].isBoosted;
-  const boostedData = vault.pools[id].boostData;
-  const vaultBoosts = vault.pools[id].boosts;
+  const boostedData = {} as any; //vault.pools[id].boostData;
 
   const [formData, setFormData] = React.useState({
     deposit: {
       input: '',
       amount: BIG_ZERO,
       max: false,
-      token: null,
+      token: vault.oracleId,
       isZap: false,
       zapEstimate: {
         isLoading: true,
@@ -68,76 +94,17 @@ export const Vault = () => {
       input: '',
       amount: BIG_ZERO,
       max: false,
-      token: null,
+      token: vault.oracleId,
       isZap: false,
       isZapSwap: false,
       zapEstimate: {
         isLoading: true,
       },
     },
-    zap: null,
+    zap: eligibleZap,
     slippageTolerance: 0.01,
   });
-
-  const resetFormData = () => {
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-      withdraw: {
-        ...formData.withdraw,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-    });
-  };
-
-  const handleWalletConnect = () => {
-    if (!wallet.address) {
-      dispatch(reduxActions.wallet.connect());
-    }
-  };
-
-  const updateItemData = () => {
-    if (wallet.address && item) {
-      dispatch(reduxActions.vault.fetchPools(item));
-      dispatch(reduxActions.balance.fetchBalances(item));
-    }
-  };
-
-  React.useEffect(() => {
-    if (!isEmpty(vault.pools) && vault.pools[id]) {
-      setVaultData(vault.pools[id]);
-    } else {
-      history.push('/error');
-    }
-  }, [vault.pools, id, history]);
-
-  React.useEffect(() => {
-    if (item) {
-      setFormData({
-        ...formData,
-        deposit: {
-          ...formData.deposit,
-          token: item.token,
-        },
-        withdraw: {
-          ...formData.withdraw,
-          token: item.token,
-        },
-        zap: getEligibleZap(item),
-      });
-      setIsGovVault(item.isGovVault);
-      setIsLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item]);
-
+  /*
   React.useEffect(() => {
     if (formData.deposit.isZap && formData.deposit.token) {
       reduxActions.vault.estimateZapDeposit({
@@ -149,178 +116,130 @@ export const Vault = () => {
     }
     // eslint-disable-next-line
   }, [formData.deposit.amount, formData.deposit.isZap, formData.deposit.token, wallet.rpc, item]);
-
+*/
+  /*
   React.useEffect(() => {
     document.body.style.backgroundColor = '#1B203A';
   }, []);
-
+*/
   return (
     <>
       <Box className={classes.vaultContainer}>
         <Container maxWidth="lg">
-          {isLoading ? (
-            <Loader message={t('Vault-GetData')} />
-          ) : (
-            <>
-              <Box className={classes.header}>
-                <Box className={classes.title}>
-                  <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-                  <Typography variant="h2">
-                    {item.name} {!item.isGovVault ? t('Vault-vault') : ''}
-                  </Typography>
+          <>
+            <Box className={classes.header}>
+              <Box className={classes.title}>
+                <AssetsImage img={vault.logoUri} assets={vault.assetIds} alt={vault.name} />
+                <Typography variant="h2">
+                  {vault.name} {!isGovVault(vault) ? t('Vault-vault') : ''}
+                </Typography>
+              </Box>
+              <Box>
+                <Box className={classes.badges}>
+                  <DisplayTags vaultId={vault.id} />
                 </Box>
                 <Box>
-                  <Box className={classes.badges}>
-                    <DisplayTags vaultId={item.id} />
-                  </Box>
-                  <Box>
-                    <span className={classes.platformContainer}>
-                      <Box className={classes.chainContainer}>
-                        <Typography className={classes.platformLabel}>
-                          {t('Chain')}: <span>{item.network}</span>
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography className={classes.platformLabel}>
-                          {t('PLATFORM')}: <span>{item.platform}</span>
-                        </Typography>
-                      </Box>
-                    </span>
-                  </Box>
+                  <span className={classes.platformContainer}>
+                    <Box className={classes.chainContainer}>
+                      <Typography className={classes.platformLabel}>
+                        {t('Chain')}: <span>{chain.name}</span>
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography className={classes.platformLabel}>
+                        {t('PLATFORM')}: <span>{platform.name}</span>
+                      </Typography>
+                    </Box>
+                  </span>
                 </Box>
               </Box>
-              <VaultsStats
-                item={item}
-                isBoosted={isBoosted}
-                boostedData={boostedData}
-                vaultBoosts={vaultBoosts}
-              />
-            </>
-          )}
+            </Box>
+            <VaultsStats vaultId={vault.id} />
+          </>
         </Container>
       </Box>
       <Box style={{ marginTop: '24px' }}>
         <Container {...({ maxWidth: 'lg', my: 5 } as any)}>
-          {isLoading ? (
-            <Loader message={t('Vault-GetData')} />
-          ) : (
-            <Grid container spacing={6}>
-              <Grid item xs={12} md={4} className={classes.customOrder}>
-                <Box className={classes.dw}>
-                  <Box className={classes.tabs}>
-                    <Button
-                      onClick={() => setDw('deposit')}
-                      className={dw === 'deposit' ? classes.selected : ''}
-                    >
-                      {t('Deposit-Verb')}
-                    </Button>
-                    <Button
-                      onClick={() => setDw('withdraw')}
-                      className={dw === 'withdraw' ? classes.selected : ''}
-                    >
-                      {t('Withdraw-Verb')}
-                    </Button>
-                  </Box>
-                  {dw === 'deposit' ? (
-                    <Deposit
-                      boostedData={boostedData}
-                      isBoosted={isBoosted}
-                      vaultBoosts={vaultBoosts}
-                      item={item}
-                      handleWalletConnect={handleWalletConnect}
-                      formData={formData}
-                      setFormData={setFormData}
-                      updateItemData={updateItemData}
-                      resetFormData={resetFormData}
-                    />
-                  ) : (
-                    <Withdraw
-                      boostedData={boostedData}
-                      isBoosted={isBoosted}
-                      vaultBoosts={vaultBoosts}
-                      item={item}
-                      handleWalletConnect={handleWalletConnect}
-                      formData={formData}
-                      setFormData={setFormData}
-                      updateItemData={updateItemData}
-                      resetFormData={resetFormData}
-                    />
-                  )}
+          <Grid container spacing={6}>
+            <Grid item xs={12} md={4} className={classes.customOrder}>
+              <Box className={classes.dw}>
+                <Box className={classes.tabs}>
+                  <Button
+                    onClick={() => setDw('deposit')}
+                    className={dw === 'deposit' ? classes.selected : ''}
+                  >
+                    {t('Deposit-Verb')}
+                  </Button>
+                  <Button
+                    onClick={() => setDw('withdraw')}
+                    className={dw === 'withdraw' ? classes.selected : ''}
+                  >
+                    {t('Withdraw-Verb')}
+                  </Button>
                 </Box>
-                {/*QiDao card */}
-                {item.isQidao && (
-                  <Box>
-                    {' '}
-                    <QiDao mooToken={item.earnedToken} />
-                  </Box>
-                )}
-                {/*Spirit Card */}
-                {item.isBinSpirit && (
-                  <Box>
-                    <Spirit item={item} />
-                  </Box>
-                )}
-                {/*Moonpot Card */}
-                {item.moonpot.isMoonpot && (
-                  <Box>
-                    <Moonpot name={item.token} item={item.moonpot.data} />
-                  </Box>
-                )}
-                {/* Insurace card */}
-                {item.isInsurace && (
-                  <Box>
-                    <Insurace />
-                  </Box>
-                )}
-              </Grid>
-              <Grid item xs={12} md={8} className={classes.customOrder2}>
-                {/* TODO: Show only for boosts */}
-                {isBoosted && <BoostCard boostedData={boostedData} />}
-                {/* TODO: Show only for gov pools */}
-                {isGovVault && <GovDetailsCard earnedToken={item.earnedToken} />}
-                {!isGovVault ? (
-                  <Graph oracleId={item.oracleId} vaultId={item.id} network={item.network} />
-                ) : null}
-
-                {item.risks && item.risks.length > 0 && (
-                  <SafetyCard vaultRisks={item.risks} score={item.safetyScore} />
-                )}
-                {!isGovVault ? (
-                  <StrategyCard
-                    stratType={item.stratType}
-                    stratAddr={item.strategy}
-                    vaultAddr={item.earnContractAddress}
-                    network={item.network}
-                    apy={item.apy}
-                    platform={item.platform}
-                    assets={item.assets}
-                    want={item.name}
-                    vamp={item.vamp}
-                    isBoosted={isBoosted}
-                    boostedData={boostedData}
-                    isGovVault={isGovVault}
+                {/*dw === 'deposit' ? (
+                  <Deposit
+                    vaultId={vault.id}
+                    formData={formData}
+                    setFormData={setFormData}
+                    resetFormData={resetFormData}
                   />
-                ) : null}
-                {renderTokens(item)}
-              </Grid>
+                ) : (
+                  <Withdraw
+                    vaultId={vault.id}
+                    formData={formData}
+                    setFormData={setFormData}
+                    resetFormData={resetFormData}
+                  />
+                )*/}
+              </Box>
+              {isQidao && (
+                <Box>
+                  <QiDao vaultId={vault.id} />
+                </Box>
+              )}
+              {isBinSpirit && (
+                <Box>
+                  <Spirit vaultId={vault.id} />
+                </Box>
+              )}
+              {isMoonpot && (
+                <Box>
+                  <Moonpot vaultId={vault.id} />
+                </Box>
+              )}
+              {isInsurace && (
+                <Box>
+                  <Insurace />
+                </Box>
+              )}
             </Grid>
-          )}
+            {/* 
+            <Grid item xs={12} md={8} className={classes.customOrder2}>
+              {isBoosted && <BoostCard vaultId={vault.id} />}
+              {isGovVault(vault) && <GovDetailsCard vaultId={vault.id} />}
+              {!isGovVault(vault) ? <Graph vaultId={vault.id} /> : null}
+              <SafetyCard vaultId={vault.id} />
+              {!isGovVault(vault) ? <StrategyCard vaultId={vault.id} /> : null}
+              <VaultAssets vaultId={vault.id} />
+            </Grid>*/}
+          </Grid>
         </Container>
       </Box>
     </>
   ); //return
 }; //const Vault
 
-const renderTokens = item => {
-  return item.assets.map(asset => {
-    if (asset in addressBook[item.network].tokens) {
-      return (
-        <TokenCard
-          key={asset}
-          token={addressBook[item.network].tokens[asset]}
-          network={item.network}
-        />
-      );
-    } else return null;
-  });
-};
+const VaultAssets = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
+  const vault = selectVaultById(state, vaultId);
+  const tokens = vault.assetIds.map(assetId => selectTokenById(state, vault.chainId, assetId));
+  return { tokens };
+})(({ tokens }: { tokens: TokenEntity[] }) => {
+  return (
+    <>
+      {tokens.map(token => (
+        <TokenCard key={token.id} token={token} />
+      ))}
+    </>
+  );
+});

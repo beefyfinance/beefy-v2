@@ -18,6 +18,7 @@ import { filteredVaultsSlice } from '../../data/reducers/filtered-vaults';
 import { platformsSlice } from '../../data/reducers/platforms';
 import { uiThemeSlice } from '../../data/reducers/ui-theme';
 import { partnersSlice } from '../../data/reducers/partners';
+import { zapsSlice } from '../../data/reducers/zaps';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -25,6 +26,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   tokens: tokensSlice.reducer,
   boosts: boostsSlice.reducer,
   platforms: platformsSlice.reducer,
+  zaps: zapsSlice.reducer,
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,

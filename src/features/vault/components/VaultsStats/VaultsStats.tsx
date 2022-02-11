@@ -3,81 +3,36 @@ import { Box, makeStyles, Typography, Divider, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
 import { useSelector } from 'react-redux';
-import { calcDaily, formatApy, formatUsd, byDecimals, BIG_ZERO } from '../../../../helpers/format';
-import { isEmpty } from '../../../../helpers/utils';
-import BigNumber from 'bignumber.js';
+import {
+  calcDaily,
+  formatApy,
+  formatUsd,
+  BIG_ZERO,
+  formattedTotalApy,
+  formatBigUsd,
+  formatBigNumber,
+} from '../../../../helpers/format';
 import { styles } from './styles';
 import { useLastHarvest } from '../../hooks/useLastHarvest';
+import { BeefyState } from '../../../../redux-types';
+import {
+  selectGovVaultPendingRewardsInToken,
+  selectGovVaultPendingRewardsInUsd,
+  selectUserVaultDepositInToken,
+  selectUserVaultDepositInUsd,
+} from '../../../data/selectors/balance';
+import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectVaultTotalApy } from '../../../data/selectors/apy';
+import { selectVaultTvl } from '../../../data/selectors/tvl';
+import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import { DailyApyStats, YearlyApyStats } from '../../../home/components/ApyStats';
 
 const useStyles = makeStyles(styles as any);
-function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
-  const pricesReducer = useSelector((state: any) => state.pricesReducer);
-  const lastHarvest = useLastHarvest(item.id);
+
+const ValueText = ({ value }) => {
   const classes = useStyles();
-  const t = useTranslation().t;
-  const [deposited, setDeposited] = React.useState({
-    balance: BIG_ZERO,
-    shares: BIG_ZERO,
-  });
-  const [poolRewards, setPoolRewards] = React.useState({
-    balance: BIG_ZERO,
-    shares: BIG_ZERO,
-  });
-  const { wallet, balance } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-    balance: state.balanceReducer,
-  }));
-
-  React.useEffect(() => {
-    let symbol = item.isGovVault ? `${item.token}GovVault` : item.earnedToken;
-
-    let balanceSingle = BIG_ZERO;
-    let rewardsBalance = BIG_ZERO;
-    let sharesBalance = BIG_ZERO;
-    let rewardsSharesBalance = BIG_ZERO;
-
-    if (wallet.address && !isEmpty(balance.tokens[item.network][symbol])) {
-      if (item.isGovVault) {
-        balanceSingle = byDecimals(
-          balance.tokens[item.network][symbol].balance,
-          item.tokenDecimals
-        );
-        rewardsBalance = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].rewards),
-          item.tokenDecimals
-        );
-        sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-        rewardsSharesBalance = byDecimals(
-          new BigNumber(balance.tokens[item.network][symbol].rewards)
-        );
-      } else {
-        balanceSingle = byDecimals(
-          new BigNumber(balance.tokens[item.network][item.earnedToken].balance)
-            .multipliedBy(byDecimals(item.pricePerFullShare))
-            .toFixed(8),
-          item.tokenDecimals
-        );
-        sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-      }
-      if (item.isBoosted) {
-        const boost = item.boostData;
-        let symbol = `${boost.token}${boost.id}Boost`;
-        if (!isEmpty(balance.tokens[item.network][symbol])) {
-          balanceSingle = byDecimals(
-            new BigNumber(balance.tokens[item.network][symbol].balance).multipliedBy(
-              byDecimals(item.pricePerFullShare)
-            ),
-            item.tokenDecimals
-          );
-          sharesBalance = new BigNumber(balance.tokens[item.network][symbol].balance);
-        }
-      }
-    }
-    setDeposited({ balance: balanceSingle, shares: sharesBalance });
-    setPoolRewards({ balance: rewardsBalance, shares: rewardsSharesBalance });
-  }, [wallet.address, item, balance, vaultBoosts]);
-
-  const ValueText = ({ value }) => (
+  return (
     <>
       {value ? (
         <Typography variant="h4" className={classes.value}>
@@ -88,218 +43,122 @@ function VaultsStatsComponent({ item, boostedData, isBoosted, vaultBoosts }) {
       )}
     </>
   );
+};
 
-  const ValueTached = ({ value }) => (
-    <>{value ? <span className={classes.tached}>{value}</span> : <ApyStatLoader />}</>
-  );
+const ValueTached = ({ value }) => {
+  const classes = useStyles();
+  return <>{value ? <span className={classes.tached}>{value}</span> : <ApyStatLoader />}</>;
+};
 
-  const ValuePrice = ({ value }) => (
+const ValuePrice = ({ value }) => {
+  const classes = useStyles();
+  return (
     <>{value ? <Typography className={classes.price}>{value}</Typography> : <ApyStatLoader />}</>
   );
+};
 
-  const yearlyToDaily = apy => {
-    const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
-
-    if (isNaN(g)) {
-      return 0;
-    }
-
-    return g;
-  };
-
-  const values: Record<string, any> = {};
-
-  values.totalApy = item.apy.totalApy;
-
-  if (item.apy.vaultApr) {
-    values.vaultApr = item.apy.vaultApr;
-    values.vaultDaily = item.apy.vaultApr / 365;
-  }
-
-  if (item.apy.tradingApr) {
-    values.tradingApr = item.apy.tradingApr;
-    values.tradingDaily = item.apy.tradingApr / 365;
-  }
-
-  if (values.vaultDaily || values.tradingDaily) {
-    values.totalDaily = (values.vaultDaily || 0) + (values.tradingDaily || 0);
-  } else {
-    values.totalDaily = yearlyToDaily(values.totalApy);
-  }
-
-  if (item.isGovVault) {
-    values.totalApy = values.vaultApr / 1;
-    values.totalDaily = values.vaultApr / 365;
-  }
-
-  if (isBoosted) {
-    values.boostApr = boostedData.apr;
-    values.boostDaily = boostedData.apr / 365;
-    values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
-    values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
-  }
-
-  const formatted = Object.fromEntries(
-    Object.entries(values).map(([key, value]) => {
-      const formattedValue = key.toLowerCase().includes('daily')
-        ? formatApy(value, 4)
-        : formatApy(value);
-      return [key, formattedValue];
-    })
+function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
+  const lastHarvest = useLastHarvest(vaultId);
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const deposited = useSelector((state: BeefyState) =>
+    selectUserVaultDepositInToken(state, vaultId)
   );
+  const depositedUsd = useSelector((state: BeefyState) =>
+    selectUserVaultDepositInUsd(state, vaultId)
+  );
+  const poolRewards = useSelector((state: BeefyState) =>
+    isGovVault(vault) ? selectGovVaultPendingRewardsInToken(state, vaultId) : BIG_ZERO
+  );
+  const poolRewardsUsd = useSelector((state: BeefyState) =>
+    isGovVault(vault) ? selectGovVaultPendingRewardsInUsd(state, vaultId) : BIG_ZERO
+  );
+  const vaultTvl = useSelector((state: BeefyState) => selectVaultTvl(state, vaultId));
+  const vaultTotalApy = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
 
-  const _deposited = deposited.balance.isGreaterThan(0)
-    ? deposited.balance.toFixed(8)
-    : BIG_ZERO.toFixed(2);
+  const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
+  const formatted = formattedTotalApy(values);
+  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
 
-  const depositedUsd = deposited.balance.isGreaterThan(0)
-    ? formatUsd(deposited.balance, pricesReducer.prices[item.oracleId])
-    : formatUsd(0);
-
-  const rewardsEarned = poolRewards.balance.isGreaterThan(0) ? poolRewards.shares : BIG_ZERO;
-
-  const rewardPrice = poolRewards.balance.isGreaterThan(0)
-    ? formatUsd(poolRewards.balance, pricesReducer.prices[item.earnedToken])
-    : formatUsd(0);
-
-  const formatDecimals = number => {
-    return number.isGreaterThanOrEqualTo(0)
-      ? number.toFixed(4)
-      : number.isEqualTo(0)
-      ? 0
-      : number.toFixed(8);
-  };
+  ///const rewardsEarned = poolRewards.balance.isGreaterThan(0) ? poolRewards.shares : BIG_ZERO;
 
   return (
-    <>
-      {item && (
-        <Box className={classes.container}>
-          <Grid spacing={6} container>
-            <Grid item lg={8} xs={12}>
-              <Box className={classes.stats}>
-                {/**TVL */}
-                <Box width={'33%'}>
-                  <Typography className={classes.label}>{t('TVL')}</Typography>
+    <Box className={classes.container}>
+      <Grid spacing={6} container>
+        <Grid item lg={8} xs={12}>
+          <Box className={classes.stats}>
+            {/**TVL */}
+            <Box width={'33%'}>
+              <Typography className={classes.label}>{t('TVL')}</Typography>
+              <Typography>
+                <ValueText value={formatBigUsd(vaultTvl)} />
+              </Typography>
+            </Box>
+            <Box className={classes.stat}>
+              <Divider className={classes.divider} orientation="vertical" />
+              <Box>
+                <YearlyApyStats vaultId={vault.id} />
+              </Box>
+            </Box>
+            <Box display="flex">
+              <Divider className={classes.divider} orientation="vertical" />
+              <Box>
+                <DailyApyStats vaultId={vault.id} />
+              </Box>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item lg={4} xs={12}>
+          <Grid container className={classes.stats2}>
+            <Grid item xs={6} className={classes.stat1}>
+              <Box>
+                <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
+                <Typography>
+                  <ValueText value={formatBigNumber(deposited)} />
+                </Typography>
+                {depositedUsd.isGreaterThan(0) && (
                   <Typography>
-                    <ValueText value={item ? formatUsd(item.tvl.toNumber()) : formatUsd(0)} />
+                    <ValuePrice value={formatBigUsd(depositedUsd)} />
                   </Typography>
-                </Box>
-                {/*APY-APR */}
-                <Box className={classes.stat}>
-                  <Divider className={classes.divider} orientation="vertical" />
-                  <Box>
-                    <Typography className={classes.label}>
-                      {!item.isGovVault ? t('APY') : t('APR')}
-                    </Typography>
-                    {isBoosted ? (
-                      <>
-                        {' '}
-                        <Typography>
-                          <ValueText value={formatted.boostedTotalApy} />
-                        </Typography>
-                        <Typography>
-                          <ValueTached value={formatApy(item.apy.totalApy)} />
-                        </Typography>{' '}
-                      </>
-                    ) : (
-                      <>
-                        <Typography>
-                          <ValueText
-                            value={
-                              item.isGovVault
-                                ? formatApy(values.totalApy)
-                                : formatApy(item.apy.totalApy)
-                            }
-                          />
-                        </Typography>
-                      </>
-                    )}
-                  </Box>
-                </Box>
-                {/* DAILY */}
-                <Box display="flex">
-                  <Divider className={classes.divider} orientation="vertical" />
-                  <Box>
-                    <Typography className={classes.label}>{t('Vault-Daily')}</Typography>
-                    {isBoosted ? (
-                      <>
-                        <Typography>
-                          <ValueText value={formatted.boostedTotalDaily} />
-                        </Typography>
-                        <Typography>
-                          <ValueTached value={item ? calcDaily(item.apy.totalApy) : 0} />
-                        </Typography>
-                      </>
-                    ) : (
-                      <Typography>
-                        <ValueText
-                          value={
-                            item.isGovVault
-                              ? formatApy(values.totalDaily)
-                              : calcDaily(item.apy.totalApy)
-                          }
-                        />
-                        {/* <ValueText value={item ? calcDaily(item.apy.totalApy) : 0} /> */}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
+                )}
               </Box>
             </Grid>
-            <Grid item lg={4} xs={12}>
-              <Grid container className={classes.stats2}>
-                <Grid item xs={6} className={classes.stat1}>
-                  <Box>
-                    <Typography className={classes.label}>{t('Vault-deposited')}</Typography>
-                    <Typography>
-                      <ValueText value={_deposited} />
-                    </Typography>
-                    {deposited.balance.isGreaterThan(0) && (
-                      <Typography>
-                        <ValuePrice value={depositedUsd} />
-                      </Typography>
-                    )}
-                  </Box>
-                </Grid>
-                {(item.isGovVault || lastHarvest !== 'never') && (
-                  <Divider flexItem={true} className={classes.divider1} orientation="vertical" />
-                )}
-                {!item.isGovVault ? (
-                  <>
-                    {lastHarvest !== 'never' && (
-                      <Grid item xs={6}>
-                        <Box>
-                          <Typography className={classes.label}>
-                            {t('Vault-LastHarvest')}
-                          </Typography>
-                          <Typography>
-                            <ValueText value={lastHarvest} />
-                          </Typography>
-                        </Box>
-                      </Grid>
-                    )}
-                  </>
-                ) : (
+            {(isGovVault(vault) || lastHarvest !== 'never') && (
+              <Divider flexItem={true} className={classes.divider1} orientation="vertical" />
+            )}
+            {!isGovVault(vault) ? (
+              <>
+                {lastHarvest !== 'never' && (
                   <Grid item xs={6}>
                     <Box>
-                      <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
+                      <Typography className={classes.label}>{t('Vault-LastHarvest')}</Typography>
                       <Typography>
-                        <ValueText value={formatDecimals(rewardsEarned)} />
+                        <ValueText value={lastHarvest} />
                       </Typography>
-                      {deposited.balance.isGreaterThan(0) && (
-                        <Typography>
-                          <ValuePrice value={rewardPrice} />
-                        </Typography>
-                      )}
                     </Box>
                   </Grid>
                 )}
+              </>
+            ) : (
+              <Grid item xs={6}>
+                <Box>
+                  <Typography className={classes.label}>{t('Vault-rewards')}</Typography>
+                  <Typography>
+                    <ValueText value={formatBigNumber(poolRewards)} />
+                  </Typography>
+                  {poolRewardsUsd.isGreaterThan(0) && (
+                    <Typography>
+                      <ValuePrice value={formatBigUsd(poolRewardsUsd)} />
+                    </Typography>
+                  )}
+                </Box>
               </Grid>
-            </Grid>
+            )}
           </Grid>
-        </Box>
-      )}
-    </>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 

@@ -6,35 +6,45 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { LinkButton } from '../../../../components/LinkButton';
-import { config } from '../../../../config/config';
 import { styles } from './styles';
+import { isTokenErc20, TokenEntity } from '../../../data/entities/token';
+import { useSelector } from 'react-redux';
+import { selectChainById } from '../../../data/selectors/chains';
+import { BeefyState } from '../../../../redux-types';
 
 const useStyles = makeStyles(styles as any);
-function TokenCardComponent({ token, network }) {
+function TokenCardComponent({ token }: { token: TokenEntity }) {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
 
-  const { symbol, website, address, description } = token;
+  const chain = useSelector((state: BeefyState) => selectChainById(state, token.chainId));
+  // todo: async load token description and website
+  const website = '';
+  const description = '';
+
+  const contractAddress = isTokenErc20(token) ? token.contractAddress : null;
 
   return (
     <Card>
       <CardHeader>
         <Typography className={classes.detailTitle}>{t('Token-Detail')}</Typography>
-        <CardTitle title={symbol} />
+        <CardTitle title={token.symbol} />
         <div className={classes.cardActions}>
-          {website ? (
+          {website && (
             <div className={classes.cardAction}>
               <LinkButton type="link" href={website} text={t('Token-Site')} />
             </div>
-          ) : null}
-          <div className={classes.cardAction}>
-            <LinkButton
-              href={`${config[network].explorerUrl}/token/${address}`}
-              className={classes.cardAction}
-              text={t('Token-Contract')}
-              type="code"
-            />
-          </div>
+          )}
+          {contractAddress && (
+            <div className={classes.cardAction}>
+              <LinkButton
+                href={`${chain.explorerUrl}/token/${contractAddress}`}
+                className={classes.cardAction}
+                text={t('Token-Contract')}
+                type="code"
+              />
+            </div>
+          )}
         </div>
       </CardHeader>
       <CardContent>

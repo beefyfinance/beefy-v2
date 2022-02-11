@@ -1,10 +1,11 @@
 import { memoize } from 'lodash';
-import { BIG_ZERO } from '../../../helpers/format';
+import { BIG_ZERO, formatApy } from '../../../helpers/format';
 import { mooAmountToOracleAmount } from '../../../helpers/ppfs';
 import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { BoostEntity } from '../entities/boost';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import { TotalApy } from '../reducers/apy';
 import {
   selectBoostUserBalanceInToken,
   selectUserDepositedVaults,
