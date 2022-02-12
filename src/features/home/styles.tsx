@@ -32,6 +32,7 @@ export const styles = theme => ({
     letterSpacing: '1px',
   },
   vaultsList: {
+    marginTop: '20px',
     marginBottom: '20px',
   },
   row: {
@@ -45,11 +46,5 @@ export const styles = theme => ({
   },
   vaultContainer: {
     marginTop: '48px',
-  },
-  gridContainer: {
-    outline: 'none',
-    '& .ReactVirtualized__Grid': {
-      outline: 'none',
-    },
   },
 });

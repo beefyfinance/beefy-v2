@@ -143,10 +143,13 @@ export function isGovVault(vault: VaultEntity): vault is VaultGov {
   return vault.isGovVault === true;
 }
 
+// Todo: make this the right way
+export function isMaxiVault(vault: VaultEntity): vault is VaultStandard {
+  return vault.id.endsWith('-maxi');
+}
+
 export function isVaultActive(vault: VaultEntity) {
   return vault.status === 'active';
 }
-
-// TODO: type guards
 
 export type VaultEntity = VaultStandard | VaultGov;
