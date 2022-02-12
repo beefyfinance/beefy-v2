@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import BigNumber from 'bignumber.js';
 import { Grid, makeStyles, Typography, useMediaQuery, Box, Hidden } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -8,7 +7,7 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
 import { DisplayTags } from '../../../../components/vaultTags';
 import { Popover } from '../../../../components/Popover';
-import { formatBigUsd, formatBigDecimals } from '../../../../helpers/format';
+import { formatBigUsd, formatBigDecimals, BIG_ZERO } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { ApyStats } from '../ApyStats';
@@ -44,6 +43,12 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { ChainEntity } from '../../../data/entities/chain';
 import { PlatformEntity } from '../../../data/entities/platform';
 import { TokenEntity } from '../../../data/entities/token';
+import {
+  popoverInLinkHack__linkHandler,
+  popoverInLinkHack__linkStyle,
+  popoverInLinkHack__popoverContainerHandler,
+  popoverInLinkHack__popoverContainerStyle,
+} from '../../../../helpers/list-popover-in-link-hack';
 
 function ValueText({
   vaultId,
@@ -103,38 +108,49 @@ function ValuePrice({
 
 const _ItemTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const vault = selectVaultById(state, vaultId);
+  const tvlLoaded =
+    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.alreadyLoadedOnce &&
+    state.ui.dataLoader.global.prices.alreadyLoadedOnce;
   const isBoosted = selectIsVaultBoosted(state, vaultId);
-  const vaultTvl = selectVaultTvl(state, vaultId);
+  const vaultTvl = tvlLoaded ? selectVaultTvl(state, vaultId) : BIG_ZERO;
   const totalDeposited = selectUserVaultDepositInToken(state, vaultId);
-  return { vault, isBoosted, vaultTvl, totalDeposited };
+
+  const blurred = !tvlLoaded;
+  return {
+    vault,
+    isBoosted,
+    vaultTvl: formatBigUsd(vaultTvl),
+    hasDeposit: totalDeposited.isGreaterThan(0),
+    blurred,
+  };
 })(
   ({
     vault,
     isBoosted,
     vaultTvl,
-    totalDeposited,
+    hasDeposit,
+    blurred,
   }: {
     vault: VaultEntity;
     isBoosted: boolean;
-    vaultTvl: BigNumber;
-    totalDeposited: BigNumber;
+    vaultTvl: string;
+    hasDeposit: boolean;
+    blurred: boolean;
   }) => {
     const isTwoColumns = useIsTwoColumns();
     const { t } = useTranslation();
     const classes = useItemStyles(vault.id);
 
     return (
-      <Link className={classes.removeLinkStyles} to={`/${vault.chainId}/vault/${vault.id}`}>
-        <div className={isGovVault || isBoosted ? classes.stat1 : classes.stat}>
-          <Typography className={classes.label}>{t('TVL')}</Typography>
-          <Typography className={classes.value}>{formatBigUsd(vaultTvl)}</Typography>
-          {isBoosted ||
-          (totalDeposited.isGreaterThan(0) && !isTwoColumns) ||
-          (totalDeposited.isGreaterThan(0) && !isTwoColumns) ? (
-            <div className={classes.boostSpacer} />
-          ) : null}
-        </div>
-      </Link>
+      <div className={isGovVault || isBoosted ? classes.stat1 : classes.stat}>
+        <Typography className={classes.label}>{t('TVL')}</Typography>
+        <Typography className={classes.value}>
+          <ValueText blurred={blurred} value={vaultTvl} vaultId={vault.id} />
+        </Typography>
+        {isBoosted || (hasDeposit && !isTwoColumns) || (hasDeposit && !isTwoColumns) ? (
+          <div className={classes.boostSpacer} />
+        ) : null}
+      </div>
     );
   }
 );
@@ -190,31 +206,29 @@ const _ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: Vault
 
     return (
       <>
-        <Link className={classes.removeLinkStyles} to={`/${vault.chainId}/vault/${vault.id}`}>
-          {/*Boosted by */}
-          {isBoosted && userStaked && (
-            <div className={clsx([classes.stat, classes.marginBottom])}>
-              <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-              <ValueText value={stakedIds} vaultId={vault.id} />
+        {/*Boosted by */}
+        {isBoosted && userStaked && (
+          <div className={clsx([classes.stat, classes.marginBottom])}>
+            <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
+            <ValueText value={stakedIds} vaultId={vault.id} />
+            <Typography className={classes.label}>
+              <ValuePrice value={t('BOOST')} vaultId={vault.id} />
+            </Typography>
+          </div>
+        )}
+        {/* Deposit */}
+        {(!isBoosted || !userStaked) && (
+          <div className={clsx([classes.stat, classes.marginBottom])}>
+            <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
+            <ValueText blurred={blurred} value={totalDeposited} vaultId={vault.id} />
+            {hasDeposit && (
               <Typography className={classes.label}>
-                <ValuePrice value={t('BOOST')} vaultId={vault.id} />
+                <ValuePrice blurred={blurred} value={totalDepositedUsd} vaultId={vault.id} />
               </Typography>
-            </div>
-          )}
-          {/* Deposit */}
-          {(!isBoosted || !userStaked) && (
-            <div className={clsx([classes.stat, classes.marginBottom])}>
-              <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-              <ValueText blurred={blurred} value={totalDeposited} vaultId={vault.id} />
-              {hasDeposit && (
-                <Typography className={classes.label}>
-                  <ValuePrice blurred={blurred} value={totalDepositedUsd} vaultId={vault.id} />
-                </Typography>
-              )}
-              {hasDeposit && <div className={classes.boostSpacer} />}
-            </div>
-          )}
-        </Link>
+            )}
+            {hasDeposit && <div className={classes.boostSpacer} />}
+          </div>
+        )}
       </>
     );
   }
@@ -228,7 +242,14 @@ const _ItemGovVaultRewards = connect(
     const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
     const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
     const blurred = selectIsBalanceHidden(state);
-    return { vault, earnedToken, rewardsEarnedToken, rewardsEarnedUsd, blurred };
+    return {
+      vault,
+      earnedToken,
+      rewardsEarnedToken: formatBigDecimals(rewardsEarnedToken),
+      rewardsEarnedUsd: formatBigDecimals(rewardsEarnedUsd),
+      blurred,
+      hasRewards: rewardsEarnedUsd.gt(0),
+    };
   }
 )(
   ({
@@ -237,35 +258,31 @@ const _ItemGovVaultRewards = connect(
     rewardsEarnedUsd,
     earnedToken,
     blurred,
+    hasRewards,
   }: {
     vault: VaultEntity;
-    rewardsEarnedToken: BigNumber;
-    rewardsEarnedUsd: BigNumber;
     earnedToken: TokenEntity;
+    rewardsEarnedToken: string;
+    rewardsEarnedUsd: string;
     blurred: boolean;
+    hasRewards: boolean;
   }) => {
     const classes = useItemStyles(vault.id);
     const { t } = useTranslation();
 
     return (
-      <Link className={classes.removeLinkStyles} to={`/${vault.chainId}/vault/${vault.id}`}>
-        <div className={classes.stat1}>
-          <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
-          <Typography className={classes.value}>
-            {formatBigDecimals(rewardsEarnedToken) + ` ${earnedToken.symbol}`}
-          </Typography>
+      <div className={classes.stat1}>
+        <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
+        <Typography className={classes.value}>
+          {rewardsEarnedToken + ` ${earnedToken.symbol}`}
+        </Typography>
 
-          {rewardsEarnedUsd.isGreaterThan(0) && (
-            <Typography className={classes.label}>
-              <ValuePrice
-                blurred={blurred}
-                value={formatBigDecimals(rewardsEarnedUsd)}
-                vaultId={vault.id}
-              />
-            </Typography>
-          )}
-        </div>
-      </Link>
+        {hasRewards && (
+          <Typography className={classes.label}>
+            <ValuePrice blurred={blurred} value={rewardsEarnedUsd} vaultId={vault.id} />
+          </Typography>
+        )}
+      </div>
     );
   }
 );
@@ -282,7 +299,12 @@ const _ItemStandardVaultSafetyScore = connect(
   const { t } = useTranslation();
 
   return (
-    <div className={isBoosted ? classes.stat1 : classes.stat}>
+    <div
+      className={isBoosted ? classes.stat1 : classes.stat}
+      onClick={popoverInLinkHack__popoverContainerHandler}
+      onTouchStart={popoverInLinkHack__popoverContainerHandler}
+      style={popoverInLinkHack__popoverContainerStyle}
+    >
       <div className={classes.tooltipLabel}>
         <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
         <div className={classes.tooltipHolder}>
@@ -334,18 +356,16 @@ const _ItemWalletAmount = connect(
     const { t } = useTranslation();
 
     return (
-      <Link className={classes.removeLinkStyles} to={`/${vault.chainId}/vault/${vault.id}`}>
-        <div className={clsx([classes.stat, classes.marginBottom])}>
-          <Typography className={classes.label}>{t('WALLET')}</Typography>
-          <ValueText blurred={blurred} value={userOracleInWallet} vaultId={vault.id} />
-          {hasInWallet && (
-            <Typography className={classes.label}>
-              <ValuePrice blurred={blurred} value={userOracleInWalletUsd} vaultId={vault.id} />
-            </Typography>
-          )}
-          {hasInWallet && <div className={classes.boostSpacer} />}
-        </div>
-      </Link>
+      <div className={clsx([classes.stat, classes.marginBottom])}>
+        <Typography className={classes.label}>{t('WALLET')}</Typography>
+        <ValueText blurred={blurred} value={userOracleInWallet} vaultId={vault.id} />
+        {hasInWallet && (
+          <Typography className={classes.label}>
+            <ValuePrice blurred={blurred} value={userOracleInWalletUsd} vaultId={vault.id} />
+          </Typography>
+        )}
+        {hasInWallet && <div className={classes.boostSpacer} />}
+      </div>
     );
   }
 );
@@ -374,7 +394,7 @@ const _ItemVaultPresentation = connect(
     const classes = useItemStyles(vault.id);
     const { t } = useTranslation();
     return (
-      <Link className={classes.removeLinkStyles} to={`/${vault.chainId}/vault/${vault.id}`}>
+      <>
         {/*Vault Image */}
         <div className={classes.infoContainer}>
           <Hidden smDown>
@@ -434,7 +454,7 @@ const _ItemVaultPresentation = connect(
             </span>
           </div>
         </div>
-      </Link>
+      </>
     );
   }
 );
@@ -442,66 +462,61 @@ const ItemVaultPresentation = React.memo(_ItemVaultPresentation);
 
 const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => {
   const isBoosted = selectIsVaultBoosted(state, vault.id);
-  const tvlLoaded =
-    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.alreadyLoadedOnce &&
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce;
-  return { vault, isBoosted, tvlLoaded };
-})(
-  ({
-    vault,
-    isBoosted,
-    tvlLoaded,
-  }: {
-    vault: VaultEntity;
-    isBoosted: boolean;
-    tvlLoaded: boolean;
-  }) => {
-    const classes = useItemStyles(vault.id);
-    return (
-      <div className={classes.boosterSpace}>
-        <div
-          className={clsx({
-            [classes.itemContainer]: true,
-            [classes.withMuted]: !isVaultActive(vault),
-            [classes.withIsLongName]: vault.name.length > 12,
-            [classes.withBoosted]: isBoosted,
-            [classes.withGovVault]: isGovVault(vault),
-          })}
-        >
-          <Grid container>
-            {/* Title Container */}
-            <Grid item xs={12} md={4} lg={4}>
-              <ItemVaultPresentation vaultId={vault.id} />
-            </Grid>
-            {/* Content Container */}
-            <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
-              <Grid container>
-                <Grid item xs={6} md={2} lg={2}>
-                  <ItemWalletAmount vaultId={vault.id} />
-                </Grid>
+  return { vault, isBoosted };
+})(({ vault, isBoosted }: { vault: VaultEntity; isBoosted: boolean }) => {
+  const classes = useItemStyles(vault.id);
 
-                <Grid item xs={6} md={2} lg={2}>
-                  <ItemDeposited vaultId={vault.id} />
-                </Grid>
-                <ApyStats vaultId={vault.id} />
-                <Grid item xs={6} md={2} lg={2}>
-                  {tvlLoaded && <ItemTvl vaultId={vault.id} />}
-                </Grid>
-                <Grid item xs={6} md={2} lg={2}>
-                  {isGovVault(vault) ? (
-                    <ItemGovVaultRewards vaultId={vault.id} />
-                  ) : (
-                    <ItemStandardVaultSafetyScore vaultId={vault.id} />
-                  )}
-                </Grid>
+  return (
+    <Link
+      className={classes.removeLinkStyles}
+      onClick={popoverInLinkHack__linkHandler}
+      onTouchStart={popoverInLinkHack__linkHandler}
+      style={popoverInLinkHack__linkStyle}
+      to={`/${vault.chainId}/vault/${vault.id}`}
+    >
+      <div
+        className={clsx({
+          [classes.itemContainer]: true,
+          [classes.withMuted]: !isVaultActive(vault),
+          [classes.withIsLongName]: vault.name.length > 12,
+          [classes.withBoosted]: isBoosted,
+          [classes.withGovVault]: isGovVault(vault),
+        })}
+      >
+        <Grid container>
+          <Grid item xs={12} md={4} lg={4}>
+            <ItemVaultPresentation vaultId={vault.id} />
+          </Grid>
+          {/* Content Container */}
+          <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
+            <Grid container>
+              <Grid item xs={6} md={2} lg={2}>
+                <ItemWalletAmount vaultId={vault.id} />
+              </Grid>
+
+              <Grid item xs={6} md={2} lg={2}>
+                <ItemDeposited vaultId={vault.id} />
+              </Grid>
+              <ApyStats vaultId={vault.id} />
+
+              <Grid item xs={6} md={2} lg={2}>
+                <ItemTvl vaultId={vault.id} />
+              </Grid>
+
+              <Grid item xs={6} md={2} lg={2}>
+                {isGovVault(vault) ? (
+                  <ItemGovVaultRewards vaultId={vault.id} />
+                ) : (
+                  <ItemStandardVaultSafetyScore vaultId={vault.id} />
+                )}
               </Grid>
             </Grid>
           </Grid>
-        </div>
+        </Grid>
       </div>
-    );
-  }
-);
+    </Link>
+  );
+});
 export const Item = React.memo(_Item);
 
 function useIsTwoColumns() {

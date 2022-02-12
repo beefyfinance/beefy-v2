@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
-import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isVaultActive } from '../entities/vault';
 import { selectHasUserDepositInVault, selectIsUserEligibleForVault } from './balance';
 import { selectActiveVaultBoostIds, selectBoostById, selectIsVaultBoosted } from './boosts';
@@ -53,7 +52,7 @@ export const selectFilteredVaults = createSelector(
     const filterOptions = selectFilterOptions(state);
     const vaults = state.entities.vaults.allIds.map(id => selectVaultById(state, id));
     const tvlByVaultId = state.biz.tvl.byVaultId;
-    const apyByVaultId = state.biz.apy.byVaultId;
+    const apyByVaultId = state.biz.apy.totalApy.byVaultId;
 
     // apply filtering
     const chainIdMap = createIdMap(filterOptions.chainIds);
@@ -143,12 +142,10 @@ export const selectFilteredVaults = createSelector(
         if (!apy) {
           return 0;
         }
-        if (isStandardVaultApy(apy)) {
+        if (apy.totalApy !== undefined) {
           return -apy.totalApy;
-        } else if (isGovVaultApy(apy)) {
+        } else if (apy.vaultApr !== undefined) {
           return -apy.vaultApr;
-        } else if (isMaxiVaultApy(apy)) {
-          return -apy.totalApy;
         } else {
           throw new Error('Apy type not supported');
         }

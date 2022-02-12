@@ -5,32 +5,22 @@ import { LabeledStat } from '../LabeledStat';
 import { Typography, Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formatApy } from '../../../../helpers/format';
-import BigNumber from 'bignumber.js';
 import { Popover } from '../../../../components/Popover';
-import { YearlyBreakdownTooltipProps } from './YearlyBreakdownTooltipProps';
-import { DailyBreakdownTooltipProps } from './DailyBreakdownTooltipProps';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectBoostAprInfos, selectVaultApyInfos } from '../../../data/selectors/apy';
+import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
-import { selectActiveVaultBoostIds, selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { selectVaultApyAvailable } from '../../../data/selectors/data-loader';
+import { TotalApy } from '../../../data/reducers/apy';
+import { AllValuesAsString } from '../../../data/utils/types-utils';
+import {
+  popoverInLinkHack__popoverContainerHandler,
+  popoverInLinkHack__popoverContainerStyle,
+} from '../../../../helpers/list-popover-in-link-hack';
 
 const useStyles = makeStyles(styles as any);
-const yearlyToDaily = apy => {
-  const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
-
-  if (isNaN(g)) {
-    return 0;
-  }
-
-  return g;
-};
-
-export function isNaN(value) {
-  return new BigNumber(`${value}`).isNaN();
-}
 
 const BreakdownTooltip = memo(({ rows }: any) => {
   const classes = useStyles();
@@ -47,10 +37,15 @@ const BreakdownTooltip = memo(({ rows }: any) => {
   );
 });
 
-const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({
+const _YearlyBreakdownTooltip = ({
   isGovVault,
   boosted,
   rates,
+}: {
+  isGovVault: boolean;
+  boosted: boolean;
+  // here we get formatted values
+  rates: AllValuesAsString<TotalApy>;
 }) => {
   const rows = [];
   const { t } = useTranslation();
@@ -99,10 +94,15 @@ const _YearlyBreakdownTooltip: React.FC<YearlyBreakdownTooltipProps> = ({
 
 const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
 
-const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({
+const _DailyBreakdownTooltip = ({
   isGovVault,
   boosted,
   rates,
+}: {
+  isGovVault: boolean;
+  boosted: boolean;
+  // here we get formatted values
+  rates: AllValuesAsString<TotalApy>;
 }) => {
   const rows = [];
   const { t } = useTranslation();
@@ -151,73 +151,35 @@ const _DailyBreakdownTooltip: React.FC<DailyBreakdownTooltipProps> = ({
 
 const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
 
-const LabeledStatWithTooltip = memo(
-  ({ children, boosted, label, value, spacer, ...passthrough }: any) => {
-    const classes = useStyles();
+const LabeledStatWithTooltip = memo(({ children, boosted, label, value }: any) => {
+  const classes = useStyles();
 
-    return (
-      <div className={classes.stat}>
-        <div className={classes.tooltipLabel}>
-          <Typography className={classes.label}>{label}</Typography>
-          <div className={classes.tooltipHolder}>
-            <Popover {...({} as any)}>{children}</Popover>
-          </div>
+  return (
+    <div
+      className={classes.stat}
+      onClick={popoverInLinkHack__popoverContainerHandler}
+      onTouchStart={popoverInLinkHack__popoverContainerHandler}
+      style={popoverInLinkHack__popoverContainerStyle}
+    >
+      <div className={classes.tooltipLabel}>
+        <Typography className={classes.label}>{label}</Typography>
+        <div className={classes.tooltipHolder}>
+          <Popover {...({} as any)}>{children}</Popover>
         </div>
-        <LabeledStat {...({ boosted } as any)} value={value} />
       </div>
-    );
-  }
-);
+      <LabeledStat {...({ boosted } as any)} value={value} />
+    </div>
+  );
+});
 
 export function _ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
-  const values: Record<string, any> = {};
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
-  const boostApr = useSelector((state: BeefyState) => {
-    if (isBoosted) {
-      const latestActiveBoost = selectActiveVaultBoostIds(state, vaultId);
-      return selectBoostAprInfos(state, latestActiveBoost[0]).apr;
-    } else {
-      return 0;
-    }
-  });
-  const apy = useSelector((state: BeefyState) =>
-    selectVaultApyInfos(state, vaultId)
-  ) as any; /* legacy code that should use type guards */
 
   const isLoading = useSelector((state: BeefyState) => !selectVaultApyAvailable(state, vaultId));
-
-  values.totalApy = apy.totalApy;
-
-  if (apy.vaultApr) {
-    values.vaultApr = apy.vaultApr;
-    values.vaultDaily = apy.vaultApr / 365;
-  }
-
-  if (apy.tradingApr) {
-    values.tradingApr = apy.tradingApr;
-    values.tradingDaily = apy.tradingApr / 365;
-  }
-
-  if (values.vaultDaily || values.tradingDaily) {
-    values.totalDaily = (values.vaultDaily || 0) + (values.tradingDaily || 0);
-  } else {
-    values.totalDaily = yearlyToDaily(values.totalApy);
-  }
-
-  if (isGovVault(vault)) {
-    values.totalApy = apy.vaultApr / 1;
-    values.totalDaily = apy.vaultApr / 365;
-  }
-
-  if (isBoosted) {
-    values.boostApr = boostApr;
-    values.boostDaily = boostApr / 365;
-    values.boostedTotalApy = values.boostApr ? values.totalApy + values.boostApr : 0;
-    values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
-  }
+  const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
 
   const formatted = Object.fromEntries(
     Object.entries(values).map(([key, value]) => {

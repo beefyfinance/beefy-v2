@@ -1,8 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 import BigNumber from 'bignumber.js';
+import { isString } from 'lodash';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
+import { mapValuesDeep } from '../utils/array-utils';
 
 export interface ApyGovVault {
   vaultApr: number;
@@ -83,9 +85,19 @@ export class BeefyAPI {
 
   public async getBreakdown(): Promise<BeefyAPIBreakdownResponse> {
     const res = await this.api.get('/apy/breakdown', {
-      params: { _: this.getCacheBuster('hour') },
+      params: { _: this.getCacheBuster('day') },
     });
-    return res.data;
+
+    // somehow, all vaultApr are currently strings, we need to fix that before sending
+    // the data to be processed
+    const data = mapValuesDeep(res.data, (val, key) => {
+      if (key === 'vaultApr' && isString(val)) {
+        val = parseFloat(val);
+      }
+      return val;
+    });
+
+    return data;
   }
 
   public async getHistoricalAPY(): Promise<BeefyAPIHistoricalAPYResponse> {

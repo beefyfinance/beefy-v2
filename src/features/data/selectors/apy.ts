@@ -15,14 +15,14 @@ import { selectIsUserBalanceAvailable } from './data-loader';
 import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
-export const selectBoostAprInfos = (state: BeefyState, boostId: BoostEntity['id']) =>
-  state.biz.apy.byBoostId[boostId] || { apr: 0 };
+export const selectBoostRawAprInfos = (state: BeefyState, boostId: BoostEntity['id']) =>
+  state.biz.apy.rawApy.byBoostId[boostId] || { apr: 0 };
 
-export const selectVaultApyInfos = (state: BeefyState, vaultId: VaultEntity['id']) =>
-  state.biz.apy.byVaultId[vaultId] || { totalApy: 0 };
+export const selectVaultRawApyInfos = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.biz.apy.rawApy.byVaultId[vaultId] || { totalApy: 0 };
 
-export const selectGovVaultApr = (state: BeefyState, vaultId: VaultGov['id']) => {
-  const vaultApy = state.biz.apy.byVaultId[vaultId];
+export const selectGovVaultRawApr = (state: BeefyState, vaultId: VaultGov['id']) => {
+  const vaultApy = state.biz.apy.rawApy.byVaultId[vaultId];
   if (vaultApy === undefined) {
     return 0;
   }
@@ -32,8 +32,8 @@ export const selectGovVaultApr = (state: BeefyState, vaultId: VaultGov['id']) =>
   return vaultApy.vaultApr;
 };
 
-export const selectStandardVaultTotalApy = (state: BeefyState, vaultId: VaultStandard['id']) => {
-  const vaultApy = state.biz.apy.byVaultId[vaultId];
+export const selectStandardVaultRawTotalApy = (state: BeefyState, vaultId: VaultStandard['id']) => {
+  const vaultApy = state.biz.apy.rawApy.byVaultId[vaultId];
   if (vaultApy === undefined) {
     return 0;
   }
@@ -41,6 +41,10 @@ export const selectStandardVaultTotalApy = (state: BeefyState, vaultId: VaultSta
     throw new Error('Apy is not a standard vault apy and not a maxi vault apy');
   }
   return vaultApy.totalApy;
+};
+
+export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.biz.apy.totalApy.byVaultId[vaultId] || {};
 };
 
 export const selectUserGlobalStats = memoize((state: BeefyState) => {
@@ -88,13 +92,13 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
 
     // compute apy and daily yield
     if (isGovVault(vault)) {
-      const apr = selectGovVaultApr(state, vault.id);
+      const apr = selectGovVaultRawApr(state, vault.id);
       const dailyApr = apr / 365;
       const dailyUsd = vaultUsdBalance.times(dailyApr);
 
       newGlobalStats.daily = newGlobalStats.daily.plus(dailyUsd);
     } else {
-      const apy = selectStandardVaultTotalApy(state, vault.id);
+      const apy = selectStandardVaultRawTotalApy(state, vault.id);
       const dailyApr = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
       const dailyUsd = vaultUsdBalance.times(dailyApr);
       newGlobalStats.daily = newGlobalStats.daily.plus(dailyUsd);

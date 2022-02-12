@@ -80,8 +80,21 @@ export const boostsSlice = createSlice({
 
 export const { recomputeBoostStatus } = boostsSlice.actions;
 
+export function getBoostStatusFromPeriodFinish(periodFinish: Date | null, now = new Date()) {
+  if (!periodFinish) {
+    return 'prestake';
+  }
+  const nowUTCTime = now.getTime();
+  const pfUTCTime = periodFinish.getTime();
+  if (nowUTCTime < pfUTCTime) {
+    return 'active';
+  } else {
+    return 'expired';
+  }
+}
+
 function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
-  const nowUTCTime = new Date().getTime();
+  const now = new Date();
 
   for (const boostData of [sliceState.byVaultId, sliceState.byChainId]) {
     for (const entityData of Object.values(boostData)) {
@@ -91,13 +104,12 @@ function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
 
       for (const boostId of entityData.allBoostsIds) {
         const periodFinish = sliceState.periodfinish[boostId];
-        if (periodFinish) {
-          const pfUTCTime = periodFinish.getTime();
-          if (nowUTCTime < pfUTCTime) {
-            activeBoostsIds.push(boostId);
-          } else {
-            expiredBoostsIds.push(boostId);
-          }
+        const status = getBoostStatusFromPeriodFinish(periodFinish, now);
+        if (status === 'expired') {
+          expiredBoostsIds.push(boostId);
+        } else {
+          // TODO: handle prestake status
+          activeBoostsIds.push(boostId);
         }
       }
 

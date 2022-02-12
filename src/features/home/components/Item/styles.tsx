@@ -5,10 +5,11 @@ export const styles = theme => ({
     },
     display: 'flex',
     flexDirection: 'column',
-    margin: '20px 0 0 0',
+    margin: '0',
     borderRadius: '20px',
     padding: '22px',
     width: '100%',
+    height: '100%',
     border: `2px solid ${theme.palette.background.vaults.defaultOutline}`,
     boxShadow: '0px 1px 8px rgba(0,0,0,0.1)',
     background: theme.palette.background.vaults.default,
@@ -185,6 +186,8 @@ export const styles = theme => ({
     },
   },
   removeLinkStyles: {
+    display: 'block', // make sure we have proper height and width
+    cursor: 'pointer',
     textDecoration: 'none',
     color: '#FFF',
     width: '100%',
@@ -365,12 +368,6 @@ export const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       margin: 0,
       marginTop: theme.spacing(3),
-    },
-  },
-  boosterSpace: {
-    [theme.breakpoints.only('sm')]: {
-      height: '100%',
-      padding: '20px 10px 0px 10px',
     },
   },
 });
