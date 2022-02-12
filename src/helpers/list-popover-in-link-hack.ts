@@ -11,6 +11,9 @@ import { CSSProperties } from '@material-ui/core/styles/withStyles';
  */
 
 export const popoverInLinkHack__linkStyle: CSSProperties = {
+  cursor: 'pointer',
+};
+export const popoverInLinkHack__linkContentStyle: CSSProperties = {
   // disabling pointer events saves CPU when scrolling super fast
   pointerEvents: 'none',
 };
