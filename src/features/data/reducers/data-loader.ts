@@ -79,9 +79,6 @@ const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
 };
 
 export interface DataLoaderState {
-  // todo: have proper error handling, not just a global string
-  latestError: string | null;
-
   global: {
     chainConfig: LoaderState;
     prices: LoaderState;
@@ -100,7 +97,6 @@ export interface DataLoaderState {
   };
 }
 export const initialDataLoaderState: DataLoaderState = {
-  latestError: null,
   global: {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
@@ -135,7 +131,6 @@ function addGlobalAsyncThunkActions(
       error: msg,
       alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
     };
-    sliceState.latestError = msg;
   });
   builder.addCase(action.fulfilled, sliceState => {
     sliceState.global[stateKey] = dataLoaderStateFulfilled;
@@ -170,7 +165,6 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
       status: 'rejected',
       error: msg,
     };
-    sliceState.latestError = msg;
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
