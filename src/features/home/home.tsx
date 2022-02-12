@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { memo, RefObject } from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, useMediaQuery } from '@material-ui/core';
@@ -26,12 +26,9 @@ interface VirtualVaultsListProps {
 }
 
 class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
-  gridRef: RefObject<any>;
-
   constructor(props: VirtualVaultsListProps) {
     super(props);
 
-    this.gridRef = React.createRef();
     this._renderVault = this._renderVault.bind(this);
     this._getRowHeight = this._getRowHeight.bind(this);
   }
@@ -50,13 +47,36 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
                   onScroll={onChildScroll}
                   overscanRowCount={2}
                   rowCount={ceil(this.props.vaults.length / this.props.columns)}
-                  rowHeight={this._getRowHeight}
+                  rowHeight={params => {
+                    /**
+                     * Ok so this is the only way I found to reset the style cache
+                     * by passing a new function reference each time this component
+                     * re-renders.
+                     *
+                     * Without this, when the list changes, the element height are not
+                     * updated. Ex: render the grid with a first element with a large height
+                     * (a gov vault) then update the grid to have a smaller element on the
+                     * first place (a standard vault). This element will receive the height
+                     * property from the style cache and have a larger height than normal.
+                     * This height affects the element, but also serves for placing elements
+                     * that are below it.
+                     *
+                     * There seem to be no way to reset the style cache programatically
+                     * but I found that react-virtualized checks rowWidth and rowHeight
+                     * properties references to know if it needs to reset the style cache on
+                     * the getDerivedStateFromProps handler.
+                     * https://github.com/bvaughn/react-virtualized/blob/abe0530a512639c042e74009fbf647abdb52d661/source/Grid/Grid.js#L859
+                     *
+                     * So by passing a new function reference each time we re-render we
+                     * force the style cache to be reset.
+                     */
+                    return this._getRowHeight(params);
+                  }}
                   cellRenderer={this._renderVault}
                   scrollTop={scrollTop}
                   width={width}
                   columnCount={this.props.columns}
                   columnWidth={width / this.props.columns}
-                  ref={this.gridRef}
                 />
               </div>
             )}
@@ -66,7 +86,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     );
   }
 
-  _renderVault({ rowIndex, columnIndex, key, style }) {
+  _renderVault({ rowIndex, columnIndex, style }) {
     const index = rowIndex * this.props.columns + columnIndex;
     const vault = this.props.vaults[index] ?? null;
 
@@ -85,7 +105,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     }
 
     return (
-      <div key={key} style={{ ...style, ...spacerStyles }}>
+      <div key={vault.id} style={{ ...style, ...spacerStyles }}>
         <Item vault={vault} />
       </div>
     );
@@ -135,20 +155,6 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     // some default large value in case we forgot a case
     // users will still see the entier vault cards, just super spaced out
     return this.props.spaceBetweenRows + 1000;
-  }
-
-  shouldComponentUpdate(nextProps: Readonly<VirtualVaultsListProps>): boolean {
-    return this.props.vaults !== nextProps.vaults;
-  }
-
-  componentDidUpdate(prevProps: Readonly<VirtualVaultsListProps>): void {
-    if (prevProps.vaults !== this.props.vaults) {
-      // tell the grid about the updated height data
-      // this method is way faster than unmounting and remounting the component
-      if (this.gridRef.current) {
-        this.gridRef.current.forceUpdate();
-      }
-    }
   }
 }
 

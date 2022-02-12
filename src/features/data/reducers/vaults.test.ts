@@ -11,7 +11,6 @@ import {
 import { vaultsSlice, initialVaultsState } from './vaults';
 import { getBeefyTestingStore } from '../utils/test-utils';
 import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../../redux-types';
 
 describe('Vaults slice tests', () => {
   it('should update state on fulfilled vault list', async () => {

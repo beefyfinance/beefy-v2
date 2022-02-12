@@ -13,6 +13,7 @@ import { pools as fuseVaults } from '../../../config/vault/fuse';
 import { pools as harmonyVaults } from '../../../config/vault/harmony';
 import { pools as hecoVaults } from '../../../config/vault/heco';
 import { pools as metisVaults } from '../../../config/vault/metis';
+import { pools as moonbeamVaults } from '../../../config/vault/moonbeam';
 import { pools as moonriverVaults } from '../../../config/vault/moonriver';
 import { pools as polygonVaults } from '../../../config/vault/polygon';
 
@@ -27,6 +28,7 @@ import { pools as fuseBoosts } from '../../../config/boost/fuse';
 import { pools as harmonyBoosts } from '../../../config/boost/harmony';
 import { pools as hecoBoosts } from '../../../config/boost/heco';
 import { pools as metisBoosts } from '../../../config/boost/metis';
+import { pools as moonbeamBoosts } from '../../../config/boost/moonbeam';
 import { pools as moonriverBoosts } from '../../../config/boost/moonriver';
 import { pools as polygonBoosts } from '../../../config/boost/polygon';
 
@@ -165,6 +167,7 @@ const vaultsByChainId: {
   harmony: harmonyVaults,
   heco: hecoVaults,
   metis: metisVaults,
+  moonbeam: moonbeamVaults,
   moonriver: moonriverVaults,
   polygon: polygonVaults,
 };
@@ -183,6 +186,7 @@ const boostsByChainId: {
   harmony: harmonyBoosts,
   heco: hecoBoosts,
   metis: metisBoosts,
+  moonbeam: moonbeamBoosts,
   moonriver: moonriverBoosts,
   polygon: polygonBoosts,
 };

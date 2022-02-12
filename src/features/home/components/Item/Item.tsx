@@ -45,9 +45,10 @@ import { PlatformEntity } from '../../../data/entities/platform';
 import { TokenEntity } from '../../../data/entities/token';
 import {
   popoverInLinkHack__linkHandler,
-  popoverInLinkHack__linkStyle,
+  popoverInLinkHack__linkContentStyle,
   popoverInLinkHack__popoverContainerHandler,
   popoverInLinkHack__popoverContainerStyle,
+  popoverInLinkHack__linkStyle,
 } from '../../../../helpers/list-popover-in-link-hack';
 
 function ValueText({
@@ -475,6 +476,7 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
       to={`/${vault.chainId}/vault/${vault.id}`}
     >
       <div
+        style={popoverInLinkHack__linkContentStyle}
         className={clsx({
           [classes.itemContainer]: true,
           [classes.withMuted]: !isVaultActive(vault),
