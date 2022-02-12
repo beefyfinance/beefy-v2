@@ -104,6 +104,9 @@ function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
 
       for (const boostId of entityData.allBoostsIds) {
         const periodFinish = sliceState.periodfinish[boostId];
+        if (periodFinish === undefined) {
+          continue;
+        }
         const status = getBoostStatusFromPeriodFinish(periodFinish, now);
         if (status === 'expired') {
           expiredBoostsIds.push(boostId);
