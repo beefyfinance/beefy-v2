@@ -53,7 +53,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": null,
 }
 `;
 
@@ -110,7 +109,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": null,
 }
 `;
 
@@ -167,7 +165,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": "fatality",
 }
 `;
 
@@ -224,7 +221,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": "fatality",
 }
 `;
 
@@ -263,7 +259,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": null,
 }
 `;
 
@@ -302,7 +297,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": null,
 }
 `;
 
@@ -341,7 +335,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": "fatality",
 }
 `;
 
@@ -380,7 +373,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": "fatality message",
 }
 `;
 
@@ -419,7 +411,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": "fatality name",
 }
 `;
 
@@ -458,7 +449,6 @@ Object {
       "status": "init",
     },
   },
-  "latestError": "1234",
 }
 `;
 
@@ -497,6 +487,5 @@ Object {
       "status": "init",
     },
   },
-  "latestError": "1234",
 }
 `;
