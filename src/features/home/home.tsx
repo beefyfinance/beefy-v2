@@ -53,7 +53,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualV
                   height={height}
                   isScrolling={isScrolling}
                   onScroll={onChildScroll}
-                  overscanRowCount={2}
+                  overscanRowCount={15}
                   rowCount={
                     ceil(this.props.vaults.length / this.props.columns) +
                     (this.state.addFakeElement ? 1 : 0)
