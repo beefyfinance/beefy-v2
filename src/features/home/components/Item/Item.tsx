@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Grid, makeStyles, Typography, useMediaQuery, Box, Hidden } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -6,17 +6,11 @@ import { connect, useSelector } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
 import { DisplayTags } from '../../../../components/vaultTags';
-import { Popover } from '../../../../components/Popover';
-import { formatBigUsd, formatBigDecimals, BIG_ZERO } from '../../../../helpers/format';
+import { formatBigUsd, formatBigDecimals } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { ApyStats } from '../ApyStats';
-import { ApyStatLoader } from '../../../../components/ApyStatLoader';
-import {
-  selectActiveVaultBoostIds,
-  selectBoostById,
-  selectIsVaultBoosted,
-} from '../../../data/selectors/boosts';
+import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
+import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import {
   isGovVault,
   isVaultActive,
@@ -25,14 +19,9 @@ import {
   VaultStandard,
 } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
-import { selectVaultTvl } from '../../../data/selectors/tvl';
 import {
-  selectGovVaultPendingRewardsInToken,
-  selectGovVaultPendingRewardsInUsd,
   selectHasGovVaultPendingRewards,
-  selectHasUserDepositInVault,
   selectUserVaultDepositInToken,
-  selectUserVaultDepositInUsd,
   selectWalletBalanceOfToken,
 } from '../../../data/selectors/balance';
 import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
@@ -46,248 +35,54 @@ import { TokenEntity } from '../../../data/entities/token';
 import {
   popoverInLinkHack__linkHandler,
   popoverInLinkHack__linkContentStyle,
-  popoverInLinkHack__popoverContainerHandler,
-  popoverInLinkHack__popoverContainerStyle,
   popoverInLinkHack__linkStyle,
 } from '../../../../helpers/list-popover-in-link-hack';
+import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl';
+import { ValueBlock } from '../../../../components/ValueBlock/ValueBlock';
+import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDeposited';
+import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 
-function ValueText({
-  vaultId,
-  value,
-  blurred = false,
-}: {
-  vaultId: VaultEntity['id'];
-  value: ReactNode | null;
-  blurred?: boolean;
-}) {
+const ItemTvl = React.memo(({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useItemStyles(vaultId);
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+
   return (
-    <>
-      {value ? (
-        <span
-          className={clsx({
-            [classes.value]: true,
-            [classes.blurred]: blurred,
-          })}
-        >
-          {blurred ? '$100' : value}
-        </span>
-      ) : (
-        <ApyStatLoader />
-      )}
-    </>
+    <div className={isGovVault(vault) || isBoosted ? classes.stat1 : classes.stat}>
+      <VaultTvl vaultId={vaultId} />
+    </div>
   );
-}
-
-function ValuePrice({
-  vaultId,
-  value,
-  blurred = false,
-}: {
-  vaultId: VaultEntity['id'];
-  value: ReactNode | null;
-  blurred?: boolean;
-}) {
-  const classes = useItemStyles(vaultId);
-  return (
-    <>
-      {value ? (
-        <span
-          className={clsx({
-            [classes.price]: true,
-            [classes.blurred]: blurred,
-          })}
-        >
-          {blurred ? '$100' : value}
-        </span>
-      ) : (
-        <ApyStatLoader />
-      )}
-    </>
-  );
-}
-
-const _ItemTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
-  const vault = selectVaultById(state, vaultId);
-  const tvlLoaded =
-    state.ui.dataLoader.byChainId[vault.chainId]?.contractData.alreadyLoadedOnce &&
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce;
-  const isBoosted = selectIsVaultBoosted(state, vaultId);
-  const vaultTvl = tvlLoaded ? selectVaultTvl(state, vaultId) : BIG_ZERO;
-  const totalDeposited = selectUserVaultDepositInToken(state, vaultId);
-
-  const blurred = !tvlLoaded;
-  return {
-    vault,
-    isBoosted,
-    vaultTvl: formatBigUsd(vaultTvl),
-    hasDeposit: totalDeposited.isGreaterThan(0),
-    blurred,
-  };
-})(
-  ({
-    vault,
-    isBoosted,
-    vaultTvl,
-    hasDeposit,
-    blurred,
-  }: {
-    vault: VaultEntity;
-    isBoosted: boolean;
-    vaultTvl: string;
-    hasDeposit: boolean;
-    blurred: boolean;
-  }) => {
-    const isTwoColumns = useIsTwoColumns();
-    const { t } = useTranslation();
-    const classes = useItemStyles(vault.id);
-
-    return (
-      <div className={isGovVault || isBoosted ? classes.stat1 : classes.stat}>
-        <Typography className={classes.label}>{t('TVL')}</Typography>
-        <Typography className={classes.value}>
-          <ValueText blurred={blurred} value={vaultTvl} vaultId={vault.id} />
-        </Typography>
-        {isBoosted || (hasDeposit && !isTwoColumns) || (hasDeposit && !isTwoColumns) ? (
-          <div className={classes.boostSpacer} />
-        ) : null}
-      </div>
-    );
-  }
-);
-const ItemTvl = React.memo(_ItemTvl);
+});
 
 const _ItemDeposited = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const vault = selectVaultById(state, vaultId);
-  const isBoosted = selectIsVaultBoosted(state, vault.id);
-  const stakedIds = selectActiveVaultBoostIds(state, vault.id)
-    .map(boostId => {
-      const boost = selectBoostById(state, boostId);
-      return boost.name;
-    })
-    .join(', ');
-  const userStaked = selectHasUserDepositInVault(state, vault.id);
   const deposit = selectUserVaultDepositInToken(state, vault.id);
   const hasDeposit = deposit.gt(0);
-  const totalDeposited = formatBigDecimals(deposit, 8, false);
-  const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
-  const blurred = selectIsBalanceHidden(state);
   return {
-    vault,
-    stakedIds,
-    isBoosted,
-    userStaked,
+    vaultId,
     hasDeposit,
-    totalDeposited,
-    totalDepositedUsd,
-    blurred,
   };
-})(
-  ({
-    vault,
-    stakedIds,
-    isBoosted,
-    userStaked,
-    hasDeposit,
-    totalDeposited,
-    totalDepositedUsd,
-    blurred,
-  }: {
-    vault: VaultEntity;
-    stakedIds: string;
-    isBoosted: boolean;
-    userStaked: boolean;
-    hasDeposit: boolean;
-    totalDeposited: string;
-    totalDepositedUsd: string;
-    blurred: boolean;
-  }) => {
-    const classes = useItemStyles(vault.id);
-    const { t } = useTranslation();
+})(({ vaultId, hasDeposit }: { vaultId: VaultEntity['id']; hasDeposit: boolean }) => {
+  const classes = useItemStyles(vaultId);
 
-    return (
-      <>
-        {/*Boosted by */}
-        {isBoosted && userStaked && (
-          <div className={clsx([classes.stat, classes.marginBottom])}>
-            <Typography className={classes.label}>{t('STAKED-IN')}</Typography>
-            <ValueText value={stakedIds} vaultId={vault.id} />
-            <Typography className={classes.label}>
-              <ValuePrice value={t('BOOST')} vaultId={vault.id} />
-            </Typography>
-          </div>
-        )}
-        {/* Deposit */}
-        {(!isBoosted || !userStaked) && (
-          <div className={clsx([classes.stat, classes.marginBottom])}>
-            <Typography className={classes.label}>{t('DEPOSITED')}</Typography>
-            <ValueText blurred={blurred} value={totalDeposited} vaultId={vault.id} />
-            {hasDeposit && (
-              <Typography className={classes.label}>
-                <ValuePrice blurred={blurred} value={totalDepositedUsd} vaultId={vault.id} />
-              </Typography>
-            )}
-            {hasDeposit && <div className={classes.boostSpacer} />}
-          </div>
-        )}
-      </>
-    );
-  }
-);
+  return (
+    <div className={clsx([classes.stat, classes.marginBottom])}>
+      <VaultDeposited vaultId={vaultId} />
+      {hasDeposit && <div className={classes.boostSpacer} />}
+    </div>
+  );
+});
 const ItemDeposited = React.memo(_ItemDeposited);
 
-const _ItemGovVaultRewards = connect(
-  (state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }) => {
-    const vault = selectVaultById(state, vaultId);
-    const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-    const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
-    const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
-    const blurred = selectIsBalanceHidden(state);
-    return {
-      vault,
-      earnedToken,
-      rewardsEarnedToken: formatBigDecimals(rewardsEarnedToken),
-      rewardsEarnedUsd: formatBigDecimals(rewardsEarnedUsd),
-      blurred,
-      hasRewards: rewardsEarnedUsd.gt(0),
-    };
-  }
-)(
-  ({
-    vault,
-    rewardsEarnedToken,
-    rewardsEarnedUsd,
-    earnedToken,
-    blurred,
-    hasRewards,
-  }: {
-    vault: VaultEntity;
-    earnedToken: TokenEntity;
-    rewardsEarnedToken: string;
-    rewardsEarnedUsd: string;
-    blurred: boolean;
-    hasRewards: boolean;
-  }) => {
-    const classes = useItemStyles(vault.id);
-    const { t } = useTranslation();
+const ItemGovVaultRewards = React.memo(({ vaultId }: { vaultId: VaultGov['id'] }) => {
+  const classes = useItemStyles(vaultId);
 
-    return (
-      <div className={classes.stat1}>
-        <Typography className={classes.label}>{t('Vault-Rewards')}</Typography>
-        <Typography className={classes.value}>
-          {rewardsEarnedToken + ` ${earnedToken.symbol}`}
-        </Typography>
-
-        {hasRewards && (
-          <Typography className={classes.label}>
-            <ValuePrice blurred={blurred} value={rewardsEarnedUsd} vaultId={vault.id} />
-          </Typography>
-        )}
-      </div>
-    );
-  }
-);
-const ItemGovVaultRewards = React.memo(_ItemGovVaultRewards);
+  return (
+    <div className={classes.stat1}>
+      <GovVaultRewards vaultId={vaultId} />
+    </div>
+  );
+});
 
 const _ItemStandardVaultSafetyScore = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultStandard['id'] }) => {
@@ -300,24 +95,16 @@ const _ItemStandardVaultSafetyScore = connect(
   const { t } = useTranslation();
 
   return (
-    <div
-      className={isBoosted ? classes.stat1 : classes.stat}
-      onClick={popoverInLinkHack__popoverContainerHandler}
-      onTouchStart={popoverInLinkHack__popoverContainerHandler}
-      style={popoverInLinkHack__popoverContainerStyle}
-    >
-      <div className={classes.tooltipLabel}>
-        <Typography className={classes.safetyLabel}>{t('Safety-Score')}</Typography>
-        <div className={classes.tooltipHolder}>
-          <Popover
-            {...({
-              title: t('Safety-ScoreWhat'),
-              content: t('Safety-ScoreExpl'),
-            } as any)}
-          />
-        </div>
-      </div>
-      <SafetyScore score={vault.safetyScore} whiteLabel size="sm" />
+    <div className={isBoosted ? classes.stat1 : classes.stat}>
+      <ValueBlock
+        label={t('Safety-Score')}
+        textContent={false}
+        value={<SafetyScore score={vault.safetyScore} whiteLabel size="sm" />}
+        tooltip={{
+          title: t('Safety-ScoreWhat'),
+          content: t('Safety-ScoreExpl'),
+        }}
+      />
     </div>
   );
 });
@@ -331,12 +118,16 @@ const _ItemWalletAmount = connect(
     const userOracleInWalletUsd = userOracleInWallet.multipliedBy(price);
 
     const blurred = selectIsBalanceHidden(state);
+    const isLoaded =
+      state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+      state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce;
     return {
       vault,
       hasInWallet: userOracleInWallet.gt(0),
       userOracleInWallet: formatBigDecimals(userOracleInWallet, 4, false),
       userOracleInWalletUsd: formatBigUsd(userOracleInWalletUsd),
       blurred,
+      loading: !isLoaded,
     };
   }
 )(
@@ -346,25 +137,27 @@ const _ItemWalletAmount = connect(
     userOracleInWallet,
     userOracleInWalletUsd,
     blurred,
+    loading,
   }: {
     vault: VaultEntity;
     hasInWallet: boolean;
     userOracleInWallet: string;
     userOracleInWalletUsd: string;
     blurred: boolean;
+    loading: boolean;
   }) => {
     const classes = useItemStyles(vault.id);
     const { t } = useTranslation();
 
     return (
       <div className={clsx([classes.stat, classes.marginBottom])}>
-        <Typography className={classes.label}>{t('WALLET')}</Typography>
-        <ValueText blurred={blurred} value={userOracleInWallet} vaultId={vault.id} />
-        {hasInWallet && (
-          <Typography className={classes.label}>
-            <ValuePrice blurred={blurred} value={userOracleInWalletUsd} vaultId={vault.id} />
-          </Typography>
-        )}
+        <ValueBlock
+          label={t('WALLET')}
+          value={userOracleInWallet}
+          usdValue={hasInWallet ? userOracleInWalletUsd : null}
+          blurred={blurred}
+          loading={loading}
+        />
         {hasInWallet && <div className={classes.boostSpacer} />}
       </div>
     );
@@ -499,7 +292,18 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
               <Grid item xs={6} md={2} lg={2}>
                 <ItemDeposited vaultId={vault.id} />
               </Grid>
-              <ApyStats vaultId={vault.id} />
+
+              <Grid item xs={6} md={2} lg={2}>
+                <div className={classes.stat1}>
+                  <YearlyApyStats vaultId={vault.id} />
+                </div>
+              </Grid>
+
+              <Grid item xs={6} md={2} lg={2}>
+                <div className={classes.stat1}>
+                  <DailyApyStats vaultId={vault.id} />
+                </div>
+              </Grid>
 
               <Grid item xs={6} md={2} lg={2}>
                 <ItemTvl vaultId={vault.id} />

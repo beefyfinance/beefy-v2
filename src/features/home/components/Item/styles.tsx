@@ -30,27 +30,6 @@ export const styles = theme => ({
     },
     width: 'fit-content',
   },
-  titleContainer: {
-    display: 'flex',
-    padding: '0 0 8px 0',
-    flexDirection: 'row',
-    alignItems: 'space-around',
-    justifyContent: 'center',
-    [theme.breakpoints.up('md')]: {
-      alignItems: 'flex-start',
-      maxWidth: '30%',
-      flexBasis: '30%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: 0,
-      alignItems: 'flex-start',
-      maxWidth: '100%',
-      marginBottom: theme.spacing(3),
-    },
-  },
-  imageContainer: {
-    paddingRight: '16px',
-  },
   infoContainer: {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -75,39 +54,6 @@ export const styles = theme => ({
     marginBottom: theme.spacing(1),
     cursor: 'pointer',
   },
-  value: {
-    fontWeight: 600,
-    fontSize: '18px',
-    margin: 0,
-    padding: 0,
-    whiteSpace: 'nowrap',
-    letterSpacing: '0.2px',
-    [theme.breakpoints.up('lg')]: {
-      fontSize: '18px',
-    },
-    [theme.breakpoints.down('md')]: {
-      fontSize: '18px',
-      textAlign: 'left',
-    },
-  },
-  label: {
-    fontWeight: 600,
-    fontSize: '12px',
-    color: theme.palette.text.disabled,
-    letterSpacing: '0.2px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    textAlign: 'left',
-    [theme.breakpoints.up('md')]: {
-      textAlign: 'center',
-    },
-  },
-  price: {
-    color: theme.palette.text.disabled,
-    fontWeight: 400,
-    letterSpacing: '0.2px',
-    fontSize: '14px',
-    whiteSpace: 'nowrap',
-  },
   platformLabel: {
     display: 'flex',
     fontWeight: 600,
@@ -120,71 +66,6 @@ export const styles = theme => ({
       textTransform: 'uppercase',
     },
   },
-  safetyLabel: {
-    whiteSpace: 'nowrap',
-    fontWeight: 600,
-    fontSize: '12px',
-    color: theme.palette.text.disabled,
-    letterSpacing: '0.2px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    textAlign: 'left',
-    [theme.breakpoints.up('md')]: {
-      textAlign: 'center',
-    },
-  },
-  centerSpace: {
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    [theme.breakpoints.up('md')]: {
-      padding: '0.5rem 32px 0.5rem 32px',
-      justifyContent: 'space-around',
-      flexGrow: '0',
-      maxWidth: '15%',
-      flexBasis: '15%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      height: 60,
-      margin: '10px 0',
-      flexGrow: '0',
-      maxWidth: '50%',
-      flexBasis: '50%',
-    },
-  },
-  chart: {
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  blurred: {
-    filter: 'blur(.5rem)',
-  },
-  depositButton: {
-    border: `solid 2px ${theme.palette.primary.main}`,
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: '8px',
-    color: 'white',
-    fontSize: '16px',
-    fontWeight: 700,
-    padding: '2px 20px 2px',
-    textTransform: 'capitalize',
-    display: 'block',
-    minWidth: '64px',
-    '&:hover': {
-      cursor: 'pointer',
-      backgroundColor: 'transparent',
-    },
-    [theme.breakpoints.up('md')]: {
-      marginLeft: 'auto',
-      marginRight: '0',
-      width: '75%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginTop: props => (props.removeMarginButton ? '0px' : '16px'),
-      width: '100%',
-    },
-  },
   removeLinkStyles: {
     display: 'block', // make sure we have proper height and width
     cursor: 'pointer',
@@ -193,57 +74,9 @@ export const styles = theme => ({
     width: '100%',
     height: '100%',
   },
-  removeLinkStylesVault: {
-    textDecoration: 'none',
-    color: '#FFF',
-    width: '100%',
-    height: '100%',
-  },
-  apyContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderRadius: '0px 0px 20px 20px',
-    background: theme.palette.type === 'dark' ? '#313759' : '#faf6f1',
-    padding: '20px 0',
-    '& .MuiTypography-h1': {
-      fontWeight: 600,
-      fontSize: '30px',
-      lineHeight: '34px',
-    },
-    '& .MuiTypography-h2': {
-      fontWeight: 600,
-      fontSize: '18px',
-      lineHeight: '24px',
-      color: '#8585A6',
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '275px',
-      flexDirection: 'column',
-      borderRadius: '0px 20px 20px 0px',
-    },
-  },
-  btnSeeDetails: {
-    fontSize: '14px',
-    lineHeight: '14px',
-    fontWeight: 600,
-    color: theme.palette.type === 'dark' ? '#6B7199' : '#A69885',
-    backgroundColor: theme.palette.type === 'dark' ? '#232743' : 'rgba(0,0,0,0.04)',
-    letterSpacing: '0.5px',
-    textTransform: 'inherit',
-    borderRadius: '20px',
-    padding: '5px 15px 5px',
-  },
   badgesContainter: {
     display: 'block',
     margin: '0',
-  },
-  leftCenter: {
-    textAlign: 'left',
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
-    },
   },
   stat: {
     display: 'flex',
@@ -275,21 +108,6 @@ export const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       margin: '0 0 10px 0',
     },
-  },
-  tooltipLabel: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  networkIconHolder: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  seeDetailsHolder: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-  tooltipHolder: {
-    marginLeft: theme.spacing(0.5),
   },
   withMuted: {
     background: theme.palette.background.vaults.inactive,
@@ -326,31 +144,6 @@ export const styles = theme => ({
   },
   govVaultTitle: {
     fontSize: '15px',
-  },
-  valueStrikethrough: {
-    fontWeight: 400,
-    fontSize: '12px',
-    lineHeight: '18px',
-    color: theme.palette.type === 'dark' ? '#8585A6' : '#A69885',
-    letterSpacing: '0.2px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    textAlign: 'left',
-    [theme.breakpoints.up('md')]: {
-      textAlign: 'center',
-    },
-    textDecoration: 'line-through',
-  },
-  statsContainer: {
-    margin: 'auto',
-    [theme.breakpoints.up('md')]: {
-      alignItems: 'flex-start',
-      maxWidth: '70%',
-      flexBasis: '70%',
-    },
-    [theme.breakpoints.down('sm')]: {
-      alignItems: 'flex-start',
-      maxWidth: '100%',
-    },
   },
   platformContainer: {
     display: 'flex',

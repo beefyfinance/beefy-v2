@@ -1,24 +1,20 @@
 import { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
-import { LabeledStat } from '../LabeledStat';
-import { Typography, Box, Grid } from '@material-ui/core';
+import { LabeledStat } from '../../features/home/components/LabeledStat';
+import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formattedTotalApy } from '../../../../helpers/format';
-import { Popover } from '../../../../components/Popover';
+import { formattedTotalApy } from '../../helpers/format';
 import { useSelector } from 'react-redux';
-import { BeefyState } from '../../../../redux-types';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectVaultTotalApy } from '../../../data/selectors/apy';
-import { isGovVault, VaultEntity } from '../../../data/entities/vault';
-import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
-import { selectVaultApyAvailable } from '../../../data/selectors/data-loader';
-import { TotalApy } from '../../../data/reducers/apy';
-import { AllValuesAsString } from '../../../data/utils/types-utils';
-import {
-  popoverInLinkHack__popoverContainerHandler,
-  popoverInLinkHack__popoverContainerStyle,
-} from '../../../../helpers/list-popover-in-link-hack';
+import { BeefyState } from '../../redux-types';
+import { selectVaultById } from '../../features/data/selectors/vaults';
+import { selectVaultTotalApy } from '../../features/data/selectors/apy';
+import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
+import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
+import { selectVaultApyAvailable } from '../../features/data/selectors/data-loader';
+import { TotalApy } from '../../features/data/reducers/apy';
+import { AllValuesAsString } from '../../features/data/utils/types-utils';
+import { ValueBlock } from '../ValueBlock/ValueBlock';
 
 const useStyles = makeStyles(styles as any);
 
@@ -151,27 +147,6 @@ const _DailyBreakdownTooltip = ({
 
 const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
 
-const LabeledStatWithTooltip = memo(({ children, boosted, label, value }: any) => {
-  const classes = useStyles();
-
-  return (
-    <div
-      className={classes.stat}
-      onClick={popoverInLinkHack__popoverContainerHandler}
-      onTouchStart={popoverInLinkHack__popoverContainerHandler}
-      style={popoverInLinkHack__popoverContainerStyle}
-    >
-      <div className={classes.tooltipLabel}>
-        <Typography className={classes.label}>{label}</Typography>
-        <div className={classes.tooltipHolder}>
-          <Popover {...({} as any)}>{children}</Popover>
-        </div>
-      </div>
-      <LabeledStat {...({ boosted } as any)} value={value} />
-    </div>
-  );
-});
-
 function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
 
@@ -184,19 +159,25 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const formatted = formattedTotalApy(values);
 
   return (
-    <LabeledStatWithTooltip
-      value={formatted.totalApy}
+    <ValueBlock
       label={isGovVault(vault) ? t('APR') : t('APY')}
-      boosted={isBoosted ? formatted.boostedTotalApy : ''}
-      isLoading={isLoading}
-      className={`tooltip-toggle`}
-    >
-      <YearlyBreakdownTooltip
-        isGovVault={isGovVault(vault)}
-        boosted={isBoosted}
-        rates={formatted}
-      />
-    </LabeledStatWithTooltip>
+      value={
+        <LabeledStat
+          {...({ boosted: isBoosted ? formatted.boostedTotalApy : '' } as any)}
+          value={formatted.totalApy}
+        />
+      }
+      tooltip={{
+        content: (
+          <YearlyBreakdownTooltip
+            isGovVault={isGovVault(vault)}
+            boosted={isBoosted}
+            rates={formatted}
+          />
+        ),
+      }}
+      loading={isLoading}
+    />
   );
 }
 export const YearlyApyStats = memo(_YearlyApyStats);
@@ -213,28 +194,25 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const formatted = formattedTotalApy(values);
 
   return (
-    <LabeledStatWithTooltip
-      value={formatted.totalDaily}
+    <ValueBlock
       label={t('Vault-Daily')}
-      boosted={isBoosted ? formatted.boostedTotalDaily : ''}
-      isLoading={isLoading}
-      className={`tooltip-toggle`}
-    >
-      <DailyBreakdownTooltip isGovVault={isGovVault(vault)} boosted={isBoosted} rates={formatted} />
-    </LabeledStatWithTooltip>
+      value={
+        <LabeledStat
+          {...({ boosted: isBoosted ? formatted.boostedTotalDaily : '' } as any)}
+          value={formatted.totalDaily}
+        />
+      }
+      tooltip={{
+        content: (
+          <DailyBreakdownTooltip
+            isGovVault={isGovVault(vault)}
+            boosted={isBoosted}
+            rates={formatted}
+          />
+        ),
+      }}
+      loading={isLoading}
+    />
   );
 }
 export const DailyApyStats = memo(_DailyApyStats);
-
-export function ApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  return (
-    <>
-      <Grid item xs={6} md={2} lg={2}>
-        <YearlyApyStats vaultId={vaultId} />
-      </Grid>
-      <Grid item xs={6} md={2} lg={2}>
-        <DailyApyStats vaultId={vaultId} />
-      </Grid>
-    </>
-  );
-}

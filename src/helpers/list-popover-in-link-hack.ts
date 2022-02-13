@@ -15,7 +15,7 @@ export const popoverInLinkHack__linkStyle: CSSProperties = {
 };
 export const popoverInLinkHack__linkContentStyle: CSSProperties = {
   // disabling pointer events saves CPU when scrolling super fast
-  pointerEvents: 'none',
+  //pointerEvents: 'none',
 };
 
 export const popoverInLinkHack__linkHandler = e => {
@@ -42,7 +42,7 @@ export const popoverInLinkHack__popoverContainerStyle: CSSProperties = {
   // pointer events have been disabled on the list item
   // for performance, we need to re-enable them here
   // to display the tooltip
-  pointerEvents: 'initial',
+  //pointerEvents: 'initial',
 };
 
 // this is needed on mobile because popovers need to be "clicked"
