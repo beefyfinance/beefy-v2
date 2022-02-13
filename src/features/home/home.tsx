@@ -25,12 +25,20 @@ interface VirtualVaultsListProps {
   spaceBetweenRows: number;
 }
 
-class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
+interface VirtualVaultsListState {
+  addFakeElement: boolean;
+}
+
+class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualVaultsListState> {
   constructor(props: VirtualVaultsListProps) {
     super(props);
 
     this._renderVault = this._renderVault.bind(this);
     this._getRowHeight = this._getRowHeight.bind(this);
+
+    this.state = {
+      addFakeElement: false,
+    };
   }
 
   render() {
@@ -46,7 +54,10 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
                   isScrolling={isScrolling}
                   onScroll={onChildScroll}
                   overscanRowCount={2}
-                  rowCount={ceil(this.props.vaults.length / this.props.columns)}
+                  rowCount={
+                    ceil(this.props.vaults.length / this.props.columns) +
+                    (this.state.addFakeElement ? 1 : 0)
+                  }
                   rowHeight={params => {
                     /**
                      * Ok so this is the only way I found to reset the style cache
@@ -86,9 +97,14 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     );
   }
 
-  _renderVault({ rowIndex, columnIndex, style }) {
+  _renderVault({ rowIndex, columnIndex, key, style }) {
     const index = rowIndex * this.props.columns + columnIndex;
     const vault = this.props.vaults[index] ?? null;
+
+    // this is our fake row
+    if (!vault) {
+      return <div style={style}></div>;
+    }
 
     // compute the space between cards
     const spacerStyles = {
@@ -105,7 +121,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     }
 
     return (
-      <div key={vault.id} style={{ ...style, ...spacerStyles }}>
+      <div key={key} style={{ ...style, ...spacerStyles }}>
         <Item vault={vault} />
       </div>
     );
@@ -117,6 +133,11 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
    */
   _getRowHeight({ index }: { index: number }) {
     const vault = this.props.vaults[index] ?? null;
+
+    // this is our fake row
+    if (!vault) {
+      return 0;
+    }
 
     // this should happen on large screen
     if (this.props.columns === 1 && this.props.cards === false) {
@@ -155,6 +176,43 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps> {
     // some default large value in case we forgot a case
     // users will still see the entier vault cards, just super spaced out
     return this.props.spaceBetweenRows + 1000;
+  }
+
+  componentDidUpdate(prevProps: Readonly<VirtualVaultsListProps>): void {
+    /**
+     * soooooo, this is a hack to bypass the CellSizeAndPositionManager or react-virtualized
+     * basically the row height will not get recomputed if the rowHeight is not a number
+     * (which is needed to bypass a style cache, see above for more details)
+     * But there is an edge case when the list changes but has the same number of elements,
+     * the height is not re-computed
+     * https://github.com/bvaughn/react-virtualized/blob/abe0530a512639c042e74009fbf647abdb52d661/source/Grid/utils/CellSizeAndPositionManager.js#L93
+     * https://github.com/bvaughn/react-virtualized/blob/abe0530a512639c042e74009fbf647abdb52d661/source/Grid/utils/calculateSizeAndPositionDataAndUpdateScrollOffset.js#L36
+     *
+     * To fix this, we remember the previous list length to introduce "fake" elements and force
+     * this cache to reset here:
+     * https://github.com/bvaughn/react-virtualized/blob/abe0530a512639c042e74009fbf647abdb52d661/source/Grid/Grid.js#L902
+     *
+     * But this can create a new situation where the first render has 2 elements, second has 2
+     * elements and third render has 3 elements. If we introduce a "fake" element on the second
+     * render, the third render will has the same element count as the second render from
+     * the PoV of the grid.
+     *
+     * This is why we have to reset the "fake" state
+     * so the initial render will always be a normal render
+     * */
+    if (
+      this.props.vaults.length > 0 &&
+      prevProps.vaults !== this.props.vaults &&
+      prevProps.vaults.length === this.props.vaults.length &&
+      this.state.addFakeElement === false
+    ) {
+      this.setState(
+        () => ({ addFakeElement: true }),
+        () => {
+          this.setState({ addFakeElement: false });
+        }
+      );
+    }
   }
 }
 
