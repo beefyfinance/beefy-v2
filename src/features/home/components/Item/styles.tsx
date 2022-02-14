@@ -84,22 +84,11 @@ export const styles = theme => ({
     alignItems: 'flex-start',
     [theme.breakpoints.up('md')]: {
       alignItems: 'center',
-    },
-    [theme.breakpoints.down('sm')]: {
       marginTop: '20px',
-      alignItems: 'flex-start',
-    },
-  },
-  stat1: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    [theme.breakpoints.up('md')]: {
-      alignItems: 'center',
     },
     [theme.breakpoints.down('sm')]: {
       paddingTop: '10px',
-      paddingBottom: '24px',
+      paddingBottom: '10px',
       alignItems: 'flex-start',
       height: '100%',
     },
@@ -145,6 +134,12 @@ export const styles = theme => ({
   govVaultTitle: {
     fontSize: '15px',
   },
+  fakeGovVaultTitleSpacer: {
+    fontSize: '15px',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
   platformContainer: {
     display: 'flex',
     marginTop: theme.spacing(1),
@@ -158,9 +153,7 @@ export const styles = theme => ({
   },
   contentContainer: {
     margin: 'auto',
-    [theme.breakpoints.down('md')]: {
-      margin: 0,
-      marginTop: theme.spacing(3),
-    },
+    display: 'flex',
+    alignItems: 'center',
   },
 });

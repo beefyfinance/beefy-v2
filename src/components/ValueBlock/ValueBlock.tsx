@@ -3,10 +3,7 @@ import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { styles } from './styles';
 import ContentLoader from 'react-content-loader';
-import {
-  popoverInLinkHack__popoverContainerHandler,
-  popoverInLinkHack__popoverContainerStyle,
-} from '../../helpers/list-popover-in-link-hack';
+import { popoverInLinkHack__popoverContainerHandler } from '../../helpers/list-popover-in-link-hack';
 import { Popover } from '../Popover';
 
 const useStyles = makeStyles(styles as any);
@@ -90,6 +87,7 @@ export function ValueBlock({
   usdValue,
   loading = false,
   blurred = false,
+  variant = 'small',
 }: {
   label: ReactNode;
   value: ReactNode;
@@ -98,8 +96,9 @@ export function ValueBlock({
   usdValue?: ReactNode;
   loading?: boolean;
   blurred?: boolean;
+  variant?: 'small' | 'large';
 }) {
-  const classes = useStyles();
+  const classes = useStyles(variant);
   return (
     <>
       {tooltip ? (
@@ -107,7 +106,6 @@ export function ValueBlock({
           className={classes.tooltipLabel}
           onClick={popoverInLinkHack__popoverContainerHandler}
           onTouchStart={popoverInLinkHack__popoverContainerHandler}
-          style={popoverInLinkHack__popoverContainerStyle}
         >
           <Typography className={classes.label}>{label}</Typography>
           <div className={classes.tooltipHolder}>

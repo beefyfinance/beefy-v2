@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +8,7 @@ import { EmptyStates } from './components/EmptyStates';
 import { styles } from './styles';
 import { AutoSizer, Grid as GridVirtualized, WindowScroller } from 'react-virtualized';
 import { Item } from './components/Item';
-import { ceil } from 'lodash';
+import { ceil, debounce } from 'lodash';
 import { CowLoader } from '../../components/CowLoader';
 import { selectIsVaultListAvailable } from '../data/selectors/data-loader';
 import { selectIsWalletConnected } from '../data/selectors/wallet';
@@ -35,6 +34,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualV
 
     this._renderVault = this._renderVault.bind(this);
     this._getRowHeight = this._getRowHeight.bind(this);
+    this._onResize = debounce(this._onResize.bind(this), 50);
 
     this.state = {
       addFakeElement: false,
@@ -140,7 +140,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualV
     }
 
     // this should happen on large screen
-    if (this.props.columns === 1 && this.props.cards === false) {
+    if (this.props.cards === false) {
       if (isGovVault(vault)) {
         return this.props.spaceBetweenRows + 162;
       } else {
@@ -150,16 +150,25 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualV
 
     // in 2 column mode we have to know if there is a gov vault in the row
     // if index is even, current cell is left cell, otherwise it's right cell
-    if (this.props.columns === 2 && this.props.cards === true) {
+    if (this.props.cards === true) {
+      // too many weird bugs, just make everything larger
+      return this.props.spaceBetweenRows + 418;
+      /*
       const isEvenIdx = index % 2 === 0; // if slow, use bitwise tricks
       const neighbourVault =
         (isEvenIdx ? this.props.vaults[index + 1] : this.props.vaults[index - 1]) ?? null;
 
-      if (isGovVault(vault) || isGovVault(neighbourVault)) {
+      let isNeighbourAGovVault = false;
+      // this is our fake row
+      if (neighbourVault) {
+        isNeighbourAGovVault = isGovVault(neighbourVault);
+      }
+
+      if (isGovVault(vault) || isNeighbourAGovVault) {
         return this.props.spaceBetweenRows + 418;
       } else {
         return this.props.spaceBetweenRows + 375;
-      }
+      }*/
     }
 
     // this should happen on super small screens where 2 columns don't fit
@@ -179,6 +188,27 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualV
   }
 
   componentDidUpdate(prevProps: Readonly<VirtualVaultsListProps>): void {
+    if (
+      this.props.vaults.length > 0 &&
+      prevProps.vaults !== this.props.vaults &&
+      //prevProps.vaults.length === this.props.vaults.length &&
+      this.state.addFakeElement === false
+    ) {
+      this._forceItemHeightRecompute();
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this._onResize);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+  }
+  _onResize() {
+    this._forceItemHeightRecompute();
+  }
+
+  _forceItemHeightRecompute() {
     /**
      * soooooo, this is a hack to bypass the CellSizeAndPositionManager or react-virtualized
      * basically the row height will not get recomputed if the rowHeight is not a number
@@ -200,27 +230,20 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualV
      * This is why we have to reset the "fake" state
      * so the initial render will always be a normal render
      * */
-    if (
-      this.props.vaults.length > 0 &&
-      prevProps.vaults !== this.props.vaults &&
-      prevProps.vaults.length === this.props.vaults.length &&
-      this.state.addFakeElement === false
-    ) {
-      this.setState(
-        () => ({ addFakeElement: true }),
-        () => {
-          this.setState({ addFakeElement: false });
-        }
-      );
-    }
+    this.setState(
+      () => ({ addFakeElement: true }),
+      () => {
+        this.setState({ addFakeElement: false });
+      }
+    );
   }
 }
 
 const VaultsList = memo(function HomeVaultsList() {
   const classes = useStyles();
-  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 960px)');
+  const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 959px)');
   // we switch to vault cards on smaller screens or when doing 2 columns
-  const isVaultCard = useMediaQuery('(max-width: 960px)');
+  const isVaultCard = useMediaQuery('(max-width: 959px)');
   const filterOptions = useSelector(selectFilterOptions);
   const isWalletConnected = useSelector(selectIsWalletConnected);
   const vaults = useSelector(selectFilteredVaults);
