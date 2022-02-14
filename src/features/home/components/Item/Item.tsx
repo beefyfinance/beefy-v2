@@ -6,21 +6,15 @@ import { connect } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { SafetyScore } from '../../../../components/SafetyScore';
 import { DisplayTags } from '../../../../components/vaultTags';
-import { formatBigUsd, formatBigDecimals } from '../../../../helpers/format';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { isGovVault, isVaultActive, VaultEntity } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
-import {
-  selectUserVaultDepositInToken,
-  selectWalletBalanceOfToken,
-} from '../../../data/selectors/balance';
-import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectPlatformById } from '../../../data/selectors/platforms';
-import { selectTokenById, selectTokenPriceByTokenId } from '../../../data/selectors/tokens';
+import { selectTokenById } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { ChainEntity } from '../../../data/entities/chain';
 import { PlatformEntity } from '../../../data/entities/platform';
@@ -160,28 +154,28 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
           <Grid item xs={12} md={8} lg={8} className={classes.contentContainer}>
             <Grid container>
               <Grid item xs={6} md={2} lg={2} className={classes.stat}>
-                <VaultWalletAmount vaultId={vault.id} />
+                <VaultWalletAmount vaultId={vault.id} variant="small" />
               </Grid>
 
               <Grid item xs={6} md={2} lg={2} className={classes.stat}>
-                <VaultDeposited vaultId={vault.id} />
+                <VaultDeposited vaultId={vault.id} variant="small" />
               </Grid>
 
               <Grid item xs={6} md={2} lg={2} className={classes.stat}>
-                <YearlyApyStats vaultId={vault.id} />
+                <YearlyApyStats vaultId={vault.id} variant="small" />
               </Grid>
 
               <Grid item xs={6} md={2} lg={2} className={classes.stat}>
-                <DailyApyStats vaultId={vault.id} />
+                <DailyApyStats vaultId={vault.id} variant="small" />
               </Grid>
 
               <Grid item xs={6} md={2} lg={2} className={classes.stat}>
-                <VaultTvl vaultId={vault.id} />
+                <VaultTvl vaultId={vault.id} variant="small" />
               </Grid>
 
               <Grid item xs={6} md={2} lg={2} className={classes.stat}>
                 {isGovVault(vault) ? (
-                  <GovVaultRewards vaultId={vault.id} />
+                  <GovVaultRewards vaultId={vault.id} variant="small" />
                 ) : (
                   <ValueBlock
                     label={t('Safety-Score')}
@@ -191,6 +185,7 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
                       title: t('Safety-ScoreWhat'),
                       content: t('Safety-ScoreExpl'),
                     }}
+                    variant="small"
                   />
                 )}
               </Grid>

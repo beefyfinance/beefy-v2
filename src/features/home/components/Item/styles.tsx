@@ -81,10 +81,12 @@ export const styles = theme => ({
   stat: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    [theme.breakpoints.down('md')]: {
+      alignItems: 'flex-start',
+    },
     [theme.breakpoints.up('md')]: {
       alignItems: 'center',
-      marginTop: '20px',
+      marginTop: '10px',
     },
     [theme.breakpoints.down('sm')]: {
       paddingTop: '10px',

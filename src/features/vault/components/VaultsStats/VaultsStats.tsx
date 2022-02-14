@@ -27,18 +27,18 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <Grid item lg={8} xs={12}>
           <Box className={classes.stats}>
             <Box width={'33%'}>
-              <VaultTvl vaultId={vaultId} />
+              <VaultTvl variant="large" vaultId={vaultId} />
             </Box>
             <Box className={classes.stat}>
               <Divider className={classes.divider} orientation="vertical" />
               <Box>
-                <YearlyApyStats vaultId={vault.id} />
+                <YearlyApyStats variant="large" vaultId={vault.id} />
               </Box>
             </Box>
             <Box display="flex">
               <Divider className={classes.divider} orientation="vertical" />
               <Box>
-                <DailyApyStats vaultId={vault.id} />
+                <DailyApyStats variant="large" vaultId={vault.id} />
               </Box>
             </Box>
           </Box>
@@ -47,7 +47,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <Grid container className={classes.stats2}>
             <Grid item xs={6} className={classes.stat1}>
               <Box>
-                <VaultDeposited vaultId={vaultId} />
+                <VaultDeposited variant="large" vaultId={vaultId} />
               </Box>
             </Grid>
             {(isGovVault(vault) || lastHarvest !== 'never') && (
@@ -58,7 +58,11 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                 {lastHarvest !== 'never' && (
                   <Grid item xs={6}>
                     <Box>
-                      <ValueBlock label={t('Vault-LastHarvest')} value={lastHarvest} />
+                      <ValueBlock
+                        variant="large"
+                        label={t('Vault-LastHarvest')}
+                        value={lastHarvest}
+                      />
                     </Box>
                   </Grid>
                 )}
@@ -66,7 +70,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
             ) : (
               <Grid item xs={6}>
                 <Box>
-                  <GovVaultRewards vaultId={vaultId} />
+                  <GovVaultRewards variant="large" vaultId={vaultId} />
                 </Box>
               </Grid>
             )}

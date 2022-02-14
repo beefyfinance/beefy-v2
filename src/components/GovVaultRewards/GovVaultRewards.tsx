@@ -14,24 +14,30 @@ import { formatBigDecimals } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 
-const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: VaultGov['id'] }) => {
-  const vault = selectVaultById(state, vaultId);
-  const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-  const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
-  const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
-  const blurred = selectIsBalanceHidden(state);
-  const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
-    state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce;
-  return {
-    earnedToken,
-    rewardsEarnedToken: formatBigDecimals(rewardsEarnedToken),
-    rewardsEarnedUsd: formatBigDecimals(rewardsEarnedUsd),
-    blurred,
-    hasRewards: rewardsEarnedUsd.gt(0),
-    loading: !isLoaded,
-  };
-})(
+const _GovVaultRewards = connect(
+  (
+    state: BeefyState,
+    { vaultId, variant  }: { vaultId: VaultGov['id']; variant: 'small' | 'large' }
+  ) => {
+    const vault = selectVaultById(state, vaultId);
+    const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+    const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
+    const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
+    const blurred = selectIsBalanceHidden(state);
+    const isLoaded =
+      state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
+      state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce;
+    return {
+      earnedToken,
+      rewardsEarnedToken: formatBigDecimals(rewardsEarnedToken),
+      rewardsEarnedUsd: formatBigDecimals(rewardsEarnedUsd),
+      blurred,
+      hasRewards: rewardsEarnedUsd.gt(0),
+      loading: !isLoaded,
+      variant,
+    };
+  }
+)(
   ({
     rewardsEarnedToken,
     rewardsEarnedUsd,
@@ -39,6 +45,7 @@ const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: Vau
     blurred,
     loading,
     hasRewards,
+    variant,
   }: {
     earnedToken: TokenEntity;
     rewardsEarnedToken: string;
@@ -46,6 +53,7 @@ const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: Vau
     blurred: boolean;
     loading: boolean;
     hasRewards: boolean;
+    variant: 'small' | 'large';
   }) => {
     const { t } = useTranslation();
 
@@ -56,6 +64,7 @@ const _GovVaultRewards = connect((state: BeefyState, { vaultId }: { vaultId: Vau
         usdValue={hasRewards ? rewardsEarnedUsd : null}
         blurred={blurred}
         loading={loading}
+        variant={variant}
       />
     );
   }

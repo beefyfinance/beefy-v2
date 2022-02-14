@@ -22,63 +22,6 @@ const ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585A
   );
 };
 
-function ValueText({
-  value,
-  loading = false,
-  blurred = false,
-}: {
-  value: ReactNode;
-  loading?: boolean;
-  blurred?: boolean;
-}) {
-  const classes = useStyles();
-
-  return (
-    <>
-      {!loading ? (
-        <span
-          className={clsx({
-            [classes.value]: true,
-            [classes.blurred]: blurred,
-          })}
-        >
-          {blurred ? '....' : value}
-        </span>
-      ) : (
-        <ContentLoading />
-      )}
-    </>
-  );
-}
-
-function ValuePrice({
-  value,
-  loading = false,
-  blurred = false,
-}: {
-  value: ReactNode;
-  loading?: boolean;
-  blurred?: boolean;
-}) {
-  const classes = useStyles();
-  return (
-    <>
-      {!loading ? (
-        <span
-          className={clsx({
-            [classes.price]: true,
-            [classes.blurred]: blurred,
-          })}
-        >
-          {blurred ? '...' : value}
-        </span>
-      ) : (
-        <ContentLoading />
-      )}
-    </>
-  );
-}
-
 export function ValueBlock({
   label,
   value,
@@ -87,7 +30,7 @@ export function ValueBlock({
   usdValue,
   loading = false,
   blurred = false,
-  variant = 'small',
+  variant,
 }: {
   label: ReactNode;
   value: ReactNode;
@@ -98,7 +41,7 @@ export function ValueBlock({
   blurred?: boolean;
   variant?: 'small' | 'large';
 }) {
-  const classes = useStyles(variant);
+  const classes = useStyles();
   return (
     <>
       {tooltip ? (
@@ -107,25 +50,52 @@ export function ValueBlock({
           onClick={popoverInLinkHack__popoverContainerHandler}
           onTouchStart={popoverInLinkHack__popoverContainerHandler}
         >
-          <Typography className={classes.label}>{label}</Typography>
+          <Typography
+            className={clsx({
+              [classes.label]: true,
+              large: variant === 'large',
+            })}
+          >
+            {label}
+          </Typography>
           <div className={classes.tooltipHolder}>
             <Popover title={tooltip.title}>{tooltip.content}</Popover>
           </div>
         </div>
       ) : (
-        <Typography className={classes.label}>{label}</Typography>
+        <Typography
+          className={clsx({
+            [classes.label]: true,
+            large: variant === 'large',
+          })}
+        >
+          {label}
+        </Typography>
       )}
+
       {textContent ? (
-        <Typography className={classes.value}>
-          <ValueText loading={loading} blurred={blurred} value={value} />
+        <Typography
+          className={clsx({
+            [classes.value]: true,
+            large: variant === 'large',
+            [classes.blurred]: blurred,
+          })}
+        >
+          {!loading ? <>{blurred ? '....' : value}</> : <ContentLoading />}
         </Typography>
       ) : (
         value
       )}
 
       {usdValue && (
-        <Typography className={classes.label}>
-          <ValuePrice loading={loading} blurred={blurred} value={usdValue} />
+        <Typography
+          className={clsx({
+            [classes.price]: true,
+            large: variant === 'large',
+            [classes.blurred]: blurred,
+          })}
+        >
+          {!loading ? <>{blurred ? '...' : usdValue}</> : <ContentLoading />}
         </Typography>
       )}
     </>

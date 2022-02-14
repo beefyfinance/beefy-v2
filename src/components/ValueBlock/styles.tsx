@@ -13,6 +13,11 @@ export const styles = theme => ({
       fontSize: '18px',
       textAlign: 'left',
     },
+    '&.large': {
+      fontSize: '21px',
+      lineHeight: '24px',
+      color: theme.palette.text.secondary,
+    },
   },
   label: {
     fontWeight: 600,
@@ -23,6 +28,11 @@ export const styles = theme => ({
     textAlign: 'left',
     [theme.breakpoints.up('md')]: {
       textAlign: 'center',
+    },
+    '&.large': {
+      lineHeight: '20px',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
     },
   },
   price: {

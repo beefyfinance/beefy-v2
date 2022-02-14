@@ -19,7 +19,10 @@ import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 
 const _VaultDeposited = connect(
-  (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
+  (
+    state: BeefyState,
+    { vaultId, variant }: { vaultId: VaultEntity['id']; variant: 'small' | 'large' }
+  ) => {
     const vault = selectVaultById(state, vaultId);
     const isBoosted = selectIsVaultBoosted(state, vault.id);
     const stakedIds = selectActiveVaultBoostIds(state, vault.id)
@@ -46,6 +49,7 @@ const _VaultDeposited = connect(
       totalDepositedUsd,
       blurred,
       loading: !isLoaded,
+      variant,
     };
   }
 )(
@@ -58,6 +62,7 @@ const _VaultDeposited = connect(
     totalDepositedUsd,
     blurred,
     loading,
+    variant,
   }: {
     stakedIds: string;
     isBoosted: boolean;
@@ -67,6 +72,7 @@ const _VaultDeposited = connect(
     totalDepositedUsd: string;
     blurred: boolean;
     loading: boolean;
+    variant: 'small' | 'large';
   }) => {
     const { t } = useTranslation();
 
@@ -79,6 +85,7 @@ const _VaultDeposited = connect(
             usdValue={t('BOOST')}
             blurred={blurred}
             loading={loading}
+            variant={variant}
           />
         )}
         {(!isBoosted || !userStaked) && (
@@ -88,6 +95,7 @@ const _VaultDeposited = connect(
             usdValue={hasDeposit ? totalDepositedUsd : null}
             blurred={blurred}
             loading={loading}
+            variant={variant}
           />
         )}
       </>

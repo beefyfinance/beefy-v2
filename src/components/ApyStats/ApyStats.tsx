@@ -147,7 +147,13 @@ const _DailyBreakdownTooltip = ({
 
 const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
 
-function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
+function _YearlyApyStats({
+  vaultId,
+  variant,
+}: {
+  vaultId: VaultEntity['id'];
+  variant: 'small' | 'large';
+}) {
   const { t } = useTranslation();
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -177,12 +183,19 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
         ),
       }}
       loading={isLoading}
+      variant={variant}
     />
   );
 }
 export const YearlyApyStats = memo(_YearlyApyStats);
 
-function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
+function _DailyApyStats({
+  vaultId,
+  variant
+}: {
+  vaultId: VaultEntity['id'];
+  variant: 'small' | 'large';
+}) {
   const { t } = useTranslation();
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -212,6 +225,7 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
         ),
       }}
       loading={isLoading}
+      variant={variant}
     />
   );
 }

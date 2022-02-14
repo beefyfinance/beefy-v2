@@ -11,7 +11,10 @@ import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 
 const _VaultWalletAmount = connect(
-  (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
+  (
+    state: BeefyState,
+    { vaultId, variant }: { vaultId: VaultEntity['id']; variant: 'small' | 'large' }
+  ) => {
     const vault = selectVaultById(state, vaultId);
     const userOracleInWallet = selectWalletBalanceOfToken(state, vault.chainId, vault.oracleId);
     const price = selectTokenPriceByTokenId(state, vault.oracleId);
@@ -27,6 +30,7 @@ const _VaultWalletAmount = connect(
       userOracleInWalletUsd: formatBigUsd(userOracleInWalletUsd),
       blurred,
       loading: !isLoaded,
+      variant,
     };
   }
 )(
@@ -36,12 +40,14 @@ const _VaultWalletAmount = connect(
     userOracleInWalletUsd,
     blurred,
     loading,
+    variant,
   }: {
     hasInWallet: boolean;
     userOracleInWallet: string;
     userOracleInWalletUsd: string;
     blurred: boolean;
     loading: boolean;
+    variant: 'small' | 'large';
   }) => {
     const { t } = useTranslation();
 
@@ -52,6 +58,7 @@ const _VaultWalletAmount = connect(
         usdValue={hasInWallet ? userOracleInWalletUsd : null}
         blurred={blurred}
         loading={loading}
+        variant={variant}
       />
     );
   }
