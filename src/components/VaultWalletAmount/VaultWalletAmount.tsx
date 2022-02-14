@@ -5,7 +5,10 @@ import { VaultEntity } from '../../features/data/entities/vault';
 import { selectWalletBalanceOfToken } from '../../features/data/selectors/balance';
 import { selectTokenPriceByTokenId } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectIsBalanceHidden } from '../../features/data/selectors/wallet';
+import {
+  selectIsBalanceHidden,
+  selectIsWalletConnected,
+} from '../../features/data/selectors/wallet';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
@@ -22,8 +25,9 @@ const _VaultWalletAmount = connect(
 
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
-      state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce;
+      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletConnected(state)
+        ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+        : true;
     return {
       hasInWallet: userOracleInWallet.gt(0),
       userOracleInWallet: formatBigDecimals(userOracleInWallet, 4, false),

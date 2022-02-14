@@ -9,7 +9,10 @@ import {
 } from '../../features/data/selectors/balance';
 import { selectTokenById } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectIsBalanceHidden } from '../../features/data/selectors/wallet';
+import {
+  selectIsBalanceHidden,
+  selectIsWalletConnected,
+} from '../../features/data/selectors/wallet';
 import { formatBigDecimals } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
@@ -17,7 +20,7 @@ import { ValueBlock } from '../ValueBlock/ValueBlock';
 const _GovVaultRewards = connect(
   (
     state: BeefyState,
-    { vaultId, variant  }: { vaultId: VaultGov['id']; variant: 'small' | 'large' }
+    { vaultId, variant }: { vaultId: VaultGov['id']; variant: 'small' | 'large' }
   ) => {
     const vault = selectVaultById(state, vaultId);
     const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
@@ -25,8 +28,9 @@ const _GovVaultRewards = connect(
     const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce &&
-      state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce;
+      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletConnected(state)
+        ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
+        : true;
     return {
       earnedToken,
       rewardsEarnedToken: formatBigDecimals(rewardsEarnedToken),

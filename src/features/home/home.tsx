@@ -152,7 +152,7 @@ class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualV
     // if index is even, current cell is left cell, otherwise it's right cell
     if (this.props.cards === true) {
       // too many weird bugs, just make everything larger
-      return this.props.spaceBetweenRows + 418;
+      return this.props.spaceBetweenRows + 375;
       /*
       const isEvenIdx = index % 2 === 0; // if slow, use bitwise tricks
       const neighbourVault =
