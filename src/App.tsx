@@ -9,6 +9,7 @@ import { store } from './store';
 import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 const Home = React.lazy(() => import(`./features/home`));
+const Home2 = React.lazy(() => import(`./features/home/homev2`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
@@ -34,6 +35,9 @@ export const App = () => {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/home_no_virtualized">
+              <Home2 />
             </Route>
             <Route strict sensitive exact path="/:network/vault/:id">
               <Vault />
