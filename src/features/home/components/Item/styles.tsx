@@ -24,7 +24,7 @@ export const styles = theme => ({
   badges: {
     display: 'flex',
     alignItems: 'center',
-    flexWrap: 'nowrap',
+    flexWrap: 'wrap',
     '& img': {
       height: '24px',
     },

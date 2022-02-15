@@ -84,9 +84,6 @@ const _ItemVaultPresentation = connect(
                 <Typography variant="h4" className={classes.vaultName}>
                   {vault.name}
                 </Typography>
-                {!isGovVault(vault) && !isBoosted ? (
-                  <Typography className={classes.fakeGovVaultTitleSpacer}>&nbsp;</Typography>
-                ) : null}
               </div>
             </div>
             <div className={classes.badges}>
