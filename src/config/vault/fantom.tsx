@@ -32,7 +32,8 @@ export const pools = [
     stratType: "Maxi",
     withdrawalFee: "0.05%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1622574935
   },
   {
     id: "fantom-bifi-gov",
@@ -109,7 +110,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x2bea17ede5d83ad19ae112b8592aadaa2b015de7000100000000000000000069",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636020955
   },
   {
     id: "beets-tubular-bells",
@@ -147,7 +149,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x65bf2d53bd1d7050d22873f6b9bb59edb0ca0b2000010000000000000000006e",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636019838
   },
   {
     id: "curve-ftm-geist",
@@ -184,7 +187,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://ftm.curve.fi/geist/deposit",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634888217
   },
   {
     id: "beets-late-quartet",
@@ -222,7 +226,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0xf3a602d30dcb723a74a0198313a7551feaca7dac00010000000000000000005f",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1635702186
   },
   {
     id: "boo-wftm-dola",
@@ -258,7 +263,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1635415386
   },
   {
     id: "scream-dola",
@@ -293,7 +299,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1635454839
   },
   {
     id: "beets-guqin-qi-2",
@@ -330,7 +337,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x2c580c6f08044d6dfaca8976a66c8fadddbd9901000000000000000000000038",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1635363222
   },
   {
     id: "beets-fantom-conservatory",
@@ -371,78 +379,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0xfc092f85125907ffcb0f9012e6e40b3f37c4de60000100000000000000000044",
-    network: "fantom"
-  },
-  {
-    id: "summit-summit",
-    logo: "single-assets/SUMMIT.png",
-    name: "SUMMIT",
-    token: "SUMMIT",
-    tokenDescription: "SummitDefi",
-    tokenAddress: "0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSummit",
-    earnedTokenAddress: "0x8E923758B7A959Db4110DbE78f637c4b7a6a9007",
-    earnContractAddress: "0x8E923758B7A959Db4110DbE78f637c4b7a6a9007",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "SUMMIT",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "SUMMIT"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "NEW_STRAT",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
-    network: "fantom"
-  },
-  {
-    id: "summit-summit-ftm",
-    name: "SUMMIT-FTM LP",
-    token: "SUMMIT-FTM LP",
-    tokenDescription: "SpookySwap (SummitDefi)",
-    tokenAddress: "0x06300c5e8e55cC40Bf3A0383F69aCf18f1d32EC1",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSummitSUMMIT-FTM",
-    earnedTokenAddress: "0x277Da1Fa86B7a82d4060db81bFABd194C17B48F5",
-    earnContractAddress: "0x277Da1Fa86B7a82d4060db81bFABd194C17B48F5",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "summit-summit-ftm",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "SUMMIT",
-      "FTM"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "NEW_STRAT",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
-    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1635369288
   },
   {
     id: "beets-sound-of-moosic",
@@ -480,7 +418,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x2975035545008935152fdf48ca13406cc5d4e47500010000000000000000002a",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634922183
   },
   {
     id: "beets-ftm-sonata",
@@ -521,7 +460,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xf0e2c47d4c9fbbbc2f2e19acdaa3c773a3ecd22100010000000000000000000a",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634917292
   },
   {
     id: "beets-dance-of-degens-eol",
@@ -564,7 +504,8 @@ export const pools = [
     withdrawalFee: "0%",
     retireReason: "upgrade",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x72c0eb973dc95e2d185563f58fc26626cc2e8034000100000000000000000011",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634920235
   },
   {
     id: "beets-magic-touch-daniele",
@@ -603,7 +544,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x6d12d3fe16dd83115254a32b273b05ac5444c349000100000000000000000029",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634921587
   },
   {
     id: "beets-classic-trio",
@@ -640,7 +582,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x6fdc8415b654b0f60475944a0b9421dc36ee1363000100000000000000000000",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634908480
   },
   {
     id: "beets-e-major",
@@ -676,7 +619,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xa07de66aef84e2c01d88a48d57d1463377ee602b000200000000000000000002",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634911153
   },
   {
     id: "beets-b-major",
@@ -712,7 +656,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x22b30b00e6796daf710fbe5cafbfc9cdd1377f2a000200000000000000000001",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634914810
   },
   {
     id: "beets-ziggy-mim",
@@ -749,7 +694,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xd163415bd34ef06f57c58d2aed5a5478afb464cc00000000000000000000000e",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634916171
   },
   {
     id: "beets-fidelio-duetto",
@@ -785,7 +731,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xcde5a11a4acb4ee4c805352cec57e236bdbc3837000200000000000000000019",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634809776
   },
   {
     id: "beets-grand-orchestra",
@@ -822,7 +769,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xd47d2791d3b46f9452709fa41855a045304d6f9d000100000000000000000004",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634740557
   },
   {
     id: "beets-fantom-of-opera",
@@ -858,7 +806,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xcdf68a4d525ba2e90fe959c74330430a5a6b8226000200000000000000000008",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634805280
   },
   {
     id: "scream-frax",
@@ -893,7 +842,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.frax.finance/crosschain",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634500757
   },
   {
     id: "scream-mim",
@@ -928,7 +878,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634453638
   },
   {
     id: "spirit-wmemo-mim",
@@ -964,7 +915,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x82f0B8B456c1A451378467398982d4834b6829c1/0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xDDc0385169797937066bBd8EF409b5B3c0dFEB52",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634312717
   },
   {
     id: "spell-ftm-mim-crv",
@@ -1001,7 +953,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://ftm.curve.fi/factory/1/deposit",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633879958
   },
   {
     id: "geist-geist-ftm",
@@ -1037,7 +990,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633607188
   },
   {
     id: "boo-wftm-spell",
@@ -1073,7 +1027,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x468003B688943977e6130F4F68F23aad939a1040",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x468003B688943977e6130F4F68F23aad939a1040",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634118092
   },
   {
     id: "spirit-link-ftm",
@@ -1109,7 +1064,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633336526
   },
   {
     id: "curve-ftm-tricrypto",
@@ -1146,7 +1102,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://ftm.curve.fi/tricrypto/deposit",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633341420
   },
   {
     id: "sing-ftm-usdc-sing",
@@ -1182,7 +1139,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x53D831e1db0947c74e8a52618f662209ec5dE0cE",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x53D831e1db0947c74e8a52618f662209ec5dE0cE",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1634116608
   },
   {
     id: "spirit-ftm-usdc",
@@ -1218,7 +1176,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633180384
   },
   {
     id: "spirit-fusdt-ftm",
@@ -1254,7 +1213,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633182001
   },
   {
     id: "spirit-crv-ftm",
@@ -1290,7 +1250,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633199608
   },
   {
     id: "jetswap-fantom-eth-btc",
@@ -1324,7 +1285,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1632980637
   },
   {
     id: "jetswap-fantom-eth-usdc",
@@ -1358,7 +1320,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1632980829
   },
   {
     id: "jetswap-fantom-btc-usdc",
@@ -1392,7 +1355,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/0x049d68029688eabf473097a2fc38ef61633a3c7a/0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1632980917
   },
   {
     id: "jetswap-fantom-fusdt-usdc",
@@ -1426,7 +1390,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x049d68029688eabf473097a2fc38ef61633a3c7a",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1632981007
   },
   {
     id: "jetswap-fantom-fwings-ftm",
@@ -1461,7 +1426,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/FANTOM/0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
     buyTokenUrl: "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1632906330
   },
   {
     id: "jetswap-fantom-fwings-usdc",
@@ -1496,7 +1462,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
     buyTokenUrl: "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1632906651
   },
   {
     id: "jetswap-fantom-fwings",
@@ -1531,7 +1498,8 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0%",
     buyTokenUrl: "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1632911389
   },
   {
     id: "tomb-tshare-ftm",
@@ -1567,7 +1535,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1623662472
   },
   {
     id: "tomb-tomb-ftm",
@@ -1603,7 +1572,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1623659891
   },
   {
     id: "spirit-ftm-sushi",
@@ -1639,7 +1609,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633336047
   },
   {
     id: "boo-wftm-treeb",
@@ -1675,7 +1646,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1631897760
   },
   {
     id: "scream-crv",
@@ -1710,7 +1682,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1631727659
   },
   {
     id: "scream-link",
@@ -1745,7 +1718,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1631726729
   },
   {
     id: "boo-boo",
@@ -1780,7 +1754,8 @@ export const pools = [
     stratType: "SingleStake",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
     network: "fantom",
-    withdrawalFee: "0%"
+    withdrawalFee: "0%",
+    createdAt: 1620998574
   },
   {
     id: "boo-wftm-foo",
@@ -1816,7 +1791,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xFbc3c04845162F067A0B6F8934383E63899c3524",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xFbc3c04845162F067A0B6F8934383E63899c3524",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1631054248
   },
   {
     id: "boo-ftm-scream",
@@ -1851,7 +1827,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1630352068
   },
   {
     id: "steakhouse-scream-ftm",
@@ -1888,7 +1865,8 @@ export const pools = [
     platform: "Other",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1628881379
   },
   {
     id: "scream-ftm",
@@ -1922,7 +1900,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=FTM",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1628734094
   },
   {
     id: "scream-usdc",
@@ -1957,7 +1936,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1628627757
   },
   {
     id: "scream-wbtc",
@@ -1992,7 +1972,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1628739572
   },
   {
     id: "scream-dai",
@@ -2027,7 +2008,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1628739318
   },
   {
     id: "scream-eth",
@@ -2062,7 +2044,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1628739417
   },
   {
     id: "scream-fusdt",
@@ -2097,7 +2080,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1628739191
   },
   {
     id: "boo-yfi-eth",
@@ -2132,7 +2116,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/0x29b0Da86e484E1C0029B56e817912d778aC0EC69/0x74b23882a30290451A17c44f4F05243b6b58C76d",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x29b0Da86e484E1C0029B56e817912d778aC0EC69&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1628168514
   },
   {
     id: "curve-ftm-2pool",
@@ -2168,7 +2153,8 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://ftm.curve.fi/2pool/deposit",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1626957477
   },
   {
     id: "curve-ftm-ren",
@@ -2204,7 +2190,8 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://ftm.curve.fi/ren/deposit",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1626964654
   },
   {
     id: "boo-mim-ftm",
@@ -2239,7 +2226,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1625679284
   },
   {
     id: "boo-boo-ftm",
@@ -2274,7 +2262,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620386574
   },
   {
     id: "boo-bifi-ftm",
@@ -2310,7 +2299,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1622569266
   },
   {
     id: "boo-ftm-ice",
@@ -2346,7 +2336,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xf16e81dce15B08F326220742020379B855B87DF9",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xf16e81dce15B08F326220742020379B855B87DF9",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1622445591
   },
   {
     id: "boo-ftm-sushi",
@@ -2382,7 +2373,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1622446524
   },
   {
     id: "boo-ftm-usdc",
@@ -2418,7 +2410,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620386549
   },
   {
     id: "boo-any-ftm",
@@ -2454,7 +2447,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1622123539
   },
   {
     id: "boo-dai-ftm",
@@ -2490,7 +2484,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1622123567
   },
   {
     id: "ester-est-ftm",
@@ -2526,7 +2521,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1621505384
   },
   {
     id: "ester-est",
@@ -2560,7 +2556,8 @@ export const pools = [
     ],
     stratType: "SingleStake",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1621508945
   },
   {
     id: "boo-bnb-ftm",
@@ -2596,7 +2593,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620919260
   },
   {
     id: "froyo-3pool",
@@ -2632,7 +2630,8 @@ export const pools = [
     ],
     stratType: "StratMultiLP",
     addLiquidityUrl: "https://frozenyogurt.finance/pool",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620633860
   },
   {
     id: "froyo-froyo-ftm",
@@ -2668,7 +2667,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA",
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620626525
   },
   {
     id: "boo-link-ftm",
@@ -2704,7 +2704,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620500758
   },
   {
     id: "boo-cover-ftm-eol",
@@ -2733,7 +2734,8 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xB01E8419d842beebf1b70A7b5f7142abbaf7159D",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xB01E8419d842beebf1b70A7b5f7142abbaf7159D",
     stratType: "StratLP",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620500733
   },
   {
     id: "boo-usdt-ftm",
@@ -2769,7 +2771,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620500483
   },
   {
     id: "boo-btc-ftm",
@@ -2805,7 +2808,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x321162Cd933E2Be498Cd2267a90534A804051b11",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620500455
   },
   {
     id: "boo-eth-ftm",
@@ -2841,7 +2845,8 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     network: "fantom",
-    logo: "fantom/ETH-FTM.png"
+    logo: "fantom/ETH-FTM.png",
+    createdAt: 1620386666
   },
   {
     id: "boo-aave-ftm",
@@ -2877,7 +2882,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620386633
   },
   {
     id: "boo-crv-ftm",
@@ -2913,7 +2919,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x1E4F97b9f9F913c46F1632781732927B9019C68b",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1620386607
   },
   {
     id: "boo-usdc-mai",
@@ -2949,7 +2956,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
     addLiquidityUrl: "https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636758731
   },
   {
     id: "boo-wftm-joe",
@@ -2985,7 +2993,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1637587170
   },
   {
     id: "beets-baron-von-binance",
@@ -3022,7 +3031,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x5e65474c8400d0bb76edbbe066b2d2e7b0b6e7fb00010000000000000000007c",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1637221810
   },
   {
     id: "beets-phantom-dai-opera",
@@ -3058,7 +3068,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x63386ef152e1ddef96c065636d6cc0165ff332910002000000000000000000a1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1637704300
   },
   {
     id: "boo-usdc-tusd",
@@ -3094,7 +3105,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x9879aBDea01a879644185341F7aF7d8343556B7a",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1637658328
   },
   {
     id: "scream-tusd",
@@ -3131,7 +3143,8 @@ export const pools = [
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a",
     network: "fantom",
     showWarning: false,
-    warning: "liquidity"
+    warning: "liquidity",
+    createdAt: 1637875008
   },
   {
     id: "beets-solana-sonata",
@@ -3168,7 +3181,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x41870439b607a29293d48f7c9da10e67142176240001000000000000000000a4",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1638210632
   },
   {
     id: "beets-double-dollar-fugue",
@@ -3205,7 +3219,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0xf3f0970bca8ce7e9672d17a301b54d1485d938070000000000000000000000c8",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1638539115
   },
   {
     id: "boo-wftm-ooe",
@@ -3242,7 +3257,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1639423285
   },
   {
     id: "boo-wftm-wshec",
@@ -3279,7 +3295,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x94CcF60f700146BeA8eF7832820800E2dFa92EdA",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x94CcF60f700146BeA8eF7832820800E2dFa92EdA",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1639423158
   },
   {
     id: "boo-wftm-wsspa",
@@ -3316,7 +3333,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x89346B51A54263cF2e92dA79B1863759eFa68692",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x89346B51A54263cF2e92dA79B1863759eFa68692",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1639423010
   },
   {
     id: "boo-wftm-yoshi",
@@ -3353,7 +3371,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x3dc57B391262e3aAe37a08D91241f9bA9d58b570",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x3dc57B391262e3aAe37a08D91241f9bA9d58b570",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1639422895
   },
   {
     id: "pearzap-fpear-ftm-eol",
@@ -3389,7 +3408,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x7C10108d4B7f4bd659ee57A53b30dF928244b354",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1634884703
   },
   {
     id: "pearzap-fpear-usdc-eol",
@@ -3425,7 +3445,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x7C10108d4B7f4bd659ee57A53b30dF928244b354",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x7c10108d4b7f4bd659ee57a53b30df928244b354",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1634885192
   },
   {
     id: "boo-wftm-shade-eol",
@@ -3462,7 +3483,8 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1631898051
   },
   {
     id: "stakesteak-fusd-usdc-eol",
@@ -3500,7 +3522,8 @@ export const pools = [
     addLiquidityUrl: "https://stakesteak.app/",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xAd84341756Bf337f5a0164515b1f6F993D194E1f",
     network: "fantom",
-    retireReason: "tvl"
+    retireReason: "tvl",
+    createdAt: 1631357355
   },
   {
     id: "boo-steak-wftm-eol",
@@ -3537,7 +3560,8 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x05848B832E872d9eDd84AC5718D58f21fD9c9649",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x05848B832E872d9eDd84AC5718D58f21fD9c9649",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1631055499
   },
   {
     id: "curve-ftm-fusdt-eol",
@@ -3575,7 +3599,8 @@ export const pools = [
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://ftm.curve.fi/fusdt/deposit",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1626963081
   },
   {
     id: "boo-woofy-ftm-eol",
@@ -3612,7 +3637,8 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xD0660cD418a64a1d44E9214ad8e459324D8157f1",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xD0660cD418a64a1d44E9214ad8e459324D8157f1",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1621266087
   },
   {
     id: "boo-cream-ftm-eol",
@@ -3649,7 +3675,8 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x657A1861c15A3deD9AF0B6799a195a249ebdCbc6",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x657A1861c15A3deD9AF0B6799a195a249ebdCbc6",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1620500710
   },
   {
     id: "geist-crv",
@@ -3685,7 +3712,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1639737670
   },
   {
     id: "boo-wftm-avax",
@@ -3722,7 +3750,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x511D35c52a3C244E7b8bd92c0C297755FbD89212",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x511D35c52a3C244E7b8bd92c0C297755FbD89212",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1639923705
   },
   {
     id: "boo-wftm-woo",
@@ -3759,7 +3788,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1639923811
   },
   {
     id: "geist-ftm",
@@ -3794,7 +3824,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=FTM",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636115081
   },
   {
     id: "geist-wbtc",
@@ -3830,7 +3861,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636111832
   },
   {
     id: "geist-eth",
@@ -3866,7 +3898,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636106243
   },
   {
     id: "geist-fusdt",
@@ -3902,7 +3935,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636108542
   },
   {
     id: "geist-usdc",
@@ -3938,7 +3972,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636126692
   },
   {
     id: "geist-dai",
@@ -3974,7 +4009,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1636100990
   },
   {
     id: "spirit-dai-usdc",
@@ -4011,7 +4047,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1640070468
   },
   {
     id: "geist-mim",
@@ -4047,7 +4084,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1640092257
   },
   {
     id: "beets-battle-bands",
@@ -4088,7 +4126,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x9af1f0e9ac9c844a4a4439d446c14378071830750001000000000000000000da",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1640018890
   },
   {
     id: "beets-symphony-nr-10-eol",
@@ -4125,7 +4164,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0x03c6b3f09d2504606936b1a4decefad204687890000200000000000000000015",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1634812249
   },
   {
     id: "boo-zoo-ftm-eol",
@@ -4161,7 +4201,8 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1630243343
   },
   {
     id: "boo-snx-ftm-eol",
@@ -4198,7 +4239,8 @@ export const pools = [
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1620500694
   },
   {
     id: "popsicle-ice-ftm",
@@ -4235,7 +4277,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0xf16e81dce15B08F326220742020379B855B87DF9",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xf16e81dce15B08F326220742020379B855B87DF9",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1640767060
   },
   {
     id: "beets-variation-theme",
@@ -4272,7 +4315,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x8bb1839393359895836688165f7c5878f8c81c5e0002000000000000000000e1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1640629158
   },
   {
     id: "scream-spell",
@@ -4310,7 +4354,8 @@ export const pools = [
     showWarning: false,
     warning: "liquidity",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x468003B688943977e6130F4F68F23aad939a1040",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1640646636
   },
   {
     id: "boo-wftm-matic",
@@ -4347,7 +4392,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1640973310
   },
   {
     id: "boo-dola-inv-eol",
@@ -4384,7 +4430,8 @@ export const pools = [
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
     addLiquidityUrl: "https://spookyswap.finance/add/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1635418613
   },
   {
     id: "boo-hnd-wftm",
@@ -4421,7 +4468,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x10010078a54396F62c96dF8532dc2B4847d47ED3",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x10010078a54396F62c96dF8532dc2B4847d47ED3",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1641572631
   },
   {
     id: "spartacadabra-lambda-crv",
@@ -4459,7 +4507,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://ftm.curve.fi/factory/35/deposit",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1641548990
   },
   {
     id: "spartacadabra-charm-usdc",
@@ -4496,7 +4545,8 @@ export const pools = [
     withdrawalFee: "0.1%",
     addLiquidityUrl: "https://spookyswap.finance/add/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x248cb87dda803028dfead98101c9465a2fbda0d4",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x248cb87dda803028dfead98101c9465a2fbda0d4",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1641550679
   },
   {
     id: "spirit-ftm-mim-eol",
@@ -4532,7 +4582,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x82f0b8b456c1a451378467398982d4834b6829c1",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x82f0B8B456c1A451378467398982d4834b6829c1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1633184876
   },
   {
     id: "spirit-ftm-ice-eol",
@@ -4570,7 +4621,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0xf16e81dce15B08F326220742020379B855B87DF9",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xf16e81dce15B08F326220742020379B855B87DF9",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1633205561
   },
   {
     id: "beets-steady-beets-2",
@@ -4607,7 +4659,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://beets.fi/#/pool/0xecaa1cbd28459d34b766f9195413cb20122fb942000200000000000000000120",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1641982117
   },
   {
     id: "beets-two-became-one",
@@ -4645,7 +4698,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://beets.fi/#/pool/0xd57cda2caebb9b64bb88905c4de0f0da217a77d7000100000000000000000073",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1641410484
   },
   {
     id: "beets-dante-symphony",
@@ -4685,7 +4739,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0xc042ef6ca08576bdfb57d3055a7654344fd153e400010000000000000000003a",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1641988564
   },
   {
     id: "beets-wagmi-index",
@@ -4726,7 +4781,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x713ee620a7702b79ea5413096a90702244fe4532000100000000000000000105",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1641992405
   },
   {
     id: "beets-steady-beets-eol",
@@ -4763,7 +4819,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beethovenx.io/#/pool/0xd41bf724b6e31311db582c5388af6b316e812fe4000200000000000000000003",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1634807049
   },
   {
     id: "2omb-2omb-ftm",
@@ -4800,7 +4857,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642150805
   },
   {
     id: "2omb-2share-ftm",
@@ -4837,7 +4895,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642152342
   },
   {
     id: "boo-kek-ftm",
@@ -4874,7 +4933,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x627524d78B4fC840C887ffeC90563c7A42b671fD",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x627524d78B4fC840C887ffeC90563c7A42b671fD",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642139577
   },
   {
     id: "boo-inv-wftm",
@@ -4911,7 +4971,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642097531
   },
   {
     id: "spirit-zoo-ftm-eol",
@@ -4947,7 +5008,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56",
     network: "fantom",
-    retireReason: "tvl"
+    retireReason: "tvl",
+    createdAt: 1633206054
   },
   {
     id: "spirit-fusdt-spell-eol",
@@ -4984,7 +5046,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x468003B688943977e6130F4F68F23aad939a1040",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1633342959
   },
   {
     id: "spirit-fusdt-usdc",
@@ -5021,7 +5084,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642557662
   },
   {
     id: "spirit-frax-usdc",
@@ -5059,7 +5123,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xdc301622e621166BD8E82f2cA0A26c13Ad0BE355",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xdc301622e621166BD8E82f2cA0A26c13Ad0BE355",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642560206
   },
   {
     id: "spirit-mim-usdc",
@@ -5096,7 +5161,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x82f0B8B456c1A451378467398982d4834b6829c1",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x82f0B8B456c1A451378467398982d4834b6829c1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642560383
   },
   {
     id: "boo-wftm-brush",
@@ -5133,7 +5199,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x85dec8c4B2680793661bCA91a8F129607571863d",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x85dec8c4B2680793661bCA91a8F129607571863d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642291662
   },
   {
     id: "boo-wftm-beets",
@@ -5170,80 +5237,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e",
-    network: "fantom"
-  },
-  {
-    id: "0xdao-tomb",
-    logo: "single-assets/TOMB.png",
-    name: "TOMB",
-    token: "TOMB",
-    tokenDescription: "0xDAO",
-    tokenAddress: "0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooOXDTOMB",
-    earnedTokenAddress: "0xF76e11b2e67169D2b835E7DE8755b37747A45D6D",
-    earnContractAddress: "0xF76e11b2e67169D2b835E7DE8755b37747A45D6D",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "TOMB",
-    oraclePrice: 0,
-    depositsPaused: false,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "TOMB"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
-    network: "fantom"
-  },
-  {
-    id: "oxd-oxd-usdc",
-    name: "OXD-USDC LP",
-    token: "OXD-USDC LP",
-    tokenDescription: "SpookySwap (0xDAO)",
-    tokenAddress: "0xD5fa400a24EB2EA55BC5Bd29c989E70fbC626FfF",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooOXDOXD-USDC",
-    earnedTokenAddress: "0x350f0E29d67Bc6745D28b17554CFB5F53bBe90ac",
-    earnContractAddress: "0x350f0E29d67Bc6745D28b17554CFB5F53bBe90ac",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "oxd-oxd-usdc",
-    oraclePrice: 0,
-    depositsPaused: false,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "OXD",
-      "USDC"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://spookyswap.finance/add/0xc165d941481e68696f43EE6E99BFB2B23E0E3114/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642634017
   },
   {
     id: "beets-spooky-tempered-clavier",
@@ -5281,7 +5276,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://beets.fi/#/pool/0xfa901cadcaf38cd533e8b1f693d090fc7005658e000100000000000000000165",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642690961
   },
   {
     id: "boo-btc-eth",
@@ -5318,7 +5314,8 @@ export const pools = [
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://spookyswap.finance/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d&outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642672280
   },
   {
     id: "sushi-usdc-wftm",
@@ -5355,7 +5352,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83&outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642944703
   },
   {
     id: "sushi-wftm-eth",
@@ -5392,7 +5390,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642945488
   },
   {
     id: "sushi-fusdt-wftm",
@@ -5429,7 +5428,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x049d68029688eAbF473097a2fC38ef61633A3C7A/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642946143
   },
   {
     id: "sushi-eth-dai",
@@ -5466,7 +5466,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d&outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642946550
   },
   {
     id: "sushi-usdc-mim",
@@ -5503,7 +5504,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x82f0B8B456c1A451378467398982d4834b6829c1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642946810
   },
   {
     id: "sushi-btc-eth",
@@ -5540,7 +5542,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x321162Cd933E2Be498Cd2267a90534A804051b11/0x74b23882a30290451A17c44f4F05243b6b58C76d",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642947064
   },
   {
     id: "sushi-wftm-sushi",
@@ -5577,7 +5580,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83&outputCurrency=0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1642948006
   },
   {
     id: "0xdao-wftm-eol",
@@ -5613,7 +5617,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=FTM",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1642887314
   },
   {
     id: "0xdao-usdc-eol",
@@ -5650,7 +5655,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1642877204
   },
   {
     id: "0xdao-dai-eol",
@@ -5687,7 +5693,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1642877428
   },
   {
     id: "0xdao-mim-eol",
@@ -5724,7 +5731,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1642880855
   },
   {
     id: "0xdao-wbtc-eol",
@@ -5761,7 +5769,8 @@ export const pools = [
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1642875469
   },
   {
     id: "0xdao-weth-eol",
@@ -5798,43 +5807,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     network: "fantom",
-    retireReason: "rewards"
-  },
-  {
-    id: "0xdao-oxd",
-    logo: "single-assets/OXD.png",
-    name: "OXD",
-    token: "OXD",
-    tokenDescription: "0xDAO",
-    tokenAddress: "0xc165d941481e68696f43EE6E99BFB2B23E0E3114",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooOXD",
-    earnedTokenAddress: "0x59a7e9F6B369aA88A7EABfbc43D3EF72DEf4bd81",
-    earnContractAddress: "0x59a7e9F6B369aA88A7EABfbc43D3EF72DEf4bd81",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "OXD",
-    oraclePrice: 0,
-    depositsPaused: false,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "OXD"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114",
-    network: "fantom"
+    retireReason: "rewards",
+    createdAt: 1642860948
   },
   {
     id: "beets-ode-to-joy-eol",
@@ -5872,44 +5846,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.beets.fi/#/pool/0x5dd0d5d6c13e9302271be0dfade2b9fd708e5ddb0002000000000000000000e7",
     network: "fantom",
-    retireReason: "rewards"
-  },
-  {
-    id: "0xdao-xboo",
-    logo: "single-assets/xBOO.png",
-    name: "xBOO",
-    token: "xBOO",
-    tokenDescription: "0xDAO",
-    tokenAddress: "0xa48d959AE2E88f1dAA7D5F611E01908106dE7598",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooOXDxBOO",
-    earnedTokenAddress: "0xE95f98631895bB9657e37906ea4c61b272BddeB0",
-    earnContractAddress: "0xE95f98631895bB9657e37906ea4c61b272BddeB0",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "xBOO",
-    oraclePrice: 0,
-    depositsPaused: false,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "xBOO"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_SMALL",
-      "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://spookyswap.finance/pools",
-    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
-    network: "fantom"
+    retireReason: "rewards",
+    createdAt: 1641989971
   },
   {
     id: "spirit-spell-sspell-eol",
@@ -5946,44 +5884,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x468003B688943977e6130F4F68F23aad939a1040/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xbB29D2A58d880Af8AA5859e30470134dEAf84F2B",
     network: "fantom",
-    retireReason: "rewards"
-  },
-  {
-    id: "0xdao-xscream",
-    logo: "single-assets/xSCREAM.png",
-    name: "xSCREAM",
-    token: "xSCREAM",
-    tokenDescription: "0xDAO",
-    tokenAddress: "0xe3D17C7e840ec140a7A51ACA351a482231760824",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooOXDxSCREAM",
-    earnedTokenAddress: "0x7926eA7aba64AF38297b832DEc713804f99039fD",
-    earnContractAddress: "0x7926eA7aba64AF38297b832DEc713804f99039fD",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "tokens",
-    oracleId: "xSCREAM",
-    oraclePrice: 0,
-    depositsPaused: false,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "xSCREAM"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_MICRO",
-      "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "SingleStake",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://scream.sh/stake",
-    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
-    network: "fantom"
+    retireReason: "rewards",
+    createdAt: 1637179993
   },
   {
     id: "beefy-binspirit",
@@ -6019,7 +5921,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/SPIRIT/binSPIRIT",
     network: "fantom",
-    mintTokenUrl: "https://beta.beefy.finance/#/fantom/vault/beefy-binspirit"
+    mintTokenUrl: "https://beta.beefy.finance/#/fantom/vault/beefy-binspirit",
+    createdAt: 1643754413
   },
   {
     id: "spirit-ftm-spirit",
@@ -6056,7 +5959,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x5Cc61A78F164885776AA610fb0FE1257df78E59B",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x5Cc61A78F164885776AA610fb0FE1257df78E59B",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1643747530
   },
   {
     id: "spirit-binspirit-spirit",
@@ -6093,7 +5997,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/0x44e314190D9E4cE6d4C0903459204F8E21ff940A/0x5Cc61A78F164885776AA610fb0FE1257df78E59B",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/SPIRIT/binSPIRIT",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1643907163
   },
   {
     id: "sushi-yfi-eth",
@@ -6130,7 +6035,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x29b0Da86e484E1C0029B56e817912d778aC0EC69/0x74b23882a30290451A17c44f4F05243b6b58C76d",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d&outputCurrency=0x29b0Da86e484E1C0029B56e817912d778aC0EC69",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644347692
   },
   {
     id: "spirit-ftm-dai",
@@ -6167,7 +6073,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644340948
   },
   {
     id: "spirit-ftm-wshec",
@@ -6204,7 +6111,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x94CcF60f700146BeA8eF7832820800E2dFa92EdA",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0x94CcF60f700146BeA8eF7832820800E2dFa92EdA",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644337415
   },
   {
     id: "spirit-ftm-multi",
@@ -6241,7 +6149,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x9Fb9a33956351cf4fa040f65A13b835A3C8764E3",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0x9Fb9a33956351cf4fa040f65A13b835A3C8764E3",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644338119
   },
   {
     id: "sushi-wftm-link",
@@ -6278,7 +6187,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83&outputCurrency=0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1643801084
   },
   {
     id: "spirit-ftm-spell",
@@ -6315,7 +6225,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x468003B688943977e6130F4F68F23aad939a1040",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0x468003B688943977e6130F4F68F23aad939a1040",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644170237
   },
   {
     id: "spirit-ftm-jewel",
@@ -6352,7 +6263,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0xD97F9674E2597e7a252de4875985f4385B9608fB",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0xD97F9674E2597e7a252de4875985f4385B9608fB",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644171366
   },
   {
     id: "spirit-ftm-pills",
@@ -6389,7 +6301,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0xB66b5D38E183De42F21e92aBcAF3c712dd5d6286",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0xB66b5D38E183De42F21e92aBcAF3c712dd5d6286",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644248016
   },
   {
     id: "spirit-ftm-eth",
@@ -6426,7 +6339,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644248760
   },
   {
     id: "boo-usdc-fs",
@@ -6463,7 +6377,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xC758295Cd1A564cdb020a78a681a838CF8e0627D",
     addLiquidityUrl: "https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xC758295Cd1A564cdb020a78a681a838CF8e0627D",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644274576
   },
   {
     id: "spirit-ftm-frax",
@@ -6500,7 +6415,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0xdc301622e621166BD8E82f2cA0A26c13Ad0BE355",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0xdc301622e621166BD8E82f2cA0A26c13Ad0BE355",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644000284
   },
   {
     id: "spirit-ftm-mai",
@@ -6537,7 +6453,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644003891
   },
   {
     id: "spirit-ftm-gohm",
@@ -6574,7 +6491,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x91fa20244Fb509e8289CA630E5db3E9166233FDc",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/FTM/0x91fa20244Fb509e8289CA630E5db3E9166233FDc",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644011850
   },
   {
     id: "2omb-2omb-2share",
@@ -6611,7 +6529,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
     buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE&outputCurrency=0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644007618
   },
   {
     id: "beets-demeters-degree",
@@ -6647,7 +6566,8 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0%",
     addLiquidityUrl: "https://beets.fi/#/pool/0xf7bf0f161d3240488807ffa23894452246049916000200000000000000000198",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1643849905
   },
   {
     id: "spirit-yfi-ftm-eol",
@@ -6685,7 +6605,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x29b0Da86e484E1C0029B56e817912d778aC0EC69",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x29b0Da86e484E1C0029B56e817912d778aC0EC69",
     network: "fantom",
-    retireReason: "tvl"
+    retireReason: "tvl",
+    createdAt: 1640392035
   },
   {
     id: "spirit-any-ftm-eol",
@@ -6722,7 +6643,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1633336796
   },
   {
     id: "spirit-ftm-just-eol",
@@ -6759,7 +6681,8 @@ export const pools = [
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x37C045bE4641328DFEB625f1Dde610D061613497",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x37C045bE4641328DFEB625f1Dde610D061613497",
     network: "fantom",
-    retireReason: "tvl"
+    retireReason: "tvl",
+    createdAt: 1633342210
   },
   {
     id: "ripae-pftm-ftm",
@@ -6796,7 +6719,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644485111
   },
   {
     id: "ripae-pae-ftm",
@@ -6833,7 +6757,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498",
-    network: "fantom"
+    network: "fantom",
+    createdAt: 1644485584
   },
   {
     id: "beets-paint-it-black-eol",
@@ -6872,6 +6797,275 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://beets.fi/#/pool/0x7ca132d9e8c420b84578a6618f10b2354551305800010000000000000000002b",
     network: "fantom",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1642605794
+  },
+  {
+    id: "0xdao-xscream-eol",
+    logo: "single-assets/xSCREAM.png",
+    name: "xSCREAM",
+    token: "xSCREAM",
+    tokenDescription: "0xDAO",
+    tokenAddress: "0xe3D17C7e840ec140a7A51ACA351a482231760824",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDxSCREAM",
+    earnedTokenAddress: "0x7926eA7aba64AF38297b832DEc713804f99039fD",
+    earnContractAddress: "0x7926eA7aba64AF38297b832DEc713804f99039fD",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "xSCREAM",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "xSCREAM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://scream.sh/stake",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
+    network: "fantom",
+    retireReason: "rewards",
+    createdAt: 1643612827
+  },
+  {
+    id: "0xdao-xboo-eol",
+    logo: "single-assets/xBOO.png",
+    name: "xBOO",
+    token: "xBOO",
+    tokenDescription: "0xDAO",
+    tokenAddress: "0xa48d959AE2E88f1dAA7D5F611E01908106dE7598",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDxBOO",
+    earnedTokenAddress: "0xE95f98631895bB9657e37906ea4c61b272BddeB0",
+    earnContractAddress: "0xE95f98631895bB9657e37906ea4c61b272BddeB0",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "xBOO",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "xBOO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/pools",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE",
+    network: "fantom",
+    retireReason: "rewards",
+    createdAt: 1643099828
+  },
+  {
+    id: "0xdao-oxd-eol",
+    logo: "single-assets/OXD.png",
+    name: "OXD",
+    token: "OXD",
+    tokenDescription: "0xDAO",
+    tokenAddress: "0xc165d941481e68696f43EE6E99BFB2B23E0E3114",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXD",
+    earnedTokenAddress: "0x59a7e9F6B369aA88A7EABfbc43D3EF72DEf4bd81",
+    earnContractAddress: "0x59a7e9F6B369aA88A7EABfbc43D3EF72DEf4bd81",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "OXD",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "OXD"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114",
+    network: "fantom",
+    retireReason: "rewards",
+    createdAt: 1643104856
+  },
+  {
+    id: "0xdao-tomb-eol",
+    logo: "single-assets/TOMB.png",
+    name: "TOMB",
+    token: "TOMB",
+    tokenDescription: "0xDAO",
+    tokenAddress: "0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDTOMB",
+    earnedTokenAddress: "0xF76e11b2e67169D2b835E7DE8755b37747A45D6D",
+    earnContractAddress: "0xF76e11b2e67169D2b835E7DE8755b37747A45D6D",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "TOMB",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "TOMB"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
+    network: "fantom",
+    retireReason: "rewards",
+    createdAt: 1642865861
+  },
+  {
+    id: "oxd-oxd-usdc-eol",
+    name: "OXD-USDC LP",
+    token: "OXD-USDC LP",
+    tokenDescription: "SpookySwap (0xDAO)",
+    tokenAddress: "0xD5fa400a24EB2EA55BC5Bd29c989E70fbC626FfF",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooOXDOXD-USDC",
+    earnedTokenAddress: "0x350f0E29d67Bc6745D28b17554CFB5F53bBe90ac",
+    earnContractAddress: "0x350f0E29d67Bc6745D28b17554CFB5F53bBe90ac",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "oxd-oxd-usdc",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "OXD",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "NO_AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/0xc165d941481e68696f43EE6E99BFB2B23E0E3114/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75",
+    buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114",
+    network: "fantom",
+    retireReason: "rewards",
+    createdAt: 1642811156
+  },
+  {
+    id: "summit-summit-eol",
+    logo: "single-assets/SUMMIT.png",
+    name: "SUMMIT",
+    token: "SUMMIT",
+    tokenDescription: "SummitDefi",
+    tokenAddress: "0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSummit",
+    earnedTokenAddress: "0x8E923758B7A959Db4110DbE78f637c4b7a6a9007",
+    earnContractAddress: "0x8E923758B7A959Db4110DbE78f637c4b7a6a9007",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "SUMMIT",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "SUMMIT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "SingleStake",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
+    network: "fantom",
+    retireReason: "rewards",
+    createdAt: 1635336610
+  },
+  {
+    id: "summit-summit-ftm-eol",
+    name: "SUMMIT-FTM LP",
+    token: "SUMMIT-FTM LP",
+    tokenDescription: "SpookySwap (SummitDefi)",
+    tokenAddress: "0x06300c5e8e55cC40Bf3A0383F69aCf18f1d32EC1",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSummitSUMMIT-FTM",
+    earnedTokenAddress: "0x277Da1Fa86B7a82d4060db81bFABd194C17B48F5",
+    earnContractAddress: "0x277Da1Fa86B7a82d4060db81bFABd194C17B48F5",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "summit-summit-ftm",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "SUMMIT",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994",
+    network: "fantom",
+    retireReason: "rewards",
+    createdAt: 1635338766
   }
 ];

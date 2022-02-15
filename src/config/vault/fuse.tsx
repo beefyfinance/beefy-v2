@@ -70,7 +70,8 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1641908745
   },
   {
     id: "sushi-wfuse-weth",
@@ -107,7 +108,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x0BE9e53fd7EDaC9F859882AfdDa116645287C629/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x0BE9e53fd7EDaC9F859882AfdDa116645287C629&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1643414500
   },
   {
     id: "sushi-wfuse-usdc",
@@ -144,7 +146,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x0BE9e53fd7EDaC9F859882AfdDa116645287C629/0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x0BE9e53fd7EDaC9F859882AfdDa116645287C629&outputCurrency=0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1643485320
   },
   {
     id: "voltage-wfuse-usdc",
@@ -181,7 +184,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x620fd5fa44be6af63715ef4e65ddfa0387ad13f5",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1641409265
   },
   {
     id: "voltage-wfuse-ust",
@@ -218,7 +222,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1643810650
   },
   {
     id: "voltage-luna-ust",
@@ -255,7 +260,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/0x588e24DEd8f850b14BB2e62E9c50A7Cd5Ee13Da9/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f&outputCurrency=0x588e24DEd8f850b14BB2e62E9c50A7Cd5Ee13Da9",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1643819850
   },
   {
     id: "voltage-wfuse-weth",
@@ -292,7 +298,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1641410065
   },
   {
     id: "voltage-wfuse-g$",
@@ -329,7 +336,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x495d133B938596C9984d462F007B676bDc57eCEC",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x495d133B938596C9984d462F007B676bDc57eCEC",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1641411120
   },
   {
     id: "voltage-fusd-bnb",
@@ -366,7 +374,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/0x6acb34b1Df86E254b544189Ec32Cf737e2482058/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=0x6acb34b1Df86E254b544189Ec32Cf737e2482058&outputCurrency=0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1641410790
   },
   {
     id: "voltage-wfuse-busd",
@@ -403,7 +412,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x6a5F6A8121592BeCd6747a38d67451B310F7f156",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1641410975
   },
   {
     id: "voltage-wfuse-fusd",
@@ -440,7 +450,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x249BE57637D8B013Ad64785404b24aeBaE9B098B",
-    network: "fuse"
+    network: "fuse",
+    createdAt: 1641410460
   },
   {
     id: "voltage-wbtc-weth",
@@ -477,6 +488,82 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/0x33284f95ccb7B948d9D352e1439561CF83d8d00d/0xa722c13135930332Eb3d749B2F0906559D2C5b99",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=0x33284f95ccb7B948d9D352e1439561CF83d8d00d&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+    network: "fuse",
+    createdAt: 1641410240
+  },
+  {
+    id: "fuse-bifi-maxi",
+    logo: "single-assets/BIFI.png",
+    name: "BIFI Maxi",
+    token: "BIFI",
+    tokenDescription: "Beefy.Finance",
+    tokenAddress: "0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFuseBIFI",
+    earnedTokenAddress: "0x79149B500f0d796aA7f85e0170d16C7e79BAd3C5",
+    earnContractAddress: "0x79149B500f0d796aA7f85e0170d16C7e79BAd3C5",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "BIFI",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beefy.Finance",
+    assets: [
+      "BIFI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "Maxi",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c",
+    createdAt: 1644690600,
+    network: "fuse"
+  },
+  {
+    id: "voltage-wfuse-elon",
+    name: "ELON-FUSE LP",
+    token: "ELON-FUSE LP",
+    tokenDescription: "Voltage",
+    tokenAddress: "0xe418c323fA450e7e18c4dB304bEFC7ffF92D2Cc1",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVoltageFUSE-ELON",
+    earnedTokenAddress: "0xa7224e31367069637A8C2cc0aa10B7A90D9343C1",
+    earnContractAddress: "0xa7224e31367069637A8C2cc0aa10B7A90D9343C1",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "voltage-wfuse-elon",
+    oraclePrice: 0,
+    withdrawalFee: "0%",
+    depositsPaused: false,
+    status: "active",
+    platform: "Voltage",
+    assets: [
+      "ELON",
+      "FUSE"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.voltage.finance/#/add/FUSE/0x5DD8015cec49F4dB01fd228F688BF30337d3e0A9",
+    buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x5DD8015cec49F4dB01fd228F688BF30337d3e0A9",
+    createdAt: 1644603605,
     network: "fuse"
   }
 ];

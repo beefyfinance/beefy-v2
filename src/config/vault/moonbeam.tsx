@@ -1,35 +1,35 @@
 export const pools = [
   {
-    id: 'moonbeam-bifi-gov',
-    name: 'BIFI Earnings Pool',
-    logo: 'single-assets/BIFI.png',
-    token: 'BIFI',
+    id: "moonbeam-bifi-gov",
+    name: "BIFI Earnings Pool",
+    logo: "single-assets/BIFI.png",
+    token: "BIFI",
     tokenDecimals: 18,
-		tokenDescription: 'Beefy.Finance',
-    tokenAddress: '0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8',
-		tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
-    earnedToken: 'GLMR',
+    tokenDescription: "Beefy.Finance",
+    tokenAddress: "0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8",
+    tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
+    earnedToken: "GLMR",
     earnedTokenDecimals: 18,
-    earnedTokenAddress: '0x1198f78efd67DFc917510aaA07d49545f4B24f11',
-    earnContractAddress: '0x1198f78efd67DFc917510aaA07d49545f4B24f11',
-		poolAddress: "0x1198f78efd67DFc917510aaA07d49545f4B24f11",
-		excluded: "moonbeam-bifi-maxi",
-		pricePerFullShare: 1,
-		isGovVault: true,
-		tvl: 0,
-		oracle: "tokens",
-		oracleId: "BIFI",
-		oraclePrice: 0,
-		status: "active",
-		platform: "Beefy.Finance",
-		assets: [
-			"BIFI"
-		],
-		risks: [
-			"COMPLEXITY_LOW",
-			"BATTLE_TESTED",
-			"IL_NONE",
-			"MCAP_SMALL",
+    earnedTokenAddress: "0x1198f78efd67DFc917510aaA07d49545f4B24f11",
+    earnContractAddress: "0x1198f78efd67DFc917510aaA07d49545f4B24f11",
+    poolAddress: "0x1198f78efd67DFc917510aaA07d49545f4B24f11",
+    excluded: "moonbeam-bifi-maxi",
+    pricePerFullShare: 1,
+    isGovVault: true,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "BIFI",
+    oraclePrice: 0,
+    status: "active",
+    platform: "Beefy.Finance",
+    assets: [
+      "BIFI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -37,8 +37,8 @@ export const pools = [
     callFee: 0.5,
     withdrawalFee: "0%",
     createdAt: 1623706144,
-    network: "moonbeam"		
-	},
+    network: "moonbeam"
+  },
   {
     id: "beamswap-usdc-wglmr",
     name: "USDC-GLMR LP",
@@ -73,7 +73,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0xacc15dc74880c9944775448304b263d191c6077f3",
     buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0xacc15dc74880c9944775448304b263d191c6077f",
-    network: "moonbeam"
+    network: "moonbeam",
+    createdAt: 1644598122
   },
   {
     id: "beamswap-dai-usdc",
@@ -109,7 +110,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61",
     buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0x765277EebeCA2e31912C9946eAe1021199B39C61",
-    network: "moonbeam"
+    network: "moonbeam",
+    createdAt: 1644598824
   },
   {
     id: "beamswap-wglmr-glint",
@@ -145,7 +147,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61",
     buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0x765277EebeCA2e31912C9946eAe1021199B39C61",
-    network: "moonbeam"
+    network: "moonbeam",
+    createdAt: 1644599100
   },
   {
     id: "beamswap-busd-bnb",
@@ -181,7 +184,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.beamswap.io/exchange/add/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
     buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055&outputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
-    network: "moonbeam"
+    network: "moonbeam",
+    createdAt: 1644599646
   },
   {
     id: "beamswap-usdc-busd",
@@ -217,7 +221,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.beamswap.io/exchange/add/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
-    network: "moonbeam"
+    network: "moonbeam",
+    createdAt: 1644599298
   },
   {
     id: "beamswap-usdc-eth",
@@ -253,7 +258,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.beamswap.io/exchange/add/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
-    network: "moonbeam"
+    network: "moonbeam",
+    createdAt: 1644599832
   },
   {
     id: "beamswap-usdc-usdt",
@@ -289,6 +295,118 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.beamswap.io/exchange/add/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
+    network: "moonbeam",
+    createdAt: 1644600000
+  },
+  {
+    id: "moonbeam-bifi-maxi",
+    logo: "single-assets/BIFI.png",
+    name: "BIFI Maxi",
+    token: "BIFI",
+    tokenDescription: "Beefy.Finance",
+    tokenAddress: "0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooMoonbeamBIFI",
+    earnedTokenAddress: "0xd1bAb603eee03fA99A378d90d5d83186fEB81aA9",
+    earnContractAddress: "0xd1bAb603eee03fA99A378d90d5d83186fEB81aA9",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "BIFI",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beefy.Finance",
+    assets: [
+      "BIFI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "Maxi",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0xacc15dc74880c9944775448304b263d191c6077f&outputCurrency=0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8",
+    createdAt: 1644700692,
+    network: "moonbeam"
+  },
+  {
+    id: "beamswap-bifi-wglmr",
+    name: "BIFI-GLMR LP",
+    token: "BIFI-GLMR TLP",
+    tokenDescription: "Beamswap",
+    tokenAddress: "0x321e45B7134b5Ed52129027F1743c8E71DA0A339",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeamBIFI-GLMR",
+    earnedTokenAddress: "0x2Ba77eE40995d8FedD5212E4776aE5eBfFde7a47",
+    earnContractAddress: "0x2Ba77eE40995d8FedD5212E4776aE5eBfFde7a47",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beamswap-bifi-wglmr",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beamswap",
+    assets: [
+      "BIFI",
+      "GLMR"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.beamswap.io/exchange/add/0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8/0xacc15dc74880c9944775448304b263d191c6077f3",
+    buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8&outputCurrency=0xacc15dc74880c9944775448304b263d191c6077f",
+    createdAt: 1644704004,
+    network: "moonbeam"
+  },
+  {
+    id: "beamswap-usdc-ftm",
+    name: "FTM-USDC LP",
+    token: "FTM-USDC TLP",
+    tokenDescription: "Beamswap",
+    tokenAddress: "0xA135de8E019447DA28f15eb480AEa0a242af5335",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeamFTM-USDC",
+    earnedTokenAddress: "0x05CC7F3AaD0Cecbf926D2F4A534F55C19035718e",
+    earnContractAddress: "0x05CC7F3AaD0Cecbf926D2F4A534F55C19035718e",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beamswap-usdc-ftm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beamswap",
+    assets: [
+      "FTM",
+      "USDC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_HIGH",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
+    buyTokenUrl: "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
+    createdAt: 1644703824,
     network: "moonbeam"
   }
 ];
