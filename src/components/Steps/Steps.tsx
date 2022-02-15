@@ -16,8 +16,6 @@ export const Steps = ({ item, steps, handleClose }) => {
   const t = useTranslation().t;
   const wallet = useSelector((state: any) => state.walletReducer);
 
-  console.log(steps.currentStep);
-
   return (
     <Snackbar
       key={steps.currentStep}
@@ -26,7 +24,6 @@ export const Steps = ({ item, steps, handleClose }) => {
       autoHideDuration={6000}
     >
       <Box className={classes.snackbarContainer}>
-        {console.log(steps.finished && steps.items[steps.currentStep].step === 'deposit')}
         <Box className={classes.topBar}>
           <Box
             className={clsx({
@@ -119,17 +116,10 @@ export const Steps = ({ item, steps, handleClose }) => {
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Success', {
-                        amount: item.isGovVault
-                          ? byDecimals(
-                              new BigNumber(wallet.action.data.amount),
-                              steps.items[steps.currentStep].token.decimals
-                            ).toFixed(4)
-                          : byDecimals(
-                              new BigNumber(wallet.action.data.amount).multipliedBy(
-                                byDecimals(item.pricePerFullShare)
-                              ),
-                              item.tokenDecimals
-                            ).toFixed(4),
+                        amount: byDecimals(
+                          steps.items[steps.currentStep].amount,
+                          item.tokenDecimals
+                        ).toFixed(2),
                         token: item.token,
                       })}
                     </Typography>
@@ -163,12 +153,7 @@ export const Steps = ({ item, steps, handleClose }) => {
                               new BigNumber(wallet.action.data.amount),
                               steps.items[steps.currentStep].token.decimals
                             ).toFixed(4)
-                          : byDecimals(
-                              new BigNumber(wallet.action.data.amount).multipliedBy(
-                                byDecimals(item.pricePerFullShare)
-                              ),
-                              item.tokenDecimals
-                            ).toFixed(4),
+                          : byDecimals(wallet.action.data.amount, item.tokenDecimals).toFixed(4),
                         token: item.token,
                       })}
                     </Typography>
@@ -184,13 +169,9 @@ export const Steps = ({ item, steps, handleClose }) => {
                       {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
                     </Button>
                   </Box>
-                  <Button className={classes.closeBtn} onClick={handleClose}>
-                    {t('Transactn-Close')}
-                  </Button>
                 </>
               )}
               {/* Boost Success */}
-              {console.log(steps.items[steps.currentStep].amount)}
               {steps.items[steps.currentStep].step === 'stake' && (
                 <>
                   <Box className={classes.successContent}>
