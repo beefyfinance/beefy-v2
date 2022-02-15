@@ -96,6 +96,11 @@ class LargeList extends React.PureComponent<LargeListProps, LargeListState> {
     if (!this.scrollProbe.current) {
       return;
     }
+    // no more rows to show
+    if (this.state.renderUntilRow > this.props.rowCount) {
+      return;
+    }
+
     const scrollProbePos = this._getElementYPosition(this.scrollProbe.current);
     const screenTopPos = window.pageYOffset;
     const screenHeight = window.screen.height;
