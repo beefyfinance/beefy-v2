@@ -70,8 +70,6 @@ export const Steps = ({ item, steps, handleClose }) => {
                   {steps.items[steps.currentStep].step === 'withdraw' && t('Withdraw-Done')}
                   {steps.items[steps.currentStep].step === 'claim-unstake' &&
                     t('Claim-Unstake-Done')}
-                  {steps.items[steps.currentStep].step === 'claim-withdraw' &&
-                    t('Claim-Withdraw-Done')}
                   {steps.items[steps.currentStep].step === 'stake' && t('Stake-Done')}
                   {steps.items[steps.currentStep].step === 'unstake' && t('Unstake-Done')}
                   {steps.items[steps.currentStep].step === 'claim' && t('Claim-Done')}
@@ -112,8 +110,10 @@ export const Steps = ({ item, steps, handleClose }) => {
               </>
             )}
           </Box>
+          {/* Steps finished */}
           {steps.finished && (
             <>
+              {/* Succes deposit */}
               {steps.items[steps.currentStep].step === 'deposit' && (
                 <>
                   <Box className={classes.successContent}>
@@ -135,7 +135,11 @@ export const Steps = ({ item, steps, handleClose }) => {
                     </Typography>
                     <Button
                       className={classes.redirectBtnSuccess}
-                      href={wallet.explorer[item.network] + '/tx/' + wallet.action.data.hash}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
                       target="_blank"
                     >
                       {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
@@ -146,12 +150,9 @@ export const Steps = ({ item, steps, handleClose }) => {
                       <span>{t('Remember')}</span> {t('Remember-Msg')}
                     </Typography>
                   </Box>
-                  <Button className={classes.closeBtn} onClick={handleClose}>
-                    {t('Transactn-Close')}
-                  </Button>
                 </>
               )}
-              {console.log(steps.items[steps.currentStep].step)}
+              {/* Success Withdraw */}
               {steps.items[steps.currentStep].step === 'withdraw' && (
                 <>
                   <Box className={classes.successContent}>
@@ -173,7 +174,11 @@ export const Steps = ({ item, steps, handleClose }) => {
                     </Typography>
                     <Button
                       className={classes.redirectBtnSuccess}
-                      href={wallet.explorer[item.network] + '/tx/' + wallet.action.data.hash}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
                       target="_blank"
                     >
                       {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
@@ -184,6 +189,64 @@ export const Steps = ({ item, steps, handleClose }) => {
                   </Button>
                 </>
               )}
+              {/* Boost Success */}
+              {console.log(steps.items[steps.currentStep].amount)}
+              {steps.items[steps.currentStep].step === 'stake' && (
+                <>
+                  <Box className={classes.successContent}>
+                    <Typography variant="body1" className={classes.message}>
+                      {t('Transactn-Success-Bst', {
+                        amount: byDecimals(steps.items[steps.currentStep].amount).toFixed(2),
+                        token: item.token,
+                      })}
+                    </Typography>
+
+                    <Button
+                      className={classes.redirectBtnSuccess}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
+                      target="_blank"
+                    >
+                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+                    </Button>
+                  </Box>
+                  <Box pt={2}>
+                    <Typography variant="body1" className={classes.message}>
+                      <span>{t('Remember')}</span> {t('Remember-Msg-Bst')}
+                    </Typography>
+                  </Box>
+                </>
+              )}
+              {(steps.items[steps.currentStep].step === 'unstake' ||
+                steps.items[steps.currentStep].step === 'claim-unstake') && (
+                <>
+                  <Box className={classes.successContent}>
+                    <Typography variant="body1" className={classes.message}>
+                      {t('Transactn-Withdrawal-Boost', {
+                        amount: byDecimals(steps.items[steps.currentStep].amount).toFixed(2),
+                        token: item.token,
+                      })}
+                    </Typography>
+                    <Button
+                      className={classes.redirectBtnSuccess}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
+                      target="_blank"
+                    >
+                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+                    </Button>
+                  </Box>
+                </>
+              )}
+              <Button className={classes.closeBtn} onClick={handleClose}>
+                {t('Transactn-Close')}
+              </Button>
             </>
           )}
         </Box>
