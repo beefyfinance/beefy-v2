@@ -79,7 +79,7 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
 export function getBigNumOrder(num: BigNumber): number {
   const nEstr = num.abs().decimalPlaces(0).toExponential();
   const parts = nEstr.split('e');
-  const exp = parseInt(parts[1]);
+  const exp = parseInt(parts[1] || '0');
   return Math.floor(exp / 3);
 }
 

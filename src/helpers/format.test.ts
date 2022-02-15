@@ -34,6 +34,7 @@ describe('Formatter tests', () => {
   });
 
   it('format Big numbers properly', () => {
+    expect(formatBigNumber(new BigNumber(NaN))).toBe('NaN');
     expect(formatBigNumber(new BigNumber('0'))).toBe('0');
     expect(formatBigNumber(new BigNumber('0.0001'))).toBe('0');
     expect(formatBigNumber(new BigNumber('10.6001'))).toBe('10.60');
@@ -52,6 +53,7 @@ describe('Formatter tests', () => {
   });
 
   it('format Big decimals properly', () => {
+    expect(formatBigDecimals(new BigNumber(NaN))).toBe('NaN');
     expect(formatBigDecimals(new BigNumber('0'))).toBe('0');
     expect(formatBigDecimals(new BigNumber('0.1'))).toBe('0.1');
     expect(formatBigDecimals(new BigNumber('0.0001'))).toBe('0.0001');
