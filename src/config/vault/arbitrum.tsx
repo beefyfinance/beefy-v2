@@ -72,7 +72,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://arbitrum.curve.fi/factory/0/deposit",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1633276273
   },
   {
     id: "sushi-arb-spell-weth",
@@ -107,7 +108,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632254179
   },
   {
     id: "sushi-arb-weth-mim",
@@ -142,7 +144,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632254301
   },
   {
     id: "sushi-arb-weth-link",
@@ -177,7 +180,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0xf97f4df75117a78c1A5a0DBb814Af92458539FB4/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0xf97f4df75117a78c1A5a0DBb814Af92458539FB4&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632249714
   },
   {
     id: "sushi-arb-eth-usdc",
@@ -212,7 +216,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632243592
   },
   {
     id: "curve-arb-tricrypto",
@@ -249,7 +254,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://arbitrum.curve.fi/tricrypto/deposit",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632215060
   },
   {
     id: "curve-arb-2pool",
@@ -285,7 +291,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://arbitrum.curve.fi/2pool/deposit",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632224639
   },
   {
     id: "curve-arb-ren",
@@ -321,7 +328,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://arbitrum.curve.fi/ren/deposit",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632226590
   },
   {
     id: "sushi-arb-wbtc-weth",
@@ -356,7 +364,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632169397
   },
   {
     id: "sushi-arb-sushi-eth",
@@ -391,7 +400,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0xd4d42f0b6def4ce0383636770ef773390d85c61a/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0xd4d42f0b6def4ce0383636770ef773390d85c61af&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632173780
   },
   {
     id: "sushi-arb-weth-usdt",
@@ -426,7 +436,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9&outputCurrency=0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1632173316
   },
   {
     id: "arbi-bifi-maxi",
@@ -461,7 +472,8 @@ export const pools = [
     stratType: "Maxi",
     withdrawalFee: "0.05%",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1636764972
   },
   {
     id: "sushi-arb-magic-weth",
@@ -497,7 +509,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/0x539bdE0d7Dbd336b79148AA742883198BBF60342",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&outputCurrency=0x539bdE0d7Dbd336b79148AA742883198BBF60342",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1639146591
   },
   {
     id: "sushi-arb-weth-gohm",
@@ -533,6 +546,7 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/0x8D9bA570D6cb60C7e3e0F31343Efe75AB8E65FB1",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x82aF49447D8a07e3bd95BD0d56f35241523fBab1&outputCurrency=0x8D9bA570D6cb60C7e3e0F31343Efe75AB8E65FB1",
-    network: "arbitrum"
+    network: "arbitrum",
+    createdAt: 1639146342
   }
 ];

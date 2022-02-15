@@ -2470,7 +2470,7 @@ export const pools = [
   },
   {
     id: "moo_baby-aot-usdt-ageoftanks",
-    poolId: "baby-aot-usdt",
+    poolId: "baby-aot-usdt-eol",
     name: "AgeOfTanks",
     assets: [
       "AOT",
