@@ -159,6 +159,9 @@ const VaultsList = memo(function HomeVaultsList() {
   const renderRow = useCallback(
     (index: number) => {
       const vaultIdx = index * 2;
+      if (!vaults[vaultIdx]) {
+        return <></>;
+      }
       return (
         <div className={classes.doubleItemContainer}>
           <div className={classes.doubleItem1}>
