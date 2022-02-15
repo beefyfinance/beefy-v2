@@ -157,17 +157,19 @@ const VaultsList = memo(function HomeVaultsList() {
 
   // so we render 2 by 2 to handle column case
   const renderRow = useCallback(
-    (index: number) =>
-      vaults[index] && (
+    (index: number) => {
+      const vaultIdx = index * 2;
+      return (
         <div className={classes.doubleItemContainer}>
           <div className={classes.doubleItem1}>
-            <Item vault={vaults[index]} />
+            {vaults[vaultIdx] ? <Item vault={vaults[vaultIdx]} /> : null}
           </div>
           <div className={classes.doubleItem2}>
-            {vaults[index + 1] && <Item vault={vaults[index + 1]} />}
+            {vaults[vaultIdx + 1] ? <Item vault={vaults[vaultIdx + 1]} /> : null}
           </div>
         </div>
-      ),
+      );
+    },
     [vaults, classes]
   );
 
