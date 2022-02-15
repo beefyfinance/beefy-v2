@@ -214,15 +214,14 @@ export const Vault = () => {
                 </Box>
               )}
             </Grid>
-            {/* 
             <Grid item xs={12} md={8} className={classes.customOrder2}>
               {isBoosted && <BoostCard vaultId={vault.id} />}
-              {isGovVault(vault) && <GovDetailsCard vaultId={vault.id} />}
-              {!isGovVault(vault) ? <Graph vaultId={vault.id} /> : null}
+              {/* {isGovVault(vault) && <GovDetailsCard vaultId={vault.id} />}*/}
+              {/* {!isGovVault(vault) ? <Graph vaultId={vault.id} /> : null}*/}
               <SafetyCard vaultId={vault.id} />
-              {!isGovVault(vault) ? <StrategyCard vaultId={vault.id} /> : null}
+              {/* {!isGovVault(vault) ? <StrategyCard vaultId={vault.id} /> : null}*/}
               <VaultAssets vaultId={vault.id} />
-            </Grid>*/}
+            </Grid>
           </Grid>
         </Container>
       </Box>

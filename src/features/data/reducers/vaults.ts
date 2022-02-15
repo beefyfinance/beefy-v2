@@ -131,6 +131,7 @@ function addVaultToState(
       safetyScore: score,
       assetIds: apiVault.assets || [],
       type: 'single',
+      risks: apiVault.risks || [],
     };
 
     sliceState.byId[vault.id] = vault;
@@ -166,6 +167,7 @@ function addVaultToState(
       tags: tags,
       safetyScore: score,
       assetIds: apiVault.assets || [],
+      risks: apiVault.risks || [],
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual

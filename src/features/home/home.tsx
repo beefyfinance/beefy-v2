@@ -11,7 +11,6 @@ import { CowLoader } from '../../components/CowLoader';
 import { selectIsVaultListAvailable } from '../data/selectors/data-loader';
 import { selectIsWalletConnected } from '../data/selectors/wallet';
 import { selectFilteredVaults, selectFilterOptions } from '../data/selectors/filtered-vaults';
-import { VaultEntity } from '../data/entities/vault';
 import { Item } from './components/Item';
 import { debounce } from 'lodash';
 

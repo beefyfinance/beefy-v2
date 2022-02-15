@@ -2,12 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchPartnersConfig } from '../actions/partners';
 import { MoonpotConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
+import { PartnerEntity } from '../entities/partner';
 import { VaultEntity } from '../entities/vault';
 
 /**
  * State containing Vault infos
  */
 export type PartnersState = {
+  byId: {
+    [partnerId: PartnerEntity['id']]: PartnerEntity;
+  };
   moonpot: {
     byVaultId: {
       [vaultId: VaultEntity['id']]: MoonpotConfig;
@@ -30,6 +34,7 @@ export type PartnersState = {
   };
 };
 export const initialPartnersState: PartnersState = {
+  byId: {},
   moonpot: {
     byVaultId: {},
   },

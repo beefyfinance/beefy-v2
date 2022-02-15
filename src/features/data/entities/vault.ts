@@ -74,17 +74,7 @@ export interface VaultStandard {
 
   safetyScore: number;
 
-  /*safetyAnalysis: {
-    score: number;
-    audited: boolean; // maybe split for multiple audit or
-    risks: VaultRiskTag[]; // maybe be smarter about it later?
-  };
-  fees: {
-    depositFee: number;
-    performanceFee: number;
-    withdrawalFee: number;
-  };
-  */
+  risks: string[];
 }
 
 export interface VaultGov {
@@ -137,6 +127,8 @@ export interface VaultGov {
   type: 'single';
 
   safetyScore: number;
+
+  risks: string[];
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {

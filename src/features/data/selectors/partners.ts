@@ -1,5 +1,6 @@
 import { BeefyState } from '../../../redux-types';
 import { VaultEntity } from '../entities/vault';
+import { selectActiveVaultBoostIds, selectBoostById } from './boosts';
 import { selectVaultById } from './vaults';
 
 export const selectIsVaultMoonpot = (state: BeefyState, vaultId: VaultEntity['id']) => {
@@ -25,4 +26,11 @@ export const selectIsVaultInsurace = (state: BeefyState, vaultId: VaultEntity['i
 export const selectIsVaultBinSpirit = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return vault.platformId === 'spiritswap';
+};
+
+export const selectBoostedVaultMainPartner = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const boostIds = selectActiveVaultBoostIds(state, vaultId);
+  const boost = selectBoostById(state, boostIds[0]);
+  const partner = state.biz.partners.byId[boost.partnerIds[0]];
+  return partner;
 };
