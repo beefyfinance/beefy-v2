@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, ReactNode, RefObject, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Container, makeStyles, useMediaQuery } from '@material-ui/core';
@@ -6,247 +6,171 @@ import { Filter } from './components/Filter';
 import { Portfolio } from './components/Portfolio';
 import { EmptyStates } from './components/EmptyStates';
 import { styles } from './styles';
-import { AutoSizer, Grid as GridVirtualized, WindowScroller } from 'react-virtualized';
-import { Item } from './components/Item';
-import { ceil, debounce } from 'lodash';
+import { AutoSizer } from 'react-virtualized';
 import { CowLoader } from '../../components/CowLoader';
 import { selectIsVaultListAvailable } from '../data/selectors/data-loader';
 import { selectIsWalletConnected } from '../data/selectors/wallet';
 import { selectFilteredVaults, selectFilterOptions } from '../data/selectors/filtered-vaults';
-import { isGovVault, isMaxiVault, VaultEntity } from '../data/entities/vault';
+import { VaultEntity } from '../data/entities/vault';
+import { Item } from './components/Item';
+import { debounce } from 'lodash';
 
 const useStyles = makeStyles(styles as any);
 
-interface VirtualVaultsListProps {
-  vaults: VaultEntity[];
-  columns: number;
-  cards: boolean;
+interface LargeListProps {
+  rowCount: number;
+  rowRenderer: (index: number) => ReactNode;
   spaceBetweenRows: number;
+  batchSize: number;
+  estimatedRowSize: number;
+}
+interface LargeListState {
+  renderUntilRow: number;
 }
 
-interface VirtualVaultsListState {
-  addFakeElement: boolean;
-}
-
-class VirtualVaultsList extends React.Component<VirtualVaultsListProps, VirtualVaultsListState> {
-  constructor(props: VirtualVaultsListProps) {
+/**
+ * We cannot use a list virtualization lib as design requirements have been set
+ * so each list item size depends on actual content size.
+ * Using react-virtualized + cellmeasurer leaded to many hard to track bugs
+ * and there is a style cache and a height and position cache that needs to be
+ * hacked around when resizing or when updating the vault list.
+ *
+ * So we landed on this solution which is not optimal perf wise but is way simpler
+ * to maintain.
+ * It works by tracking a specific element at the bottom of the page, if the tracking
+ * element is within a relatively close distance, we re-render with more elements.
+ *
+ * This way, we only render each element once and the next elements position can depend
+ * on the current element content, which makes iterating on style way easier.
+ */
+class LargeList extends React.PureComponent<LargeListProps, LargeListState> {
+  scrollProbe: RefObject<HTMLDivElement>;
+  constructor(props: LargeListProps) {
     super(props);
-
-    this._renderVault = this._renderVault.bind(this);
-    this._getRowHeight = this._getRowHeight.bind(this);
-    this._onResize = debounce(this._onResize.bind(this), 50);
+    this.scrollProbe = React.createRef();
 
     this.state = {
-      addFakeElement: false,
+      renderUntilRow: props.batchSize * 2,
     };
+    this._refreshRowToBeRendered = debounce(this._refreshRowToBeRendered.bind(this), 10);
   }
 
   render() {
+    const { estimatedRowSize, spaceBetweenRows, rowCount, rowRenderer } = this.props;
+    const { renderUntilRow } = this.state;
+    const indicesToRender = Array.from({ length: renderUntilRow });
     return (
-      <WindowScroller>
-        {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
-          <AutoSizer disableHeight>
-            {({ width }) => (
-              <div ref={registerChild}>
-                <GridVirtualized
-                  autoHeight
-                  height={height}
-                  isScrolling={isScrolling}
-                  onScroll={onChildScroll}
-                  overscanRowCount={15}
-                  rowCount={
-                    ceil(this.props.vaults.length / this.props.columns) +
-                    (this.state.addFakeElement ? 1 : 0)
-                  }
-                  rowHeight={params => {
-                    /**
-                     * Ok so this is the only way I found to reset the style cache
-                     * by passing a new function reference each time this component
-                     * re-renders.
-                     *
-                     * Without this, when the list changes, the element height are not
-                     * updated. Ex: render the grid with a first element with a large height
-                     * (a gov vault) then update the grid to have a smaller element on the
-                     * first place (a standard vault). This element will receive the height
-                     * property from the style cache and have a larger height than normal.
-                     * This height affects the element, but also serves for placing elements
-                     * that are below it.
-                     *
-                     * There seem to be no way to reset the style cache programatically
-                     * but I found that react-virtualized checks rowWidth and rowHeight
-                     * properties references to know if it needs to reset the style cache on
-                     * the getDerivedStateFromProps handler.
-                     * https://github.com/bvaughn/react-virtualized/blob/abe0530a512639c042e74009fbf647abdb52d661/source/Grid/Grid.js#L859
-                     *
-                     * So by passing a new function reference each time we re-render we
-                     * force the style cache to be reset.
-                     */
-                    return this._getRowHeight(params);
-                  }}
-                  cellRenderer={this._renderVault}
-                  scrollTop={scrollTop}
-                  width={width}
-                  columnCount={this.props.columns}
-                  columnWidth={width / this.props.columns}
-                />
-              </div>
-            )}
-          </AutoSizer>
+      <AutoSizer disableHeight>
+        {({ width }) => (
+          <div
+            style={{
+              minHeight: (estimatedRowSize + spaceBetweenRows) * rowCount,
+              width,
+            }}
+          >
+            {indicesToRender.map((_, i) => {
+              return (
+                <div key={i} style={{ marginBottom: spaceBetweenRows }}>
+                  {rowRenderer(i)}
+                </div>
+              );
+            })}
+            <div ref={this.scrollProbe}></div>
+          </div>
         )}
-      </WindowScroller>
+      </AutoSizer>
     );
   }
 
-  _renderVault({ rowIndex, columnIndex, key, style }) {
-    const index = rowIndex * this.props.columns + columnIndex;
-    const vault = this.props.vaults[index] ?? null;
+  _getElementYPosition(el: any) {
+    var y = 0;
+    while (el && !isNaN(el.offsetTop)) {
+      y += el.offsetTop - el.scrollTop;
+      el = el.offsetParent;
+    }
+    return y;
+  }
 
-    // this is our fake row
-    if (!vault) {
-      return <div style={style}></div>;
+  _refreshRowToBeRendered() {
+    if (!this.scrollProbe.current) {
+      return;
+    }
+    const scrollProbePos = this._getElementYPosition(this.scrollProbe.current);
+    const screenTopPos = window.pageYOffset;
+    const screenHeight = window.screen.height;
+    const screenbottomPos = screenTopPos + screenHeight;
+
+    // we should render until scrollProbe is always at least 0.5 batch size away
+    const batchEstimatedSize =
+      this.props.estimatedRowSize * (this.props.batchSize + this.props.spaceBetweenRows);
+
+    // if we scroll too fast down, we might want to send many batches at once
+    if (screenbottomPos > scrollProbePos) {
+      const approxBatchesToRender = Math.ceil(
+        (screenbottomPos - scrollProbePos) / batchEstimatedSize
+      );
+      return this.setState(state => ({
+        renderUntilRow: state.renderUntilRow + approxBatchesToRender * this.props.batchSize,
+      }));
     }
 
-    // compute the space between cards
-    const spacerStyles = {
-      paddingBottom: this.props.spaceBetweenRows,
-      paddingLeft: 0,
-      paddingRight: 0,
+    // we render another batch if we get too close from the probe
+    if (screenbottomPos + 1.0 * batchEstimatedSize > scrollProbePos) {
+      return this.setState(state => ({
+        renderUntilRow: state.renderUntilRow + this.props.batchSize,
+      }));
+    }
+    // we render less if we get too far
+    if (screenbottomPos + 2.5 * batchEstimatedSize < scrollProbePos) {
+      return this.setState(state => ({
+        renderUntilRow: state.renderUntilRow - this.props.batchSize,
+      }));
+    }
+  }
+
+  /*
+  static getDerivedStateFromProps(props) {
+    // reset when props change
+    return {
+      renderUntilRow: props.batchSize * 2,
     };
-    if (this.props.columns === 2) {
-      if (columnIndex === 0) {
-        spacerStyles.paddingRight = this.props.spaceBetweenRows / 2;
-      } else if (columnIndex === 1) {
-        spacerStyles.paddingLeft = this.props.spaceBetweenRows / 2;
-      }
-    }
-
-    return (
-      <div key={key} style={{ ...style, ...spacerStyles }}>
-        <Item vault={vault} />
-      </div>
-    );
-  }
-
-  /**
-   * Have a static way to compute row height
-   * for performance. All numbers are expressed in px
-   */
-  _getRowHeight({ index }: { index: number }) {
-    const vault = this.props.vaults[index] ?? null;
-
-    // this is our fake row
-    if (!vault) {
-      return 0;
-    }
-
-    // this should happen on large screen
-    if (this.props.cards === false) {
-      if (isGovVault(vault)) {
-        return this.props.spaceBetweenRows + 162;
-      } else {
-        return this.props.spaceBetweenRows + 138;
-      }
-    }
-
-    // in 2 column mode we have to know if there is a gov vault in the row
-    // if index is even, current cell is left cell, otherwise it's right cell
-    if (this.props.cards === true) {
-      // too many weird bugs, just make everything larger
-      return this.props.spaceBetweenRows + 375;
-      /*
-      const isEvenIdx = index % 2 === 0; // if slow, use bitwise tricks
-      const neighbourVault =
-        (isEvenIdx ? this.props.vaults[index + 1] : this.props.vaults[index - 1]) ?? null;
-
-      let isNeighbourAGovVault = false;
-      // this is our fake row
-      if (neighbourVault) {
-        isNeighbourAGovVault = isGovVault(neighbourVault);
-      }
-
-      if (isGovVault(vault) || isNeighbourAGovVault) {
-        return this.props.spaceBetweenRows + 418;
-      } else {
-        return this.props.spaceBetweenRows + 375;
-      }*/
-    }
-
-    // this should happen on super small screens where 2 columns don't fit
-    if (this.props.columns === 1 && this.props.cards === true) {
-      if (isGovVault(vault)) {
-        return this.props.spaceBetweenRows + 398;
-      } else if (isMaxiVault(vault)) {
-        return this.props.spaceBetweenRows + 399;
-      } else {
-        return this.props.spaceBetweenRows + 372;
-      }
-    }
-
-    // some default large value in case we forgot a case
-    // users will still see the entier vault cards, just super spaced out
-    return this.props.spaceBetweenRows + 1000;
-  }
-
-  componentDidUpdate(prevProps: Readonly<VirtualVaultsListProps>): void {
-    if (
-      this.props.vaults.length > 0 &&
-      prevProps.vaults !== this.props.vaults &&
-      //prevProps.vaults.length === this.props.vaults.length &&
-      this.state.addFakeElement === false
-    ) {
-      this._forceItemHeightRecompute();
-    }
-  }
+  }*/
 
   componentDidMount() {
-    window.addEventListener('resize', this._onResize);
+    window.addEventListener('scroll', this._refreshRowToBeRendered);
+    window.addEventListener('resize', this._refreshRowToBeRendered);
   }
   componentWillUnmount() {
-    window.removeEventListener('resize', this._onResize);
-  }
-  _onResize() {
-    this._forceItemHeightRecompute();
-  }
-
-  _forceItemHeightRecompute() {
-    /**
-     * soooooo, this is a hack to bypass the CellSizeAndPositionManager or react-virtualized
-     * basically the row height will not get recomputed if the rowHeight is not a number
-     * (which is needed to bypass a style cache, see above for more details)
-     * But there is an edge case when the list changes but has the same number of elements,
-     * the height is not re-computed
-     * https://github.com/bvaughn/react-virtualized/blob/abe0530a512639c042e74009fbf647abdb52d661/source/Grid/utils/CellSizeAndPositionManager.js#L93
-     * https://github.com/bvaughn/react-virtualized/blob/abe0530a512639c042e74009fbf647abdb52d661/source/Grid/utils/calculateSizeAndPositionDataAndUpdateScrollOffset.js#L36
-     *
-     * To fix this, we remember the previous list length to introduce "fake" elements and force
-     * this cache to reset here:
-     * https://github.com/bvaughn/react-virtualized/blob/abe0530a512639c042e74009fbf647abdb52d661/source/Grid/Grid.js#L902
-     *
-     * But this can create a new situation where the first render has 2 elements, second has 2
-     * elements and third render has 3 elements. If we introduce a "fake" element on the second
-     * render, the third render will has the same element count as the second render from
-     * the PoV of the grid.
-     *
-     * This is why we have to reset the "fake" state
-     * so the initial render will always be a normal render
-     * */
-    this.setState(
-      () => ({ addFakeElement: true }),
-      () => {
-        this.setState({ addFakeElement: false });
-      }
-    );
+    window.removeEventListener('scroll', this._refreshRowToBeRendered);
+    window.removeEventListener('resize', this._refreshRowToBeRendered);
   }
 }
 
 const VaultsList = memo(function HomeVaultsList() {
-  const classes = useStyles();
   const isTwoColumns = useMediaQuery('(min-width: 600px) and (max-width: 959px)');
   // we switch to vault cards on smaller screens or when doing 2 columns
   const isVaultCard = useMediaQuery('(max-width: 959px)');
   const filterOptions = useSelector(selectFilterOptions);
   const isWalletConnected = useSelector(selectIsWalletConnected);
   const vaults = useSelector(selectFilteredVaults);
+  const spaceBetweenRows = 20;
+  const classes = useStyles(spaceBetweenRows);
+
+  // so we render 2 by 2 to handle column case
+  const renderRow = useCallback(
+    (index: number) =>
+      vaults[index] && (
+        <div className={classes.doubleItemContainer}>
+          <div className={classes.doubleItem1}>
+            <Item vault={vaults[index]} />
+          </div>
+          <div className={classes.doubleItem2}>
+            {vaults[index + 1] && <Item vault={vaults[index + 1]} />}
+          </div>
+        </div>
+      ),
+    [vaults, classes]
+  );
 
   return (
     <div className={classes.vaultsList}>
@@ -255,11 +179,12 @@ const VaultsList = memo(function HomeVaultsList() {
       )}
       {filterOptions.userCategory === 'deposited' && !isWalletConnected && <EmptyStates />}
       {filterOptions.userCategory === 'eligible' && !isWalletConnected && <EmptyStates />}
-      <VirtualVaultsList
-        vaults={vaults}
-        columns={isTwoColumns ? 2 : 1}
-        cards={isVaultCard}
-        spaceBetweenRows={20}
+      <LargeList
+        batchSize={5}
+        spaceBetweenRows={spaceBetweenRows}
+        estimatedRowSize={(isTwoColumns || isVaultCard ? 400 : 150) * 2 + spaceBetweenRows}
+        rowCount={Math.ceil(vaults.length / 2)}
+        rowRenderer={renderRow}
       />
     </div>
   );
@@ -285,3 +210,7 @@ export const Home = () => {
     </React.Fragment>
   );
 };
+
+// React.Lazy only works on default exports
+// eslint-disable-next-line no-restricted-syntax
+export default Home;
