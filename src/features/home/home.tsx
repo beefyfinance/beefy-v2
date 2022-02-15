@@ -18,6 +18,7 @@ import { debounce } from 'lodash';
 const useStyles = makeStyles(styles as any);
 
 interface LargeListProps {
+  list: unknown[];
   rowCount: number;
   rowRenderer: (index: number) => ReactNode;
   spaceBetweenRows: number;
@@ -50,7 +51,7 @@ class LargeList extends React.PureComponent<LargeListProps, LargeListState> {
     this.scrollProbe = React.createRef();
 
     this.state = {
-      renderUntilRow: props.batchSize * 2,
+      renderUntilRow: props.batchSize,
     };
     this._refreshRowToBeRendered = debounce(this._refreshRowToBeRendered.bind(this), 10);
   }
@@ -102,7 +103,7 @@ class LargeList extends React.PureComponent<LargeListProps, LargeListState> {
 
     // we should render until scrollProbe is always at least 0.5 batch size away
     const batchEstimatedSize =
-      this.props.estimatedRowSize * (this.props.batchSize + this.props.spaceBetweenRows);
+      (this.props.estimatedRowSize + this.props.spaceBetweenRows) * this.props.batchSize;
 
     // if we scroll too fast down, we might want to send many batches at once
     if (screenbottomPos > scrollProbePos) {
@@ -128,14 +129,12 @@ class LargeList extends React.PureComponent<LargeListProps, LargeListState> {
     }
   }
 
-  /*
-  static getDerivedStateFromProps(props) {
+  componentDidUpdate(prevProps: Readonly<LargeListProps>): void {
     // reset when props change
-    return {
-      renderUntilRow: props.batchSize * 2,
-    };
-  }*/
-
+    if (prevProps.list !== this.props.list) {
+      this.setState({ renderUntilRow: this.props.batchSize });
+    }
+  }
   componentDidMount() {
     window.addEventListener('scroll', this._refreshRowToBeRendered);
     window.addEventListener('resize', this._refreshRowToBeRendered);
@@ -185,6 +184,7 @@ const VaultsList = memo(function HomeVaultsList() {
         estimatedRowSize={(isTwoColumns || isVaultCard ? 400 : 150) * 2 + spaceBetweenRows}
         rowCount={Math.ceil(vaults.length / 2)}
         rowRenderer={renderRow}
+        list={vaults}
       />
     </div>
   );
