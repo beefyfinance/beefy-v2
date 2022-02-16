@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchAllBoosts } from '../actions/boosts';
 import { fetchPartnersConfig } from '../actions/partners';
 import { MoonpotConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
@@ -76,6 +77,19 @@ export const partnersSlice = createSlice({
       for (const vaultId of action.payload.LaCucina) {
         if (!sliceState.lacucina.byVaultId[vaultId]) {
           sliceState.lacucina.byVaultId[vaultId] = true;
+        }
+      }
+    });
+
+    builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
+      for (const boosts of Object.values(action.payload)) {
+        for (const boost of boosts) {
+          for (const partner of boost.partners || []) {
+            const id = partner.website;
+            if (sliceState.byId[id] === undefined) {
+              sliceState.byId[id] = { id, ...partner };
+            }
+          }
         }
       }
     });

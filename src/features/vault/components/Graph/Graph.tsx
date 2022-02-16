@@ -13,17 +13,18 @@ import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatUsd, formatApy } from '../../../../helpers/format';
 import { styles } from './styles';
-interface GraphProps {
-  oracleId: any;
-  vaultId: any;
-  network: any;
-}
+import { VaultEntity } from '../../../data/entities/vault';
+import { BeefyState } from '../../../../redux-types';
+import { useSelector } from 'react-redux';
+import { selectVaultById } from '../../../data/selectors/vaults';
+
 const useStyles = makeStyles(styles as any);
-function GraphComponent({ oracleId, vaultId, network }: GraphProps) {
+function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const classes = useStyles();
   const [stat, setStat] = useState(2);
   const [period, setPeriod] = useState(2);
-  const chartData = useChartData(stat, period, oracleId, vaultId, network);
+  const chartData = useChartData(stat, period, vault.oracleId, vaultId, vault.chainId);
   const t = useTranslation().t;
 
   return (

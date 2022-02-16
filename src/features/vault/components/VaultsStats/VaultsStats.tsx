@@ -16,7 +16,8 @@ import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVault
 const useStyles = makeStyles(styles as any);
 
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const lastHarvest = useLastHarvest(vaultId);
+  //const lastHarvest = useLastHarvest(vaultId);
+  const lastHarvest = 'never';
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -26,18 +27,18 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
       <Grid spacing={6} container>
         <Grid item lg={8} xs={12}>
           <Box className={classes.stats}>
-            <Box width={'33%'}>
+            <Box width={'33%'} className={classes.stat3}>
               <VaultTvl variant="large" vaultId={vaultId} />
             </Box>
             <Box className={classes.stat}>
               <Divider className={classes.divider} orientation="vertical" />
-              <Box>
+              <Box className={classes.stat3}>
                 <YearlyApyStats variant="large" vaultId={vault.id} />
               </Box>
             </Box>
             <Box display="flex">
               <Divider className={classes.divider} orientation="vertical" />
-              <Box>
+              <Box className={classes.stat3}>
                 <DailyApyStats variant="large" vaultId={vault.id} />
               </Box>
             </Box>

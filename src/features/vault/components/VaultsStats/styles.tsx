@@ -47,12 +47,18 @@ export const styles = theme => ({
     paddingTop: 0,
     paddingBottom: 0,
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
       marginRight: theme.spacing(4),
       justifyContent: 'flex-start',
     },
+  },
+  stat3: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   value: {
     color: theme.palette.text.secondary,

@@ -165,12 +165,12 @@ describe('Vaults slice tests', () => {
     const action = { type: fetchAllContractDataByChainAction.fulfilled, payload: payload };
     const sliceState = vaultsSlice.reducer(state.entities.vaults, action);
     // don't snapshot all vaults from the test state
-    expect(sliceState.pricePerFullShare).toMatchSnapshot();
+    expect(sliceState.contractData).toMatchSnapshot();
 
     // getting the same vaults don't update the state object
-    const beforeReDispatch = sliceState.pricePerFullShare;
+    const beforeReDispatch = sliceState.contractData;
     const newState = vaultsSlice.reducer(sliceState, action);
-    const afterReDispatch = newState.pricePerFullShare;
+    const afterReDispatch = newState.contractData;
     expect(beforeReDispatch).toBe(afterReDispatch);
   });
 

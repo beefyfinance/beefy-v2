@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { addressBook as _addressBook } from 'blockchain-addressbook';
 import { reduxActions } from '../redux/actions';
 import { Loader } from '../../components/loader';
 import { DisplayTags } from '../../components/vaultTags';
@@ -45,10 +44,6 @@ import {
 import { TokenEntity } from '../data/entities/token';
 import { selectTokenById } from '../data/selectors/tokens';
 import { selectPlatformById } from '../data/selectors/platforms';
-
-//allow the Harmony-blockchain entries in the address-book to be accessed via the normal
-//  "network" property values used in our core vault-object schema
-const addressBook = { ..._addressBook, harmony: _addressBook.one };
 
 const useStyles = makeStyles(styles as any);
 
@@ -216,18 +211,18 @@ export const Vault = () => {
             </Grid>
             <Grid item xs={12} md={8} className={classes.customOrder2}>
               {isBoosted && <BoostCard vaultId={vault.id} />}
-              {/* {isGovVault(vault) && <GovDetailsCard vaultId={vault.id} />}*/}
-              {/* {!isGovVault(vault) ? <Graph vaultId={vault.id} /> : null}*/}
+              {isGovVault(vault) && <GovDetailsCard vaultId={vault.id} />}
+              {!isGovVault(vault) ? <Graph vaultId={vault.id} /> : null}
               <SafetyCard vaultId={vault.id} />
-              {/* {!isGovVault(vault) ? <StrategyCard vaultId={vault.id} /> : null}*/}
+              {!isGovVault(vault) ? <StrategyCard vaultId={vault.id} /> : null}
               <VaultAssets vaultId={vault.id} />
             </Grid>
           </Grid>
         </Container>
       </Box>
     </>
-  ); //return
-}; //const Vault
+  );
+};
 
 const VaultAssets = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const vault = selectVaultById(state, vaultId);

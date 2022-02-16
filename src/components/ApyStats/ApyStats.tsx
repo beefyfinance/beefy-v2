@@ -167,9 +167,11 @@ function _YearlyApyStats({
   return (
     <ValueBlock
       label={isGovVault(vault) ? t('APR') : t('APY')}
+      textContent={false}
       value={
         <LabeledStat
-          {...({ boosted: isBoosted ? formatted.boostedTotalApy : '' } as any)}
+          variant={variant}
+          boosted={isBoosted ? formatted.boostedTotalApy : ''}
           value={formatted.totalApy}
         />
       }
@@ -191,7 +193,7 @@ export const YearlyApyStats = memo(_YearlyApyStats);
 
 function _DailyApyStats({
   vaultId,
-  variant
+  variant,
 }: {
   vaultId: VaultEntity['id'];
   variant: 'small' | 'large';
@@ -209,9 +211,11 @@ function _DailyApyStats({
   return (
     <ValueBlock
       label={t('Vault-Daily')}
+      textContent={false}
       value={
         <LabeledStat
-          {...({ boosted: isBoosted ? formatted.boostedTotalDaily : '' } as any)}
+          variant={variant}
+          boosted={isBoosted ? formatted.boostedTotalDaily : ''}
           value={formatted.totalDaily}
         />
       }

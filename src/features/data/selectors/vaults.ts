@@ -28,20 +28,11 @@ export const selectVaultByChainId = createSelector(
     vaultsChainId ? vaultsChainId.allActiveIds.concat(vaultsChainId.allRetiredIds) : []
 );
 
-export const selectVaultPricePerFullShare = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.vaults.pricePerFullShare.byVaultId,
-  // get the user passed ID
-  (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  // last function receives previous function outputs as parameters
-  (byVaultId, vaultId) => {
-    // ppfs didn't arrive yet
-    if (byVaultId[vaultId] === undefined) {
-      return BIG_ONE;
-    }
-    return byVaultId[vaultId];
-  }
-);
+export const selectVaultPricePerFullShare = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.contractData.byVaultId[vaultId]?.pricePerFullShare || BIG_ONE;
+
+export const selectVaultStrategyAddress = (state: BeefyState, vaultId: VaultEntity['id']) =>
+  state.entities.vaults.contractData.byVaultId[vaultId]?.strategyAddress || null;
 
 export const selectAllGovVaultsByChainId = createSelector(
   (state: BeefyState) => state.entities.vaults.byId,

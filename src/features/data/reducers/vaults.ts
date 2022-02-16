@@ -48,9 +48,12 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
    *
    * That value is fetched from the smart contract upon loading
    **/
-  pricePerFullShare: {
+  contractData: {
     byVaultId: {
-      [vaultId: VaultEntity['id']]: BigNumber;
+      [vaultId: VaultEntity['id']]: {
+        strategyAddress: string;
+        pricePerFullShare: BigNumber;
+      };
     };
   };
 
@@ -63,7 +66,7 @@ export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
   byChainId: {},
-  pricePerFullShare: { byVaultId: {} },
+  contractData: { byVaultId: {} },
   featuredVaults: {},
 };
 
@@ -91,8 +94,11 @@ export const vaultsSlice = createSlice({
         const vaultId = vaultContractData.id;
 
         // only update it if needed
-        if (sliceState.pricePerFullShare.byVaultId[vaultId] === undefined) {
-          sliceState.pricePerFullShare.byVaultId[vaultId] = vaultContractData.pricePerFullShare;
+        if (sliceState.contractData.byVaultId[vaultId] === undefined) {
+          sliceState.contractData.byVaultId[vaultId] = {
+            pricePerFullShare: vaultContractData.pricePerFullShare,
+            strategyAddress: vaultContractData.strategy,
+          };
         }
       }
     });
