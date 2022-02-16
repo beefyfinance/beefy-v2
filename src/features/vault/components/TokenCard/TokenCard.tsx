@@ -1,5 +1,5 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
@@ -11,6 +11,32 @@ import { isTokenErc20, TokenEntity } from '../../../data/entities/token';
 import { useSelector } from 'react-redux';
 import { selectChainById } from '../../../data/selectors/chains';
 import { BeefyState } from '../../../../redux-types';
+import { ChainEntity } from '../../../data/entities/chain';
+import { memoize } from 'lodash';
+
+// these are expensive to fetch so we do this at the last moment and memoize result
+// might be a good idea to make it as a redux action if needed at some other place
+const getTokenAddressBook = memoize(
+  async (
+    chainId: ChainEntity['id']
+  ): Promise<{
+    [tokenId: TokenEntity['id']]: {
+      name: string;
+      symbol: string;
+      address: string;
+      chainId: number;
+      decimals: number;
+      logoURI: string;
+      website: string;
+      description: string;
+    };
+  }> => {
+    const addressBook = await import(
+      `blockchain-addressbook/build/address-book/${chainId}/tokens/tokens`
+    );
+    return addressBook.tokens;
+  }
+);
 
 const useStyles = makeStyles(styles as any);
 function TokenCardComponent({ token }: { token: TokenEntity }) {
@@ -18,11 +44,22 @@ function TokenCardComponent({ token }: { token: TokenEntity }) {
   const { t } = useTranslation();
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, token.chainId));
-  // todo: async load token description and website
-  const website = '';
-  const description = '';
-
   const contractAddress = isTokenErc20(token) ? token.contractAddress : null;
+
+  // todo: async load token description and website
+  const [addressBook, setTokenAddressBook] = useState<null | {
+    website: string;
+    description: string;
+  }>(null);
+
+  useEffect(() => {
+    (async () => {
+      const tokens = await getTokenAddressBook(chain.id);
+      if (tokens && token.id in tokens) {
+        setTokenAddressBook(tokens[token.id]);
+      }
+    })();
+  }, [chain.id, token.id]);
 
   return (
     <Card>
@@ -30,9 +67,9 @@ function TokenCardComponent({ token }: { token: TokenEntity }) {
         <Typography className={classes.detailTitle}>{t('Token-Detail')}</Typography>
         <CardTitle title={token.symbol} />
         <div className={classes.cardActions}>
-          {website && (
+          {addressBook && (
             <div className={classes.cardAction}>
-              <LinkButton type="link" href={website} text={t('Token-Site')} />
+              <LinkButton type="link" href={addressBook.website} text={t('Token-Site')} />
             </div>
           )}
           {contractAddress && (
@@ -49,7 +86,7 @@ function TokenCardComponent({ token }: { token: TokenEntity }) {
       </CardHeader>
       <CardContent>
         <Typography variant="body1" className={classes.text}>
-          {description ? description : t('Token-NoDescrip')}
+          {addressBook && addressBook.description ? addressBook.description : t('Token-NoDescrip')}
         </Typography>
       </CardContent>
     </Card>

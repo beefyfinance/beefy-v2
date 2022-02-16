@@ -37,7 +37,7 @@ const _VaultDeposited = connect(
     const userStaked = selectHasUserDepositInVault(state, vault.id);
     const deposit = selectUserVaultDepositInToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
-    const totalDeposited = formatBigDecimals(deposit, 8, false);
+    const totalDeposited = deposit.isZero() ? '0.00' : formatBigDecimals(deposit, 8, false);
     const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
@@ -94,7 +94,7 @@ const _VaultDeposited = connect(
         )}
         {(!isBoosted || !userStaked) && (
           <ValueBlock
-            label={t('DEPOSITED')}
+            label={variant === 'large' ? t('Vault-deposited') : t('DEPOSITED')}
             value={totalDeposited}
             usdValue={hasDeposit ? totalDepositedUsd : null}
             blurred={blurred}

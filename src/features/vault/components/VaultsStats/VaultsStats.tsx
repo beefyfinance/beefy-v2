@@ -1,9 +1,9 @@
 import React from 'react';
+import moment from 'moment';
 import { Box, makeStyles, Divider, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { styles } from './styles';
-import { useLastHarvest } from '../../hooks/useLastHarvest';
 import { BeefyState } from '../../../../redux-types';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -13,11 +13,11 @@ import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl';
 import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDeposited';
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 
+import { getBeefyApi } from '../../../data/apis/instances';
 const useStyles = makeStyles(styles as any);
 
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  //const lastHarvest = useLastHarvest(vaultId);
-  const lastHarvest = 'never';
+  const lastHarvestStr = useLastHarvestStr(vaultId);
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -51,18 +51,18 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                 <VaultDeposited variant="large" vaultId={vaultId} />
               </Box>
             </Grid>
-            {(isGovVault(vault) || lastHarvest !== 'never') && (
+            {(isGovVault(vault) || lastHarvestStr !== 'never') && (
               <Divider flexItem={true} className={classes.divider1} orientation="vertical" />
             )}
             {!isGovVault(vault) ? (
               <>
-                {lastHarvest !== 'never' && (
+                {lastHarvestStr !== 'never' && (
                   <Grid item xs={6}>
                     <Box className={classes.stat4}>
                       <ValueBlock
                         variant="large"
                         label={t('Vault-LastHarvest')}
-                        value={lastHarvest}
+                        value={lastHarvestStr}
                       />
                     </Box>
                   </Grid>
@@ -83,3 +83,28 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 }
 
 export const VaultsStats = React.memo(VaultsStatsComponent);
+
+const useLastHarvestStr = (vaultId: string) => {
+  const [state, setState] = React.useState('');
+
+  React.useEffect(() => {
+    (async () => {
+      const beefyApi = getBeefyApi();
+      const lastHarvest = await beefyApi.getVaultLastHarvest(vaultId);
+
+      if (lastHarvest === null) {
+        setState('never');
+      } else {
+        const lhStr = moment(lastHarvest)
+          .fromNow()
+          .replace(' hours', 'h')
+          .replace(' minutes', 'm')
+          .replace(' days', 'd');
+
+        setState(lhStr);
+      }
+    })();
+  }, [vaultId]);
+
+  return state;
+};

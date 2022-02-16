@@ -109,7 +109,7 @@ export function formatBigNumber(value: BigNumber) {
 }
 
 export function formatBigDecimals(value: BigNumber, maxPlaces: number = 8, strip = true) {
-  if (value.isZero()) {
+  if (value.isZero() && strip) {
     return '0';
   }
 

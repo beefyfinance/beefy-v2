@@ -51,8 +51,11 @@ export interface BeefyAPIBuybackResponse {
   [chainId: ChainEntity['id']]: { buybackTokenAmount: BigNumber; buybackUsdAmount: BigNumber };
 }
 
-// TODO: is this the same as VaultConfig?
-export type BeefyAPIVaultsResponse = any;
+// note that there is more infos but we don't need it
+export type BeefyAPIVaultsResponse = {
+  id: string;
+  lastHarvest?: number | string;
+}[];
 
 export class BeefyAPI {
   public api: AxiosInstance;
@@ -128,9 +131,35 @@ export class BeefyAPI {
     return res;
   }
 
-  public async getVaults(): Promise<BeefyAPIVaultsResponse> {
-    const res = await this.api.get('/vaults', { params: { _: this.getCacheBuster('hour') } });
-    return res.data;
+  /**
+   * For now we fetch lastHarvest from the api
+   * TODO: fetch this from the contract directly
+   */
+  public async getVaultLastHarvest(vaultId: VaultEntity['id']): Promise<null | Date> {
+    const res = await this.api.get<BeefyAPIVaultsResponse>('/vaults', {
+      params: { _: this.getCacheBuster('hour') },
+    });
+
+    // const vault = data.filter(vault => vault.id.includes(vaultId));
+    const vaultConfig = res.data.find(vault => {
+      return vault.id === vaultId;
+    });
+
+    if (!vaultConfig) {
+      throw new Error('Could not find vault last harvest');
+    }
+    if (!('lastHarvest' in vaultConfig)) {
+      return null;
+    }
+    let lh = 0;
+    if (isString(vaultConfig.lastHarvest)) {
+      lh = parseInt(vaultConfig.lastHarvest);
+    }
+    if (lh === 0) {
+      return null;
+    }
+
+    return new Date(lh * 1000);
   }
 
   // maybe have a local cache instead of this cache busting
