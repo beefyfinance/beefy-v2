@@ -76,33 +76,37 @@ export const tokensSlice = createSlice({
 function addBoostToState(
   sliceState: WritableDraft<TokensState>,
   chainId: ChainEntity['id'],
-  boost: BoostConfig
+  apiBoost: BoostConfig
 ) {
   if (sliceState.byChainId[chainId] === undefined) {
     sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
   }
 
+  let tokenId = apiBoost.earnedToken;
+
   /**
-   * Fix for old configurations where the "earnedToken" is BIFI
-   * when it should be mooXyzBIFI
+   * Fix case for some tokens like "Charge" and "CHARGE"
+   * Only fix when values are different
    */
-  let tokenId = boost.earnedToken;
   if (
-    tokenId === 'BIFI' &&
-    boost.earnedToken.startsWith('moo') &&
-    boost.earnedToken.endsWith('BIFI')
+    !tokenId.startsWith('moo') &&
+    !tokenId.includes('-') &&
+    !tokenId.includes('_') &&
+    !tokenId.includes('.') &&
+    !tokenId.includes(' ') &&
+    apiBoost.earnedToken !== apiBoost.earnedOracleId &&
+    apiBoost.earnedToken.toLocaleUpperCase() === apiBoost.earnedOracleId.toLocaleUpperCase()
   ) {
-    //console.debug(`Configuration outdated for boost ${boost.id}`);
-    tokenId = boost.earnedToken;
+    tokenId = apiBoost.earnedToken.toLocaleUpperCase();
   }
 
   if (sliceState.byChainId[chainId].byId[tokenId] === undefined) {
     const token: TokenEntity = {
       id: tokenId,
       chainId: chainId,
-      contractAddress: boost.earnedTokenAddress,
-      decimals: boost.earnedTokenDecimals,
-      symbol: boost.earnedToken,
+      contractAddress: apiBoost.earnedTokenAddress,
+      decimals: apiBoost.earnedTokenDecimals,
+      symbol: apiBoost.earnedToken,
       buyUrl: null,
       description: null,
       website: null,

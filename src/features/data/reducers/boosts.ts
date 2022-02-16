@@ -144,11 +144,29 @@ function addBoostToState(
     return;
   }
 
+  let tokenId = apiBoost.earnedToken;
+
+  /**
+   * Fix case for some tokens like "Charge" and "CHARGE"
+   * Only fix when values are different
+   */
+  if (
+    !tokenId.startsWith('moo') &&
+    !tokenId.includes('-') &&
+    !tokenId.includes('_') &&
+    !tokenId.includes('.') &&
+    !tokenId.includes(' ') &&
+    apiBoost.earnedToken !== apiBoost.earnedOracleId &&
+    apiBoost.earnedToken.toLocaleUpperCase() === apiBoost.earnedOracleId.toLocaleUpperCase()
+  ) {
+    tokenId = apiBoost.earnedToken.toLocaleUpperCase();
+  }
+
   const boost: BoostEntity = {
     id: apiBoost.id,
     chainId: chainId,
     assets: apiBoost.assets,
-    earnedTokenId: apiBoost.earnedOracleId,
+    earnedTokenId: tokenId,
     earnContractAddress: apiBoost.earnContractAddress,
     logo: apiBoost.logo,
     name: apiBoost.name,
