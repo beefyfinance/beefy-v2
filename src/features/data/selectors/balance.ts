@@ -6,7 +6,7 @@ import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
-import { selectAllVaultBoostIds, selectBoostById, selectIsVaultBoosted } from './boosts';
+import { selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectIsWalletConnected, selectWalletAddress } from './wallet';
@@ -82,13 +82,10 @@ export const selectStandardVaultUserBalanceInToken = (
   );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   // we also need to account for deposits in boost (even those expired)
-  const isBoosted = selectIsVaultBoosted(state, vaultId);
-  if (isBoosted) {
-    const boostIds = selectAllVaultBoostIds(state, vaultId);
-    for (const boostId of boostIds) {
-      const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
-      mooTokenBalance = mooTokenBalance.plus(boostMooToken);
-    }
+  const boostIds = selectAllVaultBoostIds(state, vaultId);
+  for (const boostId of boostIds) {
+    const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
+    mooTokenBalance = mooTokenBalance.plus(boostMooToken);
   }
   return mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
 };
