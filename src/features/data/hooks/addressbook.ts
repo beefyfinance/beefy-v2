@@ -1,5 +1,7 @@
 import { memoize } from 'lodash';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity, TokenErc20 } from '../entities/token';
 
@@ -33,21 +35,28 @@ const getTokenAddressBook = memoize(
 export function useTokenAddressbookData(
   chainId: ChainEntity['id'],
   tokenId: TokenEntity['id']
-): null | TokenErc20 {
-  const [addressBook, setTokenAddressBook] = useState<null | TokenErc20>(null);
+): [boolean, null | TokenErc20] {
+  const stateToken = useSelector(
+    (state: BeefyState) =>
+      (state.entities.tokens.byChainId[chainId]?.byId[tokenId] as TokenErc20) || null
+  );
+  const [addressBook, setTokenAddressBook] = useState<null | TokenErc20>(stateToken);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     (async () => {
       const tokens = await getTokenAddressBook(chainId);
       if (!(tokenId in tokens)) {
-        throw new Error(`Could not find token ${tokenId} in the addressbook of ${chainId}`);
+        console.debug(`Could not find token ${tokenId} in the addressbook of ${chainId}`);
+      } else {
+        setTokenAddressBook(toTokenEntity(chainId, tokens[tokenId]));
       }
 
-      setTokenAddressBook(toTokenEntity(chainId, tokens[tokenId]));
+      setLoading(false);
     })();
   }, [chainId, tokenId]);
 
-  return addressBook;
+  return [loading, addressBook];
 }
 
 function toTokenEntity(chainId: ChainEntity['id'], bookToken: AddressBookToken): TokenErc20 {
@@ -58,8 +67,8 @@ function toTokenEntity(chainId: ChainEntity['id'], bookToken: AddressBookToken):
     decimals: bookToken.decimals,
     symbol: bookToken.symbol,
     buyUrl: null,
-    website: bookToken.website,
-    description: bookToken.description,
+    website: bookToken.website || null,
+    description: bookToken.description || null,
     type: 'erc20',
   };
 }

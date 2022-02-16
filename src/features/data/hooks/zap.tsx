@@ -15,12 +15,17 @@ export const useVaultEligibleZap = (vaultId: VaultEntity['id']) => {
   const oracleToken = useSelector((state: BeefyState) =>
     selectTokenById(state, vault.chainId, vault.oracleId)
   );
-  const tokenA = useTokenAddressbookData(vault.chainId, vault.assetIds[0]);
-  const tokenB = useTokenAddressbookData(vault.chainId, vault.assetIds[1]);
-  const tokenWNative = useTokenAddressbookData(vault.chainId, 'WNATIVE');
+  const [loadingA, tokenA] = useTokenAddressbookData(vault.chainId, vault.assetIds[0]);
+  const [loadingB, tokenB] = useTokenAddressbookData(vault.chainId, vault.assetIds[1]);
+  const [loadingWNative, tokenWNative] = useTokenAddressbookData(vault.chainId, 'WNATIVE');
   const chainZaps = useSelector(
     (state: BeefyState) => state.entities.zaps.byChainId[vault.chainId]
   );
+
+  // still loading data
+  if (loadingA || loadingB || loadingWNative || !tokenA || !tokenB || !tokenWNative) {
+    return null;
+  }
 
   // no zap if this is not a 2 assets lp vault
   if (vault.assetIds.length !== 2) {

@@ -164,6 +164,8 @@ export async function initHomeDataV4(store: BeefyStore) {
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
+
+  preLoadPages();
 }
 
 export function fetchCaptureUserData(
@@ -184,4 +186,15 @@ export async function dispatchUserFfs(
 ) {
   await store.dispatch((await userFfs.balance)());
   //await store.dispatch((await userFfs.allowance)());
+}
+
+/**
+ * we want to preload the vault page to make it fast on the first click
+ */
+function preLoadPages() {
+  window.requestIdleCallback(async () => {
+    console.debug('pre-loading vault page...');
+    await import('../../../features/vault');
+    console.debug('pre-loading vault page done');
+  });
 }

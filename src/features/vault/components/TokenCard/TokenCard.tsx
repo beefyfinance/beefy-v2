@@ -64,7 +64,7 @@ function TokenCardComponent({
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const addressBook = useTokenAddressbookData(chainId, tokenId);
+  const [loading, addressBook] = useTokenAddressbookData(chainId, tokenId);
 
   return addressBook ? (
     <TokenCardDisplay token={addressBook} />
@@ -76,7 +76,7 @@ function TokenCardComponent({
       </CardHeader>
       <CardContent>
         <Typography variant="body1" className={classes.text}>
-          <Loader />
+          {loading ? <Loader /> : t('Token-NoDescrip')}
         </Typography>
       </CardContent>
     </Card>
