@@ -108,6 +108,7 @@ const _Filter = () => {
   }, [dispatch, setLocalSearchText]);
 
   const handleReset = useCallback(() => {
+    setLocalSearchText('');
     dispatch(filteredVaultActions.reset());
   }, [dispatch]);
 

@@ -191,11 +191,7 @@ export const Vault = () => {
                   <QiDao vaultId={vaultId} />
                 </Box>
               )}
-              {isBinSpirit && (
-                <Box>
-                  <Spirit vaultId={vaultId} />
-                </Box>
-              )}
+              {isBinSpirit && <Box>{/*<Spirit vaultId={vaultId} />*/}</Box>}
               {isMoonpot && (
                 <Box>
                   <Moonpot vaultId={vaultId} />

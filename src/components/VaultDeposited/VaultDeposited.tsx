@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect, useSelector } from 'react-redux';
 import { VaultEntity } from '../../features/data/entities/vault';
 import {
+  selectHasUserDepositInVault,
   selectUserVaultDepositInToken,
   selectUserVaultDepositInUsd,
 } from '../../features/data/selectors/balance';
@@ -114,7 +115,10 @@ const _NonBoostedVaultDeposited = connect(
     const vault = selectVaultById(state, vaultId);
     const deposit = selectUserVaultDepositInToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
-    const totalDeposited = deposit.isZero() ? '0.00' : formatBigDecimals(deposit, 8, false);
+    const totalDeposited =
+      deposit.isZero() && variant === 'large'
+        ? '0.00'
+        : formatBigDecimals(deposit, 8, variant === 'small');
     const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
@@ -170,8 +174,11 @@ const _VaultDeposited = ({
   variant: 'small' | 'large';
 }) => {
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const userStaked = useSelector((state: BeefyState) =>
+    selectHasUserDepositInVault(state, vaultId)
+  );
 
-  return isBoosted ? (
+  return isBoosted && userStaked ? (
     variant === 'large' ? (
       <BoostedVaultDepositedLarge vaultId={vaultId} />
     ) : (

@@ -64,7 +64,10 @@ class LargeList extends React.PureComponent<LargeListProps, LargeListState> {
         {({ width }) => (
           <div
             style={{
-              minHeight: (estimatedRowSize + spaceBetweenRows) * rowCount,
+              minHeight:
+                renderUntilRow >= rowCount
+                  ? undefined
+                  : (estimatedRowSize + spaceBetweenRows) * rowCount,
               width,
             }}
           >

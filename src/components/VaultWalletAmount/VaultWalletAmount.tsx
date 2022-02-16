@@ -30,7 +30,7 @@ const _VaultWalletAmount = connect(
         : true;
     return {
       hasInWallet: userOracleInWallet.gt(0),
-      userOracleInWallet: formatBigDecimals(userOracleInWallet, 4, false),
+      userOracleInWallet: formatBigDecimals(userOracleInWallet, 4, variant === 'small'),
       userOracleInWalletUsd: formatBigUsd(userOracleInWalletUsd),
       blurred,
       loading: !isLoaded,
