@@ -47,7 +47,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <Grid item lg={4} xs={12}>
           <Grid container className={classes.stats2}>
             <Grid item xs={6} className={classes.stat1}>
-              <Box>
+              <Box className={classes.stat4}>
                 <VaultDeposited variant="large" vaultId={vaultId} />
               </Box>
             </Grid>
@@ -58,7 +58,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               <>
                 {lastHarvest !== 'never' && (
                   <Grid item xs={6}>
-                    <Box>
+                    <Box className={classes.stat4}>
                       <ValueBlock
                         variant="large"
                         label={t('Vault-LastHarvest')}
@@ -70,7 +70,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               </>
             ) : (
               <Grid item xs={6}>
-                <Box>
+                <Box className={classes.stat4}>
                   <GovVaultRewards variant="large" vaultId={vaultId} />
                 </Box>
               </Grid>

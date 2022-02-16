@@ -47,7 +47,7 @@ export const styles = theme => ({
     paddingTop: 0,
     paddingBottom: 0,
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     [theme.breakpoints.down('md')]: {
       marginLeft: 0,
       marginRight: theme.spacing(4),
@@ -59,6 +59,15 @@ export const styles = theme => ({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+  },
+  stat4: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    [theme.breakpoints.down('md')]: {
+      alignItems: 'flex-start',
+    },
   },
   value: {
     color: theme.palette.text.secondary,
