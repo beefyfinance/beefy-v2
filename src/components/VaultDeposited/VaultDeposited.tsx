@@ -116,9 +116,7 @@ const _NonBoostedVaultDeposited = connect(
     const deposit = selectUserVaultDepositInToken(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const totalDeposited =
-      deposit.isZero() && variant === 'large'
-        ? '0.00'
-        : formatBigDecimals(deposit, 8, variant === 'small');
+      !hasDeposit && variant === 'large' ? '0.00' : formatBigDecimals(deposit, 8, !hasDeposit);
     const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =

@@ -13,7 +13,7 @@ import {
   selectIsBalanceHidden,
   selectIsWalletConnected,
 } from '../../features/data/selectors/wallet';
-import { formatBigDecimals } from '../../helpers/format';
+import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 
@@ -31,12 +31,13 @@ const _GovVaultRewards = connect(
       state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletConnected(state)
         ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
         : true;
+    const hasRewards = rewardsEarnedUsd.gt(0);
     return {
       earnedToken,
-      rewardsEarnedToken: formatBigDecimals(rewardsEarnedToken),
-      rewardsEarnedUsd: formatBigDecimals(rewardsEarnedUsd),
+      rewardsEarnedToken: formatBigDecimals(rewardsEarnedToken, 4, !hasRewards),
+      rewardsEarnedUsd: formatBigUsd(rewardsEarnedUsd),
       blurred,
-      hasRewards: rewardsEarnedUsd.gt(0),
+      hasRewards,
       loading: !isLoaded,
       variant,
     };

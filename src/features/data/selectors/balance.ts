@@ -140,7 +140,7 @@ export const selectUserVaultDepositInUsd = (
 
 export const selectGovVaultPendingRewardsInToken = (state: BeefyState, vaultId: VaultGov['id']) => {
   const walletBalance = _selectWalletBalance(state);
-  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards[vaultId] || BIG_ZERO;
+  return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards || BIG_ZERO;
 };
 
 export const selectHasGovVaultPendingRewards = (state: BeefyState, vaultId: VaultGov['id']) => {
