@@ -14,22 +14,24 @@ import { BeefyState } from '../../../../redux-types';
 import { ChainEntity } from '../../../data/entities/chain';
 import { memoize } from 'lodash';
 
+interface AddressBookToken {
+  name: string;
+  symbol: string;
+  address: string;
+  chainId: number;
+  decimals: number;
+  logoURI?: string;
+  website?: string;
+  description?: string;
+}
+
 // these are expensive to fetch so we do this at the last moment and memoize result
 // might be a good idea to make it as a redux action if needed at some other place
 const getTokenAddressBook = memoize(
   async (
     chainId: ChainEntity['id']
   ): Promise<{
-    [tokenId: TokenEntity['id']]: {
-      name: string;
-      symbol: string;
-      address: string;
-      chainId: number;
-      decimals: number;
-      logoURI: string;
-      website: string;
-      description: string;
-    };
+    [tokenId: TokenEntity['id']]: AddressBookToken;
   }> => {
     const addressBook = await import(
       `blockchain-addressbook/build/address-book/${chainId}/tokens/tokens`
@@ -44,14 +46,18 @@ function TokenCardComponent({ token }: { token: TokenEntity }) {
   const { t } = useTranslation();
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, token.chainId));
-  const contractAddress = isTokenErc20(token) ? token.contractAddress : null;
   const addressBook = useTokenAddressbookData(token.chainId, token.id);
+  const contractAddress = addressBook
+    ? addressBook.address
+    : isTokenErc20(token)
+    ? token.contractAddress
+    : null;
 
   return (
     <Card>
       <CardHeader>
         <Typography className={classes.detailTitle}>{t('Token-Detail')}</Typography>
-        <CardTitle title={token.symbol} />
+        <CardTitle title={addressBook ? addressBook.symbol : token.symbol} />
         <div className={classes.cardActions}>
           {addressBook && (
             <div className={classes.cardAction}>
@@ -82,10 +88,7 @@ function TokenCardComponent({ token }: { token: TokenEntity }) {
 export const TokenCard = React.memo(TokenCardComponent);
 
 function useTokenAddressbookData(chainId: ChainEntity['id'], tokenId: TokenEntity['id']) {
-  const [addressBook, setTokenAddressBook] = useState<null | {
-    website: string;
-    description: string;
-  }>(null);
+  const [addressBook, setTokenAddressBook] = useState<null | AddressBookToken>(null);
 
   useEffect(() => {
     (async () => {
