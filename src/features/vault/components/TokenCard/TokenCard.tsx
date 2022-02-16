@@ -45,21 +45,7 @@ function TokenCardComponent({ token }: { token: TokenEntity }) {
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, token.chainId));
   const contractAddress = isTokenErc20(token) ? token.contractAddress : null;
-
-  // todo: async load token description and website
-  const [addressBook, setTokenAddressBook] = useState<null | {
-    website: string;
-    description: string;
-  }>(null);
-
-  useEffect(() => {
-    (async () => {
-      const tokens = await getTokenAddressBook(chain.id);
-      if (tokens && token.id in tokens) {
-        setTokenAddressBook(tokens[token.id]);
-      }
-    })();
-  }, [chain.id, token.id]);
+  const addressBook = useTokenAddressbookData(token.chainId, token.id);
 
   return (
     <Card>
@@ -94,3 +80,21 @@ function TokenCardComponent({ token }: { token: TokenEntity }) {
 }
 
 export const TokenCard = React.memo(TokenCardComponent);
+
+function useTokenAddressbookData(chainId: ChainEntity['id'], tokenId: TokenEntity['id']) {
+  const [addressBook, setTokenAddressBook] = useState<null | {
+    website: string;
+    description: string;
+  }>(null);
+
+  useEffect(() => {
+    (async () => {
+      const tokens = await getTokenAddressBook(chainId);
+      if (tokens && tokenId in tokens) {
+        setTokenAddressBook(tokens[tokenId]);
+      }
+    })();
+  }, [chainId, tokenId]);
+
+  return addressBook;
+}

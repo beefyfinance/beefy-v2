@@ -154,6 +154,8 @@ export class BeefyAPI {
     let lh = 0;
     if (isString(vaultConfig.lastHarvest)) {
       lh = parseInt(vaultConfig.lastHarvest);
+    } else {
+      lh = vaultConfig.lastHarvest;
     }
     if (lh === 0) {
       return null;

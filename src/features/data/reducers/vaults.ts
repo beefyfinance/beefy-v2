@@ -162,7 +162,6 @@ function addVaultToState(
       logoUri: apiVault.logo,
       isGovVault: false,
       contractAddress: apiVault.earnContractAddress,
-      assets: apiVault.assets,
       earnedTokenId: apiVault.earnedToken,
       oracleId: apiVault.oracleId,
       strategyType: apiVault.stratType as VaultStandard['strategyType'],

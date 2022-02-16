@@ -25,6 +25,12 @@ export interface VaultStandard {
   id: string;
   name: string;
   logoUri: string;
+
+  /**
+   * ASSETS are basically the assets that are in that vault
+   * So if you go into a BIFI vault, the assets is of course only BIFI
+   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
+   */
   assetIds: TokenEntity['id'][];
 
   chainId: ChainEntity['id'];
@@ -48,13 +54,6 @@ export interface VaultStandard {
    * The vault contract address
    */
   contractAddress: string;
-
-  /**
-   * ASSETS are basically the assets that are in that vault
-   * So if you go into a BIFI vault, the assets is of course only BIFI
-   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
-   */
-  assets: TokenEntity['id'][];
 
   // for display purpose only
   strategyType: 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
@@ -81,7 +80,14 @@ export interface VaultGov {
   id: string;
   name: string;
   logoUri: string;
+
+  /**
+   * ASSETS are basically the assets that are in that vault
+   * So if you go into a BIFI vault, the assets is of course only BIFI
+   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
+   */
   assetIds: TokenEntity['id'][];
+
   chainId: ChainEntity['id'];
 
   /**

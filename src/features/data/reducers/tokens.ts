@@ -83,10 +83,10 @@ function addBoostToState(
   }
 
   /**
-   * Fix for old configurations where the "earnedOracleId" is BIFI
+   * Fix for old configurations where the "earnedToken" is BIFI
    * when it should be mooXyzBIFI
    */
-  let tokenId = boost.earnedOracleId;
+  let tokenId = boost.earnedToken;
   if (
     tokenId === 'BIFI' &&
     boost.earnedToken.startsWith('moo') &&
