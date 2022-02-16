@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { BIG_ZERO } from '../../../helpers/format';
-import { mooAmountToOracleAmount } from '../../../helpers/ppfs';
+import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov } from '../entities/vault';

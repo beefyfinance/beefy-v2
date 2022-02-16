@@ -32,7 +32,6 @@ import {
 import { selectIsWalletConnected, selectWalletAddress } from '../data/selectors/wallet';
 import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
-import { selectVaultEligibleZap } from '../data/selectors/zaps';
 import {
   selectIsVaultBinSpirit,
   selectIsVaultInsurace,
@@ -42,6 +41,7 @@ import {
 import { TokenEntity } from '../data/entities/token';
 import { selectTokenById } from '../data/selectors/tokens';
 import { selectPlatformById } from '../data/selectors/platforms';
+import { useVaultEligibleZap } from '../data/hooks/zap';
 
 const useStyles = makeStyles(styles as any);
 
@@ -50,25 +50,25 @@ export const Vault = () => {
   const classes = useStyles();
   const t = useTranslation().t;
 
-  let { id }: any = useParams();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, id));
+  let { id: vaultId }: any = useParams();
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, id));
+  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
   const vaultBoosts = useSelector((state: BeefyState) =>
-    selectActiveVaultBoostIds(state, id).map(boostId => selectBoostById(state, boostId))
+    selectActiveVaultBoostIds(state, vaultId).map(boostId => selectBoostById(state, boostId))
   );
   const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
   const walletAddress = useSelector((state: BeefyState) =>
     isWalletConnected ? selectWalletAddress(state) : null
   );
-  const eligibleZap = useSelector((state: BeefyState) => selectVaultEligibleZap(state, id));
+  const eligibleZap = useVaultEligibleZap(vaultId);
   const dispatch = useDispatch();
   const [dw, setDw] = React.useState('deposit');
-  const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, id));
-  const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, id));
-  const isBinSpirit = useSelector((state: BeefyState) => selectIsVaultBinSpirit(state, id));
-  const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, id));
+  const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
+  const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
+  const isBinSpirit = useSelector((state: BeefyState) => selectIsVaultBinSpirit(state, vaultId));
+  const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
 
   const boostedData = {} as any; //vault.pools[id].boostData;
 
@@ -129,7 +129,7 @@ export const Vault = () => {
               </Box>
               <Box>
                 <Box className={classes.badges}>
-                  <DisplayTags vaultId={vault.id} />
+                  <DisplayTags vaultId={vaultId} />
                 </Box>
                 <Box>
                   <span className={classes.platformContainer}>
@@ -147,7 +147,7 @@ export const Vault = () => {
                 </Box>
               </Box>
             </Box>
-            <VaultsStats vaultId={vault.id} />
+            <VaultsStats vaultId={vaultId} />
           </>
         </Container>
       </Box>
@@ -172,14 +172,14 @@ export const Vault = () => {
                 </Box>
                 {/*dw === 'deposit' ? (
                   <Deposit
-                    vaultId={vault.id}
+                    vaultId={vaultId}
                     formData={formData}
                     setFormData={setFormData}
                     resetFormData={resetFormData}
                   />
                 ) : (
                   <Withdraw
-                    vaultId={vault.id}
+                    vaultId={vaultId}
                     formData={formData}
                     setFormData={setFormData}
                     resetFormData={resetFormData}
@@ -188,17 +188,17 @@ export const Vault = () => {
               </Box>
               {isQidao && (
                 <Box>
-                  <QiDao vaultId={vault.id} />
+                  <QiDao vaultId={vaultId} />
                 </Box>
               )}
               {isBinSpirit && (
                 <Box>
-                  <Spirit vaultId={vault.id} />
+                  <Spirit vaultId={vaultId} />
                 </Box>
               )}
               {isMoonpot && (
                 <Box>
-                  <Moonpot vaultId={vault.id} />
+                  <Moonpot vaultId={vaultId} />
                 </Box>
               )}
               {isInsurace && (
@@ -208,12 +208,14 @@ export const Vault = () => {
               )}
             </Grid>
             <Grid item xs={12} md={8} className={classes.customOrder2}>
-              {isBoosted && <BoostCard vaultId={vault.id} />}
-              {isGovVault(vault) && <GovDetailsCard vaultId={vault.id} />}
-              {!isGovVault(vault) ? <Graph vaultId={vault.id} /> : null}
-              <SafetyCard vaultId={vault.id} />
-              {!isGovVault(vault) ? <StrategyCard vaultId={vault.id} /> : null}
-              <VaultAssets vaultId={vault.id} />
+              {isBoosted && <BoostCard vaultId={vaultId} />}
+              {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
+              {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
+              <SafetyCard vaultId={vaultId} />
+              {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
+              {vault.assetIds.map(tokenId => (
+                <TokenCard key={tokenId} chainId={vault.chainId} tokenId={tokenId} />
+              ))}
             </Grid>
           </Grid>
         </Container>
@@ -221,17 +223,3 @@ export const Vault = () => {
     </>
   );
 };
-
-const VaultAssets = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
-  const vault = selectVaultById(state, vaultId);
-  const tokens = vault.assetIds.map(assetId => selectTokenById(state, vault.chainId, assetId));
-  return { tokens };
-})(({ tokens }: { tokens: TokenEntity[] }) => {
-  return (
-    <>
-      {tokens.map(token => (
-        <TokenCard key={token.id} token={token} />
-      ))}
-    </>
-  );
-});

@@ -104,6 +104,8 @@ function addBoostToState(
       decimals: boost.earnedTokenDecimals,
       symbol: boost.earnedToken,
       buyUrl: null,
+      description: null,
+      website: null,
       type: 'erc20',
     };
     temporaryWrappedtokenFix(token);
@@ -129,6 +131,8 @@ function addVaultToState(
       decimals: vault.tokenDecimals,
       symbol: vault.token,
       buyUrl: null,
+      description: null,
+      website: null,
       type: 'erc20',
     };
     temporaryWrappedtokenFix(token);
@@ -160,6 +164,8 @@ function addVaultToState(
         decimals: 18, // TODO: not sure about that
         symbol: vault.earnedToken,
         buyUrl: null,
+        description: null,
+        website: null,
         type: 'erc20',
       };
       temporaryWrappedtokenFix(token);

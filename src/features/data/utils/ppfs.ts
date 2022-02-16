@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { TokenEntity } from '../features/data/entities/token';
+import { TokenEntity } from '../entities/token';
 
 export function mooAmountToOracleAmount(
   mooToken: TokenEntity,

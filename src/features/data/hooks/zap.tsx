@@ -3,25 +3,34 @@ import { getCreate2Address } from '@ethersproject/address';
 import { BeefyState } from '../../../redux-types';
 import { isTokenErc20 } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
-import { selectTokenById } from './tokens';
-import { selectVaultById } from './vaults';
+import { selectVaultById } from '../selectors/vaults';
+import { selectTokenById } from '../selectors/tokens';
+import { selectChainById } from '../selectors/chains';
+import { useSelector } from 'react-redux';
+import { useTokenAddressbookData } from './addressbook';
 
-export const selectVaultEligibleZap = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vault = selectVaultById(state, vaultId);
+export const useVaultEligibleZap = (vaultId: VaultEntity['id']) => {
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+  const oracleToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, vault.chainId, vault.oracleId)
+  );
+  const tokenA = useTokenAddressbookData(vault.chainId, vault.assetIds[0]);
+  const tokenB = useTokenAddressbookData(vault.chainId, vault.assetIds[1]);
+  const tokenWNative = useTokenAddressbookData(vault.chainId, 'WNATIVE');
+  const chainZaps = useSelector(
+    (state: BeefyState) => state.entities.zaps.byChainId[vault.chainId]
+  );
 
   // no zap if this is not a 2 assets lp vault
   if (vault.assetIds.length !== 2) {
     return null;
   }
-  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-  const tokenA = selectTokenById(state, vault.chainId, vault.assetIds[0]);
-  const tokenB = selectTokenById(state, vault.chainId, vault.assetIds[1]);
-
-  if (!isTokenErc20(tokenA) || !isTokenErc20(tokenB) || !isTokenErc20(oracleToken)) {
+  // type narrowing
+  if (!isTokenErc20(oracleToken)) {
     return null;
   }
 
-  const chainZaps = state.entities.zaps.byChainId[vault.chainId];
   // zaps are not loaded yet
   if (!chainZaps) {
     return null;
@@ -44,23 +53,24 @@ export const selectVaultEligibleZap = (state: BeefyState, vaultId: VaultEntity['
   }
 
   let zapOptions = [tokenA, tokenB];
-  /*
+
   const wrappedToken = [tokenA, tokenB].find(
-    t => t.contractAddress === addressBook[pool.network].tokens.WNATIVE.address
+    t => t.contractAddress === tokenWNative.contractAddress
   );
   if (wrappedToken) {
+    // @ts-ignore
     wrappedToken.isWrapped = true;
     zapOptions = [
       ...zapOptions,
       {
         ...wrappedToken,
-        symbol: config[pool.network].walletSettings.nativeCurrency.symbol,
+        symbol: chain.walletSettings.nativeCurrency.symbol,
+        // @ts-ignore
         isNative: true,
         isWrapped: false,
       },
     ];
   }
-*/
   return {
     address: zap.zapAddress,
     router: zap.ammRouter,

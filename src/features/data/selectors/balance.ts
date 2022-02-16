@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BIG_ZERO } from '../../../helpers/format';
-import { mooAmountToOracleAmount } from '../../../helpers/ppfs';
+import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { BeefyState } from '../../../redux-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
