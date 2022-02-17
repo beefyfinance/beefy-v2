@@ -150,6 +150,12 @@ describe('Boosts slice tests', () => {
             rewardRate: new BigNumber(0.4),
             totalSupply: new BigNumber(12345),
           },
+          {
+            id: 'moo_banana-crush-wbnb-bitcrush',
+            periodFinish: null, // prestake boost
+            rewardRate: new BigNumber(0.4),
+            totalSupply: new BigNumber(12345),
+          },
         ],
       },
       state,

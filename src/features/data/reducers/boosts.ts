@@ -31,8 +31,9 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
   };
   // put the period finish in another part of the state
   // to avoid re-rendering of non-updateable boost data
+  // null means prestake
   periodfinish: {
-    [boostId: BoostEntity['id']]: Date;
+    [boostId: BoostEntity['id']]: Date | null;
   };
 };
 export const initialBoostsState: BoostsState = {
@@ -65,6 +66,7 @@ export const boostsSlice = createSlice({
       for (const boostContractData of action.payload.data.boosts) {
         if (
           sliceState.periodfinish[boostContractData.id] === undefined ||
+          sliceState.periodfinish[boostContractData.id] === null ||
           sliceState.periodfinish[boostContractData.id].getTime() !==
             boostContractData.periodFinish.getTime()
         ) {
@@ -81,7 +83,7 @@ export const boostsSlice = createSlice({
 export const { recomputeBoostStatus } = boostsSlice.actions;
 
 export function getBoostStatusFromPeriodFinish(periodFinish: Date | null, now = new Date()) {
-  if (!periodFinish) {
+  if (periodFinish === null) {
     return 'prestake';
   }
   const nowUTCTime = now.getTime();
@@ -110,9 +112,12 @@ function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
         const status = getBoostStatusFromPeriodFinish(periodFinish, now);
         if (status === 'expired') {
           expiredBoostsIds.push(boostId);
-        } else {
-          // TODO: handle prestake status
+        } else if (status === 'prestake') {
+          prestakeBoostsIds.push(boostId);
+        } else if (status === 'active') {
           activeBoostsIds.push(boostId);
+        } else {
+          throw new Error(`Unknown boost status ${status} ${boostId}`);
         }
       }
 
