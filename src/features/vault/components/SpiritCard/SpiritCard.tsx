@@ -167,6 +167,7 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           ),
         token: SpiritToken,
         pending: false,
+        amount,
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });

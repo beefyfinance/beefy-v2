@@ -54,4 +54,111 @@ export const styles = theme => ({
       transition: 'color 0.2s',
     },
   },
+  snackbarContainer: {
+    width: '350px',
+  },
+  topBar: {
+    height: '10px',
+    borderRadius: '4px 4px 0 0',
+    backgroundColor: theme.palette.background.snackbars.bgLine,
+  },
+  progresBar: {
+    width: '50%',
+    margin: 0,
+    backgroundColor: theme.palette.primary.main,
+    height: '100%',
+    borderRadius: '4px 0 0 0',
+  },
+  progresBar1: {
+    width: '75%',
+    margin: 0,
+    backgroundColor: theme.palette.primary.main,
+    height: '100%',
+    borderRadius: '4px 0 0 0',
+  },
+  confirmationBar: {
+    width: '75%',
+    margin: 0,
+    backgroundColor: theme.palette.primary.main,
+    height: '100%',
+    borderRadius: '4px 0 0 0',
+  },
+  successBar: {
+    width: '100%',
+    margin: 0,
+    height: '100%',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: '4px 4px 0 0',
+  },
+  errorBar: {
+    width: '100%',
+    margin: 0,
+    height: '100%',
+    backgroundColor: theme.palette.background.snackbars.error,
+    borderRadius: '4px 4px 0 0',
+  },
+  icon: {
+    height: '20px',
+    marginRight: theme.spacing(1),
+  },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  closeIcon: {
+    padding: 0,
+  },
+  contentContainer: {
+    backgroundColor: theme.palette.background.snackbars.bg,
+    borderRadius: '0 0 4px 4px',
+    padding: '12px 16px',
+  },
+  title: {
+    color: theme.palette.background.snackbars.text,
+    fontWeight: 700,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  message: {
+    color: theme.palette.background.snackbars.text,
+    '& span': {
+      fontWeight: 700,
+    },
+  },
+  errorContent: {
+    marginTop: theme.spacing(1),
+    padding: '16px',
+    borderRadius: '4px',
+    backgroundColor: 'rgba(219, 50, 50, 0.1)',
+  },
+  successContent: {
+    marginTop: theme.spacing(1),
+    padding: '16px',
+    borderRadius: '4px',
+    backgroundColor: 'rgba(89, 166, 98, 0.15)',
+  },
+  closeBtn: {
+    marginTop: theme.spacing(3),
+    backgroundColor: theme.palette.background.snackbars.bgBtn,
+    color: theme.palette.text.primary,
+    width: '100%',
+    fontSize: '15px',
+    lineHeight: '24px',
+    fontWeight: 700,
+    borderRadius: '8px',
+    textTransform: 'none',
+    '&:Hover': {
+      backgroundColor: theme.palette.background.snackbars.bgBtn,
+    },
+  },
+  redirectBtnSuccess: {
+    color: theme.palette.primary.main,
+    background: 'none',
+    textTransform: 'none',
+    margin: 0,
+    padding: 0,
+    '& .MuiSvgIcon-root': {
+      height: '15px',
+    },
+  },
 });

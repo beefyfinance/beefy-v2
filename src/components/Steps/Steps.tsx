@@ -1,234 +1,239 @@
-import { Backdrop, Box, Button, Fade, makeStyles, Modal, Typography } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { ArrowRight } from '@material-ui/icons';
-import * as React from 'react';
+import React from 'react';
+import { Box, Button, makeStyles, Typography, Snackbar, IconButton } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { byDecimals } from '../../helpers/format';
 import { isEmpty } from '../../helpers/utils';
-import { Loader } from '../loader';
 import { styles } from './styles';
 import BigNumber from 'bignumber.js';
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles as any);
 export const Steps = ({ item, steps, handleClose }) => {
-  const history = useHistory();
   const classes = useStyles();
   const t = useTranslation().t;
   const wallet = useSelector((state: any) => state.walletReducer);
 
   return (
-    <Modal
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
-      className={classes.modal}
+    <Snackbar
+      key={steps.currentStep}
       open={steps.modal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+      autoHideDuration={6000}
     >
-      <Fade in={steps.modal}>
-        {steps.finished ? (
-          <React.Fragment>
-            <Box>
-              <Box p={8} className={classes.finishedCard}>
-                {/* New Attempt  */}
-                {steps.items[steps.currentStep].step === 'deposit' ? (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>
-                      {byDecimals(
-                        new BigNumber(wallet.action.data.amount),
-                        steps.items[steps.currentStep].token.decimals
-                      ).toFixed(8)}{' '}
-                      {steps.items[steps.currentStep].token.symbol}
+      <Box className={classes.snackbarContainer}>
+        <Box className={classes.topBar}>
+          <Box
+            className={clsx({
+              [classes.progresBar]: true,
+              [classes.progresBar1]: steps.items.length > 1,
+              [classes.errorBar]: wallet.action && wallet.action.result === 'error',
+              [classes.confirmationBar]:
+                wallet.action && wallet.action.result === 'success_pending',
+              [classes.successBar]: steps.finished,
+            })}
+          />
+        </Box>
+        <Box className={classes.contentContainer}>
+          <Box className={classes.titleContainer}>
+            <Typography className={classes.title} variant={'body1'}>
+              {/* Error  */}
+              {wallet.action && wallet.action.result === 'error' && (
+                <>
+                  <img
+                    className={classes.icon}
+                    src={require('../../images/error.svg').default}
+                    alt="error"
+                  />
+                  {t('Transactn-Error')}
+                </>
+              )}
+              {/* Waiting  */}
+              {!steps.finished &&
+                wallet.action &&
+                wallet.action.result === 'success_pending' &&
+                t('Transactn-ConfirmPending')}
+              {/* Transactions  */}
+              {!steps.finished &&
+                wallet.action.result !== 'error' &&
+                wallet.action.result !== 'success_pending' &&
+                `${steps.currentStep} / ${steps.items.length} ${t('Transactn-Confirmed')} `}
+
+              {steps.finished && (
+                <>
+                  {steps.items[steps.currentStep].step === 'deposit' && t('Deposit-Done')}
+                  {steps.items[steps.currentStep].step === 'withdraw' && t('Withdraw-Done')}
+                  {steps.items[steps.currentStep].step === 'claim-unstake' &&
+                    t('Claim-Unstake-Done')}
+                  {steps.items[steps.currentStep].step === 'stake' && t('Stake-Done')}
+                  {steps.items[steps.currentStep].step === 'unstake' && t('Unstake-Done')}
+                  {steps.items[steps.currentStep].step === 'claim' && t('Claim-Done')}
+                </>
+              )}
+            </Typography>
+            <IconButton className={classes.closeIcon} onClick={handleClose}>
+              <CloseRoundedIcon fontSize="small" htmlColor="#8A8EA8" />
+            </IconButton>
+          </Box>
+          <Box>
+            {/* Steps Count Content */}
+            {!isEmpty(steps.items[steps.currentStep]) &&
+              wallet.action.result !== 'error' &&
+              wallet.action.result !== 'success_pending' &&
+              !steps.finished && (
+                <Typography className={classes.message} variant={'body2'}>
+                  {steps.items[steps.currentStep].message}
+                </Typography>
+              )}
+            {/* Waiting Content */}
+            {!steps.finished && wallet.action && wallet.action.result === 'success_pending' && (
+              <Typography variant={'body2'} className={classes.message}>
+                {t('Transactn-Wait')}
+              </Typography>
+            )}
+            {/* Error content */}
+            {!steps.finished && wallet.action && wallet.action.result === 'error' && (
+              <>
+                <Box className={classes.errorContent}>
+                  <Typography variant="body1" className={classes.message}>
+                    <span>{t('Error')}</span> {wallet.action.data.error}
+                  </Typography>
+                </Box>
+                <Button className={classes.closeBtn} onClick={handleClose}>
+                  {t('Transactn-Close')}
+                </Button>
+              </>
+            )}
+          </Box>
+          {/* Steps finished */}
+          {steps.finished && (
+            <>
+              {/* Succes deposit */}
+              {steps.items[steps.currentStep].step === 'deposit' && (
+                <>
+                  <Box className={classes.successContent}>
+                    <Typography variant="body1" className={classes.message}>
+                      {t('Transactn-Success', {
+                        amount: byDecimals(
+                          steps.items[steps.currentStep].amount,
+                          item.tokenDecimals
+                        ).toFixed(2),
+                        token: item.token,
+                      })}
                     </Typography>
-                    <Typography variant={'h2'}>{t('Deposit-Done')}</Typography>
-                  </React.Fragment>
-                ) : null}
-                {steps.items[steps.currentStep].step === 'withdraw' ? (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>
-                      <React.Fragment>
-                        {item.isGovVault
+                    <Button
+                      className={classes.redirectBtnSuccess}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
+                      target="_blank"
+                    >
+                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+                    </Button>
+                  </Box>
+                  <Box pt={2}>
+                    <Typography variant="body1" className={classes.message}>
+                      <span>{t('Remember')}</span> {t('Remember-Msg')}
+                    </Typography>
+                  </Box>
+                </>
+              )}
+              {/* Success Withdraw */}
+              {steps.items[steps.currentStep].step === 'withdraw' && (
+                <>
+                  <Box className={classes.successContent}>
+                    <Typography variant="body1" className={classes.message}>
+                      {t('Transactn-Withdrawal', {
+                        amount: item.isGovVault
                           ? byDecimals(
                               new BigNumber(wallet.action.data.amount),
                               steps.items[steps.currentStep].token.decimals
-                            ).toFixed(8)
-                          : null}
-                        {!item.isGovVault
-                          ? byDecimals(
-                              new BigNumber(wallet.action.data.amount).multipliedBy(
-                                byDecimals(item.pricePerFullShare)
-                              ),
-                              item.tokenDecimals
-                            ).toFixed(8)
-                          : null}{' '}
-                        {item.token}
-                      </React.Fragment>
+                            ).toFixed(4)
+                          : byDecimals(wallet.action.data.amount, item.tokenDecimals).toFixed(4),
+                        token: item.token,
+                      })}
                     </Typography>
-                    <Typography variant={'h2'}>{t('Withdraw-Done')}</Typography>
-                  </React.Fragment>
-                ) : null}
-                {/* exit-unstake should be used for boosts, since button mentions
-                  those function names */}
-                {steps.items[steps.currentStep].step === 'claim-unstake' ? (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>{t('Claim-Unstake-Done')}</Typography>
-                  </React.Fragment>
-                ) : null}
-                {/* exit-withdraw should be used for gov pools, since button mentions
-                  those function names */}
-                {steps.items[steps.currentStep].step === 'claim-withdraw' ? (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>{t('Claim-Withdraw-Done')}</Typography>
-                  </React.Fragment>
-                ) : null}
-                {steps.items[steps.currentStep].step === 'stake' ? (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>{t('Stake-Done')}</Typography>
-                  </React.Fragment>
-                ) : null}
-                {steps.items[steps.currentStep].step === 'unstake' ? (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>{t('Unstake-Done')}</Typography>
-                  </React.Fragment>
-                ) : null}
-                {steps.items[steps.currentStep].step === 'claim' ? (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>{t('Claim-Done')}</Typography>
-                  </React.Fragment>
-                ) : null}
+                    <Button
+                      className={classes.redirectBtnSuccess}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
+                      target="_blank"
+                    >
+                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+                    </Button>
+                  </Box>
+                </>
+              )}
+              {/* Boost Success */}
+              {steps.items[steps.currentStep].step === 'stake' && (
+                <>
+                  <Box className={classes.successContent}>
+                    <Typography variant="body1" className={classes.message}>
+                      {t('Transactn-Success-Bst', {
+                        amount: byDecimals(steps.items[steps.currentStep].amount).toFixed(2),
+                        token: item.token,
+                      })}
+                    </Typography>
 
-                {/* Old stuff */}
-                {/* {steps.items[steps.currentStep].step === 'deposit' ? (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>
-                      {byDecimals(
-                        new BigNumber(wallet.action.data.amount),
-                        steps.items[steps.currentStep].token.decimals
-                      ).toFixed(8)}{' '}
-                      {steps.items[steps.currentStep].token.symbol}
+                    <Button
+                      className={classes.redirectBtnSuccess}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
+                      target="_blank"
+                    >
+                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+                    </Button>
+                  </Box>
+                  <Box pt={2}>
+                    <Typography variant="body1" className={classes.message}>
+                      <span>{t('Remember')}</span> {t('Remember-Msg-Bst')}
                     </Typography>
-                    <Typography variant={'h2'}>{t('Deposit-Done')}</Typography>
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <Typography variant={'h2'}>
-                      {steps.items[steps.currentStep].step === 'withdraw' ? (
-                        <React.Fragment>
-                          {item.isGovVault
-                            ? byDecimals(
-                                new BigNumber(wallet.action.data.amount),
-                                steps.items[steps.currentStep].token.decimals
-                              ).toFixed(8)
-                            : null}
-                          {!item.isGovVault
-                            ? byDecimals(
-                                new BigNumber(wallet.action.data.amount).multipliedBy(
-                                  byDecimals(item.pricePerFullShare)
-                                ),
-                                item.tokenDecimals
-                              ).toFixed(8)
-                            : null}{' '}
-                          {item.token}
-                        </React.Fragment>
-                      ) : (
-                        <React.Fragment>
-                          {byDecimals(
-                            new BigNumber(wallet.action.data.amount),
-                            item.earnedTokenDecimals
-                          ).toFixed(8)}{' '}
-                          {item.earnedToken}
-                        </React.Fragment>
-                      )}
+                  </Box>
+                </>
+              )}
+              {(steps.items[steps.currentStep].step === 'unstake' ||
+                steps.items[steps.currentStep].step === 'claim-unstake') && (
+                <>
+                  <Box className={classes.successContent}>
+                    <Typography variant="body1" className={classes.message}>
+                      {t('Transactn-Withdrawal-Boost', {
+                        amount: byDecimals(steps.items[steps.currentStep].amount).toFixed(2),
+                        token: item.token,
+                      })}
                     </Typography>
-                    <Typography variant={'h2'}>{t('Withdraw-Done')}</Typography>
-                  </React.Fragment>
-                )} */}
-                <Typography>{t('Transactn-EnRoute')}</Typography>
-                <Box mt={1} textAlign={'center'}>
-                  <Button
-                    className={classes.finishedBtn}
-                    href={
-                      wallet.explorer[item.network] +
-                      '/tx/' +
-                      wallet.action.data.receipt.transactionHash
-                    }
-                    target="_blank"
-                  >
-                    {t('Transactn-View')}
-                  </Button>{' '}
-                  <Button className={classes.finishedBtn} onClick={handleClose}>
-                    {t('Transactn-CloseDialog')}
-                  </Button>
-                </Box>
-              </Box>
-              <Box mt={2} textAlign={'center'}>
-                <Button
-                  onClick={() => {
-                    history.push({
-                      pathname: '/',
-                      portfolioOpen: true,
-                    } as any);
-                  }}
-                  className={classes.finishedBtn}
-                >
-                  {t('Transactn-GoPortfolio')} <ArrowRight />
-                </Button>
-              </Box>
-            </Box>
-          </React.Fragment>
-        ) : (
-          <Box className={classes.paper}>
-            <Typography id="transition-modal-title" variant={'h2'}>
-              {steps.currentStep} / {steps.items.length}
-              <br />
-              {t('Transactn-Confirmed')}
-            </Typography>
-            <Typography id="transition-modal-description" variant={'body2'}>
-              {!isEmpty(steps.items[steps.currentStep])
-                ? steps.items[steps.currentStep].message
-                : ''}
-            </Typography>
-            {wallet.action && wallet.action.result === 'error' ? (
-              <Alert severity={'error'}>
-                <AlertTitle>{t('Transactn-Error')}</AlertTitle>
-                <Typography>{wallet.action.data.error}</Typography>
-                <Box textAlign={'center'} mt={2}>
-                  <Button variant={'outlined'} onClick={handleClose}>
-                    {t('Transactn-Close')}
-                  </Button>
-                </Box>
-              </Alert>
-            ) : (
-              ''
-            )}
-            {wallet.action && wallet.action.result === 'success_pending' ? (
-              <Alert severity={'info'}>
-                <AlertTitle>{t('Transactn-ConfirmPending')}</AlertTitle>
-                <Typography>{t('Transactn-Wait')}</Typography>
-                <Box textAlign={'center'}>
-                  <Loader message={''} line={false} />
-                </Box>
-                <Box textAlign={'center'} mt={2}>
-                  <Button
-                    variant={'outlined'}
-                    href={wallet.explorer[item.network] + '/tx/' + wallet.action.data.hash}
-                    target="_blank"
-                  >
-                    {t('Transactn-View')}
-                  </Button>
-                </Box>
-              </Alert>
-            ) : (
-              ''
-            )}
-          </Box>
-        )}
-      </Fade>
-    </Modal>
+                    <Button
+                      className={classes.redirectBtnSuccess}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
+                      target="_blank"
+                    >
+                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+                    </Button>
+                  </Box>
+                </>
+              )}
+              <Button className={classes.closeBtn} onClick={handleClose}>
+                {t('Transactn-Close')}
+              </Button>
+            </>
+          )}
+        </Box>
+      </Box>
+    </Snackbar>
   ); //return
 }; //const Steps
+
+/* */
