@@ -120,43 +120,46 @@ export class BalanceAPI implements IBalanceApi {
 
     for (const result of results) {
       if (result.type === 'boost') {
-        if (result.balance !== '0' && result.rewards !== '0') {
-          const balanceToken = selectBoostBalanceTokenEntity(state, result.boostId);
-          const rewardsToken = selectBoostRewardsTokenEntity(state, result.boostId);
-          const rawRewards = new BigNumber(result.rewards);
-          const rawBalance = new BigNumber(result.balance);
-          const balance = {
-            boostId: result.boostId,
-            balance: rawBalance.shiftedBy(-balanceToken.decimals),
-            rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
-          };
-          res.boosts.push(balance);
+        if (result.balance === '0' && result.rewards === '0') {
+          continue;
         }
+        const balanceToken = selectBoostBalanceTokenEntity(state, result.boostId);
+        const rewardsToken = selectBoostRewardsTokenEntity(state, result.boostId);
+        const rawRewards = new BigNumber(result.rewards);
+        const rawBalance = new BigNumber(result.balance);
+        const balance = {
+          boostId: result.boostId,
+          balance: rawBalance.shiftedBy(-balanceToken.decimals),
+          rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+        };
+        res.boosts.push(balance);
       } else if (result.type === 'vault-gov') {
-        if (result.balance !== '0' && result.rewards !== '0') {
-          // apply token decimals to balance and rewards
-          const balanceToken = selectGovVaultBalanceTokenEntity(state, result.vaultId);
-          const rewardsToken = selectGovVaultRewardsTokenEntity(state, result.vaultId);
-          const rawBalance = new BigNumber(result.balance);
-          const rawRewards = new BigNumber(result.rewards);
-          const balance = {
-            vaultId: result.vaultId,
-            balance: rawBalance.shiftedBy(-balanceToken.decimals),
-            rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
-          };
-          res.govVaults.push(balance);
+        if (result.balance === '0' && result.rewards === '0') {
+          continue;
         }
+        // apply token decimals to balance and rewards
+        const balanceToken = selectGovVaultBalanceTokenEntity(state, result.vaultId);
+        const rewardsToken = selectGovVaultRewardsTokenEntity(state, result.vaultId);
+        const rawBalance = new BigNumber(result.balance);
+        const rawRewards = new BigNumber(result.rewards);
+        const balance = {
+          vaultId: result.vaultId,
+          balance: rawBalance.shiftedBy(-balanceToken.decimals),
+          rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+        };
+        res.govVaults.push(balance);
       } else if (result.type === 'token') {
-        if (result.amount !== '0') {
-          // apply token decimals to amount
-          const token = selectTokenById(state, this.chain.id, result.tokenId);
-          const rawAmount = new BigNumber(result.amount);
-          const balance = {
-            tokenId: result.tokenId,
-            amount: rawAmount.shiftedBy(-token.decimals),
-          };
-          res.tokens.push(balance);
+        if (result.amount === '0') {
+          continue;
         }
+        // apply token decimals to amount
+        const token = selectTokenById(state, this.chain.id, result.tokenId);
+        const rawAmount = new BigNumber(result.amount);
+        const balance = {
+          tokenId: result.tokenId,
+          amount: rawAmount.shiftedBy(-token.decimals),
+        };
+        res.tokens.push(balance);
       } else {
         console.error(result);
         throw new Error(`Could not identify type`);
