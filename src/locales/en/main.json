@@ -196,6 +196,7 @@
   "Transactn-Success": "You have successfully deposited {{amount}} {{token}} in the Vault.",
   "Transactn-Success-Bst": "You have successfully deposited {{amount}} {{token}} in the vault Boost",
   "Transactn-Withdrawal": "You have successfully withdrawn {{amount}} {{token}} from the Vault.",
+  "Transactn-Claimed": "You have successfully claimed {{amount}} {{token}} from boost vault",
   "Transactn-ViewTrnsactn": "View transaction",
   "Transactn-Withdrawal-Boost": "You have successfully withdrawn {{amount}} {{token}} in the vault Boost.",
   "Remember": "Remember: ",

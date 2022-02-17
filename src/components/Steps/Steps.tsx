@@ -16,6 +16,8 @@ export const Steps = ({ item, steps, handleClose }) => {
   const t = useTranslation().t;
   const wallet = useSelector((state: any) => state.walletReducer);
 
+  console.log(steps);
+
   return (
     <Snackbar
       key={steps.currentStep}
@@ -209,6 +211,29 @@ export const Steps = ({ item, steps, handleClose }) => {
                       {t('Transactn-Withdrawal-Boost', {
                         amount: byDecimals(steps.items[steps.currentStep].amount).toFixed(2),
                         token: item.token,
+                      })}
+                    </Typography>
+                    <Button
+                      className={classes.redirectBtnSuccess}
+                      href={
+                        wallet.explorer[item.network] +
+                        '/tx/' +
+                        wallet.action.data.receipt.transactionHash
+                      }
+                      target="_blank"
+                    >
+                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+                    </Button>
+                  </Box>
+                </>
+              )}
+              {steps.items[steps.currentStep].step === 'claim' && (
+                <>
+                  <Box className={classes.successContent}>
+                    <Typography variant="body1" className={classes.message}>
+                      {t('Transactn-Claimed', {
+                        amount:steps.items[steps.currentStep].amount,
+                        token: steps.items[steps.currentStep].token.symbol,
                       })}
                     </Typography>
                     <Button
