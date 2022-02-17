@@ -65,27 +65,9 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
   );
 
   for (const vault of userVaults) {
-    let vaultUsdBalance = BIG_ZERO;
     const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
-    const tokenBalance = selectUserVaultDepositInToken(state, vault.id);
-    const usdBalance = tokenBalance.times(oraclePrice);
-    vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
-
-    for (const boostId of selectAllVaultBoostIds(state, vault.id)) {
-      const boost = selectBoostById(state, boostId);
-      const mooTokenBalance = selectBoostUserBalanceInToken(state, boost.id);
-      const ppfs = selectVaultPricePerFullShare(state, vault.id);
-      const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-      const originalTokenBalance = mooAmountToOracleAmount(
-        mooToken,
-        oracleToken,
-        ppfs,
-        mooTokenBalance
-      );
-      const usdBalance = originalTokenBalance.times(oraclePrice);
-      vaultUsdBalance = vaultUsdBalance.plus(usdBalance);
-    }
+    const tokenBalance = selectUserVaultDepositInToken(state, vault.id); // accounts for boost
+    const vaultUsdBalance = tokenBalance.times(oraclePrice);
 
     // add vault balance to total
     newGlobalStats.deposited = newGlobalStats.deposited.plus(vaultUsdBalance);
