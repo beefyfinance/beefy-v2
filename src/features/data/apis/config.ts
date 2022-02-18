@@ -134,7 +134,20 @@ const vaultsByChainId: {
   [chainId: ChainEntity['id']]: VaultConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  vaultsByChainId[chainId] = require(`../../../config/vault/${chainId}`).pools;
+  let pools = require(`../../../config/vault/${chainId}`).pools;
+  /**
+   * venus-bnb and venus-wbnb are in fact the same vault
+   * this is legacy config and we fix it here
+   */
+  if (chainId === 'bsc') {
+    pools = pools.map(vault => {
+      if (vault.id === 'venus-bnb') {
+        vault.oracleId = 'BNB';
+      }
+      return vault;
+    });
+  }
+  vaultsByChainId[chainId] = pools;
 }
 
 const boostsByChainId: {

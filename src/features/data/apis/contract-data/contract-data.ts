@@ -1,8 +1,7 @@
 import { MultiCall, ShapeWithLabel } from 'eth-multicall';
-import { isTokenErc20 } from '../../entities/token';
 import Web3 from 'web3';
 import { VaultGov, VaultStandard } from '../../entities/vault';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectErc20TokenById, selectTokenById } from '../../selectors/tokens';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
@@ -44,14 +43,7 @@ export class ContractDataAPI implements IContractDataApi {
 
     const standardVaultCalls: ShapeWithLabel[] = [];
     for (const vault of standardVaults) {
-      const earnedToken = selectTokenById(state, this.chain.id, vault.earnedTokenId);
-      // do this check to please the TypeScript gods
-      if (!isTokenErc20(earnedToken)) {
-        console.info(
-          `VaultContractAPI.fetchStandardVaultsContractData: skipping non erc20 token ${earnedToken.id}`
-        );
-        continue;
-      }
+      const earnedToken = selectErc20TokenById(state, this.chain.id, vault.earnedTokenId);
       const vaultContract = getVaultContractInstance(earnedToken.contractAddress);
       standardVaultCalls.push({
         type: 'vault-standard',

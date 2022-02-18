@@ -2,7 +2,7 @@
 
 import { memoize } from 'lodash';
 import { ChainEntity } from '../entities/chain';
-import { TokenEntity, TokenErc20 } from '../entities/token';
+import { TokenEntity } from '../entities/token';
 
 interface AddressBookTokenConfig {
   name: string;
@@ -15,17 +15,15 @@ interface AddressBookTokenConfig {
   description?: string;
 }
 
-// we want to be as close as possible from TokenErc20 for futur refactors
-export type AddressBookToken = TokenErc20 & { isWrapped: boolean; isNative: boolean };
-
 export interface ChainAddressBook {
-  [tokenId: TokenEntity['id']]: AddressBookToken;
+  [tokenId: TokenEntity['id']]: TokenEntity;
 }
 
 export const getChainAddressBook = memoize(
   async (chain: ChainEntity): Promise<ChainAddressBook> => {
+    const addressbookChain = chain.id === 'harmony' ? 'one' : chain.id;
     const addressBook = (await import(
-      `blockchain-addressbook/build/address-book/${chain.id}/tokens/tokens`
+      `blockchain-addressbook/build/address-book/${addressbookChain}/tokens/tokens`
     )) as { tokens: { [tokenId: TokenEntity['id']]: AddressBookTokenConfig } };
 
     const wnative = addressBook.tokens['WNATIVE'];
@@ -33,17 +31,15 @@ export const getChainAddressBook = memoize(
     // map to our own token entity
     return Object.entries(addressBook.tokens).reduce((agg, [tokenId, bookToken]) => {
       agg[tokenId] = {
-        id: tokenId,
+        id: tokenId === 'WNATIVE' ? wnative.symbol : tokenId,
         chainId: chain.id,
         contractAddress: bookToken.address,
         decimals: bookToken.decimals,
-        symbol: bookToken.symbol,
+        symbol: tokenId === nativeSymbol ? nativeSymbol : bookToken.symbol,
         buyUrl: null,
         website: bookToken.website || null,
         description: bookToken.description || null,
-        type: 'erc20',
-        isWrapped: wnative.address === bookToken.address,
-        isNative: bookToken.symbol === nativeSymbol,
+        type: tokenId === nativeSymbol ? 'native' : 'erc20',
       };
 
       return agg;

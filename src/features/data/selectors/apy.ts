@@ -1,27 +1,13 @@
-import { memoize } from 'lodash';
 import { BIG_ZERO } from '../../../helpers/format';
-import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
-import { BoostEntity } from '../entities/boost';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
-import {
-  selectBoostUserBalanceInToken,
-  selectUserDepositedVaults,
-  selectUserVaultDepositInToken,
-} from './balance';
-import { selectAllVaultBoostIds, selectBoostById } from './boosts';
+import { selectUserDepositedVaults, selectUserVaultDepositInToken } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
-import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { selectTokenPriceByTokenId } from './tokens';
+import { selectVaultById } from './vaults';
 
-export const selectBoostRawAprInfos = (state: BeefyState, boostId: BoostEntity['id']) =>
-  state.biz.apy.rawApy.byBoostId[boostId] || { apr: 0 };
-
-export const selectVaultRawApyInfos = (state: BeefyState, vaultId: VaultEntity['id']) =>
-  state.biz.apy.rawApy.byVaultId[vaultId] || { totalApy: 0 };
-
-export const selectGovVaultRawApr = (state: BeefyState, vaultId: VaultGov['id']) => {
+const selectGovVaultRawApr = (state: BeefyState, vaultId: VaultGov['id']) => {
   const vaultApy = state.biz.apy.rawApy.byVaultId[vaultId];
   if (vaultApy === undefined) {
     return 0;
@@ -32,7 +18,7 @@ export const selectGovVaultRawApr = (state: BeefyState, vaultId: VaultGov['id'])
   return vaultApy.vaultApr;
 };
 
-export const selectStandardVaultRawTotalApy = (state: BeefyState, vaultId: VaultStandard['id']) => {
+const selectStandardVaultRawTotalApy = (state: BeefyState, vaultId: VaultStandard['id']) => {
   const vaultApy = state.biz.apy.rawApy.byVaultId[vaultId];
   if (vaultApy === undefined) {
     return 0;
@@ -47,7 +33,7 @@ export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id'
   return state.biz.apy.totalApy.byVaultId[vaultId] || {};
 };
 
-export const selectUserGlobalStats = memoize((state: BeefyState) => {
+export const selectUserGlobalStats = (state: BeefyState) => {
   let newGlobalStats = {
     deposited: BIG_ZERO,
     totalYield: BIG_ZERO,
@@ -88,4 +74,4 @@ export const selectUserGlobalStats = memoize((state: BeefyState) => {
   }
   newGlobalStats.monthly = newGlobalStats.daily.times(30);
   return newGlobalStats;
-});
+};

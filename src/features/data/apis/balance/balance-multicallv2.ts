@@ -61,7 +61,7 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
       } else if (isTokenNative(token)) {
         nativeTokens.push(token);
       } else {
-        throw new Error(`Token type unsupported ${token.id}`);
+        throw new Error(`Token type unsupported`);
       }
     }
     const erc20TokensBatches = chunk(erc20Tokens, CHUNK_SIZE);
@@ -111,32 +111,30 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
 
     let resultsIdx = 0;
     for (const boostBatch of boostBatches) {
-      const batchRes = results[resultsIdx]
-        .map((boostRes, elemidx) => this.boostFormatter(state, boostRes, boostBatch[elemidx]))
-        .filter(item => item);
+      const batchRes = results[resultsIdx].map((boostRes, elemidx) =>
+        this.boostFormatter(state, boostRes, boostBatch[elemidx])
+      );
       res.boosts = res.boosts.concat(batchRes);
       resultsIdx++;
     }
     for (const govVaultBatch of govVaultBatches) {
-      const batchRes = results[resultsIdx]
-        .map((vaultRes, elemidx) => this.govVaultFormatter(state, vaultRes, govVaultBatch[elemidx]))
-        .filter(item => item);
+      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
+        this.govVaultFormatter(state, vaultRes, govVaultBatch[elemidx])
+      );
       res.govVaults = res.govVaults.concat(batchRes);
       resultsIdx++;
     }
     for (const erc20TokenBatch of erc20TokensBatches) {
-      const batchRes = results[resultsIdx]
-        .map((vaultRes, elemidx) => this.erc20TokenFormatter(vaultRes, erc20TokenBatch[elemidx]))
-        .filter(item => item);
+      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
+        this.erc20TokenFormatter(vaultRes, erc20TokenBatch[elemidx])
+      );
       res.tokens = res.tokens.concat(batchRes);
       resultsIdx++;
     }
 
     for (const nativeToken of nativeTokens) {
       const formatted = this.nativeTokenFormatter(results[resultsIdx], nativeToken);
-      if (formatted !== null) {
-        res.tokens.push(formatted);
-      }
+      res.tokens.push(formatted);
       resultsIdx++;
     }
 
@@ -144,9 +142,6 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
   }
 
   protected erc20TokenFormatter(result: string, token: TokenEntity): null | TokenBalance {
-    if (result === '0') {
-      return null;
-    }
     const rawAmount = new BigNumber(result);
     return {
       tokenId: token.id,
@@ -155,9 +150,6 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
   }
 
   protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance | null {
-    if (result === '0') {
-      return null;
-    }
     const rawAmount = new BigNumber(result);
     return {
       tokenId: token.id,
@@ -170,9 +162,6 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
     result: AllValuesAsString<GovVaultPoolBalance>,
     govVault: VaultGov
   ): GovVaultPoolBalance | null {
-    if (result.balance === '0' && result.rewards === '0') {
-      return null;
-    }
     const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
     const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
     const rawBalance = new BigNumber(result.balance);
@@ -189,9 +178,6 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
     result: AllValuesAsString<BoostBalance>,
     boost: BoostEntity
   ): BoostBalance | null {
-    if (result.balance === '0' && result.rewards === '0') {
-      return null;
-    }
     const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
     const rewardsToken = selectBoostRewardsTokenEntity(state, boost.id);
     const rawBalance = new BigNumber(result.balance);

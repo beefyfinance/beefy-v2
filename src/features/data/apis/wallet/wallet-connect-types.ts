@@ -1,3 +1,4 @@
+import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 
 export interface WalletConnectOptions {
@@ -19,4 +20,6 @@ export interface IWalletConnectApi {
   askUserToConnectIfNeeded();
   askUserForChainChangeIfNeeded(chainId: ChainEntity['id']);
   disconnect();
+  // to be used by wallet actions
+  getConnectedWeb3Instance(): Promise<Web3>;
 }

@@ -6,19 +6,31 @@ import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 
-export const selectVaultById = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.vaults.byId,
-  // get the user passed ID
-  (_: BeefyState, vaultId: VaultEntity['id']) => vaultId,
-  // last function receives previous function outputs as parameters
-  (vaultsByIds, vaultId) => {
-    if (vaultsByIds[vaultId] === undefined) {
-      throw new Error(`selectVaultById: Unknown vault id ${vaultId}`);
-    }
-    return vaultsByIds[vaultId];
+export const selectVaultById = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vaultsByIds = state.entities.vaults.byId;
+  if (vaultsByIds[vaultId] === undefined) {
+    throw new Error(`selectVaultById: Unknown vault id ${vaultId}`);
   }
-);
+  return vaultsByIds[vaultId];
+};
+
+export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']): VaultGov => {
+  const vault = selectVaultById(state, vaultId);
+  if (!isGovVault(vault)) {
+    throw new Error(`selectGovVaultById: Vault ${vaultId} is not a gov vault`);
+  }
+  return vault;
+};
+export const selectStandardVaultById = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): VaultStandard => {
+  const vault = selectVaultById(state, vaultId);
+  if (isGovVault(vault)) {
+    throw new Error(`selectStandardVaultById: Vault ${vaultId} is not a standard vault`);
+  }
+  return vault;
+};
 
 export const selectVaultByChainId = createSelector(
   // get a tiny bit of the data
@@ -43,15 +55,6 @@ export const selectAllGovVaultsByChainId = createSelector(
   }
 );
 
-export const selectAllStandardVaultsByChainId = createSelector(
-  (state: BeefyState) => state.entities.vaults.byId,
-  selectVaultByChainId,
-  (byIds, vaultIds): VaultStandard[] => {
-    const allVaults = vaultIds.map(id => byIds[id]);
-    return allVaults.filter(vault => !isGovVault(vault)) as VaultStandard[];
-  }
-);
-
 export const selectVaultIdsByOracleId = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -60,10 +63,6 @@ export const selectVaultIdsByOracleId = (
   const vaultIds = state.entities.vaults.byChainId[chainId]?.byOracleId[tokenId];
   return vaultIds || [];
 };
-export const selectIsStandardVaultOracleToken = createSelector(
-  [selectVaultIdsByOracleId],
-  vaultIds => vaultIds.length > 0
-);
 
 export const selectIsStandardVaultEarnTokenId = (
   state: BeefyState,

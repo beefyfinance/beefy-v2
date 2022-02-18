@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
-import { LanguageDropdown } from '../LanguageDropdown/LanguageDropdown';
+import { LanguageDropdown } from '../LanguageDropdown';
 import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
 import { Transak } from '../Transak';

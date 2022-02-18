@@ -10,110 +10,57 @@
 # TODO:
 
 [x] Define TS types Draft for business entities
-
-    [x] Basic types based on configuration files
-    [x] Analyse current redux state and complete types
-    [x] Re-read all chebiN detailed explaination to make sure nothing is missing
-
 [x] Compile a list of each type of vault/boost to create a regression testing book
-
 [x] Code review n°1 changes
-
-    [x] remove duplicate boost contractAddress and earnContractAddress
-    [x] Store ppfs in the vault reducer, this is a vault property
-    [x] remove comments "like maybe we want to re-render more often, we could make this a generator instead" or explain
-    [x] we can remove poolAddress from govVaults and use earnContractAddress instead it's the same in the end
-    [x] periodFinish could be parsed as an int, it's a timestamp. we use it to know if there's an active one, we know that if current timestamp is less than that
-    [x] merge token and token-price reducers
-    [x] have a list of deprecated tokens (tokens not listed in the api) for development so we can have a clear exception when requesting an unknown token id. In prod, just set price to 0 to avoid breaking the app
-    [x] double check that undefined isn't returned while fetching rewardRate and periodFinish
-    [x] fix the allowance api to add regular tokens (cf. answers section)
-    [x] break dependencies between actions to fetch everything asap.
-        For home we need TVL, APY, user deposited amount both in usd and token amount, for gov vaults => rewards
-
 [x] Extract API code
-
-    [x] Config (chains, vaults, boosts)
-    [x] Vault contract data
-    [x] Boost contract data
-    [x] Balances
-    [x] Allowances
-    [x] Wallet
-
 [x] Create new reducers using new TS types
-
-    [x] Config (chains, vaults, boosts)
-    [x] TVL? (need some unit tests to make sure I didn't fuck it up)
-    [x] APY
-    [x] Balances
-    [x] Allowances
-    [x] Wallet
-
 [x] Fetch scenario for the home page
+[x] Smarter data loading
+[x] Code cleanup & Testing
+[x] Rework components to use new reducers
+[x] Vault page display
 
-    [x] prices
-    [x] Config (chains, vaults, boosts)
-    [x] Chain data (vaults, boosts)
-    [x] Balances
-    [x] Allowances
-    [x] Wallet
+[ ] Vault actions
 
-[ ] Smarter data loading
+    [x] Standard vault deposit and withdraw
+    [x] Standard vault zap deposit
+    [x] Standard vault zap withdraw both assets
+    [x] Standard vault zap withdraw single asset
+    [x] Gov vault deposit
+    [x] Gov vault withdraw
+    [x] Gov vault claim
+    [x] Gov vault exit
+    [ ] Boost deposit
+    [ ] Boost withdraw
+    [ ] Spirit card
 
-    [x] handle errors
-    [x] handle loading
-    [~] handle canceling ongoing requests => not happening
-
-[ ] Code cleanup & Testing
-
-    [x] remove unused price mocks
-    [ ] reorganize files?
-    [x] remove unnecessary comments
-    [x] ensure TVL and APY is computed properly
-    [x] ensure user balance is computed properly
-    [ ] ensure user allowances are computed properly
-    [ ] make tests run in CI
-
-[ ] Rework components to use new reducers
-
-    [x] Filters: search box, vault category, user vault category
-    [x] Store last used filters
-    [x] Fix deposits metric
-    [x] Fix wallet metric
-    [x] Fix safety score metric
-    [x] Fix apy metric
-    [x] delay loading of web3modal
-    [~] Make sure we can still use the vault page => not happening
-    [x] Prevent wallet popin on startup
-    [x] Bifi price missing
-    [x] Remove unused old code
-    [ ] fix boost status
-    [ ] fix boost APY
-    [ ] fix vault TVL (maybe exclusions)
-    [ ] fix filters
-    [ ] Add moonpot support
-    [ ] Do some performance enhancement (scenario + filters)
-    [ ] too many selectors https://redux.js.org/usage/deriving-data-selectors#balance-selector-usage
-    [ ] Go over left todos
-
-[ ] Add `tokenAddress` to WFTM and WMATIC tokens
-[ ] Rework search to handle partially loaded data
-[ ] Create unit tests for critical business cases
-[ ] Rework error handling
-[ ] Ensure percieved performance is OK
-[ ] State persistence on reload
-[ ] Code reviews & fixes
-[ ] Regression Testing & fixes
-
-    [ ] Make sure TVL is properly computed (compare with current bêta)
-
-[ ] Use BigNumber.shiftedBy when relevant for perf improvements
+[ ] Don't display an ugly ass loader when showing the deposit/withdraw form
+[ ] Don't forget to remove withdraw estimated amounts
+[ ] remove the debug record middleware
+[ ] Have a scenario specific to the vault page on direct access
+[ ] Rename selectors like selectStandardVaultUserBalanceInTokenExcludingBoosts
+[ ] create quick access hooks to avoid useSelector hell
+[ ] create deposit & withdrawal specific selectors (spenderAddress)
+[ ] find out why some contract-data and balance contracts are not working on some chains
+[ ] have unit tests for deposit / withdraw stuff it's critical
 
 BONUS:
 
-[ ] Currently, when the wallet is connected, Memory usage goes steadily up, It’d be ideal if we could prevent memory leaks from existing once this is over
-[ ] Apply decimals as soon as possible (in the API classes). We won't loose precision as we return bignumbers only
+[x] Currently, when the wallet is connected, Memory usage goes steadily up, It’d be ideal if we could prevent memory leaks from existing once this is over
+[x] Apply decimals as soon as possible (in the API classes). We won't loose precision as we return bignumbers only
 [ ] Optimize images (large svgs and pngs should be webp or jpg)
+[ ] Error state when api or RPC fails
+[ ] reorganize files? a lot of files have the same name, that's annoying
+[ ] make tests run in CI
+[ ] Add `tokenAddress` to WFTM and WMATIC tokens and remove associated hack
+[ ] Remove hack for venus-wbnb/venus-bnb
+[ ] Create unit tests for critical business cases
+[ ] Rework error handling
+[ ] Ensure percieved performance is OK
+[ ] Go over left todos
+[~] handle canceling ongoing requests => not happening
+[ ] remove unused material ui classes
+[ ] enable typescript null checks
 
 # REGRESSION TESTING BOOK
 
@@ -159,12 +106,7 @@ BONUS:
 
 # WEIRD STUFF / QUESTIONS
 
-- What is `launchpoolApr.apr;`
-  launchpoolApr === boost.apr
-- On the current beta, I don't see the boost border around the "fantom-bifi-maxi", but we have an active "moo_bifi-scream" boost. Isn't this a boosted vault?
-  We don't use "status": "active" to know if a boost is active, we use the periodFinish data fetched from the contract
 - `excluded: "aurora-bifi-maxi",` but vault does not seem to exists
-- how do you know if it's a moonpot vault?
 
 # ANSWERED
 
@@ -235,3 +177,9 @@ BONUS:
   It is not.
 - What is "zero" in "sortConfig" => sortConfig.deposited === false && sortConfig.zero === false
   Zero mean "hide zero balance"
+- how do you know if it's a moonpot vault?
+  It's in the partner config file
+- What is `launchpoolApr.apr;`
+  launchpoolApr === boost.apr
+- On the current beta, I don't see the boost border around the "fantom-bifi-maxi", but we have an active "moo_bifi-scream" boost. Isn't this a boosted vault?
+  We don't use "status": "active" to know if a boost is active, we use the periodFinish data fetched from the contract

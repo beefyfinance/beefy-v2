@@ -4,7 +4,7 @@ import { VaultEntity } from '../entities/vault';
 import { isPending } from '../reducers/data-loader';
 import { selectVaultById } from './vaults';
 
-export const selectIsPriceAvailable = (state: BeefyState) =>
+const selectIsPriceAvailable = (state: BeefyState) =>
   state.ui.dataLoader.global.prices.alreadyLoadedOnce;
 
 export const selectIsConfigAvailable = (state: BeefyState) =>

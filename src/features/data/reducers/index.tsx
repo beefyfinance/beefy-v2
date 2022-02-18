@@ -1,25 +1,26 @@
-import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
 import { combineReducers } from 'redux';
-import { chainsSlice } from '../../data/reducers/chains';
-import { vaultsSlice } from '../../data/reducers/vaults';
-import { tokensSlice } from '../../data/reducers/tokens';
-import { tvlSlice } from '../../data/reducers/tvl';
-import { apySlice } from '../../data/reducers/apy';
-import { historicalApySlice } from '../../data/reducers/historical-apy';
-import { balanceSlice } from '../../data/reducers/balance';
-import { allowanceSlice } from '../../data/reducers/allowance';
-import { boostsSlice } from '../../data/reducers/boosts';
-import { dataLoaderSlice } from '../../data/reducers/data-loader';
-import { walletSlice } from '../../data/reducers/wallet';
+import { chainsSlice } from './chains';
+import { vaultsSlice } from './vaults';
+import { tokensSlice } from './tokens';
+import { tvlSlice } from './tvl';
+import { apySlice } from './apy';
+import { balanceSlice } from './wallet/balance';
+import { allowanceSlice } from './wallet/allowance';
+import { boostsSlice } from './boosts';
+import { dataLoaderSlice } from './data-loader';
+import { walletSlice } from './wallet/wallet';
 import { BeefyState } from '../../../redux-types';
-import { buybackSlice } from '../../data/reducers/buyback';
-import { filteredVaultsSlice } from '../../data/reducers/filtered-vaults';
-import { platformsSlice } from '../../data/reducers/platforms';
-import { uiThemeSlice } from '../../data/reducers/ui-theme';
-import { partnersSlice } from '../../data/reducers/partners';
-import { zapsSlice } from '../../data/reducers/zaps';
-import { depositSlice } from '../../data/reducers/deposit';
+import { buybackSlice } from './buyback';
+import { filteredVaultsSlice } from './filtered-vaults';
+import { platformsSlice } from './platforms';
+import { uiThemeSlice } from './ui-theme';
+import { partnersSlice } from './partners';
+import { zapsSlice } from './zaps';
+import { depositSlice } from './wallet/deposit';
+import { walletActionsReducer } from './wallet/wallet-action';
+import { withdrawSlice } from './wallet/withdraw';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -32,7 +33,6 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,
   apy: apySlice.reducer,
-  historicalApy: historicalApySlice.reducer,
   buyback: buybackSlice.reducer,
   partners: partnersSlice.reducer,
 });
@@ -40,12 +40,14 @@ const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,
   allowance: allowanceSlice.reducer,
   wallet: persistReducer({ key: 'wallet', storage }, walletSlice.reducer),
+  walletActions: walletActionsReducer,
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
   dataLoader: dataLoaderSlice.reducer,
   filteredVaults: persistReducer({ key: 'filters', storage }, filteredVaultsSlice.reducer),
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
   deposit: depositSlice.reducer,
+  withdraw: withdrawSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

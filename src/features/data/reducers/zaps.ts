@@ -11,7 +11,7 @@ export type ZapsState = {
     [chainId: ChainEntity['id']]: ZapEntity[];
   };
 };
-export const initialZapsState: ZapsState = {
+const initialZapsState: ZapsState = {
   byChainId: {},
 };
 

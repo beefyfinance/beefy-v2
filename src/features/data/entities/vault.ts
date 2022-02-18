@@ -74,6 +74,12 @@ export interface VaultStandard {
   safetyScore: number;
 
   risks: string[];
+
+  buyTokenUrl: string | null;
+  addLiquidityUrl: string | null;
+
+  withdrawalFee: string | null;
+  depositFee: string | null;
 }
 
 export interface VaultGov {
@@ -135,19 +141,30 @@ export interface VaultGov {
   safetyScore: number;
 
   risks: string[];
+
+  buyTokenUrl: string | null;
+  addLiquidityUrl: null;
+
+  withdrawalFee: string;
+  depositFee: string;
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {
   return vault.isGovVault === true;
 }
 
-// Todo: make this the right way
-export function isMaxiVault(vault: VaultEntity): vault is VaultStandard {
-  return vault.id.endsWith('-maxi');
+export function isStandardVault(vault: VaultEntity): vault is VaultStandard {
+  return vault.isGovVault === false;
 }
 
+export function isVaultRetired(vault: VaultEntity) {
+  return vault.status === 'eol';
+}
 export function isVaultActive(vault: VaultEntity) {
   return vault.status === 'active';
+}
+export function isVaultPaused(vault: VaultEntity) {
+  return vault.status === 'paused';
 }
 
 export type VaultEntity = VaultStandard | VaultGov;

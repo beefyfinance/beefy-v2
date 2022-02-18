@@ -1,11 +1,11 @@
 import BigNumber from 'bignumber.js';
-import { fetchAllBalanceAction, FetchAllBalanceFulfilledPayload } from '../actions/balance';
+import { fetchAllBalanceAction, FetchAllBalanceFulfilledPayload } from '../../actions/balance';
 import { balanceSlice, initialBalanceState } from './balance';
-import { getBeefyTestingStore } from '../utils/test-utils';
+import { getBeefyTestingStore } from '../../utils/test-utils';
 import {
   fetchAllContractDataByChainAction,
   FetchAllContractDataFulfilledPayload,
-} from '../actions/contract-data';
+} from '../../actions/contract-data';
 
 describe('Balance slice tests', () => {
   it('should update state on fulfilled token balance', async () => {

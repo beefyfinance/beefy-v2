@@ -23,7 +23,6 @@ import { isEmpty } from '../../../../helpers/utils';
 import { Steps } from '../../../../components/Steps';
 import { StakeProps } from './StakeProps';
 import { askForNetworkChange } from '../../../data/actions/wallet';
-import { reduxActions } from '../../../redux/actions';
 
 (BigNumber.prototype as any).significant = function (digits) {
   const number = this.toFormat({
@@ -155,11 +154,11 @@ export const Stake: React.FC<StakeProps> = ({
           message: t('Vault-ApproveMsg'),
           action: () =>
             dispatch(
-              reduxActions.wallet.approval(
+              /*walletActions.approval(
                 item.network,
                 tokens[formData.deposit.token].address,
                 item.earnContractAddress
-              )
+              )*/ null
             ),
           pending: false,
         });
@@ -171,11 +170,11 @@ export const Stake: React.FC<StakeProps> = ({
           message: t('Vault-ApproveMsg'),
           action: () =>
             dispatch(
-              reduxActions.wallet.approval(
+              /*walletActions.approval(
                 item.network,
                 item.tokenAddress,
                 item.earnContractAddress
-              )
+              )*/ null
             ),
           pending: false,
         });
@@ -185,7 +184,7 @@ export const Stake: React.FC<StakeProps> = ({
         step: 'stake',
         message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
         action: () =>
-          dispatch(reduxActions.wallet.stake(item.network, item.earnContractAddress, amount)),
+          /*dispatch(walletActions.stake(item.network, item.earnContractAddress, amount))*/ null,
         pending: false,
         token: tokens[formData.deposit.token],
         amount,
@@ -319,7 +318,7 @@ export const Stake: React.FC<StakeProps> = ({
           </CardContent>
         </Card>
       </Box>
-      <Steps item={item} steps={steps} handleClose={handleClose} />
+      <Steps vaultId={item.id} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   );
 };

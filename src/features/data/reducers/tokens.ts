@@ -5,10 +5,15 @@ import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
-import { AddressBookToken } from '../apis/addressbook';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
-import { isTokenErc20, TokenEntity, TokenErc20 } from '../entities/token';
+import {
+  isTokenErc20,
+  isTokenNative,
+  TokenEntity,
+  TokenErc20,
+  TokenNative,
+} from '../entities/token';
 
 /**
  * State containing Vault infos
@@ -20,7 +25,16 @@ export type TokensState = {
       byId: {
         [id: string]: TokenEntity;
       };
-      allIds: string[];
+      native: TokenNative['id'];
+      wnative: TokenErc20['id'];
+      /**
+       * we keep the list of tokens where we could be interested in fetching the balance of
+       * it would be more correct to put those inside the balance reducer but this token
+       * reducer has a number of config fixes that I find would make for a more complex code
+       * if refactored. And we have to update the config anyway to make it smaller, so move this
+       * inside the balance reducer once the config is reworked
+       */
+      interestingBalanceTokenIds: TokenEntity['id'][];
     };
   };
   prices: {
@@ -28,22 +42,10 @@ export type TokensState = {
       [tokenId: TokenEntity['id']]: BigNumber;
     };
   };
-
-  // addressbook is kept separated because it handles native tokens very differently
-  addressBook: {
-    [chainId: ChainEntity['id']]: {
-      byId: {
-        [id: string]: AddressBookToken;
-      };
-      native: AddressBookToken['id'];
-      wnative: AddressBookToken['id'];
-    };
-  };
 };
 export const initialTokensState: TokensState = {
   byChainId: {},
   prices: { byTokenId: {} },
-  addressBook: {},
 };
 
 export const tokensSlice = createSlice({
@@ -91,19 +93,25 @@ export const tokensSlice = createSlice({
     // we have another way of finding token info
     builder.addCase(fetchAddressBookAction.fulfilled, (sliceState, action) => {
       const chainId = action.payload.chainId;
-      for (const token of Object.values(action.payload.addressBook)) {
-        if (sliceState.addressBook[chainId] === undefined) {
-          sliceState.addressBook[chainId] = { byId: {}, native: null, wnative: null };
-        }
 
-        if (sliceState.addressBook[chainId].byId[token.id] === undefined) {
-          sliceState.addressBook[chainId].byId[token.id] = token;
+      if (sliceState.byChainId[chainId] === undefined) {
+        sliceState.byChainId[chainId] = {
+          byId: {},
+          interestingBalanceTokenIds: [],
+          native: null,
+          wnative: null,
+        };
+      }
+
+      for (const [addressBookId, token] of Object.entries(action.payload.addressBook)) {
+        if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
+          sliceState.byChainId[chainId].byId[token.id] = token;
         }
-        if (token.isNative) {
-          sliceState.addressBook[chainId].native = token.id;
+        if (isTokenNative(token) && !sliceState.byChainId[chainId].native) {
+          sliceState.byChainId[chainId].native = token.id;
         }
-        if (token.isWrapped) {
-          sliceState.addressBook[chainId].wnative = token.id;
+        if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
+          sliceState.byChainId[chainId].wnative = token.id;
         }
       }
     });
@@ -116,7 +124,12 @@ function addBoostToState(
   apiBoost: BoostConfig
 ) {
   if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      interestingBalanceTokenIds: [],
+      native: null,
+      wnative: null,
+    };
   }
 
   let tokenId = apiBoost.earnedToken;
@@ -151,7 +164,7 @@ function addBoostToState(
     };
     temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
-    sliceState.byChainId[chainId].allIds.push(token.id);
+    sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
   }
 }
 
@@ -161,7 +174,12 @@ function addVaultToState(
   vault: VaultConfig
 ) {
   if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      interestingBalanceTokenIds: [],
+      native: null,
+      wnative: null,
+    };
   }
 
   if (sliceState.byChainId[chainId].byId[vault.oracleId] === undefined) {
@@ -178,7 +196,7 @@ function addVaultToState(
     };
     temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
-    sliceState.byChainId[chainId].allIds.push(token.id);
+    sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
   }
 
   // add earned token data
@@ -193,10 +211,12 @@ function addVaultToState(
         symbol: vault.earnedToken,
         buyUrl: null,
         type: 'native',
+        website: null,
+        description: null,
       };
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
-      sliceState.byChainId[chainId].allIds.push(token.id);
+      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
     } else {
       const token: TokenEntity = {
         id: earnedTokenId,
@@ -211,7 +231,7 @@ function addVaultToState(
       };
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
-      sliceState.byChainId[chainId].allIds.push(token.id);
+      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
     }
   }
 }

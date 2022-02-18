@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { memoize, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
-import { isVaultActive } from '../entities/vault';
+import { isGovVault, isVaultRetired } from '../entities/vault';
 import { selectHasUserDepositInVault, selectIsUserEligibleForVault } from './balance';
 import { selectActiveVaultBoostIds, selectBoostById, selectIsVaultBoosted } from './boosts';
 import { selectIsVaultMoonpot } from './partners';
@@ -47,7 +47,9 @@ export const selectVaultCategory = createSelector(
   filterOptions => filterOptions.vaultCategory
 );
 
-export const selectFilteredVaults = memoize((state: BeefyState) => {
+// todo: use createSelector or put the result in the state to avoid re-computing these on every render
+// https://dev.to/nioufe/you-should-not-use-lodash-for-memoization-3441
+export const selectFilteredVaults = (state: BeefyState) => {
   const filterOptions = selectFilterOptions(state);
   const vaults = state.entities.vaults.allIds.map(id => selectVaultById(state, id));
   const tvlByVaultId = state.biz.tvl.byVaultId;
@@ -75,10 +77,11 @@ export const selectFilteredVaults = memoize((state: BeefyState) => {
     if (filterOptions.platformId !== null && vault.platformId !== filterOptions.platformId) {
       return false;
     }
-    if (filterOptions.onlyRetired && isVaultActive(vault)) {
+    // paused vaults are not considered retired
+    if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
       return false;
     }
-    if (!filterOptions.onlyRetired && !isVaultActive(vault)) {
+    if (!filterOptions.onlyRetired && isVaultRetired(vault)) {
       return false;
     }
     if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
@@ -120,7 +123,7 @@ export const selectFilteredVaults = memoize((state: BeefyState) => {
       if (
         !(
           vault.assetIds.find(S_TKN => S_TKN.toLowerCase().match(O_TST)) ||
-          (vault.isGovVault && vault.earnedTokenId.toLowerCase().match(O_TST)) ||
+          (isGovVault(vault) && vault.earnedTokenId.toLowerCase().match(O_TST)) ||
           (selectIsVaultBoosted(state, vault.id) &&
             selectActiveVaultBoostIds(state, vault.id)
               .map(boostId => selectBoostById(state, boostId))
@@ -164,7 +167,7 @@ export const selectFilteredVaults = memoize((state: BeefyState) => {
   }
 
   return sortedVaults;
-});
+};
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);
 
