@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import BigNumber from 'bignumber.js';
 import AnimateHeight from 'react-animate-height';
-import { reduxActions } from '../../../redux/actions';
 import { styles } from './styles';
 import { Stake } from '../Stake';
 import { Unstake } from '../Unstake';
@@ -14,6 +13,8 @@ import { Steps } from '../../../../components/Steps';
 import { StakeCountdown } from '../StakeCountdown';
 import { isEmpty } from '../../../../helpers/utils';
 import { BIG_ZERO, byDecimals } from '../../../../helpers/format';
+import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
+import { reduxActions } from '../../../redux/actions';
 
 const useStyles = makeStyles(styles as any);
 
@@ -63,7 +64,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
 
   const handleWalletConnect = () => {
     if (!wallet.address) {
-      dispatch(reduxActions.wallet.connect());
+      dispatch(askForWalletConnection());
     }
   };
 
@@ -180,7 +181,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     const steps = [];
     if (wallet.address) {
       if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
+        dispatch(askForNetworkChange(item.network));
         return false;
       }
 
@@ -274,7 +275,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
     const steps = [];
     if (wallet.address) {
       if (boost.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(boost.network));
+        dispatch(askForNetworkChange({ chainId: item.chainId }));
         return false;
       }
 

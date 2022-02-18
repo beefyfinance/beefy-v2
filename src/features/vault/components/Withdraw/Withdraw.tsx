@@ -17,14 +17,15 @@ import { Loader } from '../../../../components/loader';
 import { BIG_ZERO, byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { AssetsImage } from '../../../../components/AssetsImage';
-import { reduxActions } from '../../../redux/actions';
 import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
 import { Steps } from '../../../../components/Steps';
 import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
-import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { config } from '../../../../config/config';
+import { reduxActions } from '../../../redux/actions';
+import { askForNetworkChange } from '../../../data/actions/wallet';
+import { estimateZapWithdraw } from '../../../redux/actions/vault';
 
 const useStyles = makeStyles(styles as any);
 export const Withdraw = ({
@@ -127,8 +128,7 @@ export const Withdraw = ({
 
   React.useEffect(() => {
     if (formData.withdraw.isZapSwap) {
-      reduxActions.vault.estimateZapWithdraw({
-        web3: wallet.rpc,
+      estimateZapWithdraw({
         vault: item,
         formData,
         setFormData,
@@ -147,7 +147,7 @@ export const Withdraw = ({
     const steps = [];
     if (wallet.address) {
       if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
+        dispatch(askForNetworkChange({ chainId: item.chainId }));
         return false;
       }
 
@@ -278,7 +278,7 @@ export const Withdraw = ({
     const steps = [];
     if (wallet.address) {
       if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
+        dispatch(askForNetworkChange({ chainId: item.chainId }));
         return false;
       }
 
@@ -305,7 +305,7 @@ export const Withdraw = ({
     const steps = [];
     if (wallet.address) {
       if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
+        dispatch(askForNetworkChange({ chainId: item.chainId }));
         return false;
       }
 
@@ -562,7 +562,7 @@ export const Withdraw = ({
             item.network !== wallet.network ? (
               <>
                 <Button
-                  onClick={() => switchNetwork(item.network, dispatch)}
+                  onClick={() => dispatch(askForNetworkChange({ chainId: item.chainId }))}
                   className={classes.btnSubmit}
                   fullWidth={true}
                 >

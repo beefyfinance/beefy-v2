@@ -69,4 +69,4 @@ export const filteredVaultsSlice = createSlice({
   },
 });
 
-export const actions = filteredVaultsSlice.actions;
+export const filteredVaultsActions = filteredVaultsSlice.actions;

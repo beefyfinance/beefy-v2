@@ -19,10 +19,7 @@ import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';
 import { Search, CloseRounded } from '@material-ui/icons';
 import { FilterCategories } from './FilterCategories';
-import {
-  actions as filteredVaultActions,
-  FilteredVaultsState,
-} from '../../../data/reducers/filtered-vaults';
+import { filteredVaultsActions, FilteredVaultsState } from '../../../data/reducers/filtered-vaults';
 import { selectAllPlatform } from '../../../data/selectors/platforms';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';

@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { BIG_ZERO, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
-import { reduxActions } from '../../../redux/actions';
 import { Steps } from '../../../../components/Steps';
 import CloseIcon from '@material-ui/icons/Close';
 import { Card } from '../Card/Card';
@@ -22,8 +21,9 @@ import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import BigNumber from 'bignumber.js';
-import { switchNetwork } from '../../../../helpers/switchNetwork';
 import { UnstakeProps } from './UnstakeProps';
+import { askForNetworkChange } from '../../../data/actions/wallet';
+import { reduxActions } from '../../../redux/actions';
 
 (BigNumber.prototype as any).significant = function (digits) {
   const number = this.toFormat({
@@ -165,7 +165,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
     const steps = [];
     if (wallet.address) {
       if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
+        dispatch(askForNetworkChange({ chainId: item.chainId }));
         return false;
       }
 
@@ -256,7 +256,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
               ) : wallet.address ? (
                 item.network !== wallet.network ? (
                   <Button
-                    onClick={() => switchNetwork(item.network, dispatch)}
+                    onClick={() => dispatch(askForNetworkChange({ chainId: item.chainId }))}
                     className={classes.btnSubmit}
                     fullWidth={true}
                   >

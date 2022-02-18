@@ -3,10 +3,12 @@ import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllPricesAction } from '../actions/prices';
+import { fetchAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
+import { AddressBookToken } from '../apis/addressbook';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
-import { isTokenErc20, TokenEntity } from '../entities/token';
+import { isTokenErc20, TokenEntity, TokenErc20 } from '../entities/token';
 
 /**
  * State containing Vault infos
@@ -26,8 +28,23 @@ export type TokensState = {
       [tokenId: TokenEntity['id']]: BigNumber;
     };
   };
+
+  // addressbook is kept separated because it handles native tokens very differently
+  addressBook: {
+    [chainId: ChainEntity['id']]: {
+      byId: {
+        [id: string]: AddressBookToken;
+      };
+      native: AddressBookToken['id'];
+      wnative: AddressBookToken['id'];
+    };
+  };
 };
-export const initialTokensState: TokensState = { byChainId: {}, prices: { byTokenId: {} } };
+export const initialTokensState: TokensState = {
+  byChainId: {},
+  prices: { byTokenId: {} },
+  addressBook: {},
+};
 
 export const tokensSlice = createSlice({
   name: 'tokens',
@@ -67,6 +84,26 @@ export const tokensSlice = createSlice({
           // price exists, update it if it changed
         } else if (sliceState.prices.byTokenId[tokenId].comparedTo(tokenPrice) === 0) {
           sliceState.prices.byTokenId[tokenId] = new BigNumber(tokenPrice);
+        }
+      }
+    });
+
+    // we have another way of finding token info
+    builder.addCase(fetchAddressBookAction.fulfilled, (sliceState, action) => {
+      const chainId = action.payload.chainId;
+      for (const token of Object.values(action.payload.addressBook)) {
+        if (sliceState.addressBook[chainId] === undefined) {
+          sliceState.addressBook[chainId] = { byId: {}, native: null, wnative: null };
+        }
+
+        if (sliceState.addressBook[chainId].byId[token.id] === undefined) {
+          sliceState.addressBook[chainId].byId[token.id] = token;
+        }
+        if (token.isNative) {
+          sliceState.addressBook[chainId].native = token.id;
+        }
+        if (token.isWrapped) {
+          sliceState.addressBook[chainId].wnative = token.id;
         }
       }
     });

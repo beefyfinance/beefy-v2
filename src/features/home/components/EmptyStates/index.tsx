@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { connect, useDispatch } from 'react-redux';
 import { selectIsWalletConnected, selectWalletAddress } from '../../../data/selectors/wallet';
-import { actions as filteredVaultActions } from '../../../data/reducers/filtered-vaults';
+import { filteredVaultsActions } from '../../../data/reducers/filtered-vaults';
 import { BeefyState } from '../../../../redux-types';
 import { askForWalletConnection, doDisconnectWallet } from '../../../data/actions/wallet';
 
@@ -26,7 +26,7 @@ const _EmptyStates = connect((state: BeefyState) => {
       }
     };
 
-    const handleReset = useCallback(() => dispatch(filteredVaultActions.reset()), [dispatch]);
+    const handleReset = useCallback(() => dispatch(filteredVaultsActions.reset()), [dispatch]);
 
     return (
       <Box className={classes.itemContainer}>

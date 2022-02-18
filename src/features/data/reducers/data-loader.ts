@@ -11,7 +11,9 @@ import { fetchAllBalanceAction } from '../actions/balance';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
+import { initiateDepositForm } from '../actions/deposit';
 import { fetchAllPricesAction } from '../actions/prices';
+import { fetchAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { askForNetworkChange, askForWalletConnection, doDisconnectWallet } from '../actions/wallet';
 import { ChainEntity } from '../entities/chain';
@@ -76,6 +78,7 @@ const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
   contractData: dataLoaderStateInit,
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
+  addressBook: dataLoaderStateInit,
 };
 
 export interface DataLoaderState {
@@ -86,6 +89,7 @@ export interface DataLoaderState {
     vaults: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
+    depositForm: LoaderState;
   };
 
   byChainId: {
@@ -93,6 +97,7 @@ export interface DataLoaderState {
       contractData: LoaderState;
       balance: LoaderState;
       allowance: LoaderState;
+      addressBook: LoaderState;
     };
   };
 }
@@ -104,6 +109,7 @@ export const initialDataLoaderState: DataLoaderState = {
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
+    depositForm: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -191,9 +197,11 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
+    addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm');
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, 'contractData');
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, 'balance');
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, 'allowance');
+    addByChainAsyncThunkActions(builder, fetchAddressBookAction, 'addressBook');
   },
 });
 
