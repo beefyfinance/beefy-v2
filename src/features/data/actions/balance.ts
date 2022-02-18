@@ -3,9 +3,10 @@ import { BeefyState } from '../../../redux-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { getBalanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
+import { selectAllTokenWhereUserCouldHaveBalance } from '../selectors/balance';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectAllTokenByChain, selectTokenById } from '../selectors/tokens';
+import { selectTokenById } from '../selectors/tokens';
 import { selectAllGovVaultsByChainId } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
@@ -32,7 +33,7 @@ export const fetchAllBalanceAction = createAsyncThunk<
   const chain = selectChainById(state, chainId);
   const api = await getBalanceApi(chain);
 
-  const tokens = selectAllTokenByChain(state, chainId).map(tokenId =>
+  const tokens = selectAllTokenWhereUserCouldHaveBalance(state, chainId).map(tokenId =>
     selectTokenById(state, chain.id, tokenId)
   );
   // maybe have a way to retrieve those easily

@@ -1,15 +1,18 @@
 // https://coderwall.com/p/pafnew/redux-middleware-logger
+
 // debug middleware for when redux browser extension is not helpful
 export const loggerMiddleware = store => next => action => {
   let prefix = '[' + new Date().toISOString().slice(11, 11 + 8 + 4) + '] ';
   let suffix = '';
 
-  if (action.type.endsWith('/rejected')) {
-    prefix += '❌❌❌ ';
-  } else if (action.type.endsWith('/fulfilled')) {
-    prefix += '✅ ';
-  } else if (action.type.endsWith('/pending')) {
-    prefix += '👀 ';
+  if (action.type) {
+    if (action.type.endsWith('/rejected')) {
+      prefix += '❌❌❌ ';
+    } else if (action.type.endsWith('/fulfilled')) {
+      prefix += '✅ ';
+    } else if (action.type.endsWith('/pending')) {
+      prefix += '👀 ';
+    }
   }
 
   // add action arguments in the log groups for our sanity
@@ -24,10 +27,12 @@ export const loggerMiddleware = store => next => action => {
   }
 
   // expand errors by default otherwise, collapse
-  if (action.type.endsWith('/error')) {
-    console.group(prefix + action.type + suffix);
-  } else {
-    console.groupCollapsed(prefix + action.type + suffix);
+  if (action.type) {
+    if (action.type.endsWith('/error')) {
+      console.group(prefix + action.type + suffix);
+    } else {
+      console.groupCollapsed(prefix + action.type + suffix);
+    }
   }
   try {
     const oldState = store.getState();

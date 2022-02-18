@@ -7,7 +7,7 @@ import { fetchAllVaults } from '../actions/vaults';
 import { selectAllChains } from '../selectors/chains';
 import mockPrices from './mock-prices.json';
 import mockLPPrices from './mock-lp-prices.json';
-import { rootReducer } from '../../redux/reducers';
+import { rootReducer } from '../reducers';
 
 /**
  * Create a new BeefyState store with some data included

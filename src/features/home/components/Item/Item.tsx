@@ -10,7 +10,7 @@ import { styles } from './styles';
 import clsx from 'clsx';
 import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
-import { isGovVault, isVaultActive, VaultEntity } from '../../../data/entities/vault';
+import { isGovVault, isVaultRetired, VaultEntity } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectPlatformById } from '../../../data/selectors/platforms';
@@ -137,7 +137,7 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
       <div
         className={clsx({
           [classes.itemContainer]: true,
-          [classes.withMuted]: !isVaultActive(vault),
+          [classes.withMuted]: isVaultRetired(vault),
           [classes.withIsLongName]: vault.name.length > 12,
           [classes.withBoosted]: isBoosted,
           [classes.withGovVault]: isGovVault(vault),

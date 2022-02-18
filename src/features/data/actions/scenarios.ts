@@ -16,6 +16,13 @@ import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
+import { fetchAddressBookAction } from './tokens';
+import { fetchAllZapsAction } from './zap';
+import { isInitialLoader } from '../reducers/data-loader';
+import { VaultEntity } from '../entities/vault';
+import { selectVaultById } from '../selectors/vaults';
+import { initiateDepositForm } from './deposit';
+import { initiateWithdrawForm } from './withdraw';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -197,4 +204,50 @@ function preLoadPages() {
     await import('../../../features/vault');
     console.debug('pre-loading vault page done');
   });
+}
+
+export async function initDepositForm(
+  store: BeefyStore,
+  vaultId: VaultEntity['id'],
+  walletAddress: string | null
+) {
+  const vault = selectVaultById(store.getState(), vaultId);
+
+  // we need the addressbook
+  const addrBookLoader = store.getState().ui.dataLoader.byChainId[vault.chainId]?.addressBook;
+  if (addrBookLoader && isInitialLoader(addrBookLoader)) {
+    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
+  }
+
+  // we need zaps
+  const zapsLoader = store.getState().ui.dataLoader.global.zaps;
+  if (zapsLoader && isInitialLoader(zapsLoader)) {
+    await store.dispatch(fetchAllZapsAction({}));
+  }
+
+  // then we can init the form
+  store.dispatch(initiateDepositForm({ vaultId, walletAddress }));
+}
+
+export async function initWithdrawForm(
+  store: BeefyStore,
+  vaultId: VaultEntity['id'],
+  walletAddress: string | null
+) {
+  const vault = selectVaultById(store.getState(), vaultId);
+
+  // we need the addressbook
+  const addrBookLoader = store.getState().ui.dataLoader.byChainId[vault.chainId]?.addressBook;
+  if (addrBookLoader && isInitialLoader(addrBookLoader)) {
+    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
+  }
+
+  // we need zaps
+  const zapsLoader = store.getState().ui.dataLoader.global.zaps;
+  if (zapsLoader && isInitialLoader(zapsLoader)) {
+    await store.dispatch(fetchAllZapsAction({}));
+  }
+
+  // then we can init the form
+  store.dispatch(initiateWithdrawForm({ vaultId, walletAddress }));
 }

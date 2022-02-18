@@ -1,7 +1,7 @@
 import { renderIcon } from '@download/blockies';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createCanvas } from 'canvas';
-import { ChainEntity } from '../entities/chain';
+import { ChainEntity } from '../../entities/chain';
 import { memoize } from 'lodash';
 
 /**
@@ -14,7 +14,7 @@ export type WalletState = {
   hideBalance: boolean;
   profilePictureUrl: null | string;
 };
-export const initialWalletState: WalletState = {
+const initialWalletState: WalletState = {
   address: null,
   selectedChainId: null,
   error: null,

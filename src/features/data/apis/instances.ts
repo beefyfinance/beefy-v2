@@ -101,8 +101,11 @@ export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
 
 let walletCo: IWalletConnectApi | null = null;
 export async function getWalletConnectApiInstance(
-  options: WalletConnectOptions
+  options?: WalletConnectOptions
 ): Promise<IWalletConnectApi> {
+  if (!options && !walletCo) {
+    throw new Error('Please initialize wallet instance');
+  }
   if (!walletCo) {
     // allow code splitting to put all wallet connect stuff
     // in a separate, non-critical-path js file

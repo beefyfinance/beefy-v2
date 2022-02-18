@@ -9,7 +9,7 @@ import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
-import { isTokenBoost, isTokenErc20, isTokenNative, TokenEntity } from '../../entities/token';
+import { isTokenErc20, isTokenNative, TokenEntity } from '../../entities/token';
 import {
   BoostBalance,
   FetchAllBalancesResult,
@@ -48,12 +48,6 @@ export class BalanceAPI implements IBalanceApi {
 
     const tokenCalls: ShapeWithLabel[] = [];
     for (const token of tokens) {
-      // skip virtual boost tokens
-      if (isTokenBoost(token)) {
-        console.info(`BalanceAPI.fetchTokenBalanceByChain: Skipping boost token ${token.id}`);
-        continue;
-      }
-
       if (isTokenNative(token)) {
         const tokenContract = new this.web3.eth.Contract(multicallAbi, mc.contract);
         tokenCalls.push({
@@ -62,11 +56,6 @@ export class BalanceAPI implements IBalanceApi {
           amount: tokenContract.methods.getEthBalance(walletAddress),
         });
       } else if (isTokenErc20(token)) {
-        // TODO: temporary check until we can sort out the WFTM mystery
-        if (!token.contractAddress) {
-          console.error(`Could not find token contractAddress: ${token.id}`);
-          continue;
-        }
         const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
         tokenCalls.push({
           type: 'token',
@@ -120,9 +109,6 @@ export class BalanceAPI implements IBalanceApi {
 
     for (const result of results) {
       if (result.type === 'boost') {
-        if (result.balance === '0' && result.rewards === '0') {
-          continue;
-        }
         const balanceToken = selectBoostBalanceTokenEntity(state, result.boostId);
         const rewardsToken = selectBoostRewardsTokenEntity(state, result.boostId);
         const rawRewards = new BigNumber(result.rewards);
@@ -134,9 +120,6 @@ export class BalanceAPI implements IBalanceApi {
         };
         res.boosts.push(balance);
       } else if (result.type === 'vault-gov') {
-        if (result.balance === '0' && result.rewards === '0') {
-          continue;
-        }
         // apply token decimals to balance and rewards
         const balanceToken = selectGovVaultBalanceTokenEntity(state, result.vaultId);
         const rewardsToken = selectGovVaultRewardsTokenEntity(state, result.vaultId);
@@ -149,9 +132,6 @@ export class BalanceAPI implements IBalanceApi {
         };
         res.govVaults.push(balance);
       } else if (result.type === 'token') {
-        if (result.amount === '0') {
-          continue;
-        }
         // apply token decimals to amount
         const token = selectTokenById(state, this.chain.id, result.tokenId);
         const rawAmount = new BigNumber(result.amount);

@@ -14,7 +14,6 @@ import { StakeCountdown } from '../StakeCountdown';
 import { isEmpty } from '../../../../helpers/utils';
 import { BIG_ZERO, byDecimals } from '../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
-import { reduxActions } from '../../../redux/actions';
 
 const useStyles = makeStyles(styles as any);
 
@@ -190,11 +189,11 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
         message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
         action: () =>
           dispatch(
-            reduxActions.wallet.claim(
+            /*walletActions.claim(
               item.network,
               item.earnContractAddress,
               state.rewards.toNumber()
-            )
+            )*/ null
           ),
         pending: false,
         token: balance.tokens[item.network][item.earnedToken],
@@ -283,7 +282,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
         step: 'claim-unstake',
         message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
         action: () =>
-          dispatch(reduxActions.wallet.exit(boost.network, boost.earnContractAddress, 0)),
+          /*dispatch(walletActions.exit(boost.network, boost.earnContractAddress, 0))*/ null,
         pending: false,
         token: balance.tokens[boost.network][boost.token],
       });
@@ -431,7 +430,9 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
           </AnimateHeight>
         </div>
       )}
-      {(isBoosted || filterOpen) && <Steps item={item} steps={steps} handleClose={handleClose} />}
+      {(isBoosted || filterOpen) && (
+        <Steps vaultId={item.id} steps={steps} handleClose={handleClose} />
+      )}
     </>
   );
 };

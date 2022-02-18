@@ -12,7 +12,15 @@ const resolveImgSrc = (img, assets) => {
   return assets.length === 1 ? getSingleAssetSrc(assets[0]) : undefined;
 };
 
-export const AssetsImage = ({ img, assets, alt }) => {
+export const AssetsImage = ({
+  img,
+  assets,
+  alt,
+}: {
+  img?: string;
+  assets?: string[];
+  alt?: string;
+}) => {
   const classes = useStyles();
   const singleImage = resolveImgSrc(img, assets);
 

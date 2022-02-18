@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export type UIThemeState = {
   nightMode: boolean;
 };
-export const initialUIThemeState: UIThemeState = {
+const initialUIThemeState: UIThemeState = {
   nightMode: true,
 };
 

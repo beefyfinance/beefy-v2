@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore } from 'redux-persist';
-import { rootReducer } from './features/redux/reducers';
+import { rootReducer } from './features/data/reducers';
 import { loggerMiddleware } from './features/data/middlewares/logger';
 import { walletActionsMiddleware } from './features/data/middlewares/wallet';
 import { debugRecorderMiddleware } from './features/data/middlewares/debug/debug-record';
@@ -8,6 +8,7 @@ import {
   featureFlag_recordReduxActions,
   featureFlag_replayReduxActions,
 } from './features/data/utils/feature-flags';
+import { zapEstimateMiddleware } from './features/data/middlewares/zap-estimate';
 
 let middlewares = [loggerMiddleware];
 
@@ -17,7 +18,7 @@ if (featureFlag_recordReduxActions()) {
 
 if (!featureFlag_replayReduxActions()) {
   // don't want this to run actions when replaying
-  middlewares = [...middlewares, walletActionsMiddleware];
+  middlewares = [...middlewares, walletActionsMiddleware, zapEstimateMiddleware];
 }
 
 console.debug('Middlewares', middlewares);

@@ -10,7 +10,7 @@ import {
   initWalletState,
   userDidConnect,
   walletHasDisconnected,
-} from '../reducers/wallet';
+} from '../reducers/wallet/wallet';
 import { selectAllChains } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 

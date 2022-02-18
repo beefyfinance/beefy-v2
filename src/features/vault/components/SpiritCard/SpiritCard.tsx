@@ -19,10 +19,9 @@ import { useAllowance } from './useAllowance';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { BeefyState } from '../../../../redux-types';
-import { selectStandardVaultUserBalanceInToken } from '../../../data/selectors/balance';
+import { selectStandardVaultUserBalanceInTokenIncludingBoosts } from '../../../data/selectors/balance';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { selectTokenById } from '../../../data/selectors/tokens';
-import { reduxActions } from '../../../redux/actions';
 
 const useStyles = makeStyles(styles as any);
 
@@ -36,7 +35,7 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
   const walletAddress = useSelector((state: BeefyState) => selectWalletAddress(state));
   const binSpiritBalance = useSelector((state: BeefyState) =>
-    selectStandardVaultUserBalanceInToken(state, vaultId)
+    selectStandardVaultUserBalanceInTokenIncludingBoosts(state, vaultId)
   );
 
   const [spiritBalance, spiritBalanceString] = useBalance(
@@ -143,11 +142,11 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           message: t('Vault-ApproveMsg'),
           action: () =>
             dispatch(
-              reduxActions.wallet.approval(
+              /*walletActions.approval(
                 vault.chainId,
                 SpiritToken.address,
                 binSpiritMintVault.mintAdress
-              )
+              )*/ null
             ),
           pending: false,
         });
@@ -158,12 +157,12 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
         action: () =>
           dispatch(
-            reduxActions.wallet.deposit(
+            /*walletActions.deposit(
               vault.chainId,
               binSpiritMintVault.mintAdress,
               amount,
               formData.deposit.max
-            )
+            )*/ null
           ),
         token: SpiritToken,
         pending: false,
@@ -270,7 +269,7 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Button>
         </CardContent>
       </Card>
-      <Steps item={vault} steps={steps} handleClose={handleClose} />
+      <Steps vaultId={vault.id} steps={steps} handleClose={handleClose} />
     </>
   );
 };

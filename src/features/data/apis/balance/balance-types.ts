@@ -36,7 +36,3 @@ export interface FetchAllBalancesResult {
   govVaults: GovVaultPoolBalance[];
   boosts: BoostBalance[];
 }
-
-export type AllValuesAsString<T> = {
-  [key in keyof T]: string;
-};

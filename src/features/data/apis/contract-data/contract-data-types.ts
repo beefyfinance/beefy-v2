@@ -12,30 +12,6 @@ export interface IContractDataApi {
   ): Promise<FetchAllContractDataResult>;
 }
 
-export interface MinimalEntity {
-  id: string;
-  contractAddress: string;
-}
-
-export interface WorkerChainEntity {
-  id: string;
-  multicallAddress: string;
-  rpc: [];
-}
-
-export interface FetchAllContractDataWorkerParams {
-  chain: WorkerChainEntity;
-  boosts: MinimalEntity[];
-  govVaults: MinimalEntity[];
-  standardVaults: MinimalEntity[];
-}
-
-export type FetchAllContractDataWorkerResults = {
-  boosts: AllValuesAsString<BoostContractData>[];
-  govVaults: AllValuesAsString<GovVaultContractData>[];
-  standardVaults: AllValuesAsString<StandardVaultContractData>[];
-};
-
 export interface GovVaultContractData {
   id: string;
   totalSupply: BigNumber;
@@ -71,7 +47,3 @@ export interface FetchAllContractDataResult {
   standardVaults: StandardVaultContractData[];
   govVaults: GovVaultContractData[];
 }
-
-export type AllValuesAsString<T> = {
-  [key in keyof T]: string;
-};

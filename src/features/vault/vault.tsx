@@ -1,8 +1,7 @@
-import { Container, makeStyles, Grid, Typography, Box, Button, Hidden } from '@material-ui/core';
+import { Container, makeStyles, Grid, Typography, Box, Button } from '@material-ui/core';
 import * as React from 'react';
 import { useParams } from 'react-router';
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
@@ -13,7 +12,6 @@ import { TokenCard } from './components/TokenCard';
 import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
 import { Graph } from './components/Graph';
-import { BIG_ZERO } from '../../helpers/format';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
@@ -23,13 +21,8 @@ import { Spirit } from './components/SpiritCard';
 import { Moonpot } from './components/MoonportCard';
 import { selectVaultById } from '../data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
-import {
-  selectActiveVaultBoostIds,
-  selectBoostById,
-  selectIsVaultBoosted,
-} from '../data/selectors/boosts';
-import { selectIsWalletConnected, selectWalletAddress } from '../data/selectors/wallet';
-import { isGovVault, VaultEntity } from '../data/entities/vault';
+import { selectIsVaultBoosted } from '../data/selectors/boosts';
+import { isGovVault } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
 import {
   selectIsVaultBinSpirit,
@@ -37,114 +30,23 @@ import {
   selectIsVaultMoonpot,
   selectIsVaultQidao,
 } from '../data/selectors/partners';
-import { TokenEntity } from '../data/entities/token';
-import { selectTokenById } from '../data/selectors/tokens';
 import { selectPlatformById } from '../data/selectors/platforms';
-import { useVaultEligibleZap } from '../data/hooks/zap';
-import { askForWalletConnection } from '../data/actions/wallet';
-import { fetchAllVaults } from '../data/actions/vaults';
-import { fetchAllContractDataByChainAction } from '../data/actions/contract-data';
-import { fetchAllBalanceAction } from '../data/actions/balance';
-import { estimateZapDeposit } from '../redux/actions/vault';
 
 const useStyles = makeStyles(styles as any);
 
 export const Vault = () => {
-  const history = useHistory();
   const classes = useStyles();
-  const t = useTranslation().t;
-
+  const { t } = useTranslation();
   let { id: vaultId }: any = useParams();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
-  const vaultBoosts = useSelector((state: BeefyState) =>
-    selectActiveVaultBoostIds(state, vaultId).map(boostId => selectBoostById(state, boostId))
-  );
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
-  const walletAddress = useSelector((state: BeefyState) =>
-    isWalletConnected ? selectWalletAddress(state) : null
-  );
-  const eligibleZap = useVaultEligibleZap(vaultId);
-  const dispatch = useDispatch();
   const [dw, setDw] = React.useState('deposit');
   const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
   const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
   const isBinSpirit = useSelector((state: BeefyState) => selectIsVaultBinSpirit(state, vaultId));
   const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
-
-  const boostedData = {} as any; //vault.pools[id].boostData;
-
-  const [formData, setFormData] = React.useState({
-    deposit: {
-      input: '',
-      amount: BIG_ZERO,
-      max: false,
-      token: vault.oracleId,
-      isZap: false,
-      zapEstimate: {
-        isLoading: true,
-      },
-    },
-    withdraw: {
-      input: '',
-      amount: BIG_ZERO,
-      max: false,
-      token: vault.oracleId,
-      isZap: false,
-      isZapSwap: false,
-      zapEstimate: {
-        isLoading: true,
-      },
-    },
-    zap: eligibleZap,
-    slippageTolerance: 0.01,
-  });
-
-  const resetFormData = () => {
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-      withdraw: {
-        ...formData.withdraw,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-    });
-  };
-
-  const handleWalletConnect = () => {
-    dispatch(askForWalletConnection());
-  };
-
-  const updateItemData = () => {
-    if (isWalletConnected) {
-      dispatch(fetchAllContractDataByChainAction({ chainId: vault.chainId }));
-      dispatch(fetchAllBalanceAction({ chainId: vault.chainId }));
-    }
-  };
-
-  React.useEffect(() => {
-    if (formData.deposit.isZap && formData.deposit.token) {
-      estimateZapDeposit({
-        vault,
-        formData,
-        setFormData,
-      });
-    }
-    // eslint-disable-next-line
-  }, [formData.deposit.amount, formData.deposit.isZap, formData.deposit.token, vault]);
-
-  React.useEffect(() => {
-    document.body.style.backgroundColor = '#1B203A';
-  }, []);
 
   return (
     <>
@@ -201,21 +103,7 @@ export const Vault = () => {
                     {t('Withdraw-Verb')}
                   </Button>
                 </Box>
-                {dw === 'deposit' ? (
-                  <Deposit vaultId={vaultId} />
-                ) : (
-                  <Withdraw
-                    boostedData={boostedData}
-                    isBoosted={isBoosted}
-                    vaultBoosts={vaultBoosts}
-                    item={vault}
-                    handleWalletConnect={handleWalletConnect}
-                    formData={formData}
-                    setFormData={setFormData}
-                    updateItemData={updateItemData}
-                    resetFormData={resetFormData}
-                  />
-                )}
+                {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </Box>
               {isQidao && (
                 <Box>

@@ -1,24 +1,25 @@
 import { EnhancedStore, CombinedState, MiddlewareArray, AnyAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'react';
 import { ThunkMiddleware } from 'redux-thunk';
-import { AllowanceState } from './features/data/reducers/allowance';
 import { ApyState } from './features/data/reducers/apy';
-import { BalanceState } from './features/data/reducers/balance';
 import { BoostsState } from './features/data/reducers/boosts';
 import { BuybackState } from './features/data/reducers/buyback';
 import { ChainsState } from './features/data/reducers/chains';
 import { DataLoaderState } from './features/data/reducers/data-loader';
-import { DepositState } from './features/data/reducers/deposit';
 import { FilteredVaultsState } from './features/data/reducers/filtered-vaults';
-import { HistoricalApyState } from './features/data/reducers/historical-apy';
 import { PartnersState } from './features/data/reducers/partners';
 import { PlatformsState } from './features/data/reducers/platforms';
 import { TokensState } from './features/data/reducers/tokens';
 import { TvlState } from './features/data/reducers/tvl';
 import { UIThemeState } from './features/data/reducers/ui-theme';
 import { VaultsState } from './features/data/reducers/vaults';
-import { WalletState } from './features/data/reducers/wallet';
+import { WalletState } from './features/data/reducers/wallet/wallet';
+import { AllowanceState } from './features/data/reducers/wallet/allowance';
+import { BalanceState } from './features/data/reducers/wallet/balance';
+import { DepositState } from './features/data/reducers/wallet/deposit';
+import { WalletActionsState } from './features/data/reducers/wallet/wallet-action';
 import { ZapsState } from './features/data/reducers/zaps';
+import { WithdrawState } from './features/data/reducers/wallet/withdraw';
 
 export interface BeefyState {
   entities: {
@@ -32,12 +33,12 @@ export interface BeefyState {
   biz: {
     tvl: TvlState;
     apy: ApyState;
-    historicalApy: HistoricalApyState;
     buyback: BuybackState;
     partners: PartnersState;
   };
   user: {
     wallet: WalletState;
+    walletActions: WalletActionsState;
     balance: BalanceState;
     allowance: AllowanceState;
   };
@@ -46,6 +47,7 @@ export interface BeefyState {
     filteredVaults: FilteredVaultsState;
     theme: UIThemeState;
     deposit: DepositState;
+    withdraw: WithdrawState;
   };
 }
 
@@ -57,5 +59,3 @@ export type BeefyStore = EnhancedStore<
     | ThunkMiddleware<CombinedState<BeefyState>, any, null>
   >
 >;
-
-export type BeefyDispatch = Dispatch<any>;

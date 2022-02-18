@@ -13,9 +13,13 @@ import {
 import { selectTokenPriceByTokenId } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 import { BeefyState } from '../../../redux-types';
-import { BoostContractData } from '../apis/contract-data/contract-data-types';
+import {
+  BoostContractData,
+  FetchAllContractDataResult,
+} from '../apis/contract-data/contract-data-types';
 import { getBoostStatusFromPeriodFinish } from './boosts';
 import { selectIsConfigAvailable } from '../selectors/data-loader';
+import { reloadBalanceAndAllowanceAndGovRewards } from '../actions/tokens';
 
 // boost is expressed as APR
 interface AprData {
@@ -80,44 +84,57 @@ export const apySlice = createSlice({
     });
 
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
-      const now = new Date();
       const state = action.payload.state;
-      const activeBoostsByVaultIds: { [vaultId: VaultEntity['id']]: BoostContractData[] } = {};
+      addContractDataToState(state, sliceState, action.payload.data);
+    });
 
-      for (const boostContractData of action.payload.data.boosts) {
-        const boost = selectBoostById(state, boostContractData.id);
-        const vault = selectVaultById(state, boost.vaultId);
-        const boostStatus = getBoostStatusFromPeriodFinish(boostContractData.periodFinish, now);
-        // boost is expired, don't count apy
-        if (boostStatus === 'expired') {
-          continue;
-        }
-        if (activeBoostsByVaultIds[vault.id] === undefined) {
-          activeBoostsByVaultIds[vault.id] = [];
-        }
-        activeBoostsByVaultIds[vault.id].push(boostContractData);
-
-        const tokenPrice = selectTokenPriceByTokenId(state, vault.oracleId);
-        const earnedTokenPrice = selectTokenPriceByTokenId(state, boost.earnedTokenId);
-
-        const totalStakedInUsd = boostContractData.totalSupply.times(tokenPrice);
-
-        const yearlyRewardsInUsd = boostContractData.rewardRate
-          .times(3600 * 24 * 365)
-          .times(earnedTokenPrice);
-
-        const apr = yearlyRewardsInUsd.dividedBy(totalStakedInUsd).toNumber();
-
-        // add data to state
-        sliceState.rawApy.byBoostId[boost.id] = { apr };
-      }
-
-      // recompute total apy to have it ready to render vault list super fast
-      const updatedState: BeefyState = { ...state, biz: { ...state.biz, apy: sliceState } };
-      recomputeTotalApy(updatedState, sliceState, activeBoostsByVaultIds);
+    builder.addCase(reloadBalanceAndAllowanceAndGovRewards.fulfilled, (sliceState, action) => {
+      const state = action.payload.state;
+      addContractDataToState(state, sliceState, action.payload.contractData);
     });
   },
 });
+
+function addContractDataToState(
+  state: BeefyState,
+  sliceState: WritableDraft<ApyState>,
+  contractData: FetchAllContractDataResult
+) {
+  const now = new Date();
+  const activeBoostsByVaultIds: { [vaultId: VaultEntity['id']]: BoostContractData[] } = {};
+
+  for (const boostContractData of contractData.boosts) {
+    const boost = selectBoostById(state, boostContractData.id);
+    const vault = selectVaultById(state, boost.vaultId);
+    const boostStatus = getBoostStatusFromPeriodFinish(boostContractData.periodFinish, now);
+    // boost is expired, don't count apy
+    if (boostStatus === 'expired') {
+      continue;
+    }
+    if (activeBoostsByVaultIds[vault.id] === undefined) {
+      activeBoostsByVaultIds[vault.id] = [];
+    }
+    activeBoostsByVaultIds[vault.id].push(boostContractData);
+
+    const tokenPrice = selectTokenPriceByTokenId(state, vault.oracleId);
+    const earnedTokenPrice = selectTokenPriceByTokenId(state, boost.earnedTokenId);
+
+    const totalStakedInUsd = boostContractData.totalSupply.times(tokenPrice);
+
+    const yearlyRewardsInUsd = boostContractData.rewardRate
+      .times(3600 * 24 * 365)
+      .times(earnedTokenPrice);
+
+    const apr = yearlyRewardsInUsd.dividedBy(totalStakedInUsd).toNumber();
+
+    // add data to state
+    sliceState.rawApy.byBoostId[boost.id] = { apr };
+  }
+
+  // recompute total apy to have it ready to render vault list super fast
+  const updatedState: BeefyState = { ...state, biz: { ...state.biz, apy: sliceState } };
+  recomputeTotalApy(updatedState, sliceState, activeBoostsByVaultIds);
+}
 
 function recomputeTotalApy(
   state: BeefyState,

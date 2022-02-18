@@ -1,5 +1,8 @@
 import BigNumber from 'bignumber.js';
-import { fetchAllAllowanceAction, FetchAllAllowanceFulfilledPayload } from '../actions/allowance';
+import {
+  fetchAllAllowanceAction,
+  FetchAllAllowanceFulfilledPayload,
+} from '../../actions/allowance';
 import { allowanceSlice, initialAllowanceState } from './allowance';
 
 describe('Allowance slice tests', () => {

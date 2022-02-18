@@ -23,7 +23,6 @@ import { styles } from './styles';
 import BigNumber from 'bignumber.js';
 import { UnstakeProps } from './UnstakeProps';
 import { askForNetworkChange } from '../../../data/actions/wallet';
-import { reduxActions } from '../../../redux/actions';
 
 (BigNumber.prototype as any).significant = function (digits) {
   const number = this.toFormat({
@@ -178,7 +177,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
         step: 'unstake',
         message: t('Vault-TxnConfirm', { type: t('Unstake-noun') }),
         action: () =>
-          dispatch(reduxActions.wallet.unstake(item.network, item.earnContractAddress, amount)),
+          /*dispatch(walletActions.unstake(item.network, item.earnContractAddress, amount))*/ null,
         pending: false,
         token: tokens[formData.deposit.token],
       });
@@ -286,7 +285,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
         </Card>
       </Box>
 
-      <Steps item={item} steps={steps} handleClose={handleClose} />
+      <Steps vaultId={item.id} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   );
 };

@@ -117,30 +117,8 @@ export function formatBigDecimals(value: BigNumber, maxPlaces: number = 8, strip
   return strip ? stripTrailingZeros(fixed) : fixed;
 }
 
-export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
-
-export const calcDaily = apy => {
-  if (!apy) return <ApyStatLoader />;
-
-  const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
-  if (isNaN(g)) {
-    return '- %';
-  }
-
-  return `${(g * 100).toFixed(2)}%`;
-};
-
-export const stripTrailingZeros = str => {
+const stripTrailingZeros = str => {
   return str.replace(/(\.[0-9]*?)(0+$)/, '$1').replace(/\.$/, '');
-};
-
-export const formatDecimals = (number, maxPlaces = 8) => {
-  if (new BigNumber(number).isZero()) {
-    return '0';
-  }
-
-  const places = Math.min(maxPlaces, number >= 10 ? 4 : 8);
-  return stripTrailingZeros(new BigNumber(number).toFixed(places));
 };
 
 export function byDecimals(number, tokenDecimals = 18) {
@@ -165,12 +143,6 @@ export const formatCountdown = deadline => {
   //   .padStart(2, '0');
 
   return `${day}d ${hours}h ${minutes}m`;
-};
-
-export const stripExtraDecimals = (f, decimals = 8) => {
-  return f.indexOf('.') >= 0
-    ? f.substr(0, f.indexOf('.')) + f.substr(f.indexOf('.'), decimals + 1)
-    : f;
 };
 
 export function convertAmountToRawNumber(value, decimals = 18) {

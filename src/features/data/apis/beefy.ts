@@ -6,13 +6,13 @@ import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
 import { mapValuesDeep } from '../utils/array-utils';
 
-export interface ApyGovVault {
+interface ApyGovVault {
   vaultApr: number;
 }
-export interface ApyMaxiVault {
+interface ApyMaxiVault {
   totalApy: number;
 }
-export interface ApyStandard {
+interface ApyStandard {
   beefyPerformanceFee: number;
   vaultApr: number;
   compoundingsPerYear: number;
@@ -40,7 +40,7 @@ export interface BeefyAPIBreakdownResponse {
   [vaultId: VaultEntity['id']]: ApyData;
 }
 
-export interface BeefyAPIHistoricalAPYResponse {
+interface BeefyAPIHistoricalAPYResponse {
   // those are of type string but they represent numbers
   // also for some reason there is 7 items on each array
   [vaultId: VaultEntity['id']]: string[];
@@ -52,7 +52,7 @@ export interface BeefyAPIBuybackResponse {
 }
 
 // note that there is more infos but we don't need it
-export type BeefyAPIVaultsResponse = {
+type BeefyAPIVaultsResponse = {
   id: string;
   lastHarvest?: number | string;
 }[];
@@ -146,7 +146,8 @@ export class BeefyAPI {
     });
 
     if (!vaultConfig) {
-      throw new Error('Could not find vault last harvest');
+      // vault is not harvestable (most probably a gov vault)
+      return null;
     }
     if (!('lastHarvest' in vaultConfig)) {
       return null;

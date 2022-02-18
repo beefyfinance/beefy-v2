@@ -8,7 +8,7 @@ import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
 
-export interface ActionParams {
+interface ActionParams {
   chainId: ChainEntity['id'];
 }
 

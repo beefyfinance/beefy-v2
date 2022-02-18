@@ -42,7 +42,3 @@ export const safetyScoreNum = (arr: string[]) => {
 
   return MAX_SCORE * (1 - calcRisk(arr));
 };
-
-export const safetyScore = (arr: string[]) => {
-  return safetyScoreNum(arr).toFixed(1);
-};

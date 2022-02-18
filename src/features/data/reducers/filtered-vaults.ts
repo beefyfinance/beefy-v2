@@ -16,7 +16,7 @@ export type FilteredVaultsState = {
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
 };
-export const initialFilteredVaultsState: FilteredVaultsState = {
+const initialFilteredVaultsState: FilteredVaultsState = {
   sort: 'default',
   vaultCategory: 'all',
   userCategory: 'all',
