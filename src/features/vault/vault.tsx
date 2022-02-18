@@ -1,10 +1,9 @@
-import { Container, makeStyles, Grid, Typography, Box, Button } from '@material-ui/core';
+import { Container, makeStyles, Grid, Typography, Box, Button, Hidden } from '@material-ui/core';
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { reduxActions } from '../redux/actions';
 import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
 import { styles } from './styles';
@@ -42,6 +41,11 @@ import { TokenEntity } from '../data/entities/token';
 import { selectTokenById } from '../data/selectors/tokens';
 import { selectPlatformById } from '../data/selectors/platforms';
 import { useVaultEligibleZap } from '../data/hooks/zap';
+import { askForWalletConnection } from '../data/actions/wallet';
+import { fetchAllVaults } from '../data/actions/vaults';
+import { fetchAllContractDataByChainAction } from '../data/actions/contract-data';
+import { fetchAllBalanceAction } from '../data/actions/balance';
+import { estimateZapDeposit } from '../redux/actions/vault';
 
 const useStyles = makeStyles(styles as any);
 
@@ -97,24 +101,51 @@ export const Vault = () => {
     zap: eligibleZap,
     slippageTolerance: 0.01,
   });
-  /*
+
+  const resetFormData = () => {
+    setFormData({
+      ...formData,
+      deposit: {
+        ...formData.deposit,
+        input: '',
+        amount: BIG_ZERO,
+        max: false,
+      },
+      withdraw: {
+        ...formData.withdraw,
+        input: '',
+        amount: BIG_ZERO,
+        max: false,
+      },
+    });
+  };
+
+  const handleWalletConnect = () => {
+    dispatch(askForWalletConnection());
+  };
+
+  const updateItemData = () => {
+    if (isWalletConnected) {
+      dispatch(fetchAllContractDataByChainAction({ chainId: vault.chainId }));
+      dispatch(fetchAllBalanceAction({ chainId: vault.chainId }));
+    }
+  };
+
   React.useEffect(() => {
     if (formData.deposit.isZap && formData.deposit.token) {
-      reduxActions.vault.estimateZapDeposit({
-        web3: wallet.rpc,
-        vault: item,
+      estimateZapDeposit({
+        vault,
         formData,
         setFormData,
       });
     }
     // eslint-disable-next-line
-  }, [formData.deposit.amount, formData.deposit.isZap, formData.deposit.token, wallet.rpc, item]);
-*/
-  /*
+  }, [formData.deposit.amount, formData.deposit.isZap, formData.deposit.token, vault]);
+
   React.useEffect(() => {
     document.body.style.backgroundColor = '#1B203A';
   }, []);
-*/
+
   return (
     <>
       <Box className={classes.vaultContainer}>
@@ -170,28 +201,32 @@ export const Vault = () => {
                     {t('Withdraw-Verb')}
                   </Button>
                 </Box>
-                {/*dw === 'deposit' ? (
-                  <Deposit
-                    vaultId={vaultId}
-                    formData={formData}
-                    setFormData={setFormData}
-                    resetFormData={resetFormData}
-                  />
+                {dw === 'deposit' ? (
+                  <Deposit vaultId={vaultId} />
                 ) : (
                   <Withdraw
-                    vaultId={vaultId}
+                    boostedData={boostedData}
+                    isBoosted={isBoosted}
+                    vaultBoosts={vaultBoosts}
+                    item={vault}
+                    handleWalletConnect={handleWalletConnect}
                     formData={formData}
                     setFormData={setFormData}
+                    updateItemData={updateItemData}
                     resetFormData={resetFormData}
                   />
-                )*/}
+                )}
               </Box>
               {isQidao && (
                 <Box>
                   <QiDao vaultId={vaultId} />
                 </Box>
               )}
-              {isBinSpirit && <Box>{/*<Spirit vaultId={vaultId} />*/}</Box>}
+              {isBinSpirit && (
+                <Box>
+                  <Spirit vaultId={vaultId} />
+                </Box>
+              )}
               {isMoonpot && (
                 <Box>
                   <Moonpot vaultId={vaultId} />

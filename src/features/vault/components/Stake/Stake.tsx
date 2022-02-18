@@ -21,9 +21,9 @@ import { CardTitle } from '../Card/CardTitle';
 import { BIG_ZERO, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { Steps } from '../../../../components/Steps';
-import { switchNetwork } from '../../../../helpers/switchNetwork';
-import { reduxActions } from '../../../redux/actions';
 import { StakeProps } from './StakeProps';
+import { askForNetworkChange } from '../../../data/actions/wallet';
+import { reduxActions } from '../../../redux/actions';
 
 (BigNumber.prototype as any).significant = function (digits) {
   const number = this.toFormat({
@@ -140,7 +140,7 @@ export const Stake: React.FC<StakeProps> = ({
 
     if (wallet.address) {
       if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
+        dispatch(askForNetworkChange({ chainId: item.chainId }));
         return false;
       }
 
@@ -165,21 +165,21 @@ export const Stake: React.FC<StakeProps> = ({
         });
       }
 
-      // if (!balance.allowance) {
-      //   steps.push({
-      //     step: 'approve',
-      //     message: t('Vault-ApproveMsg'),
-      //     action: () =>
-      //       dispatch(
-      //         reduxActions.wallet.approval(
-      //           item.network,
-      //           item.tokenAddress,
-      //           item.earnContractAddress
-      //         )
-      //       ),
-      //     pending: false,
-      //   });
-      // }
+      if (!balance.allowance) {
+        steps.push({
+          step: 'approve',
+          message: t('Vault-ApproveMsg'),
+          action: () =>
+            dispatch(
+              reduxActions.wallet.approval(
+                item.network,
+                item.tokenAddress,
+                item.earnContractAddress
+              )
+            ),
+          pending: false,
+        });
+      }
 
       steps.push({
         step: 'stake',
@@ -290,7 +290,7 @@ export const Stake: React.FC<StakeProps> = ({
               ) : wallet.address ? (
                 item.network !== wallet.network ? (
                   <Button
-                    onClick={() => switchNetwork(item.network, dispatch)}
+                    onClick={() => dispatch(askForNetworkChange({ chainId: item.chainId }))}
                     className={classes.btnSubmit}
                     fullWidth={true}
                   >

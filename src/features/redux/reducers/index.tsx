@@ -19,6 +19,7 @@ import { platformsSlice } from '../../data/reducers/platforms';
 import { uiThemeSlice } from '../../data/reducers/ui-theme';
 import { partnersSlice } from '../../data/reducers/partners';
 import { zapsSlice } from '../../data/reducers/zaps';
+import { depositSlice } from '../../data/reducers/deposit';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -44,6 +45,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   dataLoader: dataLoaderSlice.reducer,
   filteredVaults: persistReducer({ key: 'filters', storage }, filteredVaultsSlice.reducer),
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
+  deposit: depositSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

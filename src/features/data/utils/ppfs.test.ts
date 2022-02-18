@@ -12,6 +12,8 @@ describe('Ppfs tests', () => {
       id: 'mooVenusBNB',
       symbol: 'mooVenusBNB',
       type: 'erc20',
+      description: null,
+      website: null,
     };
 
     const oracleToken: TokenEntity = {
@@ -22,6 +24,8 @@ describe('Ppfs tests', () => {
       id: 'WBNB',
       symbol: 'WBNB',
       type: 'erc20',
+      description: null,
+      website: null,
     };
     const mooAmount = new BigNumber('0.086560461734815659');
     const ppfs = new BigNumber('1.155580391227848799');
@@ -42,6 +46,8 @@ describe('Ppfs tests', () => {
       id: 'mooScreamWBTC',
       symbol: 'mooScreamWBTC',
       type: 'erc20',
+      description: null,
+      website: null,
     };
 
     const oracleToken: TokenEntity = {
@@ -52,6 +58,8 @@ describe('Ppfs tests', () => {
       id: 'WBTC',
       symbol: 'WBTC',
       type: 'erc20',
+      description: null,
+      website: null,
     };
 
     const mooAmount = new BigNumber('0.000000000000092138');

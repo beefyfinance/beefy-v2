@@ -6,7 +6,7 @@ import { CATEGORY_LABELS } from './CategoryLabels';
 import { styles } from './styles';
 import { selectVaultCategory } from '../../../data/selectors/filtered-vaults';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions as filteredVaultActions } from '../../../data/reducers/filtered-vaults';
+import { filteredVaultsActions } from '../../../data/reducers/filtered-vaults';
 
 const useStyles = makeStyles(styles as any);
 const _FilterCategories = () => {
@@ -16,7 +16,7 @@ const _FilterCategories = () => {
   const dispatch = useDispatch();
   const cagegory = useSelector(selectVaultCategory);
   const setCategory = useCallback(
-    category => dispatch(filteredVaultActions.setVaultCategory(category)),
+    category => dispatch(filteredVaultsActions.setVaultCategory(category)),
     [dispatch]
   );
 

@@ -18,47 +18,76 @@ import BigNumber from 'bignumber.js';
 import { Loader } from '../../../../components/loader';
 import { BIG_ZERO, byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
-import { reduxActions } from '../../../redux/actions';
 import { Steps } from '../../../../components/Steps';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
-import { switchNetwork } from '../../../../helpers/switchNetwork';
-import { DepositProps } from './DepositProps';
 import { config } from '../../../../config/config';
+import { askForNetworkChange } from '../../../data/actions/wallet';
+import { reduxActions } from '../../../redux/actions';
+import { BeefyState } from '../../../../redux-types';
+import { selectIsUserBalanceAvailable } from '../../../data/selectors/data-loader';
+import { VaultEntity } from '../../../data/entities/vault';
+import { selectIsWalletConnected } from '../../../data/selectors/wallet';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { initiateDepositForm } from '../../../data/actions/deposit';
+import { isFulfilled } from '../../../data/reducers/data-loader';
 
 const useStyles = makeStyles(styles as any);
-export const Deposit: React.FC<DepositProps> = ({
-  formData,
-  setFormData,
-  item,
-  handleWalletConnect,
-  updateItemData,
-  resetFormData,
-  isBoosted,
-  boostedData,
-  vaultBoosts,
-}) => {
+
+export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const addressBookLoaded = useSelector(
+    (state: BeefyState) =>
+      state.ui.dataLoader.byChainId[vault.chainId]?.addressBook.alreadyLoadedOnce || false
+  );
+  const formReady = useSelector((state: BeefyState) =>
+    isFulfilled(state.ui.dataLoader.global.depositForm)
+  );
+
+  // initialize our form
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    if (addressBookLoaded) {
+      dispatch(initiateDepositForm({ vaultId }));
+    }
+  }, [addressBookLoaded, dispatch, vaultId]);
+
+  return addressBookLoaded && formReady ? <DepositForm vaultId={vaultId} /> : <Loader />;
+};
+
+const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { wallet, balance, tokens } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-    balance: state.balanceReducer,
-    tokens: state.balanceReducer.tokens[item.network],
-  }));
-  const t = useTranslation().t;
-
-  const [state, setState] = React.useState({
-    balance: BIG_ZERO,
-    allowance: BIG_ZERO,
-  });
+  const { t } = useTranslation();
+  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  /*
   const [steps, setSteps] = React.useState({
     modal: false,
     currentStep: -1,
     items: [],
     finished: false,
   });
-  const [isLoading, setIsLoading] = React.useState(true);
+  const isLoading = useSelector((state: BeefyState) => selectIsUserBalanceAvailable(state));
+*/
+  React.useEffect(() => {
+    let amount = BIG_ZERO;
+    let approved = BIG_ZERO;
+    if (isWalletConnected && !isEmpty(tokens[formData.deposit.token])) {
+      amount = formTokenBalance;
+      if (formData.zap && formData.deposit.token !== vault.token) {
+        approved = tokens[formData.deposit.token].allowance[formData.zap.address];
+      } else {
+        approved = tokens[formData.deposit.token].allowance[vault.earnContractAddress];
+      }
+    }
+    setState({
+      balance: new BigNumber(amount),
+      allowance: new BigNumber(approved),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wallet.address, vault, formData.deposit.token]);
 
   const handleInput = val => {
     const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
@@ -105,7 +134,7 @@ export const Deposit: React.FC<DepositProps> = ({
         amount: BIG_ZERO,
         max: false,
         token: tokenSymbol,
-        isZap: item.token !== tokenSymbol,
+        isZap: vault.token !== tokenSymbol,
       },
     });
   };
@@ -127,8 +156,8 @@ export const Deposit: React.FC<DepositProps> = ({
   const handleDeposit = () => {
     const steps = [];
     if (wallet.address) {
-      if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
+      if (vault.network !== wallet.network) {
+        dispatch(askForNetworkChange({ chainId: vault.chainId }));
         return false;
       }
 
@@ -138,7 +167,7 @@ export const Deposit: React.FC<DepositProps> = ({
       );
 
       const isNative =
-        formData.deposit.token === config[item.network].walletSettings.nativeCurrency.symbol;
+        formData.deposit.token === config[vault.network].walletSettings.nativeCurrency.symbol;
 
       if (!isNative && state.allowance.isLessThan(amount)) {
         steps.push({
@@ -147,9 +176,9 @@ export const Deposit: React.FC<DepositProps> = ({
           action: () =>
             dispatch(
               reduxActions.wallet.approval(
-                item.network,
+                vault.network,
                 tokens[formData.deposit.token].address,
-                formData.deposit.isZap ? formData.zap.address : item.earnContractAddress
+                formData.deposit.isZap ? formData.zap.address : vault.earnContractAddress
               )
             ),
           pending: false,
@@ -167,8 +196,8 @@ export const Deposit: React.FC<DepositProps> = ({
           action: () =>
             dispatch(
               reduxActions.wallet.beefIn(
-                item.network,
-                item.earnContractAddress,
+                vault.network,
+                vault.earnContractAddress,
                 isNative,
                 tokens[formData.deposit.token].address,
                 amount,
@@ -183,16 +212,16 @@ export const Deposit: React.FC<DepositProps> = ({
       }
 
       if (false === formData.deposit.isZap) {
-        if (item.isGovVault) {
+        if (vault.isGovVault) {
           steps.push({
             step: 'deposit',
             message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
             action: () =>
               dispatch(
                 reduxActions.wallet.stake(
-                  item.network,
-                  item.earnContractAddress,
-                  convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals)
+                  vault.network,
+                  vault.earnContractAddress,
+                  convertAmountToRawNumber(formData.deposit.amount, vault.tokenDecimals)
                 )
               ),
             token: tokens[formData.deposit.token],
@@ -205,7 +234,7 @@ export const Deposit: React.FC<DepositProps> = ({
             message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
             action: () =>
               dispatch(
-                reduxActions.wallet.depositNative(item.network, item.earnContractAddress, amount)
+                reduxActions.wallet.depositNative(vault.network, vault.earnContractAddress, amount)
               ),
             token: tokens[formData.deposit.token],
             pending: false,
@@ -218,8 +247,8 @@ export const Deposit: React.FC<DepositProps> = ({
             action: () =>
               dispatch(
                 reduxActions.wallet.deposit(
-                  item.network,
-                  item.earnContractAddress,
+                  vault.network,
+                  vault.earnContractAddress,
                   amount,
                   formData.deposit.max
                 )
@@ -240,31 +269,6 @@ export const Deposit: React.FC<DepositProps> = ({
     resetFormData();
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
   };
-
-  React.useEffect(() => {
-    let amount = BIG_ZERO;
-    let approved = BIG_ZERO;
-    if (wallet.address && !isEmpty(tokens[formData.deposit.token])) {
-      amount = byDecimals(
-        new BigNumber(tokens[formData.deposit.token].balance),
-        tokens[formData.deposit.token].decimals
-      );
-      if (formData.zap && formData.deposit.token !== item.token) {
-        approved = tokens[formData.deposit.token].allowance[formData.zap.address];
-      } else {
-        approved = tokens[formData.deposit.token].allowance[item.earnContractAddress];
-      }
-    }
-    setState({
-      balance: new BigNumber(amount),
-      allowance: new BigNumber(approved),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wallet.address, item, balance, formData.deposit.token]);
-
-  React.useEffect(() => {
-    setIsLoading(balance.isBalancesLoading);
-  }, [balance.isBalancesLoading]);
 
   React.useEffect(() => {
     const index = steps.currentStep;
@@ -295,8 +299,8 @@ export const Deposit: React.FC<DepositProps> = ({
           <Typography variant="body1" className={classes.zapPromotion}>
             {t('Zap-Promotion', {
               action: 'Deposit',
-              token1: item.assets[0],
-              token2: item.assets[1],
+              token1: vault.assets[0],
+              token2: vault.assets[1],
             })}
           </Typography>
         )}
@@ -311,13 +315,13 @@ export const Deposit: React.FC<DepositProps> = ({
           <div style={{ display: 'flex' }}>
             <FormControlLabel
               className={classes.depositTokenContainer}
-              value={item.token}
+              value={vault.token}
               control={formData.zap ? <Radio /> : <div style={{ width: 12 }} />}
               label={
                 /*TODO: wrap label content into component */
                 <Box className={classes.balanceContainer} display="flex" alignItems="center">
                   <Box lineHeight={0}>
-                    <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
+                    <AssetsImage img={vault.logo} assets={vault.assets} alt={vault.name} />
                   </Box>
                   <Box flexGrow={1} pl={1} lineHeight={0}>
                     {isLoading ? (
@@ -325,9 +329,12 @@ export const Deposit: React.FC<DepositProps> = ({
                     ) : (
                       <Typography className={classes.assetCount} variant={'body1'}>
                         {(
-                          byDecimals(tokens[item.token].balance, tokens[item.token].decimals) as any
+                          byDecimals(
+                            tokens[vault.token].balance,
+                            tokens[vault.token].decimals
+                          ) as any
                         ).significant(6)}{' '}
-                        {item.token}
+                        {vault.token}
                       </Typography>
                     )}
                   </Box>
@@ -335,9 +342,9 @@ export const Deposit: React.FC<DepositProps> = ({
               }
             />
             <Box>
-              {item.buyTokenUrl && !item.addLiquidityUrl && (
+              {vault.buyTokenUrl && !vault.addLiquidityUrl && (
                 <a
-                  href={item.buyTokenUrl}
+                  href={vault.buyTokenUrl}
                   target="_blank"
                   rel="noreferrer"
                   className={classes.btnSecondary}
@@ -347,9 +354,9 @@ export const Deposit: React.FC<DepositProps> = ({
                   </Button>
                 </a>
               )}
-              {item.addLiquidityUrl && !item.buyTokenUrl && (
+              {vault.addLiquidityUrl && !vault.buyTokenUrl && (
                 <a
-                  href={item.addLiquidityUrl}
+                  href={vault.addLiquidityUrl}
                   target="_blank"
                   rel="noreferrer"
                   className={classes.btnSecondary}
@@ -393,10 +400,10 @@ export const Deposit: React.FC<DepositProps> = ({
             />
           ))}
         </RadioGroup>
-        {item.buyTokenUrl && item.addLiquidityUrl && (
+        {vault.buyTokenUrl && vault.addLiquidityUrl && (
           <Box className={classes.btnContaniner}>
             <a
-              href={item.buyTokenUrl}
+              href={vault.buyTokenUrl}
               target="_blank"
               rel="noreferrer"
               className={classes.btnSecondary}
@@ -410,7 +417,7 @@ export const Deposit: React.FC<DepositProps> = ({
             </a>
             <a
               style={{ marginLeft: '12px' }}
-              href={item.addLiquidityUrl}
+              href={vault.addLiquidityUrl}
               target="_blank"
               rel="noreferrer"
               className={classes.btnSecondary}
@@ -428,9 +435,9 @@ export const Deposit: React.FC<DepositProps> = ({
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
               <AssetsImage
-                img={formData.deposit.token === item.token ? item.logo : null}
+                img={formData.deposit.token === vault.token ? vault.logo : null}
                 assets={
-                  formData.deposit.token === item.token ? item.assets : [formData.deposit.token]
+                  formData.deposit.token === vault.token ? vault.assets : [formData.deposit.token]
                 }
                 alt={formData.token}
               />
@@ -444,7 +451,7 @@ export const Deposit: React.FC<DepositProps> = ({
           </Paper>
         </Box>
         <FeeBreakdown
-          item={item}
+          item={vault}
           slippageTolerance={formData.slippageTolerance}
           zapEstimate={formData.deposit.zapEstimate}
           isZapSwap={formData.deposit.isZapSwap}
@@ -452,18 +459,18 @@ export const Deposit: React.FC<DepositProps> = ({
           type={'deposit'}
         />
         <Box mt={2}>
-          {item.status !== 'active' ? (
+          {vault.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
               {t('Deposit-Disabled')}
             </Button>
           ) : wallet.address ? (
-            item.network !== wallet.network ? (
+            vault.network !== wallet.network ? (
               <Button
-                onClick={() => switchNetwork(item.network, dispatch)}
+                onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
                 className={classes.btnSubmit}
                 fullWidth={true}
               >
-                {t('Network-Change', { network: item.network.toUpperCase() })}
+                {t('Network-Change', { network: vault.network.toUpperCase() })}
               </Button>
             ) : (
               <Button
@@ -485,10 +492,10 @@ export const Deposit: React.FC<DepositProps> = ({
           )}
         </Box>
       </Box>
-      {!item.isGovVault ? (
+      {!vault.isGovVault ? (
         <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} />
       ) : null}
-      <Steps item={item} steps={steps} handleClose={handleClose} />
+      <Steps item={vault} steps={steps} handleClose={handleClose} />
     </React.Fragment>
   ); //return
 }; //const Deposit

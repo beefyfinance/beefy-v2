@@ -5,8 +5,10 @@ import { BIG_ZERO, byDecimals, convertAmountToRawNumber } from '../../../helpers
 import zapAbi from '../../../config/abi/zap.json';
 import uniswapV2PairABI from '../../../config/abi/uniswapV2Pair.json';
 import uniswapV2RouterABI from '../../../config/abi/uniswapV2Router.json';
+import { getWeb3Instance } from '../../data/apis/instances';
 
-const estimateZapDeposit = ({ web3, vault, formData, setFormData }) => {
+export const estimateZapDeposit = ({ vault, formData, setFormData }) => {
+  const web3 = getWeb3Instance(vault.chainId);
   const tokenIn = formData.zap.tokens.find(t => t.symbol === formData.deposit.token);
   const tokenOut = formData.zap.tokens.find(t => t.symbol !== formData.deposit.token);
 
@@ -57,7 +59,8 @@ const estimateZapDeposit = ({ web3, vault, formData, setFormData }) => {
     });
 };
 
-const estimateZapWithdraw = ({ web3, vault, formData, setFormData }) => {
+export const estimateZapWithdraw = ({ vault, formData, setFormData }) => {
+  const web3 = getWeb3Instance(vault.chainId);
   const tokenOut = formData.zap.tokens.find(t => t.symbol === formData.withdraw.token);
   const tokenIn = formData.zap.tokens.find(t => t.symbol !== formData.withdraw.token);
 
@@ -136,9 +139,4 @@ const estimateZapWithdraw = ({ web3, vault, formData, setFormData }) => {
     });
 
   return multicallPromise;
-};
-
-export const vault = {
-  estimateZapDeposit,
-  estimateZapWithdraw,
 };

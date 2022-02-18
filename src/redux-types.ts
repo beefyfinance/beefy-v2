@@ -1,10 +1,4 @@
-import {
-  EnhancedStore,
-  CombinedState,
-  MiddlewareArray,
-  AnyAction,
-  AsyncThunkAction,
-} from '@reduxjs/toolkit';
+import { EnhancedStore, CombinedState, MiddlewareArray, AnyAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'react';
 import { ThunkMiddleware } from 'redux-thunk';
 import { AllowanceState } from './features/data/reducers/allowance';
@@ -14,6 +8,7 @@ import { BoostsState } from './features/data/reducers/boosts';
 import { BuybackState } from './features/data/reducers/buyback';
 import { ChainsState } from './features/data/reducers/chains';
 import { DataLoaderState } from './features/data/reducers/data-loader';
+import { DepositState } from './features/data/reducers/deposit';
 import { FilteredVaultsState } from './features/data/reducers/filtered-vaults';
 import { HistoricalApyState } from './features/data/reducers/historical-apy';
 import { PartnersState } from './features/data/reducers/partners';
@@ -50,6 +45,7 @@ export interface BeefyState {
     dataLoader: DataLoaderState;
     filteredVaults: FilteredVaultsState;
     theme: UIThemeState;
+    deposit: DepositState;
   };
 }
 

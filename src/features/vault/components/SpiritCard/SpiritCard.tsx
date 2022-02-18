@@ -13,7 +13,6 @@ import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import { useBalance } from './useBalance';
 import { BIG_ZERO, convertAmountToRawNumber, formatBigDecimals } from '../../../../helpers/format';
 import { SpiritToken, binSpiritMintVault } from './SpiritToken';
-import { reduxActions } from '../../../redux/actions';
 import { isEmpty } from '../../../../helpers/utils';
 import { Steps } from '../../../../components/Steps';
 import { useAllowance } from './useAllowance';
@@ -23,6 +22,7 @@ import { BeefyState } from '../../../../redux-types';
 import { selectStandardVaultUserBalanceInToken } from '../../../data/selectors/balance';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { selectTokenById } from '../../../data/selectors/tokens';
+import { reduxActions } from '../../../redux/actions';
 
 const useStyles = makeStyles(styles as any);
 
