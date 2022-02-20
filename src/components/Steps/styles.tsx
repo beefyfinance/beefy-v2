@@ -69,6 +69,27 @@ export const styles = theme => ({
     height: '100%',
     borderRadius: '4px 0 0 0',
   },
+  progresBar25: {
+    width: '25%',
+    margin: 0,
+    backgroundColor: theme.palette.primary.main,
+    height: '100%',
+    borderRadius: '4px 0 0 0',
+  },
+  progresBar50: {
+    width: '50%',
+    margin: 0,
+    backgroundColor: theme.palette.primary.main,
+    height: '100%',
+    borderRadius: '4px 0 0 0',
+  },
+  progresBar75: {
+    width: '75%',
+    margin: 0,
+    backgroundColor: theme.palette.primary.main,
+    height: '100%',
+    borderRadius: '4px 0 0 0',
+  },
   progresBar1: {
     width: '75%',
     margin: 0,

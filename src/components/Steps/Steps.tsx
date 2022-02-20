@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { byDecimals } from '../../helpers/format';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
-import BigNumber from 'bignumber.js';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import clsx from 'clsx';
@@ -17,6 +16,7 @@ export const Steps = ({ item, steps, handleClose }) => {
   const wallet = useSelector((state: any) => state.walletReducer);
 
   console.log(steps);
+  console.log(steps.items.length > 1);
 
   return (
     <Snackbar
@@ -30,7 +30,22 @@ export const Steps = ({ item, steps, handleClose }) => {
           <Box
             className={clsx({
               [classes.progresBar]: true,
-              [classes.progresBar1]: steps.items.length > 1,
+              [classes.progresBar25]:
+                steps.items.length > 1 &&
+                !steps.finished &&
+                steps.items[steps.currentStep].step === 'approve',
+              [classes.progresBar50]:
+                steps.items.length > 1 &&
+                !steps.finished &&
+                (steps.items[steps.currentStep].step === 'withdraw' ||
+                  steps.items[steps.currentStep].step === 'deposit'),
+              [classes.progresBar75]:
+                steps.items.length > 1 &&
+                !steps.finished &&
+                (steps.items[steps.currentStep].step === 'withdraw' ||
+                  steps.items[steps.currentStep].step === 'deposit') &&
+                wallet.action &&
+                wallet.action.result === 'success_pending',
               [classes.errorBar]: wallet.action && wallet.action.result === 'error',
               [classes.confirmationBar]:
                 wallet.action && wallet.action.result === 'success_pending',
@@ -122,7 +137,7 @@ export const Steps = ({ item, steps, handleClose }) => {
                           steps.items[steps.currentStep].amount,
                           item.tokenDecimals
                         ).toFixed(2),
-                        token: item.token,
+                        token: steps.items[steps.currentStep].token.symbol,
                       })}
                     </Typography>
                     <Button
@@ -150,12 +165,7 @@ export const Steps = ({ item, steps, handleClose }) => {
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Withdrawal', {
-                        amount: item.isGovVault
-                          ? byDecimals(
-                              new BigNumber(wallet.action.data.amount),
-                              steps.items[steps.currentStep].token.decimals
-                            ).toFixed(4)
-                          : byDecimals(wallet.action.data.amount, item.tokenDecimals).toFixed(4),
+                        amount: steps.items[steps.currentStep].amount,
                         token: item.token,
                       })}
                     </Typography>
@@ -232,7 +242,7 @@ export const Steps = ({ item, steps, handleClose }) => {
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Claimed', {
-                        amount:steps.items[steps.currentStep].amount,
+                        amount: steps.items[steps.currentStep].amount,
                         token: steps.items[steps.currentStep].token.symbol,
                       })}
                     </Typography>

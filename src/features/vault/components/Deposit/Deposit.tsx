@@ -289,6 +289,7 @@ export const Deposit: React.FC<DepositProps> = ({
 
   return (
     <React.Fragment>
+      {console.log(formData)}
       <Box p={3}>
         {formData.zap && (
           <Typography variant="body1" className={classes.zapPromotion}>
