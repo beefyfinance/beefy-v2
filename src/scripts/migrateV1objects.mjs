@@ -32,6 +32,7 @@ run. To cut down onrepository pollution, the maintainer may avoid pushing this f
 the staging repository.
 
 Development
++ v0.7.0.5 AllTrades: add Moonbeam blockchain
 + v0.7.0.4 AllTrades: add Aurora blockchain
 + v0.7.0.3 AllTrades: add Metis blockchain
 + v0.7.0.2 AllTrades: add Fuse blockchain
@@ -73,7 +74,8 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 									{S_SRC: "cronos", S_GVPOOL_SFX_ALIAS: "cronos"},
 									{S_SRC: "fuse"}, 
 									{S_SRC: "metis"},
-									{S_SRC: "aurora", S_GVPOOL_SFX_ALIAS: "aurora"}],
+									{S_SRC: "aurora", S_GVPOOL_SFX_ALIAS: "aurora"},
+									{S_SRC: "moonbeam", S_GVPOOL_SFX_ALIAS: "moonbeam"}],
 			mS_PRPNM_ID = "id", mS_PRPNM_ASSTS = "assets", mS_PRPNM_STRAT_TYP = "stratType", 
 			mS_PRPNM_CHAIN = "network", mS_PRPNM_LOGO = "logo", mS_PRPNM_RISKS = "risks",
 			mS_PRPNM_CTRCT = "earnContractAddress", mS_PRPNM_TYP = "type", 

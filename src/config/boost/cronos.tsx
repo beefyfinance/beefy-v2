@@ -28,5 +28,35 @@ export const pools = [
         }
       }
     ]
+  },
+  {
+    id: "moo_vvs-vvs-cro-darkcrypto",
+    poolId: "vvs-vvs-cro",
+    name: "DarkCrypto",
+    assets: [
+      "VVS",
+      "CRO"
+    ],
+    earnedToken: "SKY",
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: "0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
+    earnContractAddress: "0xE06575Cfd4a631e8C0Cd9FBDd8d77AB04CFfA52C",
+    earnedOracle: "tokens",
+    earnedOracleId: "SKY",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/dark/logo.png",
+        background: "stake/dark/bg.png",
+        text: "DarkCrypto - Algorithms Token Pegged With CRO on CRONOS chain. $DARK will be an on-demand token for DarkVerse - Universe of GameFi and metaverse.",
+        website: "https://www.darkcrypto.finance/",
+        social: {
+          telegram: "https://t.me/darkcryptofi",
+          twitter: "https://twitter.com/DarkCryptoFi"
+        }
+      }
+    ]
   }
 ];
