@@ -257,5 +257,33 @@ export const pools = [
         }
       }
     ]
+  },
+  {
+    id: "moo_curve-ftm-geist-ripae",
+    poolId: "curve-ftm-geist",
+    name: "Ripae.Finance",
+    logo: "uncategorized/3CRV.png",
+    earnedToken: "PAE",
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: "0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498",
+    earnContractAddress: "0x7a9797082ca4D661f8B79a4B5b82b1C7DB372E0c",
+    earnedOracle: "tokens",
+    earnedOracleId: "PAE",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/ripae/logo.png",
+        background: "stake/ripae/bg.png",
+        text: "Ripae Finance’s full focus is to build a true cross-chain algorithmic stable coin protocol that is stabilized with true use-cases all around the DeFi Ecosystem.\n\nRipae Finance, an algorithmic stable coin currently pegged to the value of 1 $FTM. An Algorithmic Stable Coin (ASC) is a non-collateralized stablecoin tailored for improving price stability. The beauty of algorithmic stable coins is that they are much more capital efficient than their collateralized cousins. Ripae finance will with its experienced teamwork towards expanding this idea of capital-efficient algorithmic stable coin and build on previous iterations to expand the basis of the ecosystem.",
+        website: "https://ripae.finance/",
+        social: {
+          telegram: "https://discord.gg/6zq53FB4TS",
+          twitter: "https://twitter.com/ripaefinance"
+        },
+        null: "Ripae’s mission is to construct a cross-chain algorithmic stablecoin (ASC) economy and connect DeFi networks to make open finance capital efficient and accessible to everyone.\n\nWith its experienced team, Ripae Finance will strive to build DeFi’s most convenient, secure, fair, and cost-effective ASC solution in order to help the industry thrive by enabling all participants to work together effortlessly."
+      }
+    ]
   }
 ];

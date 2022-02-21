@@ -167,6 +167,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
           ),
         token: SpiritToken,
         pending: false,
+        amount,
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });

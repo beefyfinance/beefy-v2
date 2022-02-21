@@ -181,6 +181,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
           dispatch(reduxActions.wallet.unstake(item.network, item.earnContractAddress, amount)),
         pending: false,
         token: tokens[formData.deposit.token],
+        amount,
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
@@ -202,8 +203,8 @@ export const Unstake: React.FC<UnstakeProps> = ({
         <Card>
           <CardHeader className={classes.header}>
             <CardTitle titleClassName={classes.title} title={t('Unstake-Modal-Title')} />
-            <IconButton onClick={closeModal} aria-label="settings">
-              <CloseIcon htmlColor="#6B7199" />
+            <IconButton className={classes.removeHover} onClick={closeModal} aria-label="settings">
+              <CloseIcon htmlColor="#8A8EA8" />
             </IconButton>
           </CardHeader>
           <CardContent className={classes.content}>

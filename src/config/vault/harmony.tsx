@@ -72,7 +72,8 @@ export const pools = [
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631279238
   },
   {
     id: "sushi-one-1eth-1aave",
@@ -109,7 +110,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631279357
   },
   {
     id: "sushi-one-1axs-1eth",
@@ -146,7 +148,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631279474
   },
   {
     id: "sushi-one-1eth-1dai",
@@ -183,7 +186,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631282246
   },
   {
     id: "sushi-one-1usdt-1eth",
@@ -220,7 +224,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631282425
   },
   {
     id: "sushi-one-1eth-1frax",
@@ -257,7 +262,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631282533
   },
   {
     id: "sushi-one-ust-1eth",
@@ -294,7 +300,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631282733
   },
   {
     id: "sushi-one-1wbtc-1eth",
@@ -331,7 +338,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631283021
   },
   {
     id: "sushi-one-1usdt-1usdc",
@@ -368,7 +376,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631283436
   },
   {
     id: "sushi-one-1usdt-wone",
@@ -405,7 +414,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631283673
   },
   {
     id: "sushi-one-sushi-one",
@@ -442,7 +452,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631197145
   },
   {
     id: "sushi-one-busd-one",
@@ -479,7 +490,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631201665
   },
   {
     id: "sushi-one-bscbusd-busd",
@@ -516,7 +528,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631204933
   },
   {
     id: "sushi-one-eth-one",
@@ -553,7 +566,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631205117
   },
   {
     id: "sushi-one-btc-one",
@@ -590,7 +604,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631205541
   },
   {
     id: "sushi-one-usdc-one",
@@ -627,7 +642,8 @@ export const pools = [
       "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-    ]
+    ],
+    createdAt: 1631205683
   },
   {
     id: "one-bifi-maxi",
@@ -662,7 +678,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
     stratType: "SingleStake",
-    network: "harmony"
+    network: "harmony",
+    createdAt: 1636644198
   },
   {
     id: "curve-harmony-tricrypto",
@@ -702,7 +719,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://harmony.curve.fi/tricrypto/deposit",
-    network: "harmony"
+    network: "harmony",
+    createdAt: 1638254407
   },
   {
     id: "curve-harmony-3pool",
@@ -740,7 +758,8 @@ export const pools = [
     stratType: "StratMultiLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://harmony.curve.fi/3pool/deposit",
-    network: "harmony"
+    network: "harmony",
+    createdAt: 1638252423
   },
   {
     id: "sushi-one-bifi-wone",
@@ -778,7 +797,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
-    network: "harmony"
+    network: "harmony",
+    createdAt: 1641218645
   },
   {
     id: "sushi-one-wone-1btc",
@@ -816,6 +836,7 @@ export const pools = [
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0xdc54046c0451f9269FEe1840aeC808D36015697d",
     buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xdc54046c0451f9269FEe1840aeC808D36015697d",
-    network: "harmony"
+    network: "harmony",
+    createdAt: 1641218490
   }
 ];

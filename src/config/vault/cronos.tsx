@@ -70,7 +70,8 @@ export const pools = [
     stratType: "SingleStake",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     network: "cronos",
-    withdrawalFee: "0%"
+    withdrawalFee: "0%",
+    createdAt: 1637054454
   },
   {
     id: "vvs-vvs-usdc",
@@ -106,7 +107,8 @@ export const pools = [
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     addLiquidityUrl: "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     network: "cronos",
-    withdrawalFee: "0%"
+    withdrawalFee: "0%",
+    createdAt: 1637045279
   },
   {
     id: "vvs-vvs-cro",
@@ -142,7 +144,8 @@ export const pools = [
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     network: "cronos",
-    withdrawalFee: "0%"
+    withdrawalFee: "0%",
+    createdAt: 1637045228
   },
   {
     id: "vvs-cro-eth",
@@ -178,7 +181,8 @@ export const pools = [
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     network: "cronos",
-    withdrawalFee: "0%"
+    withdrawalFee: "0%",
+    createdAt: 1637043985
   },
   {
     id: "vvs-cro-btc",
@@ -214,7 +218,8 @@ export const pools = [
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     network: "cronos",
-    withdrawalFee: "0%"
+    withdrawalFee: "0%",
+    createdAt: 1637045082
   },
   {
     id: "vvs-cro-shib",
@@ -250,7 +255,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637576058
   },
   {
     id: "vvs-vvs-usdt",
@@ -286,7 +292,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     addLiquidityUrl: "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x66e428c3f67a68878562e79A0234c1F83c208770",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637322635
   },
   {
     id: "vvs-usdt-usdc",
@@ -322,7 +329,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     addLiquidityUrl: "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x66e428c3f67a68878562e79A0234c1F83c208770",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637151567
   },
   {
     id: "crona-crona",
@@ -357,7 +365,8 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xadbd1231fb360047525BEdF962581F3eee7b49fe",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637166889
   },
   {
     id: "crona-cro-crona",
@@ -392,7 +401,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xadbd1231fb360047525BEdF962581F3eee7b49fe",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637138260
   },
   {
     id: "crona-cro-usdc",
@@ -427,7 +437,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637146470
   },
   {
     id: "crona-cro-usdt",
@@ -462,7 +473,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637147878
   },
   {
     id: "crona-wbtc-cro",
@@ -497,7 +509,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637150470
   },
   {
     id: "crona-usdt-busd",
@@ -532,7 +545,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637153704
   },
   {
     id: "crona-usdt-usdc",
@@ -567,7 +581,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637164857
   },
   {
     id: "cronos-bifi-maxi",
@@ -602,7 +617,8 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?inputCurrency=0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23&outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637778656
   },
   {
     id: "vvs-cro-usdt",
@@ -638,7 +654,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0x66e428c3f67a68878562e79A0234c1F83c208770",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637834160
   },
   {
     id: "vvs-cro-usdc",
@@ -674,7 +691,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1637656647
   },
   {
     id: "crona-crona-usdc",
@@ -709,7 +727,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     addLiquidityUrl: "https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1638062854
   },
   {
     id: "crona-usdt-crona",
@@ -744,7 +763,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     addLiquidityUrl: "https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0x66e428c3f67a68878562e79A0234c1F83c208770",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1638063529
   },
   {
     id: "crona-usdc-dai",
@@ -779,7 +799,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     addLiquidityUrl: "https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1638064120
   },
   {
     id: "crona-busd-bnb",
@@ -814,7 +835,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1638061783
   },
   {
     id: "vvs-cro-dai",
@@ -850,43 +872,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
-    network: "cronos"
-  },
-  {
-    id: "vvs-cro-bifi",
-    name: "BIFI-CRO",
-    token: "BIFI-CRO LP",
-    tokenDescription: "VVS",
-    tokenAddress: "0x1803E360393A472beC6E1A688BDF7048d3076b1A",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooVvsCRO-BIFI",
-    earnedTokenAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
-    earnContractAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "vvs-cro-bifi",
-    oraclePrice: 0,
-    status: "active",
-    platform: "VVS",
-    assets: [
-      "BIFI",
-      "CRO"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    withdrawalFee: "0%",
-    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
-    addLiquidityUrl: "https://vvs.finance/add/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1638173103
   },
   {
     id: "vvs-cro-doge",
@@ -923,7 +910,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1639476244
   },
   {
     id: "crona-wbtc-eth",
@@ -959,7 +947,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1639425411
   },
   {
     id: "crona-usdc-eth",
@@ -995,7 +984,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     addLiquidityUrl: "https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1639129150
   },
   {
     id: "crona-wbtc-usdc",
@@ -1031,7 +1021,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x062E66477Faf219F25D27dCED647BF57C3107d52/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1639127958
   },
   {
     id: "crona-usdt-matic-eol",
@@ -1067,7 +1058,8 @@ export const pools = [
     buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055",
     network: "cronos",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1637155684
   },
   {
     id: "vvs-cro-atom",
@@ -1104,7 +1096,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1639730963
   },
   {
     id: "liq-liq-cro",
@@ -1141,7 +1134,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1640159132
   },
   {
     id: "vvs-tonic-usdc",
@@ -1178,7 +1172,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     addLiquidityUrl: "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1640161565
   },
   {
     id: "crona-cro-dai-eol",
@@ -1214,7 +1209,8 @@ export const pools = [
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     network: "cronos",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1637152288
   },
   {
     id: "vvs-tonic-cro",
@@ -1251,7 +1247,8 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     addLiquidityUrl: "https://vvs.finance/add/CRO/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
-    network: "cronos"
+    network: "cronos",
+    createdAt: 1641552219
   },
   {
     id: "crona-cro-eth-eol",
@@ -1287,7 +1284,8 @@ export const pools = [
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     network: "cronos",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1637149838
   },
   {
     id: "crona-usdt-ftm-eol",
@@ -1323,6 +1321,121 @@ export const pools = [
     buyTokenUrl: "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
     network: "cronos",
-    retireReason: "rewards"
+    retireReason: "rewards",
+    createdAt: 1637162500
+  },
+  {
+    id: "vvs-cro-bifi-eol",
+    name: "BIFI-CRO",
+    token: "BIFI-CRO LP",
+    tokenDescription: "VVS",
+    tokenAddress: "0x1803E360393A472beC6E1A688BDF7048d3076b1A",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooVvsCRO-BIFI",
+    earnedTokenAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
+    earnContractAddress: "0xc1Ef52C61f3981EB615B4f7d2365c2Ec75abc5a4",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "vvs-cro-bifi",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "VVS",
+    assets: [
+      "BIFI",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://vvs.finance/swap?outputCurrency=0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
+    addLiquidityUrl: "https://vvs.finance/add/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
+    network: "cronos",
+    retireReason: "rewards",
+    createdAt: 1638782855
+  },
+  {
+    id: "dark-dark-cro",
+    name: "DARK-CRO",
+    token: "DARK-CRO LP",
+    tokenDescription: "MMF (DarkCrypto)",
+    tokenAddress: "0xA4AA24B8e855052071Df60E174219e6c8FEe45a3",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooDarkDARK-CRO",
+    earnedTokenAddress: "0x393170e58e2cD0E65Ef4F2b995Fbce1D6B112DFf",
+    earnContractAddress: "0x393170e58e2cD0E65Ef4F2b995Fbce1D6B112DFf",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "dark-dark-cro",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "DARK",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://mm.finance/swap?outputCurrency=0x83b2AC8642aE46FC2823Bc959fFEB3c1742c48B5",
+    addLiquidityUrl: "https://mm.finance/add/CRO/0x83b2AC8642aE46FC2823Bc959fFEB3c1742c48B5",
+    createdAt: 1644921724,
+    network: "cronos"
+  },
+  {
+    id: "dark-sky-cro",
+    name: "SKY-CRO",
+    token: "SKY-CRO LP",
+    tokenDescription: "MMF (DarkCrypto)",
+    tokenAddress: "0xaA0845EE17e4f1D4F3A8c22cB1e8102baCf56a77",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooDarkSKY-CRO",
+    earnedTokenAddress: "0xf79dDeC4E4f1c8578BA0DE006574db5cE71889bB",
+    earnContractAddress: "0xf79dDeC4E4f1c8578BA0DE006574db5cE71889bB",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "dark-sky-cro",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Other",
+    assets: [
+      "SKY",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://mm.finance/swap?outputCurrency=0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
+    addLiquidityUrl: "https://mm.finance/add/CRO/0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
+    createdAt: 1644921724,
+    network: "cronos"
   }
 ];
