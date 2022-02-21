@@ -178,6 +178,7 @@ export const Deposit: React.FC<DepositProps> = ({
             ),
           token: tokens[formData.deposit.token],
           pending: false,
+          amount,
         });
       }
 
@@ -196,6 +197,7 @@ export const Deposit: React.FC<DepositProps> = ({
               ),
             token: tokens[formData.deposit.token],
             pending: false,
+            amount: amount,
           });
         } else if (isNative) {
           steps.push({
@@ -207,6 +209,7 @@ export const Deposit: React.FC<DepositProps> = ({
               ),
             token: tokens[formData.deposit.token],
             pending: false,
+            amount: amount,
           });
         } else {
           steps.push({
@@ -223,6 +226,7 @@ export const Deposit: React.FC<DepositProps> = ({
               ),
             token: tokens[formData.deposit.token],
             pending: false,
+            amount: amount,
           });
         }
       }
@@ -285,6 +289,7 @@ export const Deposit: React.FC<DepositProps> = ({
 
   return (
     <React.Fragment>
+      {console.log(formData)}
       <Box p={3}>
         {formData.zap && (
           <Typography variant="body1" className={classes.zapPromotion}>
@@ -467,7 +472,7 @@ export const Deposit: React.FC<DepositProps> = ({
                 fullWidth={true}
                 disabled={
                   formData.deposit.amount.isLessThanOrEqualTo(0) ||
-                  formData.deposit.isZap && formData.deposit.zapEstimate.isLoading
+                  (formData.deposit.isZap && formData.deposit.zapEstimate.isLoading)
                 }
               >
                 {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}

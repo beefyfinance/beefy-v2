@@ -26,6 +26,13 @@ const theme = createTheme({
         inactive: '#111321',
         inactiveOutline: '#762C2C',
       },
+      snackbars: {
+        bg: '#FFF',
+        bgLine: '#E5E5E5',
+        bgBtn: '#363B63',
+        text: '#2D3153',
+        error: '#DC2C10',
+      },
     } as any, // TODO: fix any
     text: {
       primary: '#F5F5FF',
