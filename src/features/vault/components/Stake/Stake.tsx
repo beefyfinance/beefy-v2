@@ -188,6 +188,7 @@ export const Stake: React.FC<StakeProps> = ({
           dispatch(reduxActions.wallet.stake(item.network, item.earnContractAddress, amount)),
         pending: false,
         token: tokens[formData.deposit.token],
+        amount,
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });

@@ -3,7 +3,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Loader } from '../../../../components/loader';
-import { byDecimals, convertAmountToRawNumber, stripExtraDecimals } from '../../../../helpers/format';
+import {
+  byDecimals,
+  convertAmountToRawNumber,
+  stripExtraDecimals,
+} from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { reduxActions } from '../../../redux/actions';
@@ -77,6 +81,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
             )
           ),
         pending: false,
+        amount: amount,
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
@@ -136,7 +141,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
         <Box className={classes.balanceContainer} display="flex" alignItems="center">
           <Box flexGrow={1} pl={1} lineHeight={0}>
             {isLoading ? (
-              <Loader message={""} line={true} />
+              <Loader message={''} line={true} />
             ) : (
               <Typography variant={'body1'}>
                 {state.wallet} {item.token}
@@ -146,7 +151,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
           </Box>
           <Box>
             {isLoading ? (
-              <Loader message={""} line={true} />
+              <Loader message={''} line={true} />
             ) : (
               <Typography variant={'body1'}>{state.balance}</Typography>
             )}
