@@ -669,5 +669,35 @@ export const pools = [
         }
       }
     ]
+  },
+  {
+    id: "moo_sushi-jrt-eth-jarvis",
+    poolId: "sushi-jrt-eth",
+    name: "Jarvis",
+    assets: [
+      "JRT",
+      "ETH"
+    ],
+    earnedToken: "JRT-ETH-KPI",
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: "0x37c2a140bD1dE90D195d7CE3587fAbA7963879Fb",
+    earnContractAddress: "0x87346455bC3216fFa5c3C8Df21d7B70183B07399",
+    earnedOracle: "tokens",
+    earnedOracleId: "JRT",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/jarvis/logo.png",
+        background: "stake/jarvis/bg.png",
+        text: "arvis Network is a set of protocols and applications to bring DeFi to everyone. Its first protocol, Synthereum, pioneered a capital efficient manner to issue and exchange synthetic fiat currencies on Ethereum and Polygon. Called jFIAT, these stablecoins are redeemable for USDC at the oracle price, making them stable and liquid.",
+        website: "https://jarvis.network/",
+        social: {
+          telegram: "https://discord.com/invite/2GbKwERXDc",
+          twitter: "https://twitter.com/jarvis_network"
+        }
+      }
+    ]
   }
 ];

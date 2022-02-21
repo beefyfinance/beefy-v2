@@ -2081,5 +2081,43 @@ export const pools = [
     network: "moonriver",
     retireReason: "rewards",
     createdAt: 1635942222
+  },
+  {
+    id: "finn-usdc.m-usdc",
+    name: "USDC.m-USDC LP",
+    token: "USDC.m-USDC LP",
+    tokenDescription: "Huckleberry",
+    tokenAddress: "0xc1E370A8a2285468F95d1bf281C5179071675c3C",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFinnUSDC.m-USDC",
+    earnedTokenAddress: "0xC8ca2254bCBA3aD8511Faff54e0b9941D0424502",
+    earnContractAddress: "0xC8ca2254bCBA3aD8511Faff54e0b9941D0424502",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "finn-usdc.m-usdc",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Huckleberry",
+    assets: [
+      "USDC",
+      "USDCm"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    buyTokenUrl: "https://www.huckleberry.finance/#/swap",
+    addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x748134b5F553F2bcBD78c6826De99a70274bDEb3",
+    createdAt: 1645031166,
+    network: "moonriver"
   }
 ];
