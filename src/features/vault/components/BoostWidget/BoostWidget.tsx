@@ -197,6 +197,7 @@ export const BoostWidget = ({ isBoosted, boostedData, vaultBoosts }) => {
           ),
         pending: false,
         token: balance.tokens[item.network][item.earnedToken],
+        amount: state.rewards.toFixed(4),
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });

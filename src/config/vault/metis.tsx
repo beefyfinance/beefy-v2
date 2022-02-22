@@ -130,7 +130,7 @@ export const pools = [
     oracleId: "netswap-nett-m.usdc",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "active",
+    status: "paused",
     platform: "Netswap",
     assets: [
       "mUSDC",
@@ -630,5 +630,42 @@ export const pools = [
     buyTokenUrl: "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x420000000000000000000000000000000000000A",
     network: "metis",
     createdAt: 1642624056
+  },
+  {
+    id: "tethys-m.usdc-m.usdt",
+    name: "m.USDC-m.USDT LP",
+    token: "m.USDC-m.USDT TLP",
+    tokenDescription: "Tethys",
+    tokenAddress: "0x6c4768d4b3acD4a3fF01F179FaffDaEbe084D12D",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooTethysm.USDC - m.USDT",
+    earnedTokenAddress: "0xc674cf138415244041d512Edf1c7943D99dD229F",
+    earnContractAddress: "0xc674cf138415244041d512Edf1c7943D99dD229F",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "tethys-m.usdc-m.usdt",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Tethys",
+    assets: [
+      "mUSDC",
+      "mUSDT"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LOW",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://tethys.finance/pool/add?inputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21&outputCurrency=0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+    buyTokenUrl: "https://tethys.finance/swap?inputCurrency=METIS&outputCurrency=0x6c4768d4b3acD4a3fF01F179FaffDaEbe084D12D",
+    createdAt: 1644871173,
+    network: "metis"
   }
 ];

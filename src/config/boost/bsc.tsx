@@ -103,7 +103,7 @@ export const pools = [
   },
   {
     id: "moo_banana-crush-wbnb-bitcrush",
-    poolId: "banana-crush-wbnb",
+    poolId: "banana-crush-wbnb-eol",
     name: "Bitcrush",
     assets: [
       "CRUSH",

@@ -240,7 +240,8 @@ export const Withdraw = ({
                     )
                   ),
             pending: false,
-            token: tokens[item.token],
+            token: formData.withdraw.zapEstimate.tokenOut.symbol,
+            amount: formData.withdraw.zapEstimate.amountOut.times(2).significant(6),
           });
         } else {
           steps.push({
@@ -266,6 +267,7 @@ export const Withdraw = ({
                   ),
             pending: false,
             token: tokens[item.token],
+            amount: formData.withdraw.input,
           });
         }
       }
@@ -295,6 +297,7 @@ export const Withdraw = ({
           ),
         pending: false,
         token: tokens[item.token],
+        amount: state.balance.toFixed(4),
       });
 
       setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
@@ -382,6 +385,7 @@ export const Withdraw = ({
 
   return (
     <React.Fragment>
+      {console.log(formData)}
       <Box p={3}>
         {formData.zap && (
           <Typography variant="body1" className={classes.zapPromotion}>
