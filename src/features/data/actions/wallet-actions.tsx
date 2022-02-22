@@ -15,13 +15,15 @@ import { BeefyState } from '../../../redux-types';
 import { Dispatch } from 'redux';
 import { reloadBalanceAndAllowanceAndGovRewards } from './tokens';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
-import { selectVaultPricePerFullShare } from '../selectors/vaults';
+import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
 import { ChainEntity } from '../entities/chain';
 import { uniqBy } from 'lodash';
 import {
+  selectBoostUserRewardsInToken,
   selectGovVaultPendingRewardsInToken,
   selectGovVaultRewardsTokenEntity,
 } from '../selectors/balance';
+import { BoostEntity } from '../entities/boost';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -406,7 +408,7 @@ const unstake = (vault: VaultGov, amount: BigNumber) => {
   };
 };
 
-const claim = (vault: VaultGov) => {
+const claimGovVault = (vault: VaultGov) => {
   return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -440,7 +442,41 @@ const claim = (vault: VaultGov) => {
   };
 };
 
-const exit = (vault: VaultGov) => {
+const claimBoost = (boost: BoostEntity) => {
+  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+    const amount = selectBoostUserRewardsInToken(state, boost.id);
+    const token = selectTokenById(state, boost.chainId, boost.earnedTokenId);
+    const vault = selectVaultById(state, boost.vaultId);
+
+    const walletApi = await getWalletConnectApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contractAddr = boost.earnContractAddress;
+
+    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+
+    const transaction = contract.methods.getReward().send({ from: address });
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: contractAddr, amount, token },
+      {
+        chainId: vault.chainId,
+        spenderAddress: contractAddr,
+        tokens: getVaultTokensToRefresh(state, vault),
+        govVaultId: vault.id,
+      }
+    );
+  };
+};
+
+const exitGovVault = (vault: VaultGov) => {
   return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -474,6 +510,40 @@ const exit = (vault: VaultGov) => {
   };
 };
 
+const exitBoost = (boost: BoostEntity) => {
+  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const amount = selectBoostUserRewardsInToken(state, boost.id);
+    const token = selectTokenById(state, boost.chainId, boost.earnedTokenId);
+    const vault = selectVaultById(state, boost.vaultId);
+
+    const walletApi = await getWalletConnectApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contractAddr = boost.earnContractAddress;
+
+    const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+
+    const transaction = contract.methods.exit().send({ from: address });
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: contractAddr, amount, token },
+      {
+        chainId: boost.chainId,
+        spenderAddress: contractAddr,
+        tokens: getVaultTokensToRefresh(state, vault),
+      }
+    );
+  };
+};
+
 export const walletActions = {
   approval,
   deposit,
@@ -483,8 +553,10 @@ export const walletActions = {
   withdraw,
   stake,
   unstake,
-  claim,
-  exit,
+  claimGovVault,
+  claimBoost,
+  exitGovVault,
+  exitBoost,
 };
 
 function bindTransactionEvents<T>(

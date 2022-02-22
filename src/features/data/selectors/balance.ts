@@ -138,13 +138,22 @@ export const selectUserVaultDepositInToken = (
   }
 };
 
-const selectBoostUserBalanceInToken = (
+export const selectBoostUserBalanceInToken = (
   state: BeefyState,
   boostId: BoostEntity['id'],
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
+};
+
+export const selectBoostUserRewardsInToken = (
+  state: BeefyState,
+  boostId: BoostEntity['id'],
+  walletAddress?: string
+) => {
+  const walletBalance = _selectWalletBalance(state, walletAddress);
+  return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || BIG_ZERO;
 };
 
 export const selectUserVaultDepositInUsd = (

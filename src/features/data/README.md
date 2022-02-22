@@ -43,6 +43,7 @@
 [ ] create deposit & withdrawal specific selectors (spenderAddress)
 [ ] find out why some contract-data and balance contracts are not working on some chains
 [ ] have unit tests for deposit / withdraw stuff it's critical
+[ ] remove feature flags
 
 BONUS:
 

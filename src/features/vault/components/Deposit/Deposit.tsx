@@ -37,6 +37,8 @@ import { Step } from '../../../../components/Steps/types';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
 import { TokenWithBalance } from '../TokenWithBalance';
+import { BoostWidget } from '../BoostWidget';
+import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 
 const useStyles = makeStyles(styles as any);
 
@@ -78,6 +80,9 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const formState = useSelector((state: BeefyState) => state.ui.deposit);
   const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
   const isSelectedNative = formState.selectedToken.id === native.id;
+  const displayBoostWidget = useSelector((state: BeefyState) =>
+    selectShouldDisplayBoostWidget(state, vaultId)
+  );
 
   const spenderAddress =
     // no allowance needed for native tokens
@@ -282,9 +287,7 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           )}
         </Box>
       </Box>
-      {/*!vault.isGovVault ? (
-        <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} />
-      ) : null*/}
+      {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
       <Stepper />
     </>
   );

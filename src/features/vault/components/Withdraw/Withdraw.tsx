@@ -47,6 +47,8 @@ import {
 import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
 import { isArray } from 'lodash';
 import { TokenWithDeposit } from '../TokenWithDeposit';
+import { BoostWidget } from '../BoostWidget';
+import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 
 const useStyles = makeStyles(styles as any);
 
@@ -123,6 +125,9 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const userHasBalanceInVault = useSelector((state: BeefyState) =>
     selectUserVaultDepositInToken(state, vaultId).isGreaterThan(0)
   );
+  const displayBoostWidget = useSelector((state: BeefyState) =>
+    selectShouldDisplayBoostWidget(state, vaultId)
+  );
 
   const [startStepper, isStepping, Stepper] = useStepper(vault.id, () => {});
 
@@ -195,7 +200,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     steps.push({
       step: 'claim',
       message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-      action: walletActions.claim(vault),
+      action: walletActions.claimGovVault(vault),
       pending: false,
     });
 
@@ -217,7 +222,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     steps.push({
       step: 'claim-withdraw',
       message: t('Vault-TxnConfirm', { type: t('Claim-Withdraw-noun') }),
-      action: walletActions.exit(vault),
+      action: walletActions.exitGovVault(vault),
       pending: false,
     });
 
@@ -397,9 +402,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           )}
         </Box>
       </Box>
-      {/*!item.isGovVault ? (
-        <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} />
-      ) : null*/}
+      {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
       <Stepper />
     </>
   );
