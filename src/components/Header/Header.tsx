@@ -126,7 +126,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
                   <SimpleDropdown
                     noBorder={true}
                     chainLogos={true}
-                    list={getAvailableNetworks(true)}
+                    list={getAvailableNetworks()}
                     selected={walletReducer.network}
                     handler={e => switchNetwork(e.target.value, dispatch)}
                   />
@@ -169,7 +169,7 @@ export const Header = ({ isNightMode, setNightMode }) => {
                     <SimpleDropdown
                       noBorder={true}
                       chainLogos={true}
-                      list={getAvailableNetworks(true)}
+                      list={getAvailableNetworks()}
                       selected={walletReducer.network}
                       handler={updateNetwork}
                     />

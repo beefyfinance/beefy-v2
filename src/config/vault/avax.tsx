@@ -4623,5 +4623,80 @@ export const pools = [
     buyTokenUrl: "https://traderjoexyz.com/trade?outputCurrency=0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
     createdAt: 1645036500,
     network: "avax"
+  },
+  {
+    id: "png-fire-wavax",
+    name: "FIRE-AVAX LP",
+    token: "FIRE-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x45324950c6ba08112EbF72754004a66a0a2b7721",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinV2FIRE-AVAX",
+    earnedTokenAddress: "0xcd1f50DFfbC44F5eeFBA2ae6a19dE8196B51427a",
+    earnContractAddress: "0xcd1f50DFfbC44F5eeFBA2ae6a19dE8196B51427a",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "png-fire-wavax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Pangolin",
+    assets: [
+      "FIRE",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xfcc6CE74f4cd7eDEF0C5429bB99d38A3608043a5",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?outputCurrency=0xfcc6CE74f4cd7eDEF0C5429bB99d38A3608043a5",
+    createdAt: 1645197575,
+    network: "avax"
+  },
+  {
+    id: "curve-avax-ren",
+    logo: "single-assets/renBTC.png",
+    name: "WBTC/renBTC",
+    token: "btcCRV",
+    tokenDescription: "Curve",
+    tokenAddress: "0xC2b1DF84112619D190193E48148000e3990Bf627",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCurveRen",
+    earnedTokenAddress: "0xD437ba91922f7e0066C780cC17f175708Fd7b736",
+    earnContractAddress: "0xD437ba91922f7e0066C780cC17f175708Fd7b736",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "curve-avax-ren",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Curve",
+    assets: [
+      "WBTC",
+      "renBTC"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0.01%",
+    addLiquidityUrl: "https://avax.curve.fi/ren/deposit",
+    createdAt: 1626964654,
+    network: "avax"
   }
 ];

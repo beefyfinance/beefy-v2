@@ -6687,46 +6687,6 @@ export const pools = [
     createdAt: 1644485584
   },
   {
-    id: "beets-paint-it-black-eol",
-    logo: "fantom/Paint It Black.png",
-    name: "Paint It Black",
-    token: "Paint It Black",
-    tokenDescription: "Beethoven X",
-    tokenAddress: "0x7cA132d9E8c420b84578a6618F10b23545513058",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooBeetPaintItBlack",
-    earnedTokenAddress: "0x0d88CfD8395b9ED1953FD143d71C7D11317c2223",
-    earnContractAddress: "0x0d88CfD8395b9ED1953FD143d71C7D11317c2223",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "beets-paint-it-black",
-    oraclePrice: 0,
-    depositsPaused: false,
-    status: "eol",
-    platform: "Beethoven X",
-    assets: [
-      "BEETS",
-      "BRUSH",
-      "FTM"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "NEW_STRAT",
-      "IL_HIGH",
-      "MCAP_LOW",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratMultiLP",
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://beets.fi/#/pool/0x7ca132d9e8c420b84578a6618f10b2354551305800010000000000000000002b",
-    network: "fantom",
-    retireReason: "rewards",
-    createdAt: 1642605794
-  },
-  {
     id: "0xdao-xscream-eol",
     logo: "single-assets/xSCREAM.png",
     name: "xSCREAM",
@@ -7298,5 +7258,81 @@ export const pools = [
     network: "fantom",
     createdAt: 1633336047,
     retireReason: "rewards"
+  },
+  {
+    id: "boo-ftm-multi",
+    name: "FTM-MULTI LP",
+    token: "FTM-MULTI LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x297C8990134bf1eE08aE5D8805042fbac8781201",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooFTM-MULTI",
+    earnedTokenAddress: "0x22f72e86A9CA2CDD3Cdc94012E9901D93E3d90F8",
+    earnContractAddress: "0x22f72e86A9CA2CDD3Cdc94012E9901D93E3d90F8",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-ftm-multi",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "FTM",
+      "MULTI"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x9fb9a33956351cf4fa040f65a13b835a3c8764e3",
+    buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=FTM&outputCurrency=0x9fb9a33956351cf4fa040f65a13b835a3c8764e3",
+    createdAt: 1645049415,
+    network: "fantom"
+  },
+  {
+    id: "boo-font-ftm",
+    name: "FONT-FTM LP",
+    token: "FONT-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0x1C8D76074619BCA749b521343Ce16bb96d9F3614",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooFONT-FTM",
+    earnedTokenAddress: "0x90aa5be46B99eA5fF9aEa1C8115cB13caca20d04",
+    earnContractAddress: "0x90aa5be46B99eA5fF9aEa1C8115cB13caca20d04",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "tokens",
+    oracleId: "boo-font-ftm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "FONT",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xbbc4a8d076f4b1888fec42581b6fc58d242cf2d5",
+    buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xbbc4A8d076F4B1888fec42581B6fc58d242CF2D5",
+    createdAt: 1644614666,
+    network: "fantom"
   }
 ];
