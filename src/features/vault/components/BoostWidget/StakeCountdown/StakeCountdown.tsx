@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatCountdown } from '../../../../helpers/format';
+import { formatCountdown } from '../../../../../helpers/format';
 
 export function StakeCountdown({ periodFinish }: { periodFinish: Date | null }) {
   const { t } = useTranslation();

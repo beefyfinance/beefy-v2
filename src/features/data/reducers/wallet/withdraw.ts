@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { isArray } from 'lodash';
-import { BIG_ZERO, formatBigDecimals } from '../../../../helpers/format';
+import {
+  BIG_ZERO,
+  formatBigDecimals,
+  formatBigNumberSignificant,
+} from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { initiateWithdrawForm } from '../../actions/withdraw';
 import { fetchEstimateZapWithdraw } from '../../actions/zap';
@@ -138,7 +142,7 @@ export const withdrawSlice = createSlice({
         if (value.isEqualTo(input)) return input;
         if (input === '') return '';
         if (input === '.') return `0.`;
-        return (value as any).significant(6);
+        return formatBigNumberSignificant(value);
       })();
 
       sliceState.formattedInput = formattedInput;

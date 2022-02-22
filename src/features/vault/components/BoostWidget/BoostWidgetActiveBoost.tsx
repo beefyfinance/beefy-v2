@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover/Popover';
-import { StakeCountdown } from '../StakeCountdown';
 import { formatBigDecimals } from '../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -22,6 +21,7 @@ import {
   selectBoostUserRewardsInToken,
   selectWalletBalanceOfToken,
 } from '../../../data/selectors/balance';
+import { StakeCountdown } from './StakeCountdown';
 
 const useStyles = makeStyles(styles as any);
 

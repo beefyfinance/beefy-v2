@@ -11,40 +11,24 @@ import {
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { BIG_ZERO, convertAmountToRawNumber } from '../../../../helpers/format';
-import { isEmpty } from '../../../../helpers/utils';
-import { Steps } from '../../../../components/Steps';
+import {
+  BIG_ZERO,
+  convertAmountToRawNumber,
+  formatBigNumberSignificant,
+} from '../../../../../helpers/format';
+import { isEmpty } from '../../../../../helpers/utils';
+import { Steps } from '../../../../../components/Steps';
 import CloseIcon from '@material-ui/icons/Close';
-import { Card } from '../Card/Card';
-import { CardHeader } from '../Card/CardHeader';
-import { CardContent } from '../Card/CardContent';
-import { CardTitle } from '../Card/CardTitle';
+import { Card } from '../../Card/Card';
+import { CardHeader } from '../../Card/CardHeader';
+import { CardContent } from '../../Card/CardContent';
+import { CardTitle } from '../../Card/CardTitle';
 import { styles } from './styles';
 import BigNumber from 'bignumber.js';
-import { UnstakeProps } from './UnstakeProps';
-import { askForNetworkChange } from '../../../data/actions/wallet';
-
-(BigNumber.prototype as any).significant = function (digits) {
-  const number = this.toFormat({
-    prefix: '',
-    decimalSeparator: '.',
-    groupSeparator: '',
-    groupSize: 0,
-    secondaryGroupSize: 0,
-  });
-  if (number.length <= digits + 1) {
-    return number;
-  }
-  const [wholes, decimals] = number.split('.');
-  if (wholes.length >= digits) {
-    return wholes;
-  }
-  const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
-  return `${wholes}.${decimals.match(pattern)[0]}`;
-};
+import { askForNetworkChange } from '../../../../data/actions/wallet';
 
 const useStyles = makeStyles(styles as any);
-export const Unstake: React.FC<UnstakeProps> = ({
+export const Unstake = ({
   item,
   balance,
   handleWalletConnect,
@@ -52,6 +36,14 @@ export const Unstake: React.FC<UnstakeProps> = ({
   setFormData,
   resetFormData,
   closeModal,
+}: {
+  item: any;
+  formData: any;
+  setFormData: any;
+  balance: any;
+  handleWalletConnect: any;
+  resetFormData: any;
+  closeModal: () => void;
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -106,7 +98,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
       if (value.isEqualTo(input)) return input;
       if (input === '') return '';
       if (input === '.') return `0.`;
-      return (value as any).significant(6);
+      return formatBigNumberSignificant(value);
     })();
 
     setFormData({
@@ -126,7 +118,7 @@ export const Unstake: React.FC<UnstakeProps> = ({
         ...formData,
         withdraw: {
           ...formData.withdraw,
-          input: (balance.deposited as any).significant(6),
+          input: formatBigNumberSignificant(balance.deposited),
           amount: balance.deposited,
           max: true,
         },
@@ -212,13 +204,13 @@ export const Unstake: React.FC<UnstakeProps> = ({
                 <Box className={classes.available}>
                   <Typography className={classes.label}>{t('Stake-Label-Available')}</Typography>
                   <Typography className={classes.value}>
-                    {(balance.balance as any).significant(6)}
+                    {formatBigNumberSignificant(balance.balance)}
                   </Typography>
                 </Box>
                 <Box className={classes.staked}>
                   <Typography className={classes.label}>{t('Stake-Label-Staked')}</Typography>
                   <Typography className={classes.value}>
-                    {(balance.deposited as any).significant(6)}
+                    {formatBigNumberSignificant(balance.deposited)}
                   </Typography>
                 </Box>
               </Box>

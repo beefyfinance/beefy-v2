@@ -11,7 +11,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import BigNumber from 'bignumber.js';
 import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import { useBalance } from './useBalance';
-import { BIG_ZERO, convertAmountToRawNumber, formatBigDecimals } from '../../../../helpers/format';
+import {
+  BIG_ZERO,
+  convertAmountToRawNumber,
+  formatBigDecimals,
+  formatBigNumberSignificant,
+} from '../../../../helpers/format';
 import { SpiritToken, binSpiritMintVault } from './SpiritToken';
 import { isEmpty } from '../../../../helpers/utils';
 import { Steps } from '../../../../components/Steps';
@@ -22,6 +27,7 @@ import { BeefyState } from '../../../../redux-types';
 import { selectStandardVaultUserBalanceInTokenIncludingBoosts } from '../../../data/selectors/balance';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { selectTokenById } from '../../../data/selectors/tokens';
+import { isString } from 'lodash';
 
 const useStyles = makeStyles(styles as any);
 
@@ -78,7 +84,9 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         ...formData,
         deposit: {
           ...formData.deposit,
-          input: (spiritBalance as any).significant(6),
+          input: isString(spiritBalance)
+            ? spiritBalance
+            : formatBigNumberSignificant(spiritBalance),
           amount: new BigNumber(spiritBalance),
           max: true,
         },
@@ -105,7 +113,7 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       if (value.isEqualTo(input)) return input;
       if (input === '') return '';
       if (input === '.') return `0.`;
-      return (value as any).significant(6);
+      return formatBigNumberSignificant(value);
     })();
 
     setFormData({

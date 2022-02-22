@@ -2,8 +2,8 @@ import { BigNumber } from 'bignumber.js';
 import { ApyStatLoader } from '../components/ApyStatLoader';
 import { TotalApy } from '../features/data/reducers/apy';
 
-(BigNumber.prototype as any).significant = function (digits) {
-  const number = this.toFormat({
+export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
+  const number = num.toFormat({
     prefix: '',
     decimalSeparator: '.',
     groupSeparator: '',
@@ -19,7 +19,7 @@ import { TotalApy } from '../features/data/reducers/apy';
   }
   const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
   return `${wholes}.${decimals.match(pattern)[0]}`;
-};
+}
 
 export const BIG_ZERO = new BigNumber(0);
 export const BIG_ONE = new BigNumber(1);
