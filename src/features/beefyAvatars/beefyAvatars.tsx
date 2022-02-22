@@ -15,7 +15,8 @@ import { useTranslation } from 'react-i18next';
 import grass from '../../images/nfts/grass.svg';
 import { Filter } from './Components/Filter';
 import { useAvatarsInfo } from './hooks/useAvatarsInfo';
-import InlineSVG from 'svg-inline-react';
+
+import { CowCard } from './Components/CowCard';
 
 const useStyles = makeStyles(styles as any);
 
@@ -41,7 +42,7 @@ export const BeefyAvatars = () => {
 
   return (
     <>
-      {console.log(COWS)}
+      {console.table(COWS[0])}
       <Box className={classes.avatars} pt={5}>
         <Container maxWidth="md">
           <Box mb={5} className={classes.center}>
@@ -79,7 +80,7 @@ export const BeefyAvatars = () => {
           </Box>
         </Container>
         <Container maxWidth="lg">
-          <Box my={5} className={classes.center}>
+          <Box className={classes.center}>
             <Typography className={classes.title2}>{t('Avatars-Generated-Title')}</Typography>
           </Box>
           <Grid container>
@@ -109,16 +110,18 @@ export const BeefyAvatars = () => {
           <Box mt={5}>
             <Filter sortConfig={filter} setSortConfig={setFilter} />
           </Box>
-          <Box>
+          <Box className={classes.listContainer}>
             {COWS &&
               COWS[0].map((cow: any) => {
-                console.log(cow.image_data);
-                return (
-                  <Box key={cow.name}>
-                    {cow.name}
-                    <InlineSVG src={cow.image_data} />
-                  </Box>
-                );
+                return <CowCard cow={cow} />;
+              })}
+            {COWS &&
+              COWS[0].map((cow: any) => {
+                return <CowCard cow={cow} />;
+              })}
+            {COWS &&
+              COWS[0].map((cow: any) => {
+                return <CowCard cow={cow} />;
               })}
           </Box>
         </Container>
