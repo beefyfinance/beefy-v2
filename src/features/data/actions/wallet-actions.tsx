@@ -13,7 +13,7 @@ import { isStandardVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectChainNativeToken, selectErc20TokenById, selectTokenById } from '../selectors/tokens';
 import { BeefyState } from '../../../redux-types';
 import { Dispatch } from 'redux';
-import { reloadBalanceAndAllowanceAndGovRewards } from './tokens';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
 import { ChainEntity } from '../entities/chain';
@@ -470,6 +470,7 @@ const claimBoost = (boost: BoostEntity) => {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
+        boostId: boost.id,
       }
     );
   };
@@ -538,6 +539,7 @@ const exitBoost = (boost: BoostEntity) => {
         chainId: boost.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
+        boostId: boost.id,
       }
     );
   };
@@ -567,6 +569,7 @@ function bindTransactionEvents<T>(
     spenderAddress: string;
     tokens: TokenEntity[];
     govVaultId?: VaultEntity['id'];
+    boostId?: BoostEntity['id'];
   }
 ) {
   transaction
@@ -597,9 +600,10 @@ function bindTransactionEvents<T>(
       // fetch new balance and allowance of native token (gas spent) and allowance token
       if (refreshOnSuccess) {
         dispatch(
-          reloadBalanceAndAllowanceAndGovRewards({
+          reloadBalanceAndAllowanceAndGovRewardsAndBoostData({
             chainId: refreshOnSuccess.chainId,
             govVaultId: refreshOnSuccess.govVaultId,
+            boostId: refreshOnSuccess.boostId,
             spenderAddress: refreshOnSuccess.spenderAddress,
             tokens: refreshOnSuccess.tokens,
           })

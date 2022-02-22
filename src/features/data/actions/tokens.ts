@@ -5,9 +5,11 @@ import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getAllowanceApi, getBalanceApi, getContractDataApi } from '../apis/instances';
+import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, TokenEntity } from '../entities/token';
 import { VaultGov } from '../entities/vault';
+import { selectBoostById } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectGovVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
@@ -36,6 +38,7 @@ interface ReloadBalanceAllowanceRewardsParams {
   tokens: TokenEntity[];
   spenderAddress: string;
   govVaultId?: VaultGov['id'];
+  boostId?: BoostEntity['id'];
 }
 
 interface ReloadBalanceAllowanceRewardsFulfilledPayload {
@@ -48,17 +51,19 @@ interface ReloadBalanceAllowanceRewardsFulfilledPayload {
   state: BeefyState;
 }
 
-export const reloadBalanceAndAllowanceAndGovRewards = createAsyncThunk<
+// TODO: split this into more specialized actions to make them faster
+export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThunk<
   ReloadBalanceAllowanceRewardsFulfilledPayload,
   ReloadBalanceAllowanceRewardsParams,
   { state: BeefyState }
 >(
   'deposit/reloadBalanceAndAllowanceAndGovRewards',
-  async ({ chainId, tokens, spenderAddress, govVaultId }, { getState }) => {
+  async ({ chainId, tokens, spenderAddress, govVaultId, boostId }, { getState }) => {
     const chain = selectChainById(getState(), chainId);
     const walletAddress = selectWalletAddress(getState());
 
     const govVault = govVaultId ? selectGovVaultById(getState(), govVaultId) : null;
+    const boost = boostId ? selectBoostById(getState(), boostId) : null;
 
     const govVaults: VaultGov[] = govVault ? [govVault] : [];
     const balanceApi = await getBalanceApi(chain);
@@ -81,7 +86,12 @@ export const reloadBalanceAndAllowanceAndGovRewards = createAsyncThunk<
 
     const contractDataApi = await getContractDataApi(chain);
     const contractData: FetchAllContractDataResult = govVault
-      ? await contractDataApi.fetchAllContractData(getState(), [], [govVault], [])
+      ? await contractDataApi.fetchAllContractData(
+          getState(),
+          [],
+          govVault ? [govVault] : [],
+          boost ? [boost] : []
+        )
       : { boosts: [], govVaults: [], standardVaults: [] };
 
     return {

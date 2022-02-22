@@ -30,9 +30,6 @@ export const Steps = ({
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
 
-  console.log(steps);
-  console.log(steps.items.length > 1);
-
   return (
     <Snackbar
       key={steps.currentStep}

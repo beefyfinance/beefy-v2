@@ -8,7 +8,7 @@ import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
 import { accountHasChanged, walletHasDisconnected } from './wallet';
 import { selectVaultById } from '../../selectors/vaults';
-import { reloadBalanceAndAllowanceAndGovRewards } from '../../actions/tokens';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import { initiateWithdrawForm } from '../../actions/withdraw';
 
 /**
@@ -65,11 +65,14 @@ export const allowanceSlice = createSlice({
       addAllowancesToState(sliceState, chainId, allowances);
     });
 
-    builder.addCase(reloadBalanceAndAllowanceAndGovRewards.fulfilled, (sliceState, action) => {
-      const chainId = action.payload.chainId;
-      const allowances = action.payload.allowance;
-      addAllowancesToState(sliceState, chainId, allowances);
-    });
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        const chainId = action.payload.chainId;
+        const allowances = action.payload.allowance;
+        addAllowancesToState(sliceState, chainId, allowances);
+      }
+    );
   },
 });
 

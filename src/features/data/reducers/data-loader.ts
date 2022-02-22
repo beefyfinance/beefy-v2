@@ -13,7 +13,10 @@ import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { initiateDepositForm } from '../actions/deposit';
 import { fetchAllPricesAction } from '../actions/prices';
-import { fetchAddressBookAction, reloadBalanceAndAllowanceAndGovRewards } from '../actions/tokens';
+import {
+  fetchAddressBookAction,
+  reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+} from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { askForNetworkChange, askForWalletConnection, doDisconnectWallet } from '../actions/wallet';
 import { initiateWithdrawForm } from '../actions/withdraw';
@@ -218,7 +221,7 @@ export const dataLoaderSlice = createSlice({
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);
-    addByChainAsyncThunkActions(builder, reloadBalanceAndAllowanceAndGovRewards, [
+    addByChainAsyncThunkActions(builder, reloadBalanceAndAllowanceAndGovRewardsAndBoostData, [
       'balance',
       'allowance',
     ]);

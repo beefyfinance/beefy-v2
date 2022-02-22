@@ -3,7 +3,7 @@ import { WritableDraft } from 'immer/dist/internal';
 import { isEqual } from 'lodash';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { reloadBalanceAndAllowanceAndGovRewards } from '../actions/tokens';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { BoostConfig } from '../apis/config';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { BoostEntity } from '../entities/boost';
@@ -67,9 +67,12 @@ export const boostsSlice = createSlice({
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       addContractDataToState(sliceState, action.payload.data);
     });
-    builder.addCase(reloadBalanceAndAllowanceAndGovRewards.fulfilled, (sliceState, action) => {
-      addContractDataToState(sliceState, action.payload.contractData);
-    });
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        addContractDataToState(sliceState, action.payload.contractData);
+      }
+    );
   },
 });
 

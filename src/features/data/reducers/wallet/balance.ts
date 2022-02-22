@@ -16,7 +16,7 @@ import {
 import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../../apis/balance/balance-types';
 import { BeefyState } from '../../../../redux-types';
 import { initiateDepositForm } from '../../actions/deposit';
-import { reloadBalanceAndAllowanceAndGovRewards } from '../../actions/tokens';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import { initiateWithdrawForm } from '../../actions/withdraw';
 
 /**
@@ -142,17 +142,20 @@ export const balanceSlice = createSlice({
       addBoostBalanceToState(state, walletState, balance.boosts);
     });
 
-    builder.addCase(reloadBalanceAndAllowanceAndGovRewards.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      const chainId = action.payload.chainId;
-      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        const state = action.payload.state;
+        const chainId = action.payload.chainId;
+        const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-      const walletState = sliceState.byAddress[walletAddress];
-      const balance = action.payload.balance;
-      addTokenBalanceToState(state, walletState, chainId, balance.tokens);
-      addGovVaultBalanceToState(walletState, balance.govVaults);
-      addBoostBalanceToState(state, walletState, balance.boosts);
-    });
+        const walletState = sliceState.byAddress[walletAddress];
+        const balance = action.payload.balance;
+        addTokenBalanceToState(state, walletState, chainId, balance.tokens);
+        addGovVaultBalanceToState(walletState, balance.govVaults);
+        addBoostBalanceToState(state, walletState, balance.boosts);
+      }
+    );
   },
 });
 

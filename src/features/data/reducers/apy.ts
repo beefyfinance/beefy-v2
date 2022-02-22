@@ -19,7 +19,7 @@ import {
 } from '../apis/contract-data/contract-data-types';
 import { getBoostStatusFromPeriodFinish } from './boosts';
 import { selectIsConfigAvailable } from '../selectors/data-loader';
-import { reloadBalanceAndAllowanceAndGovRewards } from '../actions/tokens';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 
 // boost is expressed as APR
 interface AprData {
@@ -88,10 +88,13 @@ export const apySlice = createSlice({
       addContractDataToState(state, sliceState, action.payload.data);
     });
 
-    builder.addCase(reloadBalanceAndAllowanceAndGovRewards.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      addContractDataToState(state, sliceState, action.payload.contractData);
-    });
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        const state = action.payload.state;
+        addContractDataToState(state, sliceState, action.payload.contractData);
+      }
+    );
   },
 });
 

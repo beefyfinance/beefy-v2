@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { reloadBalanceAndAllowanceAndGovRewards } from '../actions/tokens';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
@@ -94,9 +94,12 @@ export const vaultsSlice = createSlice({
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       addContractDataToState(sliceState, action.payload.data);
     });
-    builder.addCase(reloadBalanceAndAllowanceAndGovRewards.fulfilled, (sliceState, action) => {
-      addContractDataToState(sliceState, action.payload.contractData);
-    });
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        addContractDataToState(sliceState, action.payload.contractData);
+      }
+    );
   },
 });
 

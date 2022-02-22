@@ -11,7 +11,7 @@ import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens'
 import { selectVaultById } from '../selectors/vaults';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { BeefyState } from '../../../redux-types';
-import { reloadBalanceAndAllowanceAndGovRewards } from '../actions/tokens';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 
 /**
  * State containing APY infos indexed by vault id
@@ -55,10 +55,13 @@ export const tvlSlice = createSlice({
       addContractDataToState(state, sliceState, action.payload.data);
     });
 
-    builder.addCase(reloadBalanceAndAllowanceAndGovRewards.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      addContractDataToState(state, sliceState, action.payload.contractData);
-    });
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        const state = action.payload.state;
+        addContractDataToState(state, sliceState, action.payload.contractData);
+      }
+    );
   },
 });
 
