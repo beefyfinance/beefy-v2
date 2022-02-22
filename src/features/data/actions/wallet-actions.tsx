@@ -470,7 +470,6 @@ const claimBoost = (boost: BoostEntity) => {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
-        govVaultId: vault.id,
       }
     );
   };
