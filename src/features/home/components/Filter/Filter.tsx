@@ -48,7 +48,13 @@ const _Filter = () => {
 
   const handleChangeBlockchain = useCallback(
     ({ target: { value } }) => {
-      dispatch(filteredVaultsActions.setChainIds(value.filter(v => v !== 'all')));
+      // last element is "all" so we filter by all
+      if (value.length && value[value.length - 1] === 'all') {
+        value = [];
+      } else {
+        value = value.filter(v => v !== 'all');
+      }
+      dispatch(filteredVaultsActions.setChainIds(value));
     },
     [dispatch]
   );
