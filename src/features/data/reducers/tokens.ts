@@ -6,7 +6,7 @@ import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAllVaults } from '../actions/vaults';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
+import { isTokenErc20, TokenEntity } from '../entities/token';
 
 /**
  * State containing Vault infos
@@ -38,7 +38,7 @@ export const tokensSlice = createSlice({
   extraReducers: builder => {
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of Object.entries(action.payload)) {
+      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
         for (const vault of vaults) {
           addVaultToState(sliceState, chainId, vault);
         }
@@ -76,22 +76,43 @@ export const tokensSlice = createSlice({
 function addBoostToState(
   sliceState: WritableDraft<TokensState>,
   chainId: ChainEntity['id'],
-  boost: BoostConfig
+  apiBoost: BoostConfig
 ) {
   if (sliceState.byChainId[chainId] === undefined) {
     sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
   }
 
-  if (sliceState.byChainId[chainId].byId[boost.earnedOracleId] === undefined) {
+  let tokenId = apiBoost.earnedToken;
+
+  /**
+   * Fix case for some tokens like "Charge" and "CHARGE"
+   * Only fix when values are different
+   */
+  if (
+    !tokenId.startsWith('moo') &&
+    !tokenId.includes('-') &&
+    !tokenId.includes('_') &&
+    !tokenId.includes('.') &&
+    !tokenId.includes(' ') &&
+    apiBoost.earnedToken !== apiBoost.earnedOracleId &&
+    apiBoost.earnedToken.toLocaleUpperCase() === apiBoost.earnedOracleId.toLocaleUpperCase()
+  ) {
+    tokenId = apiBoost.earnedToken.toLocaleUpperCase();
+  }
+
+  if (sliceState.byChainId[chainId].byId[tokenId] === undefined) {
     const token: TokenEntity = {
-      id: boost.earnedOracleId,
+      id: tokenId,
       chainId: chainId,
-      contractAddress: boost.earnedTokenAddress,
-      decimals: boost.earnedTokenDecimals,
-      symbol: boost.earnedToken,
+      contractAddress: apiBoost.earnedTokenAddress,
+      decimals: apiBoost.earnedTokenDecimals,
+      symbol: apiBoost.earnedToken,
       buyUrl: null,
+      description: null,
+      website: null,
       type: 'erc20',
     };
+    temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
     sliceState.byChainId[chainId].allIds.push(token.id);
   }
@@ -114,8 +135,11 @@ function addVaultToState(
       decimals: vault.tokenDecimals,
       symbol: vault.token,
       buyUrl: null,
+      description: null,
+      website: null,
       type: 'erc20',
     };
+    temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
     sliceState.byChainId[chainId].allIds.push(token.id);
   }
@@ -123,16 +147,77 @@ function addVaultToState(
   // add earned token data
   const earnedTokenId = vault.earnedToken;
   if (sliceState.byChainId[chainId].byId[earnedTokenId] === undefined) {
-    const token: TokenEntity = {
-      id: earnedTokenId,
-      chainId: chainId,
-      contractAddress: vault.earnedTokenAddress,
-      decimals: 18, // TODO: not sure about that
-      symbol: vault.earnedToken,
-      buyUrl: null,
-      type: 'erc20',
-    };
-    sliceState.byChainId[chainId].byId[token.id] = token;
-    sliceState.byChainId[chainId].allIds.push(token.id);
+    // gov vaults yield native tokens
+    if (vault.isGovVault) {
+      const token: TokenEntity = {
+        id: earnedTokenId,
+        chainId: chainId,
+        decimals: 18, // TODO: not sure about that
+        symbol: vault.earnedToken,
+        buyUrl: null,
+        type: 'native',
+      };
+      temporaryWrappedtokenFix(token);
+      sliceState.byChainId[chainId].byId[token.id] = token;
+      sliceState.byChainId[chainId].allIds.push(token.id);
+    } else {
+      const token: TokenEntity = {
+        id: earnedTokenId,
+        chainId: chainId,
+        contractAddress: vault.earnedTokenAddress,
+        decimals: 18, // TODO: not sure about that
+        symbol: vault.earnedToken,
+        buyUrl: null,
+        description: null,
+        website: null,
+        type: 'erc20',
+      };
+      temporaryWrappedtokenFix(token);
+      sliceState.byChainId[chainId].byId[token.id] = token;
+      sliceState.byChainId[chainId].allIds.push(token.id);
+    }
   }
+}
+
+const wrappedTokenFixes = [
+  {
+    chainId: 'fantom',
+    tokenId: 'WFTM',
+    contractAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+  },
+  {
+    chainId: 'polygon',
+    tokenId: 'WMATIC',
+    contractAddress: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
+  },
+];
+
+/**
+ * Some Wrapped tokens do not have a contractAddress set
+ * This is a temporary fix
+ */
+function temporaryWrappedtokenFix(token: TokenEntity) {
+  // only concern erc20 assets
+  if (!isTokenErc20(token)) {
+    return;
+  }
+  // contract address has been set
+  if (token.contractAddress) {
+    return;
+  }
+
+  // not a wrapped token
+  if (!token.id.startsWith('W')) {
+    console.error(`Erc20 token without a contract address: ${token.id} (${token.chainId})`);
+    return;
+  }
+
+  for (const fix of wrappedTokenFixes) {
+    if (token.chainId === fix.chainId && token.id === fix.tokenId) {
+      token.contractAddress = fix.contractAddress;
+      console.warn(`Fixed ${token.id} (${token.chainId}) contract address: ${fix.contractAddress}`);
+      return;
+    }
+  }
+  console.error(`Unfixed wrapped token without a contract address: ${token.id} (${token.chainId})`);
 }

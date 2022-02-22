@@ -205,7 +205,7 @@ export const config = {
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',
     multicallAddress: '0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5',
-    fetchBalancesAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
+    //fetchBalancesAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
     supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'harmony',
     walletSettings: {
@@ -425,3 +425,4 @@ blockExplorerUrls: [''],
 },
 stableCoins: [''],
  */
+export const chains: string[] = Object.keys(config);

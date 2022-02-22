@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 
@@ -17,30 +17,18 @@ export const selectBoostById = createSelector(
   }
 );
 
-export const selectBoostsByChainId = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState, chainId: ChainEntity['id']) => {
-    if (state.entities.boosts.byChainId[chainId] === undefined) {
-      return [];
-    }
+export const selectBoostsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
+  return state.entities.boosts.byChainId[chainId]?.allBoostsIds || [];
+};
 
-    return state.entities.boosts.byChainId[chainId].allBoostsIds;
-  },
-  // last function receives previous function outputs as parameters
-  allBoostsIds => allBoostsIds
-);
+export const selectIsVaultBoosted = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds.length > 0 || false;
+};
 
-export const selectIsVaultBoosted = createSelector(
-  [(state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId]],
-  vaultIdBoost => vaultIdBoost !== undefined && vaultIdBoost.activeBoostsIds.length > 0
-);
+export const selectActiveVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds || [];
+};
 
-export const selectActiveVaultBoostIds = createSelector(
-  [(state: BeefyState, vaultId: VaultEntity['id']) => state.entities.boosts.byVaultId[vaultId]],
-  vaultIdBoost => {
-    if (!vaultIdBoost) {
-      return [];
-    }
-    return vaultIdBoost.activeBoostsIds;
-  }
-);
+export const selectAllVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.entities.boosts.byVaultId[vaultId]?.allBoostsIds || [];
+};

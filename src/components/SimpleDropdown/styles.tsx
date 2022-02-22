@@ -58,4 +58,9 @@ export const styles = theme => ({
       marginRight: '5px',
     },
   },
+  placeholder: {
+    '&.Mui-disabled': {
+      color: theme.palette.type === 'dark' ? 'white' : 'black',
+    },
+  },
 });

@@ -1,5 +1,17 @@
 import { ChainEntity } from './chain';
+import { PlatformEntity } from './platform';
 import { TokenEntity } from './token';
+
+// maybe a RiskAnalysis type would be better
+
+export type VaultTag =
+  | 'beefy'
+  | 'bluechip'
+  | 'low' /* low risk */
+  | 'boost'
+  | 'stable'
+  | 'eol'
+  | 'paused';
 
 /**
  * A vault is anything you can stake stuff into
@@ -13,6 +25,13 @@ export interface VaultStandard {
   id: string;
   name: string;
   logoUri: string;
+
+  /**
+   * ASSETS are basically the assets that are in that vault
+   * So if you go into a BIFI vault, the assets is of course only BIFI
+   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
+   */
+  assetIds: TokenEntity['id'][];
 
   chainId: ChainEntity['id'];
 
@@ -36,37 +55,39 @@ export interface VaultStandard {
    */
   contractAddress: string;
 
-  /**
-   * ASSETS are basically the assets that are in that vault
-   * So if you go into a BIFI vault, the assets is of course only BIFI
-   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
-   */
-  assets: TokenEntity['id'][];
-
   // for display purpose only
   strategyType: 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
 
   isGovVault: false;
 
-  // TODO: WIP
-  /*
+  /**
+   * The protocol this vault rely on (Curve, boo finance, etc)
+   */
+  platformId: PlatformEntity['id'];
+
+  status: 'active' | 'eol' | 'paused';
+
+  type: 'lps' | 'single';
+
   tags: VaultTag[];
-  safetyAnalysis: {
-    score: number;
-    audited: boolean; // maybe split for multiple audit or
-    risks: VaultRiskTag[]; // maybe be smarter about it later?
-  };
-  fees: {
-    depositFee: number;
-    performanceFee: number;
-    withdrawalFee: number;
-  };
-  */
+
+  safetyScore: number;
+
+  risks: string[];
 }
 
 export interface VaultGov {
   id: string;
   name: string;
+  logoUri: string;
+
+  /**
+   * ASSETS are basically the assets that are in that vault
+   * So if you go into a BIFI vault, the assets is of course only BIFI
+   * But if you join the curve aTriCrypto vault your assets will be BTC,ETH and USDT
+   */
+  assetIds: TokenEntity['id'][];
+
   chainId: ChainEntity['id'];
 
   /**
@@ -77,6 +98,12 @@ export interface VaultGov {
    * the user (like "AAVE.e-AVAXLP")
    **/
   oracleId: TokenEntity['id'];
+
+  /**
+   * "Earned" token is the token you get back for staking into a vault
+   * Staking into a gov vault "earns" native tokens
+   */
+  earnedTokenId: TokenEntity['id'];
 
   /**
    * Vault address "treasury", we ask this address about user balances
@@ -96,12 +123,31 @@ export interface VaultGov {
   excludedId: null | VaultEntity['id'];
 
   isGovVault: true;
+
+  platformId: PlatformEntity['id'];
+
+  status: 'active' | 'eol' | 'paused';
+
+  tags: VaultTag[];
+
+  type: 'single';
+
+  safetyScore: number;
+
+  risks: string[];
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {
   return vault.isGovVault === true;
 }
 
-// TODO: type guards
+// Todo: make this the right way
+export function isMaxiVault(vault: VaultEntity): vault is VaultStandard {
+  return vault.id.endsWith('-maxi');
+}
+
+export function isVaultActive(vault: VaultEntity) {
+  return vault.status === 'active';
+}
 
 export type VaultEntity = VaultStandard | VaultGov;

@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -17,103 +17,110 @@ import {
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';
-import { getAvailableNetworks } from '../../../../helpers/utils';
 import { Search, CloseRounded } from '@material-ui/icons';
-import { FILTER_DEFAULT } from '../../hooks/useFilteredVaults';
-import { FilterProps } from './FilterProps';
 import { FilterCategories } from './FilterCategories';
-import { useLocalStorage } from '../../../../hooks/useLocalStorage';
-
+import {
+  actions as filteredVaultActions,
+  FilteredVaultsState,
+} from '../../../data/reducers/filtered-vaults';
+import { selectAllPlatform } from '../../../data/selectors/platforms';
 import clsx from 'clsx';
-
-const FILTER_COUNT_KEY = 'filteresCount';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllChains } from '../../../data/selectors/chains';
+import { debounce } from 'lodash';
+import {
+  selectFilteredVaultCount,
+  selectFilterOptions,
+  selectFilterPopinFilterCount,
+  selectHasActiveFilter,
+  selectTotalVaultCount,
+} from '../../../data/selectors/filtered-vaults';
 
 const useStyles = makeStyles(styles as any);
-const _Filter: React.FC<FilterProps> = ({
-  sortConfig,
-  setSortConfig,
-  platforms,
-  filteredCount,
-  allCount,
-}) => {
+const _Filter = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const { t } = useTranslation();
+  const filterOptions = useSelector(selectFilterOptions);
+  const hasActiveFilter = useSelector(selectHasActiveFilter);
+  const popinFilterCount = useSelector(selectFilterPopinFilterCount);
+  const filteredVaultCount = useSelector(selectFilteredVaultCount);
+  const totalVaultCount = useSelector(selectTotalVaultCount);
+  const [localSearchText, setLocalSearchText] = useState(filterOptions.searchText);
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-  const [filtersCount, setFiltersCount] = useLocalStorage(FILTER_COUNT_KEY, 0);
 
-  const handleChangeBlockchain = event => {
-    let {
-      target: { value },
-    } = event;
-
-    if (value.length === 0) {
-      if (filteredCount >= 1) {
-        setFiltersCount(current => current - 1);
-      }
-      setSortConfig(current => ({ ...current, blockchain: ['all'] }));
-    } else {
-      if (value.includes('all')) {
-        value = value.filter(value => value !== 'all');
-      }
-      if (value.length >= sortConfig.blockchain.length && !value.includes('all')) {
-        setFiltersCount(current => current + 1);
-      }
-      if (value !== sortConfig.blockchain && value.length < sortConfig.blockchain.length) {
-        setFiltersCount(current => current - 1);
-      }
-      setSortConfig(current => ({ ...current, blockchain: value }));
-    }
-  };
+  const handleChangeBlockchain = useCallback(
+    ({ target: { value } }) => {
+      dispatch(filteredVaultActions.setChainIds(value.filter(v => v !== 'all')));
+    },
+    [dispatch]
+  );
 
   const handleCheckbox = useCallback(
-    event => {
-      setSortConfig(current => ({
-        ...current,
-        [event.target.name]: event.target.checked,
-      }));
-      if (event.target.checked !== false) {
-        setFiltersCount(current => current + 1);
-      }
-
-      if (event.target.checked === false && filtersCount >= 1) {
-        setFiltersCount(current => current - 1);
+    ({ target: { name, checked } }) => {
+      if (name === 'boost') {
+        dispatch(filteredVaultActions.setOnlyBoosted(checked));
+      } else if (name === 'retired') {
+        dispatch(filteredVaultActions.setOnlyRetired(checked));
+      } else if (name === 'moonpot') {
+        dispatch(filteredVaultActions.setOnlyMoonpot(checked));
       }
     },
-    [filtersCount, setFiltersCount, setSortConfig]
+    [dispatch]
   );
 
-  const handleChange = useCallback(
-    (name, value) => {
-      setSortConfig(current => ({ ...current, [name]: value }));
+  const handlePlatformChange = useCallback(
+    ({ target: { value } }) =>
+      dispatch(filteredVaultActions.setPlatformId(value === 'all' ? null : value)),
+    [dispatch]
+  );
+
+  const handleUserCategoryChange = useCallback(
+    (userCategory: FilteredVaultsState['userCategory']) =>
+      dispatch(filteredVaultActions.setUserCategory(userCategory)),
+    [dispatch]
+  );
+
+  const handleVaultTypeChange = useCallback(
+    ({ target: { value } }) => dispatch(filteredVaultActions.setVaultType(value)),
+    [dispatch]
+  );
+
+  const handleSortChange = useCallback(
+    ({ target: { value } }) => dispatch(filteredVaultActions.setSort(value)),
+    [dispatch]
+  );
+
+  const syncSearchText = useMemo(
+    () => debounce(value => dispatch(filteredVaultActions.setSearchText(value)), 200),
+    [dispatch]
+  );
+  const handleSearchTextChange = useCallback(
+    ({ target: { value } }) => {
+      setLocalSearchText(value);
+      syncSearchText(value);
     },
-    [setSortConfig]
+    [setLocalSearchText, syncSearchText]
   );
+  const clearSearchText = useCallback(() => {
+    setLocalSearchText('');
+    dispatch(filteredVaultActions.setSearchText(''));
+  }, [dispatch, setLocalSearchText]);
 
-  const handleInputChange = useCallback(
-    (name, value) => {
-      setSortConfig(current => ({ ...current, [name]: value }));
-      if (value !== 'all') {
-        setFiltersCount(current => current + 1);
-      }
-
-      if (value === 'all' && filtersCount >= 1) {
-        setFiltersCount(current => current - 1);
-      }
-    },
-    [filtersCount, setFiltersCount, setSortConfig]
-  );
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleReset = useCallback(() => {
-    setSortConfig(FILTER_DEFAULT);
-    setFiltersCount(0);
-  }, [setFiltersCount, setSortConfig]);
+    setLocalSearchText('');
+    dispatch(filteredVaultActions.reset());
+  }, [dispatch]);
 
+  const platforms = useSelector(selectAllPlatform);
   const platformTypes = useMemo(() => {
-    return {
+    const list = {
       all: t('Filter-DropdwnDflt'),
-      ...platforms,
     };
+    for (const platform of platforms) {
+      list[platform.id] = platform.name;
+    }
+    return list;
   }, [platforms, t]);
 
   const vaultTypes = useMemo(() => {
@@ -124,12 +131,16 @@ const _Filter: React.FC<FilterProps> = ({
     };
   }, [t]);
 
-  const networkTypes = useMemo(() => {
-    return {
+  const chains = useSelector(selectAllChains);
+  const chainTypes = useMemo(() => {
+    const list = {
       all: t('Filter-DropdwnDflt'),
-      ...getAvailableNetworks(),
     };
-  }, [t]);
+    for (const chain of chains) {
+      list[chain.id] = chain.name;
+    }
+    return list;
+  }, [chains, t]);
 
   const sortList = useMemo(() => {
     return {
@@ -151,11 +162,9 @@ const _Filter: React.FC<FilterProps> = ({
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  const handleSortChange = useCallback(e => handleChange('key', e.target.value), [handleChange]);
-
   return (
     <>
-      <FilterCategories category={sortConfig.category} handleChange={handleChange} />
+      <FilterCategories />
       <Box className={classes.filtersContainer}>
         {/*Search*/}
         <Box className={classes.searchContainer}>
@@ -164,18 +173,18 @@ const _Filter: React.FC<FilterProps> = ({
             size="small"
             variant="outlined"
             label={t('Filter-Search')}
-            value={sortConfig.keyword}
-            onChange={e => handleChange('keyword', e.target.value)}
+            value={localSearchText}
+            onChange={handleSearchTextChange}
             InputProps={{
               className: classes.input,
               endAdornment: (
                 <>
                   <InputAdornment position="end">
-                    {sortConfig.keyword.length >= 1 ? (
+                    {filterOptions.searchText.length >= 1 ? (
                       <IconButton
                         className={classes.iconSearch}
                         size="small"
-                        onClick={() => handleChange('keyword', '')}
+                        onClick={clearSearchText}
                       >
                         <CloseRounded />
                       </IconButton>
@@ -197,11 +206,11 @@ const _Filter: React.FC<FilterProps> = ({
             onClick={handleClick}
             className={clsx({
               [classes.btnFilter]: true,
-              [classes.btnFilterActive]: open || filtersCount >= 1,
+              [classes.btnFilterActive]: open || popinFilterCount >= 1,
             })}
           >
-            {filtersCount >= 1 ? (
-              <Box className={classes.badge}>{filtersCount}</Box>
+            {popinFilterCount >= 1 ? (
+              <Box className={classes.badge}>{popinFilterCount}</Box>
             ) : (
               <img
                 src={require(`../../../../images/filter.svg`).default}
@@ -216,40 +225,31 @@ const _Filter: React.FC<FilterProps> = ({
         <Box className={classes.toggleSwitchContainer}>
           <Button
             className={
-              sortConfig.deposited === false && sortConfig.zero === false
+              filterOptions.userCategory === 'all'
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
-            onClick={() => {
-              handleChange('zero', false);
-              handleChange('deposited', false);
-            }}
+            onClick={() => handleUserCategoryChange('all')}
           >
             {t('Filter-AllVaults')}
           </Button>
           <Button
             className={
-              sortConfig.zero === true
+              filterOptions.userCategory === 'eligible'
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
-            onClick={() => {
-              handleChange('deposited', false);
-              handleChange('zero', true);
-            }}
+            onClick={() => handleUserCategoryChange('eligible')}
           >
             {t('Filter-Eligible')}
           </Button>
           <Button
             className={
-              sortConfig.deposited === true
+              filterOptions.userCategory === 'deposited'
                 ? classes.toggleSwitchButtonActive
                 : classes.toggleSwitchButton
             }
-            onClick={() => {
-              handleChange('zero', false);
-              handleChange('deposited', true);
-            }}
+            onClick={() => handleUserCategoryChange('deposited')}
           >
             {t('Filter-MyVaults')}
           </Button>
@@ -258,7 +258,7 @@ const _Filter: React.FC<FilterProps> = ({
         <Box className={classes.sortByContainer}>
           <LabeledDropdown
             list={sortList}
-            selected={sortConfig.key}
+            selected={filterOptions.sort}
             handler={handleSortChange}
             label={t('Filter-Sort')}
             selectStyle={{ width: '100%', minWidth: 'auto' }}
@@ -271,11 +271,11 @@ const _Filter: React.FC<FilterProps> = ({
             onClick={handleClick}
             className={clsx({
               [classes.btnFilter]: true,
-              [classes.btnFilterActive]: open || filtersCount >= 1,
+              [classes.btnFilterActive]: open || popinFilterCount >= 1,
             })}
           >
-            {filtersCount >= 1 ? (
-              <Box className={classes.badge}>{filtersCount}</Box>
+            {popinFilterCount >= 1 ? (
+              <Box className={classes.badge}>{popinFilterCount}</Box>
             ) : (
               <img
                 src={require(`../../../../images/filter.svg`).default}
@@ -287,11 +287,7 @@ const _Filter: React.FC<FilterProps> = ({
           </Button>
         </Hidden>
         {/* Clear Filter Button */}
-        <Button
-          className={classes.btnReset}
-          disabled={sortConfig === FILTER_DEFAULT}
-          onClick={handleReset}
-        >
+        <Button className={classes.btnReset} disabled={!hasActiveFilter} onClick={handleReset}>
           <CloseRounded />
           {t('Filter-Reset')}
         </Button>
@@ -314,8 +310,8 @@ const _Filter: React.FC<FilterProps> = ({
         <Box className={classes.filterContent}>
           <Typography variant="body1">
             {t('Filter-Showing', {
-              number: filteredCount,
-              count: allCount,
+              number: filteredVaultCount,
+              count: totalVaultCount,
             })}
           </Typography>
 
@@ -330,7 +326,7 @@ const _Filter: React.FC<FilterProps> = ({
                 }
                 control={
                   <Checkbox
-                    checked={sortConfig.retired}
+                    checked={filterOptions.onlyRetired}
                     onChange={handleCheckbox}
                     name="retired"
                     className={classes.checkbox}
@@ -346,7 +342,7 @@ const _Filter: React.FC<FilterProps> = ({
                 }
                 control={
                   <Checkbox
-                    checked={sortConfig.boost}
+                    checked={filterOptions.onlyBoosted}
                     onChange={handleCheckbox}
                     name="boost"
                     className={classes.checkbox}
@@ -363,7 +359,7 @@ const _Filter: React.FC<FilterProps> = ({
                 }
                 control={
                   <Checkbox
-                    checked={sortConfig.moonpot}
+                    checked={filterOptions.onlyMoonpot}
                     onChange={handleCheckbox}
                     name="moonpot"
                     className={classes.checkbox}
@@ -377,13 +373,13 @@ const _Filter: React.FC<FilterProps> = ({
               <MultipleLabeledDropdown
                 fullWidth={true}
                 noBorder={true}
-                list={networkTypes}
-                selected={sortConfig.blockchain}
+                list={chainTypes}
+                selected={filterOptions.chainIds.length === 0 ? ['all'] : filterOptions.chainIds}
                 handler={handleChangeBlockchain}
                 renderValue={selected => (
                   <Typography className={classes.value}>
                     <span className={`${classes.label} label`}>{t('Filter-Blockchn')}</span>{' '}
-                    {sortConfig.blockchain.length > 1
+                    {filterOptions.chainIds.length > 1
                       ? t('Filter-BlockchnMultiple')
                       : selected.join('')}
                   </Typography>
@@ -397,8 +393,8 @@ const _Filter: React.FC<FilterProps> = ({
                 fullWidth={true}
                 noBorder={true}
                 list={platformTypes}
-                selected={sortConfig.platform}
-                handler={e => handleInputChange('platform', e.target.value)}
+                selected={filterOptions.platformId === null ? 'all' : filterOptions.platformId}
+                handler={handlePlatformChange}
                 label={t('Filter-Platform')}
               />
             </Box>
@@ -407,8 +403,8 @@ const _Filter: React.FC<FilterProps> = ({
                 noBorder={true}
                 fullWidth={true}
                 list={vaultTypes}
-                selected={sortConfig.vault}
-                handler={e => handleInputChange('vault', e.target.value)}
+                selected={filterOptions.vaultType}
+                handler={handleVaultTypeChange}
                 label={t('Filter-Type')}
               />
             </Box>

@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js';
 import { ApyStatLoader } from '../components/ApyStatLoader';
+import { TotalApy } from '../features/data/reducers/apy';
 
 (BigNumber.prototype as any).significant = function (digits) {
   const number = this.toFormat({
@@ -21,6 +22,7 @@ import { ApyStatLoader } from '../components/ApyStatLoader';
 };
 
 export const BIG_ZERO = new BigNumber(0);
+export const BIG_ONE = new BigNumber(1);
 
 export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => {
   if (!apy) return placeholder;
@@ -35,12 +37,22 @@ export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => 
   return `${num.toFixed(dp)}${units[order]}%`;
 };
 
+export const formattedTotalApy = (totalApy: TotalApy) => {
+  return Object.fromEntries(
+    Object.entries(totalApy).map(([key, value]) => {
+      const formattedValue = key.toLowerCase().includes('daily')
+        ? formatApy(value, 4)
+        : formatApy(value);
+      return [key, formattedValue];
+    })
+  );
+};
+
 export const formatUsd = (tvl, oraclePrice = undefined) => {
   // TODO: bignum?
   if (oraclePrice) {
     tvl *= oraclePrice;
   }
-
   const order = Math.floor(Math.log10(tvl) / 3);
 
   const units = ['', 'k', 'M', 'B', 'T'];
@@ -63,6 +75,47 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
         minimumFractionDigits: 0,
       });
 };
+
+export function getBigNumOrder(num: BigNumber): number {
+  const nEstr = num.abs().decimalPlaces(0).toExponential();
+  const parts = nEstr.split('e');
+  const exp = parseInt(parts[1] || '0');
+  return Math.floor(exp / 3);
+}
+
+export function formatBigUsd(value: BigNumber) {
+  return '$' + formatBigNumber(value);
+}
+
+export function formatBigNumber(value: BigNumber) {
+  value = value.decimalPlaces(2);
+
+  if (value.isZero()) {
+    return '0';
+  }
+  const order = getBigNumOrder(value);
+  if (value.abs().gte(100)) {
+    value = value.decimalPlaces(0);
+  }
+  if (order < 2 && value.abs().gte(100)) {
+    return value.toNumber().toLocaleString('en-US', {
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    });
+  }
+  const units = ['', 'k', 'M', 'B', 'T'];
+
+  return value.shiftedBy(-order * 3).toFixed(2) + units[order];
+}
+
+export function formatBigDecimals(value: BigNumber, maxPlaces: number = 8, strip = true) {
+  if (value.isZero() && strip) {
+    return '0';
+  }
+
+  const fixed = value.toFixed(maxPlaces);
+  return strip ? stripTrailingZeros(fixed) : fixed;
+}
 
 export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
 

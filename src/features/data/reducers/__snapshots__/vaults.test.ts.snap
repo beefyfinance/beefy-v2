@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Vaults slice tests should track featured vault list 1`] = `
+Object {
+  "nope": false,
+  "test-vault": true,
+}
+`;
+
 exports[`Vaults slice tests should update state on fulfilled vault list 1`] = `
 Object {
   "allIds": Array [
@@ -21,14 +28,18 @@ Object {
         "mooSushiYGG-ETH": "sushi-one-1ygg-1eth",
       },
       "byOracleId": Object {
-        "BANANA": "banana-banana-eol",
-        "sushi-one-1ygg-1eth": "sushi-one-1ygg-1eth",
+        "BANANA": Array [
+          "banana-banana-eol",
+        ],
+        "sushi-one-1ygg-1eth": Array [
+          "sushi-one-1ygg-1eth",
+        ],
       },
     },
   },
   "byId": Object {
     "banana-banana-eol": Object {
-      "assets": Array [
+      "assetIds": Array [
         "BANANA",
       ],
       "chainId": "harmony",
@@ -39,19 +50,48 @@ Object {
       "logoUri": "degens/BANANA.svg",
       "name": "BANANA",
       "oracleId": "BANANA",
+      "platformId": "apeswap",
+      "risks": Array [],
+      "safetyScore": 0,
+      "status": "eol",
       "strategyType": "SingleStake",
+      "tags": Array [
+        "eol",
+      ],
+      "type": "single",
     },
     "one-bifi-gov": Object {
+      "assetIds": Array [
+        "BIFI",
+      ],
       "chainId": "harmony",
       "earnContractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
+      "earnedTokenId": "ONE",
       "excludedId": null,
       "id": "one-bifi-gov",
       "isGovVault": true,
+      "logoUri": "single-assets/BIFI.png",
       "name": "BIFI Earnings Pool",
       "oracleId": "BIFI",
+      "platformId": "beefy.finance",
+      "risks": Array [
+        "COMPLEXITY_LOW",
+        "BATTLE_TESTED",
+        "IL_NONE",
+        "MCAP_SMALL",
+        "AUDIT",
+        "CONTRACTS_VERIFIED",
+      ],
+      "safetyScore": 9.399999999999999,
+      "status": "active",
+      "tags": Array [
+        "beefy",
+        "low",
+      ],
+      "type": "single",
     },
     "sushi-one-1ygg-1eth": Object {
-      "assets": Array [
+      "assetIds": Array [
         "YGG",
         "ETH",
       ],
@@ -63,20 +103,42 @@ Object {
       "logoUri": undefined,
       "name": "1YGG-1ETH LP",
       "oracleId": "sushi-one-1ygg-1eth",
+      "platformId": "sushi",
+      "risks": Array [
+        "COMPLEXITY_LOW",
+        "BATTLE_TESTED",
+        "IL_LOW",
+        "MCAP_MEDIUM",
+        "AUDIT",
+        "CONTRACTS_VERIFIED",
+      ],
+      "safetyScore": 9.399999999999999,
+      "status": "active",
       "strategyType": "StratLP",
+      "tags": Array [
+        "low",
+      ],
+      "type": "lps",
     },
   },
-  "pricePerFullShare": Object {
+  "contractData": Object {
     "byVaultId": Object {},
   },
+  "featuredVaults": Object {},
 }
 `;
 
 exports[`Vaults slice tests should update state on fulfilled vault list 2`] = `
 Object {
   "byVaultId": Object {
-    "one-bifi-gov": "123",
-    "sushi-one-1ygg-1eth": "456",
+    "one-bifi-gov": Object {
+      "pricePerFullShare": "123",
+      "strategyAddress": "test",
+    },
+    "sushi-one-1ygg-1eth": Object {
+      "pricePerFullShare": "456",
+      "strategyAddress": "test",
+    },
   },
 }
 `;

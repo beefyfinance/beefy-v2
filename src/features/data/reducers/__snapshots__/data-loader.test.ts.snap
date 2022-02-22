@@ -47,6 +47,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -94,6 +99,11 @@ Object {
       "status": "init",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -149,6 +159,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -200,6 +215,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -229,6 +249,11 @@ Object {
       "status": "pending",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -266,6 +291,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -299,6 +329,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -324,10 +359,129 @@ Object {
     },
     "prices": Object {
       "alreadyLoadedOnce": true,
+      "error": "fatality message",
+      "status": "rejected",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 5`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
+      "error": "fatality name",
+      "status": "rejected",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 6`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
+      "error": "1234",
+      "status": "rejected",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 7`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
       "error": null,
       "status": "pending",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",

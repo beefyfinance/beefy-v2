@@ -22,6 +22,13 @@ import {
   TokenNative,
 } from '../../entities/token';
 import { featureFlag_getBalanceApiChunkSize } from '../../utils/feature-flags';
+import { BeefyState } from '../../../../redux-types';
+import {
+  selectBoostBalanceTokenEntity,
+  selectBoostRewardsTokenEntity,
+  selectGovVaultBalanceTokenEntity,
+  selectGovVaultRewardsTokenEntity,
+} from '../../selectors/balance';
 
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
@@ -32,6 +39,7 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
   constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllBalances(
+    state: BeefyState,
     tokens: TokenEntity[],
     govVaults: VaultGov[],
     boosts: BoostEntity[],
@@ -104,14 +112,14 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
     let resultsIdx = 0;
     for (const boostBatch of boostBatches) {
       const batchRes = results[resultsIdx]
-        .map((boostRes, elemidx) => this.boostFormatter(boostRes, boostBatch[elemidx]))
+        .map((boostRes, elemidx) => this.boostFormatter(state, boostRes, boostBatch[elemidx]))
         .filter(item => item);
       res.boosts = res.boosts.concat(batchRes);
       resultsIdx++;
     }
     for (const govVaultBatch of govVaultBatches) {
       const batchRes = results[resultsIdx]
-        .map((vaultRes, elemidx) => this.govVaultFormatter(vaultRes, govVaultBatch[elemidx]))
+        .map((vaultRes, elemidx) => this.govVaultFormatter(state, vaultRes, govVaultBatch[elemidx]))
         .filter(item => item);
       res.govVaults = res.govVaults.concat(batchRes);
       resultsIdx++;
@@ -125,60 +133,73 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
     }
 
     for (const nativeToken of nativeTokens) {
-      res.tokens.push(this.nativeTokenFormatter(results[resultsIdx], nativeToken));
+      const formatted = this.nativeTokenFormatter(results[resultsIdx], nativeToken);
+      if (formatted !== null) {
+        res.tokens.push(formatted);
+      }
       resultsIdx++;
     }
 
     return res;
   }
 
-  protected erc20TokenFormatter(result: string, token: TokenEntity): TokenBalance | null {
+  protected erc20TokenFormatter(result: string, token: TokenEntity): null | TokenBalance {
     if (result === '0') {
       return null;
     }
+    const rawAmount = new BigNumber(result);
     return {
       tokenId: token.id,
-      amount: new BigNumber(result),
+      amount: rawAmount.shiftedBy(-token.decimals),
     };
   }
-  protected nativeTokenFormatter(
-    result: AllValuesAsString<TokenBalance>,
-    token: TokenNative
-  ): TokenBalance | null {
-    if (result.amount === '0') {
+
+  protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance | null {
+    if (result === '0') {
       return null;
     }
+    const rawAmount = new BigNumber(result);
     return {
       tokenId: token.id,
-      amount: new BigNumber(result.amount),
+      amount: rawAmount.shiftedBy(-token.decimals),
     };
   }
 
   protected govVaultFormatter(
+    state: BeefyState,
     result: AllValuesAsString<GovVaultPoolBalance>,
     govVault: VaultGov
   ): GovVaultPoolBalance | null {
     if (result.balance === '0' && result.rewards === '0') {
       return null;
     }
+    const balanceToken = selectGovVaultBalanceTokenEntity(state, govVault.id);
+    const rewardsToken = selectGovVaultRewardsTokenEntity(state, govVault.id);
+    const rawBalance = new BigNumber(result.balance);
+    const rawRewards = new BigNumber(result.rewards);
     return {
       vaultId: govVault.id,
-      balance: new BigNumber(result.balance),
-      rewards: new BigNumber(result.rewards),
+      balance: rawBalance.shiftedBy(-balanceToken.decimals),
+      rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
     };
   }
 
   protected boostFormatter(
+    state: BeefyState,
     result: AllValuesAsString<BoostBalance>,
     boost: BoostEntity
   ): BoostBalance | null {
     if (result.balance === '0' && result.rewards === '0') {
       return null;
     }
+    const balanceToken = selectBoostBalanceTokenEntity(state, boost.id);
+    const rewardsToken = selectBoostRewardsTokenEntity(state, boost.id);
+    const rawBalance = new BigNumber(result.balance);
+    const rawRewards = new BigNumber(result.rewards);
     return {
       boostId: boost.id,
-      balance: new BigNumber(result.balance),
-      rewards: new BigNumber(result.rewards),
+      balance: rawBalance.shiftedBy(-balanceToken.decimals),
+      rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
     };
   }
 }

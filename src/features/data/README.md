@@ -62,19 +62,41 @@
 
     [x] handle errors
     [x] handle loading
-    [ ] handle canceling ongoing requests
+    [~] handle canceling ongoing requests => not happening
 
 [ ] Code cleanup & Testing
 
     [x] remove unused price mocks
     [ ] reorganize files?
-    [ ] remove unnecessary comments
+    [x] remove unnecessary comments
     [x] ensure TVL and APY is computed properly
     [x] ensure user balance is computed properly
     [ ] ensure user allowances are computed properly
     [ ] make tests run in CI
 
 [ ] Rework components to use new reducers
+
+    [x] Filters: search box, vault category, user vault category
+    [x] Store last used filters
+    [x] Fix deposits metric
+    [x] Fix wallet metric
+    [x] Fix safety score metric
+    [x] Fix apy metric
+    [x] delay loading of web3modal
+    [~] Make sure we can still use the vault page => not happening
+    [x] Prevent wallet popin on startup
+    [x] Bifi price missing
+    [x] Remove unused old code
+    [ ] fix boost status
+    [ ] fix boost APY
+    [ ] fix vault TVL (maybe exclusions)
+    [ ] fix filters
+    [ ] Add moonpot support
+    [ ] Do some performance enhancement (scenario + filters)
+    [ ] too many selectors https://redux.js.org/usage/deriving-data-selectors#balance-selector-usage
+    [ ] Go over left todos
+
+[ ] Add `tokenAddress` to WFTM and WMATIC tokens
 [ ] Rework search to handle partially loaded data
 [ ] Create unit tests for critical business cases
 [ ] Rework error handling
@@ -85,11 +107,13 @@
 
     [ ] Make sure TVL is properly computed (compare with current bêta)
 
-[ ] Apply decimals as soon as possible (in the API classes). We won't loose precision as we return bignumbers only
+[ ] Use BigNumber.shiftedBy when relevant for perf improvements
 
 BONUS:
 
 [ ] Currently, when the wallet is connected, Memory usage goes steadily up, It’d be ideal if we could prevent memory leaks from existing once this is over
+[ ] Apply decimals as soon as possible (in the API classes). We won't loose precision as we return bignumbers only
+[ ] Optimize images (large svgs and pngs should be webp or jpg)
 
 # REGRESSION TESTING BOOK
 
@@ -135,11 +159,12 @@ BONUS:
 
 # WEIRD STUFF / QUESTIONS
 
-- scream-ftm and 0xdao-wftm-eol have an oracleId set to "WFTM" but no "tokenAddress" set. I have hardcoded that W+<native> implies native but I'm sure there is something fishy.
-- Why wait to apply decimals if we use big numbers everywhere? Ex: token has 18 decimals, api fetch balance and returns the raw api value. Should the api return a big number with decimal applied to simplify the rest of the app?
-- Is there a good test address? someone who deposited in every single vault and boost on all chains
-- can we run unit tests in CI?
-- On fantom boost moo_boo_ftm-tomb, the "earnedOracleId" is "BIFI", but the "earnedTokenAddress" is "0xbF07093ccd6adFC3dEB259C557b61E94c1F66945" where on fantom, BIFI token address is "0xd6070ae98b8069de6b494332d1a1a81b6179d960". The "earnedTokenAddress" points to the mooFantomBIFI token. Is this normal? what's going on?
+- What is `launchpoolApr.apr;`
+  launchpoolApr === boost.apr
+- On the current beta, I don't see the boost border around the "fantom-bifi-maxi", but we have an active "moo_bifi-scream" boost. Isn't this a boosted vault?
+  We don't use "status": "active" to know if a boost is active, we use the periodFinish data fetched from the contract
+- `excluded: "aurora-bifi-maxi",` but vault does not seem to exists
+- how do you know if it's a moonpot vault?
 
 # ANSWERED
 
@@ -197,3 +222,16 @@ BONUS:
   so to know how much a user has in a vault, it checks the balance for that token
   this is for normal vaults/tokens, for gov vault balances it's different as usual
   ok so the token.allowance list is initiated with the list of vaults that have this token as oracleId
+
+- scream-ftm and 0xdao-wftm-eol have an oracleId set to "WFTM" but no "tokenAddress" set. I have hardcoded that W+<native> implies native but I'm sure there is something fishy.
+  they should have a tokenAddress
+- Why wait to apply decimals if we use big numbers everywhere? Ex: token has 18 decimals, api fetch balance and returns the raw api value. Should the api return a big number with decimal applied to simplify the rest of the app?
+  Yes, but out of scope
+- Is there a good test address? someone who deposited in every single vault and boost on all chains
+  No, but chebiN is building one
+- can we run unit tests in CI?
+  Yes, chebiN will setup
+- On fantom boost moo_boo_ftm-tomb, the "earnedOracleId" is "BIFI", but the "earnedTokenAddress" is "0xbF07093ccd6adFC3dEB259C557b61E94c1F66945" where on fantom, BIFI token address is "0xd6070ae98b8069de6b494332d1a1a81b6179d960". The "earnedTokenAddress" points to the mooFantomBIFI token. Is this normal? what's going on?
+  It is not.
+- What is "zero" in "sortConfig" => sortConfig.deposited === false && sortConfig.zero === false
+  Zero mean "hide zero balance"

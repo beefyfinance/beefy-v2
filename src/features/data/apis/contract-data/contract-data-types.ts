@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../../redux/reducers/storev2';
+import { BeefyState } from '../../../../redux-types';
 import { BoostEntity } from '../../entities/boost';
 import { VaultGov, VaultStandard } from '../../entities/vault';
 
@@ -63,7 +63,7 @@ export interface BoostContractData {
   id: string;
   totalSupply: BigNumber;
   rewardRate: BigNumber;
-  periodFinish: number;
+  periodFinish: Date | null; // null means boost is in prestake
 }
 
 export interface FetchAllContractDataResult {

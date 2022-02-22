@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Buyback slice tests should update state on fulfilled buyback action 1`] = `
+Object {
+  "byChainId": Object {
+    "bsc": Object {
+      "buybackTokenAmount": "0",
+      "buybackUsdAmount": "0",
+    },
+    "cronos": Object {
+      "buybackTokenAmount": "0.503019530037920513",
+      "buybackUsdAmount": "1124.2866831844021983137114413887526",
+    },
+    "polygon": Object {
+      "buybackTokenAmount": "0.535709913009709997",
+      "buybackUsdAmount": "1197.3521608619992880891961859928494",
+    },
+  },
+}
+`;
+
+exports[`Buyback slice tests should update state on fulfilled buyback action 2`] = `
+Object {
+  "totalBuybackTokenAmount": "1.03872944304763051",
+  "totalBuybackUsdAmount": "2321.638844046401486402907627381602",
+}
+`;

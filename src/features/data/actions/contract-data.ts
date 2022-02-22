@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getContractDataApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
@@ -26,7 +26,7 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
 >('contract-data/fetchAllContractDataByChainAction', async ({ chainId }, { getState }) => {
   const state = getState();
   const chain = selectChainById(state, chainId);
-  const contractApi = getContractDataApi(chain);
+  const contractApi = await getContractDataApi(chain);
 
   // maybe have a way to retrieve those easily
   const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>

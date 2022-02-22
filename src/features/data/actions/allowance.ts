@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { FetchAllAllowanceResult } from '../apis/allowance/allowance-types';
 import { getAllowanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
@@ -27,7 +27,7 @@ export const fetchAllAllowanceAction = createAsyncThunk<
 
   const walletAddress = selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
-  const api = getAllowanceApi(chain);
+  const api = await getAllowanceApi(chain);
 
   // maybe have a way to retrieve those easily
   const boosts = selectBoostsByChainId(state, chainId).map(vaultId =>

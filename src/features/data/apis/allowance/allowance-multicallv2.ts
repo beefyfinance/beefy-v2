@@ -9,9 +9,9 @@ import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
 import { isTokenErc20, TokenEntity } from '../../entities/token';
 import { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types';
-import { BeefyState } from '../../../redux/reducers/storev2';
 import { selectTokenById } from '../../selectors/tokens';
 import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
+import { BeefyState } from '../../../../redux-types';
 
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
@@ -40,11 +40,12 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
     const addTokenIdToCalls = (tokenId: string, spenderAddress: string) => {
       const token = selectTokenById(state, this.chain.id, tokenId);
       if (!isTokenErc20(token)) {
-        throw new Error("Can't query allowance of non erc20 token");
+        console.warn(`Can't query allowance of non erc20 token, skipping ${token.id}`);
+        return;
       }
       // TODO: temporary check until we can sort out the WFTM mystery
       if (!token.contractAddress) {
-        console.error(`Could not find token contractAddress: ${token.id}`);
+        console.warn(`Could not find token contractAddress: ${token.id}`);
         return;
       }
       if (allowanceCallsByToken[token.contractAddress] === undefined) {

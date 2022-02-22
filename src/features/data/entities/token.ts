@@ -21,6 +21,8 @@ export interface TokenErc20 {
   decimals: number;
   buyUrl: string | null; // link to 1inch/pancake/...
   type: 'erc20';
+  website: string | null;
+  description: string | null;
 }
 
 /**

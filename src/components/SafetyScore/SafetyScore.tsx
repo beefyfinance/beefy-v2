@@ -2,12 +2,19 @@ import React, { memo } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { SafetyScoreProps } from './SafetyScoreProps';
 
 const useStyles = makeStyles(styles as any);
-const _SafetyScore: React.FC<SafetyScoreProps> = ({ score, whiteLabel, size = 'lg' }) => {
+const _SafetyScore = ({
+  score,
+  whiteLabel = false,
+  size = 'lg',
+}: {
+  score: number;
+  whiteLabel?: boolean;
+  size: 'sm' | 'lg' | 'md';
+}) => {
   const classes = useStyles();
-  const scoreText = score === 0 ? '-' : score;
+  const scoreText = score === 0 ? '-' : score.toFixed(1);
 
   return (
     <div

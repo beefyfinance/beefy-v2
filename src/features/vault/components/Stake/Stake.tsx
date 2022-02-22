@@ -18,7 +18,7 @@ import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
-import { convertAmountToRawNumber } from '../../../../helpers/format';
+import { BIG_ZERO, convertAmountToRawNumber } from '../../../../helpers/format';
 import { isEmpty } from '../../../../helpers/utils';
 import { Steps } from '../../../../components/Steps';
 import { switchNetwork } from '../../../../helpers/switchNetwork';
@@ -82,7 +82,7 @@ export const Stake: React.FC<StakeProps> = ({
     );
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-      value = new BigNumber(0);
+      value = BIG_ZERO;
     }
 
     if (value.isGreaterThanOrEqualTo(balance.balance)) {

@@ -6,19 +6,24 @@ import {
   BoxProps,
   PopperPlacementType,
 } from '@material-ui/core';
-import React, { memo, useState } from 'react';
+import React, { memo, ReactNode, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { PopoverProps } from './PopoverProps';
 
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
-const _Popover: React.FC<PopoverProps> = ({
+const _Popover = ({
   title,
   content,
   children,
   size = 'sm',
   placement = 'top-end',
+}: {
+  title?: string;
+  content?: string;
+  size?: string;
+  placement?: PopperPlacementType;
+  children?: ReactNode;
 }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);

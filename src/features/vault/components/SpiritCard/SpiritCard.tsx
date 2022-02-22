@@ -9,39 +9,48 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { styles } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import BigNumber from 'bignumber.js';
-import { SpiritProps } from './SpiritProps';
 import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import { useBalance } from './useBalance';
-import { BIG_ZERO, convertAmountToRawNumber } from '../../../../helpers/format';
+import { BIG_ZERO, convertAmountToRawNumber, formatBigDecimals } from '../../../../helpers/format';
 import { SpiritToken, binSpiritMintVault } from './SpiritToken';
 import { reduxActions } from '../../../redux/actions';
 import { isEmpty } from '../../../../helpers/utils';
 import { Steps } from '../../../../components/Steps';
 import { useAllowance } from './useAllowance';
+import { VaultEntity } from '../../../data/entities/vault';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { BeefyState } from '../../../../redux-types';
+import { selectStandardVaultUserBalanceInToken } from '../../../data/selectors/balance';
+import { selectWalletAddress } from '../../../data/selectors/wallet';
+import { selectTokenById } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 
-const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
+const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const network = item.network;
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const oracleToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, vault.chainId, vaultId)
+  );
+  const walletAddress = useSelector((state: BeefyState) => selectWalletAddress(state));
+  const binSpiritBalance = useSelector((state: BeefyState) =>
+    selectStandardVaultUserBalanceInToken(state, vaultId)
+  );
 
   const [spiritBalance, spiritBalanceString] = useBalance(
     SpiritToken.address,
     SpiritToken.decimals,
-    network
+    vault.chainId
   );
 
   const [spiritAllowance] = useAllowance(
     SpiritToken.address,
     SpiritToken.decimals,
     binSpiritMintVault.mintAdress,
-    network
+    vault.chainId
   );
-
-  const [, binSpiritBalanceString] = useBalance(item.tokenAddress, item.tokenDecimals, network);
 
   const [steps, setSteps] = React.useState({
     modal: false,
@@ -49,10 +58,6 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
     items: [],
     finished: false,
   });
-
-  const { wallet } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-  }));
 
   const [formData, setFormData] = React.useState({
     deposit: {
@@ -129,12 +134,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
 
   const handleDeposit = () => {
     const steps = [];
-    if (wallet.address) {
-      if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
-        return false;
-      }
-
+    if (walletAddress) {
       const amount = convertAmountToRawNumber(formData.deposit.amount);
 
       if (spiritAllowance.isLessThan(amount)) {
@@ -144,7 +144,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
           action: () =>
             dispatch(
               reduxActions.wallet.approval(
-                item.network,
+                vault.chainId,
                 SpiritToken.address,
                 binSpiritMintVault.mintAdress
               )
@@ -159,7 +159,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
         action: () =>
           dispatch(
             reduxActions.wallet.deposit(
-              item.network,
+              vault.chainId,
               binSpiritMintVault.mintAdress,
               amount,
               formData.deposit.max
@@ -183,7 +183,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
         items[index].action();
         setSteps({ ...steps, items: items });
       } else {
-        if (wallet.action.result === 'success' && !steps.finished) {
+        if (/*wallet.action.result === 'success' && */ !steps.finished) {
           const nextStep = index + 1;
           if (!isEmpty(items[nextStep])) {
             setSteps({ ...steps, currentStep: nextStep });
@@ -193,7 +193,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
         }
       }
     }
-  }, [steps, wallet.action]);
+  }, [steps /* , wallet.action */]);
 
   const handleClose = () => {
     resetFormData();
@@ -245,12 +245,12 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
-                {t('Spirit-To')} <span className={classes.value}>{item.token}</span>
+                {t('Spirit-To')} <span className={classes.value}>{oracleToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
                 {t('Spirit-Available')}{' '}
                 <span className={classes.value}>
-                  {binSpiritBalanceString} {item.token}
+                  {formatBigDecimals(binSpiritBalance)} {oracleToken.symbol}
                 </span>
               </Typography>
             </Box>
@@ -270,7 +270,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
           </Button>
         </CardContent>
       </Card>
-      <Steps item={item} steps={steps} handleClose={handleClose} />
+      <Steps item={vault} steps={steps} handleClose={handleClose} />
     </>
   );
 };

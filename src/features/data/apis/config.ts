@@ -1,29 +1,7 @@
 // todo: load these asynchronously
+import { QiDao, Insurace, Moonpot, LaCucina } from '../../../helpers/partners';
 import { featuredPools as featuredVaults } from '../../../config/vault/featured';
-import { pools as arbitrumVaults } from '../../../config/vault/arbitrum';
-import { pools as avaxVaults } from '../../../config/vault/avax';
-import { pools as bscVaults } from '../../../config/vault/bsc';
-import { pools as celoVaults } from '../../../config/vault/celo';
-import { pools as cronosVaults } from '../../../config/vault/cronos';
-import { pools as fantomVaults } from '../../../config/vault/fantom';
-import { pools as fuseVaults } from '../../../config/vault/fuse';
-import { pools as harmonyVaults } from '../../../config/vault/harmony';
-import { pools as hecoVaults } from '../../../config/vault/heco';
-import { pools as metisVaults } from '../../../config/vault/metis';
-import { pools as moonriverVaults } from '../../../config/vault/moonriver';
-import { pools as polygonVaults } from '../../../config/vault/polygon';
-import { pools as arbitrumBoosts } from '../../../config/boost/arbitrum';
-import { pools as avaxBoosts } from '../../../config/boost/avax';
-import { pools as bscBoosts } from '../../../config/boost/bsc';
-import { pools as celoBoosts } from '../../../config/boost/celo';
-import { pools as cronosBoosts } from '../../../config/boost/cronos';
-import { pools as fantomBoosts } from '../../../config/boost/fantom';
-import { pools as fuseBoosts } from '../../../config/boost/fuse';
-import { pools as harmonyBoosts } from '../../../config/boost/harmony';
-import { pools as hecoBoosts } from '../../../config/boost/heco';
-import { pools as metisBoosts } from '../../../config/boost/metis';
-import { pools as moonriverBoosts } from '../../../config/boost/moonriver';
-import { pools as polygonBoosts } from '../../../config/boost/polygon';
+
 import { config as chainConfigs } from '../../../config/config';
 
 import { ChainEntity } from '../entities/chain';
@@ -49,7 +27,7 @@ export interface VaultConfig {
   oraclePrice?: number | null; // pulled afterward
   oracle: string; // 'tokens' | 'lp';
   oracleId: TokenEntity['id'];
-  status: string; // 'active' | 'eol';
+  status: string; // 'active' | 'eol' | 'paused';
   platform: PlatformEntity['id'];
   assets?: TokenEntity['id'][];
   risks?: string[] | null;
@@ -73,8 +51,20 @@ export interface VaultConfig {
   warning?: string | null;
 }
 
-interface FeaturedVaultConfig {
+export interface FeaturedVaultConfig {
   [vaultId: VaultEntity['id']]: boolean;
+}
+
+export interface MoonpotConfig {
+  id: VaultEntity['id'];
+  img: string;
+  link: string;
+}
+export interface PartnersConfig {
+  QiDao: VaultEntity['id'][];
+  Insurace: ChainEntity['id'][];
+  Moonpot: MoonpotConfig[];
+  LaCucina: VaultEntity['id'][];
 }
 
 interface BoostPartnerConfig {
@@ -133,39 +123,33 @@ export interface ChainConfig {
   stableCoins: string[];
 }
 
+export interface ZapConfig {
+  zapAddress: string; // identifier
+  ammRouter: string;
+  ammFactory: string;
+  ammPairInitHash: string;
+}
+
 const vaultsByChainId: {
   [chainId: ChainEntity['id']]: VaultConfig[];
-} = {
-  arbitrum: arbitrumVaults,
-  avax: avaxVaults,
-  bsc: bscVaults,
-  celo: celoVaults,
-  cronos: cronosVaults,
-  fantom: fantomVaults,
-  fuse: fuseVaults,
-  harmony: harmonyVaults,
-  heco: hecoVaults,
-  metis: metisVaults,
-  moonriver: moonriverVaults,
-  polygon: polygonVaults,
-};
+} = {};
+for (const chainId in chainConfigs) {
+  vaultsByChainId[chainId] = require(`../../../config/vault/${chainId}`).pools;
+}
 
 const boostsByChainId: {
   [chainId: ChainEntity['id']]: BoostConfig[];
-} = {
-  arbitrum: arbitrumBoosts,
-  avax: avaxBoosts,
-  bsc: bscBoosts,
-  celo: celoBoosts,
-  cronos: cronosBoosts,
-  fantom: fantomBoosts,
-  fuse: fuseBoosts,
-  harmony: harmonyBoosts,
-  heco: hecoBoosts,
-  metis: metisBoosts,
-  moonriver: moonriverBoosts,
-  polygon: polygonBoosts,
-};
+} = {};
+for (const chainId in chainConfigs) {
+  boostsByChainId[chainId] = require(`../../../config/boost/${chainId}`).pools;
+}
+
+const zapsByChainId: {
+  [chainId: ChainEntity['id']]: ZapConfig[];
+} = {};
+for (const chainId in chainConfigs) {
+  zapsByChainId[chainId] = require(`../../../config/zap/${chainId}`).zaps;
+}
 
 /**
  * A class to access beefy configuration
@@ -179,6 +163,14 @@ export class ConfigAPI {
 
   public async fetchFeaturedVaults(): Promise<FeaturedVaultConfig> {
     return featuredVaults;
+  }
+
+  public async fetchPartnersConfig(): Promise<PartnersConfig> {
+    return { QiDao, Insurace, Moonpot, LaCucina };
+  }
+
+  public async fetchZapsConfig(): Promise<{ [chainId: ChainEntity['id']]: ZapConfig[] }> {
+    return zapsByChainId;
   }
 
   public async fetchAllVaults(): Promise<{ [chainId: ChainEntity['id']]: VaultConfig[] }> {
