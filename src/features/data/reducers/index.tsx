@@ -21,6 +21,7 @@ import { zapsSlice } from './zaps';
 import { depositSlice } from './wallet/deposit';
 import { walletActionsReducer } from './wallet/wallet-action';
 import { withdrawSlice } from './wallet/withdraw';
+import { boostModalSlice } from './wallet/boost-stake';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -48,6 +49,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
   deposit: depositSlice.reducer,
   withdraw: withdrawSlice.reducer,
+  boostModal: boostModalSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({

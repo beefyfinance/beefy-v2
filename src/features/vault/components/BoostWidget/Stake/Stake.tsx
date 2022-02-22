@@ -9,208 +9,117 @@ import {
   InputBase,
 } from '@material-ui/core';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import BigNumber from 'bignumber.js';
 import CloseIcon from '@material-ui/icons/Close';
 import { Card } from '../../Card/Card';
 import { CardHeader } from '../../Card/CardHeader';
 import { CardContent } from '../../Card/CardContent';
 import { CardTitle } from '../../Card/CardTitle';
+import { formatBigNumberSignificant } from '../../../../../helpers/format';
+import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
+import { BoostEntity } from '../../../../data/entities/boost';
+import { useStepper } from '../../../../../components/Steps/hooks';
+import { BeefyState } from '../../../../../redux-types';
+import { selectBoostById, selectIsBoostActive } from '../../../../data/selectors/boosts';
+import { selectStandardVaultById } from '../../../../data/selectors/vaults';
+import { boostModalActions } from '../../../../data/reducers/wallet/boost-stake';
+import { selectCurrentChainId, selectIsWalletConnected } from '../../../../data/selectors/wallet';
+import { Step } from '../../../../../components/Steps/types';
+import { selectIsApprovalNeededForBoostStaking } from '../../../../data/selectors/wallet-actions';
+import { walletActions } from '../../../../data/actions/wallet-actions';
+import { selectErc20TokenById } from '../../../../data/selectors/tokens';
 import {
-  BIG_ZERO,
-  convertAmountToRawNumber,
-  formatBigNumberSignificant,
-} from '../../../../../helpers/format';
-import { isEmpty } from '../../../../../helpers/utils';
-import { Steps } from '../../../../../components/Steps';
-import { askForNetworkChange } from '../../../../data/actions/wallet';
+  selectBoostUserBalanceInToken,
+  selectWalletBalanceOfToken,
+} from '../../../../data/selectors/balance';
+import { selectChainById } from '../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 export const Stake = ({
-  formData,
-  setFormData,
-  item,
-  handleWalletConnect,
-  resetFormData,
-  balance,
+  boostId,
   closeModal,
 }: {
-  item: any;
-  formData: any;
-  setFormData: any;
-  balance: any;
-  handleWalletConnect: any;
-  resetFormData: any;
+  boostId: BoostEntity['id'];
   closeModal: () => void;
 }) => {
+  const boost = useSelector((state: BeefyState) => selectBoostById(state, boostId));
+  const vault = useSelector((state: BeefyState) => selectStandardVaultById(state, boost.vaultId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, boost.chainId));
+  const mooToken = useSelector((state: BeefyState) =>
+    selectErc20TokenById(state, vault.chainId, vault.earnedTokenId)
+  );
+  const isBoostActive = useSelector((state: BeefyState) => selectIsBoostActive(state, boostId));
+
+  const mooBalance = useSelector((state: BeefyState) =>
+    selectWalletBalanceOfToken(state, boost.chainId, mooToken.id)
+  );
+  const boostBalance = useSelector((state: BeefyState) =>
+    selectBoostUserBalanceInToken(state, boost.id)
+  );
+
+  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletOnVaultChain = useSelector(
+    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  );
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const store = useStore();
+  const formState = useSelector((state: BeefyState) => state.ui.boostModal);
 
-  const t = useTranslation().t;
+  const [startStepper, isStepping, Stepper] = useStepper(vault.id, () => {});
 
-  const { wallet, tokens } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-    tokens: state.balanceReducer.tokens[item.network],
-  }));
+  const spenderAddress = boost.earnContractAddress;
 
-  const [steps, setSteps] = React.useState({
-    modal: false,
-    currentStep: -1,
-    items: [],
-    finished: false,
-  });
+  const needsApproval = useSelector((state: BeefyState) =>
+    selectIsApprovalNeededForBoostStaking(state, spenderAddress)
+  );
 
-  const handleInput = val => {
-    const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
+  // initiate state
+  React.useEffect(() => {
+    dispatch(boostModalActions.setBoost({ boostId }));
+  }, [boostId, dispatch]);
+  if (formState.boostId !== boostId) {
+    return <></>;
+  }
 
-    let max = false;
-
-    let value = new BigNumber(input).decimalPlaces(
-      tokens[formData.deposit.token].decimals,
-      BigNumber.ROUND_DOWN
-    );
-
-    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-      value = BIG_ZERO;
-    }
-
-    if (value.isGreaterThanOrEqualTo(balance.balance)) {
-      value = balance.balance;
-      max = true;
-    }
-
-    const formattedInput = (() => {
-      if (value.isEqualTo(input)) return input;
-      if (input === '') return '';
-      if (input === '.') return `0.`;
-      return formatBigNumberSignificant(value);
-    })();
-
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: formattedInput,
-        amount: value,
-        max: max,
-      },
-    });
+  const handleInput = (amountStr: string) => {
+    dispatch(boostModalActions.setInput({ amount: amountStr, state: store.getState() }));
   };
 
-  // const handleInput = val => {
-  //   const value =
-  //     parseFloat(val) > balance.balance
-  //       ? balance.balance
-  //       : parseFloat(val) < 0
-  //       ? 0
-  //       : stripExtraDecimals(val);
-  //   setFormData({
-  //     ...formData,
-  //     deposit: { amount: value, max: new BigNumber(value).minus(balance.balance).toNumber() === 0 },
-  //   });
-  // };
-
   const handleMax = () => {
-    if (balance.balance > 0) {
-      setFormData({
-        ...formData,
-        deposit: {
-          ...formData.deposit,
-          input: formatBigNumberSignificant(balance.balance),
-          amount: balance.balance,
-          max: true,
-        },
-      });
-    }
+    dispatch(boostModalActions.setMax({ mode: 'stake', state: store.getState() }));
   };
 
   const handleDeposit = () => {
-    const steps = [];
+    const steps: Step[] = [];
+    if (!isWalletConnected) {
+      return dispatch(askForWalletConnection());
+    }
+    if (!isWalletOnVaultChain) {
+      return dispatch(askForNetworkChange({ chainId: vault.chainId }));
+    }
 
-    if (wallet.address) {
-      if (item.network !== wallet.network) {
-        dispatch(askForNetworkChange({ chainId: item.chainId }));
-        return false;
-      }
-
-      const amount = convertAmountToRawNumber(
-        formData.deposit.amount,
-        tokens[formData.deposit.token].decimals
-      );
-
-      if (balance.allowance.isLessThan(amount)) {
-        steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: () =>
-            dispatch(
-              /*walletActions.approval(
-                item.network,
-                tokens[formData.deposit.token].address,
-                item.earnContractAddress
-              )*/ null
-            ),
-          pending: false,
-        });
-      }
-
-      if (!balance.allowance) {
-        steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: () =>
-            dispatch(
-              /*walletActions.approval(
-                item.network,
-                item.tokenAddress,
-                item.earnContractAddress
-              )*/ null
-            ),
-          pending: false,
-        });
-      }
-
+    if (needsApproval) {
       steps.push({
-        step: 'stake',
-        message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
-        action: () =>
-          /*dispatch(walletActions.stake(item.network, item.earnContractAddress, amount))*/ null,
+        step: 'approve',
+        message: t('Vault-ApproveMsg'),
+        action: walletActions.approval(mooToken, spenderAddress),
         pending: false,
-        token: tokens[formData.deposit.token],
-        amount,
       });
-
-      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
     }
-  };
 
-  const handleClose = () => {
-    resetFormData();
-    setSteps({ modal: false, currentStep: -1, items: [], finished: false });
-  };
+    steps.push({
+      step: 'stake',
+      message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
+      action: walletActions.stakeBoost(boost, formState.amount),
+      pending: false,
+    });
 
-  React.useEffect(() => {
-    const index = steps.currentStep;
-    if (!isEmpty(steps.items[index]) && steps.modal) {
-      const items = steps.items;
-      if (!items[index].pending) {
-        items[index].pending = true;
-        items[index].action();
-        setSteps({ ...steps, items: items });
-      } else {
-        if (wallet.action.result === 'success' && !steps.finished) {
-          const nextStep = index + 1;
-          if (!isEmpty(items[nextStep])) {
-            setSteps({ ...steps, currentStep: nextStep });
-          } else {
-            setSteps({ ...steps, finished: true });
-          }
-        }
-      }
-    }
-  }, [steps, wallet.action]);
+    startStepper(steps);
+  };
 
   const style = {
     position: 'absolute' as 'absolute',
@@ -222,7 +131,7 @@ export const Stake = ({
   };
 
   return (
-    <React.Fragment>
+    <>
       <Box sx={style}>
         <Card>
           <CardHeader className={classes.header}>
@@ -237,13 +146,13 @@ export const Stake = ({
                 <Box className={classes.available}>
                   <Typography className={classes.label}>{t('Stake-Label-Available')}</Typography>
                   <Typography className={classes.value}>
-                    {formatBigNumberSignificant(balance.balance)}
+                    {formatBigNumberSignificant(mooBalance)}
                   </Typography>
                 </Box>
                 <Box className={classes.staked}>
                   <Typography className={classes.label}>{t('Stake-Label-Staked')}</Typography>
                   <Typography className={classes.value}>
-                    {formatBigNumberSignificant(balance.deposited)}
+                    {formatBigNumberSignificant(boostBalance)}
                   </Typography>
                 </Box>
               </Box>
@@ -252,8 +161,9 @@ export const Stake = ({
                   <InputBase
                     placeholder="0.00"
                     className={classes.input}
-                    value={formData.deposit.input}
+                    value={formState.formattedInput}
                     onChange={e => handleInput(e.target.value)}
+                    disabled={isStepping}
                     endAdornment={
                       <InputAdornment className={classes.positionButton} position="end">
                         <IconButton
@@ -274,25 +184,26 @@ export const Stake = ({
             </Box>
             {/*BUTTON */}
             <Box className={classes.btnSection}>
-              {item.status !== 'active' ? (
+              {isBoostActive ? (
                 <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
                   {t('Deposit-Disabled')}
                 </Button>
-              ) : wallet.address ? (
-                item.network !== wallet.network ? (
+              ) : isWalletConnected ? (
+                !isWalletOnVaultChain ? (
                   <Button
-                    onClick={() => dispatch(askForNetworkChange({ chainId: item.chainId }))}
+                    onClick={() => dispatch(askForNetworkChange({ chainId: boost.chainId }))}
                     className={classes.btnSubmit}
                     fullWidth={true}
+                    disabled={isStepping}
                   >
-                    {t('Network-Change', { network: item.network.toUpperCase() })}
+                    {t('Network-Change', { network: chain.name.toUpperCase() })}
                   </Button>
                 ) : (
                   <Button
                     onClick={handleDeposit}
                     className={classes.btnSubmit}
                     fullWidth={true}
-                    disabled={formData.deposit.amount <= 0}
+                    disabled={formState.amount.isLessThanOrEqualTo(0) || isStepping}
                   >
                     {t('Stake-Button-ConfirmStaking')}
                   </Button>
@@ -301,7 +212,8 @@ export const Stake = ({
                 <Button
                   className={classes.btnSubmit}
                   fullWidth={true}
-                  onClick={handleWalletConnect}
+                  onClick={() => dispatch(askForWalletConnection())}
+                  disabled={isStepping}
                 >
                   {t('Network-ConnectWallet')}
                 </Button>
@@ -310,7 +222,7 @@ export const Stake = ({
           </CardContent>
         </Card>
       </Box>
-      <Steps vaultId={item.id} steps={steps} handleClose={handleClose} />
-    </React.Fragment>
+      <Stepper />
+    </>
   );
 };

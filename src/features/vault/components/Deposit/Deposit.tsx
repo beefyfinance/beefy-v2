@@ -27,7 +27,7 @@ import {
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { isFulfilled } from '../../../data/reducers/data-loader';
 import { depositActions } from '../../../data/reducers/wallet/deposit';
-import { selectIsApprovalEnoughForDeposit } from '../../../data/selectors/deposit';
+import { selectIsApprovalNeededForDeposit } from '../../../data/selectors/wallet-actions';
 import { selectChainNativeToken, selectTokenById } from '../../../data/selectors/tokens';
 import { selectChainById } from '../../../data/selectors/chains';
 import { initDepositForm } from '../../../data/actions/scenarios';
@@ -99,7 +99,7 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const needsApproval = useSelector((state: BeefyState) =>
     formState.selectedToken.id !== native.id && spenderAddress
-      ? selectIsApprovalEnoughForDeposit(state, spenderAddress)
+      ? selectIsApprovalNeededForDeposit(state, spenderAddress)
       : false
   );
 
@@ -155,7 +155,7 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         steps.push({
           step: 'deposit',
           message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
-          action: walletActions.stake(vault, formState.amount),
+          action: walletActions.stakeGovVault(vault, formState.amount),
           pending: false,
         });
       } else {

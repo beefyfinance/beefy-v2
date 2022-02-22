@@ -37,7 +37,7 @@ import {
 } from '../../../data/selectors/tokens';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { walletActions } from '../../../data/actions/wallet-actions';
-import { selectIsApprovalEnoughForWithdraw } from '../../../data/selectors/deposit';
+import { selectIsApprovalNeededForWithdraw } from '../../../data/selectors/wallet-actions';
 import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import { TokenEntity } from '../../../data/entities/token';
 import {
@@ -113,7 +113,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const needsApproval = useSelector((state: BeefyState) =>
     !isSelectedNative && spenderAddress
-      ? selectIsApprovalEnoughForWithdraw(state, spenderAddress)
+      ? selectIsApprovalNeededForWithdraw(state, spenderAddress)
       : false
   );
 
@@ -144,7 +144,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       steps.push({
         step: 'withdraw',
         message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-        action: walletActions.unstake(vault, formState.amount),
+        action: walletActions.unstakeGovVault(vault, formState.amount),
         pending: false,
       });
     } else {

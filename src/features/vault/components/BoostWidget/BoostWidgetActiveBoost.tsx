@@ -22,6 +22,7 @@ import {
   selectWalletBalanceOfToken,
 } from '../../../data/selectors/balance';
 import { StakeCountdown } from './StakeCountdown';
+import { Stake } from './Stake';
 
 const useStyles = makeStyles(styles as any);
 
@@ -62,10 +63,14 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
 
   const [dw, setDw] = React.useState('deposit');
   const [inputModal, setInputModal] = React.useState(false);
+
   function depositWithdraw(deposit: string) {
     setDw(deposit);
     setInputModal(true);
   }
+  const closeInputModal = () => {
+    setInputModal(false);
+  };
 
   const handleExit = (boost: BoostEntity) => {
     const steps: Step[] = [];
@@ -190,17 +195,9 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
         onClose={() => setInputModal(false)}
       >
         <>
-          {dw === 'deposit'
-            ? /*<Stake
-              closeModal={closeInputModal}
-              item={item}
-              balance={state}
-              handleWalletConnect={handleWalletConnect}
-              formData={formData}
-              setFormData={setFormData}
-              resetFormData={resetFormData}
-            />*/ null
-            : /*
+          {dw === 'deposit' ? (
+            <Stake closeModal={closeInputModal} boostId={boostId} />
+          ) : /*
             <Unstake
               closeModal={closeInputModal}
               item={item}

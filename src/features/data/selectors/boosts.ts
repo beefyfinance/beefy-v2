@@ -1,23 +1,22 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
+import { getBoostStatusFromPeriodFinish } from '../reducers/boosts';
 import { selectBoostUserBalanceInToken } from './balance';
 
-export const selectBoostById = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.boosts.byId,
-  // get the user passed ID
-  (_: BeefyState, boostId: VaultEntity['id']) => boostId,
-  // last function receives previous function outputs as parameters
-  (boostsByIds, boostId) => {
-    if (boostsByIds[boostId] === undefined) {
-      throw new Error(`selectBoostById: Unknown vault id ${boostId}`);
-    }
-    return boostsByIds[boostId];
+export const selectBoostById = (state: BeefyState, boostId: VaultEntity['id']) => {
+  const boostsByIds = state.entities.boosts.byId;
+  if (boostsByIds[boostId] === undefined) {
+    throw new Error(`selectBoostById: Unknown vault id ${boostId}`);
   }
-);
+  return boostsByIds[boostId];
+};
+
+export const selectIsBoostActive = (state: BeefyState, boostId: VaultEntity['id']) => {
+  const status = getBoostStatusFromPeriodFinish(selectBoostPeriodFinish(state, boostId));
+  return status === 'active';
+};
 
 export const selectBoostsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
   return state.entities.boosts.byChainId[chainId]?.allBoostsIds || [];
