@@ -80,6 +80,8 @@ export interface VaultStandard {
 
   withdrawalFee: string | null;
   depositFee: string | null;
+
+  createdAt: number | null;
 }
 
 export interface VaultGov {
@@ -147,6 +149,8 @@ export interface VaultGov {
 
   withdrawalFee: string;
   depositFee: string;
+  
+  createdAt: number | null;
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {
