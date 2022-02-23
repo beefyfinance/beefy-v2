@@ -11,9 +11,16 @@ import { fetchAllBalanceAction } from '../actions/balance';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
+import { initiateDepositForm } from '../actions/deposit';
 import { fetchAllPricesAction } from '../actions/prices';
+import {
+  fetchAddressBookAction,
+  reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+} from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { askForNetworkChange, askForWalletConnection, doDisconnectWallet } from '../actions/wallet';
+import { initiateWithdrawForm } from '../actions/withdraw';
+import { fetchAllZapsAction } from '../actions/zap';
 import { ChainEntity } from '../entities/chain';
 
 /**
@@ -56,7 +63,9 @@ export function isFulfilled(state: LoaderState): state is LoaderStateFulfilled {
 export function isPending(state: LoaderState): state is LoaderStatePending {
   return state.status === 'pending';
 }
-
+export function isInitialLoader(state: LoaderState): state is LoaderStateInit {
+  return state.status === 'init';
+}
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
   status: 'init',
@@ -76,6 +85,7 @@ const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
   contractData: dataLoaderStateInit,
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
+  addressBook: dataLoaderStateInit,
 };
 
 export interface DataLoaderState {
@@ -86,6 +96,9 @@ export interface DataLoaderState {
     vaults: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
+    depositForm: LoaderState;
+    withdrawForm: LoaderState;
+    zaps: LoaderState;
   };
 
   byChainId: {
@@ -93,6 +106,7 @@ export interface DataLoaderState {
       contractData: LoaderState;
       balance: LoaderState;
       allowance: LoaderState;
+      addressBook: LoaderState;
     };
   };
 }
@@ -104,6 +118,9 @@ export const initialDataLoaderState: DataLoaderState = {
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
+    depositForm: dataLoaderStateInit,
+    withdrawForm: dataLoaderStateInit,
+    zaps: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -140,17 +157,19 @@ function addGlobalAsyncThunkActions(
 function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, unknown>,
-  stateKey: keyof DataLoaderState['byChainId']['bsc']
+  stateKeys: Array<keyof DataLoaderState['byChainId']['bsc']>
 ) {
   builder.addCase(action.pending, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
-    sliceState.byChainId[chainId][stateKey] = {
-      ...dataLoaderStatePending,
-      alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
-    };
+    for (const stateKey of stateKeys) {
+      sliceState.byChainId[chainId][stateKey] = {
+        ...dataLoaderStatePending,
+        alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
+      };
+    }
   });
   builder.addCase(action.rejected, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
@@ -160,11 +179,13 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
 
     const msg = getMessage(action.error);
     // here, maybe put an error message
-    sliceState.byChainId[chainId][stateKey] = {
-      alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
-      status: 'rejected',
-      error: msg,
-    };
+    for (const stateKey of stateKeys) {
+      sliceState.byChainId[chainId][stateKey] = {
+        alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
+        status: 'rejected',
+        error: msg,
+      };
+    }
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
@@ -172,7 +193,9 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
     // here, maybe put an error message
-    sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
+    for (const stateKey of stateKeys) {
+      sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
+    }
   });
 }
 
@@ -191,9 +214,18 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
-    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, 'contractData');
-    addByChainAsyncThunkActions(builder, fetchAllBalanceAction, 'balance');
-    addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, 'allowance');
+    addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm');
+    addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm');
+    addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps');
+
+    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
+    addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
+    addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);
+    addByChainAsyncThunkActions(builder, reloadBalanceAndAllowanceAndGovRewardsAndBoostData, [
+      'balance',
+      'allowance',
+    ]);
+    addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
   },
 });
 

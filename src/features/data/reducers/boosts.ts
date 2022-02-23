@@ -3,7 +3,9 @@ import { WritableDraft } from 'immer/dist/internal';
 import { isEqual } from 'lodash';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { BoostConfig } from '../apis/config';
+import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
@@ -32,7 +34,7 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
   // put the period finish in another part of the state
   // to avoid re-rendering of non-updateable boost data
   // null means prestake
-  periodfinish: {
+  periodFinish: {
     [boostId: BoostEntity['id']]: Date | null;
   };
 };
@@ -41,7 +43,7 @@ export const initialBoostsState: BoostsState = {
   allIds: [],
   byVaultId: {},
   byChainId: {},
-  periodfinish: {},
+  periodFinish: {},
 };
 
 export const boostsSlice = createSlice({
@@ -63,24 +65,37 @@ export const boostsSlice = createSlice({
     });
     // handle period finish data
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
-      for (const boostContractData of action.payload.data.boosts) {
-        if (
-          sliceState.periodfinish[boostContractData.id] === undefined ||
-          sliceState.periodfinish[boostContractData.id] === null ||
-          sliceState.periodfinish[boostContractData.id].getTime() !==
-            boostContractData.periodFinish.getTime()
-        ) {
-          sliceState.periodfinish[boostContractData.id] = boostContractData.periodFinish;
-        }
-      }
-
-      // we also want to create the list of active and prestake boost ids
-      updateBoostStatus(sliceState);
+      addContractDataToState(sliceState, action.payload.data);
     });
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        addContractDataToState(sliceState, action.payload.contractData);
+      }
+    );
   },
 });
 
 export const { recomputeBoostStatus } = boostsSlice.actions;
+
+function addContractDataToState(
+  sliceState: WritableDraft<BoostsState>,
+  contractData: FetchAllContractDataResult
+) {
+  for (const boostContractData of contractData.boosts) {
+    if (
+      sliceState.periodFinish[boostContractData.id] === undefined ||
+      sliceState.periodFinish[boostContractData.id] === null ||
+      sliceState.periodFinish[boostContractData.id].getTime() !==
+        boostContractData.periodFinish.getTime()
+    ) {
+      sliceState.periodFinish[boostContractData.id] = boostContractData.periodFinish;
+    }
+  }
+
+  // we also want to create the list of active and prestake boost ids
+  updateBoostStatus(sliceState);
+}
 
 export function getBoostStatusFromPeriodFinish(periodFinish: Date | null, now = new Date()) {
   if (periodFinish === null) {
@@ -105,7 +120,7 @@ function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
       const prestakeBoostsIds = [];
 
       for (const boostId of entityData.allBoostsIds) {
-        const periodFinish = sliceState.periodfinish[boostId];
+        const periodFinish = sliceState.periodFinish[boostId];
         if (periodFinish === undefined) {
           continue;
         }

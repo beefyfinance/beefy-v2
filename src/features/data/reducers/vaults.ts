@@ -5,8 +5,10 @@ import { isEmpty } from 'lodash';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
+import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vault';
@@ -90,20 +92,45 @@ export const vaultsSlice = createSlice({
     });
 
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
-      for (const vaultContractData of action.payload.data.standardVaults) {
-        const vaultId = vaultContractData.id;
-
-        // only update it if needed
-        if (sliceState.contractData.byVaultId[vaultId] === undefined) {
-          sliceState.contractData.byVaultId[vaultId] = {
-            pricePerFullShare: vaultContractData.pricePerFullShare,
-            strategyAddress: vaultContractData.strategy,
-          };
-        }
-      }
+      addContractDataToState(sliceState, action.payload.data);
     });
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        addContractDataToState(sliceState, action.payload.contractData);
+      }
+    );
   },
 });
+
+function addContractDataToState(
+  sliceState: WritableDraft<VaultsState>,
+  contractData: FetchAllContractDataResult
+) {
+  for (const vaultContractData of contractData.standardVaults) {
+    const vaultId = vaultContractData.id;
+
+    // only update it if needed
+    if (sliceState.contractData.byVaultId[vaultId] === undefined) {
+      sliceState.contractData.byVaultId[vaultId] = {
+        pricePerFullShare: vaultContractData.pricePerFullShare,
+        strategyAddress: vaultContractData.strategy,
+      };
+    }
+
+    if (
+      !sliceState.contractData.byVaultId[vaultId].pricePerFullShare.isEqualTo(
+        vaultContractData.pricePerFullShare
+      )
+    ) {
+      sliceState.contractData.byVaultId[vaultId].pricePerFullShare =
+        vaultContractData.pricePerFullShare;
+    }
+    if (sliceState.contractData.byVaultId[vaultId].strategyAddress !== vaultContractData.strategy) {
+      sliceState.contractData.byVaultId[vaultId].strategyAddress = vaultContractData.strategy;
+    }
+  }
+}
 
 function addVaultToState(
   state: BeefyState,
@@ -138,6 +165,10 @@ function addVaultToState(
       assetIds: apiVault.assets || [],
       type: 'single',
       risks: apiVault.risks || [],
+      buyTokenUrl: apiVault.buyTokenUrl || null,
+      addLiquidityUrl: null,
+      depositFee: apiVault.depositFee ?? '0%',
+      withdrawalFee: '0%',
     };
 
     sliceState.byId[vault.id] = vault;
@@ -173,6 +204,10 @@ function addVaultToState(
       safetyScore: score,
       assetIds: apiVault.assets || [],
       risks: apiVault.risks || [],
+      buyTokenUrl: apiVault.buyTokenUrl || null,
+      addLiquidityUrl: apiVault.addLiquidityUrl || null,
+      depositFee: apiVault.depositFee ?? '0%',
+      withdrawalFee: apiVault.withdrawalFee ?? '0.1%',
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual

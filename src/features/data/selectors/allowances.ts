@@ -10,7 +10,8 @@ export const selectAllowanceByTokenId = (
   spenderAddress: string
 ) => {
   return (
-    state.user.allowance.byChainId[chainId]?.byTokenId[tokenId]?.bySpenderAddress[spenderAddress] ||
-    BIG_ZERO
+    state.user.allowance.byChainId[chainId]?.byTokenId[tokenId]?.bySpenderAddress[
+      spenderAddress.toLocaleLowerCase()
+    ] || BIG_ZERO
   );
 };

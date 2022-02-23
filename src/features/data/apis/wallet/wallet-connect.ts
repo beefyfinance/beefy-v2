@@ -57,6 +57,20 @@ export class WalletConnectApi implements IWalletConnectApi {
   }
 
   /**
+   * Extract the web3 instance
+   * TODO: should not leak the instance but provide a proper api
+   */
+  async getConnectedWeb3Instance(): Promise<Web3> {
+    if (!this.web3Modal) {
+      throw new Error('Class is not initiated: missing web3Modal');
+    }
+    if (!this.provider) {
+      throw new Error('Class is not initiated: missing provider');
+    }
+    return _getWeb3FromProvider(this.provider);
+  }
+
+  /**
    * Ask the user to connect if he isn't already
    * @param suggestedChainId we will use this chain to detect providers but user can be successfully connected to another chain
    */

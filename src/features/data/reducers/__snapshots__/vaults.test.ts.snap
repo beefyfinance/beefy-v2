@@ -39,11 +39,14 @@ Object {
   },
   "byId": Object {
     "banana-banana-eol": Object {
+      "addLiquidityUrl": null,
       "assetIds": Array [
         "BANANA",
       ],
+      "buyTokenUrl": "https://dex.apeswap.finance/#/swap?inputCurrency=0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95&outputCurrency=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
       "chainId": "harmony",
       "contractAddress": "0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786",
+      "depositFee": "0%",
       "earnedTokenId": "mooApeBANANA",
       "id": "banana-banana-eol",
       "isGovVault": false,
@@ -59,12 +62,16 @@ Object {
         "eol",
       ],
       "type": "single",
+      "withdrawalFee": "0.1%",
     },
     "one-bifi-gov": Object {
+      "addLiquidityUrl": null,
       "assetIds": Array [
         "BIFI",
       ],
+      "buyTokenUrl": null,
       "chainId": "harmony",
+      "depositFee": "0%",
       "earnContractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
       "earnedTokenId": "ONE",
       "excludedId": null,
@@ -89,14 +96,18 @@ Object {
         "low",
       ],
       "type": "single",
+      "withdrawalFee": "0%",
     },
     "sushi-one-1ygg-1eth": Object {
+      "addLiquidityUrl": "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
       "assetIds": Array [
         "YGG",
         "ETH",
       ],
+      "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
       "chainId": "harmony",
       "contractAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+      "depositFee": "0%",
       "earnedTokenId": "mooSushiYGG-ETH",
       "id": "sushi-one-1ygg-1eth",
       "isGovVault": false,
@@ -119,6 +130,7 @@ Object {
         "low",
       ],
       "type": "lps",
+      "withdrawalFee": "0%",
     },
   },
   "contractData": Object {

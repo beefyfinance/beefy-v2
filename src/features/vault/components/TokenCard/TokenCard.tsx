@@ -7,17 +7,18 @@ import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { LinkButton } from '../../../../components/LinkButton';
 import { styles } from './styles';
-import { TokenEntity, TokenErc20 } from '../../../data/entities/token';
-import { useSelector } from 'react-redux';
+import { isTokenErc20, TokenEntity } from '../../../data/entities/token';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectChainById } from '../../../data/selectors/chains';
 import { BeefyState } from '../../../../redux-types';
-import { useTokenAddressbookData } from '../../../data/hooks/addressbook';
 import { ChainEntity } from '../../../data/entities/chain';
 import { Loader } from '../../../../components/loader';
+import { selectTokenById } from '../../../data/selectors/tokens';
+import { fetchAddressBookAction } from '../../../data/actions/tokens';
 
 const useStyles = makeStyles(styles as any);
 
-function TokenCardDisplay({ token }: { token: TokenErc20 }) {
+function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -34,7 +35,7 @@ function TokenCardDisplay({ token }: { token: TokenErc20 }) {
               <LinkButton type="link" href={token.website} text={t('Token-Site')} />
             </div>
           )}
-          {token.contractAddress && (
+          {isTokenErc20(token) && (
             <div className={classes.cardAction}>
               <LinkButton
                 href={`${chain.explorerUrl}/token/${token.contractAddress}`}
@@ -64,10 +65,22 @@ function TokenCardComponent({
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [loading, addressBook] = useTokenAddressbookData(chainId, tokenId);
 
-  return addressBook ? (
-    <TokenCardDisplay token={addressBook} />
+  const addressBookLoaded = useSelector(
+    (state: BeefyState) =>
+      state.ui.dataLoader.byChainId[chainId]?.addressBook.alreadyLoadedOnce || false
+  );
+  const token = useSelector((state: BeefyState) =>
+    addressBookLoaded ? selectTokenById(state, chainId, tokenId) : null
+  );
+  // initialize addressbook
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(fetchAddressBookAction({ chainId: chainId }));
+  }, [dispatch, chainId]);
+
+  return token ? (
+    <TokenCardDisplay token={token} />
   ) : (
     <Card>
       <CardHeader>
@@ -76,7 +89,7 @@ function TokenCardComponent({
       </CardHeader>
       <CardContent>
         <Typography variant="body1" className={classes.text}>
-          {loading ? <Loader /> : t('Token-NoDescrip')}
+          {!addressBookLoaded ? <Loader /> : t('Token-NoDescrip')}
         </Typography>
       </CardContent>
     </Card>

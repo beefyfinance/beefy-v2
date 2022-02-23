@@ -3,10 +3,17 @@ import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllPricesAction } from '../actions/prices';
+import { fetchAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
-import { isTokenErc20, TokenEntity } from '../entities/token';
+import {
+  isTokenErc20,
+  isTokenNative,
+  TokenEntity,
+  TokenErc20,
+  TokenNative,
+} from '../entities/token';
 
 /**
  * State containing Vault infos
@@ -18,7 +25,16 @@ export type TokensState = {
       byId: {
         [id: string]: TokenEntity;
       };
-      allIds: string[];
+      native: TokenNative['id'];
+      wnative: TokenErc20['id'];
+      /**
+       * we keep the list of tokens where we could be interested in fetching the balance of
+       * it would be more correct to put those inside the balance reducer but this token
+       * reducer has a number of config fixes that I find would make for a more complex code
+       * if refactored. And we have to update the config anyway to make it smaller, so move this
+       * inside the balance reducer once the config is reworked
+       */
+      interestingBalanceTokenIds: TokenEntity['id'][];
     };
   };
   prices: {
@@ -27,7 +43,10 @@ export type TokensState = {
     };
   };
 };
-export const initialTokensState: TokensState = { byChainId: {}, prices: { byTokenId: {} } };
+export const initialTokensState: TokensState = {
+  byChainId: {},
+  prices: { byTokenId: {} },
+};
 
 export const tokensSlice = createSlice({
   name: 'tokens',
@@ -70,6 +89,32 @@ export const tokensSlice = createSlice({
         }
       }
     });
+
+    // we have another way of finding token info
+    builder.addCase(fetchAddressBookAction.fulfilled, (sliceState, action) => {
+      const chainId = action.payload.chainId;
+
+      if (sliceState.byChainId[chainId] === undefined) {
+        sliceState.byChainId[chainId] = {
+          byId: {},
+          interestingBalanceTokenIds: [],
+          native: null,
+          wnative: null,
+        };
+      }
+
+      for (const [addressBookId, token] of Object.entries(action.payload.addressBook)) {
+        if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
+          sliceState.byChainId[chainId].byId[token.id] = token;
+        }
+        if (isTokenNative(token) && !sliceState.byChainId[chainId].native) {
+          sliceState.byChainId[chainId].native = token.id;
+        }
+        if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
+          sliceState.byChainId[chainId].wnative = token.id;
+        }
+      }
+    });
   },
 });
 
@@ -79,7 +124,12 @@ function addBoostToState(
   apiBoost: BoostConfig
 ) {
   if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      interestingBalanceTokenIds: [],
+      native: null,
+      wnative: null,
+    };
   }
 
   let tokenId = apiBoost.earnedToken;
@@ -114,7 +164,7 @@ function addBoostToState(
     };
     temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
-    sliceState.byChainId[chainId].allIds.push(token.id);
+    sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
   }
 }
 
@@ -124,7 +174,12 @@ function addVaultToState(
   vault: VaultConfig
 ) {
   if (sliceState.byChainId[chainId] === undefined) {
-    sliceState.byChainId[chainId] = { byId: {}, allIds: [] };
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      interestingBalanceTokenIds: [],
+      native: null,
+      wnative: null,
+    };
   }
 
   if (sliceState.byChainId[chainId].byId[vault.oracleId] === undefined) {
@@ -141,7 +196,7 @@ function addVaultToState(
     };
     temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
-    sliceState.byChainId[chainId].allIds.push(token.id);
+    sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
   }
 
   // add earned token data
@@ -156,10 +211,12 @@ function addVaultToState(
         symbol: vault.earnedToken,
         buyUrl: null,
         type: 'native',
+        website: null,
+        description: null,
       };
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
-      sliceState.byChainId[chainId].allIds.push(token.id);
+      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
     } else {
       const token: TokenEntity = {
         id: earnedTokenId,
@@ -174,7 +231,7 @@ function addVaultToState(
       };
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
-      sliceState.byChainId[chainId].allIds.push(token.id);
+      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
     }
   }
 }

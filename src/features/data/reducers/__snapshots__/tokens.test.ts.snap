@@ -4,10 +4,6 @@ exports[`Tokens slice tests should update state on fulfilled boosts list 1`] = `
 Object {
   "byChainId": Object {
     "harmony": Object {
-      "allIds": Array [
-        "PERA",
-        "mooPolygonBIFI",
-      ],
       "byId": Object {
         "PERA": Object {
           "buyUrl": null,
@@ -32,6 +28,12 @@ Object {
           "website": null,
         },
       },
+      "interestingBalanceTokenIds": Array [
+        "PERA",
+        "mooPolygonBIFI",
+      ],
+      "native": null,
+      "wnative": null,
     },
   },
   "prices": Object {
@@ -60,12 +62,6 @@ exports[`Tokens slice tests should update state on fulfilled vault list 1`] = `
 Object {
   "byChainId": Object {
     "harmony": Object {
-      "allIds": Array [
-        "BIFI",
-        "ONE",
-        "sushi-one-1ygg-1eth",
-        "mooSushiYGG-ETH",
-      ],
       "byId": Object {
         "BIFI": Object {
           "buyUrl": null,
@@ -82,9 +78,11 @@ Object {
           "buyUrl": null,
           "chainId": "harmony",
           "decimals": 18,
+          "description": null,
           "id": "ONE",
           "symbol": "ONE",
           "type": "native",
+          "website": null,
         },
         "mooSushiYGG-ETH": Object {
           "buyUrl": null,
@@ -109,6 +107,14 @@ Object {
           "website": null,
         },
       },
+      "interestingBalanceTokenIds": Array [
+        "BIFI",
+        "ONE",
+        "sushi-one-1ygg-1eth",
+        "mooSushiYGG-ETH",
+      ],
+      "native": null,
+      "wnative": null,
     },
   },
   "prices": Object {

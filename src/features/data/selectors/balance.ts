@@ -1,4 +1,3 @@
-import { createSelector } from '@reduxjs/toolkit';
 import { BIG_ZERO } from '../../../helpers/format';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { BeefyState } from '../../../redux-types';
@@ -8,7 +7,7 @@ import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectIsWalletConnected, selectWalletAddress } from './wallet';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
@@ -22,6 +21,17 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   } else {
     return null;
   }
+};
+
+export const selectAllTokenWhereUserCouldHaveBalance = (
+  state: BeefyState,
+  chainId: ChainEntity['id']
+) => {
+  const byChainId = state.entities.tokens.byChainId;
+  if (byChainId[chainId] === undefined) {
+    throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
+  }
+  return byChainId[chainId].interestingBalanceTokenIds;
 };
 
 export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddress: string) => {
@@ -53,25 +63,17 @@ export const selectWalletBalanceOfToken = (
   return walletBalance?.tokenAmount.byChainId[chainId]?.byTokenId[tokenId]?.balance || BIG_ZERO;
 };
 
-export const selectHasWalletBalanceOfToken = createSelector(
-  selectWalletBalanceOfToken,
-  tokenBalance => tokenBalance.gt(0)
-);
-
 /**
  * "User" balance refers to the balance displayed to the user
  * so we have to do the translation from earnedToken (mooToken) to oracleToken
  * that the user deposited
  */
-export const selectStandardVaultUserBalanceInToken = (
+export const selectStandardVaultUserBalanceInTokenExcludingBoosts = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
-  const vault = selectVaultById(state, vaultId);
-  if (isGovVault(vault)) {
-    throw new Error(`Trying to get standard vault balance but vault ${vault.id} is a gov vault`);
-  }
+  const vault = selectStandardVaultById(state, vaultId);
   const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
   const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
   let mooTokenBalance = selectWalletBalanceOfToken(
@@ -81,13 +83,37 @@ export const selectStandardVaultUserBalanceInToken = (
     walletAddress
   );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
+  return mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
+};
+
+/**
+ * "User" balance refers to the balance displayed to the user
+ * so we have to do the translation from earnedToken (mooToken) to oracleToken
+ * that the user deposited
+ */
+export const selectStandardVaultUserBalanceInTokenIncludingBoosts = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const vault = selectStandardVaultById(state, vaultId);
+  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+  const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+  const ppfs = selectVaultPricePerFullShare(state, vault.id);
+  const vaultOracleBalance = selectStandardVaultUserBalanceInTokenExcludingBoosts(
+    state,
+    vaultId,
+    walletAddress
+  );
   // we also need to account for deposits in boost (even those expired)
+  let mooTokenBalance = BIG_ZERO;
   const boostIds = selectAllVaultBoostIds(state, vaultId);
   for (const boostId of boostIds) {
     const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
     mooTokenBalance = mooTokenBalance.plus(boostMooToken);
   }
-  return mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
+  const boostOracleBalance = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
+  return vaultOracleBalance.plus(boostOracleBalance);
 };
 
 export const selectGovVaultUserBalanceInToken = (
@@ -96,10 +122,6 @@ export const selectGovVaultUserBalanceInToken = (
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
-  const vault = selectVaultById(state, vaultId);
-  if (!isGovVault(vault)) {
-    throw new Error(`Trying to get gov vault balance but vault ${vault.id} is a not a gov vault`);
-  }
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
@@ -112,7 +134,7 @@ export const selectUserVaultDepositInToken = (
   if (isGovVault(vault)) {
     return selectGovVaultUserBalanceInToken(state, vaultId, walletAddress);
   } else {
-    return selectStandardVaultUserBalanceInToken(state, vaultId, walletAddress);
+    return selectStandardVaultUserBalanceInTokenIncludingBoosts(state, vaultId, walletAddress);
   }
 };
 
@@ -123,6 +145,15 @@ export const selectBoostUserBalanceInToken = (
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
   return walletBalance?.tokenAmount?.byBoostId[boostId]?.balance || BIG_ZERO;
+};
+
+export const selectBoostUserRewardsInToken = (
+  state: BeefyState,
+  boostId: BoostEntity['id'],
+  walletAddress?: string
+) => {
+  const walletBalance = _selectWalletBalance(state, walletAddress);
+  return walletBalance?.tokenAmount?.byBoostId[boostId]?.rewards || BIG_ZERO;
 };
 
 export const selectUserVaultDepositInUsd = (
@@ -141,10 +172,6 @@ export const selectUserVaultDepositInUsd = (
 export const selectGovVaultPendingRewardsInToken = (state: BeefyState, vaultId: VaultGov['id']) => {
   const walletBalance = _selectWalletBalance(state);
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards || BIG_ZERO;
-};
-
-export const selectHasGovVaultPendingRewards = (state: BeefyState, vaultId: VaultGov['id']) => {
-  return !selectGovVaultPendingRewardsInToken(state, vaultId).isZero();
 };
 
 // TODO implement this

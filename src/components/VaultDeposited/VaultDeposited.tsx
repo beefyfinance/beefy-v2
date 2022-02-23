@@ -55,7 +55,7 @@ const _BoostedVaultDepositedSmall = connect(
     />
   );
 });
-export const BoostedVaultDepositedSmall = React.memo(_BoostedVaultDepositedSmall);
+const BoostedVaultDepositedSmall = React.memo(_BoostedVaultDepositedSmall);
 
 const _BoostedVaultDepositedLarge = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
@@ -105,7 +105,7 @@ const _BoostedVaultDepositedLarge = connect(
     );
   }
 );
-export const BoostedVaultDepositedLarge = React.memo(_BoostedVaultDepositedLarge);
+const BoostedVaultDepositedLarge = React.memo(_BoostedVaultDepositedLarge);
 
 const _NonBoostedVaultDeposited = connect(
   (
@@ -162,7 +162,7 @@ const _NonBoostedVaultDeposited = connect(
     );
   }
 );
-export const NonBoostedVaultDeposited = React.memo(_NonBoostedVaultDeposited);
+const NonBoostedVaultDeposited = React.memo(_NonBoostedVaultDeposited);
 
 const _VaultDeposited = ({
   vaultId,

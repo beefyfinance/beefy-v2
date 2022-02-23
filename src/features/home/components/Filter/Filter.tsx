@@ -19,10 +19,7 @@ import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';
 import { Search, CloseRounded } from '@material-ui/icons';
 import { FilterCategories } from './FilterCategories';
-import {
-  actions as filteredVaultActions,
-  FilteredVaultsState,
-} from '../../../data/reducers/filtered-vaults';
+import { filteredVaultsActions, FilteredVaultsState } from '../../../data/reducers/filtered-vaults';
 import { selectAllPlatform } from '../../../data/selectors/platforms';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -51,7 +48,13 @@ const _Filter = () => {
 
   const handleChangeBlockchain = useCallback(
     ({ target: { value } }) => {
-      dispatch(filteredVaultActions.setChainIds(value.filter(v => v !== 'all')));
+      // last element is "all" so we filter by all
+      if (value.length && value[value.length - 1] === 'all') {
+        value = [];
+      } else {
+        value = value.filter(v => v !== 'all');
+      }
+      dispatch(filteredVaultsActions.setChainIds(value));
     },
     [dispatch]
   );
@@ -59,11 +62,11 @@ const _Filter = () => {
   const handleCheckbox = useCallback(
     ({ target: { name, checked } }) => {
       if (name === 'boost') {
-        dispatch(filteredVaultActions.setOnlyBoosted(checked));
+        dispatch(filteredVaultsActions.setOnlyBoosted(checked));
       } else if (name === 'retired') {
-        dispatch(filteredVaultActions.setOnlyRetired(checked));
+        dispatch(filteredVaultsActions.setOnlyRetired(checked));
       } else if (name === 'moonpot') {
-        dispatch(filteredVaultActions.setOnlyMoonpot(checked));
+        dispatch(filteredVaultsActions.setOnlyMoonpot(checked));
       }
     },
     [dispatch]
@@ -71,28 +74,28 @@ const _Filter = () => {
 
   const handlePlatformChange = useCallback(
     ({ target: { value } }) =>
-      dispatch(filteredVaultActions.setPlatformId(value === 'all' ? null : value)),
+      dispatch(filteredVaultsActions.setPlatformId(value === 'all' ? null : value)),
     [dispatch]
   );
 
   const handleUserCategoryChange = useCallback(
     (userCategory: FilteredVaultsState['userCategory']) =>
-      dispatch(filteredVaultActions.setUserCategory(userCategory)),
+      dispatch(filteredVaultsActions.setUserCategory(userCategory)),
     [dispatch]
   );
 
   const handleVaultTypeChange = useCallback(
-    ({ target: { value } }) => dispatch(filteredVaultActions.setVaultType(value)),
+    ({ target: { value } }) => dispatch(filteredVaultsActions.setVaultType(value)),
     [dispatch]
   );
 
   const handleSortChange = useCallback(
-    ({ target: { value } }) => dispatch(filteredVaultActions.setSort(value)),
+    ({ target: { value } }) => dispatch(filteredVaultsActions.setSort(value)),
     [dispatch]
   );
 
   const syncSearchText = useMemo(
-    () => debounce(value => dispatch(filteredVaultActions.setSearchText(value)), 200),
+    () => debounce(value => dispatch(filteredVaultsActions.setSearchText(value)), 200),
     [dispatch]
   );
   const handleSearchTextChange = useCallback(
@@ -104,12 +107,12 @@ const _Filter = () => {
   );
   const clearSearchText = useCallback(() => {
     setLocalSearchText('');
-    dispatch(filteredVaultActions.setSearchText(''));
+    dispatch(filteredVaultsActions.setSearchText(''));
   }, [dispatch, setLocalSearchText]);
 
   const handleReset = useCallback(() => {
     setLocalSearchText('');
-    dispatch(filteredVaultActions.reset());
+    dispatch(filteredVaultsActions.reset());
   }, [dispatch]);
 
   const platforms = useSelector(selectAllPlatform);

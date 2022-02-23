@@ -1,22 +1,34 @@
-import React from 'react';
 import { Box, Button, makeStyles, Typography, Snackbar, IconButton } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { byDecimals } from '../../helpers/format';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import clsx from 'clsx';
+import { BeefyState } from '../../redux-types';
+import { selectChainById } from '../../features/data/selectors/chains';
+import { VaultEntity } from '../../features/data/entities/vault';
+import { StepperState } from './types';
+import { selectVaultById } from '../../features/data/selectors/vaults';
+import { formatBigDecimals } from '../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
-export const Steps = ({ item, steps, handleClose }) => {
-  const classes = useStyles();
-  const t = useTranslation().t;
-  const wallet = useSelector((state: any) => state.walletReducer);
 
-  console.log(steps);
-  console.log(steps.items.length > 1);
+export const Steps = ({
+  vaultId,
+  steps,
+  handleClose,
+}: {
+  vaultId: VaultEntity['id'];
+  steps: StepperState;
+  handleClose: () => unknown;
+}) => {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
 
   return (
     <Snackbar
@@ -44,11 +56,9 @@ export const Steps = ({ item, steps, handleClose }) => {
                 !steps.finished &&
                 (steps.items[steps.currentStep].step === 'withdraw' ||
                   steps.items[steps.currentStep].step === 'deposit') &&
-                wallet.action &&
-                wallet.action.result === 'success_pending',
-              [classes.errorBar]: wallet.action && wallet.action.result === 'error',
-              [classes.confirmationBar]:
-                wallet.action && wallet.action.result === 'success_pending',
+                walletActionsState.result === 'success_pending',
+              [classes.errorBar]: walletActionsState.result === 'error',
+              [classes.confirmationBar]: walletActionsState.result === 'success_pending',
               [classes.successBar]: steps.finished,
             })}
           />
@@ -57,7 +67,7 @@ export const Steps = ({ item, steps, handleClose }) => {
           <Box className={classes.titleContainer}>
             <Typography className={classes.title} variant={'body1'}>
               {/* Error  */}
-              {wallet.action && wallet.action.result === 'error' && (
+              {walletActionsState.result === 'error' && (
                 <>
                   <img
                     className={classes.icon}
@@ -69,13 +79,12 @@ export const Steps = ({ item, steps, handleClose }) => {
               )}
               {/* Waiting  */}
               {!steps.finished &&
-                wallet.action &&
-                wallet.action.result === 'success_pending' &&
+                walletActionsState.result === 'success_pending' &&
                 t('Transactn-ConfirmPending')}
               {/* Transactions  */}
               {!steps.finished &&
-                wallet.action.result !== 'error' &&
-                wallet.action.result !== 'success_pending' &&
+                walletActionsState.result !== 'error' &&
+                walletActionsState.result !== 'success_pending' &&
                 `${steps.currentStep} / ${steps.items.length} ${t('Transactn-Confirmed')} `}
 
               {steps.finished && (
@@ -97,25 +106,25 @@ export const Steps = ({ item, steps, handleClose }) => {
           <Box>
             {/* Steps Count Content */}
             {!isEmpty(steps.items[steps.currentStep]) &&
-              wallet.action.result !== 'error' &&
-              wallet.action.result !== 'success_pending' &&
+              walletActionsState.result !== 'error' &&
+              walletActionsState.result !== 'success_pending' &&
               !steps.finished && (
                 <Typography className={classes.message} variant={'body2'}>
                   {steps.items[steps.currentStep].message}
                 </Typography>
               )}
             {/* Waiting Content */}
-            {!steps.finished && wallet.action && wallet.action.result === 'success_pending' && (
+            {!steps.finished && walletActionsState.result === 'success_pending' && (
               <Typography variant={'body2'} className={classes.message}>
                 {t('Transactn-Wait')}
               </Typography>
             )}
             {/* Error content */}
-            {!steps.finished && wallet.action && wallet.action.result === 'error' && (
+            {!steps.finished && walletActionsState.result === 'error' && (
               <>
                 <Box className={classes.errorContent}>
                   <Typography variant="body1" className={classes.message}>
-                    <span>{t('Error')}</span> {wallet.action.data.error}
+                    <span>{t('Error')}</span> {walletActionsState.data.error}
                   </Typography>
                 </Box>
                 <Button className={classes.closeBtn} onClick={handleClose}>
@@ -133,19 +142,14 @@ export const Steps = ({ item, steps, handleClose }) => {
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Success', {
-                        amount: byDecimals(
-                          steps.items[steps.currentStep].amount,
-                          item.tokenDecimals
-                        ).toFixed(2),
-                        token: steps.items[steps.currentStep].token.symbol,
+                        amount: formatBigDecimals(walletActionsState.data.amountc),
+                        token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
                     <Button
                       className={classes.redirectBtnSuccess}
                       href={
-                        wallet.explorer[item.network] +
-                        '/tx/' +
-                        wallet.action.data.receipt.transactionHash
+                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
                       }
                       target="_blank"
                     >
@@ -165,16 +169,14 @@ export const Steps = ({ item, steps, handleClose }) => {
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Withdrawal', {
-                        amount: steps.items[steps.currentStep].amount,
-                        token: item.token,
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                        token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
                     <Button
                       className={classes.redirectBtnSuccess}
                       href={
-                        wallet.explorer[item.network] +
-                        '/tx/' +
-                        wallet.action.data.receipt.transactionHash
+                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
                       }
                       target="_blank"
                     >
@@ -189,17 +191,15 @@ export const Steps = ({ item, steps, handleClose }) => {
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Success-Bst', {
-                        amount: byDecimals(steps.items[steps.currentStep].amount).toFixed(2),
-                        token: item.token,
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                        token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
 
                     <Button
                       className={classes.redirectBtnSuccess}
                       href={
-                        wallet.explorer[item.network] +
-                        '/tx/' +
-                        wallet.action.data.receipt.transactionHash
+                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
                       }
                       target="_blank"
                     >
@@ -219,16 +219,14 @@ export const Steps = ({ item, steps, handleClose }) => {
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Withdrawal-Boost', {
-                        amount: byDecimals(steps.items[steps.currentStep].amount).toFixed(2),
-                        token: item.token,
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                        token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
                     <Button
                       className={classes.redirectBtnSuccess}
                       href={
-                        wallet.explorer[item.network] +
-                        '/tx/' +
-                        wallet.action.data.receipt.transactionHash
+                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
                       }
                       target="_blank"
                     >
@@ -242,16 +240,14 @@ export const Steps = ({ item, steps, handleClose }) => {
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Claimed', {
-                        amount: steps.items[steps.currentStep].amount,
-                        token: steps.items[steps.currentStep].token.symbol,
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                        token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
                     <Button
                       className={classes.redirectBtnSuccess}
                       href={
-                        wallet.explorer[item.network] +
-                        '/tx/' +
-                        wallet.action.data.receipt.transactionHash
+                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
                       }
                       target="_blank"
                     >
@@ -268,7 +264,5 @@ export const Steps = ({ item, steps, handleClose }) => {
         </Box>
       </Box>
     </Snackbar>
-  ); //return
-}; //const Steps
-
-/* */
+  );
+};

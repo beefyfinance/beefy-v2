@@ -16,7 +16,7 @@ export type FilteredVaultsState = {
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
 };
-export const initialFilteredVaultsState: FilteredVaultsState = {
+const initialFilteredVaultsState: FilteredVaultsState = {
   sort: 'default',
   vaultCategory: 'all',
   userCategory: 'all',
@@ -69,4 +69,4 @@ export const filteredVaultsSlice = createSlice({
   },
 });
 
-export const actions = filteredVaultsSlice.actions;
+export const filteredVaultsActions = filteredVaultsSlice.actions;
