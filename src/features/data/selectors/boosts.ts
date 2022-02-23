@@ -79,5 +79,5 @@ export const selectShouldDisplayBoostWidget = (state: BeefyState, vaultId: Vault
 };
 
 export const selectBoostPeriodFinish = (state: BeefyState, boostId: BoostEntity['id']) => {
-  return state.entities.boosts.periodfinish[boostId] || null;
+  return state.entities.boosts.periodFinish[boostId] || null;
 };

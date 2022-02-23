@@ -34,7 +34,7 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
   // put the period finish in another part of the state
   // to avoid re-rendering of non-updateable boost data
   // null means prestake
-  periodfinish: {
+  periodFinish: {
     [boostId: BoostEntity['id']]: Date | null;
   };
 };
@@ -43,7 +43,7 @@ export const initialBoostsState: BoostsState = {
   allIds: [],
   byVaultId: {},
   byChainId: {},
-  periodfinish: {},
+  periodFinish: {},
 };
 
 export const boostsSlice = createSlice({
@@ -84,12 +84,12 @@ function addContractDataToState(
 ) {
   for (const boostContractData of contractData.boosts) {
     if (
-      sliceState.periodfinish[boostContractData.id] === undefined ||
-      sliceState.periodfinish[boostContractData.id] === null ||
-      sliceState.periodfinish[boostContractData.id].getTime() !==
+      sliceState.periodFinish[boostContractData.id] === undefined ||
+      sliceState.periodFinish[boostContractData.id] === null ||
+      sliceState.periodFinish[boostContractData.id].getTime() !==
         boostContractData.periodFinish.getTime()
     ) {
-      sliceState.periodfinish[boostContractData.id] = boostContractData.periodFinish;
+      sliceState.periodFinish[boostContractData.id] = boostContractData.periodFinish;
     }
   }
 
@@ -120,7 +120,7 @@ function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
       const prestakeBoostsIds = [];
 
       for (const boostId of entityData.allBoostsIds) {
-        const periodFinish = sliceState.periodfinish[boostId];
+        const periodFinish = sliceState.periodFinish[boostId];
         if (periodFinish === undefined) {
           continue;
         }
