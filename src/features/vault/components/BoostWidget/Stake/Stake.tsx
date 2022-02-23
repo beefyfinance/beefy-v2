@@ -25,7 +25,11 @@ import { BeefyState } from '../../../../../redux-types';
 import { selectBoostById, selectIsBoostActive } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
 import { boostModalActions } from '../../../../data/reducers/wallet/boost-stake';
-import { selectCurrentChainId, selectIsWalletConnected } from '../../../../data/selectors/wallet';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+  selectWalletAddress,
+} from '../../../../data/selectors/wallet';
 import { Step } from '../../../../../components/Steps/types';
 import { selectIsApprovalNeededForBoostStaking } from '../../../../data/selectors/wallet-actions';
 import { walletActions } from '../../../../data/actions/wallet-actions';
@@ -35,9 +39,40 @@ import {
   selectUserBalanceOfToken,
 } from '../../../../data/selectors/balance';
 import { selectChainById } from '../../../../data/selectors/chains';
+import { Loader } from '../../../../../components/loader';
+import { initBoostForm } from '../../../../data/actions/scenarios';
+import { isFulfilled } from '../../../../data/reducers/data-loader';
 
 const useStyles = makeStyles(styles as any);
+
 export const Stake = ({
+  boostId,
+  closeModal,
+}: {
+  boostId: BoostEntity['id'];
+  closeModal: () => void;
+}) => {
+  const boost = useSelector((state: BeefyState) => selectBoostById(state, boostId));
+
+  const formReady = useSelector(
+    (state: BeefyState) =>
+      isFulfilled(state.ui.dataLoader.byChainId[boost.chainId].addressBook) &&
+      isFulfilled(state.ui.dataLoader.global.boostForm)
+  );
+  const walletAddress = useSelector((state: BeefyState) =>
+    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
+  );
+
+  // initialize our form
+  const store = useStore();
+  React.useEffect(() => {
+    initBoostForm(store, boostId, walletAddress);
+  }, [store, boostId, walletAddress]);
+
+  return formReady ? <StakeForm boostId={boostId} closeModal={closeModal} /> : <Loader />;
+};
+
+const StakeForm = ({
   boostId,
   closeModal,
 }: {

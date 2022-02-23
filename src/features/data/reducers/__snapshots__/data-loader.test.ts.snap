@@ -32,6 +32,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -104,6 +109,11 @@ Object {
   },
   "global": Object {
     "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -184,6 +194,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -260,6 +275,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -309,6 +329,11 @@ Object {
   "byChainId": Object {},
   "global": Object {
     "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -366,6 +391,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -415,6 +445,11 @@ Object {
   "byChainId": Object {},
   "global": Object {
     "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -472,6 +507,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -521,6 +561,11 @@ Object {
   "byChainId": Object {},
   "global": Object {
     "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -578,6 +623,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -627,6 +677,11 @@ Object {
   "byChainId": Object {},
   "global": Object {
     "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",

@@ -65,13 +65,12 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
     const govVault = govVaultId ? selectGovVaultById(getState(), govVaultId) : null;
     const boost = boostId ? selectBoostById(getState(), boostId) : null;
 
-    const govVaults: VaultGov[] = govVault ? [govVault] : [];
     const balanceApi = await getBalanceApi(chain);
     const balanceRes = await balanceApi.fetchAllBalances(
       getState(),
       tokens,
-      govVaults,
-      [],
+      govVault ? [govVault] : [],
+      boost ? [boost] : [],
       walletAddress
     );
 

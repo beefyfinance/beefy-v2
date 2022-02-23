@@ -8,7 +8,7 @@ import { isString } from 'lodash';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction } from '../actions/balance';
-import { fetchAllBoosts } from '../actions/boosts';
+import { fetchAllBoosts, initiateBoostForm } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { initiateDepositForm } from '../actions/deposit';
@@ -96,9 +96,10 @@ export interface DataLoaderState {
     vaults: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
+    zaps: LoaderState;
     depositForm: LoaderState;
     withdrawForm: LoaderState;
-    zaps: LoaderState;
+    boostForm: LoaderState;
   };
 
   byChainId: {
@@ -118,9 +119,10 @@ export const initialDataLoaderState: DataLoaderState = {
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
+    zaps: dataLoaderStateInit,
     depositForm: dataLoaderStateInit,
     withdrawForm: dataLoaderStateInit,
-    zaps: dataLoaderStateInit,
+    boostForm: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -216,6 +218,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
     addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm');
     addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm');
+    addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm');
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps');
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);

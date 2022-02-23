@@ -10,6 +10,8 @@ import { accountHasChanged, walletHasDisconnected } from './wallet';
 import { selectVaultById } from '../../selectors/vaults';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import { initiateWithdrawForm } from '../../actions/withdraw';
+import { initiateBoostForm } from '../../actions/boosts';
+import { selectBoostById } from '../../selectors/boosts';
 
 /**
  * State containing user allowances state
@@ -54,15 +56,16 @@ export const allowanceSlice = createSlice({
 
     builder.addCase(initiateDepositForm.fulfilled, (sliceState, action) => {
       const vault = selectVaultById(action.payload.state, action.payload.vaultId);
-      const chainId = vault.chainId;
-      const allowances = action.payload.allowance;
-      addAllowancesToState(sliceState, chainId, allowances);
+      addAllowancesToState(sliceState, vault.chainId, action.payload.allowance);
     });
     builder.addCase(initiateWithdrawForm.fulfilled, (sliceState, action) => {
       const vault = selectVaultById(action.payload.state, action.payload.vaultId);
-      const chainId = vault.chainId;
-      const allowances = action.payload.allowance;
-      addAllowancesToState(sliceState, chainId, allowances);
+      addAllowancesToState(sliceState, vault.chainId, action.payload.allowance);
+    });
+    builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
+      const boost = selectBoostById(action.payload.state, action.payload.boostId);
+      const vault = selectVaultById(action.payload.state, boost.vaultId);
+      addAllowancesToState(sliceState, vault.chainId, action.payload.allowance);
     });
 
     builder.addCase(

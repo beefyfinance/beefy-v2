@@ -3,7 +3,7 @@ import { ChainEntity } from '../entities/chain';
 import { selectIsWalletConnected } from '../selectors/wallet';
 import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
-import { fetchAllBoosts } from './boosts';
+import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
 import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
 import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
@@ -23,6 +23,8 @@ import { VaultEntity } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { initiateDepositForm } from './deposit';
 import { initiateWithdrawForm } from './withdraw';
+import { BoostEntity } from '../entities/boost';
+import { selectBoostById } from '../selectors/boosts';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -250,4 +252,21 @@ export async function initWithdrawForm(
 
   // then we can init the form
   store.dispatch(initiateWithdrawForm({ vaultId, walletAddress }));
+}
+
+export async function initBoostForm(
+  store: BeefyStore,
+  boostId: BoostEntity['id'],
+  walletAddress: string | null
+) {
+  const vault = selectBoostById(store.getState(), boostId);
+
+  // we need the addressbook
+  const addrBookLoader = store.getState().ui.dataLoader.byChainId[vault.chainId]?.addressBook;
+  if (addrBookLoader && isInitialLoader(addrBookLoader)) {
+    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
+  }
+
+  // then we can init the form
+  store.dispatch(initiateBoostForm({ boostId, walletAddress }));
 }
