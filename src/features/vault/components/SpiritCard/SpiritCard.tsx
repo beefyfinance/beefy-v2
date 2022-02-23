@@ -24,7 +24,7 @@ import { useAllowance } from './useAllowance';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { BeefyState } from '../../../../redux-types';
-import { selectStandardVaultUserBalanceInTokenIncludingBoosts } from '../../../data/selectors/balance';
+import { selectStandardVaultUserBalanceInOracleTokenIncludingBoosts } from '../../../data/selectors/balance';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
 import { selectTokenById } from '../../../data/selectors/tokens';
 import { isString } from 'lodash';
@@ -41,7 +41,7 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
   const walletAddress = useSelector((state: BeefyState) => selectWalletAddress(state));
   const binSpiritBalance = useSelector((state: BeefyState) =>
-    selectStandardVaultUserBalanceInTokenIncludingBoosts(state, vaultId)
+    selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vaultId)
   );
 
   const [spiritBalance, spiritBalanceString] = useBalance(

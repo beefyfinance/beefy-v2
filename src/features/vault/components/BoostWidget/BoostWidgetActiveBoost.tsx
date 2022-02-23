@@ -19,7 +19,7 @@ import {
   selectBoostRewardsTokenEntity,
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
-  selectWalletBalanceOfToken,
+  selectUserBalanceOfToken,
 } from '../../../data/selectors/balance';
 import { StakeCountdown } from './StakeCountdown';
 import { Stake } from './Stake';
@@ -39,7 +39,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   );
 
   const mooTokenBalance = useSelector((state: BeefyState) =>
-    selectWalletBalanceOfToken(state, boost.chainId, vault.earnedTokenId)
+    selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenId)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)

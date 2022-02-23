@@ -7,7 +7,7 @@ import {
 } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { BoostEntity } from '../../entities/boost';
-import { selectBoostUserBalanceInToken, selectWalletBalanceOfToken } from '../../selectors/balance';
+import { selectBoostUserBalanceInToken, selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectBoostById } from '../../selectors/boosts';
 import { selectTokenById } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
@@ -51,7 +51,7 @@ export const boostModalSlice = createSlice({
       const balanceToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
       const balance =
         action.payload.mode === 'stake'
-          ? selectWalletBalanceOfToken(state, vault.chainId, vault.earnedTokenId) // mootoken
+          ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId) // mootoken
           : selectBoostUserBalanceInToken(state, boost.id); // staked
       sliceState.amount = balance;
       sliceState.formattedInput = formatBigDecimals(balance, balanceToken.decimals);
@@ -73,7 +73,7 @@ export const boostModalSlice = createSlice({
         value = BIG_ZERO;
       }
 
-      const balance = selectWalletBalanceOfToken(state, vault.chainId, balanceToken.id);
+      const balance = selectUserBalanceOfToken(state, vault.chainId, balanceToken.id);
       if (value.isGreaterThanOrEqualTo(balance)) {
         value = new BigNumber(balance);
         sliceState.max = true;

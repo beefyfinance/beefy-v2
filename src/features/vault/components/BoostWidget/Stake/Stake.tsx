@@ -32,7 +32,7 @@ import { walletActions } from '../../../../data/actions/wallet-actions';
 import { selectErc20TokenById } from '../../../../data/selectors/tokens';
 import {
   selectBoostUserBalanceInToken,
-  selectWalletBalanceOfToken,
+  selectUserBalanceOfToken,
 } from '../../../../data/selectors/balance';
 import { selectChainById } from '../../../../data/selectors/chains';
 
@@ -53,7 +53,7 @@ export const Stake = ({
   const isBoostActive = useSelector((state: BeefyState) => selectIsBoostActive(state, boostId));
 
   const mooBalance = useSelector((state: BeefyState) =>
-    selectWalletBalanceOfToken(state, boost.chainId, mooToken.id)
+    selectUserBalanceOfToken(state, boost.chainId, mooToken.id)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)

@@ -13,9 +13,9 @@ import { ZapEstimate, ZapOptions } from '../../apis/zap';
 import { TokenEntity } from '../../entities/token';
 import { isGovVault, VaultEntity } from '../../entities/vault';
 import {
-  selectStandardVaultUserBalanceInTokenExcludingBoosts,
-  selectGovVaultUserBalanceInToken,
-  selectWalletBalanceOfToken,
+  selectStandardVaultUserBalanceInOracleTokenExcludingBoosts,
+  selectGovVaultUserBalanceInMooToken,
+  selectUserBalanceOfToken,
 } from '../../selectors/balance';
 import { selectTokenById } from '../../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../selectors/vaults';
@@ -100,12 +100,8 @@ export const withdrawSlice = createSlice({
       const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
       const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
       const mooTokenBalance = isGovVault(vault)
-        ? selectGovVaultUserBalanceInToken(state, vault.id)
-        : selectStandardVaultUserBalanceInTokenExcludingBoosts(
-            state,
-            vault.id,
-            vault.earnedTokenId
-          );
+        ? selectGovVaultUserBalanceInMooToken(state, vault.id)
+        : selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(state, vault.id);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
       const amount = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
 
@@ -128,7 +124,7 @@ export const withdrawSlice = createSlice({
       }
 
       const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-      const mooTokenBalance = selectWalletBalanceOfToken(state, vault.chainId, vault.earnedTokenId);
+      const mooTokenBalance = selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
       const amount = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
       if (value.isGreaterThanOrEqualTo(amount)) {
