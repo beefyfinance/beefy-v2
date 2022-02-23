@@ -184,7 +184,7 @@ export const Stake = ({
             </Box>
             {/*BUTTON */}
             <Box className={classes.btnSection}>
-              {isBoostActive ? (
+              {!isBoostActive ? (
                 <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
                   {t('Deposit-Disabled')}
                 </Button>

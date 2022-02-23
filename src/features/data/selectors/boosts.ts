@@ -5,7 +5,7 @@ import { VaultEntity } from '../entities/vault';
 import { getBoostStatusFromPeriodFinish } from '../reducers/boosts';
 import { selectBoostUserBalanceInToken } from './balance';
 
-export const selectBoostById = (state: BeefyState, boostId: VaultEntity['id']) => {
+export const selectBoostById = (state: BeefyState, boostId: BoostEntity['id']) => {
   const boostsByIds = state.entities.boosts.byId;
   if (boostsByIds[boostId] === undefined) {
     throw new Error(`selectBoostById: Unknown vault id ${boostId}`);
@@ -13,7 +13,7 @@ export const selectBoostById = (state: BeefyState, boostId: VaultEntity['id']) =
   return boostsByIds[boostId];
 };
 
-export const selectIsBoostActive = (state: BeefyState, boostId: VaultEntity['id']) => {
+export const selectIsBoostActive = (state: BeefyState, boostId: BoostEntity['id']) => {
   const status = getBoostStatusFromPeriodFinish(selectBoostPeriodFinish(state, boostId));
   return status === 'active';
 };

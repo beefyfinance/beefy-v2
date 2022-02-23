@@ -34,6 +34,9 @@ export const selectIsApprovalNeededForBoostStaking = (
 ) => {
   // to withdraw, the spender must have access to the moo token
   const boostId = state.ui.boostModal.boostId;
+  if (!boostId) {
+    return false;
+  }
   const boost = selectBoostById(state, boostId);
   const vault = selectStandardVaultById(state, boost.vaultId);
 
