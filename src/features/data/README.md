@@ -30,8 +30,8 @@
     [x] Gov vault withdraw
     [x] Gov vault claim
     [x] Gov vault exit
-    [ ] Boost deposit
-    [ ] Boost withdraw
+    [x] Boost deposit
+    [x] Boost withdraw
     [ ] Spirit card
 
 [ ] Don't display an ugly ass loader when showing the deposit/withdraw form
