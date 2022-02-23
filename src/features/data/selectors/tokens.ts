@@ -1,4 +1,4 @@
-import { BIG_ZERO } from '../../../helpers/format';
+import { BIG_ONE } from '../../../helpers/format';
 import { bluechipTokens } from '../../../helpers/utils';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
@@ -103,4 +103,4 @@ export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id'])
 };
 
 export const selectTokenPriceByTokenId = (state: BeefyState, tokenId: TokenEntity['id']) =>
-  state.entities.tokens.prices.byTokenId[tokenId] || BIG_ZERO;
+  state.entities.tokens.prices.byTokenId[tokenId] || BIG_ONE;

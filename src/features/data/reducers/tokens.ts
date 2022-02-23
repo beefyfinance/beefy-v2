@@ -78,7 +78,14 @@ export const tokensSlice = createSlice({
     // if we are OK to not use BigNumber, which I don't think we are
     builder.addCase(fetchAllPricesAction.fulfilled, (sliceState, action) => {
       for (const tokenId of Object.keys(action.payload)) {
-        const tokenPrice = action.payload[tokenId];
+        let tokenPrice = action.payload[tokenId];
+
+        // when the api fails to fetch the token price, we say 1 token = $1
+        if (tokenPrice === null || tokenPrice === undefined) {
+          console.warn(`API returned an empty price for token ${tokenId}`);
+          tokenPrice = 1.0;
+        }
+
         // new price, add it
         if (sliceState.prices.byTokenId[tokenId] === undefined) {
           sliceState.prices.byTokenId[tokenId] = new BigNumber(tokenPrice);

@@ -2,9 +2,9 @@
 
 exports[`TVL slice tests should fully recompute total TVL when getting new chain data 1`] = `"817.047632700577131"`;
 
-exports[`TVL slice tests should fully recompute total TVL when getting new chain data 2`] = `"817.047632700577131"`;
+exports[`TVL slice tests should fully recompute total TVL when getting new chain data 2`] = `"940.047632700577131"`;
 
-exports[`TVL slice tests should fully recompute total TVL when getting new chain data 3`] = `"22957.045679782069632"`;
+exports[`TVL slice tests should fully recompute total TVL when getting new chain data 3`] = `"23080.045679782069632"`;
 
 exports[`TVL slice tests should update state on fulfilled boost contract data 1`] = `
 Object {
