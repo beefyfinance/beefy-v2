@@ -159,6 +159,10 @@ describe('Tokens slice tests', () => {
       '1inch-1inch-bnb': 0,
       '2omb-2omb-ftm': 16.710317081168196,
       '2omb-2share-ftm': 171.84420463276956,
+      // when rpc are down, the API might send us nulls
+      // in this case, we say 1 token = $1
+      'solarbeam-avax-wmovr': null,
+      'solarbeam-bnb-busd': null,
     };
     const action = { type: fetchAllPricesAction.fulfilled, payload: payload };
     const state = tokensSlice.reducer(initialTokensState, action);
