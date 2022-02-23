@@ -257,6 +257,7 @@ export async function initWithdrawForm(
 export async function initBoostForm(
   store: BeefyStore,
   boostId: BoostEntity['id'],
+  mode: 'stake' | 'unstake',
   walletAddress: string | null
 ) {
   const vault = selectBoostById(store.getState(), boostId);
@@ -268,5 +269,5 @@ export async function initBoostForm(
   }
 
   // then we can init the form
-  store.dispatch(initiateBoostForm({ boostId, walletAddress }));
+  store.dispatch(initiateBoostForm({ boostId, mode, walletAddress }));
 }

@@ -24,7 +24,7 @@ import { useStepper } from '../../../../../components/Steps/hooks';
 import { BeefyState } from '../../../../../redux-types';
 import { selectBoostById, selectIsBoostActive } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
-import { boostModalActions } from '../../../../data/reducers/wallet/boost-stake';
+import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
@@ -66,7 +66,7 @@ export const Stake = ({
   // initialize our form
   const store = useStore();
   React.useEffect(() => {
-    initBoostForm(store, boostId, walletAddress);
+    initBoostForm(store, boostId, 'stake', walletAddress);
   }, [store, boostId, walletAddress]);
 
   return formReady ? <StakeForm boostId={boostId} closeModal={closeModal} /> : <Loader />;
@@ -112,20 +112,12 @@ const StakeForm = ({
     selectIsApprovalNeededForBoostStaking(state, spenderAddress)
   );
 
-  // initiate state
-  React.useEffect(() => {
-    dispatch(boostModalActions.setBoost({ boostId }));
-  }, [boostId, dispatch]);
-  if (formState.boostId !== boostId) {
-    return <></>;
-  }
-
   const handleInput = (amountStr: string) => {
     dispatch(boostModalActions.setInput({ amount: amountStr, state: store.getState() }));
   };
 
   const handleMax = () => {
-    dispatch(boostModalActions.setMax({ mode: 'stake', state: store.getState() }));
+    dispatch(boostModalActions.setMax({ state: store.getState() }));
   };
 
   const handleDeposit = () => {
