@@ -103,7 +103,7 @@ export const withdrawSlice = createSlice({
         ? selectGovVaultUserBalanceInToken(state, vault.id)
         : selectStandardVaultUserBalanceInTokenExcludingBoosts(
             state,
-            vault.chainId,
+            vault.id,
             vault.earnedTokenId
           );
       const ppfs = selectVaultPricePerFullShare(state, vault.id);

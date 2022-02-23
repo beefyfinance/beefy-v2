@@ -51,7 +51,7 @@ export const loggerMiddleware = store => next => action => {
   }
 };
 
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stringify = (o: any) =>
   mapValuesDeep(o, val => {
     if (val instanceof BigNumber) {

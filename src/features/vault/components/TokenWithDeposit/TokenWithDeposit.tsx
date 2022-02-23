@@ -37,11 +37,7 @@ export function TokenWithDeposit({
     const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
     const mooTokenBalance = isGovVault(vault)
       ? selectGovVaultUserBalanceInToken(state, vault.id)
-      : selectStandardVaultUserBalanceInTokenExcludingBoosts(
-          state,
-          vault.chainId,
-          vault.earnedTokenId
-        );
+      : selectStandardVaultUserBalanceInTokenExcludingBoosts(state, vault.id, vault.earnedTokenId);
     const ppfs = selectVaultPricePerFullShare(state, vault.id);
     return mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
   });

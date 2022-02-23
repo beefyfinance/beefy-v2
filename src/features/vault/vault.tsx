@@ -31,10 +31,18 @@ import {
   selectIsVaultQidao,
 } from '../data/selectors/partners';
 import { selectPlatformById } from '../data/selectors/platforms';
+import { selectIsConfigAvailable } from '../data/selectors/data-loader';
+import { CowLoader } from '../../components/CowLoader';
 
 const useStyles = makeStyles(styles as any);
 
 export const Vault = () => {
+  const isLoaded = useSelector((state: BeefyState) => selectIsConfigAvailable(state));
+
+  return isLoaded ? <VaultContent /> : <CowLoader text="Loading..." />;
+};
+
+const VaultContent = React.memo(() => {
   const classes = useStyles();
   const { t } = useTranslation();
   let { id: vaultId }: any = useParams();
@@ -141,4 +149,4 @@ export const Vault = () => {
       </Box>
     </>
   );
-};
+});
