@@ -94,15 +94,15 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
         if (max) {
           return contract.methods
             .depositAllBNB()
-            .send({ from: address, value: rawAmount.toString() });
+            .send({ from: address, value: rawAmount.toString(10) });
         } else {
-          return contract.methods.depositBNB().send({ from: address, value: rawAmount.toString() });
+          return contract.methods.depositBNB().send({ from: address, value: rawAmount.toString(10) });
         }
       } else {
         if (max) {
           return contract.methods.depositAll().send({ from: address });
         } else {
-          return contract.methods.deposit(rawAmount.toString()).send({ from: address });
+          return contract.methods.deposit(rawAmount.toString(10)).send({ from: address });
         }
       }
     })();
@@ -153,15 +153,15 @@ const beefIn = (
       if (isTokenNative(tokenIn)) {
         return contract.methods.beefInETH(vaultAddress, rawSwapAmountOutMin).send({
           from: address,
-          value: rawAmount.toString(),
+          value: rawAmount.toString(10),
         });
       } else {
         return contract.methods
           .beefIn(
             vaultAddress,
-            rawSwapAmountOutMin.toString(),
+            rawSwapAmountOutMin.toString(10),
             tokenIn.contractAddress,
-            rawAmount.toString()
+            rawAmount.toString(10)
           )
           .send({
             from: address,
@@ -207,7 +207,7 @@ const beefOut = (vault: VaultEntity, amount: BigNumber, zapOptions: ZapOptions) 
     const rawAmount = amount.shiftedBy(mooToken.decimals).decimalPlaces(0);
 
     const transaction = (() => {
-      return contract.methods.beefOut(vault.contractAddress, rawAmount.toString()).send({
+      return contract.methods.beefOut(vault.contractAddress, rawAmount.toString(10)).send({
         from: address,
       });
     })();
@@ -266,9 +266,9 @@ const beefOutAndSwap = (
       return contract.methods
         .beefOutAndSwap(
           vaultAddress,
-          rawAmount.toString(),
+          rawAmount.toString(10),
           tokenOurErc20.contractAddress,
-          rawSwapAmountOutMin.toString()
+          rawSwapAmountOutMin.toString(10)
         )
         .send({
           from: address,
@@ -317,13 +317,13 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
         if (max) {
           return contract.methods.withdrawAllBNB().send({ from: address });
         } else {
-          return contract.methods.withdrawBNB(rawAmount.toString()).send({ from: address });
+          return contract.methods.withdrawBNB(rawAmount.toString(10)).send({ from: address });
         }
       } else {
         if (max) {
           return contract.methods.withdrawAll().send({ from: address });
         } else {
-          return contract.methods.withdraw(rawAmount.toString()).send({ from: address });
+          return contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
         }
       }
     })();
@@ -358,7 +358,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
 
-    const transaction = contract.methods.stake(rawAmount.toString()).send({ from: address });
+    const transaction = contract.methods.stake(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,
@@ -397,7 +397,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
 
-    const transaction = contract.methods.withdraw(rawAmount.toString()).send({ from: address });
+    const transaction = contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,
@@ -568,7 +568,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
 
-    const transaction = contract.methods.stake(rawAmount.toString()).send({ from: address });
+    const transaction = contract.methods.stake(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,
@@ -609,7 +609,7 @@ const unstakeBoost = (_: BoostEntity, __: BigNumber) => {
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
 
-    const transaction = contract.methods.withdraw(rawAmount.toString()).send({ from: address });
+    const transaction = contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,

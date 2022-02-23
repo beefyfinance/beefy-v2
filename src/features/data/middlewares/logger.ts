@@ -55,7 +55,7 @@ export const loggerMiddleware = store => next => action => {
 const stringify = (o: any) =>
   mapValuesDeep(o, val => {
     if (val instanceof BigNumber) {
-      return '__BIG_NUM__: ' + val.toString();
+      return '__BIG_NUM__: ' + val.toString(10);
     } else if (val instanceof Date) {
       return '__DATE__: ' + val.toUTCString();
     } else {
