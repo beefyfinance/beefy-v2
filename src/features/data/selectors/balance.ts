@@ -76,10 +76,10 @@ export const selectStandardVaultUserBalanceInOracleTokenExcludingBoosts = (
   const vault = selectStandardVaultById(state, vaultId);
   const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
   const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-  let mooTokenBalance = selectUserBalanceOfToken(
+  const mooTokenBalance = selectUserBalanceOfToken(
     state,
     vault.chainId,
-    vault.earnedTokenId,
+    mooToken.id,
     walletAddress
   );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
