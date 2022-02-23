@@ -142,7 +142,7 @@ export const Steps = ({
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Success', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 8),
+                        amount: formatBigDecimals(walletActionsState.data.amountc),
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
@@ -169,7 +169,7 @@ export const Steps = ({
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Withdrawal', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 8),
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
@@ -191,7 +191,7 @@ export const Steps = ({
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Success-Bst', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 8),
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
@@ -219,7 +219,7 @@ export const Steps = ({
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Withdrawal-Boost', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 8),
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
@@ -240,7 +240,7 @@ export const Steps = ({
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Claimed', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 8),
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
