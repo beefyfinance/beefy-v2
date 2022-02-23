@@ -165,7 +165,7 @@ export const config = {
   fantom: {
     name: 'Fantom',
     chainId: 250,
-    rpc: ['https://rpcapi.fantom.network'],
+    rpc: ['https://rpc.ftm.tools'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     fetchContractDataAddress: '0x37FF9b4612b9e80E4082e3aC3f5149adDA2d2f21',
@@ -181,7 +181,7 @@ export const config = {
         symbol: 'FTM',
         decimals: 18,
       },
-      rpcUrls: ['https://rpcapi.fantom.network'],
+      rpcUrls: ['https://rpc.ftm.tools'],
       blockExplorerUrls: ['https://ftmscan.com/'],
     },
     stableCoins: [
@@ -270,7 +270,7 @@ export const config = {
   moonriver: {
     name: 'Moonriver',
     chainId: 1285,
-    rpc: ['https://rpc.moonriver.moonbeam.network'],
+    rpc: ['https://moonriver.api.onfinality.io/public'],
     explorerUrl: 'https://blockscout.moonriver.moonbeam.network',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
     fetchContractDataAddress: '0xfbD63fadb7B13E0599c3643405276f97217147B2',
@@ -285,7 +285,7 @@ export const config = {
         symbol: 'MOVR',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.moonriver.moonbeam.network'],
+      rpcUrls: ['https://moonriver.api.onfinality.io/public'],
       blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM', 'FRAX'],
