@@ -27,8 +27,6 @@ export const Steps = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
 
   return (
     <Snackbar
@@ -142,19 +140,11 @@ export const Steps = ({
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>
                       {t('Transactn-Success', {
-                        amount: formatBigDecimals(walletActionsState.data.amountc),
+                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
-                    <Button
-                      className={classes.redirectBtnSuccess}
-                      href={
-                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
-                      }
-                      target="_blank"
-                    >
-                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
-                    </Button>
+                    <TransactionLink vaultId={vaultId} />
                   </Box>
                   <Box pt={2}>
                     <Typography variant="body1" className={classes.message}>
@@ -173,15 +163,7 @@ export const Steps = ({
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
-                    <Button
-                      className={classes.redirectBtnSuccess}
-                      href={
-                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
-                      }
-                      target="_blank"
-                    >
-                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
-                    </Button>
+                    <TransactionLink vaultId={vaultId} />
                   </Box>
                 </>
               )}
@@ -195,16 +177,7 @@ export const Steps = ({
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
-
-                    <Button
-                      className={classes.redirectBtnSuccess}
-                      href={
-                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
-                      }
-                      target="_blank"
-                    >
-                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
-                    </Button>
+                    <TransactionLink vaultId={vaultId} />
                   </Box>
                   <Box pt={2}>
                     <Typography variant="body1" className={classes.message}>
@@ -223,15 +196,7 @@ export const Steps = ({
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
-                    <Button
-                      className={classes.redirectBtnSuccess}
-                      href={
-                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
-                      }
-                      target="_blank"
-                    >
-                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
-                    </Button>
+                    <TransactionLink vaultId={vaultId} />
                   </Box>
                 </>
               )}
@@ -244,15 +209,7 @@ export const Steps = ({
                         token: walletActionsState.data.token.symbol,
                       })}
                     </Typography>
-                    <Button
-                      className={classes.redirectBtnSuccess}
-                      href={
-                        chain.explorerUrl + '/tx/' + walletActionsState.data.receipt.transactionHash
-                      }
-                      target="_blank"
-                    >
-                      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
-                    </Button>
+                    <TransactionLink vaultId={vaultId} />
                   </Box>
                 </>
               )}
@@ -266,3 +223,29 @@ export const Steps = ({
     </Snackbar>
   );
 };
+
+function TransactionLink({ vaultId }: { vaultId: VaultEntity['id'] }) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+
+  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+
+  const hash =
+    walletActionsState.result === 'success'
+      ? walletActionsState.data.receipt.transactionHash
+      : walletActionsState.result === 'success_pending'
+      ? walletActionsState.data.hash
+      : '';
+
+  return (
+    <Button
+      className={classes.redirectBtnSuccess}
+      href={chain.explorerUrl + '/tx/' + hash}
+      target="_blank"
+    >
+      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+    </Button>
+  );
+}

@@ -24,13 +24,17 @@ import {
   selectGovVaultRewardsTokenEntity,
 } from '../selectors/balance';
 import { BoostEntity } from '../entities/boost';
+import {
+  createWalletActionErrorAction,
+  createWalletActionPendingAction,
+  createWalletActionSuccessAction,
+  TrxError,
+  TrxHash,
+  TrxReceipt,
+} from '../reducers/wallet/wallet-action';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
-
-type TrxHash = string; // not sure about this one
-type TrxReceipt = { transactionHash: string };
-type TrxError = { message: string };
 
 const approval = (token: TokenErc20, spenderAddress: string) => {
   return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
@@ -50,10 +54,11 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
 
     const transaction = contract.methods.approve(spenderAddress, maxAmount).send({ from: address });
 
+    const bigMaxAmount = new BigNumber(maxAmount).shiftedBy(-native.decimals);
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: spenderAddress, maxAmount: maxAmount, token: token },
+      { spender: spenderAddress, amount: bigMaxAmount, token: token },
       {
         chainId: token.chainId,
         spenderAddress,
@@ -105,7 +110,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount: amount, token: oracleToken },
+      { spender: contractAddr, amount, token: oracleToken },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
@@ -637,7 +642,7 @@ export const walletActions = {
   unstakeBoost,
 };
 
-function bindTransactionEvents<T>(
+function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity }>(
   dispatch: Dispatch<any>,
   transaction: any /* todo: find out what it is */,
   additionalData: T,
@@ -651,28 +656,10 @@ function bindTransactionEvents<T>(
 ) {
   transaction
     .on('transactionHash', function (hash: TrxHash) {
-      dispatch({
-        type: WALLET_ACTION,
-        payload: {
-          result: 'success_pending',
-          data: {
-            hash: hash,
-            ...additionalData,
-          },
-        },
-      });
+      dispatch(createWalletActionPendingAction(hash, additionalData));
     })
     .on('receipt', function (receipt: TrxReceipt) {
-      dispatch({
-        type: WALLET_ACTION,
-        payload: {
-          result: 'success',
-          data: {
-            receipt: receipt,
-            ...additionalData,
-          },
-        },
-      });
+      dispatch(createWalletActionSuccessAction(receipt, additionalData));
 
       // fetch new balance and allowance of native token (gas spent) and allowance token
       if (refreshOnSuccess) {
@@ -688,16 +675,7 @@ function bindTransactionEvents<T>(
       }
     })
     .on('error', function (error: TrxError) {
-      dispatch({
-        type: WALLET_ACTION,
-        payload: {
-          result: 'error',
-          data: {
-            error: error.message,
-            ...additionalData,
-          },
-        },
-      });
+      dispatch(createWalletActionErrorAction(error, additionalData));
     })
     .catch(error => {
       console.log(error);
