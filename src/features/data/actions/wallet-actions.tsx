@@ -564,8 +564,9 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 
     const walletApi = await getWalletConnectApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
+
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenById(state, vault.chainId, vault.oracleId);
+    const inputToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
 
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
@@ -588,8 +589,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 };
 
 //const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
-const unstakeBoost = (_: BoostEntity, __: BigNumber) => {
-  /*
+const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
   return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -600,32 +600,28 @@ const unstakeBoost = (_: BoostEntity, __: BigNumber) => {
 
     const walletApi = await getWalletConnectApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-    const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-    const ppfs = selectVaultPricePerFullShare(state, vault.chainId);
 
-    // amount is in oracle token, we need it in moo token
-    const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, amount);
+    const vault = selectVaultById(state, boost.vaultId);
+    const inputToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
 
-    const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
-
-    const contractAddr = vault.earnContractAddress;
+    const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
 
     const transaction = contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token: oracleToken },
+      { spender: contractAddr, amount, token: inputToken },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
-        govVaultId: vault.id,
+        boostId: boost.id,
       }
     );
-  };*/
+  };
 };
 
 export const walletActions = {
