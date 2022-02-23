@@ -25,18 +25,18 @@ export type WalletActionsState =
       data: { hash: TrxHash } & MandatoryAdditionalData;
     };
 
-const initialWalletActionState = {
+const initialWalletActionState: WalletActionsState = {
   result: null,
   data: null,
 };
 
-export const walletActionsReducer = (state = initialWalletActionState, action) => {
+export const walletActionsReducer = (
+  state = initialWalletActionState,
+  action: { type: 'WALLET_ACTION' | 'WALLET_ACTION_RESET'; payload: WalletActionsState }
+): WalletActionsState => {
   switch (action.type) {
     case WALLET_ACTION:
-      return {
-        result: action.payload.result,
-        data: action.payload.data,
-      };
+      return action.payload;
     case WALLET_ACTION_RESET:
       return { result: null, data: null };
     default:

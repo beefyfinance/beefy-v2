@@ -122,7 +122,7 @@ export const Steps = ({
               <>
                 <Box className={classes.errorContent}>
                   <Typography variant="body1" className={classes.message}>
-                    <span>{t('Error')}</span> {walletActionsState.data.error}
+                    <span>{t('Error')}</span> {walletActionsState.data.error.message}
                   </Typography>
                 </Box>
                 <Button className={classes.closeBtn} onClick={handleClose}>

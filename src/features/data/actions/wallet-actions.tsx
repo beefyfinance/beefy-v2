@@ -96,7 +96,9 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
             .depositAllBNB()
             .send({ from: address, value: rawAmount.toString(10) });
         } else {
-          return contract.methods.depositBNB().send({ from: address, value: rawAmount.toString(10) });
+          return contract.methods
+            .depositBNB()
+            .send({ from: address, value: rawAmount.toString(10) });
         }
       } else {
         if (max) {
@@ -246,6 +248,7 @@ const beefOutAndSwap = (
     }
 
     const earnedToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
+    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
     const vaultAddress = earnedToken.contractAddress;
     const { tokenIn, tokenOut } = zapEstimate;
 
@@ -278,7 +281,7 @@ const beefOutAndSwap = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zapOptions.address, amount: tokenAmount, token: tokenOut },
+      { spender: zapOptions.address, amount: tokenAmount, token: oracleToken },
       {
         chainId: vault.chainId,
         spenderAddress: zapOptions.address,
