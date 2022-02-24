@@ -32,19 +32,11 @@
     [x] Gov vault exit
     [x] Boost deposit
     [x] Boost withdraw
-    [ ] Spirit card -> Done but need to be tested when FTM will be back on his feets
+    [x] Spirit card
 
-[ ] Don't display an ugly ass loader when showing the deposit/withdraw form
-[ ] Don't forget to remove withdraw estimated amounts
+[ ] fix pending bugs
 [ ] remove the debug record middleware
-[ ] Have a scenario specific to the vault page on direct access
-[ ] Rename selectors like selectStandardVaultUserBalanceInTokenExcludingBoosts
-[ ] create quick access hooks to avoid useSelector hell
-[ ] create deposit & withdrawal specific selectors (spenderAddress)
-[ ] find out why some contract-data and balance contracts are not working on some chains
-[ ] have unit tests for deposit / withdraw stuff it's critical
 [ ] remove feature flags
-[ ] reload ppfs on a regular basis
 
 BONUS:
 
@@ -54,6 +46,7 @@ BONUS:
 [ ] Error state when api or RPC fails
 [ ] reorganize files? a lot of files have the same name, that's annoying
 [ ] make tests run in CI
+[ ] Have a scenario specific to the vault page on direct access
 [ ] Add `tokenAddress` to WFTM and WMATIC tokens and remove associated hack
 [ ] Remove hack for venus-wbnb/venus-bnb
 [ ] Create unit tests for critical business cases
@@ -67,6 +60,12 @@ BONUS:
 [ ] De-duplicate withdraw/deposit code
 [ ] create helper hooks/selectors to avoid selector hell
 [ ] refactor wallet actions reducer and stepper
+[ ] Rename selectors like selectStandardVaultUserBalanceInTokenExcludingBoosts
+[ ] create quick access hooks to avoid useSelector hell
+[ ] create deposit & withdrawal specific selectors (spenderAddress)
+[ ] find out why some contract-data and balance contracts are not working on some chains
+[ ] have unit tests for deposit / withdraw stuff it's critical
+[ ] Don't display an ugly ass loader when showing the deposit/withdraw form
 
 # REGRESSION TESTING BOOK
 
