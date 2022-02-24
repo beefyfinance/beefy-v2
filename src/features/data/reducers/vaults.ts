@@ -169,7 +169,7 @@ function addVaultToState(
       addLiquidityUrl: null,
       depositFee: apiVault.depositFee ?? '0%',
       withdrawalFee: '0%',
-      createdAt: apiVault.createdAt
+      createdAt: apiVault.createdAt ?? 0
     };
 
     sliceState.byId[vault.id] = vault;
@@ -209,7 +209,7 @@ function addVaultToState(
       addLiquidityUrl: apiVault.addLiquidityUrl || null,
       depositFee: apiVault.depositFee ?? '0%',
       withdrawalFee: apiVault.withdrawalFee ?? '0.1%',
-      createdAt: apiVault.createdAt
+      createdAt: apiVault.createdAt ?? 0
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual
