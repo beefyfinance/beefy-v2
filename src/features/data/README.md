@@ -32,7 +32,7 @@
     [x] Gov vault exit
     [x] Boost deposit
     [x] Boost withdraw
-    [ ] Spirit card
+    [ ] Spirit card -> Done but need to be tested when FTM will be back on his feets
 
 [ ] Don't display an ugly ass loader when showing the deposit/withdraw form
 [ ] Don't forget to remove withdraw estimated amounts
@@ -44,6 +44,7 @@
 [ ] find out why some contract-data and balance contracts are not working on some chains
 [ ] have unit tests for deposit / withdraw stuff it's critical
 [ ] remove feature flags
+[ ] reload ppfs on a regular basis
 
 BONUS:
 
