@@ -1,36 +1,89 @@
 [
   {
-    "id": "bsc vault: annex-ann-busd-eol",
+    "id": "polygon vault: quick-sand-matic-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: annex-ann-eol",
+    "id": "polygon vault: quick-tomb-mimatic-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom vault: boo-ftm-multi",
+    "id": "polygon vault: quick-mimatic-clam-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: polygonfarm-spade-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: polygonfarm-spade-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-wbtc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-aave-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-dai-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "metis vault: netswap-wbtc-metis",
     "type": "Added"
   },
   {
-    "id": "fantom vault: boo-font-ftm",
+    "id": "metis vault: netswap-wbtc-m.usdt",
     "type": "Added"
   },
   {
-    "id": "fantom vault: beets-paint-it-black-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: png-fire-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: curve-avax-ren",
+    "id": "metis vault: tethys-wbtc-metis",
     "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
+  },
+  {
+    "id": "polygon boost: moo_sushi-jrt-eth-jarvis",
+    "type": "synced"
+  },
+  {
+    "id": "polygon boost: moo_aave-eth",
+    "type": "synced"
+  },
+  {
+    "id": "polygon boost: moo_aave-btc",
+    "type": "synced"
+  },
+  {
+    "id": "metis boost: moo_netswap-wbtc-metis-relay",
+    "type": "Added"
   }
 ]
