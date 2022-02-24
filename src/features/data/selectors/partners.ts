@@ -25,7 +25,7 @@ export const selectIsVaultInsurace = (state: BeefyState, vaultId: VaultEntity['i
 };
 export const selectIsVaultBinSpirit = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
-  return vault.platformId === 'spiritswap';
+  return vault.id === 'beefy-binspirit';
 };
 
 export const selectBoostedVaultMainPartner = (state: BeefyState, vaultId: VaultEntity['id']) => {

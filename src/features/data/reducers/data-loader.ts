@@ -22,6 +22,7 @@ import { askForNetworkChange, askForWalletConnection, doDisconnectWallet } from 
 import { initiateWithdrawForm } from '../actions/withdraw';
 import { fetchAllZapsAction } from '../actions/zap';
 import { ChainEntity } from '../entities/chain';
+import { initWalletState } from './wallet/wallet';
 
 /**
  * because we want to be smart about data loading
@@ -89,6 +90,9 @@ const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
 };
 
 export interface DataLoaderState {
+  instances: {
+    wallet: boolean;
+  };
   global: {
     chainConfig: LoaderState;
     prices: LoaderState;
@@ -112,6 +116,9 @@ export interface DataLoaderState {
   };
 }
 export const initialDataLoaderState: DataLoaderState = {
+  instances: {
+    wallet: false,
+  },
   global: {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
@@ -229,6 +236,10 @@ export const dataLoaderSlice = createSlice({
       'allowance',
     ]);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
+
+    builder.addCase(initWalletState, sliceState => {
+      sliceState.instances.wallet = true;
+    });
   },
 });
 

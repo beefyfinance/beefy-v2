@@ -4,27 +4,33 @@ import { getERC20Contract } from '../../../../helpers/getERC20Contract';
 import BigNumber from 'bignumber.js';
 import { useSelector } from 'react-redux';
 import { BIG_ZERO, byDecimals } from '../../../../helpers/format';
+import { selectIsWalletConnected, selectWalletAddress } from '../../../data/selectors/wallet';
+import { BeefyState } from '../../../../redux-types';
+import { getWalletConnectApiInstance } from '../../../data/apis/instances';
 
 export function useBalance(tokenAddress, decimals, network) {
   const [balance, setBalance] = useState(BIG_ZERO);
   const [balanceString, setBalanceString] = useState('0');
+  const account = useSelector((state: BeefyState) =>
+    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
+  );
 
-  const { wallet } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-  }));
-
-  const web3 = wallet.rpc[network];
-  const account = wallet.address;
+  const isWalletCoInitiated = useSelector(
+    (state: BeefyState) => state.ui.dataLoader.instances.wallet
+  );
 
   useEffect(() => {
     let isCancelled = false;
 
     function getBalance() {
-      return new Promise<BigNumber>(resolve => {
-        if (!web3 || !tokenAddress) {
+      return new Promise<BigNumber>(async resolve => {
+        if (!account || !tokenAddress || !isWalletCoInitiated) {
           resolve(BIG_ZERO);
           return;
         }
+
+        const walletApi = await getWalletConnectApiInstance();
+        const web3 = await walletApi.getConnectedWeb3Instance();
 
         try {
           if (tokenAddress === ZERO_ADDRESS) {
@@ -70,7 +76,7 @@ export function useBalance(tokenAddress, decimals, network) {
     return () => {
       isCancelled = true;
     };
-  }, [tokenAddress, web3, decimals, account]);
+  }, [tokenAddress, decimals, account, isWalletCoInitiated]);
 
   return [balance, balanceString];
 }

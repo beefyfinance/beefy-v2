@@ -18,51 +18,64 @@ import {
   formatBigNumberSignificant,
 } from '../../../../helpers/format';
 import { SpiritToken, binSpiritMintVault } from './SpiritToken';
-import { isEmpty } from '../../../../helpers/utils';
-import { Steps } from '../../../../components/Steps';
 import { useAllowance } from './useAllowance';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { BeefyState } from '../../../../redux-types';
-import { selectStandardVaultUserBalanceInOracleTokenIncludingBoosts } from '../../../data/selectors/balance';
-import { selectWalletAddress } from '../../../data/selectors/wallet';
+import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
+import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import { selectTokenById } from '../../../data/selectors/tokens';
 import { isString } from 'lodash';
+import { Step } from '../../../../components/Steps/types';
+import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
+import { walletActions } from '../../../data/actions/wallet-actions';
+import { useStepper } from '../../../../components/Steps/hooks';
+import { spiritDeposit } from './spirit-wallet-action';
 
 const useStyles = makeStyles(styles as any);
 
-const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
+const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vaultId)
+    selectTokenById(state, vault.chainId, vault.oracleId)
   );
-  const walletAddress = useSelector((state: BeefyState) => selectWalletAddress(state));
   const binSpiritBalance = useSelector((state: BeefyState) =>
-    selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vaultId)
+    selectUserBalanceOfToken(state, vault.chainId, vault.oracleId)
+  );
+  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletOnVaultChain = useSelector(
+    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
 
   const [spiritBalance, spiritBalanceString] = useBalance(
-    SpiritToken.address,
+    SpiritToken.contractAddress,
     SpiritToken.decimals,
     vault.chainId
   );
 
   const [spiritAllowance] = useAllowance(
-    SpiritToken.address,
+    SpiritToken.contractAddress,
     SpiritToken.decimals,
     binSpiritMintVault.mintAdress,
     vault.chainId
   );
 
-  const [steps, setSteps] = React.useState({
-    modal: false,
-    currentStep: -1,
-    items: [],
-    finished: false,
-  });
+  const resetFormData = () => {
+    setFormData({
+      ...formData,
+      deposit: {
+        ...formData.deposit,
+        input: '',
+        amount: BIG_ZERO,
+        max: false,
+      },
+    });
+  };
+
+  const [startStepper, isStepping, Stepper] = useStepper(vaultId, resetFormData);
 
   const [formData, setFormData] = React.useState({
     deposit: {
@@ -127,84 +140,39 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     });
   };
 
-  const resetFormData = () => {
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-    });
-  };
-
   const handleDeposit = () => {
-    const steps = [];
-    if (walletAddress) {
-      const amount = convertAmountToRawNumber(formData.deposit.amount);
-
-      if (spiritAllowance.isLessThan(amount)) {
-        steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: () =>
-            dispatch(
-              /*walletActions.approval(
-                vault.chainId,
-                SpiritToken.address,
-                binSpiritMintVault.mintAdress
-              )*/ null
-            ),
-          pending: false,
-        });
-      }
-
-      steps.push({
-        step: 'deposit',
-        message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-        action: () =>
-          dispatch(
-            /*walletActions.deposit(
-              vault.chainId,
-              binSpiritMintVault.mintAdress,
-              amount,
-              formData.deposit.max
-            )*/ null
-          ),
-        token: SpiritToken,
-        pending: false,
-        amount,
-      });
-
-      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
-    } //if (wallet.address)
-  }; //const handleDeposit
-
-  React.useEffect(() => {
-    const index = steps.currentStep;
-    if (!isEmpty(steps.items[index]) && steps.modal) {
-      const items = steps.items;
-      if (!items[index].pending) {
-        items[index].pending = true;
-        items[index].action();
-        setSteps({ ...steps, items: items });
-      } else {
-        if (/*wallet.action.result === 'success' && */ !steps.finished) {
-          const nextStep = index + 1;
-          if (!isEmpty(items[nextStep])) {
-            setSteps({ ...steps, currentStep: nextStep });
-          } else {
-            setSteps({ ...steps, finished: true });
-          }
-        }
-      }
+    const steps: Step[] = [];
+    if (!isWalletConnected) {
+      return dispatch(askForWalletConnection());
     }
-  }, [steps /* , wallet.action */]);
+    if (!isWalletOnVaultChain) {
+      return dispatch(askForNetworkChange({ chainId: vault.chainId }));
+    }
 
-  const handleClose = () => {
-    resetFormData();
-    setSteps({ modal: false, currentStep: -1, items: [], finished: false });
+    const amount = convertAmountToRawNumber(formData.deposit.amount);
+
+    if (spiritAllowance.isLessThan(amount)) {
+      steps.push({
+        step: 'approve',
+        message: t('Vault-ApproveMsg'),
+        action: walletActions.approval(SpiritToken, binSpiritMintVault.mintAdress),
+        pending: false,
+      });
+    }
+
+    steps.push({
+      step: 'deposit',
+      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      action: spiritDeposit(
+        vault.chainId,
+        binSpiritMintVault.mintAdress,
+        amount,
+        formData.deposit.max
+      ),
+      pending: false,
+    });
+
+    startStepper(steps);
   };
 
   return (
@@ -240,6 +208,7 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 placeholder="0.00"
                 value={formData.deposit.input}
                 onChange={e => handleInput(e.target.value)}
+                disabled={isStepping}
               />
               <Button onClick={handleMax}>{t('Transact-Max')}</Button>
             </Paper>
@@ -269,7 +238,7 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             </Paper>
           </Box>
           <Button
-            disabled={formData.deposit.amount.isLessThanOrEqualTo(0)}
+            disabled={formData.deposit.amount.isLessThanOrEqualTo(0) || isStepping}
             onClick={handleDeposit}
             className={classes.btn}
           >
@@ -277,9 +246,9 @@ const SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Button>
         </CardContent>
       </Card>
-      <Steps vaultId={vault.id} steps={steps} handleClose={handleClose} />
+      <Stepper />
     </>
   );
 };
 
-export const Spirit = React.memo(SpiritCard);
+export const SpiritCard = React.memo(_SpiritCard);

@@ -17,7 +17,7 @@ import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
-import { Spirit } from './components/SpiritCard';
+import { SpiritCard } from './components/SpiritCard';
 import { Moonpot } from './components/MoonportCard';
 import { selectVaultById } from '../data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
@@ -120,7 +120,7 @@ const VaultContent = React.memo(() => {
               )}
               {isBinSpirit && (
                 <Box>
-                  <Spirit vaultId={vaultId} />
+                  <SpiritCard vaultId={vaultId} />
                 </Box>
               )}
               {isMoonpot && (

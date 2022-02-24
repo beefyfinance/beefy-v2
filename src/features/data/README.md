@@ -62,6 +62,10 @@ BONUS:
 [~] handle canceling ongoing requests => not happening
 [ ] remove unused material ui classes
 [ ] enable typescript null checks
+[ ] put error boundaries in relevant places https://reactjs.org/docs/error-boundaries.html
+[ ] De-duplicate withdraw/deposit code
+[ ] create helper hooks/selectors to avoid selector hell
+[ ] refactor wallet actions reducer and stepper
 
 # REGRESSION TESTING BOOK
 
