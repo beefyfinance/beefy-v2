@@ -20,7 +20,7 @@ import { DepositState } from './features/data/reducers/wallet/deposit';
 import { WalletActionsState } from './features/data/reducers/wallet/wallet-action';
 import { ZapsState } from './features/data/reducers/zaps';
 import { WithdrawState } from './features/data/reducers/wallet/withdraw';
-import { BoostModalState } from './features/data/reducers/wallet/boost-stake';
+import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
 
 export interface BeefyState {
   entities: {

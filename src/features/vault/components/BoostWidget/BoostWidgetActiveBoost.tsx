@@ -19,10 +19,11 @@ import {
   selectBoostRewardsTokenEntity,
   selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
-  selectWalletBalanceOfToken,
+  selectUserBalanceOfToken,
 } from '../../../data/selectors/balance';
 import { StakeCountdown } from './StakeCountdown';
 import { Stake } from './Stake';
+import { Unstake } from './Unstake';
 
 const useStyles = makeStyles(styles as any);
 
@@ -39,7 +40,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   );
 
   const mooTokenBalance = useSelector((state: BeefyState) =>
-    selectWalletBalanceOfToken(state, boost.chainId, vault.earnedTokenId)
+    selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenId)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)
@@ -197,16 +198,9 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
         <>
           {dw === 'deposit' ? (
             <Stake closeModal={closeInputModal} boostId={boostId} />
-          ) : /*
-            <Unstake
-              closeModal={closeInputModal}
-              item={item}
-              balance={state}
-              handleWalletConnect={handleWalletConnect}
-              formData={formData}
-              setFormData={setFormData}
-              resetFormData={resetFormData}
-            />*/ null}
+          ) : (
+            <Unstake closeModal={closeInputModal} boostId={boostId} />
+          )}
         </>
       </Modal>
       <Stepper />

@@ -42,7 +42,8 @@ import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import { TokenEntity } from '../../../data/entities/token';
 import {
   selectGovVaultPendingRewardsInToken,
-  selectUserVaultDepositInToken,
+  selectGovVaultUserStackedBalanceInOracleToken,
+  selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
 } from '../../../data/selectors/balance';
 import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
 import { isArray } from 'lodash';
@@ -122,9 +123,13 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const hasGovVaultRewards = useSelector((state: BeefyState) =>
     selectGovVaultPendingRewardsInToken(state, vaultId).isGreaterThan(0)
   );
-  const userHasBalanceInVault = useSelector((state: BeefyState) =>
-    selectUserVaultDepositInToken(state, vaultId).isGreaterThan(0)
-  );
+  // TODO: this could be a selector or hook
+  const userHasBalanceInVault = useSelector((state: BeefyState) => {
+    const deposit = isGovVault(vault)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
+      : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
+    return deposit.isGreaterThan(0);
+  });
   const displayBoostWidget = useSelector((state: BeefyState) =>
     selectShouldDisplayBoostWidget(state, vaultId)
   );

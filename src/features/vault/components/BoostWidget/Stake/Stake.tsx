@@ -24,20 +24,55 @@ import { useStepper } from '../../../../../components/Steps/hooks';
 import { BeefyState } from '../../../../../redux-types';
 import { selectBoostById, selectIsBoostActive } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
-import { boostModalActions } from '../../../../data/reducers/wallet/boost-stake';
-import { selectCurrentChainId, selectIsWalletConnected } from '../../../../data/selectors/wallet';
+import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+  selectWalletAddress,
+} from '../../../../data/selectors/wallet';
 import { Step } from '../../../../../components/Steps/types';
 import { selectIsApprovalNeededForBoostStaking } from '../../../../data/selectors/wallet-actions';
 import { walletActions } from '../../../../data/actions/wallet-actions';
 import { selectErc20TokenById } from '../../../../data/selectors/tokens';
 import {
   selectBoostUserBalanceInToken,
-  selectWalletBalanceOfToken,
+  selectUserBalanceOfToken,
 } from '../../../../data/selectors/balance';
 import { selectChainById } from '../../../../data/selectors/chains';
+import { Loader } from '../../../../../components/loader';
+import { initBoostForm } from '../../../../data/actions/scenarios';
+import { isFulfilled } from '../../../../data/reducers/data-loader';
 
 const useStyles = makeStyles(styles as any);
+
 export const Stake = ({
+  boostId,
+  closeModal,
+}: {
+  boostId: BoostEntity['id'];
+  closeModal: () => void;
+}) => {
+  const boost = useSelector((state: BeefyState) => selectBoostById(state, boostId));
+
+  const formReady = useSelector(
+    (state: BeefyState) =>
+      isFulfilled(state.ui.dataLoader.byChainId[boost.chainId].addressBook) &&
+      isFulfilled(state.ui.dataLoader.global.boostForm)
+  );
+  const walletAddress = useSelector((state: BeefyState) =>
+    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
+  );
+
+  // initialize our form
+  const store = useStore();
+  React.useEffect(() => {
+    initBoostForm(store, boostId, 'stake', walletAddress);
+  }, [store, boostId, walletAddress]);
+
+  return formReady ? <StakeForm boostId={boostId} closeModal={closeModal} /> : <Loader />;
+};
+
+const StakeForm = ({
   boostId,
   closeModal,
 }: {
@@ -53,7 +88,7 @@ export const Stake = ({
   const isBoostActive = useSelector((state: BeefyState) => selectIsBoostActive(state, boostId));
 
   const mooBalance = useSelector((state: BeefyState) =>
-    selectWalletBalanceOfToken(state, boost.chainId, mooToken.id)
+    selectUserBalanceOfToken(state, boost.chainId, mooToken.id)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)
@@ -77,20 +112,12 @@ export const Stake = ({
     selectIsApprovalNeededForBoostStaking(state, spenderAddress)
   );
 
-  // initiate state
-  React.useEffect(() => {
-    dispatch(boostModalActions.setBoost({ boostId }));
-  }, [boostId, dispatch]);
-  if (formState.boostId !== boostId) {
-    return <></>;
-  }
-
   const handleInput = (amountStr: string) => {
     dispatch(boostModalActions.setInput({ amount: amountStr, state: store.getState() }));
   };
 
   const handleMax = () => {
-    dispatch(boostModalActions.setMax({ mode: 'stake', state: store.getState() }));
+    dispatch(boostModalActions.setMax({ state: store.getState() }));
   };
 
   const handleDeposit = () => {

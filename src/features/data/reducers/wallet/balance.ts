@@ -18,6 +18,7 @@ import { BeefyState } from '../../../../redux-types';
 import { initiateDepositForm } from '../../actions/deposit';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import { initiateWithdrawForm } from '../../actions/withdraw';
+import { initiateBoostForm } from '../../actions/boosts';
 
 /**
  * State containing user balances state
@@ -116,12 +117,11 @@ export const balanceSlice = createSlice({
         return;
       }
       const vault = selectVaultById(state, action.payload.vaultId);
-      const chainId = vault.chainId;
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
       const walletState = sliceState.byAddress[walletAddress];
       const balance = action.payload.balance;
-      addTokenBalanceToState(state, walletState, chainId, balance.tokens);
+      addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
       addBoostBalanceToState(state, walletState, balance.boosts);
     });
@@ -132,12 +132,27 @@ export const balanceSlice = createSlice({
         return;
       }
       const vault = selectVaultById(state, action.payload.vaultId);
-      const chainId = vault.chainId;
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
       const walletState = sliceState.byAddress[walletAddress];
       const balance = action.payload.balance;
-      addTokenBalanceToState(state, walletState, chainId, balance.tokens);
+      addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
+      addGovVaultBalanceToState(walletState, balance.govVaults);
+      addBoostBalanceToState(state, walletState, balance.boosts);
+    });
+
+    builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
+      const state = action.payload.state;
+      if (!action.payload.walletAddress) {
+        return;
+      }
+      const boost = selectBoostById(action.payload.state, action.payload.boostId);
+      const vault = selectVaultById(action.payload.state, boost.vaultId);
+      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+
+      const walletState = sliceState.byAddress[walletAddress];
+      const balance = action.payload.balance;
+      addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
       addBoostBalanceToState(state, walletState, balance.boosts);
     });

@@ -17,7 +17,7 @@ import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
-import { Spirit } from './components/SpiritCard';
+import { SpiritCard } from './components/SpiritCard';
 import { Moonpot } from './components/MoonportCard';
 import { selectVaultById } from '../data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
@@ -31,10 +31,18 @@ import {
   selectIsVaultQidao,
 } from '../data/selectors/partners';
 import { selectPlatformById } from '../data/selectors/platforms';
+import { selectIsConfigAvailable } from '../data/selectors/data-loader';
+import { CowLoader } from '../../components/CowLoader';
 
 const useStyles = makeStyles(styles as any);
 
 export const Vault = () => {
+  const isLoaded = useSelector((state: BeefyState) => selectIsConfigAvailable(state));
+
+  return isLoaded ? <VaultContent /> : <CowLoader text="Loading..." />;
+};
+
+const VaultContent = React.memo(() => {
   const classes = useStyles();
   const { t } = useTranslation();
   let { id: vaultId }: any = useParams();
@@ -112,7 +120,7 @@ export const Vault = () => {
               )}
               {isBinSpirit && (
                 <Box>
-                  <Spirit vaultId={vaultId} />
+                  <SpiritCard vaultId={vaultId} />
                 </Box>
               )}
               {isMoonpot && (
@@ -141,4 +149,4 @@ export const Vault = () => {
       </Box>
     </>
   );
-};
+});

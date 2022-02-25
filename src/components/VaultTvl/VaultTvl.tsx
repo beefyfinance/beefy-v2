@@ -1,8 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { VaultEntity } from '../../features/data/entities/vault';
-import { selectUserVaultDepositInToken } from '../../features/data/selectors/balance';
+import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
+import {
+  selectGovVaultUserStackedBalanceInOracleToken,
+  selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
+} from '../../features/data/selectors/balance';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
 import { selectVaultById } from '../../features/data/selectors/vaults';
@@ -21,7 +24,10 @@ const _VaultTvl = connect(
       state.ui.dataLoader.global.prices.alreadyLoadedOnce;
     const isBoosted = selectIsVaultBoosted(state, vaultId);
     const vaultTvl = tvlLoaded ? selectVaultTvl(state, vaultId) : BIG_ZERO;
-    const totalDeposited = selectUserVaultDepositInToken(state, vaultId);
+
+    const totalDeposited = isGovVault(vault)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
+      : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
 
     return {
       isBoosted,

@@ -32,8 +32,8 @@ describe('Ppfs tests', () => {
     const expectedOracleAmount = new BigNumber('0.100027572236381515');
 
     const actualOracleAmount = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooAmount);
-    expect(actualOracleAmount.toPrecision(18).toString()).toBe(
-      expectedOracleAmount.toPrecision(18).toString()
+    expect(actualOracleAmount.decimalPlaces(18).toString(10)).toBe(
+      expectedOracleAmount.decimalPlaces(18).toString(10)
     );
   });
 
@@ -67,8 +67,8 @@ describe('Ppfs tests', () => {
     const expectedOracleAmount = new BigNumber('0.00096793');
 
     const actualOracleAmount = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooAmount);
-    expect(actualOracleAmount.toPrecision(18).toString()).toBe(
-      expectedOracleAmount.toPrecision(18).toString()
+    expect(actualOracleAmount.decimalPlaces(18).toString(10)).toBe(
+      expectedOracleAmount.decimalPlaces(18).toString(10)
     );
   });
 });

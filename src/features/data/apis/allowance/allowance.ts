@@ -12,6 +12,7 @@ import { selectErc20TokenById, selectTokenById } from '../../selectors/tokens';
 import { FetchAllAllowanceResult, IAllowanceApi, TokenAllowance } from './allowance-types';
 import { BeefyState } from '../../../../redux-types';
 import { createIdMap } from '../../utils/array-utils';
+import { selectVaultById } from '../../selectors/vaults';
 
 // fix TS typings
 const erc20Abi = _erc20Abi as AbiItem[];
@@ -60,7 +61,8 @@ export class AllowanceAPI implements IAllowanceApi {
       addTokenIdToCalls(govVault.oracleId, govVault.earnContractAddress);
     }
     for (const boost of boosts) {
-      addTokenIdToCalls(boost.earnedTokenId, boost.earnContractAddress);
+      const vault = selectVaultById(state, boost.vaultId);
+      addTokenIdToCalls(vault.earnedTokenId, boost.earnContractAddress);
     }
 
     const calls: ShapeWithLabel[] = [];

@@ -6,8 +6,9 @@ import {
   formatBigNumberSignificant,
 } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
+import { initiateBoostForm } from '../../actions/boosts';
 import { BoostEntity } from '../../entities/boost';
-import { selectBoostUserBalanceInToken, selectWalletBalanceOfToken } from '../../selectors/balance';
+import { selectBoostUserBalanceInToken, selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectBoostById } from '../../selectors/boosts';
 import { selectTokenById } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
@@ -15,12 +16,14 @@ import { selectVaultById } from '../../selectors/vaults';
 // TODO: this looks exactly like the withdraw state
 export type BoostModalState = {
   boostId: BoostEntity['id'];
+  mode: 'stake' | 'unstake';
   max: boolean; // this is so we know when to disable the max button
   amount: BigNumber;
   formattedInput: string;
 };
 const initialBoostModalState: BoostModalState = {
   boostId: null,
+  mode: 'stake',
   amount: BIG_ZERO,
   formattedInput: '',
   max: false,
@@ -30,17 +33,9 @@ export const boostModalSlice = createSlice({
   name: 'boost-modal',
   initialState: initialBoostModalState,
   reducers: {
-    setBoost(sliceState, action: PayloadAction<{ boostId: BoostEntity['id'] }>) {
-      sliceState.boostId = action.payload.boostId;
-      sliceState.amount = BIG_ZERO;
-      sliceState.formattedInput = '';
-      sliceState.max = false;
-    },
-
     setMax(
       sliceState,
       action: PayloadAction<{
-        mode: 'stake' | 'unstake';
         state: BeefyState;
       }>
     ) {
@@ -50,8 +45,8 @@ export const boostModalSlice = createSlice({
 
       const balanceToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
       const balance =
-        action.payload.mode === 'stake'
-          ? selectWalletBalanceOfToken(state, vault.chainId, vault.earnedTokenId) // mootoken
+        sliceState.mode === 'stake'
+          ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId) // mootoken
           : selectBoostUserBalanceInToken(state, boost.id); // staked
       sliceState.amount = balance;
       sliceState.formattedInput = formatBigDecimals(balance, balanceToken.decimals);
@@ -73,7 +68,7 @@ export const boostModalSlice = createSlice({
         value = BIG_ZERO;
       }
 
-      const balance = selectWalletBalanceOfToken(state, vault.chainId, balanceToken.id);
+      const balance = selectUserBalanceOfToken(state, vault.chainId, balanceToken.id);
       if (value.isGreaterThanOrEqualTo(balance)) {
         value = new BigNumber(balance);
         sliceState.max = true;
@@ -91,6 +86,16 @@ export const boostModalSlice = createSlice({
       sliceState.formattedInput = formattedInput;
       sliceState.amount = value;
     },
+  },
+
+  extraReducers: builder => {
+    builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
+      sliceState.boostId = action.payload.boostId;
+      sliceState.amount = BIG_ZERO;
+      sliceState.formattedInput = '';
+      sliceState.max = false;
+      sliceState.mode = action.payload.mode;
+    });
   },
 });
 

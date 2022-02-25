@@ -1,10 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect, useSelector } from 'react-redux';
-import { VaultEntity } from '../../features/data/entities/vault';
+import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
 import {
+  selectGovVaultUserStackedBalanceInOracleToken,
   selectHasUserDepositInVault,
-  selectUserVaultDepositInToken,
+  selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
   selectUserVaultDepositInUsd,
 } from '../../features/data/selectors/balance';
 import {
@@ -60,7 +61,10 @@ const BoostedVaultDepositedSmall = React.memo(_BoostedVaultDepositedSmall);
 const _BoostedVaultDepositedLarge = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
-    const deposit = selectUserVaultDepositInToken(state, vault.id);
+    // deposit can be moo or oracle
+    const deposit = isGovVault(vault)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
+      : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const totalDeposited = deposit.isZero() ? '0.00' : formatBigDecimals(deposit, 8, false);
     const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
@@ -113,7 +117,10 @@ const _NonBoostedVaultDeposited = connect(
     { vaultId, variant }: { vaultId: VaultEntity['id']; variant: 'small' | 'large' }
   ) => {
     const vault = selectVaultById(state, vaultId);
-    const deposit = selectUserVaultDepositInToken(state, vault.id);
+    // deposit can be moo or oracle
+    const deposit = isGovVault(vault)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
+      : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const totalDeposited =
       !hasDeposit && variant === 'large' ? '0.00' : formatBigDecimals(deposit, 8, !hasDeposit);

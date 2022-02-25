@@ -8,7 +8,7 @@ import { isString } from 'lodash';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction } from '../actions/balance';
-import { fetchAllBoosts } from '../actions/boosts';
+import { fetchAllBoosts, initiateBoostForm } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { initiateDepositForm } from '../actions/deposit';
@@ -22,6 +22,7 @@ import { askForNetworkChange, askForWalletConnection, doDisconnectWallet } from 
 import { initiateWithdrawForm } from '../actions/withdraw';
 import { fetchAllZapsAction } from '../actions/zap';
 import { ChainEntity } from '../entities/chain';
+import { initWalletState } from './wallet/wallet';
 
 /**
  * because we want to be smart about data loading
@@ -89,6 +90,9 @@ const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
 };
 
 export interface DataLoaderState {
+  instances: {
+    wallet: boolean;
+  };
   global: {
     chainConfig: LoaderState;
     prices: LoaderState;
@@ -96,9 +100,10 @@ export interface DataLoaderState {
     vaults: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
+    zaps: LoaderState;
     depositForm: LoaderState;
     withdrawForm: LoaderState;
-    zaps: LoaderState;
+    boostForm: LoaderState;
   };
 
   byChainId: {
@@ -111,6 +116,9 @@ export interface DataLoaderState {
   };
 }
 export const initialDataLoaderState: DataLoaderState = {
+  instances: {
+    wallet: false,
+  },
   global: {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
@@ -118,9 +126,10 @@ export const initialDataLoaderState: DataLoaderState = {
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
+    zaps: dataLoaderStateInit,
     depositForm: dataLoaderStateInit,
     withdrawForm: dataLoaderStateInit,
-    zaps: dataLoaderStateInit,
+    boostForm: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -216,6 +225,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
     addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm');
     addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm');
+    addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm');
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps');
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
@@ -226,6 +236,10 @@ export const dataLoaderSlice = createSlice({
       'allowance',
     ]);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
+
+    builder.addCase(initWalletState, sliceState => {
+      sliceState.instances.wallet = true;
+    });
   },
 });
 

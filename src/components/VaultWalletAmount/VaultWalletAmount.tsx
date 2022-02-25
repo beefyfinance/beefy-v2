@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { VaultEntity } from '../../features/data/entities/vault';
-import { selectWalletBalanceOfToken } from '../../features/data/selectors/balance';
+import { selectUserBalanceOfToken } from '../../features/data/selectors/balance';
 import { selectTokenPriceByTokenId } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
@@ -19,7 +19,7 @@ const _VaultWalletAmount = connect(
     { vaultId, variant }: { vaultId: VaultEntity['id']; variant: 'small' | 'large' }
   ) => {
     const vault = selectVaultById(state, vaultId);
-    const userOracleInWallet = selectWalletBalanceOfToken(state, vault.chainId, vault.oracleId);
+    const userOracleInWallet = selectUserBalanceOfToken(state, vault.chainId, vault.oracleId);
     const price = selectTokenPriceByTokenId(state, vault.oracleId);
     const userOracleInWalletUsd = userOracleInWallet.multipliedBy(price);
 

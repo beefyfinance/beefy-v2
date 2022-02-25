@@ -11,7 +11,7 @@ import { fetchEstimateZapDeposit } from '../../actions/zap';
 import { ZapEstimate, ZapOptions } from '../../apis/zap';
 import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
-import { selectWalletBalanceOfToken } from '../../selectors/balance';
+import { selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectTokenById } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
 
@@ -66,7 +66,7 @@ export const depositSlice = createSlice({
     setMax(sliceState, action: PayloadAction<{ state: BeefyState }>) {
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
-      const balance = selectWalletBalanceOfToken(state, vault.chainId, sliceState.selectedToken.id);
+      const balance = selectUserBalanceOfToken(state, vault.chainId, sliceState.selectedToken.id);
       sliceState.amount = balance;
       sliceState.formattedInput = formatBigDecimals(balance, sliceState.selectedToken.decimals);
       sliceState.max = true;
@@ -86,7 +86,7 @@ export const depositSlice = createSlice({
         value = BIG_ZERO;
       }
 
-      const balance = selectWalletBalanceOfToken(state, vault.chainId, sliceState.selectedToken.id);
+      const balance = selectUserBalanceOfToken(state, vault.chainId, sliceState.selectedToken.id);
       if (value.isGreaterThanOrEqualTo(balance)) {
         value = new BigNumber(balance);
         sliceState.max = true;

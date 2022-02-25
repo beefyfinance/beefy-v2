@@ -6,7 +6,7 @@ import { formatBigDecimals } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { TokenEntity } from '../../../data/entities/token';
 import { VaultEntity } from '../../../data/entities/vault';
-import { selectWalletBalanceOfToken } from '../../../data/selectors/balance';
+import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
 import { selectVaultById } from '../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles as any);
@@ -21,7 +21,7 @@ export function TokenWithBalance({
   const classes = useStyles();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const balance = useSelector((state: BeefyState) =>
-    selectWalletBalanceOfToken(state, vault.chainId, token.id)
+    selectUserBalanceOfToken(state, vault.chainId, token.id)
   );
 
   return (

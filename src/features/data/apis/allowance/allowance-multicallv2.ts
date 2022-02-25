@@ -15,6 +15,7 @@ import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags'
 import { BeefyState } from '../../../../redux-types';
 import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { createIdMap } from '../../utils/array-utils';
+import { selectVaultById } from '../../selectors/vaults';
 
 // fix ts types
 const erc20Abi = _erc20Abi as AbiItem[];
@@ -65,7 +66,8 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
       addTokenIdToCalls(govVault.oracleId, govVault.earnContractAddress);
     }
     for (const boost of boosts) {
-      addTokenIdToCalls(boost.earnedTokenId, boost.earnContractAddress);
+      const vault = selectVaultById(state, boost.vaultId);
+      addTokenIdToCalls(vault.earnedTokenId, boost.earnContractAddress);
     }
 
     // if we send too much in a single call, we get "execution reversed"

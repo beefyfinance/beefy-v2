@@ -8,13 +8,12 @@ import { BeefyState } from '../../../../redux-types';
 import { TokenEntity } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import {
-  selectGovVaultUserBalanceInToken,
-  selectStandardVaultUserBalanceInTokenExcludingBoosts,
+  selectGovVaultUserStackedBalanceInOracleToken,
+  selectStandardVaultUserBalanceInOracleTokenExcludingBoosts,
 } from '../../../data/selectors/balance';
 import { selectTokenById, selectTokenPriceByTokenId } from '../../../data/selectors/tokens';
-import { selectVaultById, selectVaultPricePerFullShare } from '../../../data/selectors/vaults';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
-import { mooAmountToOracleAmount } from '../../../data/utils/ppfs';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
@@ -34,16 +33,10 @@ export function TokenWithDeposit({
   );
 
   const oracleAmount = useSelector((state: BeefyState) => {
-    const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
     const mooTokenBalance = isGovVault(vault)
-      ? selectGovVaultUserBalanceInToken(state, vault.id)
-      : selectStandardVaultUserBalanceInTokenExcludingBoosts(
-          state,
-          vault.chainId,
-          vault.earnedTokenId
-        );
-    const ppfs = selectVaultPricePerFullShare(state, vault.id);
-    return mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
+      : selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(state, vault.id);
+    return mooTokenBalance;
   });
 
   const amountsAndSymbol = useSelector((state: BeefyState): [BigNumber, string][] => {

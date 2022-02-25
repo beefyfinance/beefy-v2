@@ -24,13 +24,17 @@ import {
   selectGovVaultRewardsTokenEntity,
 } from '../selectors/balance';
 import { BoostEntity } from '../entities/boost';
+import {
+  createWalletActionErrorAction,
+  createWalletActionPendingAction,
+  createWalletActionSuccessAction,
+  TrxError,
+  TrxHash,
+  TrxReceipt,
+} from '../reducers/wallet/wallet-action';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
-
-type TrxHash = string; // not sure about this one
-type TrxReceipt = { transactionHash: string };
-type TrxError = { message: string };
 
 const approval = (token: TokenErc20, spenderAddress: string) => {
   return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
@@ -50,10 +54,11 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
 
     const transaction = contract.methods.approve(spenderAddress, maxAmount).send({ from: address });
 
+    const bigMaxAmount = new BigNumber(maxAmount).shiftedBy(-native.decimals);
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: spenderAddress, maxAmount: maxAmount, token: token },
+      { spender: spenderAddress, amount: bigMaxAmount, token: token },
       {
         chainId: token.chainId,
         spenderAddress,
@@ -89,15 +94,17 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
         if (max) {
           return contract.methods
             .depositAllBNB()
-            .send({ from: address, value: rawAmount.toString() });
+            .send({ from: address, value: rawAmount.toString(10) });
         } else {
-          return contract.methods.depositBNB().send({ from: address, value: rawAmount.toString() });
+          return contract.methods
+            .depositBNB()
+            .send({ from: address, value: rawAmount.toString(10) });
         }
       } else {
         if (max) {
           return contract.methods.depositAll().send({ from: address });
         } else {
-          return contract.methods.deposit(rawAmount.toString()).send({ from: address });
+          return contract.methods.deposit(rawAmount.toString(10)).send({ from: address });
         }
       }
     })();
@@ -105,7 +112,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount: amount, token: oracleToken },
+      { spender: contractAddr, amount, token: oracleToken },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
@@ -148,15 +155,15 @@ const beefIn = (
       if (isTokenNative(tokenIn)) {
         return contract.methods.beefInETH(vaultAddress, rawSwapAmountOutMin).send({
           from: address,
-          value: rawAmount.toString(),
+          value: rawAmount.toString(10),
         });
       } else {
         return contract.methods
           .beefIn(
             vaultAddress,
-            rawSwapAmountOutMin.toString(),
+            rawSwapAmountOutMin.toString(10),
             tokenIn.contractAddress,
-            rawAmount.toString()
+            rawAmount.toString(10)
           )
           .send({
             from: address,
@@ -202,7 +209,7 @@ const beefOut = (vault: VaultEntity, amount: BigNumber, zapOptions: ZapOptions) 
     const rawAmount = amount.shiftedBy(mooToken.decimals).decimalPlaces(0);
 
     const transaction = (() => {
-      return contract.methods.beefOut(vault.contractAddress, rawAmount.toString()).send({
+      return contract.methods.beefOut(vault.contractAddress, rawAmount.toString(10)).send({
         from: address,
       });
     })();
@@ -241,6 +248,7 @@ const beefOutAndSwap = (
     }
 
     const earnedToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
+    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
     const vaultAddress = earnedToken.contractAddress;
     const { tokenIn, tokenOut } = zapEstimate;
 
@@ -261,9 +269,9 @@ const beefOutAndSwap = (
       return contract.methods
         .beefOutAndSwap(
           vaultAddress,
-          rawAmount.toString(),
+          rawAmount.toString(10),
           tokenOurErc20.contractAddress,
-          rawSwapAmountOutMin.toString()
+          rawSwapAmountOutMin.toString(10)
         )
         .send({
           from: address,
@@ -273,7 +281,7 @@ const beefOutAndSwap = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zapOptions.address, amount: tokenAmount, token: tokenOut },
+      { spender: zapOptions.address, amount: tokenAmount, token: oracleToken },
       {
         chainId: vault.chainId,
         spenderAddress: zapOptions.address,
@@ -312,13 +320,13 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
         if (max) {
           return contract.methods.withdrawAllBNB().send({ from: address });
         } else {
-          return contract.methods.withdrawBNB(rawAmount.toString()).send({ from: address });
+          return contract.methods.withdrawBNB(rawAmount.toString(10)).send({ from: address });
         }
       } else {
         if (max) {
           return contract.methods.withdrawAll().send({ from: address });
         } else {
-          return contract.methods.withdraw(rawAmount.toString()).send({ from: address });
+          return contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
         }
       }
     })();
@@ -353,7 +361,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
 
-    const transaction = contract.methods.stake(rawAmount.toString()).send({ from: address });
+    const transaction = contract.methods.stake(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,
@@ -392,7 +400,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
 
-    const transaction = contract.methods.withdraw(rawAmount.toString()).send({ from: address });
+    const transaction = contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,
@@ -556,14 +564,15 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 
     const walletApi = await getWalletConnectApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
+
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenById(state, vault.chainId, vault.oracleId);
+    const inputToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
 
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
 
-    const transaction = contract.methods.stake(rawAmount.toString()).send({ from: address });
+    const transaction = contract.methods.stake(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,
@@ -580,8 +589,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 };
 
 //const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
-const unstakeBoost = (_: BoostEntity, __: BigNumber) => {
-  /*
+const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
   return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -592,32 +600,28 @@ const unstakeBoost = (_: BoostEntity, __: BigNumber) => {
 
     const walletApi = await getWalletConnectApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-    const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-    const ppfs = selectVaultPricePerFullShare(state, vault.chainId);
 
-    // amount is in oracle token, we need it in moo token
-    const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, amount);
+    const vault = selectVaultById(state, boost.vaultId);
+    const inputToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
 
-    const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
-
-    const contractAddr = vault.earnContractAddress;
+    const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
+    const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
 
-    const transaction = contract.methods.withdraw(rawAmount.toString()).send({ from: address });
+    const transaction = contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
 
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token: oracleToken },
+      { spender: contractAddr, amount, token: inputToken },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
         tokens: getVaultTokensToRefresh(state, vault),
-        govVaultId: vault.id,
+        boostId: boost.id,
       }
     );
-  };*/
+  };
 };
 
 export const walletActions = {
@@ -637,7 +641,7 @@ export const walletActions = {
   unstakeBoost,
 };
 
-function bindTransactionEvents<T>(
+function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity }>(
   dispatch: Dispatch<any>,
   transaction: any /* todo: find out what it is */,
   additionalData: T,
@@ -651,28 +655,10 @@ function bindTransactionEvents<T>(
 ) {
   transaction
     .on('transactionHash', function (hash: TrxHash) {
-      dispatch({
-        type: WALLET_ACTION,
-        payload: {
-          result: 'success_pending',
-          data: {
-            hash: hash,
-            ...additionalData,
-          },
-        },
-      });
+      dispatch(createWalletActionPendingAction(hash, additionalData));
     })
     .on('receipt', function (receipt: TrxReceipt) {
-      dispatch({
-        type: WALLET_ACTION,
-        payload: {
-          result: 'success',
-          data: {
-            receipt: receipt,
-            ...additionalData,
-          },
-        },
-      });
+      dispatch(createWalletActionSuccessAction(receipt, additionalData));
 
       // fetch new balance and allowance of native token (gas spent) and allowance token
       if (refreshOnSuccess) {
@@ -688,16 +674,7 @@ function bindTransactionEvents<T>(
       }
     })
     .on('error', function (error: TrxError) {
-      dispatch({
-        type: WALLET_ACTION,
-        payload: {
-          result: 'error',
-          data: {
-            error: error.message,
-            ...additionalData,
-          },
-        },
-      });
+      dispatch(createWalletActionErrorAction(error, additionalData));
     })
     .catch(error => {
       console.log(error);
