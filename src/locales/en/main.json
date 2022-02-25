@@ -10,6 +10,7 @@
   "BOOST": "Boost",
   "Header-Home": "Home",
   "Header-Explore": "Explore",
+  "Header-Nfts": "Avatars",
   "Header-Vote": "Vote",
   "Header-Stats": "Stats",
   "Header-Docs": "Docs",
@@ -275,5 +276,15 @@
   "Spirit-From": "FROM: ",
   "Spirit-To": "TO: ",
   "Spirit-Available": "AVAILABLE: ",
-  "Spirit-Btn": "Mint binSPIRIT"
+  "Spirit-Btn": "Mint binSPIRIT",
+  "Avatars-Available": "{{number}} Available",
+  "Avatars-Minted": "{{number}} / 8000 Minted",
+  "Avatars-About-Title": "About Beefy Avatars collection",
+  "Avatars-About-Content": "  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum, corrupti? Eos non provident odit, error ipsam quisquam dignissimos. Ipsum, culpa.",
+  "Avatars-Btn-Mint": "Mint",
+  "Avatars-Btn-More": "Moore...",
+  "Avatars-Generated-Title": "Generated avatars by number of traits in this collection",
+  "Avatars-Trait": "{{number}} Trait",
+  "Avatars-Generated": "Generated ",
+  "Avatars-Percent": "or "
 }

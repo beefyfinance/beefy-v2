@@ -10,6 +10,8 @@ import { featureFlag_replayReduxActions } from './features/data/utils/feature-fl
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
+const BeefyAvatars = React.lazy(() => import(`./features/beefyAvatars`));
+
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
@@ -38,6 +40,9 @@ export const App = () => {
             <Route strict sensitive exact path="/:network/vault/:id">
               <Vault />
             </Route>
+              <Route exact path="/nfts">
+                <BeefyAvatars />
+              </Route>
             <Route>
               <PageNotFound />
             </Route>
