@@ -133,5 +133,27 @@ const hat = [
 ];
 
 const avatarsAddress = '0x35CDEC91d7e6aEe533C74989A8f3bB746AF76578';
+const mintPrice = 1000100000000000000;
+const MAX_SUPPLY = 10000;
 
-export { background, body, eyes, accsFace, accsBody, hair, hat, avatarsAddress };
+const AvatarsToken = {
+  name: 'Beefy Avatars',
+  type: 'erc721',
+  decimals: 18,
+  id: 'mooBeefyAvatars',
+  contractAddress: '0x35CDEC91d7e6aEe533C74989A8f3bB746AF76578',
+};
+
+export {
+  background,
+  body,
+  eyes,
+  accsFace,
+  accsBody,
+  hair,
+  hat,
+  avatarsAddress,
+  mintPrice,
+  MAX_SUPPLY,
+  AvatarsToken,
+};

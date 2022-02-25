@@ -7,8 +7,8 @@ import { BeefyState } from '../../redux-types';
 import { StepperState } from './types';
 
 export function useStepper(
-  vaultId: VaultEntity['id'],
-  onClose: () => unknown
+  vaultId?: VaultEntity['id'],
+  onClose?: () => unknown
 ): [(steps: StepperState['items']) => unknown, boolean, React.FC] {
   const [steps, setSteps] = React.useState<StepperState>({
     modal: false,

@@ -4,6 +4,7 @@ import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
 import boostAbi from '../../../config/abi/boost.json';
 import zapAbi from '../../../config/abi/zap.json';
+import avatarsAbi from '../../../config/abi/BeefyAvatarsAbi.json';
 import { selectWalletAddress } from '../selectors/wallet';
 import { getWalletConnectApiInstance } from '../apis/instances';
 import BigNumber from 'bignumber.js';
@@ -624,6 +625,24 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
   };
 };
 
+const mintNft = (avatarsAddress: string, mintPrice: number) => {
+  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+    const walletApi = await getWalletConnectApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(avatarsAbi as any, avatarsAddress);
+
+    const transaction = contract.methods.generateCow().send({ from: address, value: mintPrice });
+
+    bindTransactionEvents(dispatch, transaction);
+  };
+};
+
 export const walletActions = {
   approval,
   deposit,
@@ -639,12 +658,13 @@ export const walletActions = {
   claimBoost,
   stakeBoost,
   unstakeBoost,
+  mintNft,
 };
 
 function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity }>(
   dispatch: Dispatch<any>,
   transaction: any /* todo: find out what it is */,
-  additionalData: T,
+  additionalData?: T,
   refreshOnSuccess?: {
     chainId: ChainEntity['id'];
     spenderAddress: string;

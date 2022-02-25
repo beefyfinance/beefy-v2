@@ -13,10 +13,9 @@ import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import grass from '../../images/nfts/grass.svg';
-import { Filter } from './Components/Filter';
 import { useAvatarsInfo } from './hooks/useAvatarsInfo';
-
 import { CowCard } from './Components/CowCard';
+import { MintButton } from './Components/MintButton';
 
 const useStyles = makeStyles(styles as any);
 
@@ -25,7 +24,6 @@ export const BeefyAvatars = () => {
   const classes = useStyles(props);
   const { t } = useTranslation();
   const isMobile = useMediaQuery('(max-width: 960px)');
-  const [filter, setFilter] = React.useState({});
 
   const traits = [
     { id: 0, generated: 1, percent: '0.01', divier: true },
@@ -73,7 +71,7 @@ export const BeefyAvatars = () => {
                 </Box>
                 <Box className={classes.buttons}>
                   <Button className={classes.btnMore}>{t('Avatars-Btn-More')}</Button>
-                  <Button className={classes.btnMint}>{t('Avatars-Btn-Mint')}</Button>
+                  <MintButton />
                 </Box>
               </Grid>
             </Grid>
@@ -107,18 +105,8 @@ export const BeefyAvatars = () => {
               );
             })}
           </Grid>
-          <Box mt={5}>
-            <Filter sortConfig={filter} setSortConfig={setFilter} />
-          </Box>
+
           <Box className={classes.listContainer}>
-            {COWS &&
-              COWS[0].map((cow: any) => {
-                return <CowCard cow={cow} />;
-              })}
-            {COWS &&
-              COWS[0].map((cow: any) => {
-                return <CowCard cow={cow} />;
-              })}
             {COWS &&
               COWS[0].map((cow: any) => {
                 return <CowCard cow={cow} />;

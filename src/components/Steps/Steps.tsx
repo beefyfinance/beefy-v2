@@ -153,6 +153,17 @@ export const Steps = ({
                   </Box>
                 </>
               )}
+              {steps.items[steps.currentStep].step === 'mint' && (
+                <>
+                  <Box className={classes.successContent}>
+                    <Typography variant="body1" className={classes.message}>
+                      {t('Transactn-Success-Mint')}
+                    </Typography>
+                    {/* To Do :  change network to BSC */}
+                    <TransactionLink vaultId={vaultId} network="polygon" />
+                  </Box>
+                </>
+              )}
               {/* Success Withdraw */}
               {steps.items[steps.currentStep].step === 'withdraw' && (
                 <>
@@ -224,13 +235,15 @@ export const Steps = ({
   );
 };
 
-function TransactionLink({ vaultId }: { vaultId: VaultEntity['id'] }) {
+function TransactionLink({ vaultId, network }: { vaultId: VaultEntity['id']; network?: string }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+  const chain = useSelector((state: BeefyState) =>
+    selectChainById(state, network ?? vault.chainId)
+  );
 
   const hash =
     walletActionsState.result === 'success'
