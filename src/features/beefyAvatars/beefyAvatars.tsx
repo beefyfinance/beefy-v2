@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import grass from '../../images/nfts/grass.svg';
 import { Filter } from './Components/Filter';
 import { useAvatarsInfo } from './hooks/useAvatarsInfo';
+import InlineSVG from 'svg-inline-react';
 
 const useStyles = makeStyles(styles as any);
 
@@ -36,10 +37,11 @@ export const BeefyAvatars = () => {
     { id: 7, generated: 1, percent: '0.01', divier: false },
   ];
 
-  const A = useAvatarsInfo();
+  const COWS = useAvatarsInfo();
 
   return (
     <>
+      {console.log(COWS)}
       <Box className={classes.avatars} pt={5}>
         <Container maxWidth="md">
           <Box mb={5} className={classes.center}>
@@ -106,6 +108,18 @@ export const BeefyAvatars = () => {
           </Grid>
           <Box mt={5}>
             <Filter sortConfig={filter} setSortConfig={setFilter} />
+          </Box>
+          <Box>
+            {COWS &&
+              COWS[0].map((cow: any) => {
+                console.log(cow.image_data);
+                return (
+                  <Box key={cow.name}>
+                    {cow.name}
+                    <InlineSVG src={cow.image_data} />
+                  </Box>
+                );
+              })}
           </Box>
         </Container>
       </Box>

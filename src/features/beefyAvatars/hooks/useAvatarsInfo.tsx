@@ -24,10 +24,8 @@ export function useAvatarsInfo() {
       const cows = [];
       if (totalSupply) {
         for (let index = 1; index <= totalSupply; index++) {
-          const cow = await contract?.methods.imageData(index).call();
-          const metaData = await contract?.methods.metaData(index).call();
-          cows.push(cow);
-          console.log(metaData);
+          const metaData = await contract?.methods.metadata(index).call();
+          cows.push(JSON.parse(metaData));
         }
       }
       return cows;
