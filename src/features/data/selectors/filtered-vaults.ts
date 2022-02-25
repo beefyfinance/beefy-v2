@@ -164,10 +164,6 @@ export const selectFilteredVaults = (state: BeefyState) => {
     sortedVaults = sortBy(sortedVaults, vault => {
       return -vault.safetyScore;
     });
-  } else if (filterOptions.sort === 'default') {
-    sortedVaults = sortBy(sortedVaults, vaults => {
-      return -vaults.createdAt
-    })
   }
 
   return sortedVaults;
