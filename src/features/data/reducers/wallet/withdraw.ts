@@ -14,7 +14,7 @@ import { TokenEntity } from '../../entities/token';
 import { isGovVault, VaultEntity } from '../../entities/vault';
 import {
   selectStandardVaultUserBalanceInOracleTokenExcludingBoosts,
-  selectGovVaultUserBalanceInMooToken,
+  selectGovVaultUserStackedBalanceInOracleToken,
   selectUserBalanceOfToken,
 } from '../../selectors/balance';
 import { selectTokenById } from '../../selectors/tokens';
@@ -99,7 +99,7 @@ export const withdrawSlice = createSlice({
 
       const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
       const mooTokenBalance = isGovVault(vault)
-        ? selectGovVaultUserBalanceInMooToken(state, vault.id)
+        ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
         : selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(state, vault.id);
 
       // we output the amount is oracle token amount

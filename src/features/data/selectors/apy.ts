@@ -3,7 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
-  selectGovVaultUserBalanceInMooToken,
+  selectGovVaultUserStackedBalanceInOracleToken,
   selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
   selectUserDepositedVaults,
 } from './balance';
@@ -58,7 +58,7 @@ export const selectUserGlobalStats = (state: BeefyState) => {
     const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
     // TODO: this looks suspisciously wrong for gov vaults
     const tokenBalance = isGovVault(vault)
-      ? selectGovVaultUserBalanceInMooToken(state, vault.id)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
       : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
     const vaultUsdBalance = tokenBalance.times(oraclePrice);
 

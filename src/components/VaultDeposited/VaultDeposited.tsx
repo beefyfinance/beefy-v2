@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect, useSelector } from 'react-redux';
 import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
 import {
-  selectGovVaultUserBalanceInMooToken,
+  selectGovVaultUserStackedBalanceInOracleToken,
   selectHasUserDepositInVault,
   selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
   selectUserVaultDepositInUsd,
@@ -63,7 +63,7 @@ const _BoostedVaultDepositedLarge = connect(
     const vault = selectVaultById(state, vaultId);
     // deposit can be moo or oracle
     const deposit = isGovVault(vault)
-      ? selectGovVaultUserBalanceInMooToken(state, vault.id)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
       : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const totalDeposited = deposit.isZero() ? '0.00' : formatBigDecimals(deposit, 8, false);
@@ -119,7 +119,7 @@ const _NonBoostedVaultDeposited = connect(
     const vault = selectVaultById(state, vaultId);
     // deposit can be moo or oracle
     const deposit = isGovVault(vault)
-      ? selectGovVaultUserBalanceInMooToken(state, vault.id)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
       : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
     const hasDeposit = deposit.gt(0);
     const totalDeposited =

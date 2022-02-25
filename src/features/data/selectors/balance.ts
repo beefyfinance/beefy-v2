@@ -116,7 +116,7 @@ export const selectStandardVaultUserBalanceInOracleTokenIncludingBoosts = (
   return vaultOracleBalance.plus(boostOracleBalance);
 };
 
-export const selectGovVaultUserBalanceInMooToken = (
+export const selectGovVaultUserStackedBalanceInOracleToken = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -125,14 +125,14 @@ export const selectGovVaultUserBalanceInMooToken = (
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
-const selectUserVaultDepositInToken = (
+const selectUserVaultDepositInOracleToken = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
   const vault = selectVaultById(state, vaultId);
   if (isGovVault(vault)) {
-    return selectGovVaultUserBalanceInMooToken(state, vaultId, walletAddress);
+    return selectGovVaultUserStackedBalanceInOracleToken(state, vaultId, walletAddress);
   } else {
     return selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(
       state,
@@ -168,7 +168,7 @@ export const selectUserVaultDepositInUsd = (
   // TODO: do this in the state?
   const vault = selectVaultById(state, vaultId);
   const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
-  const vaultTokenDeposit = selectUserVaultDepositInToken(state, vaultId, walletAddress);
+  const vaultTokenDeposit = selectUserVaultDepositInOracleToken(state, vaultId, walletAddress);
 
   return vaultTokenDeposit.multipliedBy(oraclePrice);
 };

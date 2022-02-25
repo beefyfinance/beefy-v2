@@ -42,7 +42,7 @@ import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import { TokenEntity } from '../../../data/entities/token';
 import {
   selectGovVaultPendingRewardsInToken,
-  selectGovVaultUserBalanceInMooToken,
+  selectGovVaultUserStackedBalanceInOracleToken,
   selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
 } from '../../../data/selectors/balance';
 import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
@@ -126,7 +126,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   // TODO: this could be a selector or hook
   const userHasBalanceInVault = useSelector((state: BeefyState) => {
     const deposit = isGovVault(vault)
-      ? selectGovVaultUserBalanceInMooToken(state, vault.id)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
       : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
     return deposit.isGreaterThan(0);
   });

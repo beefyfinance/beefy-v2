@@ -8,7 +8,7 @@ import { BeefyState } from '../../../../redux-types';
 import { TokenEntity } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import {
-  selectGovVaultUserBalanceInMooToken,
+  selectGovVaultUserStackedBalanceInOracleToken,
   selectStandardVaultUserBalanceInOracleTokenExcludingBoosts,
 } from '../../../data/selectors/balance';
 import { selectTokenById, selectTokenPriceByTokenId } from '../../../data/selectors/tokens';
@@ -34,7 +34,7 @@ export function TokenWithDeposit({
 
   const oracleAmount = useSelector((state: BeefyState) => {
     const mooTokenBalance = isGovVault(vault)
-      ? selectGovVaultUserBalanceInMooToken(state, vault.id)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
       : selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(state, vault.id);
     return mooTokenBalance;
   });

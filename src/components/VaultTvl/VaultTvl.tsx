@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
 import {
-  selectGovVaultUserBalanceInMooToken,
+  selectGovVaultUserStackedBalanceInOracleToken,
   selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
 } from '../../features/data/selectors/balance';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
@@ -26,7 +26,7 @@ const _VaultTvl = connect(
     const vaultTvl = tvlLoaded ? selectVaultTvl(state, vaultId) : BIG_ZERO;
 
     const totalDeposited = isGovVault(vault)
-      ? selectGovVaultUserBalanceInMooToken(state, vault.id)
+      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
       : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
 
     return {
