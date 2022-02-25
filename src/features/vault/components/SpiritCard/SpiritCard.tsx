@@ -9,50 +9,73 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { styles } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import BigNumber from 'bignumber.js';
-import { SpiritProps } from './SpiritProps';
 import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import { useBalance } from './useBalance';
-import { BIG_ZERO, convertAmountToRawNumber } from '../../../../helpers/format';
+import {
+  BIG_ZERO,
+  convertAmountToRawNumber,
+  formatBigDecimals,
+  formatBigNumberSignificant,
+} from '../../../../helpers/format';
 import { SpiritToken, binSpiritMintVault } from './SpiritToken';
-import { reduxActions } from '../../../redux/actions';
-import { isEmpty } from '../../../../helpers/utils';
-import { Steps } from '../../../../components/Steps';
 import { useAllowance } from './useAllowance';
+import { VaultEntity } from '../../../data/entities/vault';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { BeefyState } from '../../../../redux-types';
+import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
+import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
+import { selectTokenById } from '../../../data/selectors/tokens';
+import { isString } from 'lodash';
+import { Step } from '../../../../components/Steps/types';
+import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
+import { walletActions } from '../../../data/actions/wallet-actions';
+import { useStepper } from '../../../../components/Steps/hooks';
+import { spiritDeposit } from './spirit-wallet-action';
 
 const useStyles = makeStyles(styles as any);
 
-const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
+const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const network = item.network;
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const oracleToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, vault.chainId, vault.oracleId)
+  );
+  const binSpiritBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, vault.oracleId)
+  );
+  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletOnVaultChain = useSelector(
+    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  );
 
   const [spiritBalance, spiritBalanceString] = useBalance(
-    SpiritToken.address,
+    SpiritToken.contractAddress,
     SpiritToken.decimals,
-    network
+    vault.chainId
   );
 
   const [spiritAllowance] = useAllowance(
-    SpiritToken.address,
+    SpiritToken.contractAddress,
     SpiritToken.decimals,
     binSpiritMintVault.mintAdress,
-    network
+    vault.chainId
   );
 
-  const [, binSpiritBalanceString] = useBalance(item.tokenAddress, item.tokenDecimals, network);
+  const resetFormData = () => {
+    setFormData({
+      ...formData,
+      deposit: {
+        ...formData.deposit,
+        input: '',
+        amount: BIG_ZERO,
+        max: false,
+      },
+    });
+  };
 
-  const [steps, setSteps] = React.useState({
-    modal: false,
-    currentStep: -1,
-    items: [],
-    finished: false,
-  });
-
-  const { wallet } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-  }));
+  const [startStepper, isStepping, Stepper] = useStepper(vaultId, resetFormData);
 
   const [formData, setFormData] = React.useState({
     deposit: {
@@ -74,7 +97,9 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
         ...formData,
         deposit: {
           ...formData.deposit,
-          input: (spiritBalance as any).significant(6),
+          input: isString(spiritBalance)
+            ? spiritBalance
+            : formatBigNumberSignificant(spiritBalance),
           amount: new BigNumber(spiritBalance),
           max: true,
         },
@@ -101,7 +126,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
       if (value.isEqualTo(input)) return input;
       if (input === '') return '';
       if (input === '.') return `0.`;
-      return (value as any).significant(6);
+      return formatBigNumberSignificant(value);
     })();
 
     setFormData({
@@ -115,89 +140,39 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
     });
   };
 
-  const resetFormData = () => {
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-      },
-    });
-  };
-
   const handleDeposit = () => {
-    const steps = [];
-    if (wallet.address) {
-      if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
-        return false;
-      }
-
-      const amount = convertAmountToRawNumber(formData.deposit.amount);
-
-      if (spiritAllowance.isLessThan(amount)) {
-        steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: () =>
-            dispatch(
-              reduxActions.wallet.approval(
-                item.network,
-                SpiritToken.address,
-                binSpiritMintVault.mintAdress
-              )
-            ),
-          pending: false,
-        });
-      }
-
-      steps.push({
-        step: 'deposit',
-        message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-        action: () =>
-          dispatch(
-            reduxActions.wallet.deposit(
-              item.network,
-              binSpiritMintVault.mintAdress,
-              amount,
-              formData.deposit.max
-            )
-          ),
-        token: SpiritToken,
-        pending: false,
-        amount,
-      });
-
-      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
-    } //if (wallet.address)
-  }; //const handleDeposit
-
-  React.useEffect(() => {
-    const index = steps.currentStep;
-    if (!isEmpty(steps.items[index]) && steps.modal) {
-      const items = steps.items;
-      if (!items[index].pending) {
-        items[index].pending = true;
-        items[index].action();
-        setSteps({ ...steps, items: items });
-      } else {
-        if (wallet.action.result === 'success' && !steps.finished) {
-          const nextStep = index + 1;
-          if (!isEmpty(items[nextStep])) {
-            setSteps({ ...steps, currentStep: nextStep });
-          } else {
-            setSteps({ ...steps, finished: true });
-          }
-        }
-      }
+    const steps: Step[] = [];
+    if (!isWalletConnected) {
+      return dispatch(askForWalletConnection());
     }
-  }, [steps, wallet.action]);
+    if (!isWalletOnVaultChain) {
+      return dispatch(askForNetworkChange({ chainId: vault.chainId }));
+    }
 
-  const handleClose = () => {
-    resetFormData();
-    setSteps({ modal: false, currentStep: -1, items: [], finished: false });
+    const amount = convertAmountToRawNumber(formData.deposit.amount);
+
+    if (spiritAllowance.isLessThan(amount)) {
+      steps.push({
+        step: 'approve',
+        message: t('Vault-ApproveMsg'),
+        action: walletActions.approval(SpiritToken, binSpiritMintVault.mintAdress),
+        pending: false,
+      });
+    }
+
+    steps.push({
+      step: 'deposit',
+      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      action: spiritDeposit(
+        vault.chainId,
+        binSpiritMintVault.mintAdress,
+        amount,
+        formData.deposit.max
+      ),
+      pending: false,
+    });
+
+    startStepper(steps);
   };
 
   return (
@@ -233,6 +208,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
                 placeholder="0.00"
                 value={formData.deposit.input}
                 onChange={e => handleInput(e.target.value)}
+                disabled={isStepping}
               />
               <Button onClick={handleMax}>{t('Transact-Max')}</Button>
             </Paper>
@@ -245,12 +221,12 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
-                {t('Spirit-To')} <span className={classes.value}>{item.token}</span>
+                {t('Spirit-To')} <span className={classes.value}>{oracleToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
                 {t('Spirit-Available')}{' '}
                 <span className={classes.value}>
-                  {binSpiritBalanceString} {item.token}
+                  {formatBigDecimals(binSpiritBalance)} {oracleToken.symbol}
                 </span>
               </Typography>
             </Box>
@@ -262,7 +238,7 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
             </Paper>
           </Box>
           <Button
-            disabled={formData.deposit.amount.isLessThanOrEqualTo(0)}
+            disabled={formData.deposit.amount.isLessThanOrEqualTo(0) || isStepping}
             onClick={handleDeposit}
             className={classes.btn}
           >
@@ -270,9 +246,9 @@ const SpiritCard: React.FC<SpiritProps> = ({ item }) => {
           </Button>
         </CardContent>
       </Card>
-      <Steps item={item} steps={steps} handleClose={handleClose} />
+      <Stepper />
     </>
   );
 };
 
-export const Spirit = React.memo(SpiritCard);
+export const SpiritCard = React.memo(_SpiritCard);

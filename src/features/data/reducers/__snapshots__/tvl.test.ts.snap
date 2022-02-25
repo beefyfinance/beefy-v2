@@ -1,11 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`TVL slice tests should fully recompute total TVL when getting new chain data 1`] = `"817.047632700577131"`;
+
+exports[`TVL slice tests should fully recompute total TVL when getting new chain data 2`] = `"940.047632700577131"`;
+
+exports[`TVL slice tests should fully recompute total TVL when getting new chain data 3`] = `"23080.045679782069632"`;
+
 exports[`TVL slice tests should update state on fulfilled boost contract data 1`] = `
 Object {
   "byBoostId": Object {
     "moo_banana-banana-busd-bitcrush": Object {
-      "staked": "457222222222222222222.22222222222222222222",
-      "tvl": "957184600114813149500",
+      "staked": "148140",
+      "tvl": "310127.810437199460438",
     },
   },
   "byVaultId": Object {
@@ -23,11 +29,11 @@ Object {
   "byBoostId": Object {},
   "byVaultId": Object {
     "bifi-gov": Object {
-      "tvl": "3.83973164e-12",
+      "tvl": "3839731.6410978912054",
     },
   },
   "exclusions": Object {},
-  "totalTvl": "3.83973164e-12",
+  "totalTvl": "3839731.6410978912054",
 }
 `;
 

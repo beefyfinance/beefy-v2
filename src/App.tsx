@@ -2,121 +2,52 @@ import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { reduxActions } from './features/redux/actions';
 import { ScrollToTop } from './components/ScrollToTop';
-import { HideBalanceProvider } from './components/HideBalancesContext';
 import { theme } from './theme';
 import { initHomeDataV4 } from './features/data/actions/scenarios';
-import { featureFlag_isDataLoaderV2Enabled } from './features/data/utils/feature-flags';
+import { store } from './store';
+import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
+import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
-const Boost = React.lazy(() => import(`./features/boost`));
 const BeefyAvatars = React.lazy(() => import(`./features/beefyAvatars`));
+
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
-  const dispatch = useDispatch();
-  // const storage = localStorage.getItem('nightMode');
-  //const [isNightMode, setNightMode] = React.useState(storage === null ? false : JSON.parse(storage));
-  const [isNightMode, setNightMode] = React.useState(true);
-
-  const { wallet } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-  }));
-
   React.useEffect(() => {
-    if (featureFlag_isDataLoaderV2Enabled()) {
-      return;
+    // load our data
+    if (featureFlag_replayReduxActions()) {
+      console.log(
+        'Please run __replay_action_log(actions)',
+        replayReduxActions /* add it here to make webpack add it to the build */
+      );
+    } else {
+      initHomeDataV4(store);
     }
-    const updateBalances = async () => {
-      await dispatch(reduxActions.balance.fetchBalances());
-      await dispatch(reduxActions.balance.fetchBoostBalances());
-    };
-
-    if (wallet.address) {
-      updateBalances();
-    }
-  }, [dispatch, wallet]);
-
-  React.useEffect(() => {
-    if (featureFlag_isDataLoaderV2Enabled()) {
-      return;
-    }
-    const initiate = async () => {
-      let now = Date.now();
-
-      await dispatch(reduxActions.prices.fetchPrices());
-      let promises = [
-        dispatch(reduxActions.vault.fetchPools()),
-        dispatch(reduxActions.vault.fetchBoosts()),
-      ];
-      await Promise.all(promises);
-
-      await dispatch(reduxActions.vault.linkVaultBoosts());
-
-      await dispatch(reduxActions.balance.fetchBalances());
-      await dispatch(reduxActions.balance.fetchBoostBalances());
-
-      setInterval(async () => {
-        await dispatch(reduxActions.balance.fetchBalances());
-        await dispatch(reduxActions.balance.fetchBoostBalances());
-      }, 60000);
-
-      let end = Date.now();
-      console.log(`Load time is ${(end - now) / 1000}s`);
-    };
-    initiate();
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    localStorage.setItem('nightMode', JSON.stringify(isNightMode));
-  }, [isNightMode]);
-
-  React.useEffect(() => {
-    if (featureFlag_isDataLoaderV2Enabled()) {
-      return;
-    }
-    if (!wallet.web3modal) {
-      dispatch(reduxActions.wallet.createWeb3Modal());
-    }
-  }, [dispatch, wallet.web3modal]);
-
-  React.useEffect(() => {
-    if (!featureFlag_isDataLoaderV2Enabled()) {
-      return;
-    }
-    // give some time to the app to render a loader before doing this
-    setTimeout(initHomeDataV4, 50);
   }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <HideBalanceProvider>
-          <ScrollToTop />
-          <Header isNightMode={isNightMode} setNightMode={() => setNightMode(!isNightMode)} />
-          <React.Suspense fallback={<div className="loader" />}>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route strict sensitive exact path="/:network/vault/:id">
-                <Vault />
-              </Route>
-              <Route strict sensitive exact path="/:network/boosts/:id">
-                <Boost />
-              </Route>
+        <ScrollToTop />
+        <Header />
+        <React.Suspense fallback={<div className="loader" />}>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route strict sensitive exact path="/:network/vault/:id">
+              <Vault />
+            </Route>
               <Route exact path="/nfts">
                 <BeefyAvatars />
               </Route>
-              <Route>
-                <PageNotFound />
-              </Route>
-            </Switch>
-          </React.Suspense>
-        </HideBalanceProvider>
+            <Route>
+              <PageNotFound />
+            </Route>
+          </Switch>
+        </React.Suspense>
       </Router>
     </ThemeProvider>
   );

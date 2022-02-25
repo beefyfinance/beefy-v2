@@ -7,22 +7,28 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
+import { VaultEntity } from '../../../data/entities/vault';
+import { useSelector } from 'react-redux';
+import { BeefyState } from '../../../../redux-types';
+import { selectActiveVaultBoostIds, selectBoostById } from '../../../data/selectors/boosts';
+import { selectBoostedVaultMainPartner } from '../../../data/selectors/partners';
 
 const useStyles = makeStyles(styles as any);
-export const BoostCard = ({ boostedData }) => {
+export const BoostCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
 
-  const name = React.useMemo(() => boostedData.name, [boostedData.name]);
-
-  const { text, social, website } = boostedData['partners'][0];
+  const boostIds = useSelector((state: BeefyState) => selectActiveVaultBoostIds(state, vaultId));
+  const boost = useSelector((state: BeefyState) => selectBoostById(state, boostIds[0]));
+  const partner = useSelector((state: BeefyState) => selectBoostedVaultMainPartner(state, vaultId));
+  const { text, social, website } = partner;
 
   return (
     <Card>
       <CardHeader>
         <Typography className={classes.boostedBy}>{t('Vault-BoostedBy')}</Typography>
         <div style={{ display: 'flex' }}>
-          <CardTitle title={name} subtitle={''} />
+          <CardTitle title={boost.name} subtitle={''} />
         </div>
         <div className={classes.cardActions}>
           <div className={classes.cardAction}>

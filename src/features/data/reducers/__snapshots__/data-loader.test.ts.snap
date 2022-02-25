@@ -4,6 +4,11 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "addressBook": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
       "allowance": Object {
         "alreadyLoadedOnce": false,
         "error": null,
@@ -27,12 +32,22 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
     },
     "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -47,6 +62,21 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -55,6 +85,11 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "addressBook": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
       "allowance": Object {
         "alreadyLoadedOnce": false,
         "error": null,
@@ -78,12 +113,22 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
     },
     "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -98,6 +143,21 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -106,6 +166,11 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "addressBook": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
       "allowance": Object {
         "alreadyLoadedOnce": false,
         "error": null,
@@ -129,12 +194,22 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
     },
     "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -149,6 +224,21 @@ Object {
       "error": null,
       "status": "init",
     },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
   },
 }
 `;
@@ -157,6 +247,11 @@ exports[`Data Loader slice tests should update state on fulfilled action by chai
 Object {
   "byChainId": Object {
     "test": Object {
+      "addressBook": Object {
+        "alreadyLoadedOnce": false,
+        "error": null,
+        "status": "init",
+      },
       "allowance": Object {
         "alreadyLoadedOnce": false,
         "error": null,
@@ -180,6 +275,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -190,12 +290,32 @@ Object {
       "error": null,
       "status": "init",
     },
+    "depositForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "prices": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -213,6 +333,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -223,12 +348,32 @@ Object {
       "error": null,
       "status": "init",
     },
+    "depositForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "prices": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "pending",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -246,6 +391,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -256,12 +406,32 @@ Object {
       "error": null,
       "status": "init",
     },
+    "depositForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "prices": Object {
       "alreadyLoadedOnce": true,
       "error": null,
       "status": "fulfilled",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -279,6 +449,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -289,12 +464,32 @@ Object {
       "error": null,
       "status": "init",
     },
+    "depositForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "prices": Object {
       "alreadyLoadedOnce": true,
       "error": "fatality",
       "status": "rejected",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",
@@ -312,6 +507,11 @@ Object {
       "error": null,
       "status": "init",
     },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "boosts": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -322,12 +522,206 @@ Object {
       "error": null,
       "status": "init",
     },
+    "depositForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
+      "error": "fatality message",
+      "status": "rejected",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 5`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
+      "error": "fatality name",
+      "status": "rejected",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 6`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "prices": Object {
+      "alreadyLoadedOnce": true,
+      "error": "1234",
+      "status": "rejected",
+    },
+    "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+  },
+}
+`;
+
+exports[`Data Loader slice tests should update state on fulfilled global action 7`] = `
+Object {
+  "byChainId": Object {},
+  "global": Object {
+    "apy": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boostForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "boosts": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "chainConfig": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "depositForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "prices": Object {
       "alreadyLoadedOnce": true,
       "error": null,
       "status": "pending",
     },
     "vaults": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "wallet": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "withdrawForm": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
+    "zaps": Object {
       "alreadyLoadedOnce": false,
       "error": null,
       "status": "init",

@@ -1,15 +1,18 @@
 import axios, { AxiosInstance } from 'axios';
+import BigNumber from 'bignumber.js';
+import { isString } from 'lodash';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
+import { mapValuesDeep } from '../utils/array-utils';
 
-export interface ApyGovVault {
+interface ApyGovVault {
   vaultApr: number;
 }
-export interface ApyMaxiVault {
+interface ApyMaxiVault {
   totalApy: number;
 }
-export interface ApyStandard {
+interface ApyStandard {
   beefyPerformanceFee: number;
   vaultApr: number;
   compoundingsPerYear: number;
@@ -37,7 +40,7 @@ export interface BeefyAPIBreakdownResponse {
   [vaultId: VaultEntity['id']]: ApyData;
 }
 
-export interface BeefyAPIHistoricalAPYResponse {
+interface BeefyAPIHistoricalAPYResponse {
   // those are of type string but they represent numbers
   // also for some reason there is 7 items on each array
   [vaultId: VaultEntity['id']]: string[];
@@ -45,11 +48,14 @@ export interface BeefyAPIHistoricalAPYResponse {
 
 export interface BeefyAPIBuybackResponse {
   // those are of type string but they represent numbers
-  [chainId: ChainEntity['id']]: string[];
+  [chainId: ChainEntity['id']]: { buybackTokenAmount: BigNumber; buybackUsdAmount: BigNumber };
 }
 
-// TODO: is this the same as VaultConfig?
-export type BeefyAPIVaultsResponse = any;
+// note that there is more infos but we don't need it
+type BeefyAPIVaultsResponse = {
+  id: string;
+  lastHarvest?: number | string;
+}[];
 
 export class BeefyAPI {
   public api: AxiosInstance;
@@ -81,8 +87,20 @@ export class BeefyAPI {
   }
 
   public async getBreakdown(): Promise<BeefyAPIBreakdownResponse> {
-    const res = await this.api.get('/apy/breakdown', { params: { _: this.getCacheBuster() } });
-    return res.data;
+    const res = await this.api.get('/apy/breakdown', {
+      params: { _: this.getCacheBuster('day') },
+    });
+
+    // somehow, all vaultApr are currently strings, we need to fix that before sending
+    // the data to be processed
+    const data = mapValuesDeep(res.data, (val, key) => {
+      if (key === 'vaultApr' && isString(val)) {
+        val = parseFloat(val);
+      }
+      return val;
+    });
+
+    return data;
   }
 
   public async getHistoricalAPY(): Promise<BeefyAPIHistoricalAPYResponse> {
@@ -91,13 +109,60 @@ export class BeefyAPI {
   }
 
   public async getBuyBack(): Promise<BeefyAPIBuybackResponse> {
-    const res = await this.api.get('/bifibuyback', { params: { _: this.getCacheBuster('hour') } });
-    return res.data;
+    type ResponseType = {
+      data: {
+        [chainId: ChainEntity['id']]: {
+          buybackTokenAmount: string;
+          buybackUsdAmount: string;
+        };
+      };
+    };
+    const strRes = await this.api.get<ResponseType>('/bifibuyback', {
+      params: { _: this.getCacheBuster('hour') },
+    });
+    // format result with big number as we get strings from the api
+    const res: BeefyAPIBuybackResponse = {};
+    for (const chainId in strRes.data) {
+      res[chainId] = {
+        buybackTokenAmount: new BigNumber(strRes.data[chainId].buybackTokenAmount),
+        buybackUsdAmount: new BigNumber(strRes.data[chainId].buybackUsdAmount),
+      };
+    }
+    return res;
   }
 
-  public async getVaults(): Promise<BeefyAPIVaultsResponse> {
-    const res = await this.api.get('/vaults', { params: { _: this.getCacheBuster('hour') } });
-    return res.data;
+  /**
+   * For now we fetch lastHarvest from the api
+   * TODO: fetch this from the contract directly
+   */
+  public async getVaultLastHarvest(vaultId: VaultEntity['id']): Promise<null | Date> {
+    const res = await this.api.get<BeefyAPIVaultsResponse>('/vaults', {
+      params: { _: this.getCacheBuster('hour') },
+    });
+
+    // const vault = data.filter(vault => vault.id.includes(vaultId));
+    const vaultConfig = res.data.find(vault => {
+      return vault.id === vaultId;
+    });
+
+    if (!vaultConfig) {
+      // vault is not harvestable (most probably a gov vault)
+      return null;
+    }
+    if (!('lastHarvest' in vaultConfig)) {
+      return null;
+    }
+    let lh = 0;
+    if (isString(vaultConfig.lastHarvest)) {
+      lh = parseInt(vaultConfig.lastHarvest);
+    } else {
+      lh = vaultConfig.lastHarvest;
+    }
+    if (lh === 0) {
+      return null;
+    }
+
+    return new Date(lh * 1000);
   }
 
   // maybe have a local cache instead of this cache busting

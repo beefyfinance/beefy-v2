@@ -1,27 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
+import { isEmpty } from 'lodash';
+import { safetyScoreNum } from '../../../helpers/safetyScore';
+import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
-import { fetchAllVaults } from '../actions/vaults';
-import { VaultConfig } from '../apis/config';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
+import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
+import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
+import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
-import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vault';
+import {
+  selectIsBeefyToken,
+  selectIsTokenBluechip,
+  selectIsTokenStable,
+} from '../selectors/tokens';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
  * State containing Vault infos
  */
 export type VaultsState = NormalizedEntity<VaultEntity> & {
-  // add quick access arrays
   byChainId: {
     [chainId: ChainEntity['id']]: {
+      // add quick access arrays
+      // doesn't need to be by chain but it's convenient
+      // for when we load by chain
       allActiveIds: VaultEntity['id'][];
       allRetiredIds: VaultEntity['id'][];
 
       // used to find a vault by it's token for balance stuff
       byOracleId: {
-        [tokenId: TokenEntity['id']]: VaultEntity['id'];
+        [tokenId: TokenEntity['id']]: VaultEntity['id'][];
       };
       byEarnTokenId: {
         [tokenId: TokenEntity['id']]: VaultEntity['id'];
@@ -38,17 +50,26 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
    *
    * That value is fetched from the smart contract upon loading
    **/
-  pricePerFullShare: {
+  contractData: {
     byVaultId: {
-      [vaultId: VaultEntity['id']]: BigNumber;
+      [vaultId: VaultEntity['id']]: {
+        strategyAddress: string;
+        pricePerFullShare: BigNumber;
+      };
     };
   };
+
+  /**
+   * We want to know if the vault is featured or not
+   */
+  featuredVaults: FeaturedVaultConfig;
 };
 export const initialVaultsState: VaultsState = {
   byId: {},
   allIds: [],
   byChainId: {},
-  pricePerFullShare: { byVaultId: {} },
+  contractData: { byVaultId: {} },
+  featuredVaults: {},
 };
 
 export const vaultsSlice = createSlice({
@@ -58,28 +79,61 @@ export const vaultsSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
+    builder.addCase(fetchFeaturedVaults.fulfilled, (sliceState, action) => {
+      sliceState.featuredVaults = action.payload.byVaultId;
+    });
+
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of Object.entries(action.payload)) {
+      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
         for (const vault of vaults) {
-          addVaultToState(sliceState, chainId, vault);
+          addVaultToState(action.payload.state, sliceState, chainId, vault);
         }
       }
     });
 
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
-      for (const vaultContractData of action.payload.data.standardVaults) {
-        const vaultId = vaultContractData.id;
-
-        // only update it if needed
-        if (sliceState.pricePerFullShare.byVaultId[vaultId] === undefined) {
-          sliceState.pricePerFullShare.byVaultId[vaultId] = vaultContractData.pricePerFullShare;
-        }
-      }
+      addContractDataToState(sliceState, action.payload.data);
     });
+    builder.addCase(
+      reloadBalanceAndAllowanceAndGovRewardsAndBoostData.fulfilled,
+      (sliceState, action) => {
+        addContractDataToState(sliceState, action.payload.contractData);
+      }
+    );
   },
 });
 
+function addContractDataToState(
+  sliceState: WritableDraft<VaultsState>,
+  contractData: FetchAllContractDataResult
+) {
+  for (const vaultContractData of contractData.standardVaults) {
+    const vaultId = vaultContractData.id;
+
+    // only update it if needed
+    if (sliceState.contractData.byVaultId[vaultId] === undefined) {
+      sliceState.contractData.byVaultId[vaultId] = {
+        pricePerFullShare: vaultContractData.pricePerFullShare,
+        strategyAddress: vaultContractData.strategy,
+      };
+    }
+
+    if (
+      !sliceState.contractData.byVaultId[vaultId].pricePerFullShare.isEqualTo(
+        vaultContractData.pricePerFullShare
+      )
+    ) {
+      sliceState.contractData.byVaultId[vaultId].pricePerFullShare =
+        vaultContractData.pricePerFullShare;
+    }
+    if (sliceState.contractData.byVaultId[vaultId].strategyAddress !== vaultContractData.strategy) {
+      sliceState.contractData.byVaultId[vaultId].strategyAddress = vaultContractData.strategy;
+    }
+  }
+}
+
 function addVaultToState(
+  state: BeefyState,
   sliceState: WritableDraft<VaultsState>,
   chainId: ChainEntity['id'],
   apiVault: VaultConfig
@@ -88,15 +142,33 @@ function addVaultToState(
   if (apiVault.id in sliceState.byId) {
     return;
   }
+  const { tags, score } = getVaultTagsAndSafetyScore(state, chainId, apiVault);
+
   if (apiVault.isGovVault) {
+    if (!apiVault.logo) {
+      throw new Error(`Missing logo uri for gov vault ${apiVault.id}`);
+    }
     const vault: VaultGov = {
       id: apiVault.id,
+      logoUri: apiVault.logo,
       name: apiVault.name,
       isGovVault: true,
+      earnedTokenId: apiVault.earnedToken,
       earnContractAddress: apiVault.poolAddress,
       excludedId: apiVault.excluded || null,
       oracleId: apiVault.oracleId,
       chainId: chainId,
+      status: apiVault.status as VaultGov['status'],
+      platformId: apiVault.platform.toLowerCase(),
+      tags: tags,
+      safetyScore: score,
+      assetIds: apiVault.assets || [],
+      type: 'single',
+      risks: apiVault.risks || [],
+      buyTokenUrl: apiVault.buyTokenUrl || null,
+      addLiquidityUrl: null,
+      depositFee: apiVault.depositFee ?? '0%',
+      withdrawalFee: '0%',
     };
 
     sliceState.byId[vault.id] = vault;
@@ -109,7 +181,7 @@ function addVaultToState(
         byEarnTokenId: {},
       };
     }
-    if (apiVault.status === 'eol') {
+    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
       sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
     } else {
       sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
@@ -121,11 +193,21 @@ function addVaultToState(
       logoUri: apiVault.logo,
       isGovVault: false,
       contractAddress: apiVault.earnContractAddress,
-      assets: apiVault.assets,
       earnedTokenId: apiVault.earnedToken,
       oracleId: apiVault.oracleId,
       strategyType: apiVault.stratType as VaultStandard['strategyType'],
       chainId: chainId,
+      platformId: apiVault.platform.toLowerCase(),
+      status: apiVault.status as VaultStandard['status'],
+      type: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
+      tags: tags,
+      safetyScore: score,
+      assetIds: apiVault.assets || [],
+      risks: apiVault.risks || [],
+      buyTokenUrl: apiVault.buyTokenUrl || null,
+      addLiquidityUrl: apiVault.addLiquidityUrl || null,
+      depositFee: apiVault.depositFee ?? '0%',
+      withdrawalFee: apiVault.withdrawalFee ?? '0.1%',
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual
@@ -140,12 +222,64 @@ function addVaultToState(
       };
     }
     const vaultState = sliceState.byChainId[vault.chainId];
-    if (apiVault.status === 'eol') {
+    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
       vaultState.allRetiredIds.push(vault.id);
     } else {
       vaultState.allActiveIds.push(vault.id);
     }
-    vaultState.byOracleId[vault.oracleId] = vault.id;
+
+    if (!vaultState.byOracleId[vault.oracleId]) {
+      vaultState.byOracleId[vault.oracleId] = [];
+    }
+    vaultState.byOracleId[vault.oracleId].push(vault.id);
     vaultState.byEarnTokenId[vault.earnedTokenId] = vault.id;
   }
+}
+
+function getVaultTagsAndSafetyScore(
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  apiVault: VaultConfig
+): { tags: VaultTag[]; score: number } {
+  const tags: VaultTag[] = [];
+  if (
+    apiVault.assets.every(tokenId => {
+      return selectIsTokenStable(state, chainId, tokenId);
+    })
+  ) {
+    tags.push('stable');
+  }
+
+  if (
+    apiVault.assets.every(tokenId => {
+      return selectIsBeefyToken(state, tokenId);
+    })
+  ) {
+    tags.push('beefy');
+  }
+
+  if (
+    apiVault.assets.every(tokenId => {
+      return selectIsTokenBluechip(state, tokenId);
+    })
+  ) {
+    tags.push('bluechip');
+  }
+
+  let score = 0;
+  if (!isEmpty(apiVault.risks)) {
+    score = safetyScoreNum(apiVault.risks);
+
+    if (score >= 7.5) {
+      tags.push('low');
+    }
+  }
+
+  if (apiVault.status === 'eol') {
+    tags.push('eol');
+  } else if (apiVault.status === 'paused') {
+    tags.push('paused');
+  }
+
+  return { tags, score };
 }

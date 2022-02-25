@@ -11,16 +11,21 @@ import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import up from './up.svg';
 import down from './down.svg';
+import { useSelector } from 'react-redux';
+import { BeefyState } from '../../../../redux-types';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { VaultEntity } from '../../../data/entities/vault';
 
 const useStyles = makeStyles(styles as any);
-function SafetyCardComponent({ vaultRisks, score }) {
+function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
 
   return (
     <Card>
       <CardHeader className={classes.cardHeader}>
-        <CardTitle title={(<SafetyScore score={score} size="md" />) as any} />
+        <CardTitle title={(<SafetyScore score={vault.safetyScore} size="md" />) as any} />
         <div className={classes.tooltipLabel}>
           <Typography variant="body1" className={classes.safetyLabel}>
             {t('Safety-Score1')}
@@ -37,7 +42,7 @@ function SafetyCardComponent({ vaultRisks, score }) {
       </CardHeader>
       <CardContent>
         <div className={classes.riskList}>
-          {vaultRisks.map(risk => (
+          {vault.risks.map(risk => (
             <Box key={risk}>
               {RISKS[risk] && (
                 <div className={classes.riskRow}>
@@ -73,7 +78,7 @@ function SafetyCardComponent({ vaultRisks, score }) {
         </div>
       </CardContent>
     </Card>
-  ); //return
-} //const SafetyCard
+  );
+}
 
 export const SafetyCard = React.memo(SafetyCardComponent);

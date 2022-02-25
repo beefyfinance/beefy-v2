@@ -1,6 +1,6 @@
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 import { Action, Store } from 'redux';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 
 /**
  * allows us to do
@@ -21,12 +21,26 @@ export type PollStop = () => void;
  *
  * The return value is a stop() function to stop looping
  */
-export function poll(fn: () => Promise<any>, ms: number): PollStop {
+export function poll(
+  fn: () => Promise<any>,
+  ms: number,
+  pauseWhenAppNotShown: boolean = true
+): PollStop {
+  let paused = false;
   let stop = false;
+
+  // avoid pounding the user CPU when he joins back
+  // by pausing the poll function when app is not visible
+  // TODO: maybe we want some data to reload as soon as we come back
+  if (pauseWhenAppNotShown) {
+    document.addEventListener('visibilitychange', onVisibilityChange);
+  }
 
   async function doPoll() {
     await sleep(ms);
-    await fn();
+    if (!paused) {
+      await fn();
+    }
     if (!stop) {
       // do a set timeout with no ms parameter to avoid infinite stack
       setTimeout(doPoll);
@@ -34,8 +48,17 @@ export function poll(fn: () => Promise<any>, ms: number): PollStop {
   }
   doPoll();
 
+  function onVisibilityChange() {
+    if (document.visibilityState === 'visible') {
+      paused = false;
+    } else {
+      paused = true;
+    }
+  }
+
   return () => {
     console.debug('Poll stopped');
+    document.removeEventListener('visibilitychange', onVisibilityChange);
     stop = true;
   };
 }

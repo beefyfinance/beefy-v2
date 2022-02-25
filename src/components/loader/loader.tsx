@@ -1,10 +1,8 @@
 import { Box, makeStyles } from '@material-ui/core';
-import React from 'react';
-import { LoaderProps } from './LoaderProps';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
-export const Loader: React.FC<LoaderProps> = ({ message, line }) => {
+export const Loader = ({ message, line }: { message?: string; line?: boolean }) => {
   const classes = useStyles();
   return (
     <Box textAlign={'center'}>

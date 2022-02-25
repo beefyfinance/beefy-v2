@@ -32,6 +32,7 @@ export const styles = theme => ({
     letterSpacing: '1px',
   },
   vaultsList: {
+    marginTop: '20px',
     marginBottom: '20px',
   },
   row: {
@@ -46,10 +47,28 @@ export const styles = theme => ({
   vaultContainer: {
     marginTop: '48px',
   },
-  gridContainer: {
-    outline: 'none',
-    '& .ReactVirtualized__Grid': {
-      outline: 'none',
+  doubleItemContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    [theme.breakpoints.only('sm')]: {
+      flexDirection: 'row',
+      alignItems: 'stretch',
+      justifyContent: 'stretch',
+      gap: spaceBetweenRows => spaceBetweenRows,
+    },
+  },
+  doubleItem1: {
+    marginBottom: spaceBetweenRows => spaceBetweenRows,
+    [theme.breakpoints.only('sm')]: {
+      marginBottom: '0 !important', // idk why mui doesn't make this higher priority
+      width: `50%`,
+    },
+  },
+  doubleItem2: {
+    [theme.breakpoints.only('sm')]: {
+      marginBottom: 0,
+      width: '50%',
     },
   },
 });
