@@ -1605,7 +1605,7 @@ export const pools = [
   },
   {
     id: "moo_jetswap-wings",
-    poolId: "jetswap-wings",
+    poolId: "jetswap-wings-eol",
     name: "JetSwap",
     logo: "degens/WINGS.svg",
     earnedToken: "WINGS",
