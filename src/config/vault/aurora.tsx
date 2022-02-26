@@ -9,9 +9,9 @@ export const pools = [
     tokenAddress: '0x218c3c3D49d0E7B37aff0D8bB079de36Ae61A4c0',
     tokenDescriptionUrl:
       'https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance',
-    earnedToken: 'ETH',
+    earnedToken: 'WETH',
     earnedTokenDecimals: 18,
-    earnedTokenAddress: '0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf',
+    earnedTokenAddress: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
     earnContractAddress: '0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf',
     poolAddress: '0xE6ab45f5e93FA377D0c4cC097187Ab7256c2AEBf',
     //excluded: "aurora-bifi-maxi", // this vault doesn't exists

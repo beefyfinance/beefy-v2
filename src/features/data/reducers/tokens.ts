@@ -252,7 +252,7 @@ function addVaultToState(
           : {
               id: earnedTokenId,
               chainId: chainId,
-              decimals: 18, // TODO: not sure about that
+              decimals: vault.earnedTokenDecimals ?? 18,
               contractAddress: vault.earnContractAddress,
               symbol: vault.earnedToken,
               buyUrl: null,
@@ -275,7 +275,7 @@ function addVaultToState(
         website: null,
         type: 'erc20',
       };
-      temporaryWrappedtokenFix(token);
+      // temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
       sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
     }
