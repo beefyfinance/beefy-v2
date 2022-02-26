@@ -94,6 +94,7 @@ describe('Vaults slice tests', () => {
               'AUDIT',
               'CONTRACTS_VERIFIED',
             ],
+            createdAt: 1631279238
           },
 
           // one retired vault
@@ -121,12 +122,14 @@ describe('Vaults slice tests', () => {
               'https://dex.apeswap.finance/#/swap?inputCurrency=0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95&outputCurrency=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
             stratType: 'SingleStake',
             network: 'bsc',
+            createdAt: 1615196201,
           },
         ],
       },
     };
     const action = { type: fetchAllVaults.fulfilled, payload: payload };
     const state = vaultsSlice.reducer(initialVaultsState, action);
+
     expect(state).toMatchSnapshot();
 
     // getting the same vaults don't update the state object
