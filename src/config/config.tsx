@@ -121,7 +121,6 @@ export const config = {
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     fetchContractDataAddress: '0x9e369f477F2009394D947ea7571b1E6582Bb0511',
-    // could not make it work for polygon, idk why
     fetchBalancesAddress: '0xEF03BC4C3711bb039c85189f536a35f4d72bC415',
     supportedWallets: ['injected', 'custom-clover', 'walletconnect', 'custom-coinbase'],
     providerName: 'polygon',
@@ -169,7 +168,6 @@ export const config = {
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     fetchContractDataAddress: '0x37FF9b4612b9e80E4082e3aC3f5149adDA2d2f21',
-    // could not make it work for fantom, idk why
     fetchBalancesAddress: '0x6cA0E431678979cB9Ffa317310D5db7131345058',
     supportedWallets: ['injected', 'custom-clover', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'fantom',
