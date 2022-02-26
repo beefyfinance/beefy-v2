@@ -84,7 +84,7 @@ export const vaultsSlice = createSlice({
     builder.addCase(fetchFeaturedVaults.fulfilled, (sliceState, action) => {
       sliceState.featuredVaults = action.payload.byVaultId;
     });
-
+    
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       const initialVaultAmount = sliceState.allIds.length;
       for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
@@ -96,7 +96,7 @@ export const vaultsSlice = createSlice({
 
       // If new vaults were added, apply default sorting
       if (finalVaultAmount !== initialVaultAmount) {
-        const allVaults = sliceState.allIds.map(id => useSelector((state: BeefyState) => selectVaultById(state, id)));
+        const allVaults = sliceState.allIds.map(id => sliceState.byId[id]);
         sliceState.allIds = sortBy(allVaults, vault => {
           return -vault.createdAt
         }).map(vault => vault.id);
