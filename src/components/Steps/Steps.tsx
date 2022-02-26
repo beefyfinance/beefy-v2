@@ -48,11 +48,13 @@ export const Steps = ({
                 steps.items.length > 1 &&
                 !steps.finished &&
                 (steps.items[steps.currentStep].step === 'withdraw' ||
+                  steps.items[steps.currentStep].step === 'claim-withdraw' ||
                   steps.items[steps.currentStep].step === 'deposit'),
               [classes.progresBar75]:
                 steps.items.length > 1 &&
                 !steps.finished &&
                 (steps.items[steps.currentStep].step === 'withdraw' ||
+                  steps.items[steps.currentStep].step === 'claim-withdraw' ||
                   steps.items[steps.currentStep].step === 'deposit') &&
                 walletActionsState.result === 'success_pending',
               [classes.errorBar]: walletActionsState.result === 'error',
@@ -89,6 +91,7 @@ export const Steps = ({
                 <>
                   {steps.items[steps.currentStep].step === 'deposit' && t('Deposit-Done')}
                   {steps.items[steps.currentStep].step === 'withdraw' && t('Withdraw-Done')}
+                  {steps.items[steps.currentStep].step === 'claim-withdraw' && t('Withdraw-Done')}
                   {steps.items[steps.currentStep].step === 'claim-unstake' &&
                     t('Claim-Unstake-Done')}
                   {steps.items[steps.currentStep].step === 'stake' && t('Stake-Done')}
@@ -154,7 +157,8 @@ export const Steps = ({
                 </>
               )}
               {/* Success Withdraw */}
-              {steps.items[steps.currentStep].step === 'withdraw' && (
+              {(steps.items[steps.currentStep].step === 'withdraw' ||
+                steps.items[steps.currentStep].step === 'claim-withdraw') && (
                 <>
                   <Box className={classes.successContent}>
                     <Typography variant="body1" className={classes.message}>

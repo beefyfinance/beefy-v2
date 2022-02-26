@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import vaultAbi from '../../../../config/abi/vault.json';
 
 import { WALLET_ACTION_RESET } from '../../../data/actions/wallet-actions';
@@ -31,18 +32,22 @@ export const spiritDeposit = (network, contractAddr, amount, max) => {
       }
     })();
 
+    const additionalData = {
+      amount: new BigNumber(amount).shiftedBy(-SpiritToken.decimals),
+      token: SpiritToken,
+    };
     transaction
       .on('transactionHash', function (hash) {
-        createWalletActionPendingAction(hash, { amount, token: SpiritToken });
+        dispatch(createWalletActionPendingAction(hash, additionalData));
       })
       .on('receipt', function (receipt) {
-        createWalletActionSuccessAction(receipt, { amount, token: SpiritToken });
+        dispatch(createWalletActionSuccessAction(receipt, additionalData));
       })
       .on('error', function (error) {
-        createWalletActionErrorAction(error, { amount, token: SpiritToken });
+        dispatch(createWalletActionErrorAction(error, additionalData));
       })
       .catch(error => {
-        createWalletActionErrorAction({ message: String(error) }, { amount, token: SpiritToken });
+        dispatch(createWalletActionErrorAction({ message: String(error) }, additionalData));
       });
   };
 };
