@@ -10,8 +10,8 @@ Object {
 exports[`Vaults slice tests should update state on fulfilled vault list 1`] = `
 Object {
   "allIds": Array [
-    "one-bifi-gov",
     "sushi-one-1ygg-1eth",
+    "one-bifi-gov",
     "banana-banana-eol",
   ],
   "byChainId": Object {
@@ -46,6 +46,7 @@ Object {
       "buyTokenUrl": "https://dex.apeswap.finance/#/swap?inputCurrency=0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95&outputCurrency=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
       "chainId": "harmony",
       "contractAddress": "0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786",
+      "createdAt": 1615196201,
       "depositFee": "0%",
       "earnedTokenId": "mooApeBANANA",
       "id": "banana-banana-eol",
@@ -71,6 +72,7 @@ Object {
       ],
       "buyTokenUrl": null,
       "chainId": "harmony",
+      "createdAt": 1623706144,
       "depositFee": "0%",
       "earnContractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
       "earnedTokenId": "ONE",
@@ -107,6 +109,7 @@ Object {
       "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
       "chainId": "harmony",
       "contractAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+      "createdAt": 1631279238,
       "depositFee": "0%",
       "earnedTokenId": "mooSushiYGG-ETH",
       "id": "sushi-one-1ygg-1eth",

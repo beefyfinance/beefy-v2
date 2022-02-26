@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
-import { isEmpty } from 'lodash';
+import { isEmpty, sortBy } from 'lodash';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -15,7 +15,7 @@ import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vaul
 import {
   selectIsBeefyToken,
   selectIsTokenBluechip,
-  selectIsTokenStable,
+  selectIsTokenStable
 } from '../selectors/tokens';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
@@ -84,10 +84,19 @@ export const vaultsSlice = createSlice({
     });
 
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
+      const initialVaultAmount = sliceState.allIds.length;
       for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
         for (const vault of vaults) {
           addVaultToState(action.payload.state, sliceState, chainId, vault);
         }
+      }
+      const finalVaultAmount = sliceState.allIds.length;
+
+      // If new vaults were added, apply default sorting
+      if (finalVaultAmount !== initialVaultAmount) {
+        sliceState.allIds = sortBy(sliceState.allIds, id => {
+          return -sliceState.byId[id].createdAt
+        });
       }
     });
 
@@ -169,6 +178,7 @@ function addVaultToState(
       addLiquidityUrl: null,
       depositFee: apiVault.depositFee ?? '0%',
       withdrawalFee: '0%',
+      createdAt: apiVault.createdAt ?? 0
     };
 
     sliceState.byId[vault.id] = vault;
@@ -208,6 +218,7 @@ function addVaultToState(
       addLiquidityUrl: apiVault.addLiquidityUrl || null,
       depositFee: apiVault.depositFee ?? '0%',
       withdrawalFee: apiVault.withdrawalFee ?? '0.1%',
+      createdAt: apiVault.createdAt ?? 0
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual

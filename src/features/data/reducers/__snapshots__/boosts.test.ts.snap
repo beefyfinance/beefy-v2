@@ -68,8 +68,8 @@ Object {
     },
   },
   "periodFinish": Object {
-    "moo_banana-banana-busd-bitcrush": 2021-12-31T23:00:00.000Z,
-    "moo_banana-bnb-stars-mogul2": 2249-12-31T23:00:00.000Z,
+    "moo_banana-banana-busd-bitcrush": 2022-01-01T03:00:00.000Z,
+    "moo_banana-bnb-stars-mogul2": 2250-01-01T03:00:00.000Z,
     "moo_banana-crush-wbnb-bitcrush": null,
   },
 }
