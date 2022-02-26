@@ -18,7 +18,6 @@ import {
   selectIsTokenBluechip,
   selectIsTokenStable,
 } from '../selectors/tokens';
-import { selectVaultById } from '../selectors/vaults';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
@@ -84,7 +83,7 @@ export const vaultsSlice = createSlice({
     builder.addCase(fetchFeaturedVaults.fulfilled, (sliceState, action) => {
       sliceState.featuredVaults = action.payload.byVaultId;
     });
-    
+
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       const initialVaultAmount = sliceState.allIds.length;
       for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
