@@ -7,6 +7,7 @@ import { selectVaultById } from '../selectors/vaults';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
+  selectIsTokenLoaded,
   selectTokenById,
 } from '../selectors/tokens';
 import { getWeb3Instance } from './instances';
@@ -36,6 +37,16 @@ export async function getEligibleZapOptions(
 ): Promise<ZapOptions | null> {
   const vault = selectVaultById(state, vaultId);
   if (vault.assetIds.length !== 2) {
+    return null;
+  }
+  // sometimes, the addressbook does not yet contains the necessary token address
+  if (
+    !selectIsTokenLoaded(state, vault.chainId, vault.assetIds[0]) ||
+    !selectIsTokenLoaded(state, vault.chainId, vault.assetIds[1])
+  ) {
+    console.warn(
+      `Could not estimate zap due to missing token info for vault ${vaultId}. Maybe you need to add this vault's tokens to the beefy addressbook`
+    );
     return null;
   }
 

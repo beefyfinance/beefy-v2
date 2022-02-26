@@ -13,7 +13,7 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { BeefyState } from '../../../../redux-types';
 import { ChainEntity } from '../../../data/entities/chain';
 import { Loader } from '../../../../components/loader';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectIsTokenLoaded, selectTokenById } from '../../../data/selectors/tokens';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 
 const useStyles = makeStyles(styles as any);
@@ -68,7 +68,9 @@ function TokenCardComponent({
 
   const addressBookLoaded = useSelector(
     (state: BeefyState) =>
-      state.ui.dataLoader.byChainId[chainId]?.addressBook.alreadyLoadedOnce || false
+      (state.ui.dataLoader.byChainId[chainId]?.addressBook.alreadyLoadedOnce &&
+        selectIsTokenLoaded(state, chainId, tokenId)) ||
+      false
   );
   const token = useSelector((state: BeefyState) =>
     addressBookLoaded ? selectTokenById(state, chainId, tokenId) : null
