@@ -122,7 +122,7 @@ export const config = {
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     fetchContractDataAddress: '0x9e369f477F2009394D947ea7571b1E6582Bb0511',
     // could not make it work for polygon, idk why
-    //fetchBalancesAddress: '0xEF03BC4C3711bb039c85189f536a35f4d72bC415',
+    fetchBalancesAddress: '0xEF03BC4C3711bb039c85189f536a35f4d72bC415',
     supportedWallets: ['injected', 'custom-clover', 'walletconnect', 'custom-coinbase'],
     providerName: 'polygon',
     walletSettings: {
@@ -170,7 +170,7 @@ export const config = {
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     fetchContractDataAddress: '0x37FF9b4612b9e80E4082e3aC3f5149adDA2d2f21',
     // could not make it work for fantom, idk why
-    //fetchBalancesAddress: '0x6cA0E431678979cB9Ffa317310D5db7131345058',
+    fetchBalancesAddress: '0x6cA0E431678979cB9Ffa317310D5db7131345058',
     supportedWallets: ['injected', 'custom-clover', 'custom-coinbase', 'custom-wallet-connect'],
     providerName: 'fantom',
     walletSettings: {
@@ -205,7 +205,8 @@ export const config = {
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',
     multicallAddress: '0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5',
-    //fetchBalancesAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
+    fetchContractDataAddress: '0x88D537a86e09B753361D70448d60D3dC2D75883d',
+    fetchBalancesAddress: '0xDc34b7e0f1F1512f088D1854a54EAFfD4dCaC7Bd',
     supportedWallets: ['injected', 'custom-wallet-connect'],
     providerName: 'harmony',
     walletSettings: {
@@ -365,6 +366,8 @@ export const config = {
     rpc: ['https://mainnet.aurora.dev'],
     explorerUrl: 'https://aurorascan.dev',
     multicallAddress: '0x55f46144bC62e9Af4bAdB71842B62162e2194E90',
+    fetchContractDataAddress: '0xA624Ac7824c5038AF0aEf333A6Eedc674E45bF56',
+    fetchBalancesAddress: '0xd3C0A4AB6F68e3c12DEc753255b9f769E0bA615b',
     supportedWallets: ['injected'],
     providerName: 'Aurora',
     walletSettings: {
@@ -386,6 +389,8 @@ export const config = {
     rpc: ['https://rpc.api.moonbeam.network'],
     explorerUrl: 'https://moonscan.io',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
+    fetchContractDataAddress: '0xd3C0A4AB6F68e3c12DEc753255b9f769E0bA615b',
+    fetchBalancesAddress: '0xA624Ac7824c5038AF0aEf333A6Eedc674E45bF56',
     supportedWallets: ['injected'],
     providerName: 'Moonbeam',
     walletSettings: {
