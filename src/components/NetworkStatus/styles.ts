@@ -31,6 +31,35 @@ export const styles: Styles<any, any, any> = theme => ({
     '&.warning': {
       backgroundColor: warningColor,
     },
+    position: 'relative', // to position pulse circles
+  },
+  // https://www.kirupa.com/animations/creating_pulsing_circle_animation.htm
+  '@keyframes scaleIn': {
+    from: { transform: 'scale(.5, .5)', opacity: '.7' },
+    to: { transform: 'scale(3.0, 3.0)', opacity: '0' },
+  },
+  pulseCircle: {
+    borderRadius: '50%',
+
+    // w/h same as circle
+    width: '12px',
+    height: '12px',
+    position: 'absolute',
+    opacity: 0,
+    animation: '$scaleIn 4s infinite cubic-bezier(.36, .11, .89, .32)',
+
+    '&.loading': {
+      backgroundColor: loadingColor,
+    },
+    '&.success': {
+      backgroundColor: successColor,
+    },
+    '&.warning': {
+      backgroundColor: warningColor,
+    },
+    '&.notLoading': {
+      display: 'none',
+    },
   },
   popoverPaper: {
     backgroundColor: 'transparent',
