@@ -1,3 +1,5 @@
+import { ChainEntity } from '../entities/chain';
+
 export function featureFlag_getContractDataApiImplem():
   | 'eth-multicall'
   | 'new-multicall'
@@ -104,4 +106,30 @@ export function featureFlag_replayReduxActions() {
   }
   const params = new URLSearchParams(window.location.search);
   return params.has('__replay_redux_actions');
+}
+
+export function featureFlag_simulateRpcError(chainId: ChainEntity['id']) {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return false;
+  }
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('__simulate_rpc_error')) {
+    const chainIds = params.get('__simulate_rpc_error').split(',');
+    return chainIds.includes(chainId);
+  }
+}
+
+export function featureFlag_simulateBeefyApiError(key: 'apy' | 'prices' | 'lps' | 'buyback') {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return false;
+  }
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('__simulate_beefy_error')) {
+    const chainIds = params.get('__simulate_beefy_error').split(',');
+    return chainIds.includes(key);
+  }
 }

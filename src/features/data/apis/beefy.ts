@@ -5,6 +5,7 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
 import { mapValuesDeep } from '../utils/array-utils';
+import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 
 interface ApyGovVault {
   vaultApr: number;
@@ -40,12 +41,6 @@ export interface BeefyAPIBreakdownResponse {
   [vaultId: VaultEntity['id']]: ApyData;
 }
 
-interface BeefyAPIHistoricalAPYResponse {
-  // those are of type string but they represent numbers
-  // also for some reason there is 7 items on each array
-  [vaultId: VaultEntity['id']]: string[];
-}
-
 export interface BeefyAPIBuybackResponse {
   // those are of type string but they represent numbers
   [chainId: ChainEntity['id']]: { buybackTokenAmount: BigNumber; buybackUsdAmount: BigNumber };
@@ -75,6 +70,10 @@ export class BeefyAPI {
 
   // here we can nicely type the responses
   public async getPrices(): Promise<BeefyAPITokenPricesResponse> {
+    if (featureFlag_simulateBeefyApiError('prices')) {
+      throw new Error('Simulated beefy api error');
+    }
+
     const res = await this.api.get('/prices', { params: { _: this.getCacheBuster('hour') } });
     return res.data;
   }
@@ -82,11 +81,19 @@ export class BeefyAPI {
   // i'm not 100% certain about the return type
   // are those token ids ?
   public async getLPs(): Promise<BeefyAPITokenPricesResponse> {
+    if (featureFlag_simulateBeefyApiError('lps')) {
+      throw new Error('Simulated beefy api error');
+    }
+
     const res = await this.api.get('/lps', { params: { _: this.getCacheBuster('hour') } });
     return res.data;
   }
 
   public async getBreakdown(): Promise<BeefyAPIBreakdownResponse> {
+    if (featureFlag_simulateBeefyApiError('apy')) {
+      throw new Error('Simulated beefy api error');
+    }
+
     const res = await this.api.get('/apy/breakdown', {
       params: { _: this.getCacheBuster('day') },
     });
@@ -103,12 +110,11 @@ export class BeefyAPI {
     return data;
   }
 
-  public async getHistoricalAPY(): Promise<BeefyAPIHistoricalAPYResponse> {
-    const res = await this.data.get('/bulk', { params: { _: this.getCacheBuster() } });
-    return res.data;
-  }
-
   public async getBuyBack(): Promise<BeefyAPIBuybackResponse> {
+    if (featureFlag_simulateBeefyApiError('buyback')) {
+      throw new Error('Simulated beefy api error');
+    }
+
     type ResponseType = {
       data: {
         [chainId: ChainEntity['id']]: {

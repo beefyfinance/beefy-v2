@@ -81,6 +81,9 @@ Object {
   "instances": Object {
     "wallet": false,
   },
+  "statusIndicator": Object {
+    "open": false,
+  },
 }
 `;
 
@@ -164,6 +167,9 @@ Object {
   },
   "instances": Object {
     "wallet": false,
+  },
+  "statusIndicator": Object {
+    "open": false,
   },
 }
 `;
@@ -249,6 +255,9 @@ Object {
   "instances": Object {
     "wallet": false,
   },
+  "statusIndicator": Object {
+    "open": true,
+  },
 }
 `;
 
@@ -333,6 +342,9 @@ Object {
   "instances": Object {
     "wallet": false,
   },
+  "statusIndicator": Object {
+    "open": true,
+  },
 }
 `;
 
@@ -393,6 +405,9 @@ Object {
   },
   "instances": Object {
     "wallet": false,
+  },
+  "statusIndicator": Object {
+    "open": false,
   },
 }
 `;
@@ -455,6 +470,9 @@ Object {
   "instances": Object {
     "wallet": false,
   },
+  "statusIndicator": Object {
+    "open": false,
+  },
 }
 `;
 
@@ -515,6 +533,9 @@ Object {
   },
   "instances": Object {
     "wallet": false,
+  },
+  "statusIndicator": Object {
+    "open": true,
   },
 }
 `;
@@ -577,6 +598,9 @@ Object {
   "instances": Object {
     "wallet": false,
   },
+  "statusIndicator": Object {
+    "open": true,
+  },
 }
 `;
 
@@ -637,6 +661,9 @@ Object {
   },
   "instances": Object {
     "wallet": false,
+  },
+  "statusIndicator": Object {
+    "open": true,
   },
 }
 `;
@@ -699,6 +726,9 @@ Object {
   "instances": Object {
     "wallet": false,
   },
+  "statusIndicator": Object {
+    "open": true,
+  },
 }
 `;
 
@@ -759,6 +789,9 @@ Object {
   },
   "instances": Object {
     "wallet": false,
+  },
+  "statusIndicator": Object {
+    "open": true,
   },
 }
 `;

@@ -1,30 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { fetchAllBalanceAction } from '../../actions/balance';
 import { WritableDraft } from 'immer/dist/internal';
+import { uniq } from 'lodash';
+import { BIG_ZERO } from '../../../../helpers/format';
+import { BeefyState } from '../../../../redux-types';
+import { fetchAllBalanceAction } from '../../actions/balance';
+import { initiateBoostForm } from '../../actions/boosts';
+import { initiateDepositForm } from '../../actions/deposit';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
+import { initiateWithdrawForm } from '../../actions/withdraw';
+import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../../apis/balance/balance-types';
 import { BoostEntity } from '../../entities/boost';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
-import {
-  selectAllVaultBoostIds,
-  selectBoostById,
-  selectIsVaultBoosted,
-} from '../../selectors/boosts';
+import { selectAllVaultBoostIds, selectBoostById } from '../../selectors/boosts';
 import {
   selectIsStandardVaultEarnTokenId,
   selectStandardVaultByEarnTokenId,
   selectVaultById,
   selectVaultIdsByOracleId,
 } from '../../selectors/vaults';
-import { BoostBalance, GovVaultPoolBalance, TokenBalance } from '../../apis/balance/balance-types';
-import { BeefyState } from '../../../../redux-types';
-import { initiateDepositForm } from '../../actions/deposit';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
-import { initiateWithdrawForm } from '../../actions/withdraw';
-import { initiateBoostForm } from '../../actions/boosts';
-import { BIG_ZERO } from '../../../../helpers/format';
-import { uniq } from 'lodash';
 
 /**
  * State containing user balances state

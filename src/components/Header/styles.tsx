@@ -90,4 +90,9 @@ export const styles = theme => ({
   hide: {
     display: 'none',
   },
+  walletContainer: {
+    minWidth: '195px',
+    minHeight: '10px',
+    display: 'block',
+  },
 });

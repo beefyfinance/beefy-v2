@@ -32,6 +32,7 @@ export const App = () => {
       <Router>
         <ScrollToTop />
         <Header />
+
         <React.Suspense fallback={<div className="loader" />}>
           <Switch>
             <Route exact path="/">
@@ -40,9 +41,9 @@ export const App = () => {
             <Route strict sensitive exact path="/:network/vault/:id">
               <Vault />
             </Route>
-              <Route exact path="/nfts">
-                <BeefyAvatars />
-              </Route>
+            <Route exact path="/nfts">
+              <BeefyAvatars />
+            </Route>
             <Route>
               <PageNotFound />
             </Route>

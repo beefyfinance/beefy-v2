@@ -52,7 +52,7 @@ interface LoaderStateFulfilled {
   status: 'fulfilled';
   error: null;
 }
-type LoaderState =
+export type LoaderState =
   | LoaderStateInit
   | LoaderStatePending
   | LoaderStateRejected
@@ -67,6 +67,10 @@ export function isPending(state: LoaderState): state is LoaderStatePending {
 export function isInitialLoader(state: LoaderState): state is LoaderStateInit {
   return state.status === 'init';
 }
+export function isRejected(state: LoaderState): state is LoaderStateRejected {
+  return state.status === 'rejected';
+}
+
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
   status: 'init',
@@ -93,6 +97,9 @@ export interface DataLoaderState {
   instances: {
     wallet: boolean;
   };
+  statusIndicator: {
+    open: boolean;
+  };
   global: {
     chainConfig: LoaderState;
     prices: LoaderState;
@@ -118,6 +125,9 @@ export interface DataLoaderState {
 export const initialDataLoaderState: DataLoaderState = {
   instances: {
     wallet: false,
+  },
+  statusIndicator: {
+    open: false,
   },
   global: {
     chainConfig: dataLoaderStateInit,
@@ -157,6 +167,9 @@ function addGlobalAsyncThunkActions(
       error: msg,
       alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
     };
+
+    // something got rejected, we want to auto-open the indicator
+    sliceState.statusIndicator.open = true;
   });
   builder.addCase(action.fulfilled, sliceState => {
     sliceState.global[stateKey] = dataLoaderStateFulfilled;
@@ -194,6 +207,9 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
         status: 'rejected',
         error: msg,
       };
+
+      // something got rejected, we want to auto-open the indicator
+      sliceState.statusIndicator.open = true;
     }
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
@@ -212,7 +228,12 @@ export const dataLoaderSlice = createSlice({
   name: 'dataLoader',
   initialState: initialDataLoaderState,
   reducers: {
-    // standard reducer logic, with auto-generated action types per reducer
+    closeIndicator(sliceState) {
+      sliceState.statusIndicator.open = false;
+    },
+    openIndicator(sliceState) {
+      sliceState.statusIndicator.open = true;
+    },
   },
   extraReducers: builder => {
     addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig');
@@ -246,3 +267,5 @@ export const dataLoaderSlice = createSlice({
 function getMessage(error: SerializedError) {
   return isString(error) ? error : (error?.message || error?.name || error?.code) + '';
 }
+
+export const dataLoaderActions = dataLoaderSlice.actions;
