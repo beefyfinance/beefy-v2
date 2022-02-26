@@ -9,6 +9,7 @@ import { fetchAllVaults } from '../actions/vaults';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
+import { selectChainById } from '../selectors/chains';
 
 /**
  * State containing Vault infos
@@ -82,8 +83,9 @@ export const tokensSlice = createSlice({
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
+        const chain = selectChainById(action.payload.state, chainId);
         for (const vault of vaults) {
-          addVaultToState(sliceState, chainId, vault);
+          addVaultToState(sliceState, chain, vault);
         }
       }
     });
@@ -198,9 +200,10 @@ function addBoostToState(
 
 function addVaultToState(
   sliceState: WritableDraft<TokensState>,
-  chainId: ChainEntity['id'],
+  chain: ChainEntity,
   vault: VaultConfig
 ) {
+  const chainId = chain.id;
   if (sliceState.byChainId[chainId] === undefined) {
     sliceState.byChainId[chainId] = {
       byId: {},
@@ -239,7 +242,7 @@ function addVaultToState(
           ? {
               id: earnedTokenId,
               chainId: chainId,
-              decimals: 18, // TODO: not sure about that
+              decimals: chain.walletSettings.nativeCurrency.decimals,
               symbol: vault.earnedToken,
               buyUrl: null,
               type: 'native',
