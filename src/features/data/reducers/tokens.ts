@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllBoosts } from '../actions/boosts';
+import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
@@ -55,6 +56,25 @@ export const tokensSlice = createSlice({
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: builder => {
+    // handle native token config
+    builder.addCase(fetchChainConfigs.fulfilled, (sliceState, action) => {
+      for (const chainConf of action.payload.chainConfigs) {
+        const chainId = chainConf.id;
+
+        if (sliceState.byChainId[chainId] === undefined) {
+          sliceState.byChainId[chainId] = {
+            byId: {},
+            interestingBalanceTokenIds: [],
+            native: null,
+            wnative: null,
+          };
+        }
+        if (!sliceState.byChainId[chainId].native) {
+          sliceState.byChainId[chainId].native = chainConf.walletSettings.nativeCurrency.symbol;
+        }
+      }
+    });
+
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
       for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {

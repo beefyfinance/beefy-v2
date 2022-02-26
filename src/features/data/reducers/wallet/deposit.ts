@@ -19,7 +19,7 @@ import { selectVaultById } from '../../selectors/vaults';
 export type DepositState = {
   initiated: boolean;
   vaultId: VaultEntity['id'];
-  selectedToken: TokenEntity;
+  selectedToken: TokenEntity | null; // while initializing the form, this token is null
   isZap: boolean; // tell us if it's a zap that has been selected
   max: boolean; // this is so we know when to disable the max button
   amount: BigNumber;
@@ -45,6 +45,10 @@ export const depositSlice = createSlice({
   name: 'deposit',
   initialState: initialDepositState,
   reducers: {
+    resetForm(sliceState) {
+      sliceState = initialDepositState;
+    },
+
     setAsset(sliceState, action: PayloadAction<{ tokenId: TokenEntity['id']; state: BeefyState }>) {
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
