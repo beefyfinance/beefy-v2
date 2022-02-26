@@ -6,7 +6,11 @@ import { BoostEntity } from '../../entities/boost';
 import { ChainEntity } from '../../entities/chain';
 import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
-import { selectBoostById } from '../../selectors/boosts';
+import {
+  selectAllVaultBoostIds,
+  selectBoostById,
+  selectIsVaultBoosted,
+} from '../../selectors/boosts';
 import {
   selectIsStandardVaultEarnTokenId,
   selectStandardVaultByEarnTokenId,
@@ -19,6 +23,7 @@ import { initiateDepositForm } from '../../actions/deposit';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../actions/tokens';
 import { initiateWithdrawForm } from '../../actions/withdraw';
 import { initiateBoostForm } from '../../actions/boosts';
+import { BIG_ZERO } from '../../../../helpers/format';
 
 /**
  * State containing user balances state
@@ -204,7 +209,16 @@ function addTokenBalanceToState(
       // this means the user deposited in this vault
       if (selectIsStandardVaultEarnTokenId(state, chainId, tokenBalance.tokenId)) {
         const vaultId = selectStandardVaultByEarnTokenId(state, chainId, tokenBalance.tokenId);
-        addOrRemoveFromDepositedList(walletState, tokenBalance.amount, vaultId);
+
+        // to decide if we want to add or remove the vault we consider both the boost and vault deposit
+        // I know we are adding carrots and oignons here but it's just to check if > 0
+        let totalDepositOrRewards = tokenBalance.amount;
+        for (const boostId of selectAllVaultBoostIds(state, vaultId)) {
+          const boostDeposit = walletState.tokenAmount.byBoostId[boostId]?.balance || BIG_ZERO;
+          const boostRewards = walletState.tokenAmount.byBoostId[boostId]?.rewards || BIG_ZERO;
+          totalDepositOrRewards = totalDepositOrRewards.plus(boostDeposit).plus(boostRewards);
+        }
+        addOrRemoveFromDepositedList(walletState, totalDepositOrRewards, vaultId);
       }
 
       // if the token is the oracleId of a vault
@@ -262,7 +276,12 @@ function addBoostBalanceToState(
 
       const boost = selectBoostById(state, boostBalance.boostId);
       const boostedVault = selectVaultById(state, boost.vaultId);
-      addOrRemoveFromDepositedList(walletState, boostBalance.balance, boostedVault.id);
+      const boostedVaultDeposit =
+        walletState.tokenAmount.byChainId[boost.chainId]?.byTokenId[boostedVault.earnedTokenId]
+          ?.balance || BIG_ZERO;
+      // to decide if we want to add or remove the vault we consider both the boost and vault deposit
+      const allDeposits = boostedVaultDeposit.plus(boostBalance.balance);
+      addOrRemoveFromDepositedList(walletState, allDeposits, boostedVault.id);
     }
   }
 }
