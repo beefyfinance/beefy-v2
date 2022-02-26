@@ -48,7 +48,7 @@ export const selectChainNativeToken = (state: BeefyState, chainId: ChainEntity['
   if (byChainId[chainId] === undefined) {
     throw new Error(`selectChainNativeToken: Unknown chain id ${chainId}`);
   }
-  if (!byChainId[chainId].wnative) {
+  if (!byChainId[chainId].native) {
     // fallback to addressbook token
     throw new Error(
       `selectChainNativeToken: Empty native token for chain id ${chainId}, maybe you need to load the addressbook`

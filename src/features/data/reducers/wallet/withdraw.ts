@@ -27,7 +27,7 @@ export type WithdrawState = {
   vaultId: VaultEntity['id'];
   /** if we do a beefOut, we are actually withdrawing with both LP asset,
    * so we don't have just one selectedToken */
-  selectedToken: TokenEntity | TokenEntity[];
+  selectedToken: TokenEntity | TokenEntity[] | null; // null means form is not loaded yet
   isZap: boolean; // tell us if it's a zap that has been selected
   isZapSwap: boolean; // true if we use a zap + swap
   max: boolean; // this is so we know when to disable the max button
@@ -55,6 +55,10 @@ export const withdrawSlice = createSlice({
   name: 'withdraw',
   initialState: initialWithdrawState,
   reducers: {
+    resetForm(sliceState) {
+      sliceState = initialWithdrawState;
+    },
+
     setAsset(
       sliceState,
       action: PayloadAction<{

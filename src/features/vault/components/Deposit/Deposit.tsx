@@ -1,69 +1,47 @@
 import {
   Box,
   Button,
+  FormControlLabel,
   InputBase,
   makeStyles,
   Paper,
-  Typography,
-  FormControlLabel,
-  RadioGroup,
   Radio,
+  RadioGroup,
+  Typography,
 } from '@material-ui/core';
 import React from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { styles } from '../styles';
-import { Loader } from '../../../../components/loader';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
-import { FeeBreakdown } from '../FeeBreakdown';
-import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
+import { useStepper } from '../../../../components/Steps/hooks';
+import { Step } from '../../../../components/Steps/types';
 import { BeefyState } from '../../../../redux-types';
+import { initDepositForm } from '../../../data/actions/scenarios';
+import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
+import { walletActions } from '../../../data/actions/wallet-actions';
+import { isTokenNative, TokenEntity } from '../../../data/entities/token';
 import { isGovVault, isStandardVault, VaultEntity } from '../../../data/entities/vault';
+import { isFulfilled } from '../../../data/reducers/data-loader';
+import { depositActions } from '../../../data/reducers/wallet/deposit';
+import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
+import { selectChainById } from '../../../data/selectors/chains';
+import { selectChainNativeToken, selectTokenById } from '../../../data/selectors/tokens';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
   selectWalletAddress,
 } from '../../../data/selectors/wallet';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { isFulfilled } from '../../../data/reducers/data-loader';
-import { depositActions } from '../../../data/reducers/wallet/deposit';
 import { selectIsApprovalNeededForDeposit } from '../../../data/selectors/wallet-actions';
-import { selectChainNativeToken, selectTokenById } from '../../../data/selectors/tokens';
-import { selectChainById } from '../../../data/selectors/chains';
-import { initDepositForm } from '../../../data/actions/scenarios';
-import { isTokenNative, TokenEntity } from '../../../data/entities/token';
-import { useStepper } from '../../../../components/Steps/hooks';
-import { Step } from '../../../../components/Steps/types';
-import { walletActions } from '../../../data/actions/wallet-actions';
-import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
-import { TokenWithBalance } from '../TokenWithBalance';
 import { BoostWidget } from '../BoostWidget';
-import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
+import { FeeBreakdown } from '../FeeBreakdown';
+import { styles } from '../styles';
+import { TokenWithBalance } from '../TokenWithBalance';
+import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
 
 const useStyles = makeStyles(styles as any);
 
 export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-
-  const formReady = useSelector(
-    (state: BeefyState) =>
-      isFulfilled(state.ui.dataLoader.byChainId[vault.chainId].addressBook) &&
-      isFulfilled(state.ui.dataLoader.global.depositForm)
-  );
-  const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
-  );
-
-  // initialize our form
-  const store = useStore();
-  React.useEffect(() => {
-    initDepositForm(store, vaultId, walletAddress);
-  }, [store, vaultId, walletAddress]);
-
-  return formReady ? <DepositForm vaultId={vaultId} /> : <Loader />;
-};
-
-const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -73,13 +51,28 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
+
+  const walletAddress = useSelector((state: BeefyState) =>
+    isWalletConnected ? selectWalletAddress(state) : null
+  );
+
+  // initialize form data
+  React.useEffect(() => {
+    // init form on mount
+    initDepositForm(store, vaultId, walletAddress);
+    // reset form on unmount
+    return () => {
+      store.dispatch(depositActions.resetForm());
+    };
+  }, [store, vaultId, walletAddress]);
+
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const oracleToken = useSelector((state: BeefyState) =>
     selectTokenById(state, vault.chainId, vault.oracleId)
   );
   const formState = useSelector((state: BeefyState) => state.ui.deposit);
   const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
-  const isSelectedNative = formState.selectedToken.id === native.id;
+  const isSelectedNative = formState.selectedToken && formState.selectedToken.id === native.id;
   const displayBoostWidget = useSelector((state: BeefyState) =>
     selectShouldDisplayBoostWidget(state, vaultId)
   );
@@ -98,14 +91,21 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       : vault.earnContractAddress;
 
   const needsApproval = useSelector((state: BeefyState) =>
-    formState.selectedToken.id !== native.id && spenderAddress
+    formState.selectedToken && formState.selectedToken.id !== native.id && spenderAddress
       ? selectIsApprovalNeededForDeposit(state, spenderAddress)
       : false
   );
 
+  const formDataLoaded = useSelector(
+    (state: BeefyState) =>
+      isFulfilled(state.ui.dataLoader.byChainId[vault.chainId].addressBook) &&
+      isFulfilled(state.ui.dataLoader.global.depositForm)
+  );
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
 
   const [startStepper, isStepping, Stepper] = useStepper(vaultId, () => {});
+
+  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
   const handleAsset = (tokenId: TokenEntity['id']) => {
     dispatch(depositActions.setAsset({ tokenId, state: store.getState() }));
@@ -186,7 +186,7 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
         <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
         <RadioGroup
-          value={formState.selectedToken.id}
+          value={formState.selectedToken ? formState.selectedToken.id : ''}
           aria-label="deposit-asset"
           name="deposit-asset"
           onChange={e => handleAsset(e.target.value)}
@@ -198,7 +198,7 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
               label={<TokenWithBalance token={oracleToken} vaultId={vaultId} />}
               onClick={formState.isZap ? undefined : handleMax}
-              disabled={isStepping}
+              disabled={!formReady}
             />
             <VaultBuyLinks vaultId={vaultId} />
           </div>
@@ -209,7 +209,7 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               value={zapToken.symbol}
               control={<Radio />}
               label={<TokenWithBalance token={zapToken} vaultId={vaultId} />}
-              disabled={isStepping}
+              disabled={!formReady}
             />
           ))}
         </RadioGroup>
@@ -218,22 +218,28 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
               <AssetsImage
-                img={formState.selectedToken.id === vault.oracleId ? vault.logoUri : null}
+                img={
+                  formState.selectedToken && formState.selectedToken.id === vault.oracleId
+                    ? vault.logoUri
+                    : null
+                }
                 assets={
-                  formState.selectedToken.id === vault.oracleId
+                  !formState.selectedToken
+                    ? vault.assetIds
+                    : formState.selectedToken.id === vault.oracleId
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }
-                alt={formState.selectedToken.symbol}
+                alt={formState.selectedToken ? formState.selectedToken.symbol : ''}
               />
             </Box>
             <InputBase
               placeholder="0.00"
               value={formState.formattedInput}
               onChange={e => handleInput(e.target.value)}
-              disabled={isStepping}
+              disabled={!formReady}
             />
-            <Button onClick={handleMax} disabled={isStepping}>
+            <Button onClick={handleMax} disabled={!formReady}>
               {t('Transact-Max')}
             </Button>
           </Paper>
@@ -265,9 +271,7 @@ const DepositForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 onClick={handleDeposit}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                disabled={
-                  formState.amount.isLessThanOrEqualTo(0) || isZapEstimateLoading || isStepping
-                }
+                disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
               >
                 {isZapEstimateLoading
                   ? t('Zap-Estimating')

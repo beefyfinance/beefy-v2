@@ -1,33 +1,35 @@
 import {
   Box,
   Button,
+  FormControlLabel,
   InputBase,
   makeStyles,
   Paper,
-  Typography,
-  FormControlLabel,
-  RadioGroup,
   Radio,
+  RadioGroup,
+  Typography,
 } from '@material-ui/core';
+import { isArray } from 'lodash';
 import React from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Loader } from '../../../../components/loader';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
-import { FeeBreakdown } from '../FeeBreakdown';
-import { styles } from '../styles';
-import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
-import { BeefyState } from '../../../../redux-types';
-import { isFulfilled } from '../../../data/reducers/data-loader';
-import { initWithdrawForm } from '../../../data/actions/scenarios';
-import { isGovVault, isStandardVault, VaultEntity } from '../../../data/entities/vault';
+import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
+import { BeefyState } from '../../../../redux-types';
+import { initWithdrawForm } from '../../../data/actions/scenarios';
+import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
+import { walletActions } from '../../../data/actions/wallet-actions';
+import { TokenEntity } from '../../../data/entities/token';
+import { isGovVault, isStandardVault, VaultEntity } from '../../../data/entities/vault';
+import { isFulfilled } from '../../../data/reducers/data-loader';
+import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import {
-  selectCurrentChainId,
-  selectIsWalletConnected,
-  selectWalletAddress,
-} from '../../../data/selectors/wallet';
-import { selectVaultById } from '../../../data/selectors/vaults';
+  selectGovVaultPendingRewardsInToken,
+  selectGovVaultUserStackedBalanceInOracleToken,
+  selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
+} from '../../../data/selectors/balance';
+import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import {
   selectChainNativeToken,
@@ -35,45 +37,22 @@ import {
   selectErc20TokenById,
   selectTokenById,
 } from '../../../data/selectors/tokens';
-import { useStepper } from '../../../../components/Steps/hooks';
-import { walletActions } from '../../../data/actions/wallet-actions';
-import { selectIsApprovalNeededForWithdraw } from '../../../data/selectors/wallet-actions';
-import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
-import { TokenEntity } from '../../../data/entities/token';
+import { selectVaultById } from '../../../data/selectors/vaults';
 import {
-  selectGovVaultPendingRewardsInToken,
-  selectGovVaultUserStackedBalanceInOracleToken,
-  selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
-} from '../../../data/selectors/balance';
-import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
-import { isArray } from 'lodash';
-import { TokenWithDeposit } from '../TokenWithDeposit';
+  selectCurrentChainId,
+  selectIsWalletConnected,
+  selectWalletAddress,
+} from '../../../data/selectors/wallet';
+import { selectIsApprovalNeededForWithdraw } from '../../../data/selectors/wallet-actions';
 import { BoostWidget } from '../BoostWidget';
-import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
+import { FeeBreakdown } from '../FeeBreakdown';
+import { styles } from '../styles';
+import { TokenWithDeposit } from '../TokenWithDeposit';
+import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
 
 const useStyles = makeStyles(styles as any);
 
 export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const formReady = useSelector(
-    (state: BeefyState) =>
-      isFulfilled(state.ui.dataLoader.byChainId[vault.chainId].addressBook) &&
-      isFulfilled(state.ui.dataLoader.global.withdrawForm)
-  );
-  const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
-  );
-
-  // initialize our form
-  const store = useStore();
-  React.useEffect(() => {
-    initWithdrawForm(store, vaultId, walletAddress);
-  }, [store, vaultId, walletAddress]);
-
-  return formReady ? <WithdrawForm vaultId={vaultId} /> : <Loader />;
-};
-
-const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -84,6 +63,19 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
+  const walletAddress = useSelector((state: BeefyState) =>
+    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
+  );
+
+  // initialize our form
+  React.useEffect(() => {
+    initWithdrawForm(store, vaultId, walletAddress);
+    // reset form on unmount
+    return () => {
+      store.dispatch(withdrawActions.resetForm());
+    };
+  }, [store, vaultId, walletAddress]);
+
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const oracleToken = useSelector((state: BeefyState) =>
     selectTokenById(state, vault.chainId, vault.oracleId)
@@ -97,7 +89,9 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     selectChainWrappedNativeToken(state, vault.chainId)
   );
   const isSelectedNative =
-    !isArray(formState.selectedToken) && formState.selectedToken.id === native.id;
+    !isArray(formState.selectedToken) &&
+    formState.selectedToken &&
+    formState.selectedToken.id === native.id;
 
   const spenderAddress =
     // no allowance needed for native tokens
@@ -113,12 +107,21 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       : vault.earnContractAddress;
 
   const needsApproval = useSelector((state: BeefyState) =>
-    !isSelectedNative && spenderAddress
+    formState.vaultId && !isSelectedNative && spenderAddress
       ? selectIsApprovalNeededForWithdraw(state, spenderAddress)
       : false
   );
 
+  const formDataLoaded = useSelector(
+    (state: BeefyState) =>
+      isFulfilled(state.ui.dataLoader.byChainId[vault.chainId].addressBook) &&
+      isFulfilled(state.ui.dataLoader.global.withdrawForm)
+  );
+
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
+  const [startStepper, isStepping, Stepper] = useStepper(vault.id, () => {});
+
+  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
   const hasGovVaultRewards = useSelector((state: BeefyState) =>
     selectGovVaultPendingRewardsInToken(state, vaultId).isGreaterThan(0)
@@ -133,8 +136,6 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const displayBoostWidget = useSelector((state: BeefyState) =>
     selectShouldDisplayBoostWidget(state, vaultId)
   );
-
-  const [startStepper, isStepping, Stepper] = useStepper(vault.id, () => {});
 
   const handleWithdraw = () => {
     const steps: Step[] = [];
@@ -263,7 +264,9 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           value={
             isArray(formState.selectedToken)
               ? formState.selectedToken.map(t => t.id).join('+')
-              : formState.selectedToken.id
+              : formState.selectedToken
+              ? formState.selectedToken.id
+              : ''
           }
           aria-label="deposit-asset"
           name="deposit-asset"
@@ -283,7 +286,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
               label={<TokenWithDeposit vaultId={vaultId} />}
               onClick={formState.isZap ? undefined : handleMax}
-              disabled={isStepping}
+              disabled={!formReady}
             />
             <VaultBuyLinks vaultId={vaultId} />
           </div>
@@ -293,7 +296,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               value={vault.assetIds.join('+')}
               control={<Radio />}
               label={<TokenWithDeposit convertAmountTo={vault.assetIds} vaultId={vaultId} />}
-              disabled={isStepping}
+              disabled={!formReady}
             />
           )}
           {formState.zapOptions?.tokens.map(
@@ -304,7 +307,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                   value={zapToken.symbol}
                   control={<Radio />}
                   label={<TokenWithDeposit convertAmountTo={zapToken.id} vaultId={vaultId} />}
-                  disabled={isStepping}
+                  disabled={!formReady}
                 />
               )
           )}
@@ -321,9 +324,9 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               placeholder="0.00"
               value={formState.formattedInput}
               onChange={e => handleInput(e.target.value)}
-              disabled={isStepping}
+              disabled={!formReady}
             />
-            <Button onClick={handleMax} disabled={isStepping}>
+            <Button onClick={handleMax} disabled={!formReady}>
               {t('Transact-Max')}
             </Button>
           </Paper>
@@ -355,7 +358,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                   <>
                     <Button
                       onClick={handleClaim}
-                      disabled={!hasGovVaultRewards || isStepping}
+                      disabled={!hasGovVaultRewards || !formReady}
                       className={classes.btnSubmit}
                       fullWidth={true}
                     >
@@ -365,13 +368,13 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                       onClick={handleWithdraw}
                       className={classes.btnSubmitSecondary}
                       fullWidth={true}
-                      disabled={formState.amount.isLessThanOrEqualTo(0) || isStepping}
+                      disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
                     >
                       {formState.max ? t('Withdraw-All') : t('Withdraw-Verb')}
                     </Button>
                     <Button
                       onClick={handleExit}
-                      disabled={!userHasBalanceInVault || isStepping}
+                      disabled={!userHasBalanceInVault || !formReady}
                       className={classes.btnSubmitSecondary}
                       fullWidth={true}
                     >
@@ -383,9 +386,7 @@ const WithdrawForm = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     onClick={handleWithdraw}
                     className={classes.btnSubmit}
                     fullWidth={true}
-                    disabled={
-                      formState.amount.isLessThanOrEqualTo(0) || isZapEstimateLoading || isStepping
-                    }
+                    disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
                   >
                     {isZapEstimateLoading
                       ? t('Zap-Estimating')

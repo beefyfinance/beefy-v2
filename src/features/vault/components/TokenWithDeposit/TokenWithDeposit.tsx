@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { isArray } from 'lodash';
@@ -83,10 +84,10 @@ export function TokenWithDeposit({
                 {formatBigDecimals(amount, 4)} {symbol}
               </>
             )),
-            () => (
-              <>{' + '}</>
-            )
-          )}
+            () => <>{' + '}</>
+          ).map((elem, i) => (
+            <React.Fragment key={i}>{elem}</React.Fragment>
+          ))}
         </Typography>
       </Box>
     </Box>
