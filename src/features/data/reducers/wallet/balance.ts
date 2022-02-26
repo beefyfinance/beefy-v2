@@ -24,6 +24,7 @@ import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../../action
 import { initiateWithdrawForm } from '../../actions/withdraw';
 import { initiateBoostForm } from '../../actions/boosts';
 import { BIG_ZERO } from '../../../../helpers/format';
+import { uniq } from 'lodash';
 
 /**
  * State containing user balances state
@@ -273,15 +274,27 @@ function addBoostBalanceToState(
         balance: boostBalance.balance,
         rewards: boostBalance.rewards,
       };
+    }
+  }
 
+  // once we added all boosts, find out if we have staked something in each vault
+  const allVaultIds = uniq(
+    boostBalances.map(boostBalance => {
       const boost = selectBoostById(state, boostBalance.boostId);
-      const boostedVault = selectVaultById(state, boost.vaultId);
-      const boostedVaultDeposit =
-        walletState.tokenAmount.byChainId[boost.chainId]?.byTokenId[boostedVault.earnedTokenId]
-          ?.balance || BIG_ZERO;
-      // to decide if we want to add or remove the vault we consider both the boost and vault deposit
-      const allDeposits = boostedVaultDeposit.plus(boostBalance.balance);
-      addOrRemoveFromDepositedList(walletState, allDeposits, boostedVault.id);
+      return boost.vaultId;
+    })
+  );
+  for (const vaultId of allVaultIds) {
+    const vault = selectVaultById(state, vaultId);
+    const vaultBalance =
+      walletState.tokenAmount.byChainId[vault.chainId]?.byTokenId[vault.earnedTokenId]?.balance ||
+      BIG_ZERO;
+    let totalDepositOrRewards = new BigNumber(vaultBalance);
+    for (const boostId of selectAllVaultBoostIds(state, vaultId)) {
+      const boostDeposit = walletState.tokenAmount.byBoostId[boostId]?.balance || BIG_ZERO;
+      const boostRewards = walletState.tokenAmount.byBoostId[boostId]?.rewards || BIG_ZERO;
+      totalDepositOrRewards = totalDepositOrRewards.plus(boostDeposit).plus(boostRewards);
+      addOrRemoveFromDepositedList(walletState, totalDepositOrRewards, vaultId);
     }
   }
 }

@@ -177,4 +177,67 @@ describe('Balance slice tests', () => {
       newState.byAddress['0x000000000000'].depositedVaultIds.includes('banana-banana-busd')
     ).toBeTruthy();
   });
+
+  it('should consider a vault as "staked" when boost balance is zero and boost rewards is non-zero', async () => {
+    // we have loaded some entities already
+    const store = await getBeefyTestingStore();
+    const payload: FetchAllBalanceFulfilledPayload = {
+      chainId: 'bsc',
+      state: store.getState(),
+      walletAddress: '0x000000000000',
+      data: {
+        // we have NOT staked in the vault
+        tokens: [{ tokenId: 'mooApeBANANA-BUSD', amount: new BigNumber(0) }],
+        govVaults: [],
+        boosts: [
+          {
+            boostId: 'moo_banana-banana-busd-bitcrush',
+            balance: new BigNumber(0), // but boost is empty
+            rewards: new BigNumber(1), // BUT we have some rewards
+          },
+        ],
+      },
+    };
+
+    // we should expect the vault to be included in the deposited list
+    const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
+    const newState = balanceSlice.reducer(initialBalanceState, action);
+    expect(
+      newState.byAddress['0x000000000000'].depositedVaultIds.includes('banana-banana-busd')
+    ).toBeTruthy();
+  });
+
+  it('should consider a vault as "staked" when the first boost balance is non-zero but last boost balance is zero', async () => {
+    // we have loaded some entities already
+    const store = await getBeefyTestingStore();
+    const payload: FetchAllBalanceFulfilledPayload = {
+      chainId: 'bsc',
+      state: store.getState(),
+      walletAddress: '0x000000000000',
+      data: {
+        // we have nothing in the vault
+        tokens: [{ tokenId: 'mooApeBNB-STARS', amount: new BigNumber(0) }],
+        govVaults: [],
+        boosts: [
+          {
+            boostId: 'moo_banana-bnb-stars-mogul2',
+            balance: new BigNumber(1), // this boost is not empty
+            rewards: new BigNumber(1), // this boost is not empty
+          },
+          {
+            boostId: 'moo_banana-bnb-stars-mogul',
+            balance: new BigNumber(0), // but boost is empty
+            rewards: new BigNumber(0),
+          },
+        ],
+      },
+    };
+
+    // we should expect the vault to be included in the deposited list
+    const action = { type: fetchAllBalanceAction.fulfilled, payload: payload };
+    const newState = balanceSlice.reducer(initialBalanceState, action);
+    expect(
+      newState.byAddress['0x000000000000'].depositedVaultIds.includes('banana-bnb-stars')
+    ).toBeTruthy();
+  });
 });
