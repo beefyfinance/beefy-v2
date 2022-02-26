@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
 import { isEmpty, sortBy } from 'lodash';
-import { useSelector } from 'react-redux';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -16,7 +15,7 @@ import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vaul
 import {
   selectIsBeefyToken,
   selectIsTokenBluechip,
-  selectIsTokenStable,
+  selectIsTokenStable
 } from '../selectors/tokens';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
@@ -95,10 +94,9 @@ export const vaultsSlice = createSlice({
 
       // If new vaults were added, apply default sorting
       if (finalVaultAmount !== initialVaultAmount) {
-        const allVaults = sliceState.allIds.map(id => sliceState.byId[id]);
-        sliceState.allIds = sortBy(allVaults, vault => {
-          return -vault.createdAt
-        }).map(vault => vault.id);
+        sliceState.allIds = sortBy(sliceState.allIds, id => {
+          return -sliceState.byId[id].createdAt
+        });
       }
     });
 
