@@ -7,6 +7,9 @@ export const styles = theme => ({
     alignItems: 'center',
     borderRadius: '8px',
     marginLeft: '24px',
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: '12px',
+    },
     '& .MuiTypography-root': {
       fontWeight: 700,
     },

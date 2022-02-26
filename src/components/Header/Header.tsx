@@ -12,6 +12,7 @@ import {
   Container,
   Typography,
   Divider,
+  useMediaQuery,
 } from '@material-ui/core';
 import { Menu, Close } from '@material-ui/icons';
 import { styles } from './styles';
@@ -119,6 +120,8 @@ export const Header = connect((state: BeefyState) => {
     const classes = useStyles();
     const { t } = useTranslation();
 
+    const isMobile = useMediaQuery('(max-width: 500px)');
+
     const [mobileOpen, setMobileOpen] = useState(false);
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
@@ -142,7 +145,14 @@ export const Header = connect((state: BeefyState) => {
             <Toolbar disableGutters={true}>
               <Box sx={{ flexGrow: 1 }}>
                 <Link className={classes.beefy} to="/">
-                  <img alt="BIFI" src={require(`../../images/header-logo.svg`).default} />
+                  <img
+                    alt="BIFI"
+                    src={
+                      isMobile
+                        ? require(`../../images/header-logo-notext.svg`).default
+                        : require(`../../images/header-logo.svg`).default
+                    }
+                  />
                 </Link>
               </Box>
               <Hidden mdDown>
