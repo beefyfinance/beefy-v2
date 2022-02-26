@@ -8,13 +8,7 @@ import { fetchAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
-import {
-  isTokenErc20,
-  isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenNative,
-} from '../entities/token';
+import { isTokenErc20, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
 
 /**
  * State containing Vault infos
@@ -69,9 +63,19 @@ export const tokensSlice = createSlice({
             wnative: null,
           };
         }
-        if (!sliceState.byChainId[chainId].native) {
-          sliceState.byChainId[chainId].native = chainConf.walletSettings.nativeCurrency.symbol;
-        }
+
+        const token: TokenNative = {
+          id: chainConf.walletSettings.nativeCurrency.symbol,
+          chainId: chainId,
+          decimals: 18, // TODO: not sure about that
+          symbol: chainConf.walletSettings.nativeCurrency.symbol,
+          buyUrl: null,
+          type: 'native',
+          website: null,
+          description: null,
+        };
+        sliceState.byChainId[chainId].byId[token.id] = token;
+        sliceState.byChainId[chainId].native = token.id;
       }
     });
 
@@ -133,9 +137,6 @@ export const tokensSlice = createSlice({
       for (const [addressBookId, token] of Object.entries(action.payload.addressBook)) {
         if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
           sliceState.byChainId[chainId].byId[token.id] = token;
-        }
-        if (isTokenNative(token) && !sliceState.byChainId[chainId].native) {
-          sliceState.byChainId[chainId].native = token.id;
         }
         if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
           sliceState.byChainId[chainId].wnative = token.id;
@@ -231,16 +232,31 @@ function addVaultToState(
   if (sliceState.byChainId[chainId].byId[earnedTokenId] === undefined) {
     // gov vaults yield native tokens
     if (vault.isGovVault) {
-      const token: TokenEntity = {
-        id: earnedTokenId,
-        chainId: chainId,
-        decimals: 18, // TODO: not sure about that
-        symbol: vault.earnedToken,
-        buyUrl: null,
-        type: 'native',
-        website: null,
-        description: null,
-      };
+      // all gov vaults yield Wnative tokens
+
+      const token: TokenEntity =
+        vault.earnedToken === sliceState.byChainId[chainId].native
+          ? {
+              id: earnedTokenId,
+              chainId: chainId,
+              decimals: 18, // TODO: not sure about that
+              symbol: vault.earnedToken,
+              buyUrl: null,
+              type: 'native',
+              website: null,
+              description: null,
+            }
+          : {
+              id: earnedTokenId,
+              chainId: chainId,
+              decimals: 18, // TODO: not sure about that
+              contractAddress: vault.earnContractAddress,
+              symbol: vault.earnedToken,
+              buyUrl: null,
+              type: 'erc20',
+              website: null,
+              description: null,
+            };
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
       sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
