@@ -5,6 +5,18 @@ import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { selectChainById } from './chains';
 
+export const selectIsTokenLoaded = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenId: TokenEntity['id']
+) => {
+  const byChainId = state.entities.tokens.byChainId;
+  if (byChainId[chainId] === undefined) {
+    throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
+  }
+  return byChainId[chainId].byId[tokenId] !== undefined;
+};
+
 export const selectTokenById = (
   state: BeefyState,
   chainId: ChainEntity['id'],
