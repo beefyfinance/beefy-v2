@@ -78,6 +78,9 @@ Object {
       "status": "init",
     },
   },
+  "instances": Object {
+    "wallet": false,
+  },
 }
 `;
 
@@ -158,6 +161,9 @@ Object {
       "error": null,
       "status": "init",
     },
+  },
+  "instances": Object {
+    "wallet": false,
   },
 }
 `;
@@ -240,6 +246,9 @@ Object {
       "status": "init",
     },
   },
+  "instances": Object {
+    "wallet": false,
+  },
 }
 `;
 
@@ -321,6 +330,9 @@ Object {
       "status": "init",
     },
   },
+  "instances": Object {
+    "wallet": false,
+  },
 }
 `;
 
@@ -378,6 +390,9 @@ Object {
       "error": null,
       "status": "init",
     },
+  },
+  "instances": Object {
+    "wallet": false,
   },
 }
 `;
@@ -437,6 +452,9 @@ Object {
       "status": "init",
     },
   },
+  "instances": Object {
+    "wallet": false,
+  },
 }
 `;
 
@@ -494,6 +512,9 @@ Object {
       "error": null,
       "status": "init",
     },
+  },
+  "instances": Object {
+    "wallet": false,
   },
 }
 `;
@@ -553,6 +574,9 @@ Object {
       "status": "init",
     },
   },
+  "instances": Object {
+    "wallet": false,
+  },
 }
 `;
 
@@ -610,6 +634,9 @@ Object {
       "error": null,
       "status": "init",
     },
+  },
+  "instances": Object {
+    "wallet": false,
   },
 }
 `;
@@ -669,6 +696,9 @@ Object {
       "status": "init",
     },
   },
+  "instances": Object {
+    "wallet": false,
+  },
 }
 `;
 
@@ -726,6 +756,9 @@ Object {
       "error": null,
       "status": "init",
     },
+  },
+  "instances": Object {
+    "wallet": false,
   },
 }
 `;
