@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, Hidden, makeStyles, Typography } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { isArray } from 'lodash';
 import { useSelector } from 'react-redux';
@@ -72,7 +72,15 @@ export function TokenWithDeposit({
       <Box lineHeight={0}>
         <AssetsImage
           img={oracleToken.id === vault.oracleId ? vault.logoUri : null}
-          assets={oracleToken.id === vault.oracleId ? vault.assetIds : [oracleToken.id]}
+          assets={
+            convertAmountTo
+              ? isArray(convertAmountTo)
+                ? convertAmountTo
+                : [convertAmountTo]
+              : oracleToken.id === vault.oracleId
+              ? vault.assetIds
+              : [oracleToken.id]
+          }
           alt={oracleToken.id}
         />
       </Box>
@@ -81,7 +89,13 @@ export function TokenWithDeposit({
           {intersperse(
             amountsAndSymbol.map(([amount, symbol]) => (
               <>
-                {formatBigDecimals(amount, 4)} {symbol}
+                <span style={{ display: 'none' }}>
+                  {/* This will be implemented later, we need to make the withdraw 
+                  input mimick any of those display token, didn't want to delete this
+                  to avoid you some work later */}
+                  {formatBigDecimals(amount, 4)}{' '}
+                </span>
+                {symbol}
               </>
             )),
             () => <>{' + '}</>
