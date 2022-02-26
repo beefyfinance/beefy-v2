@@ -32,6 +32,7 @@ import {
 import { ChainEntity } from '../../features/data/entities/chain';
 import { selectAllChains } from '../../features/data/selectors/chains';
 import { askForNetworkChange } from '../../features/data/actions/wallet';
+import { NetworkStatus } from '../NetworkStatus';
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
 
@@ -72,14 +73,9 @@ const NavLinks = () => {
       <NavLink activeClassName={classes.active} className={classes.navLink} key={'explore'} to="/">
         {t('Header-Explore')}
       </NavLink>
-        <NavLink
-          activeClassName={classes.active}
-          className={classes.navLink}
-          key={'nfts'}
-          to="/nfts"
-        >
-          {t('Header-Nfts')}
-        </NavLink>
+      <NavLink activeClassName={classes.active} className={classes.navLink} key={'nfts'} to="/nfts">
+        {t('Header-Nfts')}
+      </NavLink>
       {navLinks.map(({ title, path }) => (
         <Typography key={title} variant="body1" className={classes.navLink}>
           <a target="_blank" rel="noreferrer" href={path} key={title}>
@@ -91,7 +87,6 @@ const NavLinks = () => {
     </>
   );
 };
-
 
 function renderChainListValue(value: string) {
   return (
@@ -174,9 +169,12 @@ export const Header = connect((state: BeefyState) => {
                     </Box>
                   )}
                 </Hidden>
-                <Suspense fallback={<>...</>}>
-                  <WalletContainer />
-                </Suspense>
+                <NetworkStatus />
+                <div className={classes.walletContainer}>
+                  <Suspense fallback={<>...</>}>
+                    <WalletContainer />
+                  </Suspense>
+                </div>
               </Box>
               <Hidden lgUp>
                 <Box ml={2}>

@@ -7,6 +7,7 @@ import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectVaultByChainId, selectVaultById } from '../selectors/vaults';
+import { featureFlag_simulateRpcError } from '../utils/feature-flags';
 
 interface ActionParams {
   chainId: ChainEntity['id'];
@@ -24,6 +25,10 @@ export const fetchAllContractDataByChainAction = createAsyncThunk<
   ActionParams,
   { state: BeefyState }
 >('contract-data/fetchAllContractDataByChainAction', async ({ chainId }, { getState }) => {
+  if (featureFlag_simulateRpcError(chainId)) {
+    throw new Error('Simulated RPC error');
+  }
+
   const state = getState();
   const chain = selectChainById(state, chainId);
   const contractApi = await getContractDataApi(chain);
