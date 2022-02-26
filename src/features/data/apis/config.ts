@@ -21,6 +21,7 @@ export interface VaultConfig {
   tokenDescriptionUrl?: string | null;
   earnedToken: string;
   earnedTokenAddress: string;
+  earnedTokenDecimals?: number | null;
   earnContractAddress: string;
   pricePerFullShare: number;
   tvl: number;
