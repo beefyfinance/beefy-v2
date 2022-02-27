@@ -95,7 +95,7 @@ export function TokenWithDeposit({
           {intersperse(
             amountsAndSymbol.map(([amount, symbol]) => (
               <>
-                <span style={{ display: 'none' }}>
+                <span style={{ display: convertAmountTo ? 'none' : undefined }}>
                   {/* This will be implemented later, we need to make the withdraw 
                   input mimick any of those display token, didn't want to delete this
                   to avoid you some work later */}
