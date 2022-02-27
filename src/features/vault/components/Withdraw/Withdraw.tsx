@@ -32,7 +32,6 @@ import {
 import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import {
-  selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectErc20TokenById,
   selectTokenById,
@@ -84,14 +83,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     selectErc20TokenById(state, vault.chainId, vault.earnedTokenId, true)
   );
   const formState = useSelector((state: BeefyState) => state.ui.withdraw);
-  const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
   const wnative = useSelector((state: BeefyState) =>
     selectChainWrappedNativeToken(state, vault.chainId)
   );
-  const isSelectedNative =
-    !isArray(formState.selectedToken) &&
-    formState.selectedToken &&
-    formState.selectedToken.id === native.id;
 
   const spenderAddress = formState.isZap
     ? formState.zapOptions?.address || null

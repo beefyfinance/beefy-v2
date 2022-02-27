@@ -69,15 +69,16 @@ export const tokensSlice = createSlice({
           };
         }
 
+        const tokenId = chainConf.walletSettings.nativeCurrency.symbol;
         const token: TokenNative = {
-          id: chainConf.walletSettings.nativeCurrency.symbol,
+          id: tokenId,
           chainId: chainId,
           decimals: 18, // TODO: not sure about that
           symbol: chainConf.walletSettings.nativeCurrency.symbol,
-          buyUrl: null,
           type: 'native',
-          website: null,
-          description: null,
+          buyUrl: sliceState.byChainId[chainId].byId[tokenId]?.buyUrl ?? null,
+          website: sliceState.byChainId[chainId].byId[tokenId]?.website ?? null,
+          description: sliceState.byChainId[chainId].byId[tokenId]?.description ?? null,
         };
         sliceState.byChainId[chainId].byId[token.id] = token;
         sliceState.byChainId[chainId].native = token.id;
@@ -157,6 +158,11 @@ function addAddressBookToState(
   for (const [addressBookId, token] of Object.entries(addressBookPayload.addressBook)) {
     if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
       sliceState.byChainId[chainId].byId[token.id] = token;
+    } else {
+      const existingToken = sliceState.byChainId[chainId].byId[token.id];
+      existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
+      existingToken.description = existingToken.description || token.description;
+      existingToken.website = existingToken.website || token.website;
     }
     if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
       sliceState.byChainId[chainId].wnative = token.id;
@@ -260,10 +266,10 @@ function addVaultToState(
               chainId: chainId,
               decimals: chain.walletSettings.nativeCurrency.decimals,
               symbol: vault.earnedToken,
-              buyUrl: null,
               type: 'native',
-              website: null,
-              description: null,
+              buyUrl: sliceState.byChainId[chainId].byId[earnedTokenId]?.buyUrl ?? null,
+              website: sliceState.byChainId[chainId].byId[earnedTokenId]?.website ?? null,
+              description: sliceState.byChainId[chainId].byId[earnedTokenId]?.description ?? null,
             }
           : {
               id: earnedTokenId,
@@ -271,10 +277,10 @@ function addVaultToState(
               decimals: vault.earnedTokenDecimals ?? 18,
               contractAddress: vault.earnedTokenAddress,
               symbol: vault.earnedToken,
-              buyUrl: null,
               type: 'erc20',
-              website: null,
-              description: null,
+              buyUrl: sliceState.byChainId[chainId].byId[earnedTokenId]?.buyUrl ?? null,
+              website: sliceState.byChainId[chainId].byId[earnedTokenId]?.website ?? null,
+              description: sliceState.byChainId[chainId].byId[earnedTokenId]?.description ?? null,
             };
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
@@ -286,9 +292,9 @@ function addVaultToState(
         contractAddress: vault.earnedTokenAddress,
         decimals: 18, // TODO: not sure about that
         symbol: vault.earnedToken,
-        buyUrl: null,
-        description: null,
-        website: null,
+        buyUrl: sliceState.byChainId[chainId].byId[earnedTokenId]?.buyUrl ?? null,
+        website: sliceState.byChainId[chainId].byId[earnedTokenId]?.website ?? null,
+        description: sliceState.byChainId[chainId].byId[earnedTokenId]?.description ?? null,
         type: 'erc20',
       };
       // temporaryWrappedtokenFix(token);
