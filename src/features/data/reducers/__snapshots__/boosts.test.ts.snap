@@ -1,5 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Boosts slice tests should correctly handle mooFuse boost config 1`] = `
+Object {
+  "allIds": Array [
+    "moo_fusefi-wfuse-usdc-fuse",
+  ],
+  "byChainId": Object {
+    "fuse": Object {
+      "activeBoostsIds": Array [],
+      "allBoostsIds": Array [
+        "moo_fusefi-wfuse-usdc-fuse",
+      ],
+      "expiredBoostsIds": Array [],
+      "prestakeBoostsIds": Array [],
+    },
+  },
+  "byId": Object {
+    "moo_fusefi-wfuse-usdc-fuse": Object {
+      "assets": Array [
+        "USDC",
+        "FUSE",
+      ],
+      "chainId": "fuse",
+      "earnContractAddress": "0x405EE7F4f067604b787346bC22ACb66b06b15A4B",
+      "earnedTokenId": "mooFuse",
+      "id": "moo_fusefi-wfuse-usdc-fuse",
+      "logo": undefined,
+      "name": "Fuse",
+      "partnerIds": Array [
+        "https://www.fuse.io",
+      ],
+      "vaultId": "voltage-wfuse-usdc",
+    },
+  },
+  "byVaultId": Object {
+    "voltage-wfuse-usdc": Object {
+      "activeBoostsIds": Array [],
+      "allBoostsIds": Array [
+        "moo_fusefi-wfuse-usdc-fuse",
+      ],
+      "expiredBoostsIds": Array [],
+      "prestakeBoostsIds": Array [],
+    },
+  },
+  "periodFinish": Object {},
+}
+`;
+
 exports[`Boosts slice tests should update state on fulfilled boost contract data 1`] = `
 Object {
   "allIds": Array [
