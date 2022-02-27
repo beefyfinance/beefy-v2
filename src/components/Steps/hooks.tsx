@@ -8,7 +8,7 @@ import { StepperState } from './types';
 
 export function useStepper(
   vaultId: VaultEntity['id'],
-  onClose: () => unknown
+  onClose?: () => unknown
 ): [(steps: StepperState['items']) => unknown, boolean, React.FC] {
   const [steps, setSteps] = React.useState<StepperState>({
     modal: false,
@@ -16,6 +16,7 @@ export function useStepper(
     items: [],
     finished: false,
   });
+
   const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
   const dispatch = useDispatch();
 
@@ -25,7 +26,7 @@ export function useStepper(
   }, [onClose, setSteps]);
 
   const Stepper: React.FC = React.useMemo(
-    () => () => <Steps vaultId={vaultId} steps={steps} handleClose={handleClose} />,
+    () => React.memo(() => <Steps vaultId={vaultId} steps={steps} handleClose={handleClose} />),
     [vaultId, steps, handleClose]
   );
 

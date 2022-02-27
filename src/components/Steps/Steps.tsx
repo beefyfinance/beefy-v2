@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Button, makeStyles, Typography, Snackbar, IconButton } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +16,7 @@ import { formatBigDecimals } from '../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
 
-export const Steps = ({
+const _Steps = ({
   vaultId,
   steps,
   handleClose,
@@ -227,6 +228,8 @@ export const Steps = ({
     </Snackbar>
   );
 };
+
+export const Steps = React.memo(_Steps);
 
 function TransactionLink({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();

@@ -99,7 +99,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
 
-  const [startStepper, isStepping, Stepper] = useStepper(vaultId, () => {});
+  const [startStepper, isStepping, Stepper] = useStepper(vaultId);
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
