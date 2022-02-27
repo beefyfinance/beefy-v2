@@ -204,6 +204,7 @@ function addVaultToState(
       isGovVault: false,
       contractAddress: apiVault.earnContractAddress,
       earnedTokenId: apiVault.earnedToken,
+      //This could be removed if oracleId and token get aligned on configs
       oracleId: apiVault.tokenAddress ? apiVault.oracleId : apiVault.token,
       strategyType: apiVault.stratType as VaultStandard['strategyType'],
       chainId: chainId,

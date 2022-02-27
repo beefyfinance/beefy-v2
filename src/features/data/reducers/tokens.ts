@@ -14,6 +14,7 @@ import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
 import { selectChainById } from '../selectors/chains';
+import { selectChainNativeToken } from '../selectors/tokens';
 
 /**
  * State containing Vault infos
@@ -245,7 +246,7 @@ function addVaultToState(
       };
     } else {
       token = {
-        id: vault.oracleId,
+        id: vault.token,
         chainId: chainId,
         decimals: 18,
         symbol: vault.token,
