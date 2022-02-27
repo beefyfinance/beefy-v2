@@ -138,7 +138,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       });
     }
 
-    if (formState.isZap && !isTokenNative(formState.selectedToken)) {
+    if (formState.isZap) {
       steps.push({
         step: 'deposit',
         message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),

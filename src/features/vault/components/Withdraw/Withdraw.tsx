@@ -93,21 +93,16 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     formState.selectedToken &&
     formState.selectedToken.id === native.id;
 
-  const spenderAddress =
-    // no allowance needed for native tokens
-    isSelectedNative
-      ? null
-      : // if it's a zap, we spend with the zap contract
-      formState.isZap
-      ? formState.zapOptions?.address || null
-      : // if it's a classic vault, the vault contract address is the spender
-      // which is also the earned token
-      isStandardVault(vault)
-      ? vault.contractAddress
-      : vault.earnContractAddress;
+  const spenderAddress = formState.isZap
+    ? formState.zapOptions?.address || null
+    : // if it's a classic vault, the vault contract address is the spender
+    // which is also the earned token
+    isStandardVault(vault)
+    ? vault.contractAddress
+    : vault.earnContractAddress;
 
   const needsApproval = useSelector((state: BeefyState) =>
-    formState.vaultId && !isSelectedNative && spenderAddress
+    formState.vaultId && spenderAddress
       ? selectIsApprovalNeededForWithdraw(state, spenderAddress)
       : false
   );
@@ -159,7 +154,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           steps.push({
             step: 'approve',
             message: t('Vault-ApproveMsg'),
-            action: () => walletActions.approval(earnedToken, spenderAddress),
+            action: walletActions.approval(earnedToken, spenderAddress),
             pending: false,
           });
         }
