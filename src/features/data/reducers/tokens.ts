@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
+import { BeefyState } from '../../../redux-types';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
@@ -14,7 +15,10 @@ import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
 import { selectChainById } from '../selectors/chains';
-import { getBoostTokenIdFromLegacyConfig } from '../utils/config-hack-boost-token-id';
+import {
+  getBoostTokenIdFromLegacyConfig,
+  getOracleTokenFromLegacyVaultConfig,
+} from '../utils/config-hacks';
 
 /**
  * State containing Vault infos
@@ -91,7 +95,7 @@ export const tokensSlice = createSlice({
       for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
         const chain = selectChainById(action.payload.state, chainId);
         for (const vault of vaults) {
-          addVaultToState(sliceState, chain, vault);
+          addVaultToState(action.payload.state, sliceState, chain, vault);
         }
       }
     });
@@ -205,6 +209,7 @@ function addBoostToState(
 }
 
 function addVaultToState(
+  state: BeefyState,
   sliceState: WritableDraft<TokensState>,
   chain: ChainEntity,
   vault: VaultConfig
@@ -219,21 +224,10 @@ function addVaultToState(
     };
   }
 
-  if (sliceState.byChainId[chainId].byId[vault.oracleId] === undefined) {
-    const token: TokenEntity = {
-      id: vault.oracleId,
-      chainId: chainId,
-      contractAddress: vault.tokenAddress,
-      decimals: vault.tokenDecimals,
-      symbol: vault.token,
-      buyUrl: null,
-      description: null,
-      website: null,
-      type: 'erc20',
-    };
-    temporaryWrappedtokenFix(token);
-    sliceState.byChainId[chainId].byId[token.id] = token;
-    sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
+  const oracleToken = getOracleTokenFromLegacyVaultConfig(selectChainById(state, chainId), vault);
+  if (sliceState.byChainId[chainId].byId[oracleToken.id] === undefined) {
+    sliceState.byChainId[chainId].byId[oracleToken.id] = oracleToken;
+    sliceState.byChainId[chainId].interestingBalanceTokenIds.push(oracleToken.id);
   }
 
   // add earned token data

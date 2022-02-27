@@ -12,11 +12,13 @@ import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vault';
+import { selectChainById } from '../selectors/chains';
 import {
   selectIsBeefyToken,
   selectIsTokenBluechip,
-  selectIsTokenStable
+  selectIsTokenStable,
 } from '../selectors/tokens';
+import { getOracleTokenFromLegacyVaultConfig } from '../utils/config-hacks';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
@@ -95,7 +97,7 @@ export const vaultsSlice = createSlice({
       // If new vaults were added, apply default sorting
       if (finalVaultAmount !== initialVaultAmount) {
         sliceState.allIds = sortBy(sliceState.allIds, id => {
-          return -sliceState.byId[id].createdAt
+          return -sliceState.byId[id].createdAt;
         });
       }
     });
@@ -178,7 +180,7 @@ function addVaultToState(
       addLiquidityUrl: null,
       depositFee: apiVault.depositFee ?? '0%',
       withdrawalFee: '0%',
-      createdAt: apiVault.createdAt ?? 0
+      createdAt: apiVault.createdAt ?? 0,
     };
 
     sliceState.byId[vault.id] = vault;
@@ -197,6 +199,10 @@ function addVaultToState(
       sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
     }
   } else {
+    const oracleToken = getOracleTokenFromLegacyVaultConfig(
+      selectChainById(state, chainId),
+      apiVault
+    );
     const vault: VaultStandard = {
       id: apiVault.id,
       name: apiVault.name,
@@ -204,7 +210,7 @@ function addVaultToState(
       isGovVault: false,
       contractAddress: apiVault.earnContractAddress,
       earnedTokenId: apiVault.earnedToken,
-      oracleId: apiVault.oracleId,
+      oracleId: oracleToken.id,
       strategyType: apiVault.stratType as VaultStandard['strategyType'],
       chainId: chainId,
       platformId: apiVault.platform.toLowerCase(),
@@ -218,7 +224,7 @@ function addVaultToState(
       addLiquidityUrl: apiVault.addLiquidityUrl || null,
       depositFee: apiVault.depositFee ?? '0%',
       withdrawalFee: apiVault.withdrawalFee ?? '0.1%',
-      createdAt: apiVault.createdAt ?? 0
+      createdAt: apiVault.createdAt ?? 0,
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual

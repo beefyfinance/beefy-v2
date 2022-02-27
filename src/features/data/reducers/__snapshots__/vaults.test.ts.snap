@@ -1,5 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Vaults slice tests should handle fuse-fuse config correctly 1`] = `
+Object {
+  "allIds": Array [
+    "fuse-fuse",
+  ],
+  "byChainId": Object {
+    "fuse": Object {
+      "allActiveIds": Array [
+        "fuse-fuse",
+      ],
+      "allRetiredIds": Array [],
+      "byEarnTokenId": Object {
+        "mooFuse": "fuse-fuse",
+      },
+      "byOracleId": Object {
+        "FUSE": Array [
+          "fuse-fuse",
+        ],
+      },
+    },
+  },
+  "byId": Object {
+    "fuse-fuse": Object {
+      "addLiquidityUrl": null,
+      "assetIds": Array [
+        "WFUSE",
+      ],
+      "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+      "chainId": "fuse",
+      "contractAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+      "createdAt": 1641908745,
+      "depositFee": "0%",
+      "earnedTokenId": "mooFuse",
+      "id": "fuse-fuse",
+      "isGovVault": false,
+      "logoUri": "single-assets/FUSE.svg",
+      "name": "FUSE",
+      "oracleId": "FUSE",
+      "platformId": "fuse",
+      "risks": Array [],
+      "safetyScore": 0,
+      "status": "active",
+      "strategyType": "SingleStake",
+      "tags": Array [],
+      "type": "single",
+      "withdrawalFee": "0%",
+    },
+  },
+  "contractData": Object {
+    "byVaultId": Object {},
+  },
+  "featuredVaults": Object {},
+}
+`;
+
 exports[`Vaults slice tests should track featured vault list 1`] = `
 Object {
   "nope": false,
