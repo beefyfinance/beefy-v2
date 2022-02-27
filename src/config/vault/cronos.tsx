@@ -1367,7 +1367,7 @@ export const pools = [
     network: "cronos"
   },
   {
-    id: "crona-busd-bnb-eol",
+    id: "crona-busd-bnb",
     name: "BNB-BUSD",
     token: "BNB-BUSD CLP",
     tokenDescription: "CronaSwap",
@@ -1382,7 +1382,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "crona-busd-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "CronaSwap",
     assets: [
       "BNB",
@@ -1399,12 +1400,11 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
-    network: "cronos",
     createdAt: 1638061783,
-    retiredReason: "tvl"
+    network: "cronos"
   },
   {
-    id: "crona-wbtc-cro-eol",
+    id: "crona-wbtc-cro",
     name: "WBTC-CRO",
     token: "WBTC-CRO LP",
     tokenDescription: "CronaSwap",
@@ -1419,7 +1419,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "crona-wbtc-cro",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "CronaSwap",
     assets: [
       "WBTC",
@@ -1436,8 +1437,7 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
-    network: "cronos",
     createdAt: 1637150470,
-    retiredReason: "tvl"
+    network: "cronos"
   }
 ];

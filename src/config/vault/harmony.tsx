@@ -726,7 +726,7 @@ export const pools = [
     createdAt: 1641218490
   },
   {
-    id: "sushi-one-1eth-1dai-eol",
+    id: "sushi-one-1eth-1dai",
     name: "1DAI-1ETH LP",
     token: "1DAI-1ETH LP",
     tokenDescription: "Sushi",
@@ -741,18 +741,14 @@ export const pools = [
     oracle: "lps",
     oracleId: "sushi-one-1eth-1dai",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "SushiSwap",
     assets: [
       "DAI",
       "ETH"
     ],
     callFee: 0.25,
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
-    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
-    stratType: "StratLP",
-    network: "harmony",
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -761,11 +757,15 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
     createdAt: 1631282246,
-    retiredReason: "tvl"
+    network: "harmony"
   },
   {
-    id: "sushi-one-1usdt-1eth-eol",
+    id: "sushi-one-1usdt-1eth",
     name: "1USDT-1ETH LP",
     token: "1USDT-1ETH LP",
     tokenDescription: "Sushi",
@@ -780,18 +780,14 @@ export const pools = [
     oracle: "lps",
     oracleId: "sushi-one-1usdt-1eth",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "SushiSwap",
     assets: [
       "USDT",
       "ETH"
     ],
     callFee: 0.25,
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
-    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
-    stratType: "StratLP",
-    network: "harmony",
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -800,11 +796,15 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     createdAt: 1631282425,
-    retiredReason: "tvl"
+    network: "harmony"
   },
   {
-    id: "sushi-one-sushi-one-eol",
+    id: "sushi-one-sushi-one",
     name: "SUSHI-ONE LP",
     token: "SUSHI-ONE LP",
     tokenDescription: "Sushi",
@@ -819,18 +819,14 @@ export const pools = [
     oracle: "lps",
     oracleId: "sushi-one-sushi-one",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "SushiSwap",
     assets: [
       "SUSHI",
       "ONE"
     ],
     callFee: 0.25,
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.sushi.com/add/ETH/0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
-    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
-    stratType: "StratLP",
-    network: "harmony",
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -839,7 +835,11 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.sushi.com/add/ETH/0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
     createdAt: 1631197145,
-    retiredReason: "tvl"
+    network: "harmony"
   }
 ];

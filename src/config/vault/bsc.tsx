@@ -18084,7 +18084,7 @@ export const pools = [
     retireReason: "rewards"
   },
   {
-    id: "blockmine-nugget-goldcoin-eol",
+    id: "blockmine-nugget-goldcoin",
     name: "NUGGET-GOLDCOIN LP",
     token: "NUGGET-GOLDCOIN ALP",
     tokenDescription: "ApeSwap (BlockMine)",
@@ -18099,7 +18099,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "blockmine-nugget-goldcoin",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "NUGGET",
@@ -18116,12 +18117,11 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://dex.apeswap.finance/#/add/0xE0B58022487131eC9913C1F3AcFD8F74FC6A6C7E/0xF2f02f60fD1a376270e777Aa2a4667329E3984eD",
     buyTokenUrl: "https://dex.apeswap.finance/#/swap?inputCurrency=0xE0B58022487131eC9913C1F3AcFD8F74FC6A6C7E&outputCurrency=0xF2f02f60fD1a376270e777Aa2a4667329E3984eD",
-    network: "bsc",
     createdAt: 1637847086,
-    retiredReason: "tvl"
+    network: "bsc"
   },
   {
-    id: "cakev2-kart-wbnb-eol",
+    id: "cakev2-kart-wbnb",
     name: "KART-BNB LP",
     token: "KART-BNB LP2",
     tokenDescription: "PancakeSwap",
@@ -18136,7 +18136,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-kart-wbnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "KART",
@@ -18153,12 +18154,11 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0x8BDd8DBcBDf0C066cA5f3286d33673aA7A553C10",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x8BDd8DBcBDf0C066cA5f3286d33673aA7A553C10",
-    network: "bsc",
     createdAt: 1637507602,
-    retiredReason: "tvl"
+    network: "bsc"
   },
   {
-    id: "cakev2-dkt-wbnb-eol",
+    id: "cakev2-dkt-wbnb",
     name: "DKT-BNB LP",
     token: "DKT-BNB LP2",
     tokenDescription: "PancakeSwap",
@@ -18173,7 +18173,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-dkt-wbnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "DKT",
@@ -18190,12 +18191,11 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0x7Ceb519718A80Dd78a8545AD8e7f401dE4f2faA7",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x7Ceb519718A80Dd78a8545AD8e7f401dE4f2faA7",
-    network: "bsc",
     createdAt: 1635781676,
-    retiredReason: "tvl"
+    network: "bsc"
   },
   {
-    id: "sing-sing-busd-eol",
+    id: "sing-sing-busd",
     name: "SING-BUSD LP",
     token: "SING-BUSD LP",
     tokenDescription: "ApeSwap (Singular)",
@@ -18210,7 +18210,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "sing-sing-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "SING",
@@ -18218,13 +18219,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.apeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x23894C0ce2d79B79Ea33A4D02e67ae843Ef6e563",
     buyTokenUrl: "https://app.apeswap.finance/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0x23894C0ce2d79B79Ea33A4D02e67ae843Ef6e563",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1633685032,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "cafev2-brew-bnb-eol",
+    id: "cafev2-brew-bnb",
     name: "BREW-BNB LP",
     token: "BREW-BNB LP2",
     tokenDescription: "CafeSwap",
@@ -18239,7 +18239,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cafev2-brew-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "BREW",
@@ -18247,13 +18248,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://dex.cafeswap.finance/#/add/ETH/0x790Be81C3cA0e53974bE2688cDb954732C9862e1",
     buyTokenUrl: "https://dex.cafeswap.finance/#/swap?outputCurrency=0x790Be81C3cA0e53974bE2688cDb954732C9862e1",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1633690726,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "cafev2-brew-busd-eol",
+    id: "cafev2-brew-busd",
     name: "BREW-BUSD LP",
     token: "BREW-BUSD LP2",
     tokenDescription: "CafeSwap",
@@ -18268,7 +18268,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cafev2-brew-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "BREW",
@@ -18276,13 +18277,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://dex.cafeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x790Be81C3cA0e53974bE2688cDb954732C9862e1",
     buyTokenUrl: "https://dex.cafeswap.finance/#/swap?outputCurrency=0x790Be81C3cA0e53974bE2688cDb954732C9862e1",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1633691257,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "cakev2-nft-wbnb-eol",
+    id: "cakev2-nft-wbnb",
     name: "NFT-BNB LP",
     token: "NFT-BNB LP2",
     tokenDescription: "PancakeSwap",
@@ -18297,7 +18297,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-nft-wbnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "NFT",
@@ -18305,13 +18306,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0x1fC9004eC7E5722891f5f38baE7678efCB11d34D",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x1fC9004eC7E5722891f5f38baE7678efCB11d34D",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1632668528,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "banana-ong-bnb-eol",
+    id: "banana-ong-bnb",
     name: "ONG-BNB ALP",
     token: "ONG-BNB ALP",
     tokenDescription: "ApeSwap",
@@ -18326,7 +18326,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "banana-ong-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "ApeSwap",
     assets: [
       "ONG",
@@ -18334,13 +18335,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.apeswap.finance/add/ETH/0x308bfaeAaC8BDab6e9Fc5Ead8EdCb5f95b0599d9",
     buyTokenUrl: "https://app.apeswap.finance/swap?outputCurrency=0x308bfaeAaC8BDab6e9Fc5Ead8EdCb5f95b0599d9",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1632595236,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "czf-czf-busd-eol",
+    id: "czf-czf-busd",
     name: "CZF-BUSD LP",
     token: "CZF-BUSD LP2",
     tokenDescription: "PancakeSwap (CZodiac)",
@@ -18355,7 +18355,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "czf-czf-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "CZF",
@@ -18363,13 +18364,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x7c1608C004F20c3520f70b924E2BfeF092dA0043",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x7c1608C004F20c3520f70b924E2BfeF092dA0043",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1631691818,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "long-long-wbnb-eol",
+    id: "long-long-wbnb",
     name: "LONG-BNB LP",
     token: "LONG-BNB LP2",
     tokenDescription: "PancakeSwap (Longdrink)",
@@ -18384,7 +18384,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "long-long-wbnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "LONG",
@@ -18392,13 +18393,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0x5317fA16f8603bE9C461DeF5D5A1Bf28DfE42d55",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x5317fA16f8603bE9C461DeF5D5A1Bf28DfE42d55",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1631531985,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "auro-auro-busd-eol",
+    id: "auro-auro-busd",
     name: "AURO-BUSD LP",
     token: "AURO-BUSD LP",
     tokenDescription: "Viralata",
@@ -18413,7 +18413,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "auro-auro-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "AURO",
@@ -18421,13 +18422,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.viralata.finance/exchange/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x8d9A79314c4e09A7c53C124195cAeB8B89F4879D",
     buyTokenUrl: "https://app.viralata.finance/exchange/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0x8d9A79314c4e09A7c53C124195cAeB8B89F4879D",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1630068753,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "auro-auro-bnb-eol",
+    id: "auro-auro-bnb",
     name: "AURO-BNB LP",
     token: "AURO-BNB LP",
     tokenDescription: "Viralata",
@@ -18442,7 +18442,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "auro-auro-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "AURO",
@@ -18450,13 +18451,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.viralata.finance/exchange/add/ETH/0x8d9A79314c4e09A7c53C124195cAeB8B89F4879D",
     buyTokenUrl: "https://app.viralata.finance/exchange/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0x8d9A79314c4e09A7c53C124195cAeB8B89F4879D",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1630069109,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "omnifarm-usdo-popen-eol",
+    id: "omnifarm-usdo-popen",
     name: "USDO-pOPEN LP",
     token: "USDO-pOPEN LP2",
     tokenDescription: "Omnifarm (PancakeSwap)",
@@ -18471,7 +18471,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "omnifarm-usdo-popen",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Omnifarms",
     assets: [
       "pOPEN",
@@ -18479,13 +18480,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0xaBaE871B7E3b67aEeC6B46AE9FE1A91660AadAC5/0x5801D0e1C7D977D78E4890880B8E579eb4943276",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xaBaE871B7E3b67aEeC6B46AE9FE1A91660AadAC5&outputCurrency=0x5801D0e1C7D977D78E4890880B8E579eb4943276",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1629971041,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "omnifarm-usdo-anymtlx-eol",
+    id: "omnifarm-usdo-anymtlx",
     name: "USDO-anyMTLX LP",
     token: "USDO-anyMTLX LP2",
     tokenDescription: "Omnifarm (PancakeSwap)",
@@ -18500,7 +18500,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "omnifarm-usdo-anymtlx",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Omnifarms",
     assets: [
       "anyMTLX",
@@ -18508,13 +18509,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0x5921DEE8556c4593EeFCFad3CA5e2f618606483b/0x5801D0e1C7D977D78E4890880B8E579eb4943276",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0x5921DEE8556c4593EeFCFad3CA5e2f618606483b&outputCurrency=0x5801D0e1C7D977D78E4890880B8E579eb4943276",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1629973021,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "omnifarm-ocp-usdo-eol",
+    id: "omnifarm-ocp-usdo",
     name: "OCP-USDO LP",
     token: "OCP-USDO LP2",
     tokenDescription: "Omnifarm (PancakeSwap)",
@@ -18529,7 +18529,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "omnifarm-ocp-usdo",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Omnifarms",
     assets: [
       "OCP",
@@ -18537,13 +18538,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0x3C70260eEe0a2bFc4b375feB810325801f289fBd/0x5801d0e1c7d977d78e4890880b8e579eb4943276",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0x3C70260eEe0a2bFc4b375feB810325801f289fBd&outputCurrency=0x5801D0e1C7D977D78E4890880B8E579eb4943276",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1629976449,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "banana-bnb-sista-eol",
+    id: "banana-bnb-sista",
     name: "SISTA-BNB LP",
     token: "SISTA-BNB LP",
     tokenDescription: "ApeSwap",
@@ -18558,7 +18558,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "banana-bnb-sista",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "ApeSwap",
     assets: [
       "SISTA",
@@ -18566,13 +18567,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://dex.apeswap.finance/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0xCA6d25C10dad43ae8Be0bc2af4D3CD1114583C08",
     buyTokenUrl: "https://dex.apeswap.finance/#/swap?inputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c&outputCurrency=0xCA6d25C10dad43ae8Be0bc2af4D3CD1114583C08",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1627915331,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "farmhero-pancake-hero-wbnb-eol",
+    id: "farmhero-pancake-hero-wbnb",
     name: "HERO-BNB LP",
     token: "HERO-BNB LP",
     tokenDescription: "FarmHero (Pancakeswap)",
@@ -18587,7 +18587,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "farmhero-pancake-hero-wbnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "HERO",
@@ -18595,13 +18596,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0x9B26e16377ad29A6CCC01770bcfB56DE3A36d8b2/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0x9B26e16377ad29A6CCC01770bcfB56DE3A36d8b2&outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1627448553,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "farmhero-pancake-hero-busd-eol",
+    id: "farmhero-pancake-hero-busd",
     name: "HERO-BUSD LP",
     token: "HERO-BUSD LP",
     tokenDescription: "FarmHero (Pancakeswap)",
@@ -18616,7 +18616,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "farmhero-pancake-hero-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "HERO",
@@ -18624,13 +18625,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0x9B26e16377ad29A6CCC01770bcfB56DE3A36d8b2/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0x9B26e16377ad29A6CCC01770bcfB56DE3A36d8b2&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1627448941,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "ellipsis-usdn-eol",
+    id: "ellipsis-usdn",
     logo: "uncategorized/epsUSDN.png",
     name: "BUSD/USDT/USDC/USDN",
     token: "usdn3EPS",
@@ -18646,7 +18646,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "ellipsis-usdn",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Ellipsis",
     assets: [
       "USDN",
@@ -18655,13 +18656,12 @@ export const pools = [
       "BUSD"
     ],
     addLiquidityUrl: "https://ellipsis.finance/pool",
-    stratType: "StratMultiLP",
-    network: "bsc",
     createdAt: 1626784750,
-    retiredReason: "tvl"
+    stratType: "StratMultiLP",
+    network: "bsc"
   },
   {
-    id: "ica-zbtc-eol",
+    id: "ica-zbtc",
     logo: "single-assets/ZBTC.svg",
     name: "ZBTC",
     token: "ZBTC",
@@ -18677,19 +18677,19 @@ export const pools = [
     oracle: "tokens",
     oracleId: "ZBTC",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "ZBTC"
     ],
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xD0dff49De3E314FDFD3f93c5EEee7D5d2F5515cD",
-    stratType: "SingleStake",
-    network: "bsc",
     createdAt: 1624093024,
-    retiredReason: "tvl"
+    stratType: "SingleStake",
+    network: "bsc"
   },
   {
-    id: "ica-zeth-eol",
+    id: "ica-zeth",
     logo: "single-assets/ZETH.svg",
     name: "ZETH",
     token: "ZETH",
@@ -18705,19 +18705,19 @@ export const pools = [
     oracle: "tokens",
     oracleId: "ZETH",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "ZETH"
     ],
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xdbEb98858f5d4Dca13EA0272B2b786E9415d3992",
-    stratType: "SingleStake",
-    network: "bsc",
     createdAt: 1624022921,
-    retiredReason: "tvl"
+    stratType: "SingleStake",
+    network: "bsc"
   },
   {
-    id: "cakev2-mbox-bnb-eol",
+    id: "cakev2-mbox-bnb",
     logo: "bnb-pairs/MBOX-BNB.svg",
     name: "MBOX-BNB LP",
     token: "MBOX-BNB LP",
@@ -18733,7 +18733,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-mbox-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "MBOX",
@@ -18741,13 +18742,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0x3203c9e46ca618c8c1ce5dc67e7e9d75f5da2377",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x3203c9e46ca618c8c1ce5dc67e7e9d75f5da2377",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1623165437,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "ellipsis-eps-eol",
+    id: "ellipsis-eps",
     logo: "single-assets/EPS.png",
     name: "EPS",
     token: "EPS",
@@ -18763,19 +18763,19 @@ export const pools = [
     oracle: "tokens",
     oracleId: "EPS",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Ellipsis",
     assets: [
       "EPS"
     ],
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xA7f552078dcC247C2684336020c03648500C6d9F",
-    stratType: "SingleStake",
-    network: "bsc",
     createdAt: 1622492691,
-    retiredReason: "tvl"
+    stratType: "SingleStake",
+    network: "bsc"
   },
   {
-    id: "cakev2-tusd-busd-eol",
+    id: "cakev2-tusd-busd",
     logo: "busd-pairs/TUSD-BUSD.svg",
     name: "TUSD-BUSD LP",
     token: "TUSD-BUSD LP2",
@@ -18791,7 +18791,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-tusd-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "TUSD",
@@ -18799,13 +18800,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x14016e85a25aeb13065688cafb43044c2ef86784",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56&outputCurrency=0x14016e85a25aeb13065688cafb43044c2ef86784",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1622579735,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "mdex-bsc-bnb-usdt-eol",
+    id: "mdex-bsc-bnb-usdt",
     logo: "usdt-pairs/BNB-USDT.png",
     name: "BNB-USDT LP",
     token: "BNB-USDT LP",
@@ -18821,7 +18821,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "mdex-bsc-bnb-usdt",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Mdex",
     assets: [
       "BNB",
@@ -18829,13 +18830,12 @@ export const pools = [
     ],
     buyTokenUrl: "https://bsc.mdex.com/#/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955",
     addLiquidityUrl: "https://bsc.mdex.com/#/add/BNB/0x55d398326f99059fF775485246999027B3197955",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1622469917,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "jetswap-wings-eol",
+    id: "jetswap-wings",
     logo: "degens/WINGS.svg",
     name: "WINGS",
     token: "WINGS",
@@ -18851,19 +18851,19 @@ export const pools = [
     oracle: "tokens",
     oracleId: "WINGS",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "JetSwap",
     assets: [
       "WINGS"
     ],
     buyTokenUrl: "https://exchange.jetswap.finance/#/swap?outputCurrency=0x0487b824c8261462f88940f97053e65bdb498446",
-    stratType: "SingleStake",
-    network: "bsc",
     createdAt: 1621591563,
-    retiredReason: "tvl"
+    stratType: "SingleStake",
+    network: "bsc"
   },
   {
-    id: "jetswap-wings-busd-eol",
+    id: "jetswap-wings-busd",
     logo: "degens/WINGS-BUSD.svg",
     name: "WINGS-BUSD LP",
     token: "WINGS-BUSD LP",
@@ -18879,7 +18879,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "jetswap-wings-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "JetSwap",
     assets: [
       "WINGS",
@@ -18887,13 +18888,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://exchange.jetswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x0487b824c8261462f88940f97053e65bdb498446",
     buyTokenUrl: "https://exchange.jetswap.finance/#/swap?outputCurrency=0x0487b824c8261462f88940f97053e65bdb498446",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1621582618,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "goal-goal-busd-eol",
+    id: "goal-goal-busd",
     logo: "degens/GOAL-BUSD.png",
     name: "GOAL-BUSD LP",
     token: "GOAL-BUSD LP2",
@@ -18909,7 +18909,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "goal-goal-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "GOAL",
@@ -18917,13 +18918,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0xE5b57E6e1b945B91FEE368aC108d2ebCcA78Aa8F/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xE5b57E6e1b945B91FEE368aC108d2ebCcA78Aa8F",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1620725403,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "zefiv2-zefi-bnb-eol",
+    id: "zefiv2-zefi-bnb",
     logo: "degens/ZEFI-BNB.svg",
     name: "ZEFI-BNB LP",
     token: "ZEFI-BNB LP2",
@@ -18939,7 +18939,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "zefiv2-zefi-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "ZEFI",
@@ -18947,13 +18948,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0x0288D3E353fE2299F11eA2c2e1696b4A648eCC07",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x0288D3E353fE2299F11eA2c2e1696b4A648eCC07",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1620143785,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "zefiv2-zefi-busd-eol",
+    id: "zefiv2-zefi-busd",
     logo: "degens/ZEFI-BUSD.svg",
     name: "ZEFI-BUSD LP",
     token: "ZEFI-BUSD LP2",
@@ -18969,7 +18969,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "zefiv2-zefi-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "ZEFI",
@@ -18977,13 +18978,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x0288D3E353fE2299F11eA2c2e1696b4A648eCC07",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x0288D3E353fE2299F11eA2c2e1696b4A648eCC07",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1620143500,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "swampv2-swamp-bnb-eol",
+    id: "swampv2-swamp-bnb",
     logo: "bnb-pairs/SWAMP-BNB.svg",
     name: "SWAMP-BNB LP",
     token: "SWAMP-BNB LP2",
@@ -18999,7 +18999,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "swampv2-swamp-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "SWAMP",
@@ -19008,13 +19009,12 @@ export const pools = [
     depositFee: "<0.1%",
     addLiquidityUrl: "https://pancakeswap.finance/add/0xc5A49b4CBe004b6FD55B30Ba1dE6AC360FF9765d",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xc5A49b4CBe004b6FD55B30Ba1dE6AC360FF9765d",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1619446410,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "swampv2-swamp-busd-eol",
+    id: "swampv2-swamp-busd",
     logo: "busd-pairs/SWAMP-BUSD.svg",
     name: "SWAMP-BUSD LP",
     token: "SWAMP-BUSD LP2",
@@ -19030,7 +19030,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "swampv2-swamp-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "SWAMP",
@@ -19039,13 +19040,12 @@ export const pools = [
     depositFee: "<0.1%",
     addLiquidityUrl: "https://pancakeswap.finance/add/0xc5A49b4CBe004b6FD55B30Ba1dE6AC360FF9765d/0xe9e7cea3dedca5984780bafc599bd69add087d56",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xc5A49b4CBe004b6FD55B30Ba1dE6AC360FF9765d",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1619446431,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "cakev2-bunny-bnb-eol",
+    id: "cakev2-bunny-bnb",
     logo: "bnb-pairs/BUNNY-BNB.svg",
     name: "BUNNY-BNB LP",
     token: "BUNNY-BNB LP2",
@@ -19061,7 +19061,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-bunny-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "BUNNY",
@@ -19069,13 +19070,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0xc9849e6fdb743d08faee3e34dd2d1bc69ea11a51",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xc9849e6fdb743d08faee3e34dd2d1bc69ea11a51",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1619437257,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "cakev2-vai-busd-eol",
+    id: "cakev2-vai-busd",
     logo: "busd-pairs/VAI-BUSD.svg",
     name: "VAI-BUSD LP",
     token: "VAI-BUSD LP2",
@@ -19091,7 +19091,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-vai-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "VAI",
@@ -19099,13 +19100,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0x4bd17003473389a42daf6a0a729f6fdb328bbbd7/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0x4bd17003473389a42daf6a0a729f6fdb328bbbd7&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1619418482,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "cakev2-sushi-eth-eol",
+    id: "cakev2-sushi-eth",
     logo: "uncategorized/SUSHI-ETH.svg",
     name: "SUSHI-ETH LP",
     token: "SUSHI-ETH LP2",
@@ -19121,7 +19121,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-sushi-eth",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "SUSHI",
@@ -19129,13 +19130,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/0x2170ed0880ac9a755fd29b2688956bd959f933f8/0x947950bcc74888a40ffa2593c5798f11fc9124c4",
     buyTokenUrl: "https://pancakeswap.finance/swap?inputCurrency=0x2170ed0880ac9a755fd29b2688956bd959f933f8&outputCurrency=0x947950bcc74888a40ffa2593c5798f11fc9124c4",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1619350804,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "cakev2-belt-bnb-eol",
+    id: "cakev2-belt-bnb",
     logo: "bnb-pairs/BELT-BNB.svg",
     name: "BELT-BNB LP",
     token: "BELT-BNB LP2",
@@ -19151,7 +19151,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "cakev2-belt-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "BELT",
@@ -19159,13 +19160,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://pancakeswap.finance/add/BNB/0xE0e514c71282b6f4e823703a39374Cf58dc3eA4f",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0xE0e514c71282b6f4e823703a39374Cf58dc3eA4f",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1619335340,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "space-space-bnb-eol",
+    id: "space-space-bnb",
     logo: "degens/SPACE-BNB.png",
     name: "SPACE-BNB LP",
     token: "SPACE-BNB LP",
@@ -19181,20 +19181,20 @@ export const pools = [
     oracle: "lps",
     oracleId: "space-space-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "PancakeSwap",
     assets: [
       "SPACE",
       "BNB"
     ],
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x0abd3E3502c15ec252f90F64341cbA74a24fba06",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1616599212,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "salt-salt-busd-eol",
+    id: "salt-salt-busd",
     logo: "degens/salt-busd.png",
     name: "SALT-BUSD LP",
     token: "SALT-BUSD LP",
@@ -19210,7 +19210,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "salt-salt-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "SALT",
@@ -19218,13 +19219,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://exchange.saltswap.finance/#/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x2849b1ae7e04a3d9bc288673a92477cf63f28af4",
     buyTokenUrl: "https://exchange.saltswap.finance/#/swap?inputCurrency=0xcc2E12a9b5b75360c6FBf23B584c275D52cDdb0&outputCurrency=0x2849b1ae7e04a3d9bc288673a92477cf63f28af4",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1614669316,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "salt-salt-bnb-eol",
+    id: "salt-salt-bnb",
     logo: "degens/salt-bnb.png",
     name: "SALT-BNB LP",
     token: "SALT-BNB LP",
@@ -19240,7 +19240,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "salt-salt-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "SALT",
@@ -19248,13 +19249,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://exchange.saltswap.finance/#/add/BNB/0x2849b1ae7e04a3d9bc288673a92477cf63f28af4",
     buyTokenUrl: "https://exchange.saltswap.finance/#/swap?inputCurrency=ETH&outputCurrency=0x2849b1ae7e04a3d9bc288673a92477cf63f28af4",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1614674680,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "ramen-ramen-busd-eol",
+    id: "ramen-ramen-busd",
     logo: "degens/ramen-busd.svg",
     name: "RAMEN-BUSD LP",
     token: "RAMEN-BUSD LP",
@@ -19270,7 +19270,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "ramen-ramen-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Other",
     assets: [
       "RAMEN",
@@ -19278,13 +19279,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://exchange.ramenswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x4F47A0d15c1E53F3d94c069C7D16977c29F9CB6B",
     buyTokenUrl: "https://exchange.ramenswap.finance/#/swap?inputCurrency=0x4F47A0d15c1E53F3d94c069C7D16977c29F9CB6B&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1614173476,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "kebab-kebab-btc-eol",
+    id: "kebab-kebab-btc",
     logo: "kebab/KEBAB-BTCB.png",
     name: "KEBAB-BTCB LP",
     token: "KEBAB-BTCB LP",
@@ -19300,7 +19300,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "kebab-kebab-btc",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Kebab",
     assets: [
       "KEBAB",
@@ -19308,13 +19309,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://swap.kebabfinance.com/#/add/0x7979f6c54eba05e18ded44c4f986f49a5de551c2/0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
     buyTokenUrl: "https://swap.kebabfinance.com/#/swap?inputCurrency=0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c&outputCurrency=0x7979f6c54eba05e18ded44c4f986f49a5de551c2",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1613582986,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "kebab-kebab-eol",
+    id: "kebab-kebab",
     logo: "single-assets/KEBAB.png",
     name: "KEBAB",
     token: "KEBAB",
@@ -19330,19 +19330,19 @@ export const pools = [
     oracle: "tokens",
     oracleId: "KEBAB",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Kebab",
     assets: [
       "KEBAB"
     ],
     buyTokenUrl: "https://swap.kebabfinance.com/#/swap?outputCurrency=0x7979f6c54eba05e18ded44c4f986f49a5de551c2",
-    stratType: "SingleStake",
-    network: "bsc",
     createdAt: 1611760317,
-    retiredReason: "tvl"
+    stratType: "SingleStake",
+    network: "bsc"
   },
   {
-    id: "kebab-kebab-busd-eol",
+    id: "kebab-kebab-busd",
     logo: "busd-pairs/KEBAB-BUSD.png",
     name: "KEBAB-BUSD LP",
     token: "KEBAB-BUSD LP",
@@ -19358,7 +19358,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "kebab-kebab-busd",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Kebab",
     assets: [
       "KEBAB",
@@ -19366,13 +19367,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://swap.kebabfinance.com/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x7979f6c54eba05e18ded44c4f986f49a5de551c2",
     buyTokenUrl: "https://swap.kebabfinance.com/#/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0x7979f6c54eba05e18ded44c4f986f49a5de551c2",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1611764741,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   },
   {
-    id: "kebab-kebab-bnb-eol",
+    id: "kebab-kebab-bnb",
     logo: "bnb-pairs/KEBAB-BNB.png",
     name: "KEBAB-BNB LP",
     token: "KEBAB-BNB LP",
@@ -19388,7 +19388,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "kebab-kebab-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Kebab",
     assets: [
       "KEBAB",
@@ -19396,9 +19397,8 @@ export const pools = [
     ],
     addLiquidityUrl: "https://swap.kebabfinance.com/#/add/BNB/0x7979f6c54eba05e18ded44c4f986f49a5de551c2",
     buyTokenUrl: "https://swap.kebabfinance.com/#/swap?outputCurrency=0x7979f6c54eba05e18ded44c4f986f49a5de551c2",
-    stratType: "StratLP",
-    network: "bsc",
     createdAt: 1611765218,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "bsc"
   }
 ];

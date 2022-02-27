@@ -1491,7 +1491,7 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "sushi-mr-eth-usdt-eol",
+    id: "sushi-mr-eth-usdt",
     name: "ETH-USDT",
     token: "ETH-USDT SLP",
     tokenDescription: "Sushi",
@@ -1507,7 +1507,7 @@ export const pools = [
     oracleId: "sushi-mr-eth-usdt",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "eol",
+    status: "active",
     platform: "SushiSwap",
     assets: [
       "ETH",
@@ -1523,13 +1523,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.sushi.com/add/0x639a647fbe20b6c8ac19e48e2de44ea792c62c5c/0xb44a9b6905af7c801311e8f4e76932ee959c663c",
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0xb44a9b6905af7c801311e8f4e76932ee959c663c",
-    stratType: "StratLP",
-    network: "moonriver",
     createdAt: 1639598142,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "moonriver"
   },
   {
-    id: "sushi-mr-mim-wmovr-eol",
+    id: "sushi-mr-mim-wmovr",
     name: "MIM-WMOVR",
     token: "MIM-WMOVR SLP",
     tokenDescription: "Sushi",
@@ -1545,7 +1544,7 @@ export const pools = [
     oracleId: "sushi-mr-mim-wmovr",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "eol",
+    status: "active",
     platform: "SushiSwap",
     assets: [
       "MIM",
@@ -1561,13 +1560,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.sushi.com/add/0x0caE51e1032e8461f4806e26332c030E34De3aDb/0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
-    stratType: "StratLP",
-    network: "moonriver",
     createdAt: 1639683150,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "moonriver"
   },
   {
-    id: "sushi-mr-eth-bnb-eol",
+    id: "sushi-mr-eth-bnb",
     name: "ETH-BNB.bsc",
     token: "ETH-BNB.bsc SLP",
     tokenDescription: "Sushi",
@@ -1583,7 +1581,7 @@ export const pools = [
     oracleId: "sushi-mr-eth-bnb",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "eol",
+    status: "active",
     platform: "SushiSwap",
     assets: [
       "ETH",
@@ -1599,13 +1597,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.sushi.com/add/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C/0x868892CCcEdbfF0B028F3b3595205Ea91b99376B",
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x868892CCcEdbfF0B028F3b3595205Ea91b99376B",
-    stratType: "StratLP",
-    network: "moonriver",
     createdAt: 1640141208,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "moonriver"
   },
   {
-    id: "sushi-mr-eth-wbtc-eol",
+    id: "sushi-mr-eth-wbtc",
     name: "ETH-WBTC",
     token: "ETH-WBTC SLP",
     tokenDescription: "Sushi",
@@ -1621,7 +1618,7 @@ export const pools = [
     oracleId: "sushi-mr-eth-wbtc",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "eol",
+    status: "active",
     platform: "SushiSwap",
     assets: [
       "ETH",
@@ -1637,13 +1634,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.sushi.com/add/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C/0xE6a991Ffa8CfE62B0bf6BF72959A3d4f11B2E0f5",
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0xE6a991Ffa8CfE62B0bf6BF72959A3d4f11B2E0f5",
-    stratType: "StratLP",
-    network: "moonriver",
     createdAt: 1640142678,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "moonriver"
   },
   {
-    id: "sushi-mr-eth-dai-eol",
+    id: "sushi-mr-eth-dai",
     name: "ETH-DAI",
     token: "ETH-DAI SLP",
     tokenDescription: "Sushi",
@@ -1659,7 +1655,7 @@ export const pools = [
     oracleId: "sushi-mr-eth-dai",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "eol",
+    status: "active",
     platform: "SushiSwap",
     assets: [
       "ETH",
@@ -1675,13 +1671,12 @@ export const pools = [
     ],
     addLiquidityUrl: "https://app.sushi.com/add/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C/0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
-    stratType: "StratLP",
-    network: "moonriver",
     createdAt: 1640143548,
-    retiredReason: "tvl"
+    stratType: "StratLP",
+    network: "moonriver"
   },
   {
-    id: "solarbeam-frax-rome-eol",
+    id: "solarbeam-frax-rome",
     name: "ROME-FRAX",
     token: "ROME-FRAX LP",
     tokenDescription: "SolarBeam",
@@ -1697,7 +1692,7 @@ export const pools = [
     oracleId: "solarbeam-frax-rome",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "eol",
+    status: "active",
     platform: "SolarBeam",
     assets: [
       "ROME",
@@ -1715,12 +1710,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=0x1A93B23281CC1CDE4C4741353F3064709A16197d&outputCurrency=0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
-    network: "moonriver",
     createdAt: 1639145934,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "finn-wbtc-wmovr-eol",
+    id: "finn-wbtc-wmovr",
     name: "WBTC-MOVR",
     token: "WBTC-MOVR FLP",
     tokenDescription: "Huckleberry",
@@ -1735,7 +1729,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "finn-wbtc-wmovr",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Huckleberry",
     assets: [
       "WBTC",
@@ -1753,12 +1748,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
     addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0x78F811A431D248c1EDcF6d95ec8551879B2897C3",
-    network: "moonriver",
     createdAt: 1638046680,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "finn-wan-wmovr-eol",
+    id: "finn-wan-wmovr",
     name: "WAN-MOVR",
     token: "WAN-MOVR LP",
     tokenDescription: "Huckleberry",
@@ -1773,7 +1767,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "finn-wan-wmovr",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Huckleberry",
     assets: [
       "WAN",
@@ -1791,12 +1786,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
     addLiquidityUrl: "https://www.huckleberry.finance/#/add/MOVR/0x41562ae242d194247389152aCAa7a9397136b09F",
-    network: "moonriver",
     createdAt: 1637920962,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "finn-finn-usdt-eol",
+    id: "finn-finn-usdt",
     name: "FINN-USDT",
     token: "FINN-USDT LP",
     tokenDescription: "Huckleberry",
@@ -1811,7 +1805,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "finn-finn-usdt",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Huckleberry",
     assets: [
       "FINN",
@@ -1829,12 +1824,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
     addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver",
     createdAt: 1638049728,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "finn-finn-avax-eol",
+    id: "finn-finn-avax",
     name: "AVAX-FINN",
     token: "AVAX-FINN LP",
     tokenDescription: "Huckleberry",
@@ -1849,7 +1843,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "finn-finn-avax",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Huckleberry",
     assets: [
       "AVAX",
@@ -1867,12 +1862,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
     addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xc005A7A1502c9DE16CCDaBA7CDA0cee4Ac304993/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver",
     createdAt: 1638048906,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "finn-finn-ftm-eol",
+    id: "finn-finn-ftm",
     name: "FTM-FINN",
     token: "FTM-FINN FLP",
     tokenDescription: "Huckleberry",
@@ -1887,7 +1881,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "finn-finn-ftm",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Huckleberry",
     assets: [
       "FTM",
@@ -1905,12 +1900,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
     addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xd924f195C6012C301f42290cf0fdE385A66039DE/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver",
     createdAt: 1638053964,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "finn-finn-bnb-eol",
+    id: "finn-finn-bnb",
     name: "BNB-FINN",
     token: "BNB-FINN FLP",
     tokenDescription: "Huckleberry",
@@ -1925,7 +1919,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "finn-finn-bnb",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Huckleberry",
     assets: [
       "BNB",
@@ -1943,12 +1938,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
     addLiquidityUrl: "https://www.huckleberry.finance/#/add/0xf47002E6151E06554b8f16E9Cc704edD3fC078b8/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver",
     createdAt: 1638055338,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "finn-finn-xrp-eol",
+    id: "finn-finn-xrp",
     name: "XRP-FINN",
     token: "XRP-FINN LP",
     tokenDescription: "Huckleberry",
@@ -1963,7 +1957,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "finn-finn-xrp",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "Huckleberry",
     assets: [
       "XRP",
@@ -1981,12 +1976,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://www.huckleberry.finance/#/swap",
     addLiquidityUrl: "https://www.huckleberry.finance/#/add/0x9D5bc9B873AeD984e2B6A64d4792249D68BbA2Fe/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
-    network: "moonriver",
     createdAt: 1638048018,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "solarbeam-matic-wmovr-eol",
+    id: "solarbeam-matic-wmovr",
     name: "MATIC-MOVR",
     token: "MATIC-MOVR LP",
     tokenDescription: "SolarBeam",
@@ -2001,7 +1995,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "solarbeam-matic-wmovr",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "SolarBeam",
     assets: [
       "MATIC",
@@ -2019,12 +2014,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x682F81e57EAa716504090C3ECBa8595fB54561D8",
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/ETH/0x682F81e57EAa716504090C3ECBa8595fB54561D8",
-    network: "moonriver",
     createdAt: 1635802614,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "solarbeam-wmovr-rib-eol",
+    id: "solarbeam-wmovr-rib",
     name: "RIB-MOVR",
     token: "RIB-MOVR LP",
     tokenDescription: "SolarBeam",
@@ -2039,7 +2033,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "solarbeam-wmovr-rib",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "SolarBeam",
     assets: [
       "RIB",
@@ -2057,12 +2052,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/ETH/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
-    network: "moonriver",
     createdAt: 1635789006,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "solarbeam-wmovr-relay-eol",
+    id: "solarbeam-wmovr-relay",
     name: "RELAY-MOVR",
     token: "RELAY-MOVR LP",
     tokenDescription: "SolarBeam",
@@ -2077,7 +2071,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "solarbeam-wmovr-relay",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "SolarBeam",
     assets: [
       "RELAY",
@@ -2095,12 +2090,11 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xAd7F1844696652ddA7959a49063BfFccafafEfe7",
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/ETH/0xAd7F1844696652ddA7959a49063BfFccafafEfe7",
-    network: "moonriver",
     createdAt: 1635803946,
-    retiredReason: "tvl"
+    network: "moonriver"
   },
   {
-    id: "solarbeam-pets-wmovr-eol",
+    id: "solarbeam-pets-wmovr",
     name: "PETS-MOVR",
     token: "PETS-MOVR LP",
     tokenDescription: "SolarBeam",
@@ -2115,7 +2109,8 @@ export const pools = [
     oracle: "lps",
     oracleId: "solarbeam-pets-wmovr",
     oraclePrice: 0,
-    status: "eol",
+    depositsPaused: false,
+    status: "active",
     platform: "SolarBeam",
     assets: [
       "PETS",
@@ -2133,8 +2128,7 @@ export const pools = [
     withdrawalFee: "0%",
     buyTokenUrl: "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x1e0F2A75Be02c025Bd84177765F89200c04337Da",
     addLiquidityUrl: "https://app.solarbeam.io/exchange/add/ETH/0x1e0F2A75Be02c025Bd84177765F89200c04337Da",
-    network: "moonriver",
     createdAt: 1635808950,
-    retiredReason: "tvl"
+    network: "moonriver"
   }
 ];
