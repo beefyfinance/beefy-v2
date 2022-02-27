@@ -1,4 +1,5 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import React from 'react';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { styles } from './styles';
@@ -8,7 +9,7 @@ import { Popover } from '../Popover';
 
 const useStyles = makeStyles(styles as any);
 
-const ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
+const _ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
   return (
     <ContentLoader
       width={64}
@@ -21,6 +22,7 @@ const ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585A
     </ContentLoader>
   );
 };
+const ContentLoading = React.memo(_ContentLoading);
 
 export function ValueBlock({
   label,
@@ -83,8 +85,12 @@ export function ValueBlock({
         >
           {!loading ? <>{blurred ? '....' : value}</> : <ContentLoading />}
         </Typography>
+      ) : !loading ? (
+        <>{blurred ? '....' : value}</>
       ) : (
-        value
+        <Box className={classes.noTextContentLoader}>
+          <ContentLoading />
+        </Box>
       )}
 
       {usdValue && (
