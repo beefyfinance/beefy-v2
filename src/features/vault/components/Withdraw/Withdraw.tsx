@@ -95,8 +95,14 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     ? vault.contractAddress
     : vault.earnContractAddress;
 
+  // no approval when retrieving the vault LP
+  const isWithdrawingLP =
+    formState.selectedToken &&
+    !isArray(formState.selectedToken) &&
+    formState.selectedToken.id === vault.oracleId;
+
   const needsApproval = useSelector((state: BeefyState) =>
-    formState.vaultId && spenderAddress
+    formState.vaultId && spenderAddress && !isWithdrawingLP
       ? selectIsApprovalNeededForWithdraw(state, spenderAddress)
       : false
   );
