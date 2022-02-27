@@ -234,7 +234,7 @@ const beefOut = (vault: VaultEntity, amount: BigNumber, zapOptions: ZapOptions) 
 
 const beefOutAndSwap = (
   vault: VaultEntity,
-  tokenAmount: BigNumber,
+  oracleTokenAmount: BigNumber,
   zapOptions: ZapOptions,
   zapEstimate: ZapEstimate,
   slippageTolerance: number
@@ -259,11 +259,18 @@ const beefOutAndSwap = (
 
     const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
 
+    const ppfs = selectVaultPricePerFullShare(state, vault.id);
+    const earnedTokenAmount = oracleAmountToMooAmount(
+      earnedToken,
+      oracleToken,
+      ppfs,
+      oracleTokenAmount
+    );
     const rawSwapAmountOutMin = zapEstimate.amountOut
       .times(1 - slippageTolerance)
       .shiftedBy(zapEstimate.tokenOut.decimals)
       .decimalPlaces(0);
-    const rawAmount = tokenAmount.shiftedBy(earnedToken.decimals).decimalPlaces(0);
+    const rawAmount = earnedTokenAmount.shiftedBy(earnedToken.decimals).decimalPlaces(0);
 
     const transaction = (() => {
       return contract.methods
@@ -281,7 +288,7 @@ const beefOutAndSwap = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zapOptions.address, amount: tokenAmount, token: oracleToken },
+      { spender: zapOptions.address, amount: earnedTokenAmount, token: oracleToken },
       {
         chainId: vault.chainId,
         spenderAddress: zapOptions.address,
