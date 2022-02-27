@@ -165,7 +165,7 @@ export async function estimateZapDeposit(
   const contract = new web3.eth.Contract(zapAbi, zapOptions.address);
 
   const response = await contract.methods
-    .estimateSwap(vaultAddress, tokenInContract, chainTokenAmount)
+    .estimateSwap(vaultAddress, tokenInContract, chainTokenAmount.toString(10))
     .call();
 
   return {

@@ -151,7 +151,7 @@ const beefIn = (
 
     const transaction = (() => {
       if (isTokenNative(tokenIn)) {
-        return contract.methods.beefInETH(vaultAddress, rawSwapAmountOutMin).send({
+        return contract.methods.beefInETH(vaultAddress, rawSwapAmountOutMin.toString(10)).send({
           from: address,
           value: rawAmount.toString(10),
         });
