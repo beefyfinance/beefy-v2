@@ -199,18 +199,33 @@ describe('Boosts slice tests', () => {
           partnership: true,
           status: 'active',
           isMooStaked: true,
-          partners: [
-            {
-              logo: 'stake/fuse/logo.png',
-              background: 'stake/fuse/bg.png',
-              text: 'Fuse is a platform featuring a fast and low-cost, Ethereum-compatible blockchain, a robust plug-and-play mobile-centric crypto payments infrastructure for creating token-based applications and a rapidly growing ecosystem of payments, decentralized finance and NFT projects.',
-              website: 'https://www.fuse.io',
-              social: {
-                telegram: 'https://t.me/fuseio',
-                twitter: 'https://twitter.com/Fuse_network',
-              },
-            },
-          ],
+          partners: [],
+        },
+      ],
+    };
+    const action = { type: fetchAllBoosts.fulfilled, payload: payload };
+    const state = boostsSlice.reducer(initialBoostsState, action);
+    expect(state).toMatchSnapshot();
+  });
+
+  it('should correctly handle wfuse-elon boost config', () => {
+    const payload: FulfilledAllBoostsPayload = {
+      fuse: [
+        {
+          id: 'moo_voltage-wfuse-elon-elon',
+          poolId: 'voltage-wfuse-elon',
+          name: 'Dogelon Mars x Fuse',
+          assets: ['ELON', 'FUSE'],
+          earnedToken: 'ELON-FUSE LP',
+          earnedTokenDecimals: 18,
+          earnedTokenAddress: '0xe418c323fA450e7e18c4dB304bEFC7ffF92D2Cc1',
+          earnContractAddress: '0xc3a4fdcba79DB04b4C3e352b1C467B3Ba909D84A',
+          earnedOracle: 'lps',
+          earnedOracleId: 'voltage-wfuse-elon',
+          partnership: true,
+          status: 'active',
+          isMooStaked: true,
+          partners: [],
         },
       ],
     };
