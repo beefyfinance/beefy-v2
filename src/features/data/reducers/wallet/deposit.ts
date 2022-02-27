@@ -49,6 +49,10 @@ export const depositSlice = createSlice({
       return initialDepositState;
     },
 
+    setZapOptions(sliceState, action: PayloadAction<ZapOptions>) {
+      sliceState.zapOptions = action.payload;
+    },
+
     setAsset(sliceState, action: PayloadAction<{ tokenId: TokenEntity['id']; state: BeefyState }>) {
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);

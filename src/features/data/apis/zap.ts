@@ -31,12 +31,19 @@ export interface ZapOptions {
   tokens: TokenEntity[];
 }
 
-export async function getEligibleZapOptions(
+const zapOptionsCache: { [vaultId: VaultEntity['id']]: ZapOptions | null } = {};
+
+export function getEligibleZapOptions(
   state: BeefyState,
   vaultId: VaultEntity['id']
-): Promise<ZapOptions | null> {
+): ZapOptions | null {
+  if (zapOptionsCache[vaultId] !== undefined) {
+    return zapOptionsCache[vaultId];
+  }
+
   const vault = selectVaultById(state, vaultId);
   if (vault.assetIds.length !== 2) {
+    zapOptionsCache[vaultId] = null;
     return null;
   }
   // sometimes, the addressbook does not yet contains the necessary token address
@@ -73,23 +80,26 @@ export async function getEligibleZapOptions(
     );
   });
   if (!zap) {
+    zapOptionsCache[vaultId] = null;
     return null;
   }
 
-  const zapOptions: TokenEntity[] = [tokenA, tokenB];
+  const zapTokens: TokenEntity[] = [tokenA, tokenB];
 
   if ([tokenA.id, tokenB.id].includes(wnative.id) && ![tokenA.id, tokenB.id].includes(native.id)) {
-    zapOptions.unshift(native);
+    zapTokens.unshift(native);
   }
   if ([tokenA.id, tokenB.id].includes(native.id) && ![tokenA.id, tokenB.id].includes(wnative.id)) {
-    zapOptions.unshift(wnative);
+    zapTokens.unshift(wnative);
   }
 
-  return {
+  const zapOptions = {
     address: zap.zapAddress,
     router: zap.ammRouter,
-    tokens: zapOptions,
+    tokens: zapTokens,
   };
+  zapOptionsCache[vaultId] = zapOptions;
+  return zapOptions;
 }
 
 const computePairAddress = (factoryAddress, pairInitHash, tokenA, tokenB) => {

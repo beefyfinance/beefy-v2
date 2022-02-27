@@ -1,15 +1,11 @@
 export const styles = theme => ({
   container: {
-    width: '85%',
+    width: '100%',
     height: 40,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8px',
-    marginLeft: '24px',
-    [theme.breakpoints.down('xs')]: {
-      marginLeft: '12px',
-    },
     '& .MuiTypography-root': {
       fontWeight: 700,
     },
@@ -17,9 +13,6 @@ export const styles = theme => ({
       flexWrap: 'inherit',
       padding: '8px 16px',
       cursor: 'pointer',
-    },
-    [theme.breakpoints.up('md')]: {
-      width: '100%',
     },
   },
   disconnected: {

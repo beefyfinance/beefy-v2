@@ -136,12 +136,6 @@ class LargeList extends React.PureComponent<LargeListProps, LargeListState> {
     }
   }
 
-  componentDidUpdate(prevProps: Readonly<LargeListProps>): void {
-    // reset when props change
-    if (prevProps.list !== this.props.list) {
-      this.setState({ renderUntilRow: this.props.batchSize });
-    }
-  }
   componentDidMount() {
     window.addEventListener('scroll', this._refreshRowToBeRendered);
     window.addEventListener('resize', this._refreshRowToBeRendered);

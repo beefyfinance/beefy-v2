@@ -59,6 +59,10 @@ export const withdrawSlice = createSlice({
       return initialWithdrawState;
     },
 
+    setZapOptions(sliceState, action: PayloadAction<ZapOptions>) {
+      sliceState.zapOptions = action.payload;
+    },
+
     setAsset(
       sliceState,
       action: PayloadAction<{
@@ -147,6 +151,7 @@ export const withdrawSlice = createSlice({
     },
   },
   extraReducers: builder => {
+    // on init, fetch zap options
     builder.addCase(initiateWithdrawForm.fulfilled, (sliceState, action) => {
       const state = action.payload.state;
       const vault = selectVaultById(state, action.payload.vaultId);
