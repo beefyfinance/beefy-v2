@@ -40,9 +40,7 @@ export const initiateWithdrawForm = createAsyncThunk<
   const chain = selectChainById(getState(), vault.chainId);
 
   // then, we need to find out the available zap options
-  const zapOptions = isStandardVault(vault)
-    ? await getEligibleZapOptions(getState(), vaultId)
-    : null;
+  const zapOptions = isStandardVault(vault) ? getEligibleZapOptions(getState(), vaultId) : null;
 
   // then we want to know the balance and allowance for each route
   const tokens: TokenEntity[] = [oracleToken, earnedToken].concat(zapOptions?.tokens || []);
