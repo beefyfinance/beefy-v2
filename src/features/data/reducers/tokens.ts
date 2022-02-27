@@ -14,6 +14,7 @@ import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
 import { selectChainById } from '../selectors/chains';
+import { getBoostTokenIdFromLegacyConfig } from '../utils/config-hack-boost-token-id';
 
 /**
  * State containing Vault infos
@@ -184,16 +185,7 @@ function addBoostToState(
     };
   }
 
-  let tokenId = apiBoost.earnedOracleId;
-  // for convenience, the config puts "BIFI" as oracle token of all mooXBIFI
-  // but we need to distinguish those tokens
-  if (
-    tokenId === 'BIFI' &&
-    apiBoost.earnedToken.startsWith('moo') &&
-    apiBoost.earnedToken.endsWith('BIFI')
-  ) {
-    tokenId = apiBoost.earnedToken;
-  }
+  const tokenId = getBoostTokenIdFromLegacyConfig(apiBoost);
   if (sliceState.byChainId[chainId].byId[tokenId] === undefined) {
     const token: TokenEntity = {
       id: tokenId,

@@ -1,5 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Tokens slice tests should correctly handle mooFuse config 1`] = `
+Object {
+  "byChainId": Object {
+    "fuse": Object {
+      "byId": Object {
+        "mooFuse": Object {
+          "buyUrl": null,
+          "chainId": "fuse",
+          "contractAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+          "decimals": 18,
+          "description": null,
+          "id": "mooFuse",
+          "symbol": "mooFuse",
+          "type": "erc20",
+          "website": null,
+        },
+      },
+      "interestingBalanceTokenIds": Array [
+        "mooFuse",
+      ],
+      "native": null,
+      "wnative": null,
+    },
+  },
+  "prices": Object {
+    "byTokenId": Object {},
+  },
+}
+`;
+
 exports[`Tokens slice tests should update state on fulfilled boosts list 1`] = `
 Object {
   "byChainId": Object {

@@ -9,6 +9,7 @@ import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
+import { getBoostTokenIdFromLegacyConfig } from '../utils/config-hack-boost-token-id';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
@@ -164,16 +165,8 @@ function addBoostToState(
     return;
   }
 
-  let tokenId = apiBoost.earnedOracleId;
-  // for convenience, the config puts "BIFI" as oracle token of all mooXBIFI
-  // but we need to distinguish those tokens
-  if (
-    tokenId === 'BIFI' &&
-    apiBoost.earnedToken.startsWith('moo') &&
-    apiBoost.earnedToken.endsWith('BIFI')
-  ) {
-    tokenId = apiBoost.earnedToken;
-  }
+  const tokenId = getBoostTokenIdFromLegacyConfig(apiBoost);
+
   const boost: BoostEntity = {
     id: apiBoost.id,
     chainId: chainId,
