@@ -7,6 +7,7 @@ import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
+import { initiateWithdrawForm } from '../actions/withdraw';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { ChainEntity } from '../entities/chain';
@@ -111,6 +112,10 @@ export const vaultsSlice = createSlice({
         addContractDataToState(sliceState, action.payload.contractData);
       }
     );
+
+    builder.addCase(initiateWithdrawForm.fulfilled, (sliceState, action) => {
+      addContractDataToState(sliceState, action.payload.contractData);
+    });
   },
 });
 

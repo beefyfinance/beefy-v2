@@ -2,7 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { getAllowanceApi, getBalanceApi } from '../apis/instances';
+import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
+import { getAllowanceApi, getBalanceApi, getContractDataApi } from '../apis/instances';
 import { getEligibleZapOptions, ZapOptions } from '../apis/zap';
 import { isTokenErc20, TokenEntity } from '../entities/token';
 import { isGovVault, isStandardVault, VaultEntity } from '../entities/vault';
@@ -23,6 +24,7 @@ interface InitWithdrawFormPayload {
   walletAddress: string | null;
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
+  contractData: FetchAllContractDataResult;
 
   // reducers below need to access the state
   state: BeefyState;
@@ -41,6 +43,15 @@ export const initiateWithdrawForm = createAsyncThunk<
 
   // then, we need to find out the available zap options
   const zapOptions = isStandardVault(vault) ? getEligibleZapOptions(getState(), vaultId) : null;
+
+  // we need to reload the price per full share of the vault
+  const contractDataApi = await getContractDataApi(chain);
+  const contractDataRes = await contractDataApi.fetchAllContractData(
+    getState(),
+    isStandardVault(vault) ? [vault] : [],
+    isGovVault(vault) ? [vault] : [],
+    []
+  );
 
   // then we want to know the balance and allowance for each route
   const tokens: TokenEntity[] = [oracleToken, earnedToken].concat(zapOptions?.tokens || []);
@@ -73,6 +84,7 @@ export const initiateWithdrawForm = createAsyncThunk<
     walletAddress,
     allowance: allowanceRes,
     balance: balanceRes,
+    contractData: contractDataRes,
     zapOptions,
     vaultId,
     state: getState(),
