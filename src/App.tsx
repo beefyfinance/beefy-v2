@@ -42,9 +42,9 @@ export const App = () => {
             <Route strict sensitive exact path="/:network/vault/:id">
               <Vault />
             </Route>
-            <Route exact path="/nfts">
+            {/* <Route exact path="/nfts">
               <BeefyAvatars />
-            </Route>
+            </Route> */}
             <Route>
               <PageNotFound />
             </Route>
