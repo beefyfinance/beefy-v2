@@ -8,7 +8,10 @@ import { formattedTotalApy } from '../../helpers/format';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { selectVaultTotalApy } from '../../features/data/selectors/apy';
+import {
+  selectDidAPIReturnValuesForVault,
+  selectVaultTotalApy,
+} from '../../features/data/selectors/apy';
 import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultApyAvailable } from '../../features/data/selectors/data-loader';
@@ -159,7 +162,11 @@ function _YearlyApyStats({
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
 
-  const isLoading = useSelector((state: BeefyState) => !selectVaultApyAvailable(state, vaultId));
+  const isLoading = useSelector(
+    (state: BeefyState) =>
+      // sometimes, the api skips some vaults, for now, we consider the vault loading
+      !selectVaultApyAvailable(state, vaultId) || selectDidAPIReturnValuesForVault(state, vaultId)
+  );
   const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
 
   const formatted = formattedTotalApy(values);
@@ -203,7 +210,11 @@ function _DailyApyStats({
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
 
-  const isLoading = useSelector((state: BeefyState) => !selectVaultApyAvailable(state, vaultId));
+  const isLoading = useSelector(
+    (state: BeefyState) =>
+      // sometimes, the api skips some vaults, for now, we consider the vault loading
+      !selectVaultApyAvailable(state, vaultId) || selectDidAPIReturnValuesForVault(state, vaultId)
+  );
   const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
 
   const formatted = formattedTotalApy(values);

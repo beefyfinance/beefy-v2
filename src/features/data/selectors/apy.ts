@@ -37,6 +37,10 @@ export const selectVaultTotalApy = (state: BeefyState, vaultId: VaultEntity['id'
   return state.biz.apy.totalApy.byVaultId[vaultId] || {};
 };
 
+export const selectDidAPIReturnValuesForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.biz.apy.totalApy.byVaultId[vaultId] !== undefined;
+};
+
 export const selectUserGlobalStats = (state: BeefyState) => {
   let newGlobalStats = {
     deposited: BIG_ZERO,

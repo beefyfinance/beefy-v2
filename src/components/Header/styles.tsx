@@ -94,5 +94,11 @@ export const styles = theme => ({
     minWidth: '195px',
     minHeight: '10px',
     display: 'block',
+    paddingLeft: '24px',
+
+    [theme.breakpoints.down('xs')]: {
+      minWidth: '165px',
+      paddingLeft: '16px',
+    },
   },
 });
