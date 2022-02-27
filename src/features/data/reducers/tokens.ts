@@ -208,7 +208,7 @@ function addBoostToState(
       website: null,
       type: 'erc20',
     };
-    temporaryWrappedtokenFix(token);
+    // temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
     sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
   }
@@ -241,7 +241,7 @@ function addVaultToState(
         buyUrl: null,
         description: null,
         website: null,
-        type: vault.tokenAddress ? 'erc20' : 'native',
+        type:'erc20',
       };
     } else {
       token = {
@@ -290,7 +290,7 @@ function addVaultToState(
               website: null,
               description: null,
             };
-      temporaryWrappedtokenFix(token);
+      // temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
       sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
     } else {
