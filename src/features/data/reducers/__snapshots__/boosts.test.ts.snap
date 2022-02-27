@@ -27,9 +27,7 @@ Object {
       "id": "moo_fusefi-wfuse-usdc-fuse",
       "logo": undefined,
       "name": "Fuse",
-      "partnerIds": Array [
-        "https://www.fuse.io",
-      ],
+      "partnerIds": Array [],
       "vaultId": "voltage-wfuse-usdc",
     },
   },
@@ -38,6 +36,51 @@ Object {
       "activeBoostsIds": Array [],
       "allBoostsIds": Array [
         "moo_fusefi-wfuse-usdc-fuse",
+      ],
+      "expiredBoostsIds": Array [],
+      "prestakeBoostsIds": Array [],
+    },
+  },
+  "periodFinish": Object {},
+}
+`;
+
+exports[`Boosts slice tests should correctly handle wfuse-elon boost config 1`] = `
+Object {
+  "allIds": Array [
+    "moo_voltage-wfuse-elon-elon",
+  ],
+  "byChainId": Object {
+    "fuse": Object {
+      "activeBoostsIds": Array [],
+      "allBoostsIds": Array [
+        "moo_voltage-wfuse-elon-elon",
+      ],
+      "expiredBoostsIds": Array [],
+      "prestakeBoostsIds": Array [],
+    },
+  },
+  "byId": Object {
+    "moo_voltage-wfuse-elon-elon": Object {
+      "assets": Array [
+        "ELON",
+        "FUSE",
+      ],
+      "chainId": "fuse",
+      "earnContractAddress": "0xc3a4fdcba79DB04b4C3e352b1C467B3Ba909D84A",
+      "earnedTokenId": "voltage-wfuse-elon",
+      "id": "moo_voltage-wfuse-elon-elon",
+      "logo": undefined,
+      "name": "Dogelon Mars x Fuse",
+      "partnerIds": Array [],
+      "vaultId": "voltage-wfuse-elon",
+    },
+  },
+  "byVaultId": Object {
+    "voltage-wfuse-elon": Object {
+      "activeBoostsIds": Array [],
+      "allBoostsIds": Array [
+        "moo_voltage-wfuse-elon-elon",
       ],
       "expiredBoostsIds": Array [],
       "prestakeBoostsIds": Array [],
