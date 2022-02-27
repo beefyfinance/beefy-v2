@@ -52,4 +52,7 @@ export const styles = theme => ({
   tooltipHolder: {
     marginLeft: theme.spacing(0.5),
   },
+  noTextContentLoader: {
+    paddingTop: '3px',
+  },
 });

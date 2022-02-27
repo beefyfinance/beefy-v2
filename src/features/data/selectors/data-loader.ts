@@ -20,7 +20,10 @@ export const selectVaultApyAvailable = (state: BeefyState, vaultId: VaultEntity[
   const vault = selectVaultById(state, vaultId);
   const chainId = vault.chainId;
 
-  return state.ui.dataLoader.byChainId[chainId]?.contractData.alreadyLoadedOnce;
+  return (
+    state.ui.dataLoader.byChainId[chainId]?.contractData.alreadyLoadedOnce &&
+    state.ui.dataLoader.global.apy.alreadyLoadedOnce
+  );
 };
 
 export const selectIsUserBalanceAvailable = createSelector(

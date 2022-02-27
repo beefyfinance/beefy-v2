@@ -165,7 +165,7 @@ function _YearlyApyStats({
   const isLoading = useSelector(
     (state: BeefyState) =>
       // sometimes, the api skips some vaults, for now, we consider the vault loading
-      !selectVaultApyAvailable(state, vaultId) || selectDidAPIReturnValuesForVault(state, vaultId)
+      !selectVaultApyAvailable(state, vaultId) || !selectDidAPIReturnValuesForVault(state, vaultId)
   );
   const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
 
@@ -213,7 +213,7 @@ function _DailyApyStats({
   const isLoading = useSelector(
     (state: BeefyState) =>
       // sometimes, the api skips some vaults, for now, we consider the vault loading
-      !selectVaultApyAvailable(state, vaultId) || selectDidAPIReturnValuesForVault(state, vaultId)
+      !selectVaultApyAvailable(state, vaultId) || !selectDidAPIReturnValuesForVault(state, vaultId)
   );
   const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
 

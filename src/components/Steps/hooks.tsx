@@ -24,8 +24,9 @@ export function useStepper(
     onClose();
   }, [onClose, setSteps]);
 
-  const Stepper: React.FC = () => (
-    <Steps vaultId={vaultId} steps={steps} handleClose={handleClose} />
+  const Stepper: React.FC = React.useMemo(
+    () => () => <Steps vaultId={vaultId} steps={steps} handleClose={handleClose} />,
+    [vaultId, steps, handleClose]
   );
 
   // advance stepper
