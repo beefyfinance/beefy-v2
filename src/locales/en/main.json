@@ -288,6 +288,7 @@
   "Avatars-Generated": "Generated ",
   "Avatars-Percent": "or ",
   "NetworkStatus-Title-OK": "All blockchain data successfully loaded",
+  "NetworkStatus-Title-Loading": "Fetching data",
   "NetworkStatus-Title-RpcError": "RPC Errors",
   "NetworkStatus-HelpText-Error": "Some data may display incorrectly",
   "NetworkStatus-RpcError": "{{chain}} RPC failed",
