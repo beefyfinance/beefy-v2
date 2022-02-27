@@ -73,23 +73,18 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
   const formState = useSelector((state: BeefyState) => state.ui.deposit);
   const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
-  const isSelectedNative = formState.selectedToken && formState.selectedToken.id === native.id;
   const displayBoostWidget = useSelector((state: BeefyState) =>
     selectShouldDisplayBoostWidget(state, vaultId)
   );
 
-  const spenderAddress =
-    // no allowance needed for native tokens
-    isSelectedNative
-      ? null
-      : // if it's a zap, we spend with the zap contract
-      formState.isZap
-      ? formState.zapOptions?.address || null
-      : // if it's a classic vault, the vault contract address is the spender
-      // which is also the earned token
-      isStandardVault(vault)
-      ? vault.contractAddress
-      : vault.earnContractAddress;
+  // if it's a zap, we spend with the zap contract
+  const spenderAddress = formState.isZap
+    ? formState.zapOptions?.address || null
+    : // if it's a classic vault, the vault contract address is the spender
+    // which is also the earned token
+    isStandardVault(vault)
+    ? vault.contractAddress
+    : vault.earnContractAddress;
 
   const needsApproval = useSelector((state: BeefyState) =>
     formState.selectedToken && formState.selectedToken.id !== native.id && spenderAddress
