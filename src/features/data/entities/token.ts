@@ -33,6 +33,9 @@ export interface TokenNative {
   id: string;
   symbol: string;
   chainId: ChainEntity['id'];
+  // some chains have addressable native tokens
+  // maybe this should be a separate interface
+  address: string | null;
   decimals: number;
   buyUrl: string | null; // link to 1inch/pancake/...
   type: 'native';

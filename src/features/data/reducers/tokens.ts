@@ -13,7 +13,13 @@ import {
 import { fetchAllVaults } from '../actions/vaults';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
-import { isTokenErc20, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
+import {
+  isTokenErc20,
+  isTokenNative,
+  TokenEntity,
+  TokenErc20,
+  TokenNative,
+} from '../entities/token';
 import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenIdFromLegacyConfig,
@@ -79,6 +85,7 @@ export const tokensSlice = createSlice({
           id: tokenId,
           chainId: chainId,
           decimals: 18, // TODO: not sure about that
+          address: null,
           symbol: chainConf.walletSettings.nativeCurrency.symbol,
           type: 'native',
           buyUrl: sliceState.byChainId[chainId].byId[tokenId]?.buyUrl ?? null,
@@ -172,6 +179,14 @@ function addAddressBookToState(
     if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
       sliceState.byChainId[chainId].wnative = token.id;
     }
+
+    // update the native token address for those chains who have one
+    if (isTokenNative(token) && token.address !== null) {
+      const chainNative = sliceState.byChainId[chainId].byId[token.id] as TokenNative;
+      if (chainNative && chainNative.address === null) {
+        chainNative.address = token.address;
+      }
+    }
   }
 }
 
@@ -242,6 +257,7 @@ function addVaultToState(
           ? {
               id: earnedTokenId,
               chainId: chainId,
+              address: null,
               decimals: chain.walletSettings.nativeCurrency.decimals,
               symbol: vault.earnedToken,
               type: 'native',

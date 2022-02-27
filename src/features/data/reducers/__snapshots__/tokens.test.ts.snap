@@ -36,6 +36,7 @@ Object {
     "fuse": Object {
       "byId": Object {
         "FUSE": Object {
+          "address": null,
           "buyUrl": null,
           "chainId": "fuse",
           "decimals": 18,
