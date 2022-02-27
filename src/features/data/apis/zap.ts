@@ -59,10 +59,17 @@ export function getEligibleZapOptions(
 
   const wnative = selectChainWrappedNativeToken(state, vault.chainId);
   const native = selectChainNativeToken(state, vault.chainId);
-  const _tokenA = selectTokenById(state, vault.chainId, vault.assetIds[0]);
-  const _tokenB = selectTokenById(state, vault.chainId, vault.assetIds[1]);
-  const tokenA = isTokenNative(_tokenA) ? wnative : _tokenA;
-  const tokenB = isTokenNative(_tokenB) ? wnative : _tokenB;
+
+  function getAddress(token: TokenEntity) {
+    return isTokenNative(token)
+      ? token.address !== null
+        ? token.address
+        : wnative.contractAddress
+      : token.contractAddress;
+  }
+
+  const tokenA = selectTokenById(state, vault.chainId, vault.assetIds[0]);
+  const tokenB = selectTokenById(state, vault.chainId, vault.assetIds[1]);
 
   // we cannot select the addressbook token as the vault token can be an LP token
   const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
@@ -74,8 +81,8 @@ export function getEligibleZapOptions(
         computePairAddress(
           zap.ammFactory,
           zap.ammPairInitHash,
-          tokenA.contractAddress,
-          tokenB.contractAddress
+          getAddress(tokenA),
+          getAddress(tokenB)
         )
     );
   });

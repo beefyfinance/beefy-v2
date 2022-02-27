@@ -1,10 +1,11 @@
-import { BeefyState } from '../../../redux-types';
 import { fetchAllBoosts, FulfilledAllBoostsPayload } from '../actions/boosts';
 import { fetchAllPricesAction } from '../actions/prices';
+import { fetchAddressBookAction } from '../actions/tokens';
 import { fetchAllVaults, FulfilledAllVaultsPayload } from '../actions/vaults';
 import { BeefyAPITokenPricesResponse } from '../apis/beefy';
+import { selectChainNativeToken } from '../selectors/tokens';
 import { getBeefyTestingStore } from '../utils/test-utils';
-import { tokensSlice, initialTokensState } from './tokens';
+import { initialTokensState, tokensSlice } from './tokens';
 
 describe('Tokens slice tests', () => {
   it('should update state on fulfilled vault list', async () => {
@@ -249,5 +250,19 @@ describe('Tokens slice tests', () => {
     const action = { type: fetchAllVaults.fulfilled, payload: payload };
     const state = tokensSlice.reducer(initialTokensState, action);
     expect(state).toMatchSnapshot();
+  });
+
+  it('should update addressable native token addresses when fetching the address book', async () => {
+    const store = await getBeefyTestingStore();
+    await store.dispatch(fetchAddressBookAction({ chainId: 'metis' }));
+    await store.dispatch(fetchAddressBookAction({ chainId: 'celo' }));
+    await store.dispatch(fetchAddressBookAction({ chainId: 'bsc' }));
+    const state = store.getState();
+    const metisNative = selectChainNativeToken(state, 'metis');
+    const celoNative = selectChainNativeToken(state, 'celo');
+    const bscNative = selectChainNativeToken(state, 'bsc');
+    expect(metisNative.address).toBe('0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000');
+    expect(celoNative.address).toBe('0x471EcE3750Da237f93B8E339c536989b8978a438');
+    expect(bscNative.address).toBe(null);
   });
 });

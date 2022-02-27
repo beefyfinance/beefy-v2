@@ -30,17 +30,58 @@ export const getChainAddressBook = memoize(
     const nativeSymbol = chain.walletSettings.nativeCurrency.symbol;
     // map to our own token entity
     return Object.entries(addressBook.tokens).reduce((agg, [tokenId, bookToken]) => {
-      agg[tokenId] = {
-        id: tokenId === 'WNATIVE' ? wnative.symbol : tokenId,
-        chainId: chain.id,
-        contractAddress: bookToken.address,
-        decimals: bookToken.decimals,
-        symbol: tokenId === nativeSymbol ? nativeSymbol : bookToken.symbol,
-        buyUrl: null,
-        website: bookToken.website || null,
-        description: bookToken.description || null,
-        type: tokenId === nativeSymbol ? 'native' : 'erc20',
-      };
+      if (tokenId === 'WNATIVE') {
+        agg[tokenId] = {
+          id: wnative.symbol,
+          chainId: chain.id,
+          contractAddress: bookToken.address,
+          decimals: bookToken.decimals,
+          symbol: bookToken.symbol,
+          buyUrl: null,
+          website: bookToken.website || null,
+          description: bookToken.description || null,
+          type: 'erc20',
+        };
+      } else if (tokenId === nativeSymbol) {
+        // we have an addressable native token like in celo or metis
+        if (bookToken.name === nativeSymbol && bookToken.address) {
+          agg[tokenId] = {
+            id: tokenId,
+            chainId: chain.id,
+            address: bookToken.address,
+            decimals: bookToken.decimals,
+            symbol: nativeSymbol,
+            buyUrl: null,
+            website: bookToken.website || null,
+            description: bookToken.description || null,
+            type: 'native',
+          };
+        } else {
+          agg[tokenId] = {
+            id: tokenId,
+            chainId: chain.id,
+            address: null,
+            decimals: bookToken.decimals,
+            symbol: nativeSymbol,
+            buyUrl: null,
+            website: bookToken.website || null,
+            description: bookToken.description || null,
+            type: 'native',
+          };
+        }
+      } else {
+        agg[tokenId] = {
+          id: tokenId,
+          chainId: chain.id,
+          contractAddress: bookToken.address,
+          decimals: bookToken.decimals,
+          symbol: bookToken.symbol,
+          buyUrl: null,
+          website: bookToken.website || null,
+          description: bookToken.description || null,
+          type: 'erc20',
+        };
+      }
 
       return agg;
     }, {} as ChainAddressBook);
