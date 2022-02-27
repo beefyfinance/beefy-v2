@@ -27,6 +27,11 @@ Object {
     },
   },
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -114,6 +119,11 @@ Object {
     },
   },
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -201,6 +211,11 @@ Object {
     },
   },
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -288,6 +303,11 @@ Object {
     },
   },
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -352,6 +372,11 @@ exports[`Data Loader slice tests should update state on fulfilled global action 
 Object {
   "byChainId": Object {},
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -416,6 +441,11 @@ exports[`Data Loader slice tests should update state on fulfilled global action 
 Object {
   "byChainId": Object {},
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -480,6 +510,11 @@ exports[`Data Loader slice tests should update state on fulfilled global action 
 Object {
   "byChainId": Object {},
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -544,6 +579,11 @@ exports[`Data Loader slice tests should update state on fulfilled global action 
 Object {
   "byChainId": Object {},
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -608,6 +648,11 @@ exports[`Data Loader slice tests should update state on fulfilled global action 
 Object {
   "byChainId": Object {},
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -672,6 +717,11 @@ exports[`Data Loader slice tests should update state on fulfilled global action 
 Object {
   "byChainId": Object {},
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,
@@ -736,6 +786,11 @@ exports[`Data Loader slice tests should update state on fulfilled global action 
 Object {
   "byChainId": Object {},
   "global": Object {
+    "addressBook": Object {
+      "alreadyLoadedOnce": false,
+      "error": null,
+      "status": "init",
+    },
     "apy": Object {
       "alreadyLoadedOnce": false,
       "error": null,

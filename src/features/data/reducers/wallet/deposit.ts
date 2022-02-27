@@ -45,8 +45,8 @@ export const depositSlice = createSlice({
   name: 'deposit',
   initialState: initialDepositState,
   reducers: {
-    resetForm(sliceState) {
-      sliceState = initialDepositState;
+    resetForm() {
+      return initialDepositState;
     },
 
     setAsset(sliceState, action: PayloadAction<{ tokenId: TokenEntity['id']; state: BeefyState }>) {

@@ -3,12 +3,15 @@ import { fetchAllBoosts, FulfilledAllBoostsPayload } from '../actions/boosts';
 import { fetchAllPricesAction } from '../actions/prices';
 import { fetchAllVaults, FulfilledAllVaultsPayload } from '../actions/vaults';
 import { BeefyAPITokenPricesResponse } from '../apis/beefy';
+import { getBeefyTestingStore } from '../utils/test-utils';
 import { tokensSlice, initialTokensState } from './tokens';
 
 describe('Tokens slice tests', () => {
-  it('should update state on fulfilled vault list', () => {
+  it('should update state on fulfilled vault list', async () => {
+    const store = await getBeefyTestingStore();
+    const state = store.getState();
     const payload: FulfilledAllVaultsPayload = {
-      state: {} as BeefyState,
+      state,
       byChainId: {
         harmony: [
           // have one gov vault
@@ -22,7 +25,7 @@ describe('Tokens slice tests', () => {
             tokenDecimals: 18,
             tokenDescriptionUrl:
               'https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance',
-            earnedToken: 'ONE',
+            earnedToken: 'WONE',
             earnedTokenAddress: '0x5b96bbaca98d777cb736dd89a519015315e00d02',
             earnContractAddress: '0x5b96bbaca98d777cb736dd89a519015315e00d02',
             poolAddress: '0x5b96bbaca98d777cb736dd89a519015315e00d02',
@@ -91,8 +94,8 @@ describe('Tokens slice tests', () => {
       },
     };
     const action = { type: fetchAllVaults.fulfilled, payload: payload };
-    const state = tokensSlice.reducer(initialTokensState, action);
-    expect(state).toMatchSnapshot();
+    const newState = tokensSlice.reducer(initialTokensState, action);
+    expect(newState).toMatchSnapshot();
   });
 
   it('should update state on fulfilled boosts list', () => {

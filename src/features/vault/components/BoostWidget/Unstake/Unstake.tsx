@@ -41,6 +41,7 @@ import { useStepper } from '../../../../../components/Steps/hooks';
 import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal';
 import { Step } from '../../../../../components/Steps/types';
 import { walletActions } from '../../../../data/actions/wallet-actions';
+import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles as any);
 
@@ -55,7 +56,7 @@ export const Unstake = ({
 
   const formReady = useSelector(
     (state: BeefyState) =>
-      isFulfilled(state.ui.dataLoader.byChainId[boost.chainId].addressBook) &&
+      selectIsAddressBookLoaded(state, boost.chainId) &&
       isFulfilled(state.ui.dataLoader.global.boostForm)
   );
   const walletAddress = useSelector((state: BeefyState) =>

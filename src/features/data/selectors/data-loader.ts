@@ -1,7 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
+import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
-import { isPending } from '../reducers/data-loader';
+import { isInitialLoader, isPending } from '../reducers/data-loader';
 import { selectVaultById } from './vaults';
 
 const selectIsPriceAvailable = (state: BeefyState) =>
@@ -52,3 +53,12 @@ export const selectIsVaultListAvailable = selectIsConfigAvailable;
 
 export const selectIsWalletPending = (state: BeefyState) =>
   isPending(state.ui.dataLoader.global.wallet);
+
+export const selectShouldInitAddressBook = (state: BeefyState, chainId: ChainEntity['id']) =>
+  isInitialLoader(state.ui.dataLoader.global.addressBook) ||
+  !state.ui.dataLoader.byChainId[chainId] ||
+  isInitialLoader(state.ui.dataLoader.byChainId[chainId].addressBook);
+
+export const selectIsAddressBookLoaded = (state: BeefyState, chainId: ChainEntity['id']) =>
+  state.ui.dataLoader.global.addressBook.alreadyLoadedOnce ||
+  state.ui.dataLoader.byChainId[chainId]?.addressBook.alreadyLoadedOnce;

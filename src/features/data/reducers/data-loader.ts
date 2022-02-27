@@ -15,6 +15,7 @@ import { initiateDepositForm } from '../actions/deposit';
 import { fetchAllPricesAction } from '../actions/prices';
 import {
   fetchAddressBookAction,
+  fetchAllAddressBookAction,
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
@@ -111,6 +112,7 @@ export interface DataLoaderState {
     depositForm: LoaderState;
     withdrawForm: LoaderState;
     boostForm: LoaderState;
+    addressBook: LoaderState;
   };
 
   byChainId: {
@@ -140,6 +142,7 @@ export const initialDataLoaderState: DataLoaderState = {
     depositForm: dataLoaderStateInit,
     withdrawForm: dataLoaderStateInit,
     boostForm: dataLoaderStateInit,
+    addressBook: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -217,7 +220,6 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
-    // here, maybe put an error message
     for (const stateKey of stateKeys) {
       sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
     }
@@ -248,6 +250,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm');
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm');
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps');
+    addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook');
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);

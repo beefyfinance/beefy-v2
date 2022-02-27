@@ -42,6 +42,7 @@ import { selectChainById } from '../../../../data/selectors/chains';
 import { Loader } from '../../../../../components/loader';
 import { initBoostForm } from '../../../../data/actions/scenarios';
 import { isFulfilled } from '../../../../data/reducers/data-loader';
+import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
 
 const useStyles = makeStyles(styles as any);
 
@@ -56,7 +57,7 @@ export const Stake = ({
 
   const formReady = useSelector(
     (state: BeefyState) =>
-      isFulfilled(state.ui.dataLoader.byChainId[boost.chainId].addressBook) &&
+      selectIsAddressBookLoaded(state, boost.chainId) &&
       isFulfilled(state.ui.dataLoader.global.boostForm)
   );
   const walletAddress = useSelector((state: BeefyState) =>
