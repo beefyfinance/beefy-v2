@@ -1535,35 +1535,6 @@ export const pools = [
     createdAt: 1627605878
   },
   {
-    id: "quick-yamp-usdc-eol",
-    name: "YAMP-USDC LP",
-    token: "YAMP-USDC LP",
-    tokenDescription: "Quickswap",
-    tokenAddress: "0x87d68f797623590E45982AD0f21228557207FdDa",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooQuickYAMP-USDC",
-    earnedTokenAddress: "0x72eF74242Ac0bf0802c0e938B7A397001Ab34C06",
-    earnContractAddress: "0x72eF74242Ac0bf0802c0e938B7A397001Ab34C06",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "quick-yamp-usdc",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "QuickSwap",
-    assets: [
-      "YAMP",
-      "USDC"
-    ],
-    retireReason: "tvl",
-    addLiquidityUrl: "https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x87f654c4b347230c60cad8d7ea9cf0d7238bcc79",
-    buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x87f654c4b347230c60cad8d7ea9cf0d7238bcc79",
-    stratType: "StratLP",
-    network: "polygon",
-    createdAt: 1627480842
-  },
-  {
     id: "polyyeld-xyeld-quick-wmatic-xyeld-eol",
     name: "xYELD-MATIC QLP",
     token: "xYELD-MATIC QLP",

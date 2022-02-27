@@ -478,42 +478,6 @@ export const pools = [
     createdAt: 1637147878
   },
   {
-    id: "crona-wbtc-cro",
-    name: "WBTC-CRO",
-    token: "WBTC-CRO LP",
-    tokenDescription: "CronaSwap",
-    tokenAddress: "0xb4684F52867dC0dDe6F931fBf6eA66Ce94666860",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCronaWBTC-CRO",
-    earnedTokenAddress: "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
-    earnContractAddress: "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "crona-wbtc-cro",
-    oraclePrice: 0,
-    status: "active",
-    platform: "CronaSwap",
-    assets: [
-      "WBTC",
-      "CRO"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
-    addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
-    network: "cronos",
-    createdAt: 1637150470
-  },
-  {
     id: "crona-usdt-busd",
     name: "BUSD-USDT",
     token: "BUSD-USDT LP",
@@ -802,42 +766,6 @@ export const pools = [
     addLiquidityUrl: "https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     network: "cronos",
     createdAt: 1638064120
-  },
-  {
-    id: "crona-busd-bnb",
-    name: "BNB-BUSD",
-    token: "BNB-BUSD CLP",
-    tokenDescription: "CronaSwap",
-    tokenAddress: "0xe8B18116040acf83D6e1f873375adF61103AB45c",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCronaBUSD-BNB",
-    earnedTokenAddress: "0xc4903232e027b61C587D110cB2DBd0079F9f5eB8",
-    earnContractAddress: "0xc4903232e027b61C587D110cB2DBd0079F9f5eB8",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "crona-busd-bnb",
-    oraclePrice: 0,
-    status: "active",
-    platform: "CronaSwap",
-    assets: [
-      "BNB",
-      "BUSD"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
-    addLiquidityUrl: "https://app.cronaswap.org/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
-    network: "cronos",
-    createdAt: 1638061783
   },
   {
     id: "vvs-cro-dai",
@@ -1438,5 +1366,79 @@ export const pools = [
     addLiquidityUrl: "https://mm.finance/add/CRO/0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
     createdAt: 1644921724,
     network: "cronos"
+  },
+  {
+    id: "crona-busd-bnb-eol",
+    name: "BNB-BUSD",
+    token: "BNB-BUSD CLP",
+    tokenDescription: "CronaSwap",
+    tokenAddress: "0xe8B18116040acf83D6e1f873375adF61103AB45c",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCronaBUSD-BNB",
+    earnedTokenAddress: "0xc4903232e027b61C587D110cB2DBd0079F9f5eB8",
+    earnContractAddress: "0xc4903232e027b61C587D110cB2DBd0079F9f5eB8",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "crona-busd-bnb",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "CronaSwap",
+    assets: [
+      "BNB",
+      "BUSD"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
+    addLiquidityUrl: "https://app.cronaswap.org/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
+    network: "cronos",
+    createdAt: 1638061783,
+    retiredReason: "tvl"
+  },
+  {
+    id: "crona-wbtc-cro-eol",
+    name: "WBTC-CRO",
+    token: "WBTC-CRO LP",
+    tokenDescription: "CronaSwap",
+    tokenAddress: "0xb4684F52867dC0dDe6F931fBf6eA66Ce94666860",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCronaWBTC-CRO",
+    earnedTokenAddress: "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
+    earnContractAddress: "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "crona-wbtc-cro",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "CronaSwap",
+    assets: [
+      "WBTC",
+      "CRO"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
+    addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
+    network: "cronos",
+    createdAt: 1637150470,
+    retiredReason: "tvl"
   }
 ];
