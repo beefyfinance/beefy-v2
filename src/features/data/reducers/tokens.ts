@@ -94,6 +94,7 @@ export const tokensSlice = createSlice({
         };
         sliceState.byChainId[chainId].byId[token.id] = token;
         sliceState.byChainId[chainId].native = token.id;
+        sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
       }
     });
 
