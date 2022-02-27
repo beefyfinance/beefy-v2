@@ -104,7 +104,7 @@ const UnstakeForm = ({
   const store = useStore();
   const formState = useSelector((state: BeefyState) => state.ui.boostModal);
 
-  const [startStepper, isStepping, Stepper] = useStepper(vault.id, () => {});
+  const [startStepper, isStepping, Stepper] = useStepper(vault.id);
 
   const handleInput = (amountStr: string) => {
     dispatch(boostModalActions.setInput({ amount: amountStr, state: store.getState() }));
