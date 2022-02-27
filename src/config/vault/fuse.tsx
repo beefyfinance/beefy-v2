@@ -302,44 +302,6 @@ export const pools = [
     createdAt: 1641410065
   },
   {
-    id: "voltage-wfuse-g$",
-    name: "G$-FUSE LP",
-    token: "G$-FUSE LP",
-    tokenDescription: "Voltage",
-    tokenAddress: "0x8d441C2Ff54C015A1BE22ad88e5D42EFBEC6C7EF",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooFuseFiG$-FUSE",
-    earnedTokenAddress: "0xa5aaE3a55cA356C62b5425AA4bFC212542B17777",
-    earnContractAddress: "0xa5aaE3a55cA356C62b5425AA4bFC212542B17777",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "voltage-wfuse-g$",
-    oraclePrice: 0,
-    withdrawalFee: "0%",
-    depositsPaused: false,
-    status: "active",
-    platform: "Voltage",
-    assets: [
-      "G",
-      "FUSE"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x495d133B938596C9984d462F007B676bDc57eCEC",
-    buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x495d133B938596C9984d462F007B676bDc57eCEC",
-    network: "fuse",
-    createdAt: 1641411120
-  },
-  {
     id: "voltage-fusd-bnb",
     name: "fUSD-BNB LP",
     token: "fUSD-BNB LP",
@@ -565,5 +527,44 @@ export const pools = [
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x5DD8015cec49F4dB01fd228F688BF30337d3e0A9",
     createdAt: 1644603605,
     network: "fuse"
+  },
+  {
+    id: "voltage-wfuse-g$-eol",
+    name: "G$-FUSE LP",
+    token: "G$-FUSE LP",
+    tokenDescription: "Voltage",
+    tokenAddress: "0x8d441C2Ff54C015A1BE22ad88e5D42EFBEC6C7EF",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooFuseFiG$-FUSE",
+    earnedTokenAddress: "0xa5aaE3a55cA356C62b5425AA4bFC212542B17777",
+    earnContractAddress: "0xa5aaE3a55cA356C62b5425AA4bFC212542B17777",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "voltage-wfuse-g$",
+    oraclePrice: 0,
+    withdrawalFee: "0%",
+    depositsPaused: false,
+    status: "eol",
+    platform: "Voltage",
+    assets: [
+      "G",
+      "FUSE"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x495d133B938596C9984d462F007B676bDc57eCEC",
+    buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x495d133B938596C9984d462F007B676bDc57eCEC",
+    network: "fuse",
+    createdAt: 1641411120,
+    retireReason: "rewards"
   }
 ];

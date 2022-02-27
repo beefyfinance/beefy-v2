@@ -578,7 +578,7 @@ export const pools = [
   },
   {
     id: "moo_aave-eth",
-    poolId: "aave-eth",
+    poolId: "aave-eth-eol",
     name: "Iron / Garuda / Fanatics",
     logo: "single-assets/ETH.svg",
     earnedToken: "mooPolygonBIFI",
@@ -625,7 +625,7 @@ export const pools = [
   },
   {
     id: "moo_aave-btc",
-    poolId: "aave-wbtc",
+    poolId: "aave-wbtc-eol",
     name: "Iron / Garuda / Fanatics",
     logo: "single-assets/BTCB.svg",
     earnedToken: "mooPolygonBIFI",
@@ -683,7 +683,7 @@ export const pools = [
     earnedTokenAddress: "0x37c2a140bD1dE90D195d7CE3587fAbA7963879Fb",
     earnContractAddress: "0x87346455bC3216fFa5c3C8Df21d7B70183B07399",
     earnedOracle: "tokens",
-    earnedOracleId: "JRT",
+    earnedOracleId: "JRT-ETH-KPI",
     partnership: true,
     status: "active",
     isMooStaked: true,
