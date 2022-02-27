@@ -184,7 +184,7 @@ const beefIn = (
   };
 };
 
-const beefOut = (vault: VaultEntity, amount: BigNumber, zapOptions: ZapOptions) => {
+const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOptions) => {
   return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -206,7 +206,11 @@ const beefOut = (vault: VaultEntity, amount: BigNumber, zapOptions: ZapOptions) 
     );
 
     const mooToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
-    const rawAmount = amount.shiftedBy(mooToken.decimals).decimalPlaces(0);
+    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+    const ppfs = selectVaultPricePerFullShare(state, vault.id);
+
+    const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, oracleAmount);
+    const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
 
     const transaction = (() => {
       return contract.methods.beefOut(vault.contractAddress, rawAmount.toString(10)).send({
@@ -220,7 +224,7 @@ const beefOut = (vault: VaultEntity, amount: BigNumber, zapOptions: ZapOptions) 
       {
         spender: zapOptions.address,
         // TODO: this should contain 2 assets and 2 amounts
-        amount: amount,
+        amount: oracleAmount,
         token: vaultAssets[0],
       },
       {
