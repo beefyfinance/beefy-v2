@@ -1,29 +1,17 @@
-import Web3 from 'web3';
-
+import BigNumber from 'bignumber.js';
+import { uniqBy } from 'lodash';
+import { Dispatch } from 'redux';
+import boostAbi from '../../../config/abi/boost.json';
 import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
-import boostAbi from '../../../config/abi/boost.json';
 import zapAbi from '../../../config/abi/zap.json';
-import { selectWalletAddress } from '../selectors/wallet';
-import { getWalletConnectApiInstance } from '../apis/instances';
-import BigNumber from 'bignumber.js';
-import { isTokenNative, TokenEntity, TokenErc20 } from '../entities/token';
-import { ZapEstimate, ZapOptions } from '../apis/zap';
-import { isStandardVault, VaultEntity, VaultGov } from '../entities/vault';
-import { selectChainNativeToken, selectErc20TokenById, selectTokenById } from '../selectors/tokens';
 import { BeefyState } from '../../../redux-types';
-import { Dispatch } from 'redux';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
-import { oracleAmountToMooAmount } from '../utils/ppfs';
-import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
-import { ChainEntity } from '../entities/chain';
-import { uniqBy } from 'lodash';
-import {
-  selectBoostUserRewardsInToken,
-  selectGovVaultPendingRewardsInToken,
-  selectGovVaultRewardsTokenEntity,
-} from '../selectors/balance';
+import { getWalletConnectApiInstance } from '../apis/instances';
+import { ZapEstimate, ZapOptions } from '../apis/zap';
 import { BoostEntity } from '../entities/boost';
+import { ChainEntity } from '../entities/chain';
+import { isTokenNative, TokenEntity, TokenErc20 } from '../entities/token';
+import { isStandardVault, VaultEntity, VaultGov } from '../entities/vault';
 import {
   createWalletActionErrorAction,
   createWalletActionPendingAction,
@@ -32,6 +20,16 @@ import {
   TrxHash,
   TrxReceipt,
 } from '../reducers/wallet/wallet-action';
+import {
+  selectBoostUserRewardsInToken,
+  selectGovVaultPendingRewardsInToken,
+  selectGovVaultRewardsTokenEntity,
+} from '../selectors/balance';
+import { selectChainNativeToken, selectErc20TokenById, selectTokenById } from '../selectors/tokens';
+import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
+import { selectWalletAddress } from '../selectors/wallet';
+import { oracleAmountToMooAmount } from '../utils/ppfs';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -50,7 +48,7 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
     const native = selectChainNativeToken(state, token.chainId);
 
     const contract = new web3.eth.Contract(erc20Abi as any, token.contractAddress);
-    const maxAmount = Web3.utils.toWei('8000000000', 'ether');
+    const maxAmount = web3.utils.toWei('8000000000', 'ether');
 
     const transaction = contract.methods.approve(spenderAddress, maxAmount).send({ from: address });
 

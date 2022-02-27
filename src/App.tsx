@@ -8,6 +8,7 @@ import { initHomeDataV4 } from './features/data/actions/scenarios';
 import { store } from './store';
 import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
+import { CowLoader } from './components/CowLoader';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const BeefyAvatars = React.lazy(() => import(`./features/beefyAvatars`));
@@ -33,7 +34,7 @@ export const App = () => {
         <ScrollToTop />
         <Header />
 
-        <React.Suspense fallback={<div className="loader" />}>
+        <React.Suspense fallback={<CowLoader text="Loading" />}>
           <Switch>
             <Route exact path="/">
               <Home />

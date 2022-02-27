@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, Box, Avatar, FormControl, Typography, Grid } from '@material-ui/core';
 import { styles } from './styles';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useStore } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ApyStatLoader } from '../../../ApyStatLoader';
 import { useTheme } from '@material-ui/core/styles';
@@ -13,6 +13,7 @@ import { BeefyState } from '../../../../redux-types';
 import {
   askForWalletConnection,
   doDisconnectWallet,
+  initWallet,
 } from '../../../../features/data/actions/wallet';
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
 
@@ -41,6 +42,13 @@ export const WalletContainer = connect((state: BeefyState) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const t = useTranslation().t;
+
+    // load wallet data
+    const store = useStore();
+    React.useEffect(() => {
+      // create the wallet instance last because it's heavy to load all modal stuff
+      initWallet(store);
+    }, [store]);
 
     const handleWalletConnect = () => {
       if (walletAddress) {
