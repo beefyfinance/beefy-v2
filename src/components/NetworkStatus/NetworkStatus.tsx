@@ -109,13 +109,20 @@ export function NetworkStatus() {
                 {t('NetworkStatus-HelpText-Error')}
               </Typography>
             </>
-          ) : (
-            <>
-              <Typography className={classes.popoverTitle}>
-                {t('NetworkStatus-Title-OK')}
-              </Typography>
-            </>
-          )}
+          ) :
+            hasAnyLoading ? (
+              <>
+                <Typography className={classes.popoverTitle}>
+                  {t('NetworkStatus-Title-Loading')}
+                </Typography>
+              </>
+            ) : (
+              <>
+                <Typography className={classes.popoverTitle}>
+                  {t('NetworkStatus-Title-OK')}
+                </Typography>
+              </>
+            )}
         </Box>
       </Popover>
     </div>
