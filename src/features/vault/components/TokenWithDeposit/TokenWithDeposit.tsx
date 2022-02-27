@@ -12,7 +12,11 @@ import {
   selectGovVaultUserStackedBalanceInOracleToken,
   selectStandardVaultUserBalanceInOracleTokenExcludingBoosts,
 } from '../../../data/selectors/balance';
-import { selectTokenById, selectTokenPriceByTokenId } from '../../../data/selectors/tokens';
+import {
+  selectIsTokenLoaded,
+  selectTokenById,
+  selectTokenPriceByTokenId,
+} from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
 import { styles } from './styles';
@@ -49,11 +53,13 @@ export function TokenWithDeposit({
 
     const convertToArr = isArray(convertAmountTo) ? convertAmountTo : [convertAmountTo];
     for (const convertToId of convertToArr) {
-      const outputToken = selectTokenById(state, vault.chainId, convertToId);
+      const outputTokenSymbol = selectIsTokenLoaded(state, vault.chainId, convertToId)
+        ? selectTokenById(state, vault.chainId, convertToId).symbol
+        : convertToId;
       const outputTokenPrice = selectTokenPriceByTokenId(state, convertToId);
       const totalValue = oracleAmount.times(inputTokenPrice);
       const outputValue = totalValue.dividedBy(outputTokenPrice);
-      amountsAndSymbol.push([outputValue.dividedBy(convertToArr.length), outputToken.symbol]);
+      amountsAndSymbol.push([outputValue.dividedBy(convertToArr.length), outputTokenSymbol]);
     }
     return amountsAndSymbol;
   });

@@ -55,8 +55,8 @@ export const withdrawSlice = createSlice({
   name: 'withdraw',
   initialState: initialWithdrawState,
   reducers: {
-    resetForm(sliceState) {
-      sliceState = initialWithdrawState;
+    resetForm() {
+      return initialWithdrawState;
     },
 
     setAsset(
