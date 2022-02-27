@@ -230,18 +230,32 @@ function addVaultToState(
   }
 
   if (sliceState.byChainId[chainId].byId[vault.oracleId] === undefined) {
-    const token: TokenEntity = {
-      id: vault.oracleId,
-      chainId: chainId,
-      contractAddress: vault.tokenAddress,
-      decimals: vault.tokenDecimals,
-      symbol: vault.token,
-      buyUrl: null,
-      description: null,
-      website: null,
-      type: 'erc20',
+    let token: TokenEntity;
+    if (vault.tokenAddress) {
+      token = {
+        id: vault.oracleId,
+        chainId: chainId,
+        contractAddress: vault.tokenAddress,
+        decimals: vault.tokenDecimals,
+        symbol: vault.token,
+        buyUrl: null,
+        description: null,
+        website: null,
+        type: vault.tokenAddress ? 'erc20' : 'native',
+      };
+    } else {
+      token = {
+        id: vault.oracleId,
+        chainId: chainId,
+        decimals: 18,
+        symbol: vault.token,
+        buyUrl: null,
+        description: null,
+        website: null,
+        type: 'native'
+      }
     };
-    temporaryWrappedtokenFix(token);
+    // temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
     sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
   }
