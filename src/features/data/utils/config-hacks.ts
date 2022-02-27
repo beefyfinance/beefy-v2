@@ -27,6 +27,11 @@ export function getBoostTokenIdFromLegacyConfig(apiBoost: BoostConfig) {
   ) {
     tokenId = apiBoost.earnedToken.toLocaleUpperCase();
   }
+
+  // for LPs, the true token id is in the vault config
+  if (apiBoost.earnedOracle === 'lps') {
+    tokenId = apiBoost.earnedOracleId;
+  }
   return tokenId;
 }
 
