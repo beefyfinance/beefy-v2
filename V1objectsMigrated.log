@@ -1,106 +1,170 @@
 [
   {
-    "id": "bsc vault: baby-avax-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: banana-crush-wbnb-eol",
+    "id": "bsc vault: annex-ann-busd-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: cakev2-mask-wbnb-eol",
+    "id": "bsc vault: annex-ann-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: cakev2-o3-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-itam-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: space-space-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-usdc-dei",
+    "id": "fantom vault: boo-ftm-multi",
     "type": "Added"
   },
   {
-    "id": "fantom vault: spirit-ftm-deus",
+    "id": "fantom vault: boo-font-ftm",
     "type": "Added"
   },
   {
-    "id": "fantom vault: spirit-ftm-cre8r",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-multichain-maxi",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-treeb-me-bro",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: boo-mst-wftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-fusdt-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-ftm-sushi-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-kiro-matic",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-genesis-quick",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-bico-eth",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-kiro-matic-eol",
+    "id": "fantom vault: beets-paint-it-black-eol",
     "type": "REMOVED"
   },
   {
-    "id": "avax vault: joe-wavax-savax",
+    "id": "polygon vault: quick-sand-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-tomb-mimatic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-mimatic-clam-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: ape-wmatic-crystl-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: cafe-pbrew-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: cafe-pbrew-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: sing-usdc-sing-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: sushi-fox-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: ironswap-ice-iron-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: polygonfarm-spade-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: polygonfarm-spade-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: farmhero-quick-usdc-honor-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: farmhero-wault-usdc-honor-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: ironswap-ice-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: ironswap-ice-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: jetswap-poly-pwings-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: jetswap-poly-pwings-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-wbtc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: pzap-pzap-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: pzap-pzap-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-aave-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-dai-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: aave-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: png-fire-wavax",
     "type": "Added"
   },
   {
-    "id": "moonriver vault: finn-usdc.m-usdc",
+    "id": "avax vault: curve-avax-ren",
     "type": "Added"
   },
   {
-    "id": "cronos vault: dark-sky-cro",
-    "type": "synced"
-  },
-  {
-    "id": "metis vault: tethys-m.usdc-m.usdt",
+    "id": "metis vault: netswap-wbtc-metis",
     "type": "Added"
   },
   {
-    "id": "metis vault: netswap-nett-m.usdc",
-    "type": "synced"
+    "id": "metis vault: netswap-wbtc-m.usdt",
+    "type": "Added"
   },
   {
-    "id": "bsc boost: moo_banana-crush-wbnb-bitcrush",
-    "type": "synced"
+    "id": "metis vault: tethys-wbtc-metis",
+    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
@@ -108,6 +172,18 @@
   },
   {
     "id": "polygon boost: moo_sushi-jrt-eth-jarvis",
+    "type": "synced"
+  },
+  {
+    "id": "polygon boost: moo_aave-eth",
+    "type": "synced"
+  },
+  {
+    "id": "polygon boost: moo_aave-btc",
+    "type": "synced"
+  },
+  {
+    "id": "metis boost: moo_netswap-wbtc-metis-relay",
     "type": "Added"
   }
 ]
