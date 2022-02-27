@@ -9,7 +9,7 @@ import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
-import { getBoostTokenIdFromLegacyConfig } from '../utils/config-hack-boost-token-id';
+import { getBoostTokenIdFromLegacyConfig } from '../utils/config-hacks';
 import { NormalizedEntity } from '../utils/normalized-entity';
 
 /**
@@ -166,7 +166,6 @@ function addBoostToState(
   }
 
   const tokenId = getBoostTokenIdFromLegacyConfig(apiBoost);
-
   const boost: BoostEntity = {
     id: apiBoost.id,
     chainId: chainId,

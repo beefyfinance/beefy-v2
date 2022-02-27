@@ -30,6 +30,47 @@ Object {
 }
 `;
 
+exports[`Tokens slice tests should handle fuse-fuse config correctly 1`] = `
+Object {
+  "byChainId": Object {
+    "fuse": Object {
+      "byId": Object {
+        "FUSE": Object {
+          "buyUrl": null,
+          "chainId": "fuse",
+          "decimals": 18,
+          "description": null,
+          "id": "FUSE",
+          "symbol": "FUSE",
+          "type": "native",
+          "website": null,
+        },
+        "mooFuse": Object {
+          "buyUrl": null,
+          "chainId": "fuse",
+          "contractAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+          "decimals": 18,
+          "description": null,
+          "id": "mooFuse",
+          "symbol": "mooFuse",
+          "type": "erc20",
+          "website": null,
+        },
+      },
+      "interestingBalanceTokenIds": Array [
+        "FUSE",
+        "mooFuse",
+      ],
+      "native": null,
+      "wnative": null,
+    },
+  },
+  "prices": Object {
+    "byTokenId": Object {},
+  },
+}
+`;
+
 exports[`Tokens slice tests should update state on fulfilled boosts list 1`] = `
 Object {
   "byChainId": Object {

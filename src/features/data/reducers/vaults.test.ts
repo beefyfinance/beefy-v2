@@ -94,7 +94,7 @@ describe('Vaults slice tests', () => {
               'AUDIT',
               'CONTRACTS_VERIFIED',
             ],
-            createdAt: 1631279238
+            createdAt: 1631279238,
           },
 
           // one retired vault
@@ -188,5 +188,48 @@ describe('Vaults slice tests', () => {
     const sliceState = vaultsSlice.reducer(initialVaultsState, action);
     // don't snapshot all vaults from the test state
     expect(sliceState.featuredVaults).toMatchSnapshot();
+  });
+
+  it('should handle fuse-fuse config correctly', async () => {
+    const store = await getBeefyTestingStore();
+    const payload: FulfilledAllVaultsPayload = {
+      state: store.getState(),
+      byChainId: {
+        fuse: [
+          {
+            id: 'fuse-fuse',
+            logo: 'single-assets/FUSE.svg',
+            name: 'FUSE',
+            token: 'FUSE',
+            tokenDescription: 'Beefy Delegator',
+            tokenDecimals: 18,
+            tokenDescriptionUrl: '#',
+            earnedToken: 'mooFuse',
+            earnedTokenAddress: '0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3',
+            earnContractAddress: '0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3',
+            pricePerFullShare: 1,
+            tvl: 0,
+            oracle: 'tokens',
+            oracleId: 'WFUSE',
+            oraclePrice: 0,
+            depositsPaused: false,
+            status: 'active',
+            platform: 'Fuse',
+            assets: ['WFUSE'],
+            risks: [],
+            stratType: 'SingleStake',
+            withdrawalFee: '0%',
+            buyTokenUrl:
+              'https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99',
+            network: 'fuse',
+            createdAt: 1641908745,
+          },
+        ],
+      },
+    };
+    const action = { type: fetchAllVaults.fulfilled, payload: payload };
+    const state = vaultsSlice.reducer(initialVaultsState, action);
+
+    expect(state).toMatchSnapshot();
   });
 });
