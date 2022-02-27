@@ -529,7 +529,7 @@ export const pools = [
     network: "fuse"
   },
   {
-    id: "voltage-wfuse-g$",
+    id: "voltage-wfuse-g$-eol",
     name: "G$-FUSE LP",
     token: "G$-FUSE LP",
     tokenDescription: "Voltage",
@@ -546,7 +546,7 @@ export const pools = [
     oraclePrice: 0,
     withdrawalFee: "0%",
     depositsPaused: false,
-    status: "active",
+    status: "eol",
     platform: "Voltage",
     assets: [
       "G",
@@ -564,6 +564,7 @@ export const pools = [
     addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x495d133B938596C9984d462F007B676bDc57eCEC",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x495d133B938596C9984d462F007B676bDc57eCEC",
     createdAt: 1641411120,
-    network: "fuse"
+    network: "fuse",
+    retireReason: "rewards"
   }
 ];

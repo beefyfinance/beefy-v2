@@ -4558,11 +4558,11 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://avax.curve.fi/ren/deposit",
-    createdAt: 1626964654,
+    createdAt: 1645435034,
     network: "avax"
   },
   {
-    id: "joe-ampl-wavax",
+    id: "joe-ampl-wavax-eol",
     name: "AMPL-AVAX LP",
     token: "AMPL-AVAX JLP",
     tokenDescription: "Trader Joe",
@@ -4578,7 +4578,7 @@ export const pools = [
     oracleId: "joe-ampl-wavax",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "active",
+    status: "eol",
     platform: "Trader Joe",
     assets: [
       "AMPL",
@@ -4596,10 +4596,11 @@ export const pools = [
     addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
     buyTokenUrl: "https://www.traderjoexyz.com/trade",
     createdAt: 1636308849,
-    network: "avax"
+    network: "avax",
+    retiredReason: "tvl"
   },
   {
-    id: "sing-usdt.e-sing",
+    id: "sing-usdt.e-sing-eol",
     name: "SING-USDT.e LP",
     token: "SING-USDT.e LP",
     tokenDescription: "TraderJoe (Singular)",
@@ -4615,7 +4616,7 @@ export const pools = [
     oracleId: "sing-usdt.e-sing",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "active",
+    status: "eol",
     platform: "Other",
     assets: [
       "SING",
@@ -4625,10 +4626,11 @@ export const pools = [
     buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     createdAt: 1633701180,
     stratType: "StratLP",
-    network: "avax"
+    network: "avax",
+    retiredReason: "tvl"
   },
   {
-    id: "aave-usdt.e",
+    id: "aave-usdt.e-eol",
     logo: "single-assets/USDT.svg",
     name: "USDT.e",
     token: "USDT.e",
@@ -4645,7 +4647,7 @@ export const pools = [
     oracleId: "USDT.e",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "active",
+    status: "eol",
     platform: "Aave",
     assets: [
       "USDTe"
@@ -4663,10 +4665,11 @@ export const pools = [
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     createdAt: 1633529509,
-    network: "avax"
+    network: "avax",
+    retiredReason: "tvl"
   },
   {
-    id: "olive-olive-avax",
+    id: "olive-olive-avax-eol",
     logo: "avax-pairs/OLIVE-AVAX.png",
     name: "OLIVE-AVAX LP",
     token: "OLIVE-AVAX LP",
@@ -4683,7 +4686,7 @@ export const pools = [
     oracleId: "olive-olive-avax",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "active",
+    status: "eol",
     platform: "OliveSwap",
     assets: [
       "OLIVE",
@@ -4701,6 +4704,7 @@ export const pools = [
     addLiquidityUrl: "https://avax.olive.cash/add/AVAX/0x617724974218A18769020A70162165A539c07E8a",
     buyTokenUrl: "https://avax.olive.cash/swap?inputCurrency=AVAX&outputCurrency=0x617724974218A18769020A70162165A539c07E8a",
     createdAt: 1617865515,
-    network: "avax"
+    network: "avax",
+    retiredReason: "tvl"
   }
 ];
