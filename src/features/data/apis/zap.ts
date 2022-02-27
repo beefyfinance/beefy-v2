@@ -125,8 +125,11 @@ export async function estimateZapDeposit(
 
   const wnative = selectChainWrappedNativeToken(state, vault.chainId);
 
-  const _tokenIn = selectTokenById(state, vault.chainId, inputTokenId);
-  const tokenIn = isTokenNative(_tokenIn) ? wnative : _tokenIn;
+  const tokenIn = selectTokenById(state, vault.chainId, inputTokenId);
+  const tokenInContract = isTokenNative(tokenIn)
+    ? wnative.contractAddress
+    : tokenIn.contractAddress;
+  const tokenInDecimals = isTokenNative(tokenIn) ? wnative.decimals : tokenIn.decimals;
   const tokenOut =
     tokenIn.id === vault.assetIds[0]
       ? selectTokenById(state, vault.chainId, vault.assetIds[1])
@@ -152,13 +155,13 @@ export async function estimateZapDeposit(
   const contract = new web3.eth.Contract(zapAbi, zapOptions.address);
 
   const response = await contract.methods
-    .estimateSwap(vaultAddress, tokenIn.contractAddress, chainTokenAmount)
+    .estimateSwap(vaultAddress, tokenInContract, chainTokenAmount)
     .call();
 
   return {
     tokenIn,
     tokenOut,
-    amountIn: new BigNumber(response.swapAmountIn).shiftedBy(-tokenIn.decimals),
+    amountIn: new BigNumber(response.swapAmountIn).shiftedBy(-tokenInDecimals),
     amountOut: new BigNumber(response.swapAmountOut).shiftedBy(-tokenOut.decimals),
   };
 }
@@ -176,8 +179,11 @@ export const estimateZapWithdraw = async (
 
   const wnative = selectChainWrappedNativeToken(state, vault.chainId);
 
-  const _tokenOut = selectTokenById(state, vault.chainId, outputTokenId);
-  const tokenOut = isTokenNative(_tokenOut) ? wnative : _tokenOut;
+  const tokenOut = selectTokenById(state, vault.chainId, outputTokenId);
+  const tokenOutDecimals = isTokenNative(tokenOut) ? wnative.decimals : tokenOut.decimals;
+  const tokenOutAddress = isTokenNative(tokenOut)
+    ? wnative.contractAddress
+    : tokenOut.contractAddress;
   const _tokenIn =
     tokenOut.id === vault.assetIds[0]
       ? selectTokenById(state, vault.chainId, vault.assetIds[1])
@@ -215,7 +221,7 @@ export const estimateZapWithdraw = async (
   ]);
 
   const reserveIn = tokenIn.contractAddress === pair.token0 ? pair.reserves[0] : pair.reserves[1];
-  const reserveOut = tokenOut.contractAddress === pair.token1 ? pair.reserves[1] : pair.reserves[0];
+  const reserveOut = tokenOutAddress === pair.token1 ? pair.reserves[1] : pair.reserves[0];
 
   const rawAmount = amount.shiftedBy(oracleToken.decimals);
   const equity = rawAmount.dividedBy(pair.totalSupply);
@@ -231,6 +237,6 @@ export const estimateZapWithdraw = async (
     tokenIn,
     tokenOut,
     amountIn: amountIn.shiftedBy(-tokenIn.decimals),
-    amountOut: amountOut.shiftedBy(-tokenOut.decimals),
+    amountOut: amountOut.shiftedBy(-tokenOutDecimals),
   };
 };
