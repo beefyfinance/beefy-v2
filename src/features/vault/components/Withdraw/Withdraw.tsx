@@ -289,9 +289,10 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             />
           )}
           {formState.zapOptions?.tokens.map(
-            zapToken =>
+            (zapToken, i) =>
               zapToken.id !== wnative.id && (
                 <FormControlLabel
+                  key={i}
                   className={classes.depositTokenContainer}
                   value={zapToken.symbol}
                   control={<Radio />}
@@ -307,7 +308,19 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage img={vault.logoUri} assets={vault.assetIds} alt={vault.name} />
+              <AssetsImage
+                img={vault.logoUri}
+                assets={
+                  !formState.selectedToken
+                    ? vault.assetIds
+                    : isArray(formState.selectedToken)
+                    ? formState.selectedToken.map(t => t.id)
+                    : formState.selectedToken.id === vault.oracleId
+                    ? vault.assetIds
+                    : [formState.selectedToken.id]
+                }
+                alt={vault.name}
+              />
             </Box>
             <InputBase
               placeholder="0.00"
