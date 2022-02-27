@@ -44,7 +44,6 @@ export const initiateDepositForm = createAsyncThunk<
 
   // then we want to know the balance and allowance for each route
   const tokens: TokenEntity[] = [oracleToken, earnedToken].concat(zapOptions?.tokens || []);
-  const tokensErc20 = tokens.filter(isTokenErc20);
 
   const balanceApi = await getBalanceApi(chain);
   const balanceRes: FetchAllBalancesResult = walletAddress
@@ -57,18 +56,33 @@ export const initiateDepositForm = createAsyncThunk<
       )
     : { tokens: [], boosts: [], govVaults: [] };
 
-  const spenderAddress = zapOptions
-    ? zapOptions.address
-    : isStandardVault(vault)
-    ? vault.contractAddress
-    : vault.earnContractAddress;
-
+  let allowance: TokenAllowance[] = [];
   const allowanceApi = await getAllowanceApi(chain);
-  const allowanceRes =
-    walletAddress && spenderAddress
-      ? await allowanceApi.fetchTokensAllowance(tokensErc20, walletAddress, spenderAddress)
-      : [];
-  const allowance: TokenAllowance[] = allowanceRes;
+
+  // get allowance for zap options
+  if (walletAddress && zapOptions) {
+    const zapTokens = zapOptions.tokens.filter(isTokenErc20);
+    const allowanceRes = await allowanceApi.fetchTokensAllowance(
+      zapTokens,
+      walletAddress,
+      zapOptions.address
+    );
+    allowance = allowance.concat(allowanceRes);
+  }
+
+  // get allowance for non-zap options
+  if (walletAddress) {
+    const spenderAddress = isStandardVault(vault)
+      ? vault.contractAddress
+      : vault.earnContractAddress;
+    const vaultTokens = [oracleToken, earnedToken].filter(isTokenErc20);
+    const allowanceRes = await allowanceApi.fetchTokensAllowance(
+      vaultTokens,
+      walletAddress,
+      spenderAddress
+    );
+    allowance = allowance.concat(allowanceRes);
+  }
 
   return { walletAddress, allowance, balance: balanceRes, zapOptions, vaultId, state: getState() };
 });
