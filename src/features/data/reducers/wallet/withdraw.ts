@@ -106,13 +106,15 @@ export const withdrawSlice = createSlice({
       const vault = selectVaultById(state, sliceState.vaultId);
 
       const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-      const mooTokenBalance = isGovVault(vault)
+      const oracleBalance = isGovVault(vault)
         ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
         : selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(state, vault.id);
 
       // we output the amount is oracle token amount
-      sliceState.amount = mooTokenBalance;
-      sliceState.formattedInput = formatBigDecimals(mooTokenBalance, oracleToken.decimals);
+      sliceState.amount = oracleBalance;
+      // round a bit to account for ppfs inacuracies
+      const truncatedMooBalance = oracleBalance.decimalPlaces(oracleToken.decimals - 2);
+      sliceState.formattedInput = formatBigDecimals(truncatedMooBalance, oracleToken.decimals);
       sliceState.max = true;
     },
 
