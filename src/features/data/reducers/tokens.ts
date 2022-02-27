@@ -269,7 +269,7 @@ function addVaultToState(
               id: earnedTokenId,
               chainId: chainId,
               decimals: vault.earnedTokenDecimals ?? 18,
-              contractAddress: vault.earnContractAddress,
+              contractAddress: vault.earnedTokenAddress,
               symbol: vault.earnedToken,
               buyUrl: null,
               type: 'erc20',
