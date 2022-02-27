@@ -22,7 +22,9 @@ export function useStepper(
 
   const handleClose = React.useCallback(() => {
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
-    onClose();
+    if (onClose) {
+      onClose();
+    }
   }, [onClose, setSteps]);
 
   const Stepper: React.FC = React.useMemo(
