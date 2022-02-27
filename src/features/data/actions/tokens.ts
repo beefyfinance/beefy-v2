@@ -10,7 +10,7 @@ import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, TokenEntity } from '../entities/token';
 import { VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
-import { selectChainById } from '../selectors/chains';
+import { selectAllChains, selectChainById } from '../selectors/chains';
 import { selectGovVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
@@ -18,7 +18,7 @@ interface ActionParams {
   chainId: ChainEntity['id'];
 }
 
-interface FetchAddressBookPayload {
+export interface FetchAddressBookPayload {
   chainId: ChainEntity['id'];
   addressBook: ChainAddressBook;
 }
@@ -31,6 +31,20 @@ export const fetchAddressBookAction = createAsyncThunk<
   const chain = selectChainById(getState(), chainId);
   const addressBook = await getChainAddressBook(chain);
   return { chainId, addressBook };
+});
+
+export const fetchAllAddressBookAction = createAsyncThunk<
+  FetchAddressBookPayload[],
+  {},
+  { state: BeefyState }
+>('tokens/fetchAllAddressBookAction', async (_, { getState }) => {
+  const chains = selectAllChains(getState());
+  return Promise.all(
+    chains.map(async chain => ({
+      chainId: chain.id,
+      addressBook: await getChainAddressBook(chain),
+    }))
+  );
 });
 
 interface ReloadBalanceAllowanceRewardsParams {

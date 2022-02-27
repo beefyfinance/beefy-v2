@@ -1,7 +1,7 @@
-import React from 'react';
-import { Box, Hidden, makeStyles, Typography } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { isArray } from 'lodash';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { formatBigDecimals } from '../../../../helpers/format';

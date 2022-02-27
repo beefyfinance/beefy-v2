@@ -25,6 +25,7 @@ import { isFulfilled } from '../../../data/reducers/data-loader';
 import { depositActions } from '../../../data/reducers/wallet/deposit';
 import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
+import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import { selectChainNativeToken, selectTokenById } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import {
@@ -98,7 +99,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const formDataLoaded = useSelector(
     (state: BeefyState) =>
-      isFulfilled(state.ui.dataLoader.byChainId[vault.chainId].addressBook) &&
+      selectIsAddressBookLoaded(state, vault.chainId) &&
       isFulfilled(state.ui.dataLoader.global.depositForm)
   );
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;

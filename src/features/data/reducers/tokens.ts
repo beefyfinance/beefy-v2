@@ -4,7 +4,11 @@ import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllPricesAction } from '../actions/prices';
-import { fetchAddressBookAction } from '../actions/tokens';
+import {
+  fetchAddressBookAction,
+  FetchAddressBookPayload,
+  fetchAllAddressBookAction,
+} from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
@@ -125,28 +129,40 @@ export const tokensSlice = createSlice({
 
     // we have another way of finding token info
     builder.addCase(fetchAddressBookAction.fulfilled, (sliceState, action) => {
-      const chainId = action.payload.chainId;
-
-      if (sliceState.byChainId[chainId] === undefined) {
-        sliceState.byChainId[chainId] = {
-          byId: {},
-          interestingBalanceTokenIds: [],
-          native: null,
-          wnative: null,
-        };
-      }
-
-      for (const [addressBookId, token] of Object.entries(action.payload.addressBook)) {
-        if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
-          sliceState.byChainId[chainId].byId[token.id] = token;
-        }
-        if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
-          sliceState.byChainId[chainId].wnative = token.id;
-        }
+      addAddressBookToState(sliceState, action.payload);
+    });
+    builder.addCase(fetchAllAddressBookAction.fulfilled, (sliceState, action) => {
+      for (const payload of action.payload) {
+        addAddressBookToState(sliceState, payload);
       }
     });
   },
 });
+
+function addAddressBookToState(
+  sliceState: WritableDraft<TokensState>,
+  addressBookPayload: FetchAddressBookPayload
+) {
+  const chainId = addressBookPayload.chainId;
+
+  if (sliceState.byChainId[chainId] === undefined) {
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      interestingBalanceTokenIds: [],
+      native: null,
+      wnative: null,
+    };
+  }
+
+  for (const [addressBookId, token] of Object.entries(addressBookPayload.addressBook)) {
+    if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
+      sliceState.byChainId[chainId].byId[token.id] = token;
+    }
+    if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
+      sliceState.byChainId[chainId].wnative = token.id;
+    }
+  }
+}
 
 function addBoostToState(
   sliceState: WritableDraft<TokensState>,

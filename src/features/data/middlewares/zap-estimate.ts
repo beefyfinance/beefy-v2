@@ -12,13 +12,14 @@ export function zapEstimateMiddleware(store: BeefyStore) {
     const depositAfter = store.getState().ui.deposit;
     const withdrawAfter = store.getState().ui.withdraw;
 
-    // start a zap estimation if needed
+    // recompute eligible zap options when addressbook gets loaded
     if (
       depositAfter.isZap &&
       (depositBefore.vaultId !== depositAfter.vaultId ||
         depositBefore.selectedToken.id !== depositAfter.selectedToken.id ||
         !depositBefore.amount.isEqualTo(depositAfter.amount))
     ) {
+      // start a zap estimation if needed
       store.dispatch(
         fetchEstimateZapDeposit({
           vaultId: depositAfter.vaultId,

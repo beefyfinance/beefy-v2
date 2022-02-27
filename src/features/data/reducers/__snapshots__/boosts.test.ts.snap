@@ -67,12 +67,25 @@ Object {
       "prestakeBoostsIds": Array [],
     },
   },
-  "periodFinish": Object {
-    "moo_banana-banana-busd-bitcrush": 2022-01-01T03:00:00.000Z,
-    "moo_banana-bnb-stars-mogul2": 2250-01-01T03:00:00.000Z,
-    "moo_banana-crush-wbnb-bitcrush": null,
-  },
+  "periodFinish": "tested-below",
 }
+`;
+
+exports[`Boosts slice tests should update state on fulfilled boost contract data 2`] = `
+Array [
+  Array [
+    "moo_banana-banana-busd-bitcrush",
+    "Sat, 01 Jan 2022 00:00:00 GMT",
+  ],
+  Array [
+    "moo_banana-bnb-stars-mogul2",
+    "Tue, 01 Jan 2250 00:00:00 GMT",
+  ],
+  Array [
+    "moo_banana-crush-wbnb-bitcrush",
+    null,
+  ],
+]
 `;
 
 exports[`Boosts slice tests should update state on fulfilled boosts list 1`] = `

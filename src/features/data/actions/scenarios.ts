@@ -16,7 +16,7 @@ import { chains as chainsConfig } from '../../../config/config';
 import { initWallet } from './wallet';
 import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
-import { fetchAddressBookAction } from './tokens';
+import { fetchAddressBookAction, fetchAllAddressBookAction } from './tokens';
 import { fetchAllZapsAction } from './zap';
 import { isInitialLoader } from '../reducers/data-loader';
 import { VaultEntity } from '../entities/vault';
@@ -25,6 +25,7 @@ import { initiateDepositForm } from './deposit';
 import { initiateWithdrawForm } from './withdraw';
 import { BoostEntity } from '../entities/boost';
 import { selectBoostById } from '../selectors/boosts';
+import { selectShouldInitAddressBook } from '../selectors/data-loader';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -54,6 +55,9 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   // we can start fetching prices right now and await them later
   const pricesPromise = store.dispatch(fetchAllPricesAction({}));
+
+  // pre-load the addressbook
+  const addressBookPromise = store.dispatch(fetchAllAddressBookAction({}));
 
   // create the wallet instance as soon as we get the chain list
   setTimeout(async () => {
@@ -117,6 +121,7 @@ export async function initHomeDataV4(store: BeefyStore) {
     });
   }
 
+  await addressBookPromise;
   // ok all data is fetched, now we start the poll functions
 
   if (featureFlag_noDataPolling()) {
@@ -216,8 +221,7 @@ export async function initDepositForm(
   const vault = selectVaultById(store.getState(), vaultId);
 
   // we need the addressbook
-  const addrBookLoader = store.getState().ui.dataLoader.byChainId[vault.chainId]?.addressBook;
-  if (addrBookLoader && isInitialLoader(addrBookLoader)) {
+  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
     await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
   }
 
@@ -239,8 +243,7 @@ export async function initWithdrawForm(
   const vault = selectVaultById(store.getState(), vaultId);
 
   // we need the addressbook
-  const addrBookLoader = store.getState().ui.dataLoader.byChainId[vault.chainId]?.addressBook;
-  if (addrBookLoader && isInitialLoader(addrBookLoader)) {
+  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
     await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
   }
 
@@ -263,8 +266,7 @@ export async function initBoostForm(
   const vault = selectBoostById(store.getState(), boostId);
 
   // we need the addressbook
-  const addrBookLoader = store.getState().ui.dataLoader.byChainId[vault.chainId]?.addressBook;
-  if (addrBookLoader && isInitialLoader(addrBookLoader)) {
+  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
     await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
   }
 

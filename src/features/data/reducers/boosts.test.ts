@@ -140,13 +140,13 @@ describe('Boosts slice tests', () => {
         boosts: [
           {
             id: 'moo_banana-banana-busd-bitcrush',
-            periodFinish: new Date(2022, 0, 1, 0, 0, 0), // expired boost
+            periodFinish: new Date(Date.UTC(2022, 0, 1, 0, 0, 0)), // expired boost
             rewardRate: new BigNumber(0.4),
             totalSupply: new BigNumber(12345),
           },
           {
             id: 'moo_banana-bnb-stars-mogul2',
-            periodFinish: new Date(2250, 0, 1, 0, 0, 0), // active boost
+            periodFinish: new Date(Date.UTC(2250, 0, 1, 0, 0, 0)), // active boost
             rewardRate: new BigNumber(0.4),
             totalSupply: new BigNumber(12345),
           },
@@ -162,7 +162,14 @@ describe('Boosts slice tests', () => {
     };
     const action = { type: fetchAllContractDataByChainAction.fulfilled, payload: payload };
     const newState = boostsSlice.reducer(initState, action);
-    expect(newState).toMatchSnapshot();
+    expect({ ...newState, periodFinish: 'tested-below' }).toMatchSnapshot();
+    // team all around the world, make sure we test utc snapshots
+    expect(
+      Object.entries(newState.periodFinish).map(([boostId, date]) => [
+        boostId,
+        date ? date.toUTCString() : date,
+      ])
+    ).toMatchSnapshot();
 
     // We don't want the state to change reference when recomputing boost status
     const stateAfterRecompute1 = boostsSlice.reducer(newState, action);
