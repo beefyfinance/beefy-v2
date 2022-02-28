@@ -129,7 +129,7 @@ export const Header = connect((state: BeefyState) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
           {!isNetworkSupported && <UnsupportedNetwork />}
-          <Container maxWidth="lg">
+          <Container className={classes.container} maxWidth="lg">
             <Toolbar disableGutters={true}>
               <Box sx={{ flexGrow: 1 }}>
                 <Link className={classes.beefy} to="/">
@@ -152,7 +152,7 @@ export const Header = connect((state: BeefyState) => {
                 <Hidden mdDown>
                   <BifiPrice />
                   <Box>
-                    <LanguageDropdown />
+                    <LanguageDropdown isWalletConnected={isWalletConnected} />
                   </Box>
                   {isWalletConnected && (
                     <Box mr={3}>
@@ -224,7 +224,7 @@ export const Header = connect((state: BeefyState) => {
                         //   label={t('Chain')}
                         // />
                       )}
-                      <LanguageDropdown />
+                      <LanguageDropdown isWalletConnected={isWalletConnected} />
                     </Box>
                   </Box>
                 </Drawer>
