@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Balance slice tests should update state on fulfilled boost balance 1`] = `
+Object {
+  "byAddress": Object {
+    "0x00abc": Object {
+      "depositedVaultIds": Array [
+        "ellipsis-renbtc",
+        "belt-beltbnb",
+      ],
+      "eligibleVaultIds": Array [],
+      "tokenAmount": Object {
+        "byBoostId": Object {
+          "moo_beltbnb-czodiac": Object {
+            "balance": "100",
+            "rewards": "10",
+          },
+          "moo_ellipsis-renbtc-charge": Object {
+            "balance": "100",
+            "rewards": "10",
+          },
+        },
+        "byChainId": Object {},
+        "byGovVaultId": Object {},
+      },
+    },
+  },
+}
+`;
+
+exports[`Balance slice tests should update state on fulfilled gov boost pools 1`] = `
+Object {
+  "byAddress": Object {
+    "0x00abc": Object {
+      "depositedVaultIds": Array [
+        "bifi-gov",
+      ],
+      "eligibleVaultIds": Array [],
+      "tokenAmount": Object {
+        "byBoostId": Object {},
+        "byChainId": Object {},
+        "byGovVaultId": Object {
+          "bifi-gov": Object {
+            "balance": "10",
+            "rewards": "100",
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`Balance slice tests should update state on fulfilled token balance 1`] = `
+Object {
+  "byAddress": Object {
+    "0x00abc": Object {
+      "depositedVaultIds": Array [
+        "banana-bnb-stars",
+      ],
+      "eligibleVaultIds": Array [
+        "banana-nfty-wbnb",
+        "bifi-maxi",
+      ],
+      "tokenAmount": Object {
+        "byBoostId": Object {},
+        "byChainId": Object {
+          "bsc": Object {
+            "byTokenId": Object {
+              "BIFI": Object {
+                "balance": "10",
+              },
+              "banana-nfty-wbnb": Object {
+                "balance": "10",
+              },
+              "mooApeBNB-STARS": Object {
+                "balance": "10",
+              },
+            },
+          },
+        },
+        "byGovVaultId": Object {},
+      },
+    },
+  },
+}
+`;

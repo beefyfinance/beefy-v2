@@ -31,14 +31,7 @@ export const LanguageDropdown = props => {
   const i18nLanguage = getSelectedLanguage(i18n);
   const [language, setLanguage] = React.useState(i18nLanguage);
 
-  const handleSwitch = useCallback(
-    event => {
-      if (!event?.target?.value) return;
-      const newLanguage = event.target.value;
-      return i18n.changeLanguage(newLanguage);
-    },
-    [i18n]
-  );
+  const handleSwitch = useCallback(newLanguage => i18n.changeLanguage(newLanguage), [i18n]);
 
   useEffect(() => {
     setLanguage(i18nLanguage);
@@ -46,7 +39,6 @@ export const LanguageDropdown = props => {
 
   return (
     <SimpleDropdown
-      chainLogos={false}
       noBorder={true}
       list={localeToLanguageMap}
       selected={language}

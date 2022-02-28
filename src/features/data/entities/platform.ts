@@ -8,8 +8,5 @@ export interface PlatformEntity {
   id: string;
   name: string;
   // TODO: maybe this needs to be indexed by chain id
-  url: string;
-
-  // todo: maybe this is not needed
-  chains: ChainEntity['id'][];
+  url?: string;
 }

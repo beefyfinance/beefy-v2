@@ -6,13 +6,21 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import QiDaoLogo from '../../../../images/partners/qidao.svg';
 import { styles } from './styles';
-import { QiDaoProps } from './QiDaoProps';
+import { VaultEntity } from '../../../data/entities/vault';
+import { useSelector } from 'react-redux';
+import { BeefyState } from '../../../../redux-types';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectTokenById } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 
-const QiDaoCard: React.FC<QiDaoProps> = ({ mooToken }) => {
+const QiDaoCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const earnedToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, vault.chainId, vault.earnedTokenId)
+  );
 
   return (
     <Card>
@@ -32,7 +40,9 @@ const QiDaoCard: React.FC<QiDaoProps> = ({ mooToken }) => {
           rel="noreferrer"
           href="https://app.mai.finance/vaults"
         >
-          <Button className={classes.btn}>{t('QiDao-Btn', { mooToken: mooToken })}</Button>
+          <Button className={classes.btn}>
+            {t('QiDao-Btn', { mooToken: earnedToken.symbol })}
+          </Button>
         </a>
       </CardContent>
     </Card>

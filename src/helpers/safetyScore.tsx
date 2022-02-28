@@ -1,6 +1,6 @@
 import { MAX_SCORE, RISKS, CATEGORIES } from '../config/risk';
 
-const calcRisk = (arr: any[]) => {
+const calcRisk = (arr: string[]) => {
   const categories = {};
   for (const c in CATEGORIES) {
     categories[c] = [];
@@ -9,7 +9,7 @@ const calcRisk = (arr: any[]) => {
   // reverse lookup
   arr.forEach((r, idx) => {
     if (!(r in RISKS)) {
-      console.warn('unknown risk', r);
+      //console.warn('unknown risk', r);
       return;
     }
 
@@ -30,15 +30,15 @@ const calcRisk = (arr: any[]) => {
       w *
       Math.min(
         1,
-        categories[c].reduce((acc, r) => acc + RISKS[r].score, 0)
+        categories[c].reduce((acc: number, r: number) => acc + RISKS[r].score, 0)
       );
   }
 
   return risk;
 };
 
-export const safetyScore = (arr: any[]) => {
+export const safetyScoreNum = (arr: string[]) => {
   if (arr.length === 0) return null;
 
-  return (MAX_SCORE * (1 - calcRisk(arr))).toFixed(1);
+  return MAX_SCORE * (1 - calcRisk(arr));
 };

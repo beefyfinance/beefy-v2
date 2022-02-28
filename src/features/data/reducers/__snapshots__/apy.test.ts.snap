@@ -1,12 +1,159 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`APY slice tests should update state on fulfilled boost contract data 1`] = `
+exports[`APY slice tests should update state on fulfilled apy data action 1`] = `
 Object {
-  "byBoostId": Object {
-    "moo_banana-banana-busd-bitcrush": Object {
-      "apr": 16.099658752067988,
+  "rawApy": Object {
+    "byBoostId": Object {},
+    "byVaultId": Object {
+      "banana-banana-busd": Object {
+        "beefyPerformanceFee": 0.045,
+        "compoundingsPerYear": 2190,
+        "lpFee": 0.0002,
+        "totalApy": 0.0343505989421522,
+        "tradingApr": 0.000309155,
+        "vaultApr": 0.03346493761979882,
+        "vaultApy": 0.03403092311211742,
+      },
+      "ellipsis-renbtc": Object {
+        "beefyPerformanceFee": 0.045,
+        "compoundingsPerYear": 2190,
+        "lpFee": 0.0002,
+        "totalApy": 0.0343505989421522,
+        "tradingApr": 0.000309155,
+        "vaultApr": 0.03346493761979882,
+        "vaultApy": 0.03403092311211742,
+      },
+      "future-extra-super-hyped-vault": Object {
+        "vaultApr": 0.013855864509528597,
+      },
+      "one-bifi-gov": Object {
+        "vaultApr": 0.013855864509528597,
+      },
+      "one-bifi-maxi": Object {
+        "totalApy": 0.01401646541942525,
+      },
     },
   },
-  "byVaultId": Object {},
+  "totalApy": Object {
+    "byVaultId": Object {
+      "banana-banana-busd": Object {
+        "totalApy": 0.0343505989421522,
+        "totalDaily": 0.00009253176060218854,
+        "tradingApr": 0.000309155,
+        "tradingDaily": 8.469999999999999e-7,
+        "vaultApr": 0.03346493761979882,
+        "vaultDaily": 0.00009168476060218854,
+      },
+      "ellipsis-renbtc": Object {
+        "totalApy": 0.0343505989421522,
+        "totalDaily": 0.00009253176060218854,
+        "tradingApr": 0.000309155,
+        "tradingDaily": 8.469999999999999e-7,
+        "vaultApr": 0.03346493761979882,
+        "vaultDaily": 0.00009168476060218854,
+      },
+      "one-bifi-gov": Object {
+        "totalApy": 0.013855864509528597,
+        "totalDaily": 0.000037961272628845475,
+        "vaultApr": 0.013855864509528597,
+        "vaultDaily": 0.000037961272628845475,
+      },
+      "one-bifi-maxi": Object {
+        "totalApy": 0.01401646541942525,
+        "totalDaily": 0.00003813536582875088,
+      },
+    },
+  },
+}
+`;
+
+exports[`APY slice tests should update state on fulfilled apy data action 2`] = `
+Object {
+  "rawApy": Object {
+    "byBoostId": Object {
+      "moo_banana-banana-busd-bitcrush": Object {
+        "apr": 4950.645066260906,
+      },
+    },
+    "byVaultId": Object {
+      "banana-banana-busd": Object {
+        "beefyPerformanceFee": 0.045,
+        "compoundingsPerYear": 2190,
+        "lpFee": 0.0002,
+        "totalApy": 0.0343505989421522,
+        "tradingApr": 0.000309155,
+        "vaultApr": 0.03346493761979882,
+        "vaultApy": 0.03403092311211742,
+      },
+      "ellipsis-renbtc": Object {
+        "beefyPerformanceFee": 0.045,
+        "compoundingsPerYear": 2190,
+        "lpFee": 0.0002,
+        "totalApy": 0.0343505989421522,
+        "tradingApr": 0.000309155,
+        "vaultApr": 0.03346493761979882,
+        "vaultApy": 0.03403092311211742,
+      },
+      "future-extra-super-hyped-vault": Object {
+        "vaultApr": 0.013855864509528597,
+      },
+      "one-bifi-gov": Object {
+        "vaultApr": 0.013855864509528597,
+      },
+      "one-bifi-maxi": Object {
+        "totalApy": 0.01401646541942525,
+      },
+    },
+  },
+  "totalApy": Object {
+    "byVaultId": Object {
+      "banana-banana-busd": Object {
+        "boostApr": 4950.645066260906,
+        "boostDaily": 13.563411140440838,
+        "boostedTotalApy": 4950.679416859848,
+        "boostedTotalDaily": 13.56350367220144,
+        "totalApy": 0.0343505989421522,
+        "totalDaily": 0.00009253176060218854,
+        "tradingApr": 0.000309155,
+        "tradingDaily": 8.469999999999999e-7,
+        "vaultApr": 0.03346493761979882,
+        "vaultDaily": 0.00009168476060218854,
+      },
+      "ellipsis-renbtc": Object {
+        "totalApy": 0.0343505989421522,
+        "totalDaily": 0.00009253176060218854,
+        "tradingApr": 0.000309155,
+        "tradingDaily": 8.469999999999999e-7,
+        "vaultApr": 0.03346493761979882,
+        "vaultDaily": 0.00009168476060218854,
+      },
+      "one-bifi-gov": Object {
+        "totalApy": 0.013855864509528597,
+        "totalDaily": 0.000037961272628845475,
+        "vaultApr": 0.013855864509528597,
+        "vaultDaily": 0.000037961272628845475,
+      },
+      "one-bifi-maxi": Object {
+        "totalApy": 0.01401646541942525,
+        "totalDaily": 0.00003813536582875088,
+      },
+    },
+  },
+}
+`;
+
+exports[`APY slice tests should update state on fulfilled boost contract data 1`] = `
+Object {
+  "rawApy": Object {
+    "byBoostId": Object {
+      "moo_banana-banana-busd-bitcrush": Object {
+        "apr": 16.099658752067988,
+      },
+    },
+    "byVaultId": Object {},
+  },
+  "totalApy": Object {
+    "byVaultId": Object {},
+  },
 }
 `;

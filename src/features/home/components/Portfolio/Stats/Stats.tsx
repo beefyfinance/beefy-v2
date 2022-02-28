@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, makeStyles, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import BigNumber from 'bignumber.js';
-import { formatUsd } from '../../../../../helpers/format';
+import { BIG_ZERO, formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles as any);
@@ -12,14 +11,14 @@ export const Stats = ({ stats, blurred }) => {
 
   const [empty, setEmpty] = useState(false);
   useEffect(() => {
-    setEmpty(stats.deposited.eq(new BigNumber(0)));
+    setEmpty(stats.deposited.isZero());
   }, [stats]);
 
   const BlurredText = ({ value }) => (
     <span className={blurred ? classes.blurred : ''}>{blurred ? '$100' : value}</span>
   );
 
-  const formatStat = value => (empty ? new BigNumber(0).toFixed(0) : formatUsd(value.toNumber()));
+  const formatStat = value => (empty ? BIG_ZERO.toFixed(0) : formatUsd(value.toNumber()));
 
   return (
     <Grid container className={classes.stats}>

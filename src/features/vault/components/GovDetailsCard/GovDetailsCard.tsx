@@ -1,5 +1,4 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
 import { Card } from '../Card';
@@ -7,11 +6,20 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
+import { VaultGov } from '../../../data/entities/vault';
+import { useSelector } from 'react-redux';
+import { BeefyState } from '../../../../redux-types';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectTokenById } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
-export const GovDetailsCard = (earnedToken) => {
+export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const earnedToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, vault.chainId, vault.earnedTokenId)
+  );
 
   return (
     <Card>
@@ -27,7 +35,13 @@ export const GovDetailsCard = (earnedToken) => {
         </div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.text}>{t('Gov-Info1') + earnedToken.earnedToken + t('Gov-Info2') + earnedToken.earnedToken + t('Gov-Info3')}</Typography>
+        <Typography className={classes.text}>
+          {t('Gov-Info1') +
+            earnedToken.symbol +
+            t('Gov-Info2') +
+            earnedToken.symbol +
+            t('Gov-Info3')}
+        </Typography>
       </CardContent>
     </Card>
   );

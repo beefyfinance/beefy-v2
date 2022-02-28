@@ -1,5 +1,3 @@
-import { config } from "../config/config";
-
 let trimReg = /(^\s*)|(\s*$)/g;
 
 export function isEmpty(key) {
@@ -20,23 +18,6 @@ export function isEmpty(key) {
     return false;
   }
 }
-
-export function isObject(value) {
-  return value && typeof value === 'object' && value.constructor === Object;
-}
-
-export const getAvailableNetworks = (abbrOnly = false) => {
-  const networks = [];
-  for (let key in config) {
-    networks[key] = abbrOnly ? key.toUpperCase() : config[key].name;
-  }
-
-  return networks;
-};
-
-export const getStablesForNetwork = net => {
-  return config[net].stableCoins;
-};
 
 export const bluechipTokens = [
   'DAIe',

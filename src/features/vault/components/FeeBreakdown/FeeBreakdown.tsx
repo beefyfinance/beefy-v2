@@ -5,6 +5,11 @@ import { styles } from './styles';
 import { Popover } from '../../../../components/Popover';
 import { Loader } from '../../../../components/loader';
 import { BifiMaxis } from './BifiMaxis';
+import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import { ZapEstimate } from '../../../data/apis/zap';
+import { useSelector } from 'react-redux';
+import { BeefyState } from '../../../../redux-types';
+import { selectTokenById } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 const BreakdownTooltip = memo(({ rows }: any) => {
@@ -95,28 +100,34 @@ const PerformanceFees = memo(({ rates, vaultID, performanceFee }: any) => {
 
 export const FeeBreakdown = memo(
   ({
-    item,
+    vault,
     slippageTolerance,
     zapEstimate,
     isZapSwap,
     isZap,
     type,
   }: {
-    item: any;
+    vault: VaultEntity;
     slippageTolerance: number;
-    zapEstimate: any;
+    zapEstimate: ZapEstimate | null;
     isZapSwap: boolean;
     isZap: boolean;
     type: 'deposit' | 'withdraw';
   }) => {
     const classes = useStyles();
     const t = useTranslation().t;
-    const formattedDepositFee = item.depositFee;
-    const formattedWithdrawalFee = item.withdrawalFee;
+    const formattedDepositFee = vault.depositFee;
+    const formattedWithdrawalFee = vault.withdrawalFee;
+    const oracleToken = useSelector((state: BeefyState) =>
+      selectTokenById(state, vault.chainId, vault.oracleId)
+    );
+    const earnedToken = useSelector((state: BeefyState) =>
+      selectTokenById(state, vault.chainId, vault.earnedTokenId)
+    );
     const performanceFee =
-      item.isGovVault || BifiMaxis.includes(item.id)
+      isGovVault(vault) || BifiMaxis.includes(vault.id)
         ? '0%'
-        : item.id === 'cake-cakev2'
+        : vault.id === 'cake-cakev2'
         ? '1%'
         : '4.5%';
 
@@ -129,16 +140,16 @@ export const FeeBreakdown = memo(
                 <Typography className={classes.title} style={{ marginBottom: '12px' }}>
                   {t('Zap-Title')}
                 </Typography>
-                {zapEstimate.isLoading ? (
+                {zapEstimate === null ? (
                   <Loader message={'Loading swap estimate...'} line={true} />
                 ) : (
                   <ol className={classes.ol}>
                     <li>
                       <Typography className={classes.zapStep}>
                         {t('Zap-Step-Deposit-1', {
-                          valueFrom: zapEstimate.amountIn.significant(6),
+                          valueFrom: zapEstimate.amountIn.decimalPlaces(6),
                           tokenFrom: zapEstimate.tokenIn.symbol,
-                          valueTo: zapEstimate.amountOut.significant(6),
+                          valueTo: zapEstimate.amountOut.decimalPlaces(6),
                           tokenTo: zapEstimate.tokenOut.symbol,
                           slippageTolerancePercentage: slippageTolerance * 100,
                         })}
@@ -146,19 +157,19 @@ export const FeeBreakdown = memo(
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-2', { lpToken: item.token })}
+                        {t('Zap-Step-Deposit-2', { lpToken: oracleToken.symbol })}
                       </Typography>
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-3', { lpToken: item.token })}
+                        {t('Zap-Step-Deposit-3', { lpToken: oracleToken.symbol })}
                       </Typography>
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
                         {t('Zap-Step-Deposit-4', {
-                          token0: item.assets[0],
-                          token1: item.assets[1],
+                          token0: vault.assetIds[0],
+                          token1: vault.assetIds[1],
                         })}
                       </Typography>
                     </li>
@@ -171,24 +182,24 @@ export const FeeBreakdown = memo(
                 <Typography className={classes.title} style={{ marginBottom: '12px' }}>
                   {t('Zap-Title')}
                 </Typography>
-                {zapEstimate.isLoading ? (
+                {zapEstimate === null ? (
                   <Loader message={'Loading swap estimate...'} line={true} />
                 ) : (
                   <ol className={classes.ol}>
                     <li>
                       <Typography className={classes.zapStep}>
                         {t('Zap-Step-Withdraw-1', {
-                          mooToken: item.earnedToken,
-                          lpToken: item.token,
+                          mooToken: earnedToken.symbol,
+                          lpToken: oracleToken.symbol,
                         })}
                       </Typography>
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
                         {t('Zap-Step-Withdraw-2', {
-                          lpToken: item.token,
-                          token0: item.assets[0],
-                          token1: item.assets[1],
+                          lpToken: oracleToken.symbol,
+                          token0: vault.assetIds[0],
+                          token1: vault.assetIds[1],
                         })}
                       </Typography>
                     </li>
@@ -196,9 +207,9 @@ export const FeeBreakdown = memo(
                       <li>
                         <Typography className={classes.zapStep}>
                           {t('Zap-Step-Withdraw-3', {
-                            valueFrom: zapEstimate.amountIn.significant(6),
+                            valueFrom: zapEstimate.amountIn.decimalPlaces(6),
                             tokenFrom: zapEstimate.tokenIn.symbol,
-                            valueTo: zapEstimate.amountOut.significant(6),
+                            valueTo: zapEstimate.amountOut.decimalPlaces(6),
                             tokenTo: zapEstimate.tokenOut.symbol,
                             slippageTolerancePercentage: slippageTolerance * 100,
                           })}
@@ -209,7 +220,7 @@ export const FeeBreakdown = memo(
                       <li>
                         <Typography className={classes.zapStep}>
                           {t('Zap-Step-Withdraw-4', {
-                            balance: zapEstimate.amountOut.times(2).significant(6),
+                            balance: zapEstimate.amountOut.times(2).decimalPlaces(6),
                             token: zapEstimate.tokenOut.symbol,
                           })}
                         </Typography>
@@ -242,7 +253,7 @@ export const FeeBreakdown = memo(
               </Typography>
 
               <Popover {...({} as any)}>
-                <PerformanceFees performanceFee={performanceFee} vaultID={item.id} />
+                <PerformanceFees performanceFee={performanceFee} vaultID={vault.id} />
               </Popover>
             </div>
             {/*TODO : add dynamic fee */}

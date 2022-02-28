@@ -44,8 +44,9 @@ export const pools = [
     tokenAddress: "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     tokenDecimals: 18,
     tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
-    earnedToken: "AVAX",
-    earnedTokenAddress: "0x86d38c6b6313c5A3021D68D1F57CF5e69197592A",
+    earnedToken: "WAVAX",
+    earnedTokenAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+    earnedTokenDecimals: 18,
     earnContractAddress: "0x86d38c6b6313c5A3021D68D1F57CF5e69197592A",
     poolAddress: "0x86d38c6b6313c5A3021D68D1F57CF5e69197592A",
     excluded: "avax-bifi-maxi",
@@ -4595,8 +4596,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://traderjoexyz.com/pool/AVAX/0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
     buyTokenUrl: "https://www.traderjoexyz.com/trade",
-    createdAt: 1636308849,
     network: "avax",
+    createdAt: 1636308849,
     retiredReason: "tvl"
   },
   {
@@ -4624,9 +4625,9 @@ export const pools = [
     ],
     addLiquidityUrl: "https://www.traderjoexyz.com/pool/0xc7198437980c041c805a1edcba50c1ce5db95118/0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
     buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xf9a075c9647e91410bf6c402bdf166e1540f67f0",
-    createdAt: 1633701180,
     stratType: "StratLP",
     network: "avax",
+    createdAt: 1633701180,
     retiredReason: "tvl"
   },
   {
@@ -4664,8 +4665,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
-    createdAt: 1633529509,
     network: "avax",
+    createdAt: 1633529509,
     retiredReason: "tvl"
   },
   {
@@ -4703,8 +4704,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://avax.olive.cash/add/AVAX/0x617724974218A18769020A70162165A539c07E8a",
     buyTokenUrl: "https://avax.olive.cash/swap?inputCurrency=AVAX&outputCurrency=0x617724974218A18769020A70162165A539c07E8a",
-    createdAt: 1617865515,
     network: "avax",
+    createdAt: 1617865515,
     retiredReason: "tvl"
   }
 ];

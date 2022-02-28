@@ -1,33 +1,111 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Tokens slice tests should correctly handle mooFuse config 1`] = `
+Object {
+  "byChainId": Object {
+    "fuse": Object {
+      "byId": Object {
+        "mooFuse": Object {
+          "buyUrl": null,
+          "chainId": "fuse",
+          "contractAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+          "decimals": 18,
+          "description": null,
+          "id": "mooFuse",
+          "symbol": "mooFuse",
+          "type": "erc20",
+          "website": null,
+        },
+      },
+      "interestingBalanceTokenIds": Array [
+        "mooFuse",
+      ],
+      "native": null,
+      "wnative": null,
+    },
+  },
+  "prices": Object {
+    "byTokenId": Object {},
+  },
+}
+`;
+
+exports[`Tokens slice tests should handle fuse-fuse config correctly 1`] = `
+Object {
+  "byChainId": Object {
+    "fuse": Object {
+      "byId": Object {
+        "FUSE": Object {
+          "address": null,
+          "buyUrl": null,
+          "chainId": "fuse",
+          "decimals": 18,
+          "description": null,
+          "id": "FUSE",
+          "symbol": "FUSE",
+          "type": "native",
+          "website": null,
+        },
+        "mooFuse": Object {
+          "buyUrl": null,
+          "chainId": "fuse",
+          "contractAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+          "decimals": 18,
+          "description": null,
+          "id": "mooFuse",
+          "symbol": "mooFuse",
+          "type": "erc20",
+          "website": null,
+        },
+      },
+      "interestingBalanceTokenIds": Array [
+        "FUSE",
+        "mooFuse",
+      ],
+      "native": null,
+      "wnative": null,
+    },
+  },
+  "prices": Object {
+    "byTokenId": Object {},
+  },
+}
+`;
+
 exports[`Tokens slice tests should update state on fulfilled boosts list 1`] = `
 Object {
   "byChainId": Object {
     "harmony": Object {
-      "allIds": Array [
-        "PERA",
-        "BIFI",
-      ],
       "byId": Object {
-        "BIFI": Object {
-          "buyUrl": null,
-          "chainId": "harmony",
-          "contractAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
-          "decimals": 18,
-          "id": "BIFI",
-          "symbol": "mooPolygonBIFI",
-          "type": "erc20",
-        },
         "PERA": Object {
           "buyUrl": null,
           "chainId": "harmony",
           "contractAddress": "0xb9D8592E16A9c1a3AE6021CDDb324EaC1Cbc70d6",
           "decimals": 18,
+          "description": null,
           "id": "PERA",
           "symbol": "PERA",
           "type": "erc20",
+          "website": null,
+        },
+        "mooPolygonBIFI": Object {
+          "buyUrl": null,
+          "chainId": "harmony",
+          "contractAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
+          "decimals": 18,
+          "description": null,
+          "id": "mooPolygonBIFI",
+          "symbol": "mooPolygonBIFI",
+          "type": "erc20",
+          "website": null,
         },
       },
+      "interestingBalanceTokenIds": Array [
+        "PERA",
+        "mooPolygonBIFI",
+      ],
+      "native": null,
+      "wnative": null,
     },
   },
   "prices": Object {
@@ -47,6 +125,8 @@ Object {
       "1inch-1inch-bnb": "0",
       "2omb-2omb-ftm": "16.710317081168196",
       "2omb-2share-ftm": "171.84420463276956",
+      "solarbeam-avax-wmovr": "1",
+      "solarbeam-bnb-busd": "1",
     },
   },
 }
@@ -56,50 +136,60 @@ exports[`Tokens slice tests should update state on fulfilled vault list 1`] = `
 Object {
   "byChainId": Object {
     "harmony": Object {
-      "allIds": Array [
-        "BIFI",
-        "ONE",
-        "sushi-one-1ygg-1eth",
-        "mooSushiYGG-ETH",
-      ],
       "byId": Object {
         "BIFI": Object {
           "buyUrl": null,
           "chainId": "harmony",
           "contractAddress": "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
           "decimals": 18,
+          "description": null,
           "id": "BIFI",
           "symbol": "BIFI",
           "type": "erc20",
+          "website": null,
         },
-        "ONE": Object {
+        "WONE": Object {
           "buyUrl": null,
           "chainId": "harmony",
           "contractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
           "decimals": 18,
-          "id": "ONE",
-          "symbol": "ONE",
+          "description": null,
+          "id": "WONE",
+          "symbol": "WONE",
           "type": "erc20",
+          "website": null,
         },
         "mooSushiYGG-ETH": Object {
           "buyUrl": null,
           "chainId": "harmony",
           "contractAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
           "decimals": 18,
+          "description": null,
           "id": "mooSushiYGG-ETH",
           "symbol": "mooSushiYGG-ETH",
           "type": "erc20",
+          "website": null,
         },
         "sushi-one-1ygg-1eth": Object {
           "buyUrl": null,
           "chainId": "harmony",
           "contractAddress": "0x40112850EFd90e9e17b56de35d86BdFf9f4d07Fd",
           "decimals": 18,
+          "description": null,
           "id": "sushi-one-1ygg-1eth",
           "symbol": "1YGG-1ETH LP",
           "type": "erc20",
+          "website": null,
         },
       },
+      "interestingBalanceTokenIds": Array [
+        "BIFI",
+        "WONE",
+        "sushi-one-1ygg-1eth",
+        "mooSushiYGG-ETH",
+      ],
+      "native": null,
+      "wnative": null,
     },
   },
   "prices": Object {

@@ -1,8 +1,9 @@
 import { BigNumber } from 'bignumber.js';
 import { ApyStatLoader } from '../components/ApyStatLoader';
+import { TotalApy } from '../features/data/reducers/apy';
 
-(BigNumber.prototype as any).significant = function (digits) {
-  const number = this.toFormat({
+export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
+  const number = num.toFormat({
     prefix: '',
     decimalSeparator: '.',
     groupSeparator: '',
@@ -18,9 +19,10 @@ import { ApyStatLoader } from '../components/ApyStatLoader';
   }
   const pattern = new RegExp(`^[0]*[0-9]{0,${digits - (wholes === '0' ? 0 : wholes.length)}}`);
   return `${wholes}.${decimals.match(pattern)[0]}`;
-};
+}
 
 export const BIG_ZERO = new BigNumber(0);
+export const BIG_ONE = new BigNumber(1);
 
 export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => {
   if (!apy) return placeholder;
@@ -35,12 +37,22 @@ export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => 
   return `${num.toFixed(dp)}${units[order]}%`;
 };
 
+export const formattedTotalApy = (totalApy: TotalApy) => {
+  return Object.fromEntries(
+    Object.entries(totalApy).map(([key, value]) => {
+      const formattedValue = key.toLowerCase().includes('daily')
+        ? formatApy(value, 4)
+        : formatApy(value);
+      return [key, formattedValue];
+    })
+  );
+};
+
 export const formatUsd = (tvl, oraclePrice = undefined) => {
   // TODO: bignum?
   if (oraclePrice) {
     tvl *= oraclePrice;
   }
-
   const order = Math.floor(Math.log10(tvl) / 3);
 
   const units = ['', 'k', 'M', 'B', 'T'];
@@ -64,30 +76,49 @@ export const formatUsd = (tvl, oraclePrice = undefined) => {
       });
 };
 
-export const formatGlobalTvl = tvl => formatUsd(tvl, 1);
+export function getBigNumOrder(num: BigNumber): number {
+  const nEstr = num.abs().decimalPlaces(0).toExponential();
+  const parts = nEstr.split('e');
+  const exp = parseInt(parts[1] || '0');
+  return Math.floor(exp / 3);
+}
 
-export const calcDaily = apy => {
-  if (!apy) return <ApyStatLoader />;
+export function formatBigUsd(value: BigNumber) {
+  return '$' + formatBigNumber(value);
+}
 
-  const g = Math.pow(10, Math.log10(apy + 1) / 365) - 1;
-  if (isNaN(g)) {
-    return '- %';
+export function formatBigNumber(value: BigNumber) {
+  value = value.decimalPlaces(2);
+
+  if (value.isZero()) {
+    return '0';
   }
+  const order = getBigNumOrder(value);
+  if (value.abs().gte(100)) {
+    value = value.decimalPlaces(0);
+  }
+  if (order < 2 && value.abs().gte(100)) {
+    return value.toNumber().toLocaleString('en-US', {
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    });
+  }
+  const units = ['', 'k', 'M', 'B', 'T'];
 
-  return `${(g * 100).toFixed(2)}%`;
-};
+  return value.shiftedBy(-order * 3).toFixed(2) + units[order];
+}
 
-export const stripTrailingZeros = str => {
-  return str.replace(/(\.[0-9]*?)(0+$)/, '$1').replace(/\.$/, '');
-};
-
-export const formatDecimals = (number, maxPlaces = 8) => {
-  if (new BigNumber(number).isZero()) {
+export function formatBigDecimals(value: BigNumber, maxPlaces: number = 8, strip = true) {
+  if (value.isZero() && strip) {
     return '0';
   }
 
-  const places = Math.min(maxPlaces, number >= 10 ? 4 : 8);
-  return stripTrailingZeros(new BigNumber(number).toFixed(places));
+  const fixed = value.toFixed(maxPlaces);
+  return strip ? stripTrailingZeros(fixed) : fixed;
+}
+
+const stripTrailingZeros = str => {
+  return str.replace(/(\.[0-9]*?)(0+$)/, '$1').replace(/\.$/, '');
 };
 
 export function byDecimals(number, tokenDecimals = 18) {
@@ -112,12 +143,6 @@ export const formatCountdown = deadline => {
   //   .padStart(2, '0');
 
   return `${day}d ${hours}h ${minutes}m`;
-};
-
-export const stripExtraDecimals = (f, decimals = 8) => {
-  return f.indexOf('.') >= 0
-    ? f.substr(0, f.indexOf('.')) + f.substr(f.indexOf('.'), decimals + 1)
-    : f;
 };
 
 export function convertAmountToRawNumber(value, decimals = 18) {

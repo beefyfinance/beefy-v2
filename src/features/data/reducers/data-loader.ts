@@ -1,13 +1,29 @@
-import { ActionReducerMapBuilder, AsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  AsyncThunk,
+  createSlice,
+  SerializedError,
+} from '@reduxjs/toolkit';
+import { isString } from 'lodash';
 import { fetchAllAllowanceAction } from '../actions/allowance';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllBalanceAction } from '../actions/balance';
-import { fetchAllBoosts } from '../actions/boosts';
+import { fetchAllBoosts, initiateBoostForm } from '../actions/boosts';
 import { fetchChainConfigs } from '../actions/chains';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
+import { initiateDepositForm } from '../actions/deposit';
 import { fetchAllPricesAction } from '../actions/prices';
+import {
+  fetchAddressBookAction,
+  fetchAllAddressBookAction,
+  reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
+} from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
+import { askForNetworkChange, askForWalletConnection, doDisconnectWallet } from '../actions/wallet';
+import { initiateWithdrawForm } from '../actions/withdraw';
+import { fetchAllZapsAction } from '../actions/zap';
 import { ChainEntity } from '../entities/chain';
+import { initWalletState } from './wallet/wallet';
 
 /**
  * because we want to be smart about data loading
@@ -37,7 +53,7 @@ interface LoaderStateFulfilled {
   status: 'fulfilled';
   error: null;
 }
-type LoaderState =
+export type LoaderState =
   | LoaderStateInit
   | LoaderStatePending
   | LoaderStateRejected
@@ -48,6 +64,12 @@ export function isFulfilled(state: LoaderState): state is LoaderStateFulfilled {
 }
 export function isPending(state: LoaderState): state is LoaderStatePending {
   return state.status === 'pending';
+}
+export function isInitialLoader(state: LoaderState): state is LoaderStateInit {
+  return state.status === 'init';
+}
+export function isRejected(state: LoaderState): state is LoaderStateRejected {
+  return state.status === 'rejected';
 }
 
 const dataLoaderStateInit: LoaderState = {
@@ -69,15 +91,28 @@ const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
   contractData: dataLoaderStateInit,
   balance: dataLoaderStateInit,
   allowance: dataLoaderStateInit,
+  addressBook: dataLoaderStateInit,
 };
 
 export interface DataLoaderState {
+  instances: {
+    wallet: boolean;
+  };
+  statusIndicator: {
+    open: boolean;
+  };
   global: {
     chainConfig: LoaderState;
     prices: LoaderState;
     apy: LoaderState;
     vaults: LoaderState;
     boosts: LoaderState;
+    wallet: LoaderState;
+    zaps: LoaderState;
+    depositForm: LoaderState;
+    withdrawForm: LoaderState;
+    boostForm: LoaderState;
+    addressBook: LoaderState;
   };
 
   byChainId: {
@@ -85,16 +120,29 @@ export interface DataLoaderState {
       contractData: LoaderState;
       balance: LoaderState;
       allowance: LoaderState;
+      addressBook: LoaderState;
     };
   };
 }
 export const initialDataLoaderState: DataLoaderState = {
+  instances: {
+    wallet: false,
+  },
+  statusIndicator: {
+    open: false,
+  },
   global: {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
+    wallet: dataLoaderStateInit,
+    zaps: dataLoaderStateInit,
+    depositForm: dataLoaderStateInit,
+    withdrawForm: dataLoaderStateInit,
+    boostForm: dataLoaderStateInit,
+    addressBook: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -115,12 +163,16 @@ function addGlobalAsyncThunkActions(
     };
   });
   builder.addCase(action.rejected, (sliceState, action) => {
+    const msg = getMessage(action.error);
     // here, maybe put an error message
     sliceState.global[stateKey] = {
       status: 'rejected',
-      error: action.error + '',
+      error: msg,
       alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
     };
+
+    // something got rejected, we want to auto-open the indicator
+    sliceState.statusIndicator.open = true;
   });
   builder.addCase(action.fulfilled, sliceState => {
     sliceState.global[stateKey] = dataLoaderStateFulfilled;
@@ -130,37 +182,47 @@ function addGlobalAsyncThunkActions(
 function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, ActionParams, unknown>,
-  stateKey: keyof DataLoaderState['byChainId']['bsc']
+  stateKeys: Array<keyof DataLoaderState['byChainId']['bsc']>
 ) {
   builder.addCase(action.pending, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
-    sliceState.byChainId[chainId][stateKey] = {
-      ...dataLoaderStatePending,
-      alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
-    };
+    for (const stateKey of stateKeys) {
+      sliceState.byChainId[chainId][stateKey] = {
+        ...dataLoaderStatePending,
+        alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
+      };
+    }
   });
   builder.addCase(action.rejected, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
+
+    const msg = getMessage(action.error);
     // here, maybe put an error message
-    sliceState.byChainId[chainId][stateKey] = {
-      alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
-      status: 'rejected',
-      error: action.error + '',
-    };
+    for (const stateKey of stateKeys) {
+      sliceState.byChainId[chainId][stateKey] = {
+        alreadyLoadedOnce: sliceState.byChainId[chainId][stateKey].alreadyLoadedOnce,
+        status: 'rejected',
+        error: msg,
+      };
+
+      // something got rejected, we want to auto-open the indicator
+      sliceState.statusIndicator.open = true;
+    }
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
     const chainId = action.meta?.arg.chainId;
     if (sliceState.byChainId[chainId] === undefined) {
       sliceState.byChainId[chainId] = { ...dataLoaderStateInitByChainId };
     }
-    // here, maybe put an error message
-    sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
+    for (const stateKey of stateKeys) {
+      sliceState.byChainId[chainId][stateKey] = dataLoaderStateFulfilled;
+    }
   });
 }
 
@@ -168,16 +230,45 @@ export const dataLoaderSlice = createSlice({
   name: 'dataLoader',
   initialState: initialDataLoaderState,
   reducers: {
-    // standard reducer logic, with auto-generated action types per reducer
+    closeIndicator(sliceState) {
+      sliceState.statusIndicator.open = false;
+    },
+    openIndicator(sliceState) {
+      sliceState.statusIndicator.open = true;
+    },
   },
   extraReducers: builder => {
     addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig');
+    addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet');
+    addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet');
+    addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet');
     addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices');
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
-    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, 'contractData');
-    addByChainAsyncThunkActions(builder, fetchAllBalanceAction, 'balance');
-    addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, 'allowance');
+    addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm');
+    addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm');
+    addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm');
+    addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps');
+    addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook');
+
+    addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
+    addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
+    addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);
+    addByChainAsyncThunkActions(builder, reloadBalanceAndAllowanceAndGovRewardsAndBoostData, [
+      'balance',
+      'allowance',
+    ]);
+    addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
+
+    builder.addCase(initWalletState, sliceState => {
+      sliceState.instances.wallet = true;
+    });
   },
 });
+
+function getMessage(error: SerializedError) {
+  return isString(error) ? error : (error?.message || error?.name || error?.code) + '';
+}
+
+export const dataLoaderActions = dataLoaderSlice.actions;

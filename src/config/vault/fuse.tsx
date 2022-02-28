@@ -10,6 +10,7 @@ export const pools = [
     tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
     earnedToken: "WFUSE",
     earnedTokenAddress: "0x0BE9e53fd7EDaC9F859882AfdDa116645287C629",
+    earnedTokenDecimals: 18,
     earnContractAddress: "0x60a4DedF7fC45F73d9ca46222B016c2d755C79A8",
     poolAddress: "0x60a4DedF7fC45F73d9ca46222B016c2d755C79A8",
     pricePerFullShare: 1,

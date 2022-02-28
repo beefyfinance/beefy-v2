@@ -8,6 +8,7 @@ export const styles = theme => ({
     borderRadius: '4px',
     margin: '2px 0 0 6px',
     textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.background.filters.active,
     display: 'flex',

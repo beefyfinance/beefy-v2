@@ -54,6 +54,21 @@ export const styles = theme => ({
       justifyContent: 'flex-start',
     },
   },
+  stat3: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  stat4: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    [theme.breakpoints.down('md')]: {
+      alignItems: 'flex-start',
+    },
+  },
   value: {
     color: theme.palette.text.secondary,
   },
