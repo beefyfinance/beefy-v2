@@ -25,10 +25,16 @@ import {
   selectGovVaultPendingRewardsInToken,
   selectGovVaultRewardsTokenEntity,
 } from '../selectors/balance';
-import { selectChainNativeToken, selectErc20TokenById, selectTokenById } from '../selectors/tokens';
+import {
+  selectChainNativeToken,
+  selectChainWrappedNativeToken,
+  selectErc20TokenById,
+  selectTokenById,
+} from '../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
+import { getZapAddress } from '../utils/zap-utils';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
@@ -250,11 +256,13 @@ const beefOutAndSwap = (
     }
 
     const earnedToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
+    const wnative = selectChainWrappedNativeToken(state, vault.chainId);
     const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
     const vaultAddress = earnedToken.contractAddress;
     const { tokenIn, tokenOut } = zapEstimate;
 
-    const tokenOurErc20 = selectErc20TokenById(state, vault.chainId, tokenOut.id, true);
+    const tokenOutEntity = selectTokenById(state, vault.chainId, tokenOut.id);
+    const tokenOutAddress = getZapAddress(tokenOutEntity, wnative);
 
     const walletApi = await getWalletConnectApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -279,7 +287,7 @@ const beefOutAndSwap = (
         .beefOutAndSwap(
           vaultAddress,
           rawAmount.toString(10),
-          tokenOurErc20.contractAddress,
+          tokenOutAddress,
           rawSwapAmountOutMin.toString(10)
         )
         .send({
@@ -294,7 +302,10 @@ const beefOutAndSwap = (
       {
         chainId: vault.chainId,
         spenderAddress: zapOptions.address,
-        tokens: uniqBy(getVaultTokensToRefresh(state, vault).concat([tokenIn, tokenOut]), 'id'),
+        tokens: uniqBy(
+          getVaultTokensToRefresh(state, vault).concat([tokenIn, tokenOut, tokenOutEntity]),
+          'id'
+        ),
       }
     );
   };
