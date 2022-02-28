@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, makeStyles, Button } from '@material-ui/core';
+import { Typography, makeStyles, Button, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
@@ -17,9 +17,14 @@ const InsuraceCard = () => {
     <Card>
       <CardHeader className={classes.header}>
         <img src={InsuraceLogo} alt="insurance" />{' '}
-        <Typography className={classes.title} variant="h3">
-          {t('Insurance-Title')}
-        </Typography>
+        <Box>
+          <Typography className={classes.subtitle} variant="body1">
+            {t('Insurance-SubTitle')}
+          </Typography>
+          <Typography className={classes.title} variant="h3">
+            {t('Insurance-Title')}
+          </Typography>
+        </Box>
       </CardHeader>
       <CardContent>
         <Typography className={classes.content} variant="body1">
