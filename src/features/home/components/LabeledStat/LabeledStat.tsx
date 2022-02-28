@@ -1,11 +1,20 @@
-import React, { forwardRef, memo } from 'react';
+import React, { memo, ReactNode } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { styles } from './styles';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles as any);
-const _LabeledStat = forwardRef(({ value, boosted, ...passthrough }: any, ref) => {
+const _LabeledStat = ({
+  value,
+  boosted,
+  variant = 'small',
+}: {
+  value: ReactNode;
+  boosted: boolean;
+  variant: 'small' | 'large';
+}) => {
   const classes = useStyles();
 
   const valueClassName = React.useMemo(
@@ -14,11 +23,17 @@ const _LabeledStat = forwardRef(({ value, boosted, ...passthrough }: any, ref) =
   );
 
   return (
-    <div {...passthrough} ref={ref}>
-      {boosted && <Typography className={classes.value}>{boosted}</Typography>}
-      <Typography className={valueClassName}>{value}</Typography>
-    </div>
+    <>
+      {boosted && (
+        <Typography className={clsx({ [classes.value]: true, large: variant === 'large' })}>
+          {boosted}
+        </Typography>
+      )}
+      <Typography className={clsx({ [valueClassName]: true, large: variant === 'large' })}>
+        {value}
+      </Typography>
+    </>
   );
-});
+};
 
 export const LabeledStat = memo(_LabeledStat);

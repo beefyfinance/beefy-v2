@@ -1,495 +1,68 @@
 [
   {
-    "id": "bsc vault: blockmine-nugget-goldcoin-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-kart-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-dkt-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: sing-sing-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cafev2-brew-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cafev2-brew-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-nft-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-ong-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: czf-czf-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: long-long-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: auro-auro-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: auro-auro-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: omnifarm-usdo-popen-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: omnifarm-usdo-anymtlx-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: omnifarm-ocp-usdo-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-bnb-sista-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: farmhero-pancake-hero-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: farmhero-pancake-hero-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: ellipsis-usdn-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: ica-zbtc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: ica-zeth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-mbox-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: ellipsis-eps-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-tusd-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: mdex-bsc-bnb-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: jetswap-wings-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: jetswap-wings-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: goal-goal-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: zefiv2-zefi-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: zefiv2-zefi-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: swampv2-swamp-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: swampv2-swamp-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-bunny-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-vai-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-sushi-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-belt-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: space-space-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: salt-salt-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: salt-salt-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: ramen-ramen-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: kebab-kebab-btc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: kebab-kebab-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: kebab-kebab-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: kebab-kebab-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: geist-dai-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: sing-ftm-usdc-sing-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: jetswap-fantom-eth-btc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: jetswap-fantom-fwings-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: jetswap-fantom-fwings-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: jetswap-fantom-fwings-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-ftm-scream-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: ester-est-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: ester-est-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc vault: cakev2-raca-busd",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: froyo-3pool-eol",
+    "id": "bsc vault: charge-static-busd-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom vault: froyo-froyo-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: ape-wmatic-crystl-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: cafe-pbrew-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: cafe-pbrew-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sing-usdc-sing-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-fox-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: ironswap-ice-iron-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: farmhero-quick-usdc-honor-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: farmhero-wault-usdc-honor-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: ironswap-ice-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: ironswap-ice-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: jetswap-poly-pwings-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: jetswap-poly-pwings-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: pzap-pzap-usdc-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fantom vault: boo-kae-wftm",
+    "type": "Added"
   },
   {
-    "id": "polygon vault: pzap-pzap-matic-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fantom vault: beets-beardhemian-brushsody",
+    "type": "Added"
   },
   {
-    "id": "polygon vault: quick-yamp-usdc-eol",
-    "type": "REMOVED"
+    "id": "fantom vault: ripae-pftm-ftm",
+    "type": "synced"
   },
   {
-    "id": "avax vault: curve-avax-ren-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fantom vault: ripae-pae-ftm",
+    "type": "synced"
   },
   {
-    "id": "avax vault: joe-ampl-wavax-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "polygon vault: quick-eth-cxeth",
+    "type": "Added"
   },
   {
-    "id": "avax vault: sing-usdt.e-sing-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "polygon vault: quick-cxada-cxeth",
+    "type": "Added"
   },
   {
-    "id": "avax vault: aave-usdt.e-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "polygon vault: quick-cxdoge-cxeth",
+    "type": "Added"
   },
   {
-    "id": "avax vault: olive-olive-avax-eol",
+    "id": "polygon vault: quick-hbar[0x]-mimatic-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "harmony vault: sushi-one-1eth-1dai-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "avax vault: png-acre-wavax",
+    "type": "Added"
   },
   {
-    "id": "harmony vault: sushi-one-1usdt-1eth-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "avax vault: png-bribe-wavax",
+    "type": "Added"
   },
   {
-    "id": "harmony vault: sushi-one-sushi-one-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "avax vault: png-tus-wavax",
+    "type": "Added"
   },
   {
     "id": "moonriver vault: sushi-mr-eth-usdt-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "synced"
   },
   {
     "id": "moonriver vault: sushi-mr-mim-wmovr-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: sushi-mr-eth-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: sushi-mr-eth-wbtc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: sushi-mr-eth-dai-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-frax-rome-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-wbtc-wmovr-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-wan-wmovr-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-finn-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-finn-avax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-finn-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-finn-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-finn-xrp-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "synced"
   },
   {
     "id": "moonriver vault: solarbeam-matic-wmovr-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-wmovr-rib-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-wmovr-relay-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-pets-wmovr-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "cronos vault: crona-busd-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "cronos vault: crona-wbtc-cro-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-g$-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc boost: moo_jetswap-wings",
     "type": "synced"
   },
   {

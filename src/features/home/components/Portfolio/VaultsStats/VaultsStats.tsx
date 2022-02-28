@@ -1,22 +1,20 @@
-import React from 'react';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useVaults } from '../../../hooks/useFilteredVaults';
 import { useSelector } from 'react-redux';
 import { ApyStatLoader } from '../../../../../components/ApyStatLoader';
-import { useBuyback } from '../../../hooks/useBuyback';
-import { formatUsd } from '../../../../../helpers/format';
+import { formatBigUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
+import { selectTotalTvl } from '../../../../data/selectors/tvl';
+import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
+import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
 
 const useStyles = makeStyles(styles as any);
-export const VaultsStats = ({ stats, blurred }) => {
+export const VaultsStats = () => {
   const classes = useStyles();
   const t = useTranslation().t;
-  const { activeVaults } = useVaults();
-  const totalTvl = useSelector((state: any) => state.vaultReducer.totalTvl.toNumber());
-
-  const buyback = useBuyback();
-
+  const totalTvl = useSelector(selectTotalTvl);
+  const totalActiveVaults = useSelector(selectTotalActiveVaults);
+  const buyback = useSelector(selectTotalBuybackUsdAmount);
   const ValueText = ({ value }) => <>{value ? <span>{value}</span> : <ApyStatLoader />}</>;
 
   return (
@@ -26,7 +24,7 @@ export const VaultsStats = ({ stats, blurred }) => {
           {t('TVL')}
         </Typography>
         <Typography variant="h3" className={classes.value}>
-          <ValueText value={totalTvl ? formatUsd(totalTvl) : 0} />
+          <ValueText value={formatBigUsd(totalTvl)} />
         </Typography>
       </Box>
       <Box className={classes.stat}>
@@ -34,7 +32,7 @@ export const VaultsStats = ({ stats, blurred }) => {
           {t('Vaults-Title')}
         </Typography>
         <Typography variant="h3" className={classes.value}>
-          <ValueText value={activeVaults} />
+          <ValueText value={totalActiveVaults} />
         </Typography>
       </Box>
       <Box className={classes.stat}>
@@ -42,7 +40,7 @@ export const VaultsStats = ({ stats, blurred }) => {
           {t('BuyBack')}
         </Typography>
         <Typography variant="h3" className={classes.value}>
-          <ValueText value={buyback ? formatUsd(buyback) : 0} />
+          <ValueText value={formatBigUsd(buyback)} />
         </Typography>
       </Box>
     </Grid>

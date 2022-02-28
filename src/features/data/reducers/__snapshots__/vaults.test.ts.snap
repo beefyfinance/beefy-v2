@@ -1,10 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Vaults slice tests should handle fuse-fuse config correctly 1`] = `
+Object {
+  "allIds": Array [
+    "fuse-fuse",
+  ],
+  "byChainId": Object {
+    "fuse": Object {
+      "allActiveIds": Array [
+        "fuse-fuse",
+      ],
+      "allRetiredIds": Array [],
+      "byEarnTokenId": Object {
+        "mooFuse": "fuse-fuse",
+      },
+      "byOracleId": Object {
+        "FUSE": Array [
+          "fuse-fuse",
+        ],
+      },
+    },
+  },
+  "byId": Object {
+    "fuse-fuse": Object {
+      "addLiquidityUrl": null,
+      "assetIds": Array [
+        "WFUSE",
+      ],
+      "buyTokenUrl": "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0xa722c13135930332Eb3d749B2F0906559D2C5b99",
+      "chainId": "fuse",
+      "contractAddress": "0x2C43DBef81ABa6b95799FD2aEc738Cd721ba77f3",
+      "createdAt": 1641908745,
+      "depositFee": "0%",
+      "earnedTokenId": "mooFuse",
+      "id": "fuse-fuse",
+      "isGovVault": false,
+      "logoUri": "single-assets/FUSE.svg",
+      "name": "FUSE",
+      "oracleId": "FUSE",
+      "platformId": "fuse",
+      "risks": Array [],
+      "safetyScore": 0,
+      "status": "active",
+      "strategyType": "SingleStake",
+      "tags": Array [],
+      "type": "single",
+      "withdrawalFee": "0%",
+    },
+  },
+  "contractData": Object {
+    "byVaultId": Object {},
+  },
+  "featuredVaults": Object {},
+}
+`;
+
+exports[`Vaults slice tests should track featured vault list 1`] = `
+Object {
+  "nope": false,
+  "test-vault": true,
+}
+`;
+
 exports[`Vaults slice tests should update state on fulfilled vault list 1`] = `
 Object {
   "allIds": Array [
-    "one-bifi-gov",
     "sushi-one-1ygg-1eth",
+    "one-bifi-gov",
     "banana-banana-eol",
   ],
   "byChainId": Object {
@@ -21,62 +83,132 @@ Object {
         "mooSushiYGG-ETH": "sushi-one-1ygg-1eth",
       },
       "byOracleId": Object {
-        "BANANA": "banana-banana-eol",
-        "sushi-one-1ygg-1eth": "sushi-one-1ygg-1eth",
+        "BANANA": Array [
+          "banana-banana-eol",
+        ],
+        "sushi-one-1ygg-1eth": Array [
+          "sushi-one-1ygg-1eth",
+        ],
       },
     },
   },
   "byId": Object {
     "banana-banana-eol": Object {
-      "assets": Array [
+      "addLiquidityUrl": null,
+      "assetIds": Array [
         "BANANA",
       ],
+      "buyTokenUrl": "https://dex.apeswap.finance/#/swap?inputCurrency=0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95&outputCurrency=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
       "chainId": "harmony",
       "contractAddress": "0xD307e7CC6a302046b7D91D83aa4B8324cFB7a786",
+      "createdAt": 1615196201,
+      "depositFee": "0%",
       "earnedTokenId": "mooApeBANANA",
       "id": "banana-banana-eol",
       "isGovVault": false,
       "logoUri": "degens/BANANA.svg",
       "name": "BANANA",
       "oracleId": "BANANA",
+      "platformId": "apeswap",
+      "risks": Array [],
+      "safetyScore": 0,
+      "status": "eol",
       "strategyType": "SingleStake",
+      "tags": Array [
+        "eol",
+      ],
+      "type": "single",
+      "withdrawalFee": "0.1%",
     },
     "one-bifi-gov": Object {
+      "addLiquidityUrl": null,
+      "assetIds": Array [
+        "BIFI",
+      ],
+      "buyTokenUrl": null,
       "chainId": "harmony",
+      "createdAt": 1623706144,
+      "depositFee": "0%",
       "earnContractAddress": "0x5b96bbaca98d777cb736dd89a519015315e00d02",
+      "earnedTokenId": "ONE",
       "excludedId": null,
       "id": "one-bifi-gov",
       "isGovVault": true,
+      "logoUri": "single-assets/BIFI.png",
       "name": "BIFI Earnings Pool",
       "oracleId": "BIFI",
+      "platformId": "beefy.finance",
+      "risks": Array [
+        "COMPLEXITY_LOW",
+        "BATTLE_TESTED",
+        "IL_NONE",
+        "MCAP_SMALL",
+        "AUDIT",
+        "CONTRACTS_VERIFIED",
+      ],
+      "safetyScore": 9.399999999999999,
+      "status": "active",
+      "tags": Array [
+        "beefy",
+        "low",
+      ],
+      "type": "single",
+      "withdrawalFee": "0%",
     },
     "sushi-one-1ygg-1eth": Object {
-      "assets": Array [
+      "addLiquidityUrl": "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
+      "assetIds": Array [
         "YGG",
         "ETH",
       ],
+      "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x63cf309500d8be0B9fDB8F1fb66C821236c0438c",
       "chainId": "harmony",
       "contractAddress": "0x69F683aa79ab78B95A9823Ace8b9771Ad18fFC71",
+      "createdAt": 1631279238,
+      "depositFee": "0%",
       "earnedTokenId": "mooSushiYGG-ETH",
       "id": "sushi-one-1ygg-1eth",
       "isGovVault": false,
       "logoUri": undefined,
       "name": "1YGG-1ETH LP",
       "oracleId": "sushi-one-1ygg-1eth",
+      "platformId": "sushi",
+      "risks": Array [
+        "COMPLEXITY_LOW",
+        "BATTLE_TESTED",
+        "IL_LOW",
+        "MCAP_MEDIUM",
+        "AUDIT",
+        "CONTRACTS_VERIFIED",
+      ],
+      "safetyScore": 9.399999999999999,
+      "status": "active",
       "strategyType": "StratLP",
+      "tags": Array [
+        "low",
+      ],
+      "type": "lps",
+      "withdrawalFee": "0%",
     },
   },
-  "pricePerFullShare": Object {
+  "contractData": Object {
     "byVaultId": Object {},
   },
+  "featuredVaults": Object {},
 }
 `;
 
 exports[`Vaults slice tests should update state on fulfilled vault list 2`] = `
 Object {
   "byVaultId": Object {
-    "one-bifi-gov": "123",
-    "sushi-one-1ygg-1eth": "456",
+    "one-bifi-gov": Object {
+      "pricePerFullShare": "123",
+      "strategyAddress": "test",
+    },
+    "sushi-one-1ygg-1eth": Object {
+      "pricePerFullShare": "456",
+      "strategyAddress": "test",
+    },
   },
 }
 `;

@@ -5,7 +5,6 @@ import { VaultGov, VaultStandard } from '../../entities/vault';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
-import { BeefyState } from '../../../redux/reducers/storev2';
 import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
 import {
@@ -16,6 +15,9 @@ import {
   StandardVaultContractData,
 } from './contract-data-types';
 import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
+import { BeefyState } from '../../../../redux-types';
+import { selectVaultById } from '../../selectors/vaults';
+import { selectTokenById } from '../../selectors/tokens';
 
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
@@ -68,21 +70,21 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     let resultsIdx = 0;
     for (const boostBatch of boostBatches) {
       const batchRes = results[resultsIdx].map((boostRes, elemidx) =>
-        this.boostFormatter(boostRes, boostBatch[elemidx])
+        this.boostFormatter(state, boostRes, boostBatch[elemidx])
       );
       res.boosts = res.boosts.concat(batchRes);
       resultsIdx++;
     }
     for (const vaultBatch of vaultBatches) {
       const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
-        this.standardVaultFormatter(vaultRes, vaultBatch[elemidx])
+        this.standardVaultFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.standardVaults = res.standardVaults.concat(batchRes);
       resultsIdx++;
     }
     for (const vaultBatch of govVaultBatches) {
       const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
-        this.govVaultFormatter(vaultRes, vaultBatch[elemidx])
+        this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
       );
       res.govVaults = res.govVaults.concat(batchRes);
       resultsIdx++;
@@ -92,30 +94,50 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
   }
 
   protected standardVaultFormatter(
+    state: BeefyState,
     result: AllValuesAsString<StandardVaultContractData>,
     standardVault: VaultStandard
   ) {
+    const vault = selectVaultById(state, standardVault.id);
+    const mooToken = selectTokenById(state, vault.chainId, vault.oracleId);
     return {
       id: standardVault.id,
-      balance: new BigNumber(result.balance),
-      pricePerFullShare: new BigNumber(result.pricePerFullShare),
+      balance: new BigNumber(result.balance).shiftedBy(-mooToken.decimals),
+      /** always 18 decimals for PPFS */
+      pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-18),
       strategy: result.strategy,
     } as StandardVaultContractData;
   }
 
-  protected govVaultFormatter(result: AllValuesAsString<GovVaultContractData>, govVault: VaultGov) {
+  protected govVaultFormatter(
+    state: BeefyState,
+    result: AllValuesAsString<GovVaultContractData>,
+    govVault: VaultGov
+  ) {
+    const vault = selectVaultById(state, govVault.id);
+    const token = selectTokenById(state, vault.chainId, vault.oracleId);
     return {
       id: govVault.id,
-      totalSupply: new BigNumber(result.totalSupply),
+      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
     } as GovVaultContractData;
   }
 
-  protected boostFormatter(result: AllValuesAsString<BoostContractData>, boost: BoostEntity) {
+  protected boostFormatter(
+    state: BeefyState,
+
+    result: AllValuesAsString<BoostContractData>,
+    boost: BoostEntity
+  ) {
+    const earnedToken = selectTokenById(state, boost.chainId, boost.earnedTokenId);
+    const vault = selectVaultById(state, boost.vaultId);
+    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
     return {
       id: boost.id,
-      totalSupply: new BigNumber(result.totalSupply),
-      rewardRate: new BigNumber(result.rewardRate),
-      periodFinish: parseInt(result.periodFinish),
+      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-oracleToken.decimals),
+      rewardRate: new BigNumber(result.rewardRate).shiftedBy(-earnedToken.decimals),
+      /* assuming period finish is a UTC timestamp in seconds */
+      periodFinish:
+        result.periodFinish === '0' ? null : new Date(parseInt(result.periodFinish) * 1000),
     } as BoostContractData;
   }
 }

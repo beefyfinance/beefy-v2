@@ -1,117 +1,88 @@
 import { Action } from 'redux';
-import { storeV2 } from '../../../store';
 import { ChainEntity } from '../entities/chain';
-import {
-  accountHasChanged,
-  chainHasChanged,
-  chainHasChangedToUnsupported,
-  userDidConnect,
-  walletHasDisconnected,
-} from '../reducers/wallet';
-import { selectAllChains } from '../selectors/chains';
 import { selectIsWalletConnected } from '../selectors/wallet';
 import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
-import { fetchAllBoosts } from './boosts';
+import { fetchAllBoosts, initiateBoostForm } from './boosts';
 import { fetchChainConfigs } from './chains';
-import { fetchAllPricesAction } from './prices';
-import { fetchAllVaults } from './vaults';
+import { fetchAllPricesAction, fetchBeefyBuybackAction } from './prices';
+import { fetchAllVaults, fetchFeaturedVaults } from './vaults';
 import { fetchAllBalanceAction } from './balance';
-import { getWalletConnectInstance } from '../apis/instances';
 import { fetchAllContractDataByChainAction } from './contract-data';
-import { featureFlag_dataPolling, featureFlag_scenarioTimings } from '../utils/feature-flags';
-import { fetchAllAllowanceAction } from './allowance';
-
-const store = storeV2;
+import { featureFlag_noDataPolling } from '../utils/feature-flags';
+//import { fetchAllAllowanceAction } from './allowance';
+import { BeefyStore } from '../../../redux-types';
+import { chains as chainsConfig } from '../../../config/config';
+import { initWallet } from './wallet';
+import { recomputeBoostStatus } from '../reducers/boosts';
+import { fetchPartnersConfig } from './partners';
+import { fetchAddressBookAction, fetchAllAddressBookAction } from './tokens';
+import { fetchAllZapsAction } from './zap';
+import { isInitialLoader } from '../reducers/data-loader';
+import { VaultEntity } from '../entities/vault';
+import { selectVaultById } from '../selectors/vaults';
+import { initiateDepositForm } from './deposit';
+import { initiateWithdrawForm } from './withdraw';
+import { BoostEntity } from '../entities/boost';
+import { selectBoostById } from '../selectors/boosts';
+import { selectShouldInitAddressBook } from '../selectors/data-loader';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
-interface CapturedFulfilledActions {
+export interface CapturedFulfilledActions {
   contractData: CapturedFulfilledActionGetter;
   user: {
     balance: CapturedFulfilledActionGetter;
-    allowance: CapturedFulfilledActionGetter;
+    //allowance: CapturedFulfilledActionGetter;
   } | null;
 }
 
 let pollStopFns: PollStop[] = [];
 
-// todo: put this in a config
-const chains = [
-  'arbitrum',
-  'avax',
-  'celo',
-  'cronos',
-  'fantom',
-  'fuse',
-  'harmony',
-  'heco',
-  'metis',
-  'moonriver',
-  'polygon',
-  // fetch BSC last, his multicall split in multiple calls
-  // and that takes up all 6 simulatneous network calls
-  // putting it last allow all other data to arrive faster
-  'bsc',
-].map(id => ({ id }));
+export const chains = chainsConfig.map(id => ({ id }));
 
 /**
  * Fetch all necessary information for the home page
- * TODO: we need to inject the store in parameters somehow and not get if from a global import
  */
-export async function initHomeDataV4() {
-  if (featureFlag_scenarioTimings()) {
-    console.time('From scenario start');
-    console.timeLog('From scenario start');
-  }
-
+export async function initHomeDataV4(store: BeefyStore) {
   const captureFulfill = createFulfilledActionCapturer(store);
 
   // start fetching chain config
   const chainListPromise = store.dispatch(fetchChainConfigs());
 
-  // create the wallet instance as soon as we get the chain list
-  setTimeout(async () => {
-    await chainListPromise;
-    if (featureFlag_scenarioTimings()) {
-      console.timeLog('From scenario start');
-      console.log('Chain Config Loaded');
-    }
-
-    const state = store.getState();
-    const chains = selectAllChains(state);
-    // instanciate and do the proper piping between both worlds
-    const walletCo = getWalletConnectInstance({
-      chains,
-      onConnect: (chainId, address) => store.dispatch(userDidConnect({ chainId, address })),
-      onAccountChanged: address => store.dispatch(accountHasChanged({ address })),
-      onChainChanged: chainId => store.dispatch(chainHasChanged({ chainId })),
-      onUnsupportedChainSelected: () => store.dispatch(chainHasChangedToUnsupported()),
-      onWalletDisconnected: () => store.dispatch(walletHasDisconnected()),
-    });
-
-    // todo: take it from local storage
-    const defaultChainId = 'bsc';
-    return walletCo.askUserToConnectIfNeeded(defaultChainId);
-  });
-
   // we fetch the configuration for all chain
-  const boostsAndVaults = Promise.all([
-    store.dispatch(fetchAllBoosts()),
-    store.dispatch(fetchAllVaults()),
-  ]);
+  const boostListPromise = store.dispatch(fetchAllBoosts());
+  const vaultListFulfill = captureFulfill(fetchAllVaults({}));
 
   // we can start fetching prices right now and await them later
   const pricesPromise = store.dispatch(fetchAllPricesAction({}));
-  // we can start fetching apy, it will arrive when it wants, nothing depends on it
-  store.dispatch(fetchApyAction({}));
+
+  // pre-load the addressbook
+  const addressBookPromise = store.dispatch(fetchAllAddressBookAction({}));
+
+  // create the wallet instance as soon as we get the chain list
+  setTimeout(async () => {
+    // we can start fetching apy, it will arrive when it wants, nothing depends on it
+    store.dispatch(fetchApyAction({}));
+
+    // we start fetching buyback
+    store.dispatch(fetchBeefyBuybackAction({}));
+
+    store.dispatch(fetchFeaturedVaults());
+
+    store.dispatch(fetchPartnersConfig());
+  });
+
+  // create the wallet instance as soon as we get the chain list
+  setTimeout(async () => {
+    await chainListPromise;
+    initWallet(store);
+  });
 
   // we need config data (for contract addresses) to start querying the rest
-  await boostsAndVaults;
-
-  if (featureFlag_scenarioTimings()) {
-    console.timeLog('From scenario start');
-    console.log(`Vaults and boost list for all chains OK`);
-  }
+  await chainListPromise;
+  // we need the chain list to handle the vault list
+  store.dispatch((await vaultListFulfill)());
+  await boostListPromise;
 
   // then, we work by chain
 
@@ -120,20 +91,12 @@ export async function initHomeDataV4() {
     [chainId: ChainEntity['id']]: CapturedFulfilledActions;
   } = {};
   for (const chain of chains) {
-    // if user is connected, start fetching balances and allowances
-    let userFullfills: CapturedFulfilledActions['user'] = null;
-    if (selectIsWalletConnected(store.getState())) {
-      userFullfills = fetchCaptureUserData(chain.id);
-    }
-
-    // startfetching all contract-related data at the same time
     fulfillsByNet[chain.id] = {
       contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
-      user: userFullfills,
+      user: null,
     };
-    if (featureFlag_scenarioTimings()) {
-      console.timeLog('From scenario start');
-      console.log(`Vaults and boost contract for chain ${chain.id} FETCHING`);
+    if (selectIsWalletConnected(store.getState())) {
+      fulfillsByNet[chain.id].user = fetchCaptureUserData(store, chain.id);
     }
   }
 
@@ -143,33 +106,25 @@ export async function initHomeDataV4() {
   await pricesPromise;
 
   for (const chain of chains) {
-    setTimeout(() =>
-      (async () => {
-        const chainFfs = fulfillsByNet[chain.id];
-        // dispatch fulfills in order
-        await store.dispatch((await chainFfs.contractData)());
-
-        if (featureFlag_scenarioTimings()) {
-          console.timeLog('From scenario start');
-          console.log(`Vaults and boost contract for chain ${chain.id} OK`);
-        }
-
-        // user ffs can be dispatched in any order after that
-        if (chainFfs.user !== null) {
-          dispatchUserFfs(chainFfs.user);
-        }
-      })().catch(err => {
-        // as we still dispatch network errors, for reducers to handle
-        // there is not much to do here, this is just to avoid
-        // "unhandled promise exception" messages in the console
-        console.warn(err);
-      })
-    );
+    // run in an async block se we don't wait for a slow chain
+    (async () => {
+      const chainFfs = fulfillsByNet[chain.id];
+      await store.dispatch((await chainFfs.contractData)());
+      if (chainFfs.user !== null) {
+        dispatchUserFfs(store, chainFfs.user);
+      }
+    })().catch(err => {
+      // as we still dispatch network errors, for reducers to handle
+      // there is not much to do here, this is just to avoid
+      // "unhandled promise exception" messages in the console
+      console.warn(err);
+    });
   }
 
+  await addressBookPromise;
   // ok all data is fetched, now we start the poll functions
 
-  if (!featureFlag_dataPolling()) {
+  if (featureFlag_noDataPolling()) {
     console.debug('Polling disabled');
     return;
   }
@@ -180,8 +135,14 @@ export async function initHomeDataV4() {
   }
   pollStopFns = [];
 
+  // recompute boost activity status
+  let pollStop = poll(async () => {
+    return store.dispatch(recomputeBoostStatus());
+  }, 5 * 1000 /* every 5s */);
+  pollStopFns.push(pollStop);
+
   // now set regular calls to update prices
-  const pollStop = poll(async () => {
+  pollStop = poll(async () => {
     return Promise.all([
       store.dispatch(fetchAllPricesAction({})),
       store.dispatch(fetchApyAction({})),
@@ -206,60 +167,109 @@ export async function initHomeDataV4() {
   // now set regular calls to update user data
   for (const chain of chains) {
     const pollStop = poll(async () => {
+      if (!selectIsWalletConnected(store.getState())) {
+        return;
+      }
       // trigger all calls at the same time
-      const fulfills = fetchCaptureUserData(chain.id);
+      const fulfills = fetchCaptureUserData(store, chain.id);
 
       // dispatch fulfills in order
-      await dispatchUserFfs(fulfills);
+      await dispatchUserFfs(store, fulfills);
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
+
+  preLoadPages();
 }
 
-// when some wallet actions are triggered (like connection or account changed)
-// fetch balance and allowance again
-export function walletActionsMiddleware(store) {
-  return next => async (action: { type: string; payload: { chainId?: ChainEntity['id'] } }) => {
-    await next(action);
-
-    let userFfsByChain: { [chainId: ChainEntity['id']]: CapturedFulfilledActions['user'] } | null =
-      null;
-    switch (action.type) {
-      case userDidConnect.type:
-      case accountHasChanged.type:
-        userFfsByChain = {};
-        for (const chain of chains) {
-          userFfsByChain[chain.id] = fetchCaptureUserData(chain.id);
-        }
-        break;
-    }
-
-    if (userFfsByChain !== null) {
-      for (const chain of chains) {
-        dispatchUserFfs(userFfsByChain[chain.id]);
-      }
-    }
-  };
-}
-
-function fetchCaptureUserData(chainId: ChainEntity['id']): CapturedFulfilledActions['user'] {
+export function fetchCaptureUserData(
+  store: BeefyStore,
+  chainId: ChainEntity['id']
+): CapturedFulfilledActions['user'] {
   const captureFulfill = createFulfilledActionCapturer(store);
-  if (featureFlag_scenarioTimings()) {
-    console.timeLog('From scenario start');
-    console.log(`balance and allowance for chain ${chainId} FETCHING`);
-  }
   return {
     balance: captureFulfill(fetchAllBalanceAction({ chainId })),
     // TODO: do we really need to fetch allowances right now?
-    allowance: captureFulfill(fetchAllAllowanceAction({ chainId })),
+    //allowance: captureFulfill(fetchAllAllowanceAction({ chainId })),
   };
 }
 
-async function dispatchUserFfs(userFfs: CapturedFulfilledActions['user']) {
+export async function dispatchUserFfs(
+  store: BeefyStore,
+  userFfs: CapturedFulfilledActions['user']
+) {
   await store.dispatch((await userFfs.balance)());
-  await store.dispatch((await userFfs.allowance)());
-  if (featureFlag_scenarioTimings()) {
-    console.timeLog('From scenario start');
-    console.log(`balance and allowance for FETCHED`);
+  //await store.dispatch((await userFfs.allowance)());
+}
+
+/**
+ * we want to preload the vault page to make it fast on the first click
+ */
+function preLoadPages() {
+  window.requestIdleCallback(async () => {
+    console.debug('pre-loading vault page...');
+    await import('../../../features/vault');
+    console.debug('pre-loading vault page done');
+  });
+}
+
+export async function initDepositForm(
+  store: BeefyStore,
+  vaultId: VaultEntity['id'],
+  walletAddress: string | null
+) {
+  const vault = selectVaultById(store.getState(), vaultId);
+
+  // we need the addressbook
+  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
+    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
   }
+
+  // we need zaps
+  const zapsLoader = store.getState().ui.dataLoader.global.zaps;
+  if (zapsLoader && isInitialLoader(zapsLoader)) {
+    await store.dispatch(fetchAllZapsAction({}));
+  }
+
+  // then we can init the form
+  store.dispatch(initiateDepositForm({ vaultId, walletAddress }));
+}
+
+export async function initWithdrawForm(
+  store: BeefyStore,
+  vaultId: VaultEntity['id'],
+  walletAddress: string | null
+) {
+  const vault = selectVaultById(store.getState(), vaultId);
+
+  // we need the addressbook
+  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
+    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
+  }
+
+  // we need zaps
+  const zapsLoader = store.getState().ui.dataLoader.global.zaps;
+  if (zapsLoader && isInitialLoader(zapsLoader)) {
+    await store.dispatch(fetchAllZapsAction({}));
+  }
+
+  // then we can init the form
+  store.dispatch(initiateWithdrawForm({ vaultId, walletAddress }));
+}
+
+export async function initBoostForm(
+  store: BeefyStore,
+  boostId: BoostEntity['id'],
+  mode: 'stake' | 'unstake',
+  walletAddress: string | null
+) {
+  const vault = selectBoostById(store.getState(), boostId);
+
+  // we need the addressbook
+  if (selectShouldInitAddressBook(store.getState(), vault.chainId)) {
+    await store.dispatch(fetchAddressBookAction({ chainId: vault.chainId }));
+  }
+
+  // then we can init the form
+  store.dispatch(initiateBoostForm({ boostId, mode, walletAddress }));
 }

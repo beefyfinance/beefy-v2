@@ -9,9 +9,9 @@ export interface PartnerEntity {
   text: string;
   website: string;
   social: {
-    telegram: string | null;
-    twitter: string | null;
-    discord: string | null;
+    telegram?: string | null;
+    twitter?: string | null;
+    discord?: string | null;
   };
-  logoNight: string | null;
+  logoNight?: string | null;
 }

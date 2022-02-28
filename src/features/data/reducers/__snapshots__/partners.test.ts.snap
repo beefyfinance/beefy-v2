@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Partners slice tests should update state on fulfilled boosts list 1`] = `
+Object {
+  "byId": Object {
+    "https://pera.finance/": Object {
+      "background": "stake/pera/bg.png",
+      "id": "https://pera.finance/",
+      "logo": "stake/pera/logo.png",
+      "social": Object {
+        "telegram": "https://t.me/perafinance",
+        "twitter": "https://twitter.com/perafinance",
+      },
+      "text": "Pera Finance is a decentralized trading competition platform with multi-layered yield farming opportunities. Traders, liquidity providers and holders yield farm together through the DeFi's first decentralized trading competition. Every on-chain PERA transaction (transfer, trade, or liquidity addition/ removal) generates a 2 % transaction fee.",
+      "website": "https://pera.finance/",
+    },
+  },
+  "insurace": Object {
+    "byChainId": Object {},
+  },
+  "lacucina": Object {
+    "byVaultId": Object {},
+  },
+  "moonpot": Object {
+    "byVaultId": Object {},
+  },
+  "qidao": Object {
+    "byVaultId": Object {},
+  },
+}
+`;

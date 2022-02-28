@@ -1,70 +1,118 @@
-import { createSelector } from '@reduxjs/toolkit';
-import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BIG_ONE } from '../../../helpers/format';
+import { bluechipTokens } from '../../../helpers/utils';
+import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
-import { TokenEntity } from '../entities/token';
+import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
+import { selectChainById } from './chains';
 
-export const selectAllTokenByChain = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.tokens.byChainId,
-  // get the user params
-  (_: BeefyState, chainId: ChainEntity['id']) => chainId,
-  // last function receives previous function outputs as parameters
-  (byChainId, chainId) => {
-    if (byChainId[chainId] === undefined) {
-      throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
-    }
-    return byChainId[chainId].allIds;
+export const selectIsTokenLoaded = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenId: TokenEntity['id']
+) => {
+  const byChainId = state.entities.tokens.byChainId;
+  if (byChainId[chainId] === undefined) {
+    throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
   }
-);
+  return byChainId[chainId].byId[tokenId] !== undefined;
+};
 
-export const selectTokenById = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.tokens.byChainId,
-  // get the user params
-  (_: BeefyState, chainId: ChainEntity['id'], tokenId: TokenEntity['id']) => ({ chainId, tokenId }),
-  // last function receives previous function outputs as parameters
-  (byChainId, { chainId, tokenId }) => {
-    if (byChainId[chainId] === undefined) {
-      throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
-    }
-    if (byChainId[chainId].byId[tokenId] === undefined) {
-      throw new Error(`selectTokenById: Unknown token id ${tokenId} for chain ${chainId}`);
-    }
-    return byChainId[chainId].byId[tokenId];
+export const selectTokenById = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenId: TokenEntity['id']
+) => {
+  const byChainId = state.entities.tokens.byChainId;
+  if (byChainId[chainId] === undefined) {
+    throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
   }
-);
-
-/**
- * These are tokens we are not expecting to find in the /lp or /prices API
- * We don't want to fail if we query price for those tokens
- */
-const deprecatedTokenIds = [
-  'blizzard-blzd-bnb',
-  'blizzard-blzd-busd',
-  'BLZD',
-  'nyanswop-nyas-usdt',
-  'boo-wftm-dola',
-];
-
-export const selectTokenPriceByTokenId = createSelector(
-  // get a tiny bit of the data
-  (state: BeefyState) => state.entities.tokens.prices.byTokenId,
-  // get the user passed ID
-  (_: BeefyState, tokenId: TokenEntity['id']) => tokenId,
-  // last function receives previous function outputs as parameters
-  (pricesByTokenId, tokenId) => {
-    if (pricesByTokenId[tokenId] === undefined) {
-      if (deprecatedTokenIds.includes(tokenId)) {
-        // if price is not in the api, it's rug and value is 0
-        console.debug(
-          `selectTokenPriceByTokenId: querying price for a deprecated token: ${tokenId}`
-        );
-        return new BigNumber(0);
-      } else {
-        throw new Error(`selectTokenPriceByTokenId: Could not find price for token id ${tokenId}`);
-      }
-    }
-    return pricesByTokenId[tokenId];
+  if (byChainId[chainId].byId[tokenId] === undefined) {
+    // fallback to addressbook token
+    throw new Error(
+      `selectTokenById: Unknown token id ${tokenId} for chain ${chainId}, maybe you need to load the addressbook`
+    );
   }
-);
+  return byChainId[chainId].byId[tokenId];
+};
+
+export const selectErc20TokenById = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenId: TokenEntity['id'],
+  mapNativeToWnative: boolean = false
+) => {
+  const token = selectTokenById(state, chainId, tokenId);
+  // type narrowing
+  if (!isTokenErc20(token)) {
+    if (mapNativeToWnative) {
+      return selectChainWrappedNativeToken(state, chainId);
+    } else {
+      throw new Error(
+        `selectErc20TokenById: Input token ${tokenId} is native. set mapNativeToWnative = true to automatically fetch wrapped token if needed`
+      );
+    }
+  }
+  return token;
+};
+
+export const selectChainNativeToken = (state: BeefyState, chainId: ChainEntity['id']) => {
+  const byChainId = state.entities.tokens.byChainId;
+  if (byChainId[chainId] === undefined) {
+    throw new Error(`selectChainNativeToken: Unknown chain id ${chainId}`);
+  }
+  if (!byChainId[chainId].native) {
+    // fallback to addressbook token
+    throw new Error(
+      `selectChainNativeToken: Empty native token for chain id ${chainId}, maybe you need to load the addressbook`
+    );
+  }
+  const token = selectTokenById(state, chainId, byChainId[chainId].native);
+  // type narrowing
+  if (!isTokenNative(token)) {
+    throw new Error(
+      `selectChainNativeToken: Fetch a native token when getting native of chain ${chainId}`
+    );
+  }
+  return token;
+};
+
+export const selectChainWrappedNativeToken = (state: BeefyState, chainId: ChainEntity['id']) => {
+  const byChainId = state.entities.tokens.byChainId;
+  if (byChainId[chainId] === undefined) {
+    throw new Error(`selectChainWrappedNativeToken: Unknown chain id ${chainId}`);
+  }
+  if (!byChainId[chainId].wnative) {
+    // fallback to addressbook token
+    throw new Error(
+      `selectChainWrappedNativeToken: Empty wnative token for chain id ${chainId}, maybe you need to load the addressbook`
+    );
+  }
+  const token = selectTokenById(state, chainId, byChainId[chainId].wnative);
+  // type narrowing
+  if (!isTokenErc20(token)) {
+    throw new Error(
+      `selectChainWrappedNativeToken: Fetch a wnative token when getting native of chain ${chainId}`
+    );
+  }
+  return token;
+};
+
+export const selectIsTokenStable = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenId: TokenEntity['id']
+) => {
+  const chain = selectChainById(state, chainId);
+  return chain.stableCoins.includes(tokenId);
+};
+
+export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
+  return ['BIFI', 'POTS'].includes(tokenId);
+};
+
+export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id']) => {
+  return bluechipTokens.includes(tokenId);
+};
+
+export const selectTokenPriceByTokenId = (state: BeefyState, tokenId: TokenEntity['id']) =>
+  state.entities.tokens.prices.byTokenId[tokenId] || BIG_ONE;

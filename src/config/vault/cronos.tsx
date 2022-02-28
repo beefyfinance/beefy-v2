@@ -9,7 +9,8 @@ export const pools = [
     tokenDecimals: 18,
     tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
     earnedToken: "WCRO",
-    earnedTokenAddress: "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
+    earnedTokenAddress: "0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23",
+    earnedTokenDecimals: 18,
     earnContractAddress: "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
     poolAddress: "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
     pricePerFullShare: 1,
@@ -1382,6 +1383,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "crona-busd-bnb",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "CronaSwap",
     assets: [
@@ -1399,8 +1401,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     addLiquidityUrl: "https://app.cronaswap.org/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
-    network: "cronos",
     createdAt: 1638061783,
+    network: "cronos",
     retiredReason: "tvl"
   },
   {
@@ -1419,6 +1421,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "crona-wbtc-cro",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "CronaSwap",
     assets: [
@@ -1436,8 +1439,8 @@ export const pools = [
     stratType: "StratLP",
     buyTokenUrl: "https://app.cronaswap.org/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     addLiquidityUrl: "https://app.cronaswap.org/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
-    network: "cronos",
     createdAt: 1637150470,
+    network: "cronos",
     retiredReason: "tvl"
   }
 ];

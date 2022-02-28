@@ -1,34 +1,45 @@
-import * as React from 'react';
 import { Box, Typography, Button, makeStyles } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { styles } from './styles';
-
-import { reduxActions } from '../../features/redux/actions';
+import { askForNetworkChange } from '../../features/data/actions/wallet';
+import { useCallback } from 'react';
+import { selectCurrentChainId } from '../../features/data/selectors/wallet';
+import { selectChainById } from '../../features/data/selectors/chains';
+import { ChainEntity } from '../../features/data/entities/chain';
+import { BeefyState } from '../../redux-types';
+import { selectIsConfigAvailable } from '../../features/data/selectors/data-loader';
 
 const useStyles = makeStyles(styles as any);
-export const UnsupportedNetwork = () => {
+
+export const UnsupportedNetwork = connect((state: BeefyState) => {
+  const defaultChainId = selectCurrentChainId(state) || 'bsc';
+  const configLoaded = selectIsConfigAvailable(state);
+  const chain = configLoaded ? selectChainById(state, defaultChainId) : null;
+  return { chain };
+})(({ chain }: { chain: ChainEntity | null }) => {
   const dispatch = useDispatch();
-  const walletReducer = useSelector((state: any) => state.walletReducer);
 
   const classes = useStyles();
-  const handleWalletConnect = () => {
-    if (!walletReducer.address) {
-      dispatch(reduxActions.wallet.connect());
-    } else {
-      dispatch(reduxActions.wallet.disconnect());
-    }
-  };
+  const updateNetwork = useCallback(
+    () => dispatch(askForNetworkChange({ chainId: chain.id })),
+    [chain, dispatch]
+  );
+
+  // still loading chain config
+  if (!chain) {
+    return <></>;
+  }
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Box mr={4}>
-        <Typography {...({color:"red"} as any)}>We do not support this network.</Typography>
+        <Typography {...({ color: 'red' } as any)}>We do not support this network.</Typography>
       </Box>
       <Box>
-        <Button className={classes.btn} onClick={handleWalletConnect} size="small">
-          Switch to BSC
+        <Button className={classes.btn} onClick={updateNetwork} size="small">
+          Switch to {chain.name}
         </Button>
       </Box>
     </Box>
   );
-}
+});

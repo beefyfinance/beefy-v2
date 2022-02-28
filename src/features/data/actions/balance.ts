@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { getBalanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
+import { selectAllTokenWhereUserCouldHaveBalance } from '../selectors/balance';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectAllTokenByChain, selectTokenById } from '../selectors/tokens';
+import { selectTokenById } from '../selectors/tokens';
 import { selectAllGovVaultsByChainId } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
@@ -15,6 +16,7 @@ interface ActionParams {
 
 export interface FetchAllBalanceFulfilledPayload {
   chainId: ChainEntity['id'];
+  walletAddress: string;
   data: FetchAllBalancesResult;
   // reducers need the state (balance)
   state: BeefyState;
@@ -29,9 +31,9 @@ export const fetchAllBalanceAction = createAsyncThunk<
 
   const walletAddress = selectWalletAddress(state);
   const chain = selectChainById(state, chainId);
-  const api = getBalanceApi(chain);
+  const api = await getBalanceApi(chain);
 
-  const tokens = selectAllTokenByChain(state, chainId).map(tokenId =>
+  const tokens = selectAllTokenWhereUserCouldHaveBalance(state, chainId).map(tokenId =>
     selectTokenById(state, chain.id, tokenId)
   );
   // maybe have a way to retrieve those easily
@@ -40,9 +42,10 @@ export const fetchAllBalanceAction = createAsyncThunk<
   );
   const govVaults = selectAllGovVaultsByChainId(state, chain.id);
 
-  const data = await api.fetchAllBalances(tokens, govVaults, boosts, walletAddress);
+  const data = await api.fetchAllBalances(getState(), tokens, govVaults, boosts, walletAddress);
   return {
     chainId,
+    walletAddress,
     data,
     state: getState(),
   };

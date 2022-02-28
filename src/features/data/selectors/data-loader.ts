@@ -1,23 +1,30 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BeefyState } from '../../redux/reducers/storev2';
+import { BeefyState } from '../../../redux-types';
+import { ChainEntity } from '../entities/chain';
+import { VaultEntity } from '../entities/vault';
+import { isInitialLoader, isPending } from '../reducers/data-loader';
+import { selectVaultById } from './vaults';
 
-export const selectIsPriceAvailable = createSelector(
-  [(state: BeefyState) => state.ui.dataLoader.global.prices],
-  (prices): boolean => {
-    return prices.alreadyLoadedOnce;
-  }
-);
+const selectIsPriceAvailable = (state: BeefyState) =>
+  state.ui.dataLoader.global.prices.alreadyLoadedOnce;
 
-export const selectIsConfigAvailable = createSelector(
-  [(state: BeefyState) => state.ui.dataLoader.global],
-  (glob): boolean => {
-    return (
-      glob.chainConfig.alreadyLoadedOnce &&
-      glob.vaults.alreadyLoadedOnce &&
-      glob.boosts.alreadyLoadedOnce
-    );
+export const selectIsConfigAvailable = (state: BeefyState) =>
+  state.ui.dataLoader.global.chainConfig.alreadyLoadedOnce &&
+  state.ui.dataLoader.global.vaults.alreadyLoadedOnce &&
+  state.ui.dataLoader.global.boosts.alreadyLoadedOnce;
+
+export const selectVaultApyAvailable = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  if (!selectIsConfigAvailable(state)) {
+    return false;
   }
-);
+  const vault = selectVaultById(state, vaultId);
+  const chainId = vault.chainId;
+
+  return (
+    state.ui.dataLoader.byChainId[chainId]?.contractData.alreadyLoadedOnce &&
+    state.ui.dataLoader.global.apy.alreadyLoadedOnce
+  );
+};
 
 export const selectIsUserBalanceAvailable = createSelector(
   [
@@ -43,3 +50,18 @@ export const selectIsUserBalanceAvailable = createSelector(
     return false;
   }
 );
+
+// vault list is available as soon as we load the config
+export const selectIsVaultListAvailable = selectIsConfigAvailable;
+
+export const selectIsWalletPending = (state: BeefyState) =>
+  isPending(state.ui.dataLoader.global.wallet);
+
+export const selectShouldInitAddressBook = (state: BeefyState, chainId: ChainEntity['id']) =>
+  isInitialLoader(state.ui.dataLoader.global.addressBook) ||
+  !state.ui.dataLoader.byChainId[chainId] ||
+  isInitialLoader(state.ui.dataLoader.byChainId[chainId].addressBook);
+
+export const selectIsAddressBookLoaded = (state: BeefyState, chainId: ChainEntity['id']) =>
+  state.ui.dataLoader.global.addressBook.alreadyLoadedOnce ||
+  state.ui.dataLoader.byChainId[chainId]?.addressBook.alreadyLoadedOnce;

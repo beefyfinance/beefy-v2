@@ -11,6 +11,13 @@ export const styles = theme => ({
       textAlign: 'center',
     },
     textDecoration: 'line-through',
+    '&.large': {
+      color: '#8A8EA8',
+      fontSize: '14px',
+      lineHeight: '24px',
+      letterSpacing: '0.2px',
+      textDecorationLine: 'line-through',
+    },
   },
   value: {
     fontWeight: 600,
@@ -25,6 +32,11 @@ export const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       fontSize: '18px',
       textAlign: 'left',
+    },
+    '&.large': {
+      fontSize: '21px',
+      lineHeight: '24px',
+      color: theme.palette.text.secondary,
     },
   },
 });

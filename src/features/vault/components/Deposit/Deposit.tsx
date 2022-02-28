@@ -1,309 +1,188 @@
 import {
   Box,
   Button,
+  FormControlLabel,
   InputBase,
   makeStyles,
   Paper,
-  Typography,
-  FormControlLabel,
-  RadioGroup,
   Radio,
+  RadioGroup,
+  Typography,
 } from '@material-ui/core';
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { styles } from '../styles';
-import BigNumber from 'bignumber.js';
-import { Loader } from '../../../../components/loader';
-import { BIG_ZERO, byDecimals, convertAmountToRawNumber } from '../../../../helpers/format';
-import { isEmpty } from '../../../../helpers/utils';
-import { reduxActions } from '../../../redux/actions';
-import { Steps } from '../../../../components/Steps';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
+import { useStepper } from '../../../../components/Steps/hooks';
+import { Step } from '../../../../components/Steps/types';
+import { BeefyState } from '../../../../redux-types';
+import { initDepositForm } from '../../../data/actions/scenarios';
+import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
+import { walletActions } from '../../../data/actions/wallet-actions';
+import { isTokenNative, TokenEntity } from '../../../data/entities/token';
+import { isGovVault, isStandardVault, VaultEntity } from '../../../data/entities/vault';
+import { isFulfilled } from '../../../data/reducers/data-loader';
+import { depositActions } from '../../../data/reducers/wallet/deposit';
+import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
+import { selectChainById } from '../../../data/selectors/chains';
+import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
+import { selectChainNativeToken, selectTokenById } from '../../../data/selectors/tokens';
+import { selectVaultById } from '../../../data/selectors/vaults';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+  selectWalletAddress,
+} from '../../../data/selectors/wallet';
+import { selectIsApprovalNeededForDeposit } from '../../../data/selectors/wallet-actions';
 import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
-import { switchNetwork } from '../../../../helpers/switchNetwork';
-import { DepositProps } from './DepositProps';
-import { config } from '../../../../config/config';
+import { styles } from '../styles';
+import { TokenWithBalance } from '../TokenWithBalance';
+import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
 
 const useStyles = makeStyles(styles as any);
-export const Deposit: React.FC<DepositProps> = ({
-  formData,
-  setFormData,
-  item,
-  handleWalletConnect,
-  updateItemData,
-  resetFormData,
-  isBoosted,
-  boostedData,
-  vaultBoosts,
-}) => {
+
+export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { wallet, balance, tokens } = useSelector((state: any) => ({
-    wallet: state.walletReducer,
-    balance: state.balanceReducer,
-    tokens: state.balanceReducer.tokens[item.network],
-  }));
-  const t = useTranslation().t;
+  const { t } = useTranslation();
+  const store = useStore();
+  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletOnVaultChain = useSelector(
+    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  );
 
-  const [state, setState] = React.useState({
-    balance: BIG_ZERO,
-    allowance: BIG_ZERO,
-  });
-  const [steps, setSteps] = React.useState({
-    modal: false,
-    currentStep: -1,
-    items: [],
-    finished: false,
-  });
-  const [isLoading, setIsLoading] = React.useState(true);
+  const walletAddress = useSelector((state: BeefyState) =>
+    isWalletConnected ? selectWalletAddress(state) : null
+  );
 
-  const handleInput = val => {
-    const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
+  // initialize form data
+  React.useEffect(() => {
+    // init form on mount
+    initDepositForm(store, vaultId, walletAddress);
+    // reset form on unmount
+    return () => {
+      store.dispatch(depositActions.resetForm());
+    };
+  }, [store, vaultId, walletAddress]);
 
-    let max = false;
-    let value = new BigNumber(input).decimalPlaces(
-      tokens[formData.deposit.token].decimals,
-      BigNumber.ROUND_DOWN
-    );
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+  const oracleToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, vault.chainId, vault.oracleId)
+  );
+  const formState = useSelector((state: BeefyState) => state.ui.deposit);
+  const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
+  const displayBoostWidget = useSelector((state: BeefyState) =>
+    selectShouldDisplayBoostWidget(state, vaultId)
+  );
 
-    if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
-      value = BIG_ZERO;
-    }
+  // if it's a zap, we spend with the zap contract
+  const spenderAddress = formState.isZap
+    ? formState.zapOptions?.address || null
+    : // if it's a classic vault, the vault contract address is the spender
+    // which is also the earned token
+    isStandardVault(vault)
+    ? vault.contractAddress
+    : vault.earnContractAddress;
 
-    if (value.isGreaterThanOrEqualTo(state.balance)) {
-      value = state.balance;
-      max = true;
-    }
+  const needsApproval = useSelector((state: BeefyState) =>
+    formState.selectedToken && formState.selectedToken.id !== native.id && spenderAddress
+      ? selectIsApprovalNeededForDeposit(state, spenderAddress)
+      : false
+  );
 
-    const formattedInput = (() => {
-      if (value.isEqualTo(input)) return input;
-      if (input === '') return '';
-      if (input === '.') return `0.`;
-      return (value as any).significant(6);
-    })();
+  const formDataLoaded = useSelector(
+    (state: BeefyState) =>
+      selectIsAddressBookLoaded(state, vault.chainId) &&
+      isFulfilled(state.ui.dataLoader.global.depositForm)
+  );
+  const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
 
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: formattedInput,
-        amount: value,
-        max: max,
-      },
-    });
+  const [startStepper, isStepping, Stepper] = useStepper(vaultId);
+
+  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
+
+  const handleAsset = (tokenId: TokenEntity['id']) => {
+    dispatch(depositActions.setAsset({ tokenId, state: store.getState() }));
   };
 
-  const handleAsset = tokenSymbol => {
-    setFormData({
-      ...formData,
-      deposit: {
-        ...formData.deposit,
-        input: '',
-        amount: BIG_ZERO,
-        max: false,
-        token: tokenSymbol,
-        isZap: item.token !== tokenSymbol,
-      },
-    });
+  const handleInput = (amountStr: string) => {
+    dispatch(depositActions.setInput({ amount: amountStr, state: store.getState() }));
   };
 
   const handleMax = () => {
-    if (state.balance > BIG_ZERO) {
-      setFormData({
-        ...formData,
-        deposit: {
-          ...formData.deposit,
-          input: (state.balance as any).significant(6),
-          amount: state.balance,
-          max: true,
-        },
-      });
-    }
+    dispatch(depositActions.setMax({ state: store.getState() }));
   };
 
   const handleDeposit = () => {
-    const steps = [];
-    if (wallet.address) {
-      if (item.network !== wallet.network) {
-        dispatch(reduxActions.wallet.setNetwork(item.network));
-        return false;
-      }
+    const steps: Step[] = [];
+    if (!isWalletConnected) {
+      return dispatch(askForWalletConnection());
+    }
+    if (!isWalletOnVaultChain) {
+      return dispatch(askForNetworkChange({ chainId: vault.chainId }));
+    }
 
-      const amount = convertAmountToRawNumber(
-        formData.deposit.amount,
-        tokens[formData.deposit.token].decimals
-      );
+    if (!isTokenNative(formState.selectedToken) && needsApproval) {
+      steps.push({
+        step: 'approve',
+        message: t('Vault-ApproveMsg'),
+        action: walletActions.approval(formState.selectedToken, spenderAddress),
+        pending: false,
+      });
+    }
 
-      const isNative =
-        formData.deposit.token === config[item.network].walletSettings.nativeCurrency.symbol;
-
-      if (!isNative && state.allowance.isLessThan(amount)) {
+    if (formState.isZap) {
+      steps.push({
+        step: 'deposit',
+        message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+        action: walletActions.beefIn(
+          vault,
+          formState.amount,
+          formState.zapOptions,
+          formState.zapEstimate,
+          formState.slippageTolerance
+        ),
+        pending: false,
+      });
+    } else {
+      if (isGovVault(vault)) {
         steps.push({
-          step: 'approve',
-          message: t('Vault-ApproveMsg'),
-          action: () =>
-            dispatch(
-              reduxActions.wallet.approval(
-                item.network,
-                tokens[formData.deposit.token].address,
-                formData.deposit.isZap ? formData.zap.address : item.earnContractAddress
-              )
-            ),
+          step: 'deposit',
+          message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
+          action: walletActions.stakeGovVault(vault, formState.amount),
           pending: false,
         });
-      }
-
-      if (true === formData.deposit.isZap) {
-        const swapAmountOutMin = convertAmountToRawNumber(
-          formData.deposit.zapEstimate.amountOut.times(1 - formData.slippageTolerance),
-          formData.deposit.zapEstimate.tokenOut.decimals
-        );
+      } else {
         steps.push({
           step: 'deposit',
           message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-          action: () =>
-            dispatch(
-              reduxActions.wallet.beefIn(
-                item.network,
-                item.earnContractAddress,
-                isNative,
-                tokens[formData.deposit.token].address,
-                amount,
-                formData.zap.address,
-                swapAmountOutMin
-              )
-            ),
-          token: tokens[formData.deposit.token],
+          action: walletActions.deposit(vault, formState.amount, formState.max),
           pending: false,
-          amount,
         });
       }
+    }
 
-      if (false === formData.deposit.isZap) {
-        if (item.isGovVault) {
-          steps.push({
-            step: 'deposit',
-            message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
-            action: () =>
-              dispatch(
-                reduxActions.wallet.stake(
-                  item.network,
-                  item.earnContractAddress,
-                  convertAmountToRawNumber(formData.deposit.amount, item.tokenDecimals)
-                )
-              ),
-            token: tokens[formData.deposit.token],
-            pending: false,
-            amount: amount,
-          });
-        } else if (isNative) {
-          steps.push({
-            step: 'deposit',
-            message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-            action: () =>
-              dispatch(
-                reduxActions.wallet.depositNative(item.network, item.earnContractAddress, amount)
-              ),
-            token: tokens[formData.deposit.token],
-            pending: false,
-            amount: amount,
-          });
-        } else {
-          steps.push({
-            step: 'deposit',
-            message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-            action: () =>
-              dispatch(
-                reduxActions.wallet.deposit(
-                  item.network,
-                  item.earnContractAddress,
-                  amount,
-                  formData.deposit.max
-                )
-              ),
-            token: tokens[formData.deposit.token],
-            pending: false,
-            amount: amount,
-          });
-        }
-      }
-
-      setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
-    } //if (wallet.address)
-  }; //const handleDeposit
-
-  const handleClose = () => {
-    updateItemData();
-    resetFormData();
-    setSteps({ modal: false, currentStep: -1, items: [], finished: false });
+    startStepper(steps);
   };
 
-  React.useEffect(() => {
-    let amount = BIG_ZERO;
-    let approved = BIG_ZERO;
-    if (wallet.address && !isEmpty(tokens[formData.deposit.token])) {
-      amount = byDecimals(
-        new BigNumber(tokens[formData.deposit.token].balance),
-        tokens[formData.deposit.token].decimals
-      );
-      if (formData.zap && formData.deposit.token !== item.token) {
-        approved = tokens[formData.deposit.token].allowance[formData.zap.address];
-      } else {
-        approved = tokens[formData.deposit.token].allowance[item.earnContractAddress];
-      }
-    }
-    setState({
-      balance: new BigNumber(amount),
-      allowance: new BigNumber(approved),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wallet.address, item, balance, formData.deposit.token]);
-
-  React.useEffect(() => {
-    setIsLoading(balance.isBalancesLoading);
-  }, [balance.isBalancesLoading]);
-
-  React.useEffect(() => {
-    const index = steps.currentStep;
-    if (!isEmpty(steps.items[index]) && steps.modal) {
-      const items = steps.items;
-      if (!items[index].pending) {
-        items[index].pending = true;
-        items[index].action();
-        setSteps({ ...steps, items: items });
-      } else {
-        if (wallet.action.result === 'success' && !steps.finished) {
-          const nextStep = index + 1;
-          if (!isEmpty(items[nextStep])) {
-            setSteps({ ...steps, currentStep: nextStep });
-          } else {
-            setSteps({ ...steps, finished: true });
-          }
-        }
-      }
-    }
-  }, [steps, wallet.action]);
-
   return (
-    <React.Fragment>
-      {console.log(formData)}
+    <>
       <Box p={3}>
-        {formData.zap && (
+        {formState.zapOptions !== null && (
           <Typography variant="body1" className={classes.zapPromotion}>
             {t('Zap-Promotion', {
               action: 'Deposit',
-              token1: item.assets[0],
-              token2: item.assets[1],
+              token1: vault.assetIds[0],
+              token2: vault.assetIds[1],
             })}
           </Typography>
         )}
 
         <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
         <RadioGroup
-          value={formData.deposit.token}
+          value={formState.selectedToken ? formState.selectedToken.id : ''}
           aria-label="deposit-asset"
           name="deposit-asset"
           onChange={e => handleAsset(e.target.value)}
@@ -311,184 +190,105 @@ export const Deposit: React.FC<DepositProps> = ({
           <div style={{ display: 'flex' }}>
             <FormControlLabel
               className={classes.depositTokenContainer}
-              value={item.token}
-              control={formData.zap ? <Radio /> : <div style={{ width: 12 }} />}
-              label={
-                /*TODO: wrap label content into component */
-                <Box className={classes.balanceContainer} display="flex" alignItems="center">
-                  <Box lineHeight={0}>
-                    <AssetsImage img={item.logo} assets={item.assets} alt={item.name} />
-                  </Box>
-                  <Box flexGrow={1} pl={1} lineHeight={0}>
-                    {isLoading ? (
-                      <Loader message={''} line={true} />
-                    ) : (
-                      <Typography className={classes.assetCount} variant={'body1'}>
-                        {(
-                          byDecimals(tokens[item.token].balance, tokens[item.token].decimals) as any
-                        ).significant(6)}{' '}
-                        {item.token}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              }
+              value={oracleToken.id}
+              control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
+              label={<TokenWithBalance token={oracleToken} vaultId={vaultId} />}
+              onClick={formState.isZap ? undefined : handleMax}
+              disabled={!formReady}
             />
-            <Box>
-              {item.buyTokenUrl && !item.addLiquidityUrl && (
-                <a
-                  href={item.buyTokenUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={classes.btnSecondary}
-                >
-                  <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
-                    {t('Transact-BuyTkn')}
-                  </Button>
-                </a>
-              )}
-              {item.addLiquidityUrl && !item.buyTokenUrl && (
-                <a
-                  href={item.addLiquidityUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={classes.btnSecondary}
-                >
-                  <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
-                    {t('Transact-AddLiquidity')}
-                  </Button>
-                </a>
-              )}
-            </Box>
+            <VaultBuyLinks vaultId={vaultId} />
           </div>
-          {formData.zap?.tokens.map(zapToken => (
+          {formState.zapOptions?.tokens.map(zapToken => (
             <FormControlLabel
+              key={zapToken.id}
               className={classes.depositTokenContainer}
               value={zapToken.symbol}
               control={<Radio />}
-              label={
-                <Box className={classes.balanceContainer} display="flex" alignItems="center">
-                  <Box lineHeight={0}>
-                    <AssetsImage
-                      {...({
-                        assets: [zapToken.symbol],
-                        alt: zapToken.name,
-                      } as any)}
-                    />
-                  </Box>
-                  <Box flexGrow={1} pl={1} lineHeight={0}>
-                    {isLoading ? (
-                      <Loader message={''} line={true} />
-                    ) : (
-                      <Typography className={classes.assetCount} variant={'body1'}>
-                        {(
-                          byDecimals(tokens[zapToken.symbol].balance, zapToken.decimals) as any
-                        ).significant(6)}{' '}
-                        {zapToken.symbol}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              }
+              label={<TokenWithBalance token={zapToken} vaultId={vaultId} />}
+              disabled={!formReady}
             />
           ))}
         </RadioGroup>
-        {item.buyTokenUrl && item.addLiquidityUrl && (
-          <Box className={classes.btnContaniner}>
-            <a
-              href={item.buyTokenUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.btnSecondary}
-            >
-              <Button
-                size="small"
-                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-              >
-                {t('Transact-BuyTkn')}
-              </Button>
-            </a>
-            <a
-              style={{ marginLeft: '12px' }}
-              href={item.addLiquidityUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.btnSecondary}
-            >
-              <Button
-                size="small"
-                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-              >
-                {t('Transact-AddLiquidity')}
-              </Button>
-            </a>
-          </Box>
-        )}
+        <VaultBuyLinks2 vaultId={vaultId} />
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
               <AssetsImage
-                img={formData.deposit.token === item.token ? item.logo : null}
-                assets={
-                  formData.deposit.token === item.token ? item.assets : [formData.deposit.token]
+                img={
+                  formState.selectedToken && formState.selectedToken.id === vault.oracleId
+                    ? vault.logoUri
+                    : null
                 }
-                alt={formData.token}
+                assets={
+                  !formState.selectedToken
+                    ? vault.assetIds
+                    : formState.selectedToken.id === vault.oracleId
+                    ? vault.assetIds
+                    : [formState.selectedToken.id]
+                }
+                alt={formState.selectedToken ? formState.selectedToken.symbol : ''}
               />
             </Box>
             <InputBase
               placeholder="0.00"
-              value={formData.deposit.input}
+              value={formState.formattedInput}
               onChange={e => handleInput(e.target.value)}
+              disabled={!formReady}
             />
-            <Button onClick={handleMax}>{t('Transact-Max')}</Button>
+            <Button onClick={handleMax} disabled={!formReady}>
+              {t('Transact-Max')}
+            </Button>
           </Paper>
         </Box>
         <FeeBreakdown
-          item={item}
-          slippageTolerance={formData.slippageTolerance}
-          zapEstimate={formData.deposit.zapEstimate}
-          isZapSwap={formData.deposit.isZapSwap}
-          isZap={formData.deposit.isZap}
+          vault={vault}
+          slippageTolerance={formState.slippageTolerance}
+          zapEstimate={formState.zapEstimate}
+          isZapSwap={false}
+          isZap={formState.isZap}
           type={'deposit'}
         />
         <Box mt={2}>
-          {item.status !== 'active' ? (
+          {vault.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
               {t('Deposit-Disabled')}
             </Button>
-          ) : wallet.address ? (
-            item.network !== wallet.network ? (
+          ) : isWalletConnected ? (
+            !isWalletOnVaultChain ? (
               <Button
-                onClick={() => switchNetwork(item.network, dispatch)}
+                onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
                 className={classes.btnSubmit}
                 fullWidth={true}
               >
-                {t('Network-Change', { network: item.network.toUpperCase() })}
+                {t('Network-Change', { network: chain.name.toUpperCase() })}
               </Button>
             ) : (
               <Button
                 onClick={handleDeposit}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                disabled={
-                  formData.deposit.amount.isLessThanOrEqualTo(0) ||
-                  (formData.deposit.isZap && formData.deposit.zapEstimate.isLoading)
-                }
+                disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
               >
-                {formData.deposit.max ? t('Deposit-All') : t('Deposit-Verb')}
+                {isZapEstimateLoading
+                  ? t('Zap-Estimating')
+                  : formState.max
+                  ? t('Deposit-All')
+                  : t('Deposit-Verb')}
               </Button>
             )
           ) : (
-            <Button className={classes.btnSubmit} fullWidth={true} onClick={handleWalletConnect}>
+            <Button
+              className={classes.btnSubmit}
+              fullWidth={true}
+              onClick={() => dispatch(askForWalletConnection())}
+            >
               {t('Network-ConnectWallet')}
             </Button>
           )}
         </Box>
       </Box>
-      {!item.isGovVault ? (
-        <BoostWidget boostedData={boostedData} isBoosted={isBoosted} vaultBoosts={vaultBoosts} />
-      ) : null}
-      <Steps item={item} steps={steps} handleClose={handleClose} />
-    </React.Fragment>
-  ); //return
-}; //const Deposit
+      {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
+      <Stepper />
+    </>
+  );
+};

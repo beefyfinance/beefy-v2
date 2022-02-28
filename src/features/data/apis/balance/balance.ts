@@ -9,7 +9,7 @@ import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
-import { isTokenBoost, isTokenErc20, isTokenNative, TokenEntity } from '../../entities/token';
+import { isTokenErc20, isTokenNative, TokenEntity } from '../../entities/token';
 import {
   BoostBalance,
   FetchAllBalancesResult,
@@ -17,6 +17,14 @@ import {
   IBalanceApi,
   TokenBalance,
 } from './balance-types';
+import { BeefyState } from '../../../../redux-types';
+import {
+  selectBoostBalanceTokenEntity,
+  selectBoostRewardsTokenEntity,
+  selectGovVaultBalanceTokenEntity,
+  selectGovVaultRewardsTokenEntity,
+} from '../../selectors/balance';
+import { selectTokenById } from '../../selectors/tokens';
 
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];
@@ -30,6 +38,7 @@ export class BalanceAPI implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: ChainEntity) {}
 
   public async fetchAllBalances(
+    state: BeefyState,
     tokens: TokenEntity[],
     govVaults: VaultGov[],
     boosts: BoostEntity[],
@@ -37,17 +46,52 @@ export class BalanceAPI implements IBalanceApi {
   ): Promise<FetchAllBalancesResult> {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
 
-    const { calls: tokenCalls, formatter: tokensFormatter } = this._getTokensCallsAndFormatter(
-      mc,
-      tokens,
-      walletAddress
-    );
-    const { calls: govVaultCalls, formatter: govVaultFormatter } =
-      this._getGovVaultCallsAndFormatter(govVaults, walletAddress);
-    const { calls: boostsCalls, formatter: boostsFormatter } = this._getBoostCallsAndFormatter(
-      boosts,
-      walletAddress
-    );
+    const tokenCalls: ShapeWithLabel[] = [];
+    for (const token of tokens) {
+      if (isTokenNative(token)) {
+        const tokenContract = new this.web3.eth.Contract(multicallAbi, mc.contract);
+        tokenCalls.push({
+          type: 'token',
+          tokenId: token.id,
+          amount: tokenContract.methods.getEthBalance(walletAddress),
+        });
+      } else if (isTokenErc20(token)) {
+        const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
+        tokenCalls.push({
+          type: 'token',
+          tokenId: token.id,
+          amount: tokenContract.methods.balanceOf(walletAddress),
+        });
+      } else {
+        throw new Error(
+          "BalanceAPI.fetchTokenBalanceByChain: I don't know how to fetch token balance"
+        );
+      }
+    }
+
+    const govVaultCalls: ShapeWithLabel[] = [];
+    for (const vault of govVaults) {
+      // we fetch a gov vault data with boostAbi, poker face *-*
+      const poolContract = new this.web3.eth.Contract(boostAbi, vault.earnContractAddress);
+      govVaultCalls.push({
+        type: 'vault-gov',
+        vaultId: vault.id,
+        balance: poolContract.methods.balanceOf(walletAddress),
+        rewards: poolContract.methods.earned(walletAddress),
+      });
+    }
+
+    const boostsCalls: ShapeWithLabel[] = [];
+    for (const boost of boosts) {
+      // we fetch a gov vault data with boostAbi, poker face *-*
+      const earnContract = new this.web3.eth.Contract(boostAbi, boost.earnContractAddress);
+      boostsCalls.push({
+        type: 'boost',
+        boostId: boost.id,
+        balance: earnContract.methods.balanceOf(walletAddress),
+        rewards: earnContract.methods.earned(walletAddress),
+      });
+    }
 
     const calls = [...tokenCalls, ...govVaultCalls, ...boostsCalls];
 
@@ -62,19 +106,40 @@ export class BalanceAPI implements IBalanceApi {
       govVaults: [],
       tokens: [],
     };
+
     for (const result of results) {
       if (result.type === 'boost') {
-        if (result.balance !== '0' && result.rewards !== '0') {
-          res.boosts.push(boostsFormatter(result));
-        }
+        const balanceToken = selectBoostBalanceTokenEntity(state, result.boostId);
+        const rewardsToken = selectBoostRewardsTokenEntity(state, result.boostId);
+        const rawRewards = new BigNumber(result.rewards);
+        const rawBalance = new BigNumber(result.balance);
+        const balance = {
+          boostId: result.boostId,
+          balance: rawBalance.shiftedBy(-balanceToken.decimals),
+          rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+        };
+        res.boosts.push(balance);
       } else if (result.type === 'vault-gov') {
-        if (result.balance !== '0' && result.rewards !== '0') {
-          res.govVaults.push(govVaultFormatter(result));
-        }
+        // apply token decimals to balance and rewards
+        const balanceToken = selectGovVaultBalanceTokenEntity(state, result.vaultId);
+        const rewardsToken = selectGovVaultRewardsTokenEntity(state, result.vaultId);
+        const rawBalance = new BigNumber(result.balance);
+        const rawRewards = new BigNumber(result.rewards);
+        const balance = {
+          vaultId: result.vaultId,
+          balance: rawBalance.shiftedBy(-balanceToken.decimals),
+          rewards: rawRewards.shiftedBy(-rewardsToken.decimals),
+        };
+        res.govVaults.push(balance);
       } else if (result.type === 'token') {
-        if (result.amount !== '0') {
-          res.tokens.push(tokensFormatter(result));
-        }
+        // apply token decimals to amount
+        const token = selectTokenById(state, this.chain.id, result.tokenId);
+        const rawAmount = new BigNumber(result.amount);
+        const balance = {
+          tokenId: result.tokenId,
+          amount: rawAmount.shiftedBy(-token.decimals),
+        };
+        res.tokens.push(balance);
       } else {
         console.error(result);
         throw new Error(`Could not identify type`);
@@ -82,105 +147,5 @@ export class BalanceAPI implements IBalanceApi {
     }
     // format strings as numbers
     return res;
-  }
-
-  protected _getTokensCallsAndFormatter(
-    mc: MultiCall,
-    tokens: TokenEntity[],
-    walletAddress: string
-  ) {
-    const calls: ShapeWithLabel[] = [];
-    for (const token of tokens) {
-      // skip virtual boost tokens
-      if (isTokenBoost(token)) {
-        console.info(`BalanceAPI.fetchTokenBalanceByChain: Skipping boost token ${token.id}`);
-        continue;
-      }
-
-      if (isTokenNative(token)) {
-        const tokenContract = new this.web3.eth.Contract(multicallAbi, mc.contract);
-        calls.push({
-          type: 'token',
-          tokenId: token.id,
-          amount: tokenContract.methods.getEthBalance(walletAddress),
-        });
-      } else if (isTokenErc20(token)) {
-        // TODO: temporary check until we can sort out the WFTM mystery
-        if (!token.contractAddress) {
-          console.error(`Could not find token contractAddress: ${token.id}`);
-          continue;
-        }
-        const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
-        calls.push({
-          type: 'token',
-          tokenId: token.id,
-          amount: tokenContract.methods.balanceOf(walletAddress),
-        });
-      } else {
-        throw new Error(
-          "BalanceAPI.fetchTokenBalanceByChain: I don't know how to fetch token balance"
-        );
-      }
-    }
-    return {
-      calls,
-      formatter: (result: AllValuesAsString<TokenBalance>): TokenBalance => {
-        return {
-          tokenId: result.tokenId,
-          amount: new BigNumber(result.amount),
-        };
-      },
-    };
-  }
-
-  protected _getGovVaultCallsAndFormatter(govVaults: VaultGov[], walletAddress: string) {
-    const calls: ShapeWithLabel[] = [];
-
-    for (const vault of govVaults) {
-      // we fetch a gov vault data with boostAbi, poker face *-*
-      const poolContract = new this.web3.eth.Contract(boostAbi, vault.earnContractAddress);
-      calls.push({
-        type: 'vault-gov',
-        vaultId: vault.id,
-        balance: poolContract.methods.balanceOf(walletAddress),
-        rewards: poolContract.methods.earned(walletAddress),
-      });
-    }
-    return {
-      calls,
-      formatter: (result: AllValuesAsString<GovVaultPoolBalance>): GovVaultPoolBalance => {
-        return {
-          vaultId: result.vaultId,
-          balance: new BigNumber(result.balance),
-          rewards: new BigNumber(result.rewards),
-        };
-      },
-    };
-  }
-
-  protected _getBoostCallsAndFormatter(boosts: BoostEntity[], walletAddress) {
-    const calls: ShapeWithLabel[] = [];
-
-    for (const boost of boosts) {
-      // we fetch a gov vault data with boostAbi, poker face *-*
-      const earnContract = new this.web3.eth.Contract(boostAbi, boost.earnContractAddress);
-      calls.push({
-        type: 'boost',
-        boostId: boost.id,
-        balance: earnContract.methods.balanceOf(walletAddress),
-        rewards: earnContract.methods.earned(walletAddress),
-      });
-    }
-
-    return {
-      calls,
-      formatter: (result: AllValuesAsString<BoostBalance>): BoostBalance => {
-        return {
-          boostId: result.boostId,
-          balance: new BigNumber(result.balance),
-          rewards: new BigNumber(result.rewards),
-        };
-      },
-    };
   }
 }

@@ -8,8 +8,9 @@ export const pools = [
     tokenAddress: "0x6ab6d61428fde76768d7b45d8bfeec19c6ef91a8",
     tokenDecimals: 18,
     tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
-    earnedToken: "ONE",
-    earnedTokenAddress: "0x5b96bbaca98d777cb736dd89a519015315e00d02",
+    earnedToken: "WONE",
+    earnedTokenAddress: "0xcf664087a5bb0237a0bad6742852ec6c8d69a27a",
+    earnedTokenDecimals: 18,
     earnContractAddress: "0x5b96bbaca98d777cb736dd89a519015315e00d02",
     poolAddress: "0x5b96bbaca98d777cb736dd89a519015315e00d02",
     pricePerFullShare: 1,
@@ -741,6 +742,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "sushi-one-1eth-1dai",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "SushiSwap",
     assets: [
@@ -748,11 +750,6 @@ export const pools = [
       "ETH"
     ],
     callFee: 0.25,
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
-    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
-    stratType: "StratLP",
-    network: "harmony",
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -761,7 +758,12 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0xEf977d2f931C1978Db5F6747666fa1eACB0d0339",
     createdAt: 1631282246,
+    network: "harmony",
     retiredReason: "tvl"
   },
   {
@@ -780,6 +782,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "sushi-one-1usdt-1eth",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "SushiSwap",
     assets: [
@@ -787,11 +790,6 @@ export const pools = [
       "ETH"
     ],
     callFee: 0.25,
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
-    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
-    stratType: "StratLP",
-    network: "harmony",
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -800,7 +798,12 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.sushi.com/add/0x6983D1E6DEf3690C4d616b13597A09e6193EA013/0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x6983D1E6DEf3690C4d616b13597A09e6193EA013&outputCurrency=0x3C2B8Be99c50593081EAA2A724F0B8285F5aba8f",
     createdAt: 1631282425,
+    network: "harmony",
     retiredReason: "tvl"
   },
   {
@@ -819,6 +822,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "sushi-one-sushi-one",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "SushiSwap",
     assets: [
@@ -826,11 +830,6 @@ export const pools = [
       "ONE"
     ],
     callFee: 0.25,
-    withdrawalFee: "0%",
-    addLiquidityUrl: "https://app.sushi.com/add/ETH/0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
-    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
-    stratType: "StratLP",
-    network: "harmony",
     risks: [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -839,7 +838,12 @@ export const pools = [
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.sushi.com/add/ETH/0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=&outputCurrency=0xBEC775Cb42AbFa4288dE81F387a9b1A3c4Bc552A",
     createdAt: 1631197145,
+    network: "harmony",
     retiredReason: "tvl"
   }
 ];

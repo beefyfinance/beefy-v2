@@ -1,16 +1,13 @@
-export function featureFlag_isDataLoaderV2Enabled() {
-  const params = new URLSearchParams(window.location.search);
-  return params.has('__data_loader_v2');
-}
+import { ChainEntity } from '../entities/chain';
 
 export function featureFlag_getContractDataApiImplem():
   | 'eth-multicall'
   | 'new-multicall'
   | 'webworker-eth-multicall' {
   const params = new URLSearchParams(window.location.search);
-  // default is eth-multicall
+  // default is new-multicall
   if (!params.has('__contract_data_api')) {
-    return 'eth-multicall';
+    return 'new-multicall';
   }
   const implem = params.get('__contract_data_api');
   if (
@@ -20,8 +17,8 @@ export function featureFlag_getContractDataApiImplem():
   ) {
     return implem;
   }
-  // default is eth-multicall
-  return 'eth-multicall';
+  // default is new-multicall
+  return 'new-multicall';
 }
 export function featureFlag_getContractDataApiChunkSize(): number {
   const params = new URLSearchParams(window.location.search);
@@ -36,14 +33,14 @@ export function featureFlag_getBalanceApiImplem(): 'eth-multicall' | 'new-multic
   const params = new URLSearchParams(window.location.search);
   // default is eth-multicall
   if (!params.has('__balance_api')) {
-    return 'eth-multicall';
+    return 'new-multicall';
   }
   const implem = params.get('__balance_api');
   if (implem === 'eth-multicall' || implem === 'new-multicall') {
     return implem;
   }
   // default is eth-multicall
-  return 'eth-multicall';
+  return 'new-multicall';
 }
 export function featureFlag_getBalanceApiChunkSize(): number {
   const params = new URLSearchParams(window.location.search);
@@ -58,14 +55,14 @@ export function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-mult
   const params = new URLSearchParams(window.location.search);
   // default is eth-multicall
   if (!params.has('__allowance_api')) {
-    return 'eth-multicall';
+    return 'new-multicall';
   }
   const implem = params.get('__allowance_api');
   if (implem === 'eth-multicall' || implem === 'new-multicall') {
     return implem;
   }
   // default is eth-multicall
-  return 'eth-multicall';
+  return 'new-multicall';
 }
 
 export function featureFlag_getAllowanceApiChunkSize(): number {
@@ -77,21 +74,62 @@ export function featureFlag_getAllowanceApiChunkSize(): number {
   return 500;
 }
 
-export function featureFlag_dataPolling() {
+export function featureFlag_noDataPolling() {
   const params = new URLSearchParams(window.location.search);
-  return params.has('__polling');
-}
-
-export function featureFlag_scenarioTimings() {
-  const params = new URLSearchParams(window.location.search);
-  return params.has('__scenario_timings');
+  return params.has('__no_polling');
 }
 
 export function featureFlag_walletAddressOverride(walletAddress: string | null | undefined) {
   const params = new URLSearchParams(window.location.search);
-  if (params.has('__view_as')) {
+  if (walletAddress && params.has('__view_as')) {
     return params.get('__view_as');
   } else {
     return walletAddress;
+  }
+}
+
+export function featureFlag_recordReduxActions() {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return false;
+  }
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__record_redux_actions');
+}
+
+export function featureFlag_replayReduxActions() {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return false;
+  }
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__replay_redux_actions');
+}
+
+export function featureFlag_simulateRpcError(chainId: ChainEntity['id']) {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return false;
+  }
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('__simulate_rpc_error')) {
+    const chainIds = params.get('__simulate_rpc_error').split(',');
+    return chainIds.includes(chainId);
+  }
+}
+
+export function featureFlag_simulateBeefyApiError(key: 'apy' | 'prices' | 'lps' | 'buyback') {
+  const isAuthorizedDomain =
+    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
+  if (!isAuthorizedDomain) {
+    return false;
+  }
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('__simulate_beefy_error')) {
+    const chainIds = params.get('__simulate_beefy_error').split(',');
+    return chainIds.includes(key);
   }
 }

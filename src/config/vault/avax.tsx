@@ -44,8 +44,9 @@ export const pools = [
     tokenAddress: "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     tokenDecimals: 18,
     tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
-    earnedToken: "AVAX",
-    earnedTokenAddress: "0x86d38c6b6313c5A3021D68D1F57CF5e69197592A",
+    earnedToken: "WAVAX",
+    earnedTokenAddress: "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+    earnedTokenDecimals: 18,
     earnContractAddress: "0x86d38c6b6313c5A3021D68D1F57CF5e69197592A",
     poolAddress: "0x86d38c6b6313c5A3021D68D1F57CF5e69197592A",
     excluded: "avax-bifi-maxi",
@@ -4524,7 +4525,7 @@ export const pools = [
     network: "avax"
   },
   {
-    id: "curve-avax-ren-eol",
+    id: "curve-avax-ren",
     logo: "single-assets/renBTC.png",
     name: "WBTC/renBTC",
     token: "btcCRV",
@@ -4541,7 +4542,7 @@ export const pools = [
     oracleId: "curve-avax-ren",
     oraclePrice: 0,
     depositsPaused: false,
-    status: "eol",
+    status: "active",
     platform: "Curve",
     assets: [
       "WBTC",
@@ -4558,9 +4559,8 @@ export const pools = [
     stratType: "StratLP",
     withdrawalFee: "0.01%",
     addLiquidityUrl: "https://avax.curve.fi/ren/deposit",
-    createdAt: 1626964654,
-    network: "avax",
-    retiredReason: "tvl"
+    createdAt: 1645435034,
+    network: "avax"
   },
   {
     id: "joe-ampl-wavax-eol",
@@ -4578,6 +4578,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "joe-ampl-wavax",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Trader Joe",
     assets: [
@@ -4615,6 +4616,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "sing-usdt.e-sing",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Other",
     assets: [
@@ -4645,6 +4647,7 @@ export const pools = [
     oracle: "tokens",
     oracleId: "USDT.e",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Aave",
     assets: [
@@ -4683,6 +4686,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "olive-olive-avax",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "OliveSwap",
     assets: [
@@ -4703,5 +4707,116 @@ export const pools = [
     network: "avax",
     createdAt: 1617865515,
     retiredReason: "tvl"
+  },
+  {
+    id: "png-acre-wavax",
+    name: "ACRE-AVAX LP",
+    token: "ACRE-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x64694FC8dFCA286bF1A15b0903FAC98217dC3AD7",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinV2ACRE-AVAX",
+    earnedTokenAddress: "0xB6aE1f6Be8575a44D22af3cD2C5385CC9c293978",
+    earnContractAddress: "0xB6aE1f6Be8575a44D22af3cD2C5385CC9c293978",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "png-acre-wavax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Pangolin",
+    assets: [
+      "ACRE",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0x00EE200Df31b869a321B10400Da10b561F3ee60d",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?outputCurrency=0x00EE200Df31b869a321B10400Da10b561F3ee60d",
+    createdAt: 1645887882,
+    network: "avax"
+  },
+  {
+    id: "png-bribe-wavax",
+    name: "BRIBE-AVAX LP",
+    token: "BRIBE-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0x7472887De3B0aA65168a1Da22164C81DE5fd4044",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinV2BRIBE-AVAX",
+    earnedTokenAddress: "0xbaCeC852971EB461DA6Ad8F5C2e37694dca56002",
+    earnContractAddress: "0xbaCeC852971EB461DA6Ad8F5C2e37694dca56002",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "png-bribe-wavax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Pangolin",
+    assets: [
+      "BRIBE",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/ 0xCe2fbed816E320258161CeD52c2d0CEBcdFd8136",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?outputCurrency=0xCe2fbed816E320258161CeD52c2d0CEBcdFd8136",
+    createdAt: 1645972427,
+    network: "avax"
+  },
+  {
+    id: "png-tus-wavax",
+    name: "TUS-AVAX LP",
+    token: "TUS-AVAX LP",
+    tokenDescription: "Pangolin",
+    tokenAddress: "0xbCEd3B6D759B9CA8Fc7706E46Aa81627b2e9EAE8",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooPangolinV2TUS-AVAX",
+    earnedTokenAddress: "0xEd7208d44f5cC209DE534461a5D5b3cf60fDdeE5",
+    earnContractAddress: "0xEd7208d44f5cC209DE534461a5D5b3cf60fDdeE5",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "png-tus-wavax",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Pangolin",
+    assets: [
+      "TUS",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://app.pangolin.exchange/#/add/AVAX/0xf693248F96Fe03422FEa95aC0aFbBBc4a8FdD172",
+    buyTokenUrl: "https://app.pangolin.exchange/#/swap?outputCurrency=0xf693248F96Fe03422FEa95aC0aFbBBc4a8FdD172",
+    createdAt: 1645972427,
+    network: "avax"
   }
 ];

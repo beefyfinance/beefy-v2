@@ -1,4 +1,5 @@
 import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppUserMulticall.json';
+import _erc20Abi from '../../../../config/abi/erc20.json';
 import { AbiItem } from 'web3-utils';
 import Web3 from 'web3';
 import { VaultGov, VaultStandard } from '../../entities/vault';
@@ -7,13 +8,17 @@ import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
-import { isTokenErc20, TokenEntity } from '../../entities/token';
-import { FetchAllAllowanceResult, IAllowanceApi } from './allowance-types';
-import { BeefyState } from '../../../redux/reducers/storev2';
+import { isTokenErc20, TokenEntity, TokenErc20 } from '../../entities/token';
+import { FetchAllAllowanceResult, IAllowanceApi, TokenAllowance } from './allowance-types';
 import { selectTokenById } from '../../selectors/tokens';
 import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
+import { BeefyState } from '../../../../redux-types';
+import { MultiCall, ShapeWithLabel } from 'eth-multicall';
+import { createIdMap } from '../../utils/array-utils';
+import { selectVaultById } from '../../selectors/vaults';
 
 // fix ts types
+const erc20Abi = _erc20Abi as AbiItem[];
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
 
 export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: string }>
@@ -37,20 +42,20 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
     const allowanceCallsByToken: {
       [tokenAddress: string]: { tokenId: TokenEntity['id']; spenders: Set<string> };
     } = {};
+    const tokensById: { [tokenId: TokenEntity['id']]: TokenEntity } = {};
     const addTokenIdToCalls = (tokenId: string, spenderAddress: string) => {
       const token = selectTokenById(state, this.chain.id, tokenId);
       if (!isTokenErc20(token)) {
-        throw new Error("Can't query allowance of non erc20 token");
-      }
-      // TODO: temporary check until we can sort out the WFTM mystery
-      if (!token.contractAddress) {
-        console.error(`Could not find token contractAddress: ${token.id}`);
-        return;
+        throw new Error(`Can't query allowance of non erc20 token, skipping ${token.id}`);
       }
       if (allowanceCallsByToken[token.contractAddress] === undefined) {
         allowanceCallsByToken[token.contractAddress] = { tokenId: token.id, spenders: new Set() };
       }
       allowanceCallsByToken[token.contractAddress].spenders.add(spenderAddress);
+      // keep a map to get decimals at the end
+      if (tokensById[token.id] === undefined) {
+        tokensById[token.id] = token;
+      }
     };
 
     for (const standardVault of standardVaults) {
@@ -61,7 +66,8 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
       addTokenIdToCalls(govVault.oracleId, govVault.earnContractAddress);
     }
     for (const boost of boosts) {
-      addTokenIdToCalls(boost.earnedTokenId, boost.earnContractAddress);
+      const vault = selectVaultById(state, boost.vaultId);
+      addTokenIdToCalls(vault.earnedTokenId, boost.earnContractAddress);
     }
 
     // if we send too much in a single call, we get "execution reversed"
@@ -97,7 +103,9 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
             res.push({
               tokenId: spendersCalls.tokenId,
               spenderAddress,
-              allowance: new BigNumber(allowance),
+              allowance: new BigNumber(allowance).shiftedBy(
+                -tokensById[spendersCalls.tokenId].decimals
+              ),
             });
           }
           resIdx++;
@@ -107,5 +115,35 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
     }
 
     return res;
+  }
+
+  async fetchTokensAllowance(tokens: TokenErc20[], walletAddress: string, spenderAddress: string) {
+    const calls: ShapeWithLabel[] = [];
+    const baseTokenContract = new this.web3.eth.Contract(erc20Abi);
+
+    for (const token of tokens) {
+      const tokenContract = baseTokenContract.clone();
+      tokenContract.options.address = token.contractAddress;
+      calls.push({
+        tokenId: token.id,
+        spenderAddress: spenderAddress,
+        tokenAddress: token.contractAddress,
+        allowance: tokenContract.methods.allowance(walletAddress, spenderAddress),
+      });
+    }
+
+    type ResultType = AllValuesAsString<TokenAllowance>;
+    const mc = new MultiCall(this.web3, this.chain.multicallAddress);
+    const [results] = (await mc.all([calls])) as ResultType[][];
+
+    const tokensById = createIdMap(tokens);
+
+    return results.map(
+      (result): TokenAllowance => ({
+        tokenId: result.tokenId,
+        spenderAddress: result.spenderAddress,
+        allowance: new BigNumber(result.allowance).shiftedBy(-tokensById[result.tokenId].decimals),
+      })
+    );
   }
 }

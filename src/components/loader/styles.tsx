@@ -16,4 +16,7 @@ export const styles = theme => ({
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
   },
+  span: {
+    display: 'block',
+  },
 });

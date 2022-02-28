@@ -44,8 +44,9 @@ export const pools = [
     tokenAddress: "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
     tokenDecimals: 18,
     tokenDescriptionUrl: "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
-    earnedToken: "FTM",
-    earnedTokenAddress: "0x7fB900C14c9889A559C777D016a885995cE759Ee",
+    earnedToken: "WFTM",
+    earnedTokenAddress: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+    earnedTokenDecimals: 18,
     earnContractAddress: "0x7fB900C14c9889A559C777D016a885995cE759Ee",
     poolAddress: "0x7fB900C14c9889A559C777D016a885995cE759Ee",
     excluded: "fantom-bifi-maxi",
@@ -6229,7 +6230,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Other",
+    platform: "Ripae",
     assets: [
       "pFTM",
       "FTM"
@@ -6267,7 +6268,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Other",
+    platform: "Ripae",
     assets: [
       "PAE",
       "FTM"
@@ -6970,8 +6971,8 @@ export const pools = [
     stratType: "Lending",
     withdrawalFee: "0.01%",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
-    network: "fantom",
     createdAt: 1636100990,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
@@ -6990,6 +6991,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "sing-ftm-usdc-sing",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Other",
     assets: [
@@ -7008,8 +7010,8 @@ export const pools = [
     withdrawalFee: "0%",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x53D831e1db0947c74e8a52618f662209ec5dE0cE",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0x53D831e1db0947c74e8a52618f662209ec5dE0cE",
-    network: "fantom",
     createdAt: 1634116608,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
@@ -7028,6 +7030,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "jetswap-fantom-eth-btc",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "JetSwap",
     assets: [
@@ -7044,8 +7047,8 @@ export const pools = [
     ],
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11",
-    network: "fantom",
     createdAt: 1632980637,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
@@ -7064,6 +7067,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "jetswap-fantom-fwings-ftm",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "JetSwap",
     assets: [
@@ -7081,8 +7085,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/FANTOM/0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
     buyTokenUrl: "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
-    network: "fantom",
     createdAt: 1632906330,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
@@ -7101,6 +7105,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "jetswap-fantom-fwings-usdc",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "JetSwap",
     assets: [
@@ -7118,8 +7123,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://fantom-exchange.jetswap.finance/#/add/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
     buyTokenUrl: "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
-    network: "fantom",
     createdAt: 1632906651,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
@@ -7139,6 +7144,7 @@ export const pools = [
     oracle: "tokens",
     oracleId: "fWINGS",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "JetSwap",
     assets: [
@@ -7155,8 +7161,8 @@ export const pools = [
     stratType: "SingleStake",
     withdrawalFee: "0%",
     buyTokenUrl: "https://fantom-exchange.jetswap.finance/#/swap?outputCurrency=0x3D8f1ACCEe8e263F837138829B6C4517473d0688",
-    network: "fantom",
     createdAt: 1632911389,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
@@ -7175,6 +7181,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "boo-ftm-scream",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "SpookySwap",
     assets: [
@@ -7192,13 +7199,12 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://spookyswap.finance/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
     buyTokenUrl: "https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475",
-    network: "fantom",
     createdAt: 1630352068,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
     id: "ester-est-ftm-eol",
-    logo: "fantom/EST-FTM.png",
     name: "EST-FTM LP",
     token: "EST-FTM LP",
     tokenDescription: "SpiritSwap",
@@ -7213,6 +7219,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "ester-est-ftm",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Ester",
     assets: [
@@ -7230,8 +7237,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://swap.spiritswap.finance/#/add/FTM/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
-    network: "fantom",
     createdAt: 1621505384,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
@@ -7251,6 +7258,7 @@ export const pools = [
     oracle: "tokens",
     oracleId: "EST",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Ester",
     assets: [
@@ -7266,8 +7274,8 @@ export const pools = [
     ],
     stratType: "SingleStake",
     buyTokenUrl: "https://swap.spiritswap.finance/#/exchange/swap/0x181F3F22C9a751E2ce673498A03E1FDFC0ebBFB6",
-    network: "fantom",
     createdAt: 1621508945,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
@@ -7287,6 +7295,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "froyo-3pool",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Froyo",
     assets: [
@@ -7304,13 +7313,12 @@ export const pools = [
     ],
     stratType: "StratMultiLP",
     addLiquidityUrl: "https://frozenyogurt.finance/pool",
-    network: "fantom",
     createdAt: 1620633860,
+    network: "fantom",
     retiredReason: "tvl"
   },
   {
     id: "froyo-froyo-ftm-eol",
-    logo: "fantom/FROYO.png",
     name: "FROYO-FTM LP",
     token: "FROYO-FTM LP",
     tokenDescription: "SushiSwap",
@@ -7325,6 +7333,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "froyo-froyo-ftm",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Froyo",
     assets: [
@@ -7342,8 +7351,85 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.sushi.com/add/ETH/0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA",
     buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0xA92d41Ab8eFeE617d80a829CD9F5683c5F793ADA",
-    network: "fantom",
     createdAt: 1620626525,
+    network: "fantom",
     retiredReason: "tvl"
+  },
+  {
+    id: "boo-kae-wftm",
+    name: "KAE-FTM LP",
+    token: "KAE-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0xE6C2DB69dCDA38A8f56feAfC0229E6f039E5d5E2",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooFTM-KAE",
+    earnedTokenAddress: "0x8D4022a63634a785955a5Da01ab639a469430585",
+    earnContractAddress: "0x8D4022a63634a785955a5Da01ab639a469430585",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-kae-wftm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "KAE",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436",
+    buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=FTM&outputCurrency=0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436",
+    createdAt: 1645886552,
+    network: "fantom"
+  },
+  {
+    id: "beets-beardhemian-brushsody",
+    logo: "fantom/Beardhemian Brushsody.png",
+    name: "Beardhemian Brushsody",
+    token: "Beardhemian Brushsody",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0x8FdD16a23aEBe95B928f1863760618E9EC29e72D",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetBeardhemianBrushsody",
+    earnedTokenAddress: "0x4737a4d9112347937a9b03f449678Ba01A0AcEae",
+    earnContractAddress: "0x4737a4d9112347937a9b03f449678Ba01A0AcEae",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-beardhemian-brushsody",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "BRUSH",
+      "USDC",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://beets.fi/#/pool/0x8fdd16a23aebe95b928f1863760618e9ec29e72d000100000000000000000166",
+    createdAt: 1644853476,
+    network: "fantom"
   }
 ];

@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { BeefyState } from '../../../redux/reducers/storev2';
+import { BeefyState } from '../../../../redux-types';
 import { BoostEntity } from '../../entities/boost';
 import { VaultGov, VaultStandard } from '../../entities/vault';
 
@@ -11,30 +11,6 @@ export interface IContractDataApi {
     boosts: BoostEntity[]
   ): Promise<FetchAllContractDataResult>;
 }
-
-export interface MinimalEntity {
-  id: string;
-  contractAddress: string;
-}
-
-export interface WorkerChainEntity {
-  id: string;
-  multicallAddress: string;
-  rpc: [];
-}
-
-export interface FetchAllContractDataWorkerParams {
-  chain: WorkerChainEntity;
-  boosts: MinimalEntity[];
-  govVaults: MinimalEntity[];
-  standardVaults: MinimalEntity[];
-}
-
-export type FetchAllContractDataWorkerResults = {
-  boosts: AllValuesAsString<BoostContractData>[];
-  govVaults: AllValuesAsString<GovVaultContractData>[];
-  standardVaults: AllValuesAsString<StandardVaultContractData>[];
-};
 
 export interface GovVaultContractData {
   id: string;
@@ -63,7 +39,7 @@ export interface BoostContractData {
   id: string;
   totalSupply: BigNumber;
   rewardRate: BigNumber;
-  periodFinish: number;
+  periodFinish: Date | null; // null means boost is in prestake
 }
 
 export interface FetchAllContractDataResult {
@@ -71,7 +47,3 @@ export interface FetchAllContractDataResult {
   standardVaults: StandardVaultContractData[];
   govVaults: GovVaultContractData[];
 }
-
-export type AllValuesAsString<T> = {
-  [key in keyof T]: string;
-};
