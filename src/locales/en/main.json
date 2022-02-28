@@ -292,5 +292,9 @@
   "NetworkStatus-Title-RpcError": "RPC Errors",
   "NetworkStatus-HelpText-Error": "Some data may display incorrectly",
   "NetworkStatus-RpcError": "{{chain}} RPC failed",
-  "NetworkStatus-BeefyError": "Beefy API failed"
+  "NetworkStatus-BeefyError": "Beefy API failed",
+  "Nexus-SubTitle": "Nexus Mutual",
+  "Nexus-Title": "Cover your deposit",
+  "Nexus-Content": "Nexus Mutual empowers people worldwide to share their insurance risk via blockchain-powered smart contracts. Join the mutual and pay a membership fee to start building up your cover.",
+  "Nexus-Btn": "Cover Vaults"
 }
