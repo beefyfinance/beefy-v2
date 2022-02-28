@@ -181,7 +181,7 @@ export const Header = connect((state: BeefyState) => {
                     <LanguageDropdown />
                   </Box>
                   {isWalletConnected && (
-                    <Box>
+                    <Box mr={3}>
                       <ActiveChain value={currentChainId || 'bsc'} />
                       {/* <SimpleDropdown
                         noBorder={true}
@@ -238,16 +238,17 @@ export const Header = connect((state: BeefyState) => {
                     <Box mx={2} my={2}>
                       <BifiPrice />
                     </Box>
-                    <Box my={1} display="flex">
+                    <Box mx={2} my={1} display="flex">
                       {isWalletConnected && (
-                        <SimpleDropdown
-                          noBorder={true}
-                          renderValue={renderChainListValue}
-                          list={chainValues}
-                          selected={currentChainId || 'bsc'}
-                          handler={updateNetwork}
-                          label={t('Chain')}
-                        />
+                        <ActiveChain value={currentChainId || 'bsc'} />
+                        // <SimpleDropdown
+                        //   noBorder={true}
+                        //   renderValue={renderChainListValue}
+                        //   list={chainValues}
+                        //   selected={currentChainId || 'bsc'}
+                        //   handler={updateNetwork}
+                        //   label={t('Chain')}
+                        // />
                       )}
                       <LanguageDropdown />
                     </Box>
