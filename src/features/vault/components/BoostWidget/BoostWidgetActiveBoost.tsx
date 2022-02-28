@@ -157,7 +157,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
       </Grid>
 
       <Button
-        disabled={isStepping}
+        disabled={isStepping || mooTokenBalance.isZero()}
         className={classes.button}
         onClick={() => depositWithdraw('deposit')}
         fullWidth={true}
@@ -165,7 +165,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
         {t('Boost-Button-Vault')}
       </Button>
       <Button
-        disabled={isStepping}
+        disabled={isStepping || boostPendingRewards.isZero()}
         className={classes.button}
         onClick={handleClaim}
         fullWidth={true}
@@ -173,7 +173,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
         {t('Boost-Button-Withdraw')}
       </Button>
       <Button
-        disabled={isStepping}
+        disabled={isStepping || (boostBalance.isZero() && boostPendingRewards.isZero())}
         className={classes.button}
         onClick={() => handleExit(boost)}
         fullWidth={true}
@@ -181,7 +181,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
         {t('Boost-Button-Claim-Unstake')}
       </Button>
       <Button
-        disabled={isStepping}
+        disabled={isStepping || boostBalance.isZero()}
         onClick={() => depositWithdraw('unstake')}
         className={classes.button}
         fullWidth={true}
