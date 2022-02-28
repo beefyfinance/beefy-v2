@@ -99,7 +99,7 @@ export const styles = theme => ({
       fontWeight: 700,
       color: theme.palette.text.disabled,
     },
-    marginRight: '12px'
+    marginRight: '24px'
   },
   drawerBlack: {
     backgroundColor: '#0D0E14',
