@@ -98,8 +98,7 @@ export const styles = theme => ({
     '& .MuiTypography-root': {
       fontWeight: 700,
       color: theme.palette.text.disabled,
-    },
-    marginRight: '24px'
+    }
   },
   drawerBlack: {
     backgroundColor: '#0D0E14',
