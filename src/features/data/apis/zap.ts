@@ -1,24 +1,25 @@
-import { pack, keccak256 } from '@ethersproject/solidity';
 import { getCreate2Address } from '@ethersproject/address';
+import { keccak256, pack } from '@ethersproject/solidity';
+import BigNumber from 'bignumber.js';
+import { MultiCall } from 'eth-multicall';
 import { AbiItem } from 'web3-utils';
-import { isStandardVault, VaultEntity } from '../entities/vault';
+import _uniswapV2PairABI from '../../../config/abi/uniswapV2Pair.json';
+import _uniswapV2RouterABI from '../../../config/abi/uniswapV2Router.json';
+import _zapAbi from '../../../config/abi/zap.json';
+import { BIG_ZERO } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
-import { selectVaultById } from '../selectors/vaults';
+import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
+import { isStandardVault, VaultEntity } from '../entities/vault';
+import { selectChainById } from '../selectors/chains';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectIsTokenLoaded,
   selectTokenById,
 } from '../selectors/tokens';
+import { selectVaultById } from '../selectors/vaults';
+import { getZapAddress, getZapDecimals } from '../utils/zap-utils';
 import { getWeb3Instance } from './instances';
-import { selectChainById } from '../selectors/chains';
-import _zapAbi from '../../../config/abi/zap.json';
-import _uniswapV2PairABI from '../../../config/abi/uniswapV2Pair.json';
-import _uniswapV2RouterABI from '../../../config/abi/uniswapV2Router.json';
-import BigNumber from 'bignumber.js';
-import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
-import { BIG_ZERO } from '../../../helpers/format';
-import { MultiCall } from 'eth-multicall';
 
 // fix ts types
 const zapAbi = _zapAbi as AbiItem | AbiItem[];
@@ -60,14 +61,6 @@ export function getEligibleZapOptions(
   const wnative = selectChainWrappedNativeToken(state, vault.chainId);
   const native = selectChainNativeToken(state, vault.chainId);
 
-  function getAddress(token: TokenEntity) {
-    return isTokenNative(token)
-      ? token.address !== null
-        ? token.address
-        : wnative.contractAddress
-      : token.contractAddress;
-  }
-
   const tokenA = selectTokenById(state, vault.chainId, vault.assetIds[0]);
   const tokenB = selectTokenById(state, vault.chainId, vault.assetIds[1]);
 
@@ -81,8 +74,8 @@ export function getEligibleZapOptions(
         computePairAddress(
           zap.ammFactory,
           zap.ammPairInitHash,
-          getAddress(tokenA),
-          getAddress(tokenB)
+          getZapAddress(tokenA, wnative),
+          getZapAddress(tokenB, wnative)
         )
     );
   });
@@ -143,10 +136,8 @@ export async function estimateZapDeposit(
   const wnative = selectChainWrappedNativeToken(state, vault.chainId);
 
   const tokenIn = selectTokenById(state, vault.chainId, inputTokenId);
-  const tokenInContract = isTokenNative(tokenIn)
-    ? wnative.contractAddress
-    : tokenIn.contractAddress;
-  const tokenInDecimals = isTokenNative(tokenIn) ? wnative.decimals : tokenIn.decimals;
+  const tokenInContract = getZapAddress(tokenIn, wnative);
+  const tokenInDecimals = getZapDecimals(tokenIn, wnative);
   const tokenOut =
     tokenIn.id === vault.assetIds[0]
       ? selectTokenById(state, vault.chainId, vault.assetIds[1])
@@ -197,10 +188,8 @@ export const estimateZapWithdraw = async (
   const wnative = selectChainWrappedNativeToken(state, vault.chainId);
 
   const tokenOut = selectTokenById(state, vault.chainId, outputTokenId);
-  const tokenOutDecimals = isTokenNative(tokenOut) ? wnative.decimals : tokenOut.decimals;
-  const tokenOutAddress = isTokenNative(tokenOut)
-    ? wnative.contractAddress
-    : tokenOut.contractAddress;
+  const tokenOutAddress = getZapAddress(tokenOut, wnative);
+  const tokenOutDecimals = getZapDecimals(tokenOut, wnative);
   const _tokenIn =
     tokenOut.id === vault.assetIds[0]
       ? selectTokenById(state, vault.chainId, vault.assetIds[1])
