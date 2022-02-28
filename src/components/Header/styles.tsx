@@ -84,6 +84,23 @@ export const styles = theme => ({
       color: theme.palette.text.disabled,
     },
   },
+  chain: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'flex-start',
+    },
+    '& img': {
+      height: '18px',
+      marginRight: '5px',
+    },
+    '& .MuiTypography-root': {
+      fontWeight: 700,
+      color: theme.palette.text.disabled,
+    },
+    marginRight: '24px'
+  },
   drawerBlack: {
     backgroundColor: '#0D0E14',
   },
