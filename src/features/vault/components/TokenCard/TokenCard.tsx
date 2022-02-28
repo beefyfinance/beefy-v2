@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkButton } from '../../../../components/LinkButton';
-import { Loader } from '../../../../components/loader';
 import { BeefyState } from '../../../../redux-types';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import { ChainEntity } from '../../../data/entities/chain';
@@ -67,9 +66,6 @@ function TokenCardComponent({
   chainId: ChainEntity['id'];
   tokenId: TokenEntity['id'];
 }) {
-  const classes = useStyles();
-  const { t } = useTranslation();
-
   const tokenLoaded = useSelector(
     (state: BeefyState) =>
       (selectIsAddressBookLoaded(state, chainId) && selectIsTokenLoaded(state, chainId, tokenId)) ||
@@ -89,21 +85,14 @@ function TokenCardComponent({
     }
   }, [dispatch, chainId, shouldInitAddressBook]);
 
-  return token ? (
-    <TokenCardDisplay token={token} />
-  ) : (
-    <Card>
-      <CardHeader>
-        <Typography className={classes.detailTitle}>{t('Token-Detail')}</Typography>
-        <CardTitle title={tokenId} />
-      </CardHeader>
-      <CardContent>
-        <Typography variant="body1" className={classes.text}>
-          {!tokenLoaded ? <Loader /> : t('Token-NoDescrip')}
-        </Typography>
-      </CardContent>
-    </Card>
-  );
+  // sometimes we have mooX tokens in the asset list
+  // so we never know if a token will ever load or not
+  // see: vault beets-sound-of-moosic
+  if (!tokenLoaded || !token) {
+    return <></>;
+  }
+
+  return <TokenCardDisplay token={token} />;
 }
 
 export const TokenCard = React.memo(TokenCardComponent);
