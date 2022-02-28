@@ -89,6 +89,20 @@ const NavLinks = () => {
   );
 };
 
+const ActiveChain = ({value}: {value: string}) => {
+  const classes = useStyles();
+  return (
+    <div
+      className={classes.chain}
+      style={{ textDecoration: 'none' }}>
+      <img alt={value} src={require(`../../images/networks/${value}.svg`).default} />{' '}
+      <Typography variant="body1" noWrap={true}>
+        {value.toLocaleUpperCase()}
+      </Typography>
+    </div>
+  );
+}
+
 function renderChainListValue(value: string) {
   return (
     <>
@@ -168,14 +182,15 @@ export const Header = connect((state: BeefyState) => {
                   </Box>
                   {isWalletConnected && (
                     <Box>
-                      <SimpleDropdown
+                      <ActiveChain value={currentChainId || 'bsc'} />
+                      {/* <SimpleDropdown
                         noBorder={true}
                         list={chainValues}
                         selected={currentChainId || 'bsc'}
                         renderValue={renderChainListValue}
                         handler={updateNetwork}
                         label={t('Chain')}
-                      />
+                      /> */}
                     </Box>
                   )}
                 </Hidden>
