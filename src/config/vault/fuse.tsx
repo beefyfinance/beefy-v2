@@ -564,8 +564,8 @@ export const pools = [
     stratType: "StratLP",
     addLiquidityUrl: "https://app.fuse.fi/#/add/FUSE/0x495d133B938596C9984d462F007B676bDc57eCEC",
     buyTokenUrl: "https://app.fuse.fi/#/swap?inputCurrency=FUSE&outputCurrency=0x495d133B938596C9984d462F007B676bDc57eCEC",
-    network: "fuse",
     createdAt: 1641411120,
+    network: "fuse",
     retireReason: "rewards"
   }
 ];

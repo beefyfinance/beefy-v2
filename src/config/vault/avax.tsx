@@ -4578,6 +4578,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "joe-ampl-wavax",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Trader Joe",
     assets: [
@@ -4615,6 +4616,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "sing-usdt.e-sing",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Other",
     assets: [
@@ -4645,6 +4647,7 @@ export const pools = [
     oracle: "tokens",
     oracleId: "USDT.e",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Aave",
     assets: [
@@ -4683,6 +4686,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "olive-olive-avax",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "OliveSwap",
     assets: [

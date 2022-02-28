@@ -1,6 +1,6 @@
 export const config = {
   bsc: {
-    name: 'BSC',
+    name: 'BNB Chain',
     chainId: 56,
     rpc: [
       'https://bsc-dataseed.binance.org',
