@@ -111,7 +111,7 @@ export const selectIsVaultBlueChip = createSelector(
 export const selectIsVaultStable = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
-    return vault.assetIds.some(assetId => selectIsTokenStable(state, vault.chainId, assetId));
+    return vault.assetIds.every(assetId => selectIsTokenStable(state, vault.chainId, assetId));
   },
   res => res
 );
