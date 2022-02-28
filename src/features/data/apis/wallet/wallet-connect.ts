@@ -118,10 +118,6 @@ export class WalletConnectApi implements IWalletConnectApi {
       method: 'wallet_addEthereumChain',
       params: [chain.walletSettings],
     });
-
-    const web3 = _getWeb3FromProvider(this.provider);
-    const accounts = await web3.eth.getAccounts();
-    return this.options.onChainChanged(chain.id, accounts[0]);
   }
 
   public async disconnect() {
