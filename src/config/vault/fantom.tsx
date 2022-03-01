@@ -6230,7 +6230,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Other",
+    platform: "Ripae",
     assets: [
       "pFTM",
       "FTM"
@@ -6268,7 +6268,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: "active",
-    platform: "Other",
+    platform: "Ripae",
     assets: [
       "PAE",
       "FTM"
@@ -7354,5 +7354,82 @@ export const pools = [
     createdAt: 1620626525,
     network: "fantom",
     retiredReason: "tvl"
+  },
+  {
+    id: "boo-kae-wftm",
+    name: "KAE-FTM LP",
+    token: "KAE-FTM LP",
+    tokenDescription: "SpookySwap",
+    tokenAddress: "0xE6C2DB69dCDA38A8f56feAfC0229E6f039E5d5E2",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBooFTM-KAE",
+    earnedTokenAddress: "0x8D4022a63634a785955a5Da01ab639a469430585",
+    earnContractAddress: "0x8D4022a63634a785955a5Da01ab639a469430585",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "boo-kae-wftm",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SpookySwap",
+    assets: [
+      "KAE",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://spookyswap.finance/add/FTM/0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436",
+    buyTokenUrl: "https://spookyswap.finance/swap?inputCurrency=FTM&outputCurrency=0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436",
+    createdAt: 1645886552,
+    network: "fantom"
+  },
+  {
+    id: "beets-beardhemian-brushsody",
+    logo: "fantom/Beardhemian Brushsody.png",
+    name: "Beardhemian Brushsody",
+    token: "Beardhemian Brushsody",
+    tokenDescription: "Beethoven X",
+    tokenAddress: "0x8FdD16a23aEBe95B928f1863760618E9EC29e72D",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooBeetBeardhemianBrushsody",
+    earnedTokenAddress: "0x4737a4d9112347937a9b03f449678Ba01A0AcEae",
+    earnContractAddress: "0x4737a4d9112347937a9b03f449678Ba01A0AcEae",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "beets-beardhemian-brushsody",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Beethoven X",
+    assets: [
+      "BRUSH",
+      "USDC",
+      "FTM"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratMultiLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://beets.fi/#/pool/0x8fdd16a23aebe95b928f1863760618e9ec29e72d000100000000000000000166",
+    createdAt: 1644853476,
+    network: "fantom"
   }
 ];

@@ -1,15 +1,20 @@
 [
   {
-    "id": "bsc vault: charge-static-busd",
+    "id": "bsc vault: cakev2-raca-busd",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-raca-busd",
-    "type": "REMOVED"
+    "id": "bsc vault: charge-static-busd-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "bsc vault: charge-static-busd-eol",
-    "type": "REMOVED"
+    "id": "fantom vault: boo-kae-wftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-beardhemian-brushsody",
+    "type": "Added"
   },
   {
     "id": "fantom vault: ripae-pftm-ftm",
@@ -20,59 +25,48 @@
     "type": "synced"
   },
   {
-    "id": "fantom vault: boo-kae-wftm",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: beets-beardhemian-brushsody",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: quick-hbar[0x]-mimatic",
+    "id": "polygon vault: quick-eth-cxeth",
     "type": "Added"
   },
   {
-    "id": "polygon vault: quick-eth-cxeth",
-    "type": "REMOVED"
-  },
-  {
     "id": "polygon vault: quick-cxada-cxeth",
-    "type": "REMOVED"
+    "type": "Added"
   },
   {
     "id": "polygon vault: quick-cxdoge-cxeth",
-    "type": "REMOVED"
+    "type": "Added"
   },
   {
     "id": "polygon vault: quick-hbar[0x]-mimatic-eol",
-    "type": "REMOVED"
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: ripae-pavax-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: ripae-pae-wavax",
+    "type": "Added"
   },
   {
     "id": "avax vault: png-acre-wavax",
-    "type": "REMOVED"
+    "type": "Added"
   },
   {
     "id": "avax vault: png-bribe-wavax",
-    "type": "REMOVED"
+    "type": "Added"
   },
   {
     "id": "avax vault: png-tus-wavax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "moonriver vault: sushi-mr-eth-usdt-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: sushi-mr-mim-wmovr-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-matic-wmovr-eol",
-    "type": "synced"
+    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
+  },
+  {
+    "id": "avax boost: moo_curve-avax-atricrypto-ripae",
+    "type": "Added"
   }
 ]
