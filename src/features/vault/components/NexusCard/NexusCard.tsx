@@ -30,7 +30,12 @@ const NexusCard = () => {
         <Typography className={classes.content} variant="body1">
           {t('Nexus-Content')}
         </Typography>
-        <a className={classes.link} target="_blank" rel="noreferrer" href="">
+        <a
+          className={classes.link}
+          target="_blank"
+          rel="noreferrer"
+          href="https://app.nexusmutual.io/cover"
+        >
           <Button className={classes.btn}>{t('Nexus-Btn')}</Button>
         </a>
       </CardContent>
