@@ -9,7 +9,7 @@ import {
   makeStyles,
   Toolbar,
   Typography,
-  useMediaQuery,
+  useMediaQuery
 } from '@material-ui/core';
 import { Close, Menu } from '@material-ui/icons';
 import BigNumber from 'bignumber.js';
@@ -22,7 +22,7 @@ import { ChainEntity } from '../../features/data/entities/chain';
 import {
   selectCurrentChainId,
   selectIsNetworkSupported,
-  selectIsWalletConnected,
+  selectIsWalletConnected
 } from '../../features/data/selectors/wallet';
 import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
@@ -114,6 +114,7 @@ export const Header = connect((state: BeefyState) => {
     currentChainId: ChainEntity['id'] | null;
   }) => {
     const classes = useStyles();
+    const { t } = useTranslation();
 
     const isMobile = useMediaQuery('(max-width: 500px)');
 
@@ -121,7 +122,6 @@ export const Header = connect((state: BeefyState) => {
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
     };
-
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">

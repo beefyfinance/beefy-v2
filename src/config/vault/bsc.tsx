@@ -15338,43 +15338,6 @@ export const pools = [
     createdAt: 1619285563
   },
   {
-    id: "charge-static-busd",
-    name: "Static-BUSD LP",
-    token: "Static-BUSD LP",
-    tokenDescription: "Pancake (Charge)",
-    tokenAddress: "0x69758726b04e527238B261ab00236AFE9F34929D",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooChargeSTATIC-BUSD",
-    earnedTokenAddress: "0xaAe97E1B198406D691d75B5aA60Ac0b4e4b0E5CD",
-    earnContractAddress: "0xaAe97E1B198406D691d75B5aA60Ac0b4e4b0E5CD",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "charge-static-busd",
-    oraclePrice: 0,
-    status: "active",
-    platform: "Other",
-    assets: [
-      "STATIC",
-      "BUSD"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    stratType: "StratLP",
-    addLiquidityUrl: "https://pancakeswap.finance/add/0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983",
-    network: "bsc",
-    withdrawalFee: "0%",
-    createdAt: 1638426684
-  },
-  {
     id: "charge-charge-busd",
     name: "Charge-BUSD LP",
     token: "Charge-BUSD LP",
@@ -19445,5 +19408,79 @@ export const pools = [
     stratType: "StratLP",
     network: "bsc",
     retiredReason: "tvl"
+  },
+  {
+    id: "cakev2-raca-busd",
+    name: "RACA-BUSD LP",
+    token: "RACA-BUSD LP",
+    tokenDescription: "PancakeSwap",
+    tokenAddress: "0x8e744Ec2795c8B836689d1b4EBE1489204357dAC",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooCakeV2RACA-BUSD",
+    earnedTokenAddress: "0xF390114CBB24D1E258e87F274A7b840f11cb0Ac4",
+    earnContractAddress: "0xF390114CBB24D1E258e87F274A7b840f11cb0Ac4",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "cakev2-raca-busd",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "PancakeSwap",
+    assets: [
+      "RACA",
+      "BUSD"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x12BB890508c125661E03b09EC06E404bc9289040",
+    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x12BB890508c125661E03b09EC06E404bc9289040",
+    createdAt: 1645891282,
+    network: "bsc"
+  },
+  {
+    id: "charge-static-busd-eol",
+    name: "Static-BUSD LP",
+    token: "Static-BUSD LP",
+    tokenDescription: "Pancake (Charge)",
+    tokenAddress: "0x69758726b04e527238B261ab00236AFE9F34929D",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooChargeSTATIC-BUSD",
+    earnedTokenAddress: "0xaAe97E1B198406D691d75B5aA60Ac0b4e4b0E5CD",
+    earnContractAddress: "0xaAe97E1B198406D691d75B5aA60Ac0b4e4b0E5CD",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "charge-static-busd",
+    oraclePrice: 0,
+    status: "eol",
+    platform: "Other",
+    assets: [
+      "STATIC",
+      "BUSD"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://pancakeswap.finance/add/0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983",
+    network: "bsc",
+    withdrawalFee: "0%",
+    createdAt: 1638426684,
+    retireReason: "rewards"
   }
 ];
