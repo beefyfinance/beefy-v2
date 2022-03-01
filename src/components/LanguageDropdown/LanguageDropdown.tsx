@@ -29,7 +29,7 @@ const selectedRenderer = locale => {
   return locale.toUpperCase();
 };
 
-export const LanguageDropdown = ({ isWalletConnected }: { isWalletConnected?: boolean }) => {
+export const LanguageDropdown = () => {
   const { i18n } = useTranslation();
   const i18nLanguage = getSelectedLanguage(i18n);
   const [language, setLanguage] = React.useState(i18nLanguage);

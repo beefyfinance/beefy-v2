@@ -2,36 +2,35 @@ import React, { Suspense, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
-  makeStyles,
   AppBar,
-  Toolbar,
-  IconButton,
-  Hidden,
-  Drawer,
   Box,
   Container,
-  Typography,
   Divider,
-  useMediaQuery,
+  Drawer,
+  Hidden,
+  IconButton,
+  makeStyles,
+  Toolbar,
+  Typography,
+  useMediaQuery
 } from '@material-ui/core';
-import { Menu, Close } from '@material-ui/icons';
-import { styles } from './styles';
-import { useTranslation } from 'react-i18next';
+import { Close, Menu } from '@material-ui/icons';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
-import { LanguageDropdown } from '../LanguageDropdown';
-import { UnsupportedNetwork } from '../UnsupportedNetwork';
-import { Transak } from '../Transak';
-import { BeefyState } from '../../redux-types';
+import { useTranslation } from 'react-i18next';
 import {
   selectCurrentChainId,
   selectIsNetworkSupported,
-  selectIsWalletConnected,
+  selectIsWalletConnected
 } from '../../features/data/selectors/wallet';
+import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
+import { BeefyState } from '../../redux-types';
+import { LanguageDropdown } from '../LanguageDropdown';
 import { ChainEntity } from '../../features/data/entities/chain';
-import { selectAllChains } from '../../features/data/selectors/chains';
 import { NetworkStatus } from '../NetworkStatus';
+import { Transak } from '../Transak';
+import { UnsupportedNetwork } from '../UnsupportedNetwork';
+import { styles } from './styles';
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
 
@@ -102,20 +101,17 @@ const ActiveChain = ({ value }: { value: string }) => {
 export const Header = connect((state: BeefyState) => {
   const isNetworkSupported = selectIsNetworkSupported(state);
   const currentChainId = selectCurrentChainId(state);
-  const chains = selectAllChains(state);
   const isWalletConnected = selectIsWalletConnected(state);
-  return { isWalletConnected, isNetworkSupported, currentChainId, chains };
+  return { isWalletConnected, isNetworkSupported, currentChainId };
 })(
   ({
     isWalletConnected,
     isNetworkSupported,
     currentChainId,
-    chains,
   }: {
     isWalletConnected: boolean;
     isNetworkSupported: boolean;
     currentChainId: ChainEntity['id'] | null;
-    chains: ChainEntity[];
   }) => {
     const classes = useStyles();
 
@@ -152,19 +148,11 @@ export const Header = connect((state: BeefyState) => {
                 <Hidden mdDown>
                   <BifiPrice />
                   <Box>
-                    <LanguageDropdown isWalletConnected={isWalletConnected} />
+                    <LanguageDropdown />
                   </Box>
                   {isWalletConnected && (
                     <Box mr={3}>
                       <ActiveChain value={currentChainId || 'bsc'} />
-                      {/* <SimpleDropdown
-                        noBorder={true}
-                        list={chainValues}
-                        selected={currentChainId || 'bsc'}
-                        renderValue={renderChainListValue}
-                        handler={updateNetwork}
-                        label={t('Chain')}
-                      /> */}
                     </Box>
                   )}
                 </Hidden>
@@ -213,18 +201,8 @@ export const Header = connect((state: BeefyState) => {
                       <BifiPrice />
                     </Box>
                     <Box mx={2} my={1} display="flex">
-                      {isWalletConnected && (
-                        <ActiveChain value={currentChainId || 'bsc'} />
-                        // <SimpleDropdown
-                        //   noBorder={true}
-                        //   renderValue={renderChainListValue}
-                        //   list={chainValues}
-                        //   selected={currentChainId || 'bsc'}
-                        //   handler={updateNetwork}
-                        //   label={t('Chain')}
-                        // />
-                      )}
-                      <LanguageDropdown isWalletConnected={isWalletConnected} />
+                      {isWalletConnected && <ActiveChain value={currentChainId || 'bsc'} />}
+                      <LanguageDropdown />
                     </Box>
                   </Box>
                 </Drawer>
