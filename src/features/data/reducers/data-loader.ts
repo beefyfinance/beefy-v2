@@ -154,7 +154,8 @@ export const initialDataLoaderState: DataLoaderState = {
 function addGlobalAsyncThunkActions(
   builder: ActionReducerMapBuilder<DataLoaderState>,
   action: AsyncThunk<unknown, unknown, unknown>,
-  stateKey: keyof DataLoaderState['global']
+  stateKey: keyof DataLoaderState['global'],
+  openNetworkModalOnReject: boolean = false
 ) {
   builder.addCase(action.pending, sliceState => {
     sliceState.global[stateKey] = {
@@ -172,7 +173,9 @@ function addGlobalAsyncThunkActions(
     };
 
     // something got rejected, we want to auto-open the indicator
-    sliceState.statusIndicator.open = true;
+    if (openNetworkModalOnReject) {
+      sliceState.statusIndicator.open = true;
+    }
   });
   builder.addCase(action.fulfilled, sliceState => {
     sliceState.global[stateKey] = dataLoaderStateFulfilled;
@@ -238,19 +241,19 @@ export const dataLoaderSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig');
-    addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet');
-    addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet');
-    addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet');
-    addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices');
-    addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy');
-    addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults');
-    addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts');
-    addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm');
-    addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm');
-    addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm');
-    addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps');
-    addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook');
+    addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig', true);
+    addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet', false);
+    addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet', false);
+    addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet', false);
+    addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices', true);
+    addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
+    addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
+    addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
+    addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm', true);
+    addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm', true);
+    addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
+    addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
+    addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
 
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);

@@ -178,9 +178,11 @@ export const selectGovVaultPendingRewardsInToken = (state: BeefyState, vaultId: 
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.rewards || BIG_ZERO;
 };
 
-// TODO implement this
 export const selectGovVaultPendingRewardsInUsd = (state: BeefyState, vaultId: VaultGov['id']) => {
-  return selectGovVaultPendingRewardsInToken(state, vaultId);
+  const vault = selectVaultById(state, vaultId);
+  const tokenRewards = selectGovVaultPendingRewardsInToken(state, vaultId);
+  const tokenPrice = selectTokenPriceByTokenId(state, vault.earnedTokenId);
+  return tokenRewards.times(tokenPrice);
 };
 
 /**

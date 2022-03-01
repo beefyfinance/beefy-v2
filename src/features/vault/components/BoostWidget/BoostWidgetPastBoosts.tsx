@@ -16,10 +16,12 @@ import { Step } from '../../../../components/Steps/types';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
 import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectChainById } from '../../../data/selectors/chains';
 const useStyles = makeStyles(styles as any);
 
 export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();
@@ -74,22 +76,44 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
         <Button></Button>
       </Box>
       <AnimateHeight duration={500} height="auto">
-        {pastBoostsWithUserBalance.map(boost => (
-          <div className={classes.expiredBoostContainer} key={boost.id}>
-            <Typography className={classes.h2} style={{ textTransform: 'none' }}>
-              {boost.name}&nbsp;{t('Filter-Boost')}
-            </Typography>
+        {isWalletConnected ? (
+          !isWalletOnVaultChain ? (
             <Button
-              onClick={() => handleExit(boost)}
-              disabled={isStepping}
+              onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
               className={classes.button}
-              style={{ marginBottom: 0 }}
               fullWidth={true}
+              disabled={isStepping}
             >
-              {t('Boost-Button-Claim-Unstake')}
+              {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
-          </div>
-        ))}
+          ) : (
+            pastBoostsWithUserBalance.map(boost => (
+              <div className={classes.expiredBoostContainer} key={boost.id}>
+                <Typography className={classes.h2} style={{ textTransform: 'none' }}>
+                  {boost.name}&nbsp;{t('Filter-Boost')}
+                </Typography>
+                <Button
+                  onClick={() => handleExit(boost)}
+                  disabled={isStepping}
+                  className={classes.button}
+                  style={{ marginBottom: 0 }}
+                  fullWidth={true}
+                >
+                  {t('Boost-Button-Claim-Unstake')}
+                </Button>
+              </div>
+            ))
+          )
+        ) : (
+          <Button
+            className={classes.button}
+            fullWidth={true}
+            onClick={() => dispatch(askForWalletConnection())}
+            disabled={isStepping}
+          >
+            {t('Network-ConnectWallet')}
+          </Button>
+        )}
       </AnimateHeight>
       <Stepper />
     </div>

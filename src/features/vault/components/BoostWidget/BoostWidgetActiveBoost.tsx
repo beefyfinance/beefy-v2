@@ -24,12 +24,14 @@ import {
 import { StakeCountdown } from './StakeCountdown';
 import { Stake } from './Stake';
 import { Unstake } from './Unstake';
+import { selectChainById } from '../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
 export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
   const boost = useSelector((state: BeefyState) => selectBoostById(state, boostId));
   const vault = useSelector((state: BeefyState) => selectVaultById(state, boost.vaultId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, boost.chainId));
   const isBoosted = true;
 
   const mooToken = useSelector((state: BeefyState) =>
@@ -155,40 +157,62 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
           </Typography>
         </Grid>
       </Grid>
-
-      <Button
-        disabled={isStepping || mooTokenBalance.isZero()}
-        className={classes.button}
-        onClick={() => depositWithdraw('deposit')}
-        fullWidth={true}
-      >
-        {t('Boost-Button-Vault')}
-      </Button>
-      <Button
-        disabled={isStepping || boostPendingRewards.isZero()}
-        className={classes.button}
-        onClick={handleClaim}
-        fullWidth={true}
-      >
-        {t('Boost-Button-Withdraw')}
-      </Button>
-      <Button
-        disabled={isStepping || (boostBalance.isZero() && boostPendingRewards.isZero())}
-        className={classes.button}
-        onClick={() => handleExit(boost)}
-        fullWidth={true}
-      >
-        {t('Boost-Button-Claim-Unstake')}
-      </Button>
-      <Button
-        disabled={isStepping || boostBalance.isZero()}
-        onClick={() => depositWithdraw('unstake')}
-        className={classes.button}
-        fullWidth={true}
-      >
-        {t('Boost-Button-Unestake')}
-      </Button>
-
+      {isWalletConnected ? (
+        !isWalletOnVaultChain ? (
+          <Button
+            onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
+            className={classes.button}
+            fullWidth={true}
+            disabled={isStepping}
+          >
+            {t('Network-Change', { network: chain.name.toUpperCase() })}
+          </Button>
+        ) : (
+          <>
+            <Button
+              disabled={isStepping || mooTokenBalance.isZero()}
+              className={classes.button}
+              onClick={() => depositWithdraw('deposit')}
+              fullWidth={true}
+            >
+              {t('Boost-Button-Vault')}
+            </Button>
+            <Button
+              disabled={isStepping || boostPendingRewards.isZero()}
+              className={classes.button}
+              onClick={handleClaim}
+              fullWidth={true}
+            >
+              {t('Boost-Button-Withdraw')}
+            </Button>
+            <Button
+              disabled={isStepping || (boostBalance.isZero() && boostPendingRewards.isZero())}
+              className={classes.button}
+              onClick={() => handleExit(boost)}
+              fullWidth={true}
+            >
+              {t('Boost-Button-Claim-Unstake')}
+            </Button>
+            <Button
+              disabled={isStepping || boostBalance.isZero()}
+              onClick={() => depositWithdraw('unstake')}
+              className={classes.button}
+              fullWidth={true}
+            >
+              {t('Boost-Button-Unestake')}
+            </Button>
+          </>
+        )
+      ) : (
+        <Button
+          className={classes.button}
+          fullWidth={true}
+          onClick={() => dispatch(askForWalletConnection())}
+          disabled={isStepping}
+        >
+          {t('Network-ConnectWallet')}
+        </Button>
+      )}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
