@@ -8,6 +8,7 @@ import { useTheme } from '@material-ui/core/styles';
 import {
   selectIsWalletConnected,
   selectWalletAddress,
+  selectIsBalanceHidden,
 } from '../../../../features/data/selectors/wallet';
 import { BeefyState } from '../../../../redux-types';
 import {
@@ -16,6 +17,7 @@ import {
   initWallet,
 } from '../../../../features/data/actions/wallet';
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles as any);
 const formatAddress = addr => {
@@ -27,16 +29,19 @@ export const WalletContainer = connect((state: BeefyState) => {
   const walletAddress = isWalletConnected ? selectWalletAddress(state) : null;
   const walletPending = selectIsWalletPending(state);
   const walletProfileUrl = state.user.wallet.profilePictureUrl;
-  return { walletAddress, walletPending, walletProfileUrl };
+  const blurred = selectIsBalanceHidden(state);
+  return { walletAddress, walletPending, walletProfileUrl, blurred };
 })(
   ({
     walletAddress,
     walletPending,
     walletProfileUrl,
+    blurred,
   }: {
     walletAddress: null | string;
     walletPending: boolean;
     walletProfileUrl: null | string;
+    blurred: boolean;
   }) => {
     const theme = useTheme();
     const classes = useStyles();
@@ -58,10 +63,6 @@ export const WalletContainer = connect((state: BeefyState) => {
       }
     };
 
-    const containerClassName = `${classes.container} ${
-      walletAddress ? classes.connected : classes.disconnected
-    }`;
-
     const formControlProps = {
       noValidate: true,
       autoComplete: 'off',
@@ -69,7 +70,13 @@ export const WalletContainer = connect((state: BeefyState) => {
     };
 
     return (
-      <Box className={containerClassName}>
+      <Box
+        className={clsx({
+          [classes.container]: true,
+          [classes.connected]: walletAddress,
+          [classes.disconnected]: !walletAddress,
+        })}
+      >
         <FormControl {...formControlProps}>
           <Grid container direction="row" alignItems="center">
             {walletPending ? (
@@ -81,8 +88,16 @@ export const WalletContainer = connect((state: BeefyState) => {
               </Box>
             ) : (
               <React.Fragment>
-                {walletProfileUrl ? <Avatar src={walletProfileUrl} /> : ''}
-                <Typography variant="body1" noWrap={true}>
+                {walletProfileUrl ? (
+                  <Avatar className={clsx({ [classes.blurred]: blurred })} src={walletProfileUrl} />
+                ) : (
+                  ''
+                )}
+                <Typography
+                  className={clsx({ [classes.blurred]: blurred })}
+                  variant="body1"
+                  noWrap={true}
+                >
                   {walletAddress ? formatAddress(walletAddress) : t('Network-ConnectWallet')}
                 </Typography>
               </React.Fragment>

@@ -226,8 +226,14 @@ export const estimateZapWithdraw = async (
     ],
   ]);
 
-  const reserveIn = tokenIn.contractAddress === pair.token0 ? pair.reserves[0] : pair.reserves[1];
-  const reserveOut = tokenOutAddress === pair.token1 ? pair.reserves[1] : pair.reserves[0];
+  const reserveIn =
+    tokenIn.contractAddress.toLocaleLowerCase() === pair.token0.toLocaleLowerCase()
+      ? pair.reserves[0]
+      : pair.reserves[1];
+  const reserveOut =
+    tokenOutAddress.toLocaleLowerCase() === pair.token1.toLocaleLowerCase()
+      ? pair.reserves[1]
+      : pair.reserves[0];
 
   const rawAmount = amount.shiftedBy(oracleToken.decimals);
   const equity = rawAmount.dividedBy(pair.totalSupply);

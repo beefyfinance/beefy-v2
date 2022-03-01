@@ -3,7 +3,7 @@ import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { getBoostStatusFromPeriodFinish } from '../reducers/boosts';
-import { selectBoostUserBalanceInToken } from './balance';
+import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance';
 
 export const selectBoostById = (state: BeefyState, boostId: BoostEntity['id']) => {
   const boostsByIds = state.entities.boosts.byId;
@@ -48,6 +48,10 @@ export const selectPastBoostIdsWithUserBalance = (
   for (const eolBoostId of vaultBoosts.expiredBoostsIds) {
     const userBalance = selectBoostUserBalanceInToken(state, eolBoostId);
     if (userBalance.gt(0)) {
+      boostIds.push(eolBoostId);
+    }
+    const userRewards = selectBoostUserRewardsInToken(state, eolBoostId);
+    if (userRewards.gt(0)) {
       boostIds.push(eolBoostId);
     }
   }

@@ -145,7 +145,7 @@
   "Zap-Promotion": "{{action}} your LP or️ ZAP⚡ in {{token1}} or {{token2}}",
   "Zap-Title": "Zap Transaction",
   "Zap-Step-Deposit-1": "To balance a liquidity pair, swap {{valueFrom}} {{tokenFrom}} for {{valueTo}} {{tokenTo}} (±{{slippageTolerancePercentage}}% slippage and deposit fee, if any)",
-  "Zap-Step-Deposit-2": "Add liquidty to receive {{lpToken}}",
+  "Zap-Step-Deposit-2": "Add liquidity to receive {{lpToken}}",
   "Zap-Step-Deposit-3": "Deposit received {{lpToken}} into Beefy vault",
   "Zap-Step-Deposit-4": "Return unused trace amounts of {{token0}} and {{token1}} to your wallet",
   "Zap-Step-Withdraw-1": "Redeem {{mooToken}} token for {{lpToken}}",
@@ -260,6 +260,7 @@
   "QiDao-Content": "Use your mooTokens as collateral with Mai.finance and mint MAI with just a 0.5% repayment fee. Note that all loans are subject to liquidation risk.",
   "QiDao-Btn": "Lend {{mooToken}}",
   "Insurance-Title": "Insure your deposit",
+  "Insurance-SubTitle": "Insurace.io",
   "Insurance-Content": "InsurAce.io is a decentralized, multi-chain insurance protocol that protects users against smart contracts risk. Guarantee your deposits in return for a fee.",
   "Insurance-Btn": "Insure Vaults",
   "Moonpot-Title": "Win {{name}} & earn interest",
@@ -292,5 +293,9 @@
   "NetworkStatus-Title-RpcError": "RPC Errors",
   "NetworkStatus-HelpText-Error": "Some data may display incorrectly",
   "NetworkStatus-RpcError": "{{chain}} RPC failed",
-  "NetworkStatus-BeefyError": "Beefy API failed"
+  "NetworkStatus-BeefyError": "Beefy API failed",
+  "Nexus-SubTitle": "Nexus Mutual",
+  "Nexus-Title": "Cover your deposit",
+  "Nexus-Content": "Nexus Mutual is a blockchain-based alternative to traditional insurance. Become a mutual member to purchase comprehensive coverage for your Beefy positions.",
+  "Nexus-Btn": "Cover Vaults"
 }

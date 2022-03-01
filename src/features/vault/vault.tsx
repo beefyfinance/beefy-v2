@@ -33,6 +33,7 @@ import {
 import { selectPlatformById } from '../data/selectors/platforms';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
+import { Nexus } from './components/NexusCard';
 
 const useStyles = makeStyles(styles as any);
 
@@ -112,6 +113,9 @@ const VaultContent = React.memo(() => {
                   </Button>
                 </Box>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
+              </Box>
+              <Box>
+                <Nexus />
               </Box>
               {isQidao && (
                 <Box>

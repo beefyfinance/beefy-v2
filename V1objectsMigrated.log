@@ -42,6 +42,14 @@
     "EOLd": true
   },
   {
+    "id": "avax vault: ripae-pavax-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: ripae-pae-wavax",
+    "type": "Added"
+  },
+  {
     "id": "avax vault: png-acre-wavax",
     "type": "Added"
   },
@@ -54,19 +62,11 @@
     "type": "Added"
   },
   {
-    "id": "moonriver vault: sushi-mr-eth-usdt-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: sushi-mr-mim-wmovr-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-matic-wmovr-eol",
-    "type": "synced"
-  },
-  {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
+  },
+  {
+    "id": "avax boost: moo_curve-avax-atricrypto-ripae",
+    "type": "Added"
   }
 ]
