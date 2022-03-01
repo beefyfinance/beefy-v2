@@ -7,6 +7,8 @@ export const styles = theme => ({
     display: 'flex',
     '& img': {
       marginRight: theme.spacing(2),
+      height: 48,
+      width: 48,
     },
   },
   title: {

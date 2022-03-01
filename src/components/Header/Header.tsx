@@ -1,3 +1,6 @@
+import React, { Suspense, useState } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   AppBar,
   Box,
@@ -14,11 +17,7 @@ import {
 import { Close, Menu } from '@material-ui/icons';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import React, { Suspense, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import { ChainEntity } from '../../features/data/entities/chain';
 import {
   selectCurrentChainId,
   selectIsNetworkSupported,
@@ -27,6 +26,7 @@ import {
 import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { LanguageDropdown } from '../LanguageDropdown';
+import { ChainEntity } from '../../features/data/entities/chain';
 import { NetworkStatus } from '../NetworkStatus';
 import { Transak } from '../Transak';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
@@ -114,7 +114,6 @@ export const Header = connect((state: BeefyState) => {
     currentChainId: ChainEntity['id'] | null;
   }) => {
     const classes = useStyles();
-    const { t } = useTranslation();
 
     const isMobile = useMediaQuery('(max-width: 500px)');
 
@@ -126,7 +125,7 @@ export const Header = connect((state: BeefyState) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
           {!isNetworkSupported && <UnsupportedNetwork />}
-          <Container maxWidth="lg">
+          <Container className={classes.container} maxWidth="lg">
             <Toolbar disableGutters={true}>
               <Box sx={{ flexGrow: 1 }}>
                 <Link className={classes.beefy} to="/">

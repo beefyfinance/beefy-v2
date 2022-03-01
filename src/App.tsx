@@ -11,7 +11,7 @@ import { replayReduxActions } from './features/data/middlewares/debug/debug-repl
 import { CowLoader } from './components/CowLoader';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
-const BeefyAvatars = React.lazy(() => import(`./features/beefyAvatars`));
+// const BeefyAvatars = React.lazy(() => import(`./features/beefyAvatars`));
 
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 

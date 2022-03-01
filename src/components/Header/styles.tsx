@@ -1,6 +1,5 @@
 export const styles = theme => ({
   navHeader: {
-    paddingTop: '20px',
     background: 'transparent',
     boxShadow: 'none',
     '&:hover .MuiListItem-button': {
@@ -14,6 +13,10 @@ export const styles = theme => ({
   },
   hasPortfolio: {
     backgroundColor: theme.palette.background.header,
+  },
+  container: {
+    paddingTop: '12px',
+    paddingBottom: '12px',
   },
   mobileMenu: {
     width: 250,
@@ -72,6 +75,7 @@ export const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: theme.spacing(3),
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
     },
@@ -88,8 +92,10 @@ export const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
+      marginRight: theme.spacing(2),
     },
     '& img': {
       height: '18px',
@@ -98,7 +104,7 @@ export const styles = theme => ({
     '& .MuiTypography-root': {
       fontWeight: 700,
       color: theme.palette.text.disabled,
-    }
+    },
   },
   drawerBlack: {
     backgroundColor: '#0D0E14',
