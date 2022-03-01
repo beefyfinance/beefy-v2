@@ -114,6 +114,7 @@ export const Header = connect((state: BeefyState) => {
     currentChainId: ChainEntity['id'] | null;
   }) => {
     const classes = useStyles();
+    const { t } = useTranslation();
 
     const isMobile = useMediaQuery('(max-width: 500px)');
 
