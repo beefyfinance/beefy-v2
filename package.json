@@ -55,7 +55,8 @@
     "tsc-watch": "tsc --watch",
     "ts-node": "ts-node",
     "analyze-bundles": "react-scripts build && source-map-explorer 'build/static/js/*.js'",
-    "analyze-sources": "madge --extensions js,jsx,ts,tsx  ./src --image madge.svg"
+    "analyze-sources": "madge --extensions js,jsx,ts,tsx  ./src --image madge.svg",
+    "sync": "node --loader ts-node/esm  src/scripts/migrateV1objects.mjs && yarn upgrade blockchain-addressbook --latest"
   },
   "eslintConfig": {
     "extends": [
