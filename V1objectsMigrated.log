@@ -1,20 +1,15 @@
 [
   {
-    "id": "bsc vault: cakev2-raca-busd",
+    "id": "bsc vault: charge-static-busd",
     "type": "Added"
+  },
+  {
+    "id": "bsc vault: cakev2-raca-busd",
+    "type": "REMOVED"
   },
   {
     "id": "bsc vault: charge-static-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-kae-wftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-beardhemian-brushsody",
-    "type": "Added"
+    "type": "REMOVED"
   },
   {
     "id": "fantom vault: ripae-pftm-ftm",
@@ -25,33 +20,44 @@
     "type": "synced"
   },
   {
-    "id": "polygon vault: quick-eth-cxeth",
+    "id": "fantom vault: boo-kae-wftm",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-beardhemian-brushsody",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon vault: quick-hbar[0x]-mimatic",
     "type": "Added"
+  },
+  {
+    "id": "polygon vault: quick-eth-cxeth",
+    "type": "REMOVED"
   },
   {
     "id": "polygon vault: quick-cxada-cxeth",
-    "type": "Added"
+    "type": "REMOVED"
   },
   {
     "id": "polygon vault: quick-cxdoge-cxeth",
-    "type": "Added"
+    "type": "REMOVED"
   },
   {
     "id": "polygon vault: quick-hbar[0x]-mimatic-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "REMOVED"
   },
   {
     "id": "avax vault: png-acre-wavax",
-    "type": "Added"
+    "type": "REMOVED"
   },
   {
     "id": "avax vault: png-bribe-wavax",
-    "type": "Added"
+    "type": "REMOVED"
   },
   {
     "id": "avax vault: png-tus-wavax",
-    "type": "Added"
+    "type": "REMOVED"
   },
   {
     "id": "moonriver vault: sushi-mr-eth-usdt-eol",
