@@ -44,4 +44,7 @@ export const styles = theme => ({
   loading: {
     paddingTop: '4px',
   },
+  blurred: {
+    filter: 'blur(.5rem)',
+  },
 });

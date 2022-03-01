@@ -1,6 +1,6 @@
-import React, { Suspense, useCallback, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import {
   makeStyles,
   AppBar,
@@ -21,7 +21,6 @@ import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
 import { LanguageDropdown } from '../LanguageDropdown';
-import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
 import { UnsupportedNetwork } from '../UnsupportedNetwork';
 import { Transak } from '../Transak';
 import { BeefyState } from '../../redux-types';
@@ -32,7 +31,6 @@ import {
 } from '../../features/data/selectors/wallet';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { selectAllChains } from '../../features/data/selectors/chains';
-import { askForNetworkChange } from '../../features/data/actions/wallet';
 import { NetworkStatus } from '../NetworkStatus';
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
@@ -89,28 +87,17 @@ const NavLinks = () => {
   );
 };
 
-const ActiveChain = ({value}: {value: string}) => {
+const ActiveChain = ({ value }: { value: string }) => {
   const classes = useStyles();
   return (
-    <div
-      className={classes.chain}
-      style={{ textDecoration: 'none' }}>
+    <div className={classes.chain} style={{ textDecoration: 'none' }}>
       <img alt={value} src={require(`../../images/networks/${value}.svg`).default} />{' '}
       <Typography variant="body1" noWrap={true}>
         {value.toLocaleUpperCase()}
       </Typography>
     </div>
   );
-}
-
-function renderChainListValue(value: string) {
-  return (
-    <>
-      <img alt={value} src={require(`../../images/networks/${value}.svg`).default} />{' '}
-      {value.toLocaleUpperCase()}
-    </>
-  );
-}
+};
 
 export const Header = connect((state: BeefyState) => {
   const isNetworkSupported = selectIsNetworkSupported(state);
@@ -130,9 +117,7 @@ export const Header = connect((state: BeefyState) => {
     currentChainId: ChainEntity['id'] | null;
     chains: ChainEntity[];
   }) => {
-    const dispatch = useDispatch();
     const classes = useStyles();
-    const { t } = useTranslation();
 
     const isMobile = useMediaQuery('(max-width: 500px)');
 
@@ -140,22 +125,11 @@ export const Header = connect((state: BeefyState) => {
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
     };
-
-    const updateNetwork = useCallback(
-      chainId => dispatch(askForNetworkChange({ chainId })),
-      [dispatch]
-    );
-
-    const chainValues = chains.reduce((agg, chain) => {
-      agg[chain.id] = chain.name;
-      return agg;
-    }, {});
-
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
           {!isNetworkSupported && <UnsupportedNetwork />}
-          <Container maxWidth="lg">
+          <Container className={classes.container} maxWidth="lg">
             <Toolbar disableGutters={true}>
               <Box sx={{ flexGrow: 1 }}>
                 <Link className={classes.beefy} to="/">
@@ -178,7 +152,7 @@ export const Header = connect((state: BeefyState) => {
                 <Hidden mdDown>
                   <BifiPrice />
                   <Box>
-                    <LanguageDropdown />
+                    <LanguageDropdown isWalletConnected={isWalletConnected} />
                   </Box>
                   {isWalletConnected && (
                     <Box mr={3}>
@@ -250,7 +224,7 @@ export const Header = connect((state: BeefyState) => {
                         //   label={t('Chain')}
                         // />
                       )}
-                      <LanguageDropdown />
+                      <LanguageDropdown isWalletConnected={isWalletConnected} />
                     </Box>
                   </Box>
                 </Drawer>
