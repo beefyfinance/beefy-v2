@@ -19,7 +19,7 @@ describe('Formatter tests', () => {
 
   it('format Big numbers usd properly', () => {
     expect(formatBigUsd(new BigNumber('0'))).toBe('$0');
-    expect(formatBigUsd(new BigNumber('0.0001'))).toBe('$0');
+    expect(formatBigUsd(new BigNumber('0.0001'))).toBe('$0.012');
     expect(formatBigUsd(new BigNumber('10.6001'))).toBe('$10.60');
     expect(formatBigUsd(new BigNumber('999.0001'))).toBe('$999');
     expect(formatBigUsd(new BigNumber('999.02001'))).toBe('$999');
