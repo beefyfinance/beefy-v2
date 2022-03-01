@@ -44,7 +44,7 @@ export const LanguageDropdown = ({ isWalletConnected }: { isWalletConnected?: bo
 
   return (
     <SimpleDropdown
-      className={classes.lenguageCustom}
+      className={classes.languageCustom}
       noBorder={true}
       list={localeToLanguageMap}
       selected={language}

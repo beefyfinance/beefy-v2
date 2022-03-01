@@ -1,5 +1,5 @@
 export const styles = theme => ({
-  lenguageCustom: {
+  languageCustom: {
     marginRight: theme.spacing(3),
     '& .MuiSelect-select': {
       padding: '12px 30px 0px 0px',
