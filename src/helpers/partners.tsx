@@ -11,11 +11,9 @@ const QiDao = [
 const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriver', 'polygon'];
 
 const LaCucina = [
-  'mdex-lac-busd',
-  'banana-btcb-bnb',
-  'ellipsis-renbtc',
-  'auto-btcb-eth',
-  'cakev2-cake-bnb',
+  { id: 'mdex-lac-busd', ovenId: '8f0304f1-cef0-4808-9caa-d6ede4037fba' },
+  { id: 'cakev2-bifi-bnb', ovenId: '2d126032-7d6b-4fd2-939b-f2f06196200e' },
+  { id: 'banana-btcb-bnb', ovenId: '5d5e1467-2333-4c8f-a461-677d892613f6' },
 ];
 
 const Moonpot = [
