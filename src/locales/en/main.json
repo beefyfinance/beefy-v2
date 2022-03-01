@@ -145,7 +145,7 @@
   "Zap-Promotion": "{{action}} your LP or️ ZAP⚡ in {{token1}} or {{token2}}",
   "Zap-Title": "Zap Transaction",
   "Zap-Step-Deposit-1": "To balance a liquidity pair, swap {{valueFrom}} {{tokenFrom}} for {{valueTo}} {{tokenTo}} (±{{slippageTolerancePercentage}}% slippage and deposit fee, if any)",
-  "Zap-Step-Deposit-2": "Add liquidty to receive {{lpToken}}",
+  "Zap-Step-Deposit-2": "Add liquidity to receive {{lpToken}}",
   "Zap-Step-Deposit-3": "Deposit received {{lpToken}} into Beefy vault",
   "Zap-Step-Deposit-4": "Return unused trace amounts of {{token0}} and {{token1}} to your wallet",
   "Zap-Step-Withdraw-1": "Redeem {{mooToken}} token for {{lpToken}}",
