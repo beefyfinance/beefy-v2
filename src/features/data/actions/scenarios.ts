@@ -56,9 +56,6 @@ export async function initHomeDataV4(store: BeefyStore) {
   // we can start fetching prices right now and await them later
   const pricesPromise = store.dispatch(fetchAllPricesAction({}));
 
-  // pre-load the addressbook
-  const addressBookPromise = store.dispatch(fetchAllAddressBookAction({}));
-
   // create the wallet instance as soon as we get the chain list
   setTimeout(async () => {
     // we can start fetching apy, it will arrive when it wants, nothing depends on it
@@ -80,6 +77,8 @@ export async function initHomeDataV4(store: BeefyStore) {
 
   // we need config data (for contract addresses) to start querying the rest
   await chainListPromise;
+  // pre-load the addressbook
+  const addressBookPromise = store.dispatch(fetchAllAddressBookAction({}));
   // we need the chain list to handle the vault list
   store.dispatch((await vaultListFulfill)());
   await boostListPromise;
