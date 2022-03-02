@@ -117,14 +117,6 @@ const VaultContent = React.memo(() => {
                 </Box>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </Box>
-              <Box>
-                <Nexus />
-              </Box>
-              {isQidao && (
-                <Box>
-                  <QiDao vaultId={vaultId} />
-                </Box>
-              )}
               {isBeFtm && (
                 <Box>
                   <BeFtm vaultId={vaultId} />
@@ -133,6 +125,14 @@ const VaultContent = React.memo(() => {
               {isBinSpirit && (
                 <Box>
                   <SpiritCard vaultId={vaultId} />
+                </Box>
+              )}
+              <Box>
+                <Nexus />
+              </Box>
+              {isQidao && (
+                <Box>
+                  <QiDao vaultId={vaultId} />
                 </Box>
               )}
               {isMoonpot && (
