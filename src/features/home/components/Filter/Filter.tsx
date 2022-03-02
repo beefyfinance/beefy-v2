@@ -115,6 +115,12 @@ const _Filter = () => {
     dispatch(filteredVaultsActions.reset());
   }, [dispatch]);
 
+  React.useEffect(() => {
+    if (filterOptions.reseted) {
+      setLocalSearchText('');
+    }
+  }, [filterOptions.reseted, setLocalSearchText]);
+
   const platforms = useSelector(selectAllPlatform);
   const platformTypes = useMemo(() => {
     const list = {
