@@ -32,6 +32,7 @@ run. To cut down onrepository pollution, the maintainer may avoid pushing this f
 the staging repository.
 
 Development
++ v0.7.0.6 AllTrades: hack handling of special moo_beFTM staking pool
 + v0.7.0.5 AllTrades: add Moonbeam blockchain
 + v0.7.0.4 AllTrades: add Aurora blockchain
 + v0.7.0.3 AllTrades: add Metis blockchain
@@ -629,12 +630,13 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 																							O_CHN.S_SRC].tokens.WNATIVE.symbol.slice( 1);
 		let s, o;
 		for (const O_SRC of oAO_SRC_BSTS[ O_CHN.S_SRC])	{
-			//if this is the Beefy earnings pool, loop for the next boost to analyze
+			//if this is the Beefy earnings pool or the unusual Fantom beFTM pool, loop for the 
+			//	next boost to analyze
 			const S_ID = O_SRC[ mS_PRPNM_ID];
 			if (S_ID.startsWith( 'bifi-') && S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? 
-																S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS)) && 
-																'BIFI' === O_SRC.token && (S_NTV === O_SRC.earnedToken ||  
-																'W' + S_NTV === O_SRC.earnedToken))
+															S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS)) && 
+															'BIFI' === O_SRC.token && (S_NTV === O_SRC.earnedToken ||  
+															'W' + S_NTV === O_SRC.earnedToken) || 'moo_beFTM' === S_ID)
 				continue;
 
 			let o_trgt;
