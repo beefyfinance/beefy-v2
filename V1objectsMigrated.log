@@ -1,72 +1,86 @@
 [
   {
-    "id": "bsc vault: cakev2-raca-busd",
+    "id": "fantom vault: wigo-wigo-ftm",
     "type": "Added"
   },
   {
-    "id": "bsc vault: charge-static-busd-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fantom vault: wigo-usdc-wigo",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-solid-wigo",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-tomb-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-beets-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-geist-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-treeb-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-crv-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-dai-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-usdc-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-fusdt-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-eth-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-eth-btc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-usdc-dai",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-usdc-fusdt",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-usdc-frax",
+    "type": "Added"
   },
   {
     "id": "fantom vault: boo-kae-wftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-beardhemian-brushsody",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: ripae-pftm-ftm",
     "type": "synced"
   },
   {
-    "id": "fantom vault: ripae-pae-ftm",
+    "id": "fantom vault: boo-ftm-multi",
     "type": "synced"
   },
   {
-    "id": "polygon vault: quick-eth-cxeth",
-    "type": "Added"
+    "id": "fantom vault: sushi-btc-eth",
+    "type": "synced"
   },
   {
-    "id": "polygon vault: quick-cxada-cxeth",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-cxdoge-cxeth",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-hbar[0x]-mimatic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: ripae-pavax-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: ripae-pae-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-acre-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-bribe-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-tus-wavax",
+    "id": "fantom boost: moo_binSPIRIT-wigoswap",
     "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
-  },
-  {
-    "id": "avax boost: moo_curve-avax-atricrypto-ripae",
-    "type": "Added"
   }
 ]
