@@ -76,7 +76,7 @@ export const pools = [
     network: "fantom"
   },
 	{
-    id: 'moo_beFTM',
+    id: 'beefy-beFTM-earnings',
     logo: 'single-assets/beFTM.svg',
     name: 'beFTM Earnings Pool',
     token: 'beFTM',
