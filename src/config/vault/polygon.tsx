@@ -8482,7 +8482,121 @@ export const pools = [
     retiredReason: "tvl"
   },
   {
-    id: "quick-hbar[0x]-mimatic",
+    id: "quick-eth-cxeth",
+    name: "ETH-cxETH LP",
+    token: "ETH-cxETH QLP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0xda7cd765DF426fCA6FB5E1438c78581E4e66bFe7",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickETH-cxETH",
+    earnedTokenAddress: "0x5027da71EA7679775C3870A508cB1CdEFDbECa25",
+    earnContractAddress: "0x5027da71EA7679775C3870A508cB1CdEFDbECa25",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-eth-cxeth",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "ETH",
+      "cxETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xfe4546feFe124F30788c4Cc1BB9AA6907A7987F9",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
+    createdAt: 1645899124,
+    network: "polygon"
+  },
+  {
+    id: "quick-cxada-cxeth",
+    name: "cxADA-cxETH LP",
+    token: "cxADA-cxETH QLP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0xfeC2385b26a4446A7813d16263348FdE7E99FEe4",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickcxADA-cxETH",
+    earnedTokenAddress: "0xFe4519d295089aC689a6EC6779De4740c06D4707",
+    earnContractAddress: "0xFe4519d295089aC689a6EC6779De4740c06D4707",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-cxada-cxeth",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "cxADA",
+      "cxETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x64875Aaa68d1d5521666C67d692Ee0B926b08b2F/0xfe4546feFe124F30788c4Cc1BB9AA6907A7987F9",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x64875aaa68d1d5521666c67d692ee0b926b08b2f&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
+    createdAt: 1645967761,
+    network: "polygon"
+  },
+  {
+    id: "quick-cxdoge-cxeth",
+    name: "cxDOGE-cxETH LP",
+    token: "cxDOGE-cxETH QLP",
+    tokenDescription: "QuickSwap",
+    tokenAddress: "0x96A523d3576b9b1DfEE49AA73723F64A5b553720",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooQuickcxDOGE-cxETH",
+    earnedTokenAddress: "0x87F322dD9c327B4F91A7D620EE6ED7FA883Af62f",
+    earnContractAddress: "0x87F322dD9c327B4F91A7D620EE6ED7FA883Af62f",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "quick-cxdoge-cxeth",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "QuickSwap",
+    assets: [
+      "cxDOGE",
+      "cxETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://quickswap.exchange/#/add/0x9Bd9aD490dD3a52f096D229af4483b94D63BE618/0xfe4546feFe124F30788c4Cc1BB9AA6907A7987F9",
+    buyTokenUrl: "https://quickswap.exchange/#/swap?inputCurrency=0x9bd9ad490dd3a52f096d229af4483b94d63be618&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
+    createdAt: 1645982670,
+    network: "polygon"
+  },
+  {
+    id: "quick-hbar[0x]-mimatic-eol",
     name: "HBAR-MAI LP",
     token: "HBAR-MAI LP",
     tokenDescription: "QuickSwap",
@@ -8497,7 +8611,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "quick-hbar[0x]-mimatic",
     depositsPaused: false,
-    status: "active",
+    status: "eol",
     platform: "QuickSwap",
     assets: [
       "HBAR",
@@ -8517,6 +8631,7 @@ export const pools = [
     addLiquidityUrl: "https://quickswap.exchange/#/add/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1/0x1646C835d70F76D9030DF6BaAeec8f65c250353d",
     buyTokenUrl: "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&inputCurrency=0x1646C835d70F76D9030DF6BaAeec8f65c250353d",
     createdAt: 1640281632,
-    network: "polygon"
+    network: "polygon",
+    retireReason: "rewards"
   }
 ];

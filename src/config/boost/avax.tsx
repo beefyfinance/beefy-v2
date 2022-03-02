@@ -86,5 +86,32 @@ export const pools = [
         }
       }
     ]
+  },
+  {
+    id: "moo_curve-avax-atricrypto-ripae",
+    poolId: "curve-avax-atricrypto",
+    name: "Ripae",
+    logo: "uncategorized/ATRICRYPTO.png",
+    earnedToken: "PAE",
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: "0x9466Ab927611725B9AF76b9F31B2F879Ff14233d",
+    earnContractAddress: "0xc4C291b76F9aD94F0Ce57E7a5E629D81A02bB1C9",
+    earnedOracle: "tokens",
+    earnedOracleId: "PAE",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/ripae/logo.png",
+        background: "stake/ripae/bg.png",
+        text: "Ripae’s mission is to construct a cross-chain algorithmic stablecoin (ASC) economy and connect DeFi networks to make open finance capital efficient and accessible to everyone.\n\nWith its experienced team, Ripae Finance will strive to build DeFi’s most convenient, secure, fair, and cost-effective ASC solution in order to help the industry thrive by enabling all participants to work together effortlessly.",
+        website: "https://avax.ripae.finance/",
+        social: {
+          telegram: "https://discord.gg/6zq53FB4TS",
+          twitter: "https://twitter.com/ripaefinance"
+        }
+      }
+    ]
   }
 ];
