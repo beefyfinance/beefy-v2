@@ -21,9 +21,11 @@ import {
   TrxReceipt,
 } from '../reducers/wallet/wallet-action';
 import {
+  selectBoostUserBalanceInToken,
   selectBoostUserRewardsInToken,
   selectGovVaultPendingRewardsInToken,
   selectGovVaultRewardsTokenEntity,
+  selectGovVaultUserStackedBalanceInOracleToken,
 } from '../selectors/balance';
 import {
   selectChainNativeToken,
@@ -479,7 +481,8 @@ const exitGovVault = (vault: VaultGov) => {
       return;
     }
 
-    const amount = selectGovVaultPendingRewardsInToken(state, vault.id);
+    const balanceAmount = selectGovVaultUserStackedBalanceInOracleToken(state, vault.id);
+    const rewardAmount = selectGovVaultPendingRewardsInToken(state, vault.id);
     const token = selectGovVaultRewardsTokenEntity(state, vault.id);
 
     const walletApi = await getWalletConnectApiInstance();
@@ -488,12 +491,18 @@ const exitGovVault = (vault: VaultGov) => {
 
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
 
-    const transaction = contract.methods.exit().send({ from: address });
+    /**
+     * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
+     * so if there is only rewards left getReward() should be called instead of exit()
+     */
+    const transaction = balanceAmount.gt(0)
+      ? contract.methods.exit().send({ from: address })
+      : contract.methods.getReward().send({ from: address });
 
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token },
+      { spender: contractAddr, amount: rewardAmount, token },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
@@ -547,7 +556,8 @@ const exitBoost = (boost: BoostEntity) => {
       return;
     }
 
-    const amount = selectBoostUserRewardsInToken(state, boost.id);
+    const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
+    const rewardAmount = selectBoostUserRewardsInToken(state, boost.id);
     const token = selectTokenById(state, boost.chainId, boost.earnedTokenId);
     const vault = selectVaultById(state, boost.vaultId);
 
@@ -557,12 +567,18 @@ const exitBoost = (boost: BoostEntity) => {
 
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
 
-    const transaction = contract.methods.exit().send({ from: address });
+    /**
+     * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
+     * so if there is only rewards left getReward() should be called instead of exit()
+     */
+    const transaction = boostAmount.gt(0)
+      ? contract.methods.exit().send({ from: address })
+      : contract.methods.getReward().send({ from: address });
 
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token },
+      { spender: contractAddr, amount: rewardAmount, token },
       {
         chainId: boost.chainId,
         spenderAddress: contractAddr,
