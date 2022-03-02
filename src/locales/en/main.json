@@ -306,5 +306,6 @@
   "Nexus-SubTitle": "Nexus Mutual",
   "Nexus-Title": "Cover your deposit",
   "Nexus-Content": "Nexus Mutual is a blockchain-based alternative to traditional insurance. Become a mutual member to purchase comprehensive coverage for your Beefy positions.",
-  "Nexus-Btn": "Cover Vaults"
+  "Nexus-Btn": "Cover Vaults",
+  "beFTM-description": "beFTM simply means Beefy Escrowed Fantom. The token is pegged to FTM and can be staked on the Beefy platform and farms on major DEXs. beFTM gives stakers access to maximized validator rewards that typically aren’t available to the individual investor without locking FTM for 1 year."
 }

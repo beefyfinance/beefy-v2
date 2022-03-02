@@ -28,19 +28,21 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
         <div style={{ display: 'flex' }}>
           <CardTitle title={t('Gov-Pool')} subtitle={''} />
         </div>
-        <div className={classes.cardActions}>
+        {/* <div className={classes.cardActions}>
           <div className={classes.cardAction}>
             <LinkButton href={`/`} text={t('Gov-Learn')} />
           </div>
-        </div>
+        </div> */}
       </CardHeader>
       <CardContent>
         <Typography className={classes.text}>
-          {t('Gov-Info1') +
-            earnedToken.symbol +
-            t('Gov-Info2') +
-            earnedToken.symbol +
-            t('Gov-Info3')}
+          {vaultId === 'beefy-beFTM-earnings'
+            ? t('beFTM-description')
+            : t('Gov-Info1') +
+              earnedToken.symbol +
+              t('Gov-Info2') +
+              earnedToken.symbol +
+              t('Gov-Info3')}
         </Typography>
       </CardContent>
     </Card>
