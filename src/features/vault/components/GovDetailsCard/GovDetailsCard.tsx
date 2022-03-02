@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../../../../components/LinkButton';
+// import { LinkButton } from '../../../../components/LinkButton';
 import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
