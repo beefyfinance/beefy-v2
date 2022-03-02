@@ -304,7 +304,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 <FormControlLabel
                   key={i}
                   className={classes.depositTokenContainer}
-                  value={zapToken.symbol}
+                  value={zapToken.id}
                   control={<Radio />}
                   label={<TokenWithDeposit convertAmountTo={zapToken.id} vaultId={vaultId} />}
                   disabled={!formReady}
