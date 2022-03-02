@@ -1,83 +1,11 @@
 [
   {
-    "id": "fantom vault: wigo-wigo-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-usdc-wigo",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-solid-wigo",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-tomb-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-beets-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-geist-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-treeb-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-crv-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-dai-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-usdc-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-fusdt-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-eth-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-eth-btc",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-usdc-dai",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-usdc-fusdt",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-usdc-frax",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: boo-kae-wftm",
+    "id": "fantom vault: beefy-binspirit",
     "type": "synced"
   },
   {
-    "id": "fantom vault: boo-ftm-multi",
+    "id": "fantom vault: beefy-beFTM",
     "type": "synced"
-  },
-  {
-    "id": "fantom vault: sushi-btc-eth",
-    "type": "synced"
-  },
-  {
-    "id": "fantom boost: moo_binSPIRIT-wigoswap",
-    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
