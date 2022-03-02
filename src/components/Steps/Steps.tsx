@@ -98,6 +98,7 @@ const _Steps = ({
                   {steps.items[steps.currentStep].step === 'stake' && t('Stake-Done')}
                   {steps.items[steps.currentStep].step === 'unstake' && t('Unstake-Done')}
                   {steps.items[steps.currentStep].step === 'claim' && t('Claim-Done')}
+                  {steps.items[steps.currentStep].step === 'mint' && t('Mint-Done')}
                 </>
               )}
             </Typography>
@@ -215,6 +216,20 @@ const _Steps = ({
                     <Box className={classes.successContent}>
                       <Typography variant="body1" className={classes.message}>
                         {t('Transactn-Claimed', {
+                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          token: walletActionsState.data.token.symbol,
+                        })}
+                      </Typography>
+                      <TransactionLink vaultId={vaultId} />
+                    </Box>
+                  </>
+                )}
+              {steps.items[steps.currentStep].step === 'mint' &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={classes.successContent}>
+                      <Typography variant="body1" className={classes.message}>
+                        {t('Transactn-Minted', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
                           token: walletActionsState.data.token.symbol,
                         })}
