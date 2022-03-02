@@ -9,7 +9,7 @@ import {
   createWalletActionSuccessAction,
 } from '../../../data/reducers/wallet/wallet-action';
 import { selectWalletAddress } from '../../../data/selectors/wallet';
-import { SpiritToken } from './SpiritToken';
+import { BinSpiritToken } from './SpiritToken';
 
 export const spiritDeposit = (network, contractAddr, amount, max) => {
   return async (dispatch, getState) => {
@@ -33,8 +33,8 @@ export const spiritDeposit = (network, contractAddr, amount, max) => {
     })();
 
     const additionalData = {
-      amount: new BigNumber(amount).shiftedBy(-SpiritToken.decimals),
-      token: SpiritToken,
+      amount: new BigNumber(amount).shiftedBy(-BinSpiritToken.decimals),
+      token: BinSpiritToken,
     };
     transaction
       .on('transactionHash', function (hash) {

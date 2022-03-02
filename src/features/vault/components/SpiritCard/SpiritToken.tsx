@@ -12,6 +12,18 @@ export const SpiritToken: TokenErc20 = {
   type: 'erc20',
 };
 
+export const BinSpiritToken: TokenErc20 = {
+  id: 'binSPIRIT',
+  chainId: 'fantom',
+  contractAddress: '0x44e314190D9E4cE6d4C0903459204F8E21ff940A',
+  symbol: 'binSPIRIT',
+  decimals: 18,
+  buyUrl: null,
+  description: null,
+  website: null,
+  type: 'erc20',
+};
+
 export const binSpiritMintVault = {
   mintAdress: '0x44e314190D9E4cE6d4C0903459204F8E21ff940A',
 };
