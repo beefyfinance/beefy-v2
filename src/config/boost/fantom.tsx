@@ -285,5 +285,32 @@ export const pools = [
         null: "Ripae’s mission is to construct a cross-chain algorithmic stablecoin (ASC) economy and connect DeFi networks to make open finance capital efficient and accessible to everyone.\n\nWith its experienced team, Ripae Finance will strive to build DeFi’s most convenient, secure, fair, and cost-effective ASC solution in order to help the industry thrive by enabling all participants to work together effortlessly."
       }
     ]
+  },
+  {
+    id: "moo_binSPIRIT-wigoswap",
+    poolId: "beefy-binspirit",
+    name: "WigoSwap",
+    logo: "single-assets/binSPIRIT.svg",
+    earnedToken: "WIGO",
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: "0xE992bEAb6659BFF447893641A378FbbF031C5bD6",
+    earnContractAddress: "0x80F442b0207Fbc58efBd55da37F2fCc134CAEE7B",
+    earnedOracle: "tokens",
+    earnedOracleId: "WIGO",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/wigoswap/logo.png",
+        background: "stake/wigoswap/bg.png",
+        text: "DeFi hub with LIFETIME farming earnings powered by Gamified Burning Mechanism (GBM). \nGBM comes in by utilizing burning function through increasing activities on platform and boosts the burning process.\nIt means that WigoSwap is able to continue minting tokens by constantly and automatically de-minting them. With the help of this mechanism, we will never reach the 2B hard-cap.",
+        website: "https://wigoswap.io/",
+        social: {
+          telegram: "https://t.me/wigoswap",
+          twitter: "https://twitter.com/wigoswap"
+        }
+      }
+    ]
   }
 ];
