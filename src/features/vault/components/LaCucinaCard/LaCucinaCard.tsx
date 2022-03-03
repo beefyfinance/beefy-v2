@@ -38,7 +38,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
               {t('LaCucina-Apr')}
             </Typography>
             <Typography className={classes.itemInfo} variant="h5">
-              {data.aprValue}
+              {data.aprValue ?? '0%'}
             </Typography>
           </Box>
           <Box>
@@ -56,7 +56,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
           </Typography>
           <Typography className={classes.itemInfo} variant="h5">
             <img src={LaCucinaToken} className={classes.token} alt="LaCucinaToken" />{' '}
-            {data.rewardTokenSymbol}
+            {data.rewardTokenSymbol ?? 'LAC'}
           </Typography>
         </Box>
         <a className={classes.link} target="_blank" rel="noreferrer" href={url}>
