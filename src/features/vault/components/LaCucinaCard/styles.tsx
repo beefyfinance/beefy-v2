@@ -27,6 +27,7 @@ export const styles = theme => ({
     padding: '12px 24px',
     backgroundColor: theme.palette.background.default,
     textTransform: 'none',
+    width: '100%',
   },
   subtitle: {
     color: theme.palette.text.disabled,
@@ -46,7 +47,7 @@ export const styles = theme => ({
     marginBottom: theme.spacing(3),
   },
   item: {
-    marginRight: theme.spacing(4),
+    width: '50%',
   },
   itemInfo: {
     color: theme.palette.text.secondary,
@@ -56,5 +57,9 @@ export const styles = theme => ({
   },
   token: {
     marginRight: theme.spacing(1),
+  },
+  link: {
+    textDecoration: 'none',
+    width: '100%',
   },
 });

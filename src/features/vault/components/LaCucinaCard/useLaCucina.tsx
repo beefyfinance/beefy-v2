@@ -1,15 +1,28 @@
 import React from 'react';
 import { getLaCucinaApi } from './laCucina';
 
+interface LaCucinaData {
+  aprValue: string;
+  rewardTokenSymbol: string;
+  expiryDate: Date;
+}
+
 export function useLaCucina(ovenId) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<LaCucinaData>({
+    aprValue: '',
+    rewardTokenSymbol: '',
+    expiryDate: new Date(0),
+  });
   const api = getLaCucinaApi();
 
   React.useEffect(() => {
     async function fetchData() {
-      const data = await api.getLaCucinaInfo(ovenId);
-      return data;
+      const { data } = await api.getLaCucinaInfo(ovenId);
+      setData({
+        aprValue: data.aprValue,
+        rewardTokenSymbol: data.rewardTokenSymbol,
+        expiryDate: new Date(data.expiryDate),
+      });
     }
     fetchData();
   }, [api, ovenId]);

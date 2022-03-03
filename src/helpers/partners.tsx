@@ -11,9 +11,21 @@ const QiDao = [
 const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriver', 'polygon'];
 
 const LaCucina = [
-  { id: 'mdex-lac-busd', ovenId: '8f0304f1-cef0-4808-9caa-d6ede4037fba' },
-  { id: 'cakev2-bifi-bnb', ovenId: '2d126032-7d6b-4fd2-939b-f2f06196200e' },
-  { id: 'banana-btcb-bnb', ovenId: '5d5e1467-2333-4c8f-a461-677d892613f6' },
+  {
+    id: 'mdex-lac-busd',
+    ovenId: '8f0304f1-cef0-4808-9caa-d6ede4037fba',
+    url: 'https://app.lacucina.io/oven-details/8f0304f1-cef0-4808-9caa-d6ede4037fba?isFeatured=false&isStaked=false',
+  },
+  {
+    id: 'cakev2-bifi-bnb',
+    ovenId: '2d126032-7d6b-4fd2-939b-f2f06196200e',
+    url: 'https://app.lacucina.io/oven-details/2d126032-7d6b-4fd2-939b-f2f06196200e?isFeatured=false&isStaked=false',
+  },
+  {
+    id: 'banana-btcb-bnb',
+    ovenId: '5d5e1467-2333-4c8f-a461-677d892613f6',
+    url: 'https://app.lacucina.io/oven-details/5d5e1467-2333-4c8f-a461-677d892613f6?isFeatured=false&isStaked=false',
+  },
 ];
 
 const Moonpot = [

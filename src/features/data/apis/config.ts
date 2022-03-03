@@ -65,6 +65,7 @@ export interface MoonpotConfig {
 export interface LaCucinaConfig {
   id: VaultEntity['id'];
   ovenId: string;
+  url: string;
 }
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];

@@ -11,6 +11,7 @@ import { useLaCucina } from './useLaCucina';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectLacucinaData } from '../../../data/selectors/partners';
+import { StakeCountdown } from '../BoostWidget/StakeCountdown';
 
 const useStyles = makeStyles(styles as any);
 
@@ -18,12 +19,12 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const { ovenId } = useSelector((state: BeefyState) => selectLacucinaData(state, vaultId));
+  const { ovenId, url } = useSelector((state: BeefyState) => selectLacucinaData(state, vaultId));
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data] = useLaCucina(ovenId);
   return (
     <Card>
+      {console.log(data)}
       <CardHeader className={classes.header}>
         <img className={classes.logo} src={LaCucinaLogo} alt="lacucina" />{' '}
       </CardHeader>
@@ -37,7 +38,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
               {t('LaCucina-Apr')}
             </Typography>
             <Typography className={classes.itemInfo} variant="h5">
-              475%
+              {data.aprValue}
             </Typography>
           </Box>
           <Box>
@@ -45,7 +46,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
               {t('LaCucina-Ends')}
             </Typography>
             <Typography className={classes.itemInfo} variant="h5">
-              4d 20h 57m
+              <StakeCountdown periodFinish={data.expiryDate} />
             </Typography>
           </Box>
         </Box>
@@ -54,11 +55,13 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
             {t('LaCucina-Earn')}
           </Typography>
           <Typography className={classes.itemInfo} variant="h5">
-            <img src={LaCucinaToken} className={classes.token} alt="LaCucinaToken" /> LAC
+            <img src={LaCucinaToken} className={classes.token} alt="LaCucinaToken" />{' '}
+            {data.rewardTokenSymbol}
           </Typography>
         </Box>
-
-        <Button className={classes.btn}>{t('LaCucina-Btn')}</Button>
+        <a className={classes.link} target="_blank" rel="noreferrer" href={url}>
+          <Button className={classes.btn}>{t('LaCucina-Btn')}</Button>
+        </a>
       </CardContent>
     </Card>
   );

@@ -15,6 +15,7 @@ export type FilteredVaultsState = {
   onlyRetired: boolean;
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
+  onlyLaCucina: boolean;
 };
 const initialFilteredVaultsState: FilteredVaultsState = {
   sort: 'default',
@@ -27,6 +28,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyRetired: false,
   onlyMoonpot: false,
   onlyBoosted: false,
+  onlyLaCucina: false,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -62,6 +64,9 @@ export const filteredVaultsSlice = createSlice({
     },
     setOnlyMoonpot(sliceState, action: PayloadAction<FilteredVaultsState['onlyMoonpot']>) {
       sliceState.onlyMoonpot = action.payload;
+    },
+    setOnlyLaCucina(sliceState, action: PayloadAction<FilteredVaultsState['onlyLaCucina']>) {
+      sliceState.onlyLaCucina = action.payload;
     },
     setOnlyBoosted(sliceState, action: PayloadAction<FilteredVaultsState['onlyBoosted']>) {
       sliceState.onlyBoosted = action.payload;

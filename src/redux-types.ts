@@ -1,5 +1,4 @@
 import { EnhancedStore, CombinedState, MiddlewareArray, AnyAction } from '@reduxjs/toolkit';
-import { Dispatch } from 'react';
 import { ThunkMiddleware } from 'redux-thunk';
 import { ApyState } from './features/data/reducers/apy';
 import { BoostsState } from './features/data/reducers/boosts';
