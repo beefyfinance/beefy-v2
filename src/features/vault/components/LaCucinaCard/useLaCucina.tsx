@@ -8,24 +8,25 @@ interface LaCucinaData {
 }
 
 export function useLaCucina(ovenId) {
-  const [data, setData] = React.useState<LaCucinaData>({
-    aprValue: '',
-    rewardTokenSymbol: '',
+  const [state, setState] = React.useState<LaCucinaData>({
+    aprValue: '0%',
+    rewardTokenSymbol: 'LAC',
     expiryDate: new Date(0),
   });
-  const api = getLaCucinaApi();
 
   React.useEffect(() => {
     async function fetchData() {
-      const { data } = await api.getLaCucinaInfo(ovenId);
-      setData({
-        aprValue: data.aprValue,
-        rewardTokenSymbol: data.rewardTokenSymbol,
-        expiryDate: new Date(data.expiryDate),
+      const api = getLaCucinaApi();
+      const res = await api.getLaCucinaInfo(ovenId);
+      const expiryDate = new Date(parseInt(res.data.expiryDate) * 1000);
+      setState({
+        aprValue: res.data.aprValue,
+        rewardTokenSymbol: res.data.rewardTokenSymbol,
+        expiryDate,
       });
     }
     fetchData();
-  }, [api, ovenId]);
+  }, [ovenId]);
 
-  return [data];
+  return [state];
 }

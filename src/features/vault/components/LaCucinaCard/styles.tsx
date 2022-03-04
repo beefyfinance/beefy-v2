@@ -15,7 +15,8 @@ export const styles = theme => ({
   logo: {
     height: '50px',
   },
-  content: {
+  content: { color: theme.palette.text.secondary },
+  content1: {
     color: theme.palette.text.secondary,
     marginBottom: theme.spacing(3),
   },

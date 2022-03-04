@@ -24,7 +24,6 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
   const [data] = useLaCucina(ovenId);
   return (
     <Card>
-      {console.log(data)}
       <CardHeader className={classes.header}>
         <img className={classes.logo} src={LaCucinaLogo} alt="lacucina" />{' '}
       </CardHeader>
@@ -32,13 +31,16 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
         <Typography className={classes.content} variant="body1">
           {t('LaCucina-Content')}
         </Typography>
+        <Typography className={classes.content1} variant="body1">
+          {t('LaCucina-Content1')}
+        </Typography>
         <Box className={classes.info}>
           <Box className={classes.item}>
             <Typography variant="body2" className={classes.subtitle}>
               {t('LaCucina-Apr')}
             </Typography>
             <Typography className={classes.itemInfo} variant="h5">
-              {data.aprValue ?? '0%'}
+              {data.aprValue}
             </Typography>
           </Box>
           <Box>
@@ -56,7 +58,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
           </Typography>
           <Typography className={classes.itemInfo} variant="h5">
             <img src={LaCucinaToken} className={classes.token} alt="LaCucinaToken" />{' '}
-            {data.rewardTokenSymbol ?? 'LAC'}
+            {data.rewardTokenSymbol}
           </Typography>
         </Box>
         <a className={classes.link} target="_blank" rel="noreferrer" href={url}>
