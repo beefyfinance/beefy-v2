@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import { ScrollToTop } from './components/ScrollToTop';
 import { theme } from './theme';
@@ -33,7 +34,6 @@ export const App = () => {
       <Router>
         <ScrollToTop />
         <Header />
-
         <React.Suspense fallback={<CowLoader text="Loading" />}>
           <Switch>
             <Route exact path="/">
@@ -51,6 +51,7 @@ export const App = () => {
           </Switch>
         </React.Suspense>
       </Router>
+      <Footer />
     </ThemeProvider>
   );
 };
