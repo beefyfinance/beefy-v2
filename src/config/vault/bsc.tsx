@@ -19461,6 +19461,7 @@ export const pools = [
     oracle: "lps",
     oracleId: "charge-static-busd",
     oraclePrice: 0,
+    depositsPaused: false,
     status: "eol",
     platform: "Other",
     assets: [
@@ -19476,11 +19477,11 @@ export const pools = [
       "CONTRACTS_VERIFIED"
     ],
     stratType: "StratLP",
+    withdrawalFee: "0%",
     addLiquidityUrl: "https://pancakeswap.finance/add/0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     buyTokenUrl: "https://pancakeswap.finance/swap?outputCurrency=0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983",
-    network: "bsc",
-    withdrawalFee: "0%",
     createdAt: 1638426684,
+    network: "bsc",
     retireReason: "rewards"
   }
 ];

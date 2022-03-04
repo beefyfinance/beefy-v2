@@ -98,6 +98,7 @@ const _Steps = ({
                   {steps.items[steps.currentStep].step === 'stake' && t('Stake-Done')}
                   {steps.items[steps.currentStep].step === 'unstake' && t('Unstake-Done')}
                   {steps.items[steps.currentStep].step === 'claim' && t('Claim-Done')}
+                  {steps.items[steps.currentStep].step === 'mint' && t('Mint-Done')}
                 </>
               )}
             </Typography>
@@ -139,85 +140,104 @@ const _Steps = ({
           {steps.finished && (
             <>
               {/* Succes deposit */}
-              {steps.items[steps.currentStep].step === 'deposit' && (
-                <>
-                  <Box className={classes.successContent}>
-                    <Typography variant="body1" className={classes.message}>
-                      {t('Transactn-Success', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
-                        token: walletActionsState.data.token.symbol,
-                      })}
-                    </Typography>
-                    <TransactionLink vaultId={vaultId} />
-                  </Box>
-                  <Box pt={2}>
-                    <Typography variant="body1" className={classes.message}>
-                      <span>{t('Remember')}</span> {t('Remember-Msg')}
-                    </Typography>
-                  </Box>
-                </>
-              )}
+              {steps.items[steps.currentStep].step === 'deposit' &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={classes.successContent}>
+                      <Typography variant="body1" className={classes.message}>
+                        {t('Transactn-Success', {
+                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          token: walletActionsState.data.token.symbol,
+                        })}
+                      </Typography>
+                      <TransactionLink vaultId={vaultId} />
+                    </Box>
+                    <Box pt={2}>
+                      <Typography variant="body1" className={classes.message}>
+                        <span>{t('Remember')}</span> {t('Remember-Msg')}
+                      </Typography>
+                    </Box>
+                  </>
+                )}
               {/* Success Withdraw */}
               {(steps.items[steps.currentStep].step === 'withdraw' ||
-                steps.items[steps.currentStep].step === 'claim-withdraw') && (
-                <>
-                  <Box className={classes.successContent}>
-                    <Typography variant="body1" className={classes.message}>
-                      {t('Transactn-Withdrawal', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
-                        token: walletActionsState.data.token.symbol,
-                      })}
-                    </Typography>
-                    <TransactionLink vaultId={vaultId} />
-                  </Box>
-                </>
-              )}
+                steps.items[steps.currentStep].step === 'claim-withdraw') &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={classes.successContent}>
+                      <Typography variant="body1" className={classes.message}>
+                        {t('Transactn-Withdrawal', {
+                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          token: walletActionsState.data.token.symbol,
+                        })}
+                      </Typography>
+                      <TransactionLink vaultId={vaultId} />
+                    </Box>
+                  </>
+                )}
               {/* Boost Success */}
-              {steps.items[steps.currentStep].step === 'stake' && (
-                <>
-                  <Box className={classes.successContent}>
-                    <Typography variant="body1" className={classes.message}>
-                      {t('Transactn-Success-Bst', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
-                        token: walletActionsState.data.token.symbol,
-                      })}
-                    </Typography>
-                    <TransactionLink vaultId={vaultId} />
-                  </Box>
-                  <Box pt={2}>
-                    <Typography variant="body1" className={classes.message}>
-                      <span>{t('Remember')}</span> {t('Remember-Msg-Bst')}
-                    </Typography>
-                  </Box>
-                </>
-              )}
+              {steps.items[steps.currentStep].step === 'stake' &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={classes.successContent}>
+                      <Typography variant="body1" className={classes.message}>
+                        {t('Transactn-Success-Bst', {
+                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          token: walletActionsState.data.token.symbol,
+                        })}
+                      </Typography>
+                      <TransactionLink vaultId={vaultId} />
+                    </Box>
+                    <Box pt={2}>
+                      <Typography variant="body1" className={classes.message}>
+                        <span>{t('Remember')}</span> {t('Remember-Msg-Bst')}
+                      </Typography>
+                    </Box>
+                  </>
+                )}
               {(steps.items[steps.currentStep].step === 'unstake' ||
-                steps.items[steps.currentStep].step === 'claim-unstake') && (
-                <>
-                  <Box className={classes.successContent}>
-                    <Typography variant="body1" className={classes.message}>
-                      {t('Transactn-Withdrawal-Boost', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
-                        token: walletActionsState.data.token.symbol,
-                      })}
-                    </Typography>
-                    <TransactionLink vaultId={vaultId} />
-                  </Box>
-                </>
-              )}
-              {steps.items[steps.currentStep].step === 'claim' && (
-                <>
-                  <Box className={classes.successContent}>
-                    <Typography variant="body1" className={classes.message}>
-                      {t('Transactn-Claimed', {
-                        amount: formatBigDecimals(walletActionsState.data.amount, 2),
-                        token: walletActionsState.data.token.symbol,
-                      })}
-                    </Typography>
-                    <TransactionLink vaultId={vaultId} />
-                  </Box>
-                </>
-              )}
+                steps.items[steps.currentStep].step === 'claim-unstake') &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={classes.successContent}>
+                      <Typography variant="body1" className={classes.message}>
+                        {t('Transactn-Withdrawal-Boost', {
+                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          token: walletActionsState.data.token.symbol,
+                        })}
+                      </Typography>
+                      <TransactionLink vaultId={vaultId} />
+                    </Box>
+                  </>
+                )}
+              {steps.items[steps.currentStep].step === 'claim' &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={classes.successContent}>
+                      <Typography variant="body1" className={classes.message}>
+                        {t('Transactn-Claimed', {
+                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          token: walletActionsState.data.token.symbol,
+                        })}
+                      </Typography>
+                      <TransactionLink vaultId={vaultId} />
+                    </Box>
+                  </>
+                )}
+              {steps.items[steps.currentStep].step === 'mint' &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={classes.successContent}>
+                      <Typography variant="body1" className={classes.message}>
+                        {t('Transactn-Minted', {
+                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          token: walletActionsState.data.token.symbol,
+                        })}
+                      </Typography>
+                      <TransactionLink vaultId={vaultId} />
+                    </Box>
+                  </>
+                )}
               <Button className={classes.closeBtn} onClick={handleClose}>
                 {t('Transactn-Close')}
               </Button>

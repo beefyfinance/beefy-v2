@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js';
 import { ThunkAction } from 'redux-thunk';
 
 export type Step = {
@@ -10,7 +9,8 @@ export type Step = {
     | 'withdraw'
     | 'claim-unstake'
     | 'claim-withdraw'
-    | 'claim';
+    | 'claim'
+    | 'mint';
   message: string;
   action: ThunkAction<any, any, any, any>;
   pending: boolean;

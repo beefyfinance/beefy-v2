@@ -19,7 +19,8 @@ import {
   selectIsStandardVaultEarnTokenId,
   selectStandardVaultByEarnTokenId,
   selectVaultById,
-  selectVaultIdsByOracleId,
+  selectStandardVaultIdsByOracleId,
+  selectGovVaultVaultIdsByOracleId,
 } from '../../selectors/vaults';
 
 /**
@@ -220,8 +221,12 @@ function addTokenBalanceToState(
 
       // if the token is the oracleId of a vault
       // this means the user can deposit in a vault
-      const vaultIds = selectVaultIdsByOracleId(state, chainId, tokenBalance.tokenId);
-      for (const vaultId of vaultIds) {
+      const stdVaultIds = selectStandardVaultIdsByOracleId(state, chainId, tokenBalance.tokenId);
+      for (const vaultId of stdVaultIds) {
+        addOrRemoveFromEligibleList(walletState, tokenBalance.amount, vaultId);
+      }
+      const govVaultIds = selectGovVaultVaultIdsByOracleId(state, chainId, tokenBalance.tokenId);
+      for (const vaultId of govVaultIds) {
         addOrRemoveFromEligibleList(walletState, tokenBalance.amount, vaultId);
       }
     }

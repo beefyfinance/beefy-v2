@@ -3,6 +3,7 @@ import { ExpandMore } from '@material-ui/icons';
 import { isEmpty } from 'lodash';
 import { ReactNode } from 'react';
 import { styles } from './styles';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles as any);
 export function SimpleDropdown({
@@ -12,6 +13,7 @@ export function SimpleDropdown({
   renderValue,
   noBorder = false,
   label,
+  className,
 }: {
   list: Record<string, string>;
   selected: string;
@@ -19,6 +21,7 @@ export function SimpleDropdown({
   renderValue: (selectedId: string) => ReactNode;
   noBorder: boolean;
   label?: string;
+  className?: string;
 }) {
   const props = {
     noBorder: noBorder,
@@ -27,7 +30,7 @@ export function SimpleDropdown({
   const classes = useStyles(props);
 
   return (
-    <Box className={classes.select}>
+    <Box className={clsx({ [classes.select]: true, [className]: className ?? false })}>
       <FormControl>
         <Select
           labelId="chain-list-label"

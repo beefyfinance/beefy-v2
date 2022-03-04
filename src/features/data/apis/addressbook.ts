@@ -28,8 +28,16 @@ export const getChainAddressBook = memoize(
 
     const wnative = addressBook.tokens['WNATIVE'];
     const nativeSymbol = chain.walletSettings.nativeCurrency.symbol;
+
+    const addrBookEntries = Object.entries(addressBook.tokens);
+    if (addrBookEntries.length <= 0) {
+      throw new Error(
+        `Addressbook empty for chain ${chain.id}. You may need to run "yarn install"`
+      );
+    }
+
     // map to our own token entity
-    return Object.entries(addressBook.tokens).reduce((agg, [tokenId, bookToken]) => {
+    return addrBookEntries.reduce((agg, [tokenId, bookToken]) => {
       if (tokenId === 'WNATIVE') {
         agg[tokenId] = {
           id: wnative.symbol,

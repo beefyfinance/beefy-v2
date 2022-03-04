@@ -1,39 +1,36 @@
-import React, { Suspense, useCallback, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import {
-  makeStyles,
   AppBar,
-  Toolbar,
-  IconButton,
-  Hidden,
-  Drawer,
   Box,
   Container,
-  Typography,
   Divider,
+  Drawer,
+  Hidden,
+  IconButton,
+  makeStyles,
+  Toolbar,
+  Typography,
   useMediaQuery,
 } from '@material-ui/core';
-import { Menu, Close } from '@material-ui/icons';
-import { styles } from './styles';
-import { useTranslation } from 'react-i18next';
+import { Close, Menu } from '@material-ui/icons';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
-import { LanguageDropdown } from '../LanguageDropdown';
-import { SimpleDropdown } from '../SimpleDropdown/SimpleDropdown';
-import { UnsupportedNetwork } from '../UnsupportedNetwork';
-import { Transak } from '../Transak';
-import { BeefyState } from '../../redux-types';
+import { useTranslation } from 'react-i18next';
 import {
   selectCurrentChainId,
   selectIsNetworkSupported,
   selectIsWalletConnected,
 } from '../../features/data/selectors/wallet';
+import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
+import { BeefyState } from '../../redux-types';
+import { LanguageDropdown } from '../LanguageDropdown';
 import { ChainEntity } from '../../features/data/entities/chain';
-import { selectAllChains } from '../../features/data/selectors/chains';
-import { askForNetworkChange } from '../../features/data/actions/wallet';
 import { NetworkStatus } from '../NetworkStatus';
+import { Transak } from '../Transak';
+import { UnsupportedNetwork } from '../UnsupportedNetwork';
+import { styles } from './styles';
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
 
@@ -89,50 +86,34 @@ const NavLinks = () => {
   );
 };
 
-const ActiveChain = ({value}: {value: string}) => {
+const ActiveChain = ({ value }: { value: string }) => {
   const classes = useStyles();
   return (
-    <div
-      className={classes.chain}
-      style={{ textDecoration: 'none' }}>
+    <div className={classes.chain} style={{ textDecoration: 'none' }}>
       <img alt={value} src={require(`../../images/networks/${value}.svg`).default} />{' '}
       <Typography variant="body1" noWrap={true}>
         {value.toLocaleUpperCase()}
       </Typography>
     </div>
   );
-}
-
-function renderChainListValue(value: string) {
-  return (
-    <>
-      <img alt={value} src={require(`../../images/networks/${value}.svg`).default} />{' '}
-      {value.toLocaleUpperCase()}
-    </>
-  );
-}
+};
 
 export const Header = connect((state: BeefyState) => {
   const isNetworkSupported = selectIsNetworkSupported(state);
   const currentChainId = selectCurrentChainId(state);
-  const chains = selectAllChains(state);
   const isWalletConnected = selectIsWalletConnected(state);
-  return { isWalletConnected, isNetworkSupported, currentChainId, chains };
+  return { isWalletConnected, isNetworkSupported, currentChainId };
 })(
   ({
     isWalletConnected,
     isNetworkSupported,
     currentChainId,
-    chains,
   }: {
     isWalletConnected: boolean;
     isNetworkSupported: boolean;
     currentChainId: ChainEntity['id'] | null;
-    chains: ChainEntity[];
   }) => {
-    const dispatch = useDispatch();
     const classes = useStyles();
-    const { t } = useTranslation();
 
     const isMobile = useMediaQuery('(max-width: 500px)');
 
@@ -140,22 +121,11 @@ export const Header = connect((state: BeefyState) => {
     const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
     };
-
-    const updateNetwork = useCallback(
-      chainId => dispatch(askForNetworkChange({ chainId })),
-      [dispatch]
-    );
-
-    const chainValues = chains.reduce((agg, chain) => {
-      agg[chain.id] = chain.name;
-      return agg;
-    }, {});
-
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
           {!isNetworkSupported && <UnsupportedNetwork />}
-          <Container maxWidth="lg">
+          <Container className={classes.container} maxWidth="lg">
             <Toolbar disableGutters={true}>
               <Box sx={{ flexGrow: 1 }}>
                 <Link className={classes.beefy} to="/">
@@ -183,14 +153,6 @@ export const Header = connect((state: BeefyState) => {
                   {isWalletConnected && (
                     <Box mr={3}>
                       <ActiveChain value={currentChainId || 'bsc'} />
-                      {/* <SimpleDropdown
-                        noBorder={true}
-                        list={chainValues}
-                        selected={currentChainId || 'bsc'}
-                        renderValue={renderChainListValue}
-                        handler={updateNetwork}
-                        label={t('Chain')}
-                      /> */}
                     </Box>
                   )}
                 </Hidden>
@@ -239,17 +201,7 @@ export const Header = connect((state: BeefyState) => {
                       <BifiPrice />
                     </Box>
                     <Box mx={2} my={1} display="flex">
-                      {isWalletConnected && (
-                        <ActiveChain value={currentChainId || 'bsc'} />
-                        // <SimpleDropdown
-                        //   noBorder={true}
-                        //   renderValue={renderChainListValue}
-                        //   list={chainValues}
-                        //   selected={currentChainId || 'bsc'}
-                        //   handler={updateNetwork}
-                        //   label={t('Chain')}
-                        // />
-                      )}
+                      {isWalletConnected && <ActiveChain value={currentChainId || 'bsc'} />}
                       <LanguageDropdown />
                     </Box>
                   </Box>

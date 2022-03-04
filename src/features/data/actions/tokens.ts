@@ -39,6 +39,9 @@ export const fetchAllAddressBookAction = createAsyncThunk<
   { state: BeefyState }
 >('tokens/fetchAllAddressBookAction', async (_, { getState }) => {
   const chains = selectAllChains(getState());
+  if (chains.length <= 0) {
+    throw new Error(`Chain config not loaded. Load chain config first`);
+  }
   return Promise.all(
     chains.map(async chain => ({
       chainId: chain.id,

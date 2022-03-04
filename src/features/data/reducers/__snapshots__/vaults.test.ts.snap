@@ -11,13 +11,18 @@ Object {
         "fuse-fuse",
       ],
       "allRetiredIds": Array [],
-      "byEarnTokenId": Object {
-        "mooFuse": "fuse-fuse",
+      "govVault": Object {
+        "byOracleId": Object {},
       },
-      "byOracleId": Object {
-        "FUSE": Array [
-          "fuse-fuse",
-        ],
+      "standardVault": Object {
+        "byEarnTokenId": Object {
+          "mooFuse": "fuse-fuse",
+        },
+        "byOracleId": Object {
+          "FUSE": Array [
+            "fuse-fuse",
+          ],
+        },
       },
     },
   },
@@ -78,17 +83,26 @@ Object {
       "allRetiredIds": Array [
         "banana-banana-eol",
       ],
-      "byEarnTokenId": Object {
-        "mooApeBANANA": "banana-banana-eol",
-        "mooSushiYGG-ETH": "sushi-one-1ygg-1eth",
+      "govVault": Object {
+        "byOracleId": Object {
+          "BIFI": Array [
+            "one-bifi-gov",
+          ],
+        },
       },
-      "byOracleId": Object {
-        "BANANA": Array [
-          "banana-banana-eol",
-        ],
-        "sushi-one-1ygg-1eth": Array [
-          "sushi-one-1ygg-1eth",
-        ],
+      "standardVault": Object {
+        "byEarnTokenId": Object {
+          "mooApeBANANA": "banana-banana-eol",
+          "mooSushiYGG-ETH": "sushi-one-1ygg-1eth",
+        },
+        "byOracleId": Object {
+          "BANANA": Array [
+            "banana-banana-eol",
+          ],
+          "sushi-one-1ygg-1eth": Array [
+            "sushi-one-1ygg-1eth",
+          ],
+        },
       },
     },
   },

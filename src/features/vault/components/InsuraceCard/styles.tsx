@@ -12,6 +12,11 @@ export const styles = theme => ({
   title: {
     color: theme.palette.text.primary,
   },
+  subtitle: {
+    color: theme.palette.text.disabled,
+    textTransform: 'uppercase',
+    fontWeight: 600,
+  },
   content: {
     color: theme.palette.text.secondary,
     marginBottom: theme.spacing(3),

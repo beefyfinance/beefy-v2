@@ -1,7 +1,10 @@
+import { makeStyles } from '@material-ui/core';
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { localeToLanguageMap } from '../../i18n';
 import { SimpleDropdown } from '../SimpleDropdown';
+import { styles } from './styles';
+const useStyles = makeStyles(styles as any);
 
 const getSelectedLanguage = i18n => {
   const cachedLanguage = i18n.language;
@@ -26,10 +29,12 @@ const selectedRenderer = locale => {
   return locale.toUpperCase();
 };
 
-export const LanguageDropdown = props => {
+export const LanguageDropdown = () => {
   const { i18n } = useTranslation();
   const i18nLanguage = getSelectedLanguage(i18n);
   const [language, setLanguage] = React.useState(i18nLanguage);
+
+  const classes = useStyles();
 
   const handleSwitch = useCallback(newLanguage => i18n.changeLanguage(newLanguage), [i18n]);
 
@@ -39,6 +44,7 @@ export const LanguageDropdown = props => {
 
   return (
     <SimpleDropdown
+      className={classes.languageCustom}
       noBorder={true}
       list={localeToLanguageMap}
       selected={language}

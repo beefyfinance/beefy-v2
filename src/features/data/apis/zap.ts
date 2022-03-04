@@ -134,14 +134,18 @@ export async function estimateZapDeposit(
   const amount = state.ui.deposit.amount;
 
   const wnative = selectChainWrappedNativeToken(state, vault.chainId);
+  const native = selectChainNativeToken(state, vault.chainId);
 
   const tokenIn = selectTokenById(state, vault.chainId, inputTokenId);
   const tokenInContract = getZapAddress(tokenIn, wnative);
   const tokenInDecimals = getZapDecimals(tokenIn, wnative);
+
   const tokenOut =
-    tokenIn.id === vault.assetIds[0]
+    tokenIn.id === vault.assetIds[0] ||
+    (tokenIn.id === wnative.id && native.id === vault.assetIds[0])
       ? selectTokenById(state, vault.chainId, vault.assetIds[1])
-      : tokenIn.id === vault.assetIds[1]
+      : tokenIn.id === vault.assetIds[1] ||
+        (tokenIn.id === wnative.id && native.id === vault.assetIds[1])
       ? selectTokenById(state, vault.chainId, vault.assetIds[0])
       : tokenIn.id === wnative.id
       ? selectChainNativeToken(state, vault.chainId)
@@ -186,14 +190,17 @@ export const estimateZapWithdraw = async (
   const amount = state.ui.withdraw.amount;
 
   const wnative = selectChainWrappedNativeToken(state, vault.chainId);
+  const native = selectChainNativeToken(state, vault.chainId);
 
   const tokenOut = selectTokenById(state, vault.chainId, outputTokenId);
   const tokenOutAddress = getZapAddress(tokenOut, wnative);
   const tokenOutDecimals = getZapDecimals(tokenOut, wnative);
   const _tokenIn =
-    tokenOut.id === vault.assetIds[0]
+    tokenOut.id === vault.assetIds[0] ||
+    (tokenOut.id === wnative.id && native.id === vault.assetIds[0])
       ? selectTokenById(state, vault.chainId, vault.assetIds[1])
-      : tokenOut.id === vault.assetIds[1]
+      : tokenOut.id === vault.assetIds[1] ||
+        (tokenOut.id === wnative.id && native.id === vault.assetIds[1])
       ? selectTokenById(state, vault.chainId, vault.assetIds[0])
       : tokenOut.id === wnative.id
       ? selectChainNativeToken(state, vault.chainId)
@@ -226,8 +233,14 @@ export const estimateZapWithdraw = async (
     ],
   ]);
 
-  const reserveIn = tokenIn.contractAddress === pair.token0 ? pair.reserves[0] : pair.reserves[1];
-  const reserveOut = tokenOutAddress === pair.token1 ? pair.reserves[1] : pair.reserves[0];
+  const reserveIn =
+    tokenIn.contractAddress.toLocaleLowerCase() === pair.token0.toLocaleLowerCase()
+      ? pair.reserves[0]
+      : pair.reserves[1];
+  const reserveOut =
+    tokenOutAddress.toLocaleLowerCase() === pair.token1.toLocaleLowerCase()
+      ? pair.reserves[1]
+      : pair.reserves[0];
 
   const rawAmount = amount.shiftedBy(oracleToken.decimals);
   const equity = rawAmount.dividedBy(pair.totalSupply);

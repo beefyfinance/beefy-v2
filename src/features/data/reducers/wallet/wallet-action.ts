@@ -13,6 +13,10 @@ type MandatoryAdditionalData = {
 
 export type WalletActionsState =
   | {
+      result: null;
+      data: null;
+    }
+  | {
       result: 'error';
       data: { error: TrxError } & MandatoryAdditionalData;
     }

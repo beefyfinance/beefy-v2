@@ -35,11 +35,18 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
       allRetiredIds: VaultEntity['id'][];
 
       // used to find a vault by it's token for balance stuff
-      byOracleId: {
-        [tokenId: TokenEntity['id']]: VaultEntity['id'][];
+      standardVault: {
+        byOracleId: {
+          [tokenId: TokenEntity['id']]: VaultEntity['id'][];
+        };
+        byEarnTokenId: {
+          [tokenId: TokenEntity['id']]: VaultEntity['id'];
+        };
       };
-      byEarnTokenId: {
-        [tokenId: TokenEntity['id']]: VaultEntity['id'];
+      govVault: {
+        byOracleId: {
+          [tokenId: TokenEntity['id']]: VaultEntity['id'][];
+        };
       };
     };
   };
@@ -194,15 +201,27 @@ function addVaultToState(
       sliceState.byChainId[vault.chainId] = {
         allActiveIds: [],
         allRetiredIds: [],
-        byOracleId: {},
-        byEarnTokenId: {},
+        standardVault: {
+          byOracleId: {},
+          byEarnTokenId: {},
+        },
+        govVault: {
+          byOracleId: {},
+        },
       };
     }
+
+    const vaultState = sliceState.byChainId[vault.chainId];
     if (apiVault.status === 'eol' || apiVault.status === 'paused') {
-      sliceState.byChainId[vault.chainId].allRetiredIds.push(vault.id);
+      vaultState.allRetiredIds.push(vault.id);
     } else {
-      sliceState.byChainId[vault.chainId].allActiveIds.push(vault.id);
+      vaultState.allActiveIds.push(vault.id);
     }
+
+    if (!vaultState.govVault.byOracleId[vault.oracleId]) {
+      vaultState.govVault.byOracleId[vault.oracleId] = [];
+    }
+    vaultState.govVault.byOracleId[vault.oracleId].push(vault.id);
   } else {
     const oracleToken = getOracleTokenFromLegacyVaultConfig(
       selectChainById(state, chainId),
@@ -239,8 +258,13 @@ function addVaultToState(
       sliceState.byChainId[vault.chainId] = {
         allActiveIds: [],
         allRetiredIds: [],
-        byOracleId: {},
-        byEarnTokenId: {},
+        standardVault: {
+          byOracleId: {},
+          byEarnTokenId: {},
+        },
+        govVault: {
+          byOracleId: {},
+        },
       };
     }
     const vaultState = sliceState.byChainId[vault.chainId];
@@ -250,11 +274,11 @@ function addVaultToState(
       vaultState.allActiveIds.push(vault.id);
     }
 
-    if (!vaultState.byOracleId[vault.oracleId]) {
-      vaultState.byOracleId[vault.oracleId] = [];
+    if (!vaultState.standardVault.byOracleId[vault.oracleId]) {
+      vaultState.standardVault.byOracleId[vault.oracleId] = [];
     }
-    vaultState.byOracleId[vault.oracleId].push(vault.id);
-    vaultState.byEarnTokenId[vault.earnedTokenId] = vault.id;
+    vaultState.standardVault.byOracleId[vault.oracleId].push(vault.id);
+    vaultState.standardVault.byEarnTokenId[vault.earnedTokenId] = vault.id;
   }
 }
 

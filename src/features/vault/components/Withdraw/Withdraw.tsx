@@ -31,6 +31,7 @@ import {
 } from '../../../data/selectors/balance';
 import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
+import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import {
   selectChainWrappedNativeToken,
   selectErc20TokenById,
@@ -84,7 +85,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
   const formState = useSelector((state: BeefyState) => state.ui.withdraw);
   const wnative = useSelector((state: BeefyState) =>
-    selectChainWrappedNativeToken(state, vault.chainId)
+    selectIsAddressBookLoaded(state, vault.chainId)
+      ? selectChainWrappedNativeToken(state, vault.chainId)
+      : null
   );
 
   const spenderAddress = formState.isZap
@@ -296,11 +299,12 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           )}
           {formState.zapOptions?.tokens.map(
             (zapToken, i) =>
+              wnative &&
               zapToken.id !== wnative.id && (
                 <FormControlLabel
                   key={i}
                   className={classes.depositTokenContainer}
-                  value={zapToken.symbol}
+                  value={zapToken.id}
                   control={<Radio />}
                   label={<TokenWithDeposit convertAmountTo={zapToken.id} vaultId={vaultId} />}
                   disabled={!formReady}
