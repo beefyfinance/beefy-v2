@@ -61,11 +61,17 @@ export interface MoonpotConfig {
   img: string;
   link: string;
 }
+
+export interface LaCucinaConfig {
+  id: VaultEntity['id'];
+  ovenId: string;
+  url: string;
+}
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Insurace: ChainEntity['id'][];
   Moonpot: MoonpotConfig[];
-  LaCucina: VaultEntity['id'][];
+  LaCucina: LaCucinaConfig[];
 }
 
 interface BoostPartnerConfig {

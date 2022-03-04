@@ -30,12 +30,15 @@ import {
   selectIsVaultInsurace,
   selectIsVaultMoonpot,
   selectIsVaultQidao,
+  selectIsVaultLacucina,
 } from '../data/selectors/partners';
 import { selectPlatformById } from '../data/selectors/platforms';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
+import { LaCucina } from './components/LaCucinaCard';
 import { Nexus } from './components/NexusCard';
 import { BeFtm } from './components/BeftmCard';
+
 
 const useStyles = makeStyles(styles as any);
 
@@ -58,6 +61,7 @@ const VaultContent = React.memo(() => {
   const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
   const isBinSpirit = useSelector((state: BeefyState) => selectIsVaultBinSpirit(state, vaultId));
   const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
+  const isLaCucina = useSelector((state: BeefyState) => selectIsVaultLacucina(state, vaultId));
   const isBeFtm = useSelector((state: BeefyState) => selectIsBeFTM(state, vaultId));
 
   return (
@@ -138,6 +142,11 @@ const VaultContent = React.memo(() => {
               {isMoonpot && (
                 <Box>
                   <Moonpot vaultId={vaultId} />
+                </Box>
+              )}
+              {isLaCucina && (
+                <Box>
+                  <LaCucina vaultId={vaultId} />
                 </Box>
               )}
               {isInsurace && (
