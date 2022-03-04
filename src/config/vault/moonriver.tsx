@@ -1492,44 +1492,6 @@ export const pools = [
     network: "moonriver"
   },
   {
-    id: "sushi-mr-eth-usdt-eol",
-    name: "ETH-USDT",
-    token: "ETH-USDT SLP",
-    tokenDescription: "Sushi",
-    tokenAddress: "0xB0A594e76A876DE40a7fda9819E5c4Ec6d9Fd222",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooSushiETH-USDT",
-    earnedTokenAddress: "0x0DB1744a6D5bb4aB5FeaE826af120c08d84eefd4",
-    earnContractAddress: "0x0DB1744a6D5bb4aB5FeaE826af120c08d84eefd4",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "sushi-mr-eth-usdt",
-    oraclePrice: 0,
-    depositsPaused: false,
-    status: "eol",
-    platform: "SushiSwap",
-    assets: [
-      "ETH",
-      "USDT"
-    ],
-    risks: [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    addLiquidityUrl: "https://app.sushi.com/add/0x639a647fbe20b6c8ac19e48e2de44ea792c62c5c/0xb44a9b6905af7c801311e8f4e76932ee959c663c",
-    buyTokenUrl: "https://app.sushi.com/swap?outputCurrency=0xb44a9b6905af7c801311e8f4e76932ee959c663c",
-    createdAt: 1639598142,
-    stratType: "StratLP",
-    network: "moonriver",
-    retiredReason: "tvl"
-  },
-  {
     id: "sushi-mr-mim-wmovr-eol",
     name: "MIM-WMOVR",
     token: "MIM-WMOVR SLP",

@@ -8633,5 +8633,44 @@ export const pools = [
     createdAt: 1640281632,
     network: "polygon",
     retireReason: "rewards"
+  },
+  {
+    id: "sushi-weth-sx",
+    name: "ETH-SX SLP",
+    token: "ETH-SX SLP",
+    tokenDescription: "SushiSwap",
+    tokenAddress: "0x1bF9805B40a5f69c7d0f9E5d1Ab718642203c652",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooSushiETH-SX",
+    earnedTokenAddress: "0xD244A8494ec9fF6923D6Ec07f94096b87b166187",
+    earnContractAddress: "0xD244A8494ec9fF6923D6Ec07f94096b87b166187",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "sushi-weth-sx",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "SushiSwap",
+    assets: [
+      "SX",
+      "ETH"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    withdrawalFee: "0%",
+    addLiquidityUrl: "https://app.sushi.com/add/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0x840195888Db4D6A99ED9F73FcD3B225Bb3cB1A79",
+    buyTokenUrl: "https://app.sushi.com/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x840195888Db4D6A99ED9F73FcD3B225Bb3cB1A79",
+    createdAt: 1634625658,
+    network: "polygon"
   }
 ];

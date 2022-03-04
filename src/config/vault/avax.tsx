@@ -4894,5 +4894,42 @@ export const pools = [
     buyTokenUrl: "https://app.pangolin.exchange/#/swap?outputCurrency=0xf693248F96Fe03422FEa95aC0aFbBBc4a8FdD172",
     createdAt: 1645972427,
     network: "avax"
+  },
+  {
+    id: "joe-wavax-fief",
+    name: "FIEF-AVAX LP",
+    token: "FIEF-AVAX JLP",
+    tokenDescription: "Trader Joe",
+    tokenAddress: "0x939D6eD8a0f7FC90436BA6842D7372250a03fA7c",
+    tokenDecimals: 18,
+    tokenDescriptionUrl: "#",
+    earnedToken: "mooJoeAVAX-FIEF",
+    earnedTokenAddress: "0x87267285Bd7990B05950703f7bA6b24dF88aa302",
+    earnContractAddress: "0x87267285Bd7990B05950703f7bA6b24dF88aa302",
+    pricePerFullShare: 1,
+    tvl: 0,
+    oracle: "lps",
+    oracleId: "joe-wavax-fief",
+    oraclePrice: 0,
+    depositsPaused: false,
+    status: "active",
+    platform: "Trader Joe",
+    assets: [
+      "FIEF",
+      "AVAX"
+    ],
+    risks: [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    stratType: "StratLP",
+    addLiquidityUrl: "https://traderjoexyz.com/pool/0xeA068Fba19CE95f12d252aD8Cb2939225C4Ea02D/AVAX",
+    buyTokenUrl: "https://traderjoexyz.com/trade?outputCurrency=0xeA068Fba19CE95f12d252aD8Cb2939225C4Ea02D",
+    createdAt: 1646148122,
+    network: "avax"
   }
 ];

@@ -312,5 +312,32 @@ export const pools = [
         }
       }
     ]
+  },
+  {
+    id: "moo_beFTM-based",
+    poolId: "beefy-beFTM",
+    name: "Based",
+    logo: "single-assets/beFTM.svg",
+    earnedToken: "BSHARE",
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: "0x49C290Ff692149A4E16611c694fdED42C954ab7a",
+    earnContractAddress: "0xA31D040bb52c7C41eAb80fB975e5Caf95a8CD2Aa",
+    earnedOracle: "tokens",
+    earnedOracleId: "BSHARE",
+    partnership: true,
+    status: "active",
+    isMooStaked: true,
+    partners: [
+      {
+        logo: "stake/based/logo.png",
+        background: "stake/based/bg.png",
+        text: "Based Finance is launched with the main purpose of supporting Tomb Finance by pegging BASED to TOMB, thus giving additional use cases to TOMB as well as attracting more TVL into the Fantom ecosystem. The BASED algorithmic token aims to serve as the backbone of a rapidly growing Fantom ecosystem and aims towards bringing new liquidity.",
+        website: "https://basedfinance.io/",
+        social: {
+          telegram: "https://t.me/BasedFinanceio",
+          twitter: "https://twitter.com/BasedFinance_io"
+        }
+      }
+    ]
   }
 ];
