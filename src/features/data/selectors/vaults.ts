@@ -55,12 +55,21 @@ export const selectAllGovVaultsByChainId = createSelector(
   }
 );
 
-export const selectVaultIdsByOracleId = (
+export const selectStandardVaultIdsByOracleId = (
   state: BeefyState,
   chainId: ChainEntity['id'],
   tokenId: TokenEntity['id']
 ) => {
-  const vaultIds = state.entities.vaults.byChainId[chainId]?.byOracleId[tokenId];
+  const vaultIds = state.entities.vaults.byChainId[chainId]?.standardVault.byOracleId[tokenId];
+  return vaultIds || [];
+};
+
+export const selectGovVaultVaultIdsByOracleId = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  tokenId: TokenEntity['id']
+) => {
+  const vaultIds = state.entities.vaults.byChainId[chainId]?.govVault.byOracleId[tokenId];
   return vaultIds || [];
 };
 
@@ -69,7 +78,9 @@ export const selectIsStandardVaultEarnTokenId = (
   chainId: ChainEntity['id'],
   tokenId: TokenEntity['id']
 ) => {
-  return state.entities.vaults.byChainId[chainId]?.byEarnTokenId[tokenId] !== undefined;
+  return (
+    state.entities.vaults.byChainId[chainId]?.standardVault.byEarnTokenId[tokenId] !== undefined
+  );
 };
 
 export const selectStandardVaultByEarnTokenId = (
@@ -77,7 +88,7 @@ export const selectStandardVaultByEarnTokenId = (
   chainId: ChainEntity['id'],
   tokenId: TokenEntity['id']
 ) => {
-  const vaultId = state.entities.vaults.byChainId[chainId]?.byEarnTokenId[tokenId];
+  const vaultId = state.entities.vaults.byChainId[chainId]?.standardVault.byEarnTokenId[tokenId];
   if (vaultId === undefined) {
     throw new Error(`Vault id by earn token id not found`);
   }

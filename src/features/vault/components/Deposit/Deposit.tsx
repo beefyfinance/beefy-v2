@@ -202,7 +202,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             <FormControlLabel
               key={zapToken.id}
               className={classes.depositTokenContainer}
-              value={zapToken.symbol}
+              value={zapToken.id}
               control={<Radio />}
               label={<TokenWithBalance token={zapToken} vaultId={vaultId} />}
               disabled={!formReady}

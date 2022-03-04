@@ -1,8 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchApyAction } from '../actions/apy';
 import { WritableDraft } from 'immer/dist/internal';
+import { BIG_ONE } from '../../../helpers/format';
+import { BeefyState } from '../../../redux-types';
+import { fetchApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
+import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { ApyData } from '../apis/beefy';
+import {
+  BoostContractData,
+  FetchAllContractDataResult,
+} from '../apis/contract-data/contract-data-types';
 import { BoostEntity } from '../entities/boost';
 import { isGovVault, VaultEntity } from '../entities/vault';
 import {
@@ -10,16 +17,12 @@ import {
   selectBoostById,
   selectIsVaultBoosted,
 } from '../selectors/boosts';
-import { selectTokenPriceByTokenId } from '../selectors/tokens';
-import { selectVaultById } from '../selectors/vaults';
-import { BeefyState } from '../../../redux-types';
-import {
-  BoostContractData,
-  FetchAllContractDataResult,
-} from '../apis/contract-data/contract-data-types';
-import { getBoostStatusFromPeriodFinish } from './boosts';
 import { selectIsConfigAvailable } from '../selectors/data-loader';
-import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
+import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
+import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
+import { createIdMap } from '../utils/array-utils';
+import { mooAmountToOracleAmount } from '../utils/ppfs';
+import { getBoostStatusFromPeriodFinish } from './boosts';
 
 // boost is expressed as APR
 interface AprData {
@@ -106,6 +109,9 @@ function addContractDataToState(
   const now = new Date();
   const activeBoostsByVaultIds: { [vaultId: VaultEntity['id']]: BoostContractData[] } = {};
 
+  // create a quick access map
+  const vaultDataByVaultId = createIdMap(contractData.standardVaults);
+
   for (const boostContractData of contractData.boosts) {
     const boost = selectBoostById(state, boostContractData.id);
     const vault = selectVaultById(state, boost.vaultId);
@@ -119,14 +125,39 @@ function addContractDataToState(
     }
     activeBoostsByVaultIds[vault.id].push(boostContractData);
 
-    const tokenPrice = selectTokenPriceByTokenId(state, vault.oracleId);
-    const earnedTokenPrice = selectTokenPriceByTokenId(state, boost.earnedTokenId);
+    /**
+     * Some boosts can yield rewards in mooToken, be it from the same vault
+     * or for another vault (like binSPIRIT) and some boost yield rewards as another
+     * unrelated token (like PAE). When the boost is a mooToken, we don't have the
+     * token price in the api so we need to compute it.
+     **/
+    let earnedPrice = null;
+    const rewardTargetVaultId =
+      state.entities.vaults.byChainId[boost.chainId]?.standardVault.byEarnTokenId[boost.earnedTokenId];
+    if (rewardTargetVaultId) {
+      const rewardTargetVault = selectVaultById(state, rewardTargetVaultId);
+      const rewardVaultOraclePrice = selectTokenPriceByTokenId(state, rewardTargetVault.oracleId);
+      const oracleToken = selectTokenById(state, boost.chainId, rewardTargetVault.oracleId);
+      const earnedToken = selectTokenById(state, boost.chainId, boost.earnedTokenId);
 
-    const totalStakedInUsd = boostContractData.totalSupply.times(tokenPrice);
+      // use the latest ppfs if any, otherwise fetch it in the previous state
+      const ppfs =
+        vaultDataByVaultId[rewardTargetVault.id]?.pricePerFullShare ||
+        selectVaultPricePerFullShare(state, rewardTargetVault.id);
 
+      // so the price rate is the oracle token price by the rate of the conversion to mooToken
+      const mooToOracleRate = mooAmountToOracleAmount(earnedToken, oracleToken, ppfs, BIG_ONE);
+      earnedPrice = mooToOracleRate.times(rewardVaultOraclePrice);
+    } else {
+      // if we don't have a matching vault, it should be a yield from a token that has a price
+      earnedPrice = selectTokenPriceByTokenId(state, boost.earnedTokenId);
+    }
+
+    const stakedTokenPrice = selectTokenPriceByTokenId(state, vault.oracleId);
+    const totalStakedInUsd = boostContractData.totalSupply.times(stakedTokenPrice);
     const yearlyRewardsInUsd = boostContractData.rewardRate
       .times(3600 * 24 * 365)
-      .times(earnedTokenPrice);
+      .times(earnedPrice);
 
     const apr = yearlyRewardsInUsd.dividedBy(totalStakedInUsd).toNumber();
 

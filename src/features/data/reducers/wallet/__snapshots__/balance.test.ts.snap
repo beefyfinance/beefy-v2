@@ -61,6 +61,7 @@ Object {
       "eligibleVaultIds": Array [
         "banana-nfty-wbnb",
         "bifi-maxi",
+        "bifi-gov",
       ],
       "tokenAmount": Object {
         "byBoostId": Object {},

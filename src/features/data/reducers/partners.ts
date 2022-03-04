@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchPartnersConfig } from '../actions/partners';
 import { MoonpotConfig } from '../apis/config';
+import { LaCucinaConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { PartnerEntity } from '../entities/partner';
 import { VaultEntity } from '../entities/vault';
@@ -30,7 +31,7 @@ export type PartnersState = {
   };
   lacucina: {
     byVaultId: {
-      [vaultId: VaultEntity['id']]: boolean;
+      [vaultId: VaultEntity['id']]: LaCucinaConfig;
     };
   };
 };
@@ -74,9 +75,10 @@ export const partnersSlice = createSlice({
           sliceState.qidao.byVaultId[vaultId] = true;
         }
       }
-      for (const vaultId of action.payload.LaCucina) {
+      for (const laCucinaConfig of action.payload.LaCucina) {
+        const vaultId = laCucinaConfig.id;
         if (!sliceState.lacucina.byVaultId[vaultId]) {
-          sliceState.lacucina.byVaultId[vaultId] = true;
+          sliceState.lacucina.byVaultId[vaultId] = laCucinaConfig;
         }
       }
     });

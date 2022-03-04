@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`APY slice tests should properly compute binSPIRIT boost apr when getting the ppfs beforehand 1`] = `1.5224351568892651`;
+
+exports[`APY slice tests should properly compute binSPIRIT boost apr when getting the ppfs in the same action 1`] = `1.5224351568892651`;
+
 exports[`APY slice tests should update state on fulfilled apy data action 1`] = `
 Object {
   "rawApy": Object {

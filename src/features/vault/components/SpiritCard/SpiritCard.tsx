@@ -161,8 +161,8 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     }
 
     steps.push({
-      step: 'deposit',
-      message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+      step: 'mint',
+      message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
       action: spiritDeposit(
         vault.chainId,
         binSpiritMintVault.mintAdress,

@@ -34,7 +34,7 @@ const NexusCard = () => {
           className={classes.link}
           target="_blank"
           rel="noreferrer"
-          href="https://app.nexusmutual.io/cover"
+          href="https://app.nexusmutual.io/cover/buy/get-quote?address=0x453D4Ba9a2D594314DF88564248497F7D74d6b2C"
         >
           <Button className={classes.btn}>{t('Nexus-Btn')}</Button>
         </a>

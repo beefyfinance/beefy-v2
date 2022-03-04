@@ -7378,34 +7378,6 @@ export const pools = [
     createdAt: 1619393616
   },
   {
-    id: "cakev2-mtsla-ust-eol",
-    logo: "ust-pairs/MTSLA-UST.svg",
-    name: "MTSLA-UST LP",
-    token: "MTSLA-UST LP2",
-    tokenDescription: "PancakeSwap",
-    tokenAddress: "0xEc6b56a736859AE8ea4bEdA16279Ecd8c60dA7EA",
-    tokenDecimals: 18,
-    tokenDescriptionUrl: "#",
-    earnedToken: "mooCakeV2mTSLA-UST",
-    earnedTokenAddress: "0x30E31EA485D5be9E1A63268181e6EF731b9b853f",
-    earnContractAddress: "0x30E31EA485D5be9E1A63268181e6EF731b9b853f",
-    pricePerFullShare: 1,
-    tvl: 0,
-    oracle: "lps",
-    oracleId: "cakev2-mtsla-ust",
-    oraclePrice: 0,
-    status: "eol",
-    platform: "PancakeSwap",
-    assets: [
-      "MTSLA",
-      "UST"
-    ],
-    removeLiquidityUrl: "https://pancakeswap.finance/remove/0x23396cf899ca06c4472205fc903bdb4de249d6fc/0xF215A127A196e3988C09d052e16BcFD365Cd7AA3",
-    stratType: "StratLP",
-    network: "bsc",
-    createdAt: 1619393265
-  },
-  {
     id: "cakev2-mir-ust-eol",
     logo: "ust-pairs/MIR-UST.svg",
     name: "MIR-UST LP",

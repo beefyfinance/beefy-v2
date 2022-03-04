@@ -23,7 +23,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const classes = useStyles();
   const [stat, setStat] = useState(2);
-  const [period, setPeriod] = useState(2);
+  const [period, setPeriod] = useState(1);
   const chartData = useChartData(stat, period, vault.oracleId, vaultId, vault.chainId);
   const t = useTranslation().t;
 
