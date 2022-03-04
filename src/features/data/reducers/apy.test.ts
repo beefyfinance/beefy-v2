@@ -4,6 +4,8 @@ import {
   fetchAllContractDataByChainAction,
   FetchAllContractDataFulfilledPayload,
 } from '../actions/contract-data';
+import { fetchAllPricesAction } from '../actions/prices';
+import { BeefyAPITokenPricesResponse } from '../apis/beefy';
 import { getBeefyTestingStore } from '../utils/test-utils';
 import { apySlice, initialApyState } from './apy';
 
@@ -101,5 +103,98 @@ describe('APY slice tests', () => {
     const action = { type: fetchAllContractDataByChainAction.fulfilled, payload: payload };
     const newState = apySlice.reducer(initialApyState, action);
     expect(newState).toMatchSnapshot();
+  });
+
+  it('should properly compute binSPIRIT boost apr when getting the ppfs in the same action', async () => {
+    // we have loaded some entities already
+    const store = await getBeefyTestingStore();
+
+    const initPayload: BeefyAPITokenPricesResponse = {
+      'spirit-binspirit-spirit': 0.2597297311519736,
+      binSPIRIT: 0.10508944967219624,
+    };
+    store.dispatch({ type: fetchAllPricesAction.fulfilled, payload: initPayload });
+
+    const state = store.getState();
+
+    // We want to make sure we handle the action properly
+    const payload: FetchAllContractDataFulfilledPayload = {
+      chainId: 'fantom',
+      data: {
+        govVaults: [],
+        standardVaults: [
+          {
+            id: 'beefy-binspirit',
+            balance: new BigNumber(0),
+            pricePerFullShare: new BigNumber('1.120250293767506234'),
+            strategy: '0x000',
+          },
+        ],
+        boosts: [
+          {
+            id: 'moo_spirit-binspirit-spirit-spirit',
+            periodFinish: new Date(2050, 0, 1, 0, 0, 0),
+            rewardRate: new BigNumber('0.142541908840469245'),
+            totalSupply: new BigNumber('1338329.00751070894030697'),
+          },
+        ],
+      },
+      state,
+    };
+    const action = { type: fetchAllContractDataByChainAction.fulfilled, payload: payload };
+    const newState = apySlice.reducer(initialApyState, action);
+    expect(newState.rawApy.byBoostId['moo_spirit-binspirit-spirit-spirit'].apr).toMatchSnapshot();
+  });
+
+  it('should properly compute binSPIRIT boost apr when getting the ppfs beforehand', async () => {
+    // we have loaded some entities already
+    const store = await getBeefyTestingStore();
+
+    const initPayload1: BeefyAPITokenPricesResponse = {
+      'spirit-binspirit-spirit': 0.2597297311519736,
+      binSPIRIT: 0.10508944967219624,
+    };
+    store.dispatch({ type: fetchAllPricesAction.fulfilled, payload: initPayload1 });
+    // we get the ppfs beforehand
+    const initPayload2: FetchAllContractDataFulfilledPayload = {
+      chainId: 'fantom',
+      data: {
+        govVaults: [],
+        standardVaults: [
+          {
+            id: 'beefy-binspirit',
+            balance: new BigNumber(0),
+            pricePerFullShare: new BigNumber('1.120250293767506234'),
+            strategy: '0x000',
+          },
+        ],
+        boosts: [],
+      },
+      state: store.getState(),
+    };
+    store.dispatch({ type: fetchAllContractDataByChainAction.fulfilled, payload: initPayload2 });
+
+    const state = store.getState();
+
+    // We want to make sure we handle the action properly
+    const payload: FetchAllContractDataFulfilledPayload = {
+      chainId: 'fantom',
+      data: {
+        govVaults: [],
+        standardVaults: [],
+        boosts: [
+          {
+            id: 'moo_spirit-binspirit-spirit-spirit',
+            periodFinish: new Date(2050, 0, 1, 0, 0, 0),
+            rewardRate: new BigNumber('0.142541908840469245'),
+            totalSupply: new BigNumber('1338329.00751070894030697'),
+          },
+        ],
+      },
+      state,
+    };
+    const action = { type: fetchAllContractDataByChainAction.fulfilled, payload: payload };
+    const newState = apySlice.reducer(initialApyState, action);
+    expect(newState.rawApy.byBoostId['moo_spirit-binspirit-spirit-spirit'].apr).toMatchSnapshot();
   });
 });
