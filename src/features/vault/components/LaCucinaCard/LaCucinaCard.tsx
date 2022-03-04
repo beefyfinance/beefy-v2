@@ -12,16 +12,33 @@ import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectLacucinaData } from '../../../data/selectors/partners';
 import { StakeCountdown } from '../BoostWidget/StakeCountdown';
+import ContentLoader from 'react-content-loader';
 
 const useStyles = makeStyles(styles as any);
+
+const _ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
+  return (
+    <ContentLoader
+      width={64}
+      height={16}
+      viewBox="0 0 64 16"
+      backgroundColor={backgroundColor}
+      foregroundColor={foregroundColor}
+    >
+      <rect x="0" y="0" width="64" height="16" />
+    </ContentLoader>
+  );
+};
+const ContentLoading = React.memo(_ContentLoading);
 
 const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   const { ovenId, url } = useSelector((state: BeefyState) => selectLacucinaData(state, vaultId));
 
-  const [data] = useLaCucina(ovenId);
+  const [data] = useLaCucina(ovenId, setIsLoading);
   return (
     <Card>
       <CardHeader className={classes.header}>
@@ -40,7 +57,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
               {t('LaCucina-Apr')}
             </Typography>
             <Typography className={classes.itemInfo} variant="h5">
-              {data.aprValue}
+              {isLoading ? <ContentLoading /> : data.aprValue}
             </Typography>
           </Box>
           <Box>
@@ -48,7 +65,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
               {t('LaCucina-Ends')}
             </Typography>
             <Typography className={classes.itemInfo} variant="h5">
-              <StakeCountdown periodFinish={data.expiryDate} />
+              {isLoading ? <ContentLoading /> : <StakeCountdown periodFinish={data.expiryDate} />}
             </Typography>
           </Box>
         </Box>
@@ -57,8 +74,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
             {t('LaCucina-Earn')}
           </Typography>
           <Typography className={classes.itemInfo} variant="h5">
-            <img src={LaCucinaToken} className={classes.token} alt="LaCucinaToken" />{' '}
-            {data.rewardTokenSymbol}
+            <img src={LaCucinaToken} className={classes.token} alt="LaCucinaToken" /> LAC
           </Typography>
         </Box>
         <a className={classes.link} target="_blank" rel="noreferrer" href={url}>

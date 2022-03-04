@@ -7,7 +7,7 @@ interface LaCucinaData {
   expiryDate: Date;
 }
 
-export function useLaCucina(ovenId) {
+export function useLaCucina(ovenId, setIsLoading) {
   const [state, setState] = React.useState<LaCucinaData>({
     aprValue: '0%',
     rewardTokenSymbol: 'LAC',
@@ -24,9 +24,10 @@ export function useLaCucina(ovenId) {
         rewardTokenSymbol: res.data.rewardTokenSymbol,
         expiryDate,
       });
+      setIsLoading(false);
     }
     fetchData();
-  }, [ovenId]);
+  }, [ovenId, setIsLoading]);
 
   return [state];
 }
