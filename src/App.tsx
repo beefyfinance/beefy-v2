@@ -1,8 +1,8 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
+import { WrappedFooter } from './components/Footer';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import { ScrollToTop } from './components/ScrollToTop';
 import { theme } from './theme';
 import { initHomeDataV4 } from './features/data/actions/scenarios';
@@ -10,6 +10,7 @@ import { store } from './store';
 import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 import { CowLoader } from './components/CowLoader';
+
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 // const BeefyAvatars = React.lazy(() => import(`./features/beefyAvatars`));
@@ -22,7 +23,7 @@ export const App = () => {
     if (featureFlag_replayReduxActions()) {
       console.log(
         'Please run __replay_action_log(actions)',
-        replayReduxActions /* add it here to make webpack add it to the build */
+        replayReduxActions, /* add it here to make webpack add it to the build */
       );
     } else {
       initHomeDataV4(store);
@@ -33,25 +34,26 @@ export const App = () => {
       <CssBaseline />
       <Router>
         <ScrollToTop />
-        <Header />
-        <React.Suspense fallback={<CowLoader text="Loading" />}>
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route strict sensitive exact path="/:network/vault/:id">
-              <Vault />
-            </Route>
-            {/* <Route exact path="/nfts">
+        <WrappedFooter>
+          <Header />
+          <React.Suspense fallback={<CowLoader text='Loading' />}>
+            <Switch>
+              <Route exact path='/'>
+                <Home />
+              </Route>
+              <Route strict sensitive exact path='/:network/vault/:id'>
+                <Vault />
+              </Route>
+              {/* <Route exact path="/nfts">
               <BeefyAvatars />
             </Route> */}
-            <Route>
-              <PageNotFound />
-            </Route>
-          </Switch>
-        </React.Suspense>
+              <Route>
+                <PageNotFound />
+              </Route>
+            </Switch>
+          </React.Suspense>
+        </WrappedFooter>
       </Router>
-      <Footer />
     </ThemeProvider>
   );
 };

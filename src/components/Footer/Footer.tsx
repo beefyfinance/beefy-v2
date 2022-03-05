@@ -40,31 +40,32 @@ const socialLinks = [
   {
     title: 'GitHub',
     path: 'https://github.com/beefyfinance',
-    Icon: IconGithub
+    Icon: IconGithub,
   },
   {
     title: 'Telegram',
     path: 'https://t.me/beefyfinance',
-    Icon: IconTelegram
+    Icon: IconTelegram,
   },
   {
     title: 'Discord',
     path: 'https://discord.gg/yq8wfHd',
-    Icon: IconDiscord
+    Icon: IconDiscord,
   },
   {
     title: 'Twitter',
     path: 'https://twitter.com/beefyfinance',
-    Icon: IconTwitter
+    Icon: IconTwitter,
   },
   {
     title: 'Reddit',
     path: 'https://www.reddit.com/r/Beefy/',
-    Icon: IconReddit
-  }
+    Icon: IconReddit,
+  },
 ];
 
 const useStyles = makeStyles(styles);
+
 
 // Memo: Static footer, no need to re-render when parent does
 export const Footer = memo(function() {
@@ -89,4 +90,14 @@ export const Footer = memo(function() {
       </ul>
     </div>
   );
+});
+
+// This keeps the footer at the bottom of the page when the page is under 100vh
+export const WrappedFooter = memo(function WrappedFooter({ children }) {
+  const classes = useStyles();
+
+  return <div className={classes.wrapper}>
+    <div className={classes.wrapperTop}>{children}</div>
+    <Footer />
+  </div>;
 });
