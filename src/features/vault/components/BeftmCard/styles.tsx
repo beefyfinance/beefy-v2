@@ -9,6 +9,13 @@ export const styles = theme => ({
       marginRight: theme.spacing(2),
     },
   },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '0 0 12px 12px',
+    padding: '24px',
+  },
   title: {
     color: theme.palette.text.primary,
   },
@@ -128,5 +135,11 @@ export const styles = theme => ({
     width: '100%',
     backgroundColor: theme.palette.text.disabled,
     borderRadius: '8px',
+  },
+  boxReminder: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    borderRadius: theme.spacing(0.5),
+    backgroundColor: theme.palette.background.content,
   },
 });

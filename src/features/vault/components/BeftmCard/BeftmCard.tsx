@@ -58,7 +58,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       ...formData,
       deposit: {
         ...formData.deposit,
-        input: '',
+        input: '0.00',
         amount: BIG_ZERO,
         max: false,
       },
@@ -69,7 +69,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const [formData, setFormData] = React.useState({
     deposit: {
-      input: '',
+      input: '0.00',
       amount: BIG_ZERO,
       max: false,
       token: null,
@@ -160,17 +160,22 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             {t('beFtm-Title')}
           </Typography>
         </CardHeader>
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <Typography className={classes.content} variant="body1">
             {t('beFtm-Content')}
           </Typography>
+          <Box className={classes.boxReminder}>
+            <Typography className={classes.content} variant="body1">
+              {t('beFtm-Reminder')}
+            </Typography>
+          </Box>
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
                 {t('beFtm-From')} <span className={classes.value}>{'FTM'}</span>
               </Typography>
               <Typography className={classes.label}>
-                {t('beFtm-Available')}{' '}
+                {t('beFtm-Wallet')}{' '}
                 <span className={classes.value}>
                   {formatBigDecimals(FTMBalance)} {'FTM'}
                 </span>
@@ -200,7 +205,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 {t('beFtm-To')} <span className={classes.value}>{oracleToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
-                {t('beFtm-Available')}{' '}
+                {t('beFtm-Wallet')}{' '}
                 <span className={classes.value}>
                   {formatBigDecimals(BeFTMBalance)} {oracleToken.symbol}
                 </span>
@@ -210,7 +215,11 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               <Box className={classes.inputLogo}>
                 <AssetsImage assets={[]} img={'partners/beftm.svg'} alt={'beFTM'} />
               </Box>
-              <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
+              <InputBase
+                disabled={true}
+                placeholder="0.00"
+                value={t('beFTM-Minimum', { input: formData.deposit.input ?? '0.00' })}
+              />
             </Paper>
           </Box>
           <Button
