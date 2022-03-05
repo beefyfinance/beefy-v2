@@ -9,7 +9,6 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { styles } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import BigNumber from 'bignumber.js';
-import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import {
   BIG_ZERO,
   formatBigDecimals,
@@ -196,7 +195,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Box>
           <Box className={classes.customDivider}>
             <Box className={classes.line} />
-            <ArrowDownwardRoundedIcon htmlColor="#F5F5FF" />
+            <img alt="arrowDown" src={require('../../../../images/arrowDown.svg').default} />
             <Box className={classes.line} />
           </Box>
           <Box className={classes.inputContainer}>
