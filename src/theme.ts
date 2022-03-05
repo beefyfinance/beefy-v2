@@ -1,5 +1,39 @@
 import { createTheme } from '@material-ui/core/styles';
 
+// Module augmentation to allow custom theme entries
+declare module '@material-ui/core/styles/createPalette' {
+  interface TypeBackground {
+    footer: string
+    light: string
+    content: string
+    header: string
+    cta: string
+    filters: {
+      active: string,
+      inactive: string
+      outline: string
+      footer: string
+    },
+    vaults: {
+      default: string
+      defaultOutline: string
+      boostOutline: string
+      gov: string
+      govOutline: string
+      inactive: string
+      inactiveOutline: string
+    },
+    snackbars: {
+      bg: string
+      bgLine: string
+      bgBtn: string
+      text: string
+      error: string
+    },
+  }
+}
+
+
 const theme = createTheme({
   palette: {
     type: 'dark',
@@ -10,6 +44,7 @@ const theme = createTheme({
       light: '#313759',
       content: '#2D3153',
       header: '#121212',
+      footer: '#121212',
       cta: '#59A662',
       filters: {
         active: '#4C5480',
@@ -33,7 +68,7 @@ const theme = createTheme({
         text: '#2D3153',
         error: '#DC2C10',
       },
-    } as any, // TODO: fix any
+    },
     text: {
       primary: '#F5F5FF',
       secondary: '#D0D0DA',

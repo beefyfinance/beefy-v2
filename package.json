@@ -71,7 +71,13 @@
           "message": "Prefer named exports"
         }
       ],
-      "no-mixed-operators": "off"
+      "no-mixed-operators": "off",
+      "react/jsx-no-target-blank": [
+        "error",
+        {
+          "allowReferrer": true
+        }
+      ]
     }
   },
   "browserslist": {
