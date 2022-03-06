@@ -121,11 +121,11 @@ const VaultContent = React.memo(() => {
                 </Box>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </Box>
-              {isBeFtm && (
+              {/* {isBeFtm && (
                 <Box>
                   <BeFtm vaultId={vaultId} />
                 </Box>
-              )}
+              )} */}
               {isBinSpirit && (
                 <Box>
                   <SpiritCard vaultId={vaultId} />
