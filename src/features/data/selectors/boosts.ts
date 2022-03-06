@@ -49,10 +49,12 @@ export const selectPastBoostIdsWithUserBalance = (
     const userBalance = selectBoostUserBalanceInToken(state, eolBoostId);
     if (userBalance.gt(0)) {
       boostIds.push(eolBoostId);
+      continue;
     }
     const userRewards = selectBoostUserRewardsInToken(state, eolBoostId);
     if (userRewards.gt(0)) {
       boostIds.push(eolBoostId);
+      continue;
     }
   }
   return boostIds;
