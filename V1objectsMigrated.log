@@ -1,47 +1,18 @@
 [
   {
-    "id": "bsc vault: cakev2-mtsla-ust-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: based-based-tomb",
+    "id": "moonbeam vault: solarflare-ust-wglmr",
     "type": "Added"
   },
   {
-    "id": "fantom vault: based-bshare-ftm",
+    "id": "moonbeam vault: solarflare-luna-flare",
     "type": "Added"
   },
   {
-    "id": "fantom vault: spirit-ftm-atlas",
+    "id": "moonbeam vault: solarflare-wglmr-flare",
     "type": "Added"
   },
   {
-    "id": "fantom vault: spirit-ftm-bifi",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beefy-beFTM-earnings",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: sushi-weth-sx",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-wavax-fief",
-    "type": "Added"
-  },
-  {
-    "id": "arbitrum vault: curve-arb-ren",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "moonriver vault: sushi-mr-eth-usdt-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom boost: moo_beFTM-based",
+    "id": "moonbeam vault: solarflare-usdc-wglmr",
     "type": "Added"
   },
   {
