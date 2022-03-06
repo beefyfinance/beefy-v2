@@ -32,7 +32,8 @@ run. To cut down onrepository pollution, the maintainer may avoid pushing this f
 the staging repository.
 
 Development
-+ v0.7.0.6 AllTrades: hack handling of special moo_beFTM staking pool
++ v0.7.0.7 AllTrades: finish hack handling of special beFTM staking pool
++ v0.7.0.6 AllTrades: hack handling of special beFTM staking pool
 + v0.7.0.5 AllTrades: add Moonbeam blockchain
 + v0.7.0.4 AllTrades: add Aurora blockchain
 + v0.7.0.3 AllTrades: add Metis blockchain
@@ -368,13 +369,13 @@ async function Po_resolveVaults()	{
 		} //for (const O_SRC of moAO_SRC_VLTS[ O_CHN.S_SRC]
 
 		//All source vaults on this chain having been processed, cycle through the list of 
-		//	vaults on the target platform (v2) and delete those that are unknown on the 
-		//	source platform (v1), the last word on what exists on Beefy. Also note any such 
+		//	_regular_ vaults on the target platform (v2) and delete those that are unknown on 
+		//	the source platform (v1), the last word on what exists on Beefy. Also note any such 
 		//	deletions.
 		const I = i_pruned;
 		Object.values( o_trgtChn).forEach( O_trgt => {
-			if (!(O_trgt && Object === O_trgt.constructor) || O_trgt[ mS_PRPNM_ID].endsWith( 
-																																							"bifi-gov"))
+			if (!(O_trgt && Object === O_trgt.constructor) || (s = O_trgt[ 
+										mS_PRPNM_ID]).endsWith( "bifi-gov") || "beefy-beFTM-earnings" === s)
 				return;
 			const S = S_TRGT_CHN + " vault: " + O_trgt[ mS_PRPNM_ID];
 			if (O_hits[ S])
