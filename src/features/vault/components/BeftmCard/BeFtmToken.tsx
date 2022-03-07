@@ -1,7 +1,7 @@
 import { TokenErc20 } from '../../../data/entities/token';
 
 export const beFtmMintVault = {
-  mintAdress: '0x7381eD41F6dE418DdE5e84B55590422a57917886',
+  mintAdress: '0x34753f36d69d00e2112Eb99B3F7f0FE76cC35090',
 };
 
 export const Ftmtoken: TokenErc20 = {
