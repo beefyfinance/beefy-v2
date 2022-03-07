@@ -9,7 +9,6 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { styles } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import BigNumber from 'bignumber.js';
-import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import { useBalance } from './useBalance';
 import {
   BIG_ZERO,
@@ -184,7 +183,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             {t('Spirit-Title')}
           </Typography>
         </CardHeader>
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <Typography className={classes.content} variant="body1">
             {t('Spirit-Content')}
           </Typography>
@@ -215,7 +214,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Box>
           <Box className={classes.customDivider}>
             <Box className={classes.line} />
-            <ArrowDownwardRoundedIcon htmlColor="#F5F5FF" />
+            <img alt="arrowDown" src={require('../../../../images/arrowDown.svg').default} />
             <Box className={classes.line} />
           </Box>
           <Box className={classes.inputContainer}>

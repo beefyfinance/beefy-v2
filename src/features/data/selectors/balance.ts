@@ -5,7 +5,7 @@ import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
-import { selectAllVaultBoostIds, selectBoostById } from './boosts';
+import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectIsWalletConnected, selectWalletAddress } from './wallet';
@@ -47,6 +47,15 @@ export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEnt
   const walletBalance = _selectWalletBalance(state);
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
 };
+
+export const selectHasUserBalanceInActiveBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const activeBoostsIds = selectActiveVaultBoostIds(state, vaultId);
+  let userBalance = BIG_ZERO;
+  activeBoostsIds.forEach(boostId => {
+    userBalance = userBalance.plus(selectBoostUserBalanceInToken(state, boostId) ?? BIG_ZERO);
+  });
+  return userBalance.isGreaterThan(0);
+}
 
 export const selectIsUserEligibleForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);

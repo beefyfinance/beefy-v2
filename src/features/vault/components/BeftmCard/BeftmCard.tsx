@@ -9,7 +9,6 @@ import { AssetsImage } from '../../../../components/AssetsImage';
 import { styles } from './styles';
 import { useSelector, useDispatch } from 'react-redux';
 import BigNumber from 'bignumber.js';
-import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import {
   BIG_ZERO,
   formatBigDecimals,
@@ -58,7 +57,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       ...formData,
       deposit: {
         ...formData.deposit,
-        input: '',
+        input: '0.00',
         amount: BIG_ZERO,
         max: false,
       },
@@ -69,7 +68,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const [formData, setFormData] = React.useState({
     deposit: {
-      input: '',
+      input: '0.00',
       amount: BIG_ZERO,
       max: false,
       token: null,
@@ -160,17 +159,22 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             {t('beFtm-Title')}
           </Typography>
         </CardHeader>
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <Typography className={classes.content} variant="body1">
             {t('beFtm-Content')}
           </Typography>
+          <Box className={classes.boxReminder}>
+            <Typography className={classes.content} variant="body1">
+              {t('beFtm-Reminder')}
+            </Typography>
+          </Box>
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
                 {t('beFtm-From')} <span className={classes.value}>{'FTM'}</span>
               </Typography>
               <Typography className={classes.label}>
-                {t('beFtm-Available')}{' '}
+                {t('beFtm-Wallet')}{' '}
                 <span className={classes.value}>
                   {formatBigDecimals(FTMBalance)} {'FTM'}
                 </span>
@@ -191,7 +195,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Box>
           <Box className={classes.customDivider}>
             <Box className={classes.line} />
-            <ArrowDownwardRoundedIcon htmlColor="#F5F5FF" />
+            <img alt="arrowDown" src={require('../../../../images/arrowDown.svg').default} />
             <Box className={classes.line} />
           </Box>
           <Box className={classes.inputContainer}>
@@ -200,7 +204,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 {t('beFtm-To')} <span className={classes.value}>{oracleToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
-                {t('beFtm-Available')}{' '}
+                {t('beFtm-Wallet')}{' '}
                 <span className={classes.value}>
                   {formatBigDecimals(BeFTMBalance)} {oracleToken.symbol}
                 </span>
@@ -210,7 +214,11 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               <Box className={classes.inputLogo}>
                 <AssetsImage assets={[]} img={'partners/beftm.svg'} alt={'beFTM'} />
               </Box>
-              <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
+              <InputBase
+                disabled={true}
+                placeholder="0.00"
+                value={t('beFTM-Minimum', { input: formData.deposit.input ?? '0.00' })}
+              />
             </Paper>
           </Box>
           <Button

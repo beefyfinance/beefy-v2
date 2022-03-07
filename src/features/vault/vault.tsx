@@ -39,7 +39,6 @@ import { LaCucina } from './components/LaCucinaCard';
 import { Nexus } from './components/NexusCard';
 import { BeFtm } from './components/BeftmCard';
 
-
 const useStyles = makeStyles(styles as any);
 
 export const Vault = () => {
@@ -121,11 +120,11 @@ const VaultContent = React.memo(() => {
                 </Box>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </Box>
-              {/* {isBeFtm && (
+              {isBeFtm && (
                 <Box>
                   <BeFtm vaultId={vaultId} />
                 </Box>
-              )} */}
+              )}
               {isBinSpirit && (
                 <Box>
                   <SpiritCard vaultId={vaultId} />

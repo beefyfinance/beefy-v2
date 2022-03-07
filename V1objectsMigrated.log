@@ -1,48 +1,48 @@
 [
   {
-    "id": "bsc vault: cakev2-mtsla-ust-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: based-based-tomb",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: based-bshare-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-atlas",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-bifi",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beefy-beFTM-earnings",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: sushi-weth-sx",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-wavax-fief",
-    "type": "Added"
-  },
-  {
-    "id": "arbitrum vault: curve-arb-ren",
+    "id": "bsc vault: cakev2-quidd-wbnb-eol",
     "type": "synced",
-    "logo-copied": "logo"
+    "EOLd": true
   },
   {
-    "id": "moonriver vault: sushi-mr-eth-usdt-eol",
+    "id": "bsc vault: omnifarm-usdo-busd-ot-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: omnifarm-usdo-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: omnifarm-fet-usdo-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: cakev2-dodo-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: wex-krown-bnb-eol",
     "type": "REMOVED"
   },
   {
-    "id": "fantom boost: moo_beFTM-based",
+    "id": "bsc vault: cakev2-unfi-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc vault: auto-ada-v2-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-statera-duet",
     "type": "Added"
+  },
+  {
+    "id": "fantom vault: boo-font-ftm",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
