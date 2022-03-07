@@ -11,7 +11,7 @@ export type FilteredVaultsState = {
    * to reset their local copy. The search text is (for now) the only example.
    **/
   reseted: boolean;
-  sort: 'tvl' | 'apy' | 'safetyScore' | 'default';
+  sort: 'tvl' | 'apy' | 'safetyScore' | 'default' | 'depositValue';
   vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy';
   userCategory: 'all' | 'eligible' | 'deposited';
   vaultType: 'all' | 'lps' | 'single';

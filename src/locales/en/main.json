@@ -54,6 +54,7 @@
   "Filter-Sort": "Sort by:",
   "Filter-SortDflt": "Date",
   "Filter-SortSafety": "Safety",
+  "Filter-SortDeposit": "Deposit",
   "Filter-Btn": "Filter",
   "Filter-HideZero": "Hide Zero balances",
   "Filter-Retired": "Retired vaults",
