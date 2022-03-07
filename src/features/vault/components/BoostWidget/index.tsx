@@ -1,1 +1,1 @@
-export * from "./BoostWidget"
+export * from './BoostWidget';

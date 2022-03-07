@@ -1,1 +1,1 @@
-export * from "./BoostCard"
+export * from './BoostCard';

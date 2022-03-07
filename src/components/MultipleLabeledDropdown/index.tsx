@@ -1,1 +1,1 @@
-export * from "./MultipleLabeledDropdown"
+export * from './MultipleLabeledDropdown';

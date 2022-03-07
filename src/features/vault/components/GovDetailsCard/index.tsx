@@ -1,1 +1,1 @@
-export * from "./GovDetailsCard"
+export * from './GovDetailsCard';

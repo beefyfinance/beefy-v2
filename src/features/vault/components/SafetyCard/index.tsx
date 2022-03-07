@@ -1,1 +1,1 @@
-export * from "./SafetyCard"
+export * from './SafetyCard';

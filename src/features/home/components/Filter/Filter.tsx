@@ -159,7 +159,7 @@ const _Filter = () => {
       apy: t('APY'),
       tvl: t('TVL'),
       safetyScore: t('Filter-SortSafety'),
-      depositValue:t('Filter-SortDeposit')
+      depositValue: t('Filter-SortDeposit'),
     };
   }, [t]);
 

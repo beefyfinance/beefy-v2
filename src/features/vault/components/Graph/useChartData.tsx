@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { config } from '../../../../config/config';
 
-
 const STATS = ['tvl', 'price', 'apy'];
 const PERIODS = ['hour', 'hour', 'day', 'day'];
 const LIMITS = [24, 168, 30, 365];

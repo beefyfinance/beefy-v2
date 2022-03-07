@@ -149,7 +149,7 @@ export interface VaultGov {
 
   withdrawalFee: string;
   depositFee: string;
-  
+
   createdAt: number;
 }
 

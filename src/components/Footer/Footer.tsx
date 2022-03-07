@@ -66,27 +66,36 @@ const socialLinks = [
 
 const useStyles = makeStyles(styles);
 
-
 // Memo: Static footer, no need to re-render when parent does
-export const Footer = memo(function() {
+export const Footer = memo(function () {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
     <div className={classes.footer}>
       <ul className={classes.nav}>
-        {navLinks.map(({ title, path }) => <li key={path} className={classes.navItem}>
-          <a href={path} target='_blank' rel='noopener' className={classes.navLink}>
-            {t(title)}
-          </a>
-        </li>)}
+        {navLinks.map(({ title, path }) => (
+          <li key={path} className={classes.navItem}>
+            <a href={path} target="_blank" rel="noopener" className={classes.navLink}>
+              {t(title)}
+            </a>
+          </li>
+        ))}
       </ul>
       <ul className={classes.nav}>
-        {socialLinks.map(({ title, path, Icon }) => <li key={path} className={classes.navItem}>
-          <a href={path} target='_blank' rel='noopener' className={classes.navLink} title={t(title)}>
-            <Icon />
-          </a>
-        </li>)}
+        {socialLinks.map(({ title, path, Icon }) => (
+          <li key={path} className={classes.navItem}>
+            <a
+              href={path}
+              target="_blank"
+              rel="noopener"
+              className={classes.navLink}
+              title={t(title)}
+            >
+              <Icon />
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -96,8 +105,10 @@ export const Footer = memo(function() {
 export const WrappedFooter = memo(function WrappedFooter({ children }) {
   const classes = useStyles();
 
-  return <div className={classes.wrapper}>
-    <div className={classes.wrapperTop}>{children}</div>
-    <Footer />
-  </div>;
+  return (
+    <div className={classes.wrapper}>
+      <div className={classes.wrapperTop}>{children}</div>
+      <Footer />
+    </div>
+  );
 });

@@ -133,7 +133,9 @@ function addContractDataToState(
      **/
     let earnedPrice = null;
     const rewardTargetVaultId =
-      state.entities.vaults.byChainId[boost.chainId]?.standardVault.byEarnTokenId[boost.earnedTokenId];
+      state.entities.vaults.byChainId[boost.chainId]?.standardVault.byEarnTokenId[
+        boost.earnedTokenId
+      ];
     if (rewardTargetVaultId) {
       const rewardTargetVault = selectVaultById(state, rewardTargetVaultId);
       const rewardVaultOraclePrice = selectTokenPriceByTokenId(state, rewardTargetVault.oracleId);

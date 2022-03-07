@@ -1,1 +1,1 @@
-export * from "./TokenCard"
+export * from './TokenCard';

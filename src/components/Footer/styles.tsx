@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
   },
   wrapperTop: {
-    marginBottom: 'auto'
+    marginBottom: 'auto',
   },
   footer: {
     background: theme.palette.background.footer,
@@ -26,14 +26,14 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'wrap' as const,
     justifyContent: 'center',
     padding: '0',
-    margin: `0 ${theme.spacing(3)/-2}px ${theme.spacing(3)/-2}px ${theme.spacing(3)/-2}px`,
+    margin: `0 ${theme.spacing(3) / -2}px ${theme.spacing(3) / -2}px ${theme.spacing(3) / -2}px`,
     listStyle: 'none',
     '& + $nav': {
       marginTop: `${theme.spacing(4)}px`,
     },
   },
   navItem: {
-    margin: `0 ${theme.spacing(3)/2}px ${theme.spacing(3)/2}px ${theme.spacing(3)/2}px`,
+    margin: `0 ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px`,
   },
   navLink: {
     display: 'block',
