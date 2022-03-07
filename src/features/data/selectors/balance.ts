@@ -48,14 +48,17 @@ export const selectHasUserDepositInVault = (state: BeefyState, vaultId: VaultEnt
   return walletBalance ? walletBalance.depositedVaultIds.indexOf(vaultId) !== -1 : false;
 };
 
-export const selectHasUserBalanceInActiveBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
+export const selectHasUserBalanceInActiveBoost = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+) => {
   const activeBoostsIds = selectActiveVaultBoostIds(state, vaultId);
   let userBalance = BIG_ZERO;
   activeBoostsIds.forEach(boostId => {
     userBalance = userBalance.plus(selectBoostUserBalanceInToken(state, boostId) ?? BIG_ZERO);
   });
   return userBalance.isGreaterThan(0);
-}
+};
 
 export const selectIsUserEligibleForVault = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const walletBalance = _selectWalletBalance(state);

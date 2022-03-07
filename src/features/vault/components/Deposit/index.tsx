@@ -1,1 +1,1 @@
-export * from "./Deposit"
+export * from './Deposit';

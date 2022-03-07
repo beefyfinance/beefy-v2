@@ -55,8 +55,10 @@
     "tsc-watch": "tsc --watch",
     "ts-node": "ts-node",
     "analyze-bundles": "react-scripts build && source-map-explorer 'build/static/js/*.js'",
-    "analyze-sources": "madge --extensions js,jsx,ts,tsx  ./src --image madge.svg",
-    "sync": "node --loader ts-node/esm  src/scripts/migrateV1objects.mjs && yarn upgrade blockchain-addressbook --latest"
+    "analyze-sources": "madge --extensions js,jsx,ts,tsx ./src --image madge.svg",
+    "sync": "node --loader ts-node/esm src/scripts/migrateV1objects.mjs && yarn upgrade blockchain-addressbook --latest",
+    "prettier:check": "prettier --check src/**/*.{ts,tsx,json}",
+    "prettier:fix": "prettier --write src/**/*.{ts,tsx,json}"
   },
   "eslintConfig": {
     "extends": [
@@ -114,7 +116,7 @@
     "typescript": "^4.4.4"
   },
   "lint-staged": {
-    "*.{js,css,json}": "prettier --write"
+    "*.{ts,tsx,json}": "prettier --write"
   },
   "jest": {
     "moduleNameMapper": {

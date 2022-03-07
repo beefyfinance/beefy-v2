@@ -1,1 +1,1 @@
-export * from "./StrategyCard"
+export * from './StrategyCard';

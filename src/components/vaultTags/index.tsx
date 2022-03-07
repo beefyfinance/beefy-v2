@@ -1,1 +1,1 @@
-export * from "./vaultTags"
+export * from './vaultTags';

@@ -1,1 +1,1 @@
-export * from "./ApyStatLoader"
+export * from './ApyStatLoader';

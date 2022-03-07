@@ -23,7 +23,7 @@ export const App = () => {
     if (featureFlag_replayReduxActions()) {
       console.log(
         'Please run __replay_action_log(actions)',
-        replayReduxActions, /* add it here to make webpack add it to the build */
+        replayReduxActions /* add it here to make webpack add it to the build */
       );
     } else {
       initHomeDataV4(store);
@@ -36,12 +36,12 @@ export const App = () => {
         <ScrollToTop />
         <WrappedFooter>
           <Header />
-          <React.Suspense fallback={<CowLoader text='Loading' />}>
+          <React.Suspense fallback={<CowLoader text="Loading" />}>
             <Switch>
-              <Route exact path='/'>
+              <Route exact path="/">
                 <Home />
               </Route>
-              <Route strict sensitive exact path='/:network/vault/:id'>
+              <Route strict sensitive exact path="/:network/vault/:id">
                 <Vault />
               </Route>
               {/* <Route exact path="/nfts">
