@@ -2,7 +2,11 @@ import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
 import { isGovVault, isVaultRetired } from '../entities/vault';
-import { selectHasUserDepositInVault, selectIsUserEligibleForVault } from './balance';
+import {
+  selectHasUserDepositInVault,
+  selectIsUserEligibleForVault,
+  selectUserVaultDepositInUsd,
+} from './balance';
 import { selectActiveVaultBoostIds, selectBoostById, selectIsVaultBoosted } from './boosts';
 import { selectIsVaultLacucina, selectIsVaultMoonpot } from './partners';
 import {
@@ -168,6 +172,11 @@ export const selectFilteredVaults = (state: BeefyState) => {
   } else if (filterOptions.sort === 'safetyScore') {
     sortedVaults = sortBy(sortedVaults, vault => {
       return -vault.safetyScore;
+    });
+  } else if (filterOptions.sort === 'depositValue') {
+    sortedVaults = sortBy(sortedVaults, vault => {
+      const balance = selectUserVaultDepositInUsd(state, vault.id);
+      return -balance;
     });
   }
 

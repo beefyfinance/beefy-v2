@@ -1,19 +1,48 @@
 [
   {
-    "id": "moonbeam vault: solarflare-ust-wglmr",
+    "id": "bsc vault: cakev2-quidd-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: omnifarm-usdo-busd-ot-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: omnifarm-usdo-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: omnifarm-fet-usdo-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: cakev2-dodo-bnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc vault: wex-krown-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc vault: cakev2-unfi-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "bsc vault: auto-ada-v2-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-statera-duet",
     "type": "Added"
   },
   {
-    "id": "moonbeam vault: solarflare-luna-flare",
-    "type": "Added"
-  },
-  {
-    "id": "moonbeam vault: solarflare-wglmr-flare",
-    "type": "Added"
-  },
-  {
-    "id": "moonbeam vault: solarflare-usdc-wglmr",
-    "type": "Added"
+    "id": "fantom vault: boo-font-ftm",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
