@@ -9,6 +9,13 @@ export const styles = theme => ({
       marginRight: theme.spacing(2),
     },
   },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '0 0 12px 12px',
+    padding: '24px',
+  },
   title: {
     color: theme.palette.text.primary,
   },
@@ -103,6 +110,7 @@ export const styles = theme => ({
   balances: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginBottom: theme.spacing(1),
   },
   label: {
     color: theme.palette.text.disabled,
@@ -119,14 +127,14 @@ export const styles = theme => ({
   customDivider: {
     display: 'flex',
     alignItems: 'center',
-    '& svg': {
+    '& img': {
       margin: '0 12px',
     },
   },
   line: {
     height: '2px',
     width: '100%',
-    backgroundColor: theme.palette.text.disabled,
+    backgroundColor: theme.palette.background.vaults.default,
     borderRadius: '8px',
   },
 });
