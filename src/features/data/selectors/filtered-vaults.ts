@@ -147,7 +147,6 @@ export const selectFilteredVaults = (state: BeefyState) => {
 
   // apply sort
   let sortedVaults = filteredVaults;
-  console.log(filteredVaults);
   if (filterOptions.sort === 'apy') {
     sortedVaults = sortBy(sortedVaults, vault => {
       const apy = apyByVaultId[vault.id];
