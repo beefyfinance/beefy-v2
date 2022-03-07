@@ -4,7 +4,7 @@ import { connect, useSelector } from 'react-redux';
 import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
 import {
   selectGovVaultUserStackedBalanceInOracleToken,
-  selectHasUserDepositInVault,
+  selectHasUserBalanceInActiveBoost,
   selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
   selectUserVaultDepositInUsd,
 } from '../../features/data/selectors/balance';
@@ -180,7 +180,7 @@ const _VaultDeposited = ({
 }) => {
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
   const userStaked = useSelector((state: BeefyState) =>
-    selectHasUserDepositInVault(state, vaultId)
+    selectHasUserBalanceInActiveBoost(state, vaultId)
   );
 
   return isBoosted && userStaked ? (
