@@ -123,13 +123,16 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     // If the user's included a search string...
-    const SearchText = filterOptions.searchText.toLowerCase();
-    if (SearchText.length > 0 && !vault.name.toLowerCase().includes(SearchText)) {
+    const SearchText = filterOptions.searchText.toLowerCase().replace(/-/g, ' ');
+    if (
+      SearchText.length > 0 &&
+      !vault.name.toLowerCase().replace(/-/g, ' ').includes(SearchText)
+    ) {
       //if the search string is only one character, it's not enough, so hide the vault
       if (SearchText.length < 2) return false;
 
       //for each "token" in the search string...
-      const Assets = SearchText.replace(/-/g, ' ').split(' ');
+      const Assets = SearchText.split(' ');
       for (const Asset of Assets) {
         //if we're at the beginning or ending hyphen or space, loop for the next word
         if (!Asset.length) continue;
