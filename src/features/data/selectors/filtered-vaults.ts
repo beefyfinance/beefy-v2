@@ -122,25 +122,38 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
 
-    // Hide when the given searchword is found neither in the vault's name nor among its
-    // tokens or those of an involved, active boost. "Fuzzily" account also along the way
-    // for the standardly named wrapped version of a token.
-    const S = filterOptions.searchText.toLowerCase();
-    if (S.length > 0 && !vault.name.toLowerCase().includes(S)) {
-      if (S.length < 2) return false;
-      const O_TST = new RegExp(`^w?${S}$`);
-      if (
-        !(
-          vault.assetIds.find(S_TKN => S_TKN.toLowerCase().match(O_TST)) ||
-          (isGovVault(vault) && vault.earnedTokenId.toLowerCase().match(O_TST)) ||
-          (selectIsVaultBoosted(state, vault.id) &&
-            selectActiveVaultBoostIds(state, vault.id)
-              .map(boostId => selectBoostById(state, boostId))
-              .some(O => O.earnedTokenId.toLowerCase().match(O_TST)))
+    // If the user's included a search string...
+    const SearchText = filterOptions.searchText.toLowerCase();
+    if (SearchText.length > 0 && !vault.name.toLowerCase().includes(SearchText)) {
+      //if the search string is only one character, it's not enough, so hide the vault
+      if (SearchText.length < 2) return false;
+
+      //for each "token" in the search string...
+      const Assets = SearchText.replace(/-/g, ' ').split(' ');
+      for (const Asset of Assets) {
+        //if we're at the beginning or ending hyphen or space, loop for the next word
+        if (!Asset.length) continue;
+
+        //if the "token" is only one character, it's not enough, so hide the vault
+        if (Asset.length < 2) return false;
+
+        //If the "token" is not found among the vault's tokens or those of an involved,
+        //  active boost, hide the vault. "Fuzzily" account also along the way for the
+        //  standardly named wrapped version of a token.
+        const Regex = new RegExp(`^w?${Asset}$`);
+        if (
+          !(
+            vault.assetIds.find(SearchToken => SearchToken.toLowerCase().match(Regex)) ||
+            (isGovVault(vault) && vault.earnedTokenId.toLowerCase().match(Regex)) ||
+            (selectIsVaultBoosted(state, vault.id) &&
+              selectActiveVaultBoostIds(state, vault.id)
+                .map(boostId => selectBoostById(state, boostId))
+                .some(boost => boost.earnedTokenId.toLowerCase().match(Regex)))
+          )
         )
-      )
-        return false;
-    }
+          return false;
+      } //for (const Asset of Assets)
+    } //if (SearchText.length > 0 && !vault.name.toLowerCase().includes(SearchText))
 
     return true;
   });
