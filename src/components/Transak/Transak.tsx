@@ -14,8 +14,8 @@ const TransakNav = ({ className, children }) => {
     hostURL: window.location.origin,
     widgetHeight: '550px',
     widgetWidth: '450px',
-    defaultNetwork: 'polygon',
-    defaultCryptoCurrency: 'usdc',
+    defaultNetwork: 'bifi',
+    defaultCryptoCurrency: 'bsc',
     networks: 'arbitrum,avaxcchain,polygon,bsc,celo,fantom,moonriver', // NETWORK PREFFERENCES
     cryptoCurrencyList:
       'eth,weth,usdt,usdc,matic,dai,qi,bnb,bifi,avax,ftm,cusd,ceur,movr,aave,sushi,busd,quick,celo,wbtc',
