@@ -10,7 +10,7 @@ import { styles } from './styles';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
-import { selectActiveVaultBoostIds, selectBoostById } from '../../../data/selectors/boosts';
+import { selectBoostById, selectPreStakeOrActiveBoost } from '../../../data/selectors/boosts';
 import { selectBoostedVaultMainPartner } from '../../../data/selectors/partners';
 
 const useStyles = makeStyles(styles as any);
@@ -18,7 +18,7 @@ export const BoostCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const boostIds = useSelector((state: BeefyState) => selectActiveVaultBoostIds(state, vaultId));
+  const boostIds = useSelector((state: BeefyState) => selectPreStakeOrActiveBoost(state, vaultId));
   const boost = useSelector((state: BeefyState) => selectBoostById(state, boostIds[0]));
   const partner = useSelector((state: BeefyState) => selectBoostedVaultMainPartner(state, vaultId));
   const { text, social, website } = partner;

@@ -52,6 +52,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   );
 
   const periodFinish = useSelector((state: BeefyState) => selectBoostPeriodFinish(state, boost.id));
+  const isPreStake = periodFinish === null;
 
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();
@@ -150,12 +151,16 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
             {formatBigDecimals(boostPendingRewards, 8)} {rewardToken.symbol}
           </Typography>
         </Grid>
-        <Grid item xs={6}>
-          <Typography className={classes.body1}>{t('Boost-Ends')}</Typography>
-          <Typography className={classes.countDown}>
-            <StakeCountdown periodFinish={periodFinish} />
-          </Typography>
-        </Grid>
+        {!isPreStake ? (
+          <Grid item xs={6}>
+            <Typography className={classes.body1}>{t('Boost-Ends')}</Typography>
+            <Typography className={classes.countDown}>
+              <StakeCountdown periodFinish={periodFinish} />
+            </Typography>
+          </Grid>
+        ) : (
+          <></>
+        )}
       </Grid>
       {isWalletConnected ? (
         !isWalletOnVaultChain ? (
