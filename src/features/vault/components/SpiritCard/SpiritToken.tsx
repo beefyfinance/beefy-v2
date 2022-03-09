@@ -25,5 +25,5 @@ export const BinSpiritToken: TokenErc20 = {
 };
 
 export const binSpiritMintVault = {
-  mintAdress: '0x44e314190D9E4cE6d4C0903459204F8E21ff940A',
+  mintAdress: '0x8b32B01C740df5bd1fDa081BD3b12FB9200cb4Bc',
 };

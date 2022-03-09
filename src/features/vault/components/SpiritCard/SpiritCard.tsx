@@ -67,7 +67,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       ...formData,
       deposit: {
         ...formData.deposit,
-        input: '',
+        input: '0.00',
         amount: BIG_ZERO,
         max: false,
       },
@@ -78,7 +78,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const [formData, setFormData] = React.useState({
     deposit: {
-      input: '',
+      input: '0.00',
       amount: BIG_ZERO,
       max: false,
       token: null,
@@ -187,13 +187,18 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <Typography className={classes.content} variant="body1">
             {t('Spirit-Content')}
           </Typography>
+            <Box className={classes.boxReminder}>
+            <Typography className={classes.content} variant="body1">
+              {t('Spirit-Reminder')}
+            </Typography>
+          </Box>
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
                 {t('Spirit-From')} <span className={classes.value}>{SpiritToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
-                {t('Spirit-Available')}{' '}
+                {t('Spirit-Wallet')}{' '}
                 <span className={classes.value}>
                   {spiritBalanceString} {SpiritToken.symbol}
                 </span>
@@ -223,7 +228,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 {t('Spirit-To')} <span className={classes.value}>{oracleToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
-                {t('Spirit-Available')}{' '}
+                {t('Spirit-Wallet')}{' '}
                 <span className={classes.value}>
                   {formatBigDecimals(binSpiritBalance)} {oracleToken.symbol}
                 </span>
@@ -233,7 +238,11 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               <Box className={classes.inputLogo}>
                 <AssetsImage assets={[]} img={'partners/binSpiritToken.svg'} alt={'BinSpirit'} />
               </Box>
-              <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
+              <InputBase
+                disabled={true}
+                placeholder="0.00"
+                value={t('Spirit-Minimum', { input: formData.deposit.input ?? '0.00' })}
+              />
             </Paper>
           </Box>
           <Button
