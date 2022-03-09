@@ -241,7 +241,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               <InputBase
                 disabled={true}
                 placeholder="0.00"
-                value={t('Spirit-Minimum', { input: formData.deposit.input ?? '0.00' })}
+                value={t('Spirit-Minimum', { input: formData.deposit.input || '0.00' })}
               />
             </Paper>
           </Box>
