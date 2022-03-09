@@ -13,6 +13,7 @@ import { VaultEntity } from '../../features/data/entities/vault';
 import { StepperState } from './types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatBigDecimals } from '../../helpers/format';
+import { selectMintResult } from './selectors';
 
 const useStyles = makeStyles(styles as any);
 
@@ -229,10 +230,15 @@ const _Steps = ({
                   <>
                     <Box className={classes.successContent}>
                       <Typography variant="body1" className={classes.message}>
-                        {t('Transactn-Minted', {
-                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
-                          token: walletActionsState.data.token.symbol,
-                        })}
+                        {t(
+                          selectMintResult(walletActionsState).type === 'buy'
+                            ? 'Transactn-Bought'
+                            : 'Transactn-Minted',
+                          {
+                            amount: selectMintResult(walletActionsState).amount,
+                            token: walletActionsState.data.token.symbol,
+                          }
+                        )}
                       </Typography>
                       <TransactionLink vaultId={vaultId} />
                     </Box>

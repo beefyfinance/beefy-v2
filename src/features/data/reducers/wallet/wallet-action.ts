@@ -1,9 +1,17 @@
 import BigNumber from 'bignumber.js';
 import { WALLET_ACTION, WALLET_ACTION_RESET } from '../../actions/wallet-actions';
 import { TokenEntity } from '../../entities/token';
+import { EventLog } from 'web3-core';
 
 export type TrxHash = string;
-export type TrxReceipt = { transactionHash: string };
+export type TrxReceipt = {
+  readonly transactionHash: string;
+  readonly from: string;
+  readonly to: string;
+  readonly events?: {
+    [eventName: string]: EventLog | EventLog[];
+  };
+};
 export type TrxError = { message: string };
 
 type MandatoryAdditionalData = {
