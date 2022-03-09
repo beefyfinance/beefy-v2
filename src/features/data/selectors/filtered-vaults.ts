@@ -143,15 +143,15 @@ export const selectFilteredVaults = (state: BeefyState) => {
         //If the "token" is not found among the vault's tokens or those of an involved,
         //  active boost, hide the vault. "Fuzzily" account also along the way for the
         //  standardly named wrapped version of a token.
-        const Regex = new RegExp(`^w?${asset}$`);
+        const regex = new RegExp(`^w?${asset}$`);
         if (
           !(
-            vault.assetIds.find(SearchToken => SearchToken.toLowerCase().match(Regex)) ||
-            (isGovVault(vault) && vault.earnedTokenId.toLowerCase().match(Regex)) ||
+            vault.assetIds.find(SearchToken => SearchToken.toLowerCase().match(regex)) ||
+            (isGovVault(vault) && vault.earnedTokenId.toLowerCase().match(regex)) ||
             (selectIsVaultBoosted(state, vault.id) &&
               selectActiveVaultBoostIds(state, vault.id)
                 .map(boostId => selectBoostById(state, boostId))
-                .some(boost => boost.earnedTokenId.toLowerCase().match(Regex)))
+                .some(boost => boost.earnedTokenId.toLowerCase().match(regex)))
           )
         )
           return false;
