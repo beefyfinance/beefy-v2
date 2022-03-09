@@ -1,1 +1,1 @@
-export * from "./CowLoader"
+export * from './CowLoader';

@@ -1,1 +1,1 @@
-export * from "./LanguageDropdown"
+export * from './LanguageDropdown';

@@ -3,36 +3,35 @@ import { createTheme } from '@material-ui/core/styles';
 // Module augmentation to allow custom theme entries
 declare module '@material-ui/core/styles/createPalette' {
   interface TypeBackground {
-    footer: string
-    light: string
-    content: string
-    header: string
-    cta: string
+    footer: string;
+    light: string;
+    content: string;
+    header: string;
+    cta: string;
     filters: {
-      active: string,
-      inactive: string
-      outline: string
-      footer: string
-    },
+      active: string;
+      inactive: string;
+      outline: string;
+      footer: string;
+    };
     vaults: {
-      default: string
-      defaultOutline: string
-      boostOutline: string
-      gov: string
-      govOutline: string
-      inactive: string
-      inactiveOutline: string
-    },
+      default: string;
+      defaultOutline: string;
+      boostOutline: string;
+      gov: string;
+      govOutline: string;
+      inactive: string;
+      inactiveOutline: string;
+    };
     snackbars: {
-      bg: string
-      bgLine: string
-      bgBtn: string
-      text: string
-      error: string
-    },
+      bg: string;
+      bgLine: string;
+      bgBtn: string;
+      text: string;
+      error: string;
+    };
   }
 }
-
 
 const theme = createTheme({
   palette: {
