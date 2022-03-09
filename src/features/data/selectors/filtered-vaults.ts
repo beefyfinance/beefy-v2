@@ -123,27 +123,27 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     // If the user's included a search string...
-    const SearchText = filterOptions.searchText.toLowerCase().replace(/-/g, ' ');
+    const searchText = filterOptions.searchText.toLowerCase().replace(/-/g, ' ');
     if (
-      SearchText.length > 0 &&
-      !vault.name.toLowerCase().replace(/-/g, ' ').includes(SearchText)
+      searchText.length > 0 &&
+      !vault.name.toLowerCase().replace(/-/g, ' ').includes(searchText)
     ) {
       //if the search string is only one character, it's not enough, so hide the vault
-      if (SearchText.length < 2) return false;
+      if (searchText.length < 2) return false;
 
       //for each "token" in the search string...
-      const Assets = SearchText.split(' ');
-      for (const Asset of Assets) {
+      const assets = searchText.split(' ');
+      for (const asset of assets) {
         //if we're at the beginning or ending hyphen or space, loop for the next word
-        if (!Asset.length) continue;
+        if (!asset.length) continue;
 
         //if the "token" is only one character, it's not enough, so hide the vault
-        if (Asset.length < 2) return false;
+        if (asset.length < 2) return false;
 
         //If the "token" is not found among the vault's tokens or those of an involved,
         //  active boost, hide the vault. "Fuzzily" account also along the way for the
         //  standardly named wrapped version of a token.
-        const Regex = new RegExp(`^w?${Asset}$`);
+        const Regex = new RegExp(`^w?${asset}$`);
         if (
           !(
             vault.assetIds.find(SearchToken => SearchToken.toLowerCase().match(Regex)) ||
