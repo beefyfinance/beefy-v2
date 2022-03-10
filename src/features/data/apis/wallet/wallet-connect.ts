@@ -316,6 +316,24 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
         return provider;
       },
     },
+    'custom-fuse-cash': {
+      display: {
+        logo: require(`../../../../images/wallets/fusecash.png`).default,
+        name: 'Fuse.Cash',
+        description: 'Connect to your Fuse.Cash Wallet',
+      },
+      package: WalletConnectProvider,
+      options: {
+        rpc: { chainId: chain.rpc },
+      },
+      connector: async (ProviderPackage, options) => {
+        const provider = new ProviderPackage(options);
+
+        await provider.enable();
+
+        return provider;
+      },
+    },
     'custom-math': {
       display: {
         name: 'Math',
