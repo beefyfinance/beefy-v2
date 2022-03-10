@@ -37,11 +37,107 @@
     "type": "REMOVED"
   },
   {
-    "id": "fantom vault: beets-statera-duet",
+    "id": "fantom vault: spirit-ftm-beftm",
     "type": "Added"
   },
   {
-    "id": "fantom vault: boo-font-ftm",
+    "id": "fantom vault: beets-beefy-tale",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-solid-wigo-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: wigo-tomb-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: wigo-beets-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: wigo-geist-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: wigo-fusdt-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: joe-joe-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: joe-mai-wavax-v2-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: joe-joe-usdc.e-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: joe-joe-usdt.e-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "moonbeam vault: solarflare-ust-wglmr",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: solarflare-luna-flare",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: solarflare-wglmr-flare",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: solarflare-usdc-wglmr",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-bifi-wglmr",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-wglmr",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-dai-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-wglmr-glint",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-busd-bnb",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-busd",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-eth",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: beamswap-usdc-usdt",
     "type": "synced"
   },
   {
