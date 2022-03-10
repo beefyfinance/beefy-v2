@@ -45,7 +45,7 @@ export class WalletConnectApi implements IWalletConnectApi {
       this.provider = await this.web3Modal.connect();
       this._bindProviderEvents(this.provider);
       const web3 = _getWeb3FromProvider(this.provider);
-      const networkChainId = await _getNetworkChainId(web3);
+      const networkChainId = await _getNetworkChainId(web3, this.provider);
       const accounts = await web3.eth.getAccounts();
       const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
       return {
@@ -90,7 +90,7 @@ export class WalletConnectApi implements IWalletConnectApi {
     }
     const web3 = _getWeb3FromProvider(this.provider);
 
-    const networkChainId = await _getNetworkChainId(web3);
+    const networkChainId = await _getNetworkChainId(web3, this.provider);
     const accounts = await web3.eth.getAccounts();
     const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
     if (chain) {
@@ -223,8 +223,8 @@ function _getWeb3FromProvider(provider) {
   return web3;
 }
 
-async function _getNetworkChainId(web3: Web3) {
-  let networkChainId = await web3.eth.getChainId();
+async function _getNetworkChainId(web3: Web3, provider: any) {
+  let networkChainId = Number(provider.chainId || (await web3.eth.getChainId()));
   if (networkChainId === 86) {
     // Trust provider returns an incorrect chainId for BSC.
     networkChainId = 56;
@@ -385,7 +385,6 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
           cosmos: null,
         });
         await connector.activate();
-
         return connector.getProvider();
       },
     },
