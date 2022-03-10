@@ -1,13 +1,14 @@
 const connectors = [
-  'walletconnect',
+  'injected',
+  'custom-wallet-connect',
   'custom-clover',
   'custom-binance',
   'custom-math',
   'custom-twt',
   'custom-safepal',
   'custom-coinbase',
-  'custom-wallet-connect',
   'custom-fuse-cash',
+  'custom-cdc',
 ];
 
 export const config = {

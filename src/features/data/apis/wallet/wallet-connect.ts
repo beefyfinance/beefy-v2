@@ -8,6 +8,7 @@ import Web3Modal, {
 } from 'web3modal';
 import { CloverConnector } from '@clover-network/clover-connector';
 import WalletLink from 'walletlink';
+import { DeFiConnector } from 'deficonnect';
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
@@ -360,6 +361,33 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
       },
       package: 'safepal',
       connector: connectors.injected,
+    },
+    'custom-cdc': {
+      display: {
+        logo: require(`../../../../images/wallets/crypto.png`).default,
+        name: 'Crypto.com',
+        description: 'Crypto.com | Wallet Extension',
+      },
+      options: {
+        supportedChainIds: [25],
+        rpc: {
+          25: 'https://evm-cronos.crypto.org/', // cronos mainet
+        },
+        pollingInterval: 15000,
+      },
+      package: DeFiConnector,
+      connector: async (packageConnector, options) => {
+        const connector = new packageConnector({
+          name: 'Cronos',
+          supprtedChainTypes: ['eth'],
+          supportedChainTypes: ['eth'],
+          eth: options,
+          cosmos: null,
+        });
+        await connector.activate();
+
+        return connector.getProvider();
+      },
     },
   };
 
