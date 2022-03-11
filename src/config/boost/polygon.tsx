@@ -7,7 +7,7 @@ export const pools = [
     earnedToken: 'BIFI',
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xFbdd194376de19a88118e84E279b977f165d01b8',
-    earnContractAddress: '0xee857A3Cb0155fDb8950dFcC333796d6468Ff6Ca',
+    earnContractAddress: '0xE2C04ff677394872e43ee06B4a28a3cbd542A327',
     earnedOracle: 'tokens',
     earnedOracleId: 'BIFI',
     partnership: true,
