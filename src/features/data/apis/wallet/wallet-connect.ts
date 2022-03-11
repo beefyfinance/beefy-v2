@@ -306,21 +306,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
         description: 'Scan your WalletConnect to Connect',
       },
       options: {
-        rpc: {
-          56: 'https://bsc-dataseed.binance.org/',
-          43114: 'https://api.avax.network/ext/bc/C/rpc',
-          137: 'https://polygon-rpc.com/',
-          250: 'https://rpc.ftm.tools/',
-          1666600000: 'https://api.harmony.one/',
-          42161: 'https://arb1.arbitrum.io/rpc',
-          1285: 'https://rpc.moonriver.moonbeam.network',
-          42220: 'https://forno.celo.org',
-          25: 'https://evm-cronos.crypto.org/',
-          122: 'https://rpc.fuse.io',
-          1088: 'https://andromeda.metis.io/?owner=1088',
-          1313161554: 'https://mainnet.aurora.dev',
-          1284: 'https://rpc.api.moonbeam.network',
-        },
+        rpc: { chainId: chain.rpc },
       },
       package: WalletConnectProvider,
       connector: async (ProviderPackage, options) => {
