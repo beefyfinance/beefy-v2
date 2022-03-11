@@ -26,8 +26,19 @@ export const selectIsVaultBoosted = (state: BeefyState, vaultId: VaultEntity['id
   return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds.length > 0 || false;
 };
 
+export const selectIsVaultPreStakedOrBoosted = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  const vaultBoosts = state.entities.boosts.byVaultId[vaultId];
+  return vaultBoosts?.prestakeBoostsIds.length + vaultBoosts?.activeBoostsIds.length > 0 || false;
+};
+
 export const selectActiveVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds || [];
+};
+
+export const selectPreStakeOrActiveBoost = (state: BeefyState, vaultId: VaultEntity['id']) => {
+  return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds.concat(
+    state.entities.boosts.byVaultId[vaultId]?.prestakeBoostsIds
+  );
 };
 
 export const selectAllVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) => {
