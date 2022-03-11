@@ -1,144 +1,133 @@
 [
   {
-    "id": "bsc vault: cakev2-quidd-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc vault: omnifarm-usdo-busd-ot-eol",
+    "type": "synced"
   },
   {
-    "id": "bsc vault: omnifarm-usdo-busd-ot-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc vault: omnifarm-usdo-busd-eol",
+    "type": "synced"
   },
   {
     "id": "bsc vault: omnifarm-usdo-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: omnifarm-usdo-bdp-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: omnifarm-usdo-popen-eol",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: omnifarm-usdo-anymtlx-eol",
+    "type": "synced"
   },
   {
     "id": "bsc vault: omnifarm-fet-usdo-eol",
-    "type": "synced",
-    "EOLd": true
+    "type": "synced"
   },
   {
-    "id": "bsc vault: cakev2-dodo-bnb-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc vault: omnifarm-ocp-usdo-eol",
+    "type": "synced"
   },
   {
-    "id": "bsc vault: wex-krown-bnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc vault: cakev2-unfi-bnb-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "bsc vault: auto-ada-v2-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: spirit-ftm-beftm",
+    "id": "fantom vault: tomb-tomb-mai",
     "type": "Added"
   },
   {
-    "id": "fantom vault: beets-beefy-tale",
+    "id": "fantom vault: spirit-hnd-ftm",
     "type": "Added"
   },
   {
-    "id": "fantom vault: wigo-solid-wigo-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: wigo-tomb-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: wigo-beets-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: wigo-geist-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: wigo-fusdt-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-joe-usdc",
+    "id": "fantom vault: beets-cre8r-f-major",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-mai-wavax-v2-eol",
+    "id": "fantom vault: spirit-ftm-treeb",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: ester-est-ftm-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: ester-est-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: froyo-3pool-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: froyo-froyo-ftm-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-dfyn-route-eth-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-dino-eth-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-dfyn-ust-usdt-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-dfyn-eth-dfyn-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-xmark-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-dino-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-usdc-mimatic-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-usdc-usdt-eol",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-wavax-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: joe-egg-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: png-usdc.e-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: png-wavax-spell",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: png-wavax-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: png-wavax-ime",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: joe-wavax-pefi2-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "avax vault: joe-joe-usdc.e-eol",
+    "id": "cronos vault: vvs-tonic-usdc-eol",
     "type": "synced",
     "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-joe-usdt.e-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonbeam vault: solarflare-ust-wglmr",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: solarflare-luna-flare",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: solarflare-wglmr-flare",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: solarflare-usdc-wglmr",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-bifi-wglmr",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-usdc-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-usdc-wglmr",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-dai-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-wglmr-glint",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-busd-bnb",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-usdc-busd",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-usdc-eth",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: beamswap-usdc-usdt",
-    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
