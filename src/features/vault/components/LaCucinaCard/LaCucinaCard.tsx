@@ -36,7 +36,7 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const { ovenId, url } = useSelector((state: BeefyState) => selectLacucinaData(state, vaultId));
+  const { ovenId } = useSelector((state: BeefyState) => selectLacucinaData(state, vaultId));
 
   const [data] = useLaCucina(ovenId, setIsLoading);
   return (
@@ -77,7 +77,12 @@ const LaCucinaCard = ({ vaultId }: { vaultId: string }) => {
             <img src={LaCucinaToken} className={classes.token} alt="LaCucinaToken" /> LAC
           </Typography>
         </Box>
-        <a className={classes.link} target="_blank" rel="noreferrer" href={url}>
+        <a
+          className={classes.link}
+          target="_blank"
+          rel="noreferrer"
+          href={`https://app.lacucina.io/oven-details/${ovenId}?isFeatured=false&isStaked=false`}
+        >
           <Button className={classes.btn}>{t('LaCucina-Btn')}</Button>
         </a>
       </CardContent>

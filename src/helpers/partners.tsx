@@ -13,18 +13,15 @@ const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriv
 const LaCucina = [
   {
     id: 'mdex-lac-busd',
-    ovenId: '8f0304f1-cef0-4808-9caa-d6ede4037fba',
-    url: 'https://app.lacucina.io/oven-details/8f0304f1-cef0-4808-9caa-d6ede4037fba?isFeatured=false&isStaked=false',
-  },
-  {
-    id: 'cakev2-bifi-bnb',
-    ovenId: '2d126032-7d6b-4fd2-939b-f2f06196200e',
-    url: 'https://app.lacucina.io/oven-details/2d126032-7d6b-4fd2-939b-f2f06196200e?isFeatured=false&isStaked=false',
+    ovenId: '4925ec71-f494-4855-9c07-30df055e12ea',
   },
   {
     id: 'banana-btcb-bnb',
-    ovenId: '5d5e1467-2333-4c8f-a461-677d892613f6',
-    url: 'https://app.lacucina.io/oven-details/5d5e1467-2333-4c8f-a461-677d892613f6?isFeatured=false&isStaked=false',
+    ovenId: '52c7cebf-2218-4475-b60b-121196f6f81b',
+  },
+  {
+    id: 'auto-btcb-eth',
+    ovenId: '52f744d7-abfb-466b-bc29-b984ec9aa12d',
   },
 ];
 
