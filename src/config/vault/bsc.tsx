@@ -15853,7 +15853,7 @@ export const pools = [
     oracleId: 'omnifarm-usdo-busd',
     oraclePrice: 0,
     status: 'eol',
-    platform: 'Omnifarms',
+    platform: 'Other',
     assets: ['USDO', 'BUSD'],
     addLiquidityUrl:
       'https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x5801D0e1C7D977D78E4890880B8E579eb4943276',
@@ -16679,7 +16679,7 @@ export const pools = [
     oracleId: 'omnifarm-usdo-bdp',
     oraclePrice: 0,
     status: 'eol',
-    platform: 'Omnifarms',
+    platform: 'Other',
     assets: ['BDP', 'USDO'],
     addLiquidityUrl:
       'https://pancakeswap.finance/add/0x685b63CFE0179b3EFb70A01dCb1D648549AA192d/0x5801D0e1C7D977D78E4890880B8E579eb4943276',
@@ -17379,7 +17379,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: 'eol',
-    platform: 'Omnifarms',
+    platform: 'Other',
     assets: ['pOPEN', 'USDO'],
     addLiquidityUrl:
       'https://pancakeswap.finance/add/0xaBaE871B7E3b67aEeC6B46AE9FE1A91660AadAC5/0x5801D0e1C7D977D78E4890880B8E579eb4943276',
@@ -17408,7 +17408,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: 'eol',
-    platform: 'Omnifarms',
+    platform: 'Other',
     assets: ['anyMTLX', 'USDO'],
     addLiquidityUrl:
       'https://pancakeswap.finance/add/0x5921DEE8556c4593EeFCFad3CA5e2f618606483b/0x5801D0e1C7D977D78E4890880B8E579eb4943276',
@@ -17437,7 +17437,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: 'eol',
-    platform: 'Omnifarms',
+    platform: 'Other',
     assets: ['OCP', 'USDO'],
     addLiquidityUrl:
       'https://pancakeswap.finance/add/0x3C70260eEe0a2bFc4b375feB810325801f289fBd/0x5801d0e1c7d977d78e4890880b8e579eb4943276',
@@ -18420,7 +18420,7 @@ export const pools = [
     oracleId: 'omnifarm-usdo-busd-ot',
     oraclePrice: 0,
     status: 'eol',
-    platform: 'Omnifarms',
+    platform: 'Other',
     assets: ['USDO', 'BUSD'],
     addLiquidityUrl: 'https://omnitrade.ocp.finance/#/pools',
     buyTokenUrl: 'https://omnitrade.ocp.finance/#/',
@@ -18446,7 +18446,7 @@ export const pools = [
     oracleId: 'omnifarm-usdo-wbnb',
     oraclePrice: 0,
     status: 'eol',
-    platform: 'Omnifarms',
+    platform: 'Other',
     assets: ['USDO', 'BNB'],
     addLiquidityUrl:
       'https://pancakeswap.finance/add/BNB/0x5801D0e1C7D977D78E4890880B8E579eb4943276',
@@ -18474,7 +18474,7 @@ export const pools = [
     oracleId: 'omnifarm-fet-usdo',
     oraclePrice: 0,
     status: 'eol',
-    platform: 'Omnifarms',
+    platform: 'Other',
     assets: ['FET', 'USDO'],
     addLiquidityUrl:
       'https://pancakeswap.finance/add/0x031b41e504677879370e9dbcf937283a8691fa7f/0x5801d0e1c7d977d78e4890880b8e579eb4943276',
