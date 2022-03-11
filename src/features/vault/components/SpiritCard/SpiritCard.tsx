@@ -67,7 +67,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       ...formData,
       deposit: {
         ...formData.deposit,
-        input: '0.00',
+        input: '',
         amount: BIG_ZERO,
         max: false,
       },
@@ -78,7 +78,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const [formData, setFormData] = React.useState({
     deposit: {
-      input: '0.00',
+      input: '',
       amount: BIG_ZERO,
       max: false,
       token: null,
@@ -187,7 +187,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <Typography className={classes.content} variant="body1">
             {t('Spirit-Content')}
           </Typography>
-            <Box className={classes.boxReminder}>
+          <Box className={classes.boxReminder}>
             <Typography className={classes.content} variant="body1">
               {t('Spirit-Reminder')}
             </Typography>
@@ -241,7 +241,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               <InputBase
                 disabled={true}
                 placeholder="0.00"
-                value={t('Spirit-Minimum', { input: formData.deposit.input ?? '0.00' })}
+                value={t('Spirit-Minimum', { input: formData.deposit.input || '0.00' })}
               />
             </Paper>
           </Box>
