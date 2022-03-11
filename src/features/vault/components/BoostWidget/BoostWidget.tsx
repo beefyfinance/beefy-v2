@@ -2,18 +2,20 @@ import { useSelector } from 'react-redux';
 import { VaultEntity } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
 import {
-  selectActiveVaultBoostIds,
   selectBoostById,
-  selectIsVaultBoosted,
+  selectIsVaultPreStakedOrBoosted,
+  selectPreStakeOrActiveBoost,
 } from '../../../data/selectors/boosts';
 import { BoostWidgetPastBoosts } from './BoostWidgetPastBoosts';
 import { BoostWidgetActiveBoost } from './BoostWidgetActiveBoost';
 
 export const BoostWidget = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const isBoosted = useSelector((state: BeefyState) =>
+    selectIsVaultPreStakedOrBoosted(state, vaultId)
+  );
 
   const activeBoost = useSelector((state: BeefyState) =>
-    isBoosted ? selectBoostById(state, selectActiveVaultBoostIds(state, vaultId)[0]) : null
+    isBoosted ? selectBoostById(state, selectPreStakeOrActiveBoost(state, vaultId)[0]) : null
   );
 
   return (

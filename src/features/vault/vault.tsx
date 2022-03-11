@@ -21,7 +21,7 @@ import { SpiritCard } from './components/SpiritCard';
 import { Moonpot } from './components/MoonportCard';
 import { selectVaultById } from '../data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
-import { selectIsVaultBoosted } from '../data/selectors/boosts';
+import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { isGovVault } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
 import {
@@ -54,7 +54,9 @@ const VaultContent = React.memo(() => {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const isBoostedOrPreStake = useSelector((state: BeefyState) =>
+    selectIsVaultPreStakedOrBoosted(state, vaultId)
+  );
   const [dw, setDw] = React.useState('deposit');
   const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
   const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
@@ -155,7 +157,7 @@ const VaultContent = React.memo(() => {
               )}
             </Grid>
             <Grid item xs={12} md={8} className={classes.customOrder2}>
-              {isBoosted && <BoostCard vaultId={vaultId} />}
+              {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
               {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
               {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
               <SafetyCard vaultId={vaultId} />

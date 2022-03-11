@@ -57,7 +57,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       ...formData,
       deposit: {
         ...formData.deposit,
-        input: '0.00',
+        input: '',
         amount: BIG_ZERO,
         max: false,
       },
@@ -68,7 +68,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const [formData, setFormData] = React.useState({
     deposit: {
-      input: '0.00',
+      input: '',
       amount: BIG_ZERO,
       max: false,
       token: null,
@@ -217,7 +217,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               <InputBase
                 disabled={true}
                 placeholder="0.00"
-                value={t('beFTM-Minimum', { input: formData.deposit.input ?? '0.00' })}
+                value={t('beFTM-Minimum', { input: formData.deposit.input || '0.00' })}
               />
             </Paper>
           </Box>
