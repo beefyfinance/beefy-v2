@@ -8,6 +8,7 @@ import Web3Modal, {
 } from 'web3modal';
 import { CloverConnector } from '@clover-network/clover-connector';
 import WalletLink from 'walletlink';
+import { DeFiConnector } from 'deficonnect';
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
@@ -44,7 +45,7 @@ export class WalletConnectApi implements IWalletConnectApi {
       this.provider = await this.web3Modal.connect();
       this._bindProviderEvents(this.provider);
       const web3 = _getWeb3FromProvider(this.provider);
-      const networkChainId = await _getNetworkChainId(web3);
+      const networkChainId = await _getNetworkChainId(web3, this.provider);
       const accounts = await web3.eth.getAccounts();
       const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
       return {
@@ -89,7 +90,7 @@ export class WalletConnectApi implements IWalletConnectApi {
     }
     const web3 = _getWeb3FromProvider(this.provider);
 
-    const networkChainId = await _getNetworkChainId(web3);
+    const networkChainId = await _getNetworkChainId(web3, this.provider);
     const accounts = await web3.eth.getAccounts();
     const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
     if (chain) {
@@ -222,8 +223,8 @@ function _getWeb3FromProvider(provider) {
   return web3;
 }
 
-async function _getNetworkChainId(web3: Web3) {
-  let networkChainId = await web3.eth.getChainId();
+async function _getNetworkChainId(web3: Web3, provider: any) {
+  let networkChainId = Number(provider.chainId || (await web3.eth.getChainId()));
   if (networkChainId === 86) {
     // Trust provider returns an incorrect chainId for BSC.
     networkChainId = 56;
@@ -316,6 +317,27 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
         return provider;
       },
     },
+    'custom-fuse-cash': {
+      display: {
+        logo: require(`../../../../images/wallets/fusecash.png`).default,
+        name: 'Fuse.Cash',
+        description: 'Connect to your Fuse.Cash Wallet',
+      },
+      package: WalletConnectProvider,
+      options: {
+        rpc: {
+          1: 'https://rpc.fuse.io',
+          122: 'https://rpc.fuse.io',
+        },
+      },
+      connector: async (ProviderPackage, options) => {
+        const provider = new ProviderPackage(options);
+
+        await provider.enable();
+
+        return provider;
+      },
+    },
     'custom-math': {
       display: {
         name: 'Math',
@@ -342,6 +364,32 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
       },
       package: 'safepal',
       connector: connectors.injected,
+    },
+    'custom-cdc': {
+      display: {
+        logo: require(`../../../../images/wallets/crypto.png`).default,
+        name: 'Crypto.com',
+        description: 'Crypto.com | Wallet Extension',
+      },
+      options: {
+        supportedChainIds: [25],
+        rpc: {
+          25: 'https://evm-cronos.crypto.org/', // cronos mainet
+        },
+        pollingInterval: 15000,
+      },
+      package: DeFiConnector,
+      connector: async (packageConnector, options) => {
+        const connector = new packageConnector({
+          name: 'Cronos',
+          supprtedChainTypes: ['eth'],
+          supportedChainTypes: ['eth'],
+          eth: options,
+          cosmos: null,
+        });
+        await connector.activate();
+        return connector.getProvider();
+      },
     },
   };
 
