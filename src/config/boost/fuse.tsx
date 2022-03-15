@@ -1,7 +1,7 @@
 export const pools = [
   {
     id: 'moo_fusefi-wfuse-usdc-fuse',
-    poolId: 'voltage-wfuse-usdc',
+    poolId: 'voltage-wfuse-usdc-eol',
     name: 'Fuse',
     assets: ['USDC', 'FUSE'],
     earnedToken: 'mooFuse',
