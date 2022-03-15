@@ -20,6 +20,7 @@
     "blockchain-addressbook": "^0.21.1",
     "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
+    "deficonnect": "^1.1.5",
     "i18next": "^20.3.2",
     "i18next-browser-languagedetector": "^6.1.2",
     "lodash": "^4.17.21",
