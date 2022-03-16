@@ -23,6 +23,10 @@ const LaCucina = [
     id: 'auto-btcb-eth',
     ovenId: '52f744d7-abfb-466b-bc29-b984ec9aa12d',
   },
+  {
+    id: 'cakev2-bifi-bnb',
+    ovenId: '5d33ab9d-0a99-49ac-b877-0756e593031b',
+  },
 ];
 
 const Moonpot = [
