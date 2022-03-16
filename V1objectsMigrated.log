@@ -1,74 +1,22 @@
 [
   {
-    "id": "polygon vault: jarvis-2jpy-paused",
+    "id": "fantom vault: based-based-mai",
     "type": "Added"
   },
   {
-    "id": "polygon vault: jarvis-2jpy",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: joe-joe",
+    "id": "fantom vault: tomb-tomb-mai",
     "type": "synced"
   },
   {
-    "id": "avax vault: joe-wavax-vtx",
+    "id": "polygon vault: quick-usdc-orbs",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-wavax-ecd",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-elon",
+    "id": "polygon vault: sushi-weth-sx",
     "type": "synced"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-ust-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltage-luna-ust-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-weth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltage-fusd-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-fusd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltage-wbtc-weth-eol",
-    "type": "synced",
-    "EOLd": true
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
-    "type": "synced"
-  },
-  {
-    "id": "fuse boost: moo_fusefi-wfuse-usdc-fuse",
     "type": "synced"
   }
 ]
