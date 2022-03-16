@@ -64,6 +64,7 @@ export const styles = theme => ({
       fontSize: '12px',
       color: theme.palette.text.primary,
       textTransform: 'uppercase',
+      marginLeft: '2px',
     },
   },
   removeLinkStyles: {
