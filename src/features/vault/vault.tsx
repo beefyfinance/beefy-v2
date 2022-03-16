@@ -85,12 +85,12 @@ const VaultContent = React.memo(() => {
                   <span className={classes.platformContainer}>
                     <Box className={classes.chainContainer}>
                       <Typography className={classes.platformLabel}>
-                        {t('Chain')}: <span>{chain.name}</span>
+                        {t('Chain')} <span>{chain.name}</span>
                       </Typography>
                     </Box>
                     <Box>
                       <Typography className={classes.platformLabel}>
-                        {t('PLATFORM')}: <span>{platform.name}</span>
+                        {t('Platform')} <span>{platform.name}</span>
                       </Typography>
                     </Box>
                   </span>

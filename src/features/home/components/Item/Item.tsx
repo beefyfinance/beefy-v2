@@ -103,12 +103,12 @@ const _ItemVaultPresentation = connect(
             <span className={classes.platformContainer}>
               <Box sx={{ marginRight: '8px' }}>
                 <Typography className={classes.platformLabel}>
-                  {t('Chain')}: <span>{chain.name}</span>
+                  {t('Chain')} <span>{chain.name}</span>
                 </Typography>
               </Box>
               <Box>
                 <Typography className={classes.platformLabel}>
-                  {t('PLATFORM')}: <span>{platform.name}</span>
+                  {t('Platform')} <span>{platform.name}</span>
                 </Typography>
               </Box>
             </span>
