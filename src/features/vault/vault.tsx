@@ -32,7 +32,6 @@ import {
   selectIsVaultQidao,
   selectIsVaultLacucina,
 } from '../data/selectors/partners';
-import { selectPlatformById } from '../data/selectors/platforms';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
 import { LaCucina } from './components/LaCucinaCard';
@@ -53,7 +52,6 @@ const VaultContent = React.memo(() => {
   let { id: vaultId }: any = useParams();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
   const isBoostedOrPreStake = useSelector((state: BeefyState) =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
@@ -90,7 +88,7 @@ const VaultContent = React.memo(() => {
                     </Box>
                     <Box>
                       <Typography className={classes.platformLabel}>
-                        {t('Platform')} <span>{platform.name}</span>
+                        {t('Uses')} <span>{vault.tokenDescription}</span>
                       </Typography>
                     </Box>
                   </span>

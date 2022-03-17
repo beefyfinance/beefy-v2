@@ -25,6 +25,7 @@ export interface VaultStandard {
   id: string;
   name: string;
   logoUri: string;
+  tokenDescription: string;
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -88,6 +89,7 @@ export interface VaultGov {
   id: string;
   name: string;
   logoUri: string;
+  tokenDescription: string;
 
   /**
    * ASSETS are basically the assets that are in that vault

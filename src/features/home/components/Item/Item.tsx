@@ -13,11 +13,9 @@ import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { isGovVault, isVaultRetired, VaultEntity } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
 import { selectChainById } from '../../../data/selectors/chains';
-import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectTokenById } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { ChainEntity } from '../../../data/entities/chain';
-import { PlatformEntity } from '../../../data/entities/platform';
 import { TokenEntity } from '../../../data/entities/token';
 import { popoverInLinkHack__linkHandler } from '../../../../helpers/list-popover-in-link-hack';
 import { VaultTvl } from '../../../../components/VaultTvl/VaultTvl';
@@ -32,22 +30,19 @@ const _ItemVaultPresentation = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
     const chain = selectChainById(state, vault.chainId);
-    const platform = selectPlatformById(state, vault.platformId);
     const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
     const isBoosted = selectIsVaultBoosted(state, vaultId);
-    return { vault, chain, platform, earnedToken, isBoosted };
+    return { vault, chain, earnedToken, isBoosted };
   }
 )(
   ({
     vault,
     chain,
-    platform,
     earnedToken,
     isBoosted,
   }: {
     vault: VaultEntity;
     chain: ChainEntity;
-    platform: PlatformEntity;
     earnedToken: TokenEntity;
     isBoosted: boolean;
   }) => {
@@ -108,7 +103,7 @@ const _ItemVaultPresentation = connect(
               </Box>
               <Box>
                 <Typography className={classes.platformLabel}>
-                  {t('Platform')} <span>{platform.name}</span>
+                  {t('Uses')} <span>{vault.tokenDescription}</span>
                 </Typography>
               </Box>
             </span>
