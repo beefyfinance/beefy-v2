@@ -103,7 +103,7 @@ const _ItemVaultPresentation = connect(
               </Box>
               <Box>
                 <Typography className={classes.platformLabel}>
-                  {t('Uses')} <span>{vault.tokenDescription}</span>
+                  {t('Platform')} <span>{vault.tokenDescription}</span>
                 </Typography>
               </Box>
             </span>
