@@ -1,125 +1,34 @@
 [
   {
-    "id": "bsc vault: cakev2-yfi-bnb-eol",
+    "id": "polygon vault: jarvis-2sgd",
+    "type": "Added"
+  },
+  {
+    "id": "polygon vault: jarvis-2jpy",
+    "type": "Added"
+  },
+  {
+    "id": "polygon vault: jarvis-2jpy-paused",
     "type": "REMOVED"
   },
   {
-    "id": "fantom vault: spirit-ust-ftm",
+    "id": "avax vault: joe-deg-wavax",
     "type": "Added"
   },
   {
-    "id": "fantom vault: based-based-mai",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: beets-multichain-maxi-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-treeb-me-bro-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-eth-fuse",
+    "id": "metis vault: tethys-rftm-metis",
     "type": "Added"
   },
   {
-    "id": "polygon vault: quick-fodl-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fuse vault: voltagev2-fusd-bnb",
+    "id": "metis vault: tethys-metis-ravax",
     "type": "Added"
   },
   {
-    "id": "fuse vault: voltagev2-wbtc-weth",
+    "id": "metis vault: tethys-dai-metis",
     "type": "Added"
   },
   {
-    "id": "fuse vault: voltagev2-wfuse-weth",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltagev2-wfuse-busd",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltagev2-wfuse-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltagev2-wfuse-fusd",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltagev2-wfuse-volt",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltagev2-fusd-volt",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltagev2-wfuse-atust",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltagev2-volt-bnb",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltagev2-wfuse-gdollar",
-    "type": "Added"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-weth-eol",
-    "type": "synced"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-g$-eol",
-    "type": "synced"
-  },
-  {
-    "id": "fuse vault: voltage-fusd-bnb-eol",
-    "type": "synced"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-busd-eol",
-    "type": "synced"
-  },
-  {
-    "id": "fuse vault: voltage-wfuse-fusd-eol",
-    "type": "synced"
-  },
-  {
-    "id": "metis vault: netswap-byte-m.usdc",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-stella-wglmr",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-stella-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-usdc-wglmr",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-usdc-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-usdc-bnb",
-    "type": "Added"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-busd-wglmr",
+    "id": "aurora vault: tri-ausdo-usdt",
     "type": "Added"
   },
   {
