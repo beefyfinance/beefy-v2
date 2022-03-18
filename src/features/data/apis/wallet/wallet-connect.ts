@@ -1,10 +1,10 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3Modal, {
+  CACHED_PROVIDER_KEY,
   connectors,
+  getLocal as getWeb3ModalLocal,
   ICoreOptions,
   IProviderOptions,
-  CACHED_PROVIDER_KEY,
-  getLocal as getWeb3ModalLocal,
 } from 'web3modal';
 import { CloverConnector } from '@clover-network/clover-connector';
 import WalletLink from 'walletlink';
@@ -12,17 +12,14 @@ import { DeFiConnector } from 'deficonnect';
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
-import { IWalletConnectApi, WalletConnectOptions } from './wallet-connect-types';
+import { IWalletConnectApi, Provider, WalletConnectOptions } from './wallet-connect-types';
 import { featureFlag_walletAddressOverride } from '../../utils/feature-flags';
 import { sleep } from '../../utils/async-utils';
+import { maybeHexToNumber } from '../../../../helpers/format';
 
 export class WalletConnectApi implements IWalletConnectApi {
   protected web3Modal: Web3Modal | null;
-  protected provider: {
-    on?: (eventName: string, handler: () => {}) => {};
-    removeAllListeners?: () => {};
-    request: (req: { method: string; params: any[] }) => Promise<void>;
-  } | null;
+  protected provider: Provider | null;
 
   constructor(protected options: WalletConnectOptions) {
     this.web3Modal = null;
@@ -45,7 +42,7 @@ export class WalletConnectApi implements IWalletConnectApi {
       this.provider = await this.web3Modal.connect();
       this._bindProviderEvents(this.provider);
       const web3 = _getWeb3FromProvider(this.provider);
-      const networkChainId = await _getNetworkChainId(web3, this.provider);
+      const networkChainId = await _getNetworkChainId(web3);
       const accounts = await web3.eth.getAccounts();
       const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
       return {
@@ -90,7 +87,7 @@ export class WalletConnectApi implements IWalletConnectApi {
     }
     const web3 = _getWeb3FromProvider(this.provider);
 
-    const networkChainId = await _getNetworkChainId(web3, this.provider);
+    const networkChainId = await _getNetworkChainId(web3);
     const accounts = await web3.eth.getAccounts();
     const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
     if (chain) {
@@ -211,20 +208,24 @@ export class WalletConnectApi implements IWalletConnectApi {
 
 function _getWeb3FromProvider(provider) {
   const web3 = new Web3(provider);
+
+  // Override web3.eth.getChainId to accept number strings "25" as well as hex strings "0x17"
+  // eth_chainId returns "25" via Chronos Wallet Extension
   web3.eth.extend({
     methods: [
       {
-        name: 'chainId',
+        name: 'getChainId',
         call: 'eth_chainId',
-        outputFormatter: web3.utils.hexToNumber as any,
+        outputFormatter: maybeHexToNumber as any,
       },
     ],
   });
+
   return web3;
 }
 
-async function _getNetworkChainId(web3: Web3, provider: any) {
-  let networkChainId = Number(provider.chainId || (await web3.eth.getChainId()));
+async function _getNetworkChainId(web3: Web3) {
+  let networkChainId = await web3.eth.getChainId();
   if (networkChainId === 86) {
     // Trust provider returns an incorrect chainId for BSC.
     networkChainId = 56;

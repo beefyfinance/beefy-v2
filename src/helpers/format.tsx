@@ -1,6 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { ApyStatLoader } from '../components/ApyStatLoader';
 import { TotalApy } from '../features/data/reducers/apy';
+import { hexToNumber, isHexStrict } from 'web3-utils';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -150,4 +151,16 @@ export function convertAmountToRawNumber(value, decimals = 18) {
     .times(new BigNumber('10').pow(decimals))
     .decimalPlaces(0, BigNumber.ROUND_DOWN)
     .toString(10);
+}
+
+export function maybeHexToNumber(input: any): number {
+  if (typeof input === 'number') {
+    return input;
+  }
+
+  if (typeof input === 'string') {
+    return isHexStrict(input) ? hexToNumber(input) : Number(input);
+  }
+
+  throw new Error(`${typeof input} "${input}" is not valid hex or number.`);
 }

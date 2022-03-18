@@ -29,7 +29,6 @@ import { Step } from '../../../../components/Steps/types';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { useStepper } from '../../../../components/Steps/hooks';
-import { spiritDeposit } from './spirit-wallet-action';
 
 const useStyles = makeStyles(styles as any);
 
@@ -162,7 +161,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     steps.push({
       step: 'mint',
       message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
-      action: spiritDeposit(
+      action: walletActions.spiritDeposit(
         vault.chainId,
         binSpiritMintVault.mintAdress,
         amount,
