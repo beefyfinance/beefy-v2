@@ -13,4 +13,11 @@ export const zaps = [
     ammFactory: '0x43eA90e2b786728520e4f930d2A71a477BF2737C',
     ammPairInitHash: '0x1901958ef8b470f2c0a3875a79ee0bd303866d85102c0f1ea820d317024d50b5',
   },
+  {
+    // Voltage
+    zapAddress: '0xc04DbaF536286D3e06BC4BD60681C47Be586f44f',
+    ammRouter: '0xE3F85aAd0c8DD7337427B9dF5d0fB741d65EEEB5',
+    ammFactory: '0x1998E4b0F1F922367d8Ec20600ea2b86df55f34E',
+    ammPairInitHash: '0xe5f5532292e2e2a7aee3c2bb13e6d26dca6e8cc0a843ddd6f37c436c23cfab22',
+  },
 ];
