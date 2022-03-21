@@ -686,7 +686,7 @@ export const pools = [
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
-      'IL_HIGH',
+      'IL_NONE',
       'MCAP_HIGH',
       'AUDIT',
       'CONTRACTS_VERIFIED',
