@@ -1,187 +1,63 @@
 [
   {
-    "id": "bsc vault: cakev2-wbnb-gm-eol",
+    "id": "polygon vault: quick-matic-mana-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: cakev2-wbnb-dpt-eol",
+    "id": "polygon vault: quick-dai-usdt-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: cakev2-santos-wbnb-eol",
+    "id": "polygon vault: cometh-bifi-eth-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: cakev2-porto-wbnb-eol",
+    "id": "polygon vault: quick-link-eth-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: banana-hotcross-busd-eol",
+    "id": "avax vault: png-bribe-wavax-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: cakev2-sps-wbnb-eol",
+    "id": "avax vault: joe-link.e-usdc.e-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: kingdefi-krown-bnb-eol",
+    "id": "avax vault: joe-wavax-frax-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: cakev2-idia-busd-eol",
+    "id": "avax vault: joe-wavax-cly-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: cakev2-xcv-busd-eol",
+    "id": "avax vault: joe-klo-wavax-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "heco vault: lendhub-btc-eol",
+    "id": "avax vault: joe-wavax-spell-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "heco vault: lendhub-dot-eol",
+    "id": "moonriver vault: solarbeam-busd-usdc-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "heco vault: lendhub-lhb-wht-eol",
+    "id": "moonriver vault: solarbeam-usdt-usdc-eol",
     "type": "synced",
     "EOLd": true
-  },
-  {
-    "id": "heco vault: lendhub-lhb-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-mdx-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-hbtc-wht-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-eth-wht-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-hltc-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-hbch-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-lhb-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-uni-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-hbtc-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "heco vault: mdex-eth-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-kek-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-inv-wftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spartacadabra-charm-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-link-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: jetswap-fantom-eth-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-wftm-foo-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-weth-sx-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-gns-dai-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-bct-klima-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-usdc-tusd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-wmatic-ghst-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: cometh-bifi-must-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: bankerjoe-link.e-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "cronos vault: crona-wbtc-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonbeam vault: stellaswap-usdc-usdt",
-    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
