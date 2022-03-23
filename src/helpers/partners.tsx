@@ -65,6 +65,11 @@ const Moonpot = [
     img: 'partners/moonpot/4belt.svg',
     link: 'https://play.moonpot.com/#/pot/4belt',
   },
+  {
+    id: 'beefy-beFTM',
+    img: 'partners/moonpot/beFTM.svg',
+    link: 'https://play.moonpot.com/#/pot/beftm',
+  },
 ];
 
 export { QiDao, Insurace, Moonpot, LaCucina };
