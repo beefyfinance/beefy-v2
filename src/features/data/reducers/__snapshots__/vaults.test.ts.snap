@@ -49,6 +49,7 @@ Object {
       "status": "active",
       "strategyType": "SingleStake",
       "tags": Array [],
+      "tokenDescription": "Beefy Delegator",
       "type": "single",
       "withdrawalFee": "0%",
     },
@@ -131,6 +132,7 @@ Object {
       "tags": Array [
         "eol",
       ],
+      "tokenDescription": "ApeSwap",
       "type": "single",
       "withdrawalFee": "0.1%",
     },
@@ -166,6 +168,7 @@ Object {
         "beefy",
         "low",
       ],
+      "tokenDescription": "Beefy.Finance",
       "type": "single",
       "withdrawalFee": "0%",
     },
@@ -201,6 +204,7 @@ Object {
       "tags": Array [
         "low",
       ],
+      "tokenDescription": "Sushi",
       "type": "lps",
       "withdrawalFee": "0%",
     },
