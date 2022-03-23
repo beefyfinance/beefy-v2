@@ -597,7 +597,7 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'SingleStake',
-    withdrawalFee: '0%',
+    withdrawalFee: '0.1%',
     buyTokenUrl:
       'https://traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',
     network: 'avax',
