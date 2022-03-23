@@ -1,63 +1,16 @@
 [
   {
-    "id": "polygon vault: quick-matic-mana-eol",
+    "id": "fantom vault: beets-cre8r-f-major-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "polygon vault: quick-dai-usdt-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fantom vault: beets-beefy-tale-pause",
+    "type": "Added"
   },
   {
-    "id": "polygon vault: cometh-bifi-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-link-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: png-bribe-wavax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-link.e-usdc.e-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-wavax-frax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-wavax-cly-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-klo-wavax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-wavax-spell-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-busd-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-usdt-usdc-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fantom vault: beets-beefy-tale",
+    "type": "REMOVED"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
