@@ -1,16 +1,27 @@
 [
   {
-    "id": "fantom vault: beets-cre8r-f-major-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-beefy-tale-pause",
+    "id": "bsc vault: banana-ape-wbnb",
     "type": "Added"
   },
   {
-    "id": "fantom vault: beets-beefy-tale",
-    "type": "REMOVED"
+    "id": "bsc vault: cakev2-cake-duet",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: cakev2-era-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: cakev2-bsw-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: cakev2-gmt-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: wigo-wigo",
+    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
