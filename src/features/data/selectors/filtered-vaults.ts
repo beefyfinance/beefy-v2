@@ -87,7 +87,11 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
       return false;
     }
-    if (!filterOptions.onlyRetired && isVaultRetired(vault)) {
+    if (
+      !filterOptions.onlyRetired &&
+      isVaultRetired(vault) &&
+      filterOptions.userCategory !== 'deposited'
+    ) {
       return false;
     }
     if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
