@@ -1,18 +1,5 @@
 [
   {
-    "id": "fantom vault: beets-cre8r-f-major-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-beefy-tale-pause",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-beefy-tale",
-    "type": "REMOVED"
-  },
-  {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
   }
