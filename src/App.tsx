@@ -18,6 +18,7 @@ const Vault = React.lazy(() => import(`./features/vault`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
+  console.log('a');
   React.useEffect(() => {
     // load our data
     if (featureFlag_replayReduxActions()) {
