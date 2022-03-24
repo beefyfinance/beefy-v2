@@ -1,29 +1,5 @@
 [
   {
-    "id": "bsc vault: banana-ape-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-cake-duet",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-era-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-bsw-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-gmt-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: wigo-wigo",
-    "type": "Added"
-  },
-  {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
   }
