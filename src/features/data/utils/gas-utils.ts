@@ -27,7 +27,7 @@ function formatFeeHistory(history: FeeHistoryResult) {
  * Helper method to format the return value of web3.eth.getFeeHistory
  */
 async function getFeeHistory(web3: Web3, blockCount: number, percentiles: number[]) {
-  return formatFeeHistory(await web3.eth.getFeeHistory(blockCount, 'pending', percentiles));
+  return formatFeeHistory(await web3.eth.getFeeHistory(blockCount, 'latest', percentiles));
 }
 
 /**
