@@ -57,7 +57,7 @@ async function getGasPriceEstimate(web3: Web3) {
 
   const [feeHistory, pendingBlock] = await Promise.all([
     getFeeHistory(web3, blockCount, [35]),
-    web3.eth.getBlock('pending', false),
+    web3.eth.getBlock('latest', false),
   ]);
   const priorityFees = feeHistory.map(block => block.priorityFeePerGas[0]);
   const totalPriorityFees = BigNumber.sum(...priorityFees);
