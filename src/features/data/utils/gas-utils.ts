@@ -4,6 +4,12 @@ import { FeeHistoryResult } from 'web3-eth';
 import { maybeHexToNumber } from '../../../helpers/format';
 import { getConfigApi } from '../apis/instances';
 
+function medianOf(numbers: BigNumber[]): BigNumber {
+  const sortedNumbers = numbers.slice().sort((a, b) => a.comparedTo(b));
+  const i = Math.floor((sortedNumbers.length - 1) / 2);
+  return sortedNumbers[i];
+}
+
 /**
  * Formats data to per-block object, and converts hex strings to BigNumber instances
  */
@@ -26,8 +32,13 @@ function formatFeeHistory(history: FeeHistoryResult) {
 /**
  * Helper method to format the return value of web3.eth.getFeeHistory
  */
-async function getFeeHistory(web3: Web3, blockCount: number, percentiles: number[]) {
-  return formatFeeHistory(await web3.eth.getFeeHistory(blockCount, 'latest', percentiles));
+async function getFeeHistory(
+  web3: Web3,
+  blockCount: number,
+  lastBlock: number,
+  percentiles: number[]
+) {
+  return formatFeeHistory(await web3.eth.getFeeHistory(blockCount, lastBlock, percentiles));
 }
 
 /**
@@ -44,7 +55,7 @@ async function isWeb3ConnectedToEIP1559Chain(web3: Web3): Promise<boolean> {
 }
 
 /**
- * This takes the average of the last 5 blocks 35th-percentile priority fees.
+ * This takes the median of the last 5 blocks 20th-percentile priority fees.
  * We can tweak this by:
  * - changing the number of blocks we look at (more = underpay during spike, less = overpay during spike)
  * - changing the % that we look at (higher = more chance to overpay, lower = more chance to underpay)
@@ -54,22 +65,23 @@ async function isWeb3ConnectedToEIP1559Chain(web3: Web3): Promise<boolean> {
 async function getGasPriceEstimate(web3: Web3) {
   const blockCount = 5; // number of past blocks to look at
   const baseFeeSafetyMultiplier = 1.5; // a lot of full blocks after our estimate could increase the required base fee
+  const minPriorityFeePerGas = new BigNumber(1_500_000_000); // 1.5 gwei
 
-  const [feeHistory, pendingBlock] = await Promise.all([
-    getFeeHistory(web3, blockCount, [35]),
-    web3.eth.getBlock('latest', false),
-  ]);
+  const latestBlock = await web3.eth.getBlock('latest', false);
+  const feeHistory = await getFeeHistory(web3, blockCount, latestBlock.number, [20]);
+
   const priorityFees = feeHistory.map(block => block.priorityFeePerGas[0]);
-  const totalPriorityFees = BigNumber.sum(...priorityFees);
-  const avgPriorityFee = totalPriorityFees.dividedToIntegerBy(blockCount);
-  const baseFeePerGas = new BigNumber(pendingBlock.baseFeePerGas)
+  const medianPriorityFee = medianOf(priorityFees);
+  const maxPriorityFeePerGas = BigNumber.max(medianPriorityFee, minPriorityFeePerGas);
+
+  const baseFeePerGas = new BigNumber(latestBlock.baseFeePerGas)
     .multipliedBy(baseFeeSafetyMultiplier)
     .decimalPlaces(0);
 
   return {
     baseFeePerGas: baseFeePerGas.toString(10),
-    maxPriorityFeePerGas: avgPriorityFee.toString(10),
-    maxFeePerGas: baseFeePerGas.plus(avgPriorityFee).toString(10),
+    maxPriorityFeePerGas: maxPriorityFeePerGas.toString(10),
+    maxFeePerGas: baseFeePerGas.plus(maxPriorityFeePerGas).toString(10),
   };
 }
 
