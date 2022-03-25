@@ -117,8 +117,10 @@ export const config = {
       'DAIe',
       'MAI',
       'FRAX',
-      'MIM',
       'nUSD',
+      'MIM',
+      'USDC',
+      'UST',
     ],
   },
   polygon: {
@@ -167,6 +169,8 @@ export const config = {
       'JPYC',
       'jCAD',
       'CADC',
+      'jSGD',
+      'XSGD',
     ],
   },
   fantom: {
@@ -204,6 +208,7 @@ export const config = {
       'UST',
       'asUSDC',
       'LAMBDA',
+      'DEI',
     ],
   },
   harmony: {

@@ -30,12 +30,23 @@ export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => 
 
   apy *= 100;
 
-  const units = ['', 'k', 'M', 'B', 'T', 'Q', 'Q', 'S', 'S'];
-  const order = apy < 1 ? 0 : Math.floor(Math.log10(apy) / 3);
+  const units = ['', 'k', 'M', 'B', 'T', 'Q', 'S'];
+  const order = Math.floor(Math.log10(apy) / 3);
+  const shouldShowUnits = order > 1;
+  let unitToDisplay = '';
   if (order >= units.length - 1) return `🔥`;
+  let num: BigNumber | number = new BigNumber(apy);
+  if (shouldShowUnits) {
+    num = apy / 1000 ** order;
+    unitToDisplay = units[order];
+  }
 
-  const num = apy / 1000 ** order;
-  return `${num.toFixed(dp)}${units[order]}%`;
+  return num < 999
+    ? `${num.toFixed(dp)}${unitToDisplay}%`
+    : apy.toLocaleString('en-US', {
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0,
+      }) + '%';
 };
 
 export const formattedTotalApy = (totalApy: TotalApy) => {
