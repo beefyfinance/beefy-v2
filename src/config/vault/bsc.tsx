@@ -15,7 +15,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'BIFI',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Beefy.Finance',
     assets: ['BIFI'],
     risks: [
