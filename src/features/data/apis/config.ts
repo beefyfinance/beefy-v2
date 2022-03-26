@@ -108,6 +108,7 @@ export interface ChainConfig {
   id: string;
   name: string;
   chainId: number;
+  eip1559: boolean;
   rpc: string[];
   explorerUrl: string;
   multicallAddress: string;

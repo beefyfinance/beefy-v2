@@ -25,7 +25,7 @@ import { isString } from 'lodash';
 import { Step } from '../../../../components/Steps/types';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { useStepper } from '../../../../components/Steps/hooks';
-import { beFtmDeposit } from './beftm-wallet-action';
+import { walletActions } from '../../../data/actions/wallet-actions';
 
 const useStyles = makeStyles(styles as any);
 
@@ -139,7 +139,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     steps.push({
       step: 'mint',
       message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
-      action: beFtmDeposit(
+      action: walletActions.beFtmDeposit(
         beFtmMintVault.mintAdress,
         formData.deposit.amount,
         formData.deposit.max

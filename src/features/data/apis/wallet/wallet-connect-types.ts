@@ -15,6 +15,12 @@ export interface WalletConnectOptions {
   ) => Promise<unknown> | unknown;
 }
 
+export interface Provider {
+  on?: (eventName: string, handler: () => {}) => {};
+  removeAllListeners?: () => {};
+  request: (req: { method: string; params: any[] }) => Promise<void>;
+}
+
 export interface IWalletConnectApi {
   initFromLocalCache(): Promise<null | { chainId: ChainEntity['id'] | null; address: string }>;
   askUserToConnectIfNeeded();
