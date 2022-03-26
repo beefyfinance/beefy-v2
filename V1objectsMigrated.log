@@ -1,27 +1,47 @@
 [
   {
-    "id": "bsc vault: banana-ape-wbnb",
+    "id": "moonbeam vault: stellaswap-stella-wglmr",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-ust-wglmr",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-cake-duet",
+    "id": "moonbeam vault: stellaswap-dai-usdc",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-era-wbnb",
+    "id": "moonbeam vault: stellaswap-usdc-eth",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-bsw-wbnb",
+    "id": "moonbeam vault: stellaswap-wglmr-eth",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-gmt-usdc",
-    "type": "Added"
+    "id": "moonbeam vault: stellaswap-stella-usdc",
+    "type": "synced"
   },
   {
-    "id": "fantom vault: wigo-wigo",
-    "type": "Added"
+    "id": "moonbeam vault: stellaswap-usdc-wglmr",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-usdc-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-usdc-bnb",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-busd-wglmr",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: solarflare-ust-wglmr",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

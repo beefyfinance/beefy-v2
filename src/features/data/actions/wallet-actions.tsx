@@ -38,6 +38,9 @@ import { selectWalletAddress } from '../selectors/wallet';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { getZapAddress } from '../utils/zap-utils';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
+import { getGasPriceOptions } from '../utils/gas-utils';
+import { BeFTMToken, Ftmtoken } from '../../vault/components/BeftmCard/BeFtmToken';
+import { BinSpiritToken } from '../../vault/components/SpiritCard/SpiritToken';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -57,8 +60,10 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
 
     const contract = new web3.eth.Contract(erc20Abi as any, token.contractAddress);
     const maxAmount = web3.utils.toWei('8000000000', 'ether');
-
-    const transaction = contract.methods.approve(spenderAddress, maxAmount).send({ from: address });
+    const gasPrices = await getGasPriceOptions(web3);
+    const transaction = contract.methods
+      .approve(spenderAddress, maxAmount)
+      .send({ from: address, ...gasPrices });
 
     const bigMaxAmount = new BigNumber(maxAmount).shiftedBy(-native.decimals);
     bindTransactionEvents(
@@ -94,23 +99,26 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const contractAddr = mooToken.contractAddress;
     const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(oracleToken.decimals).decimalPlaces(0);
+    const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
       if (isNativeToken) {
         if (max) {
           return contract.methods
             .depositAllBNB()
-            .send({ from: address, value: rawAmount.toString(10) });
+            .send({ from: address, value: rawAmount.toString(10), ...gasPrices });
         } else {
           return contract.methods
             .depositBNB()
-            .send({ from: address, value: rawAmount.toString(10) });
+            .send({ from: address, value: rawAmount.toString(10), ...gasPrices });
         }
       } else {
         if (max) {
-          return contract.methods.depositAll().send({ from: address });
+          return contract.methods.depositAll().send({ from: address, ...gasPrices });
         } else {
-          return contract.methods.deposit(rawAmount.toString(10)).send({ from: address });
+          return contract.methods
+            .deposit(rawAmount.toString(10))
+            .send({ from: address, ...gasPrices });
         }
       }
     })();
@@ -156,12 +164,14 @@ const beefIn = (
       .shiftedBy(zapEstimate.tokenOut.decimals)
       .decimalPlaces(0);
     const rawAmount = tokenAmount.shiftedBy(tokenIn.decimals).decimalPlaces(0);
+    const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
       if (isTokenNative(tokenIn)) {
         return contract.methods.beefInETH(vaultAddress, rawSwapAmountOutMin.toString(10)).send({
           from: address,
           value: rawAmount.toString(10),
+          ...gasPrices,
         });
       } else {
         return contract.methods
@@ -173,6 +183,7 @@ const beefIn = (
           )
           .send({
             from: address,
+            ...gasPrices,
           });
       }
     })();
@@ -217,10 +228,12 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
 
     const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, oracleAmount);
     const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
+    const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
       return contract.methods.beefOut(vault.contractAddress, rawAmount.toString(10)).send({
         from: address,
+        ...gasPrices,
       });
     })();
 
@@ -283,6 +296,7 @@ const beefOutAndSwap = (
       .shiftedBy(zapEstimate.tokenOut.decimals)
       .decimalPlaces(0);
     const rawAmount = earnedTokenAmount.shiftedBy(earnedToken.decimals).decimalPlaces(0);
+    const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
       return contract.methods
@@ -294,6 +308,7 @@ const beefOutAndSwap = (
         )
         .send({
           from: address,
+          ...gasPrices,
         });
     })();
 
@@ -336,19 +351,24 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
 
     const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, oracleAmount);
     const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
+    const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
       if (isNativeToken) {
         if (max) {
-          return contract.methods.withdrawAllBNB().send({ from: address });
+          return contract.methods.withdrawAllBNB().send({ from: address, ...gasPrices });
         } else {
-          return contract.methods.withdrawBNB(rawAmount.toString(10)).send({ from: address });
+          return contract.methods
+            .withdrawBNB(rawAmount.toString(10))
+            .send({ from: address, ...gasPrices });
         }
       } else {
         if (max) {
-          return contract.methods.withdrawAll().send({ from: address });
+          return contract.methods.withdrawAll().send({ from: address, ...gasPrices });
         } else {
-          return contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
+          return contract.methods
+            .withdraw(rawAmount.toString(10))
+            .send({ from: address, ...gasPrices });
         }
       }
     })();
@@ -382,8 +402,10 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
-
-    const transaction = contract.methods.stake(rawAmount.toString(10)).send({ from: address });
+    const gasPrices = await getGasPriceOptions(web3);
+    const transaction = contract.methods
+      .stake(rawAmount.toString(10))
+      .send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
       dispatch,
@@ -421,8 +443,10 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
 
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-
-    const transaction = contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
+    const gasPrices = await getGasPriceOptions(web3);
+    const transaction = contract.methods
+      .withdraw(rawAmount.toString(10))
+      .send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
       dispatch,
@@ -455,8 +479,8 @@ const claimGovVault = (vault: VaultGov) => {
     const contractAddr = vault.earnContractAddress;
 
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-
-    const transaction = contract.methods.getReward().send({ from: address });
+    const gasPrices = await getGasPriceOptions(web3);
+    const transaction = contract.methods.getReward().send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
       dispatch,
@@ -495,9 +519,10 @@ const exitGovVault = (vault: VaultGov) => {
      * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
      * so if there is only rewards left getReward() should be called instead of exit()
      */
+    const gasPrices = await getGasPriceOptions(web3);
     const transaction = balanceAmount.gt(0)
-      ? contract.methods.exit().send({ from: address })
-      : contract.methods.getReward().send({ from: address });
+      ? contract.methods.exit().send({ from: address, ...gasPrices })
+      : contract.methods.getReward().send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
       dispatch,
@@ -530,8 +555,8 @@ const claimBoost = (boost: BoostEntity) => {
     const contractAddr = boost.earnContractAddress;
 
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
-
-    const transaction = contract.methods.getReward().send({ from: address });
+    const gasPrices = await getGasPriceOptions(web3);
+    const transaction = contract.methods.getReward().send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
       dispatch,
@@ -571,9 +596,10 @@ const exitBoost = (boost: BoostEntity) => {
      * withdraw() and by extension exit() will fail if already withdrawn (Cannot withdraw 0),
      * so if there is only rewards left getReward() should be called instead of exit()
      */
+    const gasPrices = await getGasPriceOptions(web3);
     const transaction = boostAmount.gt(0)
-      ? contract.methods.exit().send({ from: address })
-      : contract.methods.getReward().send({ from: address });
+      ? contract.methods.exit().send({ from: address, ...gasPrices })
+      : contract.methods.getReward().send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
       dispatch,
@@ -607,8 +633,10 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
-
-    const transaction = contract.methods.stake(rawAmount.toString(10)).send({ from: address });
+    const gasPrices = await getGasPriceOptions(web3);
+    const transaction = contract.methods
+      .stake(rawAmount.toString(10))
+      .send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
       dispatch,
@@ -643,8 +671,10 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
     const rawAmount = amount.shiftedBy(inputToken.decimals).decimalPlaces(0);
-
-    const transaction = contract.methods.withdraw(rawAmount.toString(10)).send({ from: address });
+    const gasPrices = await getGasPriceOptions(web3);
+    const transaction = contract.methods
+      .withdraw(rawAmount.toString(10))
+      .send({ from: address, ...gasPrices });
 
     bindTransactionEvents(
       dispatch,
@@ -657,6 +687,63 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
         boostId: boost.id,
       }
     );
+  };
+};
+
+const beFtmDeposit = (contractAddr: string, amount: BigNumber, max: boolean) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const walletApi = await getWalletConnectApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
+    const gasPrices = await getGasPriceOptions(web3);
+    const rawAmount = amount.shiftedBy(Ftmtoken.decimals).decimalPlaces(0);
+
+    const transaction = (() => {
+      return contract.methods
+        .depositNative()
+        .send({ from: address, value: rawAmount.toString(10), ...gasPrices });
+    })();
+
+    bindTransactionEvents(dispatch, transaction, {
+      amount: amount,
+      token: BeFTMToken,
+    });
+  };
+};
+
+const spiritDeposit = (network, contractAddr, amount, max) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const walletApi = await getWalletConnectApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
+    const gasPrices = await getGasPriceOptions(web3);
+
+    const transaction = (() => {
+      if (max) {
+        return contract.methods.depositAll().send({ from: address, ...gasPrices });
+      } else {
+        return contract.methods.deposit(amount).send({ from: address, ...gasPrices });
+      }
+    })();
+
+    bindTransactionEvents(dispatch, transaction, {
+      amount: new BigNumber(amount).shiftedBy(-BinSpiritToken.decimals),
+      token: BinSpiritToken,
+    });
   };
 };
 
@@ -675,6 +762,8 @@ export const walletActions = {
   claimBoost,
   stakeBoost,
   unstakeBoost,
+  beFtmDeposit,
+  spiritDeposit,
 };
 
 function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity }>(
@@ -713,7 +802,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
       dispatch(createWalletActionErrorAction(error, additionalData));
     })
     .catch(error => {
-      console.log(error);
+      dispatch(createWalletActionErrorAction({ message: String(error) }, additionalData));
     });
 }
 

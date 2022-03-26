@@ -75,6 +75,11 @@ const Moonpot = [
     img: 'partners/moonpot/tomb-ftm.svg',
     link: 'https://play.moonpot.com/#/pot/tomb-ftm',
   },
+  {
+    id: 'curve-ftm-geist',
+    img: 'partners/moonpot/g3crv.svg',
+    link: 'https://play.moonpot.com/#/pot/g3crv',
+  },
 ];
 
 export { QiDao, Insurace, Moonpot, LaCucina };
