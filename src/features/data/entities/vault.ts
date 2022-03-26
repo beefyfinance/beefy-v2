@@ -172,5 +172,8 @@ export function isVaultActive(vault: VaultEntity) {
 export function isVaultPaused(vault: VaultEntity) {
   return vault.status === 'paused';
 }
+export function isVaultPausedOrRetired(vault: VaultEntity) {
+  return vault.status === 'paused' || vault.status === 'eol';
+}
 
 export type VaultEntity = VaultStandard | VaultGov;
