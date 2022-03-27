@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';
 import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
+import beFTMAbi from '../../../config/abi/BeFtmAbi.json';
 import zapAbi from '../../../config/abi/zap.json';
 import { BeefyState } from '../../../redux-types';
 import { getWalletConnectApiInstance } from '../apis/instances';
@@ -701,7 +702,7 @@ const beFtmDeposit = (contractAddr: string, amount: BigNumber, max: boolean) => 
 
     const walletApi = await getWalletConnectApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(beFTMAbi as any, contractAddr);
     const gasPrices = await getGasPriceOptions(web3);
     const rawAmount = amount.shiftedBy(Ftmtoken.decimals).decimalPlaces(0);
 
