@@ -8,13 +8,13 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'flex-start',
     minHeight: '100vh',
     width: '100%',
+    backgroundColor: theme.palette.background.appBG,
   },
   wrapperTop: {
     marginBottom: 'auto',
   },
   footer: {
     background: theme.palette.background.footer,
-    marginTop: `${theme.spacing(5)}px`,
     padding: `${theme.spacing(5)}px`,
     display: 'flex',
     flexDirection: 'column' as const,
