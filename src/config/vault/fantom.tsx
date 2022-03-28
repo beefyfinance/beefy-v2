@@ -7959,6 +7959,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     platform: 'WigoSwap',
+    status: 'active',
     assets: ['WIGO'],
     risks: [
       'COMPLEXITY_LOW',
