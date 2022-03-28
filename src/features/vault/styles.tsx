@@ -2,6 +2,10 @@ export const styles = theme => ({
   vaultContainer: {
     padding: '42px 0px 16px 0px',
   },
+  contentContainer: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(5),
+  },
   title: {
     display: 'flex',
     marginBottom: '8px',

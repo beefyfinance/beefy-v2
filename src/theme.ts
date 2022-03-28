@@ -8,6 +8,7 @@ declare module '@material-ui/core/styles/createPalette' {
     content: string;
     header: string;
     cta: string;
+    appBG: string;
     filters: {
       active: string;
       inactive: string;
@@ -45,6 +46,7 @@ const theme = createTheme({
       header: '#121212',
       footer: '#121212',
       cta: '#59A662',
+      appBG: '#1B1E31',
       filters: {
         active: '#4C5480',
         inactive: '#262A40',
@@ -72,15 +74,6 @@ const theme = createTheme({
       primary: '#F5F5FF',
       secondary: '#D0D0DA',
       disabled: '#8A8EA8',
-    },
-  },
-  overrides: {
-    MuiCssBaseline: {
-      '@global': {
-        body: {
-          backgroundColor: '#1B1E31',
-        },
-      },
     },
   },
   typography: {

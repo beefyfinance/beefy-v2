@@ -33,7 +33,6 @@ export const styles = theme => ({
   },
   vaultsList: {
     marginTop: '20px',
-    marginBottom: '20px',
   },
   row: {
     width: '100%',
