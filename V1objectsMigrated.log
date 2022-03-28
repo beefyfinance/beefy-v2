@@ -1,18 +1,30 @@
 [
   {
-    "id": "polygon vault: polygon-sushi-eth-dai",
+    "id": "fantom vault: based-tomb-based",
     "type": "Added"
   },
   {
-    "id": "polygon vault: polygon-sushi-btc-eth",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: sushi-eth-dai",
+    "id": "fantom vault: boo-cream-ftm-eol",
     "type": "REMOVED"
   },
   {
-    "id": "polygon vault: sushi-btc-eth",
+    "id": "polygon vault: sushi-fox-eth-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon vault: sushi-weth-sx-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax vault: joe-ape-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: joe-fly-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: png-bnb-avax-eol",
     "type": "REMOVED"
   },
   {
