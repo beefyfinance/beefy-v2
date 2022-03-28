@@ -1,7 +1,19 @@
 [
   {
-    "id": "bsc vault: bifi-maxi",
-    "type": "synced"
+    "id": "polygon vault: polygon-sushi-eth-dai",
+    "type": "Added"
+  },
+  {
+    "id": "polygon vault: polygon-sushi-btc-eth",
+    "type": "Added"
+  },
+  {
+    "id": "polygon vault: sushi-eth-dai",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon vault: sushi-btc-eth",
+    "type": "REMOVED"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
