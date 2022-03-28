@@ -22,7 +22,7 @@ export const localeToLanguageMap = {
   // se: 'Svenska',
   // tr: 'Türkçe',
   // uk: 'Українська',
-  // zh: '中文',
+  zh: '中文',
 };
 
 const o_risksNstrats = code => {
