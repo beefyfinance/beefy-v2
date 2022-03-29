@@ -99,7 +99,7 @@ const VaultContent = React.memo(() => {
           </>
         </Container>
       </Box>
-      <Box style={{ marginTop: '24px' }}>
+      <Box className={classes.contentContainer}>
         <Container {...({ maxWidth: 'lg', my: 5 } as any)}>
           <Grid container spacing={6}>
             <Grid item xs={12} md={4} className={classes.customOrder}>

@@ -1,31 +1,15 @@
 [
   {
-    "id": "fantom vault: based-tomb-based",
+    "id": "bsc vault: jetfuel-usdt-bnb-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: boo-wftm-ape",
     "type": "Added"
   },
   {
-    "id": "fantom vault: boo-cream-ftm-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: sushi-fox-eth-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: sushi-weth-sx-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: joe-ape-wavax",
+    "id": "fantom vault: boo-usdc-boo",
     "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-fly-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-bnb-avax-eol",
-    "type": "REMOVED"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
