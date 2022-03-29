@@ -47,7 +47,7 @@ export const pools = [
     earnedTokenDecimals: 18,
     earnContractAddress: '0x453D4Ba9a2D594314DF88564248497F7D74d6b2C',
     poolAddress: '0x453D4Ba9a2D594314DF88564248497F7D74d6b2C',
-    excluded: 'bifi-maxi',
+    excluded: '',
     pricePerFullShare: 1,
     isGovVault: true,
     tvl: 0,

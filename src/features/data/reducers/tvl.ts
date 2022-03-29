@@ -90,10 +90,10 @@ function addContractDataToState(
     let tvl = totalStaked.times(price);
 
     // handle gov vault TVL exclusion
-    if (vault.excludedId && vault.excludedId !== 'bifi-maxi') {
+    if (vault.excludedId) {
       const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
       if (excludedTVL) {
-        tvl = tvl >= excludedTVL ? tvl.minus(excludedTVL) : BIG_ZERO;
+        tvl = tvl.minus(excludedTVL);
       }
     }
     sliceState.byVaultId[vault.id] = { tvl: tvl };
