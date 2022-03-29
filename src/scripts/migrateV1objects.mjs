@@ -634,8 +634,8 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 			//if this is the Beefy earnings pool or the unusual Fantom beFTM pool, loop for the 
 			//	next boost to analyze
 			const S_ID = O_SRC[ mS_PRPNM_ID];
-			if (S_ID.startsWith( 'bifi-') && S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? 
-															S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS)) && 
+			if (S_ID.startsWith( 'bifi-') && (S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS)) ||  
+			S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS) + '-eol'))	&& 
 															'BIFI' === O_SRC.token && (S_NTV === O_SRC.earnedToken ||  
 															'W' + S_NTV === O_SRC.earnedToken) || 'moo_beFTM' === S_ID)
 				continue;
