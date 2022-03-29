@@ -945,7 +945,7 @@ export const pools = [
   },
   {
     id: 'moo_bifi-elk',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'Elk',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'ELK',
@@ -1053,7 +1053,7 @@ export const pools = [
   },
   {
     id: 'moo_bifi-bhc',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'Billionhappiness',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'BHC',
@@ -1161,7 +1161,7 @@ export const pools = [
   },
   {
     id: 'moo_bifi-honeyfarm',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'HoneyFarm',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'HONEY',
@@ -1215,7 +1215,7 @@ export const pools = [
   },
   {
     id: 'moo_bifi-moonpot',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'Moonpot',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'POTS',
@@ -1242,7 +1242,7 @@ export const pools = [
   },
   {
     id: 'moo_bifi-honeyfarm2',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'HoneyFarm',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'HONEY',
@@ -1296,7 +1296,7 @@ export const pools = [
   },
   {
     id: 'moo_bifi-farmhero',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'FarmHero',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'HERO',
@@ -1323,7 +1323,7 @@ export const pools = [
   },
   {
     id: 'moo_bifi-fruits',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'Fruit',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'FRUIT',
@@ -1568,7 +1568,7 @@ export const pools = [
   },
   {
     id: 'moo_dumpling-sdump',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'DumplingSwap',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'SDUMP',
@@ -1920,7 +1920,7 @@ export const pools = [
   },
   {
     id: 'moo_bifi-biti',
-    poolId: 'bifi-maxi',
+    poolId: 'bifi-maxi-eol',
     name: 'BitiCity',
     logo: 'single-assets/BIFI.png',
     earnedToken: 'BITI',
