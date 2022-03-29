@@ -22,6 +22,7 @@ export const pools = [
     oraclePrice: 0,
     status: 'active',
     platform: 'Beefy.Finance',
+    excluded: 'arbi-bifi-maxi',
     assets: ['BIFI'],
     risks: [
       'COMPLEXITY_LOW',
