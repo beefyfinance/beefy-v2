@@ -270,7 +270,7 @@ function addVaultToState(
       };
     }
     const vaultState = sliceState.byChainId[vault.chainId];
-    if (apiVault.status === 'eol' || apiVault.status === 'paused') {
+    if (apiVault.status === 'eol') {
       vaultState.allRetiredIds.push(vault.id);
     } else {
       vaultState.allActiveIds.push(vault.id);

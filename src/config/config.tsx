@@ -17,9 +17,10 @@ export const config = {
     chainId: 56,
     eip1559: false,
     rpc: [
-      'https://bsc-dataseed.binance.org',
-      'https://bsc-dataseed1.defibit.io',
-      'https://bsc-dataseed1.ninicoin.io',
+      'https://cointool.app/rpcServer/bsc',
+      // 'https://bsc-dataseed.binance.org',
+      // 'https://bsc-dataseed1.defibit.io',
+      // 'https://bsc-dataseed1.ninicoin.io',
     ],
     explorerUrl: 'https://bscscan.com',
     multicallAddress: '0xB94858b0bB5437498F5453A16039337e5Fdc269C',
@@ -35,7 +36,7 @@ export const config = {
         symbol: 'BNB',
         decimals: 18,
       },
-      rpcUrls: ['https://bsc-dataseed.binance.org'],
+      rpcUrls: ['https://cointool.app/rpcServer/bsc'],
       blockExplorerUrls: ['https://bscscan.com/'],
     },
     stableCoins: [
