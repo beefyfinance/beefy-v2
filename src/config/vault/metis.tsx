@@ -127,7 +127,7 @@ export const pools = [
     oracleId: 'netswap-nett-m.usdc',
     oraclePrice: 0,
     depositsPaused: false,
-    status: 'paused',
+    status: 'active',
     platform: 'Netswap',
     assets: ['mUSDC', 'NETT'],
     risks: [
