@@ -34,8 +34,7 @@ export class WalletConnectApi implements IWalletConnectApi {
     // if we have a cached value, we want to have a connected web3Modal instance
     if (hasWeb3ModalCachedProvider()) {
       // we are already connected so we don't care about the initial chain
-      const initChain = this.options.chains.find(c => c.id === 'bsc');
-      const providerOptions = _generateProviderOptions(initChain);
+      const providerOptions = _generateProviderOptions(this.options.chains);
       this.web3Modal = new Web3Modal(providerOptions);
 
       // this shouldn't open a modal
@@ -75,8 +74,7 @@ export class WalletConnectApi implements IWalletConnectApi {
   public async askUserToConnectIfNeeded() {
     // initialize instances if needed
     if (this.web3Modal === null) {
-      const initChain = find(this.options.chains, chain => chain.id === 'bsc');
-      const providerOptions = _generateProviderOptions(initChain);
+      const providerOptions = _generateProviderOptions(this.options.chains);
       this.web3Modal = new Web3Modal(providerOptions);
     }
 
@@ -104,7 +102,7 @@ export class WalletConnectApi implements IWalletConnectApi {
     }
     // initialize instances if needed
     if (this.web3Modal === null) {
-      const providerOptions = _generateProviderOptions(chain);
+      const providerOptions = _generateProviderOptions(this.options.chains);
       this.web3Modal = new Web3Modal(providerOptions);
     }
 
@@ -119,7 +117,10 @@ export class WalletConnectApi implements IWalletConnectApi {
   }
 
   public async disconnect() {
-    await this.web3Modal.clearCachedProvider();
+    if (this.web3Modal) {
+      this.web3Modal.clearCachedProvider();
+    }
+
     if (this.provider && this.provider.removeAllListeners) {
       this.provider.removeAllListeners();
     }
@@ -164,10 +165,14 @@ export class WalletConnectApi implements IWalletConnectApi {
 
       // cleanup if needed
       if (!gotChainChangedEvent) {
-        this.web3Modal.clearCachedProvider();
+        if (this.web3Modal) {
+          this.web3Modal.clearCachedProvider();
+        }
+
         if (this.provider && this.provider.removeAllListeners) {
           this.provider.removeAllListeners();
         }
+
         this.provider = null;
         this.web3Modal = null;
       }
@@ -233,22 +238,21 @@ async function _getNetworkChainId(web3: Web3) {
   return networkChainId;
 }
 
-function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
+function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> {
+  const allSupportedChainIds = chains.map(chain => chain.networkChainId);
+  const allSupportedChainsIdRpcMap = Object.fromEntries(
+    chains.map(chain => [chain.networkChainId, sample(chain.rpc)])
+  );
+  const bnbChain = chains.find(chain => chain.id === 'bsc');
+  const cronosChain = chains.find(chain => chain.id === 'cronos');
+  const fuseChain = chains.find(chain => chain.id === 'fuse');
+
   const providerOptions: IProviderOptions = {
     injected: {
       display: {
         name: 'MetaMask',
       },
     } as any /* Property 'package' is missing in this type but required in type IProviderOptions */,
-    walletconnect: {
-      package: WalletConnectProvider,
-      options: {
-        rpc: {
-          // pick one at random
-          [chain.networkChainId]: sample(chain.rpc),
-        },
-      },
-    },
     'custom-binance': {
       display: {
         name: 'Binance',
@@ -269,7 +273,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
         description: 'Connect with your Clover wallet and earn CLV',
       },
       options: {
-        supportedChainIds: [chain.networkChainId],
+        supportedChainIds: allSupportedChainIds,
       },
       package: CloverConnector,
       connector: async (ProviderPackage, options) => {
@@ -293,7 +297,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
       connector: async (ProviderPackage, options) => {
         const walletLink = new ProviderPackage(options);
 
-        const provider = walletLink.makeWeb3Provider(chain.rpc, chain.networkChainId);
+        const provider = walletLink.makeWeb3Provider(sample(bnbChain.rpc), bnbChain.networkChainId);
 
         await provider.enable();
 
@@ -307,7 +311,7 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
         description: 'Scan your WalletConnect to Connect',
       },
       options: {
-        rpc: { chainId: chain.rpc },
+        rpc: allSupportedChainsIdRpcMap,
       },
       package: WalletConnectProvider,
       connector: async (ProviderPackage, options) => {
@@ -327,8 +331,8 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
       package: WalletConnectProvider,
       options: {
         rpc: {
-          1: 'https://rpc.fuse.io',
-          122: 'https://rpc.fuse.io',
+          1: sample(fuseChain.rpc),
+          [fuseChain.networkChainId]: sample(fuseChain.rpc),
         },
       },
       connector: async (ProviderPackage, options) => {
@@ -373,9 +377,9 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
         description: 'Crypto.com | Wallet Extension',
       },
       options: {
-        supportedChainIds: [25],
+        supportedChainIds: [cronosChain.networkChainId],
         rpc: {
-          25: 'https://evm-cronos.crypto.org/', // cronos mainet
+          [cronosChain.networkChainId]: sample(cronosChain.rpc), // cronos mainet
         },
         pollingInterval: 15000,
       },
@@ -394,18 +398,9 @@ function _generateProviderOptions(chain: ChainEntity): Partial<ICoreOptions> {
     },
   };
 
-  // filter by supported wallets
-  const newlist: IProviderOptions = {};
-  for (const key in providerOptions) {
-    if (chain.supportedWallets.includes(key)) {
-      newlist[key] = providerOptions[key];
-    }
-  }
-
   return {
-    network: chain.providerName,
     cacheProvider: true,
-    providerOptions: newlist,
+    providerOptions,
   };
 }
 

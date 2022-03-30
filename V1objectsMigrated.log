@@ -1,15 +1,107 @@
 [
   {
-    "id": "bsc vault: jetfuel-usdt-bnb-eol",
-    "type": "REMOVED"
+    "id": "bsc vault: bifi-maxi",
+    "type": "synced"
   },
   {
-    "id": "fantom vault: boo-wftm-ape",
+    "id": "bsc vault: bifi-maxi-eol",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: based-based-bshare",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-god-between-stables",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-exploding-shrapnel",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-boomer-beets",
     "type": "Added"
   },
   {
     "id": "fantom vault: boo-usdc-boo",
-    "type": "Added"
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: based-tomb-based",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: based-based-mai",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: based-based-tomb",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-boo",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-boo-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "aurora vault: tri-mecha-near-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "aurora vault: tri-avax-near-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "aurora vault: tri-matic-near-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "aurora vault: tri-bnb-near-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "bsc boost: moo_bifi-elk",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_bifi-bhc",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_bifi-honeyfarm",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_bifi-moonpot",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_bifi-honeyfarm2",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_bifi-farmhero",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_bifi-fruits",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_dumpling-sdump",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_bifi-biti",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

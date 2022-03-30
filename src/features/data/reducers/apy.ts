@@ -237,7 +237,7 @@ function recomputeTotalApy(
       values.boostedTotalDaily = values.boostDaily ? values.totalDaily + values.boostDaily : 0;
     }
 
-    if (vaultId !== 'bifi-gov') sliceState.totalApy.byVaultId[vaultId] = values;
+    sliceState.totalApy.byVaultId[vaultId] = values;
   }
 }
 
