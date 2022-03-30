@@ -32,6 +32,8 @@ run. To cut down onrepository pollution, the maintainer may avoid pushing this f
 the staging repository.
 
 Development
++ v0.7.1.0 AllTrades & chebiN: fixed bug in reflecting deposits-paused and vault-status 
+											properties; handled edge case of EOL suffix on earnings pools
 + v0.7.0.7 AllTrades: finish hack handling of special beFTM staking pool
 + v0.7.0.6 AllTrades: hack handling of special beFTM staking pool
 + v0.7.0.5 AllTrades: add Moonbeam blockchain
@@ -214,11 +216,12 @@ async function Po_resolveVaults()	{
 									O_hit[ mS_PRPNM_TYP] = S_TYP_UPDT;
 								}
 							//else if the source deposits-paused and vault-status property 
-							//	interrelationship differs from that shown for the target vault, update  
+							//	interrelationship differs from what the target vault shows, update  
 							//	the target's status, and ensure it's noted that an update to the vault 
 							//	has occurred
 							}else if (O_SRC[ S] ? 'active' === o_trgt[ mS_PRPNM_STATUS] : 'paused' === 
 																																o_trgt[ mS_PRPNM_STATUS])	{
+								o_trgt[ S] = O_SRC[ S];
 								o_trgt[ mS_PRPNM_STATUS] = O_SRC[ S] ? 'paused' : 'active';
 								O_hit[ mS_PRPNM_TYP] = S_TYP_UPDT;
 							} //if ('eol' === O_SRC[ mS_PRPNM_STATUS])
@@ -228,7 +231,7 @@ async function Po_resolveVaults()	{
 						}else if ((b_eol = 'eol' === O_SRC[ S]) || O_SRC[ mS_PRPNM_DEPOST_PSD] && 
 																									'paused' !== o_trgt[ mS_PRPNM_STATUS])	{
 							if (b_eol)
-								o_trgt[ S] = 'eol';
+								o_trgt[ S] = O_SRC[ S];
 							else
 								o_trgt[ mS_PRPNM_STATUS] = O_SRC[ mS_PRPNM_DEPOST_PSD] ? 'paused' : 
 																																									'active';
@@ -634,8 +637,10 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 			//if this is the Beefy earnings pool or the unusual Fantom beFTM pool, loop for the 
 			//	next boost to analyze
 			const S_ID = O_SRC[ mS_PRPNM_ID];
-			if (S_ID.startsWith( 'bifi-') && (S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS)) ||  
-			S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS) + '-eol'))	&& 
+			if (S_ID.startsWith( 'bifi-') && (S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? 
+															S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS)) ||  
+															S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? 
+															S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS) + '-eol')) && 
 															'BIFI' === O_SRC.token && (S_NTV === O_SRC.earnedToken ||  
 															'W' + S_NTV === O_SRC.earnedToken) || 'moo_beFTM' === S_ID)
 				continue;
