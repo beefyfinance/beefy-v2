@@ -9,7 +9,7 @@ import { DisplayTags } from '../../../../components/vaultTags';
 import { styles } from './styles';
 import clsx from 'clsx';
 import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
-import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import { selectIsVaultPreStakedOrBoosted } from '../../../data/selectors/boosts';
 import { isGovVault, isVaultPausedOrRetired, VaultEntity } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -31,20 +31,17 @@ const _ItemVaultPresentation = connect(
     const vault = selectVaultById(state, vaultId);
     const chain = selectChainById(state, vault.chainId);
     const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-    const isBoosted = selectIsVaultBoosted(state, vaultId);
-    return { vault, chain, earnedToken, isBoosted };
+    return { vault, chain, earnedToken };
   }
 )(
   ({
     vault,
     chain,
     earnedToken,
-    isBoosted,
   }: {
     vault: VaultEntity;
     chain: ChainEntity;
     earnedToken: TokenEntity;
-    isBoosted: boolean;
   }) => {
     const classes = useStyles();
     const { t } = useTranslation();
@@ -116,7 +113,7 @@ const _ItemVaultPresentation = connect(
 const ItemVaultPresentation = React.memo(_ItemVaultPresentation);
 
 const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => {
-  const isBoosted = selectIsVaultBoosted(state, vault.id);
+  const isBoosted = selectIsVaultPreStakedOrBoosted(state, vault.id);
   return { vault, isBoosted };
 })(({ vault, isBoosted }: { vault: VaultEntity; isBoosted: boolean }) => {
   const classes = useStyles();
