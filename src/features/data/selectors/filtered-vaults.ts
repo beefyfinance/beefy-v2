@@ -7,7 +7,12 @@ import {
   selectIsUserEligibleForVault,
   selectUserVaultDepositInUsd,
 } from './balance';
-import { selectActiveVaultBoostIds, selectBoostById, selectIsVaultBoosted } from './boosts';
+import {
+  selectActiveVaultBoostIds,
+  selectBoostById,
+  selectIsVaultBoosted,
+  selectIsVaultPreStakedOrBoosted,
+} from './boosts';
 import { selectIsVaultLacucina, selectIsVaultMoonpot } from './partners';
 import {
   selectIsVaultBeefy,
@@ -170,7 +175,9 @@ export const selectFilteredVaults = (state: BeefyState) => {
 
   if (filterOptions.sort === 'default') {
     // Vaults are already presorted by date on the reducer
-    sortedVaults = sortBy(sortedVaults, vault => (selectIsVaultBoosted(state, vault.id) ? -1 : 1));
+    sortedVaults = sortBy(sortedVaults, vault =>
+      selectIsVaultPreStakedOrBoosted(state, vault.id) ? -1 : 1
+    );
   }
   if (filterOptions.sort === 'apy') {
     sortedVaults = sortBy(sortedVaults, vault => {

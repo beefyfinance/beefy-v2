@@ -6,7 +6,7 @@ import { VaultEntity } from '../../features/data/entities/vault';
 import { useSelector } from 'react-redux';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
-import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
+import { selectIsVaultPreStakedOrBoosted } from '../../features/data/selectors/boosts';
 import {
   selectIsVaultLacucina,
   selectIsVaultMoonpot,
@@ -17,7 +17,9 @@ const _DisplayTags = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const isBoosted = useSelector((state: BeefyState) =>
+    selectIsVaultPreStakedOrBoosted(state, vaultId)
+  );
   const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
   const isLaCucina = useSelector((state: BeefyState) => selectIsVaultLacucina(state, vaultId));
   const labels = useMemo(
