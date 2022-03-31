@@ -134,8 +134,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const displayBoostWidget = useSelector((state: BeefyState) =>
     selectShouldDisplayBoostWidget(state, vaultId)
   );
-  //TODO: delete this logic after gov vault situation is fixed
-  const disableClaim = vaultId === 'bifi-gov';
 
   const handleWithdraw = () => {
     const steps: Step[] = [];
@@ -372,7 +370,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                   <>
                     <Button
                       onClick={handleClaim}
-                      disabled={disableClaim || !hasGovVaultRewards || !formReady}
+                      disabled={!hasGovVaultRewards || !formReady}
                       className={classes.btnSubmit}
                       fullWidth={true}
                     >
@@ -388,7 +386,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     </Button>
                     <Button
                       onClick={handleExit}
-                      disabled={disableClaim || !userHasBalanceInVault || !formReady}
+                      disabled={!userHasBalanceInVault || !formReady}
                       className={classes.btnSubmitSecondary}
                       fullWidth={true}
                     >
