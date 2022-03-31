@@ -52,7 +52,7 @@ const Moonpot = [
   },
   {
     id: 'banana-pots-bnb',
-    img: 'partners/moonpot/potsbnb.svg',
+    img: 'partners/moonpot/pots-bnb.svg',
     link: 'https://play.moonpot.com/#/pot/pots-bnb',
   },
   {
@@ -67,7 +67,7 @@ const Moonpot = [
   },
   {
     id: 'beefy-beFTM',
-    img: 'partners/moonpot/beFTM.svg',
+    img: 'partners/moonpot/beftm.svg',
     link: 'https://play.moonpot.com/#/pot/beftm',
   },
   {
@@ -79,6 +79,16 @@ const Moonpot = [
     id: 'curve-ftm-geist',
     img: 'partners/moonpot/g3crv.svg',
     link: 'https://play.moonpot.com/#/pot/g3crv',
+  },
+  {
+    id: 'beefy-binspirit',
+    img: 'partners/moonpot/binspirit.svg',
+    link: 'https://play.moonpot.com/#/pot/binspirit',
+  },
+  {
+    id: 'fantom-bifi-maxi',
+    img: 'partners/moonpot/bifi.svg',
+    link: 'https://play.moonpot.com/#/pot/fantom-bifi',
   },
 ];
 

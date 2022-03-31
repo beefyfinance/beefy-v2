@@ -92,7 +92,7 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 																																				0, -4).join( '/'),
 			mAS_STRAT_TYP = [ "", "SingleStake", "StratLP", "StratMultiLP", "Vamp"];
 const mO_PRPNM_PTNR_GRPHC = {logo: "", background: ""};
-const moAO_SRC_VLTS = {}, mo_trgtVlts = {}; 
+const moAO_SRC_VLTS = {}, mo_trgtVlts = {};
 
 
 async function P_loadChainVaults( O_CHN)	{
@@ -378,7 +378,7 @@ async function Po_resolveVaults()	{
 		const I = i_pruned;
 		Object.values( o_trgtChn).forEach( O_trgt => {
 			if (!(O_trgt && Object === O_trgt.constructor) || (s = O_trgt[ 
-										mS_PRPNM_ID]).endsWith( "bifi-gov") || "beefy-beFTM-earnings" === s)
+										mS_PRPNM_ID]).includes( "bifi-gov") || "beefy-beFTM-earnings" === s)
 				return;
 			const S = S_TRGT_CHN + " vault: " + O_trgt[ mS_PRPNM_ID];
 			if (O_hits[ S])
