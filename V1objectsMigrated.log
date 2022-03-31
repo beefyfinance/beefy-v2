@@ -1,18 +1,6 @@
 [
   {
-    "id": "bsc vault: bifi-gov-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: png-wavax-ncash",
-    "type": "Added"
-  },
-  {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
-  },
-  {
-    "id": "avax boost: moo_AVAX-nitro",
-    "type": "Added"
   }
 ]
