@@ -108,4 +108,29 @@ export const pools = [
       },
     ],
   },
+  {
+    id: 'moo_AVAX-nitro',
+    poolId: 'aave-wavax',
+    name: 'Nitro Network',
+    logo: 'single-assets/AVAX.svg',
+    earnedToken: 'NCASH',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xc69Eba65e87889f0805dB717Af06797055A0BA07',
+    earnContractAddress: '0xB27727ebeE7cfa04cAAb68522E1A14c426BBA768',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'NCASH',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: "Nitro Network NFMs, or Non-Fungible Miners, are the next evolution in NFT utility. NFMs combine the unique artwork and ownership principles of NFTs with the reward-generating utility of the DeFi industry. While most traditional mining methods require expensive and inefficient hardware, NFMs generate rewards for their owners in Nitro's native token NCash without the need for additional equipment and expenses.",
+        website: 'https://ecosystem.nitro.network/',
+        social: {
+          telegram: '',
+          twitter: '',
+        },
+      },
+    ],
+  },
 ];
