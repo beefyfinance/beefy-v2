@@ -167,14 +167,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
 
   // apply sort
   let sortedVaults = filteredVaults;
+
   if (filterOptions.sort === 'default') {
-    sortedVaults = sortBy(sortedVaults, vault => {
-      const isBoosted = selectIsVaultBoosted(state, vault.id);
-      if (!isBoosted) {
-        return 0;
-      }
-      return -1;
-    });
+    // Vaults are already presorted by date on the reducer
+    sortedVaults = sortBy(sortedVaults, vault => (selectIsVaultBoosted(state, vault.id) ? 0 : -1));
   }
   if (filterOptions.sort === 'apy') {
     sortedVaults = sortBy(sortedVaults, vault => {
