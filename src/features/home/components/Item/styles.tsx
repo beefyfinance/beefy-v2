@@ -102,17 +102,8 @@ export const styles = theme => ({
     },
   },
   withMuted: {
-    background: theme.palette.background.vaults.inactive,
-    border: `2px solid ${theme.palette.background.vaults.inactiveOutline}`,
-    '&:hover': {
-      background: '#14182B',
-    },
-    '&.hasDeposit': {
-      background: 'rgba(48, 53, 92, 0.4)',
-      '&:hover': {
-        background: 'rgba(48, 53, 92, 0.4)',
-      },
-    },
+    background: `${theme.palette.background.vaults.inactive} !important`,
+    border: `2px solid ${theme.palette.background.vaults.inactiveOutline} !important`,
   },
   withIsLongName: {
     '& $vaultName': {
