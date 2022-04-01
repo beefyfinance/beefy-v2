@@ -16,12 +16,14 @@ import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
 import { selectAllVaultBoostIds, selectBoostById } from '../../selectors/boosts';
 import {
+  selectGovVaultVaultIdsByOracleId,
   selectIsStandardVaultEarnTokenId,
   selectStandardVaultByEarnTokenId,
-  selectVaultById,
   selectStandardVaultIdsByOracleId,
-  selectGovVaultVaultIdsByOracleId,
+  selectVaultById,
 } from '../../selectors/vaults';
+import { initiateMinterForm } from '../../actions/minters';
+import { selectMinterById } from '../../selectors/minters';
 
 /**
  * State containing user balances state
@@ -94,20 +96,7 @@ export const balanceSlice = createSlice({
       const state = action.payload.state;
       const chainId = action.payload.chainId;
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
-
-      if (sliceState.byAddress[walletAddress] === undefined) {
-        sliceState.byAddress[walletAddress] = {
-          depositedVaultIds: [],
-          eligibleVaultIds: [],
-          tokenAmount: {
-            byChainId: {},
-            byBoostId: {},
-            byGovVaultId: {},
-          },
-        };
-      }
-
-      const walletState = sliceState.byAddress[walletAddress];
+      const walletState = addWalletToState(sliceState, walletAddress);
       const balance = action.payload.data;
       addTokenBalanceToState(state, walletState, chainId, balance.tokens);
       addBoostBalanceToState(state, walletState, balance.boosts);
@@ -122,7 +111,7 @@ export const balanceSlice = createSlice({
       const vault = selectVaultById(state, action.payload.vaultId);
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-      const walletState = sliceState.byAddress[walletAddress];
+      const walletState = addWalletToState(sliceState, walletAddress);
       const balance = action.payload.balance;
       addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
@@ -137,7 +126,7 @@ export const balanceSlice = createSlice({
       const vault = selectVaultById(state, action.payload.vaultId);
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-      const walletState = sliceState.byAddress[walletAddress];
+      const walletState = addWalletToState(sliceState, walletAddress);
       const balance = action.payload.balance;
       addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
@@ -153,11 +142,24 @@ export const balanceSlice = createSlice({
       const vault = selectVaultById(action.payload.state, boost.vaultId);
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-      const walletState = sliceState.byAddress[walletAddress];
+      const walletState = addWalletToState(sliceState, walletAddress);
       const balance = action.payload.balance;
       addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
       addBoostBalanceToState(state, walletState, balance.boosts);
+    });
+
+    builder.addCase(initiateMinterForm.fulfilled, (sliceState, action) => {
+      const state = action.payload.state;
+      if (!action.payload.walletAddress) {
+        return;
+      }
+      const minter = selectMinterById(action.payload.state, action.payload.minterId);
+      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+
+      const walletState = addWalletToState(sliceState, walletAddress);
+      const balance = action.payload.balance;
+      addTokenBalanceToState(state, walletState, minter.chainId, balance.tokens);
     });
 
     builder.addCase(
@@ -167,7 +169,7 @@ export const balanceSlice = createSlice({
         const chainId = action.payload.chainId;
         const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-        const walletState = sliceState.byAddress[walletAddress];
+        const walletState = addWalletToState(sliceState, walletAddress);
         const balance = action.payload.balance;
         addTokenBalanceToState(state, walletState, chainId, balance.tokens);
         addGovVaultBalanceToState(walletState, balance.govVaults);
@@ -176,6 +178,22 @@ export const balanceSlice = createSlice({
     );
   },
 });
+
+function addWalletToState(sliceState: WritableDraft<BalanceState>, walletAddress: string) {
+  if (sliceState.byAddress[walletAddress] === undefined) {
+    sliceState.byAddress[walletAddress] = {
+      depositedVaultIds: [],
+      eligibleVaultIds: [],
+      tokenAmount: {
+        byChainId: {},
+        byBoostId: {},
+        byGovVaultId: {},
+      },
+    };
+  }
+
+  return sliceState.byAddress[walletAddress];
+}
 
 function addTokenBalanceToState(
   state: BeefyState,

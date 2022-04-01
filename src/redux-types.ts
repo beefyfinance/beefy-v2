@@ -1,4 +1,4 @@
-import { EnhancedStore, CombinedState, MiddlewareArray, AnyAction } from '@reduxjs/toolkit';
+import { AnyAction, CombinedState, EnhancedStore, MiddlewareArray } from '@reduxjs/toolkit';
 import { ThunkMiddleware } from 'redux-thunk';
 import { ApyState } from './features/data/reducers/apy';
 import { BoostsState } from './features/data/reducers/boosts';
@@ -20,6 +20,7 @@ import { WalletActionsState } from './features/data/reducers/wallet/wallet-actio
 import { ZapsState } from './features/data/reducers/zaps';
 import { WithdrawState } from './features/data/reducers/wallet/withdraw';
 import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
+import { MintersState } from './features/data/reducers/minters';
 
 export interface BeefyState {
   entities: {
@@ -29,6 +30,7 @@ export interface BeefyState {
     boosts: BoostsState;
     platforms: PlatformsState;
     zaps: ZapsState;
+    minters: MintersState;
   };
   biz: {
     tvl: TvlState;

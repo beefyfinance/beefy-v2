@@ -1,5 +1,5 @@
 // todo: load these asynchronously
-import { QiDao, Insurace, Moonpot, LaCucina } from '../../../helpers/partners';
+import { Insurace, LaCucina, Moonpot, QiDao } from '../../../helpers/partners';
 import { featuredPools as featuredVaults } from '../../../config/vault/featured';
 
 import { config as chainConfigs } from '../../../config/config';
@@ -66,6 +66,7 @@ export interface LaCucinaConfig {
   id: VaultEntity['id'];
   ovenId: string;
 }
+
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Insurace: ChainEntity['id'][];
@@ -85,6 +86,7 @@ interface BoostPartnerConfig {
   };
   logoNight?: string | null;
 }
+
 export interface BoostConfig {
   id: string;
   poolId: string;
@@ -137,6 +139,32 @@ export interface ZapConfig {
   ammPairInitHash: string;
 }
 
+export interface MinterConfigTokenErc20 {
+  oracleId: string;
+  symbol: string;
+  contractAddress: string;
+  decimals: number;
+  type: 'erc20';
+}
+
+export interface MinterConfigTokenNative {
+  oracleId: string;
+  symbol: string;
+  decimals: number;
+  type: 'native';
+}
+
+export type MinterConfigToken = MinterConfigTokenErc20 | MinterConfigTokenNative;
+
+export interface MinterConfig {
+  id: string;
+  name: string;
+  contractAddress: string;
+  depositToken: MinterConfigToken;
+  mintedToken: MinterConfigToken;
+  vaultIds: string[];
+}
+
 const vaultsByChainId: {
   [chainId: ChainEntity['id']]: VaultConfig[];
 } = {};
@@ -171,6 +199,13 @@ for (const chainId in chainConfigs) {
   zapsByChainId[chainId] = require(`../../../config/zap/${chainId}`).zaps;
 }
 
+const mintersByChainId: {
+  [chainId: ChainEntity['id']]: MinterConfig[];
+} = {};
+for (const chainId in chainConfigs) {
+  mintersByChainId[chainId] = require(`../../../config/minters/${chainId}`).minters;
+}
+
 /**
  * A class to access beefy configuration
  * Access to vaults, boosts, featured items, etc
@@ -199,5 +234,9 @@ export class ConfigAPI {
 
   public async fetchAllBoosts(): Promise<{ [chainId: ChainEntity['id']]: BoostConfig[] }> {
     return boostsByChainId;
+  }
+
+  public async fetchAllMinters(): Promise<{ [chainId: ChainEntity['id']]: MinterConfig[] }> {
+    return mintersByChainId;
   }
 }
