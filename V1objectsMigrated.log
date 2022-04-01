@@ -1,5 +1,53 @@
 [
   {
+    "id": "fantom vault: boo-wftm-beftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: sushi-yfi-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: sushi-wftm-link-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: boo-font-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "moonriver vault: finn-dot-finn-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "moonbeam vault: stellaswap-usdc-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-wglmr-ftm",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-avax-wglmr",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-matic-wglmr",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-luna-wglmr",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_BIFI-emp",
+    "type": "Added"
+  },
+  {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
   }
