@@ -1,47 +1,69 @@
 [
   {
-    "id": "fantom vault: boo-wftm-beftm",
+    "id": "bsc vault: stargate-bsc-busd",
     "type": "Added"
   },
   {
-    "id": "fantom vault: sushi-yfi-eth-eol",
+    "id": "bsc vault: stargate-bsc-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: tomb-tshare-mai",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: stargate-fantom-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: tomb-tomb-wftm",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-exploding-shrapnel",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-hnd-wftm-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom vault: sushi-wftm-link-eol",
+    "id": "polygon vault: quick-eth-cxeth",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: quick-cxada-cxeth",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: quick-cxdoge-cxeth",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: jarvis-5eur-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "fantom vault: boo-font-ftm-eol",
+    "id": "polygon vault: quick-aave-eth-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "moonriver vault: finn-dot-finn-eol",
+    "id": "moonriver vault: solarbeam-mim-wmovr-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "moonbeam vault: stellaswap-usdc-ftm",
-    "type": "Added"
+    "id": "moonriver vault: solarbeam-wmovr-mai-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "moonbeam vault: stellaswap-wglmr-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-avax-wglmr",
-    "type": "Added"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-matic-wglmr",
-    "type": "Added"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-luna-wglmr",
-    "type": "Added"
+    "id": "moonriver vault: solarbeam-mim-usdc-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
