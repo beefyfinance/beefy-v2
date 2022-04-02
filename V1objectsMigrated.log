@@ -1,69 +1,15 @@
 [
   {
     "id": "bsc vault: stargate-bsc-busd",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "bsc vault: stargate-bsc-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: tomb-tshare-mai",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: stargate-fantom-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: tomb-tomb-wftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-exploding-shrapnel",
     "type": "synced"
-  },
-  {
-    "id": "fantom vault: boo-hnd-wftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-eth-cxeth",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: quick-cxada-cxeth",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: quick-cxdoge-cxeth",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: jarvis-5eur-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-aave-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-mim-wmovr-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-wmovr-mai-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-mim-usdc-eol",
-    "type": "synced",
-    "EOLd": true
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

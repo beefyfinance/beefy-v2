@@ -18743,7 +18743,7 @@ export const pools = [
     depositsPaused: false,
     status: 'active',
     platform: 'Stargate',
-    assets: ['BUSD'],
+    assets: ['sbBUSD'],
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -18780,7 +18780,7 @@ export const pools = [
     depositsPaused: false,
     status: 'active',
     platform: 'Stargate',
-    assets: ['USDT'],
+    assets: ['sbUSDT'],
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
