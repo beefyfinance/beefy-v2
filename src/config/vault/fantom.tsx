@@ -8256,7 +8256,7 @@ export const pools = [
   },
   {
     id: 'stargate-fantom-usdc',
-    name: 'USDC',
+    name: 'USDC LP',
     token: 'S*USDC',
     logo: 'single-assets/USDC.svg',
     tokenDescription: 'Stargate',
@@ -8269,7 +8269,7 @@ export const pools = [
     pricePerFullShare: 1,
     tvl: 0,
     oracle: 'tokens',
-    oracleId: 'USDC',
+    oracleId: 'sfUSDC',
     oraclePrice: 0,
     depositsPaused: false,
     status: 'active',
