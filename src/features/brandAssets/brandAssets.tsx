@@ -2,6 +2,7 @@ import React from 'react';
 import { MediaCard } from './components/MediaCard';
 import { styles } from './styles';
 import { Container, makeStyles, Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles as any);
 
@@ -82,15 +83,16 @@ const TOKENS = [
 ];
 
 export const BrandAssets = () => {
+  const { t } = useTranslation();
   const classes = useStyles();
   return (
     <Container maxWidth="lg" className={classes.brandAssetsContainer}>
       <div className={classes.headerBox}>
         <img className={classes.logo} alt="BeefyLogo" src={getImage('BIFI', 'svg')} />
-        <Typography variant="h2">Media Kit</Typography>
+        <Typography variant="h2">{t('Footer-MediaKit')}</Typography>
       </div>
       <Typography className={classes.sectionHeader} variant="h4">
-        Logos
+        {t('Logos')}
       </Typography>
       <div className={classes.cardContainer}>
         {LOGOS.map(logo => {
@@ -105,7 +107,7 @@ export const BrandAssets = () => {
         })}
       </div>
       <Typography className={classes.sectionHeader} variant="h4">
-        Tokens
+        {t('Tokens')}
       </Typography>
       <div className={classes.cardContainer}>
         {TOKENS.map(logo => {
