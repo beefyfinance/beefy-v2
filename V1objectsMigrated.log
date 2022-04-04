@@ -1,15 +1,32 @@
 [
   {
-    "id": "bsc vault: stargate-bsc-busd",
+    "id": "fantom vault: tomb-tshare-mai",
     "type": "synced"
   },
   {
-    "id": "bsc vault: stargate-bsc-usdt",
+    "id": "fantom vault: tomb-tomb-wftm",
     "type": "synced"
   },
   {
-    "id": "fantom vault: stargate-fantom-usdc",
+    "id": "fantom vault: tomb-tomb-mai",
     "type": "synced"
+  },
+  {
+    "id": "fantom vault: tomb-tshare-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: tomb-tomb-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-joe",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: png-fire-wavax-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
