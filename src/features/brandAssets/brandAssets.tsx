@@ -4,7 +4,7 @@ import { Container, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { AssetSection } from './components/AssetSection';
 import BIFI from '../../images/brand-assets/SVG/BIFI.svg';
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 const ASSETS = [
   {
@@ -177,7 +177,7 @@ export const BrandAssets = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   return (
-    <Container maxWidth="lg" className={classes.brandAssetsContainer}>
+    <Container maxWidth="lg">
       <div className={classes.headerBox}>
         <img className={classes.logo} alt="BeefyLogo" src={BIFI} />
         <Typography variant="h2">{t('Footer-MediaKit')}</Typography>

@@ -1,9 +1,9 @@
 export const styles = theme => ({
   cardStyle: {
-    width: '288px',
-    height: '230px',
-    // margin: '10px 20px 10px 0',
+    minWidth: '288px',
+    minHeight: '230px',
     borderRadius: '8px',
+    flexGrow: 1,
   },
   imageContainer: {
     display: 'flex',
@@ -16,7 +16,7 @@ export const styles = theme => ({
     maxWidth: '200px',
     maxHeight: '64px',
     width: 'auto',
-    objectFit: 'contain',
+    objectFit: 'contain' as 'contain',
   },
   actionContainer: {
     padding: '24px',

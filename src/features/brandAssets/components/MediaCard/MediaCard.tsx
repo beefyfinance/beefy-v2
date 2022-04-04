@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { SimpleLinkButton } from '../../../../components/SimpleLinkButton';
 import { MediaCardProps } from './MediaCardProps';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 function getImage(imageName, fileType) {
   return require(`../../../../images/brand-assets/${fileType.toUpperCase()}/${imageName}.${fileType.toLowerCase()}`)

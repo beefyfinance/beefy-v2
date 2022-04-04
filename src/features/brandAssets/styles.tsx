@@ -1,5 +1,4 @@
 export const styles = theme => ({
-  brandAssetsContainer: {},
   headerBox: {
     display: 'flex',
     alignItems: 'center',
