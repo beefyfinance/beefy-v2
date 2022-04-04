@@ -2,7 +2,7 @@ export const styles = theme => ({
   cardStyle: {
     width: '288px',
     height: '230px',
-    margin: '10px 20px 10px 0',
+    // margin: '10px 20px 10px 0',
     borderRadius: '8px',
   },
   imageContainer: {

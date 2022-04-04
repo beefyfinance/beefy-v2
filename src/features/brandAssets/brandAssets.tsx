@@ -1,84 +1,175 @@
 import React from 'react';
-import { MediaCard } from './components/MediaCard';
 import { styles } from './styles';
 import { Container, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-
+import { AssetSection } from './components/AssetSection';
+import BIFI from '../../images/brand-assets/SVG/BIFI.svg';
 const useStyles = makeStyles(styles as any);
 
-function getImage(imageName, fileType) {
-  return require(`../../images/brand-assets/${fileType.toUpperCase()}/${imageName}.${fileType.toLowerCase()}`)
-    .default;
-}
-
-const LOGOS = [
+const ASSETS = [
   {
-    svgImage: getImage('Just_Beefy_DARK', 'svg'),
-    pngImage: getImage('Just_Beefy_DARK@2x', 'png'),
-    description: 'Primary',
-    imageBGColor: 'white',
+    id: 'Logos',
+    assets: [
+      {
+        id: 'Primary',
+        background: 'white',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'Just_Beefy_DARK',
+          },
+          {
+            type: 'png',
+            fileName: 'Just_Beefy_DARK@2x',
+          },
+        ],
+      },
+      {
+        id: 'Primary - Light',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'Just_beefy',
+          },
+          {
+            type: 'png',
+            fileName: 'Just_Beefy_Light@2x',
+          },
+        ],
+      },
+      {
+        id: 'Mono - Dark',
+        background: 'white',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'just_black_beefy',
+          },
+          {
+            type: 'png',
+            fileName: 'Just_Beefy_Black@2x',
+          },
+        ],
+      },
+      {
+        id: 'Mono - Light',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'Just_beefy_white',
+          },
+          {
+            type: 'png',
+            fileName: 'Just_Beefy_White@2x',
+          },
+        ],
+      },
+      {
+        id: 'Autocompounding',
+        background: 'white',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'Autocompounding',
+          },
+          {
+            type: 'png',
+            fileName: 'Autocompounding',
+          },
+        ],
+      },
+      {
+        id: 'Autocompounding - White',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'Autocompounding_white',
+          },
+          {
+            type: 'png',
+            fileName: 'Autocompounding_white',
+          },
+        ],
+      },
+      {
+        id: 'Beefy.com QR code',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'beefy.com_QR',
+          },
+          {
+            type: 'png',
+            fileName: 'beefy.com_QR@2x',
+          },
+        ],
+      },
+    ],
   },
   {
-    svgImage: getImage('Just_beefy', 'svg'),
-    pngImage: getImage('Just_Beefy_Light@2x', 'png'),
-    description: 'Primary - Light',
-    imageBGColor: '',
-  },
-  {
-    svgImage: getImage('just_black_beefy', 'svg'),
-    pngImage: getImage('Just_Beefy_Black@2x', 'png'),
-    description: 'Mono - Dark',
-    imageBGColor: 'white',
-  },
-  {
-    svgImage: getImage('Just_beefy_white', 'svg'),
-    pngImage: getImage('Just_Beefy_White@2x', 'png'),
-    description: 'Mono - Light',
-    imageBGColor: '',
-  },
-  {
-    svgImage: getImage('Autocompounding', 'svg'),
-    pngImage: getImage('Autocompounding', 'png'),
-    description: 'Autocompounding',
-    imageBGColor: 'white',
-  },
-  {
-    svgImage: getImage('Autocompounding_white', 'svg'),
-    pngImage: getImage('Autocompounding_white', 'png'),
-    description: 'Autocompounding - White',
-    imageBGColor: '',
-  },
-  {
-    svgImage: getImage('beefy.com_QR', 'svg'),
-    pngImage: getImage('beefy.com_QR@2x', 'png'),
-    description: 'Beefy.com QR code',
-    imageBGColor: '',
-  },
-];
-const TOKENS = [
-  {
-    svgImage: getImage('BIFI', 'svg'),
-    pngImage: getImage('BIFI', 'png'),
-    description: 'Beefy',
-    imageBGColor: '',
-  },
-  {
-    svgImage: getImage('beFTM', 'svg'),
-    pngImage: getImage('beFTM', 'png'),
-    description: 'beFTM',
-    imageBGColor: '',
-  },
-  {
-    svgImage: getImage('binSPIRIT', 'svg'),
-    pngImage: getImage('binSPIRIT', 'png'),
-    description: 'binSPIRIT',
-    imageBGColor: '',
-  },
-  {
-    svgImage: getImage('binSPIRIT-SPIRIT', 'svg'),
-    pngImage: getImage('binSPIRIT_lp', 'png'),
-    description: 'binSPIRIT LP',
-    imageBGColor: '',
+    id: 'Tokens',
+    assets: [
+      {
+        id: 'BIFI',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'BIFI',
+          },
+          {
+            type: 'png',
+            fileName: 'BIFI',
+          },
+        ],
+      },
+      {
+        id: 'beFTM',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'beFTM',
+          },
+          {
+            type: 'png',
+            fileName: 'beFTM',
+          },
+        ],
+      },
+      {
+        id: 'binSPIRIT',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'binSPIRIT',
+          },
+          {
+            type: 'png',
+            fileName: 'binSPIRIT',
+          },
+        ],
+      },
+      {
+        id: 'binSPIRIT LP',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'binSPIRIT-SPIRIT',
+          },
+          {
+            type: 'png',
+            fileName: 'binSPIRIT_lp',
+          },
+        ],
+      },
+    ],
   },
 ];
 
@@ -88,39 +179,12 @@ export const BrandAssets = () => {
   return (
     <Container maxWidth="lg" className={classes.brandAssetsContainer}>
       <div className={classes.headerBox}>
-        <img className={classes.logo} alt="BeefyLogo" src={getImage('BIFI', 'svg')} />
+        <img className={classes.logo} alt="BeefyLogo" src={BIFI} />
         <Typography variant="h2">{t('Footer-MediaKit')}</Typography>
       </div>
-      <Typography className={classes.sectionHeader} variant="h4">
-        {t('Logos')}
-      </Typography>
-      <div className={classes.cardContainer}>
-        {LOGOS.map(logo => {
-          return (
-            <MediaCard
-              imageBGColor={logo.imageBGColor}
-              description={logo.description}
-              pngImage={logo.pngImage}
-              svgImage={logo.svgImage}
-            />
-          );
-        })}
-      </div>
-      <Typography className={classes.sectionHeader} variant="h4">
-        {t('Tokens')}
-      </Typography>
-      <div className={classes.cardContainer}>
-        {TOKENS.map(logo => {
-          return (
-            <MediaCard
-              imageBGColor={logo.imageBGColor}
-              description={logo.description}
-              pngImage={logo.pngImage}
-              svgImage={logo.svgImage}
-            />
-          );
-        })}
-      </div>
+      {ASSETS.map(asset => {
+        return <AssetSection id={asset.id} assets={asset.assets} />;
+      })}
     </Container>
   );
 };

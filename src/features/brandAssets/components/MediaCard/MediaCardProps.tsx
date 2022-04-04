@@ -1,6 +1,10 @@
 export interface MediaCardProps {
-  description?: string;
-  imageBGColor?: string;
-  svgImage?: string;
-  pngImage?: string;
+  id?: string;
+  background?: string;
+  versions: Version[];
+}
+
+interface Version {
+  type?: string;
+  fileName?: string;
 }
