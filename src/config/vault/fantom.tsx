@@ -1103,7 +1103,7 @@ export const pools = [
     oracleId: 'tomb-tshare-ftm',
     oraclePrice: 0,
     status: 'active',
-    platform: 'TombFinance',
+    platform: 'Tomb',
     assets: ['TSHARE', 'FTM'],
     risks: [
       'COMPLEXITY_LOW',
@@ -1139,7 +1139,7 @@ export const pools = [
     oracleId: 'tomb-tomb-ftm',
     oraclePrice: 0,
     status: 'active',
-    platform: 'TombFinance',
+    platform: 'Tomb',
     assets: ['TOMB', 'FTM'],
     risks: [
       'COMPLEXITY_LOW',
@@ -7277,7 +7277,7 @@ export const pools = [
     id: 'tomb-tomb-mai',
     name: 'TOMB-MAI LP',
     token: 'TOMB-MAI LP',
-    tokenDescription: 'TombSwap (Tomb)',
+    tokenDescription: 'TombSwap',
     tokenAddress: '0x45f4682B560d4e3B8FF1F1b3A38FDBe775C7177b',
     tokenDecimals: 18,
     tokenDescriptionUrl: '#',
@@ -7291,7 +7291,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: 'active',
-    platform: 'TombFinance',
+    platform: 'Tomb',
     assets: ['TOMB', 'MAI'],
     risks: [
       'COMPLEXITY_LOW',
@@ -8221,7 +8221,7 @@ export const pools = [
     id: 'tomb-tshare-mai',
     name: 'TSHARE-MAI LP',
     token: 'TSHARE-MAI LP',
-    tokenDescription: 'TombSwap (Tomb)',
+    tokenDescription: 'TombSwap',
     tokenAddress: '0x67B2fAF48C1710fF1d2a9AC429b726B8F63eE83C',
     tokenDecimals: 18,
     tokenDescriptionUrl: '#',
@@ -8235,7 +8235,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: 'active',
-    platform: 'TombFinance',
+    platform: 'Tomb',
     assets: ['TSHARE', 'MAI'],
     risks: [
       'COMPLEXITY_LOW',
@@ -8309,7 +8309,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: 'active',
-    platform: 'TombFinance',
+    platform: 'Tomb',
     assets: ['TOMB', 'FTM'],
     risks: [
       'COMPLEXITY_LOW',
