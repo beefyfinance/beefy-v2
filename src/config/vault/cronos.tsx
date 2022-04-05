@@ -371,7 +371,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-cro-crona',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['CRONA', 'CRO'],
     risks: [
@@ -388,6 +388,7 @@ export const pools = [
     addLiquidityUrl: 'https://app.cronaswap.org/add/CRO/0xadbd1231fb360047525BEdF962581F3eee7b49fe',
     network: 'cronos',
     createdAt: 1637138260,
+    depositsPaused: true,
   },
   {
     id: 'crona-cro-usdc',
@@ -405,7 +406,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-cro-usdc',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['USDC', 'CRO'],
     risks: [
@@ -422,6 +423,7 @@ export const pools = [
     addLiquidityUrl: 'https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
     network: 'cronos',
     createdAt: 1637146470,
+    depositsPaused: true,
   },
   {
     id: 'crona-cro-usdt',
@@ -439,7 +441,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-cro-usdt',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['USDT', 'CRO'],
     risks: [
@@ -456,6 +458,7 @@ export const pools = [
     addLiquidityUrl: 'https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
     network: 'cronos',
     createdAt: 1637147878,
+    depositsPaused: true,
   },
   {
     id: 'crona-usdt-busd',
@@ -473,7 +476,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-usdt-busd',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['BUSD', 'USDT'],
     risks: [
@@ -491,6 +494,7 @@ export const pools = [
       'https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8',
     network: 'cronos',
     createdAt: 1637153704,
+    depositsPaused: true,
   },
   {
     id: 'crona-usdt-usdc',
@@ -508,7 +512,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-usdt-usdc',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['USDC', 'USDT'],
     risks: [
@@ -526,6 +530,7 @@ export const pools = [
       'https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
     network: 'cronos',
     createdAt: 1637164857,
+    depositsPaused: true,
   },
   {
     id: 'cronos-bifi-maxi',
@@ -648,7 +653,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-crona-usdc',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['CRONA', 'USDC'],
     risks: [
@@ -666,6 +671,7 @@ export const pools = [
       'https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59',
     network: 'cronos',
     createdAt: 1638062854,
+    depositsPaused: true,
   },
   {
     id: 'crona-usdt-crona',
@@ -683,7 +689,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-usdt-crona',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['CRONA', 'USDT'],
     risks: [
@@ -701,6 +707,7 @@ export const pools = [
       'https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0x66e428c3f67a68878562e79A0234c1F83c208770',
     network: 'cronos',
     createdAt: 1638063529,
+    depositsPaused: true,
   },
   {
     id: 'crona-usdc-dai',
@@ -718,7 +725,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-usdc-dai',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['USDC', 'DAI'],
     risks: [
@@ -736,6 +743,7 @@ export const pools = [
       'https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xF2001B145b43032AAF5Ee2884e456CCd805F677D',
     network: 'cronos',
     createdAt: 1638064120,
+    depositsPaused: true,
   },
   {
     id: 'vvs-cro-dai',
@@ -824,8 +832,8 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-wbtc-eth',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    depositsPaused: true,
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['WBTC', 'ETH'],
     risks: [
@@ -860,8 +868,8 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'crona-usdc-eth',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    depositsPaused: true,
+    status: 'paused',
     platform: 'CronaSwap',
     assets: ['ETH', 'USDC'],
     risks: [

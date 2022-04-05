@@ -2458,4 +2458,29 @@ export const pools = [
       },
     ],
   },
+  {
+    id: 'moo_BIFI-emp',
+    poolId: 'bifi-maxi',
+    name: 'EMP Money',
+    logo: 'single-assets/BIFI.png',
+    earnedToken: 'ESHARE',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xDB20F6A8665432CE895D724b417f77EcAC956550',
+    earnContractAddress: '0x49208D4679787136FA9449ca37874B8cc543A508',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'ESHARE',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: 'Emp Money is a seigniorage protocol which is designed to follow the price of ETH. It is the first decentralized algorithmic coin on BSC that is paired to the price of ETH. It enables users to enjoy high yields normally only found on high risk assets, but with exposure to ETH (and its price appreciation) rather than just a stable token. A way to look at it would be essentially fractional ETH (think Satoshi to BTC) because 4000 EMP is to equal 1 ETH. The EMP token is the main token of the growing ecosystem, inspired by projects like tomb finance, and has many improvements to the economics with other unique use cases.',
+        website: 'https://emp.money/',
+        social: {
+          telegram: 'https://t.me/empmoney',
+          twitter: 'https://twitter.com/empmoneybsc',
+        },
+      },
+    ],
+  },
 ];
