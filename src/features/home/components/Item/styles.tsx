@@ -102,8 +102,8 @@ export const styles = theme => ({
     },
   },
   withMuted: {
-    background: `${theme.palette.background.vaults.inactive} !important`,
-    border: `2px solid ${theme.palette.background.vaults.inactiveOutline} !important`,
+    background: `${theme.palette.background.vaults.inactive}`,
+    border: `2px solid ${theme.palette.background.vaults.inactiveOutline}`,
   },
   withIsLongName: {
     '& $vaultName': {

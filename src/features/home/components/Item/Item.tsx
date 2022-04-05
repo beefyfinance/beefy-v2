@@ -132,7 +132,7 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
           [classes.withMuted]: isVaultPausedOrRetired(vault),
           [classes.withIsLongName]: vault.name.length > 12,
           [classes.withBoosted]: isBoosted,
-          [classes.withGovVault]: isGovVault(vault),
+          [classes.withGovVault]: isGovVault(vault) && !isVaultPausedOrRetired(vault),
         })}
       >
         <Grid container>
