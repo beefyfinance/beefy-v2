@@ -26,6 +26,6 @@ export const styles = theme => ({
   },
   actions: {
     display: 'flex',
-    justifyContent: 'space-between',
+    gap: theme.spacing(1),
   },
 });

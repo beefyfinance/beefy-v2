@@ -4,7 +4,7 @@ export const styles = theme => ({
   },
   cardContainer: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
     columnGap: '24px',
     rowGap: '24px',
   },
