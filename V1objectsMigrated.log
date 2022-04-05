@@ -1,32 +1,131 @@
 [
   {
-    "id": "fantom vault: tomb-tshare-mai",
-    "type": "synced"
+    "id": "bsc vault: emp-emp-eth",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: tomb-tomb-wftm",
-    "type": "synced"
+    "id": "bsc vault: emp-eshare-wbnb",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: tomb-tomb-mai",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: tomb-tshare-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: tomb-tomb-ftm",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-joe",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: png-fire-wavax-eol",
+    "id": "bsc vault: cakev2-insur-wbnb-eol",
     "type": "synced",
     "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-genesis-quick-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: joe-wavax-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-joe-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: png-png-usdc.e-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: joe-ust-wavax-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: joe-usdc.e-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-usdt-usdt.e",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-wavax-usdt.e",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-joe-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-mim-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-wbtc.e-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-weth.e-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-usdc.e-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: solarbeam-wbtc-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: solarbeam-eth-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: solarbeam-solar-wmovr",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: solarbeam-wmovr-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-wbtc-eth",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-usdc-eth",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-crona-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-usdt-crona",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-usdc-dai",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-cro-crona",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-cro-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-cro-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-usdt-busd",
+    "type": "synced"
+  },
+  {
+    "id": "cronos vault: crona-usdt-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_BIFI-emp",
+    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

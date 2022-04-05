@@ -53,7 +53,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'solarbeam-solar-wmovr',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'SolarBeam',
     assets: ['SOLAR', 'MOVR'],
     risks: [
@@ -72,6 +72,7 @@ export const pools = [
       'https://app.solarbeam.io/exchange/add/ETH/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B',
     network: 'moonriver',
     createdAt: 1635785910,
+    depositsPaused: true,
   },
   {
     id: 'solarbeam-solar-usdc',
@@ -125,7 +126,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'solarbeam-wmovr-usdc',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'SolarBeam',
     assets: ['MOVR', 'USDC'],
     risks: [
@@ -144,6 +145,7 @@ export const pools = [
       'https://app.solarbeam.io/exchange/add/ETH/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D',
     network: 'moonriver',
     createdAt: 1635789990,
+    depositsPaused: true,
   },
   {
     id: 'solarbeam-dai-usdc',
@@ -412,7 +414,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'solarbeam-wbtc-wmovr',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'SolarBeam',
     assets: ['WBTC', 'MOVR'],
     risks: [
@@ -431,6 +433,7 @@ export const pools = [
       'https://app.solarbeam.io/exchange/add/ETH/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8',
     network: 'moonriver',
     createdAt: 1637354148,
+    depositsPaused: true,
   },
   {
     id: 'solarbeam-eth-wmovr',
@@ -448,7 +451,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'solarbeam-eth-wmovr',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'SolarBeam',
     assets: ['ETH', 'MOVR'],
     risks: [
@@ -467,6 +470,7 @@ export const pools = [
       'https://app.solarbeam.io/exchange/add/ETH/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C',
     network: 'moonriver',
     createdAt: 1637355312,
+    depositsPaused: true,
   },
   {
     id: 'solarbeam-bnb-wmovr',
