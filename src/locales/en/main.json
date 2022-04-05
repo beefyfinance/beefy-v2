@@ -321,5 +321,18 @@
   "Nexus-Title": "Cover your deposit",
   "Nexus-Content": "Nexus Mutual is a blockchain-based alternative to traditional insurance. Become a mutual member to purchase comprehensive coverage for your Beefy positions.",
   "Nexus-Btn": "Cover Vaults",
-  "beFTM-description": "beFTM simply means Beefy Escrowed Fantom. The token is pegged to FTM and can be staked on the Beefy platform and farms on major DEXs. beFTM gives stakers access to maximized validator rewards that typically aren’t available to the individual investor without locking FTM for 1 year."
+  "beFTM-description": "beFTM simply means Beefy Escrowed Fantom. The token is pegged to FTM and can be staked on the Beefy platform and farms on major DEXs. beFTM gives stakers access to maximized validator rewards that typically aren’t available to the individual investor without locking FTM for 1 year.",
+  "BrandAssets-Asset-Primary": "Primary",
+  "BrandAssets-Asset-PrimaryLight": "Primary - Light",
+  "BrandAssets-Asset-MonoDark": "Mono - Dark",
+  "BrandAssets-Asset-MonoLight": "Mono - Light",
+  "BrandAssets-Asset-Autocompounding": "Autocompounding",
+  "BrandAssets-Asset-AutocompoundingWhite": "Autocompounding - White",
+  "BrandAssets-Asset-BeefyQRCode": "Beefy.com QR Code",
+  "BrandAssets-Asset-Bifi": "BIFI",
+  "BrandAssets-Asset-beFTM": "beFTM",
+  "BrandAssets-Asset-binSPIRIT": "binSPIRIT",
+  "BrandAssets-Asset-binSPIRITLP": "binSPIRIT LP",
+  "BrandAssets-Download-SVG": "Download SVG",
+  "BrandAssets-Download-PNG": "Download PNG"
 }

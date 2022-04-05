@@ -3,6 +3,8 @@ import { Card, makeStyles, CardMedia } from '@material-ui/core';
 import { styles } from './styles';
 import { SimpleLinkButton } from '../../../../components/SimpleLinkButton';
 import { MediaCardProps } from './MediaCardProps';
+import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -12,12 +14,18 @@ function getImage(imageName, fileType) {
 }
 
 export const MediaCard: React.FC<MediaCardProps> = ({ id, versions, background }) => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const svg = versions[0];
   const png = versions[1];
   return (
     <Card className={classes.cardStyle}>
-      <div className={classes.imageContainer} style={{ backgroundColor: background }}>
+      <div
+        className={clsx({
+          [classes.imageContainer]: true,
+          [classes.lightContainer]: background === 'light',
+        })}
+      >
         <CardMedia
           component="img"
           alt="MediaImg"
@@ -26,10 +34,16 @@ export const MediaCard: React.FC<MediaCardProps> = ({ id, versions, background }
         />
       </div>
       <div className={classes.actionContainer}>
-        <p className={classes.description}>{id}</p>
+        <p className={classes.description}>{t(`BrandAssets-Asset-${id}`)}</p>
         <div className={classes.actions}>
-          <SimpleLinkButton text="Download SVG" href={getImage(svg.fileName, svg.type)} />
-          <SimpleLinkButton text="Download PNG" href={getImage(png.fileName, png.type)} />
+          <SimpleLinkButton
+            text={t('BrandAssets-Download-SVG')}
+            href={getImage(svg.fileName, svg.type)}
+          />
+          <SimpleLinkButton
+            text={t('BrandAssets-Download-PNG')}
+            href={getImage(png.fileName, png.type)}
+          />
         </div>
       </div>
     </Card>

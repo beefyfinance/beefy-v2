@@ -1,10 +1,10 @@
 export interface MediaCardProps {
-  id?: string;
+  id: string;
   background?: string;
   versions: Version[];
 }
 
 interface Version {
-  type?: string;
-  fileName?: string;
+  type: string;
+  fileName: string;
 }

@@ -11,11 +11,14 @@ export const styles = theme => ({
     backgroundColor: '#363B63',
     height: '125px',
   },
+  lightContainer: {
+    backgroundColor: '#F5F5FF',
+  },
   cardImage: {
     maxWidth: '200px',
     maxHeight: '64px',
     width: 'auto',
-    objectFit: 'contain' as 'contain',
+    objectFit: 'contain' as const,
   },
   actionContainer: {
     padding: '24px',

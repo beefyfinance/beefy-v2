@@ -5,7 +5,7 @@ import React from 'react';
 import { MediaCard } from '../MediaCard';
 import { AssetSectionProps } from './AssetSectionProps';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export const AssetSection: React.FC<AssetSectionProps> = ({ id, assets }) => {
   const { t } = useTranslation();
@@ -17,11 +17,14 @@ export const AssetSection: React.FC<AssetSectionProps> = ({ id, assets }) => {
         {t(id)}
       </Typography>
       <div className={classes.cardContainer}>
-        {assets.map(asset => {
-          return (
-            <MediaCard id={asset.id} versions={asset.versions} background={asset.background} />
-          );
-        })}
+        {assets.map(asset => (
+          <MediaCard
+            key={asset.id}
+            id={asset.id}
+            versions={asset.versions}
+            background={asset.background}
+          />
+        ))}
       </div>
     </React.Fragment>
   );
