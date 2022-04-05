@@ -48,7 +48,7 @@ import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
 import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
-import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
+import { VaultBuyLinks, VaultBuyLinks2, VaultBuyLinks3 } from '../VaultBuyLinks';
 
 const useStyles = makeStyles(styles as any);
 
@@ -286,7 +286,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               onClick={formState.isZap ? undefined : handleMax}
               disabled={!formReady}
             />
-            <VaultBuyLinks vaultId={vaultId} />
+            <VaultBuyLinks vaultId={vaultId} isMaxi={true} />
           </div>
           {formState.zapOptions !== null && (
             <FormControlLabel
@@ -314,7 +314,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         </RadioGroup>
 
         <VaultBuyLinks2 vaultId={vaultId} />
-
+        <VaultBuyLinks3 vaultId={vaultId} isMaxi={true} />
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
