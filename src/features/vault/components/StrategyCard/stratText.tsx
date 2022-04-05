@@ -3,7 +3,10 @@ export const stratText = (stratType, platform, assets, want, vamp, t) => {
     case 'StratLP':
     case 'StratMultiLP':
     case 'Vamp':
-      const s_1ST = t('Strat-LP-First', { platform: platform, LPtoken: want });
+      const s_1ST = t(platform === 'Other' ? 'Strat-LP-First-Other' : 'Strat-LP-First', {
+        platform: platform,
+        LPtoken: want,
+      });
       let s_mid; // eslint-disable-next-line
       switch (stratType) {
         case 'StratLP':
@@ -22,7 +25,12 @@ export const stratText = (stratType, platform, assets, want, vamp, t) => {
 
     case 'SingleStake':
       return (
-        t('Strat-LP-Single', { platform: platform, token: assets[0] }) + ' ' + t('Strat-LP-GasCost')
+        t(platform === 'Other' ? 'Strat-LP-Single-Other' : 'Strat-LP-Single', {
+          platform: platform,
+          token: assets[0],
+        }) +
+        ' ' +
+        t('Strat-LP-GasCost')
       );
 
     case 'Maxi':
