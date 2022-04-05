@@ -3,7 +3,6 @@ export const styles = theme => ({
     minWidth: '288px',
     minHeight: '230px',
     borderRadius: '8px',
-    flexGrow: 1,
   },
   imageContainer: {
     display: 'flex',
