@@ -21,7 +21,7 @@ export const styles = theme => ({
     letterSpacing: '-0.1px',
   },
   bar: {
-    backgroundColor: theme.palette.type === 'dark' ? theme.palette.primary.main : '#A69885',
+    backgroundColor: theme.palette.text.disabled,
     width: '5px',
     borderRadius: '2px',
     '& + $bar': {
