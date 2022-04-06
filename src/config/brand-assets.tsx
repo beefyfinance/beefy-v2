@@ -161,6 +161,20 @@ export const BRAND_ASSETS = [
           },
         ],
       },
+      {
+        id: 'beJOE',
+        background: '',
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'beJOE',
+          },
+          {
+            type: 'png',
+            fileName: 'beJOE',
+          },
+        ],
+      },
     ],
   },
 ];
