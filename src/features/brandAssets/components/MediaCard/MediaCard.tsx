@@ -21,10 +21,10 @@ export const MediaCard: React.FC<MediaCardProps> = ({ id, versions, background }
   return (
     <Card className={classes.cardStyle}>
       <div
-        className={clsx({
-          [classes.imageContainer]: true,
-          [classes.lightContainer]: background === 'light',
-        })}
+        className={clsx(
+          classes.imageContainer,
+          classes[`imageContainer${background.charAt(0).toUpperCase() + background.slice(1)}`]
+        )}
       >
         <CardMedia
           component="img"

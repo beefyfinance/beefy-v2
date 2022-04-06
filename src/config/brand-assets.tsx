@@ -4,7 +4,7 @@ export const BRAND_ASSETS = [
     assets: [
       {
         id: 'Primary',
-        background: 'light',
+        background: 'white',
         versions: [
           {
             type: 'svg',
@@ -32,7 +32,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'MonoDark',
-        background: 'light',
+        background: 'white',
         versions: [
           {
             type: 'svg',
@@ -60,7 +60,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'Autocompounding',
-        background: 'light',
+        background: 'white',
         versions: [
           {
             type: 'svg',

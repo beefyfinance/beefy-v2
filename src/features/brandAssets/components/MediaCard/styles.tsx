@@ -11,7 +11,7 @@ export const styles = theme => ({
     backgroundColor: '#363B63',
     height: '125px',
   },
-  lightContainer: {
+  imageContainerWhite: {
     backgroundColor: '#F5F5FF',
   },
   cardImage: {
