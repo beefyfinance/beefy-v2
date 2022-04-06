@@ -16,8 +16,6 @@ function getImage(imageName, fileType) {
 export const MediaCard: React.FC<MediaCardProps> = ({ id, versions, background }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const svg = versions[0];
-  const png = versions[1];
   return (
     <Card className={classes.cardStyle}>
       <div
@@ -29,21 +27,20 @@ export const MediaCard: React.FC<MediaCardProps> = ({ id, versions, background }
         <CardMedia
           component="img"
           alt="MediaImg"
-          image={getImage(svg.fileName, svg.type)}
+          image={getImage(versions[0].fileName, versions[0].type)}
           className={classes.cardImage}
         />
       </div>
       <div className={classes.actionContainer}>
         <p className={classes.description}>{t(`BrandAssets-Asset-${id}`)}</p>
         <div className={classes.actions}>
-          <SimpleLinkButton
-            text={t('BrandAssets-Download-SVG')}
-            href={getImage(svg.fileName, svg.type)}
-          />
-          <SimpleLinkButton
-            text={t('BrandAssets-Download-PNG')}
-            href={getImage(png.fileName, png.type)}
-          />
+          {versions.map(version => (
+            <SimpleLinkButton
+              key={`${version.fileName}.${version.type}`}
+              text={t(`BrandAssets-Download-${version.type.toUpperCase()}`)}
+              href={getImage(version.fileName, version.type)}
+            />
+          ))}
         </div>
       </div>
     </Card>

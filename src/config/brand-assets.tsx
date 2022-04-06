@@ -4,7 +4,7 @@ export const BRAND_ASSETS = [
     assets: [
       {
         id: 'Primary',
-        background: 'white',
+        background: 'light' as const,
         versions: [
           {
             type: 'svg',
@@ -18,7 +18,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'PrimaryLight',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',
@@ -32,7 +32,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'MonoDark',
-        background: 'white',
+        background: 'light' as const,
         versions: [
           {
             type: 'svg',
@@ -46,7 +46,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'MonoLight',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',
@@ -60,7 +60,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'Autocompounding',
-        background: 'white',
+        background: 'light' as const,
         versions: [
           {
             type: 'svg',
@@ -74,7 +74,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'AutocompoundingWhite',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',
@@ -88,7 +88,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'BeefyQRCode',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',
@@ -107,7 +107,7 @@ export const BRAND_ASSETS = [
     assets: [
       {
         id: 'Bifi',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',
@@ -121,7 +121,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'beFTM',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',
@@ -135,7 +135,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'binSPIRIT',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',
@@ -149,7 +149,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'binSPIRITLP',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',
@@ -163,7 +163,7 @@ export const BRAND_ASSETS = [
       },
       {
         id: 'beJOE',
-        background: '',
+        background: 'dark' as const,
         versions: [
           {
             type: 'svg',

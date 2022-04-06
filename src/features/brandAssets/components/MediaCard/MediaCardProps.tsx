@@ -1,6 +1,6 @@
 export interface MediaCardProps {
   id: string;
-  background?: string;
+  background: 'light' | 'dark';
   versions: Version[];
 }
 

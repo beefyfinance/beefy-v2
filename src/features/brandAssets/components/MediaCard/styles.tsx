@@ -8,11 +8,13 @@ export const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     padding: '32px',
-    backgroundColor: '#363B63',
     height: '125px',
   },
-  imageContainerWhite: {
+  imageContainerLight: {
     backgroundColor: '#F5F5FF',
+  },
+  imageContainerDark: {
+    backgroundColor: '#363B63',
   },
   cardImage: {
     maxWidth: '200px',
