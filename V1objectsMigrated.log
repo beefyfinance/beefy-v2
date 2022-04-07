@@ -1,33 +1,18 @@
 [
   {
-    "id": "fantom vault: boo-wftm-beftm",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: 2omb-2omb-2share-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: 2omb-2omb-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: 2omb-2share-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: png-ustw-usdc",
+    "id": "fantom vault: curve-ftm-f-usdl",
     "type": "Added"
   },
   {
-    "id": "avax vault: png-wavax-ustw",
+    "id": "fantom vault: curve-ftm-f-ftml",
     "type": "Added"
   },
   {
-    "id": "moonbeam vault: stellaswap-ape-wglmr",
+    "id": "avax vault: curve-avax-f-avaxl",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: joe-money-wavax",
     "type": "Added"
   },
   {
