@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, makeStyles, CardMedia } from '@material-ui/core';
+import { Card, makeStyles, CardMedia, Typography } from '@material-ui/core';
 import { styles } from './styles';
 import { SimpleLinkButton } from '../../../../components/SimpleLinkButton';
 import { MediaCardProps } from './MediaCardProps';
@@ -32,7 +32,9 @@ export const MediaCard: React.FC<MediaCardProps> = ({ id, versions, background }
         />
       </div>
       <div className={classes.actionContainer}>
-        <p className={classes.description}>{t(`BrandAssets-Asset-${id}`)}</p>
+        <Typography variant="body1" className={classes.description}>
+          {t(`BrandAssets-Asset-${id}`)}
+        </Typography>
         <div className={classes.actions}>
           {versions.map(version => (
             <SimpleLinkButton
