@@ -13,19 +13,19 @@ const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriv
 const LaCucina = [
   {
     id: 'mdex-lac-busd',
-    ovenId: '77e1bd8b-9778-464c-bb4a-bf4a1f65c75e',
+    ovenId: '6485c8c9-dffe-421d-adf7-3b4d85c3866a',
   },
   {
     id: 'banana-btcb-bnb',
-    ovenId: 'f89f7c1a-ddcd-4be7-a8c7-64c49ef5a7a4',
+    ovenId: '22763730-0e7f-4701-8956-570449a54a20',
   },
   {
     id: 'auto-btcb-eth',
-    ovenId: '3317ee15-156d-45ac-a8ec-eee979abcac',
+    ovenId: '0430ea01-418f-46d9-881b-a1e2a8901d7a',
   },
   {
     id: 'cakev2-bifi-bnb',
-    ovenId: '393128ac-e2a0-4dab-b4ae-aa8d8b473219',
+    ovenId: '0586bafb-4850-4778-a291-c76a1ad54b67',
   },
 ];
 
