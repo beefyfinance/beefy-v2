@@ -1,18 +1,10 @@
 [
   {
-    "id": "fantom vault: curve-ftm-f-usdl",
+    "id": "avax vault: stargate-avax-usdc",
     "type": "Added"
   },
   {
-    "id": "fantom vault: curve-ftm-f-ftml",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: curve-avax-f-avaxl",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-money-wavax",
+    "id": "avax vault: stargate-avax-usdt",
     "type": "Added"
   },
   {
