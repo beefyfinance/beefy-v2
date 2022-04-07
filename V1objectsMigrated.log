@@ -1,11 +1,34 @@
 [
   {
-    "id": "fantom vault: beets-beefy-tale",
+    "id": "fantom vault: boo-wftm-beftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: 2omb-2omb-2share-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: 2omb-2omb-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: 2omb-2share-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: png-ustw-usdc",
     "type": "Added"
   },
   {
-    "id": "fantom vault: beets-beefy-tale-pause",
-    "type": "REMOVED"
+    "id": "avax vault: png-wavax-ustw",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-ape-wglmr",
+    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
