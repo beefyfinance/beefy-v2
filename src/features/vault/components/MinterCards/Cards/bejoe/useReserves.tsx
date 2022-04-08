@@ -5,7 +5,7 @@ import { BIG_ZERO } from '../../../../../../helpers/format';
 import { getWeb3Instance } from '../../../../../data/apis/instances';
 import MinterABI from '../../../../../../config/abi/minter.json';
 
-export function useReserves(tokenAddress, chain) {
+export function useReserves(tokenAddress, chain, beJoeBalance) {
   const [reserves, setReserves] = useState(BIG_ZERO);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export function useReserves(tokenAddress, chain) {
     return () => {
       isCancelled = true;
     };
-  }, [tokenAddress, chain]);
+  }, [tokenAddress, chain, beJoeBalance]);
 
   return reserves;
 }
