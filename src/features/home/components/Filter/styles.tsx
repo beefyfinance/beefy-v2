@@ -263,6 +263,14 @@ export const styles = theme => ({
   },
   filtersSliderContainer: {
     display: 'flex',
+    '& $filterItem': {
+      '&:first-child': {
+        margin: '0px 4px 0px 0px',
+      },
+      '&:last-child': {
+        margin: '0px 0px 0px 12px',
+      },
+    },
   },
   filterItem: {
     margin: '0px 4px',
