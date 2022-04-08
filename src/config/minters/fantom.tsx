@@ -16,7 +16,13 @@ export const minters = [
       contractAddress: '0x7381eD41F6dE418DdE5e84B55590422a57917886',
       decimals: 18,
     },
-    vaultIds: ['beefy-beFTM', 'beefy-beFTM-earnings', 'spirit-ftm-beftm'],
+    vaultIds: [
+      'beefy-beFTM',
+      'beefy-beFTM-earnings',
+      'spirit-ftm-beftm',
+      'boo-wftm-beftm',
+      'beets-beefy-tale',
+    ],
   },
   {
     id: 'binspirit',
