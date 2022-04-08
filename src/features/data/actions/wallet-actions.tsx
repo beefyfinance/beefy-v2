@@ -6,7 +6,7 @@ import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
 import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
-import { BeefyState } from '../../../redux-types';
+import { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getWalletConnectApiInstance } from '../apis/instances';
 import { ZapEstimate, ZapOptions } from '../apis/zap';
 import { BoostEntity } from '../entities/boost';
@@ -41,13 +41,13 @@ import { getZapAddress } from '../utils/zap-utils';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
 import { AbiItem } from 'web3-utils';
-import { convertAmountToRawNumber } from '../../../helpers/format';
+import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
 
 const approval = (token: TokenErc20, spenderAddress: string) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -77,11 +77,11 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
         tokens: uniqBy([token, native], 'id'),
       }
     );
-  };
+  });
 };
 
 const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -134,7 +134,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
         tokens: getVaultTokensToRefresh(state, vault),
       }
     );
-  };
+  });
 };
 
 const beefIn = (
@@ -144,7 +144,7 @@ const beefIn = (
   zapEstimate: ZapEstimate,
   slippageTolerance: number
 ) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -199,11 +199,11 @@ const beefIn = (
         tokens: uniqBy(getVaultTokensToRefresh(state, vault).concat([tokenIn, tokenOut]), 'id'),
       }
     );
-  };
+  });
 };
 
 const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOptions) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -253,7 +253,7 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
         tokens: getVaultTokensToRefresh(state, vault),
       }
     );
-  };
+  });
 };
 
 const beefOutAndSwap = (
@@ -263,7 +263,7 @@ const beefOutAndSwap = (
   zapEstimate: ZapEstimate,
   slippageTolerance: number
 ) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -326,11 +326,11 @@ const beefOutAndSwap = (
         ),
       }
     );
-  };
+  });
 };
 
 const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -384,11 +384,11 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
         tokens: getVaultTokensToRefresh(state, vault),
       }
     );
-  };
+  });
 };
 
 const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -419,11 +419,11 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         govVaultId: vault.id,
       }
     );
-  };
+  });
 };
 
 const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -460,11 +460,11 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         govVaultId: vault.id,
       }
     );
-  };
+  });
 };
 
 const claimGovVault = (vault: VaultGov) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -494,11 +494,11 @@ const claimGovVault = (vault: VaultGov) => {
         govVaultId: vault.id,
       }
     );
-  };
+  });
 };
 
 const exitGovVault = (vault: VaultGov) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -536,11 +536,11 @@ const exitGovVault = (vault: VaultGov) => {
         govVaultId: vault.id,
       }
     );
-  };
+  });
 };
 
 const claimBoost = (boost: BoostEntity) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -570,11 +570,11 @@ const claimBoost = (boost: BoostEntity) => {
         boostId: boost.id,
       }
     );
-  };
+  });
 };
 
 const exitBoost = (boost: BoostEntity) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -613,11 +613,11 @@ const exitBoost = (boost: BoostEntity) => {
         boostId: boost.id,
       }
     );
-  };
+  });
 };
 
 const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -650,12 +650,12 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
         boostId: boost.id,
       }
     );
-  };
+  });
 };
 
 //const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -688,7 +688,7 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
         boostId: boost.id,
       }
     );
-  };
+  });
 };
 
 const mintDeposit = (
@@ -699,7 +699,7 @@ const mintDeposit = (
   amount: BigNumber,
   max: boolean
 ) => {
-  return async (dispatch, getState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -742,7 +742,7 @@ const mintDeposit = (
         tokens: uniqBy([gasToken, payToken, mintedToken], 'id'),
       }
     );
-  };
+  });
 };
 
 export const walletActions = {
@@ -762,6 +762,26 @@ export const walletActions = {
   unstakeBoost,
   mintDeposit,
 };
+
+function captureWalletErrors<ReturnType>(
+  func: BeefyThunk<Promise<ReturnType>>
+): BeefyThunk<Promise<ReturnType>> {
+  return async (dispatch, getState, extraArgument) => {
+    try {
+      return await func(dispatch, getState, extraArgument);
+    } catch (error) {
+      dispatch(
+        createWalletActionErrorAction(
+          { message: String(error) },
+          {
+            amount: BIG_ZERO,
+            token: null,
+          }
+        )
+      );
+    }
+  };
+}
 
 function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity }>(
   dispatch: Dispatch<any>,

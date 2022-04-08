@@ -1,5 +1,13 @@
 [
   {
+    "id": "avax vault: stargate-avax-usdc",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: stargate-avax-usdt",
+    "type": "Added"
+  },
+  {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
   }

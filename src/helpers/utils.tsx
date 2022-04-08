@@ -20,22 +20,16 @@ export function isEmpty(key) {
 }
 
 export const bluechipTokens = [
-  'DAIe',
-  'USDCe',
-  'USDTe',
   'WBTCe',
   'WETHe',
   'BTC',
   'WBTC',
   'ETH',
   'BNB',
-  'USDT',
-  'USDC',
   'DOT',
   'UNI',
   'YFI',
   'LINK',
-  'DAI',
   'AAVE',
   'SUSHI',
   'SOL',
@@ -44,4 +38,5 @@ export const bluechipTokens = [
   'ATOM',
   'COMP',
   'SNX',
+  'BIFI',
 ];

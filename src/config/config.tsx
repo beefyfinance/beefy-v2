@@ -56,6 +56,8 @@ export const config = {
       'USDN',
       'WUSD',
       'USDO',
+      'sbBUSD',
+      'sbUSDT',
     ],
   },
   heco: {
@@ -121,6 +123,9 @@ export const config = {
       'MIM',
       'USDC',
       'UST',
+      'saUSDT',
+      'saUSDC',
+      'USTw',
     ],
   },
   polygon: {
@@ -209,6 +214,7 @@ export const config = {
       'asUSDC',
       'LAMBDA',
       'DEI',
+      'sfUSDC',
     ],
   },
   harmony: {
