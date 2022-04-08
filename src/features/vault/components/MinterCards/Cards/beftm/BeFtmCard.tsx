@@ -1,55 +1,57 @@
-import React from 'react';
-import { Typography, makeStyles, Button, Box, Paper, InputBase } from '@material-ui/core';
+import React, { memo } from 'react';
+import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { Card } from '../Card/Card';
-import { CardHeader } from '../Card/CardHeader';
-import { CardContent } from '../Card/CardContent';
-import BeFtmLogo from '../../../../images/partners/beftm.svg';
-import { AssetsImage } from '../../../../components/AssetsImage';
+import { Card, CardContent, CardHeader } from '../../../Card';
+import BeFtmLogo from '../../../../../../images/partners/beftm.svg';
+import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from './styles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import BigNumber from 'bignumber.js';
 import {
   BIG_ZERO,
   formatBigDecimals,
   formatBigNumberSignificant,
-} from '../../../../helpers/format';
-import { beFtmMintVault } from './BeFtmToken';
-import { VaultEntity } from '../../../data/entities/vault';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { BeefyState } from '../../../../redux-types';
-import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
-import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
-import { selectTokenById } from '../../../data/selectors/tokens';
+} from '../../../../../../helpers/format';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { BeefyState } from '../../../../../../redux-types';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../../../../data/selectors/wallet';
+import { selectTokenById } from '../../../../../data/selectors/tokens';
 import { isString } from 'lodash';
-import { Step } from '../../../../components/Steps/types';
-import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
-import { useStepper } from '../../../../components/Steps/hooks';
-import { walletActions } from '../../../data/actions/wallet-actions';
+import { Step } from '../../../../../../components/Steps/types';
+import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
+import { useStepper } from '../../../../../../components/Steps/hooks';
+import { walletActions } from '../../../../../data/actions/wallet-actions';
+import { MinterCardParams } from '../../MinterCard';
+import { selectMinterById } from '../../../../../data/selectors/minters';
 
 const useStyles = makeStyles(styles as any);
 
-const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
+// TODO this and SpiritCard minter cards could be refactored out to a common component
+export const BeFtmCard = memo(function BeFtmCard({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-
-  const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
-  );
-
-  const BeFTMBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, vault.oracleId)
-  );
-
-  const FTMBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, 'FTM')
-  );
-
+  const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
   const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  );
+  const ftmToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, vault.chainId, minter.depositToken.symbol)
+  );
+  const beFtmToken = useSelector((state: BeefyState) =>
+    selectTokenById(state, vault.chainId, minter.mintedToken.symbol)
+  );
+  const ftmBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, ftmToken.id)
+  );
+  const beFtmBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, beFtmToken.id)
   );
 
   const resetFormData = () => {
@@ -81,13 +83,13 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   });
 
   const handleMax = () => {
-    if (FTMBalance.isGreaterThan(BIG_ZERO)) {
+    if (ftmBalance.isGreaterThan(BIG_ZERO)) {
       setFormData({
         ...formData,
         deposit: {
           ...formData.deposit,
-          input: isString(FTMBalance) ? FTMBalance : formatBigNumberSignificant(FTMBalance),
-          amount: FTMBalance,
+          input: isString(ftmBalance) ? ftmBalance : formatBigNumberSignificant(ftmBalance),
+          amount: ftmBalance,
           max: true,
         },
       });
@@ -104,8 +106,8 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       value = BIG_ZERO;
     }
 
-    if (value.isGreaterThanOrEqualTo(FTMBalance)) {
-      value = FTMBalance;
+    if (value.isGreaterThanOrEqualTo(ftmBalance)) {
+      value = ftmBalance;
       max = true;
     }
 
@@ -139,8 +141,11 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     steps.push({
       step: 'mint',
       message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
-      action: walletActions.beFtmDeposit(
-        beFtmMintVault.mintAdress,
+      action: walletActions.mintDeposit(
+        minter.chainId,
+        minter.contractAddress,
+        ftmToken,
+        beFtmToken,
         formData.deposit.amount,
         formData.deposit.max
       ),
@@ -154,7 +159,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     <>
       <Card>
         <CardHeader className={classes.header}>
-          <img className={classes.logo} src={BeFtmLogo} alt="lacucina" />
+          <img className={classes.logo} src={BeFtmLogo} alt="beFTM" />
           <Typography className={classes.title} variant="h3">
             {t('beFtm-Title')}
           </Typography>
@@ -176,7 +181,7 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               <Typography className={classes.label}>
                 {t('beFtm-Wallet')}{' '}
                 <span className={classes.value}>
-                  {formatBigDecimals(FTMBalance)} {'FTM'}
+                  {formatBigDecimals(ftmBalance)} {'FTM'}
                 </span>
               </Typography>
             </Box>
@@ -195,18 +200,18 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Box>
           <Box className={classes.customDivider}>
             <Box className={classes.line} />
-            <img alt="arrowDown" src={require('../../../../images/arrowDown.svg').default} />
+            <img alt="arrowDown" src={require('../../../../../../images/arrowDown.svg').default} />
             <Box className={classes.line} />
           </Box>
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
-                {t('beFtm-To')} <span className={classes.value}>{oracleToken.symbol}</span>
+                {t('beFtm-To')} <span className={classes.value}>{beFtmToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
                 {t('beFtm-Wallet')}{' '}
                 <span className={classes.value}>
-                  {formatBigDecimals(BeFTMBalance)} {oracleToken.symbol}
+                  {formatBigDecimals(beFtmBalance)} {beFtmToken.symbol}
                 </span>
               </Typography>
             </Box>
@@ -233,6 +238,4 @@ const _BeFtmCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       <Stepper />
     </>
   );
-};
-
-export const BeFtm = React.memo(_BeFtmCard);
+});

@@ -1,6 +1,6 @@
 import { WalletActionsState } from '../../features/data/reducers/wallet/wallet-action';
 import { formatBigDecimals } from '../../helpers/format';
-import { TokenErc20 } from '../../features/data/entities/token';
+import { isTokenErc20 } from '../../features/data/entities/token';
 import { BigNumber } from 'bignumber.js';
 
 export function selectMintResult(walletActionsState: WalletActionsState) {
@@ -12,11 +12,12 @@ export function selectMintResult(walletActionsState: WalletActionsState) {
   if (walletActionsState.result === 'success') {
     if (
       walletActionsState.data.receipt.events &&
-      'Transfer' in walletActionsState.data.receipt.events
+      'Transfer' in walletActionsState.data.receipt.events &&
+      isTokenErc20(walletActionsState.data.token)
     ) {
       const userAddress = walletActionsState.data.receipt.from.toLowerCase();
       const mintContractAddress = walletActionsState.data.receipt.to.toLowerCase();
-      const mintToken = walletActionsState.data.token as TokenErc20;
+      const mintToken = walletActionsState.data.token;
       const mintTokenAddress = mintToken.contractAddress.toLowerCase();
       const transferEvents = Array.isArray(walletActionsState.data.receipt.events['Transfer'])
         ? walletActionsState.data.receipt.events['Transfer']

@@ -20,6 +20,7 @@ import { WalletActionsState } from './features/data/reducers/wallet/wallet-actio
 import { ZapsState } from './features/data/reducers/zaps';
 import { WithdrawState } from './features/data/reducers/wallet/withdraw';
 import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
+import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
 
 export interface BeefyState {
@@ -30,6 +31,7 @@ export interface BeefyState {
     boosts: BoostsState;
     platforms: PlatformsState;
     zaps: ZapsState;
+    minters: MintersState;
   };
   biz: {
     tvl: TvlState;

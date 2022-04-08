@@ -1,64 +1,61 @@
-import React from 'react';
-import { Typography, makeStyles, Button, Box, Paper, InputBase } from '@material-ui/core';
+import React, { memo } from 'react';
+import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { Card } from '../Card/Card';
-import { CardHeader } from '../Card/CardHeader';
-import { CardContent } from '../Card/CardContent';
-import BinSpirit from '../../../../images/partners/binSpiritToken.svg';
-import { AssetsImage } from '../../../../components/AssetsImage';
+import { Card, CardContent, CardHeader } from '../../../Card';
+import BinSpirit from '../../../../../../images/partners/binSpiritToken.svg';
+import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from './styles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import BigNumber from 'bignumber.js';
-import { useBalance } from './useBalance';
 import {
   BIG_ZERO,
-  convertAmountToRawNumber,
   formatBigDecimals,
   formatBigNumberSignificant,
-} from '../../../../helpers/format';
-import { SpiritToken, binSpiritMintVault } from './SpiritToken';
-import { useAllowance } from './useAllowance';
-import { VaultEntity } from '../../../data/entities/vault';
-import { selectVaultById } from '../../../data/selectors/vaults';
-import { BeefyState } from '../../../../redux-types';
-import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
-import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
-import { selectTokenById } from '../../../data/selectors/tokens';
+} from '../../../../../../helpers/format';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { BeefyState } from '../../../../../../redux-types';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../../../../data/selectors/wallet';
+import { selectErc20TokenById } from '../../../../../data/selectors/tokens';
 import { isString } from 'lodash';
-import { Step } from '../../../../components/Steps/types';
-import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
-import { walletActions } from '../../../data/actions/wallet-actions';
-import { useStepper } from '../../../../components/Steps/hooks';
+import { Step } from '../../../../../../components/Steps/types';
+import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
+import { walletActions } from '../../../../../data/actions/wallet-actions';
+import { useStepper } from '../../../../../../components/Steps/hooks';
+import { MinterCardParams } from '../../MinterCard';
+import { selectMinterById } from '../../../../../data/selectors/minters';
+import { selectAllowanceByTokenId } from '../../../../../data/selectors/allowances';
 
 const useStyles = makeStyles(styles as any);
 
-const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
+// TODO this and beFTM minter cards could be refactored out to a common component
+export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
-  );
-  const binSpiritBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, vault.oracleId)
-  );
+  const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
   const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
-
-  const [spiritBalance, spiritBalanceString] = useBalance(
-    SpiritToken.contractAddress,
-    SpiritToken.decimals,
-    vault.chainId
+  const tokenSPIRIT = useSelector((state: BeefyState) =>
+    selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
   );
-
-  const [spiritAllowance] = useAllowance(
-    SpiritToken.contractAddress,
-    SpiritToken.decimals,
-    binSpiritMintVault.mintAdress,
-    vault.chainId
+  const tokenBinSPIRIT = useSelector((state: BeefyState) =>
+    selectErc20TokenById(state, vault.chainId, minter.mintedToken.symbol)
+  );
+  const spiritBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, tokenSPIRIT.id)
+  );
+  const binSpiritBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, tokenBinSPIRIT.id)
+  );
+  const spiritAllowance = useSelector((state: BeefyState) =>
+    selectAllowanceByTokenId(state, vault.chainId, tokenSPIRIT.id, minter.contractAddress)
   );
 
   const resetFormData = () => {
@@ -109,7 +106,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
     let max = false;
-    let value = new BigNumber(input).decimalPlaces(SpiritToken.decimals, BigNumber.ROUND_DOWN);
+    let value = new BigNumber(input).decimalPlaces(tokenSPIRIT.decimals, BigNumber.ROUND_DOWN);
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
       value = BIG_ZERO;
@@ -147,13 +144,11 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    const amount = convertAmountToRawNumber(formData.deposit.amount);
-
-    if (spiritAllowance.isLessThan(amount)) {
+    if (spiritAllowance.isLessThan(formData.deposit.amount)) {
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(SpiritToken, binSpiritMintVault.mintAdress),
+        action: walletActions.approval(tokenSPIRIT, minter.contractAddress),
         pending: false,
       });
     }
@@ -161,10 +156,12 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     steps.push({
       step: 'mint',
       message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
-      action: walletActions.spiritDeposit(
+      action: walletActions.mintDeposit(
         vault.chainId,
-        binSpiritMintVault.mintAdress,
-        amount,
+        minter.contractAddress,
+        tokenSPIRIT,
+        tokenBinSPIRIT,
+        formData.deposit.amount,
         formData.deposit.max
       ),
       pending: false,
@@ -177,7 +174,7 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     <>
       <Card>
         <CardHeader className={classes.header}>
-          <img className={classes.logo} src={BinSpirit} alt="lacucina" />
+          <img className={classes.logo} src={BinSpirit} alt="binSPIRIT" />
           <Typography className={classes.title} variant="h3">
             {t('Spirit-Title')}
           </Typography>
@@ -194,12 +191,12 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
-                {t('Spirit-From')} <span className={classes.value}>{SpiritToken.symbol}</span>
+                {t('Spirit-From')} <span className={classes.value}>{tokenSPIRIT.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
                 {t('Spirit-Wallet')}{' '}
                 <span className={classes.value}>
-                  {spiritBalanceString} {SpiritToken.symbol}
+                  {formatBigDecimals(spiritBalance, 8)} {tokenSPIRIT.symbol}
                 </span>
               </Typography>
             </Box>
@@ -218,18 +215,18 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Box>
           <Box className={classes.customDivider}>
             <Box className={classes.line} />
-            <img alt="arrowDown" src={require('../../../../images/arrowDown.svg').default} />
+            <img alt="arrowDown" src={require('../../../../../../images/arrowDown.svg').default} />
             <Box className={classes.line} />
           </Box>
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
-                {t('Spirit-To')} <span className={classes.value}>{oracleToken.symbol}</span>
+                {t('Spirit-To')} <span className={classes.value}>{tokenBinSPIRIT.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
                 {t('Spirit-Wallet')}{' '}
                 <span className={classes.value}>
-                  {formatBigDecimals(binSpiritBalance)} {oracleToken.symbol}
+                  {formatBigDecimals(binSpiritBalance)} {tokenBinSPIRIT.symbol}
                 </span>
               </Typography>
             </Box>
@@ -256,6 +253,4 @@ const _SpiritCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       <Stepper />
     </>
   );
-};
-
-export const SpiritCard = React.memo(_SpiritCard);
+});

@@ -159,7 +159,7 @@ export const formatCountdown = deadline => {
 
 export function convertAmountToRawNumber(value, decimals = 18) {
   return new BigNumber(value)
-    .times(new BigNumber('10').pow(decimals))
+    .shiftedBy(decimals)
     .decimalPlaces(0, BigNumber.ROUND_DOWN)
     .toString(10);
 }
