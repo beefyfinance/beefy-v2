@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 import { BIG_ZERO } from '../../../../../../helpers/format';
 import { selectIsWalletConnected, selectWalletAddress } from '../../../../../data/selectors/wallet';
 import { BeefyState } from '../../../../../../redux-types';
-import { getWalletConnectApiInstance } from '../../../../../data/apis/instances';
+import { getWeb3Instance } from '../../../../../data/apis/instances';
 import MinterABI from '../../../../../../config/abi/minter.json';
 
-export function useReserves(tokenAddress) {
+export function useReserves(tokenAddress, chain) {
   const [reserves, setReserves] = useState(BIG_ZERO);
 
   const account = useSelector((state: BeefyState) =>
@@ -27,8 +27,7 @@ export function useReserves(tokenAddress) {
           resolve(BIG_ZERO);
           return;
         }
-        const walletApi = await getWalletConnectApiInstance();
-        const web3 = await walletApi.getConnectedWeb3Instance();
+        const web3 = await getWeb3Instance(chain);
         const contract = getContract(tokenAddress, web3, MinterABI);
         try {
           contract?.methods
@@ -58,7 +57,7 @@ export function useReserves(tokenAddress) {
     return () => {
       isCancelled = true;
     };
-  }, [tokenAddress, isWalletCoInitiated, account]);
+  }, [tokenAddress, isWalletCoInitiated, account, chain]);
 
   return reserves;
 }
