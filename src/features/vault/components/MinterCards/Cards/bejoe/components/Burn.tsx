@@ -238,7 +238,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         </Box>
         <Button
           disabled={
-            haveEnoughReserves ||
+            !haveEnoughReserves ||
             formData.withdraw.amount.isGreaterThan(reserves) ||
             formData.withdraw.amount.isLessThanOrEqualTo(0) ||
             isStepping
