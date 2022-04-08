@@ -1,29 +1,19 @@
 import { useState, useEffect } from 'react';
 import { getContract } from '../../../../../../helpers/getContract';
 import BigNumber from 'bignumber.js';
-import { useSelector } from 'react-redux';
 import { BIG_ZERO } from '../../../../../../helpers/format';
-import { selectIsWalletConnected, selectWalletAddress } from '../../../../../data/selectors/wallet';
-import { BeefyState } from '../../../../../../redux-types';
 import { getWeb3Instance } from '../../../../../data/apis/instances';
 import MinterABI from '../../../../../../config/abi/minter.json';
 
 export function useReserves(tokenAddress, chain) {
   const [reserves, setReserves] = useState(BIG_ZERO);
 
-  const account = useSelector((state: BeefyState) =>
-    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
-  );
-  const isWalletCoInitiated = useSelector(
-    (state: BeefyState) => state.ui.dataLoader.instances.wallet
-  );
-
   useEffect(() => {
     let isCancelled = false;
 
     function getReserves() {
       return new Promise<BigNumber>(async resolve => {
-        if (!account || !tokenAddress || !isWalletCoInitiated) {
+        if (!tokenAddress) {
           resolve(BIG_ZERO);
           return;
         }
@@ -57,7 +47,7 @@ export function useReserves(tokenAddress, chain) {
     return () => {
       isCancelled = true;
     };
-  }, [tokenAddress, isWalletCoInitiated, account, chain]);
+  }, [tokenAddress, chain]);
 
   return reserves;
 }
