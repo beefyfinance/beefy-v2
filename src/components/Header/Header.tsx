@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppBar,
@@ -20,7 +20,6 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import {
   selectCurrentChainId,
-  selectIsNetworkSupported,
   selectIsWalletConnected,
 } from '../../features/data/selectors/wallet';
 import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
@@ -29,7 +28,6 @@ import { LanguageDropdown } from '../LanguageDropdown';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { NetworkStatus } from '../NetworkStatus';
 import { Transak } from '../Transak';
-import { UnsupportedNetwork } from '../UnsupportedNetwork';
 import { styles } from './styles';
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
@@ -86,31 +84,32 @@ const NavLinks = () => {
   );
 };
 
-const ActiveChain = ({ value }: { value: string }) => {
+const ActiveChain = ({ networkId }: { networkId: string | null }) => {
   const classes = useStyles();
+  const { t } = useTranslation();
+
   return (
     <div className={classes.chain} style={{ textDecoration: 'none' }}>
-      <img alt={value} src={require(`../../images/networks/${value}.svg`).default} />{' '}
+      {networkId === null ? null : (
+        <img alt={networkId} src={require(`../../images/networks/${networkId}.svg`).default} />
+      )}{' '}
       <Typography variant="body1" noWrap={true}>
-        {value.toLocaleUpperCase()}
+        {networkId === null ? t('Network-Unsupported') : networkId.toLocaleUpperCase()}
       </Typography>
     </div>
   );
 };
 
 export const Header = connect((state: BeefyState) => {
-  const isNetworkSupported = selectIsNetworkSupported(state);
   const currentChainId = selectCurrentChainId(state);
   const isWalletConnected = selectIsWalletConnected(state);
-  return { isWalletConnected, isNetworkSupported, currentChainId };
+  return { isWalletConnected, currentChainId };
 })(
   ({
     isWalletConnected,
-    isNetworkSupported,
     currentChainId,
   }: {
     isWalletConnected: boolean;
-    isNetworkSupported: boolean;
     currentChainId: ChainEntity['id'] | null;
   }) => {
     const classes = useStyles();
@@ -124,7 +123,6 @@ export const Header = connect((state: BeefyState) => {
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className={clsx([classes.navHeader, classes.hasPortfolio])} position="static">
-          {!isNetworkSupported && <UnsupportedNetwork />}
           <Container className={classes.container} maxWidth="lg">
             <Toolbar disableGutters={true}>
               <Box sx={{ flexGrow: 1 }}>
@@ -152,7 +150,7 @@ export const Header = connect((state: BeefyState) => {
                   </Box>
                   {isWalletConnected && (
                     <Box mr={3}>
-                      <ActiveChain value={currentChainId || 'bsc'} />
+                      <ActiveChain networkId={currentChainId} />
                     </Box>
                   )}
                 </Hidden>
@@ -201,7 +199,7 @@ export const Header = connect((state: BeefyState) => {
                       <BifiPrice />
                     </Box>
                     <Box mx={2} my={1} display="flex">
-                      {isWalletConnected && <ActiveChain value={currentChainId || 'bsc'} />}
+                      {isWalletConnected && <ActiveChain networkId={currentChainId} />}
                       <LanguageDropdown />
                     </Box>
                   </Box>

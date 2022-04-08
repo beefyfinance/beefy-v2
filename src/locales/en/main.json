@@ -122,6 +122,7 @@
   "Pool-AprDaily": "Pool Daily APR",
   "Network-Change": "Switch to {{network}} network",
   "Network-ConnectWallet": "Connect Wallet",
+  "Network-Unsupported": "Unsupported Chain",
   "Deposit-Disabled": "Deposits disabled",
   "Deposit-Withdraw": "Deposit / Withdraw",
   "Deposit-noun": "deposit",
