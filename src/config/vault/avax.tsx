@@ -636,7 +636,7 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'SingleStake',
-    withdrawalFee: '0.1%',
+    withdrawalFee: '0.0%',
     buyTokenUrl:
       'https://traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',
     network: 'avax',
@@ -761,7 +761,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'joe-wavax-usdt.e',
     oraclePrice: 0,
-    status: 'paused',
+    status: 'active',
     platform: 'Trader Joe',
     assets: ['USDTe', 'AVAX'],
     risks: [
@@ -778,7 +778,7 @@ export const pools = [
     buyTokenUrl: 'https://www.traderjoexyz.com/trade',
     network: 'avax',
     createdAt: 1632129313,
-    depositsPaused: true,
+    depositsPaused: false,
   },
   {
     id: 'joe-link.e-wavax',
@@ -1074,7 +1074,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'joe-weth.e-wavax',
     oraclePrice: 0,
-    status: 'paused',
+    status: 'active',
     platform: 'Trader Joe',
     assets: ['WETHe', 'AVAX'],
     risks: [
@@ -1091,7 +1091,7 @@ export const pools = [
     buyTokenUrl: 'https://www.traderjoexyz.com/trade',
     network: 'avax',
     createdAt: 1630496791,
-    depositsPaused: true,
+    depositsPaused: false,
   },
   {
     id: 'joe-usdc.e-wavax',
@@ -1109,7 +1109,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'joe-usdc.e-wavax',
     oraclePrice: 0,
-    status: 'paused',
+    status: 'active',
     platform: 'Trader Joe',
     assets: ['USDCe', 'AVAX'],
     risks: [
@@ -1126,7 +1126,7 @@ export const pools = [
     buyTokenUrl: 'https://www.traderjoexyz.com/trade',
     network: 'avax',
     createdAt: 1630085124,
-    depositsPaused: true,
+    depositsPaused: false,
   },
   {
     id: 'olive-dai.e-usdt.e',
@@ -4274,8 +4274,8 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'joe-wavax-usdc',
     oraclePrice: 0,
-    depositsPaused: true,
-    status: 'paused',
+    depositsPaused: false,
+    status: 'active',
     platform: 'Trader Joe',
     assets: ['USDC', 'AVAX'],
     risks: [
@@ -5315,7 +5315,7 @@ export const pools = [
     logo: 'single-assets/beJOE.png',
     name: 'beJOE',
     token: 'beJOE',
-    tokenDescription: 'Beefy JOE',
+    tokenDescription: 'Beefy.Finance',
     tokenAddress: '0x1F2A8034f444dc55F963fb5925A9b6eb744EeE2c',
     tokenDecimals: 18,
     tokenDescriptionUrl: '#',
@@ -5325,11 +5325,11 @@ export const pools = [
     pricePerFullShare: 1,
     tvl: 0,
     oracle: 'tokens',
-    oracleId: 'JOE',
+    oracleId: 'beJOE',
     oraclePrice: 0,
     depositsPaused: false,
     status: 'active',
-    platform: 'Beefy',
+    platform: 'Beefy.Finance',
     assets: ['beJOE'],
     withdrawalFee: '0.1%',
     risks: [
@@ -5344,7 +5344,7 @@ export const pools = [
     stratType: 'StratSingle',
     buyTokenUrl:
       'https://www.traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',
-    createdAt: 1633521927,
+    createdAt: 1649422919,
     network: 'avax',
   },
   {
