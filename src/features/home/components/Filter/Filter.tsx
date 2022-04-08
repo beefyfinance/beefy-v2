@@ -414,25 +414,27 @@ const _Filter = () => {
             </FormGroup>
           </Box>
           <Box className={classes.selectors}>
-            <Box className={classes.selector}>
-              <MultipleLabeledDropdown
-                fullWidth={true}
-                noBorder={true}
-                list={chainTypes}
-                selected={filterOptions.chainIds.length === 0 ? ['all'] : filterOptions.chainIds}
-                handler={handleChangeBlockchain}
-                renderValue={selected => (
-                  <Typography className={classes.value}>
-                    <span className={`${classes.label} label`}>{t('Filter-Blockchn')}</span>{' '}
-                    {filterOptions.chainIds.length > 1
-                      ? t('Filter-BlockchnMultiple')
-                      : selected.join('')}
-                  </Typography>
-                )}
-                label={t('Filter-Blockchn')}
-                multiple={true}
-              />
-            </Box>
+            <Hidden lgUp>
+              <Box className={classes.selector}>
+                <MultipleLabeledDropdown
+                  fullWidth={true}
+                  noBorder={true}
+                  list={chainTypes}
+                  selected={filterOptions.chainIds.length === 0 ? ['all'] : filterOptions.chainIds}
+                  handler={handleChangeBlockchain}
+                  renderValue={selected => (
+                    <Typography className={classes.value}>
+                      <span className={`${classes.label} label`}>{t('Filter-Blockchn')}</span>{' '}
+                      {filterOptions.chainIds.length > 1
+                        ? t('Filter-BlockchnMultiple')
+                        : selected.join('')}
+                    </Typography>
+                  )}
+                  label={t('Filter-Blockchn')}
+                  multiple={true}
+                />
+              </Box>
+            </Hidden>
             <Box className={classes.selector}>
               <LabeledDropdown
                 fullWidth={true}
