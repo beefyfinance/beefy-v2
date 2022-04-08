@@ -1,14 +1,18 @@
-import React, { memo, PropsWithChildren, useCallback } from 'react';
+import React, { FC, memo, PropsWithChildren, SVGProps, useCallback } from 'react';
 import { ChainEntity } from '../../../data/entities/chain';
 import { useSelector } from 'react-redux';
 import { selectAllChainIds, selectChainById } from '../../../data/selectors/chains';
 import { BeefyState } from '../../../../redux-types';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Tooltip } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
-import { featureFlag_chainSelectorToggle } from '../../../data/utils/feature-flags';
 
 const useStyles = makeStyles(styles);
+const networkIcons = require.context(
+  '!@svgr/webpack?svgo=false!../../../../images/networks/',
+  false,
+  /\.svg$/
+);
 
 export type ChainButtonProps = PropsWithChildren<{
   id: ChainEntity['id'];
@@ -21,18 +25,23 @@ const ChainButton = memo<ChainButtonProps>(function ({ id, selected, onChange })
   const handleChange = useCallback(() => {
     onChange(!selected, id);
   }, [id, selected, onChange]);
+  const Icon: FC<SVGProps<SVGSVGElement>> = networkIcons(`./${id}.svg`).default;
 
   return (
-    <button
-      onClick={handleChange}
-      className={clsx(classes.button, { [classes.selected]: selected })}
+    <Tooltip
+      disableFocusListener
+      disableTouchListener
+      title={chain.name}
+      placement="bottom-start"
+      classes={{ tooltip: classes.tooltip }}
     >
-      <img
-        className={classes.icon}
-        alt={chain.name}
-        src={require(`../../../../images/networks/${id}.svg`).default}
-      />{' '}
-    </button>
+      <button
+        onClick={handleChange}
+        className={clsx(classes.button, { [classes.selected]: selected })}
+      >
+        <Icon className={classes.icon} width={24} height={24} />
+      </button>
+    </Tooltip>
   );
 });
 
@@ -55,13 +64,8 @@ export const ChainSelector = memo<ChainSelectorProps>(function ({ selected, onCh
       } else if (!isSelected) {
         if (selected.length === 0) {
           // special handling:
-          if (featureFlag_chainSelectorToggle()) {
-            // first chain unselected should be treated as unselecting all other chains instead
-            onChange([id]);
-          } else {
-            // include all but this one being unselected
-            onChange(chainIds.filter(selectedId => selectedId !== id));
-          }
+          // first chain unselected should be treated as unselecting all other chains instead
+          onChange([id]);
         } else if (selected.includes(id)) {
           onChange(selected.filter(selectedId => selectedId !== id));
         }

@@ -133,13 +133,3 @@ export function featureFlag_simulateBeefyApiError(key: 'apy' | 'prices' | 'lps' 
     return chainIds.includes(key);
   }
 }
-
-export function featureFlag_chainSelectorToggle() {
-  const isAuthorizedDomain =
-    window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
-  if (!isAuthorizedDomain) {
-    return false;
-  }
-  const params = new URLSearchParams(window.location.search);
-  return params.has('__chain_selector_toggle');
-}
