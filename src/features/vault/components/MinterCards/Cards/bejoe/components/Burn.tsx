@@ -162,6 +162,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
       action: walletActions.burnWithdraw(
         vault.chainId,
         minter.contractAddress,
+        tokenJoe,
         tokenBeJoe,
         formData.withdraw.amount,
         formData.withdraw.max

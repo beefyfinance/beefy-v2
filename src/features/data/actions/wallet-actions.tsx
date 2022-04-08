@@ -748,6 +748,7 @@ const mintDeposit = (
 const burnWithdraw = (
   chainId: ChainEntity['id'],
   contractAddr: string,
+  withdrawnToken: TokenEntity,
   burnedToken: TokenEntity,
   amount: BigNumber,
   max: boolean
@@ -781,7 +782,7 @@ const burnWithdraw = (
       {
         chainId: chainId,
         spenderAddress: contractAddr,
-        tokens: uniqBy([gasToken, burnedToken, burnedToken], 'id'),
+        tokens: uniqBy([gasToken, withdrawnToken, burnedToken], 'id'),
       }
     );
   });
