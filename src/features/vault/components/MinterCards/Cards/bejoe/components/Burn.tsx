@@ -59,9 +59,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   );
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
 
-  const reserves = useReserves(minter.contractAddress, chain);
-
-  const haveEnoughReserves = reserves.isGreaterThan(BIG_ZERO);
+  const reserves = useReserves(minter.contractAddress, chain, beJoeBalance);
 
   const resetFormData = () => {
     setFormData({
@@ -241,8 +239,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         </Box>
         <Button
           disabled={
-            !haveEnoughReserves ||
-            formData.withdraw.amount.isGreaterThan(reserves) ||
+            formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-tokenBeJoe.decimals)) ||
             formData.withdraw.amount.isLessThanOrEqualTo(0) ||
             isStepping
           }
@@ -251,7 +248,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         >
           {t('bejoe-action', { action: t('bejoe-burn') })}
         </Button>
-        {!haveEnoughReserves && (
+        {formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-tokenBeJoe.decimals)) && (
           <Box className={classes.noReserves}>
             <img
               className={classes.icon}
