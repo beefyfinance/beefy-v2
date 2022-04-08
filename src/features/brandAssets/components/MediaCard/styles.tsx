@@ -10,10 +10,10 @@ export const styles = theme => ({
     padding: '32px',
     height: '125px',
   },
-  imageContainerLight: {
+  lightImageContainer: {
     backgroundColor: '#F5F5FF',
   },
-  imageContainerDark: {
+  darkImageContainer: {
     backgroundColor: '#363B63',
   },
   cardImage: {
