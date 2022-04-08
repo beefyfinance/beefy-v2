@@ -1,4 +1,4 @@
-import React, { FC, lazy, memo, useEffect } from 'react';
+import React, { FC, lazy, memo, Suspense, useEffect } from 'react';
 import { useSelector, useStore } from 'react-redux';
 import { VaultEntity } from '../../../data/entities/vault';
 import { MinterEntity } from '../../../data/entities/minter';
@@ -45,5 +45,9 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
     initMinterForm(store, minterId, walletAddress);
   }, [store, minterId, walletAddress]);
 
-  return isFormReady ? <MinterCardImporter vaultId={vaultId} minterId={minterId} /> : <Loader />;
+  return (
+    <Suspense fallback={<Loader />}>
+      {isFormReady ? <MinterCardImporter vaultId={vaultId} minterId={minterId} /> : <Loader />}
+    </Suspense>
+  );
 });
