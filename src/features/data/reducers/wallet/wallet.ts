@@ -48,9 +48,7 @@ export const walletSlice = createSlice({
         sliceState.profilePictureUrl = null;
       } else {
         sliceState.address = action.payload.address;
-        // keep local storage chain if any
-        sliceState.selectedChainId =
-          action.payload.chainId === null ? sliceState.selectedChainId : action.payload.chainId;
+        sliceState.selectedChainId = action.payload.chainId;
         sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
         sliceState.error = action.payload.chainId === null ? 'unsupported chain' : null;
       }
@@ -91,6 +89,7 @@ export const walletSlice = createSlice({
       action: PayloadAction<{ networkChainId: string | number; address: string }>
     ) {
       sliceState.address = action.payload.address;
+      sliceState.selectedChainId = null;
       sliceState.error = 'unsupported chain';
       sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
     },

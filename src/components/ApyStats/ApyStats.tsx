@@ -12,7 +12,7 @@ import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
 } from '../../features/data/selectors/apy';
-import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
+import { isGovVault, isVaultRetired, VaultEntity } from '../../features/data/entities/vault';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultApyAvailable } from '../../features/data/selectors/data-loader';
 import { TotalApy } from '../../features/data/reducers/apy';
@@ -161,6 +161,8 @@ function _YearlyApyStats({
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const isRetired = isVaultRetired(vault);
+  const shouldShowApy = !isRetired;
 
   const isLoading = useSelector(
     (state: BeefyState) =>
@@ -178,20 +180,24 @@ function _YearlyApyStats({
       value={
         <LabeledStat
           variant={variant}
-          boosted={isBoosted ? formatted.boostedTotalApy : ''}
-          value={formatted.totalApy}
+          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalApy : ''}
+          value={shouldShowApy ? formatted.totalApy : '-'}
         />
       }
-      tooltip={{
-        content: (
-          <YearlyBreakdownTooltip
-            isGovVault={isGovVault(vault)}
-            boosted={isBoosted}
-            rates={formatted}
-          />
-        ),
-      }}
-      loading={isLoading}
+      tooltip={
+        shouldShowApy
+          ? {
+              content: (
+                <YearlyBreakdownTooltip
+                  isGovVault={isGovVault(vault)}
+                  boosted={isBoosted}
+                  rates={formatted}
+                />
+              ),
+            }
+          : null
+      }
+      loading={shouldShowApy && isLoading}
       variant={variant}
     />
   );
@@ -209,6 +215,8 @@ function _DailyApyStats({
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const isRetired = isVaultRetired(vault);
+  const shouldShowApy = !isRetired;
 
   const isLoading = useSelector(
     (state: BeefyState) =>
@@ -226,20 +234,24 @@ function _DailyApyStats({
       value={
         <LabeledStat
           variant={variant}
-          boosted={isBoosted ? formatted.boostedTotalDaily : ''}
-          value={formatted.totalDaily}
+          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalDaily : ''}
+          value={shouldShowApy ? formatted.totalDaily : '-'}
         />
       }
-      tooltip={{
-        content: (
-          <DailyBreakdownTooltip
-            isGovVault={isGovVault(vault)}
-            boosted={isBoosted}
-            rates={formatted}
-          />
-        ),
-      }}
-      loading={isLoading}
+      tooltip={
+        shouldShowApy
+          ? {
+              content: (
+                <DailyBreakdownTooltip
+                  isGovVault={isGovVault(vault)}
+                  boosted={isBoosted}
+                  rates={formatted}
+                />
+              ),
+            }
+          : null
+      }
+      loading={shouldShowApy && isLoading}
       variant={variant}
     />
   );
