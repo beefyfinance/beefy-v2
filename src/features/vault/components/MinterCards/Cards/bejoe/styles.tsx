@@ -188,8 +188,10 @@ export const styles = theme => ({
     color: theme.palette.text.disabled,
     fontWeight: 600,
     letterSpacing: '0.5px',
+    marginRight: theme.spacing(0.5),
   },
   amountReserves: {
+    marginLeft: theme.spacing(0.5),
     color: theme.palette.text.secondary,
     fontWeight: 600,
     letterSpacing: '0.5px',
