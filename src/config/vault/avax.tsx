@@ -78,14 +78,14 @@ export const pools = [
   {
     id: 'beefy-beJoe-earnings',
     logo: 'single-assets/beJOE.png',
-    name: 'beJoe Earnings Pool',
+    name: 'beJOE Earnings Pool',
     token: 'beJOE',
     tokenDescription: 'Beefy.Finance',
     tokenAddress: '0x1F2A8034f444dc55F963fb5925A9b6eb744EeE2c',
     tokenDecimals: 18,
     tokenDescriptionUrl:
       'https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance',
-    earnedToken: 'WFTM',
+    earnedToken: 'JOE',
     earnedTokenAddress: '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',
     earnedTokenDecimals: 18,
     earnContractAddress: '0x2E360492120cebeB2527c41BAE1a4f21992D86Ec',
