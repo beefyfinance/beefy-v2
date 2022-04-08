@@ -1,4 +1,7 @@
 export const styles = theme => ({
+  chainSelector: {
+    marginBottom: '24px',
+  },
   categories: {
     paddingBottom: '20px',
     '& .MuiTypography-h4': {

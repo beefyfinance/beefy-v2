@@ -3,21 +3,21 @@ import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
-  Popover,
   Checkbox,
   FormControlLabel,
   FormGroup,
+  Hidden,
+  IconButton,
+  InputAdornment,
   makeStyles,
+  Popover,
   TextField,
   Typography,
-  InputAdornment,
-  IconButton,
-  Hidden,
 } from '@material-ui/core';
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';
-import { Search, CloseRounded } from '@material-ui/icons';
+import { CloseRounded, Search } from '@material-ui/icons';
 import { FilterCategories } from './FilterCategories';
 import { filteredVaultsActions, FilteredVaultsState } from '../../../data/reducers/filtered-vaults';
 import { selectAllPlatform } from '../../../data/selectors/platforms';
@@ -32,6 +32,8 @@ import {
   selectHasActiveFilter,
   selectTotalVaultCount,
 } from '../../../data/selectors/filtered-vaults';
+import { ChainSelector } from '../ChainSelector';
+import { ChainEntity } from '../../../data/entities/chain';
 
 const useStyles = makeStyles(styles as any);
 const _Filter = () => {
@@ -55,6 +57,13 @@ const _Filter = () => {
         value = value.filter(v => v !== 'all');
       }
       dispatch(filteredVaultsActions.setChainIds(value));
+    },
+    [dispatch]
+  );
+
+  const handleChainSelectorChange = useCallback(
+    (selected: ChainEntity['id'][]) => {
+      dispatch(filteredVaultsActions.setChainIds(selected));
     },
     [dispatch]
   );
@@ -176,6 +185,13 @@ const _Filter = () => {
 
   return (
     <>
+      <Hidden mdDown>
+        <ChainSelector
+          selected={filterOptions.chainIds}
+          onChange={handleChainSelectorChange}
+          className={classes.chainSelector}
+        />
+      </Hidden>
       <FilterCategories />
       <Box className={classes.filtersContainer}>
         {/*Search*/}
