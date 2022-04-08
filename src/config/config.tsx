@@ -123,6 +123,9 @@ export const config = {
       'MIM',
       'USDC',
       'UST',
+      'saUSDT',
+      'saUSDC',
+      'USTw',
     ],
   },
   polygon: {
