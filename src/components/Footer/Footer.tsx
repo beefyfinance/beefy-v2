@@ -34,6 +34,10 @@ const navLinks = [
     title: 'Footer-Audit',
     path: 'https://github.com/beefyfinance/beefy-audits',
   },
+  {
+    title: 'Footer-MediaKit',
+    path: '#/brand-assets',
+  },
 ];
 
 const socialLinks = [
