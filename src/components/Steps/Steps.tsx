@@ -100,6 +100,7 @@ const _Steps = ({
                   {steps.items[steps.currentStep].step === 'unstake' && t('Unstake-Done')}
                   {steps.items[steps.currentStep].step === 'claim' && t('Claim-Done')}
                   {steps.items[steps.currentStep].step === 'mint' && t('Mint-Done')}
+                  {steps.items[steps.currentStep].step === 'burn' && t('Burn-Done')}
                 </>
               )}
             </Typography>
@@ -239,6 +240,20 @@ const _Steps = ({
                             token: walletActionsState.data.token.symbol,
                           }
                         )}
+                      </Typography>
+                      <TransactionLink vaultId={vaultId} />
+                    </Box>
+                  </>
+                )}
+              {steps.items[steps.currentStep].step === 'burn' &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={classes.successContent}>
+                      <Typography variant="body1" className={classes.message}>
+                        {t('Transactn-Burned', {
+                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          token: walletActionsState.data.token.symbol,
+                        })}
                       </Typography>
                       <TransactionLink vaultId={vaultId} />
                     </Box>

@@ -745,6 +745,48 @@ const mintDeposit = (
   });
 };
 
+const burnWithdraw = (
+  chainId: ChainEntity['id'],
+  contractAddr: string,
+  burnedToken: TokenEntity,
+  amount: BigNumber,
+  max: boolean
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const gasToken = selectChainNativeToken(state, chainId);
+    const walletApi = await getWalletConnectApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
+    const gasPrices = await getGasPriceOptions(web3);
+
+    const transaction = (() => {
+      const rawAmount = convertAmountToRawNumber(amount, burnedToken.decimals);
+      return contract.methods.withdraw(rawAmount).send({ from: address, ...gasPrices });
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        amount: amount,
+        token: burnedToken,
+      },
+      {
+        chainId: chainId,
+        spenderAddress: contractAddr,
+        tokens: uniqBy([gasToken, burnedToken, burnedToken], 'id'),
+      }
+    );
+  });
+};
+
 export const walletActions = {
   approval,
   deposit,
@@ -761,6 +803,7 @@ export const walletActions = {
   stakeBoost,
   unstakeBoost,
   mintDeposit,
+  burnWithdraw,
 };
 
 function captureWalletErrors<ReturnType>(
