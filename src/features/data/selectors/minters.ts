@@ -2,6 +2,7 @@ import { BeefyState } from '../../../redux-types';
 import { MinterEntity } from '../entities/minter';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
+import { isInitialLoader } from '../reducers/data-loader';
 
 export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']) => {
   const mintersById = state.entities.minters.byId;
@@ -15,9 +16,15 @@ export const selectMintersByChainId = (state: BeefyState, chainId: ChainEntity['
   return state.entities.minters.byChainId[chainId] || [];
 };
 
-export const selectMintersByVaultId = (state: BeefyState, vaultId: VaultEntity['id']) => {
+export const selectMintersByVaultId = (
+  state: BeefyState,
+  vaultId: VaultEntity['id']
+): MinterEntity['id'][] => {
   return state.entities.minters.byVaultId[vaultId] || [];
 };
 
 export const selectAreMintersLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.minters.alreadyLoadedOnce;
+
+export const selectShouldInitMinters = (state: BeefyState) =>
+  isInitialLoader(state.ui.dataLoader.global.minters);

@@ -96,7 +96,7 @@ export const balanceSlice = createSlice({
       const state = action.payload.state;
       const chainId = action.payload.chainId;
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
-      const walletState = addWalletToState(sliceState, walletAddress);
+      const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.data;
       addTokenBalanceToState(state, walletState, chainId, balance.tokens);
       addBoostBalanceToState(state, walletState, balance.boosts);
@@ -111,7 +111,7 @@ export const balanceSlice = createSlice({
       const vault = selectVaultById(state, action.payload.vaultId);
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-      const walletState = addWalletToState(sliceState, walletAddress);
+      const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
       addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
@@ -126,7 +126,7 @@ export const balanceSlice = createSlice({
       const vault = selectVaultById(state, action.payload.vaultId);
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-      const walletState = addWalletToState(sliceState, walletAddress);
+      const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
       addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
@@ -142,7 +142,7 @@ export const balanceSlice = createSlice({
       const vault = selectVaultById(action.payload.state, boost.vaultId);
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-      const walletState = addWalletToState(sliceState, walletAddress);
+      const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
       addTokenBalanceToState(state, walletState, vault.chainId, balance.tokens);
       addGovVaultBalanceToState(walletState, balance.govVaults);
@@ -157,7 +157,7 @@ export const balanceSlice = createSlice({
       const minter = selectMinterById(action.payload.state, action.payload.minterId);
       const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-      const walletState = addWalletToState(sliceState, walletAddress);
+      const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
       addTokenBalanceToState(state, walletState, minter.chainId, balance.tokens);
     });
@@ -169,7 +169,7 @@ export const balanceSlice = createSlice({
         const chainId = action.payload.chainId;
         const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
 
-        const walletState = addWalletToState(sliceState, walletAddress);
+        const walletState = getWalletState(sliceState, walletAddress);
         const balance = action.payload.balance;
         addTokenBalanceToState(state, walletState, chainId, balance.tokens);
         addGovVaultBalanceToState(walletState, balance.govVaults);
@@ -179,7 +179,7 @@ export const balanceSlice = createSlice({
   },
 });
 
-function addWalletToState(sliceState: WritableDraft<BalanceState>, walletAddress: string) {
+function getWalletState(sliceState: WritableDraft<BalanceState>, walletAddress: string) {
   if (sliceState.byAddress[walletAddress] === undefined) {
     sliceState.byAddress[walletAddress] = {
       depositedVaultIds: [],

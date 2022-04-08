@@ -33,8 +33,7 @@ import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
 import { LaCucina } from './components/LaCucinaCard';
 import { Nexus } from './components/NexusCard';
-import { selectMintersByVaultId } from '../data/selectors/minters';
-import { MinterCard } from './components/MinterCard';
+import { MinterCards } from './components/MinterCards';
 
 const useStyles = makeStyles(styles as any);
 
@@ -58,7 +57,6 @@ const VaultContent = React.memo(() => {
   const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
   const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
   const isLaCucina = useSelector((state: BeefyState) => selectIsVaultLacucina(state, vaultId));
-  const minterCardIds = useSelector((state: BeefyState) => selectMintersByVaultId(state, vaultId));
 
   return (
     <>
@@ -117,11 +115,7 @@ const VaultContent = React.memo(() => {
                 </Box>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </Box>
-              {minterCardIds.map(minterId => (
-                <Box key={minterId}>
-                  <MinterCard vaultId={vaultId} minterId={minterId} />
-                </Box>
-              ))}
+              <MinterCards vaultId={vaultId} />
               <Box>
                 <Nexus />
               </Box>

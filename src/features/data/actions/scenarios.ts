@@ -26,7 +26,7 @@ import { initiateWithdrawForm } from './withdraw';
 import { BoostEntity } from '../entities/boost';
 import { selectBoostById } from '../selectors/boosts';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
-import { fetchAllMinters, initiateMinterForm } from './minters';
+import { initiateMinterForm } from './minters';
 import { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
 
@@ -55,7 +55,6 @@ export async function initHomeDataV4(store: BeefyStore) {
   // we fetch the configuration for all chain
   const boostListPromise = store.dispatch(fetchAllBoosts());
   const vaultListFulfill = captureFulfill(fetchAllVaults({}));
-  const mintersPromise = store.dispatch(fetchAllMinters());
 
   // we can start fetching prices right now and await them later
   const pricesPromise = store.dispatch(fetchAllPricesAction({}));
@@ -86,8 +85,6 @@ export async function initHomeDataV4(store: BeefyStore) {
   // we need the chain list to handle the vault list
   store.dispatch((await vaultListFulfill)());
   await boostListPromise;
-  //
-  await mintersPromise;
 
   // then, we work by chain
 
