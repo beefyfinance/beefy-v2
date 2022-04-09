@@ -111,7 +111,7 @@ export const pools = [
     stratType: 'SingleStake',
     callFee: 0.5,
     withdrawalFee: '0%',
-    createdAt: 1633521927,
+    createdAt: 1649422900,
     network: 'avax',
   },
   {
