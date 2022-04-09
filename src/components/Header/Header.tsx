@@ -66,12 +66,15 @@ const NavLinks = () => {
   ];
   return (
     <>
-      <NavLink activeClassName={classes.active} className={classes.navLink} key={'explore'} to="/">
+      <NavLink
+        activeClassName={classes.active}
+        exact={true}
+        className={classes.navLink}
+        key={'explore'}
+        to="/"
+      >
         {t('Header-Explore')}
       </NavLink>
-      {/* <NavLink activeClassName={classes.active} className={classes.navLink} key={'nfts'} to="/nfts">
-        {t('Header-Nfts')}
-      </NavLink> */}
       {navLinks.map(({ title, path }) => (
         <Typography key={title} variant="body1" className={classes.navLink}>
           <a target="_blank" rel="noreferrer" href={path} key={title}>
