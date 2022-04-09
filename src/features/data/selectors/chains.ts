@@ -24,3 +24,5 @@ export const selectAllChains = createSelector(
   // last function receives previous function outputs as parameters
   (allIds, byId) => allIds.map(id => byId[id])
 );
+
+export const selectAllChainIds = (state: BeefyState) => state.entities.chains.allIds;
