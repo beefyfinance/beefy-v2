@@ -1,26 +1,18 @@
 [
   {
-    "id": "avax vault: beefy-beJoe",
+    "id": "avax vault: joe-joe-usdc",
     "type": "synced"
   },
   {
-    "id": "avax vault: joe-joe",
+    "id": "avax vault: joe-usdc.e-usdc",
     "type": "synced"
   },
   {
-    "id": "avax vault: joe-wavax-usdc",
+    "id": "avax vault: joe-usdt-usdt.e",
     "type": "synced"
   },
   {
-    "id": "avax vault: joe-wavax-usdt.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-weth.e-wavax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-usdc.e-wavax",
+    "id": "avax vault: joe-joe-wavax",
     "type": "synced"
   },
   {
