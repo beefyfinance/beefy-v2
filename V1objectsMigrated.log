@@ -1,18 +1,27 @@
 [
   {
-    "id": "bsc vault: ellipsis-eps-bnb-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "avax vault: beefy-beJoe",
+    "type": "synced"
   },
   {
-    "id": "polygon vault: quick-psp-matic-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "avax vault: joe-joe",
+    "type": "synced"
   },
   {
-    "id": "moonbeam vault: stellaswap-ust-wglmr-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "avax vault: joe-wavax-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-wavax-usdt.e",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-weth.e-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-usdc.e-wavax",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
