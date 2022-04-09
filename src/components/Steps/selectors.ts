@@ -29,7 +29,8 @@ export function selectMintResult(walletActionsState: WalletActionsState) {
         if (
           event.address.toLowerCase() === mintTokenAddress &&
           event.returnValues.to.toLowerCase() === userAddress &&
-          event.returnValues.from.toLowerCase() !== mintContractAddress
+          event.returnValues.from.toLowerCase() !== mintContractAddress &&
+          event.returnValues.from !== '0x0000000000000000000000000000000000000000'
         ) {
           result.type = 'buy';
           result.amount = formatBigDecimals(
