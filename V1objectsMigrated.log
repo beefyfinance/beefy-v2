@@ -1,11 +1,27 @@
 [
   {
-    "id": "avax vault: stargate-avax-usdc",
-    "type": "Added"
+    "id": "avax vault: beefy-beJoe",
+    "type": "synced"
   },
   {
-    "id": "avax vault: stargate-avax-usdt",
-    "type": "Added"
+    "id": "avax vault: joe-joe",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-wavax-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-wavax-usdt.e",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-weth.e-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-usdc.e-wavax",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

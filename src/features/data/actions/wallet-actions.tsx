@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';
 import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
-import beFTMAbi from '../../../config/abi/BeFtmAbi.json';
+import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
 import { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getWalletConnectApiInstance } from '../apis/instances';
@@ -40,9 +40,8 @@ import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { getZapAddress } from '../utils/zap-utils';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
-import { BeFTMToken, Ftmtoken } from '../../vault/components/BeftmCard/BeFtmToken';
-import { BinSpiritToken } from '../../vault/components/SpiritCard/SpiritToken';
-import { BIG_ZERO } from '../../../helpers/format';
+import { AbiItem } from 'web3-utils';
+import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -692,7 +691,14 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
   });
 };
 
-const beFtmDeposit = (contractAddr: string, amount: BigNumber, max: boolean) => {
+const mintDeposit = (
+  chainId: ChainEntity['id'],
+  contractAddr: string,
+  payToken: TokenEntity,
+  mintedToken: TokenEntity,
+  amount: BigNumber,
+  max: boolean
+) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
@@ -701,51 +707,84 @@ const beFtmDeposit = (contractAddr: string, amount: BigNumber, max: boolean) => 
       return;
     }
 
+    const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(beFTMAbi as any, contractAddr);
-    const gasPrices = await getGasPriceOptions(web3);
-    const rawAmount = amount.shiftedBy(Ftmtoken.decimals).decimalPlaces(0);
-
-    const transaction = (() => {
-      return contract.methods
-        .depositNative()
-        .send({ from: address, value: rawAmount.toString(10), ...gasPrices });
-    })();
-
-    bindTransactionEvents(dispatch, transaction, {
-      amount: amount,
-      token: BeFTMToken,
-    });
-  });
-};
-
-const spiritDeposit = (network, contractAddr, amount, max) => {
-  return captureWalletErrors(async (dispatch, getState) => {
-    dispatch({ type: WALLET_ACTION_RESET });
-    const state = getState();
-    const address = selectWalletAddress(state);
-    if (!address) {
-      return;
-    }
-
-    const walletApi = await getWalletConnectApiInstance();
-    const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
-      if (max) {
-        return contract.methods.depositAll().send({ from: address, ...gasPrices });
+      const rawAmount = convertAmountToRawNumber(amount, payToken.decimals);
+
+      if (isTokenNative(payToken)) {
+        return contract.methods
+          .depositNative()
+          .send({ from: address, value: rawAmount, ...gasPrices });
       } else {
-        return contract.methods.deposit(amount).send({ from: address, ...gasPrices });
+        if (max) {
+          return contract.methods.depositAll().send({ from: address, ...gasPrices });
+        } else {
+          return contract.methods.deposit(rawAmount).send({ from: address, ...gasPrices });
+        }
       }
     })();
 
-    bindTransactionEvents(dispatch, transaction, {
-      amount: new BigNumber(amount).shiftedBy(-BinSpiritToken.decimals),
-      token: BinSpiritToken,
-    });
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        amount: amount,
+        token: mintedToken,
+      },
+      {
+        chainId: chainId,
+        spenderAddress: contractAddr,
+        tokens: uniqBy([gasToken, payToken, mintedToken], 'id'),
+      }
+    );
+  });
+};
+
+const burnWithdraw = (
+  chainId: ChainEntity['id'],
+  contractAddr: string,
+  withdrawnToken: TokenEntity,
+  burnedToken: TokenEntity,
+  amount: BigNumber,
+  max: boolean
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const gasToken = selectChainNativeToken(state, chainId);
+    const walletApi = await getWalletConnectApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
+    const gasPrices = await getGasPriceOptions(web3);
+
+    const transaction = (() => {
+      const rawAmount = convertAmountToRawNumber(amount, burnedToken.decimals);
+      return contract.methods.withdraw(rawAmount).send({ from: address, ...gasPrices });
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        amount: amount,
+        token: burnedToken,
+      },
+      {
+        chainId: chainId,
+        spenderAddress: contractAddr,
+        tokens: uniqBy([gasToken, withdrawnToken, burnedToken], 'id'),
+      }
+    );
   });
 };
 
@@ -764,8 +803,8 @@ export const walletActions = {
   claimBoost,
   stakeBoost,
   unstakeBoost,
-  beFtmDeposit,
-  spiritDeposit,
+  mintDeposit,
+  burnWithdraw,
 };
 
 function captureWalletErrors<ReturnType>(

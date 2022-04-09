@@ -1,4 +1,7 @@
 export const styles = theme => ({
+  chainSelector: {
+    marginBottom: '24px',
+  },
   categories: {
     paddingBottom: '20px',
     '& .MuiTypography-h4': {
@@ -263,11 +266,19 @@ export const styles = theme => ({
   },
   filtersSliderContainer: {
     display: 'flex',
+    '& $filterItem': {
+      '&:first-child': {
+        margin: '0px 4px 0px 0px',
+      },
+      '&:last-child': {
+        margin: '0px 0px 0px 4px',
+      },
+    },
   },
   filterItem: {
     margin: '0px 4px',
     [theme.breakpoints.up(700)]: {
-      width: 'calc(20% - 8px) !important',
+      width: '20%',
     },
     [theme.breakpoints.down('md')]: {
       minWidth: '200px',

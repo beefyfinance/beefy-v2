@@ -26,6 +26,9 @@ import { initiateWithdrawForm } from './withdraw';
 import { BoostEntity } from '../entities/boost';
 import { selectBoostById } from '../selectors/boosts';
 import { selectShouldInitAddressBook } from '../selectors/data-loader';
+import { initiateMinterForm } from './minters';
+import { MinterEntity } from '../entities/minter';
+import { selectMinterById } from '../selectors/minters';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -271,4 +274,20 @@ export async function initBoostForm(
 
   // then we can init the form
   store.dispatch(initiateBoostForm({ boostId, mode, walletAddress }));
+}
+
+export async function initMinterForm(
+  store: BeefyStore,
+  minterId: MinterEntity['id'],
+  walletAddress: string | null
+) {
+  const minter = selectMinterById(store.getState(), minterId);
+
+  // we need the addressbook
+  if (selectShouldInitAddressBook(store.getState(), minter.chainId)) {
+    await store.dispatch(fetchAddressBookAction({ chainId: minter.chainId }));
+  }
+
+  // then we can init the form
+  store.dispatch(initiateMinterForm({ minterId, walletAddress }));
 }

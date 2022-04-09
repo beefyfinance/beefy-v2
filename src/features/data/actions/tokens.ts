@@ -93,12 +93,11 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
 
     const allowanceApi = await getAllowanceApi(chain);
     const erc20Tokens = tokens.filter(isTokenErc20);
-    const allowanceRes = await allowanceApi.fetchTokensAllowance(
+    const allowance: TokenAllowance[] = await allowanceApi.fetchTokensAllowance(
       erc20Tokens,
       walletAddress,
       spenderAddress
     );
-    const allowance: TokenAllowance[] = allowanceRes;
 
     const contractDataApi = await getContractDataApi(chain);
     const contractData: FetchAllContractDataResult = govVault
