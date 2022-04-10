@@ -58,6 +58,7 @@ export const config = {
       'USDO',
       'sbBUSD',
       'sbUSDT',
+      'FRAX',
     ],
   },
   heco: {
