@@ -1,18 +1,10 @@
 [
   {
-    "id": "avax vault: joe-joe-usdc",
+    "id": "avax vault: joe-mim-wavax",
     "type": "synced"
   },
   {
-    "id": "avax vault: joe-usdc.e-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-usdt-usdt.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: joe-joe-wavax",
+    "id": "avax vault: joe-wbtc.e-wavax",
     "type": "synced"
   },
   {

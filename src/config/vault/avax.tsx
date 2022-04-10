@@ -935,7 +935,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'joe-mim-wavax',
     oraclePrice: 0,
-    status: 'paused',
+    status: 'active',
     platform: 'Trader Joe',
     assets: ['MIM', 'AVAX'],
     risks: [
@@ -952,7 +952,7 @@ export const pools = [
     buyTokenUrl: 'https://www.traderjoexyz.com/trade',
     network: 'avax',
     createdAt: 1630670273,
-    depositsPaused: true,
+    depositsPaused: false,
   },
   {
     id: 'joe-qi-wavax',
@@ -1039,7 +1039,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'joe-wbtc.e-wavax',
     oraclePrice: 0,
-    status: 'paused',
+    status: 'active',
     platform: 'Trader Joe',
     assets: ['WBTCe', 'AVAX'],
     risks: [
@@ -1056,7 +1056,7 @@ export const pools = [
     buyTokenUrl: 'https://www.traderjoexyz.com/trade',
     network: 'avax',
     createdAt: 1630496650,
-    depositsPaused: true,
+    depositsPaused: false,
   },
   {
     id: 'joe-weth.e-wavax',
