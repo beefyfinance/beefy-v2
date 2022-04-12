@@ -16,10 +16,7 @@ export const minters = [
       contractAddress: '0x7381eD41F6dE418DdE5e84B55590422a57917886',
       decimals: 18,
     },
-    reserves: {
-      hasReserves: false,
-      data: 0,
-    },
+    canBurnWithReserves: false,
     vaultIds: [
       'beefy-beFTM',
       'beefy-beFTM-earnings',
@@ -46,10 +43,7 @@ export const minters = [
       contractAddress: '0x44e314190D9E4cE6d4C0903459204F8E21ff940A',
       decimals: 18,
     },
-    reserves: {
-      hasReserves: false,
-      data: 0,
-    },
+    canBurnWithReserves: false,
     vaultIds: ['beefy-binspirit', 'spirit-binspirit-spirit'],
   },
 ];

@@ -6,6 +6,7 @@ import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { MinterEntity } from '../entities/minter';
 import { fetchAllMinters } from '../actions/minters';
+import BigNumber from 'bignumber.js';
 
 export type MintersState = NormalizedEntity<MinterEntity> & {
   byChainId: {
@@ -49,6 +50,7 @@ function addMinterToState(
 
   const minter: MinterEntity = {
     ...apiMinter,
+    reserves: new BigNumber(0),
     chainId: chainId,
   };
 

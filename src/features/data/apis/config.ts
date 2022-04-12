@@ -8,7 +8,6 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { PlatformEntity } from '../entities/platform';
 import { VaultEntity } from '../entities/vault';
-import BigNumber from 'bignumber.js';
 
 // generated from config data with https://jvilk.com/MakeTypes/
 export interface VaultConfig {
@@ -163,10 +162,7 @@ export interface MinterConfig {
   contractAddress: string;
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
-  reserves: {
-    hasReserves: boolean;
-    reserves: BigNumber;
-  };
+  canBurnWithReserves: boolean;
   vaultIds: string[];
 }
 

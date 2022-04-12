@@ -19,14 +19,12 @@ export class MintersApi implements IMinterApi {
     };
 
     for (const minter of minters) {
-      if (minter.reserves.hasReserves) {
+      if (minter.canBurnWithReserves) {
         const contract = getContract(minter.contractAddress, this.web3, MinterAbi);
         const data: TokenReserves = await contract?.methods.balanceOfWant().call();
-        minter.reserves.reserves = data;
-      } else {
-        minter.reserves.reserves = new BigNumber(BIG_ZERO);
+        res.reserves = data;
       }
+      return res;
     }
-    return res;
   }
 }
