@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, makeStyles, Typography, Box, Hidden } from '@material-ui/core';
+import { Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';

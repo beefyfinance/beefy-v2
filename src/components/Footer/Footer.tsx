@@ -7,6 +7,7 @@ import { ReactComponent as IconTelegram } from '../../images/socials/telegram.sv
 import { ReactComponent as IconDiscord } from '../../images/socials/discord.svg';
 import { ReactComponent as IconTwitter } from '../../images/socials/twitter.svg';
 import { ReactComponent as IconReddit } from '../../images/socials/reddit.svg';
+import { Link } from 'react-router-dom';
 
 // Re-using header translations, allowing overwrite with footer specific ones
 const navLinks = [
@@ -64,7 +65,7 @@ const socialLinks = [
   },
 ];
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles as any);
 
 // Memo: Static footer, no need to re-render when parent does
 export const Footer = memo(function () {
@@ -81,6 +82,11 @@ export const Footer = memo(function () {
             </a>
           </li>
         ))}
+        <li key={'media-kit'} className={classes.navItem}>
+          <Link className={classes.navLink} to="media-kit">
+            {t('Footer-MediaKit')}
+          </Link>
+        </li>
       </ul>
       <ul className={classes.nav}>
         {socialLinks.map(({ title, path, Icon }) => (

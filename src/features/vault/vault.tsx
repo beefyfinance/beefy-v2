@@ -1,4 +1,4 @@
-import { Container, makeStyles, Grid, Typography, Box, Button } from '@material-ui/core';
+import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,6 @@ import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
-import { SpiritCard } from './components/SpiritCard';
 import { Moonpot } from './components/MoonportCard';
 import { selectVaultById } from '../data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
@@ -25,18 +24,16 @@ import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { isGovVault } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
 import {
-  selectIsBeFTM,
-  selectIsVaultBinSpirit,
   selectIsVaultInsurace,
+  selectIsVaultLacucina,
   selectIsVaultMoonpot,
   selectIsVaultQidao,
-  selectIsVaultLacucina,
 } from '../data/selectors/partners';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
 import { LaCucina } from './components/LaCucinaCard';
 import { Nexus } from './components/NexusCard';
-import { BeFtm } from './components/BeftmCard';
+import { MinterCards } from './components/MinterCards';
 
 const useStyles = makeStyles(styles as any);
 
@@ -58,10 +55,8 @@ const VaultContent = React.memo(() => {
   const [dw, setDw] = React.useState('deposit');
   const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
   const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
-  const isBinSpirit = useSelector((state: BeefyState) => selectIsVaultBinSpirit(state, vaultId));
   const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
   const isLaCucina = useSelector((state: BeefyState) => selectIsVaultLacucina(state, vaultId));
-  const isBeFtm = useSelector((state: BeefyState) => selectIsBeFTM(state, vaultId));
 
   return (
     <>
@@ -120,16 +115,7 @@ const VaultContent = React.memo(() => {
                 </Box>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </Box>
-              {isBeFtm && (
-                <Box>
-                  <BeFtm vaultId={vaultId} />
-                </Box>
-              )}
-              {isBinSpirit && (
-                <Box>
-                  <SpiritCard vaultId={vaultId} />
-                </Box>
-              )}
+              <MinterCards vaultId={vaultId} />
               <Box>
                 <Nexus />
               </Box>

@@ -10,7 +10,8 @@ export type Step = {
     | 'claim-unstake'
     | 'claim-withdraw'
     | 'claim'
-    | 'mint';
+    | 'mint'
+    | 'burn';
   message: string;
   action: ThunkAction<any, any, any, any>;
   pending: boolean;
