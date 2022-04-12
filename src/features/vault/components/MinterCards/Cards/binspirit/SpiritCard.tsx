@@ -32,13 +32,13 @@ import { selectAllowanceByTokenId } from '../../../../../data/selectors/allowanc
 const useStyles = makeStyles(styles as any);
 
 // TODO this and beFTM minter cards could be refactored out to a common component
-export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: MinterCardParams) {
+export const SpiritCard = memo<MinterCardParams>(function SpiritCard({ vaultId, minterId }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );

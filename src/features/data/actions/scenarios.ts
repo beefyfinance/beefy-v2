@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ChainEntity } from '../entities/chain';
-import { selectIsWalletConnected } from '../selectors/wallet';
+import { selectIsWalletKnown } from '../selectors/wallet';
 import { createFulfilledActionCapturer, poll, PollStop } from '../utils/async-utils';
 import { fetchApyAction } from './apy';
 import { fetchAllBoosts, initiateBoostForm } from './boosts';
@@ -75,7 +75,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   // create the wallet instance as soon as we get the chain list
   setTimeout(async () => {
     await chainListPromise;
-    initWallet(store);
+    store.dispatch(initWallet());
   });
 
   // we need config data (for contract addresses) to start querying the rest
@@ -97,7 +97,7 @@ export async function initHomeDataV4(store: BeefyStore) {
       contractData: captureFulfill(fetchAllContractDataByChainAction({ chainId: chain.id })),
       user: null,
     };
-    if (selectIsWalletConnected(store.getState())) {
+    if (selectIsWalletKnown(store.getState())) {
       fulfillsByNet[chain.id].user = fetchCaptureUserData(store, chain.id);
     }
   }
@@ -169,7 +169,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   // now set regular calls to update user data
   for (const chain of chains) {
     const pollStop = poll(async () => {
-      if (!selectIsWalletConnected(store.getState())) {
+      if (!selectIsWalletKnown(store.getState())) {
         return;
       }
       // trigger all calls at the same time

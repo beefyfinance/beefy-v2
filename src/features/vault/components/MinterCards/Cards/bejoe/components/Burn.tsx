@@ -32,13 +32,13 @@ import { selectChainById } from '../../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
-export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
+export const Burn = memo<MinterCardParams>(function Burn({ vaultId, minterId }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );

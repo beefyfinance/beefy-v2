@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Button, makeStyles, Typography, Grid, Modal } from '@material-ui/core';
+import { Box, Button, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover/Popover';
 import { formatBigDecimals } from '../../../../helpers/format';
@@ -58,7 +58,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === boost.chainId
   );
@@ -72,6 +72,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
     setDw(deposit);
     setInputModal(true);
   }
+
   const closeInputModal = () => {
     setInputModal(false);
   };

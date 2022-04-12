@@ -48,7 +48,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const { t } = useTranslation();
   const store = useStore();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );

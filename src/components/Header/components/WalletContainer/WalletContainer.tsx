@@ -7,7 +7,7 @@ import { ApyStatLoader } from '../../../ApyStatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
   selectIsBalanceHidden,
-  selectIsWalletConnected,
+  selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../../features/data/selectors/wallet';
 import { BeefyState } from '../../../../redux-types';
@@ -24,7 +24,7 @@ const formatAddress = addr => {
 };
 
 export const WalletContainer = connect((state: BeefyState) => {
-  const isWalletConnected = selectIsWalletConnected(state);
+  const isWalletConnected = selectIsWalletKnown(state);
   const walletAddress = isWalletConnected ? selectWalletAddress(state) : null;
   const walletPending = selectIsWalletPending(state);
   const walletProfileUrl = state.user.wallet.profilePictureUrl;
