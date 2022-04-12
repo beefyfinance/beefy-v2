@@ -30,27 +30,59 @@ export class WalletConnectApi implements IWalletConnectApi {
     chainId: ChainEntity['id'] | null;
     address: string;
   }> {
-    // we check the local cached provider
-    // if we have a cached value, we want to have a connected web3Modal instance
-    if (hasWeb3ModalCachedProvider()) {
-      // we are already connected so we don't care about the initial chain
-      const providerOptions = _generateProviderOptions(this.options.chains);
-      this.web3Modal = new Web3Modal(providerOptions);
+    try {
+      // we check the local cached provider
+      // if we have a cached value, we want to have a connected web3Modal instance
+      if (hasWeb3ModalCachedProvider()) {
+        const cachedProvider = getWeb3ModalCachedProvider();
+        const providerOptions = _generateProviderOptions(this.options.chains);
 
-      // this shouldn't open a modal
-      this.provider = await this.web3Modal.connect();
-      this._bindProviderEvents(this.provider);
-      const web3 = _getWeb3FromProvider(this.provider);
-      const networkChainId = await _getNetworkChainId(web3);
-      const accounts = await web3.eth.getAccounts();
-      const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-      return {
-        chainId: chain ? chain.id : null,
-        address: featureFlag_walletAddressOverride(accounts[0]),
-      };
-    } else {
-      return null;
+        // make sure the cached provider is available in config
+        if (cachedProvider in providerOptions.providerOptions) {
+          // init modal and connect to cached provider
+          this.web3Modal = new Web3Modal(providerOptions);
+          // FIXME connectTo can hang indefinitely if user does not accept or cancel
+          // while in this state, wallet won't be connected but app will think it is
+          const provider = await this.web3Modal.connectTo(cachedProvider);
+
+          // make sure we got provider from modal
+          if (provider) {
+            this.provider = provider;
+            this._bindProviderEvents(this.provider);
+            const web3 = _getWeb3FromProvider(this.provider);
+
+            // make sure 1 account/address is connected
+            const accounts = await web3.eth.getAccounts();
+            if (accounts.length) {
+              const networkChainId = await _getNetworkChainId(web3);
+              const chain = find(
+                this.options.chains,
+                chain => chain.networkChainId === networkChainId
+              );
+
+              return {
+                chainId: chain ? chain.id : null,
+                address: featureFlag_walletAddressOverride(accounts[0]),
+              };
+            } else {
+              console.error('initFromLocalCache: no accounts connected');
+            }
+          } else {
+            console.error('initFromLocalCache: provider not returned from web3modal', provider);
+          }
+        } else {
+          console.error(
+            'initFromLocalCache: cached provider not available',
+            cachedProvider,
+            Object.keys(providerOptions.providerOptions)
+          );
+        }
+      }
+    } catch (err) {
+      console.error('initFromLocalCache:', err);
     }
+
+    return null;
   }
 
   /**
@@ -404,7 +436,10 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
   };
 }
 
+function getWeb3ModalCachedProvider() {
+  return getWeb3ModalLocal(CACHED_PROVIDER_KEY) || '';
+}
+
 function hasWeb3ModalCachedProvider() {
-  const cacheProviderValue = getWeb3ModalLocal(CACHED_PROVIDER_KEY) || '';
-  return cacheProviderValue !== '';
+  return getWeb3ModalCachedProvider() !== '';
 }
