@@ -16,10 +16,12 @@ import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 
 let walletCo: IWalletConnectApi | null = null;
 
+// @see initHomeDataV4
 export async function initWallet(store: BeefyStore) {
   const state = store.getState();
   const chains = selectAllChains(state);
-  // instanciate and do the proper piping between both worlds
+
+  // instantiate and do the proper piping between both worlds
   walletCo = await getWalletConnectApiInstance({
     chains,
     onConnect: (chainId, address) =>
