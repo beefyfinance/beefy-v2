@@ -48,7 +48,7 @@ export const App = () => {
               {/* <Route exact path="/nfts">
               <BeefyAvatars />
             </Route> */}
-              <Route exact path="/brand-assets">
+              <Route exact path="/media-kit">
                 <BrandAssets />
               </Route>
               <Route>
