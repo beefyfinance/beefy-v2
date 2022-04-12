@@ -92,11 +92,30 @@ export async function getGasPriceOptions(web3: Web3) {
   const eip1559 = await isWeb3ConnectedToEIP1559Chain(web3);
 
   if (eip1559) {
-    const gasPriceEstimate = await getGasPriceEstimate(web3);
-    return {
-      maxPriorityFeePerGas: gasPriceEstimate.maxPriorityFeePerGas,
-      maxFeePerGas: gasPriceEstimate.maxFeePerGas,
-    };
+    try {
+      const gasPriceEstimate = await getGasPriceEstimate(web3);
+      return {
+        maxPriorityFeePerGas: gasPriceEstimate.maxPriorityFeePerGas,
+        maxFeePerGas: gasPriceEstimate.maxFeePerGas,
+      };
+    } catch (err) {
+      if (
+        err &&
+        err.message &&
+        typeof err.message === 'string' &&
+        err.message.includes('eth_feeHistory')
+      ) {
+        // most likely error is "The method 'eth_feeHistory' does not exist / is not available."
+        // this can happen on EIP1559 networks when the user's wallet is out of date
+        // we show a more user friendly message instead
+        console.error(err);
+        throw new Error(
+          `EIP-1559 gas fee estimation failed. Please check your wallet and RPC endpoint support EIP-1599.\n\n${err.message}`
+        );
+      } else {
+        throw err;
+      }
+    }
   }
 
   return {};

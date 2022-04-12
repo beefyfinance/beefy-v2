@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, makeStyles, Typography, Snackbar, IconButton } from '@material-ui/core';
+import { Box, Button, IconButton, makeStyles, Snackbar, Typography } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from '../../helpers/utils';
@@ -129,7 +129,7 @@ const _Steps = ({
               <>
                 <Box className={classes.errorContent}>
                   <Typography variant="body1" className={classes.message}>
-                    <span>{t('Error')}</span> {walletActionsState.data.error.message}
+                    {walletActionsState.data.error.message}
                   </Typography>
                 </Box>
                 <Button className={classes.closeBtn} onClick={handleClose}>

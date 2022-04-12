@@ -151,6 +151,9 @@ export const styles = theme => ({
     padding: '16px',
     borderRadius: '4px',
     backgroundColor: 'rgba(219, 50, 50, 0.1)',
+    '& $message': {
+      whiteSpace: 'pre-wrap',
+    },
   },
   successContent: {
     marginTop: theme.spacing(1),
