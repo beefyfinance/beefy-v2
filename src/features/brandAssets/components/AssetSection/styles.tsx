@@ -7,5 +7,6 @@ export const styles = theme => ({
     gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
     columnGap: '24px',
     rowGap: '24px',
+    marginBottom: theme.spacing(6),
   },
 });
