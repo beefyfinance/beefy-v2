@@ -1,6 +1,6 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AnimateHeight from 'react-animate-height';
 import { styles } from './styles';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -17,6 +17,7 @@ import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
+
 const useStyles = makeStyles(styles as any);
 
 export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
@@ -32,7 +33,7 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
       selectBoostById(state, boostId)
     )
   );
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );

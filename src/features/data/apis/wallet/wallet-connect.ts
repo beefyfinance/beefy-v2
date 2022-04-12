@@ -12,7 +12,12 @@ import { DeFiConnector } from 'deficonnect';
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
-import { IWalletConnectApi, Provider, WalletConnectOptions } from './wallet-connect-types';
+import {
+  initFromLocalCacheResponse,
+  IWalletConnectApi,
+  Provider,
+  WalletConnectOptions,
+} from './wallet-connect-types';
 import { featureFlag_walletAddressOverride } from '../../utils/feature-flags';
 import { sleep } from '../../utils/async-utils';
 import { maybeHexToNumber } from '../../../../helpers/format';
@@ -26,10 +31,7 @@ export class WalletConnectApi implements IWalletConnectApi {
     this.provider = null;
   }
 
-  public async initFromLocalCache(): Promise<null | {
-    chainId: ChainEntity['id'] | null;
-    address: string;
-  }> {
+  public async initFromLocalCache(): Promise<initFromLocalCacheResponse> {
     try {
       // we check the local cached provider
       // if we have a cached value, we want to have a connected web3Modal instance

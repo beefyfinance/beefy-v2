@@ -6,7 +6,7 @@ import { BeefyState } from '../../../../redux-types';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import { Loader } from '../../../../components/loader';
 import { isFulfilled } from '../../../data/reducers/data-loader';
-import { selectIsWalletConnected, selectWalletAddress } from '../../../data/selectors/wallet';
+import { selectIsWalletKnown, selectWalletAddress } from '../../../data/selectors/wallet';
 import { initMinterForm } from '../../../data/actions/scenarios';
 import { selectMinterById } from '../../../data/selectors/minters';
 
@@ -19,16 +19,16 @@ function importMinterCard(minterId: MinterEntity['id']) {
   return lazy<FC<MinterCardParams>>(() => import(`./Cards/${minterId}`));
 }
 
-const MinterCardImporter = memo(function MinterCardImporter({
+const MinterCardImporter = memo<MinterCardParams>(function MinterCardImporter({
   vaultId,
   minterId,
-}: MinterCardParams) {
+}) {
   const Card = importMinterCard(minterId);
 
   return <Card vaultId={vaultId} minterId={minterId} />;
 });
 
-export const MinterCard = memo(function MinterCard({ vaultId, minterId }: MinterCardParams) {
+export const MinterCard = memo<MinterCardParams>(function MinterCard({ vaultId, minterId }) {
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
   const isFormReady = useSelector(
     (state: BeefyState) =>
@@ -36,7 +36,7 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
       isFulfilled(state.ui.dataLoader.global.minterForm)
   );
   const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
+    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
   // initialize our form

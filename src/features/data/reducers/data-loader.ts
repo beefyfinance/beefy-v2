@@ -19,11 +19,15 @@ import {
   reloadBalanceAndAllowanceAndGovRewardsAndBoostData,
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
-import { askForNetworkChange, askForWalletConnection, doDisconnectWallet } from '../actions/wallet';
+import {
+  askForNetworkChange,
+  askForWalletConnection,
+  doDisconnectWallet,
+  initWallet,
+} from '../actions/wallet';
 import { initiateWithdrawForm } from '../actions/withdraw';
 import { fetchAllZapsAction } from '../actions/zap';
 import { ChainEntity } from '../entities/chain';
-import { initWalletState } from './wallet/wallet';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 
 /**
@@ -247,6 +251,7 @@ export const dataLoaderSlice = createSlice({
   extraReducers: builder => {
     addGlobalAsyncThunkActions(builder, fetchChainConfigs, 'chainConfig', true);
     addGlobalAsyncThunkActions(builder, askForWalletConnection, 'wallet', false);
+    addGlobalAsyncThunkActions(builder, initWallet, 'wallet', false);
     addGlobalAsyncThunkActions(builder, doDisconnectWallet, 'wallet', false);
     addGlobalAsyncThunkActions(builder, askForNetworkChange, 'wallet', false);
     addGlobalAsyncThunkActions(builder, fetchAllPricesAction, 'prices', true);
@@ -269,10 +274,6 @@ export const dataLoaderSlice = createSlice({
       'allowance',
     ]);
     addByChainAsyncThunkActions(builder, fetchAddressBookAction, ['addressBook']);
-
-    builder.addCase(initWalletState, sliceState => {
-      sliceState.instances.wallet = true;
-    });
   },
 });
 

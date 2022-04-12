@@ -30,13 +30,13 @@ import { selectAllowanceByTokenId } from '../../../../../../data/selectors/allow
 
 const useStyles = makeStyles(styles as any);
 
-export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) {
+export const Mint = memo<MinterCardParams>(function Mint({ vaultId, minterId }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );

@@ -14,10 +14,7 @@ import {
   selectIsVaultBoosted,
 } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import {
-  selectIsBalanceHidden,
-  selectIsWalletConnected,
-} from '../../features/data/selectors/wallet';
+import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
@@ -33,7 +30,7 @@ const _BoostedVaultDepositedSmall = connect(
       .join(', ');
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletConnected(state)
+      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
         ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
         : true;
     return {
@@ -70,7 +67,7 @@ const _BoostedVaultDepositedLarge = connect(
     const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletConnected(state)
+      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
         ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
         : true;
     return {
@@ -127,7 +124,7 @@ const _NonBoostedVaultDeposited = connect(
     const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletConnected(state)
+      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
         ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
         : true;
     return {

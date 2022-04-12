@@ -3,18 +3,22 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createCanvas } from 'canvas';
 import { ChainEntity } from '../../entities/chain';
 import { memoize } from 'lodash';
+import { initWallet } from '../../actions/wallet';
 
 /**
- * State containing Vault infos
+ * profilePictureUrl, error and initialized are not persisted
  */
 export type WalletState = {
+  initialized: boolean;
   address: string | null;
   selectedChainId: ChainEntity['id'] | null;
   error: 'unsupported chain' | null;
   hideBalance: boolean;
   profilePictureUrl: null | string;
 };
+
 const initialWalletState: WalletState = {
+  initialized: false,
   address: null,
   selectedChainId: null,
   error: null,
@@ -32,28 +36,6 @@ export const walletSlice = createSlice({
   name: 'wallet',
   initialState: initialWalletState,
   reducers: {
-    /**
-     * web3Modal has a cache on it's own, this action
-     * sole purpose is to synchronise the modal cache with our redux state
-     */
-    initWalletState(
-      sliceState,
-      action: PayloadAction<null | { chainId: ChainEntity['id'] | null; address: string }>
-    ) {
-      // there is no local web3Modal cache, disconnect
-      if (action.payload === null) {
-        sliceState.address = null;
-        sliceState.error = null;
-        sliceState.selectedChainId = null;
-        sliceState.profilePictureUrl = null;
-      } else {
-        sliceState.address = action.payload.address;
-        sliceState.selectedChainId = action.payload.chainId;
-        sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
-        sliceState.error = action.payload.chainId === null ? 'unsupported chain' : null;
-      }
-    },
-
     /**
      * Wallet connection/disconnect actions
      */
@@ -100,6 +82,28 @@ export const walletSlice = createSlice({
       sliceState.hideBalance = !sliceState.hideBalance;
     },
   },
+  extraReducers: builder => {
+    /**
+     * web3Modal has a cache on it's own, this action
+     * sole purpose is to synchronise the modal cache with our redux state
+     */
+    builder.addCase(initWallet.fulfilled, (sliceState, action) => {
+      // wallet connect api initialized
+      sliceState.initialized = true;
+      // there is no local web3Modal cache, disconnect
+      if (action.payload === null) {
+        sliceState.address = null;
+        sliceState.error = null;
+        sliceState.selectedChainId = null;
+        sliceState.profilePictureUrl = null;
+      } else {
+        sliceState.address = action.payload.address;
+        sliceState.selectedChainId = action.payload.chainId;
+        sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
+        sliceState.error = action.payload.chainId === null ? 'unsupported chain' : null;
+      }
+    });
+  },
 });
 
 export const {
@@ -109,5 +113,4 @@ export const {
   chainHasChangedToUnsupported,
   userDidConnect,
   setToggleHideBalance,
-  initWalletState,
 } = walletSlice.actions;

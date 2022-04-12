@@ -10,7 +10,7 @@ import { MinterCardParams } from '../../MinterCard';
 const useStyles = makeStyles(styles as any);
 
 // TODO this and beFTM minter cards could be refactored out to a common component
-export const JoeCard = memo(function JoeCard({ vaultId, minterId }: MinterCardParams) {
+export const JoeCard = memo<MinterCardParams>(function JoeCard({ vaultId, minterId }) {
   const classes = useStyles();
   const { t } = useTranslation();
 

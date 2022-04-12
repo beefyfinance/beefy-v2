@@ -41,6 +41,7 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
+  selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../data/selectors/wallet';
 import { selectIsApprovalNeededForWithdraw } from '../../../data/selectors/wallet-actions';
@@ -59,12 +60,12 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const store = useStore();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
   const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
+    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
   // initialize our form

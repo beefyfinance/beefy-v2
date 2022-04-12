@@ -1,12 +1,12 @@
 import {
   Box,
   Button,
-  makeStyles,
-  Typography,
-  IconButton,
   FormControl,
+  IconButton,
   InputAdornment,
   InputBase,
+  makeStyles,
+  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
@@ -28,6 +28,7 @@ import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal'
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
+  selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../../data/selectors/wallet';
 import { Step } from '../../../../../components/Steps/types';
@@ -61,7 +62,7 @@ export const Stake = ({
       isFulfilled(state.ui.dataLoader.global.boostForm)
   );
   const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
+    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
   // initialize our form
@@ -95,7 +96,7 @@ const StakeForm = ({
     selectBoostUserBalanceInToken(state, boost.id)
   );
 
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
