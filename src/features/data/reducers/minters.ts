@@ -5,13 +5,16 @@ import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { MinterEntity } from '../entities/minter';
-import { fetchAllMinters } from '../actions/minters';
+import { fetchAllMinters, fetchMintersReserveAction } from '../actions/minters';
 
 export type MintersState = NormalizedEntity<MinterEntity> & {
   byChainId: {
     [chainId: ChainEntity['id']]: MinterEntity['id'][];
   };
   byVaultId: {
+    [vaultId: VaultEntity['id']]: MinterEntity['id'][];
+  };
+  byReserves: {
     [vaultId: VaultEntity['id']]: MinterEntity['id'][];
   };
 };
@@ -21,6 +24,7 @@ export const initialMintersState: MintersState = {
   allIds: [],
   byChainId: {},
   byVaultId: {},
+  byReserves: {},
 };
 
 export const mintersSlice = createSlice({
@@ -34,6 +38,9 @@ export const mintersSlice = createSlice({
           addMinterToState(sliceState, chainId, minter);
         }
       }
+    });
+    builder.addCase(fetchMintersReserveAction.fulfilled, (sliceStation, action) => {
+      console.log('hi');
     });
   },
 });
@@ -70,3 +77,5 @@ function addMinterToState(
     sliceState.byVaultId[vaultId].push(minter.id);
   }
 }
+
+// function addReserveToState(sliceState: WritableDraft<MintersState>, apiMinter: MinterConfig) {}

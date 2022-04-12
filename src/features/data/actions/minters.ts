@@ -10,6 +10,8 @@ import { selectChainById } from '../selectors/chains';
 import { selectTokenById } from '../selectors/tokens';
 import { MinterEntity } from '../entities/minter';
 import { isTokenErc20 } from '../entities/token';
+import { getMintersApi } from '../apis/instances';
+import { TokenReserves } from '../apis/minter/minter-types';
 
 export interface FulfilledAllMintersPayload {
   byChainId: {
@@ -80,4 +82,22 @@ export const initiateMinterForm = createAsyncThunk<
     balance: balanceRes,
     state: getState(),
   };
+});
+
+export interface FetchMintersReservesFulfilledPayload {
+  reserves: TokenReserves[];
+}
+
+export interface FetchMintersReservesParams {
+  chain: ChainEntity;
+  minters: MinterConfig[];
+}
+
+export const fetchMintersReserveAction = createAsyncThunk<
+  FetchMintersReservesFulfilledPayload,
+  FetchMintersReservesParams
+>('minters/fetchReserves', async ({ chain, minters }) => {
+  const api = await getMintersApi(chain);
+  const reserves = await api.fetchAllReserves(minters);
+  return { reserves };
 });
