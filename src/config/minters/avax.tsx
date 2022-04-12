@@ -17,6 +17,10 @@ export const minters = [
       contractAddress: '0x1F2A8034f444dc55F963fb5925A9b6eb744EeE2c',
       decimals: 18,
     },
+    reserves: {
+      hasReserves: true,
+      data: 0,
+    },
     vaultIds: ['beefy-beJoe-earnings', 'beefy-beJoe'],
   },
 ];
