@@ -216,6 +216,8 @@ export const config = {
       'LAMBDA',
       'DEI',
       'sfUSDC',
+      'USTw',
+      'USTaxl',
     ],
   },
   harmony: {
@@ -360,7 +362,7 @@ export const config = {
       rpcUrls: ['https://rpc.fuse.io'],
       blockExplorerUrls: ['https://explorer.fuse.io/'],
     },
-    stableCoins: ['fUSD', 'BUSD', 'USDC'],
+    stableCoins: ['fUSD', 'BUSD', 'USDC', 'USDT'],
   },
   metis: {
     name: 'Metis',
