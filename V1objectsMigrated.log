@@ -1,10 +1,83 @@
 [
   {
-    "id": "avax vault: joe-mim-wavax",
+    "id": "fantom vault: beets-clair-de-lune",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: boo-wftm-luna",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: boo-wftm-ust",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-ust-ust",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: beets-wagmi-index-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-ixt-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: joe-ustw-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: joe-lost-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "cronos vault: vvs-ali-cro",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: voltage-wfuse-elon",
     "type": "synced"
   },
   {
-    "id": "avax vault: joe-wbtc.e-wavax",
+    "id": "fuse vault: voltagev2-xvolt",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: sushi-fuse-usdc-usdt",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-ageur",
+    "type": "Added"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-weth",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-busd",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-fusd",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-volt",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-atust",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-gdollar",
     "type": "synced"
   },
   {
