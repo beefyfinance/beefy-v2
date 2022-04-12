@@ -36,23 +36,24 @@ const _Steps = ({
       open={steps.modal}
       anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
       autoHideDuration={6000}
+      className={classes.snackbar}
     >
       <Box className={classes.snackbarContainer}>
         <Box className={classes.topBar}>
           <Box
             className={clsx({
-              [classes.progresBar]: true,
-              [classes.progresBar25]:
+              [classes.progressBar]: true,
+              [classes.progressBar25]:
                 steps.items.length > 1 &&
                 !steps.finished &&
                 steps.items[steps.currentStep].step === 'approve',
-              [classes.progresBar50]:
+              [classes.progressBar50]:
                 steps.items.length > 1 &&
                 !steps.finished &&
                 (steps.items[steps.currentStep].step === 'withdraw' ||
                   steps.items[steps.currentStep].step === 'claim-withdraw' ||
                   steps.items[steps.currentStep].step === 'deposit'),
-              [classes.progresBar75]:
+              [classes.progressBar75]:
                 steps.items.length > 1 &&
                 !steps.finished &&
                 (steps.items[steps.currentStep].step === 'withdraw' ||
@@ -108,36 +109,34 @@ const _Steps = ({
               <CloseRoundedIcon fontSize="small" htmlColor="#8A8EA8" />
             </IconButton>
           </Box>
-          <Box>
-            {/* Steps Count Content */}
-            {!isEmpty(steps.items[steps.currentStep]) &&
-              walletActionsState.result !== 'error' &&
-              walletActionsState.result !== 'success_pending' &&
-              !steps.finished && (
-                <Typography className={classes.message} variant={'body2'}>
-                  {steps.items[steps.currentStep].message}
-                </Typography>
-              )}
-            {/* Waiting Content */}
-            {!steps.finished && walletActionsState.result === 'success_pending' && (
-              <Typography variant={'body2'} className={classes.message}>
-                {t('Transactn-Wait')}
+          {/* Steps Count Content */}
+          {!isEmpty(steps.items[steps.currentStep]) &&
+            walletActionsState.result !== 'error' &&
+            walletActionsState.result !== 'success_pending' &&
+            !steps.finished && (
+              <Typography className={classes.message} variant={'body2'}>
+                {steps.items[steps.currentStep].message}
               </Typography>
             )}
-            {/* Error content */}
-            {!steps.finished && walletActionsState.result === 'error' && (
-              <>
-                <Box className={classes.errorContent}>
-                  <Typography variant="body1" className={classes.message}>
-                    {walletActionsState.data.error.message}
-                  </Typography>
-                </Box>
-                <Button className={classes.closeBtn} onClick={handleClose}>
-                  {t('Transactn-Close')}
-                </Button>
-              </>
-            )}
-          </Box>
+          {/* Waiting Content */}
+          {!steps.finished && walletActionsState.result === 'success_pending' && (
+            <Typography variant={'body2'} className={classes.message}>
+              {t('Transactn-Wait')}
+            </Typography>
+          )}
+          {/* Error content */}
+          {!steps.finished && walletActionsState.result === 'error' && (
+            <>
+              <Box className={clsx(classes.content, classes.errorContent)}>
+                <Typography variant="body1" className={classes.message}>
+                  {walletActionsState.data.error.message}
+                </Typography>
+              </Box>
+              <Button className={classes.closeBtn} onClick={handleClose}>
+                {t('Transactn-Close')}
+              </Button>
+            </>
+          )}
           {/* Steps finished */}
           {steps.finished && (
             <>
@@ -145,7 +144,7 @@ const _Steps = ({
               {steps.items[steps.currentStep].step === 'deposit' &&
                 walletActionsState.result === 'success' && (
                   <>
-                    <Box className={classes.successContent}>
+                    <Box className={clsx(classes.content, classes.successContent)}>
                       <Typography variant="body1" className={classes.message}>
                         {t('Transactn-Success', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
@@ -166,7 +165,7 @@ const _Steps = ({
                 steps.items[steps.currentStep].step === 'claim-withdraw') &&
                 walletActionsState.result === 'success' && (
                   <>
-                    <Box className={classes.successContent}>
+                    <Box className={clsx(classes.content, classes.successContent)}>
                       <Typography variant="body1" className={classes.message}>
                         {t('Transactn-Withdrawal', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
@@ -181,7 +180,7 @@ const _Steps = ({
               {steps.items[steps.currentStep].step === 'stake' &&
                 walletActionsState.result === 'success' && (
                   <>
-                    <Box className={classes.successContent}>
+                    <Box className={clsx(classes.content, classes.successContent)}>
                       <Typography variant="body1" className={classes.message}>
                         {t('Transactn-Success-Bst', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
@@ -201,7 +200,7 @@ const _Steps = ({
                 steps.items[steps.currentStep].step === 'claim-unstake') &&
                 walletActionsState.result === 'success' && (
                   <>
-                    <Box className={classes.successContent}>
+                    <Box className={clsx(classes.content, classes.successContent)}>
                       <Typography variant="body1" className={classes.message}>
                         {t('Transactn-Withdrawal-Boost', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
@@ -215,7 +214,7 @@ const _Steps = ({
               {steps.items[steps.currentStep].step === 'claim' &&
                 walletActionsState.result === 'success' && (
                   <>
-                    <Box className={classes.successContent}>
+                    <Box className={clsx(classes.content, classes.successContent)}>
                       <Typography variant="body1" className={classes.message}>
                         {t('Transactn-Claimed', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
@@ -229,7 +228,7 @@ const _Steps = ({
               {steps.items[steps.currentStep].step === 'mint' &&
                 walletActionsState.result === 'success' && (
                   <>
-                    <Box className={classes.successContent}>
+                    <Box className={clsx(classes.content, classes.successContent)}>
                       <Typography variant="body1" className={classes.message}>
                         {t(
                           selectMintResult(walletActionsState).type === 'buy'
@@ -248,7 +247,7 @@ const _Steps = ({
               {steps.items[steps.currentStep].step === 'burn' &&
                 walletActionsState.result === 'success' && (
                   <>
-                    <Box className={classes.successContent}>
+                    <Box className={clsx(classes.content, classes.successContent)}>
                       <Typography variant="body1" className={classes.message}>
                         {t('Transactn-Burned', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
