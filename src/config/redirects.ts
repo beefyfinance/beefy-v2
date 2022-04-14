@@ -1,0 +1,16 @@
+export const REDIRECTS = [
+  { from: '/bsc', to: '/' },
+  { from: '/heco', to: '/' },
+  { from: '/avax', to: '/' },
+  { from: '/polygon', to: '/' },
+  { from: '/fantom', to: '/' },
+  { from: '/harmony', to: '/' },
+  { from: '/arbitrum', to: '/' },
+  { from: '/celo', to: '/' },
+  { from: '/moonriver', to: '/' },
+  { from: '/cronos', to: '/' },
+  { from: '/fuse', to: '/' },
+  { from: '/metis', to: '/' },
+  { from: '/aurora', to: '/' },
+  { from: '/moonbeam', to: '/' },
+];
