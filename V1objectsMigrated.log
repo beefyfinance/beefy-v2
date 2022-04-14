@@ -1,11 +1,74 @@
 [
   {
-    "id": "moonbeam vault: stellaswap-axlust-wglmr",
+    "id": "bsc vault: biswap-usdt-busd",
     "type": "Added"
   },
   {
-    "id": "moonbeam vault: stellaswap-ust-wglmr-eol",
-    "type": "REMOVED"
+    "id": "bsc vault: biswap-bsw",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: biswap-bsw-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: biswap-usdt-bsw",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: biswap-eth-btcb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: biswap-usdt-wbnb",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: biswap-wbnb-bifi",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: cakev2-bmon-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: beets-spooky-tempered-clavier-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: boo-wftm-dola-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: beets-ftm-sonata-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: beets-magic-touch-daniele-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: boo-aave-ftm-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: sushi-axs-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: curve-avax-f-3pool",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_biswap-usdt-busd-biswap",
+    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
