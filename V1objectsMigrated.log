@@ -1,73 +1,26 @@
 [
   {
-    "id": "bsc vault: biswap-usdt-busd",
+    "id": "fantom vault: boo-usdc-dei",
     "type": "Added"
   },
   {
-    "id": "bsc vault: biswap-bsw",
+    "id": "fantom vault: boo-wftm-deus",
     "type": "Added"
   },
   {
-    "id": "bsc vault: biswap-bsw-wbnb",
+    "id": "fantom vault: beets-two-gods-one-pool",
     "type": "Added"
   },
   {
-    "id": "bsc vault: biswap-usdt-bsw",
+    "id": "aurora vault: rose-ust-3pool",
     "type": "Added"
   },
   {
-    "id": "bsc vault: biswap-eth-btcb",
+    "id": "moonbeam vault: stellaswap-atom-wglmr",
     "type": "Added"
   },
   {
-    "id": "bsc vault: biswap-usdt-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: biswap-wbnb-bifi",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-bmon-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-spooky-tempered-clavier-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-wftm-dola-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-ftm-sonata-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-magic-touch-daniele-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-aave-ftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: sushi-axs-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: curve-avax-f-3pool",
-    "type": "Added"
-  },
-  {
-    "id": "bsc boost: moo_biswap-usdt-busd-biswap",
+    "id": "moonbeam vault: stellaswap-atom-usdc",
     "type": "Added"
   },
   {
