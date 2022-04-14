@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Fade,
   FormControlLabel,
   FormGroup,
   Hidden,
@@ -326,6 +327,7 @@ const _Filter = () => {
         anchorEl={anchorEl}
         onClose={handleClose}
         className={classes.filter}
+        TransitionComponent={Fade}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
