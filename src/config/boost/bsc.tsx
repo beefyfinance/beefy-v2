@@ -2483,4 +2483,29 @@ export const pools = [
       },
     ],
   },
+  {
+    id: 'moo_biswap-usdt-busd-biswap',
+    poolId: 'biswap-usdt-busd',
+    name: 'Biswap',
+    assets: ['USDT', 'BUSD'],
+    earnedToken: 'BSW',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x965F527D9159dCe6288a2219DB51fc6Eef120dD1',
+    earnContractAddress: '0x3b7232F265FE4D195478cCa114FA971764729B52',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'BSW',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: 'Biswap is the 1st decentralized exchange platform on the market with a Multi-type Referral Program and the lowest platform transaction fee of 0.1%. We are a prominent DEX for swapping BEP-20 tokens on the Binance Smart Chain network. Biswap is not only about DEX, but an expanding Metaverse! The Biswap team constantly develops its products further and provides users with more crypto opportunities. Biswap ecosystem reaches new horizons as well by arranging new collaborations and epic integrations in the world of DeFi. On Biswap, you are welcome to experience fast and convenient exchange with leading tokens!',
+        website: 'https://biswap.org/farms',
+        social: {
+          telegram: 'https://t.me/biswap',
+          twitter: 'https://twitter.com/Biswap_DEX',
+        },
+      },
+    ],
+  },
 ];
