@@ -1,6 +1,7 @@
 import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import * as React from 'react';
-import { useParams } from 'react-router';
+import { memo, PropsWithChildren } from 'react';
+import { Redirect, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { DisplayTags } from '../../components/vaultTags';
@@ -18,10 +19,14 @@ import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
 import { Insurace } from './components/InsuraceCard';
 import { Moonpot } from './components/MoonportCard';
-import { selectVaultById } from '../data/selectors/vaults';
+import {
+  selectVaultById,
+  selectVaultExistsById,
+  selectVaultIdIgnoreCase,
+} from '../data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
-import { isGovVault } from '../data/entities/vault';
+import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
 import {
   selectIsVaultInsurace,
@@ -34,19 +39,48 @@ import { CowLoader } from '../../components/CowLoader';
 import { LaCucina } from './components/LaCucinaCard';
 import { Nexus } from './components/NexusCard';
 import { MinterCards } from './components/MinterCards';
+import { ChainEntity } from '../data/entities/chain';
 
 const useStyles = makeStyles(styles as any);
+const PageNotFound = React.lazy(() => import(`../../features/pagenotfound`));
 
-export const Vault = () => {
-  const isLoaded = useSelector((state: BeefyState) => selectIsConfigAvailable(state));
-
-  return isLoaded ? <VaultContent /> : <CowLoader text="Loading..." />;
+type VaultUrlParams = {
+  id: VaultEntity['id'];
+  network: ChainEntity['id'];
 };
+export const Vault = memo(function Vault() {
+  let { id, network } = useParams<VaultUrlParams>();
+  const isLoaded = useSelector(selectIsConfigAvailable);
+  const vaultExists = useSelector((state: BeefyState) => selectVaultExistsById(state, id));
 
-const VaultContent = React.memo(() => {
+  if (!isLoaded) {
+    return <CowLoader text="Loading..." />;
+  }
+
+  if (!vaultExists) {
+    return <VaultNotFound id={id} network={network} />;
+  }
+
+  return <VaultContent vaultId={id} />;
+});
+
+type VaultNotFoundProps = PropsWithChildren<VaultUrlParams>;
+const VaultNotFound = memo<VaultNotFoundProps>(function VaultNotFound({ id, network }) {
+  const maybeVaultId = useSelector((state: BeefyState) => selectVaultIdIgnoreCase(state, id));
+
+  if (maybeVaultId !== undefined) {
+    return <Redirect to={`/${network}/vault/${maybeVaultId}`} />;
+  }
+
+  return <PageNotFound />;
+});
+
+type VaultContentProps = PropsWithChildren<{
+  vaultId: VaultEntity['id'];
+}>;
+const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  let { id: vaultId }: any = useParams();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const isBoostedOrPreStake = useSelector((state: BeefyState) =>
