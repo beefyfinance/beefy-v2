@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { makeStyles, Box, MenuItem, Select, Typography, Checkbox } from '@material-ui/core';
+import { Box, Checkbox, Fade, makeStyles, MenuItem, Select, Typography } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { MultipleLabeledDropdownProps } from './MultipleLabeledDropdownProps';
 
@@ -49,6 +49,7 @@ export const MultipleLabeledDropdown: React.FC<MultipleLabeledDropdownProps> = (
           },
           getContentAnchorEl: null,
           classes: { list: classes.selectList },
+          TransitionComponent: Fade,
         }}
         value={selected}
         onChange={handler}
