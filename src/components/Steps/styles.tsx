@@ -159,6 +159,11 @@ export const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  friendlyMessage: {
+    fontWeight: 700,
+    color: theme.palette.background.snackbars.text,
+    marginBottom: theme.spacing(2),
+  },
   message: {
     color: theme.palette.background.snackbars.text,
     '& span': {
@@ -169,9 +174,6 @@ export const styles = theme => ({
     marginTop: theme.spacing(1.5),
     padding: '16px',
     borderRadius: '4px',
-    '& $message': {
-      whiteSpace: 'pre-wrap',
-    },
   },
   errorContent: {
     backgroundColor: 'rgba(219, 50, 50, 0.1)',

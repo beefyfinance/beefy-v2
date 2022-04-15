@@ -3,6 +3,7 @@ import { BigNumber } from 'bignumber.js';
 import { FeeHistoryResult } from 'web3-eth';
 import { maybeHexToNumber } from '../../../helpers/format';
 import { getConfigApi } from '../apis/instances';
+import { FriendlyError } from './error-utils';
 
 function medianOf(numbers: BigNumber[]): BigNumber {
   const sortedNumbers = numbers.slice().sort((a, b) => a.comparedTo(b));
@@ -109,8 +110,9 @@ export async function getGasPriceOptions(web3: Web3) {
         // this can happen on EIP1559 networks when the user's wallet is out of date
         // we show a more user friendly message instead
         console.error(err);
-        throw new Error(
-          `EIP-1559 gas fee estimation failed. Please check your wallet and RPC endpoint support EIP-1599.\n\n${err.message}`
+        throw new FriendlyError(
+          'Gas estimation failed. This can happen when your wallet doesn\'t support the "EIP-5119" standard. Updating your wallet software may help.',
+          err
         );
       } else {
         throw err;

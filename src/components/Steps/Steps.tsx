@@ -128,6 +128,11 @@ const _Steps = ({
           {!steps.finished && walletActionsState.result === 'error' && (
             <>
               <Box className={clsx(classes.content, classes.errorContent)}>
+                {walletActionsState.data.error.friendlyMessage ? (
+                  <Typography variant="body1" className={classes.friendlyMessage}>
+                    {walletActionsState.data.error.friendlyMessage}
+                  </Typography>
+                ) : null}
                 <Typography variant="body1" className={classes.message}>
                   {walletActionsState.data.error.message}
                 </Typography>

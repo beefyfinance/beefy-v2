@@ -12,7 +12,10 @@ export type TrxReceipt = {
     [eventName: string]: EventLog | EventLog[];
   };
 };
-export type TrxError = { message: string };
+export type TrxError = {
+  message: string;
+  friendlyMessage?: string;
+};
 
 type MandatoryAdditionalData = {
   amount: BigNumber;
