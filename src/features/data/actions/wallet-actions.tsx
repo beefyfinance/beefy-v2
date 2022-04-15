@@ -42,6 +42,7 @@ import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
 import { AbiItem } from 'web3-utils';
 import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
+import { FriendlyError } from '../utils/error-utils';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -814,14 +815,16 @@ function captureWalletErrors<ReturnType>(
     try {
       return await func(dispatch, getState, extraArgument);
     } catch (error) {
+      const txError =
+        error instanceof FriendlyError
+          ? { message: String(error.getInnerError()), friendlyMessage: error.message }
+          : { message: String(error) };
+
       dispatch(
-        createWalletActionErrorAction(
-          { message: String(error) },
-          {
-            amount: BIG_ZERO,
-            token: null,
-          }
-        )
+        createWalletActionErrorAction(txError, {
+          amount: BIG_ZERO,
+          token: null,
+        })
       );
     }
   };

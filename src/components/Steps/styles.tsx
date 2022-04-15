@@ -54,43 +54,56 @@ export const styles = theme => ({
       transition: 'color 0.2s',
     },
   },
-  snackbarContainer: {
+  snackbar: {
     width: '350px',
+    maxWidth: 'calc(100% - 16px)',
+    maxHeight: 'calc(100% - 16px)',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+  },
+  snackbarContainer: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: 0,
   },
   topBar: {
     height: '10px',
     borderRadius: '4px 4px 0 0',
     backgroundColor: theme.palette.background.snackbars.bgLine,
+    flexShrink: 0,
+    flexGrow: 0,
   },
-  progresBar: {
+  progressBar: {
     width: '50%',
     margin: 0,
     backgroundColor: theme.palette.primary.main,
     height: '100%',
     borderRadius: '4px 0 0 0',
   },
-  progresBar25: {
+  progressBar25: {
     width: '25%',
     margin: 0,
     backgroundColor: theme.palette.primary.main,
     height: '100%',
     borderRadius: '4px 0 0 0',
   },
-  progresBar50: {
+  progressBar50: {
     width: '50%',
     margin: 0,
     backgroundColor: theme.palette.primary.main,
     height: '100%',
     borderRadius: '4px 0 0 0',
   },
-  progresBar75: {
+  progressBar75: {
     width: '75%',
     margin: 0,
     backgroundColor: theme.palette.primary.main,
     height: '100%',
     borderRadius: '4px 0 0 0',
   },
-  progresBar1: {
+  progressBar1: {
     width: '75%',
     margin: 0,
     backgroundColor: theme.palette.primary.main,
@@ -125,6 +138,7 @@ export const styles = theme => ({
   titleContainer: {
     display: 'flex',
     justifyContent: 'space-between',
+    flexShrink: 0,
   },
   closeIcon: {
     padding: 0,
@@ -133,6 +147,11 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.snackbars.bg,
     borderRadius: '0 0 4px 4px',
     padding: '12px 16px',
+    minHeight: 0,
+    flexShrink: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'auto',
   },
   title: {
     color: theme.palette.background.snackbars.text,
@@ -140,22 +159,26 @@ export const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  friendlyMessage: {
+    fontWeight: 700,
+    color: theme.palette.background.snackbars.text,
+    marginBottom: theme.spacing(2),
+  },
   message: {
     color: theme.palette.background.snackbars.text,
     '& span': {
       fontWeight: 700,
     },
   },
-  errorContent: {
-    marginTop: theme.spacing(1),
+  content: {
+    marginTop: theme.spacing(1.5),
     padding: '16px',
     borderRadius: '4px',
+  },
+  errorContent: {
     backgroundColor: 'rgba(219, 50, 50, 0.1)',
   },
   successContent: {
-    marginTop: theme.spacing(1),
-    padding: '16px',
-    borderRadius: '4px',
     backgroundColor: 'rgba(89, 166, 98, 0.15)',
   },
   closeBtn: {
