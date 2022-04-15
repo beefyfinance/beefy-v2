@@ -17,8 +17,8 @@ export const minters = [
       decimals: 18,
     },
     vaultIds: [
-      'beefy-beFTM',
-      'beefy-beFTM-earnings',
+      'beefy-beftm',
+      'beefy-beftm-earnings',
       'spirit-ftm-beftm',
       'boo-wftm-beftm',
       'beets-beefy-tale',

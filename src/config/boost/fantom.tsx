@@ -302,8 +302,8 @@ export const pools = [
     ],
   },
   {
-    id: 'moo_beFTM-based',
-    poolId: 'beefy-beFTM',
+    id: 'moo_beftm-based',
+    poolId: 'beefy-beftm',
     name: 'Based',
     logo: 'single-assets/beFTM.svg',
     earnedToken: 'BSHARE',

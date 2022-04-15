@@ -76,7 +76,7 @@ export const pools = [
     network: 'avax',
   },
   {
-    id: 'beefy-beJoe-earnings',
+    id: 'beefy-bejoe-earnings',
     logo: 'single-assets/beJOE.png',
     name: 'beJOE Earnings Pool',
     token: 'beJOE',
@@ -90,7 +90,7 @@ export const pools = [
     earnedTokenDecimals: 18,
     earnContractAddress: '0x2E360492120cebeB2527c41BAE1a4f21992D86Ec',
     poolAddress: '0x2E360492120cebeB2527c41BAE1a4f21992D86Ec',
-    excluded: 'beefy-beJoe',
+    excluded: 'beefy-bejoe',
     pricePerFullShare: 1,
     isGovVault: true,
     tvl: 0,
@@ -5311,7 +5311,7 @@ export const pools = [
     network: 'avax',
   },
   {
-    id: 'beefy-beJoe',
+    id: 'beefy-bejoe',
     logo: 'single-assets/beJOE.png',
     name: 'beJOE',
     token: 'beJOE',

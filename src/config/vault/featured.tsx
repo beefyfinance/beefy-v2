@@ -5,5 +5,5 @@ export const featuredPools = {
   'arbi-bifi-gov': true,
   'fantom-bifi-maxi': true,
   'curve-ftm-geist': true,
-  'beefy-beFTM': true,
+  'beefy-beftm': true,
 };

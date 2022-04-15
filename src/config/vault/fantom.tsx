@@ -74,7 +74,7 @@ export const pools = [
     network: 'fantom',
   },
   {
-    id: 'beefy-beFTM-earnings',
+    id: 'beefy-beftm-earnings',
     logo: 'single-assets/beFTM.svg',
     name: 'beFTM Earnings Pool',
     token: 'beFTM',
@@ -88,7 +88,7 @@ export const pools = [
     earnedTokenDecimals: 18,
     earnContractAddress: '0xE00D25938671525C2542A689e42D1cfA56De5888',
     poolAddress: '0xE00D25938671525C2542A689e42D1cfA56De5888',
-    excluded: 'beefy-beFTM',
+    excluded: 'beefy-beftm',
     pricePerFullShare: 1,
     isGovVault: true,
     tvl: 0,
@@ -113,7 +113,7 @@ export const pools = [
     network: 'fantom',
   },
   {
-    id: 'beefy-beFTM',
+    id: 'beefy-beftm',
     logo: 'single-assets/beFTM.svg',
     name: 'beFTM',
     token: 'beFTM',
