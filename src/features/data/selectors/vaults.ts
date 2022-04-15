@@ -14,6 +14,19 @@ export const selectVaultById = (state: BeefyState, vaultId: VaultEntity['id']) =
   return vaultsByIds[vaultId];
 };
 
+export const selectVaultExistsById = createSelector(
+  (state: BeefyState) => state.entities.vaults.allIds,
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (allIds, vaultId): boolean => allIds.includes(vaultId)
+);
+
+export const selectVaultIdIgnoreCase = createSelector(
+  (state: BeefyState) => state.entities.vaults.allIds,
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId.toLowerCase(),
+  (allIds, vaultIdLowercase): VaultEntity['id'] | undefined =>
+    allIds.find(id => id.toLowerCase() === vaultIdLowercase)
+);
+
 export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']): VaultGov => {
   const vault = selectVaultById(state, vaultId);
   if (!isGovVault(vault)) {
@@ -21,6 +34,7 @@ export const selectGovVaultById = (state: BeefyState, vaultId: VaultEntity['id']
   }
   return vault;
 };
+
 export const selectStandardVaultById = (
   state: BeefyState,
   vaultId: VaultEntity['id']

@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, Fade } from '@material-ui/core';
 import Popover from '@material-ui/core/Popover';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -72,6 +72,7 @@ export function NetworkStatus() {
         anchorEl={anchorEl.current}
         onClose={handleClose}
         PaperProps={{ className: classes.popoverPaper }}
+        TransitionComponent={Fade}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
