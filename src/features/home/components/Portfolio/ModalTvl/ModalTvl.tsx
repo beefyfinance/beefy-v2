@@ -10,12 +10,16 @@ import { useSelector } from 'react-redux';
 import { selectAllChains } from '../../../../data/selectors/chains';
 import { Card } from '../../../../vault/components/Card';
 import { ChainEntity } from '../../../../data/entities/chain';
+import { selectTvlByChain } from '../../../../data/selectors/tvl';
+import BigNumber from 'bignumber.js';
+import { formatBigUsd } from '../../../../../helpers/format';
 
 const useStyles = makeStyles(styles as any);
 
 function _ModalTvl({ close }: { close: () => void }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const tvls = useSelector(selectTvlByChain);
 
   const chains = useSelector(selectAllChains);
 
@@ -42,7 +46,7 @@ function _ModalTvl({ close }: { close: () => void }) {
             {chains.map(chain => {
               return (
                 <Grid key={chain.id} item xs={6} lg={3}>
-                  <Chain chain={chain} />
+                  <Chain chain={chain} tvl={tvls[chain.id]} />
                 </Grid>
               );
             })}
@@ -58,8 +62,9 @@ function _ModalTvl({ close }: { close: () => void }) {
 
 export const ModalTvl = React.memo(_ModalTvl);
 
-function Chain({ chain }: { chain: ChainEntity }) {
+function Chain({ chain, tvl }: { chain: ChainEntity; tvl: BigNumber }) {
   const classes = useStyles();
+
   return (
     <Box className={classes.chain}>
       <img
@@ -71,7 +76,9 @@ function Chain({ chain }: { chain: ChainEntity }) {
         <Typography variant="body2" className={classes.chainText}>
           {chain.name}
         </Typography>
-        <Typography className={classes.chainValue}>{chain.name}</Typography>
+        <Typography variant="body1" className={classes.chainValue}>
+          {formatBigUsd(tvl)}
+        </Typography>
       </Box>
     </Box>
   );

@@ -49,6 +49,10 @@ export const styles = theme => ({
     letterSpacing: '0.5px',
     fontWeight: 600,
   },
+  chainValue: {
+    color: theme.palette.text.secondary,
+    fontWeight: 700,
+  },
   chainLogo: {
     height: '32px',
     width: '32px',

@@ -12,6 +12,7 @@ import { selectVaultById } from '../selectors/vaults';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { BeefyState } from '../../../redux-types';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
+import { ChainEntity } from '../entities/chain';
 
 /**
  * State containing APY infos indexed by vault id
@@ -32,12 +33,16 @@ export interface TvlState {
   exclusions: {
     [vaultId: VaultEntity['id']]: VaultEntity['id'];
   };
+  byChaindId: {
+    [chaindId: ChainEntity['id']]: BigNumber;
+  };
 }
 export const initialTvlState: TvlState = {
   totalTvl: BIG_ZERO,
   byVaultId: {},
   byBoostId: {},
   exclusions: {},
+  byChaindId: {},
 };
 
 export const tvlSlice = createSlice({
@@ -53,6 +58,7 @@ export const tvlSlice = createSlice({
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       const state = action.payload.state;
       addContractDataToState(state, sliceState, action.payload.data);
+      addTvlByChain(state, sliceState, action.payload.data);
     });
 
     builder.addCase(
@@ -97,6 +103,9 @@ function addContractDataToState(
       }
     }
     sliceState.byVaultId[vault.id] = { tvl: tvl };
+    sliceState.byChaindId[vault.chainId] = sliceState.byChaindId[vault.chainId]
+      ? sliceState.byChaindId[vault.chainId].plus(tvl)
+      : BIG_ZERO;
   }
 
   // create an index of ppfs for boost tvl usage
@@ -153,4 +162,40 @@ function addContractDataToState(
     totalTvl = totalTvl.plus(vaultTvl.tvl);
   }
   sliceState.totalTvl = totalTvl;
+}
+
+function addTvlByChain(
+  state: BeefyState,
+  sliceState: WritableDraft<TvlState>,
+  contractData: FetchAllContractDataResult
+) {
+  for (const vaultContractData of contractData.standardVaults) {
+    const vault = selectVaultById(state, vaultContractData.id);
+    const price = selectTokenPriceByTokenId(state, vault.oracleId);
+
+    const vaultTvl = vaultContractData.balance.times(price);
+
+    // save for vault
+    sliceState.byChaindId[vault.chainId] = sliceState.byChaindId[vault.chainId]
+      ? sliceState.byChaindId[vault.chainId].plus(vaultTvl)
+      : BIG_ZERO;
+  }
+  for (const govVaultContractData of contractData.govVaults) {
+    const totalStaked = govVaultContractData.totalSupply;
+    const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
+    const price = selectTokenPriceByTokenId(state, vault.oracleId);
+
+    let tvl = totalStaked.times(price);
+
+    // handle gov vault TVL exclusion
+    if (vault.excludedId) {
+      const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
+      if (excludedTVL) {
+        tvl = tvl.minus(excludedTVL);
+      }
+    }
+    sliceState.byChaindId[vault.chainId] = sliceState.byChaindId[vault.chainId]
+      ? sliceState.byChaindId[vault.chainId].plus(tvl)
+      : BIG_ZERO;
+  }
 }
