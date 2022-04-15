@@ -8,10 +8,10 @@ import {
   selectUserVaultDepositInUsd,
 } from './balance';
 import {
-  selectActiveVaultBoostIds,
   selectBoostById,
   selectIsVaultBoosted,
   selectIsVaultPreStakedOrBoosted,
+  selectPreStakeOrActiveBoostIds,
 } from './boosts';
 import { selectIsVaultLacucina, selectIsVaultMoonpot } from './partners';
 import {
@@ -123,8 +123,8 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
   }
 
   // Match if: search text matches vault boost earned token id
-  if (selectIsVaultBoosted(state, vault.id)) {
-    const boostAssets = selectActiveVaultBoostIds(state, vault.id)
+  if (selectIsVaultPreStakedOrBoosted(state, vault.id)) {
+    const boostAssets = selectPreStakeOrActiveBoostIds(state, vault.id)
       .map(boostId => selectBoostById(state, boostId))
       .map(boost => boost.earnedTokenId);
     for (const boostAsset of boostAssets) {
