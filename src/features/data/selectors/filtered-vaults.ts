@@ -1,17 +1,17 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
-import { isGovVault, isVaultRetired } from '../entities/vault';
+import { isGovVault, isVaultRetired, VaultEntity } from '../entities/vault';
 import {
   selectHasUserDepositInVault,
   selectIsUserEligibleForVault,
   selectUserVaultDepositInUsd,
 } from './balance';
 import {
-  selectActiveVaultBoostIds,
   selectBoostById,
   selectIsVaultBoosted,
   selectIsVaultPreStakedOrBoosted,
+  selectPreStakeOrActiveBoostIds,
 } from './boosts';
 import { selectIsVaultLacucina, selectIsVaultMoonpot } from './partners';
 import {
@@ -21,6 +21,7 @@ import {
   selectIsVaultStable,
   selectVaultById,
 } from './vaults';
+import escapeStringRegexp from 'escape-string-regexp';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -57,6 +58,85 @@ export const selectVaultCategory = createSelector(
   selectFilterOptions,
   filterOptions => filterOptions.vaultCategory
 );
+
+function simplifySearchText(text: string) {
+  return (text || '').replace(/-/g, ' ').trim();
+}
+
+function safeSearchRegex(needle: string, caseInsensitive: boolean = true) {
+  const modifiers = `g${caseInsensitive ? 'i' : ''}`;
+  return new RegExp(escapeStringRegexp(needle), modifiers);
+}
+
+// TOKEN, WTOKEN or TOKENW
+function fuzzyTokenRegex(token: string) {
+  return new RegExp(`^w?${escapeStringRegexp(token)}w?$`, 'gi');
+}
+
+function stringFoundAnywhere(haystack: string, needle: string, caseInsensitive: boolean = true) {
+  return (haystack || '').match(safeSearchRegex(needle, caseInsensitive));
+}
+
+function vaultNameMatches(vault: VaultEntity, searchText: string) {
+  return stringFoundAnywhere(simplifySearchText(vault.name), searchText);
+}
+
+function searchTextToFuzzyTokenMatchers(searchText: string) {
+  return searchText
+    .split(/[- /,]/g)
+    .map(t => t.trim())
+    .filter(t => t.length > 1)
+    .map(t => fuzzyTokenRegex(t));
+}
+
+function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchText: string) {
+  // Do not match on single characters
+  if (searchText.length < 2) {
+    return false;
+  }
+
+  // Match if: search text is in vault name
+  if (vaultNameMatches(vault, searchText)) {
+    return true;
+  }
+
+  // Split search text in to possible tokens
+  const fuzzySearchTokens = searchTextToFuzzyTokenMatchers(searchText);
+
+  // No token names in search string
+  if (fuzzySearchTokens.length === 0) {
+    return false;
+  }
+
+  // Match if: search text matches vault asset
+  for (const vaultAsset of vault.assetIds) {
+    if (fuzzySearchTokens.some(token => vaultAsset.match(token))) {
+      return true;
+    }
+  }
+
+  // Match if: search text matches gov earned token id
+  if (isGovVault(vault)) {
+    if (fuzzySearchTokens.some(token => vault.earnedTokenId.match(token))) {
+      return true;
+    }
+  }
+
+  // Match if: search text matches vault boost earned token id
+  if (selectIsVaultPreStakedOrBoosted(state, vault.id)) {
+    const boostAssets = selectPreStakeOrActiveBoostIds(state, vault.id)
+      .map(boostId => selectBoostById(state, boostId))
+      .map(boost => boost.earnedTokenId);
+    for (const boostAsset of boostAssets) {
+      if (fuzzySearchTokens.some(token => boostAsset.match(token))) {
+        return true;
+      }
+    }
+  }
+
+  // Default: no match
+  return false;
+}
 
 // todo: use createSelector or put the result in the state to avoid re-computing these on every render
 // https://dev.to/nioufe/you-should-not-use-lodash-for-memoization-3441
@@ -132,40 +212,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
     }
 
     // If the user's included a search string...
-    const searchText = filterOptions.searchText.toLowerCase().replace(/-/g, ' ');
-    if (
-      searchText.length > 0 &&
-      !vault.name.toLowerCase().replace(/-/g, ' ').includes(searchText)
-    ) {
-      //if the search string is only one character, it's not enough, so hide the vault
-      if (searchText.length < 2) return false;
-
-      //for each "token" in the search string...
-      const assets = searchText.split(' ');
-      for (const asset of assets) {
-        //if we're at the beginning or ending hyphen or space, loop for the next word
-        if (!asset.length) continue;
-
-        //if the "token" is only one character, it's not enough, so hide the vault
-        if (asset.length < 2) return false;
-
-        //If the "token" is not found among the vault's tokens or those of an involved,
-        //  active boost, hide the vault. "Fuzzily" account also along the way for the
-        //  standardly named wrapped version of a token.
-        const regex = new RegExp(`^w?${asset}$`);
-        if (
-          !(
-            vault.assetIds.find(SearchToken => SearchToken.toLowerCase().match(regex)) ||
-            (isGovVault(vault) && vault.earnedTokenId.toLowerCase().match(regex)) ||
-            (selectIsVaultBoosted(state, vault.id) &&
-              selectActiveVaultBoostIds(state, vault.id)
-                .map(boostId => selectBoostById(state, boostId))
-                .some(boost => boost.earnedTokenId.toLowerCase().match(regex)))
-          )
-        )
-          return false;
-      } //for (const Asset of Assets)
-    } //if (SearchText.length > 0 && !vault.name.toLowerCase().includes(SearchText))
+    const searchText = simplifySearchText(filterOptions.searchText);
+    if (searchText.length > 0 && !selectVaultMatchesText(state, vault, searchText)) {
+      return false;
+    }
 
     return true;
   });
