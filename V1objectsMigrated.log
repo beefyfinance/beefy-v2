@@ -1,32 +1,18 @@
 [
   {
-    "id": "bsc vault: ellipsis-renbtc",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: panther-panther-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: panther-panther-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: ellipsis-fusdt-3eps",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: ellipsis-3eps",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: quick-wmatic-cel",
+    "id": "bsc vault: valas-valas-bnb",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-usdt-wavax",
+    "id": "bsc vault: valas-wbtc",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: valas-eth",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: valas-busd",
     "type": "Added"
   },
   {
