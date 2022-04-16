@@ -19,6 +19,11 @@ export const selectIsBoostActive = (state: BeefyState, boostId: BoostEntity['id'
   return status === 'active';
 };
 
+export const selectIsBoostActiveOrPreStake = (state: BeefyState, boostId: BoostEntity['id']) => {
+  const status = getBoostStatusFromPeriodFinish(selectBoostPeriodFinish(state, boostId));
+  return status === 'active' || status === 'prestake';
+};
+
 export const selectBoostsByChainId = (state: BeefyState, chainId: ChainEntity['id']) => {
   return state.entities.boosts.byChainId[chainId]?.allBoostsIds || [];
 };

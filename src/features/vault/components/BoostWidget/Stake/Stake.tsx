@@ -22,7 +22,7 @@ import { askForNetworkChange, askForWalletConnection } from '../../../../data/ac
 import { BoostEntity } from '../../../../data/entities/boost';
 import { useStepper } from '../../../../../components/Steps/hooks';
 import { BeefyState } from '../../../../../redux-types';
-import { selectBoostById, selectIsBoostActive } from '../../../../data/selectors/boosts';
+import { selectBoostById, selectIsBoostActiveOrPreStake } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
 import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal';
 import {
@@ -86,7 +86,9 @@ const StakeForm = ({
   const mooToken = useSelector((state: BeefyState) =>
     selectErc20TokenById(state, vault.chainId, vault.earnedTokenId)
   );
-  const isBoostActive = useSelector((state: BeefyState) => selectIsBoostActive(state, boostId));
+  const isBoostDepositable = useSelector((state: BeefyState) =>
+    selectIsBoostActiveOrPreStake(state, boostId)
+  );
 
   const mooBalance = useSelector((state: BeefyState) =>
     selectUserBalanceOfToken(state, boost.chainId, mooToken.id)
@@ -212,7 +214,7 @@ const StakeForm = ({
             </Box>
             {/*BUTTON */}
             <Box className={classes.btnSection}>
-              {!isBoostActive ? (
+              {!isBoostDepositable ? (
                 <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
                   {t('Deposit-Disabled')}
                 </Button>
