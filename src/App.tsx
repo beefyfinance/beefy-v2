@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
 import { WrappedFooter } from './components/Footer';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
@@ -10,6 +10,7 @@ import { store } from './store';
 import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 import { CowLoader } from './components/CowLoader';
+import { REDIRECTS } from './config/redirects';
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
@@ -45,12 +46,14 @@ export const App = () => {
               <Route strict sensitive exact path="/:network/vault/:id">
                 <Vault />
               </Route>
-              {/* <Route exact path="/nfts">
-              <BeefyAvatars />
-            </Route> */}
               <Route exact path="/media-kit">
                 <BrandAssets />
               </Route>
+              {REDIRECTS.map(redirect => (
+                <Route key={redirect.from} path={redirect.from} exact={true}>
+                  <Redirect to={redirect.to} />
+                </Route>
+              ))}
               <Route>
                 <PageNotFound />
               </Route>

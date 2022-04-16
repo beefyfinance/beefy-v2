@@ -4,7 +4,7 @@ import { BeefyState } from '../../../../redux-types';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
-  selectPreStakeOrActiveBoost,
+  selectPreStakeOrActiveBoostIds,
 } from '../../../data/selectors/boosts';
 import { BoostWidgetPastBoosts } from './BoostWidgetPastBoosts';
 import { BoostWidgetActiveBoost } from './BoostWidgetActiveBoost';
@@ -15,7 +15,7 @@ export const BoostWidget = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const activeBoost = useSelector((state: BeefyState) =>
-    isBoosted ? selectBoostById(state, selectPreStakeOrActiveBoost(state, vaultId)[0]) : null
+    isBoosted ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0]) : null
   );
 
   return (
