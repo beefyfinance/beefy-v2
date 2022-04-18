@@ -153,18 +153,15 @@ function addContractDataToState(
   }
 
   const byChaindIdTotals = {};
+  let totalTvl = BIG_ZERO;
   for (const [vaultId, vaultTvl] of Object.entries(sliceState.byVaultId)) {
     const vault = selectVaultById(state, vaultId);
     byChaindIdTotals[vault.chainId] = byChaindIdTotals[vault.chainId]
       ? byChaindIdTotals[vault.chainId].plus(vaultTvl.tvl)
       : BIG_ZERO;
-  }
-  sliceState.byChaindId = byChaindIdTotals;
-
-  // recompute total tvl as a whole
-  let totalTvl = BIG_ZERO;
-  for (const vaultTvl of Object.values(sliceState.byVaultId)) {
     totalTvl = totalTvl.plus(vaultTvl.tvl);
   }
+  sliceState.byChaindId = byChaindIdTotals;
+  // recompute total tvl as a whole
   sliceState.totalTvl = totalTvl;
 }
