@@ -13,6 +13,7 @@ import { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
 import BigNumber from 'bignumber.js';
 import { formatBigUsd } from '../../../../../helpers/format';
+import { ContentLoading } from '../../../../../components/ContentLoading';
 
 const useStyles = makeStyles(styles as any);
 
@@ -76,9 +77,15 @@ function Chain({ chain, tvl }: { chain: ChainEntity; tvl: BigNumber }) {
         <Typography variant="body2" className={classes.chainText}>
           {chain.name}
         </Typography>
-        <Typography variant="body1" className={classes.chainValue}>
-          {formatBigUsd(tvl)}
-        </Typography>
+        <>
+          {tvl ? (
+            <Typography variant="body1" className={classes.chainValue}>
+              {formatBigUsd(tvl)}
+            </Typography>
+          ) : (
+            <ContentLoading />
+          )}
+        </>
       </Box>
     </Box>
   );
