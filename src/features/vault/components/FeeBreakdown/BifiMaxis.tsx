@@ -10,4 +10,7 @@ export const BifiMaxis = [
   'metis-bifi-maxi',
   'movr-bifi-maxi',
   'polygon-bifi-maxi',
+  'moonbeam-bifi-maxi',
+  'aurora-bifi-maxi',
+  'fuse-bifi-maxi',
 ];
