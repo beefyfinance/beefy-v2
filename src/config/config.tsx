@@ -218,6 +218,7 @@ export const config = {
       'sfUSDC',
       'USTw',
       'USTaxl',
+      'USDL'
     ],
   },
   harmony: {
