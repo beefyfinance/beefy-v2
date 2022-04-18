@@ -3,26 +3,11 @@ import { Box, makeStyles, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { styles } from './styles';
-import ContentLoader from 'react-content-loader';
 import { popoverInLinkHack__popoverContainerHandler } from '../../helpers/list-popover-in-link-hack';
 import { Popover } from '../Popover';
+import { ContentLoading } from '../ContentLoading';
 
 const useStyles = makeStyles(styles as any);
-
-const _ContentLoading = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
-  return (
-    <ContentLoader
-      width={64}
-      height={16}
-      viewBox="0 0 64 16"
-      backgroundColor={backgroundColor}
-      foregroundColor={foregroundColor}
-    >
-      <rect x="0" y="0" width="64" height="16" />
-    </ContentLoader>
-  );
-};
-const ContentLoading = React.memo(_ContentLoading);
 
 export function ValueBlock({
   label,
