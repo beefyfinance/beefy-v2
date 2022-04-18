@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { PartnersConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
+import { PartnersConfig } from '../apis/config-types';
 
 export const fetchPartnersConfig = createAsyncThunk<PartnersConfig>(
   'vaults/fetchPartnersConfig',

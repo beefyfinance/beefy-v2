@@ -22,6 +22,7 @@ import { WithdrawState } from './features/data/reducers/wallet/withdraw';
 import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
 import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
+import { InfoCardsState } from './features/data/reducers/info-cards';
 
 export interface BeefyState {
   entities: {
@@ -32,6 +33,7 @@ export interface BeefyState {
     platforms: PlatformsState;
     zaps: ZapsState;
     minters: MintersState;
+    infoCards: InfoCardsState;
   };
   biz: {
     tvl: TvlState;
