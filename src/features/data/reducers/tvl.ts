@@ -58,7 +58,6 @@ export const tvlSlice = createSlice({
     builder.addCase(fetchAllContractDataByChainAction.fulfilled, (sliceState, action) => {
       const state = action.payload.state;
       addContractDataToState(state, sliceState, action.payload.data);
-      addTvlByChain(state, sliceState, action.payload.data);
     });
 
     builder.addCase(
@@ -103,9 +102,6 @@ function addContractDataToState(
       }
     }
     sliceState.byVaultId[vault.id] = { tvl: tvl };
-    sliceState.byChaindId[vault.chainId] = sliceState.byChaindId[vault.chainId]
-      ? sliceState.byChaindId[vault.chainId].plus(tvl)
-      : BIG_ZERO;
   }
 
   // create an index of ppfs for boost tvl usage
@@ -156,46 +152,19 @@ function addContractDataToState(
     sliceState.byBoostId[boost.id] = { tvl, staked: totalStaked };
   }
 
+  const byChaindIdTotals = {};
+  for (const [vaultId, vaultTvl] of Object.entries(sliceState.byVaultId)) {
+    const vault = selectVaultById(state, vaultId);
+    byChaindIdTotals[vault.chainId] = byChaindIdTotals[vault.chainId]
+      ? byChaindIdTotals[vault.chainId].plus(vaultTvl.tvl)
+      : BIG_ZERO;
+  }
+  sliceState.byChaindId = byChaindIdTotals;
+
   // recompute total tvl as a whole
   let totalTvl = BIG_ZERO;
   for (const vaultTvl of Object.values(sliceState.byVaultId)) {
     totalTvl = totalTvl.plus(vaultTvl.tvl);
   }
   sliceState.totalTvl = totalTvl;
-}
-
-function addTvlByChain(
-  state: BeefyState,
-  sliceState: WritableDraft<TvlState>,
-  contractData: FetchAllContractDataResult
-) {
-  for (const vaultContractData of contractData.standardVaults) {
-    const vault = selectVaultById(state, vaultContractData.id);
-    const price = selectTokenPriceByTokenId(state, vault.oracleId);
-
-    const vaultTvl = vaultContractData.balance.times(price);
-
-    // save for vault
-    sliceState.byChaindId[vault.chainId] = sliceState.byChaindId[vault.chainId]
-      ? sliceState.byChaindId[vault.chainId].plus(vaultTvl)
-      : BIG_ZERO;
-  }
-  for (const govVaultContractData of contractData.govVaults) {
-    const totalStaked = govVaultContractData.totalSupply;
-    const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
-    const price = selectTokenPriceByTokenId(state, vault.oracleId);
-
-    let tvl = totalStaked.times(price);
-
-    // handle gov vault TVL exclusion
-    if (vault.excludedId) {
-      const excludedTVL = sliceState.byVaultId[vault.excludedId]?.tvl;
-      if (excludedTVL) {
-        tvl = tvl.minus(excludedTVL);
-      }
-    }
-    sliceState.byChaindId[vault.chainId] = sliceState.byChaindId[vault.chainId]
-      ? sliceState.byChaindId[vault.chainId].plus(tvl)
-      : BIG_ZERO;
-  }
 }
