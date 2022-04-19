@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { MinterConfig } from '../apis/config';
 import { getAllowanceApi, getBalanceApi, getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
@@ -10,6 +9,7 @@ import { selectChainById } from '../selectors/chains';
 import { selectTokenById } from '../selectors/tokens';
 import { MinterEntity } from '../entities/minter';
 import { isTokenErc20 } from '../entities/token';
+import { MinterConfig } from '../apis/config-types';
 
 export interface FulfilledAllMintersPayload {
   byChainId: {
@@ -22,7 +22,7 @@ export const fetchAllMinters = createAsyncThunk<
   FulfilledAllMintersPayload,
   void,
   { state: BeefyState }
->('vaults/fetchAllMinters', async (_, { getState }) => {
+>('minters/fetchAllMinters', async (_, { getState }) => {
   const api = getConfigApi();
   const minters = await api.fetchAllMinters();
   return { byChainId: minters, state: getState() };

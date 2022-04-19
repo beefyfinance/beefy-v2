@@ -40,6 +40,7 @@ import { LaCucina } from './components/LaCucinaCard';
 import { Nexus } from './components/NexusCard';
 import { MinterCards } from './components/MinterCards';
 import { ChainEntity } from '../data/entities/chain';
+import { InfoCards } from './components/InfoCards/InfoCards';
 
 const useStyles = makeStyles(styles as any);
 const PageNotFound = React.lazy(() => import(`../../features/pagenotfound`));
@@ -180,6 +181,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
               <SafetyCard vaultId={vaultId} />
               {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
+              <InfoCards chainId={vault.chainId} vaultId={vault.id} />
               {vault.assetIds.map(tokenId => (
                 <TokenCard key={tokenId} chainId={vault.chainId} tokenId={tokenId} />
               ))}

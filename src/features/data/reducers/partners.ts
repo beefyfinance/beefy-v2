@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchPartnersConfig } from '../actions/partners';
-import { MoonpotConfig } from '../apis/config';
-import { LaCucinaConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { PartnerEntity } from '../entities/partner';
 import { VaultEntity } from '../entities/vault';
+import { LaCucinaConfig, MoonpotConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos

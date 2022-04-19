@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { ZapConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
 import { estimateZapDeposit, estimateZapWithdraw, ZapEstimate } from '../apis/zap';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
+import { ZapConfig } from '../apis/config-types';
 
 interface FetchAllZapFulfilledPayload {
   byChainId: {
