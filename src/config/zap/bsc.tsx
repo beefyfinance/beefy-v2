@@ -34,4 +34,11 @@ export const zaps = [
     ammFactory: '0x86407bEa2078ea5f5EB5A52B2caA963bC1F889Da',
     ammPairInitHash: '0x48c8bec5512d397a5d512fbb7d83d515e7b6d91e9838730bd1aa1b16575da7f5',
   },
+  {
+    // BiSwap
+    zapAddress: '0x9A76a315109663d9f2e105Be7A6df18b4F7B16F0',
+    ammRouter: '0x3a6d8cA21D1CF76F653A67577FA0D27453350dD8',
+    ammFactory: '0x858E3312ed3A876947EA49d572A7C42DE08af7EE',
+    ammPairInitHash: '0xfea293c909d87cd4153593f077b76bb7e94340200f4ee84211ae8e4f9bd7ffdf',
+  },
 ];
