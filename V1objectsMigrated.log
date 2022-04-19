@@ -1,99 +1,43 @@
 [
   {
+    "id": "bsc vault: valas-valas-bnb",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: valas-wbtc",
+    "type": "synced"
+  },
+  {
     "id": "bsc vault: valas-eth",
     "type": "synced"
   },
   {
+    "id": "bsc vault: valas-busd",
+    "type": "synced"
+  },
+  {
     "id": "bsc vault: valas-usdt",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "bsc vault: valas-usdc",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "bsc vault: valas-dai",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "bsc vault: valas-tusd",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: mdex-lac-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-stmatic-matic",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-matic-near",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-wone-matic",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-wmetis-matic",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: png-png-ustw",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-yeti-wavax",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: joe-usdt-wavax",
     "type": "synced"
   },
   {
-    "id": "avax vault: bankerjoe-avax",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: bankerjoe-weth.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: bankerjoe-wbtc.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: bankerjoe-usdc.e",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: bankerjoe-usdt.e",
-    "type": "synced"
-  },
-  {
-    "id": "harmony vault: sushi-one-1ygg-1eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-bnb-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-avax-wmovr-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "cronos vault: vvs-vvs-versa",
+    "id": "aurora vault: rose-mai-3pool",
     "type": "Added"
   },
   {
-    "id": "cronos vault: vvs-vvs-tonic",
-    "type": "Added"
+    "id": "aurora vault: rose-ust-3pool",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
