@@ -12,6 +12,7 @@ import { selectVaultById } from '../selectors/vaults';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { BeefyState } from '../../../redux-types';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
+import { ChainEntity } from '../entities/chain';
 
 /**
  * State containing APY infos indexed by vault id
@@ -32,12 +33,16 @@ export interface TvlState {
   exclusions: {
     [vaultId: VaultEntity['id']]: VaultEntity['id'];
   };
+  byChaindId: {
+    [chaindId: ChainEntity['id']]: BigNumber;
+  };
 }
 export const initialTvlState: TvlState = {
   totalTvl: BIG_ZERO,
   byVaultId: {},
   byBoostId: {},
   exclusions: {},
+  byChaindId: {},
 };
 
 export const tvlSlice = createSlice({
@@ -147,10 +152,16 @@ function addContractDataToState(
     sliceState.byBoostId[boost.id] = { tvl, staked: totalStaked };
   }
 
-  // recompute total tvl as a whole
+  const byChaindIdTotals = {};
   let totalTvl = BIG_ZERO;
-  for (const vaultTvl of Object.values(sliceState.byVaultId)) {
+  for (const [vaultId, vaultTvl] of Object.entries(sliceState.byVaultId)) {
+    const vault = selectVaultById(state, vaultId);
+    byChaindIdTotals[vault.chainId] = byChaindIdTotals[vault.chainId]
+      ? byChaindIdTotals[vault.chainId].plus(vaultTvl.tvl)
+      : BIG_ZERO;
     totalTvl = totalTvl.plus(vaultTvl.tvl);
   }
+  sliceState.byChaindId = byChaindIdTotals;
+  // recompute total tvl as a whole
   sliceState.totalTvl = totalTvl;
 }

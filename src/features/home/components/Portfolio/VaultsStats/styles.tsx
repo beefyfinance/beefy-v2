@@ -30,4 +30,14 @@ export const styles = theme => ({
   obscured: {
     color: '#424866',
   },
+  flex: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  icon: {
+    marginLeft: theme.spacing(0.5),
+    '&:Hover': {
+      cursor: 'pointer',
+    },
+  },
 });

@@ -108,34 +108,32 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
     return false;
   }
 
-  // Match if: search text matches vault asset
-  for (const vaultAsset of vault.assetIds) {
-    if (fuzzySearchTokens.some(token => vaultAsset.match(token))) {
+  // All tokens must match
+  return fuzzySearchTokens.every(token => {
+    // In vault assets
+    if (vault.assetIds.some(assetId => assetId.match(token))) {
       return true;
     }
-  }
 
-  // Match if: search text matches gov earned token id
-  if (isGovVault(vault)) {
-    if (fuzzySearchTokens.some(token => vault.earnedTokenId.match(token))) {
+    // In gov earned token
+    if (isGovVault(vault) && vault.earnedTokenId.match(token)) {
       return true;
     }
-  }
 
-  // Match if: search text matches vault boost earned token id
-  if (selectIsVaultPreStakedOrBoosted(state, vault.id)) {
-    const boostAssets = selectPreStakeOrActiveBoostIds(state, vault.id)
-      .map(boostId => selectBoostById(state, boostId))
-      .map(boost => boost.earnedTokenId);
-    for (const boostAsset of boostAssets) {
-      if (fuzzySearchTokens.some(token => boostAsset.match(token))) {
+    // Boost earned token
+    if (selectIsVaultPreStakedOrBoosted(state, vault.id)) {
+      const boostAssets = selectPreStakeOrActiveBoostIds(state, vault.id)
+        .map(boostId => selectBoostById(state, boostId))
+        .map(boost => boost.earnedTokenId);
+
+      if (boostAssets.some(assetId => assetId.match(token))) {
         return true;
       }
     }
-  }
 
-  // Default: no match
-  return false;
+    // Default: no match
+    return false;
+  });
 }
 
 // todo: use createSelector or put the result in the state to avoid re-computing these on every render
