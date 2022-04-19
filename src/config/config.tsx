@@ -411,7 +411,7 @@ export const config = {
       rpcUrls: ['https://mainnet.aurora.dev'],
       blockExplorerUrls: ['https://aurorascan.dev/'],
     },
-    stableCoins: ['USDC', 'USDT'],
+    stableCoins: ['USDC', 'USDT', 'MAI', 'DAI', 'UST', 'aUSDO'],
   },
   moonbeam: {
     name: 'Moonbeam',

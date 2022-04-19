@@ -90,6 +90,11 @@ const Moonpot = [
     img: 'partners/moonpot/bifi.svg',
     link: 'https://play.moonpot.com/#/pot/fantom-bifi',
   },
+  {
+    id: 'based-based-mai',
+    img: 'partners/moonpot/based-mai.svg',
+    link: 'https://play.moonpot.com/#/pot/based-mai',
+  },
 ];
 
 export { QiDao, Insurace, Moonpot, LaCucina };
