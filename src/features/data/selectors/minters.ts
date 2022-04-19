@@ -23,6 +23,10 @@ export const selectMintersByVaultId = (
   return state.entities.minters.byVaultId[vaultId] || [];
 };
 
+export const selectMinterReserves = (state: BeefyState, minterId: MinterEntity['id']) => {
+  return state.entities.minters.byReserves[minterId];
+};
+
 export const selectAreMintersLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.minters.alreadyLoadedOnce;
 

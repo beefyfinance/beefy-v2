@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { MinterConfig } from '../apis/config';
-import { getAllowanceApi, getBalanceApi, getConfigApi } from '../apis/instances';
+import { getAllowanceApi, getBalanceApi, getConfigApi, getMintersApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
@@ -10,6 +10,8 @@ import { selectChainById } from '../selectors/chains';
 import { selectTokenById } from '../selectors/tokens';
 import { MinterEntity } from '../entities/minter';
 import { isTokenErc20 } from '../entities/token';
+import BigNumber from 'bignumber.js';
+import { BIG_ZERO } from '../../../helpers/format';
 
 export interface FulfilledAllMintersPayload {
   byChainId: {
@@ -40,6 +42,7 @@ interface InitMinterFormPayload {
   walletAddress: string | null;
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
+  reserves: BigNumber;
 
   // reducers below need to access the state
   state: BeefyState;
@@ -57,6 +60,7 @@ export const initiateMinterForm = createAsyncThunk<
   const spenderAddress = minter.contractAddress;
   const balanceApi = await getBalanceApi(chain);
   const allowanceApi = await getAllowanceApi(chain);
+  const mintersApi = await getMintersApi(chain);
 
   const balanceRes: FetchAllBalancesResult = walletAddress
     ? await balanceApi.fetchAllBalances(
@@ -73,11 +77,16 @@ export const initiateMinterForm = createAsyncThunk<
       ? await allowanceApi.fetchTokensAllowance([depositToken], walletAddress, spenderAddress)
       : [];
 
+  const reservesRes = minter.canBurnReserves
+    ? await mintersApi.fetchMinterReserves(minter)
+    : BIG_ZERO;
+
   return {
     minterId,
     walletAddress,
     allowance: allowanceRes,
     balance: balanceRes,
+    reserves: reservesRes,
     state: getState(),
   };
 });

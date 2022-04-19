@@ -5,7 +5,8 @@ import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { MinterEntity } from '../entities/minter';
-import { fetchAllMinters } from '../actions/minters';
+import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
+import BigNumber from 'bignumber.js';
 
 export type MintersState = NormalizedEntity<MinterEntity> & {
   byChainId: {
@@ -14,6 +15,9 @@ export type MintersState = NormalizedEntity<MinterEntity> & {
   byVaultId: {
     [vaultId: VaultEntity['id']]: MinterEntity['id'][];
   };
+  byReserves: {
+    [minterId: MinterEntity['id']]: BigNumber;
+  };
 };
 
 export const initialMintersState: MintersState = {
@@ -21,6 +25,7 @@ export const initialMintersState: MintersState = {
   allIds: [],
   byChainId: {},
   byVaultId: {},
+  byReserves: {},
 };
 
 export const mintersSlice = createSlice({
@@ -34,6 +39,10 @@ export const mintersSlice = createSlice({
           addMinterToState(sliceState, chainId, minter);
         }
       }
+    });
+    builder.addCase(initiateMinterForm.fulfilled, (sliceState, action) => {
+      //Add Reserves to State
+      sliceState.byReserves[action.payload.minterId] = action.payload.reserves;
     });
   },
 });
