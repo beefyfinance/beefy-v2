@@ -26,7 +26,7 @@ const CardContentSection = memo<CardContentSectionProps>(function ContentItem({ 
   return (
     <>
       {heading ? (
-        <Typography variant="h5" className={classes.sectionTitle}>
+        <Typography variant="h5" className={classes.sectionHeading}>
           {t(heading)}
         </Typography>
       ) : null}
