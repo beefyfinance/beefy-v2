@@ -4,13 +4,21 @@ import { ChainAddressBook, getChainAddressBook } from '../apis/addressbook';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
-import { getAllowanceApi, getBalanceApi, getContractDataApi } from '../apis/instances';
+import {
+  getAllowanceApi,
+  getBalanceApi,
+  getContractDataApi,
+  getMintersApi,
+} from '../apis/instances';
+import { FetchMinterReservesReloadResult } from '../apis/minter/minter-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
+import { MinterEntity } from '../entities/minter';
 import { isTokenErc20, TokenEntity } from '../entities/token';
 import { VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
 import { selectAllChains, selectChainById } from '../selectors/chains';
+import { selectMinterById } from '../selectors/minters';
 import { selectGovVaultById } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
@@ -56,6 +64,7 @@ interface ReloadBalanceAllowanceRewardsParams {
   spenderAddress: string;
   govVaultId?: VaultGov['id'];
   boostId?: BoostEntity['id'];
+  minterId?: MinterEntity['id'];
 }
 
 interface ReloadBalanceAllowanceRewardsFulfilledPayload {
@@ -65,6 +74,7 @@ interface ReloadBalanceAllowanceRewardsFulfilledPayload {
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
   contractData: FetchAllContractDataResult;
+  reserves: FetchMinterReservesReloadResult;
   state: BeefyState;
 }
 
@@ -75,9 +85,11 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
   { state: BeefyState }
 >(
   'deposit/reloadBalanceAndAllowanceAndGovRewards',
-  async ({ chainId, tokens, spenderAddress, govVaultId, boostId }, { getState }) => {
+  async ({ chainId, tokens, spenderAddress, govVaultId, boostId, minterId }, { getState }) => {
     const chain = selectChainById(getState(), chainId);
     const walletAddress = selectWalletAddress(getState());
+    const minter = selectMinterById(getState(), minterId);
+    const mintersApi = await getMintersApi(chain);
 
     const govVault = govVaultId ? selectGovVaultById(getState(), govVaultId) : null;
     const boost = boostId ? selectBoostById(getState(), boostId) : null;
@@ -99,6 +111,8 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
       spenderAddress
     );
 
+    const reserves = await mintersApi.fetchMinterReserves(minter);
+
     const contractDataApi = await getContractDataApi(chain);
     const contractData: FetchAllContractDataResult = govVault
       ? await contractDataApi.fetchAllContractData(
@@ -116,6 +130,7 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
       contractData: contractData,
       chainId,
       spenderAddress,
+      reserves: { id: minterId, reserves },
       state: getState(),
     };
   }

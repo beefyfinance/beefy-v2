@@ -11,7 +11,6 @@ import { selectTokenById } from '../selectors/tokens';
 import { MinterEntity } from '../entities/minter';
 import { isTokenErc20 } from '../entities/token';
 import BigNumber from 'bignumber.js';
-import { BIG_ZERO } from '../../../helpers/format';
 
 export interface FulfilledAllMintersPayload {
   byChainId: {
@@ -77,9 +76,7 @@ export const initiateMinterForm = createAsyncThunk<
       ? await allowanceApi.fetchTokensAllowance([depositToken], walletAddress, spenderAddress)
       : [];
 
-  const reservesRes = minter.canBurnReserves
-    ? await mintersApi.fetchMinterReserves(minter)
-    : BIG_ZERO;
+  const reservesRes = await mintersApi.fetchMinterReserves(minter);
 
   return {
     minterId,

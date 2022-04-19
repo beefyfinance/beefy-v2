@@ -159,7 +159,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         tokenJoe,
         tokenBeJoe,
         formData.withdraw.amount,
-        formData.withdraw.max
+        formData.withdraw.max,
+        minterId
       ),
       pending: false,
     });

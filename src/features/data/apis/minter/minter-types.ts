@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { MinterEntity } from '../../entities/minter';
 import { MinterConfig } from '../config';
 
 export interface IMinterApi {
@@ -6,3 +7,8 @@ export interface IMinterApi {
 }
 
 export type FetchMinterReservesResult = BigNumber;
+
+export interface FetchMinterReservesReloadResult {
+  id: MinterEntity['id'];
+  reserves: BigNumber;
+}

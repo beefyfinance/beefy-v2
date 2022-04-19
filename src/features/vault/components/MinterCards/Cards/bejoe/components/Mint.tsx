@@ -158,7 +158,8 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         tokenJoe,
         tokenBeJoe,
         formData.deposit.amount,
-        formData.deposit.max
+        formData.deposit.max,
+        minterId
       ),
       pending: false,
     });
