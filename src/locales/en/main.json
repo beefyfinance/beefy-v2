@@ -350,5 +350,12 @@
   "BrandAssets-Asset-binSPIRITLP": "binSPIRIT LP",
   "BrandAssets-Asset-beJOE": "beJOE",
   "BrandAssets-Download-SVG": "Download SVG",
-  "BrandAssets-Download-PNG": "Download PNG"
+  "BrandAssets-Download-PNG": "Download PNG",
+  "Vote": "Vote",
+  "Discuss": "Discuss",
+  "InfoCard-binSPIRIT-Title": "Vote on SPIRIT Emissions with binSPIRIT",
+  "InfoCard-binSPIRIT-Work-Title": "How Does SpiritSwap Voting Work?",
+  "InfoCard-binSPIRIT-Work-Text": "SpiritSwap’s inSPIRIT governance token uses a vote locking model. binSPIRIT is a wrapped version of 4-year-locked inSPIRIT. inSPIRIT & binSPIRIT holders receive voting power, participation rewards, and boosted farming rewards. binSPIRIT holders can vote weekly on the gauges to receive SPIRIT emission allocation.",
+  "InfoCard-binSPIRIT-Bribes-Title": "Use Beefy’s Voting Power to Earn Bribes",
+  "InfoCard-binSPIRIT-Bribes-Text": "50% of Beefy’s voting rights from locking SPIRIT are given to binSPIRIT holders. Beefy distributes these rights to binSPIRIT users to vote weekly via Snapshot. There is an open bribe environment for projects to bribe binSPIRIT holders for their voting power. Voters will receive bribes via an airdrop generated from the voting history."
 }

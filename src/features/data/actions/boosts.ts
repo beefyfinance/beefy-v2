@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { BoostConfig } from '../apis/config';
 import { getAllowanceApi, getBalanceApi, getConfigApi } from '../apis/instances';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
@@ -10,6 +9,7 @@ import { selectBoostById } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
 import { selectErc20TokenById } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
+import { BoostConfig } from '../apis/config-types';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action

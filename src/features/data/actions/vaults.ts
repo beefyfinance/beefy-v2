@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
 import { getConfigApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
+import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 
 // given the list of vaults is pulled from some api at some point
 // we use the api to create an action

@@ -4,13 +4,13 @@ import { isEqual } from 'lodash';
 import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
-import { BoostConfig } from '../apis/config';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { getBoostTokenIdFromLegacyConfig } from '../utils/config-hacks';
 import { NormalizedEntity } from '../utils/normalized-entity';
+import { BoostConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos

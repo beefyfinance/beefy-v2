@@ -2401,7 +2401,7 @@ export const pools = [
   },
   {
     id: 'png-png',
-    logo: 'single-assets/PNG.svg',
+    logo: 'single-assets/PNG.png',
     name: 'PNG',
     token: 'PNG',
     tokenDescription: 'Pangolin',
@@ -2579,7 +2579,7 @@ export const pools = [
   },
   {
     id: 'pangolin-png-pause-eol',
-    logo: 'single-assets/PNG.svg',
+    logo: 'single-assets/PNG.png',
     name: 'PNG',
     token: 'PNG',
     tokenDescription: 'Pangolin',
@@ -5591,7 +5591,7 @@ export const pools = [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
       'IL_NONE',
-      'MCAP_MICRO',
+      'MCAP_LARGE',
       'AUDIT',
       'CONTRACTS_VERIFIED',
     ],

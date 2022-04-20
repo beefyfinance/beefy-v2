@@ -11,7 +11,6 @@ import {
   fetchAllAddressBookAction,
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
-import { BoostConfig, MinterConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import {
   isTokenErc20,
@@ -26,6 +25,7 @@ import {
   getOracleTokenFromLegacyVaultConfig,
 } from '../utils/config-hacks';
 import { fetchAllMinters } from '../actions/minters';
+import { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos

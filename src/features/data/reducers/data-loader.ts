@@ -25,6 +25,7 @@ import { fetchAllZapsAction } from '../actions/zap';
 import { ChainEntity } from '../entities/chain';
 import { initWalletState } from './wallet/wallet';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
+import { fetchAllInfoCards } from '../actions/info-cards';
 
 /**
  * because we want to be smart about data loading
@@ -116,6 +117,7 @@ export interface DataLoaderState {
     addressBook: LoaderState;
     minters: LoaderState;
     minterForm: LoaderState;
+    infoCards: LoaderState;
   };
   byChainId: {
     [chainId: ChainEntity['id']]: {
@@ -147,6 +149,7 @@ export const initialDataLoaderState: DataLoaderState = {
     addressBook: dataLoaderStateInit,
     minters: dataLoaderStateInit,
     minterForm: dataLoaderStateInit,
+    infoCards: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -253,7 +256,8 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
-    addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', true);
+    addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
+    addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
     addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm', true);
     addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm', true);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
