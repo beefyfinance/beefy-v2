@@ -1,33 +1,5 @@
 [
   {
-    "id": "bsc vault: valas-wbtc",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-eth",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-busd",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-usdt",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-dai",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-tusd",
-    "type": "synced"
-  },
-  {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
   }
