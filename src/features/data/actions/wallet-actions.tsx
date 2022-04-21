@@ -7,7 +7,7 @@ import vaultAbi from '../../../config/abi/vault.json';
 import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
 import { BeefyState, BeefyThunk } from '../../../redux-types';
-import { getWalletConnectApiInstance } from '../apis/instances';
+import { getWalletConnectionApiInstance } from '../apis/instances';
 import { ZapEstimate, ZapOptions } from '../apis/zap';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
@@ -56,7 +56,7 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
       return;
     }
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const native = selectChainNativeToken(state, token.chainId);
 
@@ -90,7 +90,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
       return;
     }
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
@@ -156,7 +156,7 @@ const beefIn = (
     const vaultAddress = earnedToken.contractAddress;
     const { tokenIn, tokenOut } = zapEstimate;
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
@@ -216,7 +216,7 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
       return;
     }
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
@@ -281,7 +281,7 @@ const beefOutAndSwap = (
     const tokenOutEntity = selectTokenById(state, vault.chainId, tokenOut.id);
     const tokenOutAddress = getZapAddress(tokenOutEntity, wnative);
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
@@ -339,7 +339,7 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
       return;
     }
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
@@ -397,7 +397,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
       return;
     }
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const inputToken = selectTokenById(state, vault.chainId, vault.oracleId);
 
@@ -432,7 +432,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
       return;
     }
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
     const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
@@ -476,7 +476,7 @@ const claimGovVault = (vault: VaultGov) => {
     const amount = selectGovVaultPendingRewardsInToken(state, vault.id);
     const token = selectGovVaultRewardsTokenEntity(state, vault.id);
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contractAddr = vault.earnContractAddress;
 
@@ -511,7 +511,7 @@ const exitGovVault = (vault: VaultGov) => {
     const rewardAmount = selectGovVaultPendingRewardsInToken(state, vault.id);
     const token = selectGovVaultRewardsTokenEntity(state, vault.id);
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contractAddr = vault.earnContractAddress;
 
@@ -552,7 +552,7 @@ const claimBoost = (boost: BoostEntity) => {
     const token = selectTokenById(state, boost.chainId, boost.earnedTokenId);
     const vault = selectVaultById(state, boost.vaultId);
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contractAddr = boost.earnContractAddress;
 
@@ -588,7 +588,7 @@ const exitBoost = (boost: BoostEntity) => {
     const token = selectTokenById(state, boost.chainId, boost.earnedTokenId);
     const vault = selectVaultById(state, boost.vaultId);
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contractAddr = boost.earnContractAddress;
 
@@ -626,7 +626,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
       return;
     }
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const vault = selectVaultById(state, boost.vaultId);
@@ -664,7 +664,7 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
       return;
     }
 
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const vault = selectVaultById(state, boost.vaultId);
@@ -709,7 +709,7 @@ const mintDeposit = (
     }
 
     const gasToken = selectChainNativeToken(state, chainId);
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
     const gasPrices = await getGasPriceOptions(web3);
@@ -763,7 +763,7 @@ const burnWithdraw = (
     }
 
     const gasToken = selectChainNativeToken(state, chainId);
-    const walletApi = await getWalletConnectApiInstance();
+    const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
     const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
     const gasPrices = await getGasPriceOptions(web3);

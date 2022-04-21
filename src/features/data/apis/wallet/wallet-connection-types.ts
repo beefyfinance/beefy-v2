@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 
-export interface WalletConnectOptions {
+export interface WalletConnectionOptions {
   chains: ChainEntity[];
   onWalletDisconnected: () => Promise<unknown> | unknown;
   onConnect: (chainId: ChainEntity['id'], address: string) => Promise<unknown> | unknown;
@@ -26,11 +26,9 @@ export type initFromLocalCacheResponse = null | {
   address: string;
 };
 
-export interface IWalletConnectApi {
-  initFromLocalCache(): Promise<initFromLocalCacheResponse>;
+export interface IWalletConnectionApi {
   askUserToConnectIfNeeded();
-  askUserForChainChangeIfNeeded(chainId: ChainEntity['id']);
+  askUserForChainChange(chainId: ChainEntity['id']);
   disconnect();
-  // to be used by wallet actions
   getConnectedWeb3Instance(): Promise<Web3>;
 }

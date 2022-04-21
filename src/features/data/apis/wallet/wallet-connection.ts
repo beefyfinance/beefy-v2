@@ -1,109 +1,41 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3Modal, {
-  CACHED_PROVIDER_KEY,
-  connectors,
-  getLocal as getWeb3ModalLocal,
-  ICoreOptions,
-  IProviderOptions,
-} from 'web3modal';
+import Web3Modal, { connectors, ICoreOptions, IProviderOptions } from 'web3modal';
 import { CloverConnector } from '@clover-network/clover-connector';
 import WalletLink from 'walletlink';
 import { DeFiConnector } from 'deficonnect';
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
-import {
-  initFromLocalCacheResponse,
-  IWalletConnectApi,
-  Provider,
-  WalletConnectOptions,
-} from './wallet-connect-types';
-import { featureFlag_walletAddressOverride } from '../../utils/feature-flags';
+import { IWalletConnectionApi, Provider, WalletConnectionOptions } from './wallet-connection-types';
 import { sleep } from '../../utils/async-utils';
 import { maybeHexToNumber } from '../../../../helpers/format';
 
-export class WalletConnectApi implements IWalletConnectApi {
+export class WalletConnectionApi implements IWalletConnectionApi {
   protected web3Modal: Web3Modal | null;
   protected provider: Provider | null;
 
-  constructor(protected options: WalletConnectOptions) {
+  constructor(protected options: WalletConnectionOptions) {
     this.web3Modal = null;
     this.provider = null;
   }
 
-  public async initFromLocalCache(): Promise<initFromLocalCacheResponse> {
-    try {
-      // we check the local cached provider
-      // if we have a cached value, we want to have a connected web3Modal instance
-      if (hasWeb3ModalCachedProvider()) {
-        const cachedProvider = getWeb3ModalCachedProvider();
-        const providerOptions = _generateProviderOptions(this.options.chains);
-
-        // make sure the cached provider is available in config
-        if (cachedProvider in providerOptions.providerOptions) {
-          // init modal and connect to cached provider
-          this.web3Modal = new Web3Modal(providerOptions);
-          // FIXME connectTo can hang indefinitely if user does not accept or cancel
-          // while in this state, wallet won't be connected but app will think it is
-          const provider = await this.web3Modal.connectTo(cachedProvider);
-
-          // make sure we got provider from modal
-          if (provider) {
-            this.provider = provider;
-            this._bindProviderEvents(this.provider);
-            const web3 = _getWeb3FromProvider(this.provider);
-
-            // make sure 1 account/address is connected
-            const accounts = await web3.eth.getAccounts();
-            if (accounts.length) {
-              const networkChainId = await _getNetworkChainId(web3);
-              const chain = find(
-                this.options.chains,
-                chain => chain.networkChainId === networkChainId
-              );
-
-              return {
-                chainId: chain ? chain.id : null,
-                address: featureFlag_walletAddressOverride(accounts[0]),
-              };
-            } else {
-              console.error('initFromLocalCache: no accounts connected');
-            }
-          } else {
-            console.error('initFromLocalCache: provider not returned from web3modal', provider);
-          }
-        } else {
-          console.error(
-            'initFromLocalCache: cached provider not available',
-            cachedProvider,
-            Object.keys(providerOptions.providerOptions)
-          );
-        }
-      }
-    } catch (err) {
-      console.error('initFromLocalCache:', err);
-    }
-
-    return null;
-  }
-
   /**
-   * Extract the web3 instance
-   * TODO: should not leak the instance but provide a proper api
+   * Provider the web3 instance for signed TXs
    */
   async getConnectedWeb3Instance(): Promise<Web3> {
     if (!this.web3Modal) {
-      throw new Error('Class is not initiated: missing web3Modal');
+      throw new Error('Wallet not connected: missing web3Modal');
     }
+
     if (!this.provider) {
-      throw new Error('Class is not initiated: missing provider');
+      throw new Error('Wallet not connected: missing provider');
     }
+
     return _getWeb3FromProvider(this.provider);
   }
 
   /**
    * Ask the user to connect if he isn't already
-   * @param suggestedChainId we will use this chain to detect providers but user can be successfully connected to another chain
    */
   public async askUserToConnectIfNeeded() {
     // initialize instances if needed
@@ -114,14 +46,24 @@ export class WalletConnectApi implements IWalletConnectApi {
 
     // open modal if needed to connect
     if (this.provider === null) {
-      this.provider = await this.web3Modal.connect();
-      this._bindProviderEvents(this.provider);
+      try {
+        // Will open modal, or attempt to connect to cached provider
+        this.provider = await this.web3Modal.connect();
+        this._bindProviderEvents(this.provider);
+      } catch (err) {
+        // We clear cached provider here so that attempting to reconnect opens the modal
+        // rather than trying to reconnect to previous cached provider that just failed/was rejected.
+        this.web3Modal.clearCachedProvider();
+        // Rethrow so called knows connection failed
+        throw err;
+      }
     }
-    const web3 = _getWeb3FromProvider(this.provider);
 
+    const web3 = _getWeb3FromProvider(this.provider);
     const networkChainId = await _getNetworkChainId(web3);
     const accounts = await web3.eth.getAccounts();
     const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
+
     if (chain) {
       return this.options.onConnect(chain.id, accounts[0]);
     } else {
@@ -129,21 +71,22 @@ export class WalletConnectApi implements IWalletConnectApi {
     }
   }
 
-  public async askUserForChainChangeIfNeeded(chainId: ChainEntity['id']) {
+  /**
+   * Attempt to allow user to manually switch networks
+   * @param chainId
+   */
+  public async askUserForChainChange(chainId: ChainEntity['id']) {
     const chain = find(this.options.chains, chain => chain.id === chainId);
     if (!chain) {
       throw new Error(`Couldn't find chain by id ${chainId}`);
     }
-    // initialize instances if needed
-    if (this.web3Modal === null) {
-      const providerOptions = _generateProviderOptions(this.options.chains);
-      this.web3Modal = new Web3Modal(providerOptions);
+
+    // Wallet must be connected before we can ask to change chains
+    if (!this.web3Modal || !this.provider) {
+      throw new Error(`Wallet must be connected before switching chains`);
     }
 
-    if (this.provider === null) {
-      this.provider = await this.web3Modal.connect();
-      this._bindProviderEvents(this.provider);
-    }
+    // show add/switch chain dialog in wallets that support such
     await this.provider.request({
       method: 'wallet_addEthereumChain',
       params: [chain.walletSettings],
@@ -158,8 +101,10 @@ export class WalletConnectApi implements IWalletConnectApi {
     if (this.provider && this.provider.removeAllListeners) {
       this.provider.removeAllListeners();
     }
+
     this.provider = null;
     this.web3Modal = null;
+
     return this.options.onWalletDisconnected();
   }
 
@@ -436,12 +381,4 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
     cacheProvider: true,
     providerOptions,
   };
-}
-
-function getWeb3ModalCachedProvider() {
-  return getWeb3ModalLocal(CACHED_PROVIDER_KEY) || '';
-}
-
-function hasWeb3ModalCachedProvider() {
-  return getWeb3ModalCachedProvider() !== '';
 }

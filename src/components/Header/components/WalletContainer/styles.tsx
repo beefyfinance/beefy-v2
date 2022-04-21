@@ -24,8 +24,8 @@ export const styles = theme => ({
       textOverflow: 'clip',
     },
   },
-  connected: {
-    border: `2px solid ${theme.palette.background.cta}`,
+  known: {
+    border: `2px solid #D19847`,
     '& .MuiAvatar-root': {
       height: '24px',
       width: '24px',
@@ -40,6 +40,9 @@ export const styles = theme => ({
     '&:hover .MuiGrid-container': {
       color: theme.palette.text.middle,
     },
+  },
+  connected: {
+    borderColor: theme.palette.background.cta,
   },
   loading: {
     paddingTop: '4px',

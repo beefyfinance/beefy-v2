@@ -6,11 +6,12 @@ import { memoize } from 'lodash';
 import { initWallet } from '../../actions/wallet';
 
 /**
- * profilePictureUrl, error and initialized are not persisted
+ * Only address, hideBalance and profilePictureUrl are persisted
  */
 export type WalletState = {
   initialized: boolean;
   address: string | null;
+  connectedAddress: string | null;
   selectedChainId: ChainEntity['id'] | null;
   error: 'unsupported chain' | null;
   hideBalance: boolean;
@@ -20,6 +21,7 @@ export type WalletState = {
 const initialWalletState: WalletState = {
   initialized: false,
   address: null,
+  connectedAddress: null,
   selectedChainId: null,
   error: null,
   hideBalance: false,
@@ -44,17 +46,20 @@ export const walletSlice = createSlice({
       action: PayloadAction<{ chainId: ChainEntity['id']; address: string }>
     ) {
       sliceState.address = action.payload.address;
+      sliceState.connectedAddress = action.payload.address;
       sliceState.selectedChainId = action.payload.chainId;
       sliceState.error = null;
       sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
     },
     walletHasDisconnected(sliceState) {
       sliceState.address = null;
+      sliceState.connectedAddress = null;
       sliceState.profilePictureUrl = null;
       sliceState.error = null;
     },
     accountHasChanged(sliceState, action: PayloadAction<{ address: string }>) {
       sliceState.address = action.payload.address;
+      sliceState.connectedAddress = action.payload.address;
       sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
     },
     chainHasChanged(
@@ -62,6 +67,7 @@ export const walletSlice = createSlice({
       action: PayloadAction<{ chainId: ChainEntity['id']; address: string }>
     ) {
       sliceState.address = action.payload.address;
+      sliceState.connectedAddress = action.payload.address;
       sliceState.selectedChainId = action.payload.chainId;
       sliceState.error = null;
       sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
@@ -71,6 +77,7 @@ export const walletSlice = createSlice({
       action: PayloadAction<{ networkChainId: string | number; address: string }>
     ) {
       sliceState.address = action.payload.address;
+      sliceState.connectedAddress = action.payload.address;
       sliceState.selectedChainId = null;
       sliceState.error = 'unsupported chain';
       sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
@@ -83,25 +90,9 @@ export const walletSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    /**
-     * web3Modal has a cache on it's own, this action
-     * sole purpose is to synchronise the modal cache with our redux state
-     */
     builder.addCase(initWallet.fulfilled, (sliceState, action) => {
-      // wallet connect api initialized
+      // wallet connection api initialized
       sliceState.initialized = true;
-      // there is no local web3Modal cache, disconnect
-      if (action.payload === null) {
-        sliceState.address = null;
-        sliceState.error = null;
-        sliceState.selectedChainId = null;
-        sliceState.profilePictureUrl = null;
-      } else {
-        sliceState.address = action.payload.address;
-        sliceState.selectedChainId = action.payload.chainId;
-        sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
-        sliceState.error = action.payload.chainId === null ? 'unsupported chain' : null;
-      }
     });
   },
 });

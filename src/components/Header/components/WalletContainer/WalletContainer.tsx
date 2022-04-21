@@ -7,6 +7,7 @@ import { ApyStatLoader } from '../../../ApyStatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
   selectIsBalanceHidden,
+  selectIsWalletConnected,
   selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../../features/data/selectors/wallet';
@@ -24,19 +25,22 @@ const formatAddress = addr => {
 };
 
 export const WalletContainer = connect((state: BeefyState) => {
-  const isWalletConnected = selectIsWalletKnown(state);
-  const walletAddress = isWalletConnected ? selectWalletAddress(state) : null;
+  const isWalletConnected = selectIsWalletConnected(state);
+  const isWalletKnown = selectIsWalletKnown(state);
+  const walletAddress = isWalletKnown ? selectWalletAddress(state) : null;
   const walletPending = selectIsWalletPending(state);
   const walletProfileUrl = state.user.wallet.profilePictureUrl;
   const blurred = selectIsBalanceHidden(state);
-  return { walletAddress, walletPending, walletProfileUrl, blurred };
+  return { isWalletConnected, walletAddress, walletPending, walletProfileUrl, blurred };
 })(
   ({
+    isWalletConnected,
     walletAddress,
     walletPending,
     walletProfileUrl,
     blurred,
   }: {
+    isWalletConnected: boolean;
     walletAddress: null | string;
     walletPending: boolean;
     walletProfileUrl: null | string;
@@ -48,7 +52,7 @@ export const WalletContainer = connect((state: BeefyState) => {
     const t = useTranslation().t;
 
     const handleWalletConnect = () => {
-      if (walletAddress) {
+      if (isWalletConnected) {
         dispatch(doDisconnectWallet());
       } else {
         dispatch(askForWalletConnection());
@@ -65,7 +69,8 @@ export const WalletContainer = connect((state: BeefyState) => {
       <Box
         className={clsx({
           [classes.container]: true,
-          [classes.connected]: walletAddress,
+          [classes.known]: !!walletAddress,
+          [classes.connected]: isWalletConnected,
           [classes.disconnected]: !walletAddress,
         })}
       >

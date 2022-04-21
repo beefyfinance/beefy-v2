@@ -8,11 +8,11 @@ export const selectIsWalletKnown = createSelector(
   address => address !== null
 );
 
-// If we know the address from wallet connection
+// If address is actually connected
 export const selectIsWalletConnected = createSelector(
-  (state: BeefyState) => state.user.wallet.initialized,
+  (state: BeefyState) => state.user.wallet.connectedAddress,
   (state: BeefyState) => state.user.wallet.address,
-  (initialized, address) => initialized && address !== null
+  (connectedAddress, address) => connectedAddress !== null && connectedAddress === address
 );
 
 export const selectWalletAddress = createSelector(

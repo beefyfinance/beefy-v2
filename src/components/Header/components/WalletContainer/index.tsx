@@ -1,6 +1,1 @@
-import { WalletContainer } from './WalletContainer';
-
-// React.Lazy only works on default exports
-// eslint-disable-next-line no-restricted-syntax
-export default WalletContainer;
-export { WalletContainer };
+export { WalletContainer as default } from './WalletContainer';

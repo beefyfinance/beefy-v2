@@ -8,7 +8,7 @@ import {
   featureFlag_getBalanceApiImplem,
   featureFlag_getContractDataApiImplem,
 } from '../utils/feature-flags';
-import { IWalletConnectApi, WalletConnectOptions } from './wallet/wallet-connect-types';
+import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -99,18 +99,18 @@ export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
   return new AllowanceAPI(web3, chain);
 });
 
-let walletCo: IWalletConnectApi | null = null;
-export async function getWalletConnectApiInstance(
-  options?: WalletConnectOptions
-): Promise<IWalletConnectApi> {
-  if (!options && !walletCo) {
+let walletConnection: IWalletConnectionApi | null = null;
+export async function getWalletConnectionApiInstance(
+  options?: WalletConnectionOptions
+): Promise<IWalletConnectionApi> {
+  if (!options && !walletConnection) {
     throw new Error('Please initialize wallet instance');
   }
-  if (!walletCo) {
+  if (!walletConnection) {
     // allow code splitting to put all wallet connect stuff
     // in a separate, non-critical-path js file
-    const { WalletConnectApi } = await import('./wallet/wallet-connect');
-    walletCo = new WalletConnectApi(options);
+    const { WalletConnectionApi } = await import('./wallet/wallet-connection');
+    walletConnection = new WalletConnectionApi(options);
   }
-  return walletCo;
+  return walletConnection;
 }

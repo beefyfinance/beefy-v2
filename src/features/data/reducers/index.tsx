@@ -45,7 +45,7 @@ const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,
   allowance: allowanceSlice.reducer,
   wallet: persistReducer(
-    { key: 'wallet', storage, blacklist: ['profilePictureUrl', 'error', 'initialized'] },
+    { key: 'wallet', storage, whitelist: ['address', 'hideBalance', 'profilePictureUrl'] },
     walletSlice.reducer
   ),
   walletActions: walletActionsReducer,
