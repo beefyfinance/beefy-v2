@@ -19156,6 +19156,7 @@ export const pools = [
       'https://pancakeswap.finance/swap?outputCurrency=0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
     createdAt: 1650126214,
     network: 'bsc',
+    withdrawalFee: '0.01%',
   },
   {
     id: 'valas-eth',
@@ -19191,6 +19192,7 @@ export const pools = [
       'https://pancakeswap.finance/swap?outputCurrency=0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
     createdAt: 1650127009,
     network: 'bsc',
+    withdrawalFee: '0.01%',
   },
   {
     id: 'valas-busd',
@@ -19226,6 +19228,7 @@ export const pools = [
       'https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
     createdAt: 1650127645,
     network: 'bsc',
+    withdrawalFee: '0.01%',
   },
   {
     id: 'valas-usdt',
@@ -19261,6 +19264,7 @@ export const pools = [
       'https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955',
     createdAt: 1650128131,
     network: 'bsc',
+    withdrawalFee: '0.01%',
   },
   {
     id: 'valas-usdc',
@@ -19296,6 +19300,7 @@ export const pools = [
       'https://pancakeswap.finance/swap?outputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
     createdAt: 1650308625,
     network: 'bsc',
+    withdrawalFee: '0.01%',
   },
   {
     id: 'valas-dai',
@@ -19331,6 +19336,7 @@ export const pools = [
       'https://pancakeswap.finance/swap?outputCurrency=0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3',
     createdAt: 1650308955,
     network: 'bsc',
+    withdrawalFee: '0.01%',
   },
   {
     id: 'valas-tusd',
@@ -19366,6 +19372,7 @@ export const pools = [
       'https://pancakeswap.finance/swap?outputCurrency=0x14016E85a25aeb13065688cAFB43044C2ef86784',
     createdAt: 1650309426,
     network: 'bsc',
+    withdrawalFee: '0.01%',
   },
   {
     id: 'mdex-lac-busd-eol',

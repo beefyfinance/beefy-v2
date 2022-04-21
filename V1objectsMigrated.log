@@ -1,39 +1,34 @@
 [
   {
-    "id": "avax vault: curve-avax-f-3pool",
+    "id": "bsc vault: valas-wbtc",
     "type": "synced"
   },
   {
-    "id": "avax vault: png-png",
-    "type": "synced",
-    "logo-copied": "logo"
+    "id": "bsc vault: valas-eth",
+    "type": "synced"
   },
   {
-    "id": "avax vault: pangolin-png-pause-eol",
-    "type": "synced",
-    "logo-copied": "logo"
+    "id": "bsc vault: valas-busd",
+    "type": "synced"
   },
   {
-    "id": "moonriver vault: solarbeam-dai-usdc-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc vault: valas-usdt",
+    "type": "synced"
   },
   {
-    "id": "aurora vault: tri-atust-near-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc vault: valas-usdc",
+    "type": "synced"
   },
   {
-    "id": "aurora vault: tri-near-atluna-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "bsc vault: valas-dai",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: valas-tusd",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
-  },
-  {
-    "id": "moonbeam boost: moo_stellaswap-stella-usdc-stellaswap",
-    "type": "Added"
   }
 ]
