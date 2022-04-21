@@ -381,7 +381,7 @@ async function Po_resolveVaults()	{
 		Object.values( o_trgtChn).forEach( O_trgt => {
 			if (!(O_trgt && Object === O_trgt.constructor) || (s = O_trgt[ 
 										mS_PRPNM_ID]).includes( "bifi-gov") || "beefy-beFTM-earnings" === s || 
-										"beefy-beJoe-earnings" === s)
+										"beefy-beJoe-earnings" === s || s.endsWith('-earnings'))
 				return;
 			const S = S_TRGT_CHN + " vault: " + O_trgt[ mS_PRPNM_ID];
 			if (O_hits[ S])
@@ -637,7 +637,7 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 																							O_CHN.S_SRC].tokens.WNATIVE.symbol.slice( 1);
 		let s, o;
 		for (const O_SRC of oAO_SRC_BSTS[ O_CHN.S_SRC])	{
-			//if this is the Beefy earnings pool or the unusual Fantom beFTM or Avalanche beJoe 
+			//if this is the Beefy earnings pool or the unusual Fantom beFTM or Avalanche beJoe or beQI
 			//	pool, loop for the next boost to analyze
 			const S_ID = O_SRC[ mS_PRPNM_ID];
 			if (S_ID.startsWith( 'bifi-') && (S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? 
@@ -646,7 +646,7 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 															S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS) + '-eol')) && 
 															'BIFI' === O_SRC.token && (S_NTV === O_SRC.earnedToken ||  
 															'W' + S_NTV === O_SRC.earnedToken) || 'moo_beFTM' === S_ID || 
-															'moo_beJOE' === S_ID)
+															'moo_beJOE' === S_ID || 'moo_beQI' === S_ID)
 				continue;
 
 			let o_trgt;
