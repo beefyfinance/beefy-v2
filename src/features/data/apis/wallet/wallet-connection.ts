@@ -1,5 +1,11 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3Modal, { connectors, ICoreOptions, IProviderOptions } from 'web3modal';
+import Web3Modal, {
+  CACHED_PROVIDER_KEY,
+  connectors,
+  getLocal as getWeb3ModalLocal,
+  ICoreOptions,
+  IProviderOptions,
+} from 'web3modal';
 import { CloverConnector } from '@clover-network/clover-connector';
 import WalletLink from 'walletlink';
 import { DeFiConnector } from 'deficonnect';
@@ -11,12 +17,72 @@ import { sleep } from '../../utils/async-utils';
 import { maybeHexToNumber } from '../../../../helpers/format';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
+  protected web3ModalOptions: Partial<ICoreOptions> | null;
   protected web3Modal: Web3Modal | null;
   protected provider: Provider | null;
 
   constructor(protected options: WalletConnectionOptions) {
     this.web3Modal = null;
+    this.web3ModalOptions = null;
     this.provider = null;
+  }
+
+  private getModalOptions() {
+    if (this.web3ModalOptions === null) {
+      this.web3ModalOptions = _generateProviderOptions(this.options.chains);
+    }
+
+    return this.web3ModalOptions;
+  }
+
+  private getModal() {
+    if (this.web3Modal === null) {
+      this.web3Modal = new Web3Modal(this.getModalOptions());
+    }
+
+    return this.web3Modal;
+  }
+
+  /**
+   * Attempt to reconnect to cached provider
+   */
+  public async tryToAutoReconnect() {
+    // already connected?
+    if (this.provider) {
+      return;
+    }
+
+    // do we have a cached provider?
+    if (!hasWeb3ModalCachedProvider()) {
+      return;
+    }
+
+    // make sure the cached provider is available in options
+    const cachedProvider = getWeb3ModalCachedProvider();
+    const modalOptions = this.getModalOptions();
+    if (!(cachedProvider in modalOptions.providerOptions)) {
+      console.warn(
+        'tryToAutoReconnect: cached provider not available',
+        cachedProvider,
+        Object.keys(modalOptions.providerOptions)
+      );
+      return;
+    }
+
+    // init or get modal
+    const modal = this.getModal();
+    // try to reconnect
+    const provider = await modal.connectTo(cachedProvider);
+
+    // make sure we have provider from modal
+    if (!provider) {
+      console.error('tryToAutoReconnect: provider not returned from web3modal', provider);
+      throw new Error('tryToAutoReconnect: provider not returned from web3modal');
+    }
+
+    // Save provider and fire events
+    this.provider = provider;
+    await this.bindProviderAndRaiseEvents();
   }
 
   /**
@@ -38,36 +104,45 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * Ask the user to connect if he isn't already
    */
   public async askUserToConnectIfNeeded() {
-    // initialize instances if needed
-    if (this.web3Modal === null) {
-      const providerOptions = _generateProviderOptions(this.options.chains);
-      this.web3Modal = new Web3Modal(providerOptions);
-    }
+    // initialize modal if needed
+    const modal = this.getModal();
 
     // open modal if needed to connect
     if (this.provider === null) {
       try {
         // Will open modal, or attempt to connect to cached provider
-        this.provider = await this.web3Modal.connect();
-        this._bindProviderEvents(this.provider);
+        console.log('await model.connect');
+        this.provider = await modal.connect();
       } catch (err) {
         // We clear cached provider here so that attempting to reconnect opens the modal
         // rather than trying to reconnect to previous cached provider that just failed/was rejected.
-        this.web3Modal.clearCachedProvider();
+        modal.clearCachedProvider();
         // Rethrow so called knows connection failed
         throw err;
       }
     }
 
+    // raise relevant event
+    await this.bindProviderAndRaiseEvents();
+  }
+
+  /**
+   * Fires onConnect or onUnsupportedChainSelected
+   */
+  private async bindProviderAndRaiseEvents() {
+    // Listen to provider events
+    this._bindProviderEvents(this.provider);
+
+    // Check chain + accounts and raise our own events
     const web3 = _getWeb3FromProvider(this.provider);
     const networkChainId = await _getNetworkChainId(web3);
     const accounts = await web3.eth.getAccounts();
     const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
 
     if (chain) {
-      return this.options.onConnect(chain.id, accounts[0]);
+      this.options.onConnect(chain.id, accounts[0]);
     } else {
-      return this.options.onUnsupportedChainSelected(networkChainId, accounts[0]);
+      this.options.onUnsupportedChainSelected(networkChainId, accounts[0]);
     }
   }
 
@@ -105,7 +180,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     this.provider = null;
     this.web3Modal = null;
 
-    return this.options.onWalletDisconnected();
+    this.options.onWalletDisconnected();
   }
 
   protected _bindProviderEvents(provider) {
@@ -381,4 +456,12 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
     cacheProvider: true,
     providerOptions,
   };
+}
+
+function getWeb3ModalCachedProvider() {
+  return getWeb3ModalLocal(CACHED_PROVIDER_KEY) || '';
+}
+
+function hasWeb3ModalCachedProvider() {
+  return getWeb3ModalCachedProvider() !== '';
 }

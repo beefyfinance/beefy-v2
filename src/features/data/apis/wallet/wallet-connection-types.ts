@@ -21,14 +21,10 @@ export interface Provider {
   request: (req: { method: string; params: any[] }) => Promise<void>;
 }
 
-export type initFromLocalCacheResponse = null | {
-  chainId: ChainEntity['id'] | null;
-  address: string;
-};
-
 export interface IWalletConnectionApi {
-  askUserToConnectIfNeeded();
-  askUserForChainChange(chainId: ChainEntity['id']);
-  disconnect();
+  tryToAutoReconnect(): Promise<void>;
+  askUserToConnectIfNeeded(): Promise<void>;
+  askUserForChainChange(chainId: ChainEntity['id']): Promise<void>;
+  disconnect(): Promise<void>;
   getConnectedWeb3Instance(): Promise<Web3>;
 }

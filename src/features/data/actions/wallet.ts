@@ -11,6 +11,7 @@ import {
 } from '../reducers/wallet/wallet';
 import { selectAllChains } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
+import { selectIsWalletConnected } from '../selectors/wallet';
 
 export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/initWallet',
@@ -36,6 +37,23 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
         ),
       onWalletDisconnected: () => dispatch(walletHasDisconnected()),
     });
+
+    // MM is not loaded on browser restart and fails until page refresh
+    // So we wait some time before trying to auto reconnect
+    setTimeout(async () => {
+      dispatch(tryToAutoReconnect());
+    }, 5000);
+  }
+);
+
+export const tryToAutoReconnect = createAsyncThunk<void, void, { state: BeefyState }>(
+  'wallet/tryToAutoReconnect',
+  async (_, { getState }) => {
+    const state = getState();
+    if (!selectIsWalletConnected(state)) {
+      const walletConnection = await getWalletConnectionApiInstance();
+      await walletConnection.tryToAutoReconnect();
+    }
   }
 );
 
