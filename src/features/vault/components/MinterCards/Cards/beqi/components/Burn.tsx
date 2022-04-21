@@ -27,10 +27,12 @@ import { useStepper } from '../../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../../MinterCard';
 import { selectMinterById } from '../../../../../../data/selectors/minters';
 import { selectAllowanceByTokenId } from '../../../../../../data/selectors/allowances';
+import { useReserves } from '../useReserves';
+import { selectChainById } from '../../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
-export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) {
+export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -40,27 +42,30 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
-  const tokenJoe = useSelector((state: BeefyState) =>
+  const tokenQI = useSelector((state: BeefyState) =>
     selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
   );
-  const tokenBeJoe = useSelector((state: BeefyState) =>
+  const tokenBeQI = useSelector((state: BeefyState) =>
     selectErc20TokenById(state, vault.chainId, minter.mintedToken.symbol)
   );
-  const joeBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, tokenJoe.id)
+  const QiBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, tokenQI.id)
   );
-  const beJoeBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, tokenBeJoe.id)
+  const beQiBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, tokenBeQI.id)
   );
-  const joeAllowance = useSelector((state: BeefyState) =>
-    selectAllowanceByTokenId(state, vault.chainId, tokenJoe.id, minter.contractAddress)
+  const qiAllowance = useSelector((state: BeefyState) =>
+    selectAllowanceByTokenId(state, vault.chainId, tokenQI.id, minter.contractAddress)
   );
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+
+  const reserves = useReserves(minter.contractAddress, chain, beQiBalance);
 
   const resetFormData = () => {
     setFormData({
       ...formData,
-      deposit: {
-        ...formData.deposit,
+      withdraw: {
+        ...formData.withdraw,
         input: '',
         amount: BIG_ZERO,
         max: false,
@@ -71,7 +76,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   const [startStepper, isStepping, Stepper] = useStepper(vaultId, resetFormData);
 
   const [formData, setFormData] = React.useState({
-    deposit: {
+    withdraw: {
       input: '',
       amount: BIG_ZERO,
       max: false,
@@ -85,13 +90,13 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   });
 
   const handleMax = () => {
-    if (joeBalance > BIG_ZERO) {
+    if (beQiBalance > BIG_ZERO) {
       setFormData({
         ...formData,
-        deposit: {
-          ...formData.deposit,
-          input: isString(joeBalance) ? joeBalance : formatBigNumberSignificant(joeBalance),
-          amount: new BigNumber(joeBalance),
+        withdraw: {
+          ...formData.withdraw,
+          input: isString(beQiBalance) ? beQiBalance : formatBigNumberSignificant(beQiBalance),
+          amount: new BigNumber(beQiBalance),
           max: true,
         },
       });
@@ -102,14 +107,14 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
     let max = false;
-    let value = new BigNumber(input).decimalPlaces(tokenJoe.decimals, BigNumber.ROUND_DOWN);
+    let value = new BigNumber(input).decimalPlaces(tokenBeQI.decimals, BigNumber.ROUND_DOWN);
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
       value = BIG_ZERO;
     }
 
-    if (value.isGreaterThanOrEqualTo(joeBalance)) {
-      value = new BigNumber(joeBalance);
+    if (value.isGreaterThanOrEqualTo(beQiBalance)) {
+      value = new BigNumber(beQiBalance);
       max = true;
     }
 
@@ -122,8 +127,8 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
 
     setFormData({
       ...formData,
-      deposit: {
-        ...formData.deposit,
+      withdraw: {
+        ...formData.withdraw,
         input: formattedInput,
         amount: value,
         max: max,
@@ -131,7 +136,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     });
   };
 
-  const handleDeposit = () => {
+  const handleWithdraw = () => {
     const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
@@ -140,25 +145,25 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    if (joeAllowance.isLessThan(formData.deposit.amount)) {
+    if (qiAllowance.isLessThan(formData.withdraw.amount)) {
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(tokenJoe, minter.contractAddress),
+        action: walletActions.approval(tokenBeQI, minter.contractAddress),
         pending: false,
       });
     }
 
     steps.push({
-      step: 'mint',
-      message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
-      action: walletActions.mintDeposit(
+      step: 'burn',
+      message: t('Vault-TxnConfirm', { type: t('Burn') }),
+      action: walletActions.burnWithdraw(
         vault.chainId,
         minter.contractAddress,
-        tokenJoe,
-        tokenBeJoe,
-        formData.deposit.amount,
-        formData.deposit.max
+        tokenQI,
+        tokenBeQI,
+        formData.withdraw.amount,
+        formData.withdraw.max
       ),
       pending: false,
     });
@@ -170,30 +175,41 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     <>
       <CardContent className={classes.cardContent}>
         <Typography className={classes.content} variant="body1">
-          {t('mint-Content', {
+          {t('burn-Content', {
             token1: minter.mintedToken.symbol,
             token2: minter.depositToken.symbol,
           })}
         </Typography>
+        <Box className={classes.boxReminder}>
+          <Typography className={classes.reservesText} variant="body1">
+            {t('reserves', { token: minter.depositToken.symbol })}
+          </Typography>
+          <Box sx={{ display: 'flex' }}>
+            <AssetsImage assets={[]} img={'single-assets/QI.png'} alt={'QI'} />
+            <Typography className={classes.amountReserves}>
+              {reserves.shiftedBy(-tokenQI.decimals).toFixed(2)} {tokenQI.symbol}
+            </Typography>
+          </Box>
+        </Box>
         <Box className={classes.inputContainer}>
           <Box className={classes.balances}>
             <Typography className={classes.label}>
-              {t('from')} <span className={classes.value}>{tokenJoe.symbol}</span>
+              {t('from')} <span className={classes.value}>{tokenBeQI.symbol}</span>
             </Typography>
             <Typography className={classes.label}>
               {t('wallet')}{' '}
               <span className={classes.value}>
-                {formatBigDecimals(joeBalance, 8)} {tokenJoe.symbol}
+                {formatBigDecimals(beQiBalance, 8)} {tokenBeQI.symbol}
               </span>
             </Typography>
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={'single-assets/JOE.png'} alt={'BinSpirit'} />
+              <AssetsImage assets={[]} img={'partners/beQI.svg'} alt={'beQI'} />
             </Box>
             <InputBase
               placeholder="0.00"
-              value={formData.deposit.input}
+              value={formData.withdraw.input}
               onChange={e => handleInput(e.target.value)}
               disabled={isStepping}
             />
@@ -208,29 +224,45 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         <Box className={classes.inputContainer}>
           <Box className={classes.balances}>
             <Typography className={classes.label}>
-              {t('to')} <span className={classes.value}>{tokenBeJoe.symbol}</span>
+              {t('to')} <span className={classes.value}>{tokenQI.symbol}</span>
             </Typography>
             <Typography className={classes.label}>
               {t('wallet')}
               <span className={classes.value}>
-                {formatBigDecimals(beJoeBalance)} {tokenBeJoe.symbol}
+                {formatBigDecimals(QiBalance)} {tokenQI.symbol}
               </span>
             </Typography>
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={'partners/beJOE.svg'} alt={'beJOE'} />
+              <AssetsImage assets={[]} img={'single-assets/QI.png'} alt={'JOE'} />
             </Box>
-            <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
+            <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
           </Paper>
         </Box>
         <Button
-          disabled={formData.deposit.amount.isLessThanOrEqualTo(0) || isStepping}
-          onClick={handleDeposit}
+          disabled={
+            formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-tokenBeQI.decimals)) ||
+            formData.withdraw.amount.isLessThanOrEqualTo(0) ||
+            isStepping
+          }
+          onClick={handleWithdraw}
           className={classes.btn}
         >
-          {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
+          {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
         </Button>
+        {formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-tokenBeQI.decimals)) && (
+          <Box className={classes.noReserves}>
+            <img
+              className={classes.icon}
+              src={require('../../../../../../../images/warning.svg').default}
+              alt="warning"
+            />
+            <Typography variant="body1">
+              {t('noreserves', { token: minter.depositToken.symbol })}
+            </Typography>
+          </Box>
+        )}
       </CardContent>
       <Stepper />
     </>

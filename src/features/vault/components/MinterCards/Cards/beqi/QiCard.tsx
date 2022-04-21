@@ -10,7 +10,7 @@ import { MinterCardParams } from '../../MinterCard';
 const useStyles = makeStyles(styles as any);
 
 // TODO this and beFTM minter cards could be refactored out to a common component
-export const JoeCard = memo(function JoeCard({ vaultId, minterId }: MinterCardParams) {
+export const QiCard = memo(function QiCard({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -22,10 +22,10 @@ export const JoeCard = memo(function JoeCard({ vaultId, minterId }: MinterCardPa
         <CardHeader className={classes.mb}>
           <Box className={classes.tabs}>
             <Button onClick={() => setMb('mint')} className={mb === 'mint' ? classes.selected : ''}>
-              {t('action', { action: t('mint'), token: 'beJOE' })}
+              {t('action', { action: t('mint'), token: 'beQI' })}
             </Button>
             <Button onClick={() => setMb('burn')} className={mb === 'burn' ? classes.selected : ''}>
-              {t('action', { action: t('burn'), token: 'beJOE' })}
+              {t('action', { action: t('burn'), token: 'beQI' })}
             </Button>
           </Box>
           {mb === 'mint' ? (

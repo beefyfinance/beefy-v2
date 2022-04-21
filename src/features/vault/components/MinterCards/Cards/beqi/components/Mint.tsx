@@ -40,20 +40,20 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
-  const tokenJoe = useSelector((state: BeefyState) =>
+  const tokenQI = useSelector((state: BeefyState) =>
     selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
   );
-  const tokenBeJoe = useSelector((state: BeefyState) =>
+  const tokenBeQI = useSelector((state: BeefyState) =>
     selectErc20TokenById(state, vault.chainId, minter.mintedToken.symbol)
   );
-  const joeBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, tokenJoe.id)
+  const qiBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, tokenQI.id)
   );
-  const beJoeBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, tokenBeJoe.id)
+  const beQIBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, tokenBeQI.id)
   );
-  const joeAllowance = useSelector((state: BeefyState) =>
-    selectAllowanceByTokenId(state, vault.chainId, tokenJoe.id, minter.contractAddress)
+  const qiAllowance = useSelector((state: BeefyState) =>
+    selectAllowanceByTokenId(state, vault.chainId, tokenQI.id, minter.contractAddress)
   );
 
   const resetFormData = () => {
@@ -85,13 +85,13 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   });
 
   const handleMax = () => {
-    if (joeBalance > BIG_ZERO) {
+    if (qiBalance > BIG_ZERO) {
       setFormData({
         ...formData,
         deposit: {
           ...formData.deposit,
-          input: isString(joeBalance) ? joeBalance : formatBigNumberSignificant(joeBalance),
-          amount: new BigNumber(joeBalance),
+          input: isString(qiBalance) ? qiBalance : formatBigNumberSignificant(qiBalance),
+          amount: new BigNumber(qiBalance),
           max: true,
         },
       });
@@ -102,14 +102,14 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
     let max = false;
-    let value = new BigNumber(input).decimalPlaces(tokenJoe.decimals, BigNumber.ROUND_DOWN);
+    let value = new BigNumber(input).decimalPlaces(tokenQI.decimals, BigNumber.ROUND_DOWN);
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
       value = BIG_ZERO;
     }
 
-    if (value.isGreaterThanOrEqualTo(joeBalance)) {
-      value = new BigNumber(joeBalance);
+    if (value.isGreaterThanOrEqualTo(qiBalance)) {
+      value = new BigNumber(qiBalance);
       max = true;
     }
 
@@ -140,11 +140,11 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    if (joeAllowance.isLessThan(formData.deposit.amount)) {
+    if (qiAllowance.isLessThan(formData.deposit.amount)) {
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(tokenJoe, minter.contractAddress),
+        action: walletActions.approval(tokenQI, minter.contractAddress),
         pending: false,
       });
     }
@@ -155,8 +155,8 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       action: walletActions.mintDeposit(
         vault.chainId,
         minter.contractAddress,
-        tokenJoe,
-        tokenBeJoe,
+        tokenQI,
+        tokenBeQI,
         formData.deposit.amount,
         formData.deposit.max
       ),
@@ -178,18 +178,18 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         <Box className={classes.inputContainer}>
           <Box className={classes.balances}>
             <Typography className={classes.label}>
-              {t('from')} <span className={classes.value}>{tokenJoe.symbol}</span>
+              {t('from')} <span className={classes.value}>{tokenQI.symbol}</span>
             </Typography>
             <Typography className={classes.label}>
               {t('wallet')}{' '}
               <span className={classes.value}>
-                {formatBigDecimals(joeBalance, 8)} {tokenJoe.symbol}
+                {formatBigDecimals(qiBalance, 8)} {tokenQI.symbol}
               </span>
             </Typography>
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={'single-assets/JOE.png'} alt={'BinSpirit'} />
+              <AssetsImage assets={[]} img={'single-assets/QI.png'} alt={'QI'} />
             </Box>
             <InputBase
               placeholder="0.00"
@@ -208,18 +208,18 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         <Box className={classes.inputContainer}>
           <Box className={classes.balances}>
             <Typography className={classes.label}>
-              {t('to')} <span className={classes.value}>{tokenBeJoe.symbol}</span>
+              {t('to')} <span className={classes.value}>{tokenBeQI.symbol}</span>
             </Typography>
             <Typography className={classes.label}>
               {t('wallet')}
               <span className={classes.value}>
-                {formatBigDecimals(beJoeBalance)} {tokenBeJoe.symbol}
+                {formatBigDecimals(beQIBalance)} {tokenBeQI.symbol}
               </span>
             </Typography>
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={'partners/beJOE.svg'} alt={'beJOE'} />
+              <AssetsImage assets={[]} img={'partners/beQI.svg'} alt={'beqi'} />
             </Box>
             <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
           </Paper>
