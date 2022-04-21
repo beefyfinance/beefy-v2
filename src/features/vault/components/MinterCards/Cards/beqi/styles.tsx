@@ -164,7 +164,7 @@ export const styles = theme => ({
       fontSize: '16px',
       fontWeight: 600,
       letterSpacing: '0.1px',
-      textTransform: 'capitalize',
+      textTransform: 'none',
       color: theme.palette.text.disabled,
       background: 'none',
       width: '50%',
