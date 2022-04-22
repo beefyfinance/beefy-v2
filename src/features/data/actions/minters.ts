@@ -11,6 +11,7 @@ import { selectTokenById } from '../selectors/tokens';
 import { MinterEntity } from '../entities/minter';
 import { isTokenErc20 } from '../entities/token';
 import BigNumber from 'bignumber.js';
+import { FetchMinterReservesReloadResult } from '../apis/minter/minter-types';
 
 export interface FulfilledAllMintersPayload {
   byChainId: {
@@ -84,6 +85,34 @@ export const initiateMinterForm = createAsyncThunk<
     allowance: allowanceRes,
     balance: balanceRes,
     reserves: reservesRes,
+    state: getState(),
+  };
+});
+
+export interface ReloadReservesParams {
+  chainId: ChainEntity['id'];
+  minterId: MinterEntity['id'];
+}
+
+export interface ReloadReservesFulfilledPayload {
+  reserves: FetchMinterReservesReloadResult;
+  state: BeefyState;
+}
+
+export const reloadReserves = createAsyncThunk<
+  ReloadReservesFulfilledPayload,
+  ReloadReservesParams,
+  { state: BeefyState }
+>('minters/reloadReserves', async ({ chainId, minterId }, { getState }) => {
+  const chain = selectChainById(getState(), chainId);
+
+  const api = await getMintersApi(chain);
+  const minter = selectMinterById(getState(), minterId);
+
+  const reserves = await api.fetchMinterReserves(minter);
+
+  return {
+    reserves: { id: minterId, reserves },
     state: getState(),
   };
 });

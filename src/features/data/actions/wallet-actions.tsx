@@ -44,6 +44,7 @@ import { AbiItem } from 'web3-utils';
 import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
 import { MinterEntity } from '../entities/minter';
+import { reloadReserves } from './minters';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -864,9 +865,16 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
             boostId: refreshOnSuccess.boostId,
             spenderAddress: refreshOnSuccess.spenderAddress,
             tokens: refreshOnSuccess.tokens,
-            minterId: refreshOnSuccess.minterId,
           })
         );
+        if (refreshOnSuccess.minterId) {
+          dispatch(
+            reloadReserves({
+              chainId: refreshOnSuccess.chainId,
+              minterId: refreshOnSuccess.minterId,
+            })
+          );
+        }
       }
     })
     .on('error', function (error: TrxError) {
