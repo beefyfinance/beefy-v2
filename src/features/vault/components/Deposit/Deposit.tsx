@@ -169,128 +169,125 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   return (
     <>
-      {vaultId === 'cakev2-btcb-bnb' ? (
-        <Box p={3}>{'Hang tight, this vault is being upgraded and will be back soon.'}</Box>
-      ) : (
-        <Box p={3}>
-          {formState.zapOptions !== null && (
-            <Typography variant="body1" className={classes.zapPromotion}>
-              {t('Zap-Promotion', {
-                action: 'Deposit',
-                token1: vault.assetIds[0],
-                token2: vault.assetIds[1],
-              })}
-            </Typography>
-          )}
+      <Box p={3}>
+        {formState.zapOptions !== null && (
+          <Typography variant="body1" className={classes.zapPromotion}>
+            {t('Zap-Promotion', {
+              action: 'Deposit',
+              token1: vault.assetIds[0],
+              token2: vault.assetIds[1],
+            })}
+          </Typography>
+        )}
 
-          <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
-          <RadioGroup
-            value={formState.selectedToken ? formState.selectedToken.id : ''}
-            aria-label="deposit-asset"
-            name="deposit-asset"
-            onChange={e => handleAsset(e.target.value)}
-          >
-            <div style={{ display: 'flex' }}>
-              <FormControlLabel
-                className={classes.depositTokenContainer}
-                value={oracleToken.id}
-                control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-                label={<TokenWithBalance token={oracleToken} vaultId={vaultId} />}
-                onClick={formState.isZap ? undefined : handleMax}
-                disabled={!formReady}
+        <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
+        <RadioGroup
+          value={formState.selectedToken ? formState.selectedToken.id : ''}
+          aria-label="deposit-asset"
+          name="deposit-asset"
+          onChange={e => handleAsset(e.target.value)}
+        >
+          <div style={{ display: 'flex' }}>
+            <FormControlLabel
+              className={classes.depositTokenContainer}
+              value={oracleToken.id}
+              control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
+              label={<TokenWithBalance token={oracleToken} vaultId={vaultId} />}
+              onClick={formState.isZap ? undefined : handleMax}
+              disabled={!formReady}
+            />
+            <VaultBuyLinks vaultId={vaultId} />
+          </div>
+          {formState.zapOptions?.tokens.map(zapToken => (
+            <FormControlLabel
+              key={zapToken.id}
+              className={classes.depositTokenContainer}
+              value={zapToken.id}
+              control={<Radio />}
+              label={<TokenWithBalance token={zapToken} vaultId={vaultId} />}
+              disabled={!formReady}
+            />
+          ))}
+        </RadioGroup>
+        <VaultBuyLinks2 vaultId={vaultId} />
+        <Box className={classes.inputContainer}>
+          <Paper component="form" className={classes.root}>
+            <Box className={classes.inputLogo}>
+              <AssetsImage
+                img={
+                  formState.selectedToken && formState.selectedToken.id === vault.oracleId
+                    ? vault.logoUri
+                    : null
+                }
+                assets={
+                  !formState.selectedToken
+                    ? vault.assetIds
+                    : formState.selectedToken.id === vault.oracleId
+                    ? vault.assetIds
+                    : [formState.selectedToken.id]
+                }
+                alt={formState.selectedToken ? formState.selectedToken.symbol : ''}
               />
-              <VaultBuyLinks vaultId={vaultId} />
-            </div>
-            {formState.zapOptions?.tokens.map(zapToken => (
-              <FormControlLabel
-                key={zapToken.id}
-                className={classes.depositTokenContainer}
-                value={zapToken.id}
-                control={<Radio />}
-                label={<TokenWithBalance token={zapToken} vaultId={vaultId} />}
-                disabled={!formReady}
-              />
-            ))}
-          </RadioGroup>
-          <VaultBuyLinks2 vaultId={vaultId} />
-          <Box className={classes.inputContainer}>
-            <Paper component="form" className={classes.root}>
-              <Box className={classes.inputLogo}>
-                <AssetsImage
-                  img={
-                    formState.selectedToken && formState.selectedToken.id === vault.oracleId
-                      ? vault.logoUri
-                      : null
-                  }
-                  assets={
-                    !formState.selectedToken
-                      ? vault.assetIds
-                      : formState.selectedToken.id === vault.oracleId
-                      ? vault.assetIds
-                      : [formState.selectedToken.id]
-                  }
-                  alt={formState.selectedToken ? formState.selectedToken.symbol : ''}
-                />
-              </Box>
-              <InputBase
-                placeholder="0.00"
-                value={formState.formattedInput}
-                onChange={e => handleInput(e.target.value)}
-                disabled={!formReady}
-              />
-              <Button onClick={handleMax} disabled={!formReady}>
-                {t('Transact-Max')}
-              </Button>
-            </Paper>
-          </Box>
-          <FeeBreakdown
-            vault={vault}
-            slippageTolerance={formState.slippageTolerance}
-            zapEstimate={formState.zapEstimate}
-            isZapSwap={false}
-            isZap={formState.isZap}
-            type={'deposit'}
-          />
-          <Box mt={2}>
-            {vault.status !== 'active' ? (
-              <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
-                {t('Deposit-Disabled')}
-              </Button>
-            ) : isWalletConnected ? (
-              !isWalletOnVaultChain ? (
-                <Button
-                  onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
-                  className={classes.btnSubmit}
-                  fullWidth={true}
-                >
-                  {t('Network-Change', { network: chain.name.toUpperCase() })}
-                </Button>
-              ) : (
-                <Button
-                  onClick={handleDeposit}
-                  className={classes.btnSubmit}
-                  fullWidth={true}
-                  disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
-                >
-                  {isZapEstimateLoading
-                    ? t('Zap-Estimating')
-                    : formState.max
-                    ? t('Deposit-All')
-                    : t('Deposit-Verb')}
-                </Button>
-              )
-            ) : (
+            </Box>
+            <InputBase
+              placeholder="0.00"
+              value={formState.formattedInput}
+              onChange={e => handleInput(e.target.value)}
+              disabled={!formReady}
+            />
+            <Button onClick={handleMax} disabled={!formReady}>
+              {t('Transact-Max')}
+            </Button>
+          </Paper>
+        </Box>
+        <FeeBreakdown
+          vault={vault}
+          slippageTolerance={formState.slippageTolerance}
+          zapEstimate={formState.zapEstimate}
+          isZapSwap={false}
+          isZap={formState.isZap}
+          type={'deposit'}
+        />
+        <Box mt={2}>
+          {vault.status !== 'active' ? (
+            <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
+              {t('Deposit-Disabled')}
+            </Button>
+          ) : isWalletConnected ? (
+            !isWalletOnVaultChain ? (
               <Button
+                onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                onClick={() => dispatch(askForWalletConnection())}
               >
-                {t('Network-ConnectWallet')}
+                {t('Network-Change', { network: chain.name.toUpperCase() })}
               </Button>
-            )}
-          </Box>
+            ) : (
+              <Button
+                onClick={handleDeposit}
+                className={classes.btnSubmit}
+                fullWidth={true}
+                disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
+              >
+                {isZapEstimateLoading
+                  ? t('Zap-Estimating')
+                  : formState.max
+                  ? t('Deposit-All')
+                  : t('Deposit-Verb')}
+              </Button>
+            )
+          ) : (
+            <Button
+              className={classes.btnSubmit}
+              fullWidth={true}
+              onClick={() => dispatch(askForWalletConnection())}
+            >
+              {t('Network-ConnectWallet')}
+            </Button>
+          )}
         </Box>
-      )}
+      </Box>
+
       {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
       <Stepper />
     </>
