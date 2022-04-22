@@ -156,7 +156,7 @@ export interface MinterConfig {
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
   canBurnReserves: boolean;
-  burnMethod?: string;
+  reserveBalanceMethod?: string;
   vaultIds: string[];
 }
 
