@@ -1,5 +1,13 @@
 [
   {
+    "id": "fantom vault: jetswap-fantom-btc-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: beefy-beqi",
+    "type": "Added"
+  },
+  {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
   }
