@@ -18,6 +18,7 @@ export const minters = [
       decimals: 18,
     },
     canBurnReserves: true,
+    burnMethod: 'withdrawableBalance',
     vaultIds: ['beefy-beqi', 'beefy-beqi-earnings'],
   },
 ];

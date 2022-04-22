@@ -155,7 +155,8 @@ export interface MinterConfig {
   contractAddress: string;
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
-  canBurnReserves: boolean,
+  canBurnReserves: boolean;
+  burnMethod?: string;
   vaultIds: string[];
 }
 

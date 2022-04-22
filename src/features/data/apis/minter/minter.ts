@@ -12,7 +12,7 @@ export class MinterApi implements IMinterApi {
   public async fetchMinterReserves(minter: MinterEntity): Promise<FetchMinterReservesResult> {
     if (minter.canBurnReserves) {
       const contract = getContract(minter.contractAddress, this.web3, MinterAbi);
-      const data: BigNumber = await contract?.methods.balanceOfWant().call();
+      const data: BigNumber = await contract?.methods[minter.burnMethod]().call();
       return new BigNumber(data);
     } else {
       return new BigNumber(BIG_ZERO);
