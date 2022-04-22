@@ -175,11 +175,14 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     <>
       <CardContent className={classes.cardContent}>
         <Typography className={classes.content} variant="body1">
-          {t('bejoe-burn-Content')}
+          {t('burn-Content', {
+            token1: minter.mintedToken.symbol,
+            token2: minter.depositToken.symbol,
+          })}
         </Typography>
         <Box className={classes.boxReminder}>
           <Typography className={classes.reservesText} variant="body1">
-            {t('bejoe-reserves')}
+            {t('reserves', { token: minter.depositToken.symbol })}
           </Typography>
           <Box sx={{ display: 'flex' }}>
             <AssetsImage assets={[]} img={'single-assets/JOE.png'} alt={'JOE'} />
@@ -246,7 +249,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           onClick={handleWithdraw}
           className={classes.btn}
         >
-          {t('bejoe-action', { action: t('bejoe-burn') })}
+          {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
         </Button>
         {formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-tokenBeJoe.decimals)) && (
           <Box className={classes.noReserves}>
@@ -255,7 +258,9 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
               src={require('../../../../../../../images/warning.svg').default}
               alt="warning"
             />
-            <Typography variant="body1">{t('bejoe-noreserves')}</Typography>
+            <Typography variant="body1">
+              {t('noreserves', { token: minter.depositToken.symbol })}
+            </Typography>
           </Box>
         )}
       </CardContent>
