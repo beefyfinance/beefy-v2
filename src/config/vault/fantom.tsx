@@ -956,7 +956,7 @@ export const pools = [
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
-      'https://fantom-exchange.jetswap.finance/#/add/0x049d68029688eabf473097a2fc38ef61633a3c7a/0x321162Cd933E2Be498Cd2267a90534A804051b11',
+      'https://fantom-exchange.jetswap.finance/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x321162Cd933E2Be498Cd2267a90534A804051b11',
     network: 'fantom',
     createdAt: 1632980917,
   },
