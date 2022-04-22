@@ -1,43 +1,11 @@
 [
   {
-    "id": "bsc vault: valas-valas-bnb",
+    "id": "fantom vault: jetswap-fantom-btc-usdc",
     "type": "synced"
   },
   {
-    "id": "bsc vault: valas-wbtc",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-eth",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-busd",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-usdt",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-dai",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: valas-tusd",
-    "type": "synced"
-  },
-  {
-    "id": "aurora vault: rose-mai-3pool",
+    "id": "polygon vault: beefy-beqi",
     "type": "Added"
-  },
-  {
-    "id": "aurora vault: rose-ust-3pool",
-    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

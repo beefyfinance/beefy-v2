@@ -23,6 +23,7 @@ import { walletActionsReducer } from './wallet/wallet-action';
 import { withdrawSlice } from './wallet/withdraw';
 import { boostModalSlice } from './wallet/boost-modal';
 import { mintersSlice } from './minters';
+import { infoCardsSlice } from './info-cards';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -32,6 +33,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   platforms: platformsSlice.reducer,
   zaps: zapsSlice.reducer,
   minters: mintersSlice.reducer,
+  infoCards: infoCardsSlice.reducer,
 });
 const bizReducer = combineReducers<BeefyState['biz']>({
   tvl: tvlSlice.reducer,

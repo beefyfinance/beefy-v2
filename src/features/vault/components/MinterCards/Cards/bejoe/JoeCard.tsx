@@ -22,10 +22,10 @@ export const JoeCard = memo(function JoeCard({ vaultId, minterId }: MinterCardPa
         <CardHeader className={classes.mb}>
           <Box className={classes.tabs}>
             <Button onClick={() => setMb('mint')} className={mb === 'mint' ? classes.selected : ''}>
-              {t('bejoe-action', { action: t('bejoe-mint') })}
+              {t('action', { action: t('mint'), token: 'beJOE' })}
             </Button>
             <Button onClick={() => setMb('burn')} className={mb === 'burn' ? classes.selected : ''}>
-              {t('bejoe-action', { action: t('bejoe-burn') })}
+              {t('action', { action: t('burn'), token: 'beJOE' })}
             </Button>
           </Box>
           {mb === 'mint' ? (

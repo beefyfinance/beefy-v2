@@ -171,7 +171,10 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     <>
       <CardContent className={classes.cardContent}>
         <Typography className={classes.content} variant="body1">
-          {t('bejoe-mint-Content')}
+          {t('mint-Content', {
+            token1: minter.mintedToken.symbol,
+            token2: minter.depositToken.symbol,
+          })}
         </Typography>
         <Box className={classes.inputContainer}>
           <Box className={classes.balances}>
@@ -227,7 +230,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           onClick={handleDeposit}
           className={classes.btn}
         >
-          {t('bejoe-action', { action: t('bejoe-mint') })}
+          {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
         </Button>
       </CardContent>
       <Stepper />

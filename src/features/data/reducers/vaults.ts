@@ -8,7 +8,6 @@ import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
 import { initiateWithdrawForm } from '../actions/withdraw';
-import { FeaturedVaultConfig, VaultConfig } from '../apis/config';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
@@ -21,6 +20,7 @@ import {
 } from '../selectors/tokens';
 import { getOracleTokenFromLegacyVaultConfig } from '../utils/config-hacks';
 import { NormalizedEntity } from '../utils/normalized-entity';
+import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos

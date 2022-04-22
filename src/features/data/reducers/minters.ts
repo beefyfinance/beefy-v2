@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
-import { MinterConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { MinterEntity } from '../entities/minter';
 import { fetchAllMinters, initiateMinterForm, reloadReserves } from '../actions/minters';
+import { MinterConfig } from '../apis/config-types';
 import BigNumber from 'bignumber.js';
 
 export type MintersState = NormalizedEntity<MinterEntity> & {

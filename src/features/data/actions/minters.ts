@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { MinterConfig } from '../apis/config';
+import { MinterConfig } from '../apis/config-types';
 import { getAllowanceApi, getBalanceApi, getConfigApi, getMintersApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
@@ -24,7 +24,7 @@ export const fetchAllMinters = createAsyncThunk<
   FulfilledAllMintersPayload,
   void,
   { state: BeefyState }
->('vaults/fetchAllMinters', async (_, { getState }) => {
+>('minters/fetchAllMinters', async (_, { getState }) => {
   const api = getConfigApi();
   const minters = await api.fetchAllMinters();
   return { byChainId: minters, state: getState() };

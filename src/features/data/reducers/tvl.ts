@@ -158,7 +158,7 @@ function addContractDataToState(
     const vault = selectVaultById(state, vaultId);
     byChaindIdTotals[vault.chainId] = byChaindIdTotals[vault.chainId]
       ? byChaindIdTotals[vault.chainId].plus(vaultTvl.tvl)
-      : BIG_ZERO;
+      : vaultTvl.tvl;
     totalTvl = totalTvl.plus(vaultTvl.tvl);
   }
   sliceState.byChaindId = byChaindIdTotals;
