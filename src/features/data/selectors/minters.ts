@@ -24,7 +24,7 @@ export const selectMintersByVaultId = (
 };
 
 export const selectMinterReserves = (state: BeefyState, minterId: MinterEntity['id']) => {
-  return state.entities.minters.byReservesId[minterId];
+  return state.entities.minters.reservesById[minterId];
 };
 
 export const selectAreMintersLoaded = (state: BeefyState) =>
