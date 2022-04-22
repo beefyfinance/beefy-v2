@@ -17,6 +17,6 @@ export const minters = [
       contractAddress: '0x97bfa4b212A153E15dCafb799e733bc7d1b70E72',
       decimals: 18,
     },
-    vaultIds: ['mai-qi-matic'],
+    vaultIds: ['beefy-beqi', 'beefy-beqi-earnings'],
   },
 ];
