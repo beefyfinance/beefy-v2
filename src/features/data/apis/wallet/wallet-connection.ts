@@ -74,6 +74,12 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // try to reconnect
     const provider = await modal.connectTo(cachedProvider);
 
+    // make sure we don't have provider from a manual connect while awaiting
+    if (this.provider) {
+      console.error('tryToAutoReconnect: provider already exists');
+      throw new Error('tryToAutoReconnect: provider already exists');
+    }
+
     // make sure we have provider from modal
     if (!provider) {
       console.error('tryToAutoReconnect: provider not returned from web3modal', provider);
@@ -109,10 +115,12 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // open modal if needed to connect
     if (this.provider === null) {
+      let provider = null;
+
       try {
         // Will open modal, or attempt to connect to cached provider
         console.log('await model.connect');
-        this.provider = await modal.connect();
+        provider = await modal.connect();
       } catch (err) {
         // We clear cached provider here so that attempting to reconnect opens the modal
         // rather than trying to reconnect to previous cached provider that just failed/was rejected.
@@ -120,6 +128,14 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         // Rethrow so called knows connection failed
         throw err;
       }
+
+      // make sure we don't have provider from an auto connect while awaiting
+      if (this.provider) {
+        console.error('askUserToConnectIfNeeded: provider already exists');
+        throw new Error('askUserToConnectIfNeeded: provider already exists');
+      }
+
+      this.provider = provider;
     }
 
     // raise relevant event
