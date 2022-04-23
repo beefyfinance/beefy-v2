@@ -83,7 +83,7 @@ export const Footer = memo(function () {
           </li>
         ))}
         <li key={'media-kit'} className={classes.navItem}>
-          <Link className={classes.navLink} to="media-kit">
+          <Link className={classes.navLink} to="/media-kit">
             {t('Footer-MediaKit')}
           </Link>
         </li>
