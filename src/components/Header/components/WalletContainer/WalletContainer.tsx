@@ -52,7 +52,7 @@ export const WalletContainer = connect((state: BeefyState) => {
     const t = useTranslation().t;
 
     const handleWalletConnect = () => {
-      if (isWalletConnected) {
+      if (walletAddress) {
         dispatch(doDisconnectWallet());
       } else {
         dispatch(askForWalletConnection());
