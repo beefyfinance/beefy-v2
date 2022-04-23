@@ -102,10 +102,6 @@ export const styles = theme => ({
     position: 'absolute',
     top: '12px',
     left: '12px',
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      height: 20,
-      width: 20,
-    },
   },
   balances: {
     display: 'flex',

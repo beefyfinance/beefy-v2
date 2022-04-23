@@ -234,11 +234,11 @@ export const estimateZapWithdraw = async (
   ]);
 
   const reserveIn =
-    tokenIn.contractAddress.toLocaleLowerCase() === pair.token0.toLocaleLowerCase()
+    tokenIn.contractAddress.toLowerCase() === pair.token0.toLowerCase()
       ? pair.reserves[0]
       : pair.reserves[1];
   const reserveOut =
-    tokenOutAddress.toLocaleLowerCase() === pair.token1.toLocaleLowerCase()
+    tokenOutAddress.toLowerCase() === pair.token1.toLowerCase()
       ? pair.reserves[1]
       : pair.reserves[0];
 

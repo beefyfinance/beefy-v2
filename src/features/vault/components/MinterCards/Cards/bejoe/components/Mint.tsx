@@ -186,7 +186,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={'single-assets/JOE.png'} alt={'BinSpirit'} />
+              <AssetsImage size={20} assetIds={[]} imageUri={'single-assets/JOE.png'} />
             </Box>
             <InputBase
               placeholder="0.00"
@@ -216,7 +216,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={'partners/beJOE.svg'} alt={'beJOE'} />
+              <AssetsImage size={20} assetIds={[]} imageUri={'partners/beJOE.svg'} />
             </Box>
             <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
           </Paper>

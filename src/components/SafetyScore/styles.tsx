@@ -2,22 +2,21 @@ export const styles = theme => ({
   container: {
     display: 'flex',
     alignItems: 'flex-end',
-    marginBottom: '5px',
   },
   barsContainer: {
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    margin: 'auto auto 3px 10px',
+    margin: 'auto 0 4px 4px',
   },
   label: {
-    color: theme.palette.primary.main,
-    fontFamily: 'Proxima Nova',
+    color: 'inherit',
+    fontFamily: theme.typography.fontFamily,
     fontStyle: 'normal',
     fontWeight: 600,
     fontSize: '18px',
     lineHeight: '24px',
-    textAlign: 'center',
+    textAlign: 'center' as const,
     letterSpacing: '-0.1px',
   },
   bar: {
@@ -70,17 +69,11 @@ export const styles = theme => ({
     },
   },
   withScoreLow: {
-    '& $label': {
-      color: '#E84525',
-    },
     '& $sm': {
       backgroundColor: '#E84525',
     },
   },
   withScoreMed: {
-    '& $label': {
-      color: '#E88225',
-    },
     '& $sm': {
       backgroundColor: '#E88225',
     },
@@ -89,9 +82,6 @@ export const styles = theme => ({
     },
   },
   withScoreHigh: {
-    '& $label': {
-      color: theme.palette.primary.main,
-    },
     '& $sm': {
       backgroundColor: theme.palette.primary.main,
     },
@@ -106,5 +96,25 @@ export const styles = theme => ({
     '& $label': {
       color: theme.palette.type === 'dark' ? '#ffffff' : '#000',
     },
+  },
+  withColorLabel: {
+    '&.$withScoreLow': {
+      '& $label': {
+        color: '#E84525',
+      },
+    },
+    '&.$withScoreMed': {
+      '& $label': {
+        color: '#E88225',
+      },
+    },
+    '&.$withScoreHigh': {
+      '& $label': {
+        color: theme.palette.primary.main,
+      },
+    },
+  },
+  withRightAlign: {
+    justifyContent: 'flex-end',
   },
 });

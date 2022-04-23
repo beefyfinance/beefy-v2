@@ -8,7 +8,7 @@ const singleAssets = Object.fromEntries(
 );
 const singleAssetCache = {};
 
-export const getSingleAssetSrc = symbol => {
+export function getSingleAssetSrc(symbol) {
   if (symbol in singleAssetCache) {
     return singleAssetCache[symbol];
   }
@@ -18,5 +18,13 @@ export const getSingleAssetSrc = symbol => {
     return (singleAssetCache[symbol] = asset);
   }
 
-  // throw new Error(`Image required for '${symbol}' token in 'images/single-assets/'`);
-};
+  return undefined;
+}
+
+export function getAssetSrc(uri: string) {
+  try {
+    return require(`../images/${uri}`).default;
+  } catch {
+    return undefined;
+  }
+}

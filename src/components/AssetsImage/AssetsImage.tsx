@@ -1,51 +1,56 @@
 import * as React from 'react';
-import { styles } from './styles';
-import { Avatar, makeStyles } from '@material-ui/core';
-import { AvatarGroup } from '@material-ui/lab';
+import { memo, useMemo } from 'react';
+import { DEFAULT_SIZE, styles } from './styles';
+import { makeStyles } from '@material-ui/core';
 import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
+import clsx from 'clsx';
 
-const useStyles = makeStyles(styles as any);
-const resolveImgSrc = (img, assets) => {
-  if (img) {
-    return require(`../../images/${img}`).default;
-  }
-  return assets.length === 1 ? getSingleAssetSrc(assets[0]) : undefined;
+const useStyles = makeStyles(styles);
+
+export type AssetsImageType = {
+  assetIds: string[];
+  imageUri?: string;
+  size?: number;
+  className?: string;
 };
 
-export const AssetsImage = ({
-  img,
-  assets,
-  alt,
-}: {
-  img?: string;
-  assets?: string[];
-  alt?: string;
-}) => {
+export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
+  assetIds,
+  imageUri,
+  className,
+  size = DEFAULT_SIZE,
+}) {
   const classes = useStyles();
-  const singleImage = resolveImgSrc(img, assets);
+  const maxSupportedAssets = 8;
+  const uris = useMemo(() => {
+    if (imageUri) {
+      return [require(`../../images/${imageUri}`).default];
+    }
 
-  return singleImage ? (
-    <Avatar
-      className={(classes as any).large}
-      alt={alt}
-      src={singleImage}
-      variant="square"
-      imgProps={{ style: { objectFit: 'contain' } }}
-    />
-  ) : (
-    <AvatarGroup className={`${classes.icon} MuiAvatar-root MuiAvatar-square`} spacing="small">
-      <Avatar
-        alt={assets[0]}
-        variant="square"
-        imgProps={{ style: { objectFit: 'contain' } }}
-        src={getSingleAssetSrc(assets[0])}
-      />
-      <Avatar
-        alt={assets[1]}
-        variant="square"
-        imgProps={{ style: { objectFit: 'contain' } }}
-        src={getSingleAssetSrc(assets[1])}
-      />
-    </AvatarGroup>
+    return assetIds.slice(0, maxSupportedAssets).map(assetId => getSingleAssetSrc(assetId));
+  }, [imageUri, assetIds]);
+
+  return (
+    <div
+      className={clsx(classes.icon, className)}
+      data-count={uris.length}
+      style={size !== DEFAULT_SIZE ? { width: size, height: size } : undefined}
+    >
+      {uris.map(uri =>
+        uri ? (
+          <img
+            src={uri}
+            key={uri}
+            alt=""
+            role="presentation"
+            className={classes.iconImg}
+            width={size}
+            height={size}
+          />
+        ) : (
+          <div className={clsx(classes.iconImg, classes.iconImgPlaceholder)} />
+        )
+      )}
+    </div>
   );
-};
+});

@@ -1,0 +1,105 @@
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
+  icon: {
+    marginRight: '8px',
+  },
+  badge: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexShrink: 0,
+    flexGrow: 0,
+    width: '24px',
+    height: '24px',
+    marginRight: '8px',
+    '&:before': {
+      content: 'attr(data-count)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexShrink: 0,
+      flexGrow: 0,
+      backgroundColor: '#DB5932',
+      width: '20px',
+      height: '20px',
+      borderRadius: '50%',
+      color: '#fff',
+      fontWeight: 700,
+      fontSize: 12,
+    },
+  },
+  dropdown: {
+    width: '350px',
+    maxWidth: 'calc(100% - 32px)',
+    zIndex: 1000,
+  },
+  dropdownInner: {
+    backgroundColor: '#303550',
+    borderRadius: '8px',
+    padding: '24px',
+  },
+  sidebar: {
+    backgroundColor: '#303550',
+    width: '350px',
+    maxWidth: 'calc(100vw - 32px)',
+    borderTopLeftRadius: '16px',
+    borderBottomLeftRadius: '16px',
+  },
+  sidebarHeader: {
+    backgroundColor: '#262A40',
+    fontSize: '21px',
+    lineHeight: '24px',
+    fontWeight: 600,
+    color: '#F5F5FF',
+    padding: '24px',
+    flexGrow: 0,
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  sidebarHeaderTitle: {
+    marginRight: '24px',
+  },
+  sidebarHeaderClose: {
+    marginLeft: 'auto',
+    padding: 0,
+    border: 0,
+    boxShadow: 'none',
+    background: 'transparent',
+    color: 'inherit',
+    cursor: 'pointer',
+    outline: 'none',
+  },
+  sidebarMain: {
+    padding: '24px',
+    flexGrow: 1,
+    flexShrink: 1,
+    minHeight: 0,
+    overflowY: 'auto' as const,
+  },
+  sidebarFooter: {
+    padding: '24px',
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  extendedFilters: {
+    fontSize: '15px',
+    lineHeight: '24px',
+    color: '#F5F5FF',
+  },
+  shownVaultsCount: {
+    width: '100%',
+  },
+  checkbox: {
+    width: '100%',
+    marginTop: '16px',
+    '& + $select': {
+      marginTop: '24px',
+    },
+  },
+  select: {
+    width: '100%',
+    marginTop: '16px',
+  },
+});

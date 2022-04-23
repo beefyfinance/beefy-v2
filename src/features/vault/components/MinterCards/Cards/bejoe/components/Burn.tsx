@@ -182,7 +182,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             {t('bejoe-reserves')}
           </Typography>
           <Box sx={{ display: 'flex' }}>
-            <AssetsImage assets={[]} img={'single-assets/JOE.png'} alt={'JOE'} />
+            <AssetsImage size={20} assetIds={[]} imageUri={'single-assets/JOE.png'} />
             <Typography className={classes.amountReserves}>
               {reserves.shiftedBy(-tokenJoe.decimals).toFixed(2)} {tokenJoe.symbol}
             </Typography>
@@ -202,7 +202,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={'partners/beJOE.svg'} alt={'BinSpirit'} />
+              <AssetsImage size={20} assetIds={[]} imageUri={'partners/beJOE.svg'} />
             </Box>
             <InputBase
               placeholder="0.00"
@@ -232,7 +232,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={'single-assets/JOE.png'} alt={'JOE'} />
+              <AssetsImage size={20} assetIds={[]} imageUri={'single-assets/JOE.png'} />
             </Box>
             <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
           </Paper>

@@ -322,8 +322,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
                 <AssetsImage
-                  img={vault.logoUri}
-                  assets={
+                  size={20}
+                  imageUri={vault.logoUri}
+                  assetIds={
                     !formState.selectedToken
                       ? vault.assetIds
                       : isArray(formState.selectedToken)
@@ -332,7 +333,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                       ? vault.assetIds
                       : [formState.selectedToken.id]
                   }
-                  alt={vault.name}
                 />
               </Box>
               <InputBase

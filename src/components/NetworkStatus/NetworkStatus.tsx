@@ -1,5 +1,4 @@
-import { Box, Fade } from '@material-ui/core';
-import Popover from '@material-ui/core/Popover';
+import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
@@ -19,6 +18,7 @@ import { selectBoostById } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
 import { styles } from './styles';
+import { Floating } from '../Floating';
 
 const useStyles = makeStyles(styles);
 
@@ -31,7 +31,10 @@ export function NetworkStatus() {
   const open = useSelector((state: BeefyState) => state.ui.dataLoader.statusIndicator.open);
   const chainsById = useSelector((state: BeefyState) => state.entities.chains.byId);
   const handleClose = useCallback(() => dispatch(dataLoaderActions.closeIndicator()), [dispatch]);
-  const handleOpen = useCallback(() => dispatch(dataLoaderActions.openIndicator()), [dispatch]);
+  const handleToggle = useCallback(
+    () => dispatch(open ? dataLoaderActions.closeIndicator() : dataLoaderActions.openIndicator()),
+    [dispatch, open]
+  );
 
   const rpcErrors = useNetStatus(findChainIdMatching, isRejected);
   const rpcPending = useNetStatus(findChainIdMatching, isPending);
@@ -52,40 +55,32 @@ export function NetworkStatus() {
   };
   const pulseClassName = clsx(classes.pulseCircle, colorClasses);
 
-  // https://github.com/mui/material-ui/issues/17010#issuecomment-615577360
   return (
     <div>
-      <Box
-        {...({ ref: anchorEl } as any)}
+      <button
+        ref={anchorEl}
         className={clsx({ [classes.container]: true, open: open })}
-        onClick={handleOpen}
+        onClick={handleToggle}
       >
         <Box className={clsx(classes.circle, colorClasses)}>
-          <Box style={{ animationDelay: '0s' }} className={pulseClassName}></Box>
-          <Box style={{ animationDelay: '1s' }} className={pulseClassName}></Box>
-          <Box style={{ animationDelay: '2s' }} className={pulseClassName}></Box>
-          <Box style={{ animationDelay: '3s' }} className={pulseClassName}></Box>
+          <Box style={{ animationDelay: '0s' }} className={pulseClassName} />
+          <Box style={{ animationDelay: '1s' }} className={pulseClassName} />
+          <Box style={{ animationDelay: '2s' }} className={pulseClassName} />
+          <Box style={{ animationDelay: '3s' }} className={pulseClassName} />
         </Box>
-      </Box>
-      <Popover
+      </button>
+      <Floating
         open={open}
-        anchorEl={anchorEl.current}
-        onClose={handleClose}
-        PaperProps={{ className: classes.popoverPaper }}
-        TransitionComponent={Fade}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        placement="bottom-start"
+        anchorEl={anchorEl}
+        autoWidth={false}
+        autoHeight={false}
+        autoHide={false}
       >
-        <Box className={classes.popoverSpacer}></Box>
+        <Box className={classes.popoverSpacer} />
         <Box className={classes.popover}>
           <Box className={classes.closeButton} onClick={handleClose}>
-            <Box className={classes.X}></Box>
+            <Box className={classes.X} />
           </Box>
           {hasAnyError ? (
             <>
@@ -94,7 +89,7 @@ export function NetworkStatus() {
               </Typography>
               {rpcErrors.map(chainId => (
                 <Box className={classes.popoverLine} key={chainId}>
-                  <Box className={clsx([classes.circle, 'warning', 'circle'])}></Box>
+                  <Box className={clsx([classes.circle, 'warning', 'circle'])} />
                   <Typography>
                     {t('NetworkStatus-RpcError', { chain: chainsById[chainId].name })}
                   </Typography>
@@ -102,7 +97,7 @@ export function NetworkStatus() {
               ))}
               {(beefyErrors.length > 0 || configErrors.length > 0) && (
                 <Box className={classes.popoverLine}>
-                  <Box className={clsx([classes.circle, 'warning', 'circle'])}></Box>
+                  <Box className={clsx([classes.circle, 'warning', 'circle'])} />
                   <Typography>{t('NetworkStatus-BeefyError')}</Typography>
                 </Box>
               )}
@@ -124,7 +119,7 @@ export function NetworkStatus() {
             </>
           )}
         </Box>
-      </Popover>
+      </Floating>
     </div>
   );
 }

@@ -217,19 +217,19 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
                 <AssetsImage
-                  img={
+                  size={20}
+                  imageUri={
                     formState.selectedToken && formState.selectedToken.id === vault.oracleId
                       ? vault.logoUri
                       : null
                   }
-                  assets={
+                  assetIds={
                     !formState.selectedToken
                       ? vault.assetIds
                       : formState.selectedToken.id === vault.oracleId
                       ? vault.assetIds
                       : [formState.selectedToken.id]
                   }
-                  alt={formState.selectedToken ? formState.selectedToken.symbol : ''}
                 />
               </Box>
               <InputBase

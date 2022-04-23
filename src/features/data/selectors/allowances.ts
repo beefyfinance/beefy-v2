@@ -11,7 +11,7 @@ export const selectAllowanceByTokenId = (
 ) => {
   return (
     state.user.allowance.byChainId[chainId]?.byTokenId[tokenId]?.bySpenderAddress[
-      spenderAddress.toLocaleLowerCase()
+      spenderAddress.toLowerCase()
     ] || BIG_ZERO
   );
 };

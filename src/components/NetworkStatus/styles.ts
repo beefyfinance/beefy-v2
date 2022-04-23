@@ -14,6 +14,9 @@ export const styles: Styles<any, any, any> = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
+    backgroundColor: 'transparent',
+    padding: 0,
+    outline: 'none',
     '&.open': {
       backgroundColor: '#242737',
     },

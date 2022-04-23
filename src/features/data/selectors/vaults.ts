@@ -3,16 +3,42 @@ import { BIG_ONE } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
-import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
+import {
+  isGovVault,
+  isVaultPausedOrRetired,
+  isVaultRetired,
+  VaultEntity,
+  VaultGov,
+  VaultStandard,
+} from '../entities/vault';
 import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
+import { createCachedSelector } from 're-reselect';
 
-export const selectVaultById = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vaultsByIds = state.entities.vaults.byId;
-  if (vaultsByIds[vaultId] === undefined) {
-    throw new Error(`selectVaultById: Unknown vault id ${vaultId}`);
+export const selectVaultById = createCachedSelector(
+  (state: BeefyState) => state.entities.vaults.byId,
+  (state: BeefyState, vaultId: VaultEntity['id']) => vaultId,
+  (vaultsById, vaultId) => {
+    if (vaultsById[vaultId] === undefined) {
+      throw new Error(`selectVaultById: Unknown vault id ${vaultId}`);
+    }
+    return vaultsById[vaultId];
   }
-  return vaultsByIds[vaultId];
-};
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultPausedOrRetired = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => isVaultPausedOrRetired(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultRetired = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => isVaultRetired(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
+
+export const selectIsVaultGov = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectVaultById(state, vaultId),
+  vault => isGovVault(vault)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectVaultExistsById = createSelector(
   (state: BeefyState) => state.entities.vaults.allIds,
@@ -151,3 +177,8 @@ export const selectIsVaultBeefy = createSelector(
   },
   res => res
 );
+
+export const selectVaultName = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.byId[vaultId],
+  (vault: VaultEntity) => vault.name
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);

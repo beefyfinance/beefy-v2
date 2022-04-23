@@ -202,7 +202,7 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
             </Box>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'partners/spiritToken.svg'} alt={'BinSpirit'} />
+                <AssetsImage size={20} assetIds={[]} imageUri={'partners/spiritToken.svg'} />
               </Box>
               <InputBase
                 placeholder="0.00"
@@ -232,7 +232,7 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
             </Box>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'partners/binSpiritToken.svg'} alt={'BinSpirit'} />
+                <AssetsImage size={20} assetIds={[]} imageUri={'partners/binSpiritToken.svg'} />
               </Box>
               <InputBase
                 disabled={true}

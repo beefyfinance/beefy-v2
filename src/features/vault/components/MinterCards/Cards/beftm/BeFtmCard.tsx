@@ -187,7 +187,7 @@ export const BeFtmCard = memo(function BeFtmCard({ vaultId, minterId }: MinterCa
             </Box>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'single-assets/FTM.png'} alt={'FTM'} />
+                <AssetsImage size={20} assetIds={[]} imageUri={'single-assets/FTM.png'} />
               </Box>
               <InputBase
                 placeholder="0.00"
@@ -217,7 +217,7 @@ export const BeFtmCard = memo(function BeFtmCard({ vaultId, minterId }: MinterCa
             </Box>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'partners/beftm.svg'} alt={'beFTM'} />
+                <AssetsImage size={20} assetIds={[]} imageUri={'partners/beftm.svg'} />
               </Box>
               <InputBase
                 disabled={true}

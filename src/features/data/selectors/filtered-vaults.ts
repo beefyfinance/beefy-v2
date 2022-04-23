@@ -6,6 +6,7 @@ import {
   selectHasUserDepositInVault,
   selectIsUserEligibleForVault,
   selectUserVaultDepositInUsd,
+  selectUserVaultDepositTokenWalletBalanceInUsd,
 } from './balance';
 import {
   selectBoostById,
@@ -22,8 +23,28 @@ import {
   selectVaultById,
 } from './vaults';
 import escapeStringRegexp from 'escape-string-regexp';
+import { createCachedSelector } from 're-reselect';
+import { KeysOfType } from '../utils/types-utils';
+import { FilteredVaultsState } from '../reducers/filtered-vaults';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
+
+export const selectFilterSearchText = (state: BeefyState) => state.ui.filteredVaults.searchText;
+export const selectFilterChainIds = (state: BeefyState) => state.ui.filteredVaults.chainIds;
+export const selectFilterSearchSortField = (state: BeefyState) => state.ui.filteredVaults.sort;
+export const selectFilterSearchSortDirection = (state: BeefyState) =>
+  state.ui.filteredVaults.sortDirection;
+export const selectFilterUserCategory = (state: BeefyState) => state.ui.filteredVaults.userCategory;
+export const selectFilterVaultType = (state: BeefyState) => state.ui.filteredVaults.vaultType;
+export const selectFilterVaultCategory = (state: BeefyState) =>
+  state.ui.filteredVaults.vaultCategory;
+export const selectFilterPlatformId = (state: BeefyState) => state.ui.filteredVaults.platformId;
+
+export const selectFilterBoolean = createCachedSelector(
+  (state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key,
+  (state: BeefyState) => state.ui.filteredVaults,
+  (key, filters) => filters[key]
+)((state: BeefyState, key: KeysOfType<FilteredVaultsState, boolean>) => key);
 
 export const selectFilterPopinFilterCount = createSelector(
   selectFilterOptions,
@@ -37,13 +58,22 @@ export const selectFilterPopinFilterCount = createSelector(
     filterOptions.chainIds.length
 );
 
+export const selectFilterPopinFilterCountDesktop = createSelector(
+  selectFilterOptions,
+  filterOptions =>
+    (filterOptions.onlyRetired ? 1 : 0) +
+    (filterOptions.onlyMoonpot ? 1 : 0) +
+    (filterOptions.onlyBoosted ? 1 : 0) +
+    (filterOptions.onlyLaCucina ? 1 : 0) +
+    (filterOptions.platformId !== null ? 1 : 0)
+);
+
 export const selectHasActiveFilter = createSelector(
   selectFilterOptions,
   filterOptions =>
     filterOptions.vaultCategory !== 'all' ||
     filterOptions.userCategory !== 'all' ||
     filterOptions.vaultType !== 'all' ||
-    filterOptions.userCategory !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyLaCucina !== false ||
@@ -51,6 +81,20 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
     filterOptions.sort !== 'default' ||
+    filterOptions.chainIds.length > 0
+);
+
+export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
+  selectFilterOptions,
+  filterOptions =>
+    filterOptions.vaultCategory !== 'all' ||
+    filterOptions.vaultType !== 'all' ||
+    filterOptions.onlyRetired !== false ||
+    filterOptions.onlyMoonpot !== false ||
+    filterOptions.onlyLaCucina !== false ||
+    filterOptions.onlyBoosted !== false ||
+    filterOptions.searchText !== '' ||
+    filterOptions.platformId !== null ||
     filterOptions.chainIds.length > 0
 );
 
@@ -223,20 +267,27 @@ export const selectFilteredVaults = (state: BeefyState) => {
 
   if (filterOptions.sort === 'default') {
     // Vaults are already presorted by date on the reducer
+    // TODO find all boosted and bring to top rather than sort whole array?
+    // TODO explore having separate component to render boosted on top so list doesn't jump on load (downside: dups)
     sortedVaults = sortBy(sortedVaults, vault =>
       selectIsVaultPreStakedOrBoosted(state, vault.id) ? -1 : 1
     );
   }
+
+  const sortDirMul = filterOptions.sortDirection === 'desc' ? -1 : 1;
   if (filterOptions.sort === 'apy') {
     sortedVaults = sortBy(sortedVaults, vault => {
       const apy = apyByVaultId[vault.id];
       if (!apy) {
         return 0;
       }
-      if (apy.totalApy !== undefined) {
-        return -apy.totalApy;
+
+      if (apy.boostedTotalApy !== undefined) {
+        return sortDirMul * apy.boostedTotalApy;
+      } else if (apy.totalApy !== undefined) {
+        return sortDirMul * apy.totalApy;
       } else if (apy.vaultApr !== undefined) {
-        return -apy.vaultApr;
+        return sortDirMul * apy.vaultApr;
       } else {
         throw new Error('Apy type not supported');
       }
@@ -247,20 +298,25 @@ export const selectFilteredVaults = (state: BeefyState) => {
       if (!tvl) {
         return 0;
       }
-      return -tvl.tvl.toNumber();
+      return sortDirMul * tvl.tvl.toNumber();
     });
   } else if (filterOptions.sort === 'safetyScore') {
     sortedVaults = sortBy(sortedVaults, vault => {
-      return -vault.safetyScore;
+      return sortDirMul * vault.safetyScore;
     });
   } else if (filterOptions.sort === 'depositValue') {
     sortedVaults = sortBy(sortedVaults, vault => {
       const balance = selectUserVaultDepositInUsd(state, vault.id);
-      return -balance;
+      return sortDirMul * balance.toNumber();
+    });
+  } else if (filterOptions.sort === 'walletValue') {
+    sortedVaults = sortBy(sortedVaults, vault => {
+      const balance = selectUserVaultDepositTokenWalletBalanceInUsd(state, vault.id);
+      return sortDirMul * balance.toNumber();
     });
   }
 
-  return sortedVaults;
+  return sortedVaults.map(vault => vault.id);
 };
 
 export const selectFilteredVaultCount = createSelector(selectFilteredVaults, ids => ids.length);

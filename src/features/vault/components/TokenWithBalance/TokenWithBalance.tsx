@@ -28,9 +28,9 @@ export function TokenWithBalance({
     <Box className={classes.balanceContainer} display="flex" alignItems="center">
       <Box lineHeight={0}>
         <AssetsImage
-          img={token.id === vault.oracleId ? vault.logoUri : null}
-          assets={token.id === vault.oracleId ? vault.assetIds : [token.id]}
-          alt={token.id}
+          size={16}
+          imageUri={token.id === vault.oracleId ? vault.logoUri : null}
+          assetIds={token.id === vault.oracleId ? vault.assetIds : [token.id]}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>
