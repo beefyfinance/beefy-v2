@@ -38,6 +38,10 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
         <Typography className={classes.text}>
           {vaultId === 'beefy-beFTM-earnings'
             ? t('beFTM-description')
+            : vaultId === 'beefy-beJoe-earnings'
+            ? t('beJOE-description')
+            : vaultId === 'beefy-beqi-earnings'
+            ? t('beQI-description')
             : t('Gov-Info1') +
               earnedToken.symbol +
               t('Gov-Info2') +

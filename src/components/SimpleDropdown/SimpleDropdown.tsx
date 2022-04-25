@@ -1,4 +1,4 @@
-import { makeStyles, Box, MenuItem, Select, FormControl } from '@material-ui/core';
+import { Box, Fade, FormControl, makeStyles, MenuItem, Select } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
 import { isEmpty } from 'lodash';
 import { ReactNode } from 'react';
@@ -45,6 +45,7 @@ export function SimpleDropdown({
             },
             getContentAnchorEl: null,
             classes: { list: classes.selectList },
+            TransitionComponent: Fade,
           }}
           value={selected}
           displayEmpty={true}

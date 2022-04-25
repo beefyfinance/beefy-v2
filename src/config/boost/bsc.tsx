@@ -142,7 +142,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis-renbtc-charge',
-    poolId: 'ellipsis-renbtc',
+    poolId: 'ellipsis-renbtc-eol',
     name: 'ChargeDeFi',
     logo: 'uncategorized/epsRENBTC.png',
     earnedToken: 'Charge',
@@ -427,7 +427,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis-renbtc-gamexchange',
-    poolId: 'ellipsis-renbtc',
+    poolId: 'ellipsis-renbtc-eol',
     name: 'Game X Change',
     logo: 'uncategorized/epsRENBTC.png',
     earnedToken: 'EXP',
@@ -2055,7 +2055,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis_3pool-zefi',
-    poolId: 'ellipsis-3eps',
+    poolId: 'ellipsis-3eps-eol',
     name: 'ZCore Finance',
     logo: 'uncategorized/eps3.png',
     earnedToken: 'ZEFI',
@@ -2454,6 +2454,56 @@ export const pools = [
         social: {
           telegram: 'https://t.me/dibsmoney',
           twitter: 'https://twitter.com/DibsMoney',
+        },
+      },
+    ],
+  },
+  {
+    id: 'moo_BIFI-emp',
+    poolId: 'bifi-maxi',
+    name: 'EMP Money',
+    logo: 'single-assets/BIFI.png',
+    earnedToken: 'ESHARE',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xDB20F6A8665432CE895D724b417f77EcAC956550',
+    earnContractAddress: '0x49208D4679787136FA9449ca37874B8cc543A508',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'ESHARE',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: 'Emp Money is a seigniorage protocol which is designed to follow the price of ETH. It is the first decentralized algorithmic coin on BSC that is paired to the price of ETH. It enables users to enjoy high yields normally only found on high risk assets, but with exposure to ETH (and its price appreciation) rather than just a stable token. A way to look at it would be essentially fractional ETH (think Satoshi to BTC) because 4000 EMP is to equal 1 ETH. The EMP token is the main token of the growing ecosystem, inspired by projects like tomb finance, and has many improvements to the economics with other unique use cases.',
+        website: 'https://emp.money/',
+        social: {
+          telegram: 'https://t.me/empmoney',
+          twitter: 'https://twitter.com/empmoneybsc',
+        },
+      },
+    ],
+  },
+  {
+    id: 'moo_biswap-usdt-busd-biswap',
+    poolId: 'biswap-usdt-busd',
+    name: 'Biswap',
+    assets: ['USDT', 'BUSD'],
+    earnedToken: 'BSW',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x965F527D9159dCe6288a2219DB51fc6Eef120dD1',
+    earnContractAddress: '0x3b7232F265FE4D195478cCa114FA971764729B52',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'BSW',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: 'Biswap is the 1st decentralized exchange platform on the market with a Multi-type Referral Program and the lowest platform transaction fee of 0.1%. We are a prominent DEX for swapping BEP-20 tokens on the Binance Smart Chain network. Biswap is not only about DEX, but an expanding Metaverse! The Biswap team constantly develops its products further and provides users with more crypto opportunities. Biswap ecosystem reaches new horizons as well by arranging new collaborations and epic integrations in the world of DeFi. On Biswap, you are welcome to experience fast and convenient exchange with leading tokens!',
+        website: 'https://biswap.org/farms',
+        social: {
+          telegram: 'https://t.me/biswap',
+          twitter: 'https://twitter.com/Biswap_DEX',
         },
       },
     ],

@@ -420,6 +420,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           )}
         </Box>
       </Box>
+
       {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
       <Stepper />
     </>

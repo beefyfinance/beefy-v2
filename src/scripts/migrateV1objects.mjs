@@ -32,6 +32,8 @@ run. To cut down onrepository pollution, the maintainer may avoid pushing this f
 the staging repository.
 
 Development
++ v0.7.1.2 AllTrades: add similar hack handling of special beJoestaking pool
++ v-.7.1.1 chebiN: fixed bug to stop deletion of the beFTM earnings pool in v2
 + v0.7.1.0 AllTrades & chebiN: fixed bug in reflecting deposits-paused and vault-status 
 											properties; handled edge case of EOL suffix on earnings pools
 + v0.7.0.7 AllTrades: finish hack handling of special beFTM staking pool
@@ -92,7 +94,7 @@ const mAO_CHAIN = [{S_SRC: "bsc"},
 																																				0, -4).join( '/'),
 			mAS_STRAT_TYP = [ "", "SingleStake", "StratLP", "StratMultiLP", "Vamp"];
 const mO_PRPNM_PTNR_GRPHC = {logo: "", background: ""};
-const moAO_SRC_VLTS = {}, mo_trgtVlts = {}; 
+const moAO_SRC_VLTS = {}, mo_trgtVlts = {};
 
 
 async function P_loadChainVaults( O_CHN)	{
@@ -372,13 +374,14 @@ async function Po_resolveVaults()	{
 		} //for (const O_SRC of moAO_SRC_VLTS[ O_CHN.S_SRC]
 
 		//All source vaults on this chain having been processed, cycle through the list of 
-		//	_regular_ vaults on the target platform (v2) and delete those that are unknown on 
-		//	the source platform (v1), the last word on what exists on Beefy. Also note any such 
-		//	deletions.
+		//	_regular_ vaults (i.e. not earnings pools) on the target platform (v2) and delete 
+		//	those that are unknown on the source platform (v1), the last word on what exists on 
+		//	Beefy. Also note any such deletions.
 		const I = i_pruned;
 		Object.values( o_trgtChn).forEach( O_trgt => {
 			if (!(O_trgt && Object === O_trgt.constructor) || (s = O_trgt[ 
-										mS_PRPNM_ID]).endsWith( "bifi-gov") || "beefy-beFTM-earnings" === s)
+										mS_PRPNM_ID]).includes( "bifi-gov") || "beefy-beFTM-earnings" === s || 
+										"beefy-beJoe-earnings" === s || s.endsWith('-earnings'))
 				return;
 			const S = S_TRGT_CHN + " vault: " + O_trgt[ mS_PRPNM_ID];
 			if (O_hits[ S])
@@ -634,15 +637,16 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 																							O_CHN.S_SRC].tokens.WNATIVE.symbol.slice( 1);
 		let s, o;
 		for (const O_SRC of oAO_SRC_BSTS[ O_CHN.S_SRC])	{
-			//if this is the Beefy earnings pool or the unusual Fantom beFTM pool, loop for the 
-			//	next boost to analyze
+			//if this is the Beefy earnings pool or the unusual Fantom beFTM or Avalanche beJoe or beQI
+			//	pool, loop for the next boost to analyze
 			const S_ID = O_SRC[ mS_PRPNM_ID];
 			if (S_ID.startsWith( 'bifi-') && (S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? 
 															S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS)) ||  
 															S_ID.endsWith( '-' + (!O_CHN.S_GVPOOL_SFX_ALIAS ? 
 															S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS) + '-eol')) && 
 															'BIFI' === O_SRC.token && (S_NTV === O_SRC.earnedToken ||  
-															'W' + S_NTV === O_SRC.earnedToken) || 'moo_beFTM' === S_ID)
+															'W' + S_NTV === O_SRC.earnedToken) || 'moo_beFTM' === S_ID || 
+															'moo_beJOE' === S_ID || 'moo_beQI' === S_ID)
 				continue;
 
 			let o_trgt;

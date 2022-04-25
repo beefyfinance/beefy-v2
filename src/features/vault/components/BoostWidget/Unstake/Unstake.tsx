@@ -29,7 +29,7 @@ import {
 import { BeefyState } from '../../../../../redux-types';
 import { isFulfilled } from '../../../../data/reducers/data-loader';
 import { BoostEntity } from '../../../../data/entities/boost';
-import { selectBoostById, selectIsBoostActive } from '../../../../data/selectors/boosts';
+import { selectBoostById } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../data/selectors/chains';
 import { selectErc20TokenById } from '../../../../data/selectors/tokens';
@@ -85,7 +85,6 @@ const UnstakeForm = ({
   const mooToken = useSelector((state: BeefyState) =>
     selectErc20TokenById(state, vault.chainId, vault.earnedTokenId)
   );
-  const isBoostActive = useSelector((state: BeefyState) => selectIsBoostActive(state, boostId));
 
   const mooBalance = useSelector((state: BeefyState) =>
     selectUserBalanceOfToken(state, boost.chainId, mooToken.id)
@@ -196,11 +195,7 @@ const UnstakeForm = ({
             </Box>
             {/*BUTTON */}
             <Box className={classes.btnSection}>
-              {!isBoostActive ? (
-                <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
-                  {t('Deposit-Disabled')}
-                </Button>
-              ) : isWalletConnected ? (
+              {isWalletConnected ? (
                 !isWalletOnVaultChain ? (
                   <Button
                     onClick={() => dispatch(askForNetworkChange({ chainId: boost.chainId }))}

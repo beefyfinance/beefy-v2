@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, makeStyles, Typography, Box, Hidden } from '@material-ui/core';
+import { Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -132,7 +132,7 @@ const _Item = connect((state: BeefyState, { vault }: { vault: VaultEntity }) => 
           [classes.withMuted]: isVaultPausedOrRetired(vault),
           [classes.withIsLongName]: vault.name.length > 12,
           [classes.withBoosted]: isBoosted,
-          [classes.withGovVault]: isGovVault(vault),
+          [classes.withGovVault]: isGovVault(vault) && !isVaultPausedOrRetired(vault),
         })}
       >
         <Grid container>

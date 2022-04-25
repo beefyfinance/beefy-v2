@@ -1,5 +1,5 @@
-import { EnhancedStore, CombinedState, MiddlewareArray, AnyAction } from '@reduxjs/toolkit';
-import { ThunkMiddleware } from 'redux-thunk';
+import { AnyAction, CombinedState, EnhancedStore, MiddlewareArray } from '@reduxjs/toolkit';
+import { ThunkAction, ThunkMiddleware } from 'redux-thunk';
 import { ApyState } from './features/data/reducers/apy';
 import { BoostsState } from './features/data/reducers/boosts';
 import { BuybackState } from './features/data/reducers/buyback';
@@ -20,6 +20,9 @@ import { WalletActionsState } from './features/data/reducers/wallet/wallet-actio
 import { ZapsState } from './features/data/reducers/zaps';
 import { WithdrawState } from './features/data/reducers/wallet/withdraw';
 import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
+import { MintersState } from './features/data/reducers/minters';
+import { Action } from 'redux';
+import { InfoCardsState } from './features/data/reducers/info-cards';
 
 export interface BeefyState {
   entities: {
@@ -29,6 +32,8 @@ export interface BeefyState {
     boosts: BoostsState;
     platforms: PlatformsState;
     zaps: ZapsState;
+    minters: MintersState;
+    infoCards: InfoCardsState;
   };
   biz: {
     tvl: TvlState;
@@ -59,4 +64,11 @@ export type BeefyStore = EnhancedStore<
     | ((store: any) => (next: any) => (action: any) => any)
     | ThunkMiddleware<CombinedState<BeefyState>, any, null>
   >
+>;
+
+export type BeefyThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  BeefyState,
+  unknown,
+  Action<string>
 >;

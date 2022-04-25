@@ -1,5 +1,3 @@
-import { ChainEntity } from './chain';
-
 /**
  * A platform is a project targeted by vaults
  * Like "curve", "pancakeswap", "etc"

@@ -11,7 +11,6 @@ import {
   fetchAllAddressBookAction,
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
-import { BoostConfig, VaultConfig } from '../apis/config';
 import { ChainEntity } from '../entities/chain';
 import {
   isTokenErc20,
@@ -25,6 +24,8 @@ import {
   getBoostTokenIdFromLegacyConfig,
   getOracleTokenFromLegacyVaultConfig,
 } from '../utils/config-hacks';
+import { fetchAllMinters } from '../actions/minters';
+import { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos
@@ -113,6 +114,15 @@ export const tokensSlice = createSlice({
       for (const [chainId, boosts] of Object.entries(action.payload)) {
         for (const boost of boosts) {
           addBoostToState(sliceState, chainId, boost);
+        }
+      }
+    });
+
+    // when minter list is fetched, add all new tokens
+    builder.addCase(fetchAllMinters.fulfilled, (sliceState, action) => {
+      for (const [chainId, minters] of Object.entries(action.payload.byChainId)) {
+        for (const minter of minters) {
+          addMinterToState(sliceState, chainId, minter);
         }
       }
     });
@@ -221,6 +231,54 @@ function addBoostToState(
     temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
     sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
+  }
+}
+
+function addMinterToState(
+  sliceState: WritableDraft<TokensState>,
+  chainId: ChainEntity['id'],
+  apiMinter: MinterConfig
+) {
+  if (sliceState.byChainId[chainId] === undefined) {
+    sliceState.byChainId[chainId] = {
+      byId: {},
+      interestingBalanceTokenIds: [],
+      native: null,
+      wnative: null,
+    };
+  }
+
+  for (const sourceToken of [apiMinter.depositToken, apiMinter.mintedToken]) {
+    const sourceTokenId = sourceToken.oracleId;
+    if (sliceState.byChainId[chainId].byId[sourceTokenId] === undefined) {
+      const token: TokenEntity =
+        sourceToken.type === 'erc20'
+          ? {
+              id: sourceTokenId,
+              symbol: sourceToken.symbol,
+              chainId: chainId,
+              contractAddress: sourceToken.contractAddress,
+              decimals: sourceToken.decimals,
+              buyUrl: null,
+              type: 'erc20',
+              description: null,
+              website: null,
+            }
+          : {
+              id: sourceTokenId,
+              symbol: sourceToken.symbol,
+              chainId: chainId,
+              address: null,
+              decimals: sourceToken.decimals,
+              buyUrl: null,
+              type: 'native',
+              website: null,
+              description: null,
+            };
+      temporaryWrappedtokenFix(token);
+      sliceState.byChainId[chainId].byId[token.id] = token;
+      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
+    }
   }
 }
 

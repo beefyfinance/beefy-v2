@@ -3,21 +3,22 @@ import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
-  Popover,
   Checkbox,
+  Fade,
   FormControlLabel,
   FormGroup,
+  Hidden,
+  IconButton,
+  InputAdornment,
   makeStyles,
+  Popover,
   TextField,
   Typography,
-  InputAdornment,
-  IconButton,
-  Hidden,
 } from '@material-ui/core';
 import { styles } from './styles';
 import { LabeledDropdown } from '../../../../components/LabeledDropdown';
 import { MultipleLabeledDropdown } from '../../../../components/MultipleLabeledDropdown';
-import { Search, CloseRounded } from '@material-ui/icons';
+import { CloseRounded, Search } from '@material-ui/icons';
 import { FilterCategories } from './FilterCategories';
 import { filteredVaultsActions, FilteredVaultsState } from '../../../data/reducers/filtered-vaults';
 import { selectAllPlatform } from '../../../data/selectors/platforms';
@@ -32,6 +33,8 @@ import {
   selectHasActiveFilter,
   selectTotalVaultCount,
 } from '../../../data/selectors/filtered-vaults';
+import { ChainSelector } from '../ChainSelector';
+import { ChainEntity } from '../../../data/entities/chain';
 
 const useStyles = makeStyles(styles as any);
 const _Filter = () => {
@@ -55,6 +58,13 @@ const _Filter = () => {
         value = value.filter(v => v !== 'all');
       }
       dispatch(filteredVaultsActions.setChainIds(value));
+    },
+    [dispatch]
+  );
+
+  const handleChainSelectorChange = useCallback(
+    (selected: ChainEntity['id'][]) => {
+      dispatch(filteredVaultsActions.setChainIds(selected));
     },
     [dispatch]
   );
@@ -176,6 +186,13 @@ const _Filter = () => {
 
   return (
     <>
+      <Hidden mdDown>
+        <ChainSelector
+          selected={filterOptions.chainIds}
+          onChange={handleChainSelectorChange}
+          className={classes.chainSelector}
+        />
+      </Hidden>
       <FilterCategories />
       <Box className={classes.filtersContainer}>
         {/*Search*/}
@@ -310,6 +327,7 @@ const _Filter = () => {
         anchorEl={anchorEl}
         onClose={handleClose}
         className={classes.filter}
+        TransitionComponent={Fade}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -398,25 +416,27 @@ const _Filter = () => {
             </FormGroup>
           </Box>
           <Box className={classes.selectors}>
-            <Box className={classes.selector}>
-              <MultipleLabeledDropdown
-                fullWidth={true}
-                noBorder={true}
-                list={chainTypes}
-                selected={filterOptions.chainIds.length === 0 ? ['all'] : filterOptions.chainIds}
-                handler={handleChangeBlockchain}
-                renderValue={selected => (
-                  <Typography className={classes.value}>
-                    <span className={`${classes.label} label`}>{t('Filter-Blockchn')}</span>{' '}
-                    {filterOptions.chainIds.length > 1
-                      ? t('Filter-BlockchnMultiple')
-                      : selected.join('')}
-                  </Typography>
-                )}
-                label={t('Filter-Blockchn')}
-                multiple={true}
-              />
-            </Box>
+            <Hidden lgUp>
+              <Box className={classes.selector}>
+                <MultipleLabeledDropdown
+                  fullWidth={true}
+                  noBorder={true}
+                  list={chainTypes}
+                  selected={filterOptions.chainIds.length === 0 ? ['all'] : filterOptions.chainIds}
+                  handler={handleChangeBlockchain}
+                  renderValue={selected => (
+                    <Typography className={classes.value}>
+                      <span className={`${classes.label} label`}>{t('Filter-Blockchn')}</span>{' '}
+                      {filterOptions.chainIds.length > 1
+                        ? t('Filter-BlockchnMultiple')
+                        : selected.join('')}
+                    </Typography>
+                  )}
+                  label={t('Filter-Blockchn')}
+                  multiple={true}
+                />
+              </Box>
+            </Hidden>
             <Box className={classes.selector}>
               <LabeledDropdown
                 fullWidth={true}

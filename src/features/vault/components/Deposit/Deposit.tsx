@@ -288,6 +288,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           )}
         </Box>
       </Box>
+
       {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
       <Stepper />
     </>

@@ -3,6 +3,7 @@ import { BigNumber } from 'bignumber.js';
 import { FeeHistoryResult } from 'web3-eth';
 import { maybeHexToNumber } from '../../../helpers/format';
 import { getConfigApi } from '../apis/instances';
+import { FriendlyError } from './error-utils';
 
 function medianOf(numbers: BigNumber[]): BigNumber {
   const sortedNumbers = numbers.slice().sort((a, b) => a.comparedTo(b));
@@ -92,11 +93,31 @@ export async function getGasPriceOptions(web3: Web3) {
   const eip1559 = await isWeb3ConnectedToEIP1559Chain(web3);
 
   if (eip1559) {
-    const gasPriceEstimate = await getGasPriceEstimate(web3);
-    return {
-      maxPriorityFeePerGas: gasPriceEstimate.maxPriorityFeePerGas,
-      maxFeePerGas: gasPriceEstimate.maxFeePerGas,
-    };
+    try {
+      const gasPriceEstimate = await getGasPriceEstimate(web3);
+      return {
+        maxPriorityFeePerGas: gasPriceEstimate.maxPriorityFeePerGas,
+        maxFeePerGas: gasPriceEstimate.maxFeePerGas,
+      };
+    } catch (err) {
+      if (
+        err &&
+        err.message &&
+        typeof err.message === 'string' &&
+        err.message.includes('eth_feeHistory')
+      ) {
+        // most likely error is "The method 'eth_feeHistory' does not exist / is not available."
+        // this can happen on EIP1559 networks when the user's wallet is out of date
+        // we show a more user friendly message instead
+        console.error(err);
+        throw new FriendlyError(
+          'Gas estimation failed. This can happen when your wallet doesn\'t support the "EIP-5119" standard. Updating your wallet software may help.',
+          err
+        );
+      } else {
+        throw err;
+      }
+    }
   }
 
   return {};

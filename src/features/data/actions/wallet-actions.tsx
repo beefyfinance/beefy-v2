@@ -4,9 +4,9 @@ import { Dispatch } from 'redux';
 import boostAbi from '../../../config/abi/boost.json';
 import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
-import beFTMAbi from '../../../config/abi/BeFtmAbi.json';
+import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
-import { BeefyState } from '../../../redux-types';
+import { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getWalletConnectApiInstance } from '../apis/instances';
 import { ZapEstimate, ZapOptions } from '../apis/zap';
 import { BoostEntity } from '../entities/boost';
@@ -40,14 +40,17 @@ import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { getZapAddress } from '../utils/zap-utils';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
-import { BeFTMToken, Ftmtoken } from '../../vault/components/BeftmCard/BeFtmToken';
-import { BinSpiritToken } from '../../vault/components/SpiritCard/SpiritToken';
+import { AbiItem } from 'web3-utils';
+import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
+import { FriendlyError } from '../utils/error-utils';
+import { MinterEntity } from '../entities/minter';
+import { reloadReserves } from './minters';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
 
 const approval = (token: TokenErc20, spenderAddress: string) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -77,11 +80,11 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
         tokens: uniqBy([token, native], 'id'),
       }
     );
-  };
+  });
 };
 
 const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -134,7 +137,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
         tokens: getVaultTokensToRefresh(state, vault),
       }
     );
-  };
+  });
 };
 
 const beefIn = (
@@ -144,7 +147,7 @@ const beefIn = (
   zapEstimate: ZapEstimate,
   slippageTolerance: number
 ) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -199,11 +202,11 @@ const beefIn = (
         tokens: uniqBy(getVaultTokensToRefresh(state, vault).concat([tokenIn, tokenOut]), 'id'),
       }
     );
-  };
+  });
 };
 
 const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOptions) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -253,7 +256,7 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
         tokens: getVaultTokensToRefresh(state, vault),
       }
     );
-  };
+  });
 };
 
 const beefOutAndSwap = (
@@ -263,7 +266,7 @@ const beefOutAndSwap = (
   zapEstimate: ZapEstimate,
   slippageTolerance: number
 ) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -326,11 +329,11 @@ const beefOutAndSwap = (
         ),
       }
     );
-  };
+  });
 };
 
 const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -384,11 +387,11 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
         tokens: getVaultTokensToRefresh(state, vault),
       }
     );
-  };
+  });
 };
 
 const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -419,11 +422,11 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         govVaultId: vault.id,
       }
     );
-  };
+  });
 };
 
 const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -460,11 +463,11 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
         govVaultId: vault.id,
       }
     );
-  };
+  });
 };
 
 const claimGovVault = (vault: VaultGov) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -494,11 +497,11 @@ const claimGovVault = (vault: VaultGov) => {
         govVaultId: vault.id,
       }
     );
-  };
+  });
 };
 
 const exitGovVault = (vault: VaultGov) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -536,11 +539,11 @@ const exitGovVault = (vault: VaultGov) => {
         govVaultId: vault.id,
       }
     );
-  };
+  });
 };
 
 const claimBoost = (boost: BoostEntity) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -570,11 +573,11 @@ const claimBoost = (boost: BoostEntity) => {
         boostId: boost.id,
       }
     );
-  };
+  });
 };
 
 const exitBoost = (boost: BoostEntity) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -613,11 +616,11 @@ const exitBoost = (boost: BoostEntity) => {
         boostId: boost.id,
       }
     );
-  };
+  });
 };
 
 const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -650,12 +653,12 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
         boostId: boost.id,
       }
     );
-  };
+  });
 };
 
 //const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
 const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
-  return async (dispatch: Dispatch<any>, getState: () => BeefyState) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -688,11 +691,19 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
         boostId: boost.id,
       }
     );
-  };
+  });
 };
 
-const beFtmDeposit = (contractAddr: string, amount: BigNumber, max: boolean) => {
-  return async (dispatch, getState) => {
+const mintDeposit = (
+  chainId: ChainEntity['id'],
+  contractAddr: string,
+  payToken: TokenEntity,
+  mintedToken: TokenEntity,
+  amount: BigNumber,
+  max: boolean,
+  minterId?: MinterEntity['id']
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
     const state = getState();
     const address = selectWalletAddress(state);
@@ -700,52 +711,88 @@ const beFtmDeposit = (contractAddr: string, amount: BigNumber, max: boolean) => 
       return;
     }
 
+    const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(beFTMAbi as any, contractAddr);
-    const gasPrices = await getGasPriceOptions(web3);
-    const rawAmount = amount.shiftedBy(Ftmtoken.decimals).decimalPlaces(0);
-
-    const transaction = (() => {
-      return contract.methods
-        .depositNative()
-        .send({ from: address, value: rawAmount.toString(10), ...gasPrices });
-    })();
-
-    bindTransactionEvents(dispatch, transaction, {
-      amount: amount,
-      token: BeFTMToken,
-    });
-  };
-};
-
-const spiritDeposit = (network, contractAddr, amount, max) => {
-  return async (dispatch, getState) => {
-    dispatch({ type: WALLET_ACTION_RESET });
-    const state = getState();
-    const address = selectWalletAddress(state);
-    if (!address) {
-      return;
-    }
-
-    const walletApi = await getWalletConnectApiInstance();
-    const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
+    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
-      if (max) {
-        return contract.methods.depositAll().send({ from: address, ...gasPrices });
+      const rawAmount = convertAmountToRawNumber(amount, payToken.decimals);
+
+      if (isTokenNative(payToken)) {
+        return contract.methods
+          .depositNative()
+          .send({ from: address, value: rawAmount, ...gasPrices });
       } else {
-        return contract.methods.deposit(amount).send({ from: address, ...gasPrices });
+        if (max) {
+          return contract.methods.depositAll().send({ from: address, ...gasPrices });
+        } else {
+          return contract.methods.deposit(rawAmount).send({ from: address, ...gasPrices });
+        }
       }
     })();
 
-    bindTransactionEvents(dispatch, transaction, {
-      amount: new BigNumber(amount).shiftedBy(-BinSpiritToken.decimals),
-      token: BinSpiritToken,
-    });
-  };
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        amount: amount,
+        token: mintedToken,
+      },
+      {
+        chainId: chainId,
+        spenderAddress: contractAddr,
+        tokens: uniqBy([gasToken, payToken, mintedToken], 'id'),
+        minterId,
+      }
+    );
+  });
+};
+
+const burnWithdraw = (
+  chainId: ChainEntity['id'],
+  contractAddr: string,
+  withdrawnToken: TokenEntity,
+  burnedToken: TokenEntity,
+  amount: BigNumber,
+  max: boolean,
+  minterId: MinterEntity['id']
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const gasToken = selectChainNativeToken(state, chainId);
+    const walletApi = await getWalletConnectApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(minterAbi as AbiItem[], contractAddr);
+    const gasPrices = await getGasPriceOptions(web3);
+
+    const transaction = (() => {
+      const rawAmount = convertAmountToRawNumber(amount, burnedToken.decimals);
+      return contract.methods.withdraw(rawAmount).send({ from: address, ...gasPrices });
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        amount: amount,
+        token: burnedToken,
+      },
+      {
+        chainId: chainId,
+        spenderAddress: contractAddr,
+        tokens: uniqBy([gasToken, withdrawnToken, burnedToken], 'id'),
+        minterId,
+      }
+    );
+  });
 };
 
 export const walletActions = {
@@ -763,9 +810,31 @@ export const walletActions = {
   claimBoost,
   stakeBoost,
   unstakeBoost,
-  beFtmDeposit,
-  spiritDeposit,
+  mintDeposit,
+  burnWithdraw,
 };
+
+function captureWalletErrors<ReturnType>(
+  func: BeefyThunk<Promise<ReturnType>>
+): BeefyThunk<Promise<ReturnType>> {
+  return async (dispatch, getState, extraArgument) => {
+    try {
+      return await func(dispatch, getState, extraArgument);
+    } catch (error) {
+      const txError =
+        error instanceof FriendlyError
+          ? { message: String(error.getInnerError()), friendlyMessage: error.message }
+          : { message: String(error) };
+
+      dispatch(
+        createWalletActionErrorAction(txError, {
+          amount: BIG_ZERO,
+          token: null,
+        })
+      );
+    }
+  };
+}
 
 function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity }>(
   dispatch: Dispatch<any>,
@@ -777,6 +846,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     tokens: TokenEntity[];
     govVaultId?: VaultEntity['id'];
     boostId?: BoostEntity['id'];
+    minterId?: MinterEntity['id'];
   }
 ) {
   transaction
@@ -797,6 +867,14 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
             tokens: refreshOnSuccess.tokens,
           })
         );
+        if (refreshOnSuccess.minterId) {
+          dispatch(
+            reloadReserves({
+              chainId: refreshOnSuccess.chainId,
+              minterId: refreshOnSuccess.minterId,
+            })
+          );
+        }
       }
     })
     .on('error', function (error: TrxError) {
