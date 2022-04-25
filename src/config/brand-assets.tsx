@@ -175,6 +175,20 @@ export const BRAND_ASSETS = [
           },
         ],
       },
+      {
+        id: 'beQI',
+        background: 'dark' as const,
+        versions: [
+          {
+            type: 'svg',
+            fileName: 'beQI',
+          },
+          {
+            type: 'png',
+            fileName: 'beQI',
+          },
+        ],
+      },
     ],
   },
 ];

@@ -43,6 +43,8 @@ import { getGasPriceOptions } from '../utils/gas-utils';
 import { AbiItem } from 'web3-utils';
 import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
+import { MinterEntity } from '../entities/minter';
+import { reloadReserves } from './minters';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -698,7 +700,8 @@ const mintDeposit = (
   payToken: TokenEntity,
   mintedToken: TokenEntity,
   amount: BigNumber,
-  max: boolean
+  max: boolean,
+  minterId?: MinterEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -741,6 +744,7 @@ const mintDeposit = (
         chainId: chainId,
         spenderAddress: contractAddr,
         tokens: uniqBy([gasToken, payToken, mintedToken], 'id'),
+        minterId,
       }
     );
   });
@@ -752,7 +756,8 @@ const burnWithdraw = (
   withdrawnToken: TokenEntity,
   burnedToken: TokenEntity,
   amount: BigNumber,
-  max: boolean
+  max: boolean,
+  minterId: MinterEntity['id']
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -784,6 +789,7 @@ const burnWithdraw = (
         chainId: chainId,
         spenderAddress: contractAddr,
         tokens: uniqBy([gasToken, withdrawnToken, burnedToken], 'id'),
+        minterId,
       }
     );
   });
@@ -840,6 +846,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     tokens: TokenEntity[];
     govVaultId?: VaultEntity['id'];
     boostId?: BoostEntity['id'];
+    minterId?: MinterEntity['id'];
   }
 ) {
   transaction
@@ -860,6 +867,14 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
             tokens: refreshOnSuccess.tokens,
           })
         );
+        if (refreshOnSuccess.minterId) {
+          dispatch(
+            reloadReserves({
+              chainId: refreshOnSuccess.chainId,
+              minterId: refreshOnSuccess.minterId,
+            })
+          );
+        }
       }
     })
     .on('error', function (error: TrxError) {

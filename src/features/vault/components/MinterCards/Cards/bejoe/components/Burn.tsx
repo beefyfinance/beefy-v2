@@ -25,10 +25,8 @@ import { askForNetworkChange, askForWalletConnection } from '../../../../../../d
 import { walletActions } from '../../../../../../data/actions/wallet-actions';
 import { useStepper } from '../../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../../MinterCard';
-import { selectMinterById } from '../../../../../../data/selectors/minters';
+import { selectMinterById, selectMinterReserves } from '../../../../../../data/selectors/minters';
 import { selectAllowanceByTokenId } from '../../../../../../data/selectors/allowances';
-import { useReserves } from '../useReserves';
-import { selectChainById } from '../../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
@@ -57,9 +55,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   const joeAllowance = useSelector((state: BeefyState) =>
     selectAllowanceByTokenId(state, vault.chainId, tokenJoe.id, minter.contractAddress)
   );
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-
-  const reserves = useReserves(minter.contractAddress, chain, beJoeBalance);
+  const reserves = useSelector((state: BeefyState) => selectMinterReserves(state, minter.id));
 
   const resetFormData = () => {
     setFormData({
@@ -163,7 +159,8 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         tokenJoe,
         tokenBeJoe,
         formData.withdraw.amount,
-        formData.withdraw.max
+        formData.withdraw.max,
+        minterId
       ),
       pending: false,
     });
