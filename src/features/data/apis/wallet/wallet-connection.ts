@@ -466,6 +466,15 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
         return connector.getProvider();
       },
     },
+    'custom-bitkeep': {
+      display: {
+        name: 'BitKeep Wallet',
+        description: 'Connect your BitKeep Wallet',
+        logo: require(`../../../../images/wallets/bitkeep-wallet.png`).default,
+      },
+      package: 'bitkeep',
+      connector: connectors.injected,
+    },
   };
 
   return {
