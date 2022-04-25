@@ -142,7 +142,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis-renbtc-charge',
-    poolId: 'ellipsis-renbtc',
+    poolId: 'ellipsis-renbtc-eol',
     name: 'ChargeDeFi',
     logo: 'uncategorized/epsRENBTC.png',
     earnedToken: 'Charge',
@@ -427,7 +427,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis-renbtc-gamexchange',
-    poolId: 'ellipsis-renbtc',
+    poolId: 'ellipsis-renbtc-eol',
     name: 'Game X Change',
     logo: 'uncategorized/epsRENBTC.png',
     earnedToken: 'EXP',
@@ -2055,7 +2055,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis_3pool-zefi',
-    poolId: 'ellipsis-3eps',
+    poolId: 'ellipsis-3eps-eol',
     name: 'ZCore Finance',
     logo: 'uncategorized/eps3.png',
     earnedToken: 'ZEFI',
