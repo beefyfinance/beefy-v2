@@ -45,7 +45,7 @@ export const styles = theme => ({
     padding: theme.spacing(2),
     backgroundColor: theme.palette.background.content,
     borderRadius: '8px',
-    margin: `${theme.spacing(4)}px 0px`,
+    margin: `${theme.spacing(3)}px 0px`,
   },
   feesContent: {
     display: 'flex',
@@ -55,6 +55,10 @@ export const styles = theme => ({
     width: '50%',
   },
   advice: {
+    color: theme.palette.text.disabled,
+    margin: `${theme.spacing(1)}px 0px`,
+  },
+  advice1: {
     color: theme.palette.text.disabled,
   },
   label: {
@@ -76,7 +80,6 @@ export const styles = theme => ({
   flexContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: theme.spacing(1),
   },
   inputContainer: {
     '& .MuiPaper-root': {
@@ -126,5 +129,11 @@ export const styles = theme => ({
   },
   networkPicker: {
     width: '50%',
+    marginRight: theme.spacing(1),
+  },
+  networkValue: {
+    display: 'flex',
+    color: `${theme.palette.text.secondary} !important`,
+    fontWeight: 700,
   },
 });

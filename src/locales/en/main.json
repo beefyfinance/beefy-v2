@@ -360,5 +360,14 @@
   "InfoCard-binSPIRIT-Work-Title": "How Does SpiritSwap Voting Work?",
   "InfoCard-binSPIRIT-Work-Text": "SpiritSwap’s inSPIRIT governance token uses a vote locking model. binSPIRIT is a wrapped version of 4-year-locked inSPIRIT. inSPIRIT & binSPIRIT holders receive voting power, participation rewards, and boosted farming rewards. binSPIRIT holders can vote weekly on the gauges to receive SPIRIT emission allocation.",
   "InfoCard-binSPIRIT-Bribes-Title": "Use Beefy’s Voting Power to Earn Bribes",
-  "InfoCard-binSPIRIT-Bribes-Text": "50% of Beefy’s voting rights from locking SPIRIT are given to binSPIRIT holders. Beefy distributes these rights to binSPIRIT users to vote weekly via Snapshot. There is an open bribe environment for projects to bribe binSPIRIT holders for their voting power. Voters will receive bribes via an airdrop generated from the voting history."
+  "InfoCard-binSPIRIT-Bribes-Text": "50% of Beefy’s voting rights from locking SPIRIT are given to binSPIRIT holders. Beefy distributes these rights to binSPIRIT users to vote weekly via Snapshot. There is an open bribe environment for projects to bribe binSPIRIT holders for their voting power. Voters will receive bribes via an airdrop generated from the voting history.",
+  "Bridge-Title": "BIFI Cross Chain Bridge",
+  "Bridge-PowerBy": "Powered by multichain.org router",
+  "Bridge-Crosschain": "Crosschain fee",
+  "Bridge-Gas": "Gas Fee",
+  "Bridge-MinAmount": "Min crosschain amount",
+  "Bridge-MaxAmount": "MAX crosschain amount",
+  "Bridge-Advice-1": "Estimated Time of Crosschain Arrival is 10-30 min",
+  "Bridge-Advice-2": "Crosschain amount larger than 1,000 BIFI could take up to 12 hours",
+  "Bridge-Button-1": "Bridge BIFI to {{network}}"
 }

@@ -1,5 +1,5 @@
 import { Modal, Box, IconButton, Typography, Button, Paper, InputBase } from '@material-ui/core';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card } from '../../features/vault/components/Card';
 import { CardHeader } from '../../features/vault/components/Card/CardHeader';
 import { CardContent } from '../../features/vault/components/Card/CardContent';
@@ -9,6 +9,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/styles';
 import { AssetsImage } from '../AssetsImage';
+import { useSelector } from 'react-redux';
+import { selectAllChains } from '../../features/data/selectors/chains';
+import { SimpleDropdown } from '../SimpleDropdown';
 
 const useStyles = makeStyles(styles as any);
 
@@ -19,7 +22,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
     left: '50%',
     transform: 'translate(-50%, -50%)',
     boxShadow: 24,
-    minWidth: '400px',
+    width: '400px',
   };
   return (
     <Modal
@@ -29,15 +32,38 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
       onClose={handleClose}
     >
       <Box sx={style}>
-        <Preview />
+        <Preview handleClose={handleClose} />
       </Box>
     </Modal>
   );
 }
 
-function Preview() {
+function Preview({ handleClose }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [network1, setNetwork1] = React.useState('bsc');
   const { t } = useTranslation();
   const classes = useStyles();
+
+  const chains = useSelector(selectAllChains);
+  const chainTypes = useMemo(() => {
+    const list = {};
+    for (const chain of chains) {
+      list[chain.id] = chain.name;
+    }
+    return list;
+  }, [chains]);
+
+  const selectedRenderer = network => {
+    return (
+      <Box className={classes.flexContainer}>
+        <img src={require(`../../images/networks/${network}.svg`).default} alt={network} />{' '}
+        <Typography  className={classes.networkValue}>
+          {chainTypes[network]}
+        </Typography>
+      </Box>
+    );
+  };
+
   return (
     <Card>
       <CardHeader className={classes.header}>
@@ -47,7 +73,7 @@ function Preview() {
             {t('Bridge-PowerBy')}
           </Typography>
         </Box>
-        <IconButton className={classes.removeHover} aria-label="settings">
+        <IconButton onClick={handleClose} className={classes.removeHover} aria-label="settings">
           <CloseIcon htmlColor="#8A8EA8" />
         </IconButton>
       </CardHeader>
@@ -63,7 +89,15 @@ function Preview() {
             </Typography>
           </Box>
           <Box className={classes.flexContainer}>
-            <Box className={classes.networkPicker}> a</Box>
+            <Box className={classes.networkPicker}>
+              <SimpleDropdown
+                list={chainTypes}
+                selected={network1}
+                handler={() => console.log('item')}
+                renderValue={selectedRenderer}
+                noBorder={false}
+              />
+            </Box>
             <Box className={classes.inputContainer}>
               <Paper component="form" className={classes.root}>
                 <Box className={classes.inputLogo}>
@@ -88,7 +122,15 @@ function Preview() {
             </Typography>
           </Box>
           <Box className={classes.flexContainer}>
-            <Box className={classes.networkPicker}> a</Box>
+            <Box className={classes.networkPicker}>
+              <SimpleDropdown
+                list={chainTypes}
+                selected={network1}
+                handler={() => console.log('item')}
+                renderValue={selectedRenderer}
+                noBorder={false}
+              />
+            </Box>
             <Box className={classes.inputContainer}>
               <Paper component="form" className={classes.root}>
                 <Box className={classes.inputLogo}>
@@ -102,7 +144,7 @@ function Preview() {
         </Box>
         {/* Fees */}
         <FeesInfo />
-        <Button className={classes.btn}>{t('Bridge-Button-1')}</Button>
+        <Button className={classes.btn}>{t('Bridge-Button-1', { network: 'Fantom' })}</Button>
       </CardContent>
     </Card>
   );
@@ -154,7 +196,7 @@ const FeesInfo = () => {
       <Typography variant="body2" className={classes.advice}>
         {t('Bridge-Advice-1')}
       </Typography>
-      <Typography variant="body2" className={classes.advice}>
+      <Typography variant="body2" className={classes.advice1}>
         {t('Bridge-Advice-2')}
       </Typography>
     </Box>
