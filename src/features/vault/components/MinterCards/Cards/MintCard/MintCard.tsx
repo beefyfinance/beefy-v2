@@ -182,7 +182,7 @@ export const MintCard = memo(function MintCard({ vaultId, minterId }: MinterCard
           <img
             className={classes.logo}
             src={
-              require(`../../../../../../images/partners/${minter.mintedToken.symbol}.svg`).default
+              require(`../../../../../../images/single-assets/${minter.mintedToken.symbol}.svg`).default
             }
             alt={minter.mintedToken.symbol}
           />
