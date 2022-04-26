@@ -303,7 +303,7 @@
   "Mint-Title": "Mint {{token}}",
   "Mint-Minimum": "{{input}} minimum",
   "Mint-Content": "Lock your {{token2}} to get {{token1}}. Each {{token1}} is backed by 1 {{token2}}.",
-  "Mint-Reminder": "{{token1}} is minted at a 1:1 rate with {{token2}}. If the price of {{token1}} is under peg new {{token1}} supply won't be minted, but bought off the market instead of at a better rate.",
+  "Mint-Reminder": "{{token1}} is minted at a 1:1 ratio with {{token2}}. If {{token1}}'s price is under peg when a user attempts to mint, {{token1}} will instead be purchased at the better market rate.",
   "Mint-Btn": "Get {{token}}",
   "mint": "Mint",
   "burn": "Burn",
