@@ -230,7 +230,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             <Box className={classes.inputLogo}>
               <AssetsImage
                 assets={[]}
-                img={`partners/${minter.mintedToken.symbol}.svg`}
+                img={`single-assets/${minter.mintedToken.symbol}.png`}
                 alt={minter.mintedToken.symbol}
               />
             </Box>
