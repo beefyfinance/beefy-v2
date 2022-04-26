@@ -1,34 +1,33 @@
 [
   {
-    "id": "bsc vault: ellipsis-renbtc-eol",
+    "id": "fantom vault: beets-exploding-shrapnel-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: ellipsis-fusdt-3eps-eol",
+    "id": "fantom vault: beets-boomer-beets-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "bsc vault: ellipsis-3eps-eol",
+    "id": "fantom vault: beets-demeters-degree-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "avax vault: png-axlatom-wavax",
-    "type": "Added"
+    "id": "fantom vault: beets-variation-theme-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "bsc boost: moo_ellipsis-renbtc-charge",
-    "type": "synced"
+    "id": "fantom vault: beets-double-dollar-fugue-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
-    "id": "bsc boost: moo_ellipsis-renbtc-gamexchange",
-    "type": "synced"
-  },
-  {
-    "id": "bsc boost: moo_ellipsis_3pool-zefi",
-    "type": "synced"
+    "id": "fantom vault: beets-classic-trio-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
