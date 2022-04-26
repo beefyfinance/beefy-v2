@@ -137,10 +137,4 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.vaults.default,
     borderRadius: '8px',
   },
-  boxReminder: {
-    marginTop: theme.spacing(2),
-    padding: theme.spacing(2),
-    borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.background.content,
-  },
 });

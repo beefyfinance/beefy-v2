@@ -168,11 +168,6 @@ export const BeFtmCard = memo(function BeFtmCard({ vaultId, minterId }: MinterCa
           <Typography className={classes.content} variant="body1">
             {t('beFtm-Content')}
           </Typography>
-          <Box className={classes.boxReminder}>
-            <Typography className={classes.content} variant="body1">
-              {t('beFtm-Reminder')}
-            </Typography>
-          </Box>
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>

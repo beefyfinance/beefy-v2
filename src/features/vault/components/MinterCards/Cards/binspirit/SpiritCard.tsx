@@ -183,11 +183,6 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
           <Typography className={classes.content} variant="body1">
             {t('Spirit-Content')}
           </Typography>
-          <Box className={classes.boxReminder}>
-            <Typography className={classes.content} variant="body1">
-              {t('Spirit-Reminder')}
-            </Typography>
-          </Box>
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
