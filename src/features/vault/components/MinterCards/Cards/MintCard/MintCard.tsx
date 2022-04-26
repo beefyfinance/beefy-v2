@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '../../../Card';
-import BinSpirit from '../../../../../../images/partners/binSpiritToken.svg';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +18,7 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet';
-import { selectErc20TokenById } from '../../../../../data/selectors/tokens';
+import { selectErc20TokenById, selectTokenById } from '../../../../../data/selectors/tokens';
 import { isString } from 'lodash';
 import { Step } from '../../../../../../components/Steps/types';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
@@ -31,8 +30,7 @@ import { selectAllowanceByTokenId } from '../../../../../data/selectors/allowanc
 
 const useStyles = makeStyles(styles as any);
 
-// TODO this and beFTM minter cards could be refactored out to a common component
-export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: MinterCardParams) {
+export const MintCard = memo(function MintCard({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -42,20 +40,22 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
-  const tokenSPIRIT = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
+  const depositToken = useSelector((state: BeefyState) =>
+    minter.depositToken.type === 'native'
+      ? selectTokenById(state, vault.chainId, minter.depositToken.symbol)
+      : selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
   );
-  const tokenBinSPIRIT = useSelector((state: BeefyState) =>
+  const mintedToken = useSelector((state: BeefyState) =>
     selectErc20TokenById(state, vault.chainId, minter.mintedToken.symbol)
   );
-  const spiritBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, tokenSPIRIT.id)
+  const depositTokenBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, depositToken.id)
   );
-  const binSpiritBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, tokenBinSPIRIT.id)
+  const mintedTokenBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, mintedToken.id)
   );
-  const spiritAllowance = useSelector((state: BeefyState) =>
-    selectAllowanceByTokenId(state, vault.chainId, tokenSPIRIT.id, minter.contractAddress)
+  const mintedTokenAllowance = useSelector((state: BeefyState) =>
+    selectAllowanceByTokenId(state, vault.chainId, depositToken.id, minter.contractAddress)
   );
 
   const resetFormData = () => {
@@ -87,15 +87,15 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
   });
 
   const handleMax = () => {
-    if (spiritBalance > BIG_ZERO) {
+    if (depositTokenBalance > BIG_ZERO) {
       setFormData({
         ...formData,
         deposit: {
           ...formData.deposit,
-          input: isString(spiritBalance)
-            ? spiritBalance
-            : formatBigNumberSignificant(spiritBalance),
-          amount: new BigNumber(spiritBalance),
+          input: isString(depositTokenBalance)
+            ? depositTokenBalance
+            : formatBigNumberSignificant(depositTokenBalance),
+          amount: new BigNumber(depositTokenBalance),
           max: true,
         },
       });
@@ -106,14 +106,14 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
     const input = val.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
     let max = false;
-    let value = new BigNumber(input).decimalPlaces(tokenSPIRIT.decimals, BigNumber.ROUND_DOWN);
+    let value = new BigNumber(input).decimalPlaces(depositToken.decimals, BigNumber.ROUND_DOWN);
 
     if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
       value = BIG_ZERO;
     }
 
-    if (value.isGreaterThanOrEqualTo(spiritBalance)) {
-      value = new BigNumber(spiritBalance);
+    if (value.isGreaterThanOrEqualTo(depositTokenBalance)) {
+      value = new BigNumber(depositTokenBalance);
       max = true;
     }
 
@@ -144,11 +144,14 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    if (spiritAllowance.isLessThan(formData.deposit.amount)) {
+    if (
+      depositToken.type !== 'native' &&
+      mintedTokenAllowance.isLessThan(formData.deposit.amount)
+    ) {
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(tokenSPIRIT, minter.contractAddress),
+        action: walletActions.approval(depositToken, minter.contractAddress),
         pending: false,
       });
     }
@@ -159,8 +162,8 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
       action: walletActions.mintDeposit(
         vault.chainId,
         minter.contractAddress,
-        tokenSPIRIT,
-        tokenBinSPIRIT,
+        depositToken,
+        mintedToken,
         formData.deposit.amount,
         formData.deposit.max
       ),
@@ -174,35 +177,51 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
     <>
       <Card>
         <CardHeader className={classes.header}>
-          <img className={classes.logo} src={BinSpirit} alt="binSPIRIT" />
+          <img
+            className={classes.logo}
+            src={
+              require(`../../../../../../images/partners/${minter.mintedToken.symbol}.svg`).default
+            }
+            alt={minter.mintedToken.symbol}
+          />
           <Typography className={classes.title} variant="h3">
-            {t('Spirit-Title')}
+            {t('Mint-Title', { token: minter.mintedToken.symbol })}
           </Typography>
         </CardHeader>
         <CardContent className={classes.cardContent}>
           <Typography className={classes.content} variant="body1">
-            {t('Spirit-Content')}
+            {t('Mint-Content', {
+              token1: minter.mintedToken.symbol,
+              token2: minter.depositToken.symbol,
+            })}
           </Typography>
           <Box className={classes.boxReminder}>
             <Typography className={classes.content} variant="body1">
-              {t('Spirit-Reminder')}
+              {t('Mint-Reminder', {
+                token1: minter.mintedToken.symbol,
+                token2: minter.depositToken.symbol,
+              })}
             </Typography>
           </Box>
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
-                {t('Spirit-From')} <span className={classes.value}>{tokenSPIRIT.symbol}</span>
+                {t('from')} <span className={classes.value}>{depositToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
-                {t('Spirit-Wallet')}{' '}
+                {t('wallet')}{' '}
                 <span className={classes.value}>
-                  {formatBigDecimals(spiritBalance, 8)} {tokenSPIRIT.symbol}
+                  {formatBigDecimals(depositTokenBalance, 8)} {depositToken.symbol}
                 </span>
               </Typography>
             </Box>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'partners/spiritToken.svg'} alt={'BinSpirit'} />
+                <AssetsImage
+                  assets={[]}
+                  img={`single-assets/${minter.depositToken.symbol}.png`}
+                  alt={minter.depositToken.symbol}
+                />
               </Box>
               <InputBase
                 placeholder="0.00"
@@ -221,23 +240,27 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
           <Box className={classes.inputContainer}>
             <Box className={classes.balances}>
               <Typography className={classes.label}>
-                {t('Spirit-To')} <span className={classes.value}>{tokenBinSPIRIT.symbol}</span>
+                {t('to')} <span className={classes.value}>{mintedToken.symbol}</span>
               </Typography>
               <Typography className={classes.label}>
-                {t('Spirit-Wallet')}{' '}
+                {t('wallet')}{' '}
                 <span className={classes.value}>
-                  {formatBigDecimals(binSpiritBalance)} {tokenBinSPIRIT.symbol}
+                  {formatBigDecimals(mintedTokenBalance)} {mintedToken.symbol}
                 </span>
               </Typography>
             </Box>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'partners/binSpiritToken.svg'} alt={'BinSpirit'} />
+                <AssetsImage
+                  assets={[]}
+                  img={`partners/${minter.mintedToken.symbol}.svg`}
+                  alt={minter.mintedToken.symbol}
+                />
               </Box>
               <InputBase
                 disabled={true}
                 placeholder="0.00"
-                value={t('Spirit-Minimum', { input: formData.deposit.input || '0.00' })}
+                value={t('Mint-Minimum', { input: formData.deposit.input || '0.00' })}
               />
             </Paper>
           </Box>
@@ -246,7 +269,7 @@ export const SpiritCard = memo(function SpiritCard({ vaultId, minterId }: Minter
             onClick={handleDeposit}
             className={classes.btn}
           >
-            {t('Spirit-Btn')}
+            {t('Mint-Btn', { token: minter.mintedToken.symbol })}
           </Button>
         </CardContent>
       </Card>

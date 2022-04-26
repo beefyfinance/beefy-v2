@@ -15,15 +15,24 @@ export interface MinterCardParams {
   minterId: MinterEntity['id'];
 }
 
-function importMinterCard(minterId: MinterEntity['id']) {
-  return lazy<FC<MinterCardParams>>(() => import(`./Cards/${minterId}`));
+export interface MinterImporterParams {
+  vaultId: VaultEntity['id'];
+  minterId: MinterEntity['id'];
+  canBurnReserves: boolean;
+}
+
+function importMinterCard(canBurnReserves: boolean) {
+  return lazy<FC<MinterCardParams>>(
+    () => import(`./Cards/${canBurnReserves ? 'MintBurn' : 'Mint'}Card`)
+  );
 }
 
 const MinterCardImporter = memo(function MinterCardImporter({
   vaultId,
   minterId,
-}: MinterCardParams) {
-  const Card = importMinterCard(minterId);
+  canBurnReserves,
+}: MinterImporterParams) {
+  const Card = importMinterCard(canBurnReserves);
 
   return <Card vaultId={vaultId} minterId={minterId} />;
 });
@@ -47,7 +56,15 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
 
   return (
     <Suspense fallback={<Loader />}>
-      {isFormReady ? <MinterCardImporter vaultId={vaultId} minterId={minterId} /> : <Loader />}
+      {isFormReady ? (
+        <MinterCardImporter
+          canBurnReserves={minter.canBurnReserves}
+          vaultId={vaultId}
+          minterId={minterId}
+        />
+      ) : (
+        <Loader />
+      )}
     </Suspense>
   );
 });
