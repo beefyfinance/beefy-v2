@@ -27,6 +27,7 @@ import { useStepper } from '../../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../../MinterCard';
 import { selectMinterById } from '../../../../../../data/selectors/minters';
 import { selectAllowanceByTokenId } from '../../../../../../data/selectors/allowances';
+import { selectChainById } from '../../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
@@ -36,6 +37,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
@@ -90,7 +92,9 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         ...formData,
         deposit: {
           ...formData.deposit,
-          input: isString(depositTokenBalance) ? depositTokenBalance : formatBigNumberSignificant(depositTokenBalance),
+          input: isString(depositTokenBalance)
+            ? depositTokenBalance
+            : formatBigNumberSignificant(depositTokenBalance),
           amount: new BigNumber(depositTokenBalance),
           max: true,
         },
@@ -190,7 +194,11 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={`single-assets/${minter.depositToken.symbol}.png`} alt={minter.depositToken.symbol} />
+              <AssetsImage
+                assets={[]}
+                img={`single-assets/${minter.depositToken.symbol}.png`}
+                alt={minter.depositToken.symbol}
+              />
             </Box>
             <InputBase
               placeholder="0.00"
@@ -220,18 +228,39 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={`partners/${minter.mintedToken.symbol}.svg`} alt={minter.mintedToken.symbol} />
+              <AssetsImage
+                assets={[]}
+                img={`partners/${minter.mintedToken.symbol}.svg`}
+                alt={minter.mintedToken.symbol}
+              />
             </Box>
             <InputBase disabled={true} placeholder="0.00" value={formData.deposit.input} />
           </Paper>
         </Box>
-        <Button
-          disabled={formData.deposit.amount.isLessThanOrEqualTo(0) || isStepping}
-          onClick={handleDeposit}
-          className={classes.btn}
-        >
-          {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
-        </Button>
+        <>
+          {isWalletConnected ? (
+            !isWalletOnVaultChain ? (
+              <Button
+                onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
+                className={classes.btn}
+              >
+                {t('Network-Change', { network: chain.name.toUpperCase() })}
+              </Button>
+            ) : (
+              <Button
+                disabled={formData.deposit.amount.isLessThanOrEqualTo(0) || isStepping}
+                onClick={handleDeposit}
+                className={classes.btn}
+              >
+                {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
+              </Button>
+            )
+          ) : (
+            <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>
+              {t('Network-ConnectWallet')}
+            </Button>
+          )}
+        </>
       </CardContent>
       <Stepper />
     </>

@@ -27,6 +27,7 @@ import { useStepper } from '../../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../../MinterCard';
 import { selectMinterById, selectMinterReserves } from '../../../../../../data/selectors/minters';
 import { selectAllowanceByTokenId } from '../../../../../../data/selectors/allowances';
+import { selectChainById } from '../../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
@@ -36,6 +37,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
@@ -91,7 +93,9 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         ...formData,
         withdraw: {
           ...formData.withdraw,
-          input: isString(mintedTokenBalance) ? mintedTokenBalance : formatBigNumberSignificant(mintedTokenBalance),
+          input: isString(mintedTokenBalance)
+            ? mintedTokenBalance
+            : formatBigNumberSignificant(mintedTokenBalance),
           amount: new BigNumber(mintedTokenBalance),
           max: true,
         },
@@ -182,7 +186,11 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             {t('reserves', { token: minter.depositToken.symbol })}
           </Typography>
           <Box sx={{ display: 'flex' }}>
-            <AssetsImage assets={[]} img={`single-assets/${minter.depositToken.symbol}.png`} alt={minter.depositToken.symbol} />
+            <AssetsImage
+              assets={[]}
+              img={`single-assets/${minter.depositToken.symbol}.png`}
+              alt={minter.depositToken.symbol}
+            />
             <Typography className={classes.amountReserves}>
               {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
             </Typography>
@@ -202,7 +210,11 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]}  img={`single-assets/${minter.mintedToken.symbol}.png`} alt={minter.mintedToken.symbol} />
+              <AssetsImage
+                assets={[]}
+                img={`single-assets/${minter.mintedToken.symbol}.png`}
+                alt={minter.mintedToken.symbol}
+              />
             </Box>
             <InputBase
               placeholder="0.00"
@@ -232,22 +244,45 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assets={[]} img={`single-assets/${minter.depositToken.symbol}.png`} alt={minter.depositToken.symbol} />
+              <AssetsImage
+                assets={[]}
+                img={`single-assets/${minter.depositToken.symbol}.png`}
+                alt={minter.depositToken.symbol}
+              />
             </Box>
             <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
           </Paper>
         </Box>
-        <Button
-          disabled={
-            formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) ||
-            formData.withdraw.amount.isLessThanOrEqualTo(0) ||
-            isStepping
-          }
-          onClick={handleWithdraw}
-          className={classes.btn}
-        >
-          {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
-        </Button>
+        <>
+          {isWalletConnected ? (
+            !isWalletOnVaultChain ? (
+              <Button
+                onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
+                className={classes.btn}
+              >
+                {t('Network-Change', { network: chain.name.toUpperCase() })}
+              </Button>
+            ) : (
+              <Button
+                disabled={
+                  formData.withdraw.amount.isGreaterThan(
+                    reserves.shiftedBy(-mintedToken.decimals)
+                  ) ||
+                  formData.withdraw.amount.isLessThanOrEqualTo(0) ||
+                  isStepping
+                }
+                onClick={handleWithdraw}
+                className={classes.btn}
+              >
+                {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
+              </Button>
+            )
+          ) : (
+            <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>
+              {t('Network-ConnectWallet')}
+            </Button>
+          )}
+        </>
         {formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
           <Box className={classes.noReserves}>
             <img

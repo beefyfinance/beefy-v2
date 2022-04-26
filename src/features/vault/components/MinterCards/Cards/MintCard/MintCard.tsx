@@ -27,6 +27,7 @@ import { useStepper } from '../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../MinterCard';
 import { selectMinterById } from '../../../../../data/selectors/minters';
 import { selectAllowanceByTokenId } from '../../../../../data/selectors/allowances';
+import { selectChainById } from '../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
@@ -36,6 +37,7 @@ export const MintCard = memo(function MintCard({ vaultId, minterId }: MinterCard
   const dispatch = useDispatch();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
@@ -264,13 +266,30 @@ export const MintCard = memo(function MintCard({ vaultId, minterId }: MinterCard
               />
             </Paper>
           </Box>
-          <Button
-            disabled={formData.deposit.amount.isLessThanOrEqualTo(0) || isStepping}
-            onClick={handleDeposit}
-            className={classes.btn}
-          >
-            {t('Mint-Btn', { token: minter.mintedToken.symbol })}
-          </Button>
+          <>
+            {isWalletConnected ? (
+              !isWalletOnVaultChain ? (
+                <Button
+                  onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
+                  className={classes.btn}
+                >
+                  {t('Network-Change', { network: chain.name.toUpperCase() })}
+                </Button>
+              ) : (
+                <Button
+                  disabled={formData.deposit.amount.isLessThanOrEqualTo(0) || isStepping}
+                  onClick={handleDeposit}
+                  className={classes.btn}
+                >
+                  {t('Mint-Btn', { token: minter.mintedToken.symbol })}
+                </Button>
+              )
+            ) : (
+              <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>
+                {t('Network-ConnectWallet')}
+              </Button>
+            )}
+          </>
         </CardContent>
       </Card>
       <Stepper />
