@@ -1,33 +1,15 @@
 [
   {
-    "id": "fantom vault: beets-exploding-shrapnel-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fantom vault: beets-daiabolical-balance",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: beets-boomer-beets-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "fantom vault: beets-gelato-genesis",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: beets-demeters-degree-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-variation-theme-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-double-dollar-fugue-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-classic-trio-eol",
-    "type": "synced",
-    "EOLd": true
+    "id": "polygon vault: beefy-beqi",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

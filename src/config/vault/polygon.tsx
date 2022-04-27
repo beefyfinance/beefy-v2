@@ -8686,7 +8686,7 @@ export const pools = [
     status: 'active',
     platform: 'Beefy.Finance',
     assets: ['beQI'],
-    withdrawalFee: '0.0%',
+    withdrawalFee: '0%',
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
