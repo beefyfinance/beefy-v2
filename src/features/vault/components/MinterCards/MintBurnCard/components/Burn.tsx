@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { CardContent } from '../../../../Card';
-import { AssetsImage } from '../../../../../../../components/AssetsImage';
+import { CardContent } from '../../../Card';
+import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from '../styles';
 import { useDispatch, useSelector } from 'react-redux';
 import BigNumber from 'bignumber.js';
@@ -10,24 +10,24 @@ import {
   BIG_ZERO,
   formatBigDecimals,
   formatBigNumberSignificant,
-} from '../../../../../../../helpers/format';
-import { selectVaultById } from '../../../../../../data/selectors/vaults';
-import { BeefyState } from '../../../../../../../redux-types';
-import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';
+} from '../../../../../../helpers/format';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { BeefyState } from '../../../../../../redux-types';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-} from '../../../../../../data/selectors/wallet';
-import { selectErc20TokenById } from '../../../../../../data/selectors/tokens';
+} from '../../../../../data/selectors/wallet';
+import { selectErc20TokenById } from '../../../../../data/selectors/tokens';
 import { isString } from 'lodash';
-import { Step } from '../../../../../../../components/Steps/types';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
-import { walletActions } from '../../../../../../data/actions/wallet-actions';
-import { useStepper } from '../../../../../../../components/Steps/hooks';
-import { MinterCardParams } from '../../../MinterCard';
-import { selectMinterById, selectMinterReserves } from '../../../../../../data/selectors/minters';
-import { selectAllowanceByTokenId } from '../../../../../../data/selectors/allowances';
-import { selectChainById } from '../../../../../../data/selectors/chains';
+import { Step } from '../../../../../../components/Steps/types';
+import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
+import { walletActions } from '../../../../../data/actions/wallet-actions';
+import { useStepper } from '../../../../../../components/Steps/hooks';
+import { MinterCardParams } from '../../MinterCard';
+import { selectMinterById, selectMinterReserves } from '../../../../../data/selectors/minters';
+import { selectAllowanceByTokenId } from '../../../../../data/selectors/allowances';
+import { selectChainById } from '../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
@@ -227,7 +227,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         </Box>
         <Box className={classes.customDivider}>
           <Box className={classes.line} />
-          <img alt="arrowDown" src={require('../../../../../../../images/arrowDown.svg').default} />
+          <img alt="arrowDown" src={require('../../../../../../images/arrowDown.svg').default} />
           <Box className={classes.line} />
         </Box>
         <Box className={classes.inputContainer}>
@@ -287,7 +287,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           <Box className={classes.noReserves}>
             <img
               className={classes.icon}
-              src={require('../../../../../../../images/warning.svg').default}
+              src={require('../../../../../../images/warning.svg').default}
               alt="warning"
             />
             <Typography variant="body1">

@@ -1,4 +1,4 @@
-import React, { FC, lazy, memo, Suspense, useEffect } from 'react';
+import React, { memo, Suspense, useEffect } from 'react';
 import { useSelector, useStore } from 'react-redux';
 import { VaultEntity } from '../../../data/entities/vault';
 import { MinterEntity } from '../../../data/entities/minter';
@@ -9,33 +9,12 @@ import { isFulfilled } from '../../../data/reducers/data-loader';
 import { selectIsWalletConnected, selectWalletAddress } from '../../../data/selectors/wallet';
 import { initMinterForm } from '../../../data/actions/scenarios';
 import { selectMinterById } from '../../../data/selectors/minters';
+import PruebaCard from './MintBurnCard';
 
 export interface MinterCardParams {
   vaultId: VaultEntity['id'];
   minterId: MinterEntity['id'];
 }
-
-export interface MinterImporterParams {
-  vaultId: VaultEntity['id'];
-  minterId: MinterEntity['id'];
-  canBurnReserves: boolean;
-}
-
-function importMinterCard(canBurnReserves: boolean) {
-  return lazy<FC<MinterCardParams>>(
-    () => import(`./Cards/${canBurnReserves ? 'MintBurn' : 'Mint'}Card`)
-  );
-}
-
-const MinterCardImporter = memo(function MinterCardImporter({
-  vaultId,
-  minterId,
-  canBurnReserves,
-}: MinterImporterParams) {
-  const Card = importMinterCard(canBurnReserves);
-
-  return <Card vaultId={vaultId} minterId={minterId} />;
-});
 
 export const MinterCard = memo(function MinterCard({ vaultId, minterId }: MinterCardParams) {
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
@@ -56,15 +35,7 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
 
   return (
     <Suspense fallback={<Loader />}>
-      {isFormReady ? (
-        <MinterCardImporter
-          canBurnReserves={minter.canBurnReserves}
-          vaultId={vaultId}
-          minterId={minterId}
-        />
-      ) : (
-        <Loader />
-      )}
+      {isFormReady ? <PruebaCard vaultId={vaultId} minterId={minterId} /> : <Loader />}
     </Suspense>
   );
 });

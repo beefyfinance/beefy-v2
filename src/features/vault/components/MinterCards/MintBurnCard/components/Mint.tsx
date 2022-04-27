@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { CardContent } from '../../../../Card';
-import { AssetsImage } from '../../../../../../../components/AssetsImage';
+import { CardContent } from '../../../Card';
+import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from '../styles';
 import { useDispatch, useSelector } from 'react-redux';
 import BigNumber from 'bignumber.js';
@@ -10,24 +10,24 @@ import {
   BIG_ZERO,
   formatBigDecimals,
   formatBigNumberSignificant,
-} from '../../../../../../../helpers/format';
-import { selectVaultById } from '../../../../../../data/selectors/vaults';
-import { BeefyState } from '../../../../../../../redux-types';
-import { selectUserBalanceOfToken } from '../../../../../../data/selectors/balance';
+} from '../../../../../../helpers/format';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
+import { BeefyState } from '../../../../../../redux-types';
+import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-} from '../../../../../../data/selectors/wallet';
-import { selectErc20TokenById } from '../../../../../../data/selectors/tokens';
+} from '../../../../../data/selectors/wallet';
+import { selectErc20TokenById, selectTokenById } from '../../../../../data/selectors/tokens';
 import { isString } from 'lodash';
-import { Step } from '../../../../../../../components/Steps/types';
-import { askForNetworkChange, askForWalletConnection } from '../../../../../../data/actions/wallet';
-import { walletActions } from '../../../../../../data/actions/wallet-actions';
-import { useStepper } from '../../../../../../../components/Steps/hooks';
-import { MinterCardParams } from '../../../MinterCard';
-import { selectMinterById } from '../../../../../../data/selectors/minters';
-import { selectAllowanceByTokenId } from '../../../../../../data/selectors/allowances';
-import { selectChainById } from '../../../../../../data/selectors/chains';
+import { Step } from '../../../../../../components/Steps/types';
+import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
+import { walletActions } from '../../../../../data/actions/wallet-actions';
+import { useStepper } from '../../../../../../components/Steps/hooks';
+import { MinterCardParams } from '../../MinterCard';
+import { selectMinterById } from '../../../../../data/selectors/minters';
+import { selectAllowanceByTokenId } from '../../../../../data/selectors/allowances';
+import { selectChainById } from '../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
 
@@ -43,7 +43,9 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
   const depositToken = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
+    minter.depositToken.type === 'native'
+      ? selectTokenById(state, vault.chainId, minter.depositToken.symbol)
+      : selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
   );
   const mintedToken = useSelector((state: BeefyState) =>
     selectErc20TokenById(state, vault.chainId, minter.mintedToken.symbol)
@@ -144,7 +146,10 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    if (depositTokenAllowance.isLessThan(formData.deposit.amount)) {
+    if (
+      depositToken.type !== 'native' &&
+      depositTokenAllowance.isLessThan(formData.deposit.amount)
+    ) {
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
@@ -174,12 +179,32 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   return (
     <>
       <CardContent className={classes.cardContent}>
-        <Typography className={classes.content} variant="body1">
-          {t('mint-Content', {
-            token1: minter.mintedToken.symbol,
-            token2: minter.depositToken.symbol,
-          })}
-        </Typography>
+        {minter.canBurnReserves ? (
+          <Typography className={classes.content} variant="body1">
+            {t('Mint-Content', {
+              token1: minter.mintedToken.symbol,
+              token2: minter.depositToken.symbol,
+            })}
+          </Typography>
+        ) : (
+        <>
+            {' '}
+            <Typography className={classes.content} variant="body1">
+              {t('Mint-Content-Short', {
+                token1: minter.mintedToken.symbol,
+                token2: minter.depositToken.symbol,
+              })}
+            </Typography>
+            <Box className={classes.boxReminder}>
+              <Typography className={classes.content} variant="body1">
+                {t('Mint-Reminder', {
+                  token1: minter.mintedToken.symbol,
+                  token2: minter.depositToken.symbol,
+                })}
+              </Typography>
+            </Box>
+          </>
+        )}
         <Box className={classes.inputContainer}>
           <Box className={classes.balances}>
             <Typography className={classes.label}>
@@ -211,7 +236,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         </Box>
         <Box className={classes.customDivider}>
           <Box className={classes.line} />
-          <img alt="arrowDown" src={require('../../../../../../../images/arrowDown.svg').default} />
+          <img alt="arrowDown" src={require('../../../../../../images/arrowDown.svg').default} />
           <Box className={classes.line} />
         </Box>
         <Box className={classes.inputContainer}>
@@ -230,7 +255,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             <Box className={classes.inputLogo}>
               <AssetsImage
                 assets={[]}
-                img={`single-assets/${minter.mintedToken.symbol}.png`}
+                img={`single-assets/${minter.mintedToken.symbol}.svg`}
                 alt={minter.mintedToken.symbol}
               />
             </Box>
