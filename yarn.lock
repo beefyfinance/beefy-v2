@@ -4023,10 +4023,10 @@ blakejs@^1.1.0:
   resolved "https://registry.npmjs.org/blakejs/-/blakejs-1.1.1.tgz"
   integrity sha512-bLG6PHOCZJKNshTjGRBvET0vTciwQE6zFKOKKXPDJfwFBd4Ac0yBfPZqcGvGJap50l7ktvlpFqc2jGVaUgbJgg==
 
-blockchain-addressbook@^0.28.0:
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.28.0.tgz#8cc3c0b56ecf587929e0e5f748f511498d2b4171"
-  integrity sha512-lCykU1x2b2FEimWbyqZ1z9Yf6qHckGayVQiGT2GFj2qRoVEOq6tqJ0jNnDK7yyFNfuhSL8fr0yQ3dnlRYRePwQ==
+blockchain-addressbook@^0.28.2:
+  version "0.28.2"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.28.2.tgz#d50d38366bcb5e1b20e51fa6997ab6b03196073a"
+  integrity sha512-1saYY8Rnm1uYwicTbXzCM1nybUPmAiccJw6dbv18CdDlk6V7Z2lxEwGPsLbxDzPczyeP4AH2Hk1Y0ivPD4mpvg==
 
 bluebird@^3.5.0, bluebird@^3.5.5:
   version "3.7.2"
