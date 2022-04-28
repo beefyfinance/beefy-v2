@@ -114,3 +114,11 @@ export async function getWalletConnectionApiInstance(
   }
   return walletConnection;
 }
+
+const MintersAPIPromise = import('./minter/minter');
+export const getMintersApi = createFactoryWithCacheByChain(async chain => {
+  const { MinterApi } = await MintersAPIPromise;
+  const web3 = await getWeb3Instance(chain);
+  console.debug(`Instanciating MinterAPI for chain ${chain.id}`);
+  return new MinterApi(web3, chain);
+});

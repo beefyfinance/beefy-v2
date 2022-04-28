@@ -218,7 +218,7 @@ export const config = {
       'sfUSDC',
       'USTw',
       'USTaxl',
-      'USDL'
+      'USDL',
     ],
   },
   harmony: {
@@ -298,7 +298,7 @@ export const config = {
     chainId: 1285,
     eip1559: true,
     rpc: ['https://rpc.api.moonriver.moonbeam.network/'],
-    explorerUrl: 'https://blockscout.moonriver.moonbeam.network',
+    explorerUrl: 'https://moonriver.moonscan.io/',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
     fetchContractDataAddress: '0xfbD63fadb7B13E0599c3643405276f97217147B2',
     fetchBalancesAddress: '0xA4afDf57663951C6204E5110EE1741e8dfb0F3ec',
@@ -313,7 +313,7 @@ export const config = {
         decimals: 18,
       },
       rpcUrls: ['https://rpc.api.moonriver.moonbeam.network/'],
-      blockExplorerUrls: ['https://blockscout.moonriver.moonbeam.network/'],
+      blockExplorerUrls: ['https://moonriver.moonscan.io/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'MIM', 'FRAX'],
   },
