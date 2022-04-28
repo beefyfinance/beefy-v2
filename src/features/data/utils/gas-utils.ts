@@ -111,7 +111,7 @@ export async function getGasPriceOptions(web3: Web3) {
         // we show a more user friendly message instead
         console.error(err);
         throw new FriendlyError(
-          'Gas estimation failed. This can happen when your wallet doesn\'t support the "EIP-5119" standard. Updating your wallet software may help.',
+          'Gas estimation failed. This can happen when your wallet doesn\'t support the "EIP-1559" standard. Updating your wallet software may help.',
           err
         );
       } else {
