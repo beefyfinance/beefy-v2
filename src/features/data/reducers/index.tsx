@@ -44,7 +44,10 @@ const bizReducer = combineReducers<BeefyState['biz']>({
 const userReducer = combineReducers<BeefyState['user']>({
   balance: balanceSlice.reducer,
   allowance: allowanceSlice.reducer,
-  wallet: persistReducer({ key: 'wallet', storage }, walletSlice.reducer),
+  wallet: persistReducer(
+    { key: 'wallet', storage, whitelist: ['address', 'hideBalance', 'profilePictureUrl'] },
+    walletSlice.reducer
+  ),
   walletActions: walletActionsReducer,
 });
 const uiReducer = combineReducers<BeefyState['ui']>({

@@ -3,28 +3,41 @@ import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { connect, useDispatch } from 'react-redux';
-import { selectIsWalletConnected, selectWalletAddress } from '../../../data/selectors/wallet';
+import {
+  selectIsWalletInitialized,
+  selectIsWalletKnown,
+  selectWalletAddress,
+} from '../../../data/selectors/wallet';
 import { filteredVaultsActions } from '../../../data/reducers/filtered-vaults';
 import { BeefyState } from '../../../../redux-types';
 import { askForWalletConnection, doDisconnectWallet } from '../../../data/actions/wallet';
 
 const useStyles = makeStyles(styles as any);
 const _EmptyStates = connect((state: BeefyState) => {
-  const isWalletConnected = selectIsWalletConnected(state);
-  const walletAddress = isWalletConnected ? selectWalletAddress(state) : null;
-  return { isWalletConnected, walletAddress };
+  const isWalletKnown = selectIsWalletKnown(state);
+  const isWalletInitialized = selectIsWalletInitialized(state);
+  const walletAddress = isWalletKnown ? selectWalletAddress(state) : null;
+  return { isWalletKnown, walletAddress, isWalletInitialized };
 })(
-  ({ isWalletConnected, walletAddress }: { isWalletConnected: boolean; walletAddress: string }) => {
+  ({
+    isWalletKnown,
+    isWalletInitialized,
+    walletAddress,
+  }: {
+    isWalletKnown: boolean;
+    isWalletInitialized: boolean;
+    walletAddress: string;
+  }) => {
     const { t } = useTranslation();
     const classes = useStyles();
     const dispatch = useDispatch();
-    const handleWalletConnect = () => {
+    const handleWalletConnect = useCallback(() => {
       if (walletAddress) {
         dispatch(doDisconnectWallet());
       } else {
         dispatch(askForWalletConnection());
       }
-    };
+    }, [dispatch, walletAddress]);
 
     const handleReset = useCallback(() => dispatch(filteredVaultsActions.reset()), [dispatch]);
 
@@ -44,19 +57,19 @@ const _EmptyStates = connect((state: BeefyState) => {
         </Box>
         <Box>
           <Typography variant="body2" className={classes.text}>
-            {isWalletConnected ? t('EmptyStates-NoDeposited') : t('EmptyStates-NoConnected')}
+            {isWalletKnown ? t('EmptyStates-NoDeposited') : t('EmptyStates-NoConnected')}
           </Typography>
         </Box>
         <Box>
-          {isWalletConnected ? (
+          {isWalletKnown ? (
             <Button className={classes.btn} onClick={handleReset}>
               {t('EmptyStates-Browse')}
             </Button>
-          ) : (
+          ) : isWalletInitialized ? (
             <Button className={classes.btn} onClick={handleWalletConnect}>
               {t('EmptyStates-Connect')}
             </Button>
-          )}
+          ) : null}
         </Box>
       </Box>
     );

@@ -1,20 +1,20 @@
 import React from 'react';
-import { makeStyles, Box, Avatar, FormControl, Typography, Grid } from '@material-ui/core';
+import { Avatar, Box, FormControl, Grid, makeStyles, Typography } from '@material-ui/core';
 import { styles } from './styles';
-import { connect, useDispatch, useStore } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ApyStatLoader } from '../../../ApyStatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
-  selectIsWalletConnected,
-  selectWalletAddress,
   selectIsBalanceHidden,
+  selectIsWalletConnected,
+  selectIsWalletKnown,
+  selectWalletAddress,
 } from '../../../../features/data/selectors/wallet';
 import { BeefyState } from '../../../../redux-types';
 import {
   askForWalletConnection,
   doDisconnectWallet,
-  initWallet,
 } from '../../../../features/data/actions/wallet';
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
 import clsx from 'clsx';
@@ -26,18 +26,21 @@ const formatAddress = addr => {
 
 export const WalletContainer = connect((state: BeefyState) => {
   const isWalletConnected = selectIsWalletConnected(state);
-  const walletAddress = isWalletConnected ? selectWalletAddress(state) : null;
+  const isWalletKnown = selectIsWalletKnown(state);
+  const walletAddress = isWalletKnown ? selectWalletAddress(state) : null;
   const walletPending = selectIsWalletPending(state);
   const walletProfileUrl = state.user.wallet.profilePictureUrl;
   const blurred = selectIsBalanceHidden(state);
-  return { walletAddress, walletPending, walletProfileUrl, blurred };
+  return { isWalletConnected, walletAddress, walletPending, walletProfileUrl, blurred };
 })(
   ({
+    isWalletConnected,
     walletAddress,
     walletPending,
     walletProfileUrl,
     blurred,
   }: {
+    isWalletConnected: boolean;
     walletAddress: null | string;
     walletPending: boolean;
     walletProfileUrl: null | string;
@@ -47,13 +50,6 @@ export const WalletContainer = connect((state: BeefyState) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const t = useTranslation().t;
-
-    // load wallet data
-    const store = useStore();
-    React.useEffect(() => {
-      // create the wallet instance last because it's heavy to load all modal stuff
-      initWallet(store);
-    }, [store]);
 
     const handleWalletConnect = () => {
       if (walletAddress) {
@@ -73,7 +69,8 @@ export const WalletContainer = connect((state: BeefyState) => {
       <Box
         className={clsx({
           [classes.container]: true,
-          [classes.connected]: walletAddress,
+          [classes.known]: !!walletAddress,
+          [classes.connected]: isWalletConnected,
           [classes.disconnected]: !walletAddress,
         })}
       >
