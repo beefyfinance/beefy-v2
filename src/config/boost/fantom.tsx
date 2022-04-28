@@ -328,4 +328,29 @@ export const pools = [
       },
     ],
   },
+  {
+    id: 'moo_curve-ftm-f-4pool-orkan',
+    poolId: 'curve-ftm-f-4pool',
+    name: 'Orkan',
+    assets: ['UST', 'FRAX', 'fUSDT', 'USDC'],
+    earnedToken: 'ORKAN',
+    earnedTokenDecimals: 9,
+    earnedTokenAddress: '0xfB66e49e303A186a4c57414Ceeed651a7a78161a',
+    earnContractAddress: '0x432914274883a7632fdC639B1E64526c197f5829',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'ORKAN',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: "Orkan is a meta-governance protocol over liquidity flow within the FTM ecosystem. Orkan utilizes perpetual bond issuance to acquire governance tokens from protocols on FTM employing liquidity gauges and locking mechanisms as exchange incentives. Orkan's other plan is to enable deep liquidity and usage of wrapped BTC assets within the ecosystem.",
+        website: 'https://orkan.finance/#/dashboard',
+        social: {
+          telegram: 'https://discord.com/invite/mqd2ZaXeEB',
+          twitter: 'https://twitter.com/EnterTheStrudel',
+        },
+      },
+    ],
+  },
 ];
