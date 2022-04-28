@@ -1501,7 +1501,7 @@ export const pools = [
       'https://vvs.finance/swap?inputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03&outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2',
     addLiquidityUrl:
       'https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2',
-    createdAt: 1637045228,
+    createdAt: 1649959970,
     network: 'cronos',
   },
 ];

@@ -8,10 +8,10 @@ import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
 import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
-import { selectIsWalletConnected, selectWalletAddress } from './wallet';
+import { selectIsWalletKnown, selectWalletAddress } from './wallet';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
-  if (selectIsWalletConnected(state)) {
+  if (selectIsWalletKnown(state)) {
     const userAddress = walletAddress || selectWalletAddress(state);
     if (!userAddress) {
       return null;

@@ -187,7 +187,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
             })}
           </Typography>
         ) : (
-        <>
+          <>
             {' '}
             <Typography className={classes.content} variant="body1">
               {t('Mint-Content-Short', {

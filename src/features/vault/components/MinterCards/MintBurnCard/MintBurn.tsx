@@ -20,12 +20,14 @@ export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCard
 
   const [mintBurn, setMintBurn] = React.useState('mint');
 
-  const {canBurnReserves} = minter
+  const { canBurnReserves } = minter;
 
   return (
     <>
       <Card>
-        <CardHeader className={clsx({ [classes.mb]:canBurnReserves , [classes.header]: !canBurnReserves})}>
+        <CardHeader
+          className={clsx({ [classes.mb]: canBurnReserves, [classes.header]: !canBurnReserves })}
+        >
           <>
             {canBurnReserves ? (
               <Box className={classes.tabs}>
