@@ -18,7 +18,7 @@ export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCard
   const { t } = useTranslation();
   const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
 
-  const [mb, setMb] = React.useState('mint');
+  const [mintBurn, setMintBurn] = React.useState('mint');
 
   const {canBurnReserves} = minter
 
@@ -30,14 +30,14 @@ export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCard
             {canBurnReserves ? (
               <Box className={classes.tabs}>
                 <Button
-                  onClick={() => setMb('mint')}
-                  className={mb === 'mint' ? classes.selected : ''}
+                  onClick={() => setMintBurn('mint')}
+                  className={mintBurn === 'mint' ? classes.selected : ''}
                 >
                   {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
                 </Button>
                 <Button
-                  onClick={() => setMb('burn')}
-                  className={mb === 'burn' ? classes.selected : ''}
+                  onClick={() => setMintBurn('burn')}
+                  className={mintBurn === 'burn' ? classes.selected : ''}
                 >
                   {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
                 </Button>
@@ -61,7 +61,7 @@ export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCard
         </CardHeader>
         {canBurnReserves ? (
           <>
-            {mb === 'mint' ? (
+            {mintBurn === 'mint' ? (
               <Mint vaultId={vaultId} minterId={minterId} />
             ) : (
               <Burn vaultId={vaultId} minterId={minterId} />

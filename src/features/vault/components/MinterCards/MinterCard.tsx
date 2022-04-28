@@ -9,7 +9,7 @@ import { isFulfilled } from '../../../data/reducers/data-loader';
 import { selectIsWalletConnected, selectWalletAddress } from '../../../data/selectors/wallet';
 import { initMinterForm } from '../../../data/actions/scenarios';
 import { selectMinterById } from '../../../data/selectors/minters';
-import PruebaCard from './MintBurnCard';
+import MintBurnCard from './MintBurnCard';
 
 export interface MinterCardParams {
   vaultId: VaultEntity['id'];
@@ -35,7 +35,7 @@ export const MinterCard = memo(function MinterCard({ vaultId, minterId }: Minter
 
   return (
     <Suspense fallback={<Loader />}>
-      {isFormReady ? <PruebaCard vaultId={vaultId} minterId={minterId} /> : <Loader />}
+      {isFormReady ? <MintBurnCard vaultId={vaultId} minterId={minterId} /> : <Loader />}
     </Suspense>
   );
 });
