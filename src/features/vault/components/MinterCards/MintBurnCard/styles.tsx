@@ -105,10 +105,6 @@ export const styles = theme => ({
     position: 'absolute',
     top: '12px',
     left: '12px',
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      height: 20,
-      width: 20,
-    },
   },
   balances: {
     display: 'flex',
@@ -147,10 +143,6 @@ export const styles = theme => ({
     padding: theme.spacing(2),
     borderRadius: theme.spacing(0.5),
     backgroundColor: theme.palette.background.content,
-    '& .MuiAvatar-root': {
-      height: '24px',
-      width: '24px',
-    },
   },
   mb: {
     backgroundColor: '#272B4A',
