@@ -2,17 +2,21 @@ import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 
-export const selectIsWalletConnected = createSelector(
-  // get a tiny bit of the data
+// If we know the address: either from a wallet connection; or from hydration of persisted state from previous visit
+export const selectIsWalletKnown = createSelector(
   (state: BeefyState) => state.user.wallet.address,
-  // last function receives previous function outputs as parameters
   address => address !== null
 );
 
-export const selectWalletAddress = createSelector(
-  // get a tiny bit of the data
+// If address is actually connected
+export const selectIsWalletConnected = createSelector(
+  (state: BeefyState) => state.user.wallet.connectedAddress,
   (state: BeefyState) => state.user.wallet.address,
-  // last function receives previous function outputs as parameters
+  (connectedAddress, address) => connectedAddress !== null && connectedAddress === address
+);
+
+export const selectWalletAddress = createSelector(
+  (state: BeefyState) => state.user.wallet.address,
   address => {
     address = featureFlag_walletAddressOverride(address);
     if (address === null) {
@@ -26,3 +30,4 @@ export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.sel
 export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hideBalance;
 export const selectIsNetworkSupported = (state: BeefyState) =>
   state.user.wallet.error !== 'unsupported chain';
+export const selectIsWalletInitialized = (state: BeefyState) => state.user.wallet.initialized;

@@ -12,104 +12,172 @@ import { DeFiConnector } from 'deficonnect';
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
-import { IWalletConnectApi, Provider, WalletConnectOptions } from './wallet-connect-types';
-import { featureFlag_walletAddressOverride } from '../../utils/feature-flags';
+import { IWalletConnectionApi, Provider, WalletConnectionOptions } from './wallet-connection-types';
 import { sleep } from '../../utils/async-utils';
 import { maybeHexToNumber } from '../../../../helpers/format';
 
-export class WalletConnectApi implements IWalletConnectApi {
+export class WalletConnectionApi implements IWalletConnectionApi {
+  protected web3ModalOptions: Partial<ICoreOptions> | null;
   protected web3Modal: Web3Modal | null;
   protected provider: Provider | null;
 
-  constructor(protected options: WalletConnectOptions) {
+  constructor(protected options: WalletConnectionOptions) {
     this.web3Modal = null;
+    this.web3ModalOptions = null;
     this.provider = null;
   }
 
-  public async initFromLocalCache(): Promise<null | {
-    chainId: ChainEntity['id'] | null;
-    address: string;
-  }> {
-    // we check the local cached provider
-    // if we have a cached value, we want to have a connected web3Modal instance
-    if (hasWeb3ModalCachedProvider()) {
-      // we are already connected so we don't care about the initial chain
-      const providerOptions = _generateProviderOptions(this.options.chains);
-      this.web3Modal = new Web3Modal(providerOptions);
-
-      // this shouldn't open a modal
-      this.provider = await this.web3Modal.connect();
-      this._bindProviderEvents(this.provider);
-      const web3 = _getWeb3FromProvider(this.provider);
-      const networkChainId = await _getNetworkChainId(web3);
-      const accounts = await web3.eth.getAccounts();
-      const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-      return {
-        chainId: chain ? chain.id : null,
-        address: featureFlag_walletAddressOverride(accounts[0]),
-      };
-    } else {
-      return null;
+  private getModalOptions() {
+    if (this.web3ModalOptions === null) {
+      this.web3ModalOptions = _generateProviderOptions(this.options.chains);
     }
+
+    return this.web3ModalOptions;
+  }
+
+  private getModal() {
+    if (this.web3Modal === null) {
+      this.web3Modal = new Web3Modal(this.getModalOptions());
+    }
+
+    return this.web3Modal;
   }
 
   /**
-   * Extract the web3 instance
-   * TODO: should not leak the instance but provide a proper api
+   * Attempt to reconnect to cached provider
+   */
+  public async tryToAutoReconnect() {
+    // already connected?
+    if (this.provider) {
+      return;
+    }
+
+    // do we have a cached provider?
+    if (!hasWeb3ModalCachedProvider()) {
+      return;
+    }
+
+    // make sure the cached provider is available in options
+    const cachedProvider = getWeb3ModalCachedProvider();
+    const modalOptions = this.getModalOptions();
+    if (!(cachedProvider in modalOptions.providerOptions)) {
+      console.warn(
+        'tryToAutoReconnect: cached provider not available',
+        cachedProvider,
+        Object.keys(modalOptions.providerOptions)
+      );
+      return;
+    }
+
+    // init or get modal
+    const modal = this.getModal();
+    // try to reconnect
+    const provider = await modal.connectTo(cachedProvider);
+
+    // make sure we don't have provider from a manual connect while awaiting
+    if (this.provider) {
+      console.error('tryToAutoReconnect: provider already exists');
+      throw new Error('tryToAutoReconnect: provider already exists');
+    }
+
+    // make sure we have provider from modal
+    if (!provider) {
+      console.error('tryToAutoReconnect: provider not returned from web3modal', provider);
+      throw new Error('tryToAutoReconnect: provider not returned from web3modal');
+    }
+
+    // Save provider and fire events
+    this.provider = provider;
+    await this.bindProviderAndRaiseEvents();
+  }
+
+  /**
+   * Provider the web3 instance for signed TXs
    */
   async getConnectedWeb3Instance(): Promise<Web3> {
     if (!this.web3Modal) {
-      throw new Error('Class is not initiated: missing web3Modal');
+      throw new Error('Wallet not connected: missing web3Modal');
     }
+
     if (!this.provider) {
-      throw new Error('Class is not initiated: missing provider');
+      throw new Error('Wallet not connected: missing provider');
     }
+
     return _getWeb3FromProvider(this.provider);
   }
 
   /**
    * Ask the user to connect if he isn't already
-   * @param suggestedChainId we will use this chain to detect providers but user can be successfully connected to another chain
    */
   public async askUserToConnectIfNeeded() {
-    // initialize instances if needed
-    if (this.web3Modal === null) {
-      const providerOptions = _generateProviderOptions(this.options.chains);
-      this.web3Modal = new Web3Modal(providerOptions);
-    }
+    // initialize modal if needed
+    const modal = this.getModal();
 
     // open modal if needed to connect
     if (this.provider === null) {
-      this.provider = await this.web3Modal.connect();
-      this._bindProviderEvents(this.provider);
-    }
-    const web3 = _getWeb3FromProvider(this.provider);
+      let provider = null;
 
+      try {
+        // Will open modal, or attempt to connect to cached provider
+        console.log('await model.connect');
+        provider = await modal.connect();
+      } catch (err) {
+        // We clear cached provider here so that attempting to reconnect opens the modal
+        // rather than trying to reconnect to previous cached provider that just failed/was rejected.
+        modal.clearCachedProvider();
+        // Rethrow so called knows connection failed
+        throw err;
+      }
+
+      // make sure we don't have provider from an auto connect while awaiting
+      if (this.provider) {
+        console.error('askUserToConnectIfNeeded: provider already exists');
+        throw new Error('askUserToConnectIfNeeded: provider already exists');
+      }
+
+      this.provider = provider;
+    }
+
+    // raise relevant event
+    await this.bindProviderAndRaiseEvents();
+  }
+
+  /**
+   * Fires onConnect or onUnsupportedChainSelected
+   */
+  private async bindProviderAndRaiseEvents() {
+    // Listen to provider events
+    this._bindProviderEvents(this.provider);
+
+    // Check chain + accounts and raise our own events
+    const web3 = _getWeb3FromProvider(this.provider);
     const networkChainId = await _getNetworkChainId(web3);
     const accounts = await web3.eth.getAccounts();
     const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
+
     if (chain) {
-      return this.options.onConnect(chain.id, accounts[0]);
+      this.options.onConnect(chain.id, accounts[0]);
     } else {
-      return this.options.onUnsupportedChainSelected(networkChainId, accounts[0]);
+      this.options.onUnsupportedChainSelected(networkChainId, accounts[0]);
     }
   }
 
-  public async askUserForChainChangeIfNeeded(chainId: ChainEntity['id']) {
+  /**
+   * Attempt to allow user to manually switch networks
+   * @param chainId
+   */
+  public async askUserForChainChange(chainId: ChainEntity['id']) {
     const chain = find(this.options.chains, chain => chain.id === chainId);
     if (!chain) {
       throw new Error(`Couldn't find chain by id ${chainId}`);
     }
-    // initialize instances if needed
-    if (this.web3Modal === null) {
-      const providerOptions = _generateProviderOptions(this.options.chains);
-      this.web3Modal = new Web3Modal(providerOptions);
+
+    // Wallet must be connected before we can ask to change chains
+    if (!this.web3Modal || !this.provider) {
+      throw new Error(`Wallet must be connected before switching chains`);
     }
 
-    if (this.provider === null) {
-      this.provider = await this.web3Modal.connect();
-      this._bindProviderEvents(this.provider);
-    }
+    // show add/switch chain dialog in wallets that support such
     await this.provider.request({
       method: 'wallet_addEthereumChain',
       params: [chain.walletSettings],
@@ -124,9 +192,11 @@ export class WalletConnectApi implements IWalletConnectApi {
     if (this.provider && this.provider.removeAllListeners) {
       this.provider.removeAllListeners();
     }
+
     this.provider = null;
     this.web3Modal = null;
-    return this.options.onWalletDisconnected();
+
+    this.options.onWalletDisconnected();
   }
 
   protected _bindProviderEvents(provider) {
@@ -404,7 +474,10 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
   };
 }
 
+function getWeb3ModalCachedProvider() {
+  return getWeb3ModalLocal(CACHED_PROVIDER_KEY) || '';
+}
+
 function hasWeb3ModalCachedProvider() {
-  const cacheProviderValue = getWeb3ModalLocal(CACHED_PROVIDER_KEY) || '';
-  return cacheProviderValue !== '';
+  return getWeb3ModalCachedProvider() !== '';
 }

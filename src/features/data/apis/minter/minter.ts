@@ -1,6 +1,6 @@
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
-import { IMinterApi, FetchMinterReservesResult } from './minter-types';
+import { FetchMinterReservesResult, IMinterApi } from './minter-types';
 import { getContract } from '../../../../helpers/getContract';
 import MinterAbi from '../../../../config/abi/minter.json';
 import BigNumber from 'bignumber.js';
