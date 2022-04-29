@@ -212,7 +212,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             <Box className={classes.inputLogo}>
               <AssetsImage
                 assets={[]}
-                img={`single-assets/${minter.mintedToken.symbol}.png`}
+                img={`single-assets/${minter.mintedToken.symbol}.svg`}
                 alt={minter.mintedToken.symbol}
               />
             </Box>
