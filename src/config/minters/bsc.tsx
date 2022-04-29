@@ -19,6 +19,6 @@ export const minters = [
     },
     canBurnReserves: true,
     reserveBalanceMethod: 'withdrawableBalance',
-    vaultIds: ['cake-cakev2'],
+    vaultIds: ['beefy-becake','beefy-becake-earnings'],
   },
 ];
