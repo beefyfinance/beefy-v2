@@ -5,7 +5,7 @@ export const minters = [
     contractAddress: '0x42b50A901228fb4C739C19fcd38DC2182B515B66',
     depositToken: {
       symbol: 'CAKE',
-      oracleId: 'CAKE',
+      oracleId: 'Cake',
       type: 'erc20',
       contractAddress: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
       decimals: 18,
