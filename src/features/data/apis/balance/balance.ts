@@ -56,7 +56,7 @@ export class BalanceAPI implements IBalanceApi {
           amount: tokenContract.methods.getEthBalance(walletAddress),
         });
       } else if (isTokenErc20(token)) {
-        const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
+        const tokenContract = new this.web3.eth.Contract(erc20Abi, token.address);
         tokenCalls.push({
           type: 'token',
           tokenId: token.id,

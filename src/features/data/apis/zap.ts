@@ -70,7 +70,7 @@ export function getEligibleZapOptions(
   const zap = state.entities.zaps.byChainId[vault.chainId].find(zap => {
     return (
       isTokenErc20(oracleToken) &&
-      oracleToken.contractAddress ===
+      oracleToken.address ===
         computePairAddress(
           zap.ammFactory,
           zap.ammPairInitHash,
@@ -219,7 +219,7 @@ export const estimateZapWithdraw = async (
 
   const web3 = await getWeb3Instance(chain);
   const multicall = new MultiCall(web3, chain.multicallAddress);
-  const pairContract = new web3.eth.Contract(uniswapV2PairABI, oracleToken.contractAddress);
+  const pairContract = new web3.eth.Contract(uniswapV2PairABI, oracleToken.address);
 
   const [[pair]] = await multicall.all([
     [
@@ -234,7 +234,7 @@ export const estimateZapWithdraw = async (
   ]);
 
   const reserveIn =
-    tokenIn.contractAddress.toLocaleLowerCase() === pair.token0.toLocaleLowerCase()
+    tokenIn.address.toLocaleLowerCase() === pair.token0.toLocaleLowerCase()
       ? pair.reserves[0]
       : pair.reserves[1];
   const reserveOut =

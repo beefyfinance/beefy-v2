@@ -37,6 +37,9 @@ export type TokensState = {
       byId: {
         [id: string]: TokenEntity;
       };
+      byAddress: {
+        [address: string]: TokenEntity;
+      };
       native: TokenNative['id'];
       wnative: TokenErc20['id'];
       /**
@@ -75,6 +78,7 @@ export const tokensSlice = createSlice({
         if (sliceState.byChainId[chainId] === undefined) {
           sliceState.byChainId[chainId] = {
             byId: {},
+            byAddress: {},
             interestingBalanceTokenIds: [],
             native: null,
             wnative: null,
@@ -85,8 +89,9 @@ export const tokensSlice = createSlice({
         const token: TokenNative = {
           id: tokenId,
           chainId: chainId,
+          oracleId: tokenId,
           decimals: 18, // TODO: not sure about that
-          address: null,
+          address: 'native',
           symbol: chainConf.walletSettings.nativeCurrency.symbol,
           type: 'native',
           buyUrl: sliceState.byChainId[chainId].byId[tokenId]?.buyUrl ?? null,
@@ -94,6 +99,7 @@ export const tokensSlice = createSlice({
           description: sliceState.byChainId[chainId].byId[tokenId]?.description ?? null,
         };
         sliceState.byChainId[chainId].byId[token.id] = token;
+        sliceState.byChainId[chainId].byAddress[token.address] = token;
         sliceState.byChainId[chainId].native = token.id;
         sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
       }
@@ -172,6 +178,7 @@ function addAddressBookToState(
   if (sliceState.byChainId[chainId] === undefined) {
     sliceState.byChainId[chainId] = {
       byId: {},
+      byAddress: {},
       interestingBalanceTokenIds: [],
       native: null,
       wnative: null,
@@ -187,12 +194,22 @@ function addAddressBookToState(
       existingToken.description = existingToken.description || token.description;
       existingToken.website = existingToken.website || token.website;
     }
+
+    if (sliceState.byChainId[chainId].byAddress[token.address] === undefined) {
+      sliceState.byChainId[chainId].byAddress[token.address] = token;
+    } else {
+      const existingToken = sliceState.byChainId[chainId].byAddress[token.address];
+      existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
+      existingToken.description = existingToken.description || token.description;
+      existingToken.website = existingToken.website || token.website;
+    }
+
     if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
       sliceState.byChainId[chainId].wnative = token.id;
     }
 
     // update the native token address for those chains who have one
-    if (isTokenNative(token) && token.address !== null) {
+    if (isTokenNative(token) && token.address !== 'native') {
       const chainNative = sliceState.byChainId[chainId].byId[token.id] as TokenNative;
       if (chainNative && chainNative.address === null) {
         chainNative.address = token.address;
@@ -209,6 +226,7 @@ function addBoostToState(
   if (sliceState.byChainId[chainId] === undefined) {
     sliceState.byChainId[chainId] = {
       byId: {},
+      byAddress: {},
       interestingBalanceTokenIds: [],
       native: null,
       wnative: null,
@@ -220,7 +238,8 @@ function addBoostToState(
     const token: TokenEntity = {
       id: tokenId,
       chainId: chainId,
-      contractAddress: apiBoost.earnedTokenAddress,
+      address: apiBoost.earnedTokenAddress,
+      oracleId: tokenId,
       decimals: apiBoost.earnedTokenDecimals,
       symbol: apiBoost.earnedToken,
       buyUrl: null,
@@ -230,6 +249,7 @@ function addBoostToState(
     };
     temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
+    sliceState.byChainId[chainId].byAddress[token.address] = token;
     sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
   }
 }
@@ -242,6 +262,7 @@ function addMinterToState(
   if (sliceState.byChainId[chainId] === undefined) {
     sliceState.byChainId[chainId] = {
       byId: {},
+      byAddress: {},
       interestingBalanceTokenIds: [],
       native: null,
       wnative: null,
@@ -257,7 +278,8 @@ function addMinterToState(
               id: sourceTokenId,
               symbol: sourceToken.symbol,
               chainId: chainId,
-              contractAddress: sourceToken.contractAddress,
+              oracleId: sourceTokenId,
+              address: sourceToken.contractAddress,
               decimals: sourceToken.decimals,
               buyUrl: null,
               type: 'erc20',
@@ -268,15 +290,18 @@ function addMinterToState(
               id: sourceTokenId,
               symbol: sourceToken.symbol,
               chainId: chainId,
-              address: null,
+              oracleId: sourceTokenId,
+              address: 'native',
               decimals: sourceToken.decimals,
               buyUrl: null,
               type: 'native',
               website: null,
               description: null,
             };
+
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
+      sliceState.byChainId[chainId].byAddress[token.address] = token;
       sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
     }
   }
@@ -292,6 +317,7 @@ function addVaultToState(
   if (sliceState.byChainId[chainId] === undefined) {
     sliceState.byChainId[chainId] = {
       byId: {},
+      byAddress: {},
       interestingBalanceTokenIds: [],
       native: null,
       wnative: null,
@@ -302,6 +328,7 @@ function addVaultToState(
   if (sliceState.byChainId[chainId].byId[oracleToken.id] === undefined) {
     sliceState.byChainId[chainId].byId[oracleToken.id] = oracleToken;
     sliceState.byChainId[chainId].interestingBalanceTokenIds.push(oracleToken.id);
+    sliceState.byChainId[chainId].byAddress[oracleToken.address] = oracleToken;
   }
 
   // add earned token data
@@ -316,7 +343,8 @@ function addVaultToState(
           ? {
               id: earnedTokenId,
               chainId: chainId,
-              address: null,
+              oracleId: vault.oracleId,
+              address: 'native',
               decimals: chain.walletSettings.nativeCurrency.decimals,
               symbol: vault.earnedToken,
               type: 'native',
@@ -327,8 +355,9 @@ function addVaultToState(
           : {
               id: earnedTokenId,
               chainId: chainId,
+              oracleId: vault.oracleId,
               decimals: vault.earnedTokenDecimals ?? 18,
-              contractAddress: vault.earnedTokenAddress,
+              address: vault.earnedTokenAddress,
               symbol: vault.earnedToken,
               type: 'erc20',
               buyUrl: sliceState.byChainId[chainId].byId[earnedTokenId]?.buyUrl ?? null,
@@ -338,11 +367,13 @@ function addVaultToState(
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
       sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
+      sliceState.byChainId[chainId].byAddress[token.address] = token;
     } else {
       const token: TokenEntity = {
         id: earnedTokenId,
         chainId: chainId,
-        contractAddress: vault.earnedTokenAddress,
+        oracleId: vault.oracleId,
+        address: vault.earnedTokenAddress,
         decimals: 18, // TODO: not sure about that
         symbol: vault.earnedToken,
         buyUrl: sliceState.byChainId[chainId].byId[earnedTokenId]?.buyUrl ?? null,
@@ -353,6 +384,7 @@ function addVaultToState(
       // temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
       sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
+      sliceState.byChainId[chainId].byAddress[token.address] = token;
     }
   }
 }
@@ -380,7 +412,7 @@ function temporaryWrappedtokenFix(token: TokenEntity) {
     return;
   }
   // contract address has been set
-  if (token.contractAddress) {
+  if (token.address) {
     return;
   }
 
@@ -392,7 +424,7 @@ function temporaryWrappedtokenFix(token: TokenEntity) {
 
   for (const fix of wrappedTokenFixes) {
     if (token.chainId === fix.chainId && token.id === fix.tokenId) {
-      token.contractAddress = fix.contractAddress;
+      token.address = fix.contractAddress;
       console.warn(`Fixed ${token.id} (${token.chainId}) contract address: ${fix.contractAddress}`);
       return;
     }

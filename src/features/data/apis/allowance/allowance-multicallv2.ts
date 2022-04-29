@@ -48,10 +48,10 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
       if (!isTokenErc20(token)) {
         throw new Error(`Can't query allowance of non erc20 token, skipping ${token.id}`);
       }
-      if (allowanceCallsByToken[token.contractAddress] === undefined) {
-        allowanceCallsByToken[token.contractAddress] = { tokenId: token.id, spenders: new Set() };
+      if (allowanceCallsByToken[token.address] === undefined) {
+        allowanceCallsByToken[token.address] = { tokenId: token.id, spenders: new Set() };
       }
-      allowanceCallsByToken[token.contractAddress].spenders.add(spenderAddress);
+      allowanceCallsByToken[token.address].spenders.add(spenderAddress);
       // keep a map to get decimals at the end
       if (tokensById[token.id] === undefined) {
         tokensById[token.id] = token;
@@ -123,11 +123,11 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
 
     for (const token of tokens) {
       const tokenContract = baseTokenContract.clone();
-      tokenContract.options.address = token.contractAddress;
+      tokenContract.options.address = token.address;
       calls.push({
         tokenId: token.id,
         spenderAddress: spenderAddress,
-        tokenAddress: token.contractAddress,
+        tokenAddress: token.address,
         allowance: tokenContract.methods.allowance(walletAddress, spenderAddress),
       });
     }

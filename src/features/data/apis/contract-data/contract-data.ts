@@ -44,7 +44,7 @@ export class ContractDataAPI implements IContractDataApi {
     const standardVaultCalls: ShapeWithLabel[] = [];
     for (const vault of standardVaults) {
       const earnedToken = selectErc20TokenById(state, this.chain.id, vault.earnedTokenId);
-      const vaultContract = getVaultContractInstance(earnedToken.contractAddress);
+      const vaultContract = getVaultContractInstance(earnedToken.address);
       standardVaultCalls.push({
         type: 'vault-standard',
         id: vault.id,

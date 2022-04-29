@@ -87,7 +87,7 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
     const erc20TokensPromises = erc20TokensBatches.map(erc20TokenBatch =>
       mc.methods
         .getTokenBalances(
-          erc20TokenBatch.map(token => token.contractAddress),
+          erc20TokenBatch.map(token => token.address),
           walletAddress
         )
         .call()

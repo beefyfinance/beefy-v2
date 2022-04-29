@@ -18,7 +18,7 @@ export function selectMintResult(walletActionsState: WalletActionsState) {
       const userAddress = walletActionsState.data.receipt.from.toLowerCase();
       const mintContractAddress = walletActionsState.data.receipt.to.toLowerCase();
       const mintToken = walletActionsState.data.token;
-      const mintTokenAddress = mintToken.contractAddress.toLowerCase();
+      const mintTokenAddress = mintToken.address.toLowerCase();
       const transferEvents = Array.isArray(walletActionsState.data.receipt.events['Transfer'])
         ? walletActionsState.data.receipt.events['Transfer']
         : [walletActionsState.data.receipt.events['Transfer']];

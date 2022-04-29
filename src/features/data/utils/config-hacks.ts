@@ -41,7 +41,8 @@ export function getOracleTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault
     token = {
       id: apiVault.oracleId,
       chainId: chain.id,
-      contractAddress: apiVault.tokenAddress,
+      oracleId: apiVault.oracleId,
+      address: apiVault.tokenAddress.toUpperCase(),
       decimals: apiVault.tokenDecimals,
       symbol: apiVault.token,
       buyUrl: null,
@@ -53,7 +54,8 @@ export function getOracleTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault
     token = {
       id: chain.walletSettings.nativeCurrency.symbol,
       chainId: chain.id,
-      address: null,
+      oracleId: chain.walletSettings.nativeCurrency.symbol,
+      address: 'native',
       decimals: chain.walletSettings.nativeCurrency.decimals,
       symbol: chain.walletSettings.nativeCurrency.symbol,
       buyUrl: null,

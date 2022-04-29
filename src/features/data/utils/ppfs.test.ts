@@ -7,7 +7,7 @@ describe('Ppfs tests', () => {
     const mooToken: TokenEntity = {
       buyUrl: null,
       chainId: 'bsc',
-      contractAddress: '0x6BE4741AB0aD233e4315a10bc783a7B923386b71',
+      address: '0x6BE4741AB0aD233e4315a10bc783a7B923386b71',
       decimals: 18,
       id: 'mooVenusBNB',
       symbol: 'mooVenusBNB',
@@ -19,7 +19,7 @@ describe('Ppfs tests', () => {
     const oracleToken: TokenEntity = {
       buyUrl: null,
       chainId: 'bsc',
-      contractAddress: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+      address: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
       decimals: 18,
       id: 'WBNB',
       symbol: 'WBNB',
@@ -41,7 +41,7 @@ describe('Ppfs tests', () => {
     const mooToken: TokenEntity = {
       buyUrl: null,
       chainId: 'fantom',
-      contractAddress: '0x97927aBfE1aBBE5429cBe79260B290222fC9fbba',
+      address: '0x97927aBfE1aBBE5429cBe79260B290222fC9fbba',
       decimals: 18,
       id: 'mooScreamWBTC',
       symbol: 'mooScreamWBTC',
@@ -53,7 +53,7 @@ describe('Ppfs tests', () => {
     const oracleToken: TokenEntity = {
       buyUrl: null,
       chainId: 'fantom',
-      contractAddress: '0x321162Cd933E2Be498Cd2267a90534A804051b11',
+      address: '0x321162Cd933E2Be498Cd2267a90534A804051b11',
       decimals: 8,
       id: 'WBTC',
       symbol: 'WBTC',
