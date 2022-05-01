@@ -20,7 +20,7 @@ import { initDepositForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { isTokenNative, TokenEntity } from '../../../data/entities/token';
-import { isGovVault, isStandardVault, VaultEntity } from '../../../data/entities/vault';
+import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { isFulfilled } from '../../../data/reducers/data-loader';
 import { depositActions } from '../../../data/reducers/wallet/deposit';
 import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
