@@ -21,6 +21,7 @@ export interface BoostEntity {
    * and for boosts we do: boostSymbol = ${boost.token}${boost.id}Boost;
    */
   earnedTokenId: TokenEntity['id'];
+  earnedTokenAddress: string;
 
   /**
    * This is the boost's contract address

@@ -26,6 +26,7 @@ export interface VaultStandard {
   name: string;
   logoUri: string;
   tokenDescription: string;
+  tokenAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -50,11 +51,12 @@ export interface VaultStandard {
    * Staking into a standard vault "earns" mooTokens
    */
   earnedTokenId: TokenEntity['id'];
+  earnedTokenAddress: string;
 
   /**
    * The vault contract address
    */
-  contractAddress: string;
+  earnContractAddress: string;
 
   // for display purpose only
   strategyType: 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
@@ -90,6 +92,7 @@ export interface VaultGov {
   name: string;
   logoUri: string;
   tokenDescription: string;
+  tokenAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -108,6 +111,7 @@ export interface VaultGov {
    * the user (like "AAVE.e-AVAXLP")
    **/
   oracleId: TokenEntity['id'];
+  earnedTokenAddress: string;
 
   /**
    * "Earned" token is the token you get back for staking into a vault

@@ -33,7 +33,7 @@ import { BoostEntity } from '../../../../data/entities/boost';
 import { selectBoostById } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
 import { selectChainById } from '../../../../data/selectors/chains';
-import { selectErc20TokenById } from '../../../../data/selectors/tokens';
+import { selectErc20TokenByAddress } from '../../../../data/selectors/tokens';
 import {
   selectBoostUserBalanceInToken,
   selectUserBalanceOfToken,
@@ -84,7 +84,7 @@ const UnstakeForm = ({
   const vault = useSelector((state: BeefyState) => selectStandardVaultById(state, boost.vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, boost.chainId));
   const mooToken = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, vault.earnedTokenId)
+    selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
 
   const mooBalance = useSelector((state: BeefyState) =>

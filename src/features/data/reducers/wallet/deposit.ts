@@ -12,7 +12,7 @@ import { ZapEstimate, ZapOptions } from '../../apis/zap';
 import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
 
 // TODO: this looks exactly like the withdraw state
@@ -58,10 +58,7 @@ export const depositSlice = createSlice({
       const vault = selectVaultById(state, sliceState.vaultId);
       const tokenId = action.payload.tokenId;
 
-      const token =
-        vault.oracleId === tokenId
-          ? selectTokenById(state, vault.chainId, tokenId)
-          : selectTokenById(state, vault.chainId, tokenId);
+      const token = selectTokenById(state, vault.chainId, tokenId);
       sliceState.selectedToken = token;
 
       // also reset the input
@@ -125,7 +122,7 @@ export const depositSlice = createSlice({
       sliceState.zapOptions = action.payload.zapOptions;
 
       // select the vault oracle token by default
-      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+      const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
       sliceState.selectedToken = oracleToken;
 
       sliceState.isZap = sliceState.selectedToken.id !== vault.oracleId;

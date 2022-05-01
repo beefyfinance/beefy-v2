@@ -8,7 +8,7 @@ import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
 import { isTokenErc20, TokenEntity, TokenErc20 } from '../../entities/token';
-import { selectErc20TokenById, selectTokenById } from '../../selectors/tokens';
+import { selectErc20TokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { FetchAllAllowanceResult, IAllowanceApi, TokenAllowance } from './allowance-types';
 import { BeefyState } from '../../../../redux-types';
 import { createIdMap } from '../../utils/array-utils';
@@ -51,10 +51,14 @@ export class AllowanceAPI implements IAllowanceApi {
     };
 
     for (const standardVault of standardVaults) {
-      addTokenIdToCalls(standardVault.earnedTokenId, standardVault.contractAddress);
-      addTokenIdToCalls(standardVault.oracleId, standardVault.contractAddress);
+      addTokenIdToCalls(standardVault.earnedTokenId, standardVault.earnContractAddress);
+      addTokenIdToCalls(standardVault.oracleId, standardVault.earnContractAddress);
       // special case for what seem to be a maxi vault
-      const earnToken = selectErc20TokenById(state, this.chain.id, standardVault.earnedTokenId);
+      const earnToken = selectErc20TokenByAddress(
+        state,
+        this.chain.id,
+        standardVault.earnedTokenAddress
+      );
       addTokenIdToCalls(standardVault.oracleId, earnToken.address);
     }
     for (const govVault of govVaults) {

@@ -21,7 +21,7 @@ import { initWithdrawForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { TokenEntity } from '../../../data/entities/token';
-import { isGovVault, isStandardVault, VaultEntity } from '../../../data/entities/vault';
+import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { isFulfilled } from '../../../data/reducers/data-loader';
 import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import {
@@ -34,8 +34,8 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import {
   selectChainWrappedNativeToken,
-  selectErc20TokenById,
-  selectTokenById,
+  selectErc20TokenByAddress,
+  selectTokenByAddress,
 } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import {
@@ -79,10 +79,10 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
+    selectTokenByAddress(state, vault.chainId, vault.tokenAddress)
   );
   const earnedToken = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, vault.earnedTokenId, true)
+    selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress, true)
   );
   const formState = useSelector((state: BeefyState) => state.ui.withdraw);
   const wnative = useSelector((state: BeefyState) =>
@@ -94,10 +94,8 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const spenderAddress = formState.isZap
     ? formState.zapOptions?.address || null
     : // if it's a classic vault, the vault contract address is the spender
-    // which is also the earned token
-    isStandardVault(vault)
-    ? vault.contractAddress
-    : vault.earnContractAddress;
+      // which is also the earned token
+      vault.earnContractAddress;
 
   // no approval when retrieving the vault LP
   const isWithdrawingLP =

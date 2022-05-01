@@ -9,7 +9,7 @@ import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { ZapEstimate } from '../../../data/apis/zap';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 const BreakdownTooltip = memo(({ rows }: any) => {
@@ -119,10 +119,10 @@ export const FeeBreakdown = memo(
     const formattedDepositFee = vault.depositFee;
     const formattedWithdrawalFee = vault.withdrawalFee;
     const oracleToken = useSelector((state: BeefyState) =>
-      selectTokenById(state, vault.chainId, vault.oracleId)
+      selectTokenByAddress(state, vault.chainId, vault.tokenAddress)
     );
     const earnedToken = useSelector((state: BeefyState) =>
-      selectTokenById(state, vault.chainId, vault.earnedTokenId)
+      selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
     );
     const performanceFee =
       isGovVault(vault) || BifiMaxis.includes(vault.id)

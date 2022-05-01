@@ -171,6 +171,7 @@ function addBoostToState(
     chainId: chainId,
     assets: apiBoost.assets,
     earnedTokenId: tokenId,
+    earnedTokenAddress: apiBoost.earnedTokenAddress,
     earnContractAddress: apiBoost.earnContractAddress,
     logo: apiBoost.logo,
     name: apiBoost.name,

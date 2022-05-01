@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectMoonpotData } from '../../../data/selectors/partners';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 
@@ -18,7 +18,7 @@ const MoonpotCard = ({ vaultId }: { vaultId: string }) => {
   const { t } = useTranslation();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
+    selectTokenByAddress(state, vault.chainId, vault.tokenAddress)
   );
   const moonpotData = useSelector((state: BeefyState) => selectMoonpotData(state, vaultId));
 

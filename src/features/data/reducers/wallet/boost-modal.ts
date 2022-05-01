@@ -10,7 +10,7 @@ import { initiateBoostForm } from '../../actions/boosts';
 import { BoostEntity } from '../../entities/boost';
 import { selectBoostUserBalanceInToken, selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectBoostById } from '../../selectors/boosts';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
 
 // TODO: this looks exactly like the withdraw state
@@ -43,7 +43,7 @@ export const boostModalSlice = createSlice({
       const boost = selectBoostById(state, sliceState.boostId);
       const vault = selectVaultById(state, boost.vaultId);
 
-      const balanceToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+      const balanceToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
       const balance =
         sliceState.mode === 'stake'
           ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId) // mootoken
@@ -58,7 +58,7 @@ export const boostModalSlice = createSlice({
 
       const boost = selectBoostById(state, sliceState.boostId);
       const vault = selectVaultById(state, boost.vaultId);
-      const balanceToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+      const balanceToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
       const input = action.payload.amount.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 

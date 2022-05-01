@@ -6,7 +6,7 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { isGovVault, VaultEntity, VaultGov } from '../entities/vault';
 import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } from './boosts';
-import { selectTokenById, selectTokenPriceByTokenId } from './tokens';
+import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectIsWalletKnown, selectWalletAddress } from './wallet';
 
@@ -29,9 +29,9 @@ export const selectAllTokenWhereUserCouldHaveBalance = (
 ) => {
   const byChainId = state.entities.tokens.byChainId;
   if (byChainId[chainId] === undefined) {
-    throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
+    throw new Error(`selectTokenByAddress: Unknown chain id ${chainId}`);
   }
-  return byChainId[chainId].interestingBalanceTokenIds;
+  return byChainId[chainId].interestingBalanceTokenAddresses;
 };
 
 export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddress: string) => {
@@ -86,8 +86,8 @@ export const selectStandardVaultUserBalanceInOracleTokenExcludingBoosts = (
   walletAddress?: string
 ) => {
   const vault = selectStandardVaultById(state, vaultId);
-  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-  const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const mooTokenBalance = selectUserBalanceOfToken(
     state,
     vault.chainId,
@@ -109,8 +109,8 @@ export const selectStandardVaultUserBalanceInOracleTokenIncludingBoosts = (
   walletAddress?: string
 ) => {
   const vault = selectStandardVaultById(state, vaultId);
-  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-  const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
   const vaultOracleBalance = selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(
     state,
@@ -179,7 +179,7 @@ export const selectUserVaultDepositInUsd = (
 ) => {
   // TODO: do this in the state?
   const vault = selectVaultById(state, vaultId);
-  const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
+  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
   const vaultTokenDeposit = selectUserVaultDepositInOracleToken(state, vaultId, walletAddress);
 
   return vaultTokenDeposit.multipliedBy(oraclePrice);
@@ -193,7 +193,7 @@ export const selectGovVaultPendingRewardsInToken = (state: BeefyState, vaultId: 
 export const selectGovVaultPendingRewardsInUsd = (state: BeefyState, vaultId: VaultGov['id']) => {
   const vault = selectVaultById(state, vaultId);
   const tokenRewards = selectGovVaultPendingRewardsInToken(state, vaultId);
-  const tokenPrice = selectTokenPriceByTokenId(state, vault.earnedTokenId);
+  const tokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.earnedTokenAddress);
   return tokenRewards.times(tokenPrice);
 };
 
@@ -204,7 +204,7 @@ export const selectGovVaultPendingRewardsInUsd = (state: BeefyState, vaultId: Va
 export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
   const boost = selectBoostById(state, boostId);
   const boostedVault = selectVaultById(state, boost.vaultId);
-  return selectTokenById(state, boostedVault.chainId, boostedVault.earnedTokenId);
+  return selectTokenByAddress(state, boostedVault.chainId, boostedVault.earnedTokenAddress);
 };
 
 /**
@@ -213,7 +213,7 @@ export const selectBoostBalanceTokenEntity = (state: BeefyState, boostId: BoostE
  */
 export const selectBoostRewardsTokenEntity = (state: BeefyState, boostId: BoostEntity['id']) => {
   const boost = selectBoostById(state, boostId);
-  return selectTokenById(state, boost.chainId, boost.earnedTokenId);
+  return selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
 };
 
 /**
@@ -222,7 +222,7 @@ export const selectBoostRewardsTokenEntity = (state: BeefyState, boostId: BoostE
  */
 export const selectGovVaultBalanceTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
   const vault = selectVaultById(state, vaultId);
-  return selectTokenById(state, vault.chainId, vault.oracleId);
+  return selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
 };
 
 /**
@@ -231,5 +231,5 @@ export const selectGovVaultBalanceTokenEntity = (state: BeefyState, vaultId: Vau
  */
 export const selectGovVaultRewardsTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
   const vault = selectVaultById(state, vaultId);
-  return selectTokenById(state, vault.chainId, vault.earnedTokenId);
+  return selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 };

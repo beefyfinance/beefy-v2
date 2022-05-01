@@ -17,7 +17,7 @@ import {
   selectGovVaultUserStackedBalanceInOracleToken,
   selectUserBalanceOfToken,
 } from '../../selectors/balance';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../selectors/vaults';
 import { mooAmountToOracleAmount } from '../../utils/ppfs';
 
@@ -105,7 +105,7 @@ export const withdrawSlice = createSlice({
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
 
-      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+      const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
       const oracleBalance = isGovVault(vault)
         ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
         : selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(state, vault.id);
@@ -121,7 +121,7 @@ export const withdrawSlice = createSlice({
     setInput(sliceState, action: PayloadAction<{ amount: string; state: BeefyState }>) {
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
-      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+      const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
       const input = action.payload.amount.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
       let value = new BigNumber(input).decimalPlaces(oracleToken.decimals, BigNumber.ROUND_DOWN);
@@ -130,7 +130,7 @@ export const withdrawSlice = createSlice({
         value = BIG_ZERO;
       }
 
-      const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+      const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
       const mooTokenBalance = isGovVault(vault)
         ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
         : selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId);
@@ -167,7 +167,7 @@ export const withdrawSlice = createSlice({
       sliceState.zapOptions = action.payload.zapOptions;
 
       // select the vault oracle token by default
-      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+      const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
       sliceState.selectedToken = oracleToken;
 
       sliceState.isZap = sliceState.selectedToken.id !== vault.oracleId;

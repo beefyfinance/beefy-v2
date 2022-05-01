@@ -14,8 +14,10 @@ import {
 } from '../../../data/selectors/balance';
 import {
   selectIsTokenLoaded,
+  selectTokenByAddress,
   selectTokenById,
   selectTokenPriceByTokenId,
+  selectTokenPriceByAddress,
 } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
@@ -34,7 +36,7 @@ export function TokenWithDeposit({
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
 
   const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
+    selectTokenByAddress(state, vault.chainId, vault.tokenAddress)
   );
 
   const oracleAmount = useSelector((state: BeefyState) => {
@@ -49,7 +51,7 @@ export function TokenWithDeposit({
       return [[oracleAmount, oracleToken.symbol]];
     }
     let amountsAndSymbol: [BigNumber, string][] = [];
-    const inputTokenPrice = selectTokenPriceByTokenId(state, oracleToken.id);
+    const inputTokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
 
     const convertToArr = isArray(convertAmountTo) ? convertAmountTo : [convertAmountTo];
     for (const convertToId of convertToArr) {

@@ -2,7 +2,7 @@ import { BeefyState } from '../../../redux-types';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
 import { selectAllowanceByTokenId } from './allowances';
 import { selectBoostById } from './boosts';
-import { selectTokenById } from './tokens';
+import { selectTokenByAddress } from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
 export const selectIsApprovalNeededForDeposit = (state: BeefyState, spenderAddress: string) => {
@@ -17,8 +17,8 @@ export const selectIsApprovalNeededForWithdraw = (state: BeefyState, spenderAddr
   // to withdraw, the spender must have access to the moo token
   const vaultId = state.ui.withdraw.vaultId;
   const vault = selectVaultById(state, vaultId);
-  const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
   const allowance = selectAllowanceByTokenId(state, vault.chainId, mooToken.id, spenderAddress);
   const ppfs = selectVaultPricePerFullShare(state, vaultId);
   // the amount is expressed in oracletoken amount
@@ -40,7 +40,7 @@ export const selectIsApprovalNeededForBoostStaking = (
   const boost = selectBoostById(state, boostId);
   const vault = selectStandardVaultById(state, boost.vaultId);
 
-  const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const allowance = selectAllowanceByTokenId(state, vault.chainId, mooToken.id, spenderAddress);
   const mooAmount = state.ui.boostModal.amount;
 

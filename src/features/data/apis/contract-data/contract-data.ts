@@ -1,7 +1,7 @@
 import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import Web3 from 'web3';
 import { VaultGov, VaultStandard } from '../../entities/vault';
-import { selectErc20TokenById, selectTokenById } from '../../selectors/tokens';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
@@ -43,7 +43,7 @@ export class ContractDataAPI implements IContractDataApi {
 
     const standardVaultCalls: ShapeWithLabel[] = [];
     for (const vault of standardVaults) {
-      const earnedToken = selectErc20TokenById(state, this.chain.id, vault.earnedTokenId);
+      const earnedToken = selectErc20TokenByAddress(state, this.chain.id, vault.earnedTokenAddress);
       const vaultContract = getVaultContractInstance(earnedToken.address);
       standardVaultCalls.push({
         type: 'vault-standard',
@@ -93,9 +93,9 @@ export class ContractDataAPI implements IContractDataApi {
     for (const result of results) {
       if (result.type === 'boost') {
         const boost = selectBoostById(state, result.id);
-        const earnedToken = selectTokenById(state, boost.chainId, boost.earnedTokenId);
+        const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
         const vault = selectVaultById(state, boost.vaultId);
-        const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+        const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
         const data = {
           id: result.id,
           totalSupply: new BigNumber(result.totalSupply).shiftedBy(-oracleToken.decimals),
@@ -107,7 +107,7 @@ export class ContractDataAPI implements IContractDataApi {
         res.boosts.push(data);
       } else if (result.type === 'vault-gov') {
         const vault = selectVaultById(state, result.id);
-        const token = selectTokenById(state, vault.chainId, vault.oracleId);
+        const token = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
         const data = {
           id: result.id,
           totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
@@ -115,7 +115,7 @@ export class ContractDataAPI implements IContractDataApi {
         res.govVaults.push(data);
       } else if (result.type === 'vault-standard') {
         const vault = selectVaultById(state, result.id);
-        const mooToken = selectTokenById(state, vault.chainId, vault.oracleId);
+        const mooToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
         const data = {
           id: result.id,
           balance: new BigNumber(result.balance).shiftedBy(-mooToken.decimals),

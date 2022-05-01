@@ -8,7 +8,7 @@ import { getEligibleZapOptions, ZapOptions } from '../apis/zap';
 import { isTokenErc20, TokenEntity } from '../entities/token';
 import { isGovVault, isStandardVault, VaultEntity } from '../entities/vault';
 import { selectChainById } from '../selectors/chains';
-import { selectTokenById } from '../selectors/tokens';
+import { selectTokenByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 
 interface InitWithdrawFormParams {
@@ -37,8 +37,8 @@ export const initiateWithdrawForm = createAsyncThunk<
 >('withdraw/initiateWithdrawForm', async ({ vaultId, walletAddress }, { getState }) => {
   const vault = selectVaultById(getState(), vaultId);
   // we cannot select the addressbook token as the vault token can be an LP token
-  const oracleToken = selectTokenById(getState(), vault.chainId, vault.oracleId);
-  const earnedToken = selectTokenById(getState(), vault.chainId, vault.earnedTokenId);
+  const oracleToken = selectTokenByAddress(getState(), vault.chainId, vault.tokenAddress);
+  const earnedToken = selectTokenByAddress(getState(), vault.chainId, vault.earnedTokenAddress);
   const chain = selectChainById(getState(), vault.chainId);
 
   // then, we need to find out the available zap options
@@ -68,11 +68,7 @@ export const initiateWithdrawForm = createAsyncThunk<
       )
     : { tokens: [], boosts: [], govVaults: [] };
 
-  const spenderAddress = zapOptions
-    ? zapOptions.address
-    : isStandardVault(vault)
-    ? vault.contractAddress
-    : vault.earnContractAddress;
+  const spenderAddress = zapOptions ? zapOptions.address : vault.earnContractAddress;
 
   const allowanceApi = await getAllowanceApi(chain);
   const allowanceRes =

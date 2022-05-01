@@ -17,7 +17,7 @@ import {
 import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../selectors/vaults';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress } from '../../selectors/tokens';
 
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
@@ -49,7 +49,7 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
       mc.methods.getBoostInfo(boostBatch.map(boost => boost.earnContractAddress)).call()
     );
     const vaultPromises = vaultBatches.map(vaultBatch =>
-      mc.methods.getVaultInfo(vaultBatch.map(vault => vault.contractAddress)).call()
+      mc.methods.getVaultInfo(vaultBatch.map(vault => vault.earnContractAddress)).call()
     );
     const govVaultPromises = govVaultBatches.map(govVaultBatch => {
       return mc.methods
@@ -99,7 +99,7 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     standardVault: VaultStandard
   ) {
     const vault = selectVaultById(state, standardVault.id);
-    const mooToken = selectTokenById(state, vault.chainId, vault.oracleId);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
     return {
       id: standardVault.id,
       balance: new BigNumber(result.balance).shiftedBy(-mooToken.decimals),
@@ -115,7 +115,7 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     govVault: VaultGov
   ) {
     const vault = selectVaultById(state, govVault.id);
-    const token = selectTokenById(state, vault.chainId, vault.oracleId);
+    const token = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
     return {
       id: govVault.id,
       totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
@@ -128,9 +128,9 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     result: AllValuesAsString<BoostContractData>,
     boost: BoostEntity
   ) {
-    const earnedToken = selectTokenById(state, boost.chainId, boost.earnedTokenId);
+    const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
     const vault = selectVaultById(state, boost.vaultId);
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+    const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
     return {
       id: boost.id,
       totalSupply: new BigNumber(result.totalSupply).shiftedBy(-oracleToken.decimals),

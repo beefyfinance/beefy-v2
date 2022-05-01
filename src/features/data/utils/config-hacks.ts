@@ -42,7 +42,7 @@ export function getOracleTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault
       id: apiVault.oracleId,
       chainId: chain.id,
       oracleId: apiVault.oracleId,
-      address: apiVault.tokenAddress.toUpperCase(),
+      address: apiVault.tokenAddress,
       decimals: apiVault.tokenDecimals,
       symbol: apiVault.token,
       buyUrl: null,

@@ -8,7 +8,7 @@ import {
   selectUserDepositedVaults,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
-import { selectTokenPriceByTokenId } from './tokens';
+import { selectTokenPriceByAddress } from './tokens';
 import { selectVaultById } from './vaults';
 
 const selectGovVaultRawApr = (state: BeefyState, vaultId: VaultGov['id']) => {
@@ -59,7 +59,7 @@ export const selectUserGlobalStats = (state: BeefyState) => {
   );
 
   for (const vault of userVaults) {
-    const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
+    const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
     // TODO: this looks suspisciously wrong for gov vaults
     const tokenBalance = isGovVault(vault)
       ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)

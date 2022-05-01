@@ -15,6 +15,7 @@ import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectIsTokenLoaded,
+  selectTokenByAddress,
   selectTokenById,
 } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
@@ -65,7 +66,7 @@ export function getEligibleZapOptions(
   const tokenB = selectTokenById(state, vault.chainId, vault.assetIds[1]);
 
   // we cannot select the addressbook token as the vault token can be an LP token
-  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
 
   const zap = state.entities.zaps.byChainId[vault.chainId].find(zap => {
     return (
@@ -160,7 +161,7 @@ export async function estimateZapDeposit(
     };
   }
 
-  const vaultAddress = isStandardVault(vault) ? vault.contractAddress : null;
+  const vaultAddress = isStandardVault(vault) ? vault.earnContractAddress : null;
   const chainTokenAmount = amount.shiftedBy(tokenIn.decimals).decimalPlaces(0);
 
   const web3 = await getWeb3Instance(chain);
@@ -184,7 +185,7 @@ export const estimateZapWithdraw = async (
   outputTokenId: TokenEntity['id']
 ) => {
   const vault = selectVaultById(state, vaultId);
-  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
   const chain = selectChainById(state, vault.chainId);
   const zapOptions = state.ui.withdraw.zapOptions;
   const amount = state.ui.withdraw.amount;

@@ -26,7 +26,7 @@ import { depositActions } from '../../../data/reducers/wallet/deposit';
 import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
-import { selectChainNativeToken, selectTokenById } from '../../../data/selectors/tokens';
+import { selectChainNativeToken, selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import {
   selectCurrentChainId,
@@ -69,7 +69,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
+    selectTokenByAddress(state, vault.chainId, vault.tokenAddress)
   );
   const formState = useSelector((state: BeefyState) => state.ui.deposit);
   const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
@@ -81,10 +81,8 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const spenderAddress = formState.isZap
     ? formState.zapOptions?.address || null
     : // if it's a classic vault, the vault contract address is the spender
-    // which is also the earned token
-    isStandardVault(vault)
-    ? vault.contractAddress
-    : vault.earnContractAddress;
+      // which is also the earned token
+      vault.earnContractAddress;
 
   const needsApproval = useSelector((state: BeefyState) =>
     formState.selectedToken && formState.selectedToken.id !== native.id && spenderAddress
