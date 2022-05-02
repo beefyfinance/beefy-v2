@@ -49,8 +49,7 @@ export type TokensState = {
        * if refactored. And we have to update the config anyway to make it smaller, so move this
        * inside the balance reducer once the config is reworked
        */
-      interestingBalanceTokenIds: TokenEntity['id'][];
-      interestingBalanceTokenAddresses: string[];
+      interestingBalanceTokenAddresses: TokenEntity['address'][];
     };
   };
   prices: {
@@ -80,7 +79,6 @@ export const tokensSlice = createSlice({
           sliceState.byChainId[chainId] = {
             byId: {},
             byAddress: {},
-            interestingBalanceTokenIds: [],
             interestingBalanceTokenAddresses: [],
             native: null,
             wnative: null,
@@ -103,7 +101,6 @@ export const tokensSlice = createSlice({
         sliceState.byChainId[chainId].byId[token.id] = token;
         sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
         sliceState.byChainId[chainId].native = token.id;
-        sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
         sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
       }
     });
@@ -182,7 +179,6 @@ function addAddressBookToState(
     sliceState.byChainId[chainId] = {
       byId: {},
       byAddress: {},
-      interestingBalanceTokenIds: [],
       interestingBalanceTokenAddresses: [],
       native: null,
       wnative: null,
@@ -231,7 +227,6 @@ function addBoostToState(
     sliceState.byChainId[chainId] = {
       byId: {},
       byAddress: {},
-      interestingBalanceTokenIds: [],
       interestingBalanceTokenAddresses: [],
       native: null,
       wnative: null,
@@ -255,7 +250,6 @@ function addBoostToState(
     temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token;
     sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
-    sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
     sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
   }
 }
@@ -269,7 +263,6 @@ function addMinterToState(
     sliceState.byChainId[chainId] = {
       byId: {},
       byAddress: {},
-      interestingBalanceTokenIds: [],
       interestingBalanceTokenAddresses: [],
       native: null,
       wnative: null,
@@ -309,7 +302,6 @@ function addMinterToState(
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
-      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
     }
   }
@@ -326,7 +318,6 @@ function addVaultToState(
     sliceState.byChainId[chainId] = {
       byId: {},
       byAddress: {},
-      interestingBalanceTokenIds: [],
       interestingBalanceTokenAddresses: [],
       native: null,
       wnative: null,
@@ -336,7 +327,6 @@ function addVaultToState(
   const oracleToken = getOracleTokenFromLegacyVaultConfig(selectChainById(state, chainId), vault);
   if (sliceState.byChainId[chainId].byAddress[oracleToken.address.toLowerCase()] === undefined) {
     sliceState.byChainId[chainId].byId[oracleToken.id] = oracleToken;
-    sliceState.byChainId[chainId].interestingBalanceTokenIds.push(oracleToken.id);
     sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(oracleToken.address);
     sliceState.byChainId[chainId].byAddress[oracleToken.address.toLowerCase()] = oracleToken;
   }
@@ -379,7 +369,6 @@ function addVaultToState(
             };
       temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
-      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
     } else {
@@ -397,8 +386,7 @@ function addVaultToState(
       };
       // temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token;
-      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.id);
-      sliceState.byChainId[chainId].interestingBalanceTokenIds.push(token.address);
+      sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
     }
   }
