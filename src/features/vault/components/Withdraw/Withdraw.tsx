@@ -379,7 +379,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     </Button>
                     <Button
                       onClick={handleWithdraw}
-                      className={classes.btnSubmitSecondary}
+                      className={classes.btnSubmit}
                       fullWidth={true}
                       disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
                     >
@@ -388,10 +388,10 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     <Button
                       onClick={handleExit}
                       disabled={!userHasBalanceInVault || !formReady}
-                      className={classes.btnSubmitSecondary}
+                      className={classes.btnSubmit}
                       fullWidth={true}
                     >
-                      {t('Claim-And-Withdraw')}
+                      {t('Claim-And-Withdraw-All')}
                     </Button>
                   </>
                 ) : (

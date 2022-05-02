@@ -58,23 +58,19 @@ export const styles = theme => ({
     textTransform: 'uppercase',
   },
   button: {
-    fontSize: '18px',
-    fontWeight: 600,
-    height: '48px',
+    fontSize: '15px',
+    fontWeight: 700,
     lineHeight: '24px',
-    letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
-    color: '#D1D3E0',
-    backgroundColor: '#232743',
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.background.default,
+    padding: '12px 24px',
     borderRadius: '8px',
-    zIndex: 0,
-    marginBottom: '12px',
-    '&:hover': {
-      backgroundColor: '#232743',
+    '&.Mui-disabled': {
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
     },
-    '&:disabled': {
-      backgroundColor: '#272C47',
-      color: '#D1D3E0',
+    '& + $button': {
+      marginTop: '12px',
     },
   },
   blockBtn: {
