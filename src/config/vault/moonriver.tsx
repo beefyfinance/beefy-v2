@@ -2076,8 +2076,8 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'solarbeam-frax-3pool',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    depositsPaused: true,
+    status: 'paused',
     platform: 'SolarBeam',
     assets: ['FRAX', 'USDC', 'BUSD', 'USDT'],
     risks: [
@@ -2111,8 +2111,8 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'solarbeam-xcksm-stksm',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    depositsPaused: true,
+    status: 'paused',
     platform: 'SolarBeam',
     assets: ['xcKSM', 'stKSM'],
     risks: [
@@ -2185,8 +2185,8 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'solarbeam-3pool',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    depositsPaused: true,
+    status: 'paused',
     platform: 'SolarBeam',
     assets: ['USDC', 'BUSD', 'USDT'],
     risks: [
