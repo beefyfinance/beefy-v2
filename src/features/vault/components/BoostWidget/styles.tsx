@@ -59,7 +59,7 @@ export const styles = theme => ({
   boostStats: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-    rowGap: '12px',
+    rowGap: '16px',
     columnGap: '12px',
     margin: '20px 0 16px 0',
   },
