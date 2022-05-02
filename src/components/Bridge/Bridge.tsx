@@ -12,6 +12,8 @@ import { AssetsImage } from '../AssetsImage';
 import { useSelector } from 'react-redux';
 import { selectAllChains } from '../../features/data/selectors/chains';
 import { SimpleDropdown } from '../SimpleDropdown';
+import { selectWalletAddress } from '../../features/data/selectors/wallet';
+import { BeefyState } from '../../redux-types';
 
 const useStyles = makeStyles(styles as any);
 
@@ -23,22 +25,59 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
     transform: 'translate(-50%, -50%)',
     boxShadow: 24,
     width: '400px',
+    height: '620px',
   };
+
+  const [previewConfirm, setPreviewConfirm] = React.useState('preview');
+
+  const { t } = useTranslation();
+  const classes = useStyles();
+
+  const handleModal = () => {
+    handleClose();
+    setPreviewConfirm('preview');
+  };
+
   return (
     <Modal
       aria-labelledby="bridge-modal-title"
       aria-describedby="bridge-modal-description"
       open={open}
-      onClose={handleClose}
+      onClose={handleModal}
     >
       <Box sx={style}>
-        <Preview handleClose={handleClose} />
+        <Card>
+          <CardHeader className={classes.header}>
+            <Box>
+              {previewConfirm === 'preview' ? (
+                <>
+                  <CardTitle titleClassName={classes.title} title={t('Bridge-Title')} />
+                  <Typography className={classes.powerBy} variant="body2">
+                    {t('Bridge-PowerBy')}
+                  </Typography>
+                </>
+              ) : (
+                <CardTitle titleClassName={classes.title} title={t('Bridge-Title-Confirm')} />
+              )}
+            </Box>
+            <IconButton onClick={handleModal} className={classes.removeHover} aria-label="settings">
+              <CloseIcon htmlColor="#8A8EA8" />
+            </IconButton>
+          </CardHeader>
+          <>
+            {previewConfirm === 'preview' ? (
+              <Preview handlePreview={() => setPreviewConfirm('confirm')} />
+            ) : (
+              <Confirm />
+            )}
+          </>
+        </Card>
       </Box>
     </Modal>
   );
 }
 
-function Preview({ handleClose }) {
+function Preview({ handlePreview }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [network1, setNetwork1] = React.useState('bsc');
   const { t } = useTranslation();
@@ -57,96 +96,83 @@ function Preview({ handleClose }) {
     return (
       <Box className={classes.flexContainer}>
         <img src={require(`../../images/networks/${network}.svg`).default} alt={network} />{' '}
-        <Typography  className={classes.networkValue}>
-          {chainTypes[network]}
-        </Typography>
+        <Typography className={classes.networkValue}>{chainTypes[network]}</Typography>
       </Box>
     );
   };
 
   return (
-    <Card>
-      <CardHeader className={classes.header}>
-        <Box>
-          <CardTitle titleClassName={classes.title} title={t('Bridge-Title')} />
-          <Typography className={classes.powerBy} variant="body2">
-            {t('Bridge-PowerBy')}
+    <CardContent className={classes.content}>
+      {/*From */}
+      <Box>
+        <Box className={classes.flexContainer}>
+          <Typography variant="body2" className={classes.label}>
+            {t('From')}
+          </Typography>
+          <Typography className={classes.balance} variant="body2">
+            {t('Balance')} <span>4 BIFI</span>
           </Typography>
         </Box>
-        <IconButton onClick={handleClose} className={classes.removeHover} aria-label="settings">
-          <CloseIcon htmlColor="#8A8EA8" />
-        </IconButton>
-      </CardHeader>
-      <CardContent className={classes.content}>
-        {/*From */}
-        <Box>
-          <Box className={classes.flexContainer}>
-            <Typography variant="body2" className={classes.label}>
-              {t('From')}
-            </Typography>
-            <Typography className={classes.balance} variant="body2">
-              {t('Balance')} <span>4 BIFI</span>
-            </Typography>
+        <Box className={classes.flexContainer}>
+          <Box className={classes.networkPicker}>
+            <SimpleDropdown
+              list={chainTypes}
+              selected={network1}
+              handler={() => console.log('item')}
+              renderValue={selectedRenderer}
+              noBorder={false}
+            />
           </Box>
-          <Box className={classes.flexContainer}>
-            <Box className={classes.networkPicker}>
-              <SimpleDropdown
-                list={chainTypes}
-                selected={network1}
-                handler={() => console.log('item')}
-                renderValue={selectedRenderer}
-                noBorder={false}
-              />
-            </Box>
-            <Box className={classes.inputContainer}>
-              <Paper component="form" className={classes.root}>
-                <Box className={classes.inputLogo}>
-                  <AssetsImage assets={[]} img={'BIFI-TOKEN.svg'} alt={'BinSpirit'} />
-                </Box>
-                <InputBase placeholder="0.00" value={0} disabled={true} />
-                <Button>{t('Transact-Max')}</Button>
-              </Paper>
-            </Box>
+          <Box className={classes.inputContainer}>
+            <Paper component="form" className={classes.root}>
+              <Box className={classes.inputLogo}>
+                <AssetsImage assets={[]} img={'BIFI-TOKEN.svg'} alt={'BinSpirit'} />
+              </Box>
+              <InputBase placeholder="0.00" value={0} disabled={true} />
+              <Button>{t('Transact-Max')}</Button>
+            </Paper>
           </Box>
         </Box>
-        <Box className={classes.customDivider}>
-          <Box className={classes.line} />
-          <img alt="arrowDown" src={require('../../images/arrowDown.svg').default} />
-          <Box className={classes.line} />
+      </Box>
+      <Box className={classes.customDivider}>
+        <Box className={classes.line} />
+        <img alt="arrowDown" src={require('../../images/arrowDown.svg').default} />
+        <Box className={classes.line} />
+      </Box>
+      {/* To */}
+      <Box>
+        <Box className={classes.flexContainer}>
+          <Typography variant="body2" className={classes.label}>
+            {t('To')}
+          </Typography>
         </Box>
-        {/* To */}
-        <Box>
-          <Box className={classes.flexContainer}>
-            <Typography variant="body2" className={classes.label}>
-              {t('To')}
-            </Typography>
+        <Box className={classes.flexContainer}>
+          <Box className={classes.networkPicker}>
+            <SimpleDropdown
+              list={chainTypes}
+              selected={network1}
+              handler={() => console.log('item')}
+              renderValue={selectedRenderer}
+              noBorder={false}
+            />
           </Box>
-          <Box className={classes.flexContainer}>
-            <Box className={classes.networkPicker}>
-              <SimpleDropdown
-                list={chainTypes}
-                selected={network1}
-                handler={() => console.log('item')}
-                renderValue={selectedRenderer}
-                noBorder={false}
-              />
-            </Box>
-            <Box className={classes.inputContainer}>
-              <Paper component="form" className={classes.root}>
-                <Box className={classes.inputLogo}>
-                  <AssetsImage assets={[]} img={'BIFI-TOKEN.svg'} alt={'BinSpirit'} />
-                </Box>
-                <InputBase placeholder="0.00" value={0} disabled={true} />
-                <Button>{t('Transact-Max')}</Button>
-              </Paper>
-            </Box>
+          <Box className={classes.inputContainer}>
+            <Paper component="form" className={classes.root}>
+              <Box className={classes.inputLogo}>
+                <AssetsImage assets={[]} img={'BIFI-TOKEN.svg'} alt={'BinSpirit'} />
+              </Box>
+              <InputBase placeholder="0.00" value={0} disabled={true} />
+              <Button>{t('Transact-Max')}</Button>
+            </Paper>
           </Box>
         </Box>
-        {/* Fees */}
-        <FeesInfo />
-        <Button className={classes.btn}>{t('Bridge-Button-1', { network: 'Fantom' })}</Button>
-      </CardContent>
-    </Card>
+      </Box>
+      {/* Fees */}
+      <FeesInfo />
+      <Button onClick={handlePreview} className={classes.btn}>
+        {t('Bridge-Button-1', { network: 'Fantom' })}
+      </Button>
+    </CardContent>
   );
 }
 
@@ -202,5 +228,104 @@ const FeesInfo = () => {
     </Box>
   );
 };
+
+function Confirm() {
+  const { t } = useTranslation();
+  const classes = useStyles();
+
+  const walletAddress = useSelector((state: BeefyState) => selectWalletAddress(state));
+
+  return (
+    <CardContent className={classes.content}>
+      <Box>
+        <Typography variant="body1">{t('Bridge-Confirm-Content')}</Typography>
+      </Box>
+      <Box className={classes.fees}>
+        <Box mb={1}>
+          <Typography variant="body2" className={classes.value}>
+            {t('FROM')}
+          </Typography>
+        </Box>
+        <Box mb={1} className={classes.flexContainer}>
+          <Box className={classes.networkContainer}>
+            <img
+              className={classes.icon}
+              alt=""
+              src={require(`../../images/networks/bsc.svg`).default}
+            />
+            <Typography className={classes.chainName} variant="body1">
+              BNB Chain
+            </Typography>
+          </Box>
+          <Typography className={classes.bridgedValue} variant="body1">
+            -1.00 BIFI
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="body2" className={classes.address}>
+            {t('Address')}: <span>{walletAddress}</span>
+          </Typography>
+        </Box>
+      </Box>
+      <Box className={classes.customDivider}>
+        <Box className={classes.line} />
+        <img alt="arrowDown" src={require('../../images/arrowDown.svg').default} />
+        <Box className={classes.line} />
+      </Box>
+      <Box className={classes.fees}>
+        <Box mb={1}>
+          <Typography variant="body2" className={classes.value}>
+            {t('TO')}
+          </Typography>
+        </Box>
+        <Box mb={1} className={classes.flexContainer}>
+           <Box className={classes.networkContainer}>
+            <img
+              className={classes.icon}
+              alt=""
+              src={require(`../../images/networks/fantom.svg`).default}
+            />
+            <Typography className={classes.chainName} variant="body1">
+              Fantom
+            </Typography>
+          </Box>
+          <Typography className={classes.bridgedValue} variant="body1">
+            +1.00 BIFI
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="body2" className={classes.address}>
+            {t('Address')}: <span>{walletAddress}</span>
+          </Typography>
+        </Box>
+      </Box>
+      <Box mb={1} className={classes.flexContainer}>
+        <Typography variant="body2" className={classes.advice1}>
+          {t('Bridge-Crosschain')}:
+        </Typography>
+        <Typography variant="body2" className={classes.value}>
+          0.0%
+        </Typography>
+      </Box>
+      <Box mb={1} className={classes.flexContainer}>
+        <Typography variant="body2" className={classes.advice1}>
+          {t('Bridge-Gas')}:
+        </Typography>
+        <Typography variant="body2" className={classes.value}>
+          0 BIFI
+        </Typography>
+      </Box>
+      <Box mb={3} className={classes.flexContainer}>
+        <Typography variant="body2" className={classes.advice1}>
+          {t('Bridge-EstimatedTime')}
+        </Typography>
+        <Typography variant="body2" className={classes.value}>
+          3 - 30 min
+        </Typography>
+      </Box>
+      <Button className={classes.btn}>{t('Confirm')}</Button>
+    </CardContent>
+  );
+}
 
 export const Bridge = React.memo(_Bridge);

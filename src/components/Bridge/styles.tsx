@@ -20,7 +20,11 @@ export const styles = theme => ({
     borderRadius: '4px',
   },
   btn: {
+    height: '48px',
     width: '100%',
+    padding: '12px 24px',
+    textTransform: 'none',
+    borderRadius: '8px',
     backgroundColor: theme.palette.primary.main,
     '& .MuiButton-label': {
       fontWeight: 700,
@@ -74,6 +78,12 @@ export const styles = theme => ({
     color: theme.palette.text.disabled,
     '& span': {
       fontWeight: 600,
+      color: theme.palette.text.secondary,
+    },
+  },
+  address: {
+    color: theme.palette.text.disabled,
+    '& span': {
       color: theme.palette.text.secondary,
     },
   },
@@ -135,5 +145,21 @@ export const styles = theme => ({
     display: 'flex',
     color: `${theme.palette.text.secondary} !important`,
     fontWeight: 700,
+  },
+  networkContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  chainName: {
+    fontWeight: 700,
+    color: theme.palette.text.secondary,
+  },
+  bridgedValue: {
+    fontWeight: 700,
+    color: theme.palette.text.disabled,
+  },
+  icon: {
+    height: '20px',
+    marginRight: '4px',
   },
 });
