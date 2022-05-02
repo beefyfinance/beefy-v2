@@ -35,11 +35,15 @@ export function getBoostTokenIdFromLegacyConfig(apiBoost: BoostConfig) {
   return tokenId;
 }
 
+export function getBoostTokenAddressFromLegacyConfig(apiBoost: BoostConfig) {
+  return apiBoost.earnedTokenAddress;
+}
+
 export function getOracleTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault: VaultConfig) {
   let token: TokenEntity;
   if (apiVault.tokenAddress) {
     token = {
-      id: apiVault.oracleId,
+      id: apiVault.token,
       chainId: chain.id,
       oracleId: apiVault.oracleId,
       address: apiVault.tokenAddress,
