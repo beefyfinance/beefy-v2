@@ -133,7 +133,7 @@ export const withdrawSlice = createSlice({
       const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
       const mooTokenBalance = isGovVault(vault)
         ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
-        : selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId);
+        : selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenAddress);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
       const amount = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
       if (value.isGreaterThanOrEqualTo(amount)) {

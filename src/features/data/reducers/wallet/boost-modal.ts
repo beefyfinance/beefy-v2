@@ -46,7 +46,7 @@ export const boostModalSlice = createSlice({
       const balanceToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
       const balance =
         sliceState.mode === 'stake'
-          ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId) // mootoken
+          ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenAddress) // mootoken
           : selectBoostUserBalanceInToken(state, boost.id); // staked
       sliceState.amount = balance;
       sliceState.formattedInput = formatBigDecimals(balance, balanceToken.decimals);
@@ -68,7 +68,7 @@ export const boostModalSlice = createSlice({
         value = BIG_ZERO;
       }
 
-      const balance = selectUserBalanceOfToken(state, vault.chainId, balanceToken.id);
+      const balance = selectUserBalanceOfToken(state, vault.chainId, balanceToken.address);
       if (value.isGreaterThanOrEqualTo(balance)) {
         value = new BigNumber(balance);
         sliceState.max = true;

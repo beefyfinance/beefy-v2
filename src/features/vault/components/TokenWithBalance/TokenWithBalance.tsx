@@ -21,7 +21,7 @@ export function TokenWithBalance({
   const classes = useStyles();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const balance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, token.id)
+    selectUserBalanceOfToken(state, vault.chainId, token.address)
   );
 
   return (

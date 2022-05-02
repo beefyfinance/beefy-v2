@@ -71,7 +71,11 @@ export const depositSlice = createSlice({
     setMax(sliceState, action: PayloadAction<{ state: BeefyState }>) {
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
-      const balance = selectUserBalanceOfToken(state, vault.chainId, sliceState.selectedToken.id);
+      const balance = selectUserBalanceOfToken(
+        state,
+        vault.chainId,
+        sliceState.selectedToken.address
+      );
       sliceState.amount = balance;
       sliceState.formattedInput = formatBigDecimals(balance, sliceState.selectedToken.decimals);
       sliceState.max = true;
@@ -91,7 +95,11 @@ export const depositSlice = createSlice({
         value = BIG_ZERO;
       }
 
-      const balance = selectUserBalanceOfToken(state, vault.chainId, sliceState.selectedToken.id);
+      const balance = selectUserBalanceOfToken(
+        state,
+        vault.chainId,
+        sliceState.selectedToken.address
+      );
       if (value.isGreaterThanOrEqualTo(balance)) {
         value = new BigNumber(balance);
         sliceState.max = true;

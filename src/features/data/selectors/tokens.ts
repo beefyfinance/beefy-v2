@@ -158,7 +158,7 @@ export const selectTokenPriceByAddress = (
   address: string
 ) => {
   const token = state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()];
-  return state.entities.tokens.prices.byTokenId[token.oracleId];
+  return state.entities.tokens.prices.byTokenId[token.oracleId] || BIG_ONE;
 };
 
 export const selectTokenPriceByTokenId = (state: BeefyState, tokenId: TokenEntity['id']) =>

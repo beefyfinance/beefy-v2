@@ -144,7 +144,7 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
   protected erc20TokenFormatter(result: string, token: TokenEntity): null | TokenBalance {
     const rawAmount = new BigNumber(result);
     return {
-      tokenId: token.id,
+      tokenAddress: token.address,
       amount: rawAmount.shiftedBy(-token.decimals),
     };
   }
@@ -152,7 +152,7 @@ export class BalanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: stri
   protected nativeTokenFormatter(result: string, token: TokenNative): TokenBalance | null {
     const rawAmount = new BigNumber(result);
     return {
-      tokenId: token.id,
+      tokenAddress: token.address,
       amount: rawAmount.shiftedBy(-token.decimals),
     };
   }

@@ -88,7 +88,7 @@ const UnstakeForm = ({
   );
 
   const mooBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, boost.chainId, mooToken.id)
+    selectUserBalanceOfToken(state, boost.chainId, mooToken.address)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)

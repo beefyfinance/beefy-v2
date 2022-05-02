@@ -20,7 +20,6 @@ export interface BoostEntity {
    * so we created a fake "unique token identifier"
    * and for boosts we do: boostSymbol = ${boost.token}${boost.id}Boost;
    */
-  earnedTokenId: TokenEntity['id'];
   earnedTokenAddress: string;
 
   /**

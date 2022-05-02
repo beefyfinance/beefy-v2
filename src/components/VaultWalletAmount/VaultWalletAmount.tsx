@@ -16,7 +16,7 @@ const _VaultWalletAmount = connect(
     { vaultId, variant }: { vaultId: VaultEntity['id']; variant: 'small' | 'large' }
   ) => {
     const vault = selectVaultById(state, vaultId);
-    const userOracleInWallet = selectUserBalanceOfToken(state, vault.chainId, vault.oracleId);
+    const userOracleInWallet = selectUserBalanceOfToken(state, vault.chainId, vault.tokenAddress);
     const price = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
     const userOracleInWalletUsd = userOracleInWallet.multipliedBy(price);
 

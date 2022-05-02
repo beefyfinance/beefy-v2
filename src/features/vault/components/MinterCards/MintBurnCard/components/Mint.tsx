@@ -51,10 +51,10 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     selectErc20TokenById(state, vault.chainId, minter.mintedToken.symbol)
   );
   const depositTokenBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, depositToken.id)
+    selectUserBalanceOfToken(state, vault.chainId, depositToken.address)
   );
   const mintedTokenBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, mintedToken.id)
+    selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
   const depositTokenAllowance = useSelector((state: BeefyState) =>
     selectAllowanceByTokenId(state, vault.chainId, depositToken.id, minter.contractAddress)

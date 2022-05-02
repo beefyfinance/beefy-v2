@@ -42,7 +42,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   );
 
   const mooTokenBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenId)
+    selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenAddress)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)

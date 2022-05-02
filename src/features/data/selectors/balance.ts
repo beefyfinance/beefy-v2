@@ -68,11 +68,14 @@ export const selectIsUserEligibleForVault = (state: BeefyState, vaultId: VaultEn
 export const selectUserBalanceOfToken = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id'],
+  tokenAddress: TokenEntity['address'],
   walletAddress?: string
 ) => {
   const walletBalance = _selectWalletBalance(state, walletAddress);
-  return walletBalance?.tokenAmount.byChainId[chainId]?.byTokenId[tokenId]?.balance || BIG_ZERO;
+  return (
+    walletBalance?.tokenAmount.byChainId[chainId]?.byTokenAddress[tokenAddress.toLowerCase()]
+      ?.balance || BIG_ZERO
+  );
 };
 
 /**
@@ -91,7 +94,7 @@ export const selectStandardVaultUserBalanceInOracleTokenExcludingBoosts = (
   const mooTokenBalance = selectUserBalanceOfToken(
     state,
     vault.chainId,
-    mooToken.id,
+    mooToken.address,
     walletAddress
   );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
