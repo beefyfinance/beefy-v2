@@ -8,10 +8,9 @@ import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
 import { isTokenErc20, TokenEntity, TokenErc20 } from '../../entities/token';
-import { selectErc20TokenByAddress, selectTokenById } from '../../selectors/tokens';
+import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens';
 import { FetchAllAllowanceResult, IAllowanceApi, TokenAllowance } from './allowance-types';
 import { BeefyState } from '../../../../redux-types';
-import { createIdMap } from '../../utils/array-utils';
 import { selectVaultById } from '../../selectors/vaults';
 
 // fix TS typings
@@ -32,41 +31,45 @@ export class AllowanceAPI implements IAllowanceApi {
   ): Promise<FetchAllAllowanceResult> {
     // first, build a list of tokens and spenders we want info on
     const allowanceCallsByToken: {
-      [tokenAddress: string]: { tokenId: TokenEntity['id']; spenders: Set<string> };
+      [tokenAddress: string]: { tokenAddress: TokenEntity['id']; spenders: Set<string> };
     } = {};
-    const tokensById: { [tokenId: TokenEntity['id']]: TokenEntity } = {};
-    const addTokenIdToCalls = (tokenId: string, spenderAddress: string) => {
-      const token = selectTokenById(state, this.chain.id, tokenId);
+    const tokensByAddress: { [tokenAddress: TokenEntity['address']]: TokenEntity } = {};
+    const addTokenAddressesToCalls = (tokenAddress: string, spenderAddress: string) => {
+      const token = selectTokenByAddress(state, this.chain.id, tokenAddress);
+      const keyTokenAddress = token.address.toLowerCase();
       if (!isTokenErc20(token)) {
         throw new Error(`Can't query allowance of non erc20 token, skipping ${token.id}`);
       }
-      if (allowanceCallsByToken[token.address] === undefined) {
-        allowanceCallsByToken[token.address] = { tokenId: token.id, spenders: new Set() };
+      if (allowanceCallsByToken[keyTokenAddress] === undefined) {
+        allowanceCallsByToken[keyTokenAddress] = {
+          tokenAddress: token.address,
+          spenders: new Set(),
+        };
       }
-      allowanceCallsByToken[token.address].spenders.add(spenderAddress);
+      allowanceCallsByToken[keyTokenAddress].spenders.add(spenderAddress);
       // keep a map to get decimals at the end
-      if (tokensById[token.id] === undefined) {
-        tokensById[token.id] = token;
+      if (tokensByAddress[keyTokenAddress] === undefined) {
+        tokensByAddress[keyTokenAddress] = token;
       }
     };
 
     for (const standardVault of standardVaults) {
-      addTokenIdToCalls(standardVault.earnedTokenId, standardVault.earnContractAddress);
-      addTokenIdToCalls(standardVault.oracleId, standardVault.earnContractAddress);
+      addTokenAddressesToCalls(standardVault.earnedTokenAddress, standardVault.earnContractAddress);
+      addTokenAddressesToCalls(standardVault.tokenAddress, standardVault.earnContractAddress);
       // special case for what seem to be a maxi vault
       const earnToken = selectErc20TokenByAddress(
         state,
         this.chain.id,
         standardVault.earnedTokenAddress
       );
-      addTokenIdToCalls(standardVault.oracleId, earnToken.address);
+      addTokenAddressesToCalls(standardVault.tokenAddress, earnToken.address);
     }
     for (const govVault of govVaults) {
-      addTokenIdToCalls(govVault.oracleId, govVault.earnContractAddress);
+      addTokenAddressesToCalls(govVault.tokenAddress, govVault.earnContractAddress);
     }
     for (const boost of boosts) {
       const vault = selectVaultById(state, boost.vaultId);
-      addTokenIdToCalls(vault.earnedTokenId, boost.earnContractAddress);
+      addTokenAddressesToCalls(vault.earnedTokenAddress, boost.earnContractAddress);
     }
 
     const calls: ShapeWithLabel[] = [];
@@ -76,7 +79,7 @@ export class AllowanceAPI implements IAllowanceApi {
       tokenContract.options.address = tokenAddress;
       for (const spender of Array.from(spendersCalls.spenders)) {
         calls.push({
-          tokenId: spendersCalls.tokenId, // not sure about this
+          tokenAddress: spendersCalls.tokenAddress, // not sure about this
           spenderAddress: spender,
           allowance: tokenContract.methods.allowance(walletAddress, spender),
         });
@@ -89,9 +92,11 @@ export class AllowanceAPI implements IAllowanceApi {
 
     return results.map(
       (result): TokenAllowance => ({
-        tokenId: result.tokenId,
+        tokenAddress: result.tokenAddress,
         spenderAddress: result.spenderAddress,
-        allowance: new BigNumber(result.allowance).shiftedBy(-tokensById[result.tokenId].decimals),
+        allowance: new BigNumber(result.allowance).shiftedBy(
+          -tokensByAddress[result.tokenAddress.toLowerCase()].decimals
+        ),
       })
     );
   }
@@ -115,13 +120,18 @@ export class AllowanceAPI implements IAllowanceApi {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
     const [results] = (await mc.all([calls])) as ResultType[][];
 
-    const tokensById = createIdMap(tokens);
+    const tokensByAddress = tokens.reduce((agg, item) => {
+      agg[item.address.toLowerCase()] = item;
+      return agg;
+    }, {});
 
     return results.map(
       (result): TokenAllowance => ({
-        tokenId: result.tokenId,
+        tokenAddress: result.tokenAddress,
         spenderAddress: result.spenderAddress,
-        allowance: new BigNumber(result.allowance).shiftedBy(-tokensById[result.tokenId].decimals),
+        allowance: new BigNumber(result.allowance).shiftedBy(
+          -tokensByAddress[result.tokenAddress.toLowerCase()].decimals
+        ),
       })
     );
   }

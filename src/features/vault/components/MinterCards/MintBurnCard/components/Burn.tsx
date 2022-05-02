@@ -26,7 +26,7 @@ import { walletActions } from '../../../../../data/actions/wallet-actions';
 import { useStepper } from '../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../MinterCard';
 import { selectMinterById, selectMinterReserves } from '../../../../../data/selectors/minters';
-import { selectAllowanceByTokenId } from '../../../../../data/selectors/allowances';
+import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
@@ -55,7 +55,12 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
   const depositedTokenAllowance = useSelector((state: BeefyState) =>
-    selectAllowanceByTokenId(state, vault.chainId, depositToken.id, minter.contractAddress)
+    selectAllowanceByTokenAddress(
+      state,
+      vault.chainId,
+      depositToken.address,
+      minter.contractAddress
+    )
   );
   const reserves = useSelector((state: BeefyState) => selectMinterReserves(state, minter.id));
 

@@ -10,11 +10,10 @@ import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
 import { isTokenErc20, TokenEntity, TokenErc20 } from '../../entities/token';
 import { FetchAllAllowanceResult, IAllowanceApi, TokenAllowance } from './allowance-types';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress } from '../../selectors/tokens';
 import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
 import { BeefyState } from '../../../../redux-types';
 import { MultiCall, ShapeWithLabel } from 'eth-multicall';
-import { createIdMap } from '../../utils/array-utils';
 import { selectVaultById } from '../../selectors/vaults';
 
 // fix ts types
@@ -40,34 +39,38 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
 
     // first, build a list of tokens and spenders we want info on
     const allowanceCallsByToken: {
-      [tokenAddress: string]: { tokenId: TokenEntity['id']; spenders: Set<string> };
+      [tokenAddress: string]: { tokenAddress: TokenEntity['address']; spenders: Set<string> };
     } = {};
-    const tokensById: { [tokenId: TokenEntity['id']]: TokenEntity } = {};
-    const addTokenIdToCalls = (tokenId: string, spenderAddress: string) => {
-      const token = selectTokenById(state, this.chain.id, tokenId);
+    const tokensByAddress: { [tokenAddress: TokenEntity['address']]: TokenEntity } = {};
+    const addTokenAddressesToCalls = (tokenAddress: string, spenderAddress: string) => {
+      const token = selectTokenByAddress(state, this.chain.id, tokenAddress);
+      const keyTokenAddress = token.address.toLowerCase();
       if (!isTokenErc20(token)) {
         throw new Error(`Can't query allowance of non erc20 token, skipping ${token.id}`);
       }
-      if (allowanceCallsByToken[token.address] === undefined) {
-        allowanceCallsByToken[token.address] = { tokenId: token.id, spenders: new Set() };
+      if (allowanceCallsByToken[keyTokenAddress] === undefined) {
+        allowanceCallsByToken[keyTokenAddress] = {
+          tokenAddress: token.address,
+          spenders: new Set(),
+        };
       }
-      allowanceCallsByToken[token.address].spenders.add(spenderAddress);
+      allowanceCallsByToken[keyTokenAddress].spenders.add(spenderAddress);
       // keep a map to get decimals at the end
-      if (tokensById[token.id] === undefined) {
-        tokensById[token.id] = token;
+      if (tokensByAddress[keyTokenAddress] === undefined) {
+        tokensByAddress[keyTokenAddress] = token;
       }
     };
 
     for (const standardVault of standardVaults) {
-      addTokenIdToCalls(standardVault.earnedTokenId, standardVault.earnContractAddress);
-      addTokenIdToCalls(standardVault.oracleId, standardVault.earnContractAddress);
+      addTokenAddressesToCalls(standardVault.earnedTokenAddress, standardVault.earnContractAddress);
+      addTokenAddressesToCalls(standardVault.tokenAddress, standardVault.earnContractAddress);
     }
     for (const govVault of govVaults) {
-      addTokenIdToCalls(govVault.oracleId, govVault.earnContractAddress);
+      addTokenAddressesToCalls(govVault.tokenAddress, govVault.earnContractAddress);
     }
     for (const boost of boosts) {
       const vault = selectVaultById(state, boost.vaultId);
-      addTokenIdToCalls(vault.earnedTokenId, boost.earnContractAddress);
+      addTokenAddressesToCalls(vault.earnedTokenAddress, boost.earnContractAddress);
     }
 
     // if we send too much in a single call, we get "execution reversed"
@@ -101,10 +104,10 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
           const allowance = batchResults[resIdx];
           if (allowance !== '0') {
             res.push({
-              tokenId: spendersCalls.tokenId,
+              tokenAddress: spendersCalls.tokenAddress,
               spenderAddress,
               allowance: new BigNumber(allowance).shiftedBy(
-                -tokensById[spendersCalls.tokenId].decimals
+                -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
               ),
             });
           }
@@ -136,13 +139,19 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
     const [results] = (await mc.all([calls])) as ResultType[][];
 
-    const tokensById = createIdMap(tokens);
+    // const tokensById = createIdMap(tokens);
+    const tokensByAddress = tokens.reduce((agg, item) => {
+      agg[item.address.toLowerCase()] = item;
+      return agg;
+    }, {});
 
     return results.map(
       (result): TokenAllowance => ({
-        tokenId: result.tokenId,
+        tokenAddress: result.tokenAddress,
         spenderAddress: result.spenderAddress,
-        allowance: new BigNumber(result.allowance).shiftedBy(-tokensById[result.tokenId].decimals),
+        allowance: new BigNumber(result.allowance).shiftedBy(
+          -tokensByAddress[result.tokenAddress.toLowerCase()].decimals
+        ),
       })
     );
   }

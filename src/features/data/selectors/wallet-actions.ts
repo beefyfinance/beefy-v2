@@ -1,15 +1,20 @@
 import { BeefyState } from '../../../redux-types';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
-import { selectAllowanceByTokenId } from './allowances';
+import { selectAllowanceByTokenAddress } from './allowances';
 import { selectBoostById } from './boosts';
 import { selectTokenByAddress } from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
 export const selectIsApprovalNeededForDeposit = (state: BeefyState, spenderAddress: string) => {
-  const tokenId = state.ui.deposit.selectedToken.id;
+  const tokenAddress = state.ui.deposit.selectedToken.address;
   const vaultId = state.ui.deposit.vaultId;
   const vault = selectVaultById(state, vaultId);
-  const allowance = selectAllowanceByTokenId(state, vault.chainId, tokenId, spenderAddress);
+  const allowance = selectAllowanceByTokenAddress(
+    state,
+    vault.chainId,
+    tokenAddress,
+    spenderAddress
+  );
   return allowance.isLessThan(state.ui.deposit.amount);
 };
 
@@ -19,7 +24,12 @@ export const selectIsApprovalNeededForWithdraw = (state: BeefyState, spenderAddr
   const vault = selectVaultById(state, vaultId);
   const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
-  const allowance = selectAllowanceByTokenId(state, vault.chainId, mooToken.id, spenderAddress);
+  const allowance = selectAllowanceByTokenAddress(
+    state,
+    vault.chainId,
+    mooToken.address,
+    spenderAddress
+  );
   const ppfs = selectVaultPricePerFullShare(state, vaultId);
   // the amount is expressed in oracletoken amount
   const oracleAmount = state.ui.withdraw.amount;
@@ -41,7 +51,12 @@ export const selectIsApprovalNeededForBoostStaking = (
   const vault = selectStandardVaultById(state, boost.vaultId);
 
   const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-  const allowance = selectAllowanceByTokenId(state, vault.chainId, mooToken.id, spenderAddress);
+  const allowance = selectAllowanceByTokenAddress(
+    state,
+    vault.chainId,
+    mooToken.address,
+    spenderAddress
+  );
   const mooAmount = state.ui.boostModal.amount;
 
   return allowance.isLessThan(mooAmount);
