@@ -1,126 +1,71 @@
 [
   {
-    "id": "bsc vault: bomb-bshare-wbnb",
+    "id": "fantom vault: beets-phantom-dai-opera-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-wone-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-bnb-usdc-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: kyber-usdc-jeur-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: quick-ftm-matic-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: kyber-usdc-jgbp-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: kyber-usdc-jchf-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: png-wavax-lost",
     "type": "Added"
   },
   {
-    "id": "bsc vault: bomb-bomb-btcb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: bomb-busm-busd",
-    "type": "Added"
+    "id": "harmony vault: sushi-one-1axs-1eth-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
     "id": "moonriver vault: solarbeam-frax-3pool",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "moonriver vault: solarbeam-xcksm-stksm",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver vault: solarbeam-wmovr-xcksm",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "moonriver vault: solarbeam-3pool",
-    "type": "Added"
-  },
-  {
-    "id": "moonriver vault: sushi-mr-mim-wmovr-eol",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: sushi-mr-eth-bnb-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: sushi-mr-eth-wbtc-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: sushi-mr-eth-dai-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-frax-rome-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: finn-wbtc-wmovr-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: finn-wan-wmovr-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: finn-finn-usdt-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: finn-finn-avax-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: finn-finn-ftm-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: finn-finn-bnb-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: finn-finn-xrp-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-wbtc-wmovr",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-eth-wmovr",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-solar-wmovr",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-wmovr-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-bnb-busd-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-matic-wmovr-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-avax-wmovr-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-wmovr-rib-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-wmovr-relay-eol",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-pets-wmovr-eol",
-    "type": "synced"
-  },
-  {
-    "id": "bsc boost: moo_biswap-eth-btcb-bomb",
-    "type": "Added"
+    "id": "moonbeam vault: stellaswap-ape-wglmr-eol",
+    "type": "synced",
+    "EOLd": true
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
+    "type": "synced"
+  },
+  {
+    "id": "polygon boost: moo_kyber-usdc-jeur-jarvis",
     "type": "synced"
   }
 ]
