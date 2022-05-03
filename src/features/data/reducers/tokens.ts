@@ -272,7 +272,7 @@ function addMinterToState(
       const token: TokenEntity =
         sourceToken.type === 'erc20'
           ? {
-              id: sourceToken.oracleId,
+              id: sourceToken.symbol,
               symbol: sourceToken.symbol,
               chainId: chainId,
               oracleId: sourceToken.oracleId,
@@ -284,7 +284,7 @@ function addMinterToState(
               website: null,
             }
           : {
-              id: sourceToken.oracleId,
+              id: sourceToken.symbol,
               symbol: sourceToken.symbol,
               chainId: chainId,
               oracleId: sourceToken.oracleId,
