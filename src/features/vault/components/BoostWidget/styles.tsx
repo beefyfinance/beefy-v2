@@ -48,7 +48,6 @@ export const styles = theme => ({
     color: '#ffffff',
     marginBottom: '16px',
   },
-
   body1: {
     fontSize: '12px',
     lineHeight: '20px',
@@ -56,6 +55,18 @@ export const styles = theme => ({
     fontWeight: '600',
     letterSpacing: '0.2px',
     textTransform: 'uppercase',
+  },
+  boostStats: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    rowGap: '16px',
+    columnGap: '12px',
+    margin: '20px 0 16px 0',
+  },
+  boostStat: {
+    '& :last-child': {
+      marginBottom: 0,
+    },
   },
   button: {
     fontSize: '15px',
