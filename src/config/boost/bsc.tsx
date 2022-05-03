@@ -1350,7 +1350,7 @@ export const pools = [
   },
   {
     id: 'moo_cake-krown',
-    poolId: 'cake-cakev2',
+    poolId: 'cake-cakev2-eol',
     name: 'KingDefi',
     logo: 'single-assets/CAKE.svg',
     earnedToken: 'mooKingDefiKROWN',
@@ -1377,7 +1377,7 @@ export const pools = [
   },
   {
     id: 'moo_cake-cakev2',
-    poolId: 'cake-cakev2',
+    poolId: 'cake-cakev2-eol',
     name: 'Beefy',
     logo: 'single-assets/CAKE.svg',
     earnedToken: 'mooBIFI',
