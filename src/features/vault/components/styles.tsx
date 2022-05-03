@@ -7,10 +7,6 @@ export const styles = theme => ({
     lineHeight: '18px',
   },
   balanceContainer: {
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      height: 16,
-      width: 16,
-    },
     '& .MuiTypography-body1': {
       fontSize: '14px',
       fontWeight: '600',
@@ -60,34 +56,24 @@ export const styles = theme => ({
     position: 'absolute',
     top: '12px',
     left: '12px',
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      height: 20,
-      width: 20,
-    },
   },
   btnSubmit: {
-    fontSize: '18px',
+    fontSize: '15px',
+    lineHeight: '24px',
     fontWeight: 700,
-    letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.primary.main,
+    padding: '12px 24px',
     borderRadius: '8px',
     '&:hover': {
       backgroundColor: '#389D44',
     },
-  },
-  btnSubmitSecondary: {
-    fontSize: '18px',
-    marginTop: '12px',
-    fontWeight: 700,
-    letterSpacing: '0.2px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: '8px',
-    '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+    '&.Mui-disabled': {
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    '& + $btnSubmit': {
+      marginTop: '12px',
     },
   },
   btnContaniner: {

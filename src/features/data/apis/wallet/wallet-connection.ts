@@ -7,7 +7,7 @@ import Web3Modal, {
   IProviderOptions,
 } from 'web3modal';
 import { CloverConnector } from '@clover-network/clover-connector';
-import WalletLink from 'walletlink';
+import { CoinbaseWalletSDK } from '@coinbase/wallet-sdk';
 import { DeFiConnector } from 'deficonnect';
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
@@ -363,7 +363,7 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
         appLogoUrl: 'https://app.beefy.finance/static/media/BIFI.e797b2e4.png',
         darkMode: false,
       },
-      package: WalletLink,
+      package: CoinbaseWalletSDK,
       connector: async (ProviderPackage, options) => {
         const walletLink = new ProviderPackage(options);
 
@@ -465,6 +465,15 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
         await connector.activate();
         return connector.getProvider();
       },
+    },
+    'custom-bitkeep': {
+      display: {
+        name: 'BitKeep Wallet',
+        description: 'Connect your BitKeep Wallet',
+        logo: require(`../../../../images/wallets/bitkeep-wallet.png`).default,
+      },
+      package: 'bitkeep',
+      connector: connectors.injected,
     },
   };
 

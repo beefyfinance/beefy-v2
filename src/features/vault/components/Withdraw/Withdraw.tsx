@@ -318,8 +318,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
               <AssetsImage
-                img={vault.logoUri}
-                assets={
+                assetIds={
                   !formState.selectedToken
                     ? vault.assetIds
                     : isArray(formState.selectedToken)
@@ -328,7 +327,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }
-                alt={vault.name}
+                size={20}
               />
             </Box>
             <InputBase
@@ -377,7 +376,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     </Button>
                     <Button
                       onClick={handleWithdraw}
-                      className={classes.btnSubmitSecondary}
+                      className={classes.btnSubmit}
                       fullWidth={true}
                       disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
                     >
@@ -386,10 +385,10 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     <Button
                       onClick={handleExit}
                       disabled={!userHasBalanceInVault || !formReady}
-                      className={classes.btnSubmitSecondary}
+                      className={classes.btnSubmit}
                       fullWidth={true}
                     >
-                      {t('Claim-And-Withdraw')}
+                      {t('Claim-And-Withdraw-All')}
                     </Button>
                   </>
                 ) : (

@@ -50,22 +50,12 @@ const _ItemVaultPresentation = connect(
         {/*Vault Image */}
         <div className={classes.infoContainer}>
           <Hidden smDown>
-            <AssetsImage
-              img={vault.logoUri}
-              assets={vault.assetIds}
-              alt={vault.name}
-              {...({ size: '60px' } as any)}
-            />
+            <AssetsImage assetIds={vault.assetIds} className={classes.assetImage} />
           </Hidden>
           <div className={classes.badgesContainter}>
             <div className={classes.flexCenter}>
               <Hidden mdUp>
-                <AssetsImage
-                  img={vault.logoUri}
-                  assets={vault.assetIds}
-                  alt={vault.name}
-                  {...({ size: '60px' } as any)}
-                />
+                <AssetsImage assetIds={vault.assetIds} className={classes.assetImage} />
               </Hidden>
               <div>
                 {isGovVault(vault) ? (

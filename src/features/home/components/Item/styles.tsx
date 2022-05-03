@@ -34,16 +34,15 @@ export const styles = theme => ({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      cursor: 'pointer',
-      marginRight: '8px',
-      height: 60,
-      width: 60,
-      [theme.breakpoints.down('sm')]: {
-        height: 32,
-        width: 32,
-        marginRight: '8px',
-      },
+  },
+  assetImage: {
+    cursor: 'pointer',
+    marginRight: '8px',
+    height: 60,
+    width: 60,
+    [theme.breakpoints.down('sm')]: {
+      height: 32,
+      width: 32,
     },
   },
   flexCenter: {

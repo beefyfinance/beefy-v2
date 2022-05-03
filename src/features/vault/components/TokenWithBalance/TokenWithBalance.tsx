@@ -32,9 +32,8 @@ export function TokenWithBalance({
     <Box className={classes.balanceContainer} display="flex" alignItems="center">
       <Box lineHeight={0}>
         <AssetsImage
-          img={token.address === depositToken.address ? vault.logoUri : null}
-          assets={token.address === depositToken.address ? vault.assetIds : [token.id]}
-          alt={token.id}
+          assetIds={token.address === depositToken.address ? vault.assetIds : [token.id]}
+          size={16}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>

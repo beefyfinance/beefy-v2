@@ -15,10 +15,6 @@ export const styles = theme => ({
       color: theme.palette.text.secondary,
       paddingLeft: '12px',
     },
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      width: 48,
-      height: 48,
-    },
   },
   summaryContainer: {
     padding: '10px 0',

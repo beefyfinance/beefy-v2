@@ -1,192 +1,70 @@
 [
   {
-    "id": "bsc vault: cakev2-woop-wbnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-land-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-btt-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: mdex-bsc-fil-usdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: banana-naut-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cakev2-lina-busd-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: swamp-swamp-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: ramen-ramen-bnb-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "bsc vault: cake-cos-bnb",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: curve-ftm-f-4pool",
+    "id": "bsc vault: cakev2-wbnb-abnbc",
     "type": "Added"
   },
   {
-    "id": "fantom vault: spirit-orkan-ftm",
+    "id": "bsc vault: cakev2-wbnb-ceek",
     "type": "Added"
   },
   {
-    "id": "fantom vault: boo-wftm-sftmx",
+    "id": "bsc vault: cakev2-pex-wbnb",
     "type": "Added"
   },
   {
-    "id": "fantom vault: beets-beardhemian-brushsody-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-mst-wftm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-ftm-dai-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-ftm-multi-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-ftm-spell-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-ftm-pills-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spirit-ftm-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-usdc-fs-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: spartacadabra-lambda-crv-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: boo-wftm-wsspa-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: geist-fusdt-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-quick-tel-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: dinoswap-dfyn-route-eth-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: joe-dby-wavax",
+    "id": "bsc vault: cakev2-wbnb-froyo",
     "type": "Added"
   },
   {
-    "id": "avax vault: joe-bpt-wavax",
+    "id": "bsc vault: cakev2-cake-froyo",
     "type": "Added"
   },
   {
-    "id": "avax vault: png-png-wavax-eol",
+    "id": "bsc vault: cake-cakev2-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "avax vault: joe-wavax-cook-eol",
+    "id": "polygon vault: quick-eth-fuse-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "avax vault: png-wavax-frax-eol",
+    "id": "polygon vault: quick-wmatic-avax-eol",
     "type": "synced",
     "EOLd": true
   },
   {
-    "id": "avax vault: joe-melt-wavax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: lyd-lyd-avax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-finn-xcrmrk-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-finn-xcksm-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-usdc.m-wmovr-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: finn-usdc-finn-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "cronos vault: vvs-vvs-tonic",
+    "id": "moonriver vault: solarbeam-frax-3pool",
     "type": "synced"
   },
   {
-    "id": "fuse vault: voltage-luna-ust-eol",
-    "type": "REMOVED"
+    "id": "moonriver vault: solarbeam-xcksm-stksm",
+    "type": "synced"
   },
   {
-    "id": "aurora vault: tri-bnb-near-eol",
-    "type": "REMOVED"
+    "id": "moonriver vault: solarbeam-3pool",
+    "type": "synced"
   },
   {
-    "id": "fantom boost: moo_curve-ftm-f-4pool-orkan",
+    "id": "aurora vault: tri-bstn-near",
     "type": "Added"
+  },
+  {
+    "id": "aurora vault: tri-linear-near",
+    "type": "Added"
+  },
+  {
+    "id": "aurora vault: tri-stnear-near",
+    "type": "Added"
+  },
+  {
+    "id": "bsc boost: moo_cake-krown",
+    "type": "synced"
+  },
+  {
+    "id": "bsc boost: moo_cake-cakev2",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
