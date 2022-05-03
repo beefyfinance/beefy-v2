@@ -26,14 +26,18 @@ export const styles = theme => ({
     color: theme.palette.text.secondary,
   },
   btn: {
-    color: theme.palette.text.primary,
     fontSize: '15px',
     lineHeight: '24px',
     fontWeight: 700,
-    padding: '12px 24px',
+    textTransform: 'none', //'capitalize' no good due to localization
+    color: theme.palette.text.primary,
     backgroundColor: theme.palette.primary.main,
-    textTransform: 'none',
-    '&.MuiButton-root.Mui-disabled': {
+    padding: '12px 24px',
+    borderRadius: '8px',
+    '&:hover': {
+      backgroundColor: '#389D44',
+    },
+    '&.Mui-disabled': {
       backgroundColor: 'rgba(255, 255, 255, 0.2)',
     },
   },
