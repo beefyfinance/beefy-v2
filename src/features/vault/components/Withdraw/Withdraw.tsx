@@ -26,8 +26,8 @@ import { isFulfilled } from '../../../data/reducers/data-loader';
 import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import {
   selectGovVaultPendingRewardsInToken,
-  selectGovVaultUserStackedBalanceInOracleToken,
-  selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
+  selectGovVaultUserStackedBalanceInDepositToken,
+  selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
 } from '../../../data/selectors/balance';
 import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -78,8 +78,8 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   }, [store, vaultId, walletAddress]);
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenByAddress(state, vault.chainId, vault.tokenAddress)
+  const depositToken = useSelector((state: BeefyState) =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const earnedToken = useSelector((state: BeefyState) =>
     selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress, true)
@@ -101,7 +101,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isWithdrawingLP =
     formState.selectedToken &&
     !isArray(formState.selectedToken) &&
-    formState.selectedToken.address === oracleToken.address;
+    formState.selectedToken.address === depositToken.address;
 
   const needsApproval = useSelector((state: BeefyState) =>
     formState.vaultId && spenderAddress && !isWithdrawingLP
@@ -126,8 +126,8 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   // TODO: this could be a selector or hook
   const userHasBalanceInVault = useSelector((state: BeefyState) => {
     const deposit = isGovVault(vault)
-      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
-      : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
+      ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+      : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     return deposit.isGreaterThan(0);
   });
   const displayBoostWidget = useSelector((state: BeefyState) =>
@@ -279,7 +279,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <div style={{ display: 'flex' }}>
             <FormControlLabel
               className={classes.depositTokenContainer}
-              value={oracleToken.id}
+              value={depositToken.id}
               control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
               label={<TokenWithDeposit vaultId={vaultId} />}
               onClick={formState.isZap ? undefined : handleMax}
@@ -324,7 +324,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     ? vault.assetIds
                     : isArray(formState.selectedToken)
                     ? formState.selectedToken.map(t => t.id)
-                    : formState.selectedToken.address === oracleToken.address
+                    : formState.selectedToken.address === depositToken.address
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }

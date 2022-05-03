@@ -33,7 +33,7 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
 
       // used to find a vault by it's token for balance stuff
       standardVault: {
-        byOracleTokenAddress: {
+        byDepositTokenAddress: {
           [address: string]: VaultEntity['id'][];
         };
         byEarnedTokenAddress: {
@@ -41,7 +41,7 @@ export type VaultsState = NormalizedEntity<VaultEntity> & {
         };
       };
       govVault: {
-        byOracleTokenAddress: {
+        byDepositTokenAddress: {
           [address: string]: VaultEntity['id'][];
         };
       };
@@ -173,7 +173,7 @@ function addVaultToState(
       name: apiVault.name,
       isGovVault: true,
       tokenDescription: apiVault.tokenDescription,
-      tokenAddress: apiVault.tokenAddress,
+      depositTokenAddress: apiVault.tokenAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
       earnContractAddress: apiVault.poolAddress,
       excludedId: apiVault.excluded || null,
@@ -200,10 +200,10 @@ function addVaultToState(
         allRetiredIds: [],
         standardVault: {
           byEarnedTokenAddress: {},
-          byOracleTokenAddress: {},
+          byDepositTokenAddress: {},
         },
         govVault: {
-          byOracleTokenAddress: {},
+          byDepositTokenAddress: {},
         },
       };
     }
@@ -215,10 +215,12 @@ function addVaultToState(
       vaultState.allActiveIds.push(vault.id);
     }
 
-    if (!vaultState.govVault.byOracleTokenAddress[vault.tokenAddress.toLowerCase()]) {
-      vaultState.govVault.byOracleTokenAddress[vault.tokenAddress.toLowerCase()] = [];
+    if (!vaultState.govVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]) {
+      vaultState.govVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()] = [];
     }
-    vaultState.govVault.byOracleTokenAddress[vault.tokenAddress.toLowerCase()].push(vault.id);
+    vaultState.govVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()].push(
+      vault.id
+    );
   } else {
     const vault: VaultStandard = {
       id: apiVault.id,
@@ -226,7 +228,7 @@ function addVaultToState(
       logoUri: apiVault.logo,
       isGovVault: false,
       tokenDescription: apiVault.tokenDescription,
-      tokenAddress: apiVault.tokenAddress ?? 'native',
+      depositTokenAddress: apiVault.tokenAddress ?? 'native',
       earnContractAddress: apiVault.earnContractAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
       strategyType: apiVault.stratType as VaultStandard['strategyType'],
@@ -254,10 +256,10 @@ function addVaultToState(
         allRetiredIds: [],
         standardVault: {
           byEarnedTokenAddress: {},
-          byOracleTokenAddress: {},
+          byDepositTokenAddress: {},
         },
         govVault: {
-          byOracleTokenAddress: {},
+          byDepositTokenAddress: {},
         },
       };
     }
@@ -268,10 +270,12 @@ function addVaultToState(
       vaultState.allActiveIds.push(vault.id);
     }
 
-    if (!vaultState.standardVault.byOracleTokenAddress[vault.tokenAddress.toLowerCase()]) {
-      vaultState.standardVault.byOracleTokenAddress[vault.tokenAddress.toLowerCase()] = [];
+    if (!vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()]) {
+      vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()] = [];
     }
-    vaultState.standardVault.byOracleTokenAddress[vault.tokenAddress.toLowerCase()].push(vault.id);
+    vaultState.standardVault.byDepositTokenAddress[vault.depositTokenAddress.toLowerCase()].push(
+      vault.id
+    );
     vaultState.standardVault.byEarnedTokenAddress[vault.earnedTokenAddress.toLowerCase()] =
       vault.id;
   }

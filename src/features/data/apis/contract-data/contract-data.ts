@@ -95,10 +95,10 @@ export class ContractDataAPI implements IContractDataApi {
         const boost = selectBoostById(state, result.id);
         const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
         const vault = selectVaultById(state, boost.vaultId);
-        const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+        const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
         const data = {
           id: result.id,
-          totalSupply: new BigNumber(result.totalSupply).shiftedBy(-oracleToken.decimals),
+          totalSupply: new BigNumber(result.totalSupply).shiftedBy(-depositToken.decimals),
           rewardRate: new BigNumber(result.rewardRate).shiftedBy(-earnedToken.decimals),
           /* assuming period finish is a UTC timestamp in seconds */
           periodFinish:
@@ -107,7 +107,7 @@ export class ContractDataAPI implements IContractDataApi {
         res.boosts.push(data);
       } else if (result.type === 'vault-gov') {
         const vault = selectVaultById(state, result.id);
-        const token = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+        const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
         const data = {
           id: result.id,
           totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
@@ -115,7 +115,7 @@ export class ContractDataAPI implements IContractDataApi {
         res.govVaults.push(data);
       } else if (result.type === 'vault-standard') {
         const vault = selectVaultById(state, result.id);
-        const mooToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+        const mooToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
         const data = {
           id: result.id,
           balance: new BigNumber(result.balance).shiftedBy(-mooToken.decimals),

@@ -23,7 +23,7 @@ export const selectIsApprovalNeededForWithdraw = (state: BeefyState, spenderAddr
   const vaultId = state.ui.withdraw.vaultId;
   const vault = selectVaultById(state, vaultId);
   const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
-  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const allowance = selectAllowanceByTokenAddress(
     state,
     vault.chainId,
@@ -31,9 +31,9 @@ export const selectIsApprovalNeededForWithdraw = (state: BeefyState, spenderAddr
     spenderAddress
   );
   const ppfs = selectVaultPricePerFullShare(state, vaultId);
-  // the amount is expressed in oracletoken amount
+  // the amount is expressed in depositToken amount
   const oracleAmount = state.ui.withdraw.amount;
-  const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, oracleAmount);
+  const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, oracleAmount);
 
   return allowance.isLessThan(mooAmount);
 };

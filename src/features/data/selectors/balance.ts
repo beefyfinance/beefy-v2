@@ -80,16 +80,16 @@ export const selectUserBalanceOfToken = (
 
 /**
  * "User" balance refers to the balance displayed to the user
- * so we have to do the translation from earnedToken (mooToken) to oracleToken
+ * so we have to do the translation from earnedToken (mooToken) to depositToken
  * that the user deposited
  */
-export const selectStandardVaultUserBalanceInOracleTokenExcludingBoosts = (
+export const selectStandardVaultUserBalanceInDepositTokenExcludingBoosts = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
   const vault = selectStandardVaultById(state, vaultId);
-  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const mooTokenBalance = selectUserBalanceOfToken(
     state,
@@ -98,24 +98,24 @@ export const selectStandardVaultUserBalanceInOracleTokenExcludingBoosts = (
     walletAddress
   );
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
-  return mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
+  return mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance);
 };
 
 /**
  * "User" balance refers to the balance displayed to the user
- * so we have to do the translation from earnedToken (mooToken) to oracleToken
+ * so we have to do the translation from earnedToken (mooToken) to depositToken
  * that the user deposited
  */
-export const selectStandardVaultUserBalanceInOracleTokenIncludingBoosts = (
+export const selectStandardVaultUserBalanceInDepositTokenIncludingBoosts = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
   const vault = selectStandardVaultById(state, vaultId);
-  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
   const ppfs = selectVaultPricePerFullShare(state, vault.id);
-  const vaultOracleBalance = selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(
+  const vaultOracleBalance = selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(
     state,
     vaultId,
     walletAddress
@@ -127,11 +127,11 @@ export const selectStandardVaultUserBalanceInOracleTokenIncludingBoosts = (
     const boostMooToken = selectBoostUserBalanceInToken(state, boostId, walletAddress);
     mooTokenBalance = mooTokenBalance.plus(boostMooToken);
   }
-  const boostOracleBalance = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
+  const boostOracleBalance = mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance);
   return vaultOracleBalance.plus(boostOracleBalance);
 };
 
-export const selectGovVaultUserStackedBalanceInOracleToken = (
+export const selectGovVaultUserStackedBalanceInDepositToken = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
@@ -140,16 +140,16 @@ export const selectGovVaultUserStackedBalanceInOracleToken = (
   return walletBalance?.tokenAmount.byGovVaultId[vaultId]?.balance || BIG_ZERO;
 };
 
-const selectUserVaultDepositInOracleToken = (
+const selectUserVaultDepositInDepositToken = (
   state: BeefyState,
   vaultId: VaultEntity['id'],
   walletAddress?: string
 ) => {
   const vault = selectVaultById(state, vaultId);
   if (isGovVault(vault)) {
-    return selectGovVaultUserStackedBalanceInOracleToken(state, vaultId, walletAddress);
+    return selectGovVaultUserStackedBalanceInDepositToken(state, vaultId, walletAddress);
   } else {
-    return selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(
+    return selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(
       state,
       vaultId,
       walletAddress
@@ -182,8 +182,8 @@ export const selectUserVaultDepositInUsd = (
 ) => {
   // TODO: do this in the state?
   const vault = selectVaultById(state, vaultId);
-  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
-  const vaultTokenDeposit = selectUserVaultDepositInOracleToken(state, vaultId, walletAddress);
+  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const vaultTokenDeposit = selectUserVaultDepositInDepositToken(state, vaultId, walletAddress);
 
   return vaultTokenDeposit.multipliedBy(oraclePrice);
 };
@@ -225,7 +225,7 @@ export const selectBoostRewardsTokenEntity = (state: BeefyState, boostId: BoostE
  */
 export const selectGovVaultBalanceTokenEntity = (state: BeefyState, vaultId: VaultGov['id']) => {
   const vault = selectVaultById(state, vaultId);
-  return selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+  return selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 };
 
 /**

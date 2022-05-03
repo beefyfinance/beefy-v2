@@ -68,8 +68,8 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   }, [store, vaultId, walletAddress]);
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenByAddress(state, vault.chainId, vault.tokenAddress)
+  const depositToken = useSelector((state: BeefyState) =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const formState = useSelector((state: BeefyState) => state.ui.deposit);
   const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
@@ -188,9 +188,9 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <div style={{ display: 'flex' }}>
             <FormControlLabel
               className={classes.depositTokenContainer}
-              value={oracleToken.id}
+              value={depositToken.id}
               control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-              label={<TokenWithBalance token={oracleToken} vaultId={vaultId} />}
+              label={<TokenWithBalance token={depositToken} vaultId={vaultId} />}
               onClick={formState.isZap ? undefined : handleMax}
               disabled={!formReady}
             />
@@ -213,14 +213,15 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             <Box className={classes.inputLogo}>
               <AssetsImage
                 img={
-                  formState.selectedToken && formState.selectedToken.address === oracleToken.address
+                  formState.selectedToken &&
+                  formState.selectedToken.address === depositToken.address
                     ? vault.logoUri
                     : null
                 }
                 assets={
                   !formState.selectedToken
                     ? vault.assetIds
-                    : formState.selectedToken.address === oracleToken.address
+                    : formState.selectedToken.address === depositToken.address
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }

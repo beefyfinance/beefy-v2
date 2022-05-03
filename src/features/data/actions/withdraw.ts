@@ -37,7 +37,7 @@ export const initiateWithdrawForm = createAsyncThunk<
 >('withdraw/initiateWithdrawForm', async ({ vaultId, walletAddress }, { getState }) => {
   const vault = selectVaultById(getState(), vaultId);
   // we cannot select the addressbook token as the vault token can be an LP token
-  const oracleToken = selectTokenByAddress(getState(), vault.chainId, vault.tokenAddress);
+  const depositToken = selectTokenByAddress(getState(), vault.chainId, vault.depositTokenAddress);
   const earnedToken = selectTokenByAddress(getState(), vault.chainId, vault.earnedTokenAddress);
   const chain = selectChainById(getState(), vault.chainId);
 
@@ -54,7 +54,7 @@ export const initiateWithdrawForm = createAsyncThunk<
   );
 
   // then we want to know the balance and allowance for each route
-  const tokens: TokenEntity[] = [oracleToken, earnedToken].concat(zapOptions?.tokens || []);
+  const tokens: TokenEntity[] = [depositToken, earnedToken].concat(zapOptions?.tokens || []);
   const tokensErc20 = tokens.filter(isTokenErc20);
 
   const balanceApi = await getBalanceApi(chain);

@@ -3,8 +3,8 @@ import { BeefyState } from '../../../redux-types';
 import { isGovVaultApy, isMaxiVaultApy, isStandardVaultApy } from '../apis/beefy';
 import { isGovVault, VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import {
-  selectGovVaultUserStackedBalanceInOracleToken,
-  selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
+  selectGovVaultUserStackedBalanceInDepositToken,
+  selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserDepositedVaults,
 } from './balance';
 import { selectIsUserBalanceAvailable } from './data-loader';
@@ -59,11 +59,11 @@ export const selectUserGlobalStats = (state: BeefyState) => {
   );
 
   for (const vault of userVaults) {
-    const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
+    const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
     // TODO: this looks suspisciously wrong for gov vaults
     const tokenBalance = isGovVault(vault)
-      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
-      : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
+      ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+      : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     const vaultUsdBalance = tokenBalance.times(oraclePrice);
 
     // add vault balance to total

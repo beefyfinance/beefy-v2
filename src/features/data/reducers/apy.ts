@@ -141,12 +141,12 @@ function addContractDataToState(
       const rewardVaultOraclePrice = selectTokenPriceByAddress(
         state,
         boost.chainId,
-        rewardTargetVault.tokenAddress
+        rewardTargetVault.depositTokenAddress
       );
-      const oracleToken = selectTokenByAddress(
+      const depositToken = selectTokenByAddress(
         state,
         boost.chainId,
-        rewardTargetVault.tokenAddress
+        rewardTargetVault.depositTokenAddress
       );
       const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
 
@@ -156,14 +156,18 @@ function addContractDataToState(
         selectVaultPricePerFullShare(state, rewardTargetVault.id);
 
       // so the price rate is the oracle token price by the rate of the conversion to mooToken
-      const mooToOracleRate = mooAmountToOracleAmount(earnedToken, oracleToken, ppfs, BIG_ONE);
+      const mooToOracleRate = mooAmountToOracleAmount(earnedToken, depositToken, ppfs, BIG_ONE);
       earnedPrice = mooToOracleRate.times(rewardVaultOraclePrice);
     } else {
       // if we don't have a matching vault, it should be a yield from a token that has a price
       earnedPrice = selectTokenPriceByAddress(state, boost.chainId, boost.earnedTokenAddress);
     }
 
-    const stakedTokenPrice = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
+    const stakedTokenPrice = selectTokenPriceByAddress(
+      state,
+      vault.chainId,
+      vault.depositTokenAddress
+    );
     const totalStakedInUsd = boostContractData.totalSupply.times(stakedTokenPrice);
     const yearlyRewardsInUsd = boostContractData.rewardRate
       .times(3600 * 24 * 365)

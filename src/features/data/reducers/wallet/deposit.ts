@@ -57,7 +57,7 @@ export const depositSlice = createSlice({
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
       const tokenId = action.payload.tokenId;
-      const depositToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
       const token = selectTokenById(state, vault.chainId, tokenId);
       sliceState.selectedToken = token;
@@ -131,7 +131,7 @@ export const depositSlice = createSlice({
       sliceState.zapOptions = action.payload.zapOptions;
 
       // select the vault oracle token by default
-      const depositToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
       sliceState.selectedToken = depositToken;
 
       sliceState.isZap = false;

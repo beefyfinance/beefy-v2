@@ -66,12 +66,12 @@ export function getEligibleZapOptions(
   const tokenB = selectTokenById(state, vault.chainId, vault.assetIds[1]);
 
   // we cannot select the addressbook token as the vault token can be an LP token
-  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
   const zap = state.entities.zaps.byChainId[vault.chainId].find(zap => {
     return (
-      isTokenErc20(oracleToken) &&
-      oracleToken.address ===
+      isTokenErc20(depositToken) &&
+      depositToken.address ===
         computePairAddress(
           zap.ammFactory,
           zap.ammPairInitHash,
@@ -185,7 +185,7 @@ export const estimateZapWithdraw = async (
   outputTokenId: TokenEntity['id']
 ) => {
   const vault = selectVaultById(state, vaultId);
-  const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const chain = selectChainById(state, vault.chainId);
   const zapOptions = state.ui.withdraw.zapOptions;
   const amount = state.ui.withdraw.amount;
@@ -209,7 +209,7 @@ export const estimateZapWithdraw = async (
   const tokenIn = isTokenNative(_tokenIn) ? wnative : _tokenIn;
 
   // no zap for native tokens
-  if (amount.isZero() || !isTokenErc20(oracleToken)) {
+  if (amount.isZero() || !isTokenErc20(depositToken)) {
     return {
       tokenIn: tokenIn,
       tokenOut: tokenOut,
@@ -220,7 +220,7 @@ export const estimateZapWithdraw = async (
 
   const web3 = await getWeb3Instance(chain);
   const multicall = new MultiCall(web3, chain.multicallAddress);
-  const pairContract = new web3.eth.Contract(uniswapV2PairABI, oracleToken.address);
+  const pairContract = new web3.eth.Contract(uniswapV2PairABI, depositToken.address);
 
   const [[pair]] = await multicall.all([
     [
@@ -243,7 +243,7 @@ export const estimateZapWithdraw = async (
       ? pair.reserves[1]
       : pair.reserves[0];
 
-  const rawAmount = amount.shiftedBy(oracleToken.decimals);
+  const rawAmount = amount.shiftedBy(depositToken.decimals);
   const equity = rawAmount.dividedBy(pair.totalSupply);
   const amountIn = equity.multipliedBy(reserveIn).decimalPlaces(0, BigNumber.ROUND_DOWN);
 

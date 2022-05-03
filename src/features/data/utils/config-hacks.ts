@@ -39,7 +39,7 @@ export function getBoostTokenAddressFromLegacyConfig(apiBoost: BoostConfig) {
   return apiBoost.earnedTokenAddress;
 }
 
-export function getOracleTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault: VaultConfig) {
+export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault: VaultConfig) {
   let token: TokenEntity;
   if (apiVault.tokenAddress) {
     token = {

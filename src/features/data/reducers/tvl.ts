@@ -78,7 +78,7 @@ function addContractDataToState(
   // On standard vault contract data, recompute tvl and exclusions
   for (const vaultContractData of contractData.standardVaults) {
     const vault = selectVaultById(state, vaultContractData.id);
-    const price = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
+    const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const vaultTvl = vaultContractData.balance.times(price);
 
@@ -90,7 +90,7 @@ function addContractDataToState(
     const totalStaked = govVaultContractData.totalSupply;
 
     const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
-    const price = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
+    const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     let tvl = totalStaked.times(price);
 
@@ -132,17 +132,17 @@ function addContractDataToState(
   for (const boostContractData of contractData.boosts) {
     const boost = selectBoostById(state, boostContractData.id);
     const vault = selectVaultById(state, boost.vaultId);
-    const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.tokenAddress);
+    const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
     // find vault price per full share for the vault
     const ppfs = ppfsPerVaultId[vault.id];
     if (ppfs === undefined) {
       throw new Error(`Could not find ppfs for vault id ${vault.id}`);
     }
-    const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
     const totalStaked = mooAmountToOracleAmount(
       mooToken,
-      oracleToken,
+      depositToken,
       ppfs,
       boostContractData.totalSupply
     );

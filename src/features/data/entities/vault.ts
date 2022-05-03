@@ -26,7 +26,7 @@ export interface VaultStandard {
   name: string;
   logoUri: string;
   tokenDescription: string;
-  tokenAddress: string;
+  depositTokenAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -78,7 +78,7 @@ export interface VaultGov {
   name: string;
   logoUri: string;
   tokenDescription: string;
-  tokenAddress: string;
+  depositTokenAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that vault

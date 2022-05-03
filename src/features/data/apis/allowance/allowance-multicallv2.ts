@@ -63,10 +63,13 @@ export class AllowanceMcV2API<T extends ChainEntity & { fetchBalancesAddress: st
 
     for (const standardVault of standardVaults) {
       addTokenAddressesToCalls(standardVault.earnedTokenAddress, standardVault.earnContractAddress);
-      addTokenAddressesToCalls(standardVault.tokenAddress, standardVault.earnContractAddress);
+      addTokenAddressesToCalls(
+        standardVault.depositTokenAddress,
+        standardVault.earnContractAddress
+      );
     }
     for (const govVault of govVaults) {
-      addTokenAddressesToCalls(govVault.tokenAddress, govVault.earnContractAddress);
+      addTokenAddressesToCalls(govVault.depositTokenAddress, govVault.earnContractAddress);
     }
     for (const boost of boosts) {
       const vault = selectVaultById(state, boost.vaultId);

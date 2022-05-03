@@ -118,8 +118,8 @@ export const FeeBreakdown = memo(
     const t = useTranslation().t;
     const formattedDepositFee = vault.depositFee;
     const formattedWithdrawalFee = vault.withdrawalFee;
-    const oracleToken = useSelector((state: BeefyState) =>
-      selectTokenByAddress(state, vault.chainId, vault.tokenAddress)
+    const depositToken = useSelector((state: BeefyState) =>
+      selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
     );
     const earnedToken = useSelector((state: BeefyState) =>
       selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
@@ -157,12 +157,12 @@ export const FeeBreakdown = memo(
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-2', { lpToken: oracleToken.symbol })}
+                        {t('Zap-Step-Deposit-2', { lpToken: depositToken.symbol })}
                       </Typography>
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-3', { lpToken: oracleToken.symbol })}
+                        {t('Zap-Step-Deposit-3', { lpToken: depositToken.symbol })}
                       </Typography>
                     </li>
                     <li>
@@ -190,14 +190,14 @@ export const FeeBreakdown = memo(
                       <Typography className={classes.zapStep}>
                         {t('Zap-Step-Withdraw-1', {
                           mooToken: earnedToken.symbol,
-                          lpToken: oracleToken.symbol,
+                          lpToken: depositToken.symbol,
                         })}
                       </Typography>
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
                         {t('Zap-Step-Withdraw-2', {
-                          lpToken: oracleToken.symbol,
+                          lpToken: depositToken.symbol,
                           token0: vault.assetIds[0],
                           token1: vault.assetIds[1],
                         })}

@@ -115,7 +115,7 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
     govVault: VaultGov
   ) {
     const vault = selectVaultById(state, govVault.id);
-    const token = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+    const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: govVault.id,
       totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
@@ -130,10 +130,10 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
   ) {
     const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
     const vault = selectVaultById(state, boost.vaultId);
-    const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: boost.id,
-      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-oracleToken.decimals),
+      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-depositToken.decimals),
       rewardRate: new BigNumber(result.rewardRate).shiftedBy(-earnedToken.decimals),
       /* assuming period finish is a UTC timestamp in seconds */
       periodFinish:

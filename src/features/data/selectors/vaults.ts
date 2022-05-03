@@ -75,7 +75,7 @@ export const selectStandardVaultIdsByOracleAddress = (
   tokenAddress: TokenEntity['address']
 ) => {
   const vaultIds =
-    state.entities.vaults.byChainId[chainId]?.standardVault.byOracleTokenAddress[
+    state.entities.vaults.byChainId[chainId]?.standardVault.byDepositTokenAddress[
       tokenAddress.toLowerCase()
     ];
   return vaultIds || [];
@@ -87,7 +87,7 @@ export const selectGovVaultVaultIdsByOracleAddress = (
   tokenAddress: TokenEntity['address']
 ) => {
   const vaultIds =
-    state.entities.vaults.byChainId[chainId]?.govVault.byOracleTokenAddress[
+    state.entities.vaults.byChainId[chainId]?.govVault.byDepositTokenAddress[
       tokenAddress.toLowerCase()
     ];
   return vaultIds || [];

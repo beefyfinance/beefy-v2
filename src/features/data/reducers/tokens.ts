@@ -22,7 +22,7 @@ import {
 import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenAddressFromLegacyConfig,
-  getOracleTokenFromLegacyVaultConfig,
+  getDepositTokenFromLegacyVaultConfig,
 } from '../utils/config-hacks';
 import { fetchAllMinters } from '../actions/minters';
 import { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
@@ -319,11 +319,11 @@ function addVaultToState(
     };
   }
 
-  const oracleToken = getOracleTokenFromLegacyVaultConfig(selectChainById(state, chainId), vault);
-  if (sliceState.byChainId[chainId].byAddress[oracleToken.address.toLowerCase()] === undefined) {
-    sliceState.byChainId[chainId].byId[oracleToken.id] = oracleToken.address.toLowerCase();
-    sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(oracleToken.address);
-    sliceState.byChainId[chainId].byAddress[oracleToken.address.toLowerCase()] = oracleToken;
+  const depositToken = getDepositTokenFromLegacyVaultConfig(selectChainById(state, chainId), vault);
+  if (sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] === undefined) {
+    sliceState.byChainId[chainId].byId[depositToken.id] = depositToken.address.toLowerCase();
+    sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(depositToken.address);
+    sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] = depositToken;
   }
 
   // add earned token data

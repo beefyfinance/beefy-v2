@@ -55,17 +55,20 @@ export class AllowanceAPI implements IAllowanceApi {
 
     for (const standardVault of standardVaults) {
       addTokenAddressesToCalls(standardVault.earnedTokenAddress, standardVault.earnContractAddress);
-      addTokenAddressesToCalls(standardVault.tokenAddress, standardVault.earnContractAddress);
+      addTokenAddressesToCalls(
+        standardVault.depositTokenAddress,
+        standardVault.earnContractAddress
+      );
       // special case for what seem to be a maxi vault
       const earnToken = selectErc20TokenByAddress(
         state,
         this.chain.id,
         standardVault.earnedTokenAddress
       );
-      addTokenAddressesToCalls(standardVault.tokenAddress, earnToken.address);
+      addTokenAddressesToCalls(standardVault.depositTokenAddress, earnToken.address);
     }
     for (const govVault of govVaults) {
-      addTokenAddressesToCalls(govVault.tokenAddress, govVault.earnContractAddress);
+      addTokenAddressesToCalls(govVault.depositTokenAddress, govVault.earnContractAddress);
     }
     for (const boost of boosts) {
       const vault = selectVaultById(state, boost.vaultId);

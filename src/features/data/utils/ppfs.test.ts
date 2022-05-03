@@ -16,7 +16,7 @@ describe('Ppfs tests', () => {
       website: null,
     };
 
-    const oracleToken: TokenEntity = {
+    const depositToken: TokenEntity = {
       buyUrl: null,
       chainId: 'bsc',
       address: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
@@ -31,7 +31,7 @@ describe('Ppfs tests', () => {
     const ppfs = new BigNumber('1.155580391227848799');
     const expectedOracleAmount = new BigNumber('0.100027572236381515');
 
-    const actualOracleAmount = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooAmount);
+    const actualOracleAmount = mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooAmount);
     expect(actualOracleAmount.decimalPlaces(18).toString(10)).toBe(
       expectedOracleAmount.decimalPlaces(18).toString(10)
     );
@@ -50,7 +50,7 @@ describe('Ppfs tests', () => {
       website: null,
     };
 
-    const oracleToken: TokenEntity = {
+    const depositToken: TokenEntity = {
       buyUrl: null,
       chainId: 'fantom',
       address: '0x321162Cd933E2Be498Cd2267a90534A804051b11',
@@ -66,7 +66,7 @@ describe('Ppfs tests', () => {
     const ppfs = new BigNumber('1.050525364085333037');
     const expectedOracleAmount = new BigNumber('0.00096793');
 
-    const actualOracleAmount = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooAmount);
+    const actualOracleAmount = mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooAmount);
     expect(actualOracleAmount.decimalPlaces(18).toString(10)).toBe(
       expectedOracleAmount.decimalPlaces(18).toString(10)
     );
