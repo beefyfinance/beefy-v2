@@ -57,6 +57,7 @@ export const depositSlice = createSlice({
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
       const tokenId = action.payload.tokenId;
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
 
       const token = selectTokenById(state, vault.chainId, tokenId);
       sliceState.selectedToken = token;
@@ -64,7 +65,7 @@ export const depositSlice = createSlice({
       // also reset the input
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
-      sliceState.isZap = vault.oracleId !== sliceState.selectedToken.id;
+      sliceState.isZap = depositToken.address !== sliceState.selectedToken.address;
       sliceState.max = false;
     },
 
@@ -130,10 +131,10 @@ export const depositSlice = createSlice({
       sliceState.zapOptions = action.payload.zapOptions;
 
       // select the vault oracle token by default
-      const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
-      sliceState.selectedToken = oracleToken;
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+      sliceState.selectedToken = depositToken;
 
-      sliceState.isZap = sliceState.selectedToken.id !== vault.oracleId;
+      sliceState.isZap = false;
     });
 
     builder.addCase(fetchEstimateZapDeposit.fulfilled, (sliceState, action) => {

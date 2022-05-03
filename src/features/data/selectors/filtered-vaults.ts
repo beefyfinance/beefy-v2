@@ -117,7 +117,10 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
     }
 
     // In gov earned token
-    if (isGovVault(vault) && vault.earnedTokenId.match(token)) {
+    if (
+      isGovVault(vault) &&
+      selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress).id.match(token)
+    ) {
       return true;
     }
 

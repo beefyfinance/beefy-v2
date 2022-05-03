@@ -101,7 +101,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isWithdrawingLP =
     formState.selectedToken &&
     !isArray(formState.selectedToken) &&
-    formState.selectedToken.id === vault.oracleId;
+    formState.selectedToken.address === oracleToken.address;
 
   const needsApproval = useSelector((state: BeefyState) =>
     formState.vaultId && spenderAddress && !isWithdrawingLP
@@ -324,7 +324,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     ? vault.assetIds
                     : isArray(formState.selectedToken)
                     ? formState.selectedToken.map(t => t.id)
-                    : formState.selectedToken.id === vault.oracleId
+                    : formState.selectedToken.address === oracleToken.address
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }

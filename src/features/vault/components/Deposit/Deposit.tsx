@@ -213,14 +213,14 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             <Box className={classes.inputLogo}>
               <AssetsImage
                 img={
-                  formState.selectedToken && formState.selectedToken.id === vault.oracleId
+                  formState.selectedToken && formState.selectedToken.address === oracleToken.address
                     ? vault.logoUri
                     : null
                 }
                 assets={
                   !formState.selectedToken
                     ? vault.assetIds
-                    : formState.selectedToken.id === vault.oracleId
+                    : formState.selectedToken.address === oracleToken.address
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }

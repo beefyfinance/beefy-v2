@@ -90,7 +90,7 @@ export const tokensSlice = createSlice({
           id: tokenId,
           chainId: chainId,
           oracleId: tokenId,
-          decimals: 18, // TODO: not sure about that
+          decimals: chainConf.walletSettings.nativeCurrency.decimals, // TODO: not sure about that
           address: 'native',
           symbol: chainConf.walletSettings.nativeCurrency.symbol,
           type: 'native',
@@ -327,12 +327,9 @@ function addVaultToState(
   }
 
   // add earned token data
-  // const earnedTokenId = vault.earnedToken;
-  const addressKey = vault.earnedTokenAddress.toLowerCase() ?? 'native';
+  const addressKey = vault.earnedTokenAddress ? vault.earnedTokenAddress.toLowerCase() : 'native';
   if (sliceState.byChainId[chainId].byAddress[addressKey] === undefined) {
-    // gov vaults yield native tokens
     if (vault.isGovVault) {
-      // all gov vaults yield Wnative tokens
       const addressKey =
         vault.earnedToken === sliceState.byChainId[chainId].native
           ? 'native'

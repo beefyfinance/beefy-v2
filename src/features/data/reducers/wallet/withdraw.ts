@@ -89,11 +89,14 @@ export const withdrawSlice = createSlice({
         };
       }
 
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+
       // also reset the input
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
       sliceState.isZap =
-        isArray(sliceState.selectedToken) || vault.oracleId !== sliceState.selectedToken.id;
+        isArray(sliceState.selectedToken) ||
+        depositToken.address !== sliceState.selectedToken.address;
       sliceState.max = false;
       sliceState.isZapSwap =
         sliceState.isZap &&
@@ -167,14 +170,11 @@ export const withdrawSlice = createSlice({
       sliceState.zapOptions = action.payload.zapOptions;
 
       // select the vault oracle token by default
-      const oracleToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
-      sliceState.selectedToken = oracleToken;
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.tokenAddress);
+      sliceState.selectedToken = depositToken;
 
-      sliceState.isZap = sliceState.selectedToken.id !== vault.oracleId;
-      sliceState.isZapSwap =
-        sliceState.isZap &&
-        !isArray(sliceState.selectedToken) &&
-        vault.assetIds.includes(sliceState.selectedToken.id);
+      sliceState.isZap = false;
+      sliceState.isZapSwap = false;
     });
 
     builder.addCase(fetchEstimateZapWithdraw.fulfilled, (sliceState, action) => {

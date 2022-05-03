@@ -11,13 +11,11 @@ import { initiateWithdrawForm } from '../actions/withdraw';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vault';
-import { selectChainById } from '../selectors/chains';
 import {
   selectIsBeefyToken,
   selectIsTokenBluechip,
   selectIsTokenStable,
 } from '../selectors/tokens';
-import { getOracleTokenFromLegacyVaultConfig } from '../utils/config-hacks';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
 
@@ -176,11 +174,9 @@ function addVaultToState(
       isGovVault: true,
       tokenDescription: apiVault.tokenDescription,
       tokenAddress: apiVault.tokenAddress,
-      earnedTokenId: apiVault.earnedToken,
       earnedTokenAddress: apiVault.earnedTokenAddress,
       earnContractAddress: apiVault.poolAddress,
       excludedId: apiVault.excluded || null,
-      oracleId: apiVault.oracleId,
       chainId: chainId,
       status: apiVault.status as VaultGov['status'],
       platformId: apiVault.platform.toLowerCase(),
@@ -224,10 +220,6 @@ function addVaultToState(
     }
     vaultState.govVault.byOracleTokenAddress[vault.tokenAddress.toLowerCase()].push(vault.id);
   } else {
-    const oracleToken = getOracleTokenFromLegacyVaultConfig(
-      selectChainById(state, chainId),
-      apiVault
-    );
     const vault: VaultStandard = {
       id: apiVault.id,
       name: apiVault.name,
@@ -236,9 +228,7 @@ function addVaultToState(
       tokenDescription: apiVault.tokenDescription,
       tokenAddress: apiVault.tokenAddress ?? 'native',
       earnContractAddress: apiVault.earnContractAddress,
-      earnedTokenId: apiVault.earnedToken,
       earnedTokenAddress: apiVault.earnedTokenAddress,
-      oracleId: oracleToken.id,
       strategyType: apiVault.stratType as VaultStandard['strategyType'],
       chainId: chainId,
       platformId: apiVault.platform.toLowerCase(),
