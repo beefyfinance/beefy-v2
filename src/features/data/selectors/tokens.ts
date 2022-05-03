@@ -32,7 +32,8 @@ export const selectTokenById = (
       `selectTokenById: Unknown token id ${tokenId} for chain ${chainId}, maybe you need to load the addressbook`
     );
   }
-  return byChainId[chainId].byId[tokenId];
+  const address = byChainId[chainId].byId[tokenId];
+  return byChainId[chainId].byAddress[address];
 };
 
 export const selectTokenByAddress = (
