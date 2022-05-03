@@ -77,8 +77,7 @@ export function TokenWithDeposit({
     <Box className={classes.balanceContainer} display="flex" alignItems="center">
       <Box lineHeight={0}>
         <AssetsImage
-          img={oracleToken.id === vault.oracleId && !convertAmountTo ? vault.logoUri : null}
-          assets={
+          assetIds={
             convertAmountTo
               ? isArray(convertAmountTo)
                 ? convertAmountTo
@@ -87,7 +86,7 @@ export function TokenWithDeposit({
               ? vault.assetIds
               : [oracleToken.id]
           }
-          alt={oracleToken.id}
+          size={16}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>

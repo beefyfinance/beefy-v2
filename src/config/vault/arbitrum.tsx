@@ -282,7 +282,7 @@ export const pools = [
   },
   {
     id: 'curve-arb-ren',
-    logo: 'single-assets/renBTC.svg',
+    logo: 'single-assets/renBTC.png',
     name: 'WBTC/renBTC',
     token: 'btcCRV',
     tokenDescription: 'Curve',

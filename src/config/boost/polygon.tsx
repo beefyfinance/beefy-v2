@@ -1,7 +1,7 @@
 export const pools = [
   {
     id: 'moo_kyber-usdc-jeur-jarvis',
-    poolId: 'kyber-usdc-jeur',
+    poolId: 'kyber-usdc-jeur-eol',
     name: 'Jarvis',
     assets: ['jEUR', 'USDC'],
     earnedToken: 'BIFI',

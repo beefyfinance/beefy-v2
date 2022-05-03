@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Modal, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
@@ -133,36 +133,36 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
           />
         </Box>
       </Box>
-      <Grid container>
-        <Grid item xs={6}>
+      <div className={classes.boostStats}>
+        <div className={classes.boostStat}>
           <Typography className={classes.body1}>
             {t('Boost-Balance', { mooToken: mooToken.symbol })}
           </Typography>
           <Typography className={classes.h2}>{formatBigDecimals(mooTokenBalance, 8)}</Typography>
-        </Grid>
-        <Grid item xs={6}>
+        </div>
+        <div className={classes.boostStat}>
           <Typography className={classes.body1}>
             {t('Boost-Balance-Staked', { mooToken: mooToken.symbol })}
           </Typography>
           <Typography className={classes.h2}>{formatBigDecimals(boostBalance, 8)}</Typography>
-        </Grid>
-        <Grid item xs={6}>
+        </div>
+        <div className={classes.boostStat}>
           <Typography className={classes.body1}>{t('Boost-Rewards')}</Typography>
           <Typography className={classes.h2}>
             {formatBigDecimals(boostPendingRewards, 8)} {rewardToken.symbol}
           </Typography>
-        </Grid>
+        </div>
         {!isPreStake ? (
-          <Grid item xs={6}>
+          <div className={classes.boostStat}>
             <Typography className={classes.body1}>{t('Boost-Ends')}</Typography>
             <Typography className={classes.countDown}>
               <StakeCountdown periodFinish={periodFinish} />
             </Typography>
-          </Grid>
+          </div>
         ) : (
           <></>
         )}
-      </Grid>
+      </div>
       {isWalletConnected ? (
         !isWalletOnVaultChain ? (
           <Button
