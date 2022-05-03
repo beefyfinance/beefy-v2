@@ -143,6 +143,7 @@ export interface MinterConfigTokenErc20 {
 export interface MinterConfigTokenNative {
   oracleId: string;
   symbol: string;
+  contractAddress: string;
   decimals: number;
   type: 'native';
 }

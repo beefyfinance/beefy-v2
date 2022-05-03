@@ -54,26 +54,6 @@ export const selectTokenByAddress = (
   return byChainId[chainId].byAddress[address.toLowerCase()];
 };
 
-export const selectErc20TokenById = (
-  state: BeefyState,
-  chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id'],
-  mapNativeToWnative: boolean = false
-) => {
-  const token = selectTokenById(state, chainId, tokenId);
-  // type narrowing
-  if (!isTokenErc20(token)) {
-    if (mapNativeToWnative) {
-      return selectChainWrappedNativeToken(state, chainId);
-    } else {
-      throw new Error(
-        `selectErc20TokenById: Input token ${tokenId} is native. set mapNativeToWnative = true to automatically fetch wrapped token if needed`
-      );
-    }
-  }
-  return token;
-};
-
 export const selectErc20TokenByAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
@@ -87,7 +67,7 @@ export const selectErc20TokenByAddress = (
       return selectChainWrappedNativeToken(state, chainId);
     } else {
       throw new Error(
-        `selectErc20TokenById: Input token ${address} is native. set mapNativeToWnative = true to automatically fetch wrapped token if needed`
+        `selectErc20TokenByAddress: Input token ${address} is native. set mapNativeToWnative = true to automatically fetch wrapped token if needed`
       );
     }
   }

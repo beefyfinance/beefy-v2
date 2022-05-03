@@ -265,15 +265,17 @@ function addMinterToState(
   }
 
   for (const sourceToken of [apiMinter.depositToken, apiMinter.mintedToken]) {
-    const sourceTokenId = sourceToken.oracleId;
-    if (sliceState.byChainId[chainId].byId[sourceTokenId] === undefined) {
+    if (
+      sliceState.byChainId[chainId].byAddress[sourceToken.contractAddress.toLowerCase()] ===
+      undefined
+    ) {
       const token: TokenEntity =
         sourceToken.type === 'erc20'
           ? {
-              id: sourceTokenId,
+              id: sourceToken.oracleId,
               symbol: sourceToken.symbol,
               chainId: chainId,
-              oracleId: sourceTokenId,
+              oracleId: sourceToken.oracleId,
               address: sourceToken.contractAddress,
               decimals: sourceToken.decimals,
               buyUrl: null,
@@ -282,10 +284,10 @@ function addMinterToState(
               website: null,
             }
           : {
-              id: sourceTokenId,
+              id: sourceToken.oracleId,
               symbol: sourceToken.symbol,
               chainId: chainId,
-              oracleId: sourceTokenId,
+              oracleId: sourceToken.oracleId,
               address: 'native',
               decimals: sourceToken.decimals,
               buyUrl: null,

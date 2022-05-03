@@ -18,7 +18,10 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet';
-import { selectErc20TokenById, selectTokenById } from '../../../../../data/selectors/tokens';
+import {
+  selectErc20TokenByAddress,
+  selectTokenByAddress,
+} from '../../../../../data/selectors/tokens';
 import { isString } from 'lodash';
 import { Step } from '../../../../../../components/Steps/types';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
@@ -44,11 +47,11 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
   );
   const depositToken = useSelector((state: BeefyState) =>
     minter.depositToken.type === 'native'
-      ? selectTokenById(state, vault.chainId, minter.depositToken.symbol)
-      : selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
+      ? selectTokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
+      : selectErc20TokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
   );
   const mintedToken = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, minter.mintedToken.symbol)
+    selectErc20TokenByAddress(state, vault.chainId, minter.mintedToken.contractAddress)
   );
   const depositTokenBalance = useSelector((state: BeefyState) =>
     selectUserBalanceOfToken(state, vault.chainId, depositToken.address)
