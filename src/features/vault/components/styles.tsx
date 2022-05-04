@@ -118,4 +118,17 @@ export const styles = theme => ({
     color: theme.palette.text.secondary,
     marginBottom: theme.spacing(2),
   },
+  assetsDivider: {
+    display: 'flex',
+  },
+  stakedInValue: {
+    display: 'flex',
+    alignItems: 'center',
+    '& .MuiTypography-body1': {
+      fontSize: 14,
+      fontWeight: 600,
+      paddingLeft: '8px',
+      color: theme.palette.background.vaults.boostOutline,
+    },
+  },
 });

@@ -16,6 +16,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
+import { formatBigNumberSignificant } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { initWithdrawForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -25,11 +26,17 @@ import { isGovVault, isStandardVault, VaultEntity } from '../../../data/entities
 import { isFulfilled } from '../../../data/reducers/data-loader';
 import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import {
+  selectBoostUserBalanceInToken,
   selectGovVaultPendingRewardsInToken,
   selectGovVaultUserStackedBalanceInOracleToken,
   selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
 } from '../../../data/selectors/balance';
-import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
+import {
+  selectBoostById,
+  selectIsVaultPreStakedOrBoosted,
+  selectPreStakeOrActiveBoostIds,
+  selectShouldDisplayBoostWidget,
+} from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import {
@@ -132,6 +139,23 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
     return deposit.isGreaterThan(0);
   });
+
+  const isBoosted = useSelector((state: BeefyState) =>
+    selectIsVaultPreStakedOrBoosted(state, vaultId)
+  );
+
+  const activeBoost = useSelector((state: BeefyState) =>
+    isBoosted ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0]) : null
+  );
+
+  const boost = useSelector((state: BeefyState) =>
+    isBoosted ? selectBoostById(state, activeBoost.id) : null
+  );
+
+  const boostBalance = useSelector((state: BeefyState) =>
+    isBoosted ? selectBoostUserBalanceInToken(state, boost.id) : null
+  );
+
   const displayBoostWidget = useSelector((state: BeefyState) =>
     selectShouldDisplayBoostWidget(state, vaultId)
   );
@@ -258,62 +282,87 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             })}
           </Typography>
         )}
-        <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
-        <RadioGroup
-          value={
-            isArray(formState.selectedToken)
-              ? formState.selectedToken.map(t => t.id).join('+')
-              : formState.selectedToken
-              ? formState.selectedToken.id
-              : ''
-          }
-          aria-label="deposit-asset"
-          name="deposit-asset"
-          onChange={e => {
-            const selected: string = e.target.value;
-            if (vault.assetIds.join('+') === selected) {
-              handleAsset(vault.assetIds);
-            } else {
-              handleAsset(selected);
-            }
-          }}
-        >
-          <div style={{ display: 'flex' }}>
-            <FormControlLabel
-              className={classes.depositTokenContainer}
-              value={oracleToken.id}
-              control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-              label={<TokenWithDeposit vaultId={vaultId} />}
-              onClick={formState.isZap ? undefined : handleMax}
-              disabled={!formReady}
-            />
-            <VaultBuyLinks vaultId={vaultId} />
-          </div>
-          {formState.zapOptions !== null && (
-            <FormControlLabel
-              className={classes.depositTokenContainer}
-              value={vault.assetIds.join('+')}
-              control={<Radio />}
-              label={<TokenWithDeposit convertAmountTo={vault.assetIds} vaultId={vaultId} />}
-              disabled={!formReady}
-            />
-          )}
-          {formState.zapOptions?.tokens.map(
-            (zapToken, i) =>
-              wnative &&
-              zapToken.id !== wnative.id && (
+        <Box className={classes.assetsDivider}>
+          <Box sx={{ width: '50%' }}>
+            <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+            <RadioGroup
+              value={
+                isArray(formState.selectedToken)
+                  ? formState.selectedToken.map(t => t.id).join('+')
+                  : formState.selectedToken
+                  ? formState.selectedToken.id
+                  : ''
+              }
+              aria-label="deposit-asset"
+              name="deposit-asset"
+              onChange={e => {
+                const selected: string = e.target.value;
+                if (vault.assetIds.join('+') === selected) {
+                  handleAsset(vault.assetIds);
+                } else {
+                  handleAsset(selected);
+                }
+              }}
+            >
+              <div style={{ display: 'flex' }}>
                 <FormControlLabel
-                  key={i}
                   className={classes.depositTokenContainer}
-                  value={zapToken.id}
-                  control={<Radio />}
-                  label={<TokenWithDeposit convertAmountTo={zapToken.id} vaultId={vaultId} />}
+                  value={oracleToken.id}
+                  control={
+                    formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />
+                  }
+                  label={<TokenWithDeposit vaultId={vaultId} />}
+                  onClick={formState.isZap ? undefined : handleMax}
                   disabled={!formReady}
                 />
-              )
-          )}
-        </RadioGroup>
 
+                {!isBoosted && <VaultBuyLinks vaultId={vaultId} />}
+              </div>
+              {formState.zapOptions !== null && (
+                <FormControlLabel
+                  className={classes.depositTokenContainer}
+                  value={vault.assetIds.join('+')}
+                  control={<Radio />}
+                  label={<TokenWithDeposit convertAmountTo={vault.assetIds} vaultId={vaultId} />}
+                  disabled={!formReady}
+                />
+              )}
+              {formState.zapOptions?.tokens.map(
+                (zapToken, i) =>
+                  wnative &&
+                  zapToken.id !== wnative.id && (
+                    <FormControlLabel
+                      key={i}
+                      className={classes.depositTokenContainer}
+                      value={zapToken.id}
+                      control={<Radio />}
+                      label={<TokenWithDeposit convertAmountTo={zapToken.id} vaultId={vaultId} />}
+                      disabled={!formReady}
+                    />
+                  )
+              )}
+            </RadioGroup>
+          </Box>
+          <Box>
+            {isBoosted && (
+              <>
+                <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
+                <Box className={classes.stakedInValue}>
+                  <AssetsImage assetIds={vault.assetIds} size={16} />
+                  <Typography variant="body1">{`${formatBigNumberSignificant(
+                    boostBalance,
+                    4
+                  )} ${oracleToken.symbol}`}</Typography>
+                </Box>
+              </>
+            )}
+          </Box>
+        </Box>
+        {isBoosted && (
+          <Box mt={2}>
+            <VaultBuyLinks vaultId={vaultId} />
+          </Box>
+        )}
         <VaultBuyLinks2 vaultId={vaultId} />
 
         <Box className={classes.inputContainer}>

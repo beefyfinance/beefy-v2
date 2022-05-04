@@ -122,6 +122,7 @@
   "Vault-Rewards": "REWARDS",
   "Vault-rewards": "Rewards",
   "Vault-BoostedBy": "Boosted By",
+  "Vault-StakedIn": "Staked in Boost",
   "Pool-Apr": "Pool APR",
   "Pool-AprDaily": "Pool Daily APR",
   "Network-Change": "Switch to {{network}} network",
