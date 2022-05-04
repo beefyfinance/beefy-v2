@@ -100,11 +100,12 @@ export class ContractDataMcV2API<T extends ChainEntity & { fetchContractDataAddr
   ) {
     const vault = selectVaultById(state, standardVault.id);
     const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     return {
       id: standardVault.id,
-      balance: new BigNumber(result.balance).shiftedBy(-mooToken.decimals),
+      balance: new BigNumber(result.balance).shiftedBy(-depositToken.decimals),
       /** always 18 decimals for PPFS */
-      pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-18),
+      pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-mooToken.decimals),
       strategy: result.strategy,
     } as StandardVaultContractData;
   }

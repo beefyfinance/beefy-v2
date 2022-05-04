@@ -115,7 +115,7 @@ export class ContractDataAPI implements IContractDataApi {
         res.govVaults.push(data);
       } else if (result.type === 'vault-standard') {
         const vault = selectVaultById(state, result.id);
-        const mooToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+        const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
         const data = {
           id: result.id,
           balance: new BigNumber(result.balance).shiftedBy(-mooToken.decimals),

@@ -242,7 +242,6 @@ function addBoostToState(
       website: null,
       type: 'erc20',
     };
-    temporaryWrappedtokenFix(token);
     sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
     sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
     sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
@@ -296,7 +295,6 @@ function addMinterToState(
               description: null,
             };
 
-      temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
@@ -354,7 +352,7 @@ function addVaultToState(
           : {
               id: vault.earnedToken,
               chainId: chainId,
-              oracleId: vault.oracleId,
+              oracleId: vault.earnedToken,
               decimals: vault.earnedTokenDecimals ?? 18,
               address: vault.earnedTokenAddress,
               symbol: vault.earnedToken,
@@ -363,7 +361,6 @@ function addVaultToState(
               website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
               description: sliceState.byChainId[chainId].byAddress[addressKey]?.description ?? null,
             };
-      temporaryWrappedtokenFix(token);
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
@@ -387,47 +384,4 @@ function addVaultToState(
       sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
     }
   }
-}
-
-const wrappedTokenFixes = [
-  {
-    chainId: 'fantom',
-    tokenId: 'WFTM',
-    contractAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
-  },
-  {
-    chainId: 'polygon',
-    tokenId: 'WMATIC',
-    contractAddress: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
-  },
-];
-
-/**
- * Some Wrapped tokens do not have a contractAddress set
- * This is a temporary fix
- */
-function temporaryWrappedtokenFix(token: TokenEntity) {
-  // only concern erc20 assets
-  if (!isTokenErc20(token)) {
-    return;
-  }
-  // contract address has been set
-  if (token.address) {
-    return;
-  }
-
-  // not a wrapped token
-  if (!token.id.startsWith('W')) {
-    console.error(`Erc20 token without a contract address: ${token.id} (${token.chainId})`);
-    return;
-  }
-
-  for (const fix of wrappedTokenFixes) {
-    if (token.chainId === fix.chainId && token.id === fix.tokenId) {
-      token.address = fix.contractAddress;
-      console.warn(`Fixed ${token.id} (${token.chainId}) contract address: ${fix.contractAddress}`);
-      return;
-    }
-  }
-  console.error(`Unfixed wrapped token without a contract address: ${token.id} (${token.chainId})`);
 }
