@@ -284,7 +284,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <>
             {isBoosted && boostBalance.isGreaterThan(0) && (
               <Box className={classes.assetsDivider}>
-                <Box>
+                <Box className={classes.width50}>
                   <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
                   <Box className={classes.stakedInValue}>
                     <AssetsImage assetIds={vault.assetIds} size={16} />

@@ -121,9 +121,6 @@ export const styles = theme => ({
   },
   assetsDivider: {
     display: 'flex',
-    '& div': {
-      width: '50%',
-    },
   },
   stakedInValue: {
     display: 'flex',
