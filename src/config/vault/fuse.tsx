@@ -13,7 +13,6 @@ export const pools = [
     earnedTokenAddress: '0x0BE9e53fd7EDaC9F859882AfdDa116645287C629',
     earnedTokenDecimals: 18,
     earnContractAddress: '0x60a4DedF7fC45F73d9ca46222B016c2d755C79A8',
-    poolAddress: '0x60a4DedF7fC45F73d9ca46222B016c2d755C79A8',
     pricePerFullShare: 1,
     isGovVault: true,
     tvl: 0,

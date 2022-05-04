@@ -7,7 +7,7 @@ import { getEligibleZapOptions, ZapOptions } from '../apis/zap';
 import { isTokenErc20, TokenEntity } from '../entities/token';
 import { isGovVault, isStandardVault, VaultEntity } from '../entities/vault';
 import { selectChainById } from '../selectors/chains';
-import { selectTokenById } from '../selectors/tokens';
+import { selectTokenByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 
 interface InitDepositFormParams {
@@ -35,15 +35,15 @@ export const initiateDepositForm = createAsyncThunk<
 >('deposit/initiateDepositForm', async ({ vaultId, walletAddress }, { getState }) => {
   const vault = selectVaultById(getState(), vaultId);
   // we cannot select the addressbook token as the vault token can be an LP token
-  const oracleToken = selectTokenById(getState(), vault.chainId, vault.oracleId);
-  const earnedToken = selectTokenById(getState(), vault.chainId, vault.earnedTokenId);
+  const depositToken = selectTokenByAddress(getState(), vault.chainId, vault.depositTokenAddress);
+  const earnedToken = selectTokenByAddress(getState(), vault.chainId, vault.earnedTokenAddress);
   const chain = selectChainById(getState(), vault.chainId);
 
   // then, we need to find out the available zap options
   const zapOptions = isStandardVault(vault) ? getEligibleZapOptions(getState(), vaultId) : null;
 
   // then we want to know the balance and allowance for each route
-  const tokens: TokenEntity[] = [oracleToken, earnedToken].concat(zapOptions?.tokens || []);
+  const tokens: TokenEntity[] = [depositToken, earnedToken].concat(zapOptions?.tokens || []);
 
   const balanceApi = await getBalanceApi(chain);
   const balanceRes: FetchAllBalancesResult = walletAddress
@@ -72,10 +72,8 @@ export const initiateDepositForm = createAsyncThunk<
 
   // get allowance for non-zap options
   if (walletAddress) {
-    const spenderAddress = isStandardVault(vault)
-      ? vault.contractAddress
-      : vault.earnContractAddress;
-    const vaultTokens = [oracleToken, earnedToken].filter(isTokenErc20);
+    const spenderAddress = vault.earnContractAddress;
+    const vaultTokens = [depositToken, earnedToken].filter(isTokenErc20);
     const allowanceRes = await allowanceApi.fetchTokensAllowance(
       vaultTokens,
       walletAddress,

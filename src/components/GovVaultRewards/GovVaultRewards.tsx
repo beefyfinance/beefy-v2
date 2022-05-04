@@ -7,7 +7,7 @@ import {
   selectGovVaultPendingRewardsInToken,
   selectGovVaultPendingRewardsInUsd,
 } from '../../features/data/selectors/balance';
-import { selectTokenById } from '../../features/data/selectors/tokens';
+import { selectTokenByAddress } from '../../features/data/selectors/tokens';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
@@ -20,7 +20,7 @@ const _GovVaultRewards = connect(
     { vaultId, variant }: { vaultId: VaultGov['id']; variant: 'small' | 'large' }
   ) => {
     const vault = selectVaultById(state, vaultId);
-    const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+    const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
     const rewardsEarnedToken = selectGovVaultPendingRewardsInToken(state, vault.id);
     const rewardsEarnedUsd = selectGovVaultPendingRewardsInUsd(state, vault.id);
     const blurred = selectIsBalanceHidden(state);

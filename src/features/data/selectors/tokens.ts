@@ -32,23 +32,42 @@ export const selectTokenById = (
       `selectTokenById: Unknown token id ${tokenId} for chain ${chainId}, maybe you need to load the addressbook`
     );
   }
-  return byChainId[chainId].byId[tokenId];
+  const address = byChainId[chainId].byId[tokenId];
+  return byChainId[chainId].byAddress[address];
 };
 
-export const selectErc20TokenById = (
+export const selectTokenByAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id'],
+  address: TokenEntity['address']
+) => {
+  const byChainId = state.entities.tokens.byChainId;
+  if (byChainId[chainId] === undefined) {
+    throw new Error(`selectTokenById: Unknown chain id ${chainId}`);
+  }
+  if (byChainId[chainId].byAddress[address.toLowerCase()] === undefined) {
+    // fallback to addressbook token
+    throw new Error(
+      `selectTokenByAddress: Unknown token address ${address} for chain ${chainId}, maybe you need to load the addressbook`
+    );
+  }
+  return byChainId[chainId].byAddress[address.toLowerCase()];
+};
+
+export const selectErc20TokenByAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: string,
   mapNativeToWnative: boolean = false
 ) => {
-  const token = selectTokenById(state, chainId, tokenId);
+  const token = selectTokenByAddress(state, chainId, address);
   // type narrowing
   if (!isTokenErc20(token)) {
     if (mapNativeToWnative) {
       return selectChainWrappedNativeToken(state, chainId);
     } else {
       throw new Error(
-        `selectErc20TokenById: Input token ${tokenId} is native. set mapNativeToWnative = true to automatically fetch wrapped token if needed`
+        `selectErc20TokenByAddress: Input token ${address} is native. set mapNativeToWnative = true to automatically fetch wrapped token if needed`
       );
     }
   }
@@ -112,6 +131,15 @@ export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) =>
 
 export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id']) => {
   return bluechipTokens.includes(tokenId);
+};
+
+export const selectTokenPriceByAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: string
+) => {
+  const token = state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()];
+  return state.entities.tokens.prices.byTokenId[token.oracleId] || BIG_ONE;
 };
 
 export const selectTokenPriceByTokenId = (state: BeefyState, tokenId: TokenEntity['id']) =>

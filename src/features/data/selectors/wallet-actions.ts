@@ -1,15 +1,20 @@
 import { BeefyState } from '../../../redux-types';
 import { oracleAmountToMooAmount } from '../utils/ppfs';
-import { selectAllowanceByTokenId } from './allowances';
+import { selectAllowanceByTokenAddress } from './allowances';
 import { selectBoostById } from './boosts';
-import { selectTokenById } from './tokens';
+import { selectTokenByAddress } from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
 
 export const selectIsApprovalNeededForDeposit = (state: BeefyState, spenderAddress: string) => {
-  const tokenId = state.ui.deposit.selectedToken.id;
+  const tokenAddress = state.ui.deposit.selectedToken.address;
   const vaultId = state.ui.deposit.vaultId;
   const vault = selectVaultById(state, vaultId);
-  const allowance = selectAllowanceByTokenId(state, vault.chainId, tokenId, spenderAddress);
+  const allowance = selectAllowanceByTokenAddress(
+    state,
+    vault.chainId,
+    tokenAddress,
+    spenderAddress
+  );
   return allowance.isLessThan(state.ui.deposit.amount);
 };
 
@@ -17,13 +22,18 @@ export const selectIsApprovalNeededForWithdraw = (state: BeefyState, spenderAddr
   // to withdraw, the spender must have access to the moo token
   const vaultId = state.ui.withdraw.vaultId;
   const vault = selectVaultById(state, vaultId);
-  const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-  const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-  const allowance = selectAllowanceByTokenId(state, vault.chainId, mooToken.id, spenderAddress);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const allowance = selectAllowanceByTokenAddress(
+    state,
+    vault.chainId,
+    mooToken.address,
+    spenderAddress
+  );
   const ppfs = selectVaultPricePerFullShare(state, vaultId);
-  // the amount is expressed in oracletoken amount
+  // the amount is expressed in depositToken amount
   const oracleAmount = state.ui.withdraw.amount;
-  const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, oracleAmount);
+  const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, oracleAmount);
 
   return allowance.isLessThan(mooAmount);
 };
@@ -40,8 +50,13 @@ export const selectIsApprovalNeededForBoostStaking = (
   const boost = selectBoostById(state, boostId);
   const vault = selectStandardVaultById(state, boost.vaultId);
 
-  const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
-  const allowance = selectAllowanceByTokenId(state, vault.chainId, mooToken.id, spenderAddress);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const allowance = selectAllowanceByTokenAddress(
+    state,
+    vault.chainId,
+    mooToken.address,
+    spenderAddress
+  );
   const mooAmount = state.ui.boostModal.amount;
 
   return allowance.isLessThan(mooAmount);

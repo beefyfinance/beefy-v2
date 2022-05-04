@@ -10,7 +10,7 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 
@@ -19,7 +19,7 @@ const QiDaoCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const { t } = useTranslation();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const earnedToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.earnedTokenId)
+    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
 
   return (
