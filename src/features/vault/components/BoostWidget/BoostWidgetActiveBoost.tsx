@@ -116,7 +116,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.containerBoost}>
       <Box display="flex" alignItems="center">
         <img
           alt="fire"

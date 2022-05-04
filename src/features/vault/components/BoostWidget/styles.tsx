@@ -1,8 +1,13 @@
 export const styles = theme => ({
   container: {
     padding: theme.spacing(3),
-    backgroundColor: '#313759',
-    borderRadius: '16px',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '12px',
+  },
+  containerBoost: {
+    padding: theme.spacing(3),
+    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    borderRadius: '12px',
   },
   containerExpired: {
     padding: '24px 24px 0.1px 24px',

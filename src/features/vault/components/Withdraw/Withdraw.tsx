@@ -9,6 +9,8 @@ import {
   RadioGroup,
   Typography,
 } from '@material-ui/core';
+import BigNumber from 'bignumber.js';
+import clsx from 'clsx';
 import { isArray } from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +18,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
-import { formatBigNumberSignificant } from '../../../../helpers/format';
+import { BIG_ZERO, formatBigNumberSignificant } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { initWithdrawForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -30,6 +32,7 @@ import {
   selectGovVaultPendingRewardsInToken,
   selectGovVaultUserStackedBalanceInOracleToken,
   selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
+  selectUserBalanceOfToken,
 } from '../../../data/selectors/balance';
 import {
   selectBoostById,
@@ -153,7 +156,11 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const boostBalance = useSelector((state: BeefyState) =>
-    isBoosted ? selectBoostUserBalanceInToken(state, boost.id) : null
+    isBoosted ? selectBoostUserBalanceInToken(state, boost.id) : new BigNumber(BIG_ZERO)
+  );
+
+  const mooBalance = useSelector((state: BeefyState) =>
+    selectUserBalanceOfToken(state, vault.chainId, earnedToken.id)
   );
 
   const displayBoostWidget = useSelector((state: BeefyState) =>
@@ -274,17 +281,61 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     <>
       <Box p={3}>
         {formState.zapOptions !== null && (
-          <Typography variant="body1" className={classes.zapPromotion}>
-            {t('Zap-Promotion', {
-              action: 'Withdraw',
-              token1: vault.assetIds[0],
-              token2: vault.assetIds[1],
-            })}
-          </Typography>
+          <>
+            {isBoosted && boostBalance.isGreaterThan(0) && (
+              <Box className={classes.assetsDivider}>
+                <Box>
+                  <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+                  <Box className={classes.stakedInValue}>
+                    <AssetsImage assetIds={vault.assetIds} size={16} />
+                    <Typography variant="body1">{`${formatBigNumberSignificant(
+                      mooBalance,
+                      4
+                    )} LP`}</Typography>
+                  </Box>
+                </Box>
+                <Box mb={3}>
+                  <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
+                  <Box className={classes.stakedInValue}>
+                    <AssetsImage assetIds={vault.assetIds} size={16} />
+                    <Typography
+                      className={classes.orange}
+                      variant="body1"
+                    >{`${formatBigNumberSignificant(boostBalance, 4)} LP`}</Typography>
+                  </Box>
+                </Box>
+              </Box>
+            )}
+            <Typography variant="body1" className={classes.zapPromotion}>
+              {t('Zap-Promotion', {
+                action: 'Withdraw',
+                token1: vault.assetIds[0],
+                token2: vault.assetIds[1],
+              })}
+            </Typography>
+          </>
         )}
-        <Box className={classes.assetsDivider}>
-          <Box sx={{ width: '50%' }}>
-            <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+
+        <Box display={'flex'}>
+          <Box
+            className={clsx(
+              isBoosted && boostBalance.isGreaterThan(0) && formState.zapOptions === null
+                ? classes.width50
+                : classes.width100
+            )}
+          >
+            {isBoosted ? (
+              formState.zapOptions !== null ? (
+                boostBalance.isGreaterThan(0) ? null : (
+                  <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+                )
+              ) : (
+                <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+              )
+            ) : (
+              <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+            )}
+
             <RadioGroup
               value={
                 isArray(formState.selectedToken)
@@ -316,7 +367,13 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                   disabled={!formReady}
                 />
 
-                {!isBoosted && <VaultBuyLinks vaultId={vaultId} />}
+                {isBoosted ? (
+                  boostBalance.isGreaterThan(0) ? null : (
+                    <VaultBuyLinks vaultId={vaultId} />
+                  )
+                ) : (
+                  <VaultBuyLinks vaultId={vaultId} />
+                )}
               </div>
               {formState.zapOptions !== null && (
                 <FormControlLabel
@@ -343,26 +400,26 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               )}
             </RadioGroup>
           </Box>
-          <Box>
-            {isBoosted && (
-              <>
-                <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
-                <Box className={classes.stakedInValue}>
-                  <AssetsImage assetIds={vault.assetIds} size={16} />
-                  <Typography variant="body1">{`${formatBigNumberSignificant(
-                    boostBalance,
-                    4
-                  )} ${oracleToken.symbol}`}</Typography>
-                </Box>
-              </>
-            )}
-          </Box>
+          {isBoosted && boostBalance.isGreaterThan(0) && formState.zapOptions === null && (
+            <Box>
+              <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
+              <Box className={classes.stakedInValue}>
+                <AssetsImage assetIds={vault.assetIds} size={16} />
+                <Typography
+                  className={classes.orange}
+                  variant="body1"
+                >{`${formatBigNumberSignificant(boostBalance, 4)} LP`}</Typography>
+              </Box>
+            </Box>
+          )}
         </Box>
-        {isBoosted && (
+
+        {isBoosted && boostBalance.isGreaterThan(0) && (
           <Box mt={2}>
             <VaultBuyLinks vaultId={vaultId} />
           </Box>
         )}
+
         <VaultBuyLinks2 vaultId={vaultId} />
 
         <Box className={classes.inputContainer}>

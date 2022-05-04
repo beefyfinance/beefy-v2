@@ -7,13 +7,13 @@ export const styles = theme => ({
     '& .MuiButton-root': {
       fontSize: '15px',
       lineHeight: '24px',
-      fontWeight: 400,
+      fontWeight: 500,
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
       borderRadius: '4px',
       textTransform: 'capitalize',
-      letterSpacing: '0.1px',
       transition: 'color 0.2s',
+      padding: '2px 8px',
       width: 'max-content',
       '&:hover': {
         color: theme.palette.text.primary,

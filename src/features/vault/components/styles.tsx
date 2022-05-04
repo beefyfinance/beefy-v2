@@ -1,10 +1,11 @@
 export const styles = theme => ({
   balanceText: {
-    fontSize: '14px',
-    fontWeight: 400,
+    fontSize: '12px',
+    fontWeight: 600,
     color: theme.palette.text.disabled,
-    letterSpacing: '0.2px',
-    lineHeight: '18px',
+    letterSpacing: '0.5px',
+    lineHeight: '20px',
+    textTransform: 'uppercase',
   },
   balanceContainer: {
     '& .MuiTypography-body1': {
@@ -36,7 +37,7 @@ export const styles = theme => ({
     },
     '& .MuiButton-root': {
       fontSize: '12px',
-      fontWeight: 400,
+      fontWeight:600,
       letterSpacing: '0.5px',
       color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
@@ -116,10 +117,13 @@ export const styles = theme => ({
   },
   zapPromotion: {
     color: theme.palette.text.secondary,
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1.5),
   },
   assetsDivider: {
     display: 'flex',
+    '& div': {
+      width: '50%',
+    },
   },
   stakedInValue: {
     display: 'flex',
@@ -128,7 +132,15 @@ export const styles = theme => ({
       fontSize: 14,
       fontWeight: 600,
       paddingLeft: '8px',
-      color: theme.palette.background.vaults.boostOutline,
     },
+  },
+  width50: {
+    width: '50%',
+  },
+  width100: {
+    width: '100%',
+  },
+  orange: {
+    color: theme.palette.background.vaults.boostOutline,
   },
 });
