@@ -9,11 +9,10 @@ export const pools = [
     tokenAddress: '0xe6801928061CDbE32AC5AD0634427E140EFd05F9',
     tokenDescriptionUrl:
       'https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance',
-    earnedToken: 'WMETIS',
+    earnedToken: 'Metis',
     earnedTokenDecimals: 18,
-    earnedTokenAddress: '0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481',
+    earnedTokenAddress: '0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000',
     earnContractAddress: '0x2a30C5e0d577108F694d2A96179cd73611Ee069b',
-    poolAddress: '0x2a30C5e0d577108F694d2A96179cd73611Ee069b',
     excluded: 'metis-bifi-maxi',
     pricePerFullShare: 1,
     isGovVault: true,

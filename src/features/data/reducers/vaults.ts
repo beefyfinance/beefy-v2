@@ -175,7 +175,7 @@ function addVaultToState(
       tokenDescription: apiVault.tokenDescription,
       depositTokenAddress: apiVault.tokenAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
-      earnContractAddress: apiVault.poolAddress,
+      earnContractAddress: apiVault.earnContractAddress,
       excludedId: apiVault.excluded || null,
       chainId: chainId,
       status: apiVault.status as VaultGov['status'],

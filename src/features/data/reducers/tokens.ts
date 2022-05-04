@@ -342,7 +342,7 @@ function addVaultToState(
           ? {
               id: vault.earnedToken,
               chainId: chainId,
-              oracleId: vault.oracleId,
+              oracleId: vault.earnedToken,
               address: 'native',
               decimals: chain.walletSettings.nativeCurrency.decimals,
               symbol: vault.earnedToken,
