@@ -15,7 +15,6 @@ export const config = {
   bsc: {
     name: 'BNB Chain',
     chainId: 56,
-    eip1559: false,
     rpc: [
       'https://bsc-dataseed.binance.org',
       'https://bsc-dataseed1.defibit.io',
@@ -64,7 +63,6 @@ export const config = {
   heco: {
     name: 'HECO',
     chainId: 128,
-    eip1559: false,
     rpc: ['https://http-mainnet.hecochain.com'],
     explorerUrl: 'https://hecoinfo.com',
     multicallAddress: '0x2776CF9B6E2Fa7B33A37139C3CB1ee362Ff0356e',
@@ -88,7 +86,6 @@ export const config = {
   avax: {
     name: 'Avalanche',
     chainId: 43114,
-    eip1559: true,
     rpc: ['https://api.avax.network/ext/bc/C/rpc'],
     explorerUrl: 'https://cchain.explorer.avax.network',
     multicallAddress: '0x6FfF95AC47b586bDDEea244b3c2fe9c4B07b9F76',
@@ -132,7 +129,6 @@ export const config = {
   polygon: {
     name: 'Polygon',
     chainId: 137,
-    eip1559: true,
     rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
@@ -182,7 +178,6 @@ export const config = {
   fantom: {
     name: 'Fantom',
     chainId: 250,
-    eip1559: true,
     rpc: ['https://rpc.ftm.tools'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
@@ -224,7 +219,6 @@ export const config = {
   harmony: {
     name: 'Harmony',
     chainId: 1666600000,
-    eip1559: false,
     rpc: ['https://api.s0.t.hmny.io'],
     explorerUrl: 'https://explorer.harmony.one',
     multicallAddress: '0xBa5041B1c06e8c9cFb5dDB4b82BdC52E41EA5FC5',
@@ -248,7 +242,6 @@ export const config = {
   arbitrum: {
     name: 'Arbitrum',
     chainId: 42161,
-    eip1559: false,
     rpc: ['https://arb1.arbitrum.io/rpc'],
     explorerUrl: 'https://arbiscan.io',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
@@ -272,7 +265,6 @@ export const config = {
   celo: {
     name: 'Celo',
     chainId: 42220,
-    eip1559: false,
     rpc: ['https://forno.celo.org'],
     explorerUrl: 'https://explorer.celo.org',
     multicallAddress: '0xa9E6E271b27b20F65394914f8784B3B860dBd259',
@@ -296,7 +288,6 @@ export const config = {
   moonriver: {
     name: 'Moonriver',
     chainId: 1285,
-    eip1559: true,
     rpc: ['https://rpc.api.moonriver.moonbeam.network/'],
     explorerUrl: 'https://moonriver.moonscan.io/',
     multicallAddress: '0x7f6fE34C51d5352A0CF375C0Fbe03bD19eCD8460',
@@ -320,7 +311,6 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
-    eip1559: false,
     rpc: ['https://evm-cronos.crypto.org'],
     explorerUrl: 'https://cronoscan.com/',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
@@ -344,7 +334,6 @@ export const config = {
   fuse: {
     name: 'Fuse',
     chainId: 122,
-    eip1559: false,
     rpc: ['https://rpc.fuse.io'],
     explorerUrl: 'https://explorer.fuse.io',
     multicallAddress: '0x4f22BD7CE44b0e0B2681A28e300A7285319de3a0',
@@ -368,7 +357,6 @@ export const config = {
   metis: {
     name: 'Metis',
     chainId: 1088,
-    eip1559: false,
     rpc: ['https://andromeda.metis.io/?owner=1088'],
     explorerUrl: 'https://andromeda-explorer.metis.io',
     multicallAddress: '0x4fd2e1c2395dc088F36cab06DCe47F88A912fC85',
@@ -392,7 +380,6 @@ export const config = {
   aurora: {
     name: 'Aurora',
     chainId: 1313161554,
-    eip1559: false,
     rpc: ['https://mainnet.aurora.dev'],
     explorerUrl: 'https://aurorascan.dev',
     multicallAddress: '0x55f46144bC62e9Af4bAdB71842B62162e2194E90',
@@ -416,7 +403,6 @@ export const config = {
   moonbeam: {
     name: 'Moonbeam',
     chainId: 1284,
-    eip1559: true,
     rpc: ['https://rpc.api.moonbeam.network'],
     explorerUrl: 'https://moonscan.io',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
@@ -443,7 +429,6 @@ export const config = {
  BOILERPLATE NEW CHAIN
 name: '',
 chainId:0 ,
-eip1559: false,
 rpc: [''],
 explorerUrl: '',
 multicallAddress: '',
