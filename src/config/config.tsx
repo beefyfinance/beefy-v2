@@ -182,7 +182,7 @@ export const config = {
   fantom: {
     name: 'Fantom',
     chainId: 250,
-    eip1559: false,
+    eip1559: true,
     rpc: ['https://rpc.ftm.tools'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
