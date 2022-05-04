@@ -107,7 +107,9 @@ const UnstakeForm = ({
   const [startStepper, isStepping, Stepper] = useStepper(vault.id);
 
   const handleInput = (amountStr: string) => {
-    dispatch(boostModalActions.setInput({ amount: amountStr, state: store.getState() }));
+    dispatch(
+      boostModalActions.setInput({ amount: amountStr, withdraw: true, state: store.getState() })
+    );
   };
 
   const handleMax = () => {

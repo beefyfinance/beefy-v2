@@ -117,7 +117,9 @@ const StakeForm = ({
   );
 
   const handleInput = (amountStr: string) => {
-    dispatch(boostModalActions.setInput({ amount: amountStr, state: store.getState() }));
+    dispatch(
+      boostModalActions.setInput({ amount: amountStr, withdraw: false, state: store.getState() })
+    );
   };
 
   const handleMax = () => {

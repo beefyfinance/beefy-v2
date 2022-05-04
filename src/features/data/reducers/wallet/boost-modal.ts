@@ -53,7 +53,10 @@ export const boostModalSlice = createSlice({
       sliceState.max = true;
     },
 
-    setInput(sliceState, action: PayloadAction<{ amount: string; state: BeefyState }>) {
+    setInput(
+      sliceState,
+      action: PayloadAction<{ amount: string; withdraw: boolean; state: BeefyState }>
+    ) {
       const state = action.payload.state;
 
       const boost = selectBoostById(state, sliceState.boostId);
@@ -68,7 +71,10 @@ export const boostModalSlice = createSlice({
         value = BIG_ZERO;
       }
 
-      const balance = selectUserBalanceOfToken(state, vault.chainId, balanceToken.id);
+      const balance = action.payload.withdraw
+        ? selectBoostUserBalanceInToken(state, boost.id)
+        : selectUserBalanceOfToken(state, vault.chainId, balanceToken.id);
+
       if (value.isGreaterThanOrEqualTo(balance)) {
         value = new BigNumber(balance);
         sliceState.max = true;
