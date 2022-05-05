@@ -17,7 +17,7 @@ export interface IAllowanceApi {
 }
 
 export interface TokenAllowance {
-  tokenId: TokenEntity['id'];
+  tokenAddress: TokenEntity['address'];
   spenderAddress: string; // a 0x address
   allowance: BigNumber;
 }

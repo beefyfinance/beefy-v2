@@ -24,7 +24,7 @@ import {
   selectGovVaultBalanceTokenEntity,
   selectGovVaultRewardsTokenEntity,
 } from '../../selectors/balance';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress } from '../../selectors/tokens';
 
 // fix TS typings
 const boostAbi = _boostAbi as AbiItem[];
@@ -56,7 +56,7 @@ export class BalanceAPI implements IBalanceApi {
           amount: tokenContract.methods.getEthBalance(walletAddress),
         });
       } else if (isTokenErc20(token)) {
-        const tokenContract = new this.web3.eth.Contract(erc20Abi, token.contractAddress);
+        const tokenContract = new this.web3.eth.Contract(erc20Abi, token.address);
         tokenCalls.push({
           type: 'token',
           tokenId: token.id,
@@ -133,10 +133,10 @@ export class BalanceAPI implements IBalanceApi {
         res.govVaults.push(balance);
       } else if (result.type === 'token') {
         // apply token decimals to amount
-        const token = selectTokenById(state, this.chain.id, result.tokenId);
+        const token = selectTokenByAddress(state, this.chain.id, result.tokenAddress);
         const rawAmount = new BigNumber(result.amount);
         const balance = {
-          tokenId: result.tokenId,
+          tokenAddress: token.address,
           amount: rawAmount.shiftedBy(-token.decimals),
         };
         res.tokens.push(balance);

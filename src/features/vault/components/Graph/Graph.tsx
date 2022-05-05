@@ -17,6 +17,7 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
 import { useSelector } from 'react-redux';
 import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
@@ -24,7 +25,10 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const [stat, setStat] = useState(2);
   const [period, setPeriod] = useState(1);
-  const chartData = useChartData(stat, period, vault.oracleId, vaultId, vault.chainId);
+  const tokenOracleId = useSelector((state: BeefyState) =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  ).oracleId;
+  const chartData = useChartData(stat, period, tokenOracleId, vaultId, vault.chainId);
   const t = useTranslation().t;
 
   return (

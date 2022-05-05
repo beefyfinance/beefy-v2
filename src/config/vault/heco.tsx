@@ -48,7 +48,6 @@ export const pools = [
     earnedTokenAddress: '0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f',
     earnedTokenDecimals: 18,
     earnContractAddress: '0x5f7347fedfD0b374e8CE8ed19Fc839F59FB59a3B',
-    poolAddress: '0x5f7347fedfD0b374e8CE8ed19Fc839F59FB59a3B',
     excluded: 'heco-bifi-maxi',
     pricePerFullShare: 1,
     isGovVault: true,

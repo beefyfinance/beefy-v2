@@ -14,7 +14,7 @@ import { selectBoostById, selectBoostPeriodFinish } from '../../../data/selector
 import { Step } from '../../../../components/Steps/types';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import {
   selectBoostRewardsTokenEntity,
   selectBoostUserBalanceInToken,
@@ -35,14 +35,14 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   const isBoosted = true;
 
   const mooToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.earnedTokenId)
+    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
   const rewardToken = useSelector((state: BeefyState) =>
     selectBoostRewardsTokenEntity(state, boost.id)
   );
 
   const mooTokenBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenId)
+    selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenAddress)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)

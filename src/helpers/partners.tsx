@@ -96,10 +96,10 @@ const Moonpot = [
     link: 'https://play.moonpot.com/#/pot/based-mai',
   },
   {
-    id:'spirit-orkan-ftm',
-    img:"partners/moonpot/orkan-ftm.svg",
-    link:'https://play.moonpot.com/#/pot/orkan-ftm'
-  }
+    id: 'spirit-orkan-ftm',
+    img: 'partners/moonpot/orkan-ftm.svg',
+    link: 'https://play.moonpot.com/#/pot/orkan-ftm',
+  },
 ];
 
 export { QiDao, Insurace, Moonpot, LaCucina };

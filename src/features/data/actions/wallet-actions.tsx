@@ -26,12 +26,13 @@ import {
   selectBoostUserRewardsInToken,
   selectGovVaultPendingRewardsInToken,
   selectGovVaultRewardsTokenEntity,
-  selectGovVaultUserStackedBalanceInOracleToken,
+  selectGovVaultUserStackedBalanceInDepositToken,
 } from '../selectors/balance';
 import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
-  selectErc20TokenById,
+  selectErc20TokenByAddress,
+  selectTokenByAddress,
   selectTokenById,
 } from '../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
@@ -62,7 +63,7 @@ const approval = (token: TokenErc20, spenderAddress: string) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
     const native = selectChainNativeToken(state, token.chainId);
 
-    const contract = new web3.eth.Contract(erc20Abi as any, token.contractAddress);
+    const contract = new web3.eth.Contract(erc20Abi as any, token.address);
     const maxAmount = web3.utils.toWei('8000000000', 'ether');
     const gasPrices = await getGasPriceOptions(web3);
     const transaction = contract.methods
@@ -95,14 +96,14 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-    const mooToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
     const native = selectChainNativeToken(state, vault.chainId);
-    const isNativeToken = oracleToken.id === native.id;
-    const contractAddr = mooToken.contractAddress;
+    const isNativeToken = depositToken.id === native.id;
+    const contractAddr = mooToken.address;
     const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
-    const rawAmount = amount.shiftedBy(oracleToken.decimals).decimalPlaces(0);
+    const rawAmount = amount.shiftedBy(depositToken.decimals).decimalPlaces(0);
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
@@ -130,7 +131,7 @@ const deposit = (vault: VaultEntity, amount: BigNumber, max: boolean) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token: oracleToken },
+      { spender: contractAddr, amount, token: depositToken },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
@@ -154,8 +155,8 @@ const beefIn = (
     if (!address) {
       return;
     }
-    const earnedToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
-    const vaultAddress = earnedToken.contractAddress;
+    const earnedToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const vaultAddress = earnedToken.address;
     const { tokenIn, tokenOut } = zapEstimate;
 
     const walletApi = await getWalletConnectionApiInstance();
@@ -182,7 +183,7 @@ const beefIn = (
           .beefIn(
             vaultAddress,
             rawSwapAmountOutMin.toString(10),
-            tokenIn.contractAddress,
+            tokenIn.address,
             rawAmount.toString(10)
           )
           .send({
@@ -226,16 +227,16 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
       selectTokenById(state, vault.chainId, tokenId)
     );
 
-    const mooToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
     const ppfs = selectVaultPricePerFullShare(state, vault.id);
 
-    const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, oracleAmount);
+    const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, oracleAmount);
     const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
-      return contract.methods.beefOut(vault.contractAddress, rawAmount.toString(10)).send({
+      return contract.methods.beefOut(vault.earnContractAddress, rawAmount.toString(10)).send({
         from: address,
         ...gasPrices,
       });
@@ -261,7 +262,7 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
 
 const beefOutAndSwap = (
   vault: VaultEntity,
-  oracleTokenAmount: BigNumber,
+  depositTokenAmount: BigNumber,
   zapOptions: ZapOptions,
   zapEstimate: ZapEstimate,
   slippageTolerance: number
@@ -274,13 +275,13 @@ const beefOutAndSwap = (
       return;
     }
 
-    const earnedToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
+    const earnedToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
     const wnative = selectChainWrappedNativeToken(state, vault.chainId);
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-    const vaultAddress = earnedToken.contractAddress;
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const vaultAddress = earnedToken.address;
     const { tokenIn, tokenOut } = zapEstimate;
 
-    const tokenOutEntity = selectTokenById(state, vault.chainId, tokenOut.id);
+    const tokenOutEntity = selectTokenByAddress(state, vault.chainId, tokenOut.address);
     const tokenOutAddress = getZapAddress(tokenOutEntity, wnative);
 
     const walletApi = await getWalletConnectionApiInstance();
@@ -291,9 +292,9 @@ const beefOutAndSwap = (
     const ppfs = selectVaultPricePerFullShare(state, vault.id);
     const earnedTokenAmount = oracleAmountToMooAmount(
       earnedToken,
-      oracleToken,
+      depositToken,
       ppfs,
-      oracleTokenAmount
+      depositTokenAmount
     );
     const rawSwapAmountOutMin = zapEstimate.amountOut
       .times(1 - slippageTolerance)
@@ -319,7 +320,7 @@ const beefOutAndSwap = (
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: zapOptions.address, amount: earnedTokenAmount, token: oracleToken },
+      { spender: zapOptions.address, amount: earnedTokenAmount, token: depositToken },
       {
         chainId: vault.chainId,
         spenderAddress: zapOptions.address,
@@ -344,16 +345,16 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-    const mooToken = selectErc20TokenById(state, vault.chainId, vault.earnedTokenId);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
     const ppfs = selectVaultPricePerFullShare(state, vault.id);
     const native = selectChainNativeToken(state, vault.chainId);
-    const isNativeToken = oracleToken.id === native.id;
-    const contractAddr = mooToken.contractAddress;
+    const isNativeToken = depositToken.id === native.id;
+    const contractAddr = mooToken.address;
     const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
 
-    const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, oracleAmount);
+    const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, oracleAmount);
     const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
     const gasPrices = await getGasPriceOptions(web3);
 
@@ -380,7 +381,7 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount: oracleAmount, token: oracleToken },
+      { spender: contractAddr, amount: oracleAmount, token: depositToken },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
@@ -401,7 +402,7 @@ const stakeGovVault = (vault: VaultGov, amount: BigNumber) => {
 
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const inputToken = selectTokenById(state, vault.chainId, vault.oracleId);
+    const inputToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const contractAddr = vault.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
@@ -436,12 +437,12 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
 
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-    const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
     const ppfs = selectVaultPricePerFullShare(state, vault.chainId);
 
     // amount is in oracle token, we need it in moo token
-    const mooAmount = oracleAmountToMooAmount(mooToken, oracleToken, ppfs, amount);
+    const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, amount);
 
     const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
 
@@ -455,7 +456,7 @@ const unstakeGovVault = (vault: VaultGov, amount: BigNumber) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount, token: oracleToken },
+      { spender: contractAddr, amount, token: depositToken },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,
@@ -509,7 +510,7 @@ const exitGovVault = (vault: VaultGov) => {
       return;
     }
 
-    const balanceAmount = selectGovVaultUserStackedBalanceInOracleToken(state, vault.id);
+    const balanceAmount = selectGovVaultUserStackedBalanceInDepositToken(state, vault.id);
     const rewardAmount = selectGovVaultPendingRewardsInToken(state, vault.id);
     const token = selectGovVaultRewardsTokenEntity(state, vault.id);
 
@@ -551,7 +552,7 @@ const claimBoost = (boost: BoostEntity) => {
       return;
     }
     const amount = selectBoostUserRewardsInToken(state, boost.id);
-    const token = selectTokenById(state, boost.chainId, boost.earnedTokenId);
+    const token = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
     const vault = selectVaultById(state, boost.vaultId);
 
     const walletApi = await getWalletConnectionApiInstance();
@@ -587,7 +588,7 @@ const exitBoost = (boost: BoostEntity) => {
 
     const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
     const rewardAmount = selectBoostUserRewardsInToken(state, boost.id);
-    const token = selectTokenById(state, boost.chainId, boost.earnedTokenId);
+    const token = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
     const vault = selectVaultById(state, boost.vaultId);
 
     const walletApi = await getWalletConnectionApiInstance();
@@ -632,7 +633,7 @@ const stakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+    const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
@@ -670,7 +671,7 @@ const unstakeBoost = (boost: BoostEntity, amount: BigNumber) => {
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const vault = selectVaultById(state, boost.vaultId);
-    const inputToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+    const inputToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
     const contractAddr = boost.earnContractAddress;
     const contract = new web3.eth.Contract(boostAbi as any, contractAddr);
@@ -894,8 +895,8 @@ function getVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
       tokens.push(selectTokenById(state, vault.chainId, assetId));
     }
   }
-  tokens.push(selectTokenById(state, vault.chainId, vault.oracleId));
-  tokens.push(selectTokenById(state, vault.chainId, vault.earnedTokenId));
+  tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));
+  tokens.push(selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress));
 
   // and native token because we spent gas
   tokens.push(selectChainNativeToken(state, vault.chainId));

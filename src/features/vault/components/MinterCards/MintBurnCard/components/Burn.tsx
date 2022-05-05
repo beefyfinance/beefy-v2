@@ -18,7 +18,7 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../../data/selectors/wallet';
-import { selectErc20TokenById } from '../../../../../data/selectors/tokens';
+import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens';
 import { isString } from 'lodash';
 import { Step } from '../../../../../../components/Steps/types';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
@@ -26,7 +26,7 @@ import { walletActions } from '../../../../../data/actions/wallet-actions';
 import { useStepper } from '../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../MinterCard';
 import { selectMinterById, selectMinterReserves } from '../../../../../data/selectors/minters';
-import { selectAllowanceByTokenId } from '../../../../../data/selectors/allowances';
+import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../data/selectors/chains';
 
 const useStyles = makeStyles(styles as any);
@@ -43,19 +43,24 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
   const depositToken = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, minter.depositToken.symbol)
+    selectErc20TokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
   );
   const mintedToken = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, minter.mintedToken.symbol)
+    selectErc20TokenByAddress(state, vault.chainId, minter.mintedToken.contractAddress)
   );
   const depositedTokenBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, depositToken.id)
+    selectUserBalanceOfToken(state, vault.chainId, depositToken.address)
   );
   const mintedTokenBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, mintedToken.id)
+    selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
   const depositedTokenAllowance = useSelector((state: BeefyState) =>
-    selectAllowanceByTokenId(state, vault.chainId, depositToken.id, minter.contractAddress)
+    selectAllowanceByTokenAddress(
+      state,
+      vault.chainId,
+      depositToken.address,
+      minter.contractAddress
+    )
   );
   const reserves = useSelector((state: BeefyState) => selectMinterReserves(state, minter.id));
 

@@ -7,7 +7,7 @@ import { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { selectMinterById } from '../selectors/minters';
 import { selectChainById } from '../selectors/chains';
-import { selectTokenById } from '../selectors/tokens';
+import { selectTokenByAddress } from '../selectors/tokens';
 import { MinterEntity } from '../entities/minter';
 import { isTokenErc20 } from '../entities/token';
 import BigNumber from 'bignumber.js';
@@ -55,8 +55,16 @@ export const initiateMinterForm = createAsyncThunk<
 >('minters/initMinterForm', async ({ minterId, walletAddress }, { getState }) => {
   const minter = selectMinterById(getState(), minterId);
   const chain = selectChainById(getState(), minter.chainId);
-  const depositToken = selectTokenById(getState(), minter.chainId, minter.depositToken.oracleId);
-  const mintedToken = selectTokenById(getState(), minter.chainId, minter.mintedToken.oracleId);
+  const depositToken = selectTokenByAddress(
+    getState(),
+    minter.chainId,
+    minter.depositToken.contractAddress
+  );
+  const mintedToken = selectTokenByAddress(
+    getState(),
+    minter.chainId,
+    minter.mintedToken.contractAddress
+  );
   const spenderAddress = minter.contractAddress;
   const balanceApi = await getBalanceApi(chain);
   const allowanceApi = await getAllowanceApi(chain);

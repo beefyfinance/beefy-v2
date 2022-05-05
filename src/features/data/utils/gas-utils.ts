@@ -2,8 +2,6 @@ import Web3 from 'web3';
 import { BigNumber } from 'bignumber.js';
 import { FeeHistoryResult } from 'web3-eth';
 import { maybeHexToNumber } from '../../../helpers/format';
-import { getConfigApi } from '../apis/instances';
-import { FriendlyError } from './error-utils';
 
 function medianOf(numbers: BigNumber[]): BigNumber {
   const sortedNumbers = numbers.slice().sort((a, b) => a.comparedTo(b));
@@ -42,82 +40,37 @@ async function getFeeHistory(
   return formatFeeHistory(await web3.eth.getFeeHistory(blockCount, lastBlock, percentiles));
 }
 
-/**
- * Get the chain id of the web3 instance, and lookup if this chain supports eip1559 via our config
- */
-async function isWeb3ConnectedToEIP1559Chain(web3: Web3): Promise<boolean> {
-  const configApi = getConfigApi();
-  const [configs, chainId] = await Promise.all([
-    configApi.fetchChainConfigs(),
-    web3.eth.getChainId(),
-  ]);
-  const chainConfig = configs.find(config => config.chainId === chainId);
-  return chainConfig.eip1559;
+async function estimatePriorityGasFee(web3: Web3, blockNumber: number): Promise<BigNumber> {
+  try {
+    // Attempt to use median of last 5 blocks priority fees
+    const feeHistory = await getFeeHistory(web3, 5, blockNumber, [20]);
+    const priorityFees = feeHistory.map(block => block.priorityFeePerGas[0]);
+    return medianOf(priorityFees);
+  } catch (err) {
+    // Fallback to using legacy gas price
+    console.warn('EIP-1559 network without eth_feeHistory support.', err);
+    return new BigNumber(await web3.eth.getGasPrice());
+  }
 }
 
-/**
- * This takes the median of the last 5 blocks 20th-percentile priority fees.
- * We can tweak this by:
- * - changing the number of blocks we look at (more = underpay during spike, less = overpay during spike)
- * - changing the % that we look at (higher = more chance to overpay, lower = more chance to underpay)
- * - somehow weigh the fees by how full the previous blocks were
- * - changing the base fee safety multiplier (higher = more chance to overpay, lower = more chance to underpay)
- */
-async function getGasPriceEstimate(web3: Web3) {
-  const blockCount = 5; // number of past blocks to look at
-  const baseFeeSafetyMultiplier = 1.5; // a lot of full blocks after our estimate could increase the required base fee
-  const minPriorityFeePerGas = new BigNumber(1_500_000_000); // 1.5 gwei
-
-  const latestBlock = await web3.eth.getBlock('latest', false);
-  const feeHistory = await getFeeHistory(web3, blockCount, latestBlock.number, [20]);
-
-  const priorityFees = feeHistory.map(block => block.priorityFeePerGas[0]);
-  const medianPriorityFee = medianOf(priorityFees);
-  const maxPriorityFeePerGas = BigNumber.max(medianPriorityFee, minPriorityFeePerGas);
-
-  const baseFeePerGas = new BigNumber(latestBlock.baseFeePerGas)
-    .multipliedBy(baseFeeSafetyMultiplier)
-    .decimalPlaces(0);
-
-  return {
-    baseFeePerGas: baseFeePerGas.toString(10),
-    maxPriorityFeePerGas: maxPriorityFeePerGas.toString(10),
-    maxFeePerGas: baseFeePerGas.plus(maxPriorityFeePerGas).toString(10),
-  };
-}
-
-/**
- * Returns {maxPriorityFeePerGas,maxFeePerGas} for EIP1559 or {} otherwise, which can be passed directly to .send()
- */
 export async function getGasPriceOptions(web3: Web3) {
-  const eip1559 = await isWeb3ConnectedToEIP1559Chain(web3);
+  const latestBlock = await web3.eth.getBlock('latest', false);
 
-  if (eip1559) {
-    try {
-      const gasPriceEstimate = await getGasPriceEstimate(web3);
-      return {
-        maxPriorityFeePerGas: gasPriceEstimate.maxPriorityFeePerGas,
-        maxFeePerGas: gasPriceEstimate.maxFeePerGas,
-      };
-    } catch (err) {
-      if (
-        err &&
-        err.message &&
-        typeof err.message === 'string' &&
-        err.message.includes('eth_feeHistory')
-      ) {
-        // most likely error is "The method 'eth_feeHistory' does not exist / is not available."
-        // this can happen on EIP1559 networks when the user's wallet is out of date
-        // we show a more user friendly message instead
-        console.error(err);
-        throw new FriendlyError(
-          'Gas estimation failed. This can happen when your wallet doesn\'t support the "EIP-1559" standard. Updating your wallet software may help.',
-          err
-        );
-      } else {
-        throw err;
-      }
-    }
+  if (latestBlock.baseFeePerGas) {
+    const baseFeeSafetyMultiplier = 1.5; // a lot of full blocks after our estimate could increase the required base fee
+    const minPriorityFeePerGas = new BigNumber(1_500_000_000); // 1.5 gwei
+    const estimatePriorityFeePerGas = await estimatePriorityGasFee(web3, latestBlock.number);
+    const maxPriorityFeePerGas = BigNumber.max(estimatePriorityFeePerGas, minPriorityFeePerGas);
+
+    const baseFeePerGas = new BigNumber(latestBlock.baseFeePerGas)
+      .multipliedBy(baseFeeSafetyMultiplier)
+      .decimalPlaces(0);
+
+    return {
+      baseFeePerGas: baseFeePerGas.toString(10),
+      maxPriorityFeePerGas: maxPriorityFeePerGas.toString(10),
+      maxFeePerGas: baseFeePerGas.plus(maxPriorityFeePerGas).toString(10),
+    };
   }
 
   return {};
