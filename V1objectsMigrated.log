@@ -1,73 +1,53 @@
 [
   {
-    "id": "bsc vault: cakev2-wbnb-abnbc",
-    "type": "Added"
+    "id": "bsc vault: belt-4belt",
+    "type": "synced"
   },
   {
-    "id": "bsc vault: cakev2-wbnb-ceek",
-    "type": "Added"
+    "id": "bsc vault: beltv2-4belt",
+    "type": "synced"
   },
   {
-    "id": "bsc vault: cakev2-pex-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-wbnb-froyo",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cakev2-cake-froyo",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: cake-cakev2-eol",
+    "id": "fantom vault: 0xdao-wbtc-eol",
     "type": "synced",
-    "EOLd": true
+    "logo-copied": "logo"
   },
   {
-    "id": "polygon vault: quick-eth-fuse-eol",
+    "id": "fantom vault: geist-wbtc",
     "type": "synced",
-    "EOLd": true
+    "logo-copied": "logo"
   },
   {
-    "id": "polygon vault: quick-wmatic-avax-eol",
+    "id": "fantom vault: scream-wbtc",
     "type": "synced",
-    "EOLd": true
+    "logo-copied": "logo"
   },
   {
-    "id": "moonriver vault: solarbeam-frax-3pool",
-    "type": "synced"
+    "id": "avax vault: blizz-wbtc",
+    "type": "synced",
+    "logo-copied": "logo"
   },
   {
-    "id": "moonriver vault: solarbeam-xcksm-stksm",
-    "type": "synced"
+    "id": "avax vault: bankerjoe-wbtc.e",
+    "type": "synced",
+    "logo-copied": "logo"
   },
   {
-    "id": "moonriver vault: solarbeam-3pool",
-    "type": "synced"
+    "id": "avax vault: aave-wbtc.e",
+    "type": "synced",
+    "logo-copied": "logo"
   },
   {
-    "id": "aurora vault: tri-bstn-near",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: tri-linear-near",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: tri-stnear-near",
-    "type": "Added"
-  },
-  {
-    "id": "bsc boost: moo_cake-krown",
-    "type": "synced"
-  },
-  {
-    "id": "bsc boost: moo_cake-cakev2",
-    "type": "synced"
+    "id": "arbitrum vault: curve-arb-ren",
+    "type": "synced",
+    "logo-copied": "logo"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
+  },
+  {
+    "id": "polygon boost: moo_quick-stmatic-matic-lido",
+    "type": "Added"
   }
 ]

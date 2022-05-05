@@ -882,7 +882,7 @@ export const pools = [
     oraclePrice: 0,
     status: 'active',
     platform: 'Belt',
-    assets: ['USDT', 'BUSD', 'USDC', 'DAI'],
+    assets: ['USDT', 'BUSD', 'USDC', 'DAI', '4BELT'],
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
@@ -13459,7 +13459,7 @@ export const pools = [
     oraclePrice: 0,
     status: 'eol',
     platform: 'Belt',
-    assets: ['USDT', 'BUSD', 'USDC', 'DAI'],
+    assets: ['USDT', 'BUSD', 'USDC', 'DAI', '4BELT'],
     withdrawalFee: '0%',
     addLiquidityUrl: 'https://belt.fi/',
     stratType: 'StratMultiLP',

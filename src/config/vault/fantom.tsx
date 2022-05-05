@@ -1283,7 +1283,7 @@ export const pools = [
   },
   {
     id: 'scream-wbtc',
-    logo: 'single-assets/WBTC.png',
+    logo: 'single-assets/WBTC.svg',
     name: 'WBTC',
     token: 'WBTC',
     tokenDescription: 'Scream',
@@ -2768,7 +2768,7 @@ export const pools = [
   },
   {
     id: 'geist-wbtc',
-    logo: 'single-assets/WBTC.png',
+    logo: 'single-assets/WBTC.svg',
     name: 'WBTC',
     token: 'WBTC',
     tokenDescription: 'Geist',
@@ -4119,7 +4119,7 @@ export const pools = [
   },
   {
     id: '0xdao-wbtc-eol',
-    logo: 'single-assets/WBTC.png',
+    logo: 'single-assets/WBTC.svg',
     name: 'WBTC',
     token: 'WBTC',
     tokenDescription: '0xDAO',

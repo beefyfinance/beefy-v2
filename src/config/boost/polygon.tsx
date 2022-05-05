@@ -688,4 +688,29 @@ export const pools = [
       },
     ],
   },
+  {
+    id: 'moo_quick-stmatic-matic-lido',
+    poolId: 'quick-stmatic-matic',
+    name: 'Lido on Polygon',
+    assets: ['stMATIC', 'MATIC'],
+    earnedToken: 'LDO',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xC3C7d422809852031b44ab29EEC9F1EfF2A58756',
+    earnContractAddress: '0x20E504E52476cc0d84981b6F0562D19e33f0F188',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'LDO',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: 'Lido on Polygon is a liquid staking solution for MATIC backed by industry-leading staking providers. With Lido on Polygon you can stake your MATIC tokens in a decentralized and secure way and use your stMATIC on the secondary market.\nLido on Polygon is brought to you by Shard Labs, a new generation of blockchain architects who are building a borderless, transparent, and democratic world.',
+        website: 'https://polygon.lido.fi/',
+        social: {
+          telegram: 'https://discord.com/invite/vgdPfhZ',
+          twitter: 'https://twitter.com/LidoOnPolygon',
+        },
+      },
+    ],
+  },
 ];
