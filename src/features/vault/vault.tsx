@@ -100,7 +100,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
           <>
             <Box className={classes.header}>
               <Box className={classes.title}>
-                <AssetsImage assetIds={vault.assetIds} size={48} />
+                <AssetsImage assetIds={vault.assetIds} size={48} chainId={vault.chainId} />
                 <Typography variant="h2">
                   {vault.name} {!isGovVault(vault) ? t('Vault-vault') : ''}
                 </Typography>
