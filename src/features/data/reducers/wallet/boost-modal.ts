@@ -10,7 +10,7 @@ import { initiateBoostForm } from '../../actions/boosts';
 import { BoostEntity } from '../../entities/boost';
 import { selectBoostUserBalanceInToken, selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectBoostById } from '../../selectors/boosts';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
 
 // TODO: this looks exactly like the withdraw state
@@ -43,10 +43,10 @@ export const boostModalSlice = createSlice({
       const boost = selectBoostById(state, sliceState.boostId);
       const vault = selectVaultById(state, boost.vaultId);
 
-      const balanceToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+      const balanceToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
       const balance =
         sliceState.mode === 'stake'
-          ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId) // mootoken
+          ? selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenAddress) // mootoken
           : selectBoostUserBalanceInToken(state, boost.id); // staked
       sliceState.amount = balance;
       sliceState.formattedInput = formatBigDecimals(balance, balanceToken.decimals);
@@ -58,7 +58,7 @@ export const boostModalSlice = createSlice({
 
       const boost = selectBoostById(state, sliceState.boostId);
       const vault = selectVaultById(state, boost.vaultId);
-      const balanceToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+      const balanceToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
       const input = action.payload.amount.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
@@ -68,7 +68,7 @@ export const boostModalSlice = createSlice({
         value = BIG_ZERO;
       }
 
-      const balance = selectUserBalanceOfToken(state, vault.chainId, balanceToken.id);
+      const balance = selectUserBalanceOfToken(state, vault.chainId, balanceToken.address);
       if (value.isGreaterThanOrEqualTo(balance)) {
         value = new BigNumber(balance);
         sliceState.max = true;

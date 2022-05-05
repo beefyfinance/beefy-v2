@@ -34,7 +34,7 @@ import {
 import { Step } from '../../../../../components/Steps/types';
 import { selectIsApprovalNeededForBoostStaking } from '../../../../data/selectors/wallet-actions';
 import { walletActions } from '../../../../data/actions/wallet-actions';
-import { selectErc20TokenById } from '../../../../data/selectors/tokens';
+import { selectErc20TokenByAddress } from '../../../../data/selectors/tokens';
 import {
   selectBoostUserBalanceInToken,
   selectUserBalanceOfToken,
@@ -85,14 +85,14 @@ const StakeForm = ({
   const vault = useSelector((state: BeefyState) => selectStandardVaultById(state, boost.vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, boost.chainId));
   const mooToken = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, vault.earnedTokenId)
+    selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
   const isBoostDepositable = useSelector((state: BeefyState) =>
     selectIsBoostActiveOrPreStake(state, boostId)
   );
 
   const mooBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, boost.chainId, mooToken.id)
+    selectUserBalanceOfToken(state, boost.chainId, mooToken.address)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)

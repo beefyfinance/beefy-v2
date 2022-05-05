@@ -6,6 +6,7 @@ export const minters = [
     depositToken: {
       symbol: 'FTM',
       oracleId: 'FTM',
+      contractAddress: 'native',
       type: 'native',
       decimals: 18,
     },

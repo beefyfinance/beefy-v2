@@ -9,7 +9,7 @@ import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { ZapEstimate } from '../../../data/apis/zap';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 const BreakdownTooltip = memo(({ rows }: any) => {
@@ -118,11 +118,11 @@ export const FeeBreakdown = memo(
     const t = useTranslation().t;
     const formattedDepositFee = vault.depositFee;
     const formattedWithdrawalFee = vault.withdrawalFee;
-    const oracleToken = useSelector((state: BeefyState) =>
-      selectTokenById(state, vault.chainId, vault.oracleId)
+    const depositToken = useSelector((state: BeefyState) =>
+      selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
     );
     const earnedToken = useSelector((state: BeefyState) =>
-      selectTokenById(state, vault.chainId, vault.earnedTokenId)
+      selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
     );
     const performanceFee =
       isGovVault(vault) || BifiMaxis.includes(vault.id)
@@ -157,12 +157,12 @@ export const FeeBreakdown = memo(
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-2', { lpToken: oracleToken.symbol })}
+                        {t('Zap-Step-Deposit-2', { lpToken: depositToken.symbol })}
                       </Typography>
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-3', { lpToken: oracleToken.symbol })}
+                        {t('Zap-Step-Deposit-3', { lpToken: depositToken.symbol })}
                       </Typography>
                     </li>
                     <li>
@@ -190,14 +190,14 @@ export const FeeBreakdown = memo(
                       <Typography className={classes.zapStep}>
                         {t('Zap-Step-Withdraw-1', {
                           mooToken: earnedToken.symbol,
-                          lpToken: oracleToken.symbol,
+                          lpToken: depositToken.symbol,
                         })}
                       </Typography>
                     </li>
                     <li>
                       <Typography className={classes.zapStep}>
                         {t('Zap-Step-Withdraw-2', {
-                          lpToken: oracleToken.symbol,
+                          lpToken: depositToken.symbol,
                           token0: vault.assetIds[0],
                           token1: vault.assetIds[1],
                         })}

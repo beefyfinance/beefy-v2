@@ -15,7 +15,7 @@ export interface IBalanceApi {
 }
 
 export interface TokenBalance {
-  tokenId: TokenEntity['id'];
+  tokenAddress: TokenEntity['address'];
   amount: BigNumber;
 }
 

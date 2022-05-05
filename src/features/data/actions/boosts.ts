@@ -7,7 +7,7 @@ import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { selectBoostById } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectErc20TokenById } from '../selectors/tokens';
+import { selectErc20TokenByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 import { BoostConfig } from '../apis/config-types';
 
@@ -61,7 +61,12 @@ export const initiateBoostForm = createAsyncThunk<
   const spenderAddress = boost.earnContractAddress;
 
   const allowanceApi = await getAllowanceApi(chain);
-  const mooToken = selectErc20TokenById(getState(), boost.chainId, vault.earnedTokenId, false);
+  const mooToken = selectErc20TokenByAddress(
+    getState(),
+    boost.chainId,
+    vault.earnedTokenAddress,
+    false
+  );
   const allowanceRes =
     walletAddress && spenderAddress
       ? await allowanceApi.fetchTokensAllowance([mooToken], walletAddress, spenderAddress)

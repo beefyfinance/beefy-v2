@@ -6,7 +6,7 @@ import { ChainEntity } from '../entities/chain';
 import { selectAllTokenWhereUserCouldHaveBalance } from '../selectors/balance';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
-import { selectTokenById } from '../selectors/tokens';
+import { selectTokenByAddress } from '../selectors/tokens';
 import { selectAllGovVaultsByChainId } from '../selectors/vaults';
 import { selectWalletAddress } from '../selectors/wallet';
 
@@ -33,8 +33,8 @@ export const fetchAllBalanceAction = createAsyncThunk<
   const chain = selectChainById(state, chainId);
   const api = await getBalanceApi(chain);
 
-  const tokens = selectAllTokenWhereUserCouldHaveBalance(state, chainId).map(tokenId =>
-    selectTokenById(state, chain.id, tokenId)
+  const tokens = selectAllTokenWhereUserCouldHaveBalance(state, chainId).map(address =>
+    selectTokenByAddress(state, chain.id, address)
   );
   // maybe have a way to retrieve those easily
   const boosts = selectBoostsByChainId(state, chainId).map(boostId =>

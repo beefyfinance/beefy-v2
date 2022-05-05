@@ -22,6 +22,7 @@ import {
   selectVaultById,
 } from './vaults';
 import escapeStringRegexp from 'escape-string-regexp';
+import { selectTokenByAddress } from './tokens';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -116,7 +117,10 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
     }
 
     // In gov earned token
-    if (isGovVault(vault) && vault.earnedTokenId.match(token)) {
+    if (
+      isGovVault(vault) &&
+      selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress).id.match(token)
+    ) {
       return true;
     }
 
@@ -124,7 +128,9 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
     if (selectIsVaultPreStakedOrBoosted(state, vault.id)) {
       const boostAssets = selectPreStakeOrActiveBoostIds(state, vault.id)
         .map(boostId => selectBoostById(state, boostId))
-        .map(boost => boost.earnedTokenId);
+        .map(boost => boost.earnedTokenAddress)
+        .map(address => selectTokenByAddress(state, vault.chainId, address))
+        .map(token => token.id);
 
       if (boostAssets.some(assetId => assetId.match(token))) {
         return true;

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectMoonpotData } from '../../../data/selectors/partners';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 
@@ -17,8 +17,8 @@ const MoonpotCard = ({ vaultId }: { vaultId: string }) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
+  const depositToken = useSelector((state: BeefyState) =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const moonpotData = useSelector((state: BeefyState) => selectMoonpotData(state, vaultId));
 
@@ -28,14 +28,14 @@ const MoonpotCard = ({ vaultId }: { vaultId: string }) => {
         <img
           className={classes.logo}
           src={require(`../../../../images/${moonpotData.img}`).default}
-          alt={oracleToken.symbol}
+          alt={depositToken.symbol}
         />{' '}
         <Box>
           <Typography variant="body1" className={classes.subtitle}>
-            {t('Moonpot-Stake', { name: oracleToken.symbol })}
+            {t('Moonpot-Stake', { name: depositToken.symbol })}
           </Typography>
           <Typography className={classes.title} variant="h3">
-            {t('Moonpot-Title', { name: oracleToken.symbol })}
+            {t('Moonpot-Title', { name: depositToken.symbol })}
           </Typography>
         </Box>
       </CardHeader>

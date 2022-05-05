@@ -13,7 +13,6 @@ export const pools = [
     earnedTokenAddress: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
     earnedTokenDecimals: 18,
     earnContractAddress: '0x48F4634c8383aF01BF71AefBC125eb582eb3C74D',
-    poolAddress: '0x48F4634c8383aF01BF71AefBC125eb582eb3C74D',
     pricePerFullShare: 1,
     isGovVault: true,
     tvl: 0,
@@ -282,7 +281,7 @@ export const pools = [
   },
   {
     id: 'curve-arb-ren',
-    logo: 'single-assets/renBTC.png',
+    logo: 'single-assets/renBTC.svg',
     name: 'WBTC/renBTC',
     token: 'btcCRV',
     tokenDescription: 'Curve',

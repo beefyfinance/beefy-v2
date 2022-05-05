@@ -13,7 +13,6 @@ export const pools = [
     earnedTokenDecimals: 18,
     earnedTokenAddress: '0xAcc15dC74880C9944775448304B263D191c6077F',
     earnContractAddress: '0x1198f78efd67DFc917510aaA07d49545f4B24f11',
-    poolAddress: '0x1198f78efd67DFc917510aaA07d49545f4B24f11',
     excluded: 'moonbeam-bifi-maxi',
     pricePerFullShare: 1,
     isGovVault: true,

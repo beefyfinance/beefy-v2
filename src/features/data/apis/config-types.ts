@@ -28,7 +28,6 @@ export interface VaultConfig {
   stratType: string; // 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
   withdrawalFee?: string | null;
   network: string;
-  poolAddress?: string | null;
   excluded?: string | null;
   isGovVault?: boolean | null;
   callFee?: number | null;
@@ -142,6 +141,7 @@ export interface MinterConfigTokenErc20 {
 export interface MinterConfigTokenNative {
   oracleId: string;
   symbol: string;
+  contractAddress: string;
   decimals: number;
   type: 'native';
 }

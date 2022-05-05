@@ -20,13 +20,13 @@ import { initDepositForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { isTokenNative, TokenEntity } from '../../../data/entities/token';
-import { isGovVault, isStandardVault, VaultEntity } from '../../../data/entities/vault';
+import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { isFulfilled } from '../../../data/reducers/data-loader';
 import { depositActions } from '../../../data/reducers/wallet/deposit';
 import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
-import { selectChainNativeToken, selectTokenById } from '../../../data/selectors/tokens';
+import { selectChainNativeToken, selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import {
   selectCurrentChainId,
@@ -68,8 +68,8 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   }, [store, vaultId, walletAddress]);
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
+  const depositToken = useSelector((state: BeefyState) =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
   const formState = useSelector((state: BeefyState) => state.ui.deposit);
   const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
@@ -81,10 +81,8 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const spenderAddress = formState.isZap
     ? formState.zapOptions?.address || null
     : // if it's a classic vault, the vault contract address is the spender
-    // which is also the earned token
-    isStandardVault(vault)
-    ? vault.contractAddress
-    : vault.earnContractAddress;
+      // which is also the earned token
+      vault.earnContractAddress;
 
   const needsApproval = useSelector((state: BeefyState) =>
     formState.selectedToken && formState.selectedToken.id !== native.id && spenderAddress
@@ -190,9 +188,9 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <div style={{ display: 'flex' }}>
             <FormControlLabel
               className={classes.depositTokenContainer}
-              value={oracleToken.id}
+              value={depositToken.id}
               control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-              label={<TokenWithBalance token={oracleToken} vaultId={vaultId} />}
+              label={<TokenWithBalance token={depositToken} vaultId={vaultId} />}
               onClick={formState.isZap ? undefined : handleMax}
               disabled={!formReady}
             />
@@ -217,7 +215,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 assetIds={
                   !formState.selectedToken
                     ? vault.assetIds
-                    : formState.selectedToken.id === vault.oracleId
+                    : formState.selectedToken.address === depositToken.address
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }

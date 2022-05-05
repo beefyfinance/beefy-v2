@@ -35,13 +35,18 @@ export function getBoostTokenIdFromLegacyConfig(apiBoost: BoostConfig) {
   return tokenId;
 }
 
-export function getOracleTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault: VaultConfig) {
+export function getBoostTokenAddressFromLegacyConfig(apiBoost: BoostConfig) {
+  return apiBoost.earnedTokenAddress;
+}
+
+export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault: VaultConfig) {
   let token: TokenEntity;
   if (apiVault.tokenAddress) {
     token = {
-      id: apiVault.oracleId,
+      id: apiVault.token,
       chainId: chain.id,
-      contractAddress: apiVault.tokenAddress,
+      oracleId: apiVault.oracleId,
+      address: apiVault.tokenAddress,
       decimals: apiVault.tokenDecimals,
       symbol: apiVault.token,
       buyUrl: null,
@@ -53,7 +58,8 @@ export function getOracleTokenFromLegacyVaultConfig(chain: ChainEntity, apiVault
     token = {
       id: chain.walletSettings.nativeCurrency.symbol,
       chainId: chain.id,
-      address: null,
+      oracleId: chain.walletSettings.nativeCurrency.symbol,
+      address: 'native',
       decimals: chain.walletSettings.nativeCurrency.decimals,
       symbol: chain.walletSettings.nativeCurrency.symbol,
       buyUrl: null,
