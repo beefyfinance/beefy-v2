@@ -1,4 +1,4 @@
-import { Modal, Box, IconButton, Typography, Button, Paper, InputBase } from '@material-ui/core';
+import { Modal, Box, Typography, Button, Paper, InputBase } from '@material-ui/core';
 import React, { useMemo } from 'react';
 import { Card } from '../../features/vault/components/Card';
 import { CardHeader } from '../../features/vault/components/Card/CardHeader';
@@ -44,6 +44,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
       aria-describedby="bridge-modal-description"
       open={open}
       onClose={handleModal}
+      BackdropProps={{ className: classes.backdrop }}
     >
       <Box sx={style}>
         <Card>
@@ -60,9 +61,8 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
                 <CardTitle titleClassName={classes.title} title={t('Bridge-Title-Confirm')} />
               )}
             </Box>
-            <IconButton onClick={handleModal} className={classes.removeHover} aria-label="settings">
-              <CloseIcon htmlColor="#8A8EA8" />
-            </IconButton>
+
+            <CloseIcon onClick={handleModal} htmlColor="#8A8EA8" />
           </CardHeader>
           <>
             {previewConfirm === 'preview' ? (
@@ -105,12 +105,12 @@ function Preview({ handlePreview }) {
     <CardContent className={classes.content}>
       {/*From */}
       <Box>
-        <Box className={classes.flexContainer}>
+        <Box mb={1} className={classes.flexContainer}>
           <Typography variant="body2" className={classes.label}>
-            {t('From')}
+            {t('FROM')}
           </Typography>
           <Typography className={classes.balance} variant="body2">
-            {t('Balance')} <span>4 BIFI</span>
+            {t('Balance')}: <span>4 BIFI</span>
           </Typography>
         </Box>
         <Box className={classes.flexContainer}>
@@ -121,6 +121,7 @@ function Preview({ handlePreview }) {
               handler={() => console.log('item')}
               renderValue={selectedRenderer}
               noBorder={false}
+              className={classes.alignDropdown}
             />
           </Box>
           <Box className={classes.inputContainer}>
@@ -140,10 +141,10 @@ function Preview({ handlePreview }) {
         <Box className={classes.line} />
       </Box>
       {/* To */}
-      <Box>
-        <Box className={classes.flexContainer}>
+      <Box mb={3}>
+        <Box mb={1} className={classes.flexContainer}>
           <Typography variant="body2" className={classes.label}>
-            {t('To')}
+            {t('TO')}
           </Typography>
         </Box>
         <Box className={classes.flexContainer}>
@@ -154,12 +155,13 @@ function Preview({ handlePreview }) {
               handler={() => console.log('item')}
               renderValue={selectedRenderer}
               noBorder={false}
+              className={classes.alignDropdown}
             />
           </Box>
           <Box className={classes.inputContainer}>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'BIFI-TOKEN.svg'} alt={'BinSpirit'} />
+                <AssetsImage assets={[]} img={'BIFI-TOKEN.svg'} alt={'bifi'} />
               </Box>
               <InputBase placeholder="0.00" value={0} disabled={true} />
               <Button>{t('Transact-Max')}</Button>
@@ -169,9 +171,11 @@ function Preview({ handlePreview }) {
       </Box>
       {/* Fees */}
       <FeesInfo />
-      <Button onClick={handlePreview} className={classes.btn}>
-        {t('Bridge-Button-1', { network: 'Fantom' })}
-      </Button>
+      <Box mt={4}>
+        <Button onClick={handlePreview} className={classes.btn}>
+          {t('Bridge-Button-1', { network: 'Fantom' })}
+        </Button>
+      </Box>
     </CardContent>
   );
 }
@@ -242,11 +246,11 @@ function Confirm() {
       </Box>
       <Box className={classes.fees}>
         <Box mb={1}>
-          <Typography variant="body2" className={classes.value}>
+          <Typography variant="body2" className={classes.label}>
             {t('FROM')}
           </Typography>
         </Box>
-        <Box mb={1} className={classes.flexContainer}>
+        <Box mb={1.5} className={classes.flexContainer}>
           <Box className={classes.networkContainer}>
             <img
               className={classes.icon}
@@ -274,12 +278,12 @@ function Confirm() {
       </Box>
       <Box className={classes.fees}>
         <Box mb={1}>
-          <Typography variant="body2" className={classes.value}>
+          <Typography variant="body2" className={classes.label}>
             {t('TO')}
           </Typography>
         </Box>
-        <Box mb={1} className={classes.flexContainer}>
-           <Box className={classes.networkContainer}>
+        <Box mb={1.5} className={classes.flexContainer}>
+          <Box className={classes.networkContainer}>
             <img
               className={classes.icon}
               alt=""

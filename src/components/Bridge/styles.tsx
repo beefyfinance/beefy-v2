@@ -1,7 +1,11 @@
 export const styles = theme => ({
+  backdrop: {
+    backgroundColor: 'rgba(255,255,255,0.7) !important',
+    backdropFilter: 'blur(8px)',
+  },
   header: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     padding: '18px 24px',
     background: theme.palette.background.vaults.inactive,
@@ -30,11 +34,14 @@ export const styles = theme => ({
       fontWeight: 700,
       color: '#FFF',
     },
+    '&:hover': {
+      backgroundColor: '#389D44',
+    },
   },
   customDivider: {
     display: 'flex',
     alignItems: 'center',
-    margin: `${theme.spacing(4)}px 0px`,
+    margin: `${theme.spacing(1.5)}px 0px`,
     '& img': {
       margin: '0 12px',
     },
@@ -49,13 +56,14 @@ export const styles = theme => ({
     padding: theme.spacing(2),
     backgroundColor: theme.palette.background.content,
     borderRadius: '8px',
-    margin: `${theme.spacing(3)}px 0px`,
+    margin: `${theme.spacing(1.5)}px 0px`,
   },
   feesContent: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   feesItem: {
+    marginBottom: theme.spacing(1.5),
     width: '50%',
   },
   advice: {
@@ -69,6 +77,7 @@ export const styles = theme => ({
     color: theme.palette.text.disabled,
     letterSpacing: '0.5px',
     fontWeight: 600,
+    textTransform: 'uppercase',
   },
   value: {
     fontWeight: 600,
@@ -77,6 +86,7 @@ export const styles = theme => ({
   balance: {
     color: theme.palette.text.disabled,
     '& span': {
+      paddingLeft: '4px',
       fontWeight: 600,
       color: theme.palette.text.secondary,
     },
@@ -93,7 +103,10 @@ export const styles = theme => ({
   },
   inputContainer: {
     '& .MuiPaper-root': {
+      display: 'flex',
+      alignItems: 'center',
       position: 'relative',
+      height: '100%',
       backgroundColor: theme.palette.background.vaults.inactive,
       borderRadius: '8px',
       padding: 0,
@@ -101,7 +114,7 @@ export const styles = theme => ({
       boxShadow: 'none',
       '& .MuiInputBase-input': {
         padding: '10px 5px 8px 40px',
-        fontSize: '21px',
+        fontSize: '15px',
         fontWeight: 600,
       },
     },
@@ -112,15 +125,14 @@ export const styles = theme => ({
     },
     '& .MuiButton-root': {
       fontSize: '12px',
-      fontWeight: 400,
+      fontWeight: 600,
       letterSpacing: '0.5px',
       color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
       borderRadius: '4px',
       margin: 0,
-      padding: '5px 12px',
+      padding: '2px 12px',
       position: 'absolute',
-      top: '6px',
       right: '5px',
       minWidth: 0,
     },
@@ -161,5 +173,10 @@ export const styles = theme => ({
   icon: {
     height: '20px',
     marginRight: '4px',
+  },
+  alignDropdown: {
+    '& .MuiTypography-body1': {
+      lineHeight: 'normal',
+    },
   },
 });

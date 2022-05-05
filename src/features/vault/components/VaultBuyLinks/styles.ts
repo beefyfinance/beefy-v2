@@ -34,6 +34,9 @@ export const styles = theme => ({
     letterSpacing: '0.1px',
     transition: 'color 0.2s',
     width: 'max-content',
+    '& .MuiButton-textSizeSmall': {
+      padding: '2px 8px',
+    },
     '&:hover': {
       color: theme.palette.text.primary,
       backgroundColor: '#3F466D',
