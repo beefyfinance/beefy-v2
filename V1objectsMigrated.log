@@ -1,89 +1,18 @@
 [
   {
-    "id": "bsc vault: biswap-usdt-btcb",
+    "id": "aurora vault: tri-aurora-near",
     "type": "Added"
   },
   {
-    "id": "bsc vault: biswap-btcb-wbnb",
+    "id": "moonbeam vault: stella-xstella",
     "type": "Added"
   },
   {
-    "id": "bsc vault: biswap-wbnb-busd",
+    "id": "moonbeam vault: stellaswap-wglmr-xcdot",
     "type": "Added"
-  },
-  {
-    "id": "bsc vault: biswap-eth-usdt",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: biswap-eth-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: biswap-ust-busd",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: biswap-cake-wbnb",
-    "type": "Added"
-  },
-  {
-    "id": "bsc vault: belt-4belt",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: beltv2-4belt",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: tomb-btc-tshare",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-daiabolical-balance",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: 0xdao-wbtc-eol",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "fantom vault: geist-wbtc",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "fantom vault: scream-wbtc",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "avax vault: blizz-wbtc",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "avax vault: bankerjoe-wbtc.e",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "avax vault: aave-wbtc.e",
-    "type": "synced",
-    "logo-copied": "logo"
-  },
-  {
-    "id": "arbitrum vault: curve-arb-ren",
-    "type": "synced",
-    "logo-copied": "logo"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
-  },
-  {
-    "id": "polygon boost: moo_quick-stmatic-matic-lido",
-    "type": "Added"
   }
 ]
