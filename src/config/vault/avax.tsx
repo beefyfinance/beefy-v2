@@ -185,7 +185,7 @@ export const pools = [
   },
   {
     id: 'bankerjoe-wbtc.e',
-    logo: 'single-assets/WBTC.png',
+    logo: 'single-assets/WBTC.svg',
     name: 'WBTC.e',
     token: 'WBTC.e',
     tokenDescription: 'Banker Joe',
@@ -540,7 +540,7 @@ export const pools = [
   },
   {
     id: 'aave-wbtc.e',
-    logo: 'single-assets/WBTC.png',
+    logo: 'single-assets/WBTC.svg',
     name: 'WBTC.e',
     token: 'WBTC.e',
     tokenDescription: 'Aave',
@@ -2084,7 +2084,7 @@ export const pools = [
   },
   {
     id: 'blizz-wbtc',
-    logo: 'single-assets/WBTC.png',
+    logo: 'single-assets/WBTC.svg',
     name: 'WBTC.e',
     token: 'WBTC.e',
     tokenDescription: 'Blizz',
