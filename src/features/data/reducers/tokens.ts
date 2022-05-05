@@ -12,13 +12,7 @@ import {
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
-import {
-  isTokenErc20,
-  isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenNative,
-} from '../entities/token';
+import { isTokenNative, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
 import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenAddressFromLegacyConfig,
