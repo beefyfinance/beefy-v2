@@ -4,16 +4,19 @@ import { DEFAULT_SIZE, styles } from './styles';
 import { makeStyles } from '@material-ui/core';
 import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
 import clsx from 'clsx';
+import { ChainEntity } from '../../features/data/entities/chain';
 
 const useStyles = makeStyles(styles);
 
 export type AssetsImageType = {
+  chainId: ChainEntity['id'];
   assetIds: string[];
   imageUri?: string;
   size?: number;
   className?: string;
 };
 export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
+  chainId,
   assetIds,
   imageUri,
   className,
@@ -26,8 +29,10 @@ export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
       return [require(`../../images/${imageUri}`).default];
     }
 
-    return assetIds.slice(0, maxSupportedAssets).map(assetId => getSingleAssetSrc(assetId));
-  }, [imageUri, assetIds]);
+    return assetIds
+      .slice(0, maxSupportedAssets)
+      .map(assetId => getSingleAssetSrc(assetId, chainId));
+  }, [imageUri, assetIds, chainId]);
 
   return (
     <div
