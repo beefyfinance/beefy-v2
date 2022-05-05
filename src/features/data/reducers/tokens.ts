@@ -13,7 +13,6 @@ import {
 import { fetchAllVaults } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
 import {
-  isTokenErc20,
   isTokenNative,
   TokenEntity,
   TokenErc20,
