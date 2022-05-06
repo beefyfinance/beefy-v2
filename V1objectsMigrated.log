@@ -1,64 +1,26 @@
 [
   {
-    "id": "fantom vault: beets-gelato-genesis-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: beets-statera-duet-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: cometh-eth-wbtc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: cometh-eth-usdc-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: cometh-must-eth-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: cometh-eth-matic-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: cometh-usdc-must-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-wavax-fief-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-wavax-aave.e-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "avax vault: joe-usdc.e-wavax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "aurora vault: tri-aurora-near",
+    "id": "bsc vault: ripae-pbnb-bnb",
     "type": "Added"
   },
   {
-    "id": "moonbeam vault: stella-xstella",
+    "id": "bsc vault: ripae-pae-bnb",
     "type": "Added"
   },
   {
-    "id": "moonbeam vault: stellaswap-wglmr-xcdot",
+    "id": "fantom vault: hector-tor-crv",
+    "type": "Added"
+  },
+  {
+    "id": "fantom vault: boo-wftm-tor",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: moo_beFTM-hector",
+    "type": "Added"
+  },
+  {
+    "id": "fantom boost: moo_hector-tor-crv-hector",
     "type": "Added"
   },
   {
