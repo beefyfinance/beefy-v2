@@ -298,7 +298,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     <Typography
                       className={classes.orange}
                       variant="body1"
-                    >{`${formatBigNumberSignificant(boostBalance, 4)} LP`}</Typography>
+                    >{`${formatBigNumberSignificant(boostBalance, 4)} ${
+                      vault.assetIds.length > 1 ? 'LP' : ''
+                    }`}</Typography>
                   </Box>
                 </Box>
               </Box>
@@ -409,7 +411,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 <Typography
                   className={classes.orange}
                   variant="body1"
-                >{`${formatBigNumberSignificant(boostBalance, 4)} LP`}</Typography>
+                >{`${formatBigNumberSignificant(boostBalance, 4)} ${
+                  vault.assetIds.length > 1 ? 'LP' : ''
+                }`}</Typography>
               </Box>
             </Box>
           )}
