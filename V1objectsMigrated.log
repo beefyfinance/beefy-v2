@@ -1,27 +1,47 @@
 [
   {
+    "id": "bsc vault: biswap-usdt-btcb",
+    "type": "synced"
+  },
+  {
     "id": "bsc vault: ripae-pbnb-bnb",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "bsc vault: ripae-pae-bnb",
-    "type": "Added"
+    "type": "synced"
   },
   {
-    "id": "fantom vault: hector-tor-crv",
-    "type": "Added"
+    "id": "bsc vault: biswap-btcb-wbnb",
+    "type": "synced"
   },
   {
-    "id": "fantom vault: boo-wftm-tor",
-    "type": "Added"
+    "id": "bsc vault: biswap-wbnb-busd",
+    "type": "synced"
   },
   {
-    "id": "fantom boost: moo_beFTM-hector",
-    "type": "Added"
+    "id": "bsc vault: biswap-eth-usdt",
+    "type": "synced"
   },
   {
-    "id": "fantom boost: moo_hector-tor-crv-hector",
-    "type": "Added"
+    "id": "bsc vault: biswap-eth-wbnb",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: biswap-ust-busd",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: biswap-cake-wbnb",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: biswap-usdt-busd",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: tomb-btc-tshare",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
