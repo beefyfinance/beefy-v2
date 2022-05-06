@@ -191,7 +191,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             {t('reserves', { token: minter.depositToken.symbol })}
           </Typography>
           <Box sx={{ display: 'flex' }}>
-            <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} />
+            <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
             <Typography className={classes.amountReserves}>
               {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
             </Typography>
@@ -211,7 +211,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assetIds={[minter.mintedToken.symbol]} size={20} />
+              <AssetsImage assetIds={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
             </Box>
             <InputBase
               placeholder="0.00"
@@ -241,7 +241,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           </Box>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
-              <AssetsImage assetIds={[minter.depositToken.symbol]} size={20} />
+              <AssetsImage assetIds={[minter.depositToken.symbol]} size={20} chainId={chain.id} />
             </Box>
             <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
           </Paper>

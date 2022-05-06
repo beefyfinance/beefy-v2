@@ -1,70 +1,27 @@
 [
   {
-    "id": "bsc vault: cakev2-wbnb-abnbc",
+    "id": "bsc vault: ripae-pbnb-bnb",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-wbnb-ceek",
+    "id": "bsc vault: ripae-pae-bnb",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-pex-wbnb",
+    "id": "fantom vault: hector-tor-crv",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-wbnb-froyo",
+    "id": "fantom vault: boo-wftm-tor",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cakev2-cake-froyo",
+    "id": "fantom boost: moo_beFTM-hector",
     "type": "Added"
   },
   {
-    "id": "bsc vault: cake-cakev2-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-eth-fuse-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: quick-wmatic-avax-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "moonriver vault: solarbeam-frax-3pool",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-xcksm-stksm",
-    "type": "synced"
-  },
-  {
-    "id": "moonriver vault: solarbeam-3pool",
-    "type": "synced"
-  },
-  {
-    "id": "aurora vault: tri-bstn-near",
+    "id": "fantom boost: moo_hector-tor-crv-hector",
     "type": "Added"
-  },
-  {
-    "id": "aurora vault: tri-linear-near",
-    "type": "Added"
-  },
-  {
-    "id": "aurora vault: tri-stnear-near",
-    "type": "Added"
-  },
-  {
-    "id": "bsc boost: moo_cake-krown",
-    "type": "synced"
-  },
-  {
-    "id": "bsc boost: moo_cake-cakev2",
-    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

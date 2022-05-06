@@ -16,8 +16,8 @@ import {
   selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenById,
-  selectTokenPriceByTokenId,
   selectTokenPriceByAddress,
+  selectTokenPriceByTokenId,
 } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
@@ -83,6 +83,7 @@ export function TokenWithDeposit({
     <Box className={classes.balanceContainer} display="flex" alignItems="center">
       <Box lineHeight={0}>
         <AssetsImage
+          chainId={vault.chainId}
           assetIds={
             convertAmountTo
               ? isArray(convertAmountTo)

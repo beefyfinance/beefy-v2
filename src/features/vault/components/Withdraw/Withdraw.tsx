@@ -284,7 +284,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 <Box className={classes.width50}>
                   <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
                   <Box className={classes.stakedInValue}>
-                    <AssetsImage assetIds={vault.assetIds} size={24} />
+                    <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={24} />
                     <Typography variant="body1">{`${formatBigNumberSignificant(
                       mooBalance,
                       4
@@ -294,7 +294,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 <Box mb={3}>
                   <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
                   <Box className={classes.stakedInValue}>
-                    <AssetsImage assetIds={vault.assetIds} size={24} />
+                    <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={24} />
                     <Typography
                       className={classes.orange}
                       variant="body1"
@@ -405,7 +405,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             <Box>
               <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
               <Box className={classes.stakedInValue}>
-                <AssetsImage assetIds={vault.assetIds} size={16} />
+                <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={16} />
                 <Typography
                   className={classes.orange}
                   variant="body1"
@@ -426,6 +426,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
               <AssetsImage
+                chainId={vault.chainId}
                 assetIds={
                   !formState.selectedToken
                     ? vault.assetIds

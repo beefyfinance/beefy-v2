@@ -214,6 +214,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
               <AssetsImage
+                chainId={vault.chainId}
                 assetIds={
                   !formState.selectedToken
                     ? vault.assetIds
