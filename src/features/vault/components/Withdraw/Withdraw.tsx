@@ -284,7 +284,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 <Box className={classes.width50}>
                   <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
                   <Box className={classes.stakedInValue}>
-                    <AssetsImage assetIds={vault.assetIds} size={16} />
+                    <AssetsImage assetIds={vault.assetIds} size={24} />
                     <Typography variant="body1">{`${formatBigNumberSignificant(
                       mooBalance,
                       4
@@ -294,7 +294,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 <Box mb={3}>
                   <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
                   <Box className={classes.stakedInValue}>
-                    <AssetsImage assetIds={vault.assetIds} size={16} />
+                    <AssetsImage assetIds={vault.assetIds} size={24} />
                     <Typography
                       className={classes.orange}
                       variant="body1"
@@ -323,13 +323,19 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             {isBoosted ? (
               formState.zapOptions !== null ? (
                 boostBalance.isGreaterThan(0) ? null : (
-                  <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+                  <Box mb={1}>
+                    <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+                  </Box>
                 )
               ) : (
-                <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+                <Box mb={1}>
+                  <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+                </Box>
               )
             ) : (
-              <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+              <Box mb={1}>
+                <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
+              </Box>
             )}
 
             <RadioGroup

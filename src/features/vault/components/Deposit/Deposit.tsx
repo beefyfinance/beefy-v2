@@ -178,7 +178,9 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Typography>
         )}
 
-        <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
+        <Box mb={1}>
+          <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
+        </Box>
         <RadioGroup
           value={formState.selectedToken ? formState.selectedToken.id : ''}
           aria-label="deposit-asset"

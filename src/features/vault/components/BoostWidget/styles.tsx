@@ -65,8 +65,8 @@ export const styles = theme => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     rowGap: '16px',
-    columnGap: '12px',
-    margin: '20px 0 16px 0',
+    columnGap: '16px',
+    margin: '20px 0 24px 0',
   },
   boostStat: {
     '& :last-child': {

@@ -9,7 +9,6 @@ export const styles = theme => ({
   },
   balanceContainer: {
     '& .MuiTypography-body1': {
-      fontSize: '14px',
       fontWeight: '600',
       textTransform: 'inherit',
       color: theme.palette.text.primary,
@@ -37,7 +36,7 @@ export const styles = theme => ({
     },
     '& .MuiButton-root': {
       fontSize: '12px',
-      fontWeight:600,
+      fontWeight: 600,
       letterSpacing: '0.5px',
       color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
@@ -102,8 +101,15 @@ export const styles = theme => ({
   },
   depositTokenContainer: {
     width: 'calc(100% + 11px)',
+    marginBottom: theme.spacing(1.5),
     '& .MuiTypography-root': {
       width: '100%',
+    },
+    '& .MuiIconButton-label': {
+      padding: '0px 12px',
+    },
+    '& .MuiIconButton-root': {
+      padding: 0,
     },
     '& .MuiButtonBase-root': {
       '& .MuiIconButton-label': {
@@ -120,13 +126,14 @@ export const styles = theme => ({
     marginBottom: theme.spacing(1.5),
   },
   assetsDivider: {
-    display: 'flex',
+    display: 'grid',
+    columnGap: '16px',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
   },
   stakedInValue: {
     display: 'flex',
     alignItems: 'center',
     '& .MuiTypography-body1': {
-      fontSize: 14,
       fontWeight: 600,
       paddingLeft: '8px',
     },
