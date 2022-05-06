@@ -1,26 +1,29 @@
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
-import { AbiItem } from 'web3-utils';
+import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppUserMulticall.json';
 import _erc20Abi from '../../../../config/abi/erc20.json';
+import { AbiItem } from 'web3-utils';
 import Web3 from 'web3';
 import { VaultGov, VaultStandard } from '../../entities/vault';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
+import { chunk } from 'lodash';
 import { isTokenErc20, TokenEntity, TokenErc20 } from '../../entities/token';
-import { selectErc20TokenByAddress, selectTokenByAddress } from '../../selectors/tokens';
 import { FetchAllAllowanceResult, IAllowanceApi, TokenAllowance } from './allowance-types';
+import { selectTokenByAddress } from '../../selectors/tokens';
+import { featureFlag_getAllowanceApiChunkSize } from '../../utils/feature-flags';
 import { BeefyState } from '../../../../redux-types';
+import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { selectVaultById } from '../../selectors/vaults';
 
-// fix TS typings
+// fix ts types
 const erc20Abi = _erc20Abi as AbiItem[];
+const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
 
-/**
- * Get vault contract data
- */
-export class AllowanceAPI implements IAllowanceApi {
-  constructor(protected web3: Web3, protected chain: ChainEntity) {}
+export class AllowanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }>
+  implements IAllowanceApi
+{
+  constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllAllowances(
     state: BeefyState,
@@ -29,9 +32,14 @@ export class AllowanceAPI implements IAllowanceApi {
     boosts: BoostEntity[],
     walletAddress: string
   ): Promise<FetchAllAllowanceResult> {
+    const mc = new this.web3.eth.Contract(
+      BeefyV2AppMulticallUserAbi,
+      this.chain.fetchBalancesAddress
+    );
+
     // first, build a list of tokens and spenders we want info on
     const allowanceCallsByToken: {
-      [tokenAddress: string]: { tokenAddress: TokenEntity['id']; spenders: Set<string> };
+      [tokenAddress: string]: { tokenAddress: TokenEntity['address']; spenders: Set<string> };
     } = {};
     const tokensByAddress: { [tokenAddress: TokenEntity['address']]: TokenEntity } = {};
     const addTokenAddressesToCalls = (tokenAddress: string, spenderAddress: string) => {
@@ -59,13 +67,6 @@ export class AllowanceAPI implements IAllowanceApi {
         standardVault.depositTokenAddress,
         standardVault.earnContractAddress
       );
-      // special case for what seem to be a maxi vault
-      const earnToken = selectErc20TokenByAddress(
-        state,
-        this.chain.id,
-        standardVault.earnedTokenAddress
-      );
-      addTokenAddressesToCalls(standardVault.depositTokenAddress, earnToken.address);
     }
     for (const govVault of govVaults) {
       addTokenAddressesToCalls(govVault.depositTokenAddress, govVault.earnContractAddress);
@@ -75,33 +76,51 @@ export class AllowanceAPI implements IAllowanceApi {
       addTokenAddressesToCalls(vault.earnedTokenAddress, boost.earnContractAddress);
     }
 
-    const calls: ShapeWithLabel[] = [];
-    const baseTokenContract = new this.web3.eth.Contract(erc20Abi);
-    for (const [tokenAddress, spendersCalls] of Object.entries(allowanceCallsByToken)) {
-      const tokenContract = baseTokenContract.clone();
-      tokenContract.options.address = tokenAddress;
-      for (const spender of Array.from(spendersCalls.spenders)) {
-        calls.push({
-          tokenAddress: spendersCalls.tokenAddress, // not sure about this
-          spenderAddress: spender,
-          allowance: tokenContract.methods.allowance(walletAddress, spender),
-        });
+    // if we send too much in a single call, we get "execution reversed"
+    const CHUNK_SIZE = featureFlag_getAllowanceApiChunkSize();
+
+    const allowanceCalls = Object.entries(allowanceCallsByToken);
+    const callBatches = chunk(allowanceCalls, CHUNK_SIZE);
+
+    const allowancePromises = callBatches.map(callBatch =>
+      mc.methods
+        .getAllowancesFlat(
+          callBatch.map(([tokenAddress, _]) => tokenAddress),
+          callBatch.map(([_, spendersCalls]) => Array.from(spendersCalls.spenders)),
+          walletAddress
+        )
+        .call()
+    );
+
+    const results = (await Promise.all([...allowancePromises])) as AllValuesAsString<string[][]>;
+
+    // now reasign results
+    const res: FetchAllAllowanceResult = [];
+
+    let resultsIdx = 0;
+
+    for (const callBatch of callBatches) {
+      const batchResults = results[resultsIdx];
+      let resIdx = 0;
+      for (const spendersCalls of callBatch.map(c => c[1])) {
+        for (const spenderAddress of Array.from(spendersCalls.spenders)) {
+          const allowance = batchResults[resIdx];
+          if (allowance !== '0') {
+            res.push({
+              tokenAddress: spendersCalls.tokenAddress,
+              spenderAddress,
+              allowance: new BigNumber(allowance).shiftedBy(
+                -tokensByAddress[spendersCalls.tokenAddress.toLowerCase()].decimals
+              ),
+            });
+          }
+          resIdx++;
+        }
       }
+      resultsIdx++;
     }
 
-    type ResultType = AllValuesAsString<TokenAllowance>;
-    const mc = new MultiCall(this.web3, this.chain.multicallAddress);
-    const [results] = (await mc.all([calls])) as ResultType[][];
-
-    return results.map(
-      (result): TokenAllowance => ({
-        tokenAddress: result.tokenAddress,
-        spenderAddress: result.spenderAddress,
-        allowance: new BigNumber(result.allowance).shiftedBy(
-          -tokensByAddress[result.tokenAddress.toLowerCase()].decimals
-        ),
-      })
-    );
+    return res;
   }
 
   async fetchTokensAllowance(tokens: TokenErc20[], walletAddress: string, spenderAddress: string) {
@@ -123,6 +142,7 @@ export class AllowanceAPI implements IAllowanceApi {
     const mc = new MultiCall(this.web3, this.chain.multicallAddress);
     const [results] = (await mc.all([calls])) as ResultType[][];
 
+    // const tokensById = createIdMap(tokens);
     const tokensByAddress = tokens.reduce((agg, item) => {
       agg[item.address.toLowerCase()] = item;
       return agg;
