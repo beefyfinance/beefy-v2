@@ -405,7 +405,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           </Box>
           {isBoosted && boostBalance.isGreaterThan(0) && formState.zapOptions === null && (
             <Box>
-              <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
+              <Box mb={1}>
+                <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
+              </Box>
               <Box className={classes.stakedInValue}>
                 <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={16} />
                 <Typography
