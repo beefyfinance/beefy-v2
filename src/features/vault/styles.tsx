@@ -66,11 +66,11 @@ export const styles = theme => ({
     borderRadius: '12px',
   },
   customOrder: {
+    marginTop: theme.spacing(3),
     [theme.breakpoints.up('md')]: {
       order: 1,
     },
-    marginTop: theme.spacing(3),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: 0,
     },
   },
@@ -147,5 +147,8 @@ export const styles = theme => ({
   },
   chainContainer: {
     marginRight: theme.spacing(4),
+  },
+  retireReason: {
+    marginBottom: '24px',
   },
 });

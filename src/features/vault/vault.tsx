@@ -41,6 +41,7 @@ import { Nexus } from './components/NexusCard';
 import { MinterCards } from './components/MinterCards';
 import { ChainEntity } from '../data/entities/chain';
 import { InfoCards } from './components/InfoCards/InfoCards';
+import { RetireReason } from './components/RetireReason';
 
 const useStyles = makeStyles(styles as any);
 const PageNotFound = React.lazy(() => import(`../../features/pagenotfound`));
@@ -133,6 +134,9 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
         <Container {...({ maxWidth: 'lg', my: 5 } as any)}>
           <Grid container spacing={6}>
             <Grid item xs={12} md={4} className={classes.customOrder}>
+              {vault.status === 'eol' ? (
+                <RetireReason reasonCode={vault.retireReason} className={classes.retireReason} />
+              ) : null}
               <Box className={classes.dw}>
                 <Box className={classes.tabs}>
                   <Button

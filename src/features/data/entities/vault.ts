@@ -71,6 +71,11 @@ export interface VaultStandard {
   depositFee: string | null;
 
   createdAt: number;
+
+  /**
+   * Why was the vault retired.
+   */
+  retireReason?: string;
 }
 
 export interface VaultGov {
@@ -129,6 +134,11 @@ export interface VaultGov {
   depositFee: string;
 
   createdAt: number;
+
+  /**
+   * Why was the vault retired.
+   */
+  retireReason?: string;
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {
