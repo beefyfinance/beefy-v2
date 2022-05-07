@@ -1,46 +1,6 @@
 [
   {
-    "id": "bsc vault: biswap-usdt-btcb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: ripae-pbnb-bnb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: ripae-pae-bnb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: biswap-btcb-wbnb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: biswap-wbnb-busd",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: biswap-eth-usdt",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: biswap-eth-wbnb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: biswap-ust-busd",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: biswap-cake-wbnb",
-    "type": "synced"
-  },
-  {
-    "id": "bsc vault: biswap-usdt-busd",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: tomb-btc-tshare",
+    "id": "bsc vault: bifi-maxi-eol",
     "type": "synced"
   },
   {
