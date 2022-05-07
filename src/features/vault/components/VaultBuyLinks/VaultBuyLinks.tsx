@@ -16,46 +16,11 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
 
   return (
-    <Box>
-      {vault.buyTokenUrl && !vault.addLiquidityUrl && (
-        <a
-          href={vault.buyTokenUrl}
-          target="_blank"
-          rel="noreferrer"
-          className={classes.btnSecondary}
-        >
-          <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
-            {t('Transact-BuyTkn')}
-          </Button>
-        </a>
-      )}
-      {vault.addLiquidityUrl && !vault.buyTokenUrl && (
-        <a
-          href={vault.addLiquidityUrl}
-          target="_blank"
-          rel="noreferrer"
-          className={classes.btnSecondary}
-        >
-          <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
-            {t('Transact-AddLiquidity')}
-          </Button>
-        </a>
-      )}
-    </Box>
-  );
-}
-
-export function VaultBuyLinks2({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-
-  const classes = useStyles();
-  const { t } = useTranslation();
-
-  return (
-    <>
-      {vault.buyTokenUrl && vault.addLiquidityUrl && (
-        <Box className={classes.btnContaniner}>
+    <Box className={classes.btnContaniner}>
+      <>
+        {vault.buyTokenUrl && (
           <a
+            style={{ marginRight: '12px' }}
             href={vault.buyTokenUrl}
             target="_blank"
             rel="noreferrer"
@@ -68,8 +33,9 @@ export function VaultBuyLinks2({ vaultId }: { vaultId: VaultEntity['id'] }) {
               {t('Transact-BuyTkn')}
             </Button>
           </a>
+        )}
+        {vault.addLiquidityUrl && (
           <a
-            style={{ marginLeft: '12px' }}
             href={vault.addLiquidityUrl}
             target="_blank"
             rel="noreferrer"
@@ -82,8 +48,8 @@ export function VaultBuyLinks2({ vaultId }: { vaultId: VaultEntity['id'] }) {
               {t('Transact-AddLiquidity')}
             </Button>
           </a>
-        </Box>
-      )}
-    </>
+        )}
+      </>
+    </Box>
   );
 }

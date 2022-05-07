@@ -38,7 +38,7 @@ import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
 import { styles } from '../styles';
 import { TokenWithBalance } from '../TokenWithBalance';
-import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
+import { VaultBuyLinks } from '../VaultBuyLinks';
 
 const useStyles = makeStyles(styles as any);
 
@@ -188,17 +188,14 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           name="deposit-asset"
           onChange={e => handleAsset(e.target.value)}
         >
-          <div style={{ display: 'flex' }}>
-            <FormControlLabel
-              className={classes.depositTokenContainer}
-              value={depositToken.id}
-              control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-              label={<TokenWithBalance token={depositToken} vaultId={vaultId} />}
-              onClick={formState.isZap ? undefined : handleMax}
-              disabled={!formReady}
-            />
-            <VaultBuyLinks vaultId={vaultId} />
-          </div>
+          <FormControlLabel
+            className={classes.depositTokenContainer}
+            value={depositToken.id}
+            control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
+            label={<TokenWithBalance token={depositToken} vaultId={vaultId} />}
+            onClick={formState.isZap ? undefined : handleMax}
+            disabled={!formReady}
+          />
           {formState.zapOptions?.tokens.map(zapToken => (
             <FormControlLabel
               key={zapToken.id}
@@ -210,7 +207,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             />
           ))}
         </RadioGroup>
-        <VaultBuyLinks2 vaultId={vaultId} />
+        <VaultBuyLinks vaultId={vaultId} />
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
