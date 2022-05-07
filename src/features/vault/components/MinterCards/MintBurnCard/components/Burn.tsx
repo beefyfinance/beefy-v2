@@ -28,6 +28,7 @@ import { MinterCardParams } from '../../MinterCard';
 import { selectMinterById, selectMinterReserves } from '../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../data/selectors/chains';
+import { AlertWarning } from '../../../../../../components/Alerts';
 
 const useStyles = makeStyles(styles as any);
 
@@ -277,16 +278,9 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
           )}
         </>
         {formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
-          <Box className={classes.noReserves}>
-            <img
-              className={classes.icon}
-              src={require('../../../../../../images/warning.svg').default}
-              alt="warning"
-            />
-            <Typography variant="body1">
-              {t('noreserves', { token: minter.depositToken.symbol })}
-            </Typography>
-          </Box>
+          <AlertWarning className={classes.noReserves}>
+            {t('noreserves', { token: minter.depositToken.symbol })}
+          </AlertWarning>
         )}
       </CardContent>
       <Stepper />
