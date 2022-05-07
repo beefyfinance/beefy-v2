@@ -151,7 +151,7 @@ export const styles = theme => ({
   chainContainer: {
     marginRight: theme.spacing(4),
   },
-  retireReason: {
+  retirePauseReason: {
     marginBottom: '24px',
   },
 });

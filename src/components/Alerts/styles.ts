@@ -9,7 +9,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
     borderRadius: '8px',
     padding: '16px',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     backgroundColor: 'rgba(245, 245, 255, 0.08)',
   },
   icon: {

@@ -72,10 +72,8 @@ export interface VaultStandard {
 
   createdAt: number;
 
-  /**
-   * Why was the vault retired.
-   */
   retireReason?: string;
+  pauseReason?: string;
 }
 
 export interface VaultGov {
@@ -135,10 +133,8 @@ export interface VaultGov {
 
   createdAt: number;
 
-  /**
-   * Why was the vault retired.
-   */
   retireReason?: string;
+  pauseReason?: string;
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {

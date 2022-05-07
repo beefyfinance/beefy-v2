@@ -41,7 +41,7 @@ import { Nexus } from './components/NexusCard';
 import { MinterCards } from './components/MinterCards';
 import { ChainEntity } from '../data/entities/chain';
 import { InfoCards } from './components/InfoCards/InfoCards';
-import { RetireReason } from './components/RetireReason';
+import { RetirePauseReason } from './components/RetirePauseReason';
 
 const useStyles = makeStyles(styles as any);
 const PageNotFound = React.lazy(() => import(`../../features/pagenotfound`));
@@ -134,11 +134,9 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
         <Container {...({ maxWidth: 'lg', my: 5 } as any)}>
           <Grid container spacing={6}>
             <Grid item xs={12} md={4} className={classes.columnActions}>
-              {vault.status === 'eol' ? (
-                <Hidden mdUp>
-                  <RetireReason reasonCode={vault.retireReason} className={classes.retireReason} />
-                </Hidden>
-              ) : null}
+              <Hidden mdUp>
+                <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
+              </Hidden>
               <Box className={classes.dw}>
                 <Box className={classes.tabs}>
                   <Button
@@ -182,11 +180,9 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               )}
             </Grid>
             <Grid item xs={12} md={8} className={classes.columnInfo}>
-              {vault.status === 'eol' ? (
-                <Hidden smDown>
-                  <RetireReason reasonCode={vault.retireReason} className={classes.retireReason} />
-                </Hidden>
-              ) : null}
+              <Hidden smDown>
+                <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
+              </Hidden>
               {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
               {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
               {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
