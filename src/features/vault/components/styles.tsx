@@ -116,6 +116,14 @@ export const styles = theme => ({
         color: '#FFF',
       },
     },
+    '& label:last-child': {
+      marginBottom: 0,
+    },
+  },
+  removeLastItemMargin: {
+    '& $depositTokenContainer:last-child': {
+      marginBottom: 0,
+    },
   },
   assetCount: {
     color: theme.palette.text.primary,

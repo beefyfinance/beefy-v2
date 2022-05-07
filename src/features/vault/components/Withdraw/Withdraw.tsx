@@ -59,7 +59,6 @@ import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
 import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
-import { VaultBuyLinks, VaultBuyLinks2 } from '../VaultBuyLinks';
 
 const useStyles = makeStyles(styles as any);
 
@@ -271,7 +270,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const mooBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, boost.chainId, earnedToken.address)
+    selectUserBalanceOfToken(state, vault.chainId, earnedToken.address)
   );
 
   return (
@@ -341,6 +340,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             )}
 
             <RadioGroup
+              className={classes.removeLastItemMargin}
               value={
                 isArray(formState.selectedToken)
                   ? formState.selectedToken.map(t => t.id).join('+')
@@ -359,25 +359,14 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 }
               }}
             >
-              <div style={{ display: 'flex' }}>
-                <FormControlLabel
-                  className={classes.depositTokenContainer}
-                  value={depositToken.id}
-                  control={
-                    formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />
-                  }
-                  label={<TokenWithDeposit vaultId={vaultId} />}
-                  onClick={formState.isZap ? undefined : handleMax}
-                  disabled={!formReady}
-                />
-                {isBoosted ? (
-                  boostBalance.isGreaterThan(0) ? null : (
-                    <VaultBuyLinks vaultId={vaultId} />
-                  )
-                ) : (
-                  <VaultBuyLinks vaultId={vaultId} />
-                )}
-              </div>
+              <FormControlLabel
+                className={classes.depositTokenContainer}
+                value={depositToken.id}
+                control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
+                label={<TokenWithDeposit vaultId={vaultId} />}
+                onClick={formState.isZap ? undefined : handleMax}
+                disabled={!formReady}
+              />
               {formState.zapOptions !== null && (
                 <FormControlLabel
                   className={classes.depositTokenContainer}
@@ -420,14 +409,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             </Box>
           )}
         </Box>
-        {isBoosted && boostBalance.isGreaterThan(0) && (
-          <Box mt={2}>
-            <VaultBuyLinks vaultId={vaultId} />
-          </Box>
-        )}
-
-        <VaultBuyLinks2 vaultId={vaultId} />
-
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>
             <Box className={classes.inputLogo}>
@@ -465,7 +446,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           isZap={formState.isZap}
           type={'withdraw'}
         />
-        <Box mt={2}>
+        <Box mt={3}>
           {isWalletConnected ? (
             !isWalletOnVaultChain ? (
               <>

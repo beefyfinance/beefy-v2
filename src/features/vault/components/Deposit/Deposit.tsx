@@ -182,6 +182,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
         </Box>
         <RadioGroup
+          className={classes.removeLastItemMargin}
           value={formState.selectedToken ? formState.selectedToken.id : ''}
           aria-label="deposit-asset"
           name="deposit-asset"
@@ -244,7 +245,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           isZap={formState.isZap}
           type={'deposit'}
         />
-        <Box mt={2}>
+        <Box mt={3}>
           {vault.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
               {t('Deposit-Disabled')}
