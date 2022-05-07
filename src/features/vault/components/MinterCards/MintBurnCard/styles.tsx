@@ -194,14 +194,5 @@ export const styles = theme => ({
   },
   noReserves: {
     marginTop: theme.spacing(2),
-    padding: theme.spacing(2),
-    borderRadius: '8px',
-    backgroundColor: 'rgba(209, 152, 71, 0.15)',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  icon: {
-    height: '20px',
-    marginRight: theme.spacing(1),
   },
 });
