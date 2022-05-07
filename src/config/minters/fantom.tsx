@@ -2,7 +2,7 @@ export const minters = [
   {
     id: 'beftm',
     name: 'beFTM',
-    contractAddress: '0x34753f36d69d00e2112Eb99B3F7f0FE76cC35090',
+    contractAddress: '0x80Db135336cAFDe6f712B92109b076b3EE5ca59c',
     depositToken: {
       symbol: 'FTM',
       oracleId: 'FTM',
