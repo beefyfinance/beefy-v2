@@ -8844,7 +8844,7 @@ export const pools = [
     depositsPaused: false,
     status: 'active',
     platform: 'Tomb',
-    assets: ['TSHARE', 'BTC'],
+    assets: ['TSHARE', 'WBTC'],
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',

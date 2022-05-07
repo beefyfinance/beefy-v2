@@ -35,6 +35,7 @@ export interface VaultConfig {
   addLiquidityUrl?: string | null;
   buyTokenUrl?: string | null;
   retireReason?: string | null;
+  pauseReason?: string | null;
   removeLiquidityUrl?: string | null;
   depositFee?: string | null;
   refund?: boolean | null;

@@ -18081,7 +18081,7 @@ export const pools = [
     logo: 'single-assets/BIFI.png',
     name: 'BIFI Maxi Old',
     token: 'BIFI',
-    tokenDescription: 'Please migrate to the new BIFI Maxi',
+    tokenDescription: 'Beefy.Finance',
     tokenAddress: '0xCa3F508B8e4Dd382eE878A314789373D80A5190A',
     tokenDecimals: 18,
     earnedToken: 'mooBIFI',
@@ -18108,6 +18108,7 @@ export const pools = [
     buyTokenUrl: 'https://app.1inch.io/#/56/swap/BNB/BIFI',
     createdAt: 1606511757,
     network: 'bsc',
+    retireReason: 'upgrade',
   },
   {
     id: 'bifi-gov-eol',
@@ -18392,7 +18393,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/0x55d398326f99059fF775485246999027B3197955/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
-    createdAt: 1649884688,
+    createdAt: 1649932290,
     network: 'bsc',
   },
   {
@@ -19717,7 +19718,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/0x55d398326f99059fF775485246999027B3197955/0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
-    createdAt: 1651747679,
+    createdAt: 1651747222,
     network: 'bsc',
   },
   {
@@ -19753,7 +19754,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/ETH/0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
-    createdAt: 1651747678,
+    createdAt: 1651748230,
     network: 'bsc',
   },
   {
@@ -19789,7 +19790,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/ETH/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?inputCurrency=ETH&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
-    createdAt: 1651747677,
+    createdAt: 1651748798,
     network: 'bsc',
   },
   {
@@ -19825,7 +19826,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/0x55d398326f99059fF775485246999027B3197955/0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
-    createdAt: 1651747676,
+    createdAt: 1651749366,
     network: 'bsc',
   },
   {
@@ -19861,7 +19862,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/ETH/0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
-    createdAt: 1651747675,
+    createdAt: 1651750026,
     network: 'bsc',
   },
   {
@@ -19897,7 +19898,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x23396cF899Ca06c4472205fC903bDB4de249D6fC',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0x23396cF899Ca06c4472205fC903bDB4de249D6fC',
-    createdAt: 1651747674,
+    createdAt: 1651750575,
     network: 'bsc',
   },
   {
@@ -19933,7 +19934,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82/ETH',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
-    createdAt: 1651747673,
+    createdAt: 1651751256,
     network: 'bsc',
   },
   {
@@ -19969,7 +19970,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/ETH/0xA2315cC5A1e4aE3D0a491ED4Fe45EBF8356fEaC7',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?outputCurrency=0xA2315cC5A1e4aE3D0a491ED4Fe45EBF8356fEaC7',
-    createdAt: 1651652814,
+    createdAt: 1651849086,
     network: 'bsc',
   },
   {
@@ -20005,7 +20006,7 @@ export const pools = [
       'https://exchange.biswap.org/#/add/ETH/0x6c7fc3Fd4a9f1Cfa2a69B83F92b9DA7EC26240A2',
     buyTokenUrl:
       'https://exchange.biswap.org/#/swap?outputCurrency=0x6c7fc3Fd4a9f1Cfa2a69B83F92b9DA7EC26240A2',
-    createdAt: 1651654674,
+    createdAt: 1651849085,
     network: 'bsc',
   },
 ];
