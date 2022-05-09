@@ -132,7 +132,7 @@ export const FeeBreakdown = memo(
         : '4.5%';
 
     return (
-      <Box mt={2} p={2} className={classes.feeContainer}>
+      <Box mt={3} p={2} className={classes.feeContainer}>
         <Grid container>
           <Grid item xs={12}>
             {type === 'deposit' && isZap && (
