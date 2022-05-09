@@ -30,7 +30,7 @@ export const pools = [
     stratType: 'Maxi',
     withdrawalFee: '0.05%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960',
+      'https://spooky.fi/#/swap?outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960',
     network: 'fantom',
     createdAt: 1622574935,
   },
@@ -142,7 +142,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://solidly.exchange/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886',
+      'https://spooky.fi/#/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886',
     createdAt: 1646162527,
     mintTokenUrl: 'https://beta.beefy.finance/#/fantom/vault/beefy-beFTM',
   },
@@ -295,7 +295,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c',
+      'https://spooky.fi/#/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c',
     network: 'fantom',
     createdAt: 1635454839,
   },
@@ -645,7 +645,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
+      'https://spooky.fi/#/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
     network: 'fantom',
     createdAt: 1634453638,
   },
@@ -748,10 +748,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d',
+      'https://spooky.fi/#/swap?outputCurrency=0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d',
     network: 'fantom',
     createdAt: 1633607188,
   },
@@ -784,10 +783,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x468003B688943977e6130F4F68F23aad939a1040',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x468003B688943977e6130F4F68F23aad939a1040',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x468003B688943977e6130F4F68F23aad939a1040',
+      'https://spooky.fi/#/swap?outputCurrency=0x468003B688943977e6130F4F68F23aad939a1040',
     network: 'fantom',
     createdAt: 1634118092,
   },
@@ -992,10 +990,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37',
+      'https://spooky.fi/#/swap?outputCurrency=0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37',
     network: 'fantom',
     createdAt: 1623662472,
   },
@@ -1028,10 +1025,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7',
+      'https://spooky.fi/#/swap?outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7',
     network: 'fantom',
     createdAt: 1623659891,
   },
@@ -1064,10 +1060,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xc60D7067dfBc6f2caf30523a064f416A5Af52963',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xc60D7067dfBc6f2caf30523a064f416A5Af52963',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xc60D7067dfBc6f2caf30523a064f416A5Af52963',
+      'https://spooky.fi/#/swap?outputCurrency=0xc60D7067dfBc6f2caf30523a064f416A5Af52963',
     network: 'fantom',
     createdAt: 1631897760,
   },
@@ -1102,7 +1097,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b',
+      'https://spooky.fi/#/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b',
     network: 'fantom',
     createdAt: 1631727659,
   },
@@ -1137,7 +1132,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8',
+      'https://spooky.fi/#/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8',
     network: 'fantom',
     createdAt: 1631726729,
   },
@@ -1171,7 +1166,7 @@ export const pools = [
     ],
     stratType: 'SingleStake',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
+      'https://spooky.fi/#/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
     network: 'fantom',
     withdrawalFee: '0%',
     createdAt: 1620998574,
@@ -1206,10 +1201,9 @@ export const pools = [
     depositFee: '0.5%',
     withdrawalFee: '0%',
     platform: 'Other',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
+      'https://spooky.fi/#/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
     network: 'fantom',
     createdAt: 1628881379,
   },
@@ -1242,7 +1236,7 @@ export const pools = [
     ],
     stratType: 'Lending',
     withdrawalFee: '0%',
-    buyTokenUrl: 'https://spookyswap.finance/swap?outputCurrency=FTM',
+    buyTokenUrl: 'https://spooky.fi/#/swap?outputCurrency=FTM',
     network: 'fantom',
     createdAt: 1628734094,
   },
@@ -1277,7 +1271,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+      'https://spooky.fi/#/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     network: 'fantom',
     createdAt: 1628627757,
   },
@@ -1312,7 +1306,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
+      'https://spooky.fi/#/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
     network: 'fantom',
     createdAt: 1628739572,
   },
@@ -1347,7 +1341,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
+      'https://spooky.fi/#/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
     network: 'fantom',
     createdAt: 1628739318,
   },
@@ -1382,7 +1376,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
+      'https://spooky.fi/#/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
     network: 'fantom',
     createdAt: 1628739417,
   },
@@ -1417,7 +1411,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A',
+      'https://spooky.fi/#/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A',
     network: 'fantom',
     createdAt: 1628739191,
   },
@@ -1450,9 +1444,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x29b0Da86e484E1C0029B56e817912d778aC0EC69/0x74b23882a30290451A17c44f4F05243b6b58C76d',
+      'https://spooky.fi/#/add/0x29b0Da86e484E1C0029B56e817912d778aC0EC69/0x74b23882a30290451A17c44f4F05243b6b58C76d',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x29b0Da86e484E1C0029B56e817912d778aC0EC69&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
+      'https://spooky.fi/#/swap?inputCurrency=0x29b0Da86e484E1C0029B56e817912d778aC0EC69&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
     network: 'fantom',
     createdAt: 1628168514,
   },
@@ -1552,10 +1546,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
+      'https://spooky.fi/#/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
     network: 'fantom',
     createdAt: 1625679284,
   },
@@ -1587,10 +1580,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
+      'https://spooky.fi/#/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
     network: 'fantom',
     createdAt: 1620386574,
   },
@@ -1623,10 +1615,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xd6070ae98b8069de6B494332d1A1a81B6179D960',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xd6070ae98b8069de6B494332d1A1a81B6179D960',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960',
+      'https://spooky.fi/#/swap?outputCurrency=0xd6070ae98b8069de6B494332d1A1a81B6179D960',
     network: 'fantom',
     createdAt: 1622569266,
   },
@@ -1659,10 +1650,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xf16e81dce15B08F326220742020379B855B87DF9',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xf16e81dce15B08F326220742020379B855B87DF9',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xf16e81dce15B08F326220742020379B855B87DF9',
+      'https://spooky.fi/#/swap?outputCurrency=0xf16e81dce15B08F326220742020379B855B87DF9',
     network: 'fantom',
     createdAt: 1622445591,
   },
@@ -1695,10 +1685,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC',
+      'https://spooky.fi/#/swap?outputCurrency=0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC',
     network: 'fantom',
     createdAt: 1622446524,
   },
@@ -1731,10 +1720,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+      'https://spooky.fi/#/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     network: 'fantom',
     createdAt: 1620386549,
   },
@@ -1767,10 +1755,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xdDcb3fFD12750B45d32E084887fdf1aABAb34239',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xdDcb3fFD12750B45d32E084887fdf1aABAb34239',
+      'https://spooky.fi/#/swap?outputCurrency=0xdDcb3fFD12750B45d32E084887fdf1aABAb34239',
     network: 'fantom',
     createdAt: 1622123539,
   },
@@ -1803,10 +1790,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
+      'https://spooky.fi/#/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
     network: 'fantom',
     createdAt: 1622123567,
   },
@@ -1839,10 +1825,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454',
+      'https://spooky.fi/#/swap?outputCurrency=0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454',
     network: 'fantom',
     createdAt: 1620919260,
   },
@@ -1875,10 +1860,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8',
+      'https://spooky.fi/#/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8',
     network: 'fantom',
     createdAt: 1620500758,
   },
@@ -1903,10 +1887,9 @@ export const pools = [
     retireReason: 'rewards',
     platform: 'SpookySwap',
     assets: ['COVER', 'FTM'],
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xB01E8419d842beebf1b70A7b5f7142abbaf7159D',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xB01E8419d842beebf1b70A7b5f7142abbaf7159D',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xB01E8419d842beebf1b70A7b5f7142abbaf7159D',
+      'https://spooky.fi/#/swap?outputCurrency=0xB01E8419d842beebf1b70A7b5f7142abbaf7159D',
     stratType: 'StratLP',
     network: 'fantom',
     createdAt: 1620500733,
@@ -1940,10 +1923,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x049d68029688eAbF473097a2fC38ef61633A3C7A',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A',
+      'https://spooky.fi/#/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A',
     network: 'fantom',
     createdAt: 1620500483,
   },
@@ -1976,10 +1958,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x321162Cd933E2Be498Cd2267a90534A804051b11',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x321162Cd933E2Be498Cd2267a90534A804051b11',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
+      'https://spooky.fi/#/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
     network: 'fantom',
     createdAt: 1620500455,
   },
@@ -2011,10 +1992,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x74b23882a30290451A17c44f4F05243b6b58C76d',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
+      'https://spooky.fi/#/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
     network: 'fantom',
     logo: 'fantom/ETH-FTM.png',
     createdAt: 1620386666,
@@ -2048,10 +2028,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x1E4F97b9f9F913c46F1632781732927B9019C68b',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x1E4F97b9f9F913c46F1632781732927B9019C68b',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b',
+      'https://spooky.fi/#/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b',
     network: 'fantom',
     createdAt: 1620386607,
   },
@@ -2085,9 +2064,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xfB98B335551a418cD0737375a2ea0ded62Ea213b',
+      'https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xfB98B335551a418cD0737375a2ea0ded62Ea213b',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xfB98B335551a418cD0737375a2ea0ded62Ea213b',
+      'https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xfB98B335551a418cD0737375a2ea0ded62Ea213b',
     network: 'fantom',
     createdAt: 1636758731,
   },
@@ -2120,10 +2099,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765',
+      'https://spooky.fi/#/swap?outputCurrency=0x9F47F313ACFd4bdC52F4373b493EaE7d5aC5b765',
     network: 'fantom',
     createdAt: 1637587170,
   },
@@ -2185,9 +2163,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x9879aBDea01a879644185341F7aF7d8343556B7a',
+      'https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x9879aBDea01a879644185341F7aF7d8343556B7a',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a',
+      'https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a',
     network: 'fantom',
     createdAt: 1637658328,
   },
@@ -2222,7 +2200,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a',
+      'https://spooky.fi/#/swap?outputCurrency=0x9879aBDea01a879644185341F7aF7d8343556B7a',
     network: 'fantom',
     showWarning: false,
     warning: 'liquidity',
@@ -2286,10 +2264,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010',
+      'https://spooky.fi/#/swap?outputCurrency=0x9d8F97A3C2f9f397B6D46Cbe2d39CC1D8Cf19010',
     network: 'fantom',
     createdAt: 1639423285,
   },
@@ -2323,10 +2300,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x94CcF60f700146BeA8eF7832820800E2dFa92EdA',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x94CcF60f700146BeA8eF7832820800E2dFa92EdA',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x94CcF60f700146BeA8eF7832820800E2dFa92EdA',
+      'https://spooky.fi/#/swap?outputCurrency=0x94CcF60f700146BeA8eF7832820800E2dFa92EdA',
     network: 'fantom',
     createdAt: 1639423158,
   },
@@ -2360,10 +2336,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x3dc57B391262e3aAe37a08D91241f9bA9d58b570',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x3dc57B391262e3aAe37a08D91241f9bA9d58b570',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x3dc57B391262e3aAe37a08D91241f9bA9d58b570',
+      'https://spooky.fi/#/swap?outputCurrency=0x3dc57B391262e3aAe37a08D91241f9bA9d58b570',
     network: 'fantom',
     createdAt: 1639422895,
   },
@@ -2468,10 +2443,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262',
+      'https://spooky.fi/#/swap?outputCurrency=0x3A3841f5fa9f2c283EA567d5Aeea3Af022dD2262',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1631898051,
@@ -2508,7 +2482,7 @@ export const pools = [
     withdrawalFee: '0%',
     addLiquidityUrl: 'https://stakesteak.app/',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xAd84341756Bf337f5a0164515b1f6F993D194E1f',
+      'https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xAd84341756Bf337f5a0164515b1f6F993D194E1f',
     network: 'fantom',
     retireReason: 'tvl',
     createdAt: 1631357355,
@@ -2542,10 +2516,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x05848B832E872d9eDd84AC5718D58f21fD9c9649',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x05848B832E872d9eDd84AC5718D58f21fD9c9649',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x05848B832E872d9eDd84AC5718D58f21fD9c9649',
+      'https://spooky.fi/#/swap?outputCurrency=0x05848B832E872d9eDd84AC5718D58f21fD9c9649',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1631055499,
@@ -2614,10 +2587,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xD0660cD418a64a1d44E9214ad8e459324D8157f1',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xD0660cD418a64a1d44E9214ad8e459324D8157f1',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xD0660cD418a64a1d44E9214ad8e459324D8157f1',
+      'https://spooky.fi/#/swap?outputCurrency=0xD0660cD418a64a1d44E9214ad8e459324D8157f1',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1621266087,
@@ -2654,7 +2626,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b',
+      'https://spooky.fi/#/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b',
     network: 'fantom',
     createdAt: 1639737670,
   },
@@ -2688,10 +2660,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x511D35c52a3C244E7b8bd92c0C297755FbD89212',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x511D35c52a3C244E7b8bd92c0C297755FbD89212',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x511D35c52a3C244E7b8bd92c0C297755FbD89212',
+      'https://spooky.fi/#/swap?outputCurrency=0x511D35c52a3C244E7b8bd92c0C297755FbD89212',
     network: 'fantom',
     createdAt: 1639923705,
   },
@@ -2725,10 +2696,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a',
+      'https://spooky.fi/#/swap?outputCurrency=0x6626c47c00F1D87902fc13EECfaC3ed06D5E8D8a',
     network: 'fantom',
     createdAt: 1639923811,
   },
@@ -2762,7 +2732,7 @@ export const pools = [
     ],
     stratType: 'Lending',
     withdrawalFee: '0.01%',
-    buyTokenUrl: 'https://spookyswap.finance/swap?outputCurrency=FTM',
+    buyTokenUrl: 'https://spooky.fi/#/swap?outputCurrency=FTM',
     network: 'fantom',
     createdAt: 1636115081,
   },
@@ -2798,7 +2768,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
+      'https://spooky.fi/#/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
     network: 'fantom',
     createdAt: 1636111832,
   },
@@ -2834,7 +2804,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
+      'https://spooky.fi/#/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
     network: 'fantom',
     createdAt: 1636106243,
   },
@@ -2870,7 +2840,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+      'https://spooky.fi/#/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     network: 'fantom',
     createdAt: 1636126692,
   },
@@ -2943,7 +2913,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
+      'https://spooky.fi/#/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
     network: 'fantom',
     createdAt: 1640092257,
   },
@@ -3033,10 +3003,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56',
+      'https://spooky.fi/#/swap?outputCurrency=0x09e145A1D53c0045F41aEEf25D8ff982ae74dD56',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1630243343,
@@ -3070,10 +3039,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc',
+      'https://spooky.fi/#/swap?outputCurrency=0x56ee926bD8c72B2d5fa1aF4d9E4Cbb515a1E3Adc',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1620500694,
@@ -3148,7 +3116,7 @@ export const pools = [
     showWarning: false,
     warning: 'liquidity',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x468003B688943977e6130F4F68F23aad939a1040',
+      'https://spooky.fi/#/swap?outputCurrency=0x468003B688943977e6130F4F68F23aad939a1040',
     network: 'fantom',
     createdAt: 1640646636,
   },
@@ -3182,10 +3150,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3',
+      'https://spooky.fi/#/swap?outputCurrency=0x40DF1Ae6074C35047BFF66675488Aa2f9f6384F3',
     network: 'fantom',
     createdAt: 1640973310,
   },
@@ -3219,9 +3186,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1',
+      'https://spooky.fi/#/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1',
+      'https://spooky.fi/#/add/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1635418613,
@@ -3631,10 +3598,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x85dec8c4B2680793661bCA91a8F129607571863d',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x85dec8c4B2680793661bCA91a8F129607571863d',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x85dec8c4B2680793661bCA91a8F129607571863d',
+      'https://spooky.fi/#/swap?outputCurrency=0x85dec8c4B2680793661bCA91a8F129607571863d',
     network: 'fantom',
     createdAt: 1642291662,
   },
@@ -3668,10 +3634,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e',
+      'https://spooky.fi/#/swap?outputCurrency=0xF24Bcf4d1e507740041C9cFd2DddB29585aDCe1e',
     network: 'fantom',
     createdAt: 1642634017,
   },
@@ -3706,9 +3671,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0.01%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11',
+      'https://spooky.fi/#/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d&outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
+      'https://spooky.fi/#/swap?inputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d&outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
     network: 'fantom',
     createdAt: 1642672280,
   },
@@ -4001,7 +3966,7 @@ export const pools = [
     ],
     stratType: 'SingleStake',
     withdrawalFee: '0%',
-    buyTokenUrl: 'https://spookyswap.finance/swap?outputCurrency=FTM',
+    buyTokenUrl: 'https://spooky.fi/#/swap?outputCurrency=FTM',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1642887314,
@@ -4038,7 +4003,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+      'https://spooky.fi/#/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1642877204,
@@ -4075,7 +4040,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
+      'https://spooky.fi/#/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1642877428,
@@ -4112,7 +4077,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
+      'https://spooky.fi/#/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1642880855,
@@ -4149,7 +4114,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
+      'https://spooky.fi/#/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1642875469,
@@ -4186,7 +4151,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
+      'https://spooky.fi/#/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1642860948,
@@ -4693,10 +4658,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B',
+      'https://spooky.fi/#/swap?outputCurrency=0x112dF7E3b4B7Ab424F07319D4E92F41e6608c48B',
     network: 'fantom',
     createdAt: 1644485111,
   },
@@ -4730,10 +4694,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498',
+      'https://spooky.fi/#/swap?outputCurrency=0x8a41f13a4FaE75ca88B1ee726ee9D52B148b0498',
     network: 'fantom',
     createdAt: 1644485584,
   },
@@ -4770,7 +4733,7 @@ export const pools = [
     withdrawalFee: '0%',
     addLiquidityUrl: 'https://scream.sh/stake',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
+      'https://spooky.fi/#/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1643612827,
@@ -4806,9 +4769,9 @@ export const pools = [
     ],
     stratType: 'SingleStake',
     withdrawalFee: '0%',
-    addLiquidityUrl: 'https://spookyswap.finance/pools',
+    addLiquidityUrl: 'https://spooky.fi/#/pools',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
+      'https://spooky.fi/#/swap?outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1643099828,
@@ -4845,7 +4808,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114',
+      'https://spooky.fi/#/swap?outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1643104856,
@@ -4882,7 +4845,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7',
+      'https://spooky.fi/#/swap?outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1642865861,
@@ -4918,9 +4881,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0xc165d941481e68696f43EE6E99BFB2B23E0E3114/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+      'https://spooky.fi/#/add/0xc165d941481e68696f43EE6E99BFB2B23E0E3114/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114',
+      'https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xc165d941481e68696f43EE6E99BFB2B23E0E3114',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1642811156,
@@ -4949,7 +4912,7 @@ export const pools = [
     stratType: 'SingleStake',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994',
+      'https://spooky.fi/#/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1635336610,
@@ -4976,10 +4939,9 @@ export const pools = [
     risks: ['COMPLEXITY_LOW', 'NEW_STRAT', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994',
+      'https://spooky.fi/#/swap?outputCurrency=0x8F9bCCB6Dd999148Da1808aC290F2274b13D7994',
     network: 'fantom',
     retireReason: 'rewards',
     createdAt: 1635338766,
@@ -5199,10 +5161,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x9fb9a33956351cf4fa040f65a13b835a3c8764e3',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x9fb9a33956351cf4fa040f65a13b835a3c8764e3',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x9fb9a33956351cf4fa040f65a13b835a3c8764e3',
+      'https://spooky.fi/#/swap?outputCurrency=0x9fb9a33956351cf4fa040f65a13b835a3c8764e3',
     createdAt: 1645049415,
     network: 'fantom',
   },
@@ -5238,7 +5199,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
+      'https://spooky.fi/#/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
     createdAt: 1636100990,
     network: 'fantom',
     retiredReason: 'tvl',
@@ -5266,10 +5227,9 @@ export const pools = [
     risks: ['COMPLEXITY_LOW', 'NEW_STRAT', 'IL_HIGH', 'MCAP_MICRO', 'AUDIT', 'CONTRACTS_VERIFIED'],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x53D831e1db0947c74e8a52618f662209ec5dE0cE',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x53D831e1db0947c74e8a52618f662209ec5dE0cE',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x53D831e1db0947c74e8a52618f662209ec5dE0cE',
+      'https://spooky.fi/#/swap?outputCurrency=0x53D831e1db0947c74e8a52618f662209ec5dE0cE',
     createdAt: 1634116608,
     network: 'fantom',
     retiredReason: 'tvl',
@@ -5449,10 +5409,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
+      'https://spooky.fi/#/swap?outputCurrency=0xe0654C8e6fd4D733349ac7E09f6f23DA256bF475',
     createdAt: 1630352068,
     network: 'fantom',
     retiredReason: 'tvl',
@@ -5631,10 +5590,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436',
+      'https://spooky.fi/#/swap?outputCurrency=0x65Def5029A0e7591e46B38742bFEdd1Fb7b24436',
     createdAt: 1645886552,
     network: 'fantom',
   },
@@ -6071,9 +6029,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae',
+      'https://spooky.fi/#/add/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae',
+      'https://spooky.fi/#/swap?outputCurrency=0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae',
     createdAt: 1646398565,
     network: 'fantom',
   },
@@ -6107,10 +6065,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x49C290Ff692149A4E16611c694fdED42C954ab7a',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x49C290Ff692149A4E16611c694fdED42C954ab7a',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x49C290Ff692149A4E16611c694fdED42C954ab7a',
+      'https://spooky.fi/#/swap?outputCurrency=0x49C290Ff692149A4E16611c694fdED42C954ab7a',
     createdAt: 1646398565,
     network: 'fantom',
   },
@@ -6683,10 +6640,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x627524d78B4fC840C887ffeC90563c7A42b671fD',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x627524d78B4fC840C887ffeC90563c7A42b671fD',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x627524d78B4fC840C887ffeC90563c7A42b671fD',
+      'https://spooky.fi/#/swap?outputCurrency=0x627524d78B4fC840C887ffeC90563c7A42b671fD',
     network: 'fantom',
     createdAt: 1642139577,
     retiredReason: 'tvl',
@@ -6721,10 +6677,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1',
+      'https://spooky.fi/#/swap?outputCurrency=0xb84527D59b6Ecb96F433029ECc890D4492C5dCe1',
     network: 'fantom',
     createdAt: 1642097531,
     retiredReason: 'tvl',
@@ -6760,9 +6715,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0.1%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x248cb87dda803028dfead98101c9465a2fbda0d4',
+      'https://spooky.fi/#/add/0x04068da6c83afcfa0e13ba15a6696662335d5b75/0x248cb87dda803028dfead98101c9465a2fbda0d4',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x248cb87dda803028dfead98101c9465a2fbda0d4',
+      'https://spooky.fi/#/swap?outputCurrency=0x248cb87dda803028dfead98101c9465a2fbda0d4',
     network: 'fantom',
     createdAt: 1641550679,
     retiredReason: 'tvl',
@@ -6867,10 +6822,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xFbc3c04845162F067A0B6F8934383E63899c3524',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xFbc3c04845162F067A0B6F8934383E63899c3524',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xFbc3c04845162F067A0B6F8934383E63899c3524',
+      'https://spooky.fi/#/swap?outputCurrency=0xFbc3c04845162F067A0B6F8934383E63899c3524',
     network: 'fantom',
     createdAt: 1631054248,
     retiredReason: 'tvl',
@@ -7008,10 +6962,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x2d72A97a31Dc920dB03330780d30074626e39C8A',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x2d72A97a31Dc920dB03330780d30074626e39C8A',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x2d72A97a31Dc920dB03330780d30074626e39C8A',
+      'https://spooky.fi/#/swap?outputCurrency=0x2d72A97a31Dc920dB03330780d30074626e39C8A',
     createdAt: 1648237084,
     network: 'fantom',
   },
@@ -7046,9 +6999,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
+      'https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
+      'https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x841FAD6EAe12c286d1Fd18d1d525DFfA75C7EFFE',
     createdAt: 1648237004,
     network: 'fantom',
   },
@@ -7085,9 +7038,9 @@ export const pools = [
     depositFee: '0.2%',
     withdrawalFee: '0%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae/0x49C290Ff692149A4E16611c694fdED42C954ab7a',
+      'https://spooky.fi/#/add/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae/0x49C290Ff692149A4E16611c694fdED42C954ab7a',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae&outputCurrency=0x49C290Ff692149A4E16611c694fdED42C954ab7a',
+      'https://spooky.fi/#/swap?inputCurrency=0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae&outputCurrency=0x49C290Ff692149A4E16611c694fdED42C954ab7a',
     createdAt: 1648136284,
     network: 'fantom',
   },
@@ -7150,10 +7103,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/0x7381eD41F6dE418DdE5e84B55590422a57917886/FTM',
+    addLiquidityUrl: 'https://spooky.fi/#/add/0x7381eD41F6dE418DdE5e84B55590422a57917886/FTM',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886',
+      'https://spooky.fi/#/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886',
     createdAt: 1648777474,
     network: 'fantom',
   },
@@ -7261,10 +7213,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xbbc4a8d076f4b1888fec42581b6fc58d242cf2d5',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xbbc4a8d076f4b1888fec42581b6fc58d242cf2d5',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xbbc4A8d076F4B1888fec42581B6fc58d242CF2D5',
+      'https://spooky.fi/#/swap?outputCurrency=0xbbc4A8d076F4B1888fec42581B6fc58d242CF2D5',
     createdAt: 1644614666,
     network: 'fantom',
   },
@@ -7338,7 +7289,7 @@ export const pools = [
     withdrawalFee: '0%',
     addLiquidityUrl: 'https://stargate.finance/pool/USDC-FTM',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+      'https://spooky.fi/#/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     createdAt: 1648657158,
     network: 'fantom',
   },
@@ -7408,10 +7359,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x10010078a54396F62c96dF8532dc2B4847d47ED3',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x10010078a54396F62c96dF8532dc2B4847d47ED3',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x10010078a54396F62c96dF8532dc2B4847d47ED3',
+      'https://spooky.fi/#/swap?outputCurrency=0x10010078a54396F62c96dF8532dc2B4847d47ED3',
     network: 'fantom',
     createdAt: 1641572631,
     retireReason: 'rewards',
@@ -7475,9 +7425,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca',
+      'https://spooky.fi/#/add/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE&outputCurrency=0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca',
+      'https://spooky.fi/#/swap?inputCurrency=0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE&outputCurrency=0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca',
     network: 'fantom',
     createdAt: 1644007618,
     retireReason: 'rewards',
@@ -7512,10 +7462,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE',
+      'https://spooky.fi/#/swap?outputCurrency=0x7a6e4E3CC2ac9924605DCa4bA31d1831c84b44aE',
     network: 'fantom',
     createdAt: 1642150805,
     retireReason: 'rewards',
@@ -7550,10 +7499,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca',
+      'https://spooky.fi/#/swap?outputCurrency=0xc54A1684fD1bef1f077a336E6be4Bd9a3096a6Ca',
     network: 'fantom',
     createdAt: 1642152342,
     retireReason: 'rewards',
@@ -7694,10 +7642,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x593AE1d34c8BD7587C11D539E4F42BFf242c82Af',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x593AE1d34c8BD7587C11D539E4F42BFf242c82Af',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x593AE1d34c8BD7587C11D539E4F42BFf242c82Af',
+      'https://spooky.fi/#/swap?outputCurrency=0x593AE1d34c8BD7587C11D539E4F42BFf242c82Af',
     createdAt: 1649436436,
     network: 'fantom',
   },
@@ -7731,10 +7678,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b',
+      'https://spooky.fi/#/swap?outputCurrency=0x846e4D51d7E2043C1a87E0Ab7490B93FB940357b',
     createdAt: 1649492747,
     network: 'fantom',
   },
@@ -7857,9 +7803,8 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c',
+      'https://spooky.fi/#/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c',
     network: 'fantom',
     createdAt: 1635415386,
     retireReason: 'rewards',
@@ -7951,10 +7896,9 @@ export const pools = [
       'CONTRACTS_VERIFIED',
     ],
     stratType: 'StratLP',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B',
+      'https://spooky.fi/#/swap?outputCurrency=0x6a07A792ab2965C72a5B8088d3a069A7aC3a993B',
     network: 'fantom',
     createdAt: 1620386633,
     retireReason: 'rewards',
@@ -7990,9 +7934,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+      'https://spooky.fi/#/add/0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3',
+      'https://spooky.fi/#/swap?outputCurrency=0xDE12c7959E1a72bbe8a5f7A1dc8f8EeF9Ab011B3',
     createdAt: 1649955002,
     network: 'fantom',
   },
@@ -8026,10 +7970,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/0xDE5ed76E7c05eC5e4572CfC88d1ACEA165109E44/FTM',
+    addLiquidityUrl: 'https://spooky.fi/#/add/0xDE5ed76E7c05eC5e4572CfC88d1ACEA165109E44/FTM',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xDE5ed76E7c05eC5e4572CfC88d1ACEA165109E44',
+      'https://spooky.fi/#/swap?outputCurrency=0xDE5ed76E7c05eC5e4572CfC88d1ACEA165109E44',
     createdAt: 1649955001,
     network: 'fantom',
   },
@@ -8383,9 +8326,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83/0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1',
+      'https://spooky.fi/#/add/0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83/0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1',
+      'https://spooky.fi/#/swap?outputCurrency=0xd7028092c830b5C8FcE061Af2E593413EbbC1fc1',
     createdAt: 1650967301,
     network: 'fantom',
   },
@@ -8450,9 +8393,8 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x152888854378201e173490956085c711f1DeD565',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x152888854378201e173490956085c711f1DeD565',
+      'https://spooky.fi/#/swap?outputCurrency=0x152888854378201e173490956085c711f1DeD565',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x152888854378201e173490956085c711f1DeD565',
     createdAt: 1644813183,
     network: 'fantom',
     retireReason: 'tvl',
@@ -8678,9 +8620,9 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xC758295Cd1A564cdb020a78a681a838CF8e0627D',
+      'https://spooky.fi/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xC758295Cd1A564cdb020a78a681a838CF8e0627D',
     addLiquidityUrl:
-      'https://spookyswap.finance/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xC758295Cd1A564cdb020a78a681a838CF8e0627D',
+      'https://spooky.fi/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xC758295Cd1A564cdb020a78a681a838CF8e0627D',
     network: 'fantom',
     createdAt: 1644274576,
     retireReason: 'tvl',
@@ -8751,10 +8693,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x89346B51A54263cF2e92dA79B1863759eFa68692',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x89346B51A54263cF2e92dA79B1863759eFa68692',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x89346B51A54263cF2e92dA79B1863759eFa68692',
+      'https://spooky.fi/#/swap?outputCurrency=0x89346B51A54263cF2e92dA79B1863759eFa68692',
     network: 'fantom',
     createdAt: 1639423010,
     retireReason: 'tvl',
@@ -8791,7 +8732,7 @@ export const pools = [
     stratType: 'Lending',
     withdrawalFee: '0.01%',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A',
+      'https://spooky.fi/#/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A',
     network: 'fantom',
     createdAt: 1636108542,
     retireReason: 'tvl',
@@ -8986,10 +8927,9 @@ export const pools = [
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
-    addLiquidityUrl:
-      'https://spookyswap.finance/add/FTM/0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e',
+    addLiquidityUrl: 'https://spooky.fi/#/add/FTM/0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e',
     buyTokenUrl:
-      'https://spookyswap.finance/swap?outputCurrency=0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e',
+      'https://spooky.fi/#/swap?outputCurrency=0x74E23dF9110Aa9eA0b6ff2fAEE01e740CA1c642e',
     createdAt: 1651814013,
     network: 'fantom',
   },
