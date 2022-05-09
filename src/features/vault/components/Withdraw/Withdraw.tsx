@@ -273,13 +273,8 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     selectUserBalanceOfToken(state, vault.chainId, earnedToken.address)
   );
 
-  const showDepositedText = isBoosted
-    ? formState.zapOptions !== null
-      ? boostBalance.isGreaterThan(0)
-        ? false
-        : true
-      : true
-    : true;
+  const showDepositedText =
+    isBoosted && formState.zapOptions !== null && boostBalance.isGreaterThan(0) ? false : true;
 
   return (
     <>
