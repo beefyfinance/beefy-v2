@@ -403,4 +403,29 @@ export const pools = [
       },
     ],
   },
+  {
+    id: 'moo_boo-wftm-tor-hector',
+    poolId: 'boo-wftm-tor',
+    name: 'Hector (TOR)',
+    assets: ['TOR', 'FTM'],
+    earnedToken: 'HEC',
+    earnedTokenDecimals: 9,
+    earnedTokenAddress: '0x5C4FDfc5233f935f20D2aDbA572F770c2E377Ab0',
+    earnContractAddress: '0xF7077ad75d6f027fb1DeAF7fE88eA5819044F31C',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'HECTOR',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: 'HEC and TOR make up the foundations of the HECTOR Ecosystem. Over the coming months and years, TOR will expand to be one of the only truly decentralized and algorithmic stablecoins in the market. This will allow for significant growth of the HECTOR Ecosystem and bring value and utility to users everywhere. Over time, TOR will expand to be usable in a wide range of markets and use cases. To create adoption, partnership must be a focus. We aim to create strong, long-lasting partnerships to aid the adoption of TOR.',
+        website: 'https://app.hector.finance/#/farming',
+        social: {
+          telegram: 'https://t.me/hectorDAO',
+          twitter: 'https://twitter.com/HectorDAO_HEC',
+        },
+      },
+    ],
+  },
 ];
