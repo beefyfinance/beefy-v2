@@ -69,7 +69,12 @@ export const initiateBoostForm = createAsyncThunk<
   );
   const allowanceRes =
     walletAddress && spenderAddress
-      ? await allowanceApi.fetchTokensAllowance([mooToken], walletAddress, spenderAddress)
+      ? await allowanceApi.fetchTokensAllowance(
+          getState(),
+          [mooToken],
+          walletAddress,
+          spenderAddress
+        )
       : [];
 
   return {

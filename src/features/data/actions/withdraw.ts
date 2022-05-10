@@ -73,7 +73,12 @@ export const initiateWithdrawForm = createAsyncThunk<
   const allowanceApi = await getAllowanceApi(chain);
   const allowanceRes =
     walletAddress && spenderAddress
-      ? await allowanceApi.fetchTokensAllowance(tokensErc20, walletAddress, spenderAddress)
+      ? await allowanceApi.fetchTokensAllowance(
+          getState(),
+          tokensErc20,
+          walletAddress,
+          spenderAddress
+        )
       : [];
 
   return {
