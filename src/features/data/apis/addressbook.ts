@@ -64,7 +64,7 @@ export const getChainAddressBook = memoize(
             buyUrl: null,
             website: bookToken.website || null,
             description: bookToken.description || null,
-            type: 'erc20',
+            type: 'native',
           };
         } else {
           agg[tokenId] = {
