@@ -122,6 +122,7 @@
   "Vault-Rewards": "REWARDS",
   "Vault-rewards": "Rewards",
   "Vault-BoostedBy": "Boosted By",
+  "Vault-StakedIn": "Staked in Boost:",
   "Vault-RetireReason-upgrade": "This vault is retired. Please move to the new and improved version.",
   "Vault-RetireReason-rewards": "This vault is retired. The underlying platform stopped rewarding.",
   "Vault-RetireReason-exploit": "This vault is retired. Funds sit idle in the vault, withdrawn from the underlying platform.",
