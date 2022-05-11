@@ -9,10 +9,12 @@ import {
   featureFlag_getContractDataApiImplem,
 } from '../utils/feature-flags';
 import { IWalletConnectApi, WalletConnectOptions } from './wallet/wallet-connect-types';
+import { BridgeApi } from './bridge';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
 const configApi = new ConfigAPI();
+const bridgeApi = new BridgeApi();
 
 /**
  * These are basically factories so user code don't have to worry
@@ -24,6 +26,10 @@ export function getBeefyApi(): BeefyAPI {
 }
 export function getConfigApi(): ConfigAPI {
   return configApi;
+}
+
+export function getBridgeApi(): BridgeApi {
+  return bridgeApi;
 }
 
 const Web3Promise = import('web3');
