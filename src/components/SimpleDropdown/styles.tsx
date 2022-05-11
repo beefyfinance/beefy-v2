@@ -1,17 +1,10 @@
 export const styles = theme => ({
   select: {
-    marginLeft: '24px',
-    [theme.breakpoints.down('lg')]: {
-      marginLeft: 0,
-    },
     '& .MuiSelect-select': {
       color: theme.palette.text.disabled,
       fontWeight: 700,
       fontSize: 15,
-      padding: '12px 30px 0px 15px',
-      [theme.breakpoints.down('md')]: {
-        padding: '12px 30px 0px 11px',
-      },
+      padding: '0px 30px 0px 0px',
       border: props =>
         props.noBorder
           ? 'none'
@@ -19,9 +12,10 @@ export const styles = theme => ({
           ? '2px solid #313759'
           : '2px solid #ff0000',
       borderRadius: '8px',
-      height: '29px',
+      height: '36px',
       textAlign: 'right',
       display: 'flex',
+      alignItems: 'center',
       '& img': {
         height: '18px',
         marginRight: '5px',

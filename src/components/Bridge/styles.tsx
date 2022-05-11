@@ -41,7 +41,7 @@ export const styles = theme => ({
   customDivider: {
     display: 'flex',
     alignItems: 'center',
-    margin: `${theme.spacing(1.5)}px 0px`,
+    margin: `${theme.spacing(2)}px 0px`,
     '& img': {
       margin: '0 12px',
     },
@@ -57,6 +57,9 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.content,
     borderRadius: '8px',
     margin: `${theme.spacing(1.5)}px 0px`,
+  },
+  lastMarginFees: {
+    margin: `${theme.spacing(1.5)}px 0px 16px 0px`,
   },
   feesContent: {
     display: 'flex',
@@ -106,7 +109,7 @@ export const styles = theme => ({
       display: 'flex',
       alignItems: 'center',
       position: 'relative',
-      height: '100%',
+      height: '40px',
       backgroundColor: theme.palette.background.vaults.inactive,
       borderRadius: '8px',
       padding: 0,
@@ -150,7 +153,6 @@ export const styles = theme => ({
     },
   },
   networkPicker: {
-    width: '50%',
     marginRight: theme.spacing(1),
   },
   networkValue: {
@@ -178,5 +180,10 @@ export const styles = theme => ({
     '& .MuiTypography-body1': {
       lineHeight: 'normal',
     },
+  },
+  networkPickerContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '8px 12px',
   },
 });

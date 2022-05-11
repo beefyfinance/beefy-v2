@@ -14,6 +14,7 @@ import { selectAllChains } from '../../features/data/selectors/chains';
 import { SimpleDropdown } from '../SimpleDropdown';
 import { selectWalletAddress } from '../../features/data/selectors/wallet';
 import { BeefyState } from '../../redux-types';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles as any);
 
@@ -94,7 +95,7 @@ function Preview({ handlePreview }) {
 
   const selectedRenderer = network => {
     return (
-      <Box className={classes.flexContainer}>
+      <Box className={classes.networkPickerContainer}>
         <img src={require(`../../images/networks/${network}.svg`).default} alt={network} />{' '}
         <Typography className={classes.networkValue}>{chainTypes[network]}</Typography>
       </Box>
@@ -276,13 +277,13 @@ function Confirm() {
         <img alt="arrowDown" src={require('../../images/arrowDown.svg').default} />
         <Box className={classes.line} />
       </Box>
-      <Box className={classes.fees}>
+      <Box className={clsx(classes.fees, classes.lastMarginFees)}>
         <Box mb={1}>
           <Typography variant="body2" className={classes.label}>
             {t('TO')}
           </Typography>
         </Box>
-        <Box mb={1.5} className={classes.flexContainer}>
+        <Box mb={2} className={classes.flexContainer}>
           <Box className={classes.networkContainer}>
             <img
               className={classes.icon}
