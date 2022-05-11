@@ -12,12 +12,7 @@ import {
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
-import {
-  isTokenNative,
-  TokenEntity,
-  TokenErc20,
-  TokenNative,
-} from '../entities/token';
+import { isTokenNative, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
 import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenAddressFromLegacyConfig,
@@ -185,6 +180,8 @@ function addAddressBookToState(
   }
 
   for (const [addressBookId, token] of Object.entries(addressBookPayload.addressBook)) {
+    if (isTokenNative(token)) continue; // native tokens are preloaded when chain configs load
+
     if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
     }
@@ -200,14 +197,6 @@ function addAddressBookToState(
 
     if (addressBookId === 'WNATIVE' && !sliceState.byChainId[chainId].wnative) {
       sliceState.byChainId[chainId].wnative = token.id;
-    }
-
-    // update the native token address for those chains who have one
-    if (isTokenNative(token) && token.address !== 'native') {
-      const chainNative = sliceState.byChainId[chainId].byAddress['native'] as TokenNative;
-      if (chainNative && chainNative.address === null) {
-        chainNative.address = token.address;
-      }
     }
   }
 }
