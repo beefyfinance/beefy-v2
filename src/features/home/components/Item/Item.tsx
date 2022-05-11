@@ -13,7 +13,7 @@ import { selectIsVaultPreStakedOrBoosted } from '../../../data/selectors/boosts'
 import { isGovVault, isVaultPausedOrRetired, VaultEntity } from '../../../data/entities/vault';
 import { BeefyState } from '../../../../redux-types';
 import { selectChainById } from '../../../data/selectors/chains';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { ChainEntity } from '../../../data/entities/chain';
 import { TokenEntity } from '../../../data/entities/token';
@@ -30,7 +30,7 @@ const _ItemVaultPresentation = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
     const chain = selectChainById(state, vault.chainId);
-    const earnedToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+    const earnedToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
     return { vault, chain, earnedToken };
   }
 )(
@@ -51,20 +51,18 @@ const _ItemVaultPresentation = connect(
         <div className={classes.infoContainer}>
           <Hidden smDown>
             <AssetsImage
-              img={vault.logoUri}
-              assets={vault.assetIds}
-              alt={vault.name}
-              {...({ size: '60px' } as any)}
+              assetIds={vault.assetIds}
+              className={classes.assetImage}
+              chainId={chain.id}
             />
           </Hidden>
           <div className={classes.badgesContainter}>
             <div className={classes.flexCenter}>
               <Hidden mdUp>
                 <AssetsImage
-                  img={vault.logoUri}
-                  assets={vault.assetIds}
-                  alt={vault.name}
-                  {...({ size: '60px' } as any)}
+                  assetIds={vault.assetIds}
+                  className={classes.assetImage}
+                  chainId={chain.id}
                 />
               </Hidden>
               <div>

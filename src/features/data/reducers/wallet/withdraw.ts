@@ -13,11 +13,11 @@ import { ZapEstimate, ZapOptions } from '../../apis/zap';
 import { TokenEntity } from '../../entities/token';
 import { isGovVault, VaultEntity } from '../../entities/vault';
 import {
-  selectStandardVaultUserBalanceInOracleTokenExcludingBoosts,
-  selectGovVaultUserStackedBalanceInOracleToken,
+  selectStandardVaultUserBalanceInDepositTokenExcludingBoosts,
+  selectGovVaultUserStackedBalanceInDepositToken,
   selectUserBalanceOfToken,
 } from '../../selectors/balance';
-import { selectTokenById } from '../../selectors/tokens';
+import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../selectors/vaults';
 import { mooAmountToOracleAmount } from '../../utils/ppfs';
 
@@ -89,11 +89,14 @@ export const withdrawSlice = createSlice({
         };
       }
 
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
       // also reset the input
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
       sliceState.isZap =
-        isArray(sliceState.selectedToken) || vault.oracleId !== sliceState.selectedToken.id;
+        isArray(sliceState.selectedToken) ||
+        depositToken.address !== sliceState.selectedToken.address;
       sliceState.max = false;
       sliceState.isZapSwap =
         sliceState.isZap &&
@@ -105,37 +108,37 @@ export const withdrawSlice = createSlice({
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
 
-      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
       const oracleBalance = isGovVault(vault)
-        ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
-        : selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(state, vault.id);
+        ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+        : selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(state, vault.id);
 
       // we output the amount is oracle token amount
       sliceState.amount = oracleBalance;
       // round a bit to account for ppfs inacuracies
-      const truncatedMooBalance = oracleBalance.decimalPlaces(oracleToken.decimals - 2);
-      sliceState.formattedInput = formatBigDecimals(truncatedMooBalance, oracleToken.decimals);
+      const truncatedMooBalance = oracleBalance.decimalPlaces(depositToken.decimals - 2);
+      sliceState.formattedInput = formatBigDecimals(truncatedMooBalance, depositToken.decimals);
       sliceState.max = true;
     },
 
     setInput(sliceState, action: PayloadAction<{ amount: string; state: BeefyState }>) {
       const state = action.payload.state;
       const vault = selectVaultById(state, sliceState.vaultId);
-      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
       const input = action.payload.amount.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
-      let value = new BigNumber(input).decimalPlaces(oracleToken.decimals, BigNumber.ROUND_DOWN);
+      let value = new BigNumber(input).decimalPlaces(depositToken.decimals, BigNumber.ROUND_DOWN);
 
       if (value.isNaN() || value.isLessThanOrEqualTo(0)) {
         value = BIG_ZERO;
       }
 
-      const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+      const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
       const mooTokenBalance = isGovVault(vault)
-        ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
-        : selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenId);
+        ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+        : selectUserBalanceOfToken(state, vault.chainId, vault.earnedTokenAddress);
       const ppfs = selectVaultPricePerFullShare(state, vault.id);
-      const amount = mooAmountToOracleAmount(mooToken, oracleToken, ppfs, mooTokenBalance);
+      const amount = mooAmountToOracleAmount(mooToken, depositToken, ppfs, mooTokenBalance);
       if (value.isGreaterThanOrEqualTo(amount)) {
         value = new BigNumber(amount);
         sliceState.max = true;
@@ -167,14 +170,11 @@ export const withdrawSlice = createSlice({
       sliceState.zapOptions = action.payload.zapOptions;
 
       // select the vault oracle token by default
-      const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-      sliceState.selectedToken = oracleToken;
+      const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+      sliceState.selectedToken = depositToken;
 
-      sliceState.isZap = sliceState.selectedToken.id !== vault.oracleId;
-      sliceState.isZapSwap =
-        sliceState.isZap &&
-        !isArray(sliceState.selectedToken) &&
-        vault.assetIds.includes(sliceState.selectedToken.id);
+      sliceState.isZap = false;
+      sliceState.isZapSwap = false;
     });
 
     builder.addCase(fetchEstimateZapWithdraw.fulfilled, (sliceState, action) => {

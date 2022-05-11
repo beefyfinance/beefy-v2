@@ -8,6 +8,7 @@ import { TokenEntity } from '../../../data/entities/token';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
 import { selectVaultById } from '../../../data/selectors/vaults';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 
@@ -20,17 +21,20 @@ export function TokenWithBalance({
 }) {
   const classes = useStyles();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const depositToken = useSelector((state: BeefyState) =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
+  );
   const balance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, vault.chainId, token.id)
+    selectUserBalanceOfToken(state, vault.chainId, token.address)
   );
 
   return (
     <Box className={classes.balanceContainer} display="flex" alignItems="center">
       <Box lineHeight={0}>
         <AssetsImage
-          img={token.id === vault.oracleId ? vault.logoUri : null}
-          assets={token.id === vault.oracleId ? vault.assetIds : [token.id]}
-          alt={token.id}
+          chainId={vault.chainId}
+          assetIds={token.address === depositToken.address ? vault.assetIds : [token.id]}
+          size={16}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>

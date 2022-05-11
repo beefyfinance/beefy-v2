@@ -15,10 +15,6 @@ export const styles = theme => ({
       color: theme.palette.text.secondary,
       paddingLeft: '12px',
     },
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      width: 48,
-      height: 48,
-    },
   },
   summaryContainer: {
     padding: '10px 0',
@@ -69,18 +65,21 @@ export const styles = theme => ({
     backgroundColor: '#272B4A',
     borderRadius: '12px',
   },
-  customOrder: {
+  columnActions: {
+    '& > :first-child': {
+      marginTop: 0,
+    },
     [theme.breakpoints.up('md')]: {
       order: 1,
     },
-    marginTop: theme.spacing(3),
-    [theme.breakpoints.down('md')]: {
+  },
+  columnInfo: {
+    marginTop: '-24px',
+    '& > :first-child': {
       marginTop: 0,
     },
-  },
-  customOrder2: {
-    [theme.breakpoints.down('sm')]: {
-      marginTop: '-48px',
+    [theme.breakpoints.up('md')]: {
+      marginTop: 0,
     },
   },
   tabs: {
@@ -151,5 +150,8 @@ export const styles = theme => ({
   },
   chainContainer: {
     marginRight: theme.spacing(4),
+  },
+  retirePauseReason: {
+    marginBottom: '24px',
   },
 });

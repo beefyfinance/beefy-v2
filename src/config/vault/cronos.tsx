@@ -13,7 +13,6 @@ export const pools = [
     earnedTokenAddress: '0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23',
     earnedTokenDecimals: 18,
     earnContractAddress: '0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF',
-    poolAddress: '0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF',
     pricePerFullShare: 1,
     isGovVault: true,
     tvl: 0,
@@ -1501,7 +1500,7 @@ export const pools = [
       'https://vvs.finance/swap?inputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03&outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2',
     addLiquidityUrl:
       'https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2',
-    createdAt: 1637045228,
+    createdAt: 1649959970,
     network: 'cronos',
   },
 ];

@@ -1,12 +1,12 @@
 import {
   Box,
   Button,
-  makeStyles,
-  Typography,
-  IconButton,
   FormControl,
+  IconButton,
   InputAdornment,
   InputBase,
+  makeStyles,
+  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
@@ -28,12 +28,13 @@ import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal'
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
+  selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../../data/selectors/wallet';
 import { Step } from '../../../../../components/Steps/types';
 import { selectIsApprovalNeededForBoostStaking } from '../../../../data/selectors/wallet-actions';
 import { walletActions } from '../../../../data/actions/wallet-actions';
-import { selectErc20TokenById } from '../../../../data/selectors/tokens';
+import { selectErc20TokenByAddress } from '../../../../data/selectors/tokens';
 import {
   selectBoostUserBalanceInToken,
   selectUserBalanceOfToken,
@@ -61,7 +62,7 @@ export const Stake = ({
       isFulfilled(state.ui.dataLoader.global.boostForm)
   );
   const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletConnected(state) ? selectWalletAddress(state) : null
+    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
   // initialize our form
@@ -84,20 +85,20 @@ const StakeForm = ({
   const vault = useSelector((state: BeefyState) => selectStandardVaultById(state, boost.vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, boost.chainId));
   const mooToken = useSelector((state: BeefyState) =>
-    selectErc20TokenById(state, vault.chainId, vault.earnedTokenId)
+    selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
   const isBoostDepositable = useSelector((state: BeefyState) =>
     selectIsBoostActiveOrPreStake(state, boostId)
   );
 
   const mooBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, boost.chainId, mooToken.id)
+    selectUserBalanceOfToken(state, boost.chainId, mooToken.address)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)
   );
 
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
@@ -116,7 +117,9 @@ const StakeForm = ({
   );
 
   const handleInput = (amountStr: string) => {
-    dispatch(boostModalActions.setInput({ amount: amountStr, state: store.getState() }));
+    dispatch(
+      boostModalActions.setInput({ amount: amountStr, withdraw: false, state: store.getState() })
+    );
   };
 
   const handleMax = () => {

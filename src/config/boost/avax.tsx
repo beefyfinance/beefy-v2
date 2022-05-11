@@ -56,7 +56,7 @@ export const pools = [
   },
   {
     id: 'moo_AVAX-grape',
-    poolId: 'aave-wavax',
+    poolId: 'aavev3-avax',
     name: 'Grape Finance',
     logo: 'single-assets/AVAX.svg',
     earnedToken: 'WINE',
@@ -110,7 +110,7 @@ export const pools = [
   },
   {
     id: 'moo_AVAX-nitro',
-    poolId: 'aave-wavax',
+    poolId: 'aavev3-avax',
     name: 'Nitro Network',
     logo: 'single-assets/AVAX.svg',
     earnedToken: 'NCASH',

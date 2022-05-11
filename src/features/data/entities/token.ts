@@ -17,7 +17,8 @@ export interface TokenErc20 {
   id: string;
   symbol: string;
   chainId: ChainEntity['id'];
-  contractAddress: string;
+  oracleId: string;
+  address: string;
   decimals: number;
   buyUrl: string | null; // link to 1inch/pancake/...
   type: 'erc20';
@@ -35,7 +36,8 @@ export interface TokenNative {
   chainId: ChainEntity['id'];
   // some chains have addressable native tokens
   // maybe this should be a separate interface
-  address: string | null;
+  oracleId: string;
+  address: string;
   decimals: number;
   buyUrl: string | null; // link to 1inch/pancake/...
   type: 'native';

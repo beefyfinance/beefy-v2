@@ -18,7 +18,7 @@ import { TokenEntity } from '../entities/token';
 
 export function mooAmountToOracleAmount(
   mooToken: TokenEntity,
-  oracleToken: TokenEntity,
+  depositToken: TokenEntity,
   ppfs: BigNumber,
   mooTokenAmount: BigNumber
 ) {
@@ -31,20 +31,20 @@ export function mooAmountToOracleAmount(
   // go to math representation
   // but we can't return a number with more precision than the oracle precision
   const oracleAmount = oracleChainAmount
-    .shiftedBy(-oracleToken.decimals)
-    .decimalPlaces(oracleToken.decimals);
+    .shiftedBy(-depositToken.decimals)
+    .decimalPlaces(depositToken.decimals);
 
   return oracleAmount;
 }
 
 export function oracleAmountToMooAmount(
   mooToken: TokenEntity,
-  oracleToken: TokenEntity,
+  depositToken: TokenEntity,
   ppfs: BigNumber,
-  oracleTokenAmount: BigNumber
+  depositTokenAmount: BigNumber
 ) {
   // go to chain representation
-  const oracleChainAmount = oracleTokenAmount.shiftedBy(oracleToken.decimals);
+  const oracleChainAmount = depositTokenAmount.shiftedBy(depositToken.decimals);
 
   // convert to moo amount in chain representation
   const mooChainAmount = oracleChainAmount.dividedBy(ppfs);

@@ -1,11 +1,12 @@
-import { MultiCall, ShapeWithLabel } from 'eth-multicall';
+import _BeefyV2AppMulticallAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
+import { AbiItem } from 'web3-utils';
 import Web3 from 'web3';
 import { VaultGov, VaultStandard } from '../../entities/vault';
-import { selectErc20TokenById, selectTokenById } from '../../selectors/tokens';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { AllValuesAsString } from '../../utils/types-utils';
 import { BoostEntity } from '../../entities/boost';
+import { chunk } from 'lodash';
 import {
   BoostContractData,
   FetchAllContractDataResult,
@@ -13,25 +14,18 @@ import {
   IContractDataApi,
   StandardVaultContractData,
 } from './contract-data-types';
-import { AbiItem } from 'web3-utils';
+import { featureFlag_getContractDataApiChunkSize } from '../../utils/feature-flags';
 import { BeefyState } from '../../../../redux-types';
-import * as _Web3Contract from 'web3-eth-contract';
-import { Contract } from 'web3-eth-contract';
-import _vaultAbi from '../../../../config/abi/vault.json';
-import _boostAbi from '../../../../config/abi/boost.json';
-import { selectBoostById } from '../../selectors/boosts';
 import { selectVaultById } from '../../selectors/vaults';
+import { selectTokenByAddress } from '../../selectors/tokens';
 
-// fix TS typings
-const vaultAbi = _vaultAbi as AbiItem[];
-const boostAbi = _boostAbi as AbiItem[];
-const Web3Contract = _Web3Contract as any as Contract;
+// fix ts types
+const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
 
-/**
- * Get vault contract data
- */
-export class ContractDataAPI implements IContractDataApi {
-  constructor(protected web3: Web3, protected chain: ChainEntity) {}
+export class ContractDataAPI<T extends ChainEntity & { fetchContractDataAddress: string }>
+  implements IContractDataApi
+{
+  constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllContractData(
     state: BeefyState,
@@ -39,124 +33,112 @@ export class ContractDataAPI implements IContractDataApi {
     govVaults: VaultGov[],
     boosts: BoostEntity[]
   ): Promise<FetchAllContractDataResult> {
-    const mc = new MultiCall(this.web3, this.chain.multicallAddress);
+    const mc = new this.web3.eth.Contract(
+      BeefyV2AppMulticallAbi,
+      this.chain.fetchContractDataAddress
+    );
 
-    const standardVaultCalls: ShapeWithLabel[] = [];
-    for (const vault of standardVaults) {
-      const earnedToken = selectErc20TokenById(state, this.chain.id, vault.earnedTokenId);
-      const vaultContract = getVaultContractInstance(earnedToken.contractAddress);
-      standardVaultCalls.push({
-        type: 'vault-standard',
-        id: vault.id,
-        balance: vaultContract.methods.balance(),
-        pricePerFullShare: vaultContract.methods.getPricePerFullShare(),
-        strategy: vaultContract.methods.strategy(),
-      });
-    }
+    // if we send too much in a single call, we get "execution reversed"
+    const CHUNK_SIZE = featureFlag_getContractDataApiChunkSize();
 
-    const govVaultCalls: ShapeWithLabel[] = [];
-    for (const vault of govVaults) {
-      const vaultContract = getVaultContractInstance(vault.earnContractAddress);
-      govVaultCalls.push({
-        type: 'vault-gov',
-        id: vault.id,
-        totalSupply: vaultContract.methods.totalSupply(),
-      });
-    }
+    const boostBatches = chunk(boosts, CHUNK_SIZE);
+    const govVaultBatches = chunk(govVaults, CHUNK_SIZE);
+    const vaultBatches = chunk(standardVaults, CHUNK_SIZE);
 
-    const boostsCalls: ShapeWithLabel[] = [];
-    for (const boost of boosts) {
-      // set a new address
-      const boostContract = getBoostContractInstance(boost.earnContractAddress);
-      boostsCalls.push({
-        type: 'boost',
-        id: boost.id,
-        totalSupply: boostContract.methods.totalSupply(),
-        rewardRate: boostContract.methods.rewardRate(),
-        periodFinish: boostContract.methods.periodFinish(),
-      });
-    }
+    const boostPromises = boostBatches.map(boostBatch =>
+      mc.methods.getBoostInfo(boostBatch.map(boost => boost.earnContractAddress)).call()
+    );
+    const vaultPromises = vaultBatches.map(vaultBatch =>
+      mc.methods.getVaultInfo(vaultBatch.map(vault => vault.earnContractAddress)).call()
+    );
+    const govVaultPromises = govVaultBatches.map(govVaultBatch => {
+      return mc.methods
+        .getGovVaultInfo(govVaultBatch.map(vault => vault.earnContractAddress))
+        .call();
+    });
 
-    const calls = [...standardVaultCalls, ...govVaultCalls, ...boostsCalls];
+    const results = await Promise.all([...boostPromises, ...vaultPromises, ...govVaultPromises]);
 
-    type ResultType =
-      | ({ type: 'boost' } & AllValuesAsString<BoostContractData>)
-      | ({ type: 'vault-gov' } & AllValuesAsString<GovVaultContractData>)
-      | ({ type: 'vault-standard' } & AllValuesAsString<StandardVaultContractData>);
-    const [results] = (await mc.all([calls])) as ResultType[][];
+    // now reasign results
 
     const res: FetchAllContractDataResult = {
       boosts: [],
       govVaults: [],
       standardVaults: [],
     };
-    for (const result of results) {
-      if (result.type === 'boost') {
-        const boost = selectBoostById(state, result.id);
-        const earnedToken = selectTokenById(state, boost.chainId, boost.earnedTokenId);
-        const vault = selectVaultById(state, boost.vaultId);
-        const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-        const data = {
-          id: result.id,
-          totalSupply: new BigNumber(result.totalSupply).shiftedBy(-oracleToken.decimals),
-          rewardRate: new BigNumber(result.rewardRate).shiftedBy(-earnedToken.decimals),
-          /* assuming period finish is a UTC timestamp in seconds */
-          periodFinish:
-            result.periodFinish === '0' ? null : new Date(parseInt(result.periodFinish) * 1000),
-        };
-        res.boosts.push(data);
-      } else if (result.type === 'vault-gov') {
-        const vault = selectVaultById(state, result.id);
-        const token = selectTokenById(state, vault.chainId, vault.oracleId);
-        const data = {
-          id: result.id,
-          totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
-        };
-        res.govVaults.push(data);
-      } else if (result.type === 'vault-standard') {
-        const vault = selectVaultById(state, result.id);
-        const mooToken = selectTokenById(state, vault.chainId, vault.oracleId);
-        const data = {
-          id: result.id,
-          balance: new BigNumber(result.balance).shiftedBy(-mooToken.decimals),
-          /** always 18 decimals for PPFS */
-          pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-18),
-          strategy: result.strategy,
-        };
-        res.standardVaults.push(data);
-      } else {
-        console.error(result);
-        throw new Error(`Could not identify type`);
-      }
+
+    let resultsIdx = 0;
+    for (const boostBatch of boostBatches) {
+      const batchRes = results[resultsIdx].map((boostRes, elemidx) =>
+        this.boostFormatter(state, boostRes, boostBatch[elemidx])
+      );
+      res.boosts = res.boosts.concat(batchRes);
+      resultsIdx++;
     }
-    // format strings as numbers
+    for (const vaultBatch of vaultBatches) {
+      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
+        this.standardVaultFormatter(state, vaultRes, vaultBatch[elemidx])
+      );
+      res.standardVaults = res.standardVaults.concat(batchRes);
+      resultsIdx++;
+    }
+    for (const vaultBatch of govVaultBatches) {
+      const batchRes = results[resultsIdx].map((vaultRes, elemidx) =>
+        this.govVaultFormatter(state, vaultRes, vaultBatch[elemidx])
+      );
+      res.govVaults = res.govVaults.concat(batchRes);
+      resultsIdx++;
+    }
+
     return res;
   }
-}
 
-// turns out instanciating contracts is CPU heavy
-// so we instanciate them only once and clone them
-const baseContractCache: { vault: Contract | null; boost: Contract | null } = {
-  boost: null,
-  vault: null,
-};
-
-function getVaultContractInstance(address: string) {
-  if (baseContractCache.vault === null) {
-    // @ts-ignore types of 'web3-eth-contract' are badly defined
-    baseContractCache.vault = new Web3Contract(vaultAbi);
+  protected standardVaultFormatter(
+    state: BeefyState,
+    result: AllValuesAsString<StandardVaultContractData>,
+    standardVault: VaultStandard
+  ) {
+    const vault = selectVaultById(state, standardVault.id);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    return {
+      id: standardVault.id,
+      balance: new BigNumber(result.balance).shiftedBy(-depositToken.decimals),
+      /** always 18 decimals for PPFS */
+      pricePerFullShare: new BigNumber(result.pricePerFullShare).shiftedBy(-mooToken.decimals),
+      strategy: result.strategy,
+    } as StandardVaultContractData;
   }
-  const vaultContract = baseContractCache.vault.clone();
-  vaultContract.options.address = address;
-  return vaultContract;
-}
 
-function getBoostContractInstance(address: string) {
-  if (baseContractCache.boost === null) {
-    // @ts-ignore types of 'web3-eth-contract' are badly defined
-    baseContractCache.boost = new Web3Contract(boostAbi);
+  protected govVaultFormatter(
+    state: BeefyState,
+    result: AllValuesAsString<GovVaultContractData>,
+    govVault: VaultGov
+  ) {
+    const vault = selectVaultById(state, govVault.id);
+    const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    return {
+      id: govVault.id,
+      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-token.decimals),
+    } as GovVaultContractData;
   }
-  const boostContract = baseContractCache.boost.clone();
-  boostContract.options.address = address;
-  return boostContract;
+
+  protected boostFormatter(
+    state: BeefyState,
+
+    result: AllValuesAsString<BoostContractData>,
+    boost: BoostEntity
+  ) {
+    const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
+    const vault = selectVaultById(state, boost.vaultId);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    return {
+      id: boost.id,
+      totalSupply: new BigNumber(result.totalSupply).shiftedBy(-depositToken.decimals),
+      rewardRate: new BigNumber(result.rewardRate).shiftedBy(-earnedToken.decimals),
+      /* assuming period finish is a UTC timestamp in seconds */
+      periodFinish:
+        result.periodFinish === '0' ? null : new Date(parseInt(result.periodFinish) * 1000),
+    } as BoostContractData;
+  }
 }

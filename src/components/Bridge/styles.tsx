@@ -145,12 +145,8 @@ export const styles = theme => ({
   },
   inputLogo: {
     position: 'absolute',
-    top: '12px',
+    top: '11px',
     left: '12px',
-    '& .MuiAvatar-root:not(.MuiAvatarGroup-avatar)': {
-      height: 20,
-      width: 20,
-    },
   },
   networkPicker: {
     marginRight: theme.spacing(1),

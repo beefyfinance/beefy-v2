@@ -9,12 +9,14 @@ import { BeefyState } from '../../../../redux-types';
 import { TokenEntity } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import {
-  selectGovVaultUserStackedBalanceInOracleToken,
-  selectStandardVaultUserBalanceInOracleTokenExcludingBoosts,
+  selectGovVaultUserStackedBalanceInDepositToken,
+  selectStandardVaultUserBalanceInDepositTokenExcludingBoosts,
 } from '../../../data/selectors/balance';
 import {
   selectIsTokenLoaded,
+  selectTokenByAddress,
   selectTokenById,
+  selectTokenPriceByAddress,
   selectTokenPriceByTokenId,
 } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -33,23 +35,27 @@ export function TokenWithDeposit({
   const classes = useStyles();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
 
-  const oracleToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.oracleId)
+  const depositToken = useSelector((state: BeefyState) =>
+    selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
 
   const oracleAmount = useSelector((state: BeefyState) => {
     const mooTokenBalance = isGovVault(vault)
-      ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
-      : selectStandardVaultUserBalanceInOracleTokenExcludingBoosts(state, vault.id);
+      ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+      : selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(state, vault.id);
     return mooTokenBalance;
   });
 
   const amountsAndSymbol = useSelector((state: BeefyState): [BigNumber, string][] => {
     if (!convertAmountTo) {
-      return [[oracleAmount, oracleToken.symbol]];
+      return [[oracleAmount, depositToken.symbol]];
     }
     let amountsAndSymbol: [BigNumber, string][] = [];
-    const inputTokenPrice = selectTokenPriceByTokenId(state, oracleToken.id);
+    const inputTokenPrice = selectTokenPriceByAddress(
+      state,
+      vault.chainId,
+      vault.depositTokenAddress
+    );
 
     const convertToArr = isArray(convertAmountTo) ? convertAmountTo : [convertAmountTo];
     for (const convertToId of convertToArr) {
@@ -77,17 +83,15 @@ export function TokenWithDeposit({
     <Box className={classes.balanceContainer} display="flex" alignItems="center">
       <Box lineHeight={0}>
         <AssetsImage
-          img={oracleToken.id === vault.oracleId && !convertAmountTo ? vault.logoUri : null}
-          assets={
+          chainId={vault.chainId}
+          assetIds={
             convertAmountTo
               ? isArray(convertAmountTo)
                 ? convertAmountTo
                 : [convertAmountTo]
-              : oracleToken.id === vault.oracleId
-              ? vault.assetIds
-              : [oracleToken.id]
+              : vault.assetIds
           }
-          alt={oracleToken.id}
+          size={16}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>

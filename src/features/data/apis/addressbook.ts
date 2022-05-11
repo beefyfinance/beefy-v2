@@ -42,7 +42,8 @@ export const getChainAddressBook = memoize(
         agg[tokenId] = {
           id: wnative.symbol,
           chainId: chain.id,
-          contractAddress: bookToken.address,
+          oracleId: tokenId,
+          address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,
           buyUrl: null,
@@ -56,6 +57,7 @@ export const getChainAddressBook = memoize(
           agg[tokenId] = {
             id: tokenId,
             chainId: chain.id,
+            oracleId: tokenId,
             address: bookToken.address,
             decimals: bookToken.decimals,
             symbol: nativeSymbol,
@@ -68,7 +70,8 @@ export const getChainAddressBook = memoize(
           agg[tokenId] = {
             id: tokenId,
             chainId: chain.id,
-            address: null,
+            oracleId: tokenId,
+            address: 'native',
             decimals: bookToken.decimals,
             symbol: nativeSymbol,
             buyUrl: null,
@@ -81,7 +84,8 @@ export const getChainAddressBook = memoize(
         agg[tokenId] = {
           id: tokenId,
           chainId: chain.id,
-          contractAddress: bookToken.address,
+          oracleId: tokenId,
+          address: bookToken.address,
           decimals: bookToken.decimals,
           symbol: bookToken.symbol,
           buyUrl: null,

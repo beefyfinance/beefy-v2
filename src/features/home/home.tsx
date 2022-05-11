@@ -9,7 +9,7 @@ import { styles } from './styles';
 import { AutoSizer } from 'react-virtualized';
 import { CowLoader } from '../../components/CowLoader';
 import { selectIsVaultListAvailable } from '../data/selectors/data-loader';
-import { selectIsWalletConnected } from '../data/selectors/wallet';
+import { selectIsWalletKnown } from '../data/selectors/wallet';
 import { selectFilteredVaults, selectFilterOptions } from '../data/selectors/filtered-vaults';
 import { Item } from './components/Item';
 import { debounce } from 'lodash';
@@ -151,7 +151,7 @@ const VaultsList = memo(function HomeVaultsList() {
   // we switch to vault cards on smaller screens or when doing 2 columns
   const isVaultCard = useMediaQuery('(max-width: 959px)');
   const filterOptions = useSelector(selectFilterOptions);
-  const isWalletConnected = useSelector(selectIsWalletConnected);
+  const isWalletKnown = useSelector(selectIsWalletKnown);
   const vaults = useSelector(selectFilteredVaults);
   const spaceBetweenRows = 20;
   const classes = useStyles(spaceBetweenRows);
@@ -179,11 +179,11 @@ const VaultsList = memo(function HomeVaultsList() {
 
   return (
     <div className={classes.vaultsList}>
-      {filterOptions.userCategory === 'deposited' && isWalletConnected && vaults.length === 0 && (
+      {filterOptions.userCategory === 'deposited' && isWalletKnown && vaults.length === 0 && (
         <EmptyStates />
       )}
-      {filterOptions.userCategory === 'deposited' && !isWalletConnected && <EmptyStates />}
-      {filterOptions.userCategory === 'eligible' && !isWalletConnected && <EmptyStates />}
+      {filterOptions.userCategory === 'deposited' && !isWalletKnown && <EmptyStates />}
+      {filterOptions.userCategory === 'eligible' && !isWalletKnown && <EmptyStates />}
       <LargeList
         batchSize={5}
         spaceBetweenRows={spaceBetweenRows}

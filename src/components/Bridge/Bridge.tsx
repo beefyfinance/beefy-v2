@@ -128,7 +128,7 @@ function Preview({ handlePreview }) {
           <Box className={classes.inputContainer}>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'BIFI-TOKEN.svg'} alt={'BinSpirit'} />
+                <AssetsImage chainId={'56'} assetIds={['BIFI']} size={20} />
               </Box>
               <InputBase placeholder="0.00" value={0} disabled={true} />
               <Button>{t('Transact-Max')}</Button>
@@ -162,7 +162,7 @@ function Preview({ handlePreview }) {
           <Box className={classes.inputContainer}>
             <Paper component="form" className={classes.root}>
               <Box className={classes.inputLogo}>
-                <AssetsImage assets={[]} img={'BIFI-TOKEN.svg'} alt={'bifi'} />
+                <AssetsImage chainId={'56'} assetIds={['BIFI']} size={20} />
               </Box>
               <InputBase placeholder="0.00" value={0} disabled={true} />
               <Button>{t('Transact-Max')}</Button>

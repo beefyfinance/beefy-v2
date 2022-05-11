@@ -11,102 +11,7 @@ import { Bridge } from '../../../../components/Bridge';
 
 const useStyles = makeStyles(styles as any);
 
-export function VaultBuyLinks({
-  vaultId,
-  isMaxi,
-}: {
-  vaultId: VaultEntity['id'];
-  isMaxi: boolean;
-}) {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-
-  const classes = useStyles();
-  const { t } = useTranslation();
-
-  return (
-    <>
-      {!isMaxi && (
-        <Box>
-          {vault.buyTokenUrl && !vault.addLiquidityUrl && (
-            <a
-              href={vault.buyTokenUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.btnSecondary}
-            >
-              <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
-                {t('Transact-BuyTkn')}
-              </Button>
-            </a>
-          )}
-          {vault.addLiquidityUrl && !vault.buyTokenUrl && (
-            <a
-              href={vault.addLiquidityUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.btnSecondary}
-            >
-              <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
-                {t('Transact-AddLiquidity')}
-              </Button>
-            </a>
-          )}
-        </Box>
-      )}
-    </>
-  );
-}
-
-export function VaultBuyLinks2({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-
-  const classes = useStyles();
-  const { t } = useTranslation();
-
-  return (
-    <>
-      {vault.buyTokenUrl && vault.addLiquidityUrl && (
-        <Box className={classes.btnContaniner}>
-          <a
-            href={vault.buyTokenUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={classes.btnSecondary}
-          >
-            <Button
-              size="small"
-              endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-            >
-              {t('Transact-BuyTkn')}
-            </Button>
-          </a>
-          <a
-            style={{ marginLeft: '12px' }}
-            href={vault.addLiquidityUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={classes.btnSecondary}
-          >
-            <Button
-              size="small"
-              endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-            >
-              {t('Transact-AddLiquidity')}
-            </Button>
-          </a>
-        </Box>
-      )}
-    </>
-  );
-}
-
-export function VaultBuyLinks3({
-  vaultId,
-  isMaxi,
-}: {
-  vaultId: VaultEntity['id'];
-  isMaxi: boolean;
-}) {
+export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
 
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -123,35 +28,50 @@ export function VaultBuyLinks3({
   const { t } = useTranslation();
 
   return (
-    <>
-      {vault.buyTokenUrl && isMaxi && (
-        <>
-          <Box className={classes.btnContaniner}>
-            <a
-              href={vault.buyTokenUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.btnSecondary}
-            >
-              <Button
-                size="small"
-                endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-              >
-                {t('Transact-BuyTkn')}
-              </Button>
-            </a>
+    <Box className={classes.btnContaniner}>
+      <>
+        {vault.buyTokenUrl && (
+          <a
+            style={{ marginRight: '12px' }}
+            href={vault.buyTokenUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={classes.btnSecondary}
+          >
             <Button
               size="small"
-              className={classes.btnSecondary1}
               endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-              onClick={handleOpen}
             >
-              {t('Transact-Bridge')}
+              {t('Transact-BuyTkn')}
             </Button>
-          </Box>
-          <Bridge open={openModal} handleClose={handleClose} />
-        </>
-      )}
-    </>
+          </a>
+        )}
+        {vault.addLiquidityUrl && (
+          <a
+            href={vault.addLiquidityUrl}
+            style={{ marginRight: '12px' }}
+            target="_blank"
+            rel="noreferrer"
+            className={classes.btnSecondary}
+          >
+            <Button
+              size="small"
+              endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+            >
+              {t('Transact-AddLiquidity')}
+            </Button>
+          </a>
+        )}
+
+        <Button
+          className={classes.btnSecondary1}
+          endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+          onClick={handleOpen}
+        >
+          {t('Transact-Bridge')}
+        </Button>
+        <Bridge open={openModal} handleClose={handleClose} />
+      </>
+    </Box>
   );
 }

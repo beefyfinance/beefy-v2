@@ -7,7 +7,7 @@ import { fetchAllContractDataByChainAction } from '../actions/contract-data';
 import { BoostEntity } from '../entities/boost';
 import { VaultEntity, VaultGov } from '../entities/vault';
 import { selectBoostById } from '../selectors/boosts';
-import { selectTokenById, selectTokenPriceByTokenId } from '../selectors/tokens';
+import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { BeefyState } from '../../../redux-types';
@@ -78,7 +78,7 @@ function addContractDataToState(
   // On standard vault contract data, recompute tvl and exclusions
   for (const vaultContractData of contractData.standardVaults) {
     const vault = selectVaultById(state, vaultContractData.id);
-    const price = selectTokenPriceByTokenId(state, vault.oracleId);
+    const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const vaultTvl = vaultContractData.balance.times(price);
 
@@ -90,7 +90,7 @@ function addContractDataToState(
     const totalStaked = govVaultContractData.totalSupply;
 
     const vault = selectVaultById(state, govVaultContractData.id) as VaultGov;
-    const price = selectTokenPriceByTokenId(state, vault.oracleId);
+    const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     let tvl = totalStaked.times(price);
 
@@ -132,17 +132,17 @@ function addContractDataToState(
   for (const boostContractData of contractData.boosts) {
     const boost = selectBoostById(state, boostContractData.id);
     const vault = selectVaultById(state, boost.vaultId);
-    const oraclePrice = selectTokenPriceByTokenId(state, vault.oracleId);
+    const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
     // find vault price per full share for the vault
     const ppfs = ppfsPerVaultId[vault.id];
     if (ppfs === undefined) {
       throw new Error(`Could not find ppfs for vault id ${vault.id}`);
     }
-    const oracleToken = selectTokenById(state, vault.chainId, vault.oracleId);
-    const mooToken = selectTokenById(state, vault.chainId, vault.earnedTokenId);
+    const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+    const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnContractAddress);
     const totalStaked = mooAmountToOracleAmount(
       mooToken,
-      oracleToken,
+      depositToken,
       ppfs,
       boostContractData.totalSupply
     );

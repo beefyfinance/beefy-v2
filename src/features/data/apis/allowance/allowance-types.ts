@@ -13,11 +13,16 @@ export interface IAllowanceApi {
     walletAddress: string
   ): Promise<FetchAllAllowanceResult>;
 
-  fetchTokensAllowance(tokens: TokenErc20[], walletAddress: string, spenderAddress: string);
+  fetchTokensAllowance(
+    state: BeefyState,
+    tokens: TokenErc20[],
+    walletAddress: string,
+    spenderAddress: string
+  );
 }
 
 export interface TokenAllowance {
-  tokenId: TokenEntity['id'];
+  tokenAddress: TokenEntity['address'];
   spenderAddress: string; // a 0x address
   allowance: BigNumber;
 }
