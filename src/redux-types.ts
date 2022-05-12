@@ -23,7 +23,7 @@ import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
 import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
 import { InfoCardsState } from './features/data/reducers/info-cards';
-import { BridgeState } from './features/data/reducers/wallet/bridge';
+import { BridgeState } from './features/data/reducers/bridge';
 
 export interface BeefyState {
   entities: {
@@ -35,6 +35,7 @@ export interface BeefyState {
     zaps: ZapsState;
     minters: MintersState;
     infoCards: InfoCardsState;
+    bridge: BridgeState;
   };
   biz: {
     tvl: TvlState;
@@ -55,7 +56,6 @@ export interface BeefyState {
     deposit: DepositState;
     withdraw: WithdrawState;
     boostModal: BoostModalState;
-    bridge: BridgeState;
   };
 }
 

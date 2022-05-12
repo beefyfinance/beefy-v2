@@ -167,6 +167,9 @@ export async function initHomeDataV4(store: BeefyStore) {
     pollStopFns.push(pollStop);
   }
 
+  //load bridge data
+  store.dispatch(fetchBridgeTokenData());
+
   // now set regular calls to update user data
   for (const chain of chains) {
     const pollStop = poll(async () => {
@@ -291,8 +294,4 @@ export async function initMinterForm(
 
   // then we can init the form
   store.dispatch(initiateMinterForm({ minterId, walletAddress }));
-}
-
-export async function fetchBridgeData(store: BeefyStore) {
-  await store.dispatch(fetchBridgeTokenData());
 }
