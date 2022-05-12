@@ -9,12 +9,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { makeStyles } from '@material-ui/styles';
 import { AssetsImage } from '../AssetsImage';
-import { useSelector } from 'react-redux';
+import { useSelector, useStore } from 'react-redux';
 import { selectAllChains } from '../../features/data/selectors/chains';
 import { SimpleDropdown } from '../SimpleDropdown';
 import { selectWalletAddress } from '../../features/data/selectors/wallet';
 import { BeefyState } from '../../redux-types';
 import clsx from 'clsx';
+import { fetchBridgeData } from '../../features/data/actions/scenarios';
 
 const useStyles = makeStyles(styles as any);
 
@@ -38,6 +39,11 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
     handleClose();
     setPreviewConfirm('preview');
   };
+
+  const store = useStore();
+  React.useEffect(() => {
+    fetchBridgeData(store);
+  }, [store]);
 
   return (
     <Modal

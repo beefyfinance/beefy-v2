@@ -24,6 +24,7 @@ import { withdrawSlice } from './wallet/withdraw';
 import { boostModalSlice } from './wallet/boost-modal';
 import { mintersSlice } from './minters';
 import { infoCardsSlice } from './info-cards';
+import { bridgeSlice } from './wallet/bridge';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
   chains: chainsSlice.reducer,
@@ -57,6 +58,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   deposit: depositSlice.reducer,
   withdraw: withdrawSlice.reducer,
   boostModal: boostModalSlice.reducer,
+  bridge: bridgeSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({
