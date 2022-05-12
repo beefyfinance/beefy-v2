@@ -320,6 +320,7 @@ export const pools = [
       'MCAP_SMALL',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     addLiquidityUrl: 'https://app.fuse.fi/#/add/FUSE/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f',
@@ -840,6 +841,7 @@ export const pools = [
       'MCAP_SMALL',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:

@@ -433,6 +433,7 @@ export const pools = [
       'MCAP_HIGH',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
@@ -1085,6 +1086,7 @@ export const pools = [
       'MCAP_HIGH',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',
