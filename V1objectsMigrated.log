@@ -1,44 +1,107 @@
 [
   {
-    "id": "bsc vault: cakev2-gal-bnb",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-sftmx-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-god-between-stables-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: jetswap-fantom-fusdt-usdc",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: quick-eth-newquick",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-usdc-newquick",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-newquick",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-quick",
+    "id": "bsc vault: biswap-ust-busd",
     "type": "synced"
   },
   {
-    "id": "avax vault: png-fitfi-wavax",
-    "type": "Added"
+    "id": "fantom vault: curve-ftm-f-4pool",
+    "type": "synced"
   },
   {
-    "id": "aurora vault: tri-tri-usdt",
-    "type": "Added"
+    "id": "fantom vault: beets-clair-de-lune",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-wftm-ust",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: beets-ust-ust",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-ust-ftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: beets-double-dollar-fugue-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: quick-ustw-matic",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: quick-mai-usdt",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: quick-dai-mai",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: quick-mai-matic-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: dinoswap-dfyn-ust-usdt-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: mai-usdc-mimatic",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: png-png-ustw",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: curve-avax-f-3pool",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-ustw-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: png-ustw-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: png-wavax-ustw",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: png-ust-wavax",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: png-ust-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: joe-ust-wavax-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: voltagev2-wfuse-atust",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: voltage-wfuse-ust-eol",
+    "type": "synced"
+  },
+  {
+    "id": "aurora vault: tri-atust-near-eol",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-axlust-wglmr",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: solarflare-ust-wglmr",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
