@@ -63,6 +63,7 @@ export const initiateDepositForm = createAsyncThunk<
   if (walletAddress && zapOptions) {
     const zapTokens = zapOptions.tokens.filter(isTokenErc20);
     const allowanceRes = await allowanceApi.fetchTokensAllowance(
+      getState(),
       zapTokens,
       walletAddress,
       zapOptions.address
@@ -75,6 +76,7 @@ export const initiateDepositForm = createAsyncThunk<
     const spenderAddress = vault.earnContractAddress;
     const vaultTokens = [depositToken, earnedToken].filter(isTokenErc20);
     const allowanceRes = await allowanceApi.fetchTokensAllowance(
+      getState(),
       vaultTokens,
       walletAddress,
       spenderAddress

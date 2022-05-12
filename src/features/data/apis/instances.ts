@@ -3,11 +3,6 @@ import { ConfigAPI } from './config';
 import { sample } from 'lodash';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
 import { ChainEntity } from '../entities/chain';
-import {
-  featureFlag_getAllowanceApiImplem,
-  featureFlag_getBalanceApiImplem,
-  featureFlag_getContractDataApiImplem,
-} from '../utils/feature-flags';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
 
 // todo: maybe don't instanciate here, idk yet
@@ -39,64 +34,32 @@ export const getWeb3Instance = createFactoryWithCacheByChain(async chain => {
 
 const ContractDataAPIPromise = import('./contract-data');
 export const getContractDataApi = createFactoryWithCacheByChain(async chain => {
-  const { ContractDataAPI, ContractDataMcV2API } = await ContractDataAPIPromise;
+  const { ContractDataAPI } = await ContractDataAPIPromise;
 
   const web3 = await getWeb3Instance(chain);
 
-  let targetImplem = featureFlag_getContractDataApiImplem();
-  if (targetImplem === 'new-multicall' && !chain.fetchBalancesAddress) {
-    targetImplem = 'eth-multicall';
-  }
-  if (targetImplem === 'new-multicall') {
-    // only if we have a contract to work with
-    console.debug(`Instanciating ContractDataMcV2API for chain ${chain.id}`);
-    return new ContractDataMcV2API(
-      web3,
-      chain as ChainEntity & { fetchContractDataAddress: string }
-    );
-  }
   console.debug(`Instanciating ContractDataAPI for chain ${chain.id}`);
-  return new ContractDataAPI(web3, chain);
+  return new ContractDataAPI(web3, chain as ChainEntity & { fetchContractDataAddress: string });
 });
 
 const BalanceAPIPromise = import('./balance');
 export const getBalanceApi = createFactoryWithCacheByChain(async chain => {
-  const { BalanceAPI, BalanceMcV2API } = await BalanceAPIPromise;
+  const { BalanceAPI } = await BalanceAPIPromise;
 
   const web3 = await getWeb3Instance(chain);
 
-  let targetImplem = featureFlag_getBalanceApiImplem();
-  if (targetImplem === 'new-multicall' && !chain.fetchBalancesAddress) {
-    targetImplem = 'eth-multicall';
-  }
-
-  if (targetImplem === 'new-multicall') {
-    console.debug(`Instanciating BalanceMcV2API for chain ${chain.id}`);
-    return new BalanceMcV2API(web3, chain as ChainEntity & { fetchBalancesAddress: string });
-  }
-
   console.debug(`Instanciating BalanceAPI for chain ${chain.id}`);
-  return new BalanceAPI(web3, chain);
+  return new BalanceAPI(web3, chain as ChainEntity & { fetchBalancesAddress: string });
 });
 
 const AllowanceAPIPromise = import('./allowance');
 export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
-  const { AllowanceAPI, AllowanceMcV2API } = await AllowanceAPIPromise;
+  const { AllowanceAPI } = await AllowanceAPIPromise;
 
   const web3 = await getWeb3Instance(chain);
 
-  let targetImplem = featureFlag_getAllowanceApiImplem();
-  if (targetImplem === 'new-multicall' && !chain.fetchBalancesAddress) {
-    targetImplem = 'eth-multicall';
-  }
-
-  if (targetImplem === 'new-multicall') {
-    console.debug(`Instanciating AllowanceMcV2API for chain ${chain.id}`);
-    return new AllowanceMcV2API(web3, chain as ChainEntity & { fetchBalancesAddress: string });
-  }
-
   console.debug(`Instanciating AllowanceAPI for chain ${chain.id}`);
-  return new AllowanceAPI(web3, chain);
+  return new AllowanceAPI(web3, chain as ChainEntity & { fetchBalancesAddress: string });
 });
 
 let walletConnection: IWalletConnectionApi | null = null;
