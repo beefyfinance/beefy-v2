@@ -75,7 +75,7 @@ export const RISKS = {
 
   ALGO_STABLE: {
     category: 'Categry-Asset',
-    score: 0.5,
+    score: 0.9,
     title: 'IL-AlgoStable-Titl',
     explanation: 'IL-AlgoStable-Expl',
     condition: 'IL-AlgoStable-Cond',
@@ -212,6 +212,6 @@ export const RISKS = {
 
 export const CATEGORIES = {
   'Categry-Beefy': 0.2,
-  'Categry-Asset': 0.2,
-  'Categry-Platform': 0.6,
+  'Categry-Asset': 0.3,
+  'Categry-Platform': 0.5,
 };
