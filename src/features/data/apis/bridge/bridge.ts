@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { ChainConfig } from '../apis/config-types';
+import { ChainConfig } from '../../apis/config-types';
 
 export class BridgeApi {
   public api: AxiosInstance;

@@ -122,6 +122,7 @@ export interface DataLoaderState {
     minters: LoaderState;
     minterForm: LoaderState;
     infoCards: LoaderState;
+    bridge: LoaderState;
   };
   byChainId: {
     [chainId: ChainEntity['id']]: {
@@ -154,6 +155,7 @@ export const initialDataLoaderState: DataLoaderState = {
     minters: dataLoaderStateInit,
     minterForm: dataLoaderStateInit,
     infoCards: dataLoaderStateInit,
+    bridge: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -269,7 +271,6 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
-
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);

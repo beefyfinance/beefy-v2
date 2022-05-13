@@ -24,6 +24,7 @@ import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
 import { InfoCardsState } from './features/data/reducers/info-cards';
 import { BridgeState } from './features/data/reducers/bridge';
+import { BridgeModalState } from './features/data/reducers/wallet/bridge-modal';
 
 export interface BeefyState {
   entities: {
@@ -56,6 +57,7 @@ export interface BeefyState {
     deposit: DepositState;
     withdraw: WithdrawState;
     boostModal: BoostModalState;
+    bridgeModal: BridgeModalState;
   };
 }
 

@@ -4,7 +4,7 @@ import { sample } from 'lodash';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
 import { ChainEntity } from '../entities/chain';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
-import { BridgeApi } from './bridge';
+import { BridgeApi } from './bridge/bridge';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
