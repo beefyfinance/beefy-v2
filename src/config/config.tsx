@@ -424,6 +424,29 @@ export const config = {
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
   },
+  emerald: {
+    name: 'Emerald',
+    chainId: 42262,
+    rpc: ['https://emerald.oasis.dev'],
+    explorerUrl: 'https://explorer.emerald.oasis.dev',
+    multicallAddress: '0xFE40f6eAD11099D91D51a945c145CFaD1DD15Bb8',
+    fetchContractDataAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
+    fetchBalancesAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
+    supportedWallets: connectors,
+    providerName: 'Oasis Emerald',
+    walletSettings: {
+      chainId: `0x${parseInt('42262', 10).toString(16)}`,
+      chainName: 'Oasis Emerald',
+      nativeCurrency: {
+        name: 'Oasis Protocol',
+        symbol: 'ROSE',
+        decimals: 18,
+      },
+      rpcUrls: ['https://emerald.oasis.dev'],
+      blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],
+    },
+    stableCoins: ['ceUSDC, USDT'],
+  },
 };
 
 /*
