@@ -39,6 +39,7 @@ import { FeeBreakdown } from '../FeeBreakdown';
 import { styles } from '../styles';
 import { TokenWithBalance } from '../TokenWithBalance';
 import { VaultBuyLinks } from '../VaultBuyLinks';
+import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 
 const useStyles = makeStyles(styles as any);
 
@@ -243,6 +244,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           type={'deposit'}
         />
         <Box mt={3}>
+          {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
           {vault.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
               {t('Deposit-Disabled')}
