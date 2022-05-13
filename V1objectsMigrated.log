@@ -1,23 +1,80 @@
 [
   {
-    "id": "emerald vault: yuzu-ceusdc-yuzu",
-    "type": "Added"
+    "id": "fantom vault: hector-tor-crv",
+    "type": "synced"
   },
   {
-    "id": "emerald vault: yuzu-wrose-weth",
-    "type": "Added"
+    "id": "fantom vault: boo-wftm-tor",
+    "type": "synced"
   },
   {
-    "id": "emerald vault: yuzu-usdt-yuzu",
-    "type": "Added"
+    "id": "polygon vault: jarvis-2sgd",
+    "type": "synced"
   },
   {
-    "id": "emerald vault: yuzu-wrose-yuzu",
-    "type": "Added"
+    "id": "polygon vault: jarvis-2cad",
+    "type": "synced"
   },
   {
-    "id": "emerald vault: yuzu-wrose-usdt",
-    "type": "Added"
+    "id": "polygon vault: jarvis-2jpy-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: jarvis-4eur",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: ape-wmatic-crystl-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: cafe-pbrew-matic-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: cafe-pbrew-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: sing-usdc-sing-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: ironswap-ice-iron-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: farmhero-quick-usdc-honor-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: farmhero-wault-usdc-honor-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: ironswap-ice-eth-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: ironswap-ice-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: jetswap-poly-pwings-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: jetswap-poly-pwings-matic-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: pzap-pzap-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: pzap-pzap-matic-eol",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
