@@ -10,7 +10,7 @@ import { VaultGov } from '../../../data/entities/vault';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
 const useStyles = makeStyles(styles as any);
 export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
@@ -18,7 +18,7 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
   const { t } = useTranslation();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const earnedToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.earnedTokenId)
+    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
 
   return (
@@ -40,6 +40,8 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
             ? t('beFTM-description')
             : vaultId === 'beefy-beJoe-earnings'
             ? t('beJOE-description')
+            : vaultId === 'beefy-beqi-earnings'
+            ? t('beQI-description')
             : t('Gov-Info1') +
               earnedToken.symbol +
               t('Gov-Info2') +

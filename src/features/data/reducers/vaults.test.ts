@@ -33,7 +33,6 @@ describe('Vaults slice tests', () => {
             earnedToken: 'ONE',
             earnedTokenAddress: '0x5b96bbaca98d777cb736dd89a519015315e00d02',
             earnContractAddress: '0x5b96bbaca98d777cb736dd89a519015315e00d02',
-            poolAddress: '0x5b96bbaca98d777cb736dd89a519015315e00d02',
             pricePerFullShare: 1,
             isGovVault: true,
             tvl: 0,

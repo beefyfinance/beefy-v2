@@ -51,7 +51,7 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <div className={classes.cardAction}>
             <LinkButton
               type="code"
-              href={`${chain.explorerUrl}/address/${vault.contractAddress}`}
+              href={`${chain.explorerUrl}/address/${vault.earnContractAddress}`}
               text={t('Strat-AddressVault')}
             />
           </div>

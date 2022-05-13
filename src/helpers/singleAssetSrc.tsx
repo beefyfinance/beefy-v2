@@ -1,30 +1,23 @@
-const singleAssetRequire = (require as any).context(
-  '../images/single-assets',
-  false,
-  /\.(svg|webp|png)$/
-);
+import { TokenEntity } from '../features/data/entities/token';
+import { ChainEntity } from '../features/data/entities/chain';
+
+const singleAssetRequire = require.context('../images/single-assets', true, /\.(svg|webp|png)$/);
 const singleAssets = Object.fromEntries(
   singleAssetRequire.keys().map(path => [path.substring(2, path.lastIndexOf('.')), path])
 );
 const singleAssetCache = {};
 
-export function getSingleAssetSrc(symbol) {
-  if (symbol in singleAssetCache) {
-    return singleAssetCache[symbol];
-  }
+export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEntity['id']) {
+  const ids = chainId ? [`${chainId}/${symbol}`, symbol] : [symbol];
 
-  if (symbol in singleAssets) {
-    const asset = singleAssetRequire(singleAssets[symbol]).default;
-    return (singleAssetCache[symbol] = asset);
-  }
+  for (const id of ids) {
+    if (id in singleAssetCache) {
+      return singleAssetCache[id];
+    }
 
-  return undefined;
-}
-
-export function getAssetSrc(uri: string) {
-  try {
-    return require(`../images/${uri}`).default;
-  } catch {
-    return undefined;
+    if (id in singleAssets) {
+      const asset = singleAssetRequire(singleAssets[id]).default;
+      return (singleAssetCache[id] = asset);
+    }
   }
 }

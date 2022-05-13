@@ -6,10 +6,10 @@ import {
   selectHasActiveFilterExcludingUserCategoryAndSort,
 } from '../../../../../data/selectors/filtered-vaults';
 import { styles } from './styles';
-import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
+import { selectIsWalletKnown } from '../../../../../data/selectors/wallet';
 import { useTranslation } from 'react-i18next';
 import { selectIsUserBalanceAvailable } from '../../../../../data/selectors/data-loader';
-import { Loader } from '../../../../../../components/loader';
+import { Loader } from '../../../../../../components/Loader';
 
 const useStyles = makeStyles(styles);
 
@@ -43,7 +43,7 @@ export const NoResults = memo(function () {
   const hasActiveFilter = useAppSelector(selectHasActiveFilterExcludingUserCategoryAndSort);
   const userCategory = useAppSelector(selectFilterUserCategory);
   const userBalanceAvailable = useAppSelector(selectIsUserBalanceAvailable);
-  const isWalletKnown = useAppSelector(selectIsWalletConnected); // TODO-> known
+  const isWalletKnown = useAppSelector(selectIsWalletKnown);
 
   if (!isWalletKnown && (userCategory === 'eligible' || userCategory === 'deposited')) {
     return <Message text="NoResults-NotConnected" />;

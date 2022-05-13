@@ -646,7 +646,7 @@ async function Po_resolveBoosts( OAO_SRC_VLTS,
 															S_NTV.toLowerCase() : O_CHN.S_GVPOOL_SFX_ALIAS) + '-eol')) && 
 															'BIFI' === O_SRC.token && (S_NTV === O_SRC.earnedToken ||  
 															'W' + S_NTV === O_SRC.earnedToken) || 'moo_beFTM' === S_ID || 
-															'moo_beJOE' === S_ID || 'moo_beQI' === S_ID)
+															'moo_beJOE' === S_ID || 'moo_beQI' === S_ID || 'moo_beCAKE' === S_ID)
 				continue;
 
 			let o_trgt;

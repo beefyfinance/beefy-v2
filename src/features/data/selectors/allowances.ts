@@ -3,15 +3,14 @@ import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 
-export const selectAllowanceByTokenId = (
+export const selectAllowanceByTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id'],
+  tokenAddress: TokenEntity['address'],
   spenderAddress: string
 ) => {
   return (
-    state.user.allowance.byChainId[chainId]?.byTokenId[tokenId]?.bySpenderAddress[
-      spenderAddress.toLowerCase()
-    ] || BIG_ZERO
+    state.user.allowance.byChainId[chainId]?.byTokenAddress[tokenAddress.toLowerCase()]
+      ?.bySpenderAddress[spenderAddress.toLocaleLowerCase()] || BIG_ZERO
   );
 };

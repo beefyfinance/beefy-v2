@@ -23,8 +23,8 @@ import { selectMinterById } from '../../selectors/minters';
 export interface AllowanceState {
   byChainId: {
     [chainId: ChainEntity['id']]: {
-      byTokenId: {
-        [tokenId: TokenEntity['id']]: {
+      byTokenAddress: {
+        [tokenAddress: TokenEntity['address']]: {
           bySpenderAddress: {
             [spenderAddress: string]: BigNumber;
           };
@@ -92,15 +92,17 @@ function addAllowancesToState(
 ) {
   let stateForChain = sliceState.byChainId[chainId];
   if (stateForChain === undefined) {
-    sliceState.byChainId[chainId] = { byTokenId: {} };
+    sliceState.byChainId[chainId] = { byTokenAddress: {} };
     stateForChain = sliceState.byChainId[chainId];
   }
 
   for (const tokenAllowance of allowances) {
-    let stateForToken = stateForChain.byTokenId[tokenAllowance.tokenId];
+    let stateForToken = stateForChain.byTokenAddress[tokenAllowance.tokenAddress.toLowerCase()];
     if (stateForToken === undefined) {
-      stateForChain.byTokenId[tokenAllowance.tokenId] = { bySpenderAddress: {} };
-      stateForToken = stateForChain.byTokenId[tokenAllowance.tokenId];
+      stateForChain.byTokenAddress[tokenAllowance.tokenAddress.toLowerCase()] = {
+        bySpenderAddress: {},
+      };
+      stateForToken = stateForChain.byTokenAddress[tokenAllowance.tokenAddress.toLowerCase()];
     }
 
     // only update data if necessary

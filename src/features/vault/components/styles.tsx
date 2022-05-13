@@ -1,14 +1,14 @@
 export const styles = theme => ({
   balanceText: {
-    fontSize: '14px',
-    fontWeight: 400,
+    fontSize: '12px',
+    fontWeight: 600,
     color: theme.palette.text.disabled,
-    letterSpacing: '0.2px',
-    lineHeight: '18px',
+    letterSpacing: '0.5px',
+    lineHeight: '20px',
+    textTransform: 'uppercase',
   },
   balanceContainer: {
     '& .MuiTypography-body1': {
-      fontSize: '14px',
       fontWeight: '600',
       textTransform: 'inherit',
       color: theme.palette.text.primary,
@@ -36,7 +36,7 @@ export const styles = theme => ({
     },
     '& .MuiButton-root': {
       fontSize: '12px',
-      fontWeight: 400,
+      fontWeight: 600,
       letterSpacing: '0.5px',
       color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
@@ -58,28 +58,22 @@ export const styles = theme => ({
     left: '12px',
   },
   btnSubmit: {
-    fontSize: '18px',
+    fontSize: '15px',
+    lineHeight: '24px',
     fontWeight: 700,
-    letterSpacing: '0.2px',
     textTransform: 'none', //'capitalize' no good due to localization
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.primary.main,
+    padding: '12px 24px',
     borderRadius: '8px',
     '&:hover': {
       backgroundColor: '#389D44',
     },
-  },
-  btnSubmitSecondary: {
-    fontSize: '18px',
-    marginTop: '12px',
-    fontWeight: 700,
-    letterSpacing: '0.2px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: '8px',
-    '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+    '&.Mui-disabled': {
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    '& + $btnSubmit': {
+      marginTop: '12px',
     },
   },
   btnContaniner: {
@@ -107,13 +101,28 @@ export const styles = theme => ({
   },
   depositTokenContainer: {
     width: 'calc(100% + 11px)',
+    marginBottom: theme.spacing(1.5),
     '& .MuiTypography-root': {
       width: '100%',
+    },
+    '& .MuiIconButton-label': {
+      padding: '0px 12px',
+    },
+    '& .MuiIconButton-root': {
+      padding: 0,
     },
     '& .MuiButtonBase-root': {
       '& .MuiIconButton-label': {
         color: '#FFF',
       },
+    },
+    '& label:last-child': {
+      marginBottom: 0,
+    },
+  },
+  removeLastItemMargin: {
+    '& $depositTokenContainer:last-child': {
+      marginBottom: 0,
     },
   },
   assetCount: {
@@ -122,6 +131,28 @@ export const styles = theme => ({
   },
   zapPromotion: {
     color: theme.palette.text.secondary,
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1.5),
+  },
+  assetsDivider: {
+    display: 'grid',
+    columnGap: '16px',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+  },
+  stakedInValue: {
+    display: 'flex',
+    alignItems: 'center',
+    '& .MuiTypography-body1': {
+      fontWeight: 600,
+      paddingLeft: '8px',
+    },
+  },
+  width50: {
+    width: '50%',
+  },
+  width100: {
+    width: '100%',
+  },
+  orange: {
+    color: theme.palette.background.vaults.boostOutline,
   },
 });

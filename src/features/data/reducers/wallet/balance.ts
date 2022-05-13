@@ -16,10 +16,10 @@ import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
 import { selectAllVaultBoostIds, selectBoostById } from '../../selectors/boosts';
 import {
-  selectGovVaultVaultIdsByOracleId,
-  selectIsStandardVaultEarnTokenId,
-  selectStandardVaultByEarnTokenId,
-  selectStandardVaultIdsByOracleId,
+  selectGovVaultVaultIdsByOracleAddress,
+  selectIsStandardVaultEarnTokenAddress,
+  selectStandardVaultByEarnTokenAddress,
+  selectStandardVaultIdsByOracleAddress,
   selectVaultById,
 } from '../../selectors/vaults';
 import { initiateMinterForm } from '../../actions/minters';
@@ -49,8 +49,8 @@ export interface BalanceState {
          */
         byChainId: {
           [chainId: ChainEntity['id']]: {
-            byTokenId: {
-              [tokenId: TokenEntity['id']]: {
+            byTokenAddress: {
+              [tokenAddress: TokenEntity['address']]: {
                 balance: BigNumber;
               };
             };
@@ -206,25 +206,33 @@ function addTokenBalanceToState(
    */
   for (const tokenBalance of balances) {
     if (walletState.tokenAmount.byChainId[chainId] === undefined) {
-      walletState.tokenAmount.byChainId[chainId] = { byTokenId: {} };
+      walletState.tokenAmount.byChainId[chainId] = { byTokenAddress: {} };
     }
 
     // only update data if necessary
     const stateForToken =
-      walletState.tokenAmount.byChainId[chainId].byTokenId[tokenBalance.tokenId];
+      walletState.tokenAmount.byChainId[chainId].byTokenAddress[
+        tokenBalance.tokenAddress.toLowerCase()
+      ];
     if (
       // state isn't already there if it's there, only if amount differ
       stateForToken === undefined ||
       !stateForToken.balance.isEqualTo(tokenBalance.amount)
     ) {
-      walletState.tokenAmount.byChainId[chainId].byTokenId[tokenBalance.tokenId] = {
+      walletState.tokenAmount.byChainId[chainId].byTokenAddress[
+        tokenBalance.tokenAddress.toLowerCase()
+      ] = {
         balance: tokenBalance.amount,
       };
 
       // if the token is the earnedToken of a vault
       // this means the user deposited in this vault
-      if (selectIsStandardVaultEarnTokenId(state, chainId, tokenBalance.tokenId)) {
-        const vaultId = selectStandardVaultByEarnTokenId(state, chainId, tokenBalance.tokenId);
+      if (selectIsStandardVaultEarnTokenAddress(state, chainId, tokenBalance.tokenAddress)) {
+        const vaultId = selectStandardVaultByEarnTokenAddress(
+          state,
+          chainId,
+          tokenBalance.tokenAddress
+        );
 
         // to decide if we want to add or remove the vault we consider both the boost and vault deposit
         // I know we are adding carrots and oignons here but it's just to check if > 0
@@ -239,11 +247,19 @@ function addTokenBalanceToState(
 
       // if the token is the oracleId of a vault
       // this means the user can deposit in a vault
-      const stdVaultIds = selectStandardVaultIdsByOracleId(state, chainId, tokenBalance.tokenId);
+      const stdVaultIds = selectStandardVaultIdsByOracleAddress(
+        state,
+        chainId,
+        tokenBalance.tokenAddress
+      );
       for (const vaultId of stdVaultIds) {
         addOrRemoveFromEligibleList(walletState, tokenBalance.amount, vaultId);
       }
-      const govVaultIds = selectGovVaultVaultIdsByOracleId(state, chainId, tokenBalance.tokenId);
+      const govVaultIds = selectGovVaultVaultIdsByOracleAddress(
+        state,
+        chainId,
+        tokenBalance.tokenAddress
+      );
       for (const vaultId of govVaultIds) {
         addOrRemoveFromEligibleList(walletState, tokenBalance.amount, vaultId);
       }
@@ -306,8 +322,9 @@ function addBoostBalanceToState(
   for (const vaultId of allVaultIds) {
     const vault = selectVaultById(state, vaultId);
     const vaultBalance =
-      walletState.tokenAmount.byChainId[vault.chainId]?.byTokenId[vault.earnedTokenId]?.balance ||
-      BIG_ZERO;
+      walletState.tokenAmount.byChainId[vault.chainId]?.byTokenAddress[
+        vault.earnedTokenAddress.toLowerCase()
+      ]?.balance || BIG_ZERO;
     let totalDepositOrRewards = new BigNumber(vaultBalance);
     for (const boostId of selectAllVaultBoostIds(state, vaultId)) {
       const boostDeposit = walletState.tokenAmount.byBoostId[boostId]?.balance || BIG_ZERO;

@@ -28,7 +28,6 @@ export interface VaultConfig {
   stratType: string; // 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
   withdrawalFee?: string | null;
   network: string;
-  poolAddress?: string | null;
   excluded?: string | null;
   isGovVault?: boolean | null;
   callFee?: number | null;
@@ -36,6 +35,7 @@ export interface VaultConfig {
   addLiquidityUrl?: string | null;
   buyTokenUrl?: string | null;
   retireReason?: string | null;
+  pauseReason?: string | null;
   removeLiquidityUrl?: string | null;
   depositFee?: string | null;
   refund?: boolean | null;
@@ -103,7 +103,6 @@ export interface ChainConfig {
   id: string;
   name: string;
   chainId: number;
-  eip1559: boolean;
   rpc: string[];
   explorerUrl: string;
   multicallAddress: string;
@@ -143,6 +142,7 @@ export interface MinterConfigTokenErc20 {
 export interface MinterConfigTokenNative {
   oracleId: string;
   symbol: string;
+  contractAddress: string;
   decimals: number;
   type: 'native';
 }
@@ -155,6 +155,8 @@ export interface MinterConfig {
   contractAddress: string;
   depositToken: MinterConfigToken;
   mintedToken: MinterConfigToken;
+  canBurnReserves: boolean;
+  reserveBalanceMethod?: string;
   vaultIds: string[];
 }
 

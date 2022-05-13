@@ -4,15 +4,12 @@ import { connect } from 'react-redux';
 import { BeefyState } from '../../../../../../redux-types';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import {
-  selectGovVaultUserStackedBalanceInOracleToken,
-  selectStandardVaultUserBalanceInOracleTokenIncludingBoosts,
+  selectGovVaultUserStackedBalanceInDepositToken,
+  selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserVaultDepositInUsd,
 } from '../../../../../data/selectors/balance';
 import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
-import {
-  selectIsBalanceHidden,
-  selectIsWalletConnected,
-} from '../../../../../data/selectors/wallet';
+import { selectIsBalanceHidden, selectIsWalletKnown } from '../../../../../data/selectors/wallet';
 import { VaultValueStat } from '../VaultValueStat';
 
 export type VaultDepositStatProps = {
@@ -29,7 +26,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) 
   const hideBalance = selectIsBalanceHidden(state);
 
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletConnected(state)
+    state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
       ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
       : true;
 
@@ -45,8 +42,8 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) 
 
   // deposit can be moo or oracle
   const deposit = isGovVault(vault)
-    ? selectGovVaultUserStackedBalanceInOracleToken(state, vault.id)
-    : selectStandardVaultUserBalanceInOracleTokenIncludingBoosts(state, vault.id);
+    ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
+    : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
 
   if (!deposit.gt(0)) {
     return {

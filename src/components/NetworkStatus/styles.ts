@@ -64,6 +64,9 @@ export const styles: Styles<any, any, any> = theme => ({
       display: 'none',
     },
   },
+  floating: {
+    zIndex: 1000,
+  },
   popoverPaper: {
     backgroundColor: 'transparent',
   },

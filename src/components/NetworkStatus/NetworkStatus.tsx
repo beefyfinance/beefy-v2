@@ -76,6 +76,7 @@ export function NetworkStatus() {
         autoWidth={false}
         autoHeight={false}
         autoHide={false}
+        className={classes.floating}
       >
         <Box className={classes.popoverSpacer} />
         <Box className={classes.popover}>

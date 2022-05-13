@@ -17,6 +17,6 @@ export const VaultIcon = memo<VaultIconProps>(function VaultIcon({ vaultId }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
 
   return (
-    <AssetsImage className={classes.vaultIcon} assetIds={vault.assetIds} imageUri={vault.logoUri} />
+    <AssetsImage className={classes.vaultIcon} assetIds={vault.assetIds} chainId={vault.chainId} />
   );
 });

@@ -26,6 +26,7 @@ export interface VaultStandard {
   name: string;
   logoUri: string;
   tokenDescription: string;
+  depositTokenAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -36,25 +37,12 @@ export interface VaultStandard {
 
   chainId: ChainEntity['id'];
 
-  /**
-   * each vault has an underlying token which is what you stake in it we identify it with the oracleId
-   *
-   * "oracleId" is the technical token ID (like "pangolin-aave.e-wavax") used to uniquely
-   * identify a token in all apis, and "token" is the name that should be displayed to
-   * the user (like "AAVE.e-AVAXLP")
-   **/
-  oracleId: TokenEntity['id'];
-
-  /**
-   * "Earned" token is the token you get back for staking into a vault
-   * Staking into a standard vault "earns" mooTokens
-   */
-  earnedTokenId: TokenEntity['id'];
+  earnedTokenAddress: string;
 
   /**
    * The vault contract address
    */
-  contractAddress: string;
+  earnContractAddress: string;
 
   // for display purpose only
   strategyType: 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
@@ -83,6 +71,9 @@ export interface VaultStandard {
   depositFee: string | null;
 
   createdAt: number;
+
+  retireReason?: string;
+  pauseReason?: string;
 }
 
 export interface VaultGov {
@@ -90,6 +81,7 @@ export interface VaultGov {
   name: string;
   logoUri: string;
   tokenDescription: string;
+  depositTokenAddress: string;
 
   /**
    * ASSETS are basically the assets that are in that vault
@@ -100,20 +92,7 @@ export interface VaultGov {
 
   chainId: ChainEntity['id'];
 
-  /**
-   * each vault has an underlying token which is what you stake in it we identify it with the oracleId
-   *
-   * "oracleId" is the technical token ID (like "pangolin-aave.e-wavax") used to uniquely
-   * identify a token in all apis, and "token" is the name that should be displayed to
-   * the user (like "AAVE.e-AVAXLP")
-   **/
-  oracleId: TokenEntity['id'];
-
-  /**
-   * "Earned" token is the token you get back for staking into a vault
-   * Staking into a gov vault "earns" native tokens
-   */
-  earnedTokenId: TokenEntity['id'];
+  earnedTokenAddress: string;
 
   /**
    * Vault address "treasury", we ask this address about user balances
@@ -153,6 +132,9 @@ export interface VaultGov {
   depositFee: string;
 
   createdAt: number;
+
+  retireReason?: string;
+  pauseReason?: string;
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {

@@ -5,12 +5,9 @@ import { BeefyState } from '../../../../../../redux-types';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import { formatBigDecimals, formatBigUsd } from '../../../../../../helpers/format';
-import {
-  selectIsBalanceHidden,
-  selectIsWalletConnected,
-} from '../../../../../data/selectors/wallet';
+import { selectIsBalanceHidden, selectIsWalletKnown } from '../../../../../data/selectors/wallet';
 import { VaultValueStat } from '../VaultValueStat';
-import { selectTokenPriceByTokenId } from '../../../../../data/selectors/tokens';
+import { selectTokenPriceByAddress } from '../../../../../data/selectors/tokens';
 
 export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];
@@ -23,7 +20,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
   const vault = selectVaultById(state, vaultId);
   const hideBalance = selectIsBalanceHidden(state);
   const isLoaded =
-    state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletConnected(state)
+    state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
       ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
       : true;
 
@@ -36,7 +33,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
       loading: true,
     };
   }
-  const tokensInWallet = selectUserBalanceOfToken(state, vault.chainId, vault.oracleId);
+  const tokensInWallet = selectUserBalanceOfToken(state, vault.chainId, vault.depositTokenAddress);
 
   if (!tokensInWallet.gt(0)) {
     return {
@@ -48,7 +45,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
     };
   }
 
-  const price = selectTokenPriceByTokenId(state, vault.oracleId);
+  const price = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
   const totalInWallet = formatBigDecimals(tokensInWallet, 4);
   const totalInWalletUsd = formatBigUsd(tokensInWallet.times(price));
 

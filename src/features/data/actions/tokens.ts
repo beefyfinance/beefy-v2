@@ -94,6 +94,7 @@ export const reloadBalanceAndAllowanceAndGovRewardsAndBoostData = createAsyncThu
     const allowanceApi = await getAllowanceApi(chain);
     const erc20Tokens = tokens.filter(isTokenErc20);
     const allowance: TokenAllowance[] = await allowanceApi.fetchTokensAllowance(
+      getState(),
       erc20Tokens,
       walletAddress,
       spenderAddress

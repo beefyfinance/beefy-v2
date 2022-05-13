@@ -1,8 +1,13 @@
 export const styles = theme => ({
   container: {
     padding: theme.spacing(3),
-    backgroundColor: '#313759',
-    borderRadius: '16px',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '12px',
+  },
+  containerBoost: {
+    padding: theme.spacing(3),
+    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    borderRadius: '12px',
   },
   containerExpired: {
     padding: '24px 24px 0.1px 24px',
@@ -48,7 +53,6 @@ export const styles = theme => ({
     color: '#ffffff',
     marginBottom: '16px',
   },
-
   body1: {
     fontSize: '12px',
     lineHeight: '20px',
@@ -57,24 +61,32 @@ export const styles = theme => ({
     letterSpacing: '0.2px',
     textTransform: 'uppercase',
   },
-  button: {
-    fontSize: '18px',
-    fontWeight: 600,
-    height: '48px',
-    lineHeight: '24px',
-    letterSpacing: '0.2px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    color: '#D1D3E0',
-    backgroundColor: '#232743',
-    borderRadius: '8px',
-    zIndex: 0,
-    marginBottom: '12px',
-    '&:hover': {
-      backgroundColor: '#232743',
+  boostStats: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+    rowGap: '16px',
+    columnGap: '16px',
+    margin: '20px 0 24px 0',
+  },
+  boostStat: {
+    '& :last-child': {
+      marginBottom: 0,
     },
-    '&:disabled': {
-      backgroundColor: '#272C47',
-      color: '#D1D3E0',
+  },
+  button: {
+    fontSize: '15px',
+    fontWeight: 700,
+    lineHeight: '24px',
+    textTransform: 'none', //'capitalize' no good due to localization
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.background.default,
+    padding: '12px 24px',
+    borderRadius: '8px',
+    '&.Mui-disabled': {
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    '& + $button': {
+      marginTop: '12px',
     },
   },
   blockBtn: {

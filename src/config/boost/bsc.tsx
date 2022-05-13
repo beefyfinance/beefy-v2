@@ -142,7 +142,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis-renbtc-charge',
-    poolId: 'ellipsis-renbtc',
+    poolId: 'ellipsis-renbtc-eol',
     name: 'ChargeDeFi',
     logo: 'uncategorized/epsRENBTC.png',
     earnedToken: 'Charge',
@@ -427,7 +427,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis-renbtc-gamexchange',
-    poolId: 'ellipsis-renbtc',
+    poolId: 'ellipsis-renbtc-eol',
     name: 'Game X Change',
     logo: 'uncategorized/epsRENBTC.png',
     earnedToken: 'EXP',
@@ -1350,7 +1350,7 @@ export const pools = [
   },
   {
     id: 'moo_cake-krown',
-    poolId: 'cake-cakev2',
+    poolId: 'cake-cakev2-eol',
     name: 'KingDefi',
     logo: 'single-assets/CAKE.svg',
     earnedToken: 'mooKingDefiKROWN',
@@ -1377,7 +1377,7 @@ export const pools = [
   },
   {
     id: 'moo_cake-cakev2',
-    poolId: 'cake-cakev2',
+    poolId: 'cake-cakev2-eol',
     name: 'Beefy',
     logo: 'single-assets/CAKE.svg',
     earnedToken: 'mooBIFI',
@@ -2055,7 +2055,7 @@ export const pools = [
   },
   {
     id: 'moo_ellipsis_3pool-zefi',
-    poolId: 'ellipsis-3eps',
+    poolId: 'ellipsis-3eps-eol',
     name: 'ZCore Finance',
     logo: 'uncategorized/eps3.png',
     earnedToken: 'ZEFI',
@@ -2504,6 +2504,31 @@ export const pools = [
         social: {
           telegram: 'https://t.me/biswap',
           twitter: 'https://twitter.com/Biswap_DEX',
+        },
+      },
+    ],
+  },
+  {
+    id: 'moo_biswap-eth-btcb-bomb',
+    poolId: 'biswap-eth-btcb',
+    name: 'Bomb.money',
+    assets: ['BTCB', 'ETH'],
+    earnedToken: 'BOMB',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0x522348779DCb2911539e76A1042aA922F9C47Ee3',
+    earnContractAddress: '0x6c335C7FC07cD5e5d3d0a16a1C9E0611f5a9d76C',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'BOMB',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: 'Bomb Money is a high-yielding algorithmic stablecoin protocol on Binance Smart Chain (BSC) that utilizes seigniorage mechanisms to maintain a 10,000:1 peg of its native $BOMB token to Bitcoin (BTC). Through this protocol, Bomb Money aims to provide attractive yield earning opportunities for Bitcoin holders while still maintaining significant Bitcoin exposure.',
+        website: 'https://www.bomb.money/',
+        social: {
+          telegram: 'https://t.me/bombmoneybsc',
+          twitter: 'https://twitter.com/BombMoneyBSC',
         },
       },
     ],

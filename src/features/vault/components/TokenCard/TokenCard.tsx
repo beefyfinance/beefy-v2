@@ -41,7 +41,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
           {isTokenErc20(token) && (
             <div className={classes.cardAction}>
               <LinkButton
-                href={`${chain.explorerUrl}/token/${token.contractAddress}`}
+                href={`${chain.explorerUrl}/token/${token.address}`}
                 className={classes.cardAction}
                 text={t('Token-Contract')}
                 type="code"

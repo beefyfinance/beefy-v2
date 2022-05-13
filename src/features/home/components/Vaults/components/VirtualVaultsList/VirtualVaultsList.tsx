@@ -54,7 +54,7 @@ type VirtualVaultsListProps = {
 };
 export const VirtualVaultsList = memo<VirtualVaultsListProps>(function ({ vaultIds }) {
   const totalVaults = vaultIds.length;
-  const minBatchSize = 5;
+  const minBatchSize = 10;
   const [renderCount, setRenderCount] = useState(minBatchSize);
   const containerRef = useRef<HTMLDivElement>();
   const bottomRef = useRef<HTMLDivElement>();
@@ -64,9 +64,10 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function ({ vaultI
     return Math.max(0, totalVaults - renderCount);
   }, [totalVaults, renderCount]);
   const placeholderStyle = useMemo<Partial<CSSProperties>>(() => {
-    const height = remainingVaults * vaultHeightEstimate;
     return {
-      height: `${height}px`,
+      height: `${remainingVaults * vaultHeightEstimate}px`,
+      borderBottomLeftRadius: '8px',
+      borderBottomRightRadius: '8px',
       backgroundSize: `100% ${vaultHeightEstimate}px`,
       backgroundRepeat: 'repeat-y',
       backgroundImage: `linear-gradient(to bottom, #2D3153 0px, #2D3153 ${
@@ -140,15 +141,18 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function ({ vaultI
   }, [onScroll]);
 
   return (
-    <div ref={containerRef}>
-      <div style={{ position: 'fixed', top: 0, left: 0, background: 'black' }}>
+    <>
+      {/*TODO: remove debug*/}
+      <div style={{ position: 'fixed', top: 0, left: 0, background: 'black', zIndex: 10000 }}>
         {renderCount}/{totalVaults}
       </div>
-      {renderVaultIds.map(vaultId => (
-        <Vault vaultId={vaultId} key={vaultId} />
-      ))}
+      <div ref={containerRef}>
+        {renderVaultIds.map(vaultId => (
+          <Vault vaultId={vaultId} key={vaultId} />
+        ))}
+      </div>
       <div ref={bottomRef} />
       <div style={placeholderStyle} ref={placeholderRef} />
-    </div>
+    </>
   );
 });

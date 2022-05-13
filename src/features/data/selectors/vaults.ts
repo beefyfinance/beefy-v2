@@ -95,40 +95,51 @@ export const selectAllGovVaultsByChainId = createSelector(
   }
 );
 
-export const selectStandardVaultIdsByOracleId = (
+export const selectStandardVaultIdsByOracleAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
+  tokenAddress: TokenEntity['address']
 ) => {
-  const vaultIds = state.entities.vaults.byChainId[chainId]?.standardVault.byOracleId[tokenId];
+  const vaultIds =
+    state.entities.vaults.byChainId[chainId]?.standardVault.byDepositTokenAddress[
+      tokenAddress.toLowerCase()
+    ];
   return vaultIds || [];
 };
 
-export const selectGovVaultVaultIdsByOracleId = (
+export const selectGovVaultVaultIdsByOracleAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
+  tokenAddress: TokenEntity['address']
 ) => {
-  const vaultIds = state.entities.vaults.byChainId[chainId]?.govVault.byOracleId[tokenId];
+  const vaultIds =
+    state.entities.vaults.byChainId[chainId]?.govVault.byDepositTokenAddress[
+      tokenAddress.toLowerCase()
+    ];
   return vaultIds || [];
 };
 
-export const selectIsStandardVaultEarnTokenId = (
+export const selectIsStandardVaultEarnTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
+  tokenAddress: TokenEntity['address']
 ) => {
   return (
-    state.entities.vaults.byChainId[chainId]?.standardVault.byEarnTokenId[tokenId] !== undefined
+    state.entities.vaults.byChainId[chainId]?.standardVault.byEarnedTokenAddress[
+      tokenAddress.toLowerCase()
+    ] !== undefined
   );
 };
 
-export const selectStandardVaultByEarnTokenId = (
+export const selectStandardVaultByEarnTokenAddress = (
   state: BeefyState,
   chainId: ChainEntity['id'],
-  tokenId: TokenEntity['id']
+  tokenAddress: TokenEntity['address']
 ) => {
-  const vaultId = state.entities.vaults.byChainId[chainId]?.standardVault.byEarnTokenId[tokenId];
+  const vaultId =
+    state.entities.vaults.byChainId[chainId]?.standardVault.byEarnedTokenAddress[
+      tokenAddress.toLowerCase()
+    ];
   if (vaultId === undefined) {
     throw new Error(`Vault id by earn token id not found`);
   }

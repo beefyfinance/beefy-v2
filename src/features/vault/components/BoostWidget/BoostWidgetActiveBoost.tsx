@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Button, makeStyles, Typography, Grid, Modal } from '@material-ui/core';
+import { Box, Button, makeStyles, Modal, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover/Popover';
 import { formatBigDecimals } from '../../../../helpers/format';
@@ -14,7 +14,7 @@ import { selectBoostById, selectBoostPeriodFinish } from '../../../data/selector
 import { Step } from '../../../../components/Steps/types';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
-import { selectTokenById } from '../../../data/selectors/tokens';
+import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import {
   selectBoostRewardsTokenEntity,
   selectBoostUserBalanceInToken,
@@ -35,14 +35,14 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   const isBoosted = true;
 
   const mooToken = useSelector((state: BeefyState) =>
-    selectTokenById(state, vault.chainId, vault.earnedTokenId)
+    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
   const rewardToken = useSelector((state: BeefyState) =>
     selectBoostRewardsTokenEntity(state, boost.id)
   );
 
   const mooTokenBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenId)
+    selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenAddress)
   );
   const boostBalance = useSelector((state: BeefyState) =>
     selectBoostUserBalanceInToken(state, boost.id)
@@ -58,7 +58,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
+  const isWalletConnected = useSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useSelector(
     (state: BeefyState) => selectCurrentChainId(state) === boost.chainId
   );
@@ -72,6 +72,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
     setDw(deposit);
     setInputModal(true);
   }
+
   const closeInputModal = () => {
     setInputModal(false);
   };
@@ -115,7 +116,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.containerBoost}>
       <Box display="flex" alignItems="center">
         <img
           alt="fire"
@@ -132,36 +133,36 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
           />
         </Box>
       </Box>
-      <Grid container>
-        <Grid item xs={6}>
+      <div className={classes.boostStats}>
+        <div className={classes.boostStat}>
           <Typography className={classes.body1}>
             {t('Boost-Balance', { mooToken: mooToken.symbol })}
           </Typography>
           <Typography className={classes.h2}>{formatBigDecimals(mooTokenBalance, 8)}</Typography>
-        </Grid>
-        <Grid item xs={6}>
+        </div>
+        <div className={classes.boostStat}>
           <Typography className={classes.body1}>
             {t('Boost-Balance-Staked', { mooToken: mooToken.symbol })}
           </Typography>
           <Typography className={classes.h2}>{formatBigDecimals(boostBalance, 8)}</Typography>
-        </Grid>
-        <Grid item xs={6}>
+        </div>
+        <div className={classes.boostStat}>
           <Typography className={classes.body1}>{t('Boost-Rewards')}</Typography>
           <Typography className={classes.h2}>
             {formatBigDecimals(boostPendingRewards, 8)} {rewardToken.symbol}
           </Typography>
-        </Grid>
+        </div>
         {!isPreStake ? (
-          <Grid item xs={6}>
+          <div className={classes.boostStat}>
             <Typography className={classes.body1}>{t('Boost-Ends')}</Typography>
             <Typography className={classes.countDown}>
               <StakeCountdown periodFinish={periodFinish} />
             </Typography>
-          </Grid>
+          </div>
         ) : (
           <></>
         )}
-      </Grid>
+      </div>
       {isWalletConnected ? (
         !isWalletOnVaultChain ? (
           <Button
