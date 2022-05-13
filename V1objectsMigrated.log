@@ -1,55 +1,23 @@
 [
   {
-    "id": "fantom vault: scream-ftm",
-    "type": "synced"
+    "id": "emerald vault: yuzu-ceusdc-yuzu",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: scream-spell",
-    "type": "synced"
+    "id": "emerald vault: yuzu-wrose-weth",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: scream-tusd",
-    "type": "synced"
+    "id": "emerald vault: yuzu-usdt-yuzu",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: scream-dola",
-    "type": "synced"
+    "id": "emerald vault: yuzu-wrose-yuzu",
+    "type": "Added"
   },
   {
-    "id": "fantom vault: scream-frax",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-mim",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-crv",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-link",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-usdc",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-wbtc",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-dai",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-eth",
-    "type": "synced"
-  },
-  {
-    "id": "fantom vault: scream-fusdt",
-    "type": "synced"
+    "id": "emerald vault: yuzu-wrose-usdt",
+    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
