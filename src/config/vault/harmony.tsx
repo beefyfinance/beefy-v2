@@ -144,6 +144,7 @@ export const pools = [
       'MCAP_LARGE',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     createdAt: 1631282733,
   },
