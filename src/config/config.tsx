@@ -214,6 +214,7 @@ export const config = {
       'USTw',
       'USTaxl',
       'USDL',
+      'TOR',
     ],
   },
   harmony: {
