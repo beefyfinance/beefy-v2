@@ -281,7 +281,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'DOLA',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['DOLA'],
     risks: [
@@ -298,6 +298,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0x3129662808bEC728a27Ab6a6b9AFd3cBacA8A43c',
     network: 'fantom',
     createdAt: 1635454839,
+    depositsPaused: true,
   },
   {
     id: 'beets-guqin-qi-2',
@@ -597,7 +598,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'FRAX',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['FRAX'],
     risks: [
@@ -613,6 +614,7 @@ export const pools = [
     buyTokenUrl: 'https://app.frax.finance/crosschain',
     network: 'fantom',
     createdAt: 1634500757,
+    depositsPaused: true,
   },
   {
     id: 'scream-mim',
@@ -631,7 +633,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'MIM',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['MIM'],
     risks: [
@@ -648,6 +650,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1',
     network: 'fantom',
     createdAt: 1634453638,
+    depositsPaused: true,
   },
   {
     id: 'spirit-wmemo-mim',
@@ -1050,7 +1053,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'CRV',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['CRV'],
     risks: [
@@ -1067,6 +1070,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0x1E4F97b9f9F913c46F1632781732927B9019C68b',
     network: 'fantom',
     createdAt: 1631727659,
+    depositsPaused: true,
   },
   {
     id: 'scream-link',
@@ -1085,7 +1089,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'LINK',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['LINK'],
     risks: [
@@ -1102,6 +1106,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0xb3654dc3D10Ea7645f8319668E8F54d2574FBdC8',
     network: 'fantom',
     createdAt: 1631726729,
+    depositsPaused: true,
   },
   {
     id: 'boo-boo',
@@ -1190,7 +1195,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'WFTM',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['FTM'],
     risks: [
@@ -1206,6 +1211,7 @@ export const pools = [
     buyTokenUrl: 'https://spooky.fi/#/swap?outputCurrency=FTM',
     network: 'fantom',
     createdAt: 1628734094,
+    depositsPaused: true,
   },
   {
     id: 'scream-usdc',
@@ -1224,7 +1230,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'USDC',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['USDC'],
     risks: [
@@ -1241,6 +1247,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
     network: 'fantom',
     createdAt: 1628627757,
+    depositsPaused: true,
   },
   {
     id: 'scream-wbtc',
@@ -1259,7 +1266,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'WBTC',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['WBTC'],
     risks: [
@@ -1276,6 +1283,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11',
     network: 'fantom',
     createdAt: 1628739572,
+    depositsPaused: true,
   },
   {
     id: 'scream-dai',
@@ -1294,7 +1302,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'DAI',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['DAI'],
     risks: [
@@ -1311,6 +1319,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E',
     network: 'fantom',
     createdAt: 1628739318,
+    depositsPaused: true,
   },
   {
     id: 'scream-eth',
@@ -1329,7 +1338,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'ETH',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['ETH'],
     risks: [
@@ -1346,6 +1355,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d',
     network: 'fantom',
     createdAt: 1628739417,
+    depositsPaused: true,
   },
   {
     id: 'scream-fusdt',
@@ -1364,7 +1374,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'USDT',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['fUSDT'],
     risks: [
@@ -1381,6 +1391,7 @@ export const pools = [
       'https://spooky.fi/#/swap?outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A',
     network: 'fantom',
     createdAt: 1628739191,
+    depositsPaused: true,
   },
   {
     id: 'boo-yfi-eth',
@@ -2153,7 +2164,7 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'TUSD',
     oraclePrice: 0,
-    status: 'active',
+    status: 'paused',
     platform: 'Scream',
     assets: ['TUSD'],
     risks: [
@@ -2172,6 +2183,7 @@ export const pools = [
     showWarning: false,
     warning: 'liquidity',
     createdAt: 1637875008,
+    depositsPaused: true,
   },
   {
     id: 'beets-solana-sonata',
@@ -3066,8 +3078,8 @@ export const pools = [
     oracle: 'tokens',
     oracleId: 'SPELL',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    depositsPaused: true,
+    status: 'paused',
     platform: 'Scream',
     assets: ['SPELL'],
     risks: [

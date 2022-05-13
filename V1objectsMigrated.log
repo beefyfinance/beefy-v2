@@ -1,38 +1,54 @@
 [
   {
-    "id": "bsc vault: cakev2-ust-busd",
+    "id": "fantom vault: scream-ftm",
     "type": "synced"
   },
   {
-    "id": "avax vault: blizz-avax-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: blizz-eth-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: blizz-wbtc-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: blizz-avax",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: blizz-eth",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: blizz-wbtc",
-    "type": "REMOVED"
-  },
-  {
-    "id": "harmony vault: sushi-one-ust-1eth",
+    "id": "fantom vault: scream-spell",
     "type": "synced"
   },
   {
-    "id": "aurora vault: rose-ust-3pool",
+    "id": "fantom vault: scream-tusd",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-dola",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-frax",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-mim",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-crv",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-link",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-usdc",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-wbtc",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-dai",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-eth",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: scream-fusdt",
     "type": "synced"
   },
   {
