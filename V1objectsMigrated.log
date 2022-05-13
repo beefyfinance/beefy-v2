@@ -1,44 +1,39 @@
 [
   {
-    "id": "bsc vault: cakev2-gal-bnb",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: spirit-sftmx-ftm",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: beets-god-between-stables-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "fantom vault: jetswap-fantom-fusdt-usdc",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: quick-eth-newquick",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-usdc-newquick",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-newquick",
-    "type": "Added"
-  },
-  {
-    "id": "polygon vault: quick-quick",
+    "id": "bsc vault: cakev2-ust-busd",
     "type": "synced"
   },
   {
-    "id": "avax vault: png-fitfi-wavax",
+    "id": "avax vault: blizz-avax-pause",
     "type": "Added"
   },
   {
-    "id": "aurora vault: tri-tri-usdt",
+    "id": "avax vault: blizz-eth-pause",
     "type": "Added"
+  },
+  {
+    "id": "avax vault: blizz-wbtc-pause",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: blizz-avax",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax vault: blizz-eth",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax vault: blizz-wbtc",
+    "type": "REMOVED"
+  },
+  {
+    "id": "harmony vault: sushi-one-ust-1eth",
+    "type": "synced"
+  },
+  {
+    "id": "aurora vault: rose-ust-3pool",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

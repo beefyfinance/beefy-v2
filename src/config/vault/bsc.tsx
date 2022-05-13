@@ -6544,10 +6544,10 @@ export const pools = [
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
-      'IL_NONE',
       'MCAP_LARGE',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     createdAt: 1619369585,
   },
@@ -19888,10 +19888,10 @@ export const pools = [
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
-      'IL_NONE',
       'MCAP_LARGE',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
