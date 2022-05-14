@@ -182,11 +182,6 @@ function addGlobalAsyncThunkActions(
       error: msg,
       alreadyLoadedOnce: sliceState.global[stateKey].alreadyLoadedOnce,
     };
-
-    // something got rejected, we want to auto-open the indicator
-    if (openNetworkModalOnReject) {
-      sliceState.statusIndicator.open = true;
-    }
   });
   builder.addCase(action.fulfilled, sliceState => {
     sliceState.global[stateKey] = dataLoaderStateFulfilled;
@@ -224,9 +219,6 @@ function addByChainAsyncThunkActions<ActionParams extends { chainId: string }>(
         status: 'rejected',
         error: msg,
       };
-
-      // something got rejected, we want to auto-open the indicator
-      sliceState.statusIndicator.open = true;
     }
   });
   builder.addCase(action.fulfilled, (sliceState, action) => {
