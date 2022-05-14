@@ -425,7 +425,7 @@ export const config = {
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
   },
   emerald: {
-    name: 'Emerald',
+    name: 'Oasis',
     chainId: 42262,
     rpc: ['https://emerald.oasis.dev'],
     explorerUrl: 'https://explorer.emerald.oasis.dev',
