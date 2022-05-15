@@ -312,7 +312,7 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
-    rpc: ['https://evm-cronos.crypto.org'],
+    rpc: ['https://evm.cronos.org'],
     explorerUrl: 'https://cronoscan.com/',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     fetchContractDataAddress: '0x985024de164CbBd5BCFD0bBE48Ac3e16374c0449',
@@ -327,7 +327,7 @@ export const config = {
         symbol: 'CRO',
         decimals: 18,
       },
-      rpcUrls: ['https://evm-cronos.crypto.org'],
+      rpcUrls: ['https://evm.cronos.org'],
       blockExplorerUrls: ['https://cronoscan.com/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
