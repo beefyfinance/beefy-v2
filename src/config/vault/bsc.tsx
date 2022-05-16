@@ -20039,7 +20039,7 @@ export const pools = [
     status: 'active',
     platform: 'Ellipsis',
     assets: ['USDD', 'BUSD', 'USDT', 'USDC'],
-    risks: ['COMPLEXITY_LOW', 'NEW_STRAT', 'IL_NONE', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
+    risks: ['COMPLEXITY_LOW', 'NEW_STRAT', 'ALGO_STABLE', 'IL_NONE', 'MCAP_LARGE', 'AUDIT', 'CONTRACTS_VERIFIED'],
     stratType: 'StratMultiLP',
     addLiquidityUrl: 'https://ellipsis.finance/pool/0xC2cF01F785C587645440ccD488B188945C9505e7',
     buyTokenUrl: 'https://ellipsis.finance/pool/0xC2cF01F785C587645440ccD488B188945C9505e7',
