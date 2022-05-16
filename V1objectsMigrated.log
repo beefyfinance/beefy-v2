@@ -1,80 +1,91 @@
 [
   {
-    "id": "fantom vault: hector-tor-crv",
+    "id": "bsc vault: ellipsis-usdd",
+    "type": "Added"
+  },
+  {
+    "id": "bsc vault: memefarm-ape-bnb",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: curve-ftm-tricrypto",
     "type": "synced"
   },
   {
-    "id": "fantom vault: boo-wftm-tor",
+    "id": "fantom vault: curve-ftm-ren",
     "type": "synced"
   },
   {
-    "id": "polygon vault: jarvis-2sgd",
+    "id": "fantom vault: boo-dola-inv-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-multichain-maxi-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-boomer-beets-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-gelato-genesis-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon vault: curve-poly-eurt",
     "type": "synced"
   },
   {
-    "id": "polygon vault: jarvis-2cad",
+    "id": "polygon vault: curve-am3crv",
     "type": "synced"
   },
   {
-    "id": "polygon vault: jarvis-2jpy-eol",
-    "type": "synced",
-    "EOLd": true
-  },
-  {
-    "id": "polygon vault: jarvis-4eur",
+    "id": "polygon vault: curve-poly-ren",
     "type": "synced"
   },
   {
-    "id": "polygon vault: ape-wmatic-crystl-eol",
+    "id": "polygon vault: curve-poly-atricrypto3",
     "type": "synced"
   },
   {
-    "id": "polygon vault: cafe-pbrew-matic-eol",
+    "id": "polygon vault: tetu-matic-tetu-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon vault: sushi-usdc-tusd-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax vault: curve-avax-atricrypto",
     "type": "synced"
   },
   {
-    "id": "polygon vault: cafe-pbrew-usdc-eol",
+    "id": "avax vault: curve-avax-ren",
     "type": "synced"
   },
   {
-    "id": "polygon vault: sing-usdc-sing-eol",
+    "id": "avax vault: curve-avax-av3crv",
     "type": "synced"
   },
   {
-    "id": "polygon vault: ironswap-ice-iron-eol",
+    "id": "arbitrum vault: curve-arb-tricrypto",
     "type": "synced"
   },
   {
-    "id": "polygon vault: farmhero-quick-usdc-honor-eol",
+    "id": "arbitrum vault: curve-arb-2pool",
     "type": "synced"
   },
   {
-    "id": "polygon vault: farmhero-wault-usdc-honor-eol",
+    "id": "arbitrum vault: curve-arb-ren",
     "type": "synced"
   },
   {
-    "id": "polygon vault: ironswap-ice-eth-eol",
-    "type": "synced"
+    "id": "moonriver vault: sushi-mr-eth-wbtc-eol",
+    "type": "REMOVED"
   },
   {
-    "id": "polygon vault: ironswap-ice-usdc-eol",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: jetswap-poly-pwings-eol",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: jetswap-poly-pwings-matic-eol",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: pzap-pzap-usdc-eol",
-    "type": "synced"
-  },
-  {
-    "id": "polygon vault: pzap-pzap-matic-eol",
-    "type": "synced"
+    "id": "aurora vault: tri-matic-near-eol",
+    "type": "REMOVED"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
