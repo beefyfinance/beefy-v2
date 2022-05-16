@@ -33,7 +33,7 @@ export const pools = [
       'https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xf02b3e437304892105992512539F769423a515Cb',
     buyTokenUrl: 'https://app.yuzu-swap.com/#/swap',
     createdAt: 1652382925,
-    network: 'emerald',
+    network: 'oasis',
   },
   {
     id: 'yuzu-wrose-weth',
@@ -69,7 +69,7 @@ export const pools = [
       'https://app.yuzu-swap.com/#/add/0x3223f17957Ba502cbe71401D55A0DB26E5F7c68F/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733',
     buyTokenUrl: 'https://app.yuzu-swap.com/#/swap',
     createdAt: 1652382924,
-    network: 'emerald',
+    network: 'oasis',
   },
   {
     id: 'yuzu-usdt-yuzu',
@@ -105,7 +105,7 @@ export const pools = [
       'https://app.yuzu-swap.com/#/add/0xdC19A122e268128B5eE20366299fc7b5b199C8e3/0xf02b3e437304892105992512539F769423a515Cb',
     buyTokenUrl: 'https://app.yuzu-swap.com/#/swap',
     createdAt: 1652382923,
-    network: 'emerald',
+    network: 'oasis',
   },
   {
     id: 'yuzu-wrose-yuzu',
@@ -141,7 +141,7 @@ export const pools = [
       'https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xf02b3e437304892105992512539F769423a515Cb',
     buyTokenUrl: 'https://app.yuzu-swap.com/#/swap',
     createdAt: 1652382922,
-    network: 'emerald',
+    network: 'oasis',
   },
   {
     id: 'yuzu-wrose-usdt',
@@ -177,6 +177,6 @@ export const pools = [
       'https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xdC19A122e268128B5eE20366299fc7b5b199C8e3',
     buyTokenUrl: 'https://app.yuzu-swap.com/#/swap',
     createdAt: 1652382921,
-    network: 'emerald',
+    network: 'oasis',
   },
 ];

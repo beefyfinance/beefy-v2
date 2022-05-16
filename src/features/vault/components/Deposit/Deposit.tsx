@@ -244,7 +244,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           type={'deposit'}
         />
         <Box mt={3}>
-          {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+          {vault.chainId === 'oasis' ? <EmeraldGasNotice /> : null}
           {vault.status !== 'active' ? (
             <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
               {t('Deposit-Disabled')}

@@ -439,7 +439,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           type={'withdraw'}
         />
         <Box mt={3}>
-          {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+          {vault.chainId === 'oasis' ? <EmeraldGasNotice /> : null}
           {isWalletConnected ? (
             !isWalletOnVaultChain ? (
               <>
