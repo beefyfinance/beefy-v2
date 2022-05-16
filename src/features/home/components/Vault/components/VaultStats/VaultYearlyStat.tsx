@@ -12,8 +12,7 @@ import {
 } from '../../../../../data/selectors/apy';
 import { selectIsVaultBoosted } from '../../../../../data/selectors/boosts';
 import { useAppSelector } from '../../../../../../store';
-import { IconWithTooltip } from '../../../../../../components/Tooltip';
-import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent';
+import { InterestTooltipContent } from '../InterestTooltipContent';
 import { AllValuesAsString } from '../../../../../data/utils/types-utils';
 import { TotalApy } from '../../../../../data/reducers/apy';
 
@@ -71,17 +70,17 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
     blur: false,
     loading: !isLoaded,
     boosted: isBoosted,
-    tooltip: <YearlyTooltip vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
+    tooltip: <YearlyTooltipContent vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
   };
 }
 
-type YearlyTooltipProps = {
+type YearlyTooltipContentProps = {
   vaultId: VaultEntity['id'];
   isBoosted: boolean;
   rates: AllValuesAsString<TotalApy>;
 };
 
-const YearlyTooltip = memo<YearlyTooltipProps>(function YearlyTooltip({
+const YearlyTooltipContent = memo<YearlyTooltipContentProps>(function YearlyTooltip({
   vaultId,
   isBoosted,
   rates,
@@ -126,5 +125,5 @@ const YearlyTooltip = memo<YearlyTooltipProps>(function YearlyTooltip({
     return items.length ? items : null;
   }, [isGovVault, isBoosted, rates]);
 
-  return <IconWithTooltip content={<InterestTooltipContent rows={rows} />} />;
+  return <InterestTooltipContent rows={rows} />;
 });

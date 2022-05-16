@@ -39,7 +39,13 @@ export const ExtendedFiltersButton = memo<ExtendedFiltersButtonProps>(
 
     return (
       <>
-        <Button className={clsx(className)} variant="filter" ref={anchorEl} onClick={handleOpen}>
+        <Button
+          className={clsx(className)}
+          variant="filter"
+          ref={anchorEl}
+          onClick={handleOpen}
+          active={isOpen}
+        >
           {count > 0 ? (
             <span className={classes.badge} data-count={count} />
           ) : (

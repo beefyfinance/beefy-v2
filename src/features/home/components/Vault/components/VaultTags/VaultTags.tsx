@@ -14,11 +14,13 @@ import {
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { VaultTag } from './VaultTag';
+import { VaultTag, VaultTagWithTooltip } from './VaultTag';
 import { useTranslation } from 'react-i18next';
 import { ChainEntity } from '../../../../../data/entities/chain';
 import { TokenEntity } from '../../../../../data/entities/token';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import { useIsOverflowingHorizontally } from '../../../../../../helpers/overflow';
 
 const useStyles = makeStyles(styles);
 
@@ -29,11 +31,18 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId 
   const classes = useStyles();
   const { t } = useTranslation();
   const boost = useAppSelector(state => selectBoostById(state, boostId));
+  const { isOverflowing, ref } = useIsOverflowingHorizontally();
 
   return (
-    <VaultTag className={classes.vaultTagBoost}>
+    <VaultTagWithTooltip
+      content={<BasicTooltipContent title={boost.name} />}
+      placement="bottom"
+      disable={!isOverflowing}
+      className={classes.vaultTagBoost}
+      ref={ref}
+    >
       {t('VaultTag-BoostedByPartner', { partner: boost.name })}
-    </VaultTag>
+    </VaultTagWithTooltip>
   );
 });
 

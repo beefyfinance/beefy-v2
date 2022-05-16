@@ -11,6 +11,7 @@ export type CommonButtonProps = {
   className?: string;
   borderless?: boolean;
   fullWidth?: boolean;
+  active?: boolean;
   variant?: 'default' | 'filter' | 'success';
   component?: 'button' | 'a';
 };
@@ -22,7 +23,15 @@ export type ButtonLinkProps = CommonButtonProps & LinkProps;
 
 export const Button = memo(
   forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-    { children, className, borderless = false, fullWidth = false, variant = 'default', ...rest },
+    {
+      children,
+      className,
+      borderless = false,
+      fullWidth = false,
+      active = false,
+      variant = 'default',
+      ...rest
+    },
     ref
   ) {
     const classes = useStyles();
@@ -34,6 +43,7 @@ export const Button = memo(
         className={clsx(classes.button, classes[variant], className, {
           [classes.borderless]: borderless,
           [classes.fullWidth]: fullWidth,
+          [classes.active]: active,
         })}
       >
         {children}

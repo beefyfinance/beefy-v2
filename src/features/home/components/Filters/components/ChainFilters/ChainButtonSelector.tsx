@@ -32,7 +32,7 @@ const ChainButton = memo<ChainButtonProps>(function ({ id, selected, onChange })
       disableFocusListener
       disableTouchListener
       title={chain.name}
-      placement="bottom-start"
+      placement="top-start"
       classes={{ tooltip: classes.tooltip }}
     >
       <button

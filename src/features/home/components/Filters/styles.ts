@@ -47,7 +47,7 @@ export const styles = (theme: Theme) => ({
   clear: {},
   button: {
     width: 'auto',
-    flexBasis: 'calc(50% - 8px)',
+    flexBasis: 'calc(50% - 16px)',
     flexShrink: 0,
     flexGrow: 0,
     [theme.breakpoints.up('md')]: {

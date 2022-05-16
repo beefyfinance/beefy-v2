@@ -12,7 +12,7 @@ const _LabeledStat = ({
   variant = 'small',
 }: {
   value: ReactNode;
-  boosted: boolean;
+  boosted?: ReactNode;
   variant: 'small' | 'large';
 }) => {
   const classes = useStyles();

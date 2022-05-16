@@ -19,4 +19,7 @@ export const styles = (theme: Theme) => ({
     lineHeight: '24px',
     color: '#D0D0DA',
   },
+  extra: {
+    marginTop: '24px',
+  },
 });

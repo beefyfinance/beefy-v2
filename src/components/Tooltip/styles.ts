@@ -1,8 +1,7 @@
 import { Theme } from '@material-ui/core/styles';
 
-const borderWidth = 2;
-const arrowWidth = 24;
-const arrowHeight = 12;
+const arrowWidth = 12;
+const arrowHeight = 8;
 
 export const styles = (theme: Theme) => ({
   trigger: {
@@ -22,24 +21,21 @@ export const styles = (theme: Theme) => ({
   content: {
     fontFamily: theme.typography.fontFamily,
     fontWeight: 400,
-    fontSize: '14px',
-    lineHeight: '18px',
+    fontSize: '15px',
+    lineHeight: '24px',
     color: '#272B4A',
-    padding: '16px',
+    padding: '12px 16px',
     background: '#fff',
-    border: `${borderWidth}px solid #E5E5E5`,
-    filter: 'drop-shadow(0px 0px 40px #0A0F2B)',
-    borderRadius: '10px',
-    maxWidth: '350px',
-    minWidth: '250px',
+    borderRadius: '8px',
+    maxWidth: 'min(100%, 350px)',
     textAlign: 'left' as const,
   },
   tooltip: {
     zIndex: 1000,
     '&[x-placement*="top"]': {
-      marginBottom: `${arrowHeight - borderWidth}px`,
+      marginBottom: `${arrowHeight}px`,
       '& $arrow': {
-        bottom: `-${arrowHeight - borderWidth}px`,
+        bottom: `-${arrowHeight}px`,
         '&::before': {
           borderWidth: `${arrowHeight}px ${arrowWidth / 2}px 0 ${arrowWidth / 2}px`,
           borderColor: '#fff transparent transparent transparent',
@@ -47,9 +43,9 @@ export const styles = (theme: Theme) => ({
       },
     },
     '&[x-placement*="bottom"]': {
-      marginTop: `${arrowHeight - borderWidth}px`,
+      marginTop: `${arrowHeight}px`,
       '& $arrow': {
-        top: `-${arrowHeight - borderWidth}px`,
+        top: `-${arrowHeight}px`,
         '&::before': {
           borderWidth: `0 ${arrowWidth / 2}px ${arrowHeight}px ${arrowWidth / 2}px`,
           borderColor: 'transparent transparent #fff transparent',
@@ -57,9 +53,9 @@ export const styles = (theme: Theme) => ({
       },
     },
     '&[x-placement*="left"]': {
-      marginRight: `${arrowHeight - borderWidth}px`,
+      marginRight: `${arrowHeight}px`,
       '& $arrow': {
-        right: `-${arrowHeight - borderWidth}px`,
+        right: `-${arrowHeight}px`,
         '&::before': {
           borderWidth: `${arrowWidth / 2}px 0 ${arrowWidth / 2}px ${arrowHeight}px`,
           borderColor: ' transparent transparent transparent #fff',
@@ -67,9 +63,9 @@ export const styles = (theme: Theme) => ({
       },
     },
     '&[x-placement*="right"]': {
-      marginLeft: `${arrowHeight - borderWidth}px`,
+      marginLeft: `${arrowHeight}px`,
       '& $arrow': {
-        left: `-${arrowHeight - borderWidth}px`,
+        left: `-${arrowHeight}px`,
         '&::before': {
           borderWidth: `${arrowWidth / 2}px ${arrowHeight}px ${arrowWidth / 2}px 0`,
           borderColor: 'transparent #fff transparent transparent',
@@ -95,13 +91,16 @@ export const styles = (theme: Theme) => ({
   },
   basicTitle: {
     fontFamily: theme.typography.fontFamily,
-    fontWeight: 600,
-    fontSize: '14px',
-    lineHeight: '18px',
-    letterSpacing: '1px',
-    textTransform: 'uppercase' as const,
+    fontWeight: 700,
+    fontSize: '15px',
+    lineHeight: '24px',
     color: '#272B4A',
-    marginBottom: '8px',
   },
-  basicContent: {},
+  basicContent: {
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: 400,
+    fontSize: '15px',
+    lineHeight: '24px',
+    color: '#272B4A',
+  },
 });

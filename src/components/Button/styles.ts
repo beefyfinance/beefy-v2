@@ -34,6 +34,7 @@ export const styles = (theme: Theme) => ({
   fullWidth: {
     width: '100%',
   },
+  active: {},
   default: {
     color: '#D0D0DA',
     backgroundColor: '#1B1E31',
@@ -50,7 +51,17 @@ export const styles = (theme: Theme) => ({
     borderColor: '#303550',
     '&:hover, &:focus': {
       color: '#D0D0DA',
-      backgroundColor: 'rgba(245, 245, 255, 0.08)',
+      backgroundColor: '#262A40',
+      borderColor: '#303550',
+    },
+    '&:active, &$active': {
+      color: '#F5F5FF',
+      backgroundColor: '#303550',
+      borderColor: '#303550',
+    },
+    '&:disabled': {
+      color: '#8A8EA8',
+      backgroundColor: '#262A40',
       borderColor: '#303550',
     },
   },

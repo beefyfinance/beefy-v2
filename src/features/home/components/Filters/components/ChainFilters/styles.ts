@@ -20,7 +20,6 @@ export const styles = (theme: Theme) => ({
     boxShadow: 'none',
     flexGrow: 1,
     flexShrink: 0,
-    flexBasis: '68px',
     padding: `${12 - 2}px 0`,
     border: `solid 2px ${theme.palette.background.filters.outline}`,
     borderRadius: '6px',

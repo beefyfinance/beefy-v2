@@ -7,17 +7,15 @@ export const styles = theme => ({
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    margin: 'auto 0 4px 4px',
+    margin: 'auto 0 5px 4px',
   },
   label: {
     color: 'inherit',
     fontFamily: theme.typography.fontFamily,
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '18px',
+    fontWeight: 700,
+    fontSize: '15px',
     lineHeight: '24px',
     textAlign: 'center' as const,
-    letterSpacing: '-0.1px',
   },
   bar: {
     backgroundColor: theme.palette.text.disabled,
@@ -37,7 +35,6 @@ export const styles = theme => ({
     height: '19px',
   },
   withSizeLarge: {
-    marginBottom: '5px',
     '& $label': {
       fontSize: '36px',
       lineHeight: '30px',
@@ -53,7 +50,6 @@ export const styles = theme => ({
     },
   },
   withSizeMedium: {
-    marginBottom: '5px',
     '& $label': {
       fontSize: '24px',
       lineHeight: '24px',

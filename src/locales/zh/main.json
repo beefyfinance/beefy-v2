@@ -67,7 +67,7 @@
   "Filter-Blockchn": "区块链:",
   "Filter-BlockchnMultiple": "多重选择",
   "Filter-Showing": "显示 {{number}}/{{count}}",
-  "Filter-Reset": "清除全部",
+  "Filter-ClearAll": "清除全部",
   "Filter-Apply": "套用筛选",
   "Filter-ShowingVaults": "显示 {{number}} 个金库",
   "Filter-LoadingSearch": "加载中...",

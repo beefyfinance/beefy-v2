@@ -6,9 +6,9 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { VaultValueStat } from '../VaultValueStat';
 import { SafetyScore, SafetyScoreProps } from '../../../../../../components/SafetyScore';
 import { useTranslation } from 'react-i18next';
-import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip';
 import { useMediaQuery } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles';
+import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 
 export type VaultSafetyStatProps = {
   vaultId: VaultEntity['id'];
@@ -26,7 +26,7 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultSafetyStatProps) {
     subValue: null,
     blur: false,
     loading: false,
-    tooltip: <SafetyTooltip />,
+    tooltip: <SafetyTooltipContent />,
   };
 }
 
@@ -36,7 +36,7 @@ const StatSafetyScore = memo<StatSafetyScoreProps>(function SafetyTooltip({ scor
   return <SafetyScore score={score} size="sm" align={alignRight ? 'right' : 'left'} />;
 });
 
-const SafetyTooltip = memo(function SafetyTooltip() {
+const SafetyTooltipContent = memo(function SafetyTooltip() {
   const { t } = useTranslation();
-  return <IconWithBasicTooltip title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />;
+  return <BasicTooltipContent title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />;
 });

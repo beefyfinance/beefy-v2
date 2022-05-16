@@ -180,7 +180,7 @@ function _YearlyApyStats({
       value={
         <LabeledStat
           variant={variant}
-          boosted={isBoosted && shouldShowApy}
+          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalApy : null}
           value={shouldShowApy ? formatted.totalApy : '-'}
         />
       }
@@ -234,7 +234,7 @@ function _DailyApyStats({
       value={
         <LabeledStat
           variant={variant}
-          boosted={isBoosted && shouldShowApy}
+          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalDaily : null}
           value={shouldShowApy ? formatted.totalDaily : '-'}
         />
       }

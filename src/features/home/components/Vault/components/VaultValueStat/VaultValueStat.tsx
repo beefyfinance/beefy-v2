@@ -29,7 +29,7 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
   const { t } = useTranslation();
 
   return (
-    <VaultLabelledStat label={t(label)} tooltip={tooltip}>
+    <VaultLabelledStat label={t(label)} tooltip={loading ? null : tooltip}>
       {loading ? (
         '...'
       ) : (
@@ -43,7 +43,14 @@ export const VaultValueStat = memo<VaultValueStatProps>(function VaultValueStat(
             {value}
           </div>
           {subValue ? (
-            <div className={clsx(classes.subValue, { [classes.blurValue]: blur })}>{subValue}</div>
+            <div
+              className={clsx(classes.subValue, {
+                [classes.blurValue]: blur,
+                [classes.lineThroughValue]: boosted,
+              })}
+            >
+              {subValue}
+            </div>
           ) : null}
         </>
       )}

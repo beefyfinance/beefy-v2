@@ -13,31 +13,27 @@ import {
   selectFilterSearchSortField,
 } from '../../../../../data/selectors/filtered-vaults';
 import { LabeledSelect, LabeledSelectProps } from '../../../../../../components/LabeledSelect';
-import { IconWithBasicTooltip } from '../../../../../../components/Tooltip/IconWithBasicTooltip';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-type SortButtonProps = {
+type SortIconProps = {
   direction: 'none' | 'asc' | 'desc';
-  onClick: () => void;
 };
-const SortButton = memo<SortButtonProps>(function SortIcon({ direction, onClick }) {
+const SortIcon = memo<SortIconProps>(function SortIcon({ direction }) {
   const classes = useStyles();
 
   return (
-    <button className={classes.sortButton} onClick={onClick}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 9" className={classes.sortIcon}>
-        <path
-          className={direction === 'asc' ? classes.sortIconHighlight : undefined}
-          d="M2.463.199.097 2.827a.375.375 0 0 0 .279.626h5.066a.375.375 0 0 0 .278-.626L3.355.199a.6.6 0 0 0-.892 0Z"
-        />
-        <path
-          className={direction === 'desc' ? classes.sortIconHighlight : undefined}
-          d="M3.355 8.208 5.72 5.579a.375.375 0 0 0-.278-.626H.376a.375.375 0 0 0-.279.626l2.366 2.629a.601.601 0 0 0 .892 0Z"
-        />
-      </svg>
-    </button>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 9" className={classes.sortIcon}>
+      <path
+        className={direction === 'asc' ? classes.sortIconHighlight : undefined}
+        d="M2.463.199.097 2.827a.375.375 0 0 0 .279.626h5.066a.375.375 0 0 0 .278-.626L3.355.199a.6.6 0 0 0-.892 0Z"
+      />
+      <path
+        className={direction === 'desc' ? classes.sortIconHighlight : undefined}
+        d="M3.355 8.208 5.72 5.579a.375.375 0 0 0-.278-.626H.376a.375.375 0 0 0-.279.626l2.366 2.629a.601.601 0 0 0 .892 0Z"
+      />
+    </svg>
   );
 });
 
@@ -62,23 +58,11 @@ const SortColumnHeader = memo<SortColumnHeaderProps>(function SortColumnHeader({
   }, [sortKey, onChange]);
 
   return (
-    <div className={classes.sortColumn}>
+    <button className={classes.sortColumn} onClick={handleChange}>
       {t(label)}
       {tooltip}
-      <SortButton direction={sorted} onClick={handleChange} />
-    </div>
-  );
-});
-
-const SafetyTooltip = memo(function SafetyTooltip() {
-  const classes = useStyles();
-  const { t } = useTranslation();
-  return (
-    <IconWithBasicTooltip
-      title={t('Safety-ScoreWhat')}
-      content={t('Safety-ScoreExpl')}
-      triggerClass={classes.sortTooltipIcon}
-    />
+      <SortIcon direction={sorted} />
+    </button>
   );
 });
 
@@ -92,7 +76,7 @@ const SORT_COLUMNS: {
   { label: 'APY', sortKey: 'apy' },
   { label: 'DAILY', sortKey: 'apy' },
   { label: 'TVL', sortKey: 'tvl' },
-  { label: 'SAFETY', sortKey: 'safetyScore', TooltipComponent: SafetyTooltip },
+  { label: 'SAFETY', sortKey: 'safetyScore' },
 ];
 
 const SortColumns = memo(function SortColumns() {
@@ -114,14 +98,13 @@ const SortColumns = memo(function SortColumns() {
 
   return (
     <div className={classes.sortColumns}>
-      {SORT_COLUMNS.map(({ label, sortKey, TooltipComponent }) => (
+      {SORT_COLUMNS.map(({ label, sortKey }) => (
         <SortColumnHeader
           key={label}
           label={label}
           sortKey={sortKey}
           sorted={sortField === sortKey ? sortDirection : 'none'}
           onChange={handleSort}
-          tooltip={TooltipComponent ? <TooltipComponent /> : null}
         />
       ))}
     </div>
@@ -136,11 +119,11 @@ const SortDropdown = memo(function SortDropdown() {
   const options = useMemo<Record<FilteredVaultsState['sort'], string>>(() => {
     return {
       default: t('Filter-SortDflt'),
+      walletValue: t('Filter-SortWallet'),
+      depositValue: t('Filter-SortDeposit'),
       apy: t('Filter-SortApy'),
       tvl: t('Filter-SortTvl'),
       safetyScore: t('Filter-SortSafety'),
-      depositValue: t('Filter-SortDeposit'),
-      walletValue: t('Filter-SortWallet'),
     };
   }, [t]);
 
@@ -159,7 +142,6 @@ const SortDropdown = memo(function SortDropdown() {
       options={options}
       borderless={true}
       fullWidth={true}
-      sortOptions={'value'}
       defaultValue={'default'}
       selectClass={classes.sortDropdown}
     />

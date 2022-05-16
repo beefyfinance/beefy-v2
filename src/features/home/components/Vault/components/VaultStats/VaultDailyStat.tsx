@@ -14,8 +14,7 @@ import { selectIsVaultBoosted } from '../../../../../data/selectors/boosts';
 import { AllValuesAsString } from '../../../../../data/utils/types-utils';
 import { TotalApy } from '../../../../../data/reducers/apy';
 import { useAppSelector } from '../../../../../../store';
-import { IconWithTooltip } from '../../../../../../components/Tooltip';
-import { InterestTooltipContent } from '../InterestTooltipContent/InterestTooltipContent';
+import { InterestTooltipContent } from '../InterestTooltipContent';
 
 export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
@@ -70,17 +69,22 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps) {
     blur: false,
     loading: !isLoaded,
     boosted: isBoosted,
-    tooltip: <DailyTooltip vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
+    tooltip: <DailyContentTooltip vaultId={vaultId} isBoosted={isBoosted} rates={formatted} />,
   };
 }
 
-type DailyTooltipProps = {
+type DailyTooltipContentProps = {
   vaultId: VaultEntity['id'];
   isBoosted: boolean;
   rates: AllValuesAsString<TotalApy>;
+  className?: string;
 };
 
-const DailyTooltip = memo<DailyTooltipProps>(function DailyTooltip({ vaultId, isBoosted, rates }) {
+const DailyContentTooltip = memo<DailyTooltipContentProps>(function DailyTooltip({
+  vaultId,
+  isBoosted,
+  rates,
+}) {
   const isGovVault = useAppSelector(state => selectIsVaultGov(state, vaultId));
   const rows = useMemo(() => {
     const items = [];
@@ -121,5 +125,5 @@ const DailyTooltip = memo<DailyTooltipProps>(function DailyTooltip({ vaultId, is
     return items.length ? items : null;
   }, [isGovVault, isBoosted, rates]);
 
-  return <IconWithTooltip content={<InterestTooltipContent rows={rows} />} />;
+  return <InterestTooltipContent rows={rows} />;
 });

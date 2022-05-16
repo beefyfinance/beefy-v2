@@ -8,6 +8,7 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: '1fr minmax(0, 1fr)',
     fontSize: '14px',
     lineHeight: '18px',
+    minWidth: '248px',
   },
   label: {
     '&:nth-last-child(2)': {

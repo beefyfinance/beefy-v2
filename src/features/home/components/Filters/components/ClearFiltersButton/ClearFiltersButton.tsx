@@ -20,7 +20,7 @@ export const ClearFiltersButton = memo<ClearFiltersButtonProps>(function ClearFi
 
   return (
     <Button className={className} variant="filter" disabled={!active} onClick={handleReset}>
-      {t('Filter-Reset')}
+      {t('Filter-ClearAll')}
     </Button>
   );
 });

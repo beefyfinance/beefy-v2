@@ -6,7 +6,7 @@ const useStyles = makeStyles(styles);
 
 export type BasicTooltipContentProps = {
   title: string;
-  content: ReactNode;
+  content?: ReactNode;
 };
 export const BasicTooltipContent = memo<BasicTooltipContentProps>(function BasicTooltipInner({
   title,
@@ -17,7 +17,7 @@ export const BasicTooltipContent = memo<BasicTooltipContentProps>(function Basic
   return (
     <>
       <div className={classes.basicTitle}>{title}</div>
-      <div className={classes.basicContent}>{content}</div>
+      {content ? <div className={classes.basicContent}>{content}</div> : null}
     </>
   );
 });

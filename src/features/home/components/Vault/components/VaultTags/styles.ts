@@ -20,13 +20,13 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px',
     textTransform: 'uppercase' as const,
     whiteSpace: 'nowrap' as const,
-    // flexShrink: 0,
-    // '&:not(:first-child)': {
-    flexShrink: 1,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    minWidth: 0,
-    // }
+    flexShrink: 0,
+    '&:not(:first-child)': {
+      flexShrink: 1,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      minWidth: 0,
+    },
   },
   vaultTagBoost: {
     backgroundColor: 'rgba(219, 131, 50, 0.3)',

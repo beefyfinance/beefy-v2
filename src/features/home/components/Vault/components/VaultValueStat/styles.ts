@@ -20,4 +20,7 @@ export const styles = (theme: Theme) => ({
   boostedValue: {
     color: '#DB8332',
   },
+  lineThroughValue: {
+    textDecoration: 'line-through',
+  },
 });
