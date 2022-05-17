@@ -38,7 +38,7 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
     (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
   );
 
-  const [startStepper, isStepping, Stepper] = useStepper(vaultId);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const handleExit = (boost: BoostEntity) => {
     const steps: Step[] = [];

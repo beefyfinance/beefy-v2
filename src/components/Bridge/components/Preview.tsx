@@ -187,7 +187,7 @@ function _Preview({ handlePreview }) {
       <Box mt={4}>
         {isWalletConnected ? (
           <Button onClick={handlePreview} className={classes.btn}>
-            {t('Bridge-Button-1', { network: 'Fantom' })}
+            {t('Bridge-Button-1', { network: formState.destChain })}
           </Button>
         ) : (
           <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>

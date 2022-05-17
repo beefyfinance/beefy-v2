@@ -6,6 +6,7 @@ import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
 import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
+import bridgeAbi from '../../../config/abi/BridgeAbi.json';
 import { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getWalletConnectionApiInstance } from '../apis/instances';
 import { ZapEstimate, ZapOptions } from '../apis/zap';
@@ -46,6 +47,8 @@ import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
 import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
+import { selectBifiBridgeDataByChainId } from '../selectors/bridge';
+import { selectChainById } from '../selectors/chains';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -796,6 +799,66 @@ const burnWithdraw = (
   });
 };
 
+const bridge = (
+  chainId: ChainEntity['id'],
+  destChainId: ChainEntity['id'],
+  routerAddr: string,
+  amount: BigNumber
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const bridgeTokenData = selectBifiBridgeDataByChainId(state, chainId);
+    const destChain = selectChainById(state, destChainId);
+
+    const bridgeToken = selectTokenByAddress(state, chainId, bridgeTokenData.address);
+    const destToken = selectTokenByAddress(
+      state,
+      destChainId,
+      bridgeTokenData.destChains[destChain.networkChainId].address
+    );
+
+    const gasToken = selectChainNativeToken(state, chainId);
+    const walletApi = await getWalletConnectionApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
+    const gasPrices = await getGasPriceOptions(web3);
+
+    const method = bridgeTokenData.routerABI.includes('anySwapOutUnderlying')
+      ? 'anySwapOutUnderlying'
+      : 'anySwapOut';
+
+    const transaction = (() => {
+      const rawAmount = convertAmountToRawNumber(amount, bridgeTokenData.anyToken.decimals);
+      return contract?.methods[method](
+        bridgeTokenData.anyToken.address,
+        address,
+        rawAmount,
+        destChain.networkChainId
+      ).send({ from: address, ...gasPrices });
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        amount: amount,
+        token: bridgeToken,
+      },
+      {
+        chainId: chainId,
+        spenderAddress: routerAddr,
+        tokens: uniqBy([gasToken, bridgeToken, destToken], 'id'),
+      }
+    );
+  });
+};
+
 export const walletActions = {
   approval,
   deposit,
@@ -813,6 +876,7 @@ export const walletActions = {
   unstakeBoost,
   mintDeposit,
   burnWithdraw,
+  bridge,
 };
 
 function captureWalletErrors<ReturnType>(

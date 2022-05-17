@@ -125,7 +125,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
-  const [startStepper, isStepping, Stepper] = useStepper(vault.id);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 

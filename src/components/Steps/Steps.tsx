@@ -9,20 +9,19 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import clsx from 'clsx';
 import { BeefyState } from '../../redux-types';
 import { selectChainById } from '../../features/data/selectors/chains';
-import { VaultEntity } from '../../features/data/entities/vault';
 import { StepperState } from './types';
-import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatBigDecimals } from '../../helpers/format';
 import { selectMintResult } from './selectors';
+import { ChainEntity } from '../../features/data/entities/chain';
 
 const useStyles = makeStyles(styles as any);
 
 const _Steps = ({
-  vaultId,
+  chainId,
   steps,
   handleClose,
 }: {
-  vaultId: VaultEntity['id'];
+  chainId: ChainEntity['id'];
   steps: StepperState;
   handleClose: () => unknown;
 }) => {
@@ -156,7 +155,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                     <Box pt={2}>
                       <Typography variant="body1" className={classes.message}>
@@ -177,7 +176,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -192,7 +191,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                     <Box pt={2}>
                       <Typography variant="body1" className={classes.message}>
@@ -212,7 +211,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -226,7 +225,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -245,7 +244,7 @@ const _Steps = ({
                           }
                         )}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -259,7 +258,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -276,13 +275,12 @@ const _Steps = ({
 
 export const Steps = React.memo(_Steps);
 
-function TransactionLink({ vaultId }: { vaultId: VaultEntity['id'] }) {
+function TransactionLink({ chainId }: { chainId: ChainEntity['id'] }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+  const chain = useSelector((state: BeefyState) => selectChainById(state, chainId));
 
   const hash =
     walletActionsState.result === 'success'
