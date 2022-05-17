@@ -30,6 +30,7 @@ import { fetchAllZapsAction } from '../actions/zap';
 import { ChainEntity } from '../entities/chain';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchAllInfoCards } from '../actions/info-cards';
+import { fetchBridgeTokenData, initiateBridgeForm } from '../actions/bridge';
 
 /**
  * because we want to be smart about data loading
@@ -123,6 +124,7 @@ export interface DataLoaderState {
     minterForm: LoaderState;
     infoCards: LoaderState;
     bridge: LoaderState;
+    bridgeForm: LoaderState;
   };
   byChainId: {
     [chainId: ChainEntity['id']]: {
@@ -156,6 +158,7 @@ export const initialDataLoaderState: DataLoaderState = {
     minterForm: dataLoaderStateInit,
     infoCards: dataLoaderStateInit,
     bridge: dataLoaderStateInit,
+    bridgeForm: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -269,11 +272,13 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm', true);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
+    addGlobalAsyncThunkActions(builder, initiateBridgeForm, 'bridgeForm', true);
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);
+    addGlobalAsyncThunkActions(builder, fetchBridgeTokenData, 'bridge', false);
     addByChainAsyncThunkActions(builder, reloadBalanceAndAllowanceAndGovRewardsAndBoostData, [
       'balance',
       'allowance',

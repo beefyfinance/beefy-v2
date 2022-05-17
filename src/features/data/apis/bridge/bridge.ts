@@ -17,7 +17,7 @@ export class BridgeApi {
       const token = Object.values(res.data[`${chain.chainId}`]).filter(
         (token: any) => token.underlying?.symbol === 'BIFI' || token.anyToken.symbol === 'BIFI'
       );
-      data[chain.chainId] = token[0];
+      data[chain.id] = token[0];
     }
     return data;
   }

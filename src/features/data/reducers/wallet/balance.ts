@@ -23,6 +23,7 @@ import {
   selectVaultById,
 } from '../../selectors/vaults';
 import { initiateMinterForm } from '../../actions/minters';
+import { initiateBridgeForm } from '../../actions/bridge';
 import { selectMinterById } from '../../selectors/minters';
 
 /**
@@ -160,6 +161,20 @@ export const balanceSlice = createSlice({
       const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
       addTokenBalanceToState(state, walletState, minter.chainId, balance.tokens);
+    });
+
+    builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
+      const state = action.payload.state;
+      if (!action.payload.walletAddress) {
+        return;
+      }
+
+      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+
+      const walletState = getWalletState(sliceState, walletAddress);
+      const balance = action.payload.balance;
+
+      addTokenBalanceToState(state, walletState, action.payload.chainId, balance.tokens);
     });
 
     builder.addCase(

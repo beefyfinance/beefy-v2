@@ -1,4 +1,5 @@
 import { CardContent, Box, Typography, Button, makeStyles } from '@material-ui/core';
+import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +14,13 @@ function _Confirm() {
   const { t } = useTranslation();
   const classes = useStyles();
 
+  const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
+
   const walletAddress = useSelector((state: BeefyState) => selectWalletAddress(state));
+
+  const destAmount = formState.amount
+    .minus(new BigNumber(formState.destChainInfo.MinimumSwapFee))
+    .toFixed(4);
 
   return (
     <CardContent className={classes.content}>
@@ -38,7 +45,7 @@ function _Confirm() {
             </Typography>
           </Box>
           <Typography className={classes.bridgedValue} variant="body1">
-            -1.00 BIFI
+            {formState.formattedInput} BIFI
           </Typography>
         </Box>
         <Box>
@@ -70,7 +77,7 @@ function _Confirm() {
             </Typography>
           </Box>
           <Typography className={classes.bridgedValue} variant="body1">
-            +1.00 BIFI
+            {destAmount} BIFI
           </Typography>
         </Box>
         <Box>
@@ -84,7 +91,7 @@ function _Confirm() {
           {t('Bridge-Crosschain')}:
         </Typography>
         <Typography variant="body2" className={classes.value}>
-          0.0%
+          {formState.destChainInfo.SwapFeeRatePerMillion}%
         </Typography>
       </Box>
       <Box mb={1} className={classes.flexContainer}>
@@ -92,7 +99,7 @@ function _Confirm() {
           {t('Bridge-Gas')}:
         </Typography>
         <Typography variant="body2" className={classes.value}>
-          0 BIFI
+          {formState.destChainInfo.MinimumSwapFee} BIFI
         </Typography>
       </Box>
       <Box mb={3} className={classes.flexContainer}>

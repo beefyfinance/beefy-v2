@@ -29,7 +29,7 @@ import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { initiateMinterForm } from './minters';
 import { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
-import { fetchBridgeTokenData } from './bridge';
+import { fetchBridgeTokenData, initiateBridgeForm } from './bridge';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -294,4 +294,12 @@ export async function initMinterForm(
 
   // then we can init the form
   store.dispatch(initiateMinterForm({ minterId, walletAddress }));
+}
+
+export async function initBridgeForm(
+  store: BeefyStore,
+  chainId: ChainEntity['id'],
+  walletAddress: string | null
+) {
+  store.dispatch(initiateBridgeForm({ chainId, walletAddress }));
 }

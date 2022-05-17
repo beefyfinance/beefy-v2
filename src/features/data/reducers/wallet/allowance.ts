@@ -13,6 +13,7 @@ import { initiateWithdrawForm } from '../../actions/withdraw';
 import { initiateBoostForm } from '../../actions/boosts';
 import { selectBoostById } from '../../selectors/boosts';
 import { initiateMinterForm } from '../../actions/minters';
+import { initiateBridgeForm } from '../../actions/bridge';
 import { selectMinterById } from '../../selectors/minters';
 
 /**
@@ -72,6 +73,9 @@ export const allowanceSlice = createSlice({
     builder.addCase(initiateMinterForm.fulfilled, (sliceState, action) => {
       const minter = selectMinterById(action.payload.state, action.payload.minterId);
       addAllowancesToState(sliceState, minter.chainId, action.payload.allowance);
+    });
+    builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
+      addAllowancesToState(sliceState, action.payload.chainId, action.payload.allowance);
     });
 
     builder.addCase(

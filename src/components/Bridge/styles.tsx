@@ -93,6 +93,9 @@ export const styles = theme => ({
       fontWeight: 600,
       color: theme.palette.text.secondary,
     },
+    '&:Hover': {
+      cursor: 'pointer',
+    },
   },
   address: {
     color: theme.palette.text.disabled,

@@ -6,22 +6,27 @@ import {
   formatBigNumberSignificant,
 } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
+import { initiateBridgeForm } from '../../actions/bridge';
 import { ChainEntity } from '../../entities/chain';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
+import { selectBifiBridgeDataByChainId } from '../../selectors/bridge';
+import { selectChainById } from '../../selectors/chains';
 import { selectTokenByAddress } from '../../selectors/tokens';
 
-// TODO: this looks exactly like the withdraw state
 export type BridgeModalState = {
-  destChain: ChainEntity['networkChainId'];
-  max: boolean; // this is so we know when to disable the max button
+  destChain: ChainEntity['id'];
+  max: boolean;
   amount: BigNumber;
   formattedInput: string;
+  destChainInfo: any;
 };
+
 const initialBridgeModalState: BridgeModalState = {
-  destChain: 0,
+  destChain: '',
   amount: BIG_ZERO,
   formattedInput: '',
   max: false,
+  destChainInfo: {},
 };
 
 export const bridgeModalSlice = createSlice({
@@ -50,7 +55,6 @@ export const bridgeModalSlice = createSlice({
       sliceState,
       action: PayloadAction<{
         amount: string;
-        withdraw: boolean;
         chainId: string;
         tokenAddress: string;
         state: BeefyState;
@@ -86,16 +90,40 @@ export const bridgeModalSlice = createSlice({
       sliceState.formattedInput = formattedInput;
       sliceState.amount = value;
     },
+
+    setDestChain(
+      sliceState,
+      action: PayloadAction<{
+        chainId: string;
+        destChainId: string;
+        state: BeefyState;
+      }>
+    ) {
+      const { chainId, destChainId, state } = action.payload;
+
+      const destChain = selectChainById(state, destChainId);
+
+      const bridgeTokenInfo = selectBifiBridgeDataByChainId(state, chainId);
+
+      sliceState.destChainInfo = bridgeTokenInfo.destChains[destChain.networkChainId];
+      sliceState.destChain = destChainId;
+    },
   },
 
   extraReducers: builder => {
-    // builder.addCase(initiateBoostForm.fulfilled, (sliceState, action) => {
-    //   sliceState.boostId = action.payload.boostId;
-    //   sliceState.amount = BIG_ZERO;
-    //   sliceState.formattedInput = '';
-    //   sliceState.max = false;
-    //   sliceState.mode = action.payload.mode;
-    // });
+    builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
+      const state = action.payload.state;
+      const currentChainId = state.user.wallet.selectedChainId;
+      const isConnectedToFtm = currentChainId === 'fantom';
+      sliceState.destChain = isConnectedToFtm ? 'bsc' : 'fantom';
+      sliceState.amount = BIG_ZERO;
+      sliceState.formattedInput = '';
+      sliceState.max = false;
+      sliceState.destChainInfo =
+        state.entities.bridge.byChainId[isConnectedToFtm ? 'fantom' : currentChainId].destChains[
+          isConnectedToFtm ? 250 : 56
+        ];
+    });
   },
 });
 
