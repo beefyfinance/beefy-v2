@@ -10,7 +10,6 @@ import { selectBifiBridgeDataByChainId } from '../../../features/data/selectors/
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
 import { selectCurrentChainId, selectWalletAddress } from '../../../features/data/selectors/wallet';
 import { BeefyState } from '../../../redux-types';
-import { useStepper } from '../../Steps/hooks';
 import { Step } from '../../Steps/types';
 import { styles } from '../styles';
 
