@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     width: 'fit-content',
     margin: 0,
-    padding: `${8 - 2}px ${16 - 2}px`,
+    padding: `${8 - 2}px ${14 - 2}px`, // TEMPFIX: 16->14 iOS font
     cursor: 'pointer',
     userSelect: 'none' as const,
     boxShadow: 'none',

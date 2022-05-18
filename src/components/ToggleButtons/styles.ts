@@ -23,7 +23,7 @@ export const styles = (theme: Theme) => ({
     boxShadow: 'none',
     cursor: 'pointer',
     margin: 0,
-    padding: '6px 16px',
+    padding: '6px 14px', // TEMPFIX: 16->14 iOS font
     flexGrow: 1,
     flexShrink: 0,
     '&:hover': {
