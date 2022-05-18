@@ -1,4 +1,10 @@
 export const styles = theme => ({
+  container: {
+    borderRadius: '20px',
+    '&.MuiPaper-elevation1': {
+      boxShadow: '0px 0px 32px 0px #0000001A',
+    },
+  },
   backdrop: {
     backgroundColor: 'rgba(255,255,255,0.7) !important',
     backdropFilter: 'blur(8px)',

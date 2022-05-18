@@ -1,6 +1,5 @@
-import { Modal, Box, Typography } from '@material-ui/core';
+import { Modal, Box, Typography, Paper } from '@material-ui/core';
 import React from 'react';
-import { Card } from '../../features/vault/components/Card';
 import { CardHeader } from '../../features/vault/components/Card/CardHeader';
 import { CardTitle } from '../../features/vault/components/Card/CardTitle';
 import { useTranslation } from 'react-i18next';
@@ -51,7 +50,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
         BackdropProps={{ className: classes.backdrop }}
       >
         <Box sx={style}>
-          <Card>
+          <Paper className={classes.container}>
             <CardHeader className={classes.header}>
               <Box>
                 {previewConfirm === 'preview' ? (
@@ -79,7 +78,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
                 />
               )}
             </>
-          </Card>
+          </Paper>
         </Box>
       </Modal>
       <Stepper />
