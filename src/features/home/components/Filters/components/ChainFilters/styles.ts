@@ -16,7 +16,6 @@ export const styles = (theme: Theme) => ({
   },
   button: {
     background: 'transparent',
-    outline: 'none',
     boxShadow: 'none',
     flexGrow: 1,
     flexShrink: 0,
@@ -46,7 +45,16 @@ export const styles = (theme: Theme) => ({
     fontWeight: 700,
     margin: '4px 0',
   },
-  dropdownSelectedIcon: {
-    marginRight: '4px',
+  iconWithChain: {
+    display: 'flex',
+    justContent: 'center',
+  },
+  iconWithChainIcon: {
+    marginRight: '8px',
+  },
+  iconWithChainSelected: {
+    '& $iconWithChainIcon': {
+      marginRight: '4px',
+    },
   },
 });

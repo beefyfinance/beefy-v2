@@ -27,7 +27,7 @@ export type TooltipProps = {
   tooltipClass?: string;
   arrowClass?: string;
   contentClass?: string;
-  disable?: boolean;
+  disabled?: boolean;
 };
 
 export const Tooltip = memo(
@@ -40,7 +40,7 @@ export const Tooltip = memo(
       arrowClass,
       contentClass,
       placement = 'top-end',
-      disable = false,
+      disabled = false,
     },
     ref
   ) {
@@ -50,10 +50,10 @@ export const Tooltip = memo(
     const [arrowRef, setArrowRef] = useState<HTMLDivElement | null>(null);
 
     const handleOpen = useCallback(() => {
-      if (!disable) {
+      if (!disabled) {
         setIsOpen(true);
       }
-    }, [setIsOpen, disable]);
+    }, [setIsOpen, disabled]);
 
     const handleClose = useCallback(() => {
       setIsOpen(false);
@@ -61,13 +61,13 @@ export const Tooltip = memo(
 
     const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
       e => {
-        if (!disable) {
+        if (!disabled) {
           e.stopPropagation();
           e.preventDefault();
           setIsOpen(true);
         }
       },
-      [setIsOpen, disable]
+      [setIsOpen, disabled]
     );
 
     const modifiers = useMemo(

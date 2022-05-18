@@ -142,10 +142,6 @@ export const VirtualVaultsList = memo<VirtualVaultsListProps>(function ({ vaultI
 
   return (
     <>
-      {/*TODO: remove debug*/}
-      <div style={{ position: 'fixed', top: 0, left: 0, background: 'black', zIndex: 10000 }}>
-        {renderCount}/{totalVaults}
-      </div>
       <div ref={containerRef}>
         {renderVaultIds.map(vaultId => (
           <Vault vaultId={vaultId} key={vaultId} />

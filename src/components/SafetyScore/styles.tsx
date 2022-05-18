@@ -7,14 +7,14 @@ export const styles = theme => ({
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    margin: 'auto 0 5px 4px',
+    margin: 'auto 0 2px 4px',
   },
   label: {
     color: 'inherit',
     fontFamily: theme.typography.fontFamily,
     fontWeight: 700,
     fontSize: '15px',
-    lineHeight: '24px',
+    lineHeight: 1,
     textAlign: 'center' as const,
   },
   bar: {
@@ -34,25 +34,12 @@ export const styles = theme => ({
   lg: {
     height: '19px',
   },
-  withSizeLarge: {
-    '& $label': {
-      fontSize: '36px',
-      lineHeight: '30px',
-    },
-    '& $sm': {
-      height: '13px',
-    },
-    '& $md': {
-      height: '21px',
-    },
-    '& $lg': {
-      height: '29px',
-    },
-  },
   withSizeMedium: {
+    '& $barsContainer': {
+      marginBottom: '4px',
+    },
     '& $label': {
       fontSize: '24px',
-      lineHeight: '24px',
     },
     '& $sm': {
       height: '13px',

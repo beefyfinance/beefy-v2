@@ -23,7 +23,7 @@ export type VaultDailyStatProps = {
 export const VaultDailyStat = memo<VaultDailyStatProps>(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps) {
-  const label = 'DAILY';
+  const label = 'VaultStat-DAILY';
 
   const isRetired = selectIsVaultRetired(state, vaultId);
   if (isRetired) {

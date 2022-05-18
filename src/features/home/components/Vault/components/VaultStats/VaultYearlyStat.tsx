@@ -24,7 +24,7 @@ export const VaultYearlyStat = memo<VaultYearlyStatProps>(connect(mapStateToProp
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
   const isGovVault = selectIsVaultGov(state, vaultId);
-  const label = isGovVault ? 'APR' : 'APY';
+  const label = isGovVault ? 'VaultStat-APR' : 'VaultStat-APY';
 
   const isRetired = selectIsVaultRetired(state, vaultId);
   if (isRetired) {

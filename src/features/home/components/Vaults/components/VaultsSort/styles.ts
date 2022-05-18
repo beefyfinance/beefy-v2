@@ -23,7 +23,6 @@ export const styles = (theme: Theme) => ({
     border: 'none',
     boxShadow: 'none',
     padding: 0,
-    outline: 'none',
     cursor: 'pointer',
   },
   sortTooltipIcon: {

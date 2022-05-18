@@ -2,12 +2,13 @@ import * as React from 'react';
 import { FC, memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import { sortBy } from 'lodash';
-import { CheckBox, CheckBoxOutlineBlank, ExpandMore } from '@material-ui/icons';
+import { ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Floating } from '../Floating';
 import { LabeledSelectCommonProps } from '../LabeledSelect';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
+import { LabelledCheckbox, LabelledCheckboxProps } from '../LabelledCheckbox';
 
 const useStyles = makeStyles(styles);
 
@@ -19,14 +20,22 @@ export type LabeledMultiSelectProps = LabeledSelectCommonProps & {
   countSelectedLabel?: string;
   onChange: (value: string[]) => void;
   SelectedItemComponent?: FC<SelectedItemProps>;
+  DropdownItemComponent?: FC<DropdownItemProps>;
+  DropdownItemLabelComponent?: FC<DropdownItemProps>;
 };
 
-type DropdownItemProps = {
+export type DropdownItemProps = {
   label: string;
   value: string;
   selected: boolean;
   onChange: (value: string) => void;
   className?: string;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
+};
+
+export type DropdownItemLabelProps = {
+  label: string;
+  value: string;
 };
 
 export type SelectedItemProps = {
@@ -56,20 +65,24 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
   onChange,
   className,
   selected,
+  DropdownItemLabelComponent = DropdownItemLabel,
 }) {
-  const handleChange = useCallback<MouseEventHandler<HTMLDivElement>>(
-    e => {
-      e.stopPropagation();
-      onChange(value);
-    },
-    [onChange, value]
-  );
+  const handleChange = useCallback<LabelledCheckboxProps['onChange']>(() => {
+    onChange(value);
+  }, [onChange, value]);
 
   return (
-    <div onClick={handleChange} className={className}>
-      {selected ? <CheckBox /> : <CheckBoxOutlineBlank />} {label}
-    </div>
+    <LabelledCheckbox
+      label={<DropdownItemLabelComponent label={label} value={value} />}
+      checkboxClass={className}
+      onChange={handleChange}
+      checked={selected}
+    />
   );
+});
+
+const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItem({ label }) {
+  return <>{label}</>;
 });
 
 const SelectedItem = memo<SelectedItemProps>(function ({
@@ -106,6 +119,8 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
   fullWidth = false,
   borderless = false,
   SelectedItemComponent = SelectedItem,
+  DropdownItemComponent = DropdownItem,
+  DropdownItemLabelComponent = DropdownItemLabel,
   selectClass,
   selectCurrentClass,
   selectLabelClass,
@@ -214,23 +229,25 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
           className={classes.dropdown}
         >
           {allOptionEnabled ? (
-            <DropdownItem
+            <DropdownItemComponent
               onChange={handleChange}
               label={allLabel}
               value={allKey}
               selected={allSelected}
+              DropdownItemLabelComponent={DropdownItemLabelComponent}
               className={clsx(classes.dropdownItem, {
                 [classes.dropdownItemSelected]: allSelected,
               })}
             />
           ) : null}
           {optionsList.map(({ value: optionValue, label }) => (
-            <DropdownItem
+            <DropdownItemComponent
               key={optionValue}
               onChange={handleChange}
               label={label}
               value={optionValue}
               selected={value.includes(optionValue)}
+              DropdownItemLabelComponent={DropdownItemLabelComponent}
               className={clsx(classes.dropdownItem, {
                 [classes.dropdownItemSelected]: value.includes(optionValue),
               })}

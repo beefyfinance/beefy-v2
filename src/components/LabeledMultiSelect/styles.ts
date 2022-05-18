@@ -17,8 +17,7 @@ export const styles = (theme: Theme) => ({
     userSelect: 'none' as const,
     boxShadow: 'none',
     textAlign: 'left' as const,
-    '&:focus, &:hover': {
-      outline: 'none',
+    '&:hover': {
       boxShadow: 'none',
     },
   },
@@ -91,7 +90,7 @@ export const styles = (theme: Theme) => ({
       background: 'rgba(255, 255, 255, 0.16)',
       color: '#FFF',
     },
-    '&:focus, &:active': {
+    '&:active': {
       background: 'transparent',
       color: '#F5F5FF',
     },

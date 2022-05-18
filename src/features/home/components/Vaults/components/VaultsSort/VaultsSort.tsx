@@ -71,12 +71,12 @@ const SORT_COLUMNS: {
   sortKey: FilteredVaultsState['sort'];
   TooltipComponent?: FC;
 }[] = [
-  { label: 'WALLET', sortKey: 'walletValue' },
-  { label: 'DEPOSITED', sortKey: 'depositValue' },
-  { label: 'APY', sortKey: 'apy' },
-  { label: 'DAILY', sortKey: 'apy' },
-  { label: 'TVL', sortKey: 'tvl' },
-  { label: 'SAFETY', sortKey: 'safetyScore' },
+  { label: 'Filter-SortWallet', sortKey: 'walletValue' },
+  { label: 'Filter-SortDeposited', sortKey: 'depositValue' },
+  { label: 'Filter-SortApy', sortKey: 'apy' },
+  { label: 'Filter-SortDaily', sortKey: 'daily' },
+  { label: 'Filter-SortTvl', sortKey: 'tvl' },
+  { label: 'Filter-SortSafety', sortKey: 'safetyScore' },
 ];
 
 const SortColumns = memo(function SortColumns() {
@@ -118,10 +118,11 @@ const SortDropdown = memo(function SortDropdown() {
   const value = useAppSelector(selectFilterSearchSortField);
   const options = useMemo<Record<FilteredVaultsState['sort'], string>>(() => {
     return {
-      default: t('Filter-SortDflt'),
+      default: t('Filter-SortDefault'),
       walletValue: t('Filter-SortWallet'),
-      depositValue: t('Filter-SortDeposit'),
+      depositValue: t('Filter-SortDeposited'),
       apy: t('Filter-SortApy'),
+      daily: t('Filter-SortDaily'),
       tvl: t('Filter-SortTvl'),
       safetyScore: t('Filter-SortSafety'),
     };

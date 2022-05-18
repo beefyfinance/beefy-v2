@@ -12,8 +12,16 @@ export const styles = (theme: Theme) => ({
     cursor: 'pointer',
   },
   icon: {
+    color: '#848BAD',
     marginRight: `${8 - 3}px`,
   },
-  label: {},
-  checked: {},
+  label: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  checked: {
+    '& $icon': {
+      color: '#F5F5FF',
+    },
+  },
 });

@@ -16,6 +16,7 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     width: 'fit-content',
+    margin: 0,
     padding: `${8 - 2}px ${16 - 2}px`,
     cursor: 'pointer',
     userSelect: 'none' as const,
@@ -39,7 +40,7 @@ export const styles = (theme: Theme) => ({
     color: '#D0D0DA',
     backgroundColor: '#1B1E31',
     borderColor: '#303550',
-    '&:hover, &:focus': {
+    '&:hover': {
       color: '#D0D0DA',
       backgroundColor: '#1B1E31',
       borderColor: '#303550',
@@ -49,7 +50,7 @@ export const styles = (theme: Theme) => ({
     color: '#8A8EA8',
     backgroundColor: '#262A40',
     borderColor: '#303550',
-    '&:hover, &:focus': {
+    '&:hover': {
       color: '#D0D0DA',
       backgroundColor: '#262A40',
       borderColor: '#303550',
@@ -69,7 +70,7 @@ export const styles = (theme: Theme) => ({
     color: '#FFFFFF',
     backgroundColor: '#59A662',
     borderColor: '#59A662',
-    '&:hover, &:focus': {
+    '&:hover': {
       color: '#FFFFFF',
       backgroundColor: '#68a871',
       borderColor: '#68a871',

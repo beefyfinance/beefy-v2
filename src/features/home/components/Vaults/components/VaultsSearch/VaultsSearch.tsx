@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { makeStyles, OutlinedInputProps, TextField } from '@material-ui/core';
+import { InputBase, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults';
 import { useAppSelector } from '../../../../../../store';
@@ -57,22 +57,14 @@ export const VaultsSearch = memo(function VaultsHeader() {
     );
   }, [valueLength, handleClear, iconClass]);
 
-  const inputProps = useMemo(
-    (): Partial<OutlinedInputProps> => ({
-      endAdornment: icon,
-    }),
-    [icon]
-  );
-
   return (
-    <TextField
+    <InputBase
       className={classes.search}
       value={value}
       onChange={handleChange}
-      variant="outlined"
       fullWidth={true}
-      label={t('Filter-Search')}
-      InputProps={inputProps}
+      endAdornment={icon}
+      placeholder={t('Filter-Search')}
     />
   );
 });

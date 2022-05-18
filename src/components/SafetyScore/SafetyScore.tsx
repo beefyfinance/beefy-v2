@@ -9,7 +9,7 @@ export type SafetyScoreProps = {
   score: number;
   whiteLabel?: boolean;
   colorLabel?: boolean;
-  size: 'sm' | 'lg' | 'md';
+  size: 'sm' | 'md';
   align?: 'left' | 'right';
   className?: string;
 };
@@ -18,7 +18,7 @@ export const SafetyScore = memo<SafetyScoreProps>(function SafetyScore({
   score,
   whiteLabel = false,
   colorLabel = false,
-  size = 'lg',
+  size = 'sm',
   align = 'left',
   className,
 }) {
@@ -28,7 +28,6 @@ export const SafetyScore = memo<SafetyScoreProps>(function SafetyScore({
   return (
     <div
       className={clsx(classes.container, className, {
-        [classes.withSizeLarge]: size === 'lg',
         [classes.withSizeMedium]: size === 'md',
         [classes.withWhiteLabel]: whiteLabel,
         [classes.withColorLabel]: colorLabel,

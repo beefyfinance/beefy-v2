@@ -48,9 +48,6 @@ export const CheckboxFilter = memo<CheckboxFilterProps>(function CheckboxFilter(
       onChange={handleChange}
       checked={value}
       checkboxClass={clsx(className, classes.checkbox)}
-      labelClass={classes.label}
-      iconClass={classes.icon}
-      checkedClass={classes.checked}
     />
   );
 });

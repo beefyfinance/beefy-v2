@@ -5,34 +5,35 @@ import { ChainEntity } from '../../../../../data/entities/chain';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { selectAllChains } from '../../../../../data/selectors/chains';
 import {
+  DropdownItemLabelProps,
   LabeledMultiSelect,
   SelectedItemProps,
 } from '../../../../../../components/LabeledMultiSelect';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
-const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string }>(function ({
-  chainId,
-  label,
-}) {
-  const classes = useStyles();
+const IconWithChain = memo<{ chainId: ChainEntity['id']; label: string; className?: string }>(
+  function ({ chainId, label, className }) {
+    const classes = useStyles();
 
-  return (
-    <>
-      <img
-        alt=""
-        src={require(`../../../../../../images/networks/${chainId}.svg`).default}
-        width={20}
-        height={20}
-        className={classes.dropdownSelectedIcon}
-      />
-      {label}
-    </>
-  );
-});
+    return (
+      <div className={clsx(classes.iconWithChain, className)}>
+        <img
+          alt=""
+          src={require(`../../../../../../images/networks/${chainId}.svg`).default}
+          width={24}
+          height={24}
+          className={classes.iconWithChainIcon}
+        />
+        {label}
+      </div>
+    );
+  }
+);
 
 const SelectedChain = memo<SelectedItemProps>(function ({
   value,
@@ -42,18 +43,29 @@ const SelectedChain = memo<SelectedItemProps>(function ({
   countSelectedLabel,
 }) {
   const { t } = useTranslation();
+  const classes = useStyles();
   let label: string | ReactNode;
 
   if (allSelected) {
     label = t(allSelectedLabel);
   } else if (value.length === 1) {
     const chainId = value[0];
-    label = <IconWithChain chainId={chainId} label={options[chainId]} />;
+    label = (
+      <IconWithChain
+        chainId={chainId}
+        label={options[chainId]}
+        className={classes.iconWithChainSelected}
+      />
+    );
   } else {
     label = t(countSelectedLabel, { count: value.length });
   }
 
   return <>{label}</>;
+});
+
+const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItem({ label, value }) {
+  return <IconWithChain chainId={value} label={label} />;
 });
 
 export type ChainDropdownFilterProps = {
@@ -82,14 +94,14 @@ export const ChainDropdownFilter = memo<ChainDropdownFilterProps>(function Chain
 
   return (
     <LabeledMultiSelect
-      label={t('Filter-Blockchn')}
+      label={t('Filter-Chain')}
       onChange={handleChange}
       value={selectedChainIds}
       options={options}
       sortOptions="label"
-      allLabel={t('Filter-DropdwnDflt')}
       selectClass={className}
       SelectedItemComponent={SelectedChain}
+      DropdownItemLabelComponent={DropdownItemLabel}
     />
   );
 });

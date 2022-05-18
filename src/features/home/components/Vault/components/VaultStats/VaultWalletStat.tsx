@@ -16,7 +16,7 @@ export type VaultWalletStatProps = {
 export const VaultWalletStat = memo<VaultWalletStatProps>(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
-  const label = 'WALLET';
+  const label = 'VaultStat-WALLET';
   const vault = selectVaultById(state, vaultId);
   const hideBalance = selectIsBalanceHidden(state);
   const isLoaded =

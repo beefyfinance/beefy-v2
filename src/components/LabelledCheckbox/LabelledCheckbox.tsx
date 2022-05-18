@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { memo, ReactNode, useCallback } from 'react';
+import { memo, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
@@ -27,9 +27,13 @@ export const LabelledCheckbox = memo<LabelledCheckboxProps>(function ButtonLink(
   checkedClass,
 }) {
   const baseClasses = useStyles();
-  const handleChange = useCallback(() => {
-    onChange(!checked);
-  }, [onChange, checked]);
+  const handleChange = useCallback<MouseEventHandler<HTMLLabelElement>>(
+    e => {
+      e.stopPropagation();
+      onChange(!checked);
+    },
+    [onChange, checked]
+  );
   const Icon = checked ? CheckBoxOutlined : CheckBoxOutlineBlank;
 
   return (

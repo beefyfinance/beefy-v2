@@ -56,17 +56,8 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyLaCucina ? 1 : 0) +
     (filterOptions.platformId !== null ? 1 : 0) +
     (filterOptions.vaultType !== 'all' ? 1 : 0) +
+    (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
     filterOptions.chainIds.length
-);
-
-export const selectFilterPopinFilterCountDesktop = createSelector(
-  selectFilterOptions,
-  filterOptions =>
-    (filterOptions.onlyRetired ? 1 : 0) +
-    (filterOptions.onlyMoonpot ? 1 : 0) +
-    (filterOptions.onlyBoosted ? 1 : 0) +
-    (filterOptions.onlyLaCucina ? 1 : 0) +
-    (filterOptions.platformId !== null ? 1 : 0)
 );
 
 export const selectHasActiveFilter = createSelector(
@@ -296,6 +287,23 @@ export const selectFilteredVaults = (state: BeefyState) => {
         return sortDirMul * apy.vaultApr;
       } else {
         throw new Error('Apy type not supported');
+      }
+    });
+  } else if (filterOptions.sort === 'daily') {
+    sortedVaults = sortBy(sortedVaults, vault => {
+      const apy = apyByVaultId[vault.id];
+      if (!apy) {
+        return 0;
+      }
+
+      if (apy.boostedTotalDaily !== undefined) {
+        return sortDirMul * apy.boostedTotalDaily;
+      } else if (apy.totalDaily !== undefined) {
+        return sortDirMul * apy.totalDaily;
+      } else if (apy.vaultDaily !== undefined) {
+        return sortDirMul * apy.vaultDaily;
+      } else {
+        throw new Error('Daily type not supported');
       }
     });
   } else if (filterOptions.sort === 'tvl') {

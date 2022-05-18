@@ -22,16 +22,16 @@ export const styles = (theme: Theme) => ({
     borderRadius: '6px',
     boxShadow: 'none',
     cursor: 'pointer',
+    margin: 0,
     padding: '6px 16px',
     flexGrow: 1,
     flexShrink: 0,
-    '&:hover, &:focus': {
+    '&:hover': {
       color: '#D0D0DA',
       backgroundColor: 'rgba(245, 245, 255, 0.08)',
-      outline: 'none',
       boxShadow: 'none',
     },
-    '&:active, &:hover:active, &:focus:active': {
+    '&:active, &:hover:active': {
       color: '#ffffff',
       backgroundColor: theme.palette.primary.main,
     },
@@ -40,17 +40,17 @@ export const styles = (theme: Theme) => ({
     pointerEvents: 'none' as const,
     color: '#ffffff',
     backgroundColor: theme.palette.primary.main,
-    '&:hover, &:focus': {
+    '&:hover': {
       color: '#ffffff',
       backgroundColor: theme.palette.primary.main,
     },
   },
   untogglable: {
-    '&:hover, &:focus': {
+    '&:hover': {
       color: '#D0D0DA',
       backgroundColor: 'transparent',
     },
-    '&:active, &:hover:active, &:focus:active': {
+    '&:active, &:hover:active': {
       color: '#ffffff',
       backgroundColor: 'transparent',
     },
@@ -58,7 +58,7 @@ export const styles = (theme: Theme) => ({
       pointerEvents: 'all' as const,
       color: '#ffffff',
       backgroundColor: 'transparent',
-      '&:hover, &:focus': {
+      '&:hover': {
         color: '#ffffff',
         backgroundColor: 'transparent',
       },
