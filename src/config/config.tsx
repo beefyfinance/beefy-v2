@@ -58,6 +58,7 @@ export const config = {
       'sbBUSD',
       'sbUSDT',
       'FRAX',
+      'USDD',
     ],
   },
   heco: {
@@ -214,6 +215,7 @@ export const config = {
       'USTw',
       'USTaxl',
       'USDL',
+      'TOR',
     ],
   },
   harmony: {
@@ -311,7 +313,7 @@ export const config = {
   cronos: {
     name: 'Cronos',
     chainId: 25,
-    rpc: ['https://evm-cronos.crypto.org'],
+    rpc: ['https://evm.cronos.org'],
     explorerUrl: 'https://cronoscan.com/',
     multicallAddress: '0x13aD51a6664973EbD0749a7c84939d973F247921',
     fetchContractDataAddress: '0x985024de164CbBd5BCFD0bBE48Ac3e16374c0449',
@@ -326,7 +328,7 @@ export const config = {
         symbol: 'CRO',
         decimals: 18,
       },
-      rpcUrls: ['https://evm-cronos.crypto.org'],
+      rpcUrls: ['https://evm.cronos.org'],
       blockExplorerUrls: ['https://cronoscan.com/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
@@ -422,6 +424,29 @@ export const config = {
       blockExplorerUrls: ['https://moonscan.io/'],
     },
     stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
+  },
+  emerald: {
+    name: 'Emerald',
+    chainId: 42262,
+    rpc: ['https://emerald.oasis.dev'],
+    explorerUrl: 'https://explorer.emerald.oasis.dev',
+    multicallAddress: '0xFE40f6eAD11099D91D51a945c145CFaD1DD15Bb8',
+    fetchContractDataAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
+    fetchBalancesAddress: '0xdAaD0085e5D301Cb5721466e600606AB5158862b',
+    supportedWallets: connectors,
+    providerName: 'Oasis Emerald',
+    walletSettings: {
+      chainId: `0x${parseInt('42262', 10).toString(16)}`,
+      chainName: 'Oasis Emerald',
+      nativeCurrency: {
+        name: 'Oasis Protocol',
+        symbol: 'ROSE',
+        decimals: 18,
+      },
+      rpcUrls: ['https://emerald.oasis.dev'],
+      blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],
+    },
+    stableCoins: ['ceUSDC, USDT'],
   },
 };
 

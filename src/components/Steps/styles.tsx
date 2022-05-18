@@ -56,7 +56,7 @@ export const styles = theme => ({
   },
   snackbar: {
     width: '350px',
-    maxWidth: 'calc(100% - 16px)',
+    maxWidth: 'calc(min(100%, 350px) - 16px)',
     maxHeight: 'calc(100% - 16px)',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -64,6 +64,7 @@ export const styles = theme => ({
   },
   snackbarContainer: {
     height: '100%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     minHeight: 0,

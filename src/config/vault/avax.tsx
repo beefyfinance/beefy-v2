@@ -359,7 +359,7 @@ export const pools = [
     withdrawalFee: '0.01%',
     addLiquidityUrl: 'https://avax.curve.fi/aave/deposit',
     network: 'avax',
-    createdAt: 1634117214,
+    createdAt: 1652662923,
   },
   {
     id: 'curve-avax-atricrypto',
@@ -393,7 +393,7 @@ export const pools = [
     withdrawalFee: '0.01%',
     addLiquidityUrl: 'https://avax.curve.fi/atricrypto/deposit',
     network: 'avax',
-    createdAt: 1634113377,
+    createdAt: 1652662923,
   },
   {
     id: 'joe-joe',
@@ -3233,7 +3233,7 @@ export const pools = [
     stratType: 'StratLP',
     withdrawalFee: '0.01%',
     addLiquidityUrl: 'https://avax.curve.fi/ren/deposit',
-    createdAt: 1645435034,
+    createdAt: 1652662923,
     network: 'avax',
   },
   {

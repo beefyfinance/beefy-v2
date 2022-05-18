@@ -1,39 +1,91 @@
 [
   {
-    "id": "bsc vault: cakev2-ust-busd",
-    "type": "synced"
-  },
-  {
-    "id": "avax vault: blizz-avax-pause",
+    "id": "bsc vault: ellipsis-usdd",
     "type": "Added"
   },
   {
-    "id": "avax vault: blizz-eth-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: blizz-wbtc-pause",
-    "type": "Added"
-  },
-  {
-    "id": "avax vault: blizz-avax",
+    "id": "bsc vault: memefarm-ape-bnb",
     "type": "REMOVED"
   },
   {
-    "id": "avax vault: blizz-eth",
-    "type": "REMOVED"
-  },
-  {
-    "id": "avax vault: blizz-wbtc",
-    "type": "REMOVED"
-  },
-  {
-    "id": "harmony vault: sushi-one-ust-1eth",
+    "id": "fantom vault: curve-ftm-tricrypto",
     "type": "synced"
   },
   {
-    "id": "aurora vault: rose-ust-3pool",
+    "id": "fantom vault: curve-ftm-ren",
     "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-dola-inv-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-multichain-maxi-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-boomer-beets-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "fantom vault: beets-gelato-genesis-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon vault: curve-poly-eurt",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: curve-am3crv",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: curve-poly-ren",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: curve-poly-atricrypto3",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: tetu-matic-tetu-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "polygon vault: sushi-usdc-tusd-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "avax vault: curve-avax-atricrypto",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: curve-avax-ren",
+    "type": "synced"
+  },
+  {
+    "id": "avax vault: curve-avax-av3crv",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: curve-arb-tricrypto",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: curve-arb-2pool",
+    "type": "synced"
+  },
+  {
+    "id": "arbitrum vault: curve-arb-ren",
+    "type": "synced"
+  },
+  {
+    "id": "moonriver vault: sushi-mr-eth-wbtc-eol",
+    "type": "REMOVED"
+  },
+  {
+    "id": "aurora vault: tri-matic-near-eol",
+    "type": "REMOVED"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
