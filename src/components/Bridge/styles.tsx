@@ -34,6 +34,9 @@ export const styles = theme => ({
       fontWeight: 700,
       color: '#FFF',
     },
+    '&.Mui-disabled': {
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    },
     '&:hover': {
       backgroundColor: '#389D44',
     },
@@ -108,6 +111,7 @@ export const styles = theme => ({
     justifyContent: 'space-between',
   },
   inputContainer: {
+    width: '50%',
     '& .MuiPaper-root': {
       display: 'flex',
       alignItems: 'center',
@@ -152,7 +156,11 @@ export const styles = theme => ({
     left: '12px',
   },
   networkPicker: {
+    width: '50%',
     marginRight: theme.spacing(1),
+    '& .MuiFormControl-root': {
+      width: '100%',
+    },
   },
   networkValue: {
     display: 'flex',

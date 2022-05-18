@@ -296,10 +296,6 @@ export async function initMinterForm(
   store.dispatch(initiateMinterForm({ minterId, walletAddress }));
 }
 
-export async function initBridgeForm(
-  store: BeefyStore,
-  chainId: ChainEntity['id'],
-  walletAddress: string | null
-) {
-  store.dispatch(initiateBridgeForm({ chainId, walletAddress }));
+export async function initBridgeForm(store: BeefyStore, walletAddress: string | null) {
+  store.dispatch(initiateBridgeForm({ walletAddress }));
 }

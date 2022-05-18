@@ -34,12 +34,6 @@ export const styles = theme => ({
     '&:hover .MuiSelect-select': {
       color: theme.palette.type === 'dark' ? '#8585A6' : '#ff0000',
     },
-    [theme.breakpoints.down('md')]: {
-      '& .MuiSelect-select': {
-        textAlign: 'left',
-        margin: '0 5px',
-      },
-    },
   },
   selectList: {
     color: theme.palette.type === 'dark' ? '#6B7199' : '#ff0000',
@@ -50,6 +44,9 @@ export const styles = theme => ({
     '& img': {
       height: '24px',
       marginRight: '5px',
+    },
+    '& .MuiListItem-gutters': {
+      padding: '0px 4px',
     },
   },
   placeholder: {

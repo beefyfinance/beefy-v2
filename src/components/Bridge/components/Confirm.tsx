@@ -16,7 +16,15 @@ import { styles } from '../styles';
 
 const useStyles = makeStyles(styles as any);
 
-function _Confirm() {
+function _Confirm({
+  handleModal,
+  startStepper,
+  isStepping,
+}: {
+  handleModal: () => void;
+  startStepper: any;
+  isStepping: boolean;
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -29,8 +37,6 @@ function _Confirm() {
   const destAmount = formState.amount
     .minus(new BigNumber(formState.destChainInfo.MinimumSwapFee))
     .toFixed(4);
-
-  const [startStepper, isStepping, Stepper] = useStepper(actualChainId);
 
   const selectedToken = useSelector((state: BeefyState) =>
     selectBifiBridgeDataByChainId(state, actualChainId)
@@ -67,104 +73,102 @@ function _Confirm() {
       pending: false,
     });
 
+    handleModal();
     startStepper(steps);
   };
 
   return (
-    <>
-      <CardContent className={classes.content}>
+    <CardContent className={classes.content}>
+      <Box>
+        <Typography variant="body1">{t('Bridge-Confirm-Content')}</Typography>
+      </Box>
+      <Box className={classes.fees}>
+        <Box mb={1}>
+          <Typography variant="body2" className={classes.label}>
+            {t('FROM')}
+          </Typography>
+        </Box>
+        <Box mb={1.5} className={classes.flexContainer}>
+          <Box className={classes.networkContainer}>
+            <img
+              className={classes.icon}
+              alt=""
+              src={require(`../../../images/networks/${actualChainId}.svg`).default}
+            />
+            <Typography className={classes.chainName} variant="body1">
+              BNB Chain
+            </Typography>
+          </Box>
+          <Typography className={classes.bridgedValue} variant="body1">
+            - {formState.formattedInput} BIFI
+          </Typography>
+        </Box>
         <Box>
-          <Typography variant="body1">{t('Bridge-Confirm-Content')}</Typography>
-        </Box>
-        <Box className={classes.fees}>
-          <Box mb={1}>
-            <Typography variant="body2" className={classes.label}>
-              {t('FROM')}
-            </Typography>
-          </Box>
-          <Box mb={1.5} className={classes.flexContainer}>
-            <Box className={classes.networkContainer}>
-              <img
-                className={classes.icon}
-                alt=""
-                src={require(`../../../images/networks/${actualChainId}.svg`).default}
-              />
-              <Typography className={classes.chainName} variant="body1">
-                BNB Chain
-              </Typography>
-            </Box>
-            <Typography className={classes.bridgedValue} variant="body1">
-              - {formState.formattedInput} BIFI
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="body2" className={classes.address}>
-              {t('Address')}: <span>{walletAddress}</span>
-            </Typography>
-          </Box>
-        </Box>
-        <Box className={classes.customDivider}>
-          <Box className={classes.line} />
-          <img alt="arrowDown" src={require('../../../images/arrowDown.svg').default} />
-          <Box className={classes.line} />
-        </Box>
-        <Box className={clsx(classes.fees, classes.lastMarginFees)}>
-          <Box mb={1}>
-            <Typography variant="body2" className={classes.label}>
-              {t('TO')}
-            </Typography>
-          </Box>
-          <Box mb={2} className={classes.flexContainer}>
-            <Box className={classes.networkContainer}>
-              <img
-                className={classes.icon}
-                alt=""
-                src={require(`../../../images/networks/${formState.destChain}.svg`).default}
-              />
-              <Typography className={classes.chainName} variant="body1">
-                Fantom
-              </Typography>
-            </Box>
-            <Typography className={classes.bridgedValue} variant="body1">
-              + {destAmount} BIFI
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="body2" className={classes.address}>
-              {t('Address')}: <span>{walletAddress}</span>
-            </Typography>
-          </Box>
-        </Box>
-        <Box mb={1} className={classes.flexContainer}>
-          <Typography variant="body2" className={classes.advice1}>
-            {t('Bridge-Crosschain')}:
-          </Typography>
-          <Typography variant="body2" className={classes.value}>
-            {formState.destChainInfo.SwapFeeRatePerMillion}%
+          <Typography variant="body2" className={classes.address}>
+            {t('Address')}: <span>{walletAddress}</span>
           </Typography>
         </Box>
-        <Box mb={1} className={classes.flexContainer}>
-          <Typography variant="body2" className={classes.advice1}>
-            {t('Bridge-Gas')}:
-          </Typography>
-          <Typography variant="body2" className={classes.value}>
-            {formState.destChainInfo.MinimumSwapFee} BIFI
-          </Typography>
-        </Box>
-        <Box mb={3} className={classes.flexContainer}>
-          <Typography variant="body2" className={classes.advice1}>
-            {t('Bridge-EstimatedTime')}
-          </Typography>
-          <Typography variant="body2" className={classes.value}>
-            3 - 30 min
+      </Box>
+      <Box className={classes.customDivider}>
+        <Box className={classes.line} />
+        <img alt="arrowDown" src={require('../../../images/arrowDown.svg').default} />
+        <Box className={classes.line} />
+      </Box>
+      <Box className={clsx(classes.fees, classes.lastMarginFees)}>
+        <Box mb={1}>
+          <Typography variant="body2" className={classes.label}>
+            {t('TO')}
           </Typography>
         </Box>
-        <Button onClick={handleDeposit} disabled={isStepping} className={classes.btn}>
-          {t('Confirm')}
-        </Button>
-      </CardContent>
-      <Stepper />
-    </>
+        <Box mb={2} className={classes.flexContainer}>
+          <Box className={classes.networkContainer}>
+            <img
+              className={classes.icon}
+              alt=""
+              src={require(`../../../images/networks/${formState.destChain}.svg`).default}
+            />
+            <Typography className={classes.chainName} variant="body1">
+              Fantom
+            </Typography>
+          </Box>
+          <Typography className={classes.bridgedValue} variant="body1">
+            + {destAmount} BIFI
+          </Typography>
+        </Box>
+        <Box>
+          <Typography variant="body2" className={classes.address}>
+            {t('Address')}: <span>{walletAddress}</span>
+          </Typography>
+        </Box>
+      </Box>
+      <Box mb={1} className={classes.flexContainer}>
+        <Typography variant="body2" className={classes.advice1}>
+          {t('Bridge-Crosschain')}:
+        </Typography>
+        <Typography variant="body2" className={classes.value}>
+          {formState.destChainInfo.SwapFeeRatePerMillion}%
+        </Typography>
+      </Box>
+      <Box mb={1} className={classes.flexContainer}>
+        <Typography variant="body2" className={classes.advice1}>
+          {t('Bridge-Gas')}:
+        </Typography>
+        <Typography variant="body2" className={classes.value}>
+          {formState.destChainInfo.MinimumSwapFee} BIFI
+        </Typography>
+      </Box>
+      <Box mb={3} className={classes.flexContainer}>
+        <Typography variant="body2" className={classes.advice1}>
+          {t('Bridge-EstimatedTime')}
+        </Typography>
+        <Typography variant="body2" className={classes.value}>
+          3 - 30 min
+        </Typography>
+      </Box>
+      <Button onClick={handleDeposit} disabled={isStepping} className={classes.btn}>
+        {t('Confirm')}
+      </Button>
+    </CardContent>
   );
 }
 

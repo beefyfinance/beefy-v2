@@ -22,7 +22,7 @@ export type BridgeModalState = {
 };
 
 const initialBridgeModalState: BridgeModalState = {
-  destChain: '',
+  destChain: 'fantom',
   amount: BIG_ZERO,
   formattedInput: '',
   max: false,
@@ -113,7 +113,8 @@ export const bridgeModalSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
       const state = action.payload.state;
-      const currentChainId = state.user.wallet.selectedChainId;
+      const walletAddress = action.payload.walletAddress;
+      const currentChainId = walletAddress ? state.user.wallet.selectedChainId : 'bsc';
       const isConnectedToFtm = currentChainId === 'fantom';
       sliceState.destChain = isConnectedToFtm ? 'bsc' : 'fantom';
       sliceState.amount = BIG_ZERO;
@@ -121,7 +122,7 @@ export const bridgeModalSlice = createSlice({
       sliceState.max = false;
       sliceState.destChainInfo =
         state.entities.bridge.byChainId[isConnectedToFtm ? 'fantom' : currentChainId].destChains[
-          isConnectedToFtm ? 250 : 56
+          isConnectedToFtm ? 56 : 250
         ];
     });
   },

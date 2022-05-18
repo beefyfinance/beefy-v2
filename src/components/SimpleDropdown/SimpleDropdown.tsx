@@ -14,6 +14,7 @@ export function SimpleDropdown({
   noBorder = false,
   label,
   className,
+  disabled,
 }: {
   list: Record<string, string>;
   selected: string;
@@ -22,6 +23,7 @@ export function SimpleDropdown({
   noBorder: boolean;
   label?: string;
   className?: string;
+  disabled?: boolean;
 }) {
   const props = {
     noBorder: noBorder,
@@ -33,6 +35,7 @@ export function SimpleDropdown({
     <Box className={clsx({ [classes.select]: true, [className]: className ?? false })}>
       <FormControl>
         <Select
+          disabled={disabled}
           labelId="chain-list-label"
           MenuProps={{
             anchorOrigin: {

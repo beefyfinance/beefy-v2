@@ -3,7 +3,7 @@ import { makeStyles, Box, Typography, Button, InputBase, Paper } from '@material
 import { useTranslation } from 'react-i18next';
 import { styles } from '../styles';
 import { useSelector, useDispatch, useStore } from 'react-redux';
-import { selectAllChains } from '../../../features/data/selectors/chains';
+import { selectAllChains, selectChainById } from '../../../features/data/selectors/chains';
 import { CardContent } from '../../../features/vault/components/Card/CardContent';
 import { Fees } from './Fees';
 import { AssetsImage } from '../../AssetsImage';
@@ -13,6 +13,8 @@ import { selectUserBalanceOfToken } from '../../../features/data/selectors/balan
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
+  selectIsWalletKnown,
+  selectWalletAddress,
 } from '../../../features/data/selectors/wallet';
 import { BIG_ZERO, formatBigDecimals } from '../../../helpers/format';
 import { selectBifiBridgeDataByChainId } from '../../../features/data/selectors/bridge';
@@ -21,6 +23,7 @@ import { bridgeModalActions } from '../../../features/data/reducers/wallet/bridg
 import { selectIsAddressBookLoaded } from '../../../features/data/selectors/data-loader';
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import BigNumber from 'bignumber.js';
+import { initBridgeForm } from '../../../features/data/actions/scenarios';
 
 const useStyles = makeStyles(styles as any);
 
@@ -29,27 +32,46 @@ function _Preview({ handlePreview }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const store = useStore();
-  const actualChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
+  const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
   const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
   const isWalletConnected = useSelector(selectIsWalletConnected);
+  const walletAddress = useSelector((state: BeefyState) =>
+    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
+  );
+
+  const destChain = useSelector((state: BeefyState) => selectChainById(state, formState.destChain));
 
   const formDataLoaded = useSelector(
     (state: BeefyState) =>
-      selectIsAddressBookLoaded(state, actualChainId) &&
+      selectIsAddressBookLoaded(state, currentChainId) &&
       isFulfilled(state.ui.dataLoader.global.bridgeForm)
   );
 
+  React.useEffect(() => {
+    initBridgeForm(store, walletAddress);
+  }, [store, walletAddress]);
+
   const selectedToken = useSelector((state: BeefyState) =>
-    selectBifiBridgeDataByChainId(state, actualChainId)
+    selectBifiBridgeDataByChainId(state, currentChainId ?? 'bsc')
   );
 
   const bifiBalance = useSelector((state: BeefyState) =>
-    selectUserBalanceOfToken(state, actualChainId, selectedToken.address)
+    isWalletConnected
+      ? selectUserBalanceOfToken(state, currentChainId, selectedToken.address)
+      : new BigNumber(BIG_ZERO)
   );
 
-  const aproxAmount = formState.amount.gt(BIG_ZERO)
-    ? formState.amount.minus(new BigNumber(formState.destChainInfo.MinimumSwapFee)).toFixed(4)
-    : new BigNumber(BIG_ZERO).toFixed(4);
+  const minAmount = new BigNumber(formState.destChainInfo.MinimumSwap);
+
+  const aproxAmount =
+    formState.amount.gt(BIG_ZERO) && formState.amount.gt(minAmount)
+      ? formState.amount.minus(minAmount).toFixed(4)
+      : new BigNumber(BIG_ZERO).toFixed(2);
+
+  const isDisabled =
+    formState.amount.isLessThanOrEqualTo(BIG_ZERO) ||
+    formState.amount.isLessThanOrEqualTo(minAmount) ||
+    !formDataLoaded;
 
   const chains = useSelector(selectAllChains);
   const [chainList, destChainsList] = useMemo(() => {
@@ -57,12 +79,12 @@ function _Preview({ handlePreview }) {
     const list2 = {};
     for (const chain of chains) {
       list[chain.id] = chain.name;
-      if (chain.id !== actualChainId) {
+      if (chain.id !== currentChainId) {
         list2[chain.id] = chain.name;
       }
     }
     return [list, list2];
-  }, [actualChainId, chains]);
+  }, [currentChainId, chains]);
 
   const selectedRenderer = network => {
     return (
@@ -74,13 +96,26 @@ function _Preview({ handlePreview }) {
   };
 
   const handleNetwork = chainId => {
+    if (!isWalletConnected) {
+      dispatch(askForWalletConnection());
+    }
+    if (chainId === formState.destChain) {
+      dispatch(
+        bridgeModalActions.setDestChain({
+          chainId: chainId,
+          destChainId: currentChainId,
+          state: store.getState(),
+        })
+      );
+    }
+
     dispatch(askForNetworkChange({ chainId: chainId }));
   };
 
   const handleDestChain = destChainId => {
     dispatch(
       bridgeModalActions.setDestChain({
-        chainId: actualChainId,
+        chainId: currentChainId,
         destChainId: destChainId,
         state: store.getState(),
       })
@@ -91,7 +126,7 @@ function _Preview({ handlePreview }) {
     dispatch(
       bridgeModalActions.setInput({
         amount: amountStr,
-        chainId: actualChainId,
+        chainId: currentChainId,
         tokenAddress: selectedToken.address,
         state: store.getState(),
       })
@@ -101,7 +136,7 @@ function _Preview({ handlePreview }) {
   const handleMax = () => {
     dispatch(
       bridgeModalActions.setMax({
-        chainId: actualChainId,
+        chainId: currentChainId,
         tokenAddress: selectedToken.address,
         state: store.getState(),
       })
@@ -126,11 +161,12 @@ function _Preview({ handlePreview }) {
           <Box className={classes.networkPicker}>
             <SimpleDropdown
               list={chainList}
-              selected={actualChainId ?? 'bsc'}
+              selected={currentChainId ?? 'bsc'}
               handler={handleNetwork}
               renderValue={selectedRenderer}
               noBorder={false}
               className={classes.alignDropdown}
+              disabled={!formDataLoaded}
             />
           </Box>
           <Box className={classes.inputContainer}>
@@ -165,11 +201,12 @@ function _Preview({ handlePreview }) {
           <Box className={classes.networkPicker}>
             <SimpleDropdown
               list={destChainsList}
-              selected={formState.destChain ?? 'fantom'}
+              selected={formState.destChain}
               handler={handleDestChain}
               renderValue={selectedRenderer}
               noBorder={false}
               className={classes.alignDropdown}
+              disabled={!formDataLoaded}
             />
           </Box>
           <Box className={classes.inputContainer}>
@@ -186,8 +223,8 @@ function _Preview({ handlePreview }) {
       <Fees />
       <Box mt={4}>
         {isWalletConnected ? (
-          <Button onClick={handlePreview} className={classes.btn}>
-            {t('Bridge-Button-1', { network: formState.destChain })}
+          <Button onClick={handlePreview} disabled={isDisabled} className={classes.btn}>
+            {t('Bridge-Button-1', { network: destChain.name })}
           </Button>
         ) : (
           <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>

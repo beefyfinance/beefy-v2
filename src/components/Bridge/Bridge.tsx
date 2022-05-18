@@ -9,15 +9,10 @@ import { styles } from './styles';
 import { makeStyles } from '@material-ui/styles';
 import { Preview } from './components/Preview';
 import { Confirm } from './components/Confirm';
-import { useSelector, useStore } from 'react-redux';
-import {
-  selectCurrentChainId,
-  selectIsWalletKnown,
-  selectWalletAddress,
-} from '../../features/data/selectors/wallet';
+import { useSelector } from 'react-redux';
+import { selectCurrentChainId } from '../../features/data/selectors/wallet';
 import { BeefyState } from '../../redux-types';
-import { initBridgeForm } from '../../features/data/actions/scenarios';
-import { isFulfilled } from '../../features/data/reducers/data-loader';
+import { useStepper } from '../Steps/hooks';
 
 const useStyles = makeStyles(styles as any);
 
@@ -42,24 +37,12 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
     setPreviewConfirm('preview');
   };
 
-  const isFormReady = useSelector((state: BeefyState) =>
-    isFulfilled(state.ui.dataLoader.global.bridgeForm)
-  );
-
-  const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
-  );
-
   const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
 
-  // initialize our form
-  const store = useStore();
-  React.useEffect(() => {
-    initBridgeForm(store, currentChainId, walletAddress);
-  }, [store, currentChainId, walletAddress]);
+  const [startStepper, isStepping, Stepper] = useStepper(currentChainId);
 
   return (
-    isFormReady && (
+    <>
       <Modal
         aria-labelledby="bridge-modal-title"
         aria-describedby="bridge-modal-description"
@@ -89,13 +72,18 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
               {previewConfirm === 'preview' ? (
                 <Preview handlePreview={() => setPreviewConfirm('confirm')} />
               ) : (
-                <Confirm />
+                <Confirm
+                  handleModal={handleModal}
+                  startStepper={startStepper}
+                  isStepping={isStepping}
+                />
               )}
             </>
           </Card>
         </Box>
       </Modal>
-    )
+      <Stepper />
+    </>
   );
 }
 
