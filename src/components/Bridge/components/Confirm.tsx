@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { walletActions } from '../../../features/data/actions/wallet-actions';
 import { selectAllowanceByTokenAddress } from '../../../features/data/selectors/allowances';
 import { selectBifiBridgeDataByChainId } from '../../../features/data/selectors/bridge';
+import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
 import { selectCurrentChainId, selectWalletAddress } from '../../../features/data/selectors/wallet';
 import { BeefyState } from '../../../redux-types';
@@ -31,22 +32,31 @@ function _Confirm({
 
   const walletAddress = useSelector((state: BeefyState) => selectWalletAddress(state));
 
-  const actualChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
+  const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
+
+  const chain = useSelector((state: BeefyState) => selectChainById(state, currentChainId));
+
+  const destChain = useSelector((state: BeefyState) => selectChainById(state, formState.destChain));
 
   const destAmount = formState.amount
     .minus(new BigNumber(formState.destChainInfo.MinimumSwapFee))
     .toFixed(4);
 
   const selectedToken = useSelector((state: BeefyState) =>
-    selectBifiBridgeDataByChainId(state, actualChainId)
+    selectBifiBridgeDataByChainId(state, currentChainId)
   );
 
   const depositTokenAllowance = useSelector((state: BeefyState) =>
-    selectAllowanceByTokenAddress(state, actualChainId, selectedToken.address, selectedToken.router)
+    selectAllowanceByTokenAddress(
+      state,
+      currentChainId,
+      selectedToken.address,
+      selectedToken.router
+    )
   );
 
   const depositedToken = useSelector((state: BeefyState) =>
-    selectTokenByAddress(state, actualChainId, selectedToken.address)
+    selectTokenByAddress(state, currentChainId, selectedToken.address)
   );
 
   const handleDeposit = () => {
@@ -64,7 +74,7 @@ function _Confirm({
       step: 'bridge',
       message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
       action: walletActions.bridge(
-        actualChainId,
+        currentChainId,
         formState.destChain,
         selectedToken.router,
         formState.amount
@@ -92,10 +102,10 @@ function _Confirm({
             <img
               className={classes.icon}
               alt=""
-              src={require(`../../../images/networks/${actualChainId}.svg`).default}
+              src={require(`../../../images/networks/${currentChainId}.svg`).default}
             />
             <Typography className={classes.chainName} variant="body1">
-              BNB Chain
+              {chain.name}
             </Typography>
           </Box>
           <Typography className={classes.bridgedValue} variant="body1">
@@ -127,7 +137,7 @@ function _Confirm({
               src={require(`../../../images/networks/${formState.destChain}.svg`).default}
             />
             <Typography className={classes.chainName} variant="body1">
-              Fantom
+              {destChain.name}
             </Typography>
           </Box>
           <Typography className={classes.bridgedValue} variant="body1">
