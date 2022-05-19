@@ -4,7 +4,7 @@ export const styles = (theme: Theme) => ({
   rows: {
     display: 'grid',
     rowGap: '8px',
-    columnGap: '24px',
+    columnGap: '48px',
     gridTemplateColumns: '1fr auto',
     fontSize: '14px',
     lineHeight: '18px',
