@@ -16,16 +16,6 @@ export const selectMoonpotData = (state: BeefyState, vaultId: VaultEntity['id'])
 export const selectIsVaultQidao = (state: BeefyState, vaultId: VaultEntity['id']) => {
   return state.biz.partners.qidao.byVaultId[vaultId] !== undefined;
 };
-export const selectLacucinaData = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const lcd = state.biz.partners.lacucina.byVaultId[vaultId];
-  if (!lcd) {
-    throw new Error(`Vault ${vaultId} do not have laCucina data`);
-  }
-  return lcd;
-};
-export const selectIsVaultLacucina = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  return state.biz.partners.lacucina.byVaultId[vaultId] !== undefined;
-};
 export const selectIsVaultInsurace = (state: BeefyState, vaultId: VaultEntity['id']) => {
   const vault = selectVaultById(state, vaultId);
   return state.biz.partners.insurace.byChainId[vault.chainId] !== undefined;

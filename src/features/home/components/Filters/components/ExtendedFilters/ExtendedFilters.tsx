@@ -39,19 +39,6 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ({ desktopVie
           />
         }
       />
-      <CheckboxFilter
-        className={classes.checkbox}
-        filter="onlyLaCucina"
-        label={t('Filter-LaCucina')}
-        icon={
-          <img
-            src={require('../../../../../../images/lacucina.svg').default}
-            alt=""
-            width={20}
-            height={20}
-          />
-        }
-      />
       {!desktopView ? (
         <>
           <VaultCategoryDropdownFilter className={classes.select} />
