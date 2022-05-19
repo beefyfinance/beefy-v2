@@ -57,6 +57,7 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.platformId !== null ? 1 : 0) +
     (filterOptions.vaultType !== 'all' ? 1 : 0) +
     (filterOptions.vaultCategory !== 'all' ? 1 : 0) +
+    (filterOptions.sort !== 'default' ? 1 : 0) +
     filterOptions.chainIds.length
 );
 

@@ -8,11 +8,6 @@ export function useIsOverflowingHorizontally() {
   useEffect(() => {
     if (!ref.current) return;
 
-    console.log(
-      ref.current.scrollWidth,
-      ref.current.offsetWidth,
-      ref.current.scrollWidth > ref.current.offsetWidth
-    );
     setIsOverflowing(ref.current.scrollWidth > ref.current.offsetWidth);
   }, [width, ref, setIsOverflowing]);
 

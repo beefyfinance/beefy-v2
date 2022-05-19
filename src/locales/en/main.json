@@ -104,7 +104,7 @@
   "VaultTag-LaCucina": "LaCucina",
   "VaultTag-Retired": "Retired",
   "VaultTag-EarnToken": "Earn {{token}}",
-  "VaultTag-BoostedByPartner": "Boosted by {{partner}}",
+  "VaultTag-PartnerBoost": "{{partner}} Boost",
   "Vault-Daily": "DAILY",
   "Vault-Breakdown-DailyAPY": "Daily APY",
   "Vault-Chart": "Week's APY",

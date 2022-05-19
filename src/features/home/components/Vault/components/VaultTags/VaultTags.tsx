@@ -35,16 +35,14 @@ const VaultBoostTag = memo<VaultBoostTagProps>(function VaultBoostTag({ boostId 
 
   return (
     <VaultTagWithTooltip
-      content={
-        <BasicTooltipContent title={t('VaultTag-BoostedByPartner', { partner: boost.name })} />
-      }
+      content={<BasicTooltipContent title={t('VaultTag-PartnerBoost', { partner: boost.name })} />}
       placement="bottom"
       disabled={!isOverflowing}
       className={classes.vaultTagBoost}
       ref={ref}
     >
       {'\uD83D\uDD25 '}
-      {t('VaultTag-BoostedByPartner', { partner: boost.name })}
+      {t('VaultTag-PartnerBoost', { partner: boost.name })}
     </VaultTagWithTooltip>
   );
 });
