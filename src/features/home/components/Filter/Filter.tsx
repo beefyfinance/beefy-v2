@@ -77,8 +77,6 @@ const _Filter = () => {
         dispatch(filteredVaultsActions.setOnlyRetired(checked));
       } else if (name === 'moonpot') {
         dispatch(filteredVaultsActions.setOnlyMoonpot(checked));
-      } else if (name === 'laCucina') {
-        dispatch(filteredVaultsActions.setOnlyLaCucina(checked));
       }
     },
     [dispatch]
@@ -392,23 +390,6 @@ const _Filter = () => {
                     checked={filterOptions.onlyMoonpot}
                     onChange={handleCheckbox}
                     name="moonpot"
-                    className={classes.checkbox}
-                  />
-                }
-              />
-              <FormControlLabel
-                className={classes.checkboxContainer}
-                label={
-                  <Typography className={classes.labelMoonpot} variant="body1">
-                    <img src={require('../../../../images/lacucina.svg').default} alt="lacucina" />{' '}
-                    {t('Filter-LaCucina')}
-                  </Typography>
-                }
-                control={
-                  <Checkbox
-                    checked={filterOptions.onlyLaCucina}
-                    onChange={handleCheckbox}
-                    name="laCucina"
                     className={classes.checkbox}
                   />
                 }
