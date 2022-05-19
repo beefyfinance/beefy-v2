@@ -5166,7 +5166,7 @@ export const pools = [
     oracleId: 'quick-matic-wcro',
     status: 'active',
     platform: 'QuickSwap',
-    assets: ['CRO', 'MATIC'],
+    assets: ['WCRO', 'MATIC'],
     risks: [
       'COMPLEXITY_LOW',
       'BATTLE_TESTED',
