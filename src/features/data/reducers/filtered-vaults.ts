@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChainEntity } from '../entities/chain';
 import { PlatformEntity } from '../entities/platform';
+
 /**
  * State containing Vault infos
  */
@@ -21,7 +22,6 @@ export type FilteredVaultsState = {
   onlyRetired: boolean;
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
-  onlyLaCucina: boolean;
 };
 const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
@@ -35,7 +35,6 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyRetired: false,
   onlyMoonpot: false,
   onlyBoosted: false,
-  onlyLaCucina: false,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -80,9 +79,6 @@ export const filteredVaultsSlice = createSlice({
     setOnlyMoonpot(sliceState, action: PayloadAction<FilteredVaultsState['onlyMoonpot']>) {
       sliceState.reseted = false;
       sliceState.onlyMoonpot = action.payload;
-    },
-    setOnlyLaCucina(sliceState, action: PayloadAction<FilteredVaultsState['onlyLaCucina']>) {
-      sliceState.onlyLaCucina = action.payload;
     },
     setOnlyBoosted(sliceState, action: PayloadAction<FilteredVaultsState['onlyBoosted']>) {
       sliceState.reseted = false;

@@ -4,7 +4,7 @@ import { fetchPartnersConfig } from '../actions/partners';
 import { ChainEntity } from '../entities/chain';
 import { PartnerEntity } from '../entities/partner';
 import { VaultEntity } from '../entities/vault';
-import { LaCucinaConfig, MoonpotConfig } from '../apis/config-types';
+import { MoonpotConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos
@@ -28,11 +28,6 @@ export type PartnersState = {
       [vaultId: VaultEntity['id']]: boolean;
     };
   };
-  lacucina: {
-    byVaultId: {
-      [vaultId: VaultEntity['id']]: LaCucinaConfig;
-    };
-  };
 };
 export const initialPartnersState: PartnersState = {
   byId: {},
@@ -43,9 +38,6 @@ export const initialPartnersState: PartnersState = {
     byChainId: {},
   },
   qidao: {
-    byVaultId: {},
-  },
-  lacucina: {
     byVaultId: {},
   },
 };
@@ -72,12 +64,6 @@ export const partnersSlice = createSlice({
       for (const vaultId of action.payload.QiDao) {
         if (!sliceState.qidao.byVaultId[vaultId]) {
           sliceState.qidao.byVaultId[vaultId] = true;
-        }
-      }
-      for (const laCucinaConfig of action.payload.LaCucina) {
-        const vaultId = laCucinaConfig.id;
-        if (!sliceState.lacucina.byVaultId[vaultId]) {
-          sliceState.lacucina.byVaultId[vaultId] = laCucinaConfig;
         }
       }
     });

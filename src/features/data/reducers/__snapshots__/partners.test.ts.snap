@@ -18,9 +18,6 @@ Object {
   "insurace": Object {
     "byChainId": Object {},
   },
-  "lacucina": Object {
-    "byVaultId": Object {},
-  },
   "moonpot": Object {
     "byVaultId": Object {},
   },

@@ -13,7 +13,7 @@ import {
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
 } from './boosts';
-import { selectIsVaultLacucina, selectIsVaultMoonpot } from './partners';
+import { selectIsVaultMoonpot } from './partners';
 import {
   selectIsVaultBeefy,
   selectIsVaultBlueChip,
@@ -32,7 +32,6 @@ export const selectFilterPopinFilterCount = createSelector(
     (filterOptions.onlyRetired ? 1 : 0) +
     (filterOptions.onlyMoonpot ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
-    (filterOptions.onlyLaCucina ? 1 : 0) +
     (filterOptions.platformId !== null ? 1 : 0) +
     (filterOptions.vaultType !== 'all' ? 1 : 0) +
     filterOptions.chainIds.length
@@ -47,7 +46,6 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.userCategory !== 'all' ||
     filterOptions.onlyRetired !== false ||
     filterOptions.onlyMoonpot !== false ||
-    filterOptions.onlyLaCucina !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
     filterOptions.platformId !== null ||
@@ -184,9 +182,6 @@ export const selectFilteredVaults = (state: BeefyState) => {
       return false;
     }
     if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
-      return false;
-    }
-    if (filterOptions.onlyLaCucina && !selectIsVaultLacucina(state, vault.id)) {
       return false;
     }
     if (filterOptions.onlyBoosted && !selectIsVaultBoosted(state, vault.id)) {
