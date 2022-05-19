@@ -4,11 +4,10 @@ export const styles = (theme: Theme) => ({
   rows: {
     display: 'grid',
     rowGap: '8px',
-    columnGap: '16px',
-    gridTemplateColumns: '1fr minmax(0, 1fr)',
+    columnGap: '24px',
+    gridTemplateColumns: '1fr auto',
     fontSize: '14px',
     lineHeight: '18px',
-    minWidth: '248px',
   },
   label: {
     '&:nth-last-child(2)': {

@@ -30,7 +30,7 @@ export const styles = (theme: Theme) => ({
     textAlign: 'left' as const,
   },
   tooltip: {
-    maxWidth: 'min(100%, 350px)',
+    maxWidth: 'min(100%, 200px)',
     zIndex: 1000,
     '&[x-placement*="top"]': {
       marginBottom: `${arrowHeight}px`,
