@@ -1,14 +1,101 @@
 [
   {
-    "id": "bsc vault: ellipsis-usdd",
-    "type": "Added"
+    "id": "bsc vault: bifi-maxi",
+    "type": "synced"
   },
   {
-    "id": "bsc vault: memefarm-ape-bnb",
-    "type": "REMOVED"
+    "id": "bsc vault: ellipsis-usdd",
+    "type": "synced"
+  },
+  {
+    "id": "bsc vault: bifi-maxi-eol",
+    "type": "synced"
+  },
+  {
+    "id": "heco vault: heco-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: fantom-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: beets-clair-de-lune-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: beets-ust-ust-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: beefy-beFTM",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: beefy-binspirit",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-kek-ftm-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-inv-wftm-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spartacadabra-charm-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: beets-battle-bands-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fantom vault: geist-dai-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: spirit-link-ftm-eol",
+    "type": "synced"
   },
   {
     "id": "fantom vault: curve-ftm-tricrypto",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: sing-ftm-usdc-sing-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: jetswap-fantom-eth-btc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: jetswap-fantom-eth-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: jetswap-fantom-fwings-ftm-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: jetswap-fantom-fwings-usdc-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: jetswap-fantom-fwings-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-wftm-foo-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: boo-ftm-scream-eol",
     "type": "synced"
   },
   {
@@ -16,27 +103,31 @@
     "type": "synced"
   },
   {
-    "id": "fantom vault: boo-dola-inv-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: beets-multichain-maxi-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: beets-boomer-beets-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "fantom vault: beets-gelato-genesis-eol",
-    "type": "REMOVED"
-  },
-  {
-    "id": "polygon vault: curve-poly-eurt",
+    "id": "fantom vault: ester-est-ftm-eol",
     "type": "synced"
   },
   {
-    "id": "polygon vault: curve-am3crv",
+    "id": "fantom vault: ester-est-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: froyo-3pool-eol",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: froyo-froyo-ftm-eol",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: polygon-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: beefy-beqi",
+    "type": "synced"
+  },
+  {
+    "id": "polygon vault: curve-poly-eurt",
     "type": "synced"
   },
   {
@@ -48,12 +139,12 @@
     "type": "synced"
   },
   {
-    "id": "polygon vault: tetu-matic-tetu-eol",
-    "type": "REMOVED"
+    "id": "avax vault: avax-bifi-maxi",
+    "type": "synced"
   },
   {
-    "id": "polygon vault: sushi-usdc-tusd-eol",
-    "type": "REMOVED"
+    "id": "avax vault: beefy-beJoe",
+    "type": "synced"
   },
   {
     "id": "avax vault: curve-avax-atricrypto",
@@ -68,24 +159,40 @@
     "type": "synced"
   },
   {
-    "id": "arbitrum vault: curve-arb-tricrypto",
+    "id": "harmony vault: one-bifi-maxi",
     "type": "synced"
   },
   {
-    "id": "arbitrum vault: curve-arb-2pool",
+    "id": "arbitrum vault: arbi-bifi-maxi",
     "type": "synced"
   },
   {
-    "id": "arbitrum vault: curve-arb-ren",
+    "id": "celo vault: celo-bifi-maxi",
     "type": "synced"
   },
   {
-    "id": "moonriver vault: sushi-mr-eth-wbtc-eol",
-    "type": "REMOVED"
+    "id": "moonriver vault: movr-bifi-maxi",
+    "type": "synced"
   },
   {
-    "id": "aurora vault: tri-matic-near-eol",
-    "type": "REMOVED"
+    "id": "cronos vault: cronos-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "fuse vault: fuse-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "metis vault: metis-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "aurora vault: aurora-bifi-maxi",
+    "type": "synced"
+  },
+  {
+    "id": "moonbeam vault: moonbeam-bifi-maxi",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
