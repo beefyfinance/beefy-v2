@@ -30,13 +30,11 @@ import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
 import {
   selectIsVaultInsurace,
-  selectIsVaultLacucina,
   selectIsVaultMoonpot,
   selectIsVaultQidao,
 } from '../data/selectors/partners';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
-import { LaCucina } from './components/LaCucinaCard';
 import { Nexus } from './components/NexusCard';
 import { MinterCards } from './components/MinterCards';
 import { ChainEntity } from '../data/entities/chain';
@@ -92,7 +90,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
   const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
   const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
-  const isLaCucina = useSelector((state: BeefyState) => selectIsVaultLacucina(state, vaultId));
 
   return (
     <>
@@ -166,11 +163,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               {isMoonpot && (
                 <Box>
                   <Moonpot vaultId={vaultId} />
-                </Box>
-              )}
-              {isLaCucina && (
-                <Box>
-                  <LaCucina vaultId={vaultId} />
                 </Box>
               )}
               {isInsurace && (

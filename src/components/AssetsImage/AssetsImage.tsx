@@ -11,6 +11,7 @@ const useStyles = makeStyles(styles);
 export type AssetsImageType = {
   chainId: ChainEntity['id'];
   assetIds: string[];
+  /** @deprecated use asset ids */
   imageUri?: string;
   size?: number;
   className?: string;

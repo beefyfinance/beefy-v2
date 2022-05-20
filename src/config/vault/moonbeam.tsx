@@ -301,7 +301,7 @@ export const pools = [
     logo: 'single-assets/BIFI.png',
     name: 'BIFI Maxi',
     token: 'BIFI',
-    tokenDescription: 'Beefy.Finance',
+    tokenDescription: 'Beefy',
     tokenAddress: '0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8',
     tokenDecimals: 18,
     tokenDescriptionUrl: '#',
@@ -315,7 +315,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: 'active',
-    platform: 'Beefy.Finance',
+    platform: 'Beefy',
     assets: ['BIFI'],
     risks: [
       'COMPLEXITY_LOW',
@@ -433,6 +433,7 @@ export const pools = [
       'MCAP_HIGH',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
@@ -1085,6 +1086,7 @@ export const pools = [
       'MCAP_HIGH',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     withdrawalFee: '0%',

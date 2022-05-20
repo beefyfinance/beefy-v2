@@ -40,7 +40,7 @@ import {
   selectUserBalanceOfToken,
 } from '../../../../data/selectors/balance';
 import { selectChainById } from '../../../../data/selectors/chains';
-import { Loader } from '../../../../../components/loader';
+import { Loader } from '../../../../../components/Loader';
 import { initBoostForm } from '../../../../data/actions/scenarios';
 import { isFulfilled } from '../../../../data/reducers/data-loader';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';

@@ -536,7 +536,7 @@ export const pools = [
     logo: 'single-assets/BIFI.png',
     name: 'BIFI Maxi',
     token: 'BIFI',
-    tokenDescription: 'Beefy.Finance',
+    tokenDescription: 'Beefy',
     tokenAddress: '0xe6801928061CDbE32AC5AD0634427E140EFd05F9',
     tokenDecimals: 18,
     tokenDescriptionUrl: '#',
@@ -549,7 +549,7 @@ export const pools = [
     oracleId: 'BIFI',
     oraclePrice: 0,
     status: 'active',
-    platform: 'Beefy.Finance',
+    platform: 'Beefy',
     assets: ['BIFI'],
     risks: [
       'COMPLEXITY_LOW',

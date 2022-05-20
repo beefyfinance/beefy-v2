@@ -243,7 +243,7 @@ export const pools = [
     withdrawalFee: '0.01%',
     addLiquidityUrl: 'https://arbitrum.curve.fi/tricrypto/deposit',
     network: 'arbitrum',
-    createdAt: 1632215060,
+    createdAt: 1652662923,
   },
   {
     id: 'curve-arb-2pool',
@@ -277,7 +277,7 @@ export const pools = [
     withdrawalFee: '0.01%',
     addLiquidityUrl: 'https://arbitrum.curve.fi/2pool/deposit',
     network: 'arbitrum',
-    createdAt: 1632224639,
+    createdAt: 1652662923,
   },
   {
     id: 'curve-arb-ren',
@@ -311,7 +311,7 @@ export const pools = [
     withdrawalFee: '0.01%',
     addLiquidityUrl: 'https://arbitrum.curve.fi/ren/deposit',
     network: 'arbitrum',
-    createdAt: 1632226590,
+    createdAt: 1652662923,
   },
   {
     id: 'sushi-arb-wbtc-weth',
@@ -423,7 +423,7 @@ export const pools = [
     logo: 'single-assets/BIFI.png',
     name: 'BIFI Maxi',
     token: 'BIFI',
-    tokenDescription: 'Beefy.Finance',
+    tokenDescription: 'Beefy',
     tokenAddress: '0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE',
     tokenDecimals: 18,
     tokenDescriptionUrl: '#',
@@ -436,7 +436,7 @@ export const pools = [
     oracleId: 'BIFI',
     oraclePrice: 0,
     status: 'active',
-    platform: 'Beefy.Finance',
+    platform: 'Beefy',
     assets: ['BIFI'],
     risks: [
       'COMPLEXITY_LOW',

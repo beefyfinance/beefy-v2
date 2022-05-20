@@ -14,6 +14,8 @@ export const styles: Styles<any, any, any> = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
+    backgroundColor: 'transparent',
+    padding: 0,
     '&.open': {
       backgroundColor: '#242737',
     },
@@ -60,6 +62,9 @@ export const styles: Styles<any, any, any> = theme => ({
     '&.notLoading': {
       display: 'none',
     },
+  },
+  floating: {
+    zIndex: 1000,
   },
   popoverPaper: {
     backgroundColor: 'transparent',

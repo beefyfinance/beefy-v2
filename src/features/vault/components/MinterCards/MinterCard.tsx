@@ -4,7 +4,7 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { MinterEntity } from '../../../data/entities/minter';
 import { BeefyState } from '../../../../redux-types';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
-import { Loader } from '../../../../components/loader';
+import { Loader } from '../../../../components/Loader';
 import { isFulfilled } from '../../../data/reducers/data-loader';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../data/selectors/wallet';
 import { initMinterForm } from '../../../data/actions/scenarios';

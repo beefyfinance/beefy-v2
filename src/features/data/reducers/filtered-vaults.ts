@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChainEntity } from '../entities/chain';
 import { PlatformEntity } from '../entities/platform';
+import { KeysOfType } from '../utils/types-utils';
+
 /**
  * State containing Vault infos
  */
@@ -11,7 +13,8 @@ export type FilteredVaultsState = {
    * to reset their local copy. The search text is (for now) the only example.
    **/
   reseted: boolean;
-  sort: 'tvl' | 'apy' | 'safetyScore' | 'default' | 'depositValue';
+  sort: 'tvl' | 'apy' | 'daily' | 'safetyScore' | 'default' | 'depositValue' | 'walletValue';
+  sortDirection: 'asc' | 'desc';
   vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy';
   userCategory: 'all' | 'eligible' | 'deposited';
   vaultType: 'all' | 'lps' | 'single';
@@ -21,11 +24,13 @@ export type FilteredVaultsState = {
   onlyRetired: boolean;
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
-  onlyLaCucina: boolean;
 };
+export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
+
 const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
+  sortDirection: 'desc',
   vaultCategory: 'all',
   userCategory: 'all',
   vaultType: 'all',
@@ -35,7 +40,6 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   onlyRetired: false,
   onlyMoonpot: false,
   onlyBoosted: false,
-  onlyLaCucina: false,
 };
 
 export const filteredVaultsSlice = createSlice({
@@ -48,6 +52,21 @@ export const filteredVaultsSlice = createSlice({
     setSort(sliceState, action: PayloadAction<FilteredVaultsState['sort']>) {
       sliceState.reseted = false;
       sliceState.sort = action.payload;
+    },
+    setSortDirection(sliceState, action: PayloadAction<FilteredVaultsState['sortDirection']>) {
+      sliceState.reseted = false;
+      sliceState.sortDirection = action.payload;
+    },
+    setSortFieldAndDirection(
+      sliceState,
+      action: PayloadAction<{
+        field: FilteredVaultsState['sort'];
+        direction: FilteredVaultsState['sortDirection'];
+      }>
+    ) {
+      sliceState.reseted = false;
+      sliceState.sort = action.payload.field;
+      sliceState.sortDirection = action.payload.direction;
     },
     setVaultCategory(sliceState, action: PayloadAction<FilteredVaultsState['vaultCategory']>) {
       sliceState.reseted = false;
@@ -81,12 +100,16 @@ export const filteredVaultsSlice = createSlice({
       sliceState.reseted = false;
       sliceState.onlyMoonpot = action.payload;
     },
-    setOnlyLaCucina(sliceState, action: PayloadAction<FilteredVaultsState['onlyLaCucina']>) {
-      sliceState.onlyLaCucina = action.payload;
-    },
     setOnlyBoosted(sliceState, action: PayloadAction<FilteredVaultsState['onlyBoosted']>) {
       sliceState.reseted = false;
       sliceState.onlyBoosted = action.payload;
+    },
+    setBoolean(
+      sliceState,
+      action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>
+    ) {
+      sliceState.reseted = false;
+      sliceState[action.payload.filter] = action.payload.value;
     },
   },
 });

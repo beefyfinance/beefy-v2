@@ -59,6 +59,7 @@ import { BoostWidget } from '../BoostWidget';
 import { FeeBreakdown } from '../FeeBreakdown';
 import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
+import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 
 const useStyles = makeStyles(styles as any);
 
@@ -438,6 +439,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           type={'withdraw'}
         />
         <Box mt={3}>
+          {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
           {isWalletConnected ? (
             !isWalletOnVaultChain ? (
               <>

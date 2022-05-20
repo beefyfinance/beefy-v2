@@ -33,6 +33,7 @@ import {
   selectChainNativeToken,
   selectChainWrappedNativeToken,
   selectErc20TokenByAddress,
+  selectIsTokenLoaded,
   selectTokenByAddress,
   selectTokenById,
 } from '../selectors/tokens';
@@ -956,7 +957,11 @@ function getVaultTokensToRefresh(state: BeefyState, vault: VaultEntity) {
   // refresh vault tokens
   if (isStandardVault(vault)) {
     for (const assetId of vault.assetIds) {
-      tokens.push(selectTokenById(state, vault.chainId, assetId));
+      // selectTokenById throws if token does not exist;
+      // tokens in assetIds[] might not exist if vault does not have ZAP
+      if (selectIsTokenLoaded(state, vault.chainId, assetId)) {
+        tokens.push(selectTokenById(state, vault.chainId, assetId));
+      }
     }
   }
   tokens.push(selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress));

@@ -150,7 +150,7 @@ export const pools = [
     logo: 'single-assets/BIFI.png',
     name: 'BIFI Maxi',
     token: 'BIFI',
-    tokenDescription: 'Beefy.Finance',
+    tokenDescription: 'Beefy',
     tokenAddress: '0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c',
     tokenDecimals: 18,
     tokenDescriptionUrl: '#',
@@ -164,7 +164,7 @@ export const pools = [
     oraclePrice: 0,
     depositsPaused: false,
     status: 'active',
-    platform: 'Beefy.Finance',
+    platform: 'Beefy',
     assets: ['BIFI'],
     risks: [
       'COMPLEXITY_LOW',
@@ -320,6 +320,7 @@ export const pools = [
       'MCAP_SMALL',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     addLiquidityUrl: 'https://app.fuse.fi/#/add/FUSE/0x0D58a44be3dCA0aB449965dcc2c46932547Fea2f',
@@ -840,6 +841,7 @@ export const pools = [
       'MCAP_SMALL',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'ALGO_STABLE',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:

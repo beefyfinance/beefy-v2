@@ -194,7 +194,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     }
 
     this.provider = null;
-    this.web3Modal = null;
+    // this.web3Modal = null;
 
     this.options.onWalletDisconnected();
   }
@@ -244,7 +244,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
         }
 
         this.provider = null;
-        this.web3Modal = null;
+        // this.web3Modal = null;
       }
     };
 

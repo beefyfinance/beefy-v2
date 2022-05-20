@@ -10,25 +10,6 @@ const QiDao = [
 
 const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriver', 'polygon'];
 
-const LaCucina = [
-  {
-    id: 'mdex-lac-busd',
-    ovenId: '6485c8c9-dffe-421d-adf7-3b4d85c3866a',
-  },
-  {
-    id: 'banana-btcb-bnb',
-    ovenId: '22763730-0e7f-4701-8956-570449a54a20',
-  },
-  {
-    id: 'auto-btcb-eth',
-    ovenId: '0430ea01-418f-46d9-881b-a1e2a8901d7a',
-  },
-  {
-    id: 'cakev2-bifi-bnb',
-    ovenId: '0586bafb-4850-4778-a291-c76a1ad54b67',
-  },
-];
-
 const Moonpot = [
   {
     id: 'cake-cakev2',
@@ -102,4 +83,4 @@ const Moonpot = [
   },
 ];
 
-export { QiDao, Insurace, Moonpot, LaCucina };
+export { QiDao, Insurace, Moonpot };
