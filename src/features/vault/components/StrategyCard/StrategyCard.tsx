@@ -1,4 +1,4 @@
-import { makeStyles, Typography, Box } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { formattedTotalApy } from '../../../../helpers/format';
@@ -18,6 +18,7 @@ import { selectVaultById, selectVaultStrategyAddress } from '../../../data/selec
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
+import { ApyStatLoader } from '../../../../components/ApyStatLoader';
 
 const useStyles = makeStyles(styles as any);
 function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
@@ -27,7 +28,7 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
   const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
   const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
-  const formatted = formattedTotalApy(values);
+  const formatted = formattedTotalApy(values, <ApyStatLoader />);
   const stratAddr = useSelector((state: BeefyState) => selectVaultStrategyAddress(state, vaultId));
   const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));

@@ -19,7 +19,7 @@ import { CardContent } from '../../Card/CardContent';
 import { CardTitle } from '../../Card/CardTitle';
 import { styles } from './styles';
 import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
-import { Loader } from '../../../../../components/loader';
+import { Loader } from '../../../../../components/Loader';
 import { initBoostForm } from '../../../../data/actions/scenarios';
 import {
   selectCurrentChainId,

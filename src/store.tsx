@@ -9,6 +9,8 @@ import {
   featureFlag_replayReduxActions,
 } from './features/data/utils/feature-flags';
 import { zapEstimateMiddleware } from './features/data/middlewares/zap-estimate';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { BeefyState } from './redux-types';
 
 let middlewares = [loggerMiddleware];
 
@@ -37,3 +39,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
+export const useAppSelector: TypedUseSelectorHook<BeefyState> = useSelector;

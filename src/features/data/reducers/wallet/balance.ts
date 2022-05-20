@@ -95,7 +95,7 @@ export const balanceSlice = createSlice({
     builder.addCase(fetchAllBalanceAction.fulfilled, (sliceState, action) => {
       const state = action.payload.state;
       const chainId = action.payload.chainId;
-      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+      const walletAddress = action.payload.walletAddress.toLowerCase();
       const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.data;
       addTokenBalanceToState(state, walletState, chainId, balance.tokens);
@@ -109,7 +109,7 @@ export const balanceSlice = createSlice({
         return;
       }
       const vault = selectVaultById(state, action.payload.vaultId);
-      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+      const walletAddress = action.payload.walletAddress.toLowerCase();
 
       const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
@@ -124,7 +124,7 @@ export const balanceSlice = createSlice({
         return;
       }
       const vault = selectVaultById(state, action.payload.vaultId);
-      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+      const walletAddress = action.payload.walletAddress.toLowerCase();
 
       const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
@@ -140,7 +140,7 @@ export const balanceSlice = createSlice({
       }
       const boost = selectBoostById(action.payload.state, action.payload.boostId);
       const vault = selectVaultById(action.payload.state, boost.vaultId);
-      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+      const walletAddress = action.payload.walletAddress.toLowerCase();
 
       const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
@@ -155,7 +155,7 @@ export const balanceSlice = createSlice({
         return;
       }
       const minter = selectMinterById(action.payload.state, action.payload.minterId);
-      const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+      const walletAddress = action.payload.walletAddress.toLowerCase();
 
       const walletState = getWalletState(sliceState, walletAddress);
       const balance = action.payload.balance;
@@ -167,7 +167,7 @@ export const balanceSlice = createSlice({
       (sliceState, action) => {
         const state = action.payload.state;
         const chainId = action.payload.chainId;
-        const walletAddress = action.payload.walletAddress.toLocaleLowerCase();
+        const walletAddress = action.payload.walletAddress.toLowerCase();
 
         const walletState = getWalletState(sliceState, walletAddress);
         const balance = action.payload.balance;

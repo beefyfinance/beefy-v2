@@ -1,7 +1,8 @@
 import { BigNumber } from 'bignumber.js';
-import { ApyStatLoader } from '../components/ApyStatLoader';
 import { TotalApy } from '../features/data/reducers/apy';
 import { hexToNumber, isHexStrict } from 'web3-utils';
+import { ReactNode } from 'react';
+import { AllValuesAsString } from '../features/data/utils/types-utils';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -25,7 +26,7 @@ export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
 export const BIG_ZERO = new BigNumber(0);
 export const BIG_ONE = new BigNumber(1);
 
-export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => {
+export const formatApy = (apy, dp = 2, placeholder: any = '?') => {
   if (!apy) return placeholder;
 
   apy *= 100;
@@ -49,12 +50,15 @@ export const formatApy = (apy, dp = 2, placeholder: any = <ApyStatLoader />) => 
       }) + '%';
 };
 
-export const formattedTotalApy = (totalApy: TotalApy) => {
+export const formattedTotalApy = (
+  totalApy: TotalApy,
+  placeholder: ReactNode = '?'
+): AllValuesAsString<TotalApy> => {
   return Object.fromEntries(
     Object.entries(totalApy).map(([key, value]) => {
       const formattedValue = key.toLowerCase().includes('daily')
-        ? formatApy(value, 4)
-        : formatApy(value);
+        ? formatApy(value, 4, placeholder)
+        : formatApy(value, 2, placeholder);
       return [key, formattedValue];
     })
   );

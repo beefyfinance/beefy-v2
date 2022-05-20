@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { styles } from './styles';
-import { LabeledStat } from '../../features/home/components/LabeledStat';
+import { LabeledStat } from '../LabeledStat';
 import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formattedTotalApy } from '../../helpers/format';
@@ -180,7 +180,7 @@ function _YearlyApyStats({
       value={
         <LabeledStat
           variant={variant}
-          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalApy : ''}
+          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalApy : null}
           value={shouldShowApy ? formatted.totalApy : '-'}
         />
       }
@@ -234,7 +234,7 @@ function _DailyApyStats({
       value={
         <LabeledStat
           variant={variant}
-          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalDaily : ''}
+          boosted={isBoosted && shouldShowApy ? formatted.boostedTotalDaily : null}
           value={shouldShowApy ? formatted.totalDaily : '-'}
         />
       }

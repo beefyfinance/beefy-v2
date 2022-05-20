@@ -106,7 +106,7 @@ function addAllowancesToState(
     }
 
     // only update data if necessary
-    const spender = tokenAllowance.spenderAddress.toLocaleLowerCase();
+    const spender = tokenAllowance.spenderAddress.toLowerCase();
     let stateForSpender = stateForToken.bySpenderAddress[spender];
     if (stateForSpender === undefined || !stateForSpender.isEqualTo(tokenAllowance.allowance)) {
       stateForToken.bySpenderAddress[spender] = tokenAllowance.allowance;

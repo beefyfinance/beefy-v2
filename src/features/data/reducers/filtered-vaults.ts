@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChainEntity } from '../entities/chain';
 import { PlatformEntity } from '../entities/platform';
+import { KeysOfType } from '../utils/types-utils';
 
 /**
  * State containing Vault infos
@@ -12,7 +13,8 @@ export type FilteredVaultsState = {
    * to reset their local copy. The search text is (for now) the only example.
    **/
   reseted: boolean;
-  sort: 'tvl' | 'apy' | 'safetyScore' | 'default' | 'depositValue';
+  sort: 'tvl' | 'apy' | 'daily' | 'safetyScore' | 'default' | 'depositValue' | 'walletValue';
+  sortDirection: 'asc' | 'desc';
   vaultCategory: 'all' | 'featured' | 'stable' | 'bluechip' | 'beefy';
   userCategory: 'all' | 'eligible' | 'deposited';
   vaultType: 'all' | 'lps' | 'single';
@@ -23,9 +25,12 @@ export type FilteredVaultsState = {
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
 };
+export type FilteredVaultBooleanKeys = KeysOfType<Omit<FilteredVaultsState, 'reseted'>, boolean>;
+
 const initialFilteredVaultsState: FilteredVaultsState = {
   reseted: true,
   sort: 'default',
+  sortDirection: 'desc',
   vaultCategory: 'all',
   userCategory: 'all',
   vaultType: 'all',
@@ -47,6 +52,21 @@ export const filteredVaultsSlice = createSlice({
     setSort(sliceState, action: PayloadAction<FilteredVaultsState['sort']>) {
       sliceState.reseted = false;
       sliceState.sort = action.payload;
+    },
+    setSortDirection(sliceState, action: PayloadAction<FilteredVaultsState['sortDirection']>) {
+      sliceState.reseted = false;
+      sliceState.sortDirection = action.payload;
+    },
+    setSortFieldAndDirection(
+      sliceState,
+      action: PayloadAction<{
+        field: FilteredVaultsState['sort'];
+        direction: FilteredVaultsState['sortDirection'];
+      }>
+    ) {
+      sliceState.reseted = false;
+      sliceState.sort = action.payload.field;
+      sliceState.sortDirection = action.payload.direction;
     },
     setVaultCategory(sliceState, action: PayloadAction<FilteredVaultsState['vaultCategory']>) {
       sliceState.reseted = false;
@@ -83,6 +103,13 @@ export const filteredVaultsSlice = createSlice({
     setOnlyBoosted(sliceState, action: PayloadAction<FilteredVaultsState['onlyBoosted']>) {
       sliceState.reseted = false;
       sliceState.onlyBoosted = action.payload;
+    },
+    setBoolean(
+      sliceState,
+      action: PayloadAction<{ filter: FilteredVaultBooleanKeys; value: boolean }>
+    ) {
+      sliceState.reseted = false;
+      sliceState[action.payload.filter] = action.payload.value;
     },
   },
 });
