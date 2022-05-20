@@ -16,7 +16,7 @@ const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
     if (!userAddress) {
       return null;
     }
-    const walletBalance = state.user.balance.byAddress[userAddress.toLocaleLowerCase()];
+    const walletBalance = state.user.balance.byAddress[userAddress.toLowerCase()];
     return walletBalance || null;
   } else {
     return null;
@@ -35,7 +35,7 @@ export const selectAllTokenWhereUserCouldHaveBalance = (
 };
 
 export const selectHasWalletBalanceBeenFetched = (state: BeefyState, walletAddress: string) => {
-  return state.user.balance.byAddress[walletAddress.toLocaleLowerCase()] !== undefined;
+  return state.user.balance.byAddress[walletAddress.toLowerCase()] !== undefined;
 };
 
 export const selectUserDepositedVaults = (state: BeefyState) => {
@@ -186,6 +186,23 @@ export const selectUserVaultDepositInUsd = (
   const vaultTokenDeposit = selectUserVaultDepositInDepositToken(state, vaultId, walletAddress);
 
   return vaultTokenDeposit.multipliedBy(oraclePrice);
+};
+
+export const selectUserVaultDepositTokenWalletBalanceInUsd = (
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  walletAddress?: string
+) => {
+  const vault = selectVaultById(state, vaultId);
+  const oraclePrice = selectTokenPriceByAddress(state, vault.chainId, vault.depositTokenAddress);
+  const walletBalance = selectUserBalanceOfToken(
+    state,
+    vault.chainId,
+    vault.depositTokenAddress,
+    walletAddress
+  );
+
+  return walletBalance.multipliedBy(oraclePrice);
 };
 
 export const selectGovVaultPendingRewardsInToken = (state: BeefyState, vaultId: VaultGov['id']) => {

@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { Popover } from '../../../../components/Popover';
-import { Loader } from '../../../../components/loader';
+import { Loader } from '../../../../components/Loader';
 import { BifiMaxis } from './BifiMaxis';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { ZapEstimate } from '../../../data/apis/zap';

@@ -1,35 +1,43 @@
 import React, { memo } from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
 
-const useStyles = makeStyles(styles as any);
-const _SafetyScore = ({
-  score,
-  whiteLabel = false,
-  size = 'lg',
-}: {
+const useStyles = makeStyles(styles);
+
+export type SafetyScoreProps = {
   score: number;
   whiteLabel?: boolean;
-  size: 'sm' | 'lg' | 'md';
-}) => {
+  colorLabel?: boolean;
+  size: 'sm' | 'md';
+  align?: 'left' | 'right';
+  className?: string;
+};
+
+export const SafetyScore = memo<SafetyScoreProps>(function SafetyScore({
+  score,
+  whiteLabel = false,
+  colorLabel = false,
+  size = 'sm',
+  align = 'left',
+  className,
+}) {
   const classes = useStyles();
   const scoreText = score === 0 ? '-' : score.toFixed(1);
 
   return (
     <div
-      className={clsx(classes.container, {
-        [classes.withSizeLarge]: size === 'lg',
+      className={clsx(classes.container, className, {
         [classes.withSizeMedium]: size === 'md',
         [classes.withWhiteLabel]: whiteLabel,
+        [classes.withColorLabel]: colorLabel,
         [classes.withScoreHigh]: score > 7.5,
         [classes.withScoreMed]: score > 4 && score <= 7.5,
         [classes.withScoreLow]: score > 0 && score <= 4,
+        [classes.withRightAlign]: align === 'right',
       })}
     >
-      <Typography variant="h3" className={classes.label}>
-        {scoreText}
-      </Typography>
+      <div className={classes.label}>{scoreText}</div>
       <div className={classes.barsContainer}>
         <div className={clsx(classes.bar, classes.sm)} />
         <div className={clsx(classes.bar, classes.md)} />
@@ -37,6 +45,4 @@ const _SafetyScore = ({
       </div>
     </div>
   );
-};
-
-export const SafetyScore = memo(_SafetyScore);
+});

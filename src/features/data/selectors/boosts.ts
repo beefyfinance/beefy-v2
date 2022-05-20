@@ -4,15 +4,18 @@ import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { getBoostStatusFromPeriodFinish } from '../reducers/boosts';
 import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance';
-import { createSelector } from '@reduxjs/toolkit';
+import { createCachedSelector } from 're-reselect';
 
-export const selectBoostById = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const boostsByIds = state.entities.boosts.byId;
-  if (boostsByIds[boostId] === undefined) {
-    throw new Error(`selectBoostById: Unknown vault id ${boostId}`);
+export const selectBoostById = createCachedSelector(
+  (state: BeefyState) => state.entities.boosts.byId,
+  (state: BeefyState, boostId: BoostEntity['id']) => boostId,
+  (boostsById, boostId) => {
+    if (boostsById[boostId] === undefined) {
+      throw new Error(`selectBoostById: Unknown boost id ${boostId}`);
+    }
+    return boostsById[boostId];
   }
-  return boostsByIds[boostId];
-};
+)((state: BeefyState, boostId: BoostEntity['id']) => boostId);
 
 export const selectIsBoostActive = (state: BeefyState, boostId: BoostEntity['id']) => {
   const status = getBoostStatusFromPeriodFinish(selectBoostPeriodFinish(state, boostId));
@@ -28,39 +31,40 @@ export const selectBoostsByChainId = (state: BeefyState, chainId: ChainEntity['i
   return state.entities.boosts.byChainId[chainId]?.allBoostsIds || [];
 };
 
-export const selectIsVaultBoosted = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds.length > 0 || false;
-};
+export const selectIsVaultBoosted = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
+  activeBoostIds => activeBoostIds.length > 0
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectIsVaultPreStakedOrBoosted = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  const vaultBoosts = state.entities.boosts.byVaultId[vaultId];
-  return vaultBoosts?.prestakeBoostsIds.length + vaultBoosts?.activeBoostsIds.length > 0 || false;
-};
+export const selectIsVaultPreStakedOrBoosted = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
+  (activeBoostIds, prestakeBoostIds) => activeBoostIds.length + prestakeBoostIds.length > 0
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectActiveVaultBoostIds = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): BoostEntity['id'][] => {
-  return state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds || [];
-};
+export const selectActiveVaultBoostIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.entities.boosts.byVaultId[vaultId]?.activeBoostsIds,
+  boostIds => boostIds || []
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectPreStakeVaultBoostIds = (
-  state: BeefyState,
-  vaultId: VaultEntity['id']
-): BoostEntity['id'][] => {
-  return state.entities.boosts.byVaultId[vaultId]?.prestakeBoostsIds || [];
-};
+export const selectPreStakeVaultBoostIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.entities.boosts.byVaultId[vaultId]?.prestakeBoostsIds,
+  boostIds => boostIds || []
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectPreStakeOrActiveBoostIds = createSelector(
-  selectActiveVaultBoostIds,
-  selectPreStakeVaultBoostIds,
-  (activeIds: BoostEntity['id'][], prestakeIds: BoostEntity['id'][]): BoostEntity['id'][] =>
-    activeIds.concat(prestakeIds)
-);
+export const selectPreStakeOrActiveBoostIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectActiveVaultBoostIds(state, vaultId),
+  (state: BeefyState, vaultId: VaultEntity['id']) => selectPreStakeVaultBoostIds(state, vaultId),
+  (activeBoostIds, prestakeBoostIds) => activeBoostIds.concat(prestakeBoostIds)
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
-export const selectAllVaultBoostIds = (state: BeefyState, vaultId: VaultEntity['id']) => {
-  return state.entities.boosts.byVaultId[vaultId]?.allBoostsIds || [];
-};
+export const selectAllVaultBoostIds = createCachedSelector(
+  (state: BeefyState, vaultId: VaultEntity['id']) =>
+    state.entities.boosts.byVaultId[vaultId]?.allBoostsIds,
+  boostIds => boostIds || []
+)((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
 
 export const selectPastBoostIdsWithUserBalance = (
   state: BeefyState,

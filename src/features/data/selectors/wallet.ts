@@ -26,6 +26,12 @@ export const selectWalletAddress = createSelector(
   }
 );
 
+export const selectWalletAddressIfKnown = createSelector(
+  (state: BeefyState) => state.user.wallet.address,
+  (state: BeefyState) => selectIsWalletKnown(state),
+  (address, isKnown) => (isKnown ? address : null)
+);
+
 export const selectCurrentChainId = (state: BeefyState) => state.user.wallet.selectedChainId;
 export const selectIsBalanceHidden = (state: BeefyState) => state.user.wallet.hideBalance;
 export const selectIsNetworkSupported = (state: BeefyState) =>

@@ -16,7 +16,8 @@ export const selectPlatformById = createSelector(
   }
 );
 
-export const selectAllPlatform = createSelector(
-  (state: BeefyState) => state.entities.platforms.allIds.map(id => selectPlatformById(state, id)),
-  all => all
+export const selectAllPlatforms = createSelector(
+  (state: BeefyState) => state.entities.platforms.allIds,
+  (state: BeefyState) => state.entities.platforms.byId,
+  (ids, byId) => ids.map(id => byId[id])
 );

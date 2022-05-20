@@ -2,23 +2,20 @@ export const styles = theme => ({
   container: {
     display: 'flex',
     alignItems: 'flex-end',
-    marginBottom: '5px',
   },
   barsContainer: {
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    margin: 'auto auto 3px 10px',
+    margin: 'auto 0 2px 4px',
   },
   label: {
-    color: theme.palette.primary.main,
-    fontFamily: 'Proxima Nova',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '18px',
-    lineHeight: '24px',
-    textAlign: 'center',
-    letterSpacing: '-0.1px',
+    color: 'inherit',
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: 700,
+    fontSize: '15px',
+    lineHeight: 1,
+    textAlign: 'center' as const,
   },
   bar: {
     backgroundColor: theme.palette.text.disabled,
@@ -37,27 +34,12 @@ export const styles = theme => ({
   lg: {
     height: '19px',
   },
-  withSizeLarge: {
-    marginBottom: '5px',
-    '& $label': {
-      fontSize: '36px',
-      lineHeight: '30px',
-    },
-    '& $sm': {
-      height: '13px',
-    },
-    '& $md': {
-      height: '21px',
-    },
-    '& $lg': {
-      height: '29px',
-    },
-  },
   withSizeMedium: {
-    marginBottom: '5px',
+    '& $barsContainer': {
+      marginBottom: '4px',
+    },
     '& $label': {
       fontSize: '24px',
-      lineHeight: '24px',
     },
     '& $sm': {
       height: '13px',
@@ -70,17 +52,11 @@ export const styles = theme => ({
     },
   },
   withScoreLow: {
-    '& $label': {
-      color: '#E84525',
-    },
     '& $sm': {
       backgroundColor: '#E84525',
     },
   },
   withScoreMed: {
-    '& $label': {
-      color: '#E88225',
-    },
     '& $sm': {
       backgroundColor: '#E88225',
     },
@@ -89,9 +65,6 @@ export const styles = theme => ({
     },
   },
   withScoreHigh: {
-    '& $label': {
-      color: theme.palette.primary.main,
-    },
     '& $sm': {
       backgroundColor: theme.palette.primary.main,
     },
@@ -106,5 +79,25 @@ export const styles = theme => ({
     '& $label': {
       color: theme.palette.type === 'dark' ? '#ffffff' : '#000',
     },
+  },
+  withColorLabel: {
+    '&.$withScoreLow': {
+      '& $label': {
+        color: '#E84525',
+      },
+    },
+    '&.$withScoreMed': {
+      '& $label': {
+        color: '#E88225',
+      },
+    },
+    '&.$withScoreHigh': {
+      '& $label': {
+        color: theme.palette.primary.main,
+      },
+    },
+  },
+  withRightAlign: {
+    justifyContent: 'flex-end',
   },
 });

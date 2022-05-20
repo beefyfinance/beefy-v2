@@ -42,7 +42,7 @@ export const App = () => {
               <Route exact path="/">
                 <Home />
               </Route>
-              <Route strict sensitive exact path="/:network/vault/:id">
+              <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
                 <Vault />
               </Route>
               <Route exact path="/media-kit">

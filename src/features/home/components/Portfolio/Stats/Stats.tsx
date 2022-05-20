@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Box, makeStyles, Typography, Grid } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { BIG_ZERO, formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
@@ -38,14 +38,16 @@ export const Stats = ({ stats, blurred }) => {
           <BlurredText value={formatStat(stats.monthly)} />
         </Typography>
       </Box>
-      <Box className={classes.stat}>
-        <Typography variant="body1" className={classes.label}>
-          {t('Portfolio-YieldDay')}
-        </Typography>
-        <Typography variant="h3" className={classes.value}>
-          <BlurredText value={formatStat(stats.daily)} />
-        </Typography>
-      </Box>
+      <Hidden xsDown>
+        <Box className={classes.stat}>
+          <Typography variant="body1" className={classes.label}>
+            {t('Portfolio-YieldDay')}
+          </Typography>
+          <Typography variant="h3" className={classes.value}>
+            <BlurredText value={formatStat(stats.daily)} />
+          </Typography>
+        </Box>
+      </Hidden>
     </Grid>
   );
 };

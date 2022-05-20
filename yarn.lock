@@ -1695,6 +1695,26 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.0"
 
+"@floating-ui/core@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-0.7.0.tgz#f2442168d65c22daeb48cfb730cbc3a29a846ac7"
+  integrity sha512-W7+i5Suhhvv97WDTW//KqUA43f/2a4abprM1rWqtLM9lIlJ29tbFI8h232SvqunXon0WmKNEKVjbOsgBhTnbLw==
+
+"@floating-ui/dom@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-0.5.0.tgz#e4efd9e609ff3ee6778fbe4273930d6d1c220f2e"
+  integrity sha512-PS75dnMg4GdWjDFOiOs15cDzYJpukRNHqQn0ugrBlsrpk2n+y8bwZ24XrsdLSL7kxshmxxr2nTNycLnmRIvV7g==
+  dependencies:
+    "@floating-ui/core" "^0.7.0"
+
+"@floating-ui/react-dom@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-0.7.0.tgz#8f867b6fbf87dbfde6f55fd5f5c2c53cfdd1c873"
+  integrity sha512-mpYGykTqwtBYT+ZTQQ2OfZ6wXJNuUgmqqD9ooCgbMRgvul6InFOTtWYvtujps439hmOFiVPm4PoBkEEn5imidg==
+  dependencies:
+    "@floating-ui/dom" "^0.5.0"
+    use-isomorphic-layout-effect "^1.1.1"
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.npmjs.org/@gar/promisify/-/promisify-1.1.2.tgz"
@@ -12714,6 +12734,11 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+re-reselect@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/re-reselect/-/re-reselect-4.0.0.tgz#9ddec4c72c4d952f68caa5aa4b76a9ed38b75cac"
+  integrity sha512-wuygyq8TXUlSdVXv2kigXxQNOgdb9m7LbIjwfTNGSpaY1riLd5e+VeQjlQMyUtrk0oiyhi1AqIVynworl3qxHA==
+
 react-animate-height@^2.0.23:
   version "2.0.23"
   resolved "https://registry.npmjs.org/react-animate-height/-/react-animate-height-2.0.23.tgz"
@@ -12811,6 +12836,11 @@ react-indiana-drag-scroll@^2.1.0:
     debounce "^1.2.0"
     easy-bem "^1.1.1"
 
+react-intersection-observer@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.1.0.tgz#27e66be9113fdf6fc6d745e849e1ad6ef20f97f1"
+  integrity sha512-XSDWQGzgJ4/B4eW39+qa3S+uc4Gb+m6lxXR54m/uD5lqeL5sLrgYdntbjl4BlTYAblgUhz+JB5obINhZaD+c0Q==
+
 react-is@^16.10.2, react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -12851,6 +12881,14 @@ react-resize-detector@^6.6.3:
     "@types/resize-observer-browser" "^0.1.6"
     lodash "^4.17.21"
     resize-observer-polyfill "^1.5.1"
+
+react-resize-detector@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/react-resize-detector/-/react-resize-detector-7.0.0.tgz#fbd46917ee905b7796c797aa6b301b454a6b9229"
+  integrity sha512-Xd1POfpVzH9O3F/xB/0xYy2ijtKjE/z7y4c/aJP593YSzhPy2vDhsNPjes+uQbgL1RezxJajQ679qPs8K5LAFw==
+  dependencies:
+    "@types/resize-observer-browser" "^0.1.6"
+    lodash "^4.17.21"
 
 react-router-dom@^5.2.0:
   version "5.3.0"
@@ -15270,6 +15308,11 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-isomorphic-layout-effect@^1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/use-isomorphic-layout-effect/-/use-isomorphic-layout-effect-1.1.2.tgz#497cefb13d863d687b08477d9e5a164ad8c1a6fb"
+  integrity sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==
 
 use@^3.1.0:
   version "3.1.1"
