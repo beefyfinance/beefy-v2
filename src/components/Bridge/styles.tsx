@@ -6,7 +6,7 @@ export const styles = theme => ({
     },
   },
   backdrop: {
-    backgroundColor: 'rgba(255,255,255,0.7) !important',
+    backgroundColor: 'rgba(255,255,255,0.2) !important',
     backdropFilter: 'blur(8px)',
   },
   header: {

@@ -63,6 +63,7 @@ export const VaultsStats = () => {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={isOpen}
+        BackdropProps={{ className: classes.backdrop }}
         onClose={() => setIsOpen(false)}
       >
         <ModalTvl close={() => setIsOpen(false)} />
