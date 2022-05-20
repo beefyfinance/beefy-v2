@@ -195,6 +195,7 @@ export const estimateZapWithdraw = async (
 
   const tokenOut = selectTokenById(state, vault.chainId, outputTokenId);
   const tokenOutAddress = getZapAddress(tokenOut, wnative);
+
   const tokenOutDecimals = getZapDecimals(tokenOut, wnative);
   const _tokenIn =
     tokenOut.id === vault.assetIds[0] ||
@@ -238,10 +239,6 @@ export const estimateZapWithdraw = async (
     tokenIn.address.toLocaleLowerCase() === pair.token0.toLocaleLowerCase()
       ? pair.reserves[0]
       : pair.reserves[1];
-  const reserveOut =
-    tokenOutAddress.toLocaleLowerCase() === pair.token1.toLocaleLowerCase()
-      ? pair.reserves[1]
-      : pair.reserves[0];
 
   const rawAmount = amount.shiftedBy(depositToken.decimals);
   const equity = rawAmount.dividedBy(pair.totalSupply);
@@ -249,9 +246,10 @@ export const estimateZapWithdraw = async (
 
   const routerContract = new web3.eth.Contract(uniswapV2RouterABI, zapOptions.router);
 
-  const amountOut = new BigNumber(
-    await routerContract.methods.getAmountOut(amountIn.toString(10), reserveIn, reserveOut).call()
-  );
+  const amountsOut = await routerContract.methods
+    .getAmountsOut(amountIn.toString(10), [tokenIn.address, tokenOutAddress])
+    .call();
+  const amountOut = new BigNumber(amountsOut[1]);
 
   return {
     tokenIn,
