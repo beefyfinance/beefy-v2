@@ -983,7 +983,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'tomb-tomb-ftm',
     oraclePrice: 0,
-    status: 'active',
+    status: 'eol',
     platform: 'Tomb',
     assets: ['TOMB', 'FTM'],
     risks: [
