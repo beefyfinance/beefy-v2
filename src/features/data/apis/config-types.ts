@@ -123,6 +123,7 @@ export interface ZapConfig {
   ammRouter: string;
   ammFactory: string;
   ammPairInitHash: string;
+  withdrawEstimateMode?: 'getAmountOut' | 'getAmountsOut';
 }
 
 export interface MinterConfigTokenErc20 {

@@ -31,6 +31,7 @@ export interface ZapOptions {
   address: string;
   router: string;
   tokens: TokenEntity[];
+  withdrawEstimateMode: 'getAmountOut' | 'getAmountsOut';
 }
 
 const zapOptionsCache: { [vaultId: VaultEntity['id']]: ZapOptions | null } = {};
@@ -98,6 +99,7 @@ export function getEligibleZapOptions(
     address: zap.zapAddress,
     router: zap.ammRouter,
     tokens: zapTokens,
+    withdrawEstimateMode: zap.withdrawEstimateMode || 'getAmountOut',
   };
   zapOptionsCache[vaultId] = zapOptions;
   return zapOptions;
@@ -239,6 +241,10 @@ export const estimateZapWithdraw = async (
     tokenIn.address.toLocaleLowerCase() === pair.token0.toLocaleLowerCase()
       ? pair.reserves[0]
       : pair.reserves[1];
+  const reserveOut =
+    tokenOutAddress.toLocaleLowerCase() === pair.token1.toLocaleLowerCase()
+      ? pair.reserves[1]
+      : pair.reserves[0];
 
   const rawAmount = amount.shiftedBy(depositToken.decimals);
   const equity = rawAmount.dividedBy(pair.totalSupply);
@@ -246,10 +252,18 @@ export const estimateZapWithdraw = async (
 
   const routerContract = new web3.eth.Contract(uniswapV2RouterABI, zapOptions.router);
 
-  const amountsOut = await routerContract.methods
-    .getAmountsOut(amountIn.toString(10), [tokenIn.address, tokenOutAddress])
-    .call();
-  const amountOut = new BigNumber(amountsOut[1]);
+  let amountOut;
+
+  if (zapOptions.withdrawEstimateMode === 'getAmountsOut') {
+    const amountsOut = await routerContract.methods
+      .getAmountsOut(amountIn.toString(10), [tokenIn.address, tokenOutAddress])
+      .call();
+    amountOut = new BigNumber(amountsOut[1]);
+  } else {
+    amountOut = new BigNumber(
+      await routerContract.methods.getAmountOut(amountIn.toString(10), reserveIn, reserveOut).call()
+    );
+  }
 
   return {
     tokenIn,
