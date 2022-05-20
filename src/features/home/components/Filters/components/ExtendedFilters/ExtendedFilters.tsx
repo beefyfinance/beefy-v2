@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core';
 import { PlatformDropdownFilter } from '../PlatformFilters';
 import { styles } from './styles';
 import { VaultCategoryDropdownFilter } from '../VaultCategoryFilters';
-import { VaultTypeDropdownFilter } from '../VaultTypeFilters';
 import { CheckboxFilter } from '../CheckboxFilter';
 import { ShownVaultsCount } from './ShownVaultsCount';
 
@@ -39,12 +38,7 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ({ desktopVie
           />
         }
       />
-      {!desktopView ? (
-        <>
-          <VaultCategoryDropdownFilter className={classes.select} />
-          <VaultTypeDropdownFilter className={classes.select} />
-        </>
-      ) : null}
+      {!desktopView ? <VaultCategoryDropdownFilter className={classes.select} /> : null}
       <PlatformDropdownFilter className={classes.select} />
     </div>
   );
