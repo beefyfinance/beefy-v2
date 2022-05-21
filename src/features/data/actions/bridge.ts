@@ -26,6 +26,12 @@ export const fetchBridgeTokenData = createAsyncThunk<
   return { data };
 });
 
+export const getBridgeTxData = async (hash: string) => {
+  const api = getBridgeApi();
+  const res: any = await api.getTxStatus(hash);
+  return res.data;
+};
+
 interface InitBridgeFormParams {
   walletAddress: string | null;
 }

@@ -65,7 +65,7 @@ function _Preview({ handlePreview }) {
 
   const aproxAmount =
     formState.amount.gt(BIG_ZERO) && formState.amount.gt(minAmount)
-      ? formState.amount.minus(minAmount).toFixed(4)
+      ? formState.amount.minus(new BigNumber(formState.destChainInfo.MinimumSwapFee)).toFixed(4)
       : new BigNumber(BIG_ZERO).toFixed(2);
 
   const isDisabled =

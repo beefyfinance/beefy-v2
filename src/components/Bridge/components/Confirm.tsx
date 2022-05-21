@@ -72,7 +72,7 @@ function _Confirm({
 
     steps.push({
       step: 'bridge',
-      message: t('Vault-TxnConfirm', { type: t('Mint-noun') }),
+      message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
       action: walletActions.bridge(
         currentChainId,
         formState.destChain,

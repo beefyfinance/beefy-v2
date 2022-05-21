@@ -14,14 +14,14 @@ const useStyles = makeStyles(styles as any);
 export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
 
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openBridgeModal, setOpenBridgeModal] = useState<boolean>(false);
 
   const handleClose = useCallback(() => {
-    setOpenModal(false);
+    setOpenBridgeModal(false);
   }, []);
 
   const handleOpen = useCallback(() => {
-    setOpenModal(true);
+    setOpenBridgeModal(true);
   }, []);
 
   const classes = useStyles();
@@ -62,15 +62,14 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
             </Button>
           </a>
         )}
-
-        <Button
-          className={classes.btnSecondary1}
-          endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-          onClick={handleOpen}
-        >
-          {t('Transact-Bridge')}
-        </Button>
-        <Bridge open={openModal} handleClose={handleClose} />
+        {vault.assetIds.includes('BIFI') && (
+          <>
+            <Button className={classes.btnSecondary1} onClick={handleOpen} size="small">
+              {t('Transact-Bridge')}
+            </Button>
+            <Bridge open={openBridgeModal} handleClose={handleClose} />
+          </>
+        )}
       </>
     </Box>
   );
