@@ -10,6 +10,8 @@ const QiDao = [
 
 const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriver', 'polygon'];
 
+const Solace = ['polygon', 'aurora'];
+
 const Moonpot = [
   {
     id: 'cake-cakev2',
@@ -83,4 +85,4 @@ const Moonpot = [
   },
 ];
 
-export { QiDao, Insurace, Moonpot };
+export { QiDao, Insurace, Moonpot, Solace };
