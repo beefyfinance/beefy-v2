@@ -1,31 +1,55 @@
 [
   {
     "id": "fantom vault: tomb-usdc-wftm",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: tomb-usdc-tshare",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: tomb-usdc-tomb",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: tomb-usdc-fusdt",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: tomb-usdc-mim",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: tomb-usdc-mai",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "fantom vault: tomb-tshare-weth",
-    "type": "Added"
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: tomb-btc-tshare",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: tomb-tshare-mai",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: tomb-tomb-wftm",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: based-tomb-based",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: based-based-mai",
+    "type": "synced"
+  },
+  {
+    "id": "fantom vault: tomb-tomb-mai",
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
