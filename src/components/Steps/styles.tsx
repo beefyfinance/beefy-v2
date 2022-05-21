@@ -1,5 +1,3 @@
-import { borderRadius } from '@material-ui/system';
-
 export const styles = theme => ({
   modal: {
     display: 'flex',
