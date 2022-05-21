@@ -1,16 +1,22 @@
-export const REDIRECTS = [
-  { from: '/bsc', to: '/' },
-  { from: '/heco', to: '/' },
-  { from: '/avax', to: '/' },
-  { from: '/polygon', to: '/' },
-  { from: '/fantom', to: '/' },
-  { from: '/harmony', to: '/' },
-  { from: '/arbitrum', to: '/' },
-  { from: '/celo', to: '/' },
-  { from: '/moonriver', to: '/' },
-  { from: '/cronos', to: '/' },
-  { from: '/fuse', to: '/' },
-  { from: '/metis', to: '/' },
-  { from: '/aurora', to: '/' },
-  { from: '/moonbeam', to: '/' },
+import { RouteProps } from 'react-router';
+
+export type RedirectType = {
+  from: string | string[] | RouteProps;
+  to: string;
+};
+export const REDIRECTS: RedirectType[] = [
+  { from: { path: '/bsc', exact: true }, to: '/' },
+  { from: { path: '/heco', exact: true }, to: '/' },
+  { from: { path: '/avax', exact: true }, to: '/' },
+  { from: { path: '/polygon', exact: true }, to: '/' },
+  { from: { path: '/fantom', exact: true }, to: '/' },
+  { from: { path: '/harmony', exact: true }, to: '/' },
+  { from: { path: '/arbitrum', exact: true }, to: '/' },
+  { from: { path: '/celo', exact: true }, to: '/' },
+  { from: { path: '/moonriver', exact: true }, to: '/' },
+  { from: { path: '/cronos', exact: true }, to: '/' },
+  { from: { path: '/fuse', exact: true }, to: '/' },
+  { from: { path: '/metis', exact: true }, to: '/' },
+  { from: { path: '/aurora', exact: true }, to: '/' },
+  { from: { path: '/moonbeam', exact: true }, to: '/' },
 ];

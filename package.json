@@ -1,6 +1,6 @@
 {
   "name": "beefy-pro",
-  "homepage": ".",
+  "homepage": "/",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -34,6 +34,7 @@
     "react-animate-height": "^2.0.23",
     "react-content-loader": "^6.0.3",
     "react-dom": "^17.0.1",
+    "react-helmet-async": "^1.3.0",
     "react-i18next": "^11.11.1",
     "react-indiana-drag-scroll": "^2.1.0",
     "react-intersection-observer": "^9.1.0",
@@ -42,7 +43,6 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "react-virtualized": "^9.22.3",
     "recharts": "^2.0.7",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
