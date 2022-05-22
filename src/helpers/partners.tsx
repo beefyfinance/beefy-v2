@@ -10,7 +10,7 @@ const QiDao = [
 
 const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriver', 'polygon'];
 
-const Solace = ['polygon', 'aurora'];
+const Solace = ['polygon'];
 
 const Moonpot = [
   {
