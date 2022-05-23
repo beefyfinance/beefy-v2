@@ -59,6 +59,7 @@ export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Insurace: ChainEntity['id'][];
   Moonpot: MoonpotConfig[];
+  Solace: ChainEntity['id'][];
 }
 
 interface BoostPartnerConfig {
@@ -123,6 +124,7 @@ export interface ZapConfig {
   ammRouter: string;
   ammFactory: string;
   ammPairInitHash: string;
+  withdrawEstimateMode?: 'getAmountOut' | 'getAmountsOut';
 }
 
 export interface MinterConfigTokenErc20 {

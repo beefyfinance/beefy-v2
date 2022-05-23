@@ -17,7 +17,6 @@ import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
 import { QiDao } from './components/QiDaoCard';
-import { Insurace } from './components/InsuraceCard';
 import { Moonpot } from './components/MoonportCard';
 import {
   selectVaultById,
@@ -32,14 +31,17 @@ import {
   selectIsVaultInsurace,
   selectIsVaultMoonpot,
   selectIsVaultQidao,
+  selectIsVaultSolace,
 } from '../data/selectors/partners';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
-import { Nexus } from './components/NexusCard';
 import { MinterCards } from './components/MinterCards';
 import { ChainEntity } from '../data/entities/chain';
 import { InfoCards } from './components/InfoCards/InfoCards';
 import { RetirePauseReason } from './components/RetirePauseReason';
+import { InsuraceCard } from './components/InsuraceCard';
+import { NexusCard } from './components/NexusCard';
+import { SolaceCard } from './components/SolaceCard';
 
 const useStyles = makeStyles(styles as any);
 const PageNotFound = React.lazy(() => import(`../../features/pagenotfound`));
@@ -90,6 +92,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
   const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
   const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
+  const isSolace = useSelector((state: BeefyState) => selectIsVaultSolace(state, vaultId));
 
   return (
     <>
@@ -153,7 +156,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               </Box>
               <MinterCards vaultId={vaultId} />
               <Box>
-                <Nexus />
+                <NexusCard />
               </Box>
               {isQidao && (
                 <Box>
@@ -167,7 +170,12 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               )}
               {isInsurace && (
                 <Box>
-                  <Insurace />
+                  <InsuraceCard />
+                </Box>
+              )}
+              {isSolace && (
+                <Box>
+                  <SolaceCard />
                 </Box>
               )}
             </Grid>
