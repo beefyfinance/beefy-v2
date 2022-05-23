@@ -1,5 +1,5 @@
 // todo: load these asynchronously
-import { Insurace, Moonpot, QiDao } from '../../../helpers/partners';
+import { Insurace, Moonpot, QiDao, Solace } from '../../../helpers/partners';
 import { featuredPools as featuredVaults } from '../../../config/vault/featured';
 import { config as chainConfigs } from '../../../config/config';
 import { ChainEntity } from '../entities/chain';
@@ -71,7 +71,7 @@ export class ConfigAPI {
   }
 
   public async fetchPartnersConfig(): Promise<PartnersConfig> {
-    return { QiDao, Insurace, Moonpot };
+    return { QiDao, Insurace, Moonpot, Solace };
   }
 
   public async fetchZapsConfig(): Promise<{ [chainId: ChainEntity['id']]: ZapConfig[] }> {

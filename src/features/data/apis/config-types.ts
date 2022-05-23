@@ -59,6 +59,7 @@ export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Insurace: ChainEntity['id'][];
   Moonpot: MoonpotConfig[];
+  Solace: ChainEntity['id'][];
 }
 
 interface BoostPartnerConfig {
