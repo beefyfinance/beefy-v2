@@ -36,7 +36,9 @@ function _Confirm({
 
   const chain = useSelector((state: BeefyState) => selectChainById(state, currentChainId));
 
-  const destChain = useSelector((state: BeefyState) => selectChainById(state, formState.destChain));
+  const destChain = useSelector((state: BeefyState) =>
+    selectChainById(state, formState.destChainId)
+  );
 
   const destAmount = formState.amount
     .minus(new BigNumber(formState.destChainInfo.MinimumSwapFee))
@@ -75,7 +77,7 @@ function _Confirm({
       message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
       action: walletActions.bridge(
         currentChainId,
-        formState.destChain,
+        formState.destChainId,
         selectedToken.router,
         formState.amount
       ),
@@ -134,7 +136,7 @@ function _Confirm({
             <img
               className={classes.icon}
               alt=""
-              src={require(`../../../images/networks/${formState.destChain}.svg`).default}
+              src={require(`../../../images/networks/${formState.destChainId}.svg`).default}
             />
             <Typography className={classes.chainName} variant="body1">
               {destChain.name}

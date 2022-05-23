@@ -14,19 +14,21 @@ import { selectChainById } from '../../selectors/chains';
 import { selectTokenByAddress } from '../../selectors/tokens';
 
 export type BridgeModalState = {
-  destChain: ChainEntity['id'];
+  destChainId: ChainEntity['id'];
   max: boolean;
   amount: BigNumber;
   formattedInput: string;
   destChainInfo: any;
+  status: 'idle' | 'loading' | 'success';
 };
 
 const initialBridgeModalState: BridgeModalState = {
-  destChain: 'fantom',
+  destChainId: 'fantom',
   amount: BIG_ZERO,
   formattedInput: '',
   max: false,
   destChainInfo: {},
+  status: 'idle',
 };
 
 export const bridgeModalSlice = createSlice({
@@ -43,11 +45,10 @@ export const bridgeModalSlice = createSlice({
     ) {
       const { state, chainId, tokenAddress } = action.payload;
 
-      const balanceToken = selectTokenByAddress(state, chainId, tokenAddress);
       const balance = selectUserBalanceOfToken(state, chainId, tokenAddress);
 
       sliceState.amount = balance;
-      sliceState.formattedInput = formatBigDecimals(balance, balanceToken.decimals);
+      sliceState.formattedInput = formatBigDecimals(balance, 4);
       sliceState.max = true;
     },
 
@@ -84,7 +85,7 @@ export const bridgeModalSlice = createSlice({
         if (value.isEqualTo(input)) return input;
         if (input === '') return '';
         if (input === '.') return `0.`;
-        return formatBigNumberSignificant(value);
+        return formatBigNumberSignificant(value, 3);
       })();
 
       sliceState.formattedInput = formattedInput;
@@ -106,7 +107,13 @@ export const bridgeModalSlice = createSlice({
       const bridgeTokenInfo = selectBifiBridgeDataByChainId(state, chainId);
 
       sliceState.destChainInfo = bridgeTokenInfo.destChains[destChain.networkChainId];
-      sliceState.destChain = destChainId;
+      sliceState.destChainId = destChainId;
+    },
+
+    setStatus(sliceState, action: PayloadAction<{ status: 'idle' | 'loading' | 'success' }>) {
+      const { status } = action.payload;
+
+      sliceState.status = status;
     },
   },
 
@@ -116,7 +123,7 @@ export const bridgeModalSlice = createSlice({
       const walletAddress = action.payload.walletAddress;
       const currentChainId = walletAddress ? state.user.wallet.selectedChainId : 'bsc';
       const isConnectedToFtm = currentChainId === 'fantom';
-      sliceState.destChain = isConnectedToFtm ? 'bsc' : 'fantom';
+      sliceState.destChainId = isConnectedToFtm ? 'bsc' : 'fantom';
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
       sliceState.max = false;

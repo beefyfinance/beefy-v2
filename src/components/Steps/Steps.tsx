@@ -28,6 +28,7 @@ const _Steps = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
+  const bridgeModalState = useSelector((state: BeefyState) => state.ui.bridgeModal);
 
   return (
     <Snackbar
@@ -80,8 +81,8 @@ const _Steps = ({
                 </>
               )}
               {/* Waiting  */}
-              {!steps.finished &&
-                walletActionsState.result === 'success_pending' &&
+              {((!steps.finished && walletActionsState.result === 'success_pending') ||
+                bridgeModalState.status === 'loading') &&
                 t('Transactn-ConfirmPending')}
               {/* Transactions  */}
               {!steps.finished &&
@@ -101,7 +102,9 @@ const _Steps = ({
                   {steps.items[steps.currentStep].step === 'claim' && t('Claim-Done')}
                   {steps.items[steps.currentStep].step === 'mint' && t('Mint-Done')}
                   {steps.items[steps.currentStep].step === 'burn' && t('Burn-Done')}
-                  {steps.items[steps.currentStep].step === 'bridge' && t('Bridge-Done')}
+                  {steps.items[steps.currentStep].step === 'bridge' &&
+                    bridgeModalState.status === 'success' &&
+                    t('Bridge-Done')}
                 </>
               )}
             </Typography>
@@ -119,7 +122,8 @@ const _Steps = ({
               </Typography>
             )}
           {/* Waiting Content */}
-          {!steps.finished && walletActionsState.result === 'success_pending' && (
+          {((!steps.finished && walletActionsState.result === 'success_pending') ||
+            bridgeModalState.status === 'loading') && (
             <Typography variant={'body2'} className={classes.message}>
               {t('Transactn-Wait')}
             </Typography>
@@ -142,11 +146,14 @@ const _Steps = ({
               </Button>
             </>
           )}
+          {!isEmpty(steps.items[steps.currentStep]) &&
+            steps.items[steps.currentStep].step === 'bridge' &&
+            (walletActionsState.result === 'success_pending' ||
+              walletActionsState.result === 'success') && <BridgeInfo steps={steps} />}
 
           {/* Steps finished */}
           {steps.finished && (
             <>
-              {steps.items[steps.currentStep].step === 'bridge' && <BridgeInfo steps={steps} />}
               {/* Succes deposit */}
               {steps.items[steps.currentStep].step === 'deposit' &&
                 walletActionsState.result === 'success' && (

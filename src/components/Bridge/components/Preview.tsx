@@ -27,7 +27,13 @@ import { initBridgeForm } from '../../../features/data/actions/scenarios';
 
 const useStyles = makeStyles(styles as any);
 
-function _Preview({ handlePreview }) {
+function _Preview({
+  handleModal,
+  handlePreview,
+}: {
+  handleModal: () => void;
+  handlePreview: () => void;
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -39,7 +45,9 @@ function _Preview({ handlePreview }) {
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
-  const destChain = useSelector((state: BeefyState) => selectChainById(state, formState.destChain));
+  const destChain = useSelector((state: BeefyState) =>
+    selectChainById(state, formState.destChainId)
+  );
 
   const formDataLoaded = useSelector(
     (state: BeefyState) =>
@@ -99,7 +107,7 @@ function _Preview({ handlePreview }) {
     if (!isWalletConnected) {
       dispatch(askForWalletConnection());
     }
-    if (chainId === formState.destChain) {
+    if (chainId === formState.destChainId) {
       dispatch(
         bridgeModalActions.setDestChain({
           chainId: chainId,
@@ -141,6 +149,11 @@ function _Preview({ handlePreview }) {
         state: store.getState(),
       })
     );
+  };
+
+  const handleConnectWallet = () => {
+    handleModal();
+    dispatch(askForWalletConnection());
   };
 
   return (
@@ -201,7 +214,7 @@ function _Preview({ handlePreview }) {
           <Box className={classes.networkPicker}>
             <SimpleDropdown
               list={destChainsList}
-              selected={formState.destChain}
+              selected={formState.destChainId}
               handler={handleDestChain}
               renderValue={selectedRenderer}
               noBorder={false}
@@ -227,7 +240,7 @@ function _Preview({ handlePreview }) {
             {t('Bridge-Button-1', { network: destChain.name })}
           </Button>
         ) : (
-          <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>
+          <Button onClick={handleConnectWallet} className={classes.btn}>
             {t('Network-ConnectWallet')}
           </Button>
         )}

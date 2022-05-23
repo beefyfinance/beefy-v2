@@ -1,15 +1,16 @@
 import { Box, makeStyles, Typography, CircularProgress, Button } from '@material-ui/core';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectCurrentChainId } from '../../../features/data/selectors/wallet';
-import { formatBigDecimals } from '../../../helpers/format';
+import { formatBigNumberSignificant } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { styles } from '../styles';
 import { StepperState } from '../types';
 import { TransactionLink } from './TransactionLink';
 import { getBridgeTxData } from '../../../features/data/actions/bridge';
+import { bridgeModalActions } from '../../../features/data/reducers/wallet/bridge-modal';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 
 const useStyles = makeStyles(styles as any);
@@ -33,8 +34,10 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
   const bridgeModalState = useSelector((state: BeefyState) => state.ui.bridgeModal);
   const chain = useSelector((state: BeefyState) => selectChainById(state, currentChaindId));
   const destChain = useSelector((state: BeefyState) =>
-    selectChainById(state, bridgeModalState.destChain)
+    selectChainById(state, bridgeModalState.destChainId)
   );
+
+  const dispatch = useDispatch();
 
   // Use a ref to keep track of a stateful value that doesn't affect rendering,
   // the `setInterval` ID in this case.
@@ -48,20 +51,23 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
       : '';
 
   //TX DATA IS REFRESH EVERY 5 SECONDS
-  //
   React.useEffect(() => {
     const getTxData = () => {
       getBridgeTxData(hash)
         .then(res => {
           if (res.msg === 'Error') {
             setTxData({ ...res, swaptx: null });
+            dispatch(bridgeModalActions.setStatus({ status: 'loading' }));
           }
           if (res.msg === 'Success') {
             setTxData({ msg: 'Success', swaptx: res.info.swaptx, error: null });
+            dispatch(bridgeModalActions.setStatus({ status: 'success' }));
+            clearInterval(intervalRef.current);
           }
         })
         .catch(err => {
-          setTxData({ swaptx: null, error: 'Request Error', msg: 'Error' });
+          setTxData({ swaptx: null, error: `Request Error ${err}`, msg: 'Error' });
+          dispatch(bridgeModalActions.setStatus({ status: 'idle' }));
         });
     };
 
@@ -71,8 +77,9 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
     // running when this component is gone.
     return () => {
       clearInterval(intervalRef.current);
+      dispatch(bridgeModalActions.setStatus({ status: 'idle' }));
     };
-  }, [hash]);
+  }, [dispatch, hash]);
 
   return (
     <>
@@ -80,7 +87,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
         <Box className={classes.succesContainer}>
           <Typography variant="body1" className={classes.textSuccess}>
             {t('Transactn-Bridge', {
-              amount: formatBigDecimals(bridgeModalState.amount, 2),
+              amount: formatBigNumberSignificant(bridgeModalState.amount, 4),
               chain: destChain.name,
             })}
           </Typography>
@@ -109,14 +116,14 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
             )}
             <Typography className={classes.statusText} variant="body1">
               {walletActionsState.result === 'success_pending' && t('Pending')}
-              {walletActionsState.result === 'success' && t('Sucess')}
+              {walletActionsState.result === 'success' && t('Success')}
             </Typography>
           </Box>
         </Box>
         <TransactionLink chainId={currentChaindId} />
       </Box>
       <Box className={classes.chainContainer}>
-        <Box mb={1} className={classes.statusContainer}>
+        <Box className={classes.statusContainer}>
           <Box className={classes.chainStatusContainer}>
             <img
               className={classes.icon}
@@ -146,6 +153,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
         </Box>
         {txData.msg !== 'Error' && txData.swaptx && (
           <Button
+            style={{ marginTop: '8px' }}
             className={classes.redirectBtnSuccess}
             href={destChain.explorerUrl + '/tx/' + txData.swaptx}
             target="_blank"

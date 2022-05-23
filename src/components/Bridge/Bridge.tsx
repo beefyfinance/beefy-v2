@@ -69,7 +69,10 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
             </CardHeader>
             <>
               {previewConfirm === 'preview' ? (
-                <Preview handlePreview={() => setPreviewConfirm('confirm')} />
+                <Preview
+                  handleModal={handleModal}
+                  handlePreview={() => setPreviewConfirm('confirm')}
+                />
               ) : (
                 <Confirm
                   handleModal={handleModal}
