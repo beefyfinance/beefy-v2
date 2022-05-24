@@ -28,7 +28,7 @@ export const pools = [
   },
   {
     id: 'moo_solarbeam-frax-wmovr-2-huckleberry',
-    poolId: 'solarbeam-frax-wmovr-2',
+    poolId: 'solarbeam-frax-wmovr-2-eol',
     name: 'Huckleberry',
     assets: ['FRAX', 'MOVR'],
     earnedToken: 'FINN',
