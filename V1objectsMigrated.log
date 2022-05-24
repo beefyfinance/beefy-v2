@@ -67,6 +67,18 @@
   {
     "id": "polygon vault: jarvis-4eur",
     "type": "synced"
+},
+{
+    "id": "avax vault: joe-tus-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "avax vault: png-klo-wavax",
+    "type": "Added"
+  },
+  {
+    "id": "emerald vault: yuzu-ceusdc-usdt",
+    "type": "Added"
   },
   {
     "id": "polygon vault: quick-matic-wcro-eol",
