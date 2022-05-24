@@ -1,4 +1,4 @@
-import { Box, makeStyles, IconButton, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { CardContent } from '../../../../vault/components/Card/CardContent';
 import { CardHeader } from '../../../../vault/components/Card/CardHeader';
@@ -6,7 +6,6 @@ import { CardTitle } from '../../../../vault/components/Card/CardTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { selectAllChains } from '../../../../data/selectors/chains';
 import { Card } from '../../../../vault/components/Card';
 import { ChainEntity } from '../../../../data/entities/chain';
@@ -14,15 +13,16 @@ import { selectTvlByChain } from '../../../../data/selectors/tvl';
 import BigNumber from 'bignumber.js';
 import { formatBigUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
+import { useAppSelector } from '../../../../../store';
 
 const useStyles = makeStyles(styles as any);
 
 function _ModalTvl({ close }: { close: () => void }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const tvls = useSelector(selectTvlByChain);
+  const tvls = useAppSelector(selectTvlByChain);
 
-  const chains = useSelector(selectAllChains);
+  const chains = useAppSelector(selectAllChains);
 
   const style = {
     position: 'absolute' as 'absolute',

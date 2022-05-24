@@ -14,12 +14,10 @@ import clsx from 'clsx';
 import { isArray } from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
 import { BIG_ZERO, formatBigNumberSignificant } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
 import { initWithdrawForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
@@ -61,21 +59,22 @@ import { FeeBreakdown } from '../FeeBreakdown';
 import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
+import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 
 const useStyles = makeStyles(styles as any);
 
 export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const store = useStore();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const isWalletConnected = useSelector(selectIsWalletConnected);
-  const isWalletOnVaultChain = useSelector(
-    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  const store = useAppStore();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const isWalletOnVaultChain = useAppSelector(
+    state => selectCurrentChainId(state) === vault.chainId
   );
-  const walletAddress = useSelector((state: BeefyState) =>
+  const walletAddress = useAppSelector(state =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
@@ -88,15 +87,15 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     };
   }, [store, vaultId, walletAddress]);
 
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const depositToken = useSelector((state: BeefyState) =>
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
-  const earnedToken = useSelector((state: BeefyState) =>
+  const earnedToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress, true)
   );
-  const formState = useSelector((state: BeefyState) => state.ui.withdraw);
-  const wnative = useSelector((state: BeefyState) =>
+  const formState = useAppSelector(state => state.ui.withdraw);
+  const wnative = useAppSelector(state =>
     selectIsAddressBookLoaded(state, vault.chainId)
       ? selectChainWrappedNativeToken(state, vault.chainId)
       : null
@@ -114,14 +113,14 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     !isArray(formState.selectedToken) &&
     formState.selectedToken.address === depositToken.address;
 
-  const needsApproval = useSelector((state: BeefyState) =>
+  const needsApproval = useAppSelector(state =>
     formState.vaultId && spenderAddress && !isWithdrawingLP
       ? selectIsApprovalNeededForWithdraw(state, spenderAddress)
       : false
   );
 
-  const formDataLoaded = useSelector(
-    (state: BeefyState) =>
+  const formDataLoaded = useAppSelector(
+    state =>
       isFulfilled(state.ui.dataLoader.byChainId[vault.chainId].addressBook) &&
       isFulfilled(state.ui.dataLoader.global.withdrawForm)
   );
@@ -131,17 +130,17 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
-  const hasGovVaultRewards = useSelector((state: BeefyState) =>
+  const hasGovVaultRewards = useAppSelector(state =>
     selectGovVaultPendingRewardsInToken(state, vaultId).isGreaterThan(0)
   );
   // TODO: this could be a selector or hook
-  const userHasBalanceInVault = useSelector((state: BeefyState) => {
+  const userHasBalanceInVault = useAppSelector(state => {
     const deposit = isGovVault(vault)
       ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     return deposit.isGreaterThan(0);
   });
-  const displayBoostWidget = useSelector((state: BeefyState) =>
+  const displayBoostWidget = useAppSelector(state =>
     selectShouldDisplayBoostWidget(state, vaultId)
   );
 
@@ -255,15 +254,13 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     dispatch(withdrawActions.setMax({ state: store.getState() }));
   };
 
-  const isBoosted = useSelector((state: BeefyState) =>
-    selectIsVaultPreStakedOrBoosted(state, vaultId)
-  );
+  const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
 
-  const activeBoost = useSelector((state: BeefyState) =>
+  const activeBoost = useAppSelector(state =>
     isBoosted ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0]) : null
   );
 
-  const pastBoostsWithUserBalance = useSelector((state: BeefyState) =>
+  const pastBoostsWithUserBalance = useAppSelector(state =>
     selectPastBoostIdsWithUserBalance(state, vaultId).map(boostId => {
       return boostId;
     })
@@ -271,7 +268,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   const isBoostedOrHaveBalanceInPastBoost = isBoosted || pastBoostsWithUserBalance.length === 1;
 
-  const boost = useSelector((state: BeefyState) =>
+  const boost = useAppSelector(state =>
     isBoosted
       ? selectBoostById(state, activeBoost.id)
       : pastBoostsWithUserBalance.length === 1
@@ -279,13 +276,13 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       : null
   );
 
-  const boostBalance = useSelector((state: BeefyState) =>
+  const boostBalance = useAppSelector(state =>
     isBoostedOrHaveBalanceInPastBoost
       ? selectBoostUserBalanceInToken(state, boost.id)
       : new BigNumber(BIG_ZERO)
   );
 
-  const mooBalance = useSelector((state: BeefyState) =>
+  const mooBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, vault.chainId, earnedToken.address)
   );
 

@@ -5,8 +5,6 @@ import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectIsVaultPreStakedOrBoosted } from '../../../../../data/selectors/boosts';
 import clsx from 'clsx';
 import { ChainEntity } from '../../../../../data/entities/chain';
-import { useSelector } from 'react-redux';
-import { BeefyState } from '../../../../../../redux-types';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { VaultIcon } from '../VaultIcon';
 import { VaultTags } from '../VaultTags';
@@ -40,7 +38,7 @@ export type VaultNetworkProps = {
 };
 export const VaultNetwork = memo<VaultNetworkProps>(function VaultNetwork({ chainId }) {
   const classes = useStyles();
-  const chain = useSelector((state: BeefyState) => selectChainById(state, chainId));
+  const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
     <div className={clsx(classes.vaultNetwork, classes[`vaultNetwork-${chainId}`])}>
@@ -59,7 +57,7 @@ export type VaultIdentityProps = {
 };
 export const VaultIdentity = memo<VaultIdentityProps>(function VaultIdentity({ vaultId }) {
   const classes = useStyles();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
     <div className={classes.vaultIdentity}>

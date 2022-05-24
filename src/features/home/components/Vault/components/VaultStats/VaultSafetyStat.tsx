@@ -12,7 +12,7 @@ export type VaultSafetyStatProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const VaultSafetyStat = memo<VaultSafetyStatProps>(connect(mapStateToProps)(VaultValueStat));
+export const VaultSafetyStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultSafetyStatProps) {
   const label = 'VaultStat-SAFETY';

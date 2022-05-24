@@ -1,19 +1,18 @@
 import React from 'react';
 import { Box, Button, IconButton, makeStyles, Snackbar, Typography } from '@material-ui/core';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import clsx from 'clsx';
-import { BeefyState } from '../../redux-types';
 import { selectChainById } from '../../features/data/selectors/chains';
 import { VaultEntity } from '../../features/data/entities/vault';
 import { StepperState } from './types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatBigDecimals } from '../../helpers/format';
 import { selectMintResult } from './selectors';
+import { useAppSelector } from '../../store';
 
 const useStyles = makeStyles(styles as any);
 
@@ -28,7 +27,7 @@ const _Steps = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
 
   return (
     <Snackbar
@@ -280,9 +279,9 @@ function TransactionLink({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
 
   const hash =
     walletActionsState.result === 'success'

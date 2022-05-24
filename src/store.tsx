@@ -5,14 +5,19 @@ import { loggerMiddleware } from './features/data/middlewares/logger';
 import { walletActionsMiddleware } from './features/data/middlewares/wallet';
 import { debugRecorderMiddleware } from './features/data/middlewares/debug/debug-record';
 import {
+  featureFlag_logReduxActions,
   featureFlag_recordReduxActions,
   featureFlag_replayReduxActions,
 } from './features/data/utils/feature-flags';
 import { zapEstimateMiddleware } from './features/data/middlewares/zap-estimate';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux';
 import { BeefyState } from './redux-types';
 
-let middlewares = [loggerMiddleware];
+let middlewares = [];
+
+if (featureFlag_logReduxActions()) {
+  middlewares = [...middlewares, loggerMiddleware];
+}
 
 if (featureFlag_recordReduxActions()) {
   middlewares = [debugRecorderMiddleware, ...middlewares];
@@ -30,7 +35,7 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       // because we use BigNumber which is not serializable by default
-      // we disable rerialization altogether
+      // we disable serialization altogether
       // a better solution would be to allow serialization of the store
       serializableCheck: false,
       // this makes the old code bug
@@ -39,5 +44,6 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+export const useAppStore = () => useStore<BeefyState>();
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
 export const useAppSelector: TypedUseSelectorHook<BeefyState> = useSelector;
