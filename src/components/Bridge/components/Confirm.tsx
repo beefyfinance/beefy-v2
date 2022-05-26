@@ -51,8 +51,6 @@ function _Confirm({
 
   const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
 
-  console.log(routerAddress);
-
   const destAmount = formState.amount.minus(new BigNumber(destChainData.MinimumSwapFee)).toFixed(4);
 
   const depositTokenAllowance = useSelector((state: BeefyState) =>

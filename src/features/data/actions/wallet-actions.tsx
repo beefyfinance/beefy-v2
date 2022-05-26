@@ -834,21 +834,24 @@ const bridge = (
       if (isRouter) {
         //ROUTER CONTRACT
         const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
-        return contract?.methods
-          .anySwapOutUnderlying(
-            bridgeTokenData.address,
-            address,
-            rawAmount,
-            destChain.networkChainId
-          )
-          .send({ from: address, ...gasPrices });
+        return bridgeTokenData.underlying
+          ? contract?.methods
+              .anySwapOutUnderlying(
+                bridgeTokenData.address,
+                address,
+                rawAmount,
+                destChain.networkChainId
+              )
+              .send({ from: address, ...gasPrices })
+          : contract?.methods
+              .anySwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
+              .send({ from: address, ...gasPrices });
       } else {
         //BIFI TOKEN CONTRACT
         const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], bridgeTokenData.address);
-
-        return bridgeTokenData.type === 'swapout'
+        return destChainData.type === 'swapout'
           ? contract.methods
-              .anySwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
+              .SwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
               .send({ from: address, ...gasPrices })
           : contract.methods.transfer(routerAddr, rawAmount).send({ from: address, ...gasPrices });
       }
