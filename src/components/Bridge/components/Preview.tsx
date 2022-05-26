@@ -13,8 +13,6 @@ import { selectUserBalanceOfToken } from '../../../features/data/selectors/balan
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-  selectIsWalletKnown,
-  selectWalletAddress,
 } from '../../../features/data/selectors/wallet';
 import { BIG_ZERO, formatBigDecimals } from '../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../features/data/actions/wallet';
@@ -22,7 +20,6 @@ import { bridgeModalActions } from '../../../features/data/reducers/wallet/bridg
 import { selectIsAddressBookLoaded } from '../../../features/data/selectors/data-loader';
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import BigNumber from 'bignumber.js';
-import { initBridgeForm } from '../../../features/data/actions/scenarios';
 import { fetchBridgeChainData } from '../../../features/data/actions/bridge';
 
 const useStyles = makeStyles(styles as any);
@@ -41,9 +38,6 @@ function _Preview({
   const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
   const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
   const isWalletConnected = useSelector(selectIsWalletConnected);
-  const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
-  );
 
   const isWalletOnFromChain = currentChainId === formState.fromChainId;
 
@@ -54,10 +48,6 @@ function _Preview({
   const destChain = useSelector((state: BeefyState) =>
     selectChainById(state, formState.destChainId)
   );
-
-  React.useEffect(() => {
-    initBridgeForm(store, walletAddress);
-  }, [store, walletAddress]);
 
   const formDataLoaded = useSelector(
     (state: BeefyState) =>
