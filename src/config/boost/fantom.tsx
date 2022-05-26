@@ -428,4 +428,29 @@ export const pools = [
       },
     ],
   },
+  {
+    id: 'moo_curve-ftm-geist-midas',
+    poolId: 'curve-ftm-geist',
+    name: 'Midas',
+    logo: 'uncategorized/3CRV.png',
+    earnedToken: 'MIDAS',
+    earnedTokenDecimals: 18,
+    earnedTokenAddress: '0xb37528DA6b4D378305d000a66Ad91bd88E626761',
+    earnContractAddress: '0x541163b90Bc31CE17E813Ee4Eb0b91296C580118',
+    earnedOracle: 'tokens',
+    earnedOracleId: 'MIDAS',
+    partnership: true,
+    status: 'active',
+    isMooStaked: true,
+    partners: [
+      {
+        text: 'A custodial crypto-investment platform for staking core crypto assets and DeFi markets. All funds are managed automatically through the non-custodial wallet infrastructure on Fireblocks for hefty security. Advanced platform features such as MIDAS BOOST, allowing users to gain additional exposure via $MIDAS token.',
+        website: 'https://midas.investments/',
+        social: {
+          telegram: 'https://t.co/9VgNoIRTDb',
+          twitter: 'https://twitter.com/Midas_platform',
+        },
+      },
+    ],
+  },
 ];
