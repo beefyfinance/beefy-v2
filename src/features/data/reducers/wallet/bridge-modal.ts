@@ -14,6 +14,7 @@ import { selectChainById } from '../../selectors/chains';
 import { selectTokenByAddress } from '../../selectors/tokens';
 
 export type BridgeModalState = {
+  fromChainId: ChainEntity['id'];
   destChainId: ChainEntity['id'];
   max: boolean;
   amount: BigNumber;
@@ -23,6 +24,7 @@ export type BridgeModalState = {
 };
 
 const initialBridgeModalState: BridgeModalState = {
+  fromChainId: 'bsc',
   destChainId: 'fantom',
   amount: BIG_ZERO,
   formattedInput: '',
@@ -92,6 +94,11 @@ export const bridgeModalSlice = createSlice({
       sliceState.amount = value;
     },
 
+    setFromChain(sliceState, action: PayloadAction<{ chainId: string }>) {
+      const { chainId } = action.payload;
+      sliceState.fromChainId = chainId;
+    },
+
     setDestChain(
       sliceState,
       action: PayloadAction<{
@@ -106,7 +113,6 @@ export const bridgeModalSlice = createSlice({
 
       const bridgeTokenInfo = selectBifiBridgeDataByChainId(state, chainId);
 
-      sliceState.destChainInfo = bridgeTokenInfo.destChains[destChain.networkChainId];
       sliceState.destChainId = destChainId;
     },
 
@@ -119,18 +125,12 @@ export const bridgeModalSlice = createSlice({
 
   extraReducers: builder => {
     builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
-      const state = action.payload.state;
-      const walletAddress = action.payload.walletAddress;
-      const currentChainId = walletAddress ? state.user.wallet.selectedChainId : 'bsc';
-      const isConnectedToFtm = currentChainId === 'fantom';
-      sliceState.destChainId = isConnectedToFtm ? 'bsc' : 'fantom';
+      sliceState.fromChainId = action.payload.chainId;
+      sliceState.destChainId = action.payload.destChainId;
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
       sliceState.max = false;
-      sliceState.destChainInfo =
-        state.entities.bridge.byChainId[isConnectedToFtm ? 'fantom' : currentChainId].destChains[
-          isConnectedToFtm ? 56 : 250
-        ];
+      sliceState.destChainInfo = action.payload.destChainInfo;
     });
   },
 });

@@ -2,10 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { getAllowanceApi, getBalanceApi, getBridgeApi, getConfigApi } from '../apis/instances';
+import { getAllowanceApi, getBalanceApi, getBridgeApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20 } from '../entities/token';
-import { selectBifiBridgeDataByChainId } from '../selectors/bridge';
 import { selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { selectCurrentChainId } from '../selectors/wallet';
@@ -14,15 +13,18 @@ export interface FulfilledBridgeData {
   data: unknown;
 }
 
-export const fetchBridgeTokenData = createAsyncThunk<
-  FulfilledBridgeData,
-  void,
+export interface FetchBridgeChainDataParams {
+  chainId: ChainEntity['id'];
+}
+
+export const fetchBridgeChainData = createAsyncThunk<
+  unknown,
+  FetchBridgeChainDataParams,
   { state: BeefyState }
->('bridge/fetchBridgeTokenData', async () => {
-  const configApi = getConfigApi();
-  const chains = await configApi.fetchChainConfigs();
+>('bridge/fetchBridgeChainData', async ({ chainId }, { getState }) => {
+  const chain = selectChainById(getState(), chainId);
   const api = getBridgeApi();
-  const data = await api.getBridgeData(chains);
+  const data = await api.getBridgeChainData(chain.networkChainId);
   return { data };
 });
 
@@ -36,27 +38,33 @@ interface InitBridgeFormParams {
   walletAddress: string | null;
 }
 
-interface InitBrdigeFormPayload {
+interface InitBridgeFormPayload {
   chainId: ChainEntity['id'];
   walletAddress: string | null;
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
+  destChainId: ChainEntity['id'];
+  destChainInfo: any;
   state: BeefyState;
 }
 
 export const initiateBridgeForm = createAsyncThunk<
-  InitBrdigeFormPayload,
+  InitBridgeFormPayload,
   InitBridgeFormParams,
   { state: BeefyState }
 >('bridge/initiateBridgeForm', async ({ walletAddress }, { getState }) => {
   const chainId = selectCurrentChainId(getState());
   const chain = selectChainById(getState(), chainId ?? 'bsc');
+  const destChain = selectChainById(getState(), chain.id === 'bsc' ? 'fantom' : 'bsc');
   const balanceApi = await getBalanceApi(chain);
   const allowanceApi = await getAllowanceApi(chain);
-  const bridgeTokenData = selectBifiBridgeDataByChainId(getState(), chain.id);
+  const bridgeApi = await getBridgeApi();
 
-  const spenderAddress = bridgeTokenData.router;
-  const depositToken = selectTokenByAddress(getState(), chain.id, bridgeTokenData.address);
+  const bridgeDataRes: any = await bridgeApi.getBridgeChainData(chain.networkChainId);
+
+  const spenderInfo = bridgeDataRes.destChains[destChain.networkChainId];
+  const spenderAddress = spenderInfo.DepositAddress ?? spenderInfo.routerToken;
+  const depositToken = selectTokenByAddress(getState(), chain.id, bridgeDataRes.address);
 
   const balanceRes: FetchAllBalancesResult = walletAddress
     ? await balanceApi.fetchAllBalances(getState(), [depositToken], [], [], walletAddress)
@@ -74,9 +82,11 @@ export const initiateBridgeForm = createAsyncThunk<
 
   return {
     chainId: chain.id,
+    destChainId: destChain.id,
     walletAddress,
     allowance: allowanceRes,
     balance: balanceRes,
+    destChainInfo: bridgeDataRes,
     state: getState(),
   };
 });

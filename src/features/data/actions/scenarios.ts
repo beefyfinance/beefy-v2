@@ -29,7 +29,7 @@ import { selectShouldInitAddressBook } from '../selectors/data-loader';
 import { initiateMinterForm } from './minters';
 import { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
-import { fetchBridgeTokenData, initiateBridgeForm } from './bridge';
+import { initiateBridgeForm } from './bridge';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -166,9 +166,6 @@ export async function initHomeDataV4(store: BeefyStore) {
     }, 60 * 1000 /* every 60s */);
     pollStopFns.push(pollStop);
   }
-
-  //load bridge data
-  store.dispatch(fetchBridgeTokenData());
 
   // now set regular calls to update user data
   for (const chain of chains) {

@@ -1,34 +1,40 @@
-export interface anyTokenEntity {
+export interface FetchBridgeDataResult {
+  address: string;
+  chainId: string;
+  decimals: number;
+  liquidityType: string;
+  logoUrl: string;
+  name: string;
+  price: number;
+  symbol: string;
+  underlying: Underlying | false;
+  destChains: {};
+}
+
+export interface Underlying {
   address: string;
   decimals: number;
   name: string;
   symbol: string;
 }
 
-export interface destChainEntity {
-  BigValueThreshold: string;
-  MaximumSwap: string;
-  MaximumSwapFee: string;
-  MinimumSwap: string;
-  MinimumSwapFee: string;
+export interface DestChain {
+  BaseFeePercent?: number;
+  BigValueThreshold: number | string; //If type  === UNDERLYINGV2 this values come from api in string
+  DepositAddress?: string;
+  MaximumSwap: number | string; //If type  === UNDERLYINGV2 this values come from api in string
+  MaximumSwapFee: number | string; //If type  === UNDERLYINGV2 this values come from api in string
+  MinimumSwap: number | string; //If type  === UNDERLYINGV2 this values come from api in string
+  MinimumSwapFee: number | string; //If type  === UNDERLYINGV2 this values come from api in string
   SwapFeeRatePerMillion: number;
   address: string;
-  anyToken: anyTokenEntity;
+  decimals: number;
+  isDisabled: boolean;
   liquidityType: string;
+  name: string;
+  pairid?: string;
   swapfeeon: number;
-  underlying: anyTokenEntity | null;
-}
-
-export interface brigeTokenDataEntity {
-  address: string;
-  anyToken: anyTokenEntity;
-  chainId: string;
-  destChains: destChainEntity[];
-  logoUrl: string;
-  price: number;
-  router: string;
-  routerABI: string;
-  tokenid: string;
-  underlying: anyTokenEntity | null;
-  version: string;
+  symbol: string;
+  type: 'swapout' | 'swapin' | 'UNDERLYINGV2';
+  underlying?: Underlying | false;
 }

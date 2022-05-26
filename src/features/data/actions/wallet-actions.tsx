@@ -814,15 +814,15 @@ const bridge = (
       return;
     }
 
-    const bridgeTokenData = selectBifiBridgeDataByChainId(state, chainId);
+    const bridgeTokenData = state.ui.bridgeModal.destChainInfo;
+
     const destChain = selectChainById(state, destChainId);
+    const destChainData: any = Object.values(
+      bridgeTokenData.destChains[destChain.networkChainId]
+    )[0];
 
     const bridgeToken = selectTokenByAddress(state, chainId, bridgeTokenData.address);
-    const destToken = selectTokenByAddress(
-      state,
-      destChainId,
-      bridgeTokenData.destChains[destChain.networkChainId].address
-    );
+    const destToken = selectTokenByAddress(state, destChainId, destChainData.address);
 
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApiInstance();
@@ -830,14 +830,12 @@ const bridge = (
     const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
     const gasPrices = await getGasPriceOptions(web3);
 
-    const method = bridgeTokenData.routerABI.includes('anySwapOutUnderlying')
-      ? 'anySwapOutUnderlying'
-      : 'anySwapOut';
+    const method = 'transfer';
 
     const transaction = (() => {
-      const rawAmount = convertAmountToRawNumber(amount, bridgeTokenData.anyToken.decimals);
+      const rawAmount = convertAmountToRawNumber(amount, bridgeTokenData.decimals);
       return contract?.methods[method](
-        bridgeTokenData.anyToken.address,
+        bridgeTokenData.address,
         address,
         rawAmount,
         destChain.networkChainId

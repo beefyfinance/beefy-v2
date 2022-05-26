@@ -6,10 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { walletActions } from '../../../features/data/actions/wallet-actions';
 import { selectAllowanceByTokenAddress } from '../../../features/data/selectors/allowances';
-import { selectBifiBridgeDataByChainId } from '../../../features/data/selectors/bridge';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
-import { selectCurrentChainId, selectWalletAddress } from '../../../features/data/selectors/wallet';
+import {
+  selectCurrentChainId,
+  selectIsWalletKnown,
+  selectWalletAddress,
+} from '../../../features/data/selectors/wallet';
 import { BeefyState } from '../../../redux-types';
 import { Step } from '../../Steps/types';
 import { styles } from '../styles';
@@ -30,7 +33,9 @@ function _Confirm({
 
   const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
 
-  const walletAddress = useSelector((state: BeefyState) => selectWalletAddress(state));
+  const walletAddress = useSelector((state: BeefyState) =>
+    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
+  );
 
   const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
 
@@ -40,25 +45,25 @@ function _Confirm({
     selectChainById(state, formState.destChainId)
   );
 
-  const destAmount = formState.amount
-    .minus(new BigNumber(formState.destChainInfo.MinimumSwapFee))
-    .toFixed(4);
+  const destChainData: any = Object.values(
+    formState.destChainInfo.destChains[destChain.networkChainId]
+  )[0];
 
-  const selectedToken = useSelector((state: BeefyState) =>
-    selectBifiBridgeDataByChainId(state, currentChainId)
-  );
+  const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
+
+  const destAmount = formState.amount.minus(new BigNumber(destChainData.MinimumSwapFee)).toFixed(4);
 
   const depositTokenAllowance = useSelector((state: BeefyState) =>
     selectAllowanceByTokenAddress(
       state,
       currentChainId,
-      selectedToken.address,
-      selectedToken.router
+      formState.destChainInfo.address,
+      routerAddress
     )
   );
 
   const depositedToken = useSelector((state: BeefyState) =>
-    selectTokenByAddress(state, currentChainId, selectedToken.address)
+    selectTokenByAddress(state, currentChainId, formState.destChainInfo.address)
   );
 
   const handleDeposit = () => {
@@ -67,7 +72,7 @@ function _Confirm({
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(depositedToken, selectedToken.router),
+        action: walletActions.approval(depositedToken, routerAddress),
         pending: false,
       });
     }
@@ -78,7 +83,7 @@ function _Confirm({
       action: walletActions.bridge(
         currentChainId,
         formState.destChainId,
-        selectedToken.router,
+        routerAddress,
         formState.amount
       ),
       pending: false,
@@ -157,7 +162,7 @@ function _Confirm({
           {t('Bridge-Crosschain')}:
         </Typography>
         <Typography variant="body2" className={classes.value}>
-          {formState.destChainInfo.SwapFeeRatePerMillion}%
+          {destChainData.SwapFeeRatePerMillion}%
         </Typography>
       </Box>
       <Box mb={1} className={classes.flexContainer}>
@@ -165,7 +170,7 @@ function _Confirm({
           {t('Bridge-Gas')}:
         </Typography>
         <Typography variant="body2" className={classes.value}>
-          {formState.destChainInfo.MinimumSwapFee} BIFI
+          {destChainData.MinimumSwapFee} BIFI
         </Typography>
       </Box>
       <Box mb={3} className={classes.flexContainer}>
