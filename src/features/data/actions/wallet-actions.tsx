@@ -803,7 +803,8 @@ const bridge = (
   chainId: ChainEntity['id'],
   destChainId: ChainEntity['id'],
   routerAddr: string,
-  amount: BigNumber
+  amount: BigNumber,
+  isRouter: boolean
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
     dispatch({ type: WALLET_ACTION_RESET });
@@ -826,19 +827,28 @@ const bridge = (
     const gasToken = selectChainNativeToken(state, chainId);
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
-    const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
     const gasPrices = await getGasPriceOptions(web3);
-
-    const method = 'transfer';
 
     const transaction = (() => {
       const rawAmount = convertAmountToRawNumber(amount, bridgeTokenData.decimals);
-      return contract?.methods[method](
-        bridgeTokenData.address,
-        address,
-        rawAmount,
-        destChain.networkChainId
-      ).send({ from: address, ...gasPrices });
+      if (isRouter) {
+        //ROUTER CONTRACT
+        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
+        return contract?.methods
+          .anySwapOutUnderlying(
+            bridgeTokenData.address,
+            address,
+            rawAmount,
+            destChain.networkChainId
+          )
+          .send({ from: address, ...gasPrices });
+      } else {
+        //BIFI TOKEN CONTRACT
+        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], destChainData.address);
+        return contract.methods
+          .transfer(routerAddr, rawAmount)
+          .send({ from: address, ...gasPrices });
+      }
     })();
 
     bindTransactionEvents(

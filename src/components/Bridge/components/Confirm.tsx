@@ -1,7 +1,7 @@
 import { CardContent, Box, Typography, Button, makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { walletActions } from '../../../features/data/actions/wallet-actions';
@@ -51,6 +51,8 @@ function _Confirm({
 
   const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
 
+  console.log(routerAddress);
+
   const destAmount = formState.amount.minus(new BigNumber(destChainData.MinimumSwapFee)).toFixed(4);
 
   const depositTokenAllowance = useSelector((state: BeefyState) =>
@@ -61,6 +63,13 @@ function _Confirm({
       routerAddress
     )
   );
+
+  const isRouter = useMemo(() => {
+    if (['swapin', 'swapout'].includes(destChainData?.type)) {
+      return false;
+    }
+    return true;
+  }, [destChainData]);
 
   const depositedToken = useSelector((state: BeefyState) =>
     selectTokenByAddress(state, currentChainId, formState.destChainInfo.address)
@@ -84,7 +93,8 @@ function _Confirm({
         currentChainId,
         formState.destChainId,
         routerAddress,
-        formState.amount
+        formState.amount,
+        isRouter
       ),
       pending: false,
     });

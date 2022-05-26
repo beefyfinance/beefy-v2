@@ -18,14 +18,16 @@ const useStyles = makeStyles(styles as any);
 interface TxStateInterface {
   msg: string;
   error: string | null;
-  swaptx: string | null;
+  swapTx: string | null;
+  multichainTxHash: string | null;
 }
 
 const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
   const [txData, setTxData] = React.useState<TxStateInterface>({
     msg: '',
     error: null,
-    swaptx: null,
+    swapTx: null,
+    multichainTxHash: null,
   });
   const classes = useStyles();
   const { t } = useTranslation();
@@ -56,17 +58,26 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
       getBridgeTxData(hash)
         .then(res => {
           if (res.msg === 'Error') {
-            setTxData({ ...res, swaptx: null });
+            setTxData({ ...res, swaptx: null, multichainTxHash: null });
             dispatch(bridgeModalActions.setStatus({ status: 'loading' }));
           }
           if (res.msg === 'Success') {
-            setTxData({ msg: 'Success', swaptx: res.info.swaptx, error: null });
+            setTxData({
+              msg: 'Success',
+              swapTx: res.info.swaptx,
+              multichainTxHash: res.info.txid,
+              error: null,
+            });
             dispatch(bridgeModalActions.setStatus({ status: 'success' }));
-            clearInterval(intervalRef.current);
           }
         })
         .catch(err => {
-          setTxData({ swaptx: null, error: `Request Error ${err}`, msg: 'Error' });
+          setTxData({
+            swapTx: null,
+            multichainTxHash: null,
+            error: `Request Error ${err}`,
+            msg: 'Error',
+          });
           dispatch(bridgeModalActions.setStatus({ status: 'idle' }));
         });
     };
@@ -151,11 +162,11 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
             </Box>
           )}
         </Box>
-        {txData.msg !== 'Error' && txData.swaptx && (
+        {txData.msg !== 'Error' && txData.swapTx && (
           <Button
             style={{ marginTop: '8px' }}
             className={classes.redirectBtnSuccess}
-            href={destChain.explorerUrl + '/tx/' + txData.swaptx}
+            href={destChain.explorerUrl + '/tx/' + txData.swapTx}
             target="_blank"
           >
             {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}

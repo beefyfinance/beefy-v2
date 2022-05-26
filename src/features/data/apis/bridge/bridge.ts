@@ -13,7 +13,6 @@ export class BridgeApi {
   public async getBridgeChainData(networkChainId: ChainEntity['networkChainId']): Promise<unknown> {
     const res = await this.api.get(`/merge/tokenlist/${networkChainId}`);
     const data = Object.values(res.data).filter((token: any) => token.symbol === 'BIFI');
-
     return data[0];
   }
 

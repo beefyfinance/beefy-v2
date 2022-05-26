@@ -62,8 +62,10 @@ export const initiateBridgeForm = createAsyncThunk<
 
   const bridgeDataRes: any = await bridgeApi.getBridgeChainData(chain.networkChainId);
 
-  const spenderInfo = bridgeDataRes.destChains[destChain.networkChainId];
+  const spenderInfo: any = Object.values(bridgeDataRes.destChains[destChain.networkChainId])[0];
+
   const spenderAddress = spenderInfo.DepositAddress ?? spenderInfo.routerToken;
+
   const depositToken = selectTokenByAddress(getState(), chain.id, bridgeDataRes.address);
 
   const balanceRes: FetchAllBalancesResult = walletAddress
