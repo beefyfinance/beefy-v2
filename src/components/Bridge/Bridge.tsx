@@ -8,15 +8,10 @@ import { styles } from './styles';
 import { makeStyles } from '@material-ui/styles';
 import { Preview } from './components/Preview';
 import { Confirm } from './components/Confirm';
-import { useSelector, useStore } from 'react-redux';
-import {
-  selectCurrentChainId,
-  selectIsWalletKnown,
-  selectWalletAddress,
-} from '../../features/data/selectors/wallet';
+import { useSelector } from 'react-redux';
+import { selectCurrentChainId } from '../../features/data/selectors/wallet';
 import { BeefyState } from '../../redux-types';
 import { useStepper } from '../Steps/hooks';
-import { initBridgeForm } from '../../features/data/actions/scenarios';
 
 const useStyles = makeStyles(styles as any);
 
@@ -32,9 +27,6 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
   };
 
   const [previewConfirm, setPreviewConfirm] = React.useState('preview');
-  const walletAddress = useSelector((state: BeefyState) =>
-    selectIsWalletKnown(state) ? selectWalletAddress(state) : null
-  );
 
   const { t } = useTranslation();
   const classes = useStyles();
@@ -43,12 +35,6 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
     handleClose();
     setPreviewConfirm('preview');
   };
-
-  const store = useStore();
-
-  React.useEffect(() => {
-    initBridgeForm(store, walletAddress);
-  }, [store, walletAddress]);
 
   const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
 

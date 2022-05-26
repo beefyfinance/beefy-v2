@@ -9,8 +9,6 @@ import { BeefyState } from '../../../../redux-types';
 import { initiateBridgeForm } from '../../actions/bridge';
 import { ChainEntity } from '../../entities/chain';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
-import { selectBifiBridgeDataByChainId } from '../../selectors/bridge';
-import { selectChainById } from '../../selectors/chains';
 import { selectTokenByAddress } from '../../selectors/tokens';
 
 export type BridgeModalState = {
@@ -102,16 +100,10 @@ export const bridgeModalSlice = createSlice({
     setDestChain(
       sliceState,
       action: PayloadAction<{
-        chainId: string;
         destChainId: string;
-        state: BeefyState;
       }>
     ) {
-      const { chainId, destChainId, state } = action.payload;
-
-      const destChain = selectChainById(state, destChainId);
-
-      const bridgeTokenInfo = selectBifiBridgeDataByChainId(state, chainId);
+      const { destChainId } = action.payload;
 
       sliceState.destChainId = destChainId;
     },

@@ -48,7 +48,6 @@ import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
 import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
-import { selectBifiBridgeDataByChainId } from '../selectors/bridge';
 import { selectChainById } from '../selectors/chains';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
