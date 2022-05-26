@@ -68,7 +68,7 @@ function _Preview({
   const minAmount = new BigNumber(destChainData.MinimumSwap);
 
   const aproxAmount =
-    formState.amount.gt(BIG_ZERO) && formState.amount.gt(minAmount)
+    formState.amount.gt(BIG_ZERO) && formState.amount.gte(minAmount)
       ? formState.amount.minus(new BigNumber(destChainData.MinimumSwapFee)).toFixed(4)
       : new BigNumber(BIG_ZERO).toFixed(2);
 
@@ -83,12 +83,13 @@ function _Preview({
     const list2 = {};
     for (const chain of chains) {
       list[chain.id] = chain.name;
+
       if (chain.id !== formState.fromChainId) {
         list2[chain.id] = chain.name;
       }
     }
     return [list, list2];
-  }, [formState.fromChainId, chains]);
+  }, [chains, formState.fromChainId]);
 
   const selectedRenderer = network => {
     return (

@@ -17,15 +17,19 @@ export interface FetchBridgeChainDataParams {
   chainId: ChainEntity['id'];
 }
 
+export interface FetchBridgeChainPayload {
+  destChainInfo: any;
+}
+
 export const fetchBridgeChainData = createAsyncThunk<
-  unknown,
+  FetchBridgeChainPayload,
   FetchBridgeChainDataParams,
   { state: BeefyState }
 >('bridge/fetchBridgeChainData', async ({ chainId }, { getState }) => {
   const chain = selectChainById(getState(), chainId);
   const api = getBridgeApi();
   const data = await api.getBridgeChainData(chain.networkChainId);
-  return { data };
+  return { destChainInfo: data };
 });
 
 export const getBridgeTxData = async (hash: string) => {

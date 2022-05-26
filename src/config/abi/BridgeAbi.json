@@ -105,11 +105,11 @@
     "constant": false,
     "inputs": [
       {
-        "name": "_to",
+        "name": "recipient",
         "type": "address"
       },
       {
-        "name": "_value",
+        "name": "amount",
         "type": "uint256"
       }
     ],

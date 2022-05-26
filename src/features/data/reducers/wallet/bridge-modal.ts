@@ -6,7 +6,7 @@ import {
   formatBigNumberSignificant,
 } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
-import { initiateBridgeForm } from '../../actions/bridge';
+import { fetchBridgeChainData, initiateBridgeForm } from '../../actions/bridge';
 import { ChainEntity } from '../../entities/chain';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectTokenByAddress } from '../../selectors/tokens';
@@ -94,10 +94,6 @@ export const bridgeModalSlice = createSlice({
 
     setFromChain(sliceState, action: PayloadAction<{ chainId: string }>) {
       const { chainId } = action.payload;
-
-      if (sliceState.destChainId === chainId) {
-        sliceState.destChainId = sliceState.fromChainId;
-      }
       sliceState.fromChainId = chainId;
     },
 
@@ -126,6 +122,9 @@ export const bridgeModalSlice = createSlice({
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
       sliceState.max = false;
+      sliceState.destChainInfo = action.payload.destChainInfo;
+    });
+    builder.addCase(fetchBridgeChainData.fulfilled, (sliceState, action) => {
       sliceState.destChainInfo = action.payload.destChainInfo;
     });
   },

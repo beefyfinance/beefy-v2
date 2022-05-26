@@ -844,10 +844,13 @@ const bridge = (
           .send({ from: address, ...gasPrices });
       } else {
         //BIFI TOKEN CONTRACT
-        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], destChainData.address);
-        return contract.methods
-          .transfer(routerAddr, rawAmount)
-          .send({ from: address, ...gasPrices });
+        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], bridgeTokenData.address);
+
+        return bridgeTokenData.type === 'swapout'
+          ? contract.methods
+              .anySwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
+              .send({ from: address, ...gasPrices })
+          : contract.methods.transfer(routerAddr, rawAmount).send({ from: address, ...gasPrices });
       }
     })();
 
