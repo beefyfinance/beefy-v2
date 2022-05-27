@@ -183,7 +183,7 @@ export const styles = theme => ({
     backgroundColor: 'rgba(89, 166, 98, 0.15)',
   },
   closeBtn: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
     backgroundColor: theme.palette.background.snackbars.bgBtn,
     color: theme.palette.text.primary,
     width: '100%',

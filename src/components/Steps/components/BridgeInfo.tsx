@@ -175,7 +175,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
       </Box>
       {txData.msg !== 'Error' && txData.multichainTxHash && (
         <Button
-          style={{ marginTop: '8px' }}
+          style={{ marginTop: '16px' }}
           className={classes.redirectBtnSuccess}
           href={`https://anyswap.net/explorer/tx?params=${txData.multichainTxHash}`}
           target="_blank"

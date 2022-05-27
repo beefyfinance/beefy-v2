@@ -1,4 +1,5 @@
 import { Theme } from '@material-ui/core/styles';
+
 export const styles = (theme: Theme) => ({
   container: {
     borderRadius: '20px',
@@ -34,7 +35,7 @@ export const styles = (theme: Theme) => ({
     height: '48px',
     width: '100%',
     padding: '12px 24px',
-    textTransform: 'none',
+    textTransform: 'none' as const,
     borderRadius: '8px',
     backgroundColor: theme.palette.primary.main,
     '& .MuiButton-label': {
@@ -73,7 +74,7 @@ export const styles = (theme: Theme) => ({
   },
   feesContent: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap' as const,
   },
   feesItem: {
     marginBottom: theme.spacing(1.5),
@@ -90,7 +91,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.disabled,
     letterSpacing: '0.5px',
     fontWeight: 600,
-    textTransform: 'uppercase',
+    textTransform: 'uppercase' as const,
   },
   value: {
     fontWeight: 600,
@@ -122,7 +123,7 @@ export const styles = (theme: Theme) => ({
     '& .MuiPaper-root': {
       display: 'flex',
       alignItems: 'center',
-      position: 'relative',
+      position: 'relative' as const,
       height: '40px',
       backgroundColor: theme.palette.background.vaults.inactive,
       borderRadius: '8px',
@@ -158,7 +159,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   inputLogo: {
-    position: 'absolute',
+    position: 'absolute' as const,
     top: '11px',
     left: '12px',
   },

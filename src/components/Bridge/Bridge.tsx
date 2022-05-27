@@ -18,7 +18,7 @@ import { BeefyState } from '../../redux-types';
 import { useStepper } from '../Steps/hooks';
 import { initBridgeForm } from '../../features/data/actions/scenarios';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void }) {
   const style = {
