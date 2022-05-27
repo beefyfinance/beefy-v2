@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { fetchAllAllowanceAction } from '../../actions/allowance';
+import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance';
 import { initiateDepositForm } from '../../actions/deposit';
 import { TokenAllowance } from '../../apis/allowance/allowance-types';
 import { WritableDraft } from 'immer/dist/internal';
@@ -56,7 +56,9 @@ export const allowanceSlice = createSlice({
       const allowances = action.payload.data;
       addAllowancesToState(sliceState, chainId, allowances);
     });
-
+    builder.addCase(fetchAllowanceAction.fulfilled, (sliceState, action) => {
+      addAllowancesToState(sliceState, action.payload.chainId, action.payload.data);
+    });
     builder.addCase(initiateDepositForm.fulfilled, (sliceState, action) => {
       const vault = selectVaultById(action.payload.state, action.payload.vaultId);
       addAllowancesToState(sliceState, vault.chainId, action.payload.allowance);

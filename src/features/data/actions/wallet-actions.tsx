@@ -850,9 +850,7 @@ const bridge = (
         //BIFI TOKEN CONTRACT
         const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], bridgeTokenData.address);
         return destChainData.type === 'swapout'
-          ? contract.methods
-              .SwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
-              .send({ from: address, ...gasPrices })
+          ? contract.methods.Swapout(rawAmount, address).send({ from: address, ...gasPrices })
           : contract.methods.transfer(routerAddr, rawAmount).send({ from: address, ...gasPrices });
       }
     })();

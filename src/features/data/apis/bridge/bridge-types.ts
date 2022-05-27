@@ -1,4 +1,4 @@
-export interface FetchBridgeDataResult {
+export interface BridgeInfoEntity {
   address: string;
   chainId: string;
   decimals: number;
@@ -7,21 +7,22 @@ export interface FetchBridgeDataResult {
   name: string;
   price: number;
   symbol: string;
-  underlying: Underlying | false;
-  destChains: {};
+  underlying: UnderlyingEntity | false;
+  destChains: DestChainEntity[];
 }
 
-export interface Underlying {
+export interface UnderlyingEntity {
   address: string;
   decimals: number;
   name: string;
   symbol: string;
 }
 
-export interface DestChain {
+export interface DestChainEntity {
   BaseFeePercent?: number;
   BigValueThreshold: number | string; //If type  === UNDERLYINGV2 this values come from api in string
   DepositAddress?: string;
+  routerToken?: string;
   MaximumSwap: number | string; //If type  === UNDERLYINGV2 this values come from api in string
   MaximumSwapFee: number | string; //If type  === UNDERLYINGV2 this values come from api in string
   MinimumSwap: number | string; //If type  === UNDERLYINGV2 this values come from api in string
@@ -36,5 +37,5 @@ export interface DestChain {
   swapfeeon: number;
   symbol: string;
   type: 'swapout' | 'swapin' | 'UNDERLYINGV2';
-  underlying?: Underlying | false;
+  underlying?: UnderlyingEntity | false;
 }

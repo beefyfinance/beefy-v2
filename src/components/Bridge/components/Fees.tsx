@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux';
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import ContentLoader from 'react-content-loader';
 import { selectChainById } from '../../../features/data/selectors/chains';
+import { DestChainEntity } from '../../../features/data/apis/bridge/bridge-types';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 function _FeesInfo() {
   const { t } = useTranslation();
@@ -24,7 +25,7 @@ function _FeesInfo() {
     selectChainById(state, formState.destChainId)
   );
 
-  const destChainData: any = Object.values(
+  const destChainData: DestChainEntity = Object.values(
     formState.destChainInfo.destChains[destChain.networkChainId]
   )[0];
 

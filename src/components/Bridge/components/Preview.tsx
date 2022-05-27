@@ -21,8 +21,9 @@ import { selectIsAddressBookLoaded } from '../../../features/data/selectors/data
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import BigNumber from 'bignumber.js';
 import { fetchBridgeChainData } from '../../../features/data/actions/bridge';
+import { DestChainEntity } from '../../../features/data/apis/bridge/bridge-types';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 function _Preview({
   handleModal,
@@ -61,7 +62,7 @@ function _Preview({
       : new BigNumber(BIG_ZERO)
   );
 
-  const destChainData: any = Object.values(
+  const destChainData: DestChainEntity = Object.values(
     formState.destChainInfo.destChains[destChain.networkChainId]
   )[0];
 

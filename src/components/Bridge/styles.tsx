@@ -1,4 +1,5 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+export const styles = (theme: Theme) => ({
   container: {
     borderRadius: '20px',
     '&.MuiPaper-elevation1': {

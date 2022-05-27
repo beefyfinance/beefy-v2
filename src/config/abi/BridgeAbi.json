@@ -87,7 +87,7 @@
       },
       {
         "name": "bindaddr",
-        "type": "string"
+        "type": "address"
       }
     ],
     "name": "Swapout",

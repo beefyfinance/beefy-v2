@@ -1,5 +1,10 @@
 import axios, { AxiosInstance } from 'axios';
 import { ChainEntity } from '../../entities/chain';
+import { BridgeInfoEntity } from './bridge-types';
+
+export interface FetchBridgeDataResult {
+  data: BridgeInfoEntity[];
+}
 
 export class BridgeApi {
   public api: AxiosInstance;
@@ -10,10 +15,14 @@ export class BridgeApi {
     });
   }
 
-  public async getBridgeChainData(networkChainId: ChainEntity['networkChainId']): Promise<unknown> {
-    const res = await this.api.get(`/merge/tokenlist/${networkChainId}`);
-    const data = Object.values(res.data).filter((token: any) => token.symbol === 'BIFI');
-    return data[0];
+  public async getBridgeChainData(
+    networkChainId: ChainEntity['networkChainId']
+  ): Promise<BridgeInfoEntity> {
+    const res: FetchBridgeDataResult = await this.api.get(`/merge/tokenlist/${networkChainId}`);
+    const data = Object.values(res.data).filter(
+      (token: BridgeInfoEntity) => token.symbol === 'BIFI'
+    )[0];
+    return data;
   }
 
   public async getTxStatus(txHash: string): Promise<unknown> {

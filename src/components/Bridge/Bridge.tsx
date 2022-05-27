@@ -47,6 +47,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
 
   const store = useStore();
   React.useEffect(() => {
+    //Init from on mount
     initBridgeForm(store, walletAddress);
   }, [store, walletAddress]);
 

@@ -7,6 +7,7 @@ import {
 } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { fetchBridgeChainData, initiateBridgeForm } from '../../actions/bridge';
+import { BridgeInfoEntity } from '../../apis/bridge/bridge-types';
 import { ChainEntity } from '../../entities/chain';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectTokenByAddress } from '../../selectors/tokens';
@@ -17,7 +18,7 @@ export type BridgeModalState = {
   max: boolean;
   amount: BigNumber;
   formattedInput: string;
-  destChainInfo: any;
+  destChainInfo: BridgeInfoEntity | null;
   status: 'idle' | 'loading' | 'success';
 };
 
@@ -27,7 +28,7 @@ const initialBridgeModalState: BridgeModalState = {
   amount: BIG_ZERO,
   formattedInput: '',
   max: false,
-  destChainInfo: {},
+  destChainInfo: null,
   status: 'idle',
 };
 

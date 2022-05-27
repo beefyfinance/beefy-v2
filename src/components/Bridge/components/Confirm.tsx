@@ -3,8 +3,11 @@ import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllowanceAction } from '../../../features/data/actions/allowance';
 import { walletActions } from '../../../features/data/actions/wallet-actions';
+import { DestChainEntity } from '../../../features/data/apis/bridge/bridge-types';
+import { isTokenErc20 } from '../../../features/data/entities/token';
 import { selectAllowanceByTokenAddress } from '../../../features/data/selectors/allowances';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
@@ -30,6 +33,7 @@ function _Confirm({
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
 
@@ -45,18 +49,35 @@ function _Confirm({
     selectChainById(state, formState.destChainId)
   );
 
-  const destChainData: any = Object.values(
+  const destChainData: DestChainEntity = Object.values(
     formState.destChainInfo.destChains[destChain.networkChainId]
   )[0];
 
   const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
+
+  const depositedToken = useSelector((state: BeefyState) =>
+    selectTokenByAddress(state, currentChainId, formState.destChainInfo.address)
+  );
+
+  React.useEffect(() => {
+    //need to refresh the allowance
+    if (isTokenErc20(depositedToken)) {
+      dispatch(
+        fetchAllowanceAction({
+          chainId: formState.fromChainId,
+          spenderAddress: routerAddress,
+          tokens: [depositedToken],
+        })
+      );
+    }
+  }, [depositedToken, dispatch, formState.fromChainId, routerAddress]);
 
   const destAmount = formState.amount.minus(new BigNumber(destChainData.MinimumSwapFee)).toFixed(4);
 
   const depositTokenAllowance = useSelector((state: BeefyState) =>
     selectAllowanceByTokenAddress(
       state,
-      currentChainId,
+      formState.fromChainId,
       formState.destChainInfo.address,
       routerAddress
     )
@@ -69,13 +90,13 @@ function _Confirm({
     return true;
   }, [destChainData]);
 
-  const depositedToken = useSelector((state: BeefyState) =>
-    selectTokenByAddress(state, currentChainId, formState.destChainInfo.address)
-  );
-
   const handleDeposit = () => {
     const steps: Step[] = [];
-    if (depositTokenAllowance.isLessThan(formState.amount) && depositedToken.type !== 'native') {
+    if (
+      depositTokenAllowance.isLessThan(formState.amount) &&
+      isRouter &&
+      depositedToken.type !== 'native'
+    ) {
       steps.push({
         step: 'approve',
         message: t('Vault-ApproveMsg'),

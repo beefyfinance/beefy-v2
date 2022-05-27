@@ -222,6 +222,7 @@
   "Transact-Bridge": "Bridge BIFI",
   "Transactn-EnRoute": "Funds are on the way",
   "Transactn-View": "View on Explorer",
+  "Transactn-ViewMultichain": "View transaction on Multichain Explorer",
   "Transactn-CloseDialog": "Close Dialog",
   "Transactn-GoPortfolio": "Go to my portfolio",
   "Transactn-Error": "Transaction Error",

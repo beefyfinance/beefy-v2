@@ -59,7 +59,6 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
         .then(res => {
           if (res.msg === 'Error') {
             setTxData({ ...res, swaptx: null, multichainTxHash: null });
-            dispatch(bridgeModalActions.setStatus({ status: 'loading' }));
           }
           if (res.msg === 'Success') {
             setTxData({
@@ -68,7 +67,9 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
               multichainTxHash: res.info.txid,
               error: null,
             });
-            dispatch(bridgeModalActions.setStatus({ status: 'success' }));
+            if (res.info.swaptx && res.info.txid) {
+              dispatch(bridgeModalActions.setStatus({ status: 'success' }));
+            }
           }
         })
         .catch(err => {
@@ -78,7 +79,6 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
             error: `Request Error ${err}`,
             msg: 'Error',
           });
-          dispatch(bridgeModalActions.setStatus({ status: 'idle' }));
         });
     };
 
@@ -173,6 +173,16 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
           </Button>
         )}
       </Box>
+      {txData.msg !== 'Error' && txData.multichainTxHash && (
+        <Button
+          style={{ marginTop: '8px' }}
+          className={classes.redirectBtnSuccess}
+          href={`https://anyswap.net/explorer/tx?params=${txData.multichainTxHash}`}
+          target="_blank"
+        >
+          {t('Transactn-ViewMultichain')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+        </Button>
+      )}
     </>
   );
 };

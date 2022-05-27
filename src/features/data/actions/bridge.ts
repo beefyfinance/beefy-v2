@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
+import { BridgeInfoEntity, DestChainEntity } from '../apis/bridge/bridge-types';
 import { getAllowanceApi, getBalanceApi, getBridgeApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20 } from '../entities/token';
@@ -9,16 +10,12 @@ import { selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { selectCurrentChainId } from '../selectors/wallet';
 
-export interface FulfilledBridgeData {
-  data: unknown;
-}
-
 export interface FetchBridgeChainDataParams {
   chainId: ChainEntity['id'];
 }
 
 export interface FetchBridgeChainPayload {
-  destChainInfo: any;
+  destChainInfo: BridgeInfoEntity;
 }
 
 export const fetchBridgeChainData = createAsyncThunk<
@@ -28,7 +25,7 @@ export const fetchBridgeChainData = createAsyncThunk<
 >('bridge/fetchBridgeChainData', async ({ chainId }, { getState }) => {
   const chain = selectChainById(getState(), chainId);
   const api = getBridgeApi();
-  const data = await api.getBridgeChainData(chain.networkChainId);
+  const data: BridgeInfoEntity = await api.getBridgeChainData(chain.networkChainId);
   return { destChainInfo: data };
 });
 
@@ -48,7 +45,7 @@ interface InitBridgeFormPayload {
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
   destChainId: ChainEntity['id'];
-  destChainInfo: any;
+  destChainInfo: BridgeInfoEntity;
   state: BeefyState;
 }
 
@@ -64,9 +61,11 @@ export const initiateBridgeForm = createAsyncThunk<
   const allowanceApi = await getAllowanceApi(chain);
   const bridgeApi = await getBridgeApi();
 
-  const bridgeDataRes: any = await bridgeApi.getBridgeChainData(chain.networkChainId);
+  const bridgeDataRes: BridgeInfoEntity = await bridgeApi.getBridgeChainData(chain.networkChainId);
 
-  const spenderInfo: any = Object.values(bridgeDataRes.destChains[destChain.networkChainId])[0];
+  const spenderInfo: DestChainEntity = Object.values(
+    bridgeDataRes.destChains[destChain.networkChainId]
+  )[0];
 
   const spenderAddress = spenderInfo.DepositAddress ?? spenderInfo.routerToken;
 
