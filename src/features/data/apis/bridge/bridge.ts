@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { ChainEntity } from '../../entities/chain';
-import { BridgeInfoEntity } from './bridge-types';
+import { BridgeInfoEntity, TxDataRes } from './bridge-types';
 
 export interface FetchBridgeDataResult {
   data: BridgeInfoEntity[];
@@ -25,8 +25,9 @@ export class BridgeApi {
     return data;
   }
 
-  public async getTxStatus(txHash: string): Promise<unknown> {
+  public async getTxStatus(txHash: string): Promise<TxDataRes> {
     const res = await this.api.get(`/v2/history/details?params=${txHash}`);
-    return res;
+    const txData: TxDataRes = res.data;
+    return txData;
   }
 }

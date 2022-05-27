@@ -238,4 +238,7 @@ export const styles = theme => ({
   textSuccess: {
     color: theme.palette.primary.main,
   },
+  errorMessage: {
+    marginTop: theme.spacing(1.5),
+  },
 });

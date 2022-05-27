@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
-import { BridgeInfoEntity, DestChainEntity } from '../apis/bridge/bridge-types';
+import { BridgeInfoEntity, DestChainEntity, TxDataRes } from '../apis/bridge/bridge-types';
 import { getAllowanceApi, getBalanceApi, getBridgeApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20 } from '../entities/token';
@@ -31,8 +31,8 @@ export const fetchBridgeChainData = createAsyncThunk<
 
 export const getBridgeTxData = async (hash: string) => {
   const api = getBridgeApi();
-  const res: any = await api.getTxStatus(hash);
-  return res.data;
+  const res: TxDataRes = await api.getTxStatus(hash);
+  return res;
 };
 
 interface InitBridgeFormParams {
