@@ -172,7 +172,7 @@ function _Preview({
             />
           </Box>
           <Box className={classes.inputContainer}>
-            <Paper component="form" className={classes.root}>
+            <Paper component="form">
               <Box className={classes.inputLogo}>
                 <AssetsImage chainId={'56'} assetIds={['BIFI']} size={20} />
               </Box>
@@ -212,7 +212,7 @@ function _Preview({
             />
           </Box>
           <Box className={classes.inputContainer}>
-            <Paper component="form" className={classes.root}>
+            <Paper component="form">
               <Box className={classes.inputLogo}>
                 <AssetsImage chainId={'56'} assetIds={['BIFI']} size={20} />
               </Box>

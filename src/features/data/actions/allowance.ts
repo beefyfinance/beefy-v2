@@ -3,7 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { FetchAllAllowanceResult } from '../apis/allowance/allowance-types';
 import { getAllowanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
-import { isTokenErc20, TokenErc20 } from '../entities/token';
+import { TokenErc20 } from '../entities/token';
 import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
