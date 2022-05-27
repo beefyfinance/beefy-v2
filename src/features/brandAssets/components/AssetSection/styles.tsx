@@ -1,5 +1,8 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   sectionHeader: {
+    ...theme.typography['h2'],
     margin: '40px 10px 16px 0',
   },
   cardContainer: {

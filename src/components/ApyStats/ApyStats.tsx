@@ -1,8 +1,5 @@
 import { memo } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { styles } from './styles';
 import { LabeledStat } from '../LabeledStat';
-import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formattedTotalApy } from '../../helpers/format';
 import { useSelector } from 'react-redux';
@@ -18,23 +15,7 @@ import { selectVaultApyAvailable } from '../../features/data/selectors/data-load
 import { TotalApy } from '../../features/data/reducers/apy';
 import { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
-
-const useStyles = makeStyles(styles as any);
-
-const BreakdownTooltip = memo(({ rows }: any) => {
-  const classes = useStyles();
-
-  return (
-    <>
-      {rows.map(row => (
-        <Box className={classes.rows} key={row.label}>
-          <div className={row.last ? classes.bold : classes.statLabel}>{row.label}</div>
-          <div className={row.last ? classes.bold : classes.value}>{row.value}</div>
-        </Box>
-      ))}
-    </>
-  );
-});
+import { InterestTooltipContent } from '../../features/home/components/Vault/components/InterestTooltipContent';
 
 const _YearlyBreakdownTooltip = ({
   isGovVault,
@@ -55,7 +36,7 @@ const _YearlyBreakdownTooltip = ({
       value: rates.vaultApr,
       last: true,
     });
-    return <BreakdownTooltip rows={rows} />;
+    return <InterestTooltipContent rows={rows} />;
   }
 
   if ('vaultApr' in rates) {
@@ -88,7 +69,7 @@ const _YearlyBreakdownTooltip = ({
     last: true,
   });
 
-  return <BreakdownTooltip rows={rows} />;
+  return <InterestTooltipContent rows={rows} />;
 };
 
 const YearlyBreakdownTooltip = memo(_YearlyBreakdownTooltip);
@@ -112,7 +93,7 @@ const _DailyBreakdownTooltip = ({
       value: rates.vaultDaily,
       last: true,
     });
-    return <BreakdownTooltip rows={rows} />;
+    return <InterestTooltipContent rows={rows} />;
   }
 
   if ('vaultDaily' in rates) {
@@ -145,18 +126,12 @@ const _DailyBreakdownTooltip = ({
     last: true,
   });
 
-  return <BreakdownTooltip rows={rows} />;
+  return <InterestTooltipContent rows={rows} />;
 };
 
 const DailyBreakdownTooltip = memo(_DailyBreakdownTooltip);
 
-function _YearlyApyStats({
-  vaultId,
-  variant,
-}: {
-  vaultId: VaultEntity['id'];
-  variant: 'small' | 'large';
-}) {
+function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -179,7 +154,6 @@ function _YearlyApyStats({
       textContent={false}
       value={
         <LabeledStat
-          variant={variant}
           boosted={isBoosted && shouldShowApy ? formatted.boostedTotalApy : null}
           value={shouldShowApy ? formatted.totalApy : '-'}
         />
@@ -198,19 +172,13 @@ function _YearlyApyStats({
           : null
       }
       loading={shouldShowApy && isLoading}
-      variant={variant}
     />
   );
 }
+
 export const YearlyApyStats = memo(_YearlyApyStats);
 
-function _DailyApyStats({
-  vaultId,
-  variant,
-}: {
-  vaultId: VaultEntity['id'];
-  variant: 'small' | 'large';
-}) {
+function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
 
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -233,7 +201,6 @@ function _DailyApyStats({
       textContent={false}
       value={
         <LabeledStat
-          variant={variant}
           boosted={isBoosted && shouldShowApy ? formatted.boostedTotalDaily : null}
           value={shouldShowApy ? formatted.totalDaily : '-'}
         />
@@ -252,8 +219,8 @@ function _DailyApyStats({
           : null
       }
       loading={shouldShowApy && isLoading}
-      variant={variant}
     />
   );
 }
+
 export const DailyApyStats = memo(_DailyApyStats);

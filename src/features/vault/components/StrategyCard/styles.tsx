@@ -1,60 +1,57 @@
-const defaultFont = {
-  fontFamily: 'Proxima Nova',
-  fontStyle: 'normal',
-};
+import { Theme } from '@material-ui/core/styles';
 
-const bold = {
-  ...defaultFont,
-  fontWeight: 600,
-};
-
-export const styles = theme => ({
+export const styles = (theme: Theme) => ({
   cardActions: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap' as const,
+    rowGap: '8px',
+    columnGap: '8px',
     marginTop: theme.spacing(1),
   },
-  cardAction: {
-    marginRight: '15px',
+  cardAction: {},
+  text: {
+    margin: '0 0 32px 0',
+    whiteSpace: 'pre-line' as const,
+    color: theme.palette.text.secondary,
+    '&:last-child': {
+      marginBottom: 0,
+    },
   },
   apysContainer: {
     marginBottom: '32px',
   },
+  apyTitle: {
+    ...theme.typography['h3'],
+    color: theme.palette.text.secondary,
+    marginBottom: '8px',
+  },
   apys: {
     display: 'flex',
+    columnGap: '32px',
+    rowGap: '24px',
   },
-  apyTitle: {
-    color: theme.palette.text.secondary,
-  },
-  apy: {
-    marginRight: '24px',
+  apy: {},
+  apyLabel: {
+    ...theme.typography['subline-sm'],
+    color: theme.palette.text.disabled,
   },
   apyValue: {
-    fontWeight: 700,
+    ...theme.typography['body-lg-bold'],
     color: theme.palette.text.secondary,
-  },
-  apyLabel: {
-    fontSize: '12px',
-    lineHeight: '20px',
-    letterSpacing: '0.5px',
-    color: theme.palette.text.disabled,
   },
   audits: {
     display: 'flex',
+    columnGap: '56px',
+    rowGap: '24px',
   },
   audit: {
     display: 'flex',
-    marginRight: '50px',
-    color: 'white',
   },
   auditIcon: {
-    marginRight: '10px',
+    marginRight: '8px',
   },
   auditLabel: {
-    ...bold,
-  },
-  text: {
+    ...theme.typography['body-lg-bold'],
     color: theme.palette.text.secondary,
-    marginBottom: '28px',
   },
 });

@@ -53,7 +53,8 @@
     "web3modal": "^1.9.3"
   },
   "resolutions": {
-    "web3": "^1.7.0"
+    "web3": "^1.7.0",
+    "react-error-overlay": "6.0.9"
   },
   "scripts": {
     "start": "react-scripts start",

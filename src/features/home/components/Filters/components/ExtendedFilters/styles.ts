@@ -20,10 +20,8 @@ export const styles = (theme: Theme) => ({
     borderBottomLeftRadius: '16px',
   },
   sidebarHeader: {
+    ...theme.typography['h3'],
     backgroundColor: '#262A40',
-    fontSize: '21px',
-    lineHeight: '24px',
-    fontWeight: 600,
     color: '#F5F5FF',
     padding: '24px',
     flexGrow: 0,
@@ -56,8 +54,6 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
   },
   extendedFilters: {
-    fontSize: '15px',
-    lineHeight: '24px',
     color: '#F5F5FF',
   },
   shownVaultsCount: {

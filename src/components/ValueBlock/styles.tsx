@@ -1,46 +1,27 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   value: {
-    fontWeight: 600,
-    fontSize: '18px',
+    ...theme.typography['body-lg-bold'],
     margin: 0,
     padding: 0,
-    whiteSpace: 'nowrap',
-    letterSpacing: '0.2px',
-    [theme.breakpoints.up('lg')]: {
-      fontSize: '18px',
-    },
+    whiteSpace: 'nowrap' as const,
     [theme.breakpoints.down('md')]: {
-      fontSize: '18px',
-      textAlign: 'left',
-    },
-    '&.large': {
-      fontSize: '21px',
-      lineHeight: '24px',
-      color: theme.palette.text.secondary,
+      textAlign: 'left' as const,
     },
   },
   label: {
-    fontWeight: 600,
-    fontSize: '12px',
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
-    letterSpacing: '0.2px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    textAlign: 'left',
+    textAlign: 'left' as const,
     [theme.breakpoints.up('md')]: {
-      textAlign: 'center',
-    },
-    '&.large': {
-      lineHeight: '20px',
-      letterSpacing: '1px',
-      textTransform: 'uppercase',
+      textAlign: 'center' as const,
     },
   },
   price: {
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
-    fontWeight: 400,
-    letterSpacing: '0.2px',
-    fontSize: '14px',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'nowrap' as const,
   },
   blurred: {
     filter: 'blur(.5rem)',

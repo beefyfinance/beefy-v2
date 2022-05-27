@@ -1,5 +1,5 @@
 import React, { memo, useMemo } from 'react';
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { VaultEntity } from '../../features/data/entities/vault';
@@ -9,7 +9,7 @@ import { BeefyState } from '../../redux-types';
 import { selectIsVaultPreStakedOrBoosted } from '../../features/data/selectors/boosts';
 import { selectIsVaultMoonpot } from '../../features/data/selectors/partners';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 const _DisplayTags = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -30,26 +30,20 @@ const _DisplayTags = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
 
   return (
     <>
-      {isBoosted && (
-        <div className={classes.spacingMobile} key={'boost'}>
-          <Typography className={classes.tags}>{t('VaultTag-Boost')}</Typography>
-        </div>
-      )}
+      {isBoosted && <div className={classes.tag}>{t('VaultTag-Boost')}</div>}
       {isMoonpot && (
-        <div className={classes.spacingMobile} key={'pots'}>
-          <Box className={classes.tags}>
-            <img
-              className={classes.tagImage}
-              src={require('../../images/pots.svg').default}
-              alt="pots"
-            />
-            <Typography className={classes.text}>{t('VaultTag-Moonpot')}</Typography>
-          </Box>
+        <div className={classes.tag}>
+          <img
+            className={classes.tagImage}
+            src={require('../../images/pots.svg').default}
+            alt="pots"
+          />
+          {t('VaultTag-Moonpot')}
         </div>
       )}
       {vault.tags.map(item => (
-        <div className={classes.spacingMobile} key={item}>
-          <Typography className={classes.tags}>{item in labels ? labels[item] : item}</Typography>
+        <div className={classes.tag} key={item}>
+          {item in labels ? labels[item] : item}
         </div>
       ))}
     </>

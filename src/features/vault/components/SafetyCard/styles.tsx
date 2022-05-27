@@ -1,30 +1,20 @@
-const defaultFont = {
-  fontFamily: 'Proxima Nova',
-  fontStyle: 'normal',
-};
+import { Theme } from '@material-ui/core/styles';
 
-const boldFont = {
-  ...defaultFont,
-  fontWeight: 600,
-};
-
-export const styles = theme => ({
-  cardSubtitle: {
-    fontSize: '18px',
-    lineHeight: '24px',
-    color: '#8585A6',
-    letterSpacing: '0.2px',
-  },
+export const styles = (theme: Theme) => ({
   riskList: {
-    marginBottom: '12px',
+    marginBottom: '32px',
   },
   riskRow: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row' as const,
     justifyContent: 'space-between',
-    marginBottom: '18px',
+    marginBottom: '24px',
+    '&:last-child': {
+      marginBottom: 0,
+    },
   },
   risk: {
+    ...theme.typography['body-lg-bold'],
     color: theme.palette.text.secondary,
     marginRight: 8,
   },
@@ -39,20 +29,13 @@ export const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
   },
-  moreInfoLabel: {
-    ...boldFont,
-    marginRight: '5px',
-    fontSize: '14px',
-    lineHeight: '24px',
-    letterSpacing: '0.2px',
-    color: '#6B7199',
-  },
   notes: {
     '& p': {
+      margin: '0 0 12px 0',
       color: theme.palette.text.secondary,
     },
-    '& p:first-child': {
-      marginBottom: '12px',
+    '& p:last-child': {
+      marginBottom: 0,
     },
   },
   arrow: {
@@ -64,11 +47,8 @@ export const styles = theme => ({
     alignItems: 'center',
   },
   safetyLabel: {
-    whiteSpace: 'nowrap',
-    fontWeight: 400,
+    ...theme.typography['subline-lg'],
     color: theme.palette.text.disabled,
-    textTransform: 'none', //'capitalize' no good due to localization
-    textAlign: 'left',
   },
   tooltipHolder: {
     marginLeft: theme.spacing(0.5),

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import React from 'react';
 import { MediaCard } from '../MediaCard';
@@ -13,9 +13,7 @@ export const AssetSection: React.FC<AssetSectionProps> = ({ id, assets }) => {
 
   return (
     <React.Fragment>
-      <Typography className={classes.sectionHeader} variant="h4">
-        {t(id)}
-      </Typography>
+      <h2 className={classes.sectionHeader}>{t(id)}</h2>
       <div className={classes.cardContainer}>
         {assets.map(asset => (
           <MediaCard

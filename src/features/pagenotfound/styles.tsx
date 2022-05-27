@@ -18,10 +18,7 @@ export const styles = theme => ({
     display: 'block',
   },
   text: {
-    fontWeight: '600',
-    fontSize: '18px',
-    lineHeight: '28px',
-    textAlign: 'center',
+    textAlign: 'center' as const,
   },
   container: {
     margin: '32px auto 0',
@@ -29,19 +26,6 @@ export const styles = theme => ({
     width: 'fit-content',
   },
   button: {
-    border: 'solid 2px #54995C',
-    backgroundColor: '#54995C',
-    borderRadius: '8px',
-    color: 'white',
-    fontSize: '16px',
-    fontWeight: 700,
-    padding: '12px 24px',
-    textTransform: 'capitalize',
-    display: 'block',
     margin: '32px auto 0',
-    '&:hover': {
-      cursor: 'pointer',
-      backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
-    },
   },
 });

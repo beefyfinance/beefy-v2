@@ -4,7 +4,6 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectMintersByVaultId, selectShouldInitMinters } from '../../../data/selectors/minters';
 import { fetchAllMinters } from '../../../data/actions/minters';
-import { Box } from '@material-ui/core';
 import { MinterCard } from './MinterCard';
 import { BeefyState } from '../../../../redux-types';
 
@@ -26,9 +25,9 @@ export const MinterCards = memo<MinterCardsParams>(function MinterCards({ vaultI
   return (
     <>
       {minterCardIds.map(minterId => (
-        <Box key={minterId}>
+        <div key={minterId}>
           <MinterCard vaultId={vaultId} minterId={minterId} />
-        </Box>
+        </div>
       ))}
     </>
   );

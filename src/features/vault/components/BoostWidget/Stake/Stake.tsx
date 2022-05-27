@@ -1,22 +1,17 @@
 import {
   Box,
-  Button,
   FormControl,
   IconButton,
   InputAdornment,
   InputBase,
   makeStyles,
-  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import CloseIcon from '@material-ui/icons/Close';
-import { Card } from '../../Card/Card';
-import { CardHeader } from '../../Card/CardHeader';
-import { CardContent } from '../../Card/CardContent';
-import { CardTitle } from '../../Card/CardTitle';
+import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { formatBigNumberSignificant } from '../../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
 import { BoostEntity } from '../../../../data/entities/boost';
@@ -44,8 +39,9 @@ import { Loader } from '../../../../../components/Loader';
 import { initBoostForm } from '../../../../data/actions/scenarios';
 import { isFulfilled } from '../../../../data/reducers/data-loader';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
+import { Button } from '../../../../../components/Button';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export const Stake = ({
   boostId,
@@ -154,22 +150,13 @@ const StakeForm = ({
     startStepper(steps);
   };
 
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    boxShadow: 24,
-    minWidth: '400px',
-  };
-
   return (
     <>
-      <Box sx={style}>
+      <div className={classes.container}>
         <Card>
           <CardHeader className={classes.header}>
             <CardTitle titleClassName={classes.title} title={t('Stake-Modal-Title')} />
-            <IconButton className={classes.removeHover} onClick={closeModal} aria-label="settings">
+            <IconButton className={classes.closeIcon} onClick={closeModal} aria-label="settings">
               <CloseIcon htmlColor="#8A8EA8" />
             </IconButton>
           </CardHeader>
@@ -177,16 +164,12 @@ const StakeForm = ({
             <Box className={classes.inputContainer}>
               <Box className={classes.balances}>
                 <Box className={classes.available}>
-                  <Typography className={classes.label}>{t('Stake-Label-Available')}</Typography>
-                  <Typography className={classes.value}>
-                    {formatBigNumberSignificant(mooBalance)}
-                  </Typography>
+                  <div className={classes.label}>{t('Stake-Label-Available')}</div>
+                  <div className={classes.value}>{formatBigNumberSignificant(mooBalance)}</div>
                 </Box>
                 <Box className={classes.staked}>
-                  <Typography className={classes.label}>{t('Stake-Label-Staked')}</Typography>
-                  <Typography className={classes.value}>
-                    {formatBigNumberSignificant(boostBalance)}
-                  </Typography>
+                  <div className={classes.label}>{t('Stake-Label-Staked')}</div>
+                  <div className={classes.value}>{formatBigNumberSignificant(boostBalance)}</div>
                 </Box>
               </Box>
               <Box pt={2}>
@@ -218,7 +201,13 @@ const StakeForm = ({
             {/*BUTTON */}
             <Box className={classes.btnSection}>
               {!isBoostDepositable ? (
-                <Button className={classes.btnSubmit} fullWidth={true} disabled={true}>
+                <Button
+                  className={classes.btnSubmit}
+                  fullWidth={true}
+                  borderless={true}
+                  variant="success"
+                  disabled={true}
+                >
                   {t('Deposit-Disabled')}
                 </Button>
               ) : isWalletConnected ? (
@@ -227,6 +216,8 @@ const StakeForm = ({
                     onClick={() => dispatch(askForNetworkChange({ chainId: boost.chainId }))}
                     className={classes.btnSubmit}
                     fullWidth={true}
+                    borderless={true}
+                    variant="success"
                     disabled={isStepping}
                   >
                     {t('Network-Change', { network: chain.name.toUpperCase() })}
@@ -236,6 +227,8 @@ const StakeForm = ({
                     onClick={handleDeposit}
                     className={classes.btnSubmit}
                     fullWidth={true}
+                    borderless={true}
+                    variant="success"
                     disabled={formState.amount.isLessThanOrEqualTo(0) || isStepping}
                   >
                     {t('Stake-Button-ConfirmStaking')}
@@ -245,6 +238,8 @@ const StakeForm = ({
                 <Button
                   className={classes.btnSubmit}
                   fullWidth={true}
+                  borderless={true}
+                  variant="success"
                   onClick={() => dispatch(askForWalletConnection())}
                   disabled={isStepping}
                 >
@@ -254,7 +249,7 @@ const StakeForm = ({
             </Box>
           </CardContent>
         </Card>
-      </Box>
+      </div>
       <Stepper />
     </>
   );

@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { Box, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
+import { useCallback, useState } from 'react';
+import { Box, Grid, makeStyles, Modal } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ApyStatLoader } from '../../../../../components/ApyStatLoader';
@@ -10,9 +10,10 @@ import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
 import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
 import { ModalTvl } from '../ModalTvl';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
+
 export const VaultsStats = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
   const classes = useStyles();
   const t = useTranslation().t;
   const totalTvl = useSelector(selectTotalTvl);
@@ -20,52 +21,45 @@ export const VaultsStats = () => {
   const buyback = useSelector(selectTotalBuybackUsdAmount);
   const ValueText = ({ value }) => <>{value ? <span>{value}</span> : <ApyStatLoader />}</>;
 
-  const handleOpen = useCallback(() => {
-    setIsOpen(true);
-  }, []);
+  const handleTvlModalOpen = useCallback(() => {
+    setIsTvlModalOpen(true);
+  }, [setIsTvlModalOpen]);
+
+  const handleTvlModalClose = useCallback(() => {
+    setIsTvlModalOpen(false);
+  }, [setIsTvlModalOpen]);
 
   return (
     <Grid container className={classes.stats}>
       <Box className={classes.stat}>
-        <Box className={classes.flex}>
-          <Typography variant="body1" className={classes.label}>
-            {t('TVL')}
-          </Typography>
-          <Box className={classes.flex} onClick={handleOpen}>
+        <Box className={classes.labelWithIcon}>
+          <div className={classes.label}>{t('TVL')}</div>
+          <div onClick={handleTvlModalOpen}>
             <img
               className={classes.icon}
               src={require('../../../../../images/i.svg').default}
               alt="i"
             />
-          </Box>
+          </div>
         </Box>
-        <Typography variant="h3" className={classes.value}>
+        <div className={classes.value}>
           <ValueText value={formatBigUsd(totalTvl)} />
-        </Typography>
+        </div>
       </Box>
       <Box className={classes.stat}>
-        <Typography variant="body1" className={classes.label}>
-          {t('Vaults-Title')}
-        </Typography>
-        <Typography variant="h3" className={classes.value}>
+        <div className={classes.label}>{t('Vaults-Title')}</div>
+        <div className={classes.value}>
           <ValueText value={totalActiveVaults} />
-        </Typography>
+        </div>
       </Box>
       <Box className={classes.stat}>
-        <Typography variant="body1" className={classes.label}>
-          {t('BuyBack')}
-        </Typography>
-        <Typography variant="h3" className={classes.value}>
+        <div className={classes.label}>{t('BuyBack')}</div>
+        <div className={classes.value}>
           <ValueText value={formatBigUsd(buyback)} />
-        </Typography>
+        </div>
       </Box>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-      >
-        <ModalTvl close={() => setIsOpen(false)} />
+      <Modal open={isTvlModalOpen} onClose={handleTvlModalClose}>
+        <ModalTvl close={handleTvlModalClose} />
       </Modal>
     </Grid>
   );

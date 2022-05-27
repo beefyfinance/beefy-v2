@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import { Button, Typography, Box } from '@material-ui/core';
 import image from '../../images/404image.svg';
+import { Button } from '../../components/Button';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export const PageNotFound = () => {
   const classes = useStyles();
@@ -18,16 +18,16 @@ export const PageNotFound = () => {
   }, [history]);
 
   return (
-    <Box className={classes.pageContainer}>
-      <Box className={classes.imageContainer}>
+    <div className={classes.pageContainer}>
+      <div className={classes.imageContainer}>
         <img src={image} alt="404" className={classes.image} />
-      </Box>
-      <Box className={classes.container}>
-        <Typography className={classes.text}>{t('Page-Not-Found')}</Typography>
-        <Button className={classes.button} onClick={handleOpen}>
+      </div>
+      <div className={classes.container}>
+        <div className={classes.text}>{t('Page-Not-Found')}</div>
+        <Button variant="success" className={classes.button} onClick={handleOpen}>
           {t('View-All')}
         </Button>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };

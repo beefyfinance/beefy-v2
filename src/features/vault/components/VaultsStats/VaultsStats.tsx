@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Box, makeStyles, Divider, Grid } from '@material-ui/core';
+import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { styles } from './styles';
@@ -14,7 +14,8 @@ import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDepos
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 
 import { getBeefyApi } from '../../../data/apis/instances';
-const useStyles = makeStyles(styles as any);
+
+const useStyles = makeStyles(styles);
 
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const lastHarvestStr = useLastHarvestStr(vaultId);
@@ -28,18 +29,18 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <Grid item lg={8} xs={12}>
           <Box className={classes.stats}>
             <Box width={'33%'} className={classes.stat3}>
-              <VaultTvl variant="large" vaultId={vaultId} />
+              <VaultTvl vaultId={vaultId} />
             </Box>
             <Box className={classes.stat}>
               <Divider className={classes.divider} orientation="vertical" />
               <Box className={classes.stat3}>
-                <YearlyApyStats variant="large" vaultId={vault.id} />
+                <YearlyApyStats vaultId={vault.id} />
               </Box>
             </Box>
             <Box display="flex">
               <Divider className={classes.divider} orientation="vertical" />
               <Box className={classes.stat3}>
-                <DailyApyStats variant="large" vaultId={vault.id} />
+                <DailyApyStats vaultId={vault.id} />
               </Box>
             </Box>
           </Box>
@@ -48,7 +49,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           <Grid container className={classes.stats2}>
             <Grid item xs={6} className={classes.stat1}>
               <Box className={classes.stat4}>
-                <VaultDeposited variant="large" vaultId={vaultId} />
+                <VaultDeposited vaultId={vaultId} />
               </Box>
             </Grid>
             {(isGovVault(vault) || lastHarvestStr !== 'never') && (
@@ -59,11 +60,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                 {lastHarvestStr !== 'never' && (
                   <Grid item xs={6}>
                     <Box className={classes.stat4}>
-                      <ValueBlock
-                        variant="large"
-                        label={t('Vault-LastHarvest')}
-                        value={lastHarvestStr}
-                      />
+                      <ValueBlock label={t('Vault-LastHarvest')} value={lastHarvestStr} />
                     </Box>
                   </Grid>
                 )}
@@ -71,7 +68,7 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
             ) : (
               <Grid item xs={6}>
                 <Box className={classes.stat4}>
-                  <GovVaultRewards variant="large" vaultId={vaultId} />
+                  <GovVaultRewards vaultId={vaultId} />
                 </Box>
               </Grid>
             )}

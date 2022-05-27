@@ -1,12 +1,9 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formattedTotalApy } from '../../../../helpers/format';
 import { LinkButton } from '../../../../components/LinkButton';
-import { Card } from '../Card/Card';
-import { CardHeader } from '../Card/CardHeader';
-import { CardContent } from '../Card/CardContent';
-import { CardTitle } from '../Card/CardTitle';
+import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
 import shield from './shield.svg';
 import { stratText } from './stratText';
@@ -20,7 +17,8 @@ import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { ApyStatLoader } from '../../../../components/ApyStatLoader';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
+
 function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const t = useTranslation().t;
@@ -58,58 +56,49 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         </div>
       </CardHeader>
       <CardContent>
-        <Typography variant="body1" className={classes.text} style={{ whiteSpace: 'pre-line' }}>
+        <div className={classes.text}>
           {stratText(vault.strategyType, platform.name, vault.assetIds, vault.name, vault.name, t)}
-        </Typography>
+        </div>
         <div className={classes.apysContainer}>
-          <Typography variant="h5" className={classes.apyTitle}>
-            {t('Vault-ApyBreakdown')}
-          </Typography>
+          <div className={classes.apyTitle}>{t('Vault-ApyBreakdown')}</div>
           <div className={classes.apys}>
             <div className={classes.apy}>
-              <Typography className={classes.apyLabel}>{t('Vault-ApyTotal')}</Typography>
-              <Typography variant="h5" className={classes.apyValue}>
+              <div className={classes.apyLabel}>{t('Vault-ApyTotal')}</div>
+              <div className={classes.apyValue}>
                 {isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
-              </Typography>
+              </div>
             </div>
             {values.vaultApr && (
               <div className={classes.apy}>
-                <Typography className={classes.apyLabel}>{t('Vault-VaultApr')}</Typography>
-                <Typography variant="h5" className={classes.apyValue}>
-                  {formatted.vaultApr}
-                </Typography>
+                <div className={classes.apyLabel}>{t('Vault-VaultApr')}</div>
+                <div className={classes.apyValue}>{formatted.vaultApr}</div>
               </div>
             )}
             {values.tradingApr > 0 && (
               <div className={classes.apy}>
-                <Typography className={classes.apyLabel}>{t('Vault-AprTrading')}</Typography>
-                <Typography variant="h5" className={classes.apyValue}>
-                  {formatted.tradingApr}
-                </Typography>
+                <div className={classes.apyLabel}>{t('Vault-AprTrading')}</div>
+                <div className={classes.apyValue}>{formatted.tradingApr}</div>
               </div>
             )}
             {isBoosted && (
               <div className={classes.apy}>
-                <Typography className={classes.apyLabel}>{t('Vault-AprBoost')}</Typography>
-                <Typography variant="h5" className={classes.apyValue}>
-                  {formatted.boostApr}
-                </Typography>
+                <div className={classes.apyLabel}>{t('Vault-AprBoost')}</div>
+                <div className={classes.apyValue}>{formatted.boostApr}</div>
               </div>
             )}
           </div>
         </div>
         <div className={classes.audits}>
           {isVaultAudited ? (
-            <Box className={classes.audit}>
+            <div className={classes.audit}>
               <img alt="Audited" src={shield} className={classes.auditIcon} />
-              <Typography className={classes.auditLabel}>{t('Vault-Auditd')}</Typography>
-            </Box>
+              <div className={classes.auditLabel}>{t('Vault-Auditd')}</div>
+            </div>
           ) : null}
-
-          <Box className={classes.audit}>
+          <div className={classes.audit}>
             <img alt="Community Audited" src={shield} className={classes.auditIcon} />
-            <Typography className={classes.auditLabel}>{t('Vault-AuditdCommunity')}</Typography>
-          </Box>
+            <div className={classes.auditLabel}>{t('Vault-AuditdCommunity')}</div>
+          </div>
         </div>
       </CardContent>
     </Card>

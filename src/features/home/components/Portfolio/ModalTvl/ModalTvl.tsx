@@ -1,4 +1,4 @@
-import { Box, makeStyles, IconButton, Button, Grid, Typography } from '@material-ui/core';
+import { Box, Grid, IconButton, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { CardContent } from '../../../../vault/components/Card/CardContent';
 import { CardHeader } from '../../../../vault/components/Card/CardHeader';
@@ -14,8 +14,9 @@ import { selectTvlByChain } from '../../../../data/selectors/tvl';
 import BigNumber from 'bignumber.js';
 import { formatBigUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
+import { Button } from '../../../../../components/Button';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 function _ModalTvl({ close }: { close: () => void }) {
   const classes = useStyles();
@@ -23,18 +24,8 @@ function _ModalTvl({ close }: { close: () => void }) {
   const tvls = useSelector(selectTvlByChain);
 
   const chains = useSelector(selectAllChains);
-
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    boxShadow: 24,
-    minWidth: '400px',
-  };
-
   return (
-    <Box sx={style}>
+    <div className={classes.holder}>
       <Card>
         <CardHeader className={classes.header}>
           <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
@@ -52,12 +43,12 @@ function _ModalTvl({ close }: { close: () => void }) {
               );
             })}
           </Grid>
-          <Button onClick={close} className={classes.btn}>
+          <Button onClick={close} variant="success" fullWidth={true} className={classes.btn}>
             {t('Close')}
           </Button>
         </CardContent>
       </Card>
-    </Box>
+    </div>
   );
 }
 
@@ -74,17 +65,9 @@ function Chain({ chain, tvl }: { chain: ChainEntity; tvl: BigNumber }) {
         src={require(`../../../../../images/networks/${chain.id}.svg`).default}
       />
       <Box>
-        <Typography variant="body2" className={classes.chainText}>
-          {chain.name}
-        </Typography>
+        <div className={classes.chainText}>{chain.name}</div>
         <>
-          {tvl ? (
-            <Typography variant="body1" className={classes.chainValue}>
-              {formatBigUsd(tvl)}
-            </Typography>
-          ) : (
-            <ContentLoading />
-          )}
+          {tvl ? <div className={classes.chainValue}>{formatBigUsd(tvl)}</div> : <ContentLoading />}
         </>
       </Box>
     </Box>

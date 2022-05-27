@@ -1,4 +1,13 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
+  holder: {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    minWidth: '400px',
+  },
   header: {
     display: 'flex',
     alignItems: 'center',
@@ -9,32 +18,22 @@ export const styles = theme => ({
     borderBottom: '2px solid #373c68',
   },
   title: {
-    fontWeight: 600,
     color: theme.palette.text.primary,
   },
   removeHover: {
-    '&:Hover': {
+    '&:hover': {
       background: 'none',
     },
   },
   container: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
     backgroundColor: theme.palette.background.paper,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
   },
   btn: {
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: '8px',
-    width: '100%',
-    height: '48px',
     marginTop: theme.spacing(4),
-    '& .MuiButton-label': {
-      textTransform: 'none',
-      fontWeight: 600,
-      color: theme.palette.text.primary,
-    },
   },
   chain: {
     display: 'flex',
@@ -44,14 +43,12 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.content,
   },
   chainText: {
-    textTransform: 'uppercase',
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
-    letterSpacing: '0.5px',
-    fontWeight: 600,
   },
   chainValue: {
+    ...theme.typography['body-lg-bold'],
     color: theme.palette.text.secondary,
-    fontWeight: 700,
   },
   chainLogo: {
     height: '32px',

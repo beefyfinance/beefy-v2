@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, makeStyles, Button } from '@material-ui/core';
+import { makeStyles, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
@@ -12,7 +12,7 @@ import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 const QiDaoCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
@@ -25,15 +25,10 @@ const QiDaoCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   return (
     <Card>
       <CardHeader className={classes.header}>
-        <img src={QiDaoLogo} alt="qidao" />{' '}
-        <Typography className={classes.title} variant="h3">
-          {t('QiDao-Title')}
-        </Typography>
+        <img src={QiDaoLogo} alt="qidao" /> <div className={classes.title}>{t('QiDao-Title')}</div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.content} variant="body1">
-          {t('QiDao-Content')}
-        </Typography>
+        <div className={classes.content}>{t('QiDao-Content')}</div>
         <a
           className={classes.link}
           target="_blank"

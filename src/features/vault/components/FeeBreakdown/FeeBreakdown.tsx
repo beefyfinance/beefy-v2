@@ -1,8 +1,7 @@
-import { Box, Divider, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
-import { Popover } from '../../../../components/Popover';
 import { Loader } from '../../../../components/Loader';
 import { BifiMaxis } from './BifiMaxis';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
@@ -10,22 +9,11 @@ import { ZapEstimate } from '../../../data/apis/zap';
 import { useSelector } from 'react-redux';
 import { BeefyState } from '../../../../redux-types';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { InterestTooltipContent } from '../../../home/components/Vault/components/InterestTooltipContent';
+import { IconWithTooltip } from '../../../../components/Tooltip';
+import clsx from 'clsx';
 
-const useStyles = makeStyles(styles as any);
-const BreakdownTooltip = memo(({ rows }: any) => {
-  const classes = useStyles();
-
-  return (
-    <>
-      {rows.map(row => (
-        <Box className={classes.rows} key={row.label}>
-          <div className={row.last ? classes.bold : classes.labelTooltip}>{row.label}</div>
-          <div className={row.last ? classes.bold : classes.valueTooltip}>{row.value}</div>
-        </Box>
-      ))}
-    </>
-  );
-});
+const useStyles = makeStyles(styles);
 
 const PerformanceFees = memo(({ rates, vaultID, performanceFee }: any) => {
   const rows = [];
@@ -95,7 +83,7 @@ const PerformanceFees = memo(({ rates, vaultID, performanceFee }: any) => {
     });
   }
 
-  return <BreakdownTooltip rows={rows} />;
+  return <InterestTooltipContent rows={rows} />;
 });
 
 export const FeeBreakdown = memo(
@@ -137,41 +125,31 @@ export const FeeBreakdown = memo(
           <Grid item xs={12}>
             {type === 'deposit' && isZap && (
               <>
-                <Typography className={classes.title} style={{ marginBottom: '12px' }}>
-                  {t('Zap-Title')}
-                </Typography>
+                <div className={clsx(classes.title, classes.zapTitle)}>{t('Zap-Title')}</div>
                 {zapEstimate === null ? (
                   <Loader message={'Loading swap estimate...'} line={true} />
                 ) : (
                   <ol className={classes.ol}>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-1', {
-                          valueFrom: zapEstimate.amountIn.decimalPlaces(6),
-                          tokenFrom: zapEstimate.tokenIn.symbol,
-                          valueTo: zapEstimate.amountOut.decimalPlaces(6),
-                          tokenTo: zapEstimate.tokenOut.symbol,
-                          slippageTolerancePercentage: slippageTolerance * 100,
-                        })}
-                      </Typography>
+                    <li className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-1', {
+                        valueFrom: zapEstimate.amountIn.decimalPlaces(6),
+                        tokenFrom: zapEstimate.tokenIn.symbol,
+                        valueTo: zapEstimate.amountOut.decimalPlaces(6),
+                        tokenTo: zapEstimate.tokenOut.symbol,
+                        slippageTolerancePercentage: slippageTolerance * 100,
+                      })}
                     </li>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-2', { lpToken: depositToken.symbol })}
-                      </Typography>
+                    <li className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-2', { lpToken: depositToken.symbol })}
                     </li>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-3', { lpToken: depositToken.symbol })}
-                      </Typography>
+                    <li className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-3', { lpToken: depositToken.symbol })}
                     </li>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Deposit-4', {
-                          token0: vault.assetIds[0],
-                          token1: vault.assetIds[1],
-                        })}
-                      </Typography>
+                    <li className={classes.zapStep}>
+                      {t('Zap-Step-Deposit-4', {
+                        token0: vault.assetIds[0],
+                        token1: vault.assetIds[1],
+                      })}
                     </li>
                   </ol>
                 )}
@@ -179,51 +157,41 @@ export const FeeBreakdown = memo(
             )}
             {type === 'withdraw' && isZap && (
               <>
-                <Typography className={classes.title} style={{ marginBottom: '12px' }}>
-                  {t('Zap-Title')}
-                </Typography>
+                <div className={clsx(classes.title, classes.zapTitle)}>{t('Zap-Title')}</div>
                 {zapEstimate === null ? (
                   <Loader message={'Loading swap estimate...'} line={true} />
                 ) : (
                   <ol className={classes.ol}>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Withdraw-1', {
-                          mooToken: earnedToken.symbol,
-                          lpToken: depositToken.symbol,
-                        })}
-                      </Typography>
+                    <li className={classes.zapStep}>
+                      {t('Zap-Step-Withdraw-1', {
+                        mooToken: earnedToken.symbol,
+                        lpToken: depositToken.symbol,
+                      })}
                     </li>
-                    <li>
-                      <Typography className={classes.zapStep}>
-                        {t('Zap-Step-Withdraw-2', {
-                          lpToken: depositToken.symbol,
-                          token0: vault.assetIds[0],
-                          token1: vault.assetIds[1],
-                        })}
-                      </Typography>
+                    <li className={classes.zapStep}>
+                      {t('Zap-Step-Withdraw-2', {
+                        lpToken: depositToken.symbol,
+                        token0: vault.assetIds[0],
+                        token1: vault.assetIds[1],
+                      })}
                     </li>
                     {isZapSwap && (
-                      <li>
-                        <Typography className={classes.zapStep}>
-                          {t('Zap-Step-Withdraw-3', {
-                            valueFrom: zapEstimate.amountIn.decimalPlaces(6),
-                            tokenFrom: zapEstimate.tokenIn.symbol,
-                            valueTo: zapEstimate.amountOut.decimalPlaces(6),
-                            tokenTo: zapEstimate.tokenOut.symbol,
-                            slippageTolerancePercentage: slippageTolerance * 100,
-                          })}
-                        </Typography>
+                      <li className={classes.zapStep}>
+                        {t('Zap-Step-Withdraw-3', {
+                          valueFrom: zapEstimate.amountIn.decimalPlaces(6),
+                          tokenFrom: zapEstimate.tokenIn.symbol,
+                          valueTo: zapEstimate.amountOut.decimalPlaces(6),
+                          tokenTo: zapEstimate.tokenOut.symbol,
+                          slippageTolerancePercentage: slippageTolerance * 100,
+                        })}
                       </li>
                     )}
                     {isZapSwap && (
-                      <li>
-                        <Typography className={classes.zapStep}>
-                          {t('Zap-Step-Withdraw-4', {
-                            balance: zapEstimate.amountOut.times(2).decimalPlaces(6),
-                            token: zapEstimate.tokenOut.symbol,
-                          })}
-                        </Typography>
+                      <li className={classes.zapStep}>
+                        {t('Zap-Step-Withdraw-4', {
+                          balance: zapEstimate.amountOut.times(2).decimalPlaces(6),
+                          token: zapEstimate.tokenOut.symbol,
+                        })}
                       </li>
                     )}
                   </ol>
@@ -233,37 +201,31 @@ export const FeeBreakdown = memo(
             {isZap && <Divider className={classes.divider} />}
           </Grid>
           <Grid item xs={12}>
-            <Box display="flex" justifyContent="space-between">
-              <Typography className={classes.title}>{t('Fee-Title')}</Typography>
-            </Box>
+            <div className={classes.title}>{t('Fee-Title')}</div>
           </Grid>
           <Grid item xs={6}>
-            <Typography className={classes.label}>{t('Fee-Deposit')}</Typography>
-            <Typography className={classes.value}>{formattedDepositFee}</Typography>
+            <div className={classes.label}>{t('Fee-Deposit')}</div>
+            <div className={classes.value}>{formattedDepositFee}</div>
           </Grid>
           <Grid item xs={6}>
-            <Typography className={classes.label}>{t('Fee-Withdraw')}</Typography>
-            <Typography className={classes.value}>{formattedWithdrawalFee}</Typography>
+            <div className={classes.label}>{t('Fee-Withdraw')}</div>
+            <div className={classes.value}>{formattedWithdrawalFee}</div>
           </Grid>
           <Grid item xs={6}>
-            <div className={classes.flexAlignCenter}>
-              <Typography className={classes.label} style={{ marginRight: '4px' }}>
-                {/* TODO: add dynamic fee */}
-                {t('Fee-Performance')}
-              </Typography>
-
-              <Popover {...({} as any)}>
-                <PerformanceFees performanceFee={performanceFee} vaultID={vault.id} />
-              </Popover>
+            <div className={classes.label} style={{ marginRight: '4px' }}>
+              {/* TODO: add dynamic fee */}
+              {t('Fee-Performance')}
+              <IconWithTooltip
+                triggerClass={classes.tooltipTrigger}
+                content={<PerformanceFees performanceFee={performanceFee} vaultID={vault.id} />}
+              />
             </div>
             {/*TODO : add dynamic fee */}
-            <Typography className={classes.value}>{performanceFee}</Typography>
+            <div className={classes.value}>{performanceFee}</div>
           </Grid>
           <Grid item xs={12}>
-            <Box pt={1}>
-              <Typography variant="body2" className={classes.text}>
-                {t('Fee-PerformExt')}
-              </Typography>
+            <Box pt={1} className={classes.smallText}>
+              {t('Fee-PerformExt')}
             </Box>
           </Grid>
         </Grid>

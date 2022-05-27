@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from '../Card';
 import { useTranslation } from 'react-i18next';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -25,14 +25,8 @@ const CardContentSection = memo<CardContentSectionProps>(function ContentItem({ 
 
   return (
     <>
-      {heading ? (
-        <Typography variant="h5" className={classes.sectionHeading}>
-          {t(heading)}
-        </Typography>
-      ) : null}
-      <Typography variant="body1" className={classes.sectionText}>
-        {t(text)}
-      </Typography>
+      {heading ? <h3 className={classes.sectionHeading}>{t(heading)}</h3> : null}
+      <p className={classes.sectionText}>{t(text)}</p>
     </>
   );
 });

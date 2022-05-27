@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   container: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -10,10 +12,8 @@ export const styles = theme => ({
     margin: 'auto 0 2px 4px',
   },
   label: {
+    ...theme.typography['body-lg-bold'],
     color: 'inherit',
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: 700,
-    fontSize: '15px',
     lineHeight: 1,
     textAlign: 'center' as const,
   },
@@ -39,7 +39,7 @@ export const styles = theme => ({
       marginBottom: '4px',
     },
     '& $label': {
-      fontSize: '24px',
+      fontSize: theme.typography['h2'].fontSize,
     },
     '& $sm': {
       height: '13px',

@@ -1,4 +1,4 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { isArray } from 'lodash';
 import React from 'react';
@@ -22,15 +22,18 @@ import {
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
 import { styles } from './styles';
+import clsx from 'clsx';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function TokenWithDeposit({
   vaultId,
   convertAmountTo,
+  variant = 'lg',
 }: {
   vaultId: VaultEntity['id'];
   convertAmountTo?: TokenEntity['id'] | TokenEntity['id'][];
+  variant?: 'sm' | 'lg';
 }) {
   const classes = useStyles();
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -80,7 +83,11 @@ export function TokenWithDeposit({
    **/
 
   return (
-    <Box className={classes.balanceContainer} display="flex" alignItems="center">
+    <Box
+      className={clsx(classes.balanceContainer, { [classes.sm]: variant === 'sm' })}
+      display="flex"
+      alignItems="center"
+    >
       <Box lineHeight={0}>
         <AssetsImage
           chainId={vault.chainId}
@@ -91,11 +98,11 @@ export function TokenWithDeposit({
                 : [convertAmountTo]
               : vault.assetIds
           }
-          size={16}
+          size={20}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>
-        <Typography className={classes.assetCount} variant={'body1'}>
+        <div className={classes.assetCount}>
           {intersperse(
             amountsAndSymbol.map(([amount, symbol]) => (
               <>
@@ -112,7 +119,7 @@ export function TokenWithDeposit({
           ).map((elem, i) => (
             <React.Fragment key={i}>{elem}</React.Fragment>
           ))}
-        </Typography>
+        </div>
       </Box>
     </Box>
   );

@@ -1,5 +1,5 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
+import { makeStyles } from '@material-ui/core';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Popover } from '../../../../components/Popover';
 import { RISKS } from '../../../../config/risk';
@@ -16,7 +16,8 @@ import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { VaultEntity } from '../../../data/entities/vault';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
+
 function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -24,28 +25,21 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <Card>
-      <CardHeader className={classes.cardHeader}>
+      <CardHeader>
         <CardTitle
           title={(<SafetyScore score={vault.safetyScore} colorLabel={true} size="md" />) as any}
         />
         <div className={classes.tooltipLabel}>
-          <Typography variant="body1" className={classes.safetyLabel}>
-            {t('Safety-Score1')}
-          </Typography>
+          <div className={classes.safetyLabel}>{t('Safety-Score1')}</div>
           <div className={classes.tooltipHolder}>
-            <Popover
-              {...({
-                title: t('Safety-ScoreWhat'),
-                content: t('Safety-ScoreExpl'),
-              } as any)}
-            />
+            <Popover title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
           </div>
         </div>
       </CardHeader>
       <CardContent>
         <div className={classes.riskList}>
           {vault.risks.map(risk => (
-            <Box key={risk}>
+            <Fragment key={risk}>
               {RISKS[risk] && (
                 <div className={classes.riskRow}>
                   <div className={classes.infoContainer}>
@@ -56,27 +50,23 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                     )}
                     <div>
                       <div className={classes.moreInfoContainer}>
-                        <Typography variant="h5" className={classes.risk}>
-                          {t(RISKS[risk].title)}
-                        </Typography>
+                        <div className={classes.risk}>{t(RISKS[risk].title)}</div>
                         <Popover
                           title={t(RISKS[risk].title)}
                           content={t(RISKS[risk].explanation)}
                         />
                       </div>
-                      <Typography variant="body1" className={classes.riskCategory}>
-                        {t(RISKS[risk].category)}
-                      </Typography>
+                      <div className={classes.riskCategory}>{t(RISKS[risk].category)}</div>
                     </div>
                   </div>
                 </div>
               )}
-            </Box>
+            </Fragment>
           ))}
         </div>
         <div className={classes.notes}>
-          <Typography variant="body1">{t('Safety-HigherSafer')}</Typography>
-          <Typography variant="body1">{t('Safety-BeefySecure')}</Typography>
+          <p>{t('Safety-HigherSafer')}</p>
+          <p>{t('Safety-BeefySecure')}</p>
         </div>
       </CardContent>
     </Card>

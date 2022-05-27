@@ -36,12 +36,9 @@ export const styles = (theme: Theme) => ({
     margin: `0 ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px`,
   },
   navLink: {
+    ...theme.typography['body-lg-bold'],
     display: 'block',
     textDecoration: 'none',
-    textTransform: 'capitalize' as const,
-    fontWeight: 'bold' as const,
-    fontSize: '15px',
-    lineHeight: '24px',
     color: theme.palette.text.secondary,
     '& svg': {
       display: 'block',

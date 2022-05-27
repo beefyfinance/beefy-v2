@@ -1,9 +1,8 @@
 import React from 'react';
-import { Box, Button, makeStyles, Modal, Typography } from '@material-ui/core';
+import { makeStyles, Modal } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
-import { Popover } from '../../../../components/Popover/Popover';
 import { formatBigDecimals } from '../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -25,8 +24,10 @@ import { StakeCountdown } from './StakeCountdown';
 import { Stake } from './Stake';
 import { Unstake } from './Unstake';
 import { selectChainById } from '../../../data/selectors/chains';
+import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip';
+import { Button } from '../../../../components/Button';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
   const boost = useSelector((state: BeefyState) => selectBoostById(state, boostId));
@@ -117,47 +118,39 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
 
   return (
     <div className={classes.containerBoost}>
-      <Box display="flex" alignItems="center">
-        <img
-          alt="fire"
-          src={require(`../../../../images/fire.png`).default}
-          className={classes.boostImg}
+      <div className={classes.title}>
+        <span className={classes.titleIcon}>🔥</span> <span>{t('Boost-Noun')}</span>
+        <IconWithBasicTooltip
+          title={t('Boost-WhatIs')}
+          content={t('Boost-Explain')}
+          triggerClass={classes.titleTooltip}
         />
-        <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
-        <Box style={{ marginLeft: '8px' }}>
-          <Popover
-            title={t('Boost-WhatIs')}
-            content={t('Boost-Explain')}
-            size="md"
-            placement="top-end"
-          />
-        </Box>
-      </Box>
+      </div>
       <div className={classes.boostStats}>
         <div className={classes.boostStat}>
-          <Typography className={classes.body1}>
+          <div className={classes.boostStatLabel}>
             {t('Boost-Balance', { mooToken: mooToken.symbol })}
-          </Typography>
-          <Typography className={classes.h2}>{formatBigDecimals(mooTokenBalance, 8)}</Typography>
+          </div>
+          <div className={classes.boostStatValue}>{formatBigDecimals(mooTokenBalance, 8)}</div>
         </div>
         <div className={classes.boostStat}>
-          <Typography className={classes.body1}>
+          <div className={classes.boostStatLabel}>
             {t('Boost-Balance-Staked', { mooToken: mooToken.symbol })}
-          </Typography>
-          <Typography className={classes.h2}>{formatBigDecimals(boostBalance, 8)}</Typography>
+          </div>
+          <div className={classes.boostStatValue}>{formatBigDecimals(boostBalance, 8)}</div>
         </div>
         <div className={classes.boostStat}>
-          <Typography className={classes.body1}>{t('Boost-Rewards')}</Typography>
-          <Typography className={classes.h2}>
+          <div className={classes.boostStatLabel}>{t('Boost-Rewards')}</div>
+          <div className={classes.boostStatValue}>
             {formatBigDecimals(boostPendingRewards, 8)} {rewardToken.symbol}
-          </Typography>
+          </div>
         </div>
         {!isPreStake ? (
           <div className={classes.boostStat}>
-            <Typography className={classes.body1}>{t('Boost-Ends')}</Typography>
-            <Typography className={classes.countDown}>
+            <div className={classes.boostStatLabel}>{t('Boost-Ends')}</div>
+            <div className={classes.boostStatValue}>
               <StakeCountdown periodFinish={periodFinish} />
-            </Typography>
+            </div>
           </div>
         ) : (
           <></>
@@ -169,6 +162,8 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
             onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
             className={classes.button}
             fullWidth={true}
+            borderless={true}
+            variant="success"
             disabled={isStepping}
           >
             {t('Network-Change', { network: chain.name.toUpperCase() })}
@@ -180,6 +175,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
               className={classes.button}
               onClick={() => depositWithdraw('deposit')}
               fullWidth={true}
+              borderless={true}
             >
               {t('Boost-Button-Vault')}
             </Button>
@@ -188,6 +184,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
               className={classes.button}
               onClick={handleClaim}
               fullWidth={true}
+              borderless={true}
             >
               {t('Boost-Button-Withdraw')}
             </Button>
@@ -196,6 +193,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
               className={classes.button}
               onClick={() => handleExit(boost)}
               fullWidth={true}
+              borderless={true}
             >
               {t('Boost-Button-Claim-Unstake')}
             </Button>
@@ -204,6 +202,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
               onClick={() => depositWithdraw('unstake')}
               className={classes.button}
               fullWidth={true}
+              borderless={true}
             >
               {t('Boost-Button-Unestake')}
             </Button>
@@ -213,6 +212,8 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
         <Button
           className={classes.button}
           fullWidth={true}
+          borderless={true}
+          variant="success"
           onClick={() => dispatch(askForWalletConnection())}
           disabled={isStepping}
         >

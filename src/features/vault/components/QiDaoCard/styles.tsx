@@ -10,6 +10,7 @@ export const styles = theme => ({
     },
   },
   title: {
+    ...theme.typography['h2'],
     color: theme.palette.text.primary,
   },
   content: {
@@ -18,13 +19,9 @@ export const styles = theme => ({
   },
   btn: {
     color: theme.palette.text.primary,
-    fontSize: '15px',
-    lineHeight: '24px',
-    fontWeight: 700,
     padding: '12px 24px',
     borderRadius: '8px',
     backgroundColor: theme.palette.background.default,
-    textTransform: 'none',
     width: '100%',
   },
   link: {

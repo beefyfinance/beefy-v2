@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   stats: {
     display: 'flex',
   },
@@ -11,13 +13,12 @@ export const styles = theme => ({
     },
   },
   value: {
+    ...theme.typography['h2'],
     color: theme.palette.text.primary,
   },
   label: {
-    textTransform: 'uppercase',
+    ...theme.typography['subline-lg'],
     display: 'inline-flex',
-    letterSpacing: '0.5px',
-    fontWeight: 600,
     color: theme.palette.text.disabled,
   },
   blurred: {

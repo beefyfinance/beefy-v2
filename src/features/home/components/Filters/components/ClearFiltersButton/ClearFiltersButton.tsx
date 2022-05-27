@@ -29,7 +29,13 @@ export const ClearFiltersButton = memo<ClearFiltersButtonProps>(function ClearFi
   }, [dispatch]);
 
   return (
-    <Button className={className} variant="filter" disabled={!active} onClick={handleReset}>
+    <Button
+      className={className}
+      variant="filter"
+      size="sm"
+      disabled={!active}
+      onClick={handleReset}
+    >
       {count > 0 ? (
         <span className={classes.badge} data-count={count} />
       ) : (

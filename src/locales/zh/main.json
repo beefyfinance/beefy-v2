@@ -146,7 +146,7 @@
   "Fee-HarvestFee": "收割费",
   "Fee-TotalFee": "绩效费总额",
   "Fee-Title": "Beefy 费用",
-  "Zap-Promotion": "{{action}} 您的 LP 或使用 {{token1}} 或 {{token2}}进行 ZAP⚡",
+  "ZapIn-Promotion": "{{action}} 您的 LP 或使用 {{token1}} 或 {{token2}}进行 ZAP⚡",
   "Zap-Title": "Zap 交易",
   "Zap-Step-Deposit-1": "为了平衡一对流动性对, {{valueFrom}} {{tokenFrom}} 将被换成 {{valueTo}} {{tokenTo}} (可能存在±{{slippageTolerancePercentage}}% 滑点和存款费用)",
   "Zap-Step-Deposit-2": "添加流动性以获得 {{lpToken}}",

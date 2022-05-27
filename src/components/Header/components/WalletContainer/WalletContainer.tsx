@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Box, FormControl, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Box, FormControl, Grid, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -19,9 +19,10 @@ import {
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
 import clsx from 'clsx';
 
-const useStyles = makeStyles(styles as any);
-const formatAddress = addr => {
-  return addr.substr(0, 5) + '...' + addr.substr(addr.length - 5, 5);
+const useStyles = makeStyles(styles);
+
+const formatAddress = (addr: string) => {
+  return addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
 };
 
 export const WalletContainer = connect((state: BeefyState) => {
@@ -90,13 +91,9 @@ export const WalletContainer = connect((state: BeefyState) => {
                 ) : (
                   ''
                 )}
-                <Typography
-                  className={clsx({ [classes.blurred]: blurred })}
-                  variant="body1"
-                  noWrap={true}
-                >
+                <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
                   {walletAddress ? formatAddress(walletAddress) : t('Network-ConnectWallet')}
-                </Typography>
+                </div>
               </React.Fragment>
             )}
           </Grid>

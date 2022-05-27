@@ -7,7 +7,7 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -26,10 +26,7 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
             rel="noreferrer"
             className={classes.btnSecondary}
           >
-            <Button
-              size="small"
-              endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-            >
+            <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
               {t('Transact-BuyTkn')}
             </Button>
           </a>
@@ -41,10 +38,7 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
             rel="noreferrer"
             className={classes.btnSecondary}
           >
-            <Button
-              size="small"
-              endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-            >
+            <Button endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}>
               {t('Transact-AddLiquidity')}
             </Button>
           </a>

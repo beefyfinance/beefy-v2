@@ -1,10 +1,6 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-// import { LinkButton } from '../../../../components/LinkButton';
-import { Card } from '../Card';
-import { CardHeader } from '../Card/CardHeader';
-import { CardContent } from '../Card/CardContent';
-import { CardTitle } from '../Card/CardTitle';
+import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
 import { VaultGov } from '../../../data/entities/vault';
 import { useSelector } from 'react-redux';
@@ -12,7 +8,7 @@ import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -24,18 +20,13 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
   return (
     <Card>
       <CardHeader>
-        <Typography className={classes.preTitle}>{t('Gov-How')}</Typography>
-        <div style={{ display: 'flex' }}>
-          <CardTitle title={t('Gov-Pool')} subtitle={''} />
+        <div className={classes.preTitle}>{t('Gov-How')}</div>
+        <div>
+          <CardTitle title={t('Gov-Pool')} />
         </div>
-        {/* <div className={classes.cardActions}>
-          <div className={classes.cardAction}>
-            <LinkButton href={`/`} text={t('Gov-Learn')} />
-          </div>
-        </div> */}
       </CardHeader>
       <CardContent>
-        <Typography className={classes.text}>
+        <p className={classes.text}>
           {vaultId === 'beefy-beFTM-earnings'
             ? t('beFTM-description')
             : vaultId === 'beefy-beJoe-earnings'
@@ -47,7 +38,7 @@ export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
               t('Gov-Info2') +
               earnedToken.symbol +
               t('Gov-Info3')}
-        </Typography>
+        </p>
       </CardContent>
     </Card>
   );

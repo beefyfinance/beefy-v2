@@ -1,4 +1,4 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const classes = useStyles();
@@ -30,7 +30,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
   return (
     <Card>
       <CardHeader>
-        <Typography className={classes.detailTitle}>{t('Token-Detail')}</Typography>
+        <div className={classes.detailTitle}>{t('Token-Detail')}</div>
         <CardTitle title={token.symbol} />
         <div className={classes.cardActions}>
           {token.website && (
@@ -51,9 +51,9 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
         </div>
       </CardHeader>
       <CardContent>
-        <Typography variant="body1" className={classes.text}>
+        <div className={classes.text}>
           {token.description ? token.description : t('Token-NoDescrip')}
-        </Typography>
+        </div>
       </CardContent>
     </Card>
   );

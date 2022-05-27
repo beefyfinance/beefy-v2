@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   container: {
     padding: theme.spacing(3),
     backgroundColor: theme.palette.background.default,
@@ -13,7 +15,6 @@ export const styles = theme => ({
     padding: '24px',
     backgroundColor: theme.palette.background.default,
     borderRadius: '12px',
-    marginTop: props => (props.isBoosted ? '-24px' : '0px'),
   },
   expiredBoostContainer: {
     background: theme.palette.background.vaults.defaultOutline,
@@ -25,77 +26,56 @@ export const styles = theme => ({
     height: 30,
     marginLeft: '-8px',
   },
-  h1: {
-    fontSize: '24px',
-    fontWeight: 600,
-    textTransform: 'uppercase',
+  title: {
+    ...theme.typography['h2'],
     color: '#E88225',
+    display: 'flex',
+    alignItems: 'center',
+    margin: '0 0 24px 0',
   },
-  h1white: {
-    fontSize: '24px',
-    fontWeight: 600,
-    textTransform: 'uppercase',
-    color: '#FFFFFF',
+  titleIcon: {
+    marginRight: '8px',
   },
-  h2: {
-    marginLeft: '1px',
-    fontSize: '18px',
-    lineHeight: '24px',
-    fontWeight: 600,
-    color: '#ffffff',
-    marginBottom: '16px',
+  titleWhite: {
+    color: '#fff',
   },
-  countDown: {
-    fontSize: '18px',
-    lineHeight: '24px',
-    fontWeight: 600,
-    color: '#ffffff',
-    marginBottom: '16px',
-  },
-  body1: {
-    fontSize: '12px',
-    lineHeight: '20px',
-    color: '#8585A6',
-    fontWeight: '600',
-    letterSpacing: '0.2px',
-    textTransform: 'uppercase',
+  titleTooltip: {
+    color: theme.palette.text.secondary,
+    fontSize: '20px',
+    width: '20px',
+    height: '20px',
+    marginLeft: '8px',
+    '& .MuiSvgIcon-root': {
+      fontSize: 'inherit',
+      display: 'block',
+    },
   },
   boostStats: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
     rowGap: '16px',
     columnGap: '16px',
-    margin: '20px 0 24px 0',
+    margin: '0 0 24px 0',
   },
   boostStat: {
     '& :last-child': {
       marginBottom: 0,
     },
   },
+  boostStatLabel: {
+    ...theme.typography['subline-sm'],
+    color: '#999CB3',
+  },
+  boostStatValue: {
+    ...theme.typography['body-lg-bold'],
+    color: theme.palette.text.secondary,
+  },
   button: {
-    fontSize: '15px',
-    fontWeight: 700,
-    lineHeight: '24px',
-    textTransform: 'none', //'capitalize' no good due to localization
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.default,
-    padding: '12px 24px',
-    borderRadius: '8px',
-    '&.Mui-disabled': {
-      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    },
     '& + $button': {
       marginTop: '12px',
     },
   },
-  blockBtn: {
-    marginLeft: 'auto',
-    marginRight: '0',
-    border: 'none',
-    padding: 0,
-    width: 32,
-  },
-  diffBG: {
-    background: theme.palette.background.vaults.defaultOutline,
+  expiredBoostName: {
+    marginBottom: '8px',
   },
 });

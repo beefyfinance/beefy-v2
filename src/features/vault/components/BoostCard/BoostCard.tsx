@@ -1,11 +1,8 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
-import { Card } from '../Card/Card';
-import { CardHeader } from '../Card/CardHeader';
-import { CardContent } from '../Card/CardContent';
-import { CardTitle } from '../Card/CardTitle';
+import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useSelector } from 'react-redux';
@@ -13,7 +10,7 @@ import { BeefyState } from '../../../../redux-types';
 import { selectBoostById, selectPreStakeOrActiveBoostIds } from '../../../data/selectors/boosts';
 import { selectBoostedVaultMainPartner } from '../../../data/selectors/partners';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 export const BoostCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -28,25 +25,23 @@ export const BoostCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   return (
     <Card>
       <CardHeader>
-        <Typography className={classes.boostedBy}>{t('Vault-BoostedBy')}</Typography>
-        <div style={{ display: 'flex' }}>
-          <CardTitle title={boost.name} subtitle={''} />
+        <div className={classes.boostedBy}>{t('Vault-BoostedBy')}</div>
+        <div>
+          <CardTitle title={boost.name} />
         </div>
         <div className={classes.cardActions}>
           <div className={classes.cardAction}>
-            <LinkButton href={website} text={'Website'} />
+            <LinkButton href={website} text={t('Boost-PartnerLink-website')} />
           </div>
-          {Object.keys(social).map(net => {
-            return (
-              <div key={net} className={classes.cardAction}>
-                <LinkButton href={social[net]} text={net} />
-              </div>
-            );
-          })}
+          {Object.keys(social).map(net => (
+            <div key={net} className={classes.cardAction}>
+              <LinkButton href={social[net]} text={t(`Boost-PartnerLink-${net}`)} />
+            </div>
+          ))}
         </div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.text}>{text}</Typography>
+        <p className={classes.text}>{text}</p>
       </CardContent>
     </Card>
   );

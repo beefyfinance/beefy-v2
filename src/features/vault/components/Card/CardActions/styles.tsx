@@ -4,8 +4,8 @@ export const styles = (theme: Theme) => ({
   actions: {
     display: 'flex',
     flexWrap: 'wrap' as const,
-    marginTop: theme.spacing(1),
-    rowGap: theme.spacing(2),
-    columnGap: theme.spacing(2),
+    marginTop: '8px',
+    rowGap: '8px',
+    columnGap: '8px',
   },
 });

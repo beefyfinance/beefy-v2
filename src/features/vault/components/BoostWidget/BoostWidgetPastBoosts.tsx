@@ -1,4 +1,4 @@
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import AnimateHeight from 'react-animate-height';
@@ -17,9 +17,9 @@ import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
-import clsx from 'clsx';
+import { Button } from '../../../../components/Button';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -66,24 +66,20 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
 
   return (
     <div className={classes.containerExpired}>
-      <Box display="flex" alignItems="center" style={{ marginBottom: '24px' }}>
-        <img
-          alt="fire"
-          src={require(`../../../../images/fire.png`).default}
-          className={classes.boostImg}
-        />
-        <Typography className={classes.h1white}>{t('Boost-Expired')}</Typography>
-        &nbsp;
-        <Typography className={classes.h1}>{t('Boost-Noun')}</Typography>
-        <Button></Button>
-      </Box>
+      <div className={classes.title}>
+        <span className={classes.titleIcon}>🔥</span>{' '}
+        <span className={classes.titleWhite}>{t('Boost-Expired')}</span>{' '}
+        <span>{t('Boost-Noun')}</span>
+      </div>
       <AnimateHeight duration={500} height="auto">
         {isWalletConnected ? (
           !isWalletOnVaultChain ? (
             <Button
               onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
-              className={clsx(classes.button, classes.diffBG)}
+              className={classes.button}
               fullWidth={true}
+              borderless={true}
+              variant="success"
               disabled={isStepping}
             >
               {t('Network-Change', { network: chain.name.toUpperCase() })}
@@ -91,15 +87,15 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
           ) : (
             pastBoostsWithUserBalance.map(boost => (
               <div className={classes.expiredBoostContainer} key={boost.id}>
-                <Typography className={classes.h2} style={{ textTransform: 'none' }}>
+                <div className={classes.expiredBoostName}>
                   {boost.name}&nbsp;{t('Filter-Boost')}
-                </Typography>
+                </div>
                 <Button
                   onClick={() => handleExit(boost)}
                   disabled={isStepping}
                   className={classes.button}
-                  style={{ marginBottom: 0 }}
                   fullWidth={true}
+                  borderless={true}
                 >
                   {t('Boost-Button-Claim-Unstake')}
                 </Button>
@@ -110,6 +106,8 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
           <Button
             className={classes.button}
             fullWidth={true}
+            borderless={true}
+            variant="success"
             onClick={() => dispatch(askForWalletConnection())}
             disabled={isStepping}
           >

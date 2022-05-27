@@ -5,13 +5,10 @@ export const styles = theme => ({
   btnSecondary: {
     textDecoration: 'none',
     '& .MuiButton-root': {
-      fontSize: '15px',
-      lineHeight: '24px',
-      fontWeight: 500,
+      ...theme.typography['body-lg'],
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
       borderRadius: '4px',
-      textTransform: 'capitalize',
       transition: 'color 0.2s',
       padding: '2px 8px',
       width: 'max-content',

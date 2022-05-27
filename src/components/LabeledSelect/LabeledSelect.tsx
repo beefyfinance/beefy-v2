@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import { orderBy } from 'lodash';
 import { styles } from './styles';
@@ -10,7 +10,7 @@ import { Floating } from '../Floating';
 const useStyles = makeStyles(styles);
 
 export type LabeledSelectCommonProps = {
-  label: string;
+  label?: string;
   options: Record<string, string>;
   sortOptions?: 'default' | 'value' | 'label';
   fullWidth?: boolean;
@@ -26,12 +26,16 @@ export type LabeledSelectCommonProps = {
   dropdownClass?: string;
   dropdownItemClass?: string;
   dropdownItemSelectedClass?: string;
+  dropdownAutoWidth?: boolean;
+  dropdownAutoHeight?: boolean;
+  dropdownAutoHide?: boolean;
 };
 
 export type LabeledSelectProps = LabeledSelectCommonProps & {
   value: string;
   defaultValue?: string;
   onChange: (value: string) => void;
+  SelectedItemComponent?: FC<SelectedItemProps>;
 };
 
 type DropdownItemProps = {
@@ -39,6 +43,11 @@ type DropdownItemProps = {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+};
+
+export type SelectedItemProps = {
+  value: LabeledSelectProps['value'];
+  options: LabeledSelectProps['options'];
 };
 
 function useSortedOptions(
@@ -79,6 +88,10 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
   );
 });
 
+const SelectedItem = memo<SelectedItemProps>(function ({ value, options }) {
+  return <>{options[value]}</>;
+});
+
 export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   label,
   value,
@@ -88,6 +101,7 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   sortOptions = 'default',
   fullWidth = false,
   borderless = false,
+  SelectedItemComponent = SelectedItem,
   selectClass,
   selectCurrentClass,
   selectLabelClass,
@@ -99,6 +113,9 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   dropdownClass,
   dropdownItemClass,
   dropdownItemSelectedClass,
+  dropdownAutoWidth = true,
+  dropdownAutoHeight = true,
+  dropdownAutoHide = true,
 }) {
   const baseClasses = useStyles();
   const [isOpen, setIsOpen] = useState(false);
@@ -167,8 +184,10 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
         })}
       >
         <div className={classes.selectCurrent}>
-          <div className={classes.selectLabel}>{label}</div>
-          <div className={classes.selectValue}>{options[value]}</div>
+          {label ? <div className={classes.selectLabel}>{label}</div> : null}
+          <div className={classes.selectValue}>
+            <SelectedItemComponent options={options} value={value} />
+          </div>
           <ExpandMore className={classes.selectIcon} />
         </div>
         <Floating
@@ -176,6 +195,9 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
           anchorEl={anchorEl}
           placement="bottom-start"
           className={classes.dropdown}
+          autoWidth={dropdownAutoWidth}
+          autoHeight={dropdownAutoHeight}
+          autoHide={dropdownAutoHide}
         >
           {optionsList.map(({ value: optionValue, label }) => (
             <DropdownItem

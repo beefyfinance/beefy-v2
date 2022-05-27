@@ -8,52 +8,12 @@ import {
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserVaultDepositInUsd,
 } from '../../features/data/selectors/balance';
-import {
-  selectActiveVaultBoostIds,
-  selectBoostById,
-  selectIsVaultBoosted,
-} from '../../features/data/selectors/boosts';
+import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/selectors/wallet';
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
-
-const _BoostedVaultDepositedSmall = connect(
-  (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
-    const vault = selectVaultById(state, vaultId);
-    const stakedIds = selectActiveVaultBoostIds(state, vault.id)
-      .map(boostId => {
-        const boost = selectBoostById(state, boostId);
-        return boost.name;
-      })
-      .join(', ');
-    const blurred = selectIsBalanceHidden(state);
-    const isLoaded =
-      state.ui.dataLoader.global.prices.alreadyLoadedOnce && selectIsWalletKnown(state)
-        ? state.ui.dataLoader.byChainId[vault.chainId]?.balance.alreadyLoadedOnce
-        : true;
-    return {
-      stakedIds,
-      blurred,
-      loading: !isLoaded,
-    };
-  }
-)(({ stakedIds, blurred, loading }: { stakedIds: string; blurred: boolean; loading: boolean }) => {
-  const { t } = useTranslation();
-
-  return (
-    <ValueBlock
-      label={t('STAKED-IN')}
-      value={stakedIds}
-      usdValue={t('BOOST')}
-      blurred={blurred}
-      loading={loading}
-      variant="small"
-    />
-  );
-});
-const BoostedVaultDepositedSmall = React.memo(_BoostedVaultDepositedSmall);
 
 const _BoostedVaultDepositedLarge = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
@@ -101,7 +61,6 @@ const _BoostedVaultDepositedLarge = connect(
         usdValue={hasDeposit ? totalDepositedUsd : null}
         blurred={blurred}
         loading={loading}
-        variant="large"
       />
     );
   }
@@ -109,18 +68,14 @@ const _BoostedVaultDepositedLarge = connect(
 const BoostedVaultDepositedLarge = React.memo(_BoostedVaultDepositedLarge);
 
 const _NonBoostedVaultDeposited = connect(
-  (
-    state: BeefyState,
-    { vaultId, variant }: { vaultId: VaultEntity['id']; variant: 'small' | 'large' }
-  ) => {
+  (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
     // deposit can be moo or oracle
     const deposit = isGovVault(vault)
       ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     const hasDeposit = deposit.gt(0);
-    const totalDeposited =
-      !hasDeposit && variant === 'large' ? '0.00' : formatBigDecimals(deposit, 8, !hasDeposit);
+    const totalDeposited = formatBigDecimals(deposit, 8, !hasDeposit);
     const totalDepositedUsd = formatBigUsd(selectUserVaultDepositInUsd(state, vault.id));
     const blurred = selectIsBalanceHidden(state);
     const isLoaded =
@@ -133,7 +88,6 @@ const _NonBoostedVaultDeposited = connect(
       totalDepositedUsd,
       blurred,
       loading: !isLoaded,
-      variant,
     };
   }
 )(
@@ -143,51 +97,38 @@ const _NonBoostedVaultDeposited = connect(
     totalDepositedUsd,
     blurred,
     loading,
-    variant,
   }: {
     hasDeposit: boolean;
     totalDeposited: string;
     totalDepositedUsd: string;
     blurred: boolean;
     loading: boolean;
-    variant: 'small' | 'large';
   }) => {
     const { t } = useTranslation();
 
     return (
       <ValueBlock
-        label={variant === 'large' ? t('Vault-deposited') : t('DEPOSITED')}
+        label={t('Vault-deposited')}
         value={totalDeposited}
         usdValue={hasDeposit ? totalDepositedUsd : null}
         blurred={blurred}
         loading={loading}
-        variant={variant}
       />
     );
   }
 );
 const NonBoostedVaultDeposited = React.memo(_NonBoostedVaultDeposited);
 
-const _VaultDeposited = ({
-  vaultId,
-  variant,
-}: {
-  vaultId: VaultEntity['id'];
-  variant: 'small' | 'large';
-}) => {
+const _VaultDeposited = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
   const userStaked = useSelector((state: BeefyState) =>
     selectHasUserBalanceInActiveBoost(state, vaultId)
   );
 
   return isBoosted && userStaked ? (
-    variant === 'large' ? (
-      <BoostedVaultDepositedLarge vaultId={vaultId} />
-    ) : (
-      <BoostedVaultDepositedSmall vaultId={vaultId} />
-    )
+    <BoostedVaultDepositedLarge vaultId={vaultId} />
   ) : (
-    <NonBoostedVaultDeposited vaultId={vaultId} variant={variant} />
+    <NonBoostedVaultDeposited vaultId={vaultId} />
   );
 };
 export const VaultDeposited = React.memo(_VaultDeposited);
