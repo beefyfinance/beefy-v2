@@ -37,6 +37,7 @@ import {
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
+  selectPastBoostIdsWithUserBalance,
   selectPreStakeOrActiveBoostIds,
   selectShouldDisplayBoostWidget,
 } from '../../../data/selectors/boosts';
@@ -262,12 +263,26 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     isBoosted ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0]) : null
   );
 
+  const pastBoostsWithUserBalance = useSelector((state: BeefyState) =>
+    selectPastBoostIdsWithUserBalance(state, vaultId).map(boostId => {
+      return boostId;
+    })
+  );
+
+  const isBoostedOrHaveBalanceInPastBoost = isBoosted || pastBoostsWithUserBalance.length === 1;
+
   const boost = useSelector((state: BeefyState) =>
-    isBoosted ? selectBoostById(state, activeBoost.id) : null
+    isBoosted
+      ? selectBoostById(state, activeBoost.id)
+      : pastBoostsWithUserBalance.length === 1
+      ? selectBoostById(state, pastBoostsWithUserBalance[0])
+      : null
   );
 
   const boostBalance = useSelector((state: BeefyState) =>
-    isBoosted ? selectBoostUserBalanceInToken(state, boost.id) : new BigNumber(BIG_ZERO)
+    isBoostedOrHaveBalanceInPastBoost
+      ? selectBoostUserBalanceInToken(state, boost.id)
+      : new BigNumber(BIG_ZERO)
   );
 
   const mooBalance = useSelector((state: BeefyState) =>
@@ -275,14 +290,18 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const showDepositedText =
-    isBoosted && formState.zapOptions !== null && boostBalance.isGreaterThan(0) ? false : true;
+    isBoostedOrHaveBalanceInPastBoost &&
+    formState.zapOptions !== null &&
+    boostBalance.isGreaterThan(0)
+      ? false
+      : true;
 
   return (
     <>
       <Box p={3}>
         {formState.zapOptions !== null && (
           <>
-            {isBoosted && boostBalance.isGreaterThan(0) && (
+            {isBoostedOrHaveBalanceInPastBoost && boostBalance.isGreaterThan(0) && (
               <Box className={classes.assetsDivider}>
                 <Box className={classes.width50}>
                   <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
@@ -320,7 +339,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         <Box display="flex">
           <Box
             className={clsx(
-              isBoosted && boostBalance.isGreaterThan(0) && formState.zapOptions === null
+              isBoostedOrHaveBalanceInPastBoost &&
+                boostBalance.isGreaterThan(0) &&
+                formState.zapOptions === null
                 ? classes.width50
                 : classes.width100
             )}
@@ -384,22 +405,24 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               )}
             </RadioGroup>
           </Box>
-          {isBoosted && boostBalance.isGreaterThan(0) && formState.zapOptions === null && (
-            <Box>
-              <Box mb={1}>
-                <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
+          {isBoostedOrHaveBalanceInPastBoost &&
+            boostBalance.isGreaterThan(0) &&
+            formState.zapOptions === null && (
+              <Box>
+                <Box mb={1}>
+                  <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
+                </Box>
+                <Box className={classes.stakedInValue}>
+                  <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={16} />
+                  <Typography
+                    className={classes.orange}
+                    variant="body1"
+                  >{`${formatBigNumberSignificant(boostBalance, 4)} ${
+                    vault.assetIds.length > 1 ? 'LP' : ''
+                  }`}</Typography>
+                </Box>
               </Box>
-              <Box className={classes.stakedInValue}>
-                <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={16} />
-                <Typography
-                  className={classes.orange}
-                  variant="body1"
-                >{`${formatBigNumberSignificant(boostBalance, 4)} ${
-                  vault.assetIds.length > 1 ? 'LP' : ''
-                }`}</Typography>
-              </Box>
-            </Box>
-          )}
+            )}
         </Box>
         <Box className={classes.inputContainer}>
           <Paper component="form" className={classes.root}>

@@ -10,16 +10,15 @@ export const styles = theme => ({
     borderRadius: '12px',
   },
   containerExpired: {
-    padding: '24px 24px 0.1px 24px',
-    backgroundColor: '#3F466D',
-    borderRadius: '16px',
+    padding: '24px',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: '12px',
     marginTop: props => (props.isBoosted ? '-24px' : '0px'),
   },
   expiredBoostContainer: {
-    background: '#555D8B',
-    borderRadius: '16px',
-    padding: '16px',
-    marginBottom: '20px',
+    background: theme.palette.background.vaults.defaultOutline,
+    borderRadius: theme.spacing(1),
+    padding: theme.spacing(2),
   },
   boostImg: {
     width: 30,
@@ -95,5 +94,8 @@ export const styles = theme => ({
     border: 'none',
     padding: 0,
     width: 32,
+  },
+  diffBG: {
+    background: theme.palette.background.vaults.defaultOutline,
   },
 });

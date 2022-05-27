@@ -28,6 +28,11 @@ export type PartnersState = {
       [vaultId: VaultEntity['id']]: boolean;
     };
   };
+  solace: {
+    byChainId: {
+      [chainId: ChainEntity['id']]: boolean;
+    };
+  };
 };
 export const initialPartnersState: PartnersState = {
   byId: {},
@@ -39,6 +44,9 @@ export const initialPartnersState: PartnersState = {
   },
   qidao: {
     byVaultId: {},
+  },
+  solace: {
+    byChainId: {},
   },
 };
 
@@ -64,6 +72,11 @@ export const partnersSlice = createSlice({
       for (const vaultId of action.payload.QiDao) {
         if (!sliceState.qidao.byVaultId[vaultId]) {
           sliceState.qidao.byVaultId[vaultId] = true;
+        }
+      }
+      for (const chainId of action.payload.Solace) {
+        if (!sliceState.solace.byChainId[chainId]) {
+          sliceState.solace.byChainId[chainId] = true;
         }
       }
     });

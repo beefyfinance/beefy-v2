@@ -1,15 +1,23 @@
 [
   {
-    "id": "bsc vault: ellipsis-usdd2pool",
+    "id": "polygon vault: quick-wbtc-cxbtc",
     "type": "Added"
   },
   {
-    "id": "bsc vault: banana-usdt-busd",
+    "id": "polygon vault: quick-weth-tel",
     "type": "Added"
   },
   {
-    "id": "bsc vault: ellipsis-usdd",
-    "type": "synced"
+    "id": "polygon vault: quick-usdc-tel",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-weth-wglmr",
+    "type": "Added"
+  },
+  {
+    "id": "moonbeam vault: stellaswap-usdcmad-wglmr",
+    "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",

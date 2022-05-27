@@ -17,6 +17,7 @@ import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles as any);
 
@@ -81,7 +82,7 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
           !isWalletOnVaultChain ? (
             <Button
               onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
-              className={classes.button}
+              className={clsx(classes.button, classes.diffBG)}
               fullWidth={true}
               disabled={isStepping}
             >

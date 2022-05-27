@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   header: {
     alignItems: 'center',
     backgroundColor: theme.palette.background.default,
@@ -16,7 +18,7 @@ export const styles = theme => ({
   },
   subtitle: {
     color: theme.palette.text.disabled,
-    textTransform: 'uppercase',
+    textTransform: 'uppercase' as const,
     fontWeight: 600,
   },
   content: {
@@ -31,7 +33,7 @@ export const styles = theme => ({
     padding: '12px 24px',
     borderRadius: '8px',
     backgroundColor: theme.palette.background.default,
-    textTransform: 'none',
+    textTransform: 'none' as const,
     width: '100%',
   },
   link: {
