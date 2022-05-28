@@ -114,7 +114,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
 
   return (
     <>
-      {txData?.msg === 'Success' && (
+      {txData?.status === 10 && (
         <Box className={classes.succesContainer}>
           <Typography variant="body1" className={classes.textSuccess}>
             {t('Transactn-Bridge', {
@@ -170,8 +170,8 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
           </Box>
           {steps.finished && walletActionsState.result === 'success' && (
             <Box className={classes.chainStatusContainer}>
-              {txData?.msg !== 'Success' && <CircularProgress size={20} />}
-              {txData?.msg === 'Success' && (
+              {txData?.status !== 10 && <CircularProgress size={20} />}
+              {txData?.status === 10 && (
                 <img
                   style={{ height: '16px' }}
                   alt="check"
@@ -179,8 +179,8 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
                 />
               )}
               <Typography className={classes.statusText} variant="body1">
-                {txData?.msg !== 'Success' && t('Pending')}
-                {txData?.msg === 'Success' && t('Success')}
+                {txData?.status !== 10 && t('Pending')}
+                {txData?.status === 10 && t('Success')}
               </Typography>
             </Box>
           )}

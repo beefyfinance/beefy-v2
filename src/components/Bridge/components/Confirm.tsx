@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllowanceAction } from '../../../features/data/actions/allowance';
 import { walletActions } from '../../../features/data/actions/wallet-actions';
-import { DestChainEntity } from '../../../features/data/apis/bridge/bridge-types';
 import { isTokenErc20 } from '../../../features/data/entities/token';
 import { selectAllowanceByTokenAddress } from '../../../features/data/selectors/allowances';
+import { selectBifiDestChainData } from '../../../features/data/selectors/bridge';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
 import {
@@ -49,9 +49,9 @@ function _Confirm({
     selectChainById(state, formState.destChainId)
   );
 
-  const destChainData: DestChainEntity = Object.values(
-    formState.destChainInfo.destChains[destChain.networkChainId]
-  )[0];
+  const destChainData = useSelector((state: BeefyState) =>
+    selectBifiDestChainData(state, destChain.networkChainId)
+  );
 
   const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
 

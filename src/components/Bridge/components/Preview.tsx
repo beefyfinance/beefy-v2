@@ -21,7 +21,7 @@ import { selectIsAddressBookLoaded } from '../../../features/data/selectors/data
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import BigNumber from 'bignumber.js';
 import { fetchBridgeChainData } from '../../../features/data/actions/bridge';
-import { DestChainEntity } from '../../../features/data/apis/bridge/bridge-types';
+import { selectBifiDestChainData } from '../../../features/data/selectors/bridge';
 
 const useStyles = makeStyles(styles);
 
@@ -62,21 +62,24 @@ function _Preview({
       : new BigNumber(BIG_ZERO)
   );
 
-  const destChainData: DestChainEntity = Object.values(
-    formState.destChainInfo.destChains[destChain.networkChainId]
-  )[0];
+  const destChainData = useSelector((state: BeefyState) =>
+    selectBifiDestChainData(state, destChain.networkChainId)
+  );
 
-  const minAmount = new BigNumber(destChainData.MinimumSwap);
+  const minAmount = destChainData
+    ? new BigNumber(destChainData.MinimumSwap)
+    : new BigNumber(BIG_ZERO);
 
   const aproxAmount =
-    formState.amount.gt(BIG_ZERO) && formState.amount.gte(minAmount)
+    formState.amount.gt(BIG_ZERO) && formState.amount.gte(minAmount) && destChainData
       ? formState.amount.minus(new BigNumber(destChainData.MinimumSwapFee)).toFixed(4)
       : new BigNumber(BIG_ZERO).toFixed(2);
 
   const isDisabled =
     formState.amount.isLessThanOrEqualTo(BIG_ZERO) ||
     formState.amount.isLessThanOrEqualTo(minAmount) ||
-    !formDataLoaded;
+    !formDataLoaded ||
+    destChainData;
 
   const chains = useSelector(selectAllChains);
   const [chainList, destChainsList] = useMemo(() => {

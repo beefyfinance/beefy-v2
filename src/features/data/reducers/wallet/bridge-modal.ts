@@ -95,7 +95,15 @@ export const bridgeModalSlice = createSlice({
 
     setFromChain(sliceState, action: PayloadAction<{ chainId: string }>) {
       const { chainId } = action.payload;
-      sliceState.fromChainId = chainId;
+
+      if (chainId === sliceState.destChainId) {
+        const oldFromChain = sliceState.fromChainId;
+        console.log(oldFromChain);
+        sliceState.fromChainId = chainId;
+        sliceState.destChainId = oldFromChain;
+      } else {
+        sliceState.fromChainId = chainId;
+      }
     },
 
     setDestChain(

@@ -8,6 +8,7 @@ import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import ContentLoader from 'react-content-loader';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { DestChainEntity } from '../../../features/data/apis/bridge/bridge-types';
+import { selectBifiDestChainData } from '../../../features/data/selectors/bridge';
 
 const useStyles = makeStyles(styles);
 
@@ -25,13 +26,13 @@ function _FeesInfo() {
     selectChainById(state, formState.destChainId)
   );
 
-  const destChainData: DestChainEntity = Object.values(
-    formState.destChainInfo.destChains[destChain.networkChainId]
-  )[0];
+  const destChainData = useSelector((state: BeefyState) =>
+    selectBifiDestChainData(state, destChain.networkChainId)
+  );
 
   return (
     <Box className={classes.fees}>
-      {isBridgeDataLoaded ? (
+      {isBridgeDataLoaded && destChainData ? (
         <>
           <Box className={classes.feesContent}>
             {/*Crosschain */}
