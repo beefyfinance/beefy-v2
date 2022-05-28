@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import ContentLoader from 'react-content-loader';
 import { selectChainById } from '../../../features/data/selectors/chains';
-import { DestChainEntity } from '../../../features/data/apis/bridge/bridge-types';
 import { selectBifiDestChainData } from '../../../features/data/selectors/bridge';
 
 const useStyles = makeStyles(styles);
