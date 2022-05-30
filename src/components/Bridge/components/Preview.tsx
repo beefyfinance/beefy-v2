@@ -57,7 +57,7 @@ function _Preview({
   );
 
   const bifiBalance = useSelector((state: BeefyState) =>
-    isWalletConnected
+    isWalletConnected && formDataLoaded
       ? selectUserBalanceOfToken(state, formState.fromChainId, formState.destChainInfo.address)
       : new BigNumber(BIG_ZERO)
   );
@@ -79,7 +79,7 @@ function _Preview({
     formState.amount.isLessThanOrEqualTo(BIG_ZERO) ||
     formState.amount.isLessThanOrEqualTo(minAmount) ||
     !formDataLoaded ||
-    destChainData;
+    !destChainData;
 
   const chains = useSelector(selectAllChains);
   const [chainList, destChainsList] = useMemo(() => {
