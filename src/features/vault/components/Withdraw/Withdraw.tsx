@@ -453,7 +453,15 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             </Button>
           </Paper>
         </Box>
-
+        {vault.id === 'scream-tusd' && (
+          <Box mt={3}>
+            <AlertWarning>
+              {t(
+                'There is no liquidity in the underlying protocol to withdraw, withdraws will be activated once more liquidity is available.'
+              )}
+            </AlertWarning>
+          </Box>
+        )}
         <FeeBreakdown
           vault={vault}
           slippageTolerance={formState.slippageTolerance}
@@ -462,15 +470,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           isZap={formState.isZap}
           type={'withdraw'}
         />
-        {vault.id === 'scream-tusd' && (
-          <Box mt={3}>
-            <AlertWarning>
-              {t(
-                'There is no liquidity to withdraw, withdraws will be activated once more liquidity is available.'
-              )}
-            </AlertWarning>
-          </Box>
-        )}
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
           {isWalletConnected ? (
