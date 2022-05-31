@@ -14,6 +14,8 @@ import { selectBifiDestChainData } from '../../selectors/bridge';
 import { selectChainById } from '../../selectors/chains';
 import { selectTokenByAddress } from '../../selectors/tokens';
 
+type statusType = 'idle' | 'loading' | 'confirming' | 'success';
+
 export type BridgeModalState = {
   fromChainId: ChainEntity['id'];
   destChainId: ChainEntity['id'];
@@ -22,7 +24,7 @@ export type BridgeModalState = {
   formattedInput: string;
   formattedOutput: string;
   destChainInfo: BridgeInfoEntity | null;
-  status: 'idle' | 'loading' | 'success';
+  status: statusType;
 };
 
 const initialBridgeModalState: BridgeModalState = {
@@ -72,7 +74,7 @@ export const bridgeModalSlice = createSlice({
           const fee = balance.times(destChainData.SwapFeeRatePerMillion);
 
           let outputValue = balance.minus(fee);
-          if (fee.gt(minFee)) {
+          if (fee.lt(minFee)) {
             outputValue = balance.minus(minFee);
           } else if (fee.gt(new BigNumber(destChainData.MaximumSwapFee))) {
             outputValue = balance.minus(new BigNumber(destChainData.MaximumSwapFee));
@@ -145,7 +147,7 @@ export const bridgeModalSlice = createSlice({
           const baseFee = destChainData.BaseFeePercent ? minFee : new BigNumber(BIG_ZERO);
           const fee = value.times(new BigNumber(destChainData.SwapFeeRatePerMillion));
           let outputValue = value.minus(fee);
-          if (fee.gt(minFee)) {
+          if (fee.lt(minFee)) {
             outputValue = value.minus(minFee);
           } else if (fee.gt(new BigNumber(destChainData.MaximumSwapFee))) {
             outputValue = value.minus(new BigNumber(destChainData.MaximumSwapFee));
@@ -190,7 +192,7 @@ export const bridgeModalSlice = createSlice({
       sliceState.destChainId = destChainId;
     },
 
-    setStatus(sliceState, action: PayloadAction<{ status: 'idle' | 'loading' | 'success' }>) {
+    setStatus(sliceState, action: PayloadAction<{ status: statusType }>) {
       const { status } = action.payload;
 
       sliceState.status = status;

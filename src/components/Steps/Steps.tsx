@@ -30,6 +30,9 @@ const _Steps = ({
   const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
   const bridgeModalState = useSelector((state: BeefyState) => state.ui.bridgeModal);
 
+  const needShowPendingInBridge =
+    bridgeModalState.status === 'loading' || bridgeModalState.status === 'confirming';
+
   return (
     <Snackbar
       key={steps.currentStep}
@@ -48,21 +51,26 @@ const _Steps = ({
                 !steps.finished &&
                 steps.items[steps.currentStep].step === 'approve',
               [classes.progressBar50]:
-                steps.items.length > 1 &&
-                !steps.finished &&
-                (steps.items[steps.currentStep].step === 'withdraw' ||
-                  steps.items[steps.currentStep].step === 'claim-withdraw' ||
-                  steps.items[steps.currentStep].step === 'deposit'),
+                bridgeModalState.status === 'loading' ||
+                (steps.items.length > 1 &&
+                  !steps.finished &&
+                  (steps.items[steps.currentStep].step === 'withdraw' ||
+                    steps.items[steps.currentStep].step === 'claim-withdraw' ||
+                    steps.items[steps.currentStep].step === 'deposit')),
               [classes.progressBar75]:
-                steps.items.length > 1 &&
-                !steps.finished &&
-                (steps.items[steps.currentStep].step === 'withdraw' ||
-                  steps.items[steps.currentStep].step === 'claim-withdraw' ||
-                  steps.items[steps.currentStep].step === 'deposit') &&
-                walletActionsState.result === 'success_pending',
+                bridgeModalState.status === 'confirming' ||
+                (steps.items.length > 1 &&
+                  !steps.finished &&
+                  (steps.items[steps.currentStep].step === 'withdraw' ||
+                    steps.items[steps.currentStep].step === 'claim-withdraw' ||
+                    steps.items[steps.currentStep].step === 'deposit') &&
+                  walletActionsState.result === 'success_pending' &&
+                  steps.items[steps.currentStep].step !== 'bridge'),
               [classes.errorBar]: walletActionsState.result === 'error',
               [classes.confirmationBar]: walletActionsState.result === 'success_pending',
-              [classes.successBar]: steps.finished,
+              [classes.successBar]:
+                bridgeModalState.status === 'success' ||
+                (steps.finished && steps.items[steps.currentStep].step !== 'bridge'),
             })}
           />
         </Box>
@@ -81,8 +89,8 @@ const _Steps = ({
                 </>
               )}
               {/* Waiting  */}
-              {((!steps.finished && walletActionsState.result === 'success_pending') ||
-                bridgeModalState.status === 'loading') &&
+              {(needShowPendingInBridge ||
+                (!steps.finished && walletActionsState.result === 'success_pending')) &&
                 t('Transactn-ConfirmPending')}
               {/* Transactions  */}
               {!steps.finished &&
@@ -122,8 +130,8 @@ const _Steps = ({
               </Typography>
             )}
           {/* Waiting Content */}
-          {((!steps.finished && walletActionsState.result === 'success_pending') ||
-            bridgeModalState.status === 'loading') && (
+          {(needShowPendingInBridge ||
+            (!steps.finished && walletActionsState.result === 'success_pending')) && (
             <Typography variant={'body2'} className={classes.message}>
               {t('Transactn-Wait')}
             </Typography>
@@ -272,9 +280,17 @@ const _Steps = ({
                     </Box>
                   </>
                 )}
-              <Button className={classes.closeBtn} onClick={handleClose}>
-                {t('Transactn-Close')}
-              </Button>
+              {steps.items[steps.currentStep].step === 'bridge' ? (
+                bridgeModalState.status === 'success' ? (
+                  <Button className={classes.closeBtn} onClick={handleClose}>
+                    {t('Transactn-Close')}
+                  </Button>
+                ) : null
+              ) : (
+                <Button className={classes.closeBtn} onClick={handleClose}>
+                  {t('Transactn-Close')}
+                </Button>
+              )}
             </>
           )}
         </Box>

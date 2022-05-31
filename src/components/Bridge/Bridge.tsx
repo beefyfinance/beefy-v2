@@ -54,7 +54,11 @@ export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassna
           </Button>
           <BridgeModal open={openBridgeModal} handleClose={handleClose} />
         </>
-      ) : null}
+      ) : (
+        <Button className={buttonClassname} size="small" disabled={true}>
+          <ApyStatLoader />
+        </Button>
+      )}
     </Suspense>
   );
 });
