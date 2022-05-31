@@ -54,9 +54,10 @@ export const initiateBridgeForm = createAsyncThunk<
   InitBridgeFormParams,
   { state: BeefyState }
 >('bridge/initiateBridgeForm', async ({ walletAddress }, { getState }) => {
-  const chainId = selectCurrentChainId(getState());
-  const chain = selectChainById(getState(), chainId ?? 'bsc');
-  const destChain = selectChainById(getState(), chain.id === 'bsc' ? 'fantom' : 'bsc');
+  const state = getState();
+  const chainId = selectCurrentChainId(state);
+  const chain = selectChainById(state, chainId ?? 'bsc');
+  const destChain = selectChainById(state, chain.id === 'bsc' ? 'fantom' : 'bsc');
   const balanceApi = await getBalanceApi(chain);
   const allowanceApi = await getAllowanceApi(chain);
   const bridgeApi = await getBridgeApi();
@@ -69,16 +70,16 @@ export const initiateBridgeForm = createAsyncThunk<
 
   const spenderAddress = spenderInfo.DepositAddress ?? spenderInfo.routerToken;
 
-  const depositToken = selectTokenByAddress(getState(), chain.id, bridgeDataRes.address);
+  const depositToken = selectTokenByAddress(state, chain.id, bridgeDataRes.address);
 
   const balanceRes: FetchAllBalancesResult = walletAddress
-    ? await balanceApi.fetchAllBalances(getState(), [depositToken], [], [], walletAddress)
+    ? await balanceApi.fetchAllBalances(state, [depositToken], [], [], walletAddress)
     : { tokens: [], govVaults: [], boosts: [] };
 
   const allowanceRes =
     walletAddress && spenderAddress && isTokenErc20(depositToken)
       ? await allowanceApi.fetchTokensAllowance(
-          getState(),
+          state,
           [depositToken],
           walletAddress,
           spenderAddress
@@ -92,6 +93,6 @@ export const initiateBridgeForm = createAsyncThunk<
     allowance: allowanceRes,
     balance: balanceRes,
     destChainInfo: bridgeDataRes,
-    state: getState(),
+    state: state,
   };
 });

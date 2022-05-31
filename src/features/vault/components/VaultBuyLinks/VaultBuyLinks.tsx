@@ -1,4 +1,3 @@
-import { useCallback, useState } from 'react';
 import { Box, Button, makeStyles } from '@material-ui/core';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { useTranslation } from 'react-i18next';
@@ -14,16 +13,6 @@ const useStyles = makeStyles(styles as any);
 
 export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-
-  const [openBridgeModal, setOpenBridgeModal] = useState<boolean>(false);
-
-  const handleClose = useCallback(() => {
-    setOpenBridgeModal(false);
-  }, []);
-
-  const handleOpen = useCallback(() => {
-    setOpenBridgeModal(true);
-  }, []);
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -65,17 +54,12 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
         )}
         {vault.assetIds.includes('BIFI') && (
           <>
-            <Button
-              className={clsx({
+            <Bridge
+              buttonClassname={clsx({
                 [classes.btnSecondary1]: true,
                 [classes.marginButton]: vault.addLiquidityUrl && vault.buyTokenUrl,
               })}
-              onClick={handleOpen}
-              size="small"
-            >
-              {t('Transact-Bridge')}
-            </Button>
-            <Bridge open={openBridgeModal} handleClose={handleClose} />
+            />
           </>
         )}
       </>

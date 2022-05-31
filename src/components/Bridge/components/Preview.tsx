@@ -70,14 +70,9 @@ function _Preview({
     ? new BigNumber(destChainData.MinimumSwap)
     : new BigNumber(BIG_ZERO);
 
-  const aproxAmount =
-    formState.amount.gt(BIG_ZERO) && formState.amount.gte(minAmount) && destChainData
-      ? formState.amount.minus(new BigNumber(destChainData.MinimumSwapFee)).toFixed(4)
-      : new BigNumber(BIG_ZERO).toFixed(2);
-
   const isDisabled =
-    formState.amount.isLessThanOrEqualTo(BIG_ZERO) ||
-    formState.amount.isLessThanOrEqualTo(minAmount) ||
+    formState.amount.lte(BIG_ZERO) ||
+    formState.amount.lt(minAmount) ||
     !formDataLoaded ||
     !destChainData;
 
@@ -126,7 +121,7 @@ function _Preview({
     dispatch(
       bridgeModalActions.setInput({
         amount: amountStr,
-        chainId: currentChainId,
+        chainId: formState.fromChainId,
         tokenAddress: formState.destChainInfo.address,
         state: store.getState(),
       })
@@ -136,7 +131,7 @@ function _Preview({
   const handleMax = () => {
     dispatch(
       bridgeModalActions.setMax({
-        chainId: currentChainId,
+        chainId: formState.fromChainId,
         tokenAddress: formState.destChainInfo.address,
         state: store.getState(),
       })
@@ -219,7 +214,7 @@ function _Preview({
               <Box className={classes.inputLogo}>
                 <AssetsImage chainId={'56'} assetIds={['BIFI']} size={20} />
               </Box>
-              <InputBase placeholder="0.00" value={aproxAmount} disabled={true} />
+              <InputBase placeholder="0.00" value={formState.formattedOutput} disabled={true} />
             </Paper>
           </Box>
         </Box>

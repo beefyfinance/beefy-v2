@@ -1,10 +1,10 @@
 import { CardContent, Box, Typography, Button, makeStyles } from '@material-ui/core';
-import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllowanceAction } from '../../../features/data/actions/allowance';
+import { askForNetworkChange, askForWalletConnection } from '../../../features/data/actions/wallet';
 import { walletActions } from '../../../features/data/actions/wallet-actions';
 import { isTokenErc20 } from '../../../features/data/entities/token';
 import { selectAllowanceByTokenAddress } from '../../../features/data/selectors/allowances';
@@ -13,6 +13,7 @@ import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
 import {
   selectCurrentChainId,
+  selectIsWalletConnected,
   selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../features/data/selectors/wallet';
@@ -43,7 +44,13 @@ function _Confirm({
 
   const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
 
-  const chain = useSelector((state: BeefyState) => selectChainById(state, currentChainId));
+  const isWalletOnFromChain = currentChainId === formState.fromChainId;
+
+  const isWalletConnected = useSelector(selectIsWalletConnected);
+
+  const fromChain = useSelector((state: BeefyState) =>
+    selectChainById(state, formState.fromChainId)
+  );
 
   const destChain = useSelector((state: BeefyState) =>
     selectChainById(state, formState.destChainId)
@@ -56,7 +63,7 @@ function _Confirm({
   const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
 
   const depositedToken = useSelector((state: BeefyState) =>
-    selectTokenByAddress(state, currentChainId, formState.destChainInfo.address)
+    selectTokenByAddress(state, formState.fromChainId, formState.destChainInfo.address)
   );
 
   React.useEffect(() => {
@@ -71,8 +78,6 @@ function _Confirm({
       );
     }
   }, [depositedToken, dispatch, formState.fromChainId, routerAddress]);
-
-  const destAmount = formState.amount.minus(new BigNumber(destChainData.MinimumSwapFee)).toFixed(4);
 
   const depositTokenAllowance = useSelector((state: BeefyState) =>
     selectAllowanceByTokenAddress(
@@ -109,7 +114,7 @@ function _Confirm({
       step: 'bridge',
       message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
       action: walletActions.bridge(
-        currentChainId,
+        formState.fromChainId,
         formState.destChainId,
         routerAddress,
         formState.amount,
@@ -120,6 +125,11 @@ function _Confirm({
 
     handleModal();
     startStepper(steps);
+  };
+
+  const handleConnectWallet = () => {
+    handleModal();
+    dispatch(askForWalletConnection());
   };
 
   return (
@@ -138,10 +148,10 @@ function _Confirm({
             <img
               className={classes.icon}
               alt=""
-              src={require(`../../../images/networks/${currentChainId}.svg`).default}
+              src={require(`../../../images/networks/${formState.fromChainId}.svg`).default}
             />
             <Typography className={classes.chainName} variant="body1">
-              {chain.name}
+              {fromChain.name}
             </Typography>
           </Box>
           <Typography className={classes.bridgedValue} variant="body1">
@@ -177,7 +187,7 @@ function _Confirm({
             </Typography>
           </Box>
           <Typography className={classes.bridgedValue} variant="body1">
-            + {destAmount} BIFI
+            + {formState.formattedOutput} BIFI
           </Typography>
         </Box>
         <Box>
@@ -210,9 +220,25 @@ function _Confirm({
           3 - 30 min
         </Typography>
       </Box>
-      <Button onClick={handleDeposit} disabled={isStepping} className={classes.btn}>
-        {t('Confirm')}
-      </Button>
+
+      {isWalletConnected ? (
+        isWalletOnFromChain ? (
+          <Button onClick={handleDeposit} disabled={isStepping} className={classes.btn}>
+            {t('Confirm')}
+          </Button>
+        ) : (
+          <Button
+            onClick={() => dispatch(askForNetworkChange({ chainId: formState.fromChainId }))}
+            className={classes.btn}
+          >
+            {t('Network-Change', { network: fromChain.name })}
+          </Button>
+        )
+      ) : (
+        <Button onClick={handleConnectWallet} className={classes.btn}>
+          {t('Network-ConnectWallet')}
+        </Button>
+      )}
     </CardContent>
   );
 }

@@ -1,107 +1,60 @@
-import { Modal, Box, Typography, Paper } from '@material-ui/core';
-import React from 'react';
-import { CardHeader } from '../../features/vault/components/Card/CardHeader';
-import { CardTitle } from '../../features/vault/components/Card/CardTitle';
+import { Button } from '@material-ui/core';
+import React, { memo, Suspense, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CloseIcon from '@material-ui/icons/Close';
-import { styles } from './styles';
-import { makeStyles } from '@material-ui/styles';
-import { Preview } from './components/Preview';
-import { Confirm } from './components/Confirm';
 import { useSelector, useStore } from 'react-redux';
-import {
-  selectCurrentChainId,
-  selectIsWalletKnown,
-  selectWalletAddress,
-} from '../../features/data/selectors/wallet';
-import { BeefyState } from '../../redux-types';
-import { useStepper } from '../Steps/hooks';
 import { initBridgeForm } from '../../features/data/actions/scenarios';
+import { isFulfilled } from '../../features/data/reducers/data-loader';
+import { bridgeModalActions } from '../../features/data/reducers/wallet/bridge-modal';
+import { selectIsAddressBookLoaded } from '../../features/data/selectors/data-loader';
+import { selectIsWalletKnown, selectWalletAddress } from '../../features/data/selectors/wallet';
+import { BeefyState } from '../../redux-types';
+import { ApyStatLoader } from '../ApyStatLoader';
+import { BridgeModal } from './BridgeModal';
 
-const useStyles = makeStyles(styles);
-
-function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void }) {
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    boxShadow: 24,
-    width: '400px',
-    height: '620px',
-  };
-
-  const [previewConfirm, setPreviewConfirm] = React.useState('preview');
-
+export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassname: string }) {
+  const { t } = useTranslation();
   const walletAddress = useSelector((state: BeefyState) =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
-  const { t } = useTranslation();
-  const classes = useStyles();
+  const [openBridgeModal, setOpenBridgeModal] = useState<boolean>(false);
 
-  const handleModal = () => {
-    handleClose();
-    setPreviewConfirm('preview');
-  };
+  const handleClose = useCallback(() => {
+    setOpenBridgeModal(false);
+  }, []);
+
+  const handleOpen = useCallback(() => {
+    setOpenBridgeModal(true);
+  }, []);
+
+  const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
+
+  const isFormDataLoaded = useSelector(
+    (state: BeefyState) =>
+      selectIsAddressBookLoaded(state, formState.fromChainId) &&
+      isFulfilled(state.ui.dataLoader.global.bridgeForm)
+  );
 
   const store = useStore();
-  React.useEffect(() => {
+  useEffect(() => {
     //Init from on mount
     initBridgeForm(store, walletAddress);
+
+    return () => {
+      store.dispatch(bridgeModalActions.resetForm());
+    };
   }, [store, walletAddress]);
 
-  const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
-
-  const [startStepper, isStepping, Stepper] = useStepper(currentChainId);
-
   return (
-    <>
-      <Modal
-        aria-labelledby="bridge-modal-title"
-        aria-describedby="bridge-modal-description"
-        open={open}
-        onClose={handleModal}
-        BackdropProps={{ className: classes.backdrop }}
-      >
-        <Box sx={style}>
-          <Paper className={classes.container}>
-            <CardHeader className={classes.header}>
-              <Box>
-                {previewConfirm === 'preview' ? (
-                  <>
-                    <CardTitle titleClassName={classes.title} title={t('Bridge-Title')} />
-                    <Typography className={classes.powerBy} variant="body2">
-                      {t('Bridge-PowerBy')}
-                    </Typography>
-                  </>
-                ) : (
-                  <CardTitle titleClassName={classes.title} title={t('Bridge-Title-Confirm')} />
-                )}
-              </Box>
-
-              <CloseIcon onClick={handleModal} htmlColor="#8A8EA8" />
-            </CardHeader>
-            <>
-              {previewConfirm === 'preview' ? (
-                <Preview
-                  handleModal={handleModal}
-                  handlePreview={() => setPreviewConfirm('confirm')}
-                />
-              ) : (
-                <Confirm
-                  handleModal={handleModal}
-                  startStepper={startStepper}
-                  isStepping={isStepping}
-                />
-              )}
-            </>
-          </Paper>
-        </Box>
-      </Modal>
-      <Stepper />
-    </>
+    <Suspense fallback={<ApyStatLoader />}>
+      {isFormDataLoaded ? (
+        <>
+          <Button className={buttonClassname} onClick={handleOpen} size="small">
+            {t('Transact-Bridge')}
+          </Button>
+          <BridgeModal open={openBridgeModal} handleClose={handleClose} />
+        </>
+      ) : null}
+    </Suspense>
   );
-}
-
-export const Bridge = React.memo(_Bridge);
+});
