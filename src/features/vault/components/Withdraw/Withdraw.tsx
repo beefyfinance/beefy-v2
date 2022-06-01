@@ -521,7 +521,11 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     onClick={handleWithdraw}
                     className={classes.btnSubmit}
                     fullWidth={true}
-                    disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
+                    disabled={
+                      vault.id === 'scream-tusd' ||
+                      formState.amount.isLessThanOrEqualTo(0) ||
+                      !formReady
+                    }
                   >
                     {isZapEstimateLoading
                       ? t('Zap-Estimating')
