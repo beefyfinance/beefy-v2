@@ -97,13 +97,12 @@ function _Preview({
   };
 
   const handleNetwork = chainId => {
+    dispatch(fetchBridgeChainData({ chainId: chainId }));
     dispatch(
       bridgeModalActions.setFromChain({
         chainId: chainId,
       })
     );
-
-    dispatch(fetchBridgeChainData({ chainId: chainId }));
   };
 
   const handleDestChain = destChainId => {
