@@ -823,6 +823,7 @@ function captureWalletErrors<ReturnType>(
     try {
       return await func(dispatch, getState, extraArgument);
     } catch (error) {
+      console.error(error);
       const txError =
         error instanceof FriendlyError
           ? { message: String(error.getInnerError()), friendlyMessage: error.message }
@@ -880,6 +881,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
       }
     })
     .on('error', function (error: TrxError) {
+      console.error(error);
       dispatch(createWalletActionErrorAction(error, additionalData));
     })
     .catch(error => {
