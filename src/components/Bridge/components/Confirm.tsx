@@ -63,7 +63,7 @@ function _Confirm({
   const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
 
   const depositedToken = useSelector((state: BeefyState) =>
-    selectTokenByAddress(state, formState.fromChainId, formState.destChainInfo.address)
+    selectTokenByAddress(state, formState.fromChainId, formState.bridgeFromData.address)
   );
 
   React.useEffect(() => {
@@ -83,7 +83,7 @@ function _Confirm({
     selectAllowanceByTokenAddress(
       state,
       formState.fromChainId,
-      formState.destChainInfo.address,
+      formState.bridgeFromData.address,
       routerAddress
     )
   );

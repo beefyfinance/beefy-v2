@@ -23,7 +23,7 @@ export type BridgeModalState = {
   amount: BigNumber;
   formattedInput: string;
   formattedOutput: string;
-  destChainInfo: BridgeInfoEntity | null;
+  bridgeFromData: BridgeInfoEntity | null;
   status: statusType;
 };
 
@@ -34,7 +34,7 @@ const initialBridgeModalState: BridgeModalState = {
   formattedInput: '',
   formattedOutput: '',
   max: false,
-  destChainInfo: null,
+  bridgeFromData: null,
   status: 'idle',
 };
 
@@ -171,9 +171,11 @@ export const bridgeModalSlice = createSlice({
     setFromChain(sliceState, action: PayloadAction<{ chainId: string }>) {
       const { chainId } = action.payload;
 
+      sliceState.amount = new BigNumber(BIG_ZERO);
+      sliceState.formattedInput = '';
+      sliceState.formattedOutput = '';
       if (chainId === sliceState.destChainId) {
         const oldFromChain = sliceState.fromChainId;
-        console.log(oldFromChain);
         sliceState.fromChainId = chainId;
         sliceState.destChainId = oldFromChain;
       } else {
@@ -206,10 +208,10 @@ export const bridgeModalSlice = createSlice({
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
       sliceState.max = false;
-      sliceState.destChainInfo = action.payload.destChainInfo;
+      sliceState.bridgeFromData = action.payload.bridgeFromData;
     });
     builder.addCase(fetchBridgeChainData.fulfilled, (sliceState, action) => {
-      sliceState.destChainInfo = action.payload.destChainInfo;
+      sliceState.bridgeFromData = action.payload.bridgeFromData;
     });
   },
 });

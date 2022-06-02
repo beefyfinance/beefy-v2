@@ -17,7 +17,6 @@ import {
 import { BIG_ZERO, formatBigDecimals } from '../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../features/data/actions/wallet';
 import { bridgeModalActions } from '../../../features/data/reducers/wallet/bridge-modal';
-import { selectIsAddressBookLoaded } from '../../../features/data/selectors/data-loader';
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import BigNumber from 'bignumber.js';
 import { fetchBridgeChainData } from '../../../features/data/actions/bridge';
@@ -50,15 +49,13 @@ function _Preview({
     selectChainById(state, formState.destChainId)
   );
 
-  const formDataLoaded = useSelector(
-    (state: BeefyState) =>
-      selectIsAddressBookLoaded(state, currentChainId) &&
-      isFulfilled(state.ui.dataLoader.global.bridgeForm)
+  const formDataLoaded = useSelector((state: BeefyState) =>
+    isFulfilled(state.ui.dataLoader.global.bridgeForm)
   );
 
   const bifiBalance = useSelector((state: BeefyState) =>
     isWalletConnected && formDataLoaded
-      ? selectUserBalanceOfToken(state, formState.fromChainId, formState.destChainInfo.address)
+      ? selectUserBalanceOfToken(state, formState.fromChainId, formState.bridgeFromData.address)
       : new BigNumber(BIG_ZERO)
   );
 
@@ -122,7 +119,7 @@ function _Preview({
       bridgeModalActions.setInput({
         amount: amountStr,
         chainId: formState.fromChainId,
-        tokenAddress: formState.destChainInfo.address,
+        tokenAddress: formState.bridgeFromData.address,
         state: store.getState(),
       })
     );
@@ -132,7 +129,7 @@ function _Preview({
     dispatch(
       bridgeModalActions.setMax({
         chainId: formState.fromChainId,
-        tokenAddress: formState.destChainInfo.address,
+        tokenAddress: formState.bridgeFromData.address,
         state: store.getState(),
       })
     );
@@ -187,7 +184,12 @@ function _Preview({
       </Box>
       <Box className={classes.customDivider}>
         <Box className={classes.line} />
-        <img alt="arrowDown" src={require('../../../images/arrowDown.svg').default} />
+        <img
+          className={classes.cross}
+          onClick={() => handleNetwork(formState.destChainId)}
+          alt="arrowDown"
+          src={require('../../../images/arrowDown.svg').default}
+        />
         <Box className={classes.line} />
       </Box>
       {/* To */}

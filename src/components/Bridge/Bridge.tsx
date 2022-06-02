@@ -1,14 +1,13 @@
 import { Button } from '@material-ui/core';
 import React, { memo, Suspense, useCallback, useEffect, useState } from 'react';
+import ContentLoader from 'react-content-loader';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useStore } from 'react-redux';
 import { initBridgeForm } from '../../features/data/actions/scenarios';
 import { isFulfilled } from '../../features/data/reducers/data-loader';
 import { bridgeModalActions } from '../../features/data/reducers/wallet/bridge-modal';
-import { selectIsAddressBookLoaded } from '../../features/data/selectors/data-loader';
 import { selectIsWalletKnown, selectWalletAddress } from '../../features/data/selectors/wallet';
 import { BeefyState } from '../../redux-types';
-import { ApyStatLoader } from '../ApyStatLoader';
 import { BridgeModal } from './BridgeModal';
 
 export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassname: string }) {
@@ -27,12 +26,8 @@ export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassna
     setOpenBridgeModal(true);
   }, []);
 
-  const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
-
-  const isFormDataLoaded = useSelector(
-    (state: BeefyState) =>
-      selectIsAddressBookLoaded(state, formState.fromChainId) &&
-      isFulfilled(state.ui.dataLoader.global.bridgeForm)
+  const isFormDataLoaded = useSelector((state: BeefyState) =>
+    isFulfilled(state.ui.dataLoader.global.bridgeForm)
   );
 
   const store = useStore();
@@ -46,7 +41,7 @@ export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassna
   }, [store, walletAddress]);
 
   return (
-    <Suspense fallback={<ApyStatLoader />}>
+    <Suspense fallback={<ButtonLoader />}>
       {isFormDataLoaded ? (
         <>
           <Button className={buttonClassname} onClick={handleOpen} size="small">
@@ -56,9 +51,23 @@ export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassna
         </>
       ) : (
         <Button className={buttonClassname} size="small" disabled={true}>
-          <ApyStatLoader />
+          <ButtonLoader />
         </Button>
       )}
     </Suspense>
   );
 });
+
+export const ButtonLoader = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
+  return (
+    <ContentLoader
+      width={64}
+      height={16}
+      viewBox="0 0 64 16"
+      backgroundColor="#313759"
+      foregroundColor="'#8585A6'"
+    >
+      <rect x="0" y="0" width="64" height="16" />
+    </ContentLoader>
+  );
+};

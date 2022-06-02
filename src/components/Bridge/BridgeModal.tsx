@@ -16,16 +16,6 @@ import { useStepper } from '../Steps/hooks';
 const useStyles = makeStyles(styles);
 
 function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void }) {
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    boxShadow: 24,
-    width: '400px',
-    height: '620px',
-  };
-
   const [previewConfirm, setPreviewConfirm] = React.useState('preview');
 
   const { t } = useTranslation();
@@ -49,7 +39,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
         onClose={handleModal}
         BackdropProps={{ className: classes.backdrop }}
       >
-        <Box sx={style}>
+        <Box className={classes.modal}>
           <Paper className={classes.container}>
             <CardHeader className={classes.header}>
               <Box>
@@ -65,7 +55,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
                 )}
               </Box>
 
-              <CloseIcon onClick={handleModal} htmlColor="#8A8EA8" />
+              <CloseIcon className={classes.cross} onClick={handleModal} htmlColor="#8A8EA8" />
             </CardHeader>
             <>
               {previewConfirm === 'preview' ? (

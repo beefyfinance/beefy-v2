@@ -1,6 +1,15 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
+  modal: {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    boxShadow: '24px',
+    width: '400px',
+    height: '620px',
+  },
   container: {
     borderRadius: '20px',
     '&.MuiPaper-elevation1': {
@@ -200,5 +209,10 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     padding: '8px 12px',
+  },
+  cross: {
+    '&:Hover': {
+      cursor: 'pointer',
+    },
   },
 });
