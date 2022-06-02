@@ -4,7 +4,7 @@ import { CardHeader } from '../../features/vault/components/Card/CardHeader';
 import { CardTitle } from '../../features/vault/components/Card/CardTitle';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@material-ui/icons/Close';
-import { styles } from './styles';
+import { styles, backdropStyle } from './styles';
 import { makeStyles } from '@material-ui/styles';
 import { Preview } from './components/Preview';
 import { Confirm } from './components/Confirm';
@@ -37,7 +37,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
         aria-describedby="bridge-modal-description"
         open={open}
         onClose={handleModal}
-        BackdropProps={{ className: classes.backdrop }}
+        BackdropProps={{ style: { ...backdropStyle } }}
       >
         <Box className={classes.modal}>
           <Paper className={classes.container}>

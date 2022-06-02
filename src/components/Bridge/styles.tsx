@@ -1,5 +1,10 @@
 import { Theme } from '@material-ui/core/styles';
 
+export const backdropStyle = {
+  backgroundColor: 'rgba(255,255,255,0.2)',
+  backdropFilter: 'blur(8px)',
+};
+
 export const styles = (theme: Theme) => ({
   modal: {
     position: 'absolute' as const,
@@ -16,10 +21,7 @@ export const styles = (theme: Theme) => ({
       boxShadow: '0px 0px 32px 0px #0000001A',
     },
   },
-  backdrop: {
-    backgroundColor: 'rgba(255,255,255,0.2) !important',
-    backdropFilter: 'blur(8px)',
-  },
+
   header: {
     display: 'flex',
     alignItems: 'flex-start',
@@ -181,7 +183,7 @@ export const styles = (theme: Theme) => ({
   },
   networkValue: {
     display: 'flex',
-    color: `${theme.palette.text.secondary} !important`,
+    color: `${theme.palette.text.secondary}`,
     fontWeight: 700,
   },
   networkContainer: {
