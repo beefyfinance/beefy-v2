@@ -343,11 +343,18 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
       return;
     }
 
+    console.log('>>>', 'oracleAmount', oracleAmount.toString(10));
+
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
+
+    console.log('>>>', 'depositToken', depositToken);
+
     const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+
+    console.log('>>>', 'mooToken', mooToken);
 
     const ppfs = selectVaultPricePerFullShare(state, vault.id);
     const native = selectChainNativeToken(state, vault.chainId);
@@ -356,7 +363,13 @@ const withdraw = (vault: VaultEntity, oracleAmount: BigNumber, max: boolean) => 
     const contract = new web3.eth.Contract(vaultAbi as any, contractAddr);
 
     const mooAmount = oracleAmountToMooAmount(mooToken, depositToken, ppfs, oracleAmount);
+
+    console.log('>>>', 'mooAmount', mooAmount.toString(10));
+
     const rawAmount = mooAmount.shiftedBy(mooToken.decimals).decimalPlaces(0);
+
+    console.log('>>>', 'rawAmount', rawAmount.toString(10));
+
     const gasPrices = await getGasPriceOptions(web3);
 
     const transaction = (() => {
