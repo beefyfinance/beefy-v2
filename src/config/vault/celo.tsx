@@ -9,7 +9,7 @@ export const pools = [
     tokenDecimals: 18,
     tokenDescriptionUrl:
       'https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance',
-    earnedToken: 'CELO',
+    earnedToken: 'WCELO',
     earnedTokenAddress: '0x471EcE3750Da237f93B8E339c536989b8978a438',
     earnedTokenDecimals: 18,
     earnContractAddress: '0x2D250016E3621CfC50A0ff7e5f6E34bbC6bfE50E',
