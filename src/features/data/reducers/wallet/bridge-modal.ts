@@ -10,7 +10,7 @@ import { fetchBridgeChainData, initiateBridgeForm } from '../../actions/bridge';
 import { BridgeInfoEntity } from '../../apis/bridge/bridge-types';
 import { ChainEntity } from '../../entities/chain';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
-import { selectBifiDestChainData } from '../../selectors/bridge';
+import { selectBridgeBifiDestChainData } from '../../selectors/bridge';
 import { selectChainById } from '../../selectors/chains';
 import { selectTokenByAddress } from '../../selectors/tokens';
 
@@ -23,7 +23,10 @@ export type BridgeModalState = {
   amount: BigNumber;
   formattedInput: string;
   formattedOutput: string;
-  bridgeFromData: BridgeInfoEntity | null;
+  bridgeDataByChainId: {
+    [chainId: ChainEntity['id']]: BridgeInfoEntity;
+  };
+
   status: statusType;
 };
 
@@ -34,7 +37,7 @@ const initialBridgeModalState: BridgeModalState = {
   formattedInput: '',
   formattedOutput: '',
   max: false,
-  bridgeFromData: null,
+  bridgeDataByChainId: {},
   status: 'idle',
 };
 
@@ -60,7 +63,7 @@ export const bridgeModalSlice = createSlice({
 
       const destChain = selectChainById(state, sliceState.destChainId);
 
-      const destChainData = selectBifiDestChainData(state, destChain.networkChainId);
+      const destChainData = selectBridgeBifiDestChainData(state, chainId, destChain.networkChainId);
 
       const formattedOutput = (() => {
         if (balance && destChainData) {
@@ -70,7 +73,7 @@ export const bridgeModalSlice = createSlice({
               )
             : new BigNumber(destChainData.MinimumSwapFee);
 
-          const baseFee = destChainData.BaseFeePercent ? minFee : new BigNumber(BIG_ZERO);
+          const baseFee = destChainData.BaseFeePercent ? minFee : BIG_ZERO;
           const fee = balance.times(destChainData.SwapFeeRatePerMillion);
 
           let outputValue = balance.minus(fee);
@@ -81,12 +84,12 @@ export const bridgeModalSlice = createSlice({
           } else {
             outputValue = balance.minus(fee).minus(baseFee);
           }
-          if (outputValue && outputValue.isGreaterThan(BIG_ZERO)) {
+          if (outputValue?.isGreaterThan(BIG_ZERO)) {
             return outputValue.toFixed(4);
           }
-          return new BigNumber(BIG_ZERO).toFixed(2);
+          return BIG_ZERO.toFixed(2);
         } else {
-          return new BigNumber(BIG_ZERO).toFixed(2);
+          return BIG_ZERO.toFixed(2);
         }
       })();
 
@@ -110,7 +113,7 @@ export const bridgeModalSlice = createSlice({
 
       const destChain = selectChainById(state, sliceState.destChainId);
 
-      const destChainData = selectBifiDestChainData(state, destChain.networkChainId);
+      const destChainData = selectBridgeBifiDestChainData(state, chainId, destChain.networkChainId);
 
       const input = action.payload.amount.replace(/[,]+/, '').replace(/[^0-9.]+/, '');
 
@@ -144,7 +147,7 @@ export const bridgeModalSlice = createSlice({
               )
             : new BigNumber(destChainData.MinimumSwapFee);
 
-          const baseFee = destChainData.BaseFeePercent ? minFee : new BigNumber(BIG_ZERO);
+          const baseFee = destChainData.BaseFeePercent ? minFee : BIG_ZERO;
           const fee = value.times(new BigNumber(destChainData.SwapFeeRatePerMillion));
           let outputValue = value.minus(fee);
           if (fee.lt(minFee)) {
@@ -157,9 +160,9 @@ export const bridgeModalSlice = createSlice({
           if (value && outputValue.isGreaterThan(BIG_ZERO)) {
             return outputValue.toFixed(4);
           }
-          return new BigNumber(BIG_ZERO).toFixed(2);
+          return BIG_ZERO.toFixed(2);
         } else {
-          return new BigNumber(BIG_ZERO).toFixed(2);
+          return BIG_ZERO.toFixed(2);
         }
       })();
 
@@ -203,15 +206,19 @@ export const bridgeModalSlice = createSlice({
 
   extraReducers: builder => {
     builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
-      sliceState.fromChainId = action.payload.chainId;
-      sliceState.destChainId = action.payload.destChainId;
+      const { bridgeData, chainId, destChainId } = action.payload;
+
+      sliceState.fromChainId = chainId;
+      sliceState.destChainId = destChainId;
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
       sliceState.max = false;
-      sliceState.bridgeFromData = action.payload.bridgeFromData;
+      sliceState.bridgeDataByChainId[chainId] = bridgeData;
     });
     builder.addCase(fetchBridgeChainData.fulfilled, (sliceState, action) => {
-      sliceState.bridgeFromData = action.payload.bridgeFromData;
+      const { chainId, bridgeData } = action.payload;
+
+      sliceState.bridgeDataByChainId[chainId] = bridgeData;
     });
   },
 });

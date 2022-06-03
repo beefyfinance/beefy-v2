@@ -8,7 +8,7 @@ import { askForNetworkChange, askForWalletConnection } from '../../../features/d
 import { walletActions } from '../../../features/data/actions/wallet-actions';
 import { isTokenErc20 } from '../../../features/data/entities/token';
 import { selectAllowanceByTokenAddress } from '../../../features/data/selectors/allowances';
-import { selectBifiDestChainData } from '../../../features/data/selectors/bridge';
+import { selectBridgeBifiDestChainData } from '../../../features/data/selectors/bridge';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectTokenByAddress } from '../../../features/data/selectors/tokens';
 import {
@@ -18,6 +18,7 @@ import {
   selectWalletAddress,
 } from '../../../features/data/selectors/wallet';
 import { BeefyState } from '../../../redux-types';
+import { Divider } from '../../Divider';
 import { Step } from '../../Steps/types';
 import { styles } from '../styles';
 
@@ -57,13 +58,14 @@ function _Confirm({
   );
 
   const destChainData = useSelector((state: BeefyState) =>
-    selectBifiDestChainData(state, destChain.networkChainId)
+    selectBridgeBifiDestChainData(state, fromChain.id, destChain.networkChainId)
   );
+  const fromChainData = formState.bridgeDataByChainId[fromChain.id];
 
   const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
 
   const depositedToken = useSelector((state: BeefyState) =>
-    selectTokenByAddress(state, formState.fromChainId, formState.bridgeFromData.address)
+    selectTokenByAddress(state, formState.fromChainId, fromChainData.address)
   );
 
   React.useEffect(() => {
@@ -83,7 +85,7 @@ function _Confirm({
     selectAllowanceByTokenAddress(
       state,
       formState.fromChainId,
-      formState.bridgeFromData.address,
+      fromChainData.address,
       routerAddress
     )
   );
@@ -95,7 +97,7 @@ function _Confirm({
     return true;
   }, [destChainData]);
 
-  const handleDeposit = () => {
+  const handleBridge = () => {
     const steps: Step[] = [];
     if (
       depositTokenAllowance.isLessThan(formState.amount) &&
@@ -164,11 +166,7 @@ function _Confirm({
           </Typography>
         </Box>
       </Box>
-      <Box className={classes.customDivider}>
-        <Box className={classes.line} />
-        <img alt="arrowDown" src={require('../../../images/arrowDown.svg').default} />
-        <Box className={classes.line} />
-      </Box>
+      <Divider />
       <Box className={clsx(classes.fees, classes.lastMarginFees)}>
         <Box mb={1}>
           <Typography variant="body2" className={classes.label}>
@@ -197,33 +195,18 @@ function _Confirm({
         </Box>
       </Box>
       <Box mb={1} className={classes.flexContainer}>
-        <Typography variant="body2" className={classes.advice1}>
-          {t('Bridge-Crosschain')}:
-        </Typography>
-        <Typography variant="body2" className={classes.value}>
-          {destChainData.SwapFeeRatePerMillion}%
-        </Typography>
+        <ItemInfo title={t('Bridge-Crosschain')}>{destChainData.SwapFeeRatePerMillion}%</ItemInfo>
       </Box>
       <Box mb={1} className={classes.flexContainer}>
-        <Typography variant="body2" className={classes.advice1}>
-          {t('Bridge-Gas')}:
-        </Typography>
-        <Typography variant="body2" className={classes.value}>
-          {destChainData.MinimumSwapFee} BIFI
-        </Typography>
+        <ItemInfo title={t('Bridge-Gas')}> {destChainData.MinimumSwapFee} BIFI</ItemInfo>
       </Box>
       <Box mb={3} className={classes.flexContainer}>
-        <Typography variant="body2" className={classes.advice1}>
-          {t('Bridge-EstimatedTime')}
-        </Typography>
-        <Typography variant="body2" className={classes.value}>
-          3 - 30 min
-        </Typography>
+        <ItemInfo title={t('Bridge-EstimatedTime')}>3 - 30 min</ItemInfo>
       </Box>
 
       {isWalletConnected ? (
         isWalletOnFromChain ? (
-          <Button onClick={handleDeposit} disabled={isStepping} className={classes.btn}>
+          <Button onClick={handleBridge} disabled={isStepping} className={classes.btn}>
             {t('Confirm')}
           </Button>
         ) : (
@@ -244,3 +227,17 @@ function _Confirm({
 }
 
 export const Confirm = React.memo(_Confirm);
+
+const ItemInfo = ({ title, children }) => {
+  const classes = useStyles();
+  return (
+    <>
+      <Typography variant="body2" className={classes.advice1}>
+        {title}
+      </Typography>
+      <Typography variant="body2" className={classes.value}>
+        {children}
+      </Typography>
+    </>
+  );
+};

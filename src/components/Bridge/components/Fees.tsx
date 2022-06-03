@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import ContentLoader from 'react-content-loader';
 import { selectChainById } from '../../../features/data/selectors/chains';
-import { selectBifiDestChainData } from '../../../features/data/selectors/bridge';
+import { selectBridgeBifiDestChainData } from '../../../features/data/selectors/bridge';
 
 const useStyles = makeStyles(styles);
 
@@ -26,7 +26,7 @@ function _FeesInfo() {
   );
 
   const destChainData = useSelector((state: BeefyState) =>
-    selectBifiDestChainData(state, destChain.networkChainId)
+    selectBridgeBifiDestChainData(state, formState.fromChainId, destChain.networkChainId)
   );
 
   return (

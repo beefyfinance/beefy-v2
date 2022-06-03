@@ -40,8 +40,4 @@ export const styles = theme => ({
       cursor: 'pointer',
     },
   },
-  backdrop: {
-    backgroundColor: 'rgba(255,255,255,0.2) !important',
-    backdropFilter: 'blur(8px)',
-  },
 });

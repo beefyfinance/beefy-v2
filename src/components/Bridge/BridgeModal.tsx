@@ -55,7 +55,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
                 )}
               </Box>
 
-              <CloseIcon className={classes.cross} onClick={handleModal} htmlColor="#8A8EA8" />
+              <CloseIcon className={classes.cross} onClick={handleModal} />
             </CardHeader>
             <>
               {previewConfirm === 'preview' ? (

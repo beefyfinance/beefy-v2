@@ -60,20 +60,6 @@ export const styles = (theme: Theme) => ({
       backgroundColor: '#389D44',
     },
   },
-  customDivider: {
-    display: 'flex',
-    alignItems: 'center',
-    margin: `${theme.spacing(2)}px 0px`,
-    '& img': {
-      margin: '0 12px',
-    },
-  },
-  line: {
-    height: '2px',
-    width: '100%',
-    backgroundColor: theme.palette.background.vaults.default,
-    borderRadius: '8px',
-  },
   fees: {
     padding: theme.spacing(2),
     backgroundColor: theme.palette.background.content,
@@ -213,6 +199,7 @@ export const styles = (theme: Theme) => ({
     padding: '8px 12px',
   },
   cross: {
+    color: theme.palette.text.disabled,
     '&:Hover': {
       cursor: 'pointer',
     },

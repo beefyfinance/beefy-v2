@@ -20,7 +20,8 @@ import { bridgeModalActions } from '../../../features/data/reducers/wallet/bridg
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import BigNumber from 'bignumber.js';
 import { fetchBridgeChainData } from '../../../features/data/actions/bridge';
-import { selectBifiDestChainData } from '../../../features/data/selectors/bridge';
+import { selectBridgeBifiDestChainData } from '../../../features/data/selectors/bridge';
+import { Divider } from '../../Divider';
 
 const useStyles = makeStyles(styles);
 
@@ -53,14 +54,16 @@ function _Preview({
     isFulfilled(state.ui.dataLoader.global.bridgeForm)
   );
 
-  const bifiBalance = useSelector((state: BeefyState) =>
-    isWalletConnected && formDataLoaded
-      ? selectUserBalanceOfToken(state, formState.fromChainId, formState.bridgeFromData.address)
-      : new BigNumber(BIG_ZERO)
-  );
+  const fromChainData = formState.bridgeDataByChainId[fromChain.id];
 
   const destChainData = useSelector((state: BeefyState) =>
-    selectBifiDestChainData(state, destChain.networkChainId)
+    selectBridgeBifiDestChainData(state, fromChain.id, destChain.networkChainId)
+  );
+
+  const bifiBalance = useSelector((state: BeefyState) =>
+    isWalletConnected && formDataLoaded && fromChainData
+      ? selectUserBalanceOfToken(state, formState.fromChainId, fromChainData.address)
+      : new BigNumber(BIG_ZERO)
   );
 
   const minAmount = destChainData
@@ -97,7 +100,9 @@ function _Preview({
   };
 
   const handleNetwork = chainId => {
-    dispatch(fetchBridgeChainData({ chainId: chainId }));
+    if (!formState.bridgeDataByChainId[chainId]) {
+      dispatch(fetchBridgeChainData({ chainId: chainId }));
+    }
     dispatch(
       bridgeModalActions.setFromChain({
         chainId: chainId,
@@ -118,7 +123,7 @@ function _Preview({
       bridgeModalActions.setInput({
         amount: amountStr,
         chainId: formState.fromChainId,
-        tokenAddress: formState.bridgeFromData.address,
+        tokenAddress: fromChainData.address,
         state: store.getState(),
       })
     );
@@ -128,7 +133,7 @@ function _Preview({
     dispatch(
       bridgeModalActions.setMax({
         chainId: formState.fromChainId,
-        tokenAddress: formState.bridgeFromData.address,
+        tokenAddress: fromChainData.address,
         state: store.getState(),
       })
     );
@@ -181,16 +186,7 @@ function _Preview({
           </Box>
         </Box>
       </Box>
-      <Box className={classes.customDivider}>
-        <Box className={classes.line} />
-        <img
-          className={classes.cross}
-          onClick={() => handleNetwork(formState.destChainId)}
-          alt="arrowDown"
-          src={require('../../../images/arrowDown.svg').default}
-        />
-        <Box className={classes.line} />
-      </Box>
+      <Divider onClick={() => handleNetwork(formState.destChainId)} />
       {/* To */}
       <Box mb={3}>
         <Box mb={1} className={classes.flexContainer}>

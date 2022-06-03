@@ -3,7 +3,7 @@ import { Avatar, Box, FormControl, Grid, makeStyles, Typography } from '@materia
 import { styles } from './styles';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { ApyStatLoader } from '../../../ApyStatLoader';
+import { StatLoader } from '../../../StatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
   selectIsBalanceHidden,
@@ -78,7 +78,7 @@ export const WalletContainer = connect((state: BeefyState) => {
           <Grid container direction="row" alignItems="center">
             {walletPending ? (
               <Box className={classes.loading}>
-                <ApyStatLoader
+                <StatLoader
                   foregroundColor={theme.palette.primary.light}
                   backgroundColor={theme.palette.primary.dark}
                 />

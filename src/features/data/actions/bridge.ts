@@ -15,7 +15,8 @@ export interface FetchBridgeChainDataParams {
 }
 
 export interface FetchBridgeChainPayload {
-  bridgeFromData: BridgeInfoEntity;
+  bridgeData: BridgeInfoEntity;
+  chainId: ChainEntity['id'];
 }
 
 export const fetchBridgeChainData = createAsyncThunk<
@@ -26,7 +27,7 @@ export const fetchBridgeChainData = createAsyncThunk<
   const chain = selectChainById(getState(), chainId);
   const api = getBridgeApi();
   const data: BridgeInfoEntity = await api.getBridgeChainData(chain.networkChainId);
-  return { bridgeFromData: data };
+  return { bridgeData: data, chainId: chain.id };
 });
 
 export const getBridgeTxData = async (hash: string) => {
@@ -45,7 +46,7 @@ interface InitBridgeFormPayload {
   balance: FetchAllBalancesResult;
   allowance: TokenAllowance[];
   destChainId: ChainEntity['id'];
-  bridgeFromData: BridgeInfoEntity;
+  bridgeData: BridgeInfoEntity;
   state: BeefyState;
 }
 
@@ -92,7 +93,7 @@ export const initiateBridgeForm = createAsyncThunk<
     walletAddress,
     allowance: allowanceRes,
     balance: balanceRes,
-    bridgeFromData: bridgeDataRes,
+    bridgeData: bridgeDataRes,
     state: state,
   };
 });
