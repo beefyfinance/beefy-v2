@@ -1,5 +1,10 @@
 import { Theme } from '@material-ui/core/styles';
 
+export const backdropStyle = {
+  backgroundColor: 'rgba(255,255,255,0.2)',
+  backdropFilter: 'blur(8px)',
+};
+
 export const styles = (theme: Theme) => ({
   modal: {
     position: 'absolute' as const,

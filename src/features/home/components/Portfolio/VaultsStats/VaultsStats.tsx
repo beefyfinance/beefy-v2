@@ -4,12 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { StatLoader } from '../../../../../components/StatLoader';
 import { formatBigUsd } from '../../../../../helpers/format';
-import { styles } from './styles';
+import { styles, backdropStyle } from './styles';
 import { selectTotalTvl } from '../../../../data/selectors/tvl';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
 import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
 import { ModalTvl } from '../ModalTvl';
-import { backdropStyle } from '../../../../../helpers/styleUtils';
 
 const useStyles = makeStyles(styles as any);
 export const VaultsStats = () => {
