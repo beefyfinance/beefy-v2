@@ -9,7 +9,7 @@ import { selectTotalTvl } from '../../../../data/selectors/tvl';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
 import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
 import { ModalTvl } from '../ModalTvl';
-import { backdropStyle } from '../../../../../components/Bridge/styles';
+import { backdropStyle } from '../../../../../helpers/styleUtils';
 
 const useStyles = makeStyles(styles as any);
 export const VaultsStats = () => {

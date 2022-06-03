@@ -87,7 +87,7 @@ export const bridgeModalSlice = createSlice({
           } else {
             outputValue = balance.minus(fee).minus(baseFee);
           }
-          if (outputValue?.isGreaterThan(BIG_ZERO)) {
+          if (outputValue.isGreaterThan(BIG_ZERO)) {
             return outputValue.toFixed(4);
           }
           return BIG_ZERO.toFixed(2);
@@ -160,7 +160,7 @@ export const bridgeModalSlice = createSlice({
           } else {
             outputValue = value.minus(fee).minus(baseFee);
           }
-          if (value && outputValue.isGreaterThan(BIG_ZERO)) {
+          if (outputValue.isGreaterThan(BIG_ZERO)) {
             return outputValue.toFixed(4);
           }
           return BIG_ZERO.toFixed(2);

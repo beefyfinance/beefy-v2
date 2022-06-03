@@ -4,7 +4,7 @@ import { CardHeader } from '../../features/vault/components/Card/CardHeader';
 import { CardTitle } from '../../features/vault/components/Card/CardTitle';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@material-ui/icons/Close';
-import { styles, backdropStyle } from './styles';
+import { styles } from './styles';
 import { makeStyles } from '@material-ui/styles';
 import { Preview } from './components/Preview';
 import { Confirm } from './components/Confirm';
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentChainId } from '../../features/data/selectors/wallet';
 import { BeefyState } from '../../redux-types';
 import { useStepper } from '../Steps/hooks';
+import { backdropStyle } from '../../helpers/styleUtils';
 
 const useStyles = makeStyles(styles);
 
