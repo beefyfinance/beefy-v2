@@ -3,7 +3,7 @@ import { makeStyles, Box, Typography, Button, InputBase, Paper } from '@material
 import { useTranslation } from 'react-i18next';
 import { styles } from '../styles';
 import { useSelector, useDispatch, useStore } from 'react-redux';
-import { selectAllChains, selectChainById } from '../../../features/data/selectors/chains';
+import { selectChainById } from '../../../features/data/selectors/chains';
 import { CardContent } from '../../../features/vault/components/Card/CardContent';
 import { Fees } from './Fees';
 import { AssetsImage } from '../../AssetsImage';
@@ -22,6 +22,7 @@ import BigNumber from 'bignumber.js';
 import { fetchBridgeChainData } from '../../../features/data/actions/bridge';
 import { selectBridgeBifiDestChainData } from '../../../features/data/selectors/bridge';
 import { Divider } from '../../Divider';
+import { isEmpty } from '../../../helpers/utils';
 
 const useStyles = makeStyles(styles);
 
@@ -76,25 +77,23 @@ function _Preview({
     !formDataLoaded ||
     !destChainData;
 
-  const chains = useSelector(selectAllChains);
-  const [chainList, destChainsList] = useMemo(() => {
+  const destChainsList = useMemo(() => {
     const list = {};
-    const list2 = {};
-    for (const chain of chains) {
-      list[chain.id] = chain.name;
-
-      if (chain.id !== formState.fromChainId) {
-        list2[chain.id] = chain.name;
+    for (const [chainId, name] of Object.entries(formState.supportedChains)) {
+      if (chainId !== formState.fromChainId) {
+        list[chainId] = name;
       }
     }
-    return [list, list2];
-  }, [chains, formState.fromChainId]);
+    return list;
+  }, [formState.fromChainId, formState.supportedChains]);
 
   const selectedRenderer = network => {
     return (
       <Box className={classes.networkPickerContainer}>
         <img src={require(`../../../images/networks/${network}.svg`).default} alt={network} />{' '}
-        <Typography className={classes.networkValue}>{chainList[network]}</Typography>
+        <Typography className={classes.networkValue}>
+          {formState.supportedChains[network]}
+        </Typography>
       </Box>
     );
   };
@@ -161,7 +160,7 @@ function _Preview({
         <Box className={classes.flexContainer}>
           <Box className={classes.networkPicker}>
             <SimpleDropdown
-              list={chainList}
+              list={formState.supportedChains}
               selected={formState.fromChainId}
               handler={handleNetwork}
               renderValue={selectedRenderer}
@@ -198,7 +197,7 @@ function _Preview({
           <Box className={classes.networkPicker}>
             <SimpleDropdown
               list={destChainsList}
-              selected={formState.destChainId}
+              selected={!isEmpty(destChainsList) ? formState.destChainId : ''}
               handler={handleDestChain}
               renderValue={selectedRenderer}
               noBorder={false}

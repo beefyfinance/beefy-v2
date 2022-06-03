@@ -26,7 +26,9 @@ export type BridgeModalState = {
   bridgeDataByChainId: {
     [chainId: ChainEntity['id']]: BridgeInfoEntity;
   };
-
+  supportedChains: {
+    [chainId: ChainEntity['id']]: string;
+  };
   status: statusType;
 };
 
@@ -38,6 +40,7 @@ const initialBridgeModalState: BridgeModalState = {
   formattedOutput: '',
   max: false,
   bridgeDataByChainId: {},
+  supportedChains: {},
   status: 'idle',
 };
 
@@ -206,14 +209,14 @@ export const bridgeModalSlice = createSlice({
 
   extraReducers: builder => {
     builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
-      const { bridgeData, chainId, destChainId } = action.payload;
-
+      const { bridgeData, chainId, destChainId, supportedChains } = action.payload;
       sliceState.fromChainId = chainId;
       sliceState.destChainId = destChainId;
       sliceState.amount = BIG_ZERO;
       sliceState.formattedInput = '';
       sliceState.max = false;
       sliceState.bridgeDataByChainId[chainId] = bridgeData;
+      sliceState.supportedChains = supportedChains;
     });
     builder.addCase(fetchBridgeChainData.fulfilled, (sliceState, action) => {
       const { chainId, bridgeData } = action.payload;

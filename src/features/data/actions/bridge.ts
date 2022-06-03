@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { isEmpty } from '../../../helpers/utils';
 import { BeefyState } from '../../../redux-types';
 import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
@@ -6,7 +7,7 @@ import { BridgeInfoEntity, DestChainEntity, TxDataRes } from '../apis/bridge/bri
 import { getAllowanceApi, getBalanceApi, getBridgeApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20 } from '../entities/token';
-import { selectChainById } from '../selectors/chains';
+import { selectAllChains, selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { selectCurrentChainId } from '../selectors/wallet';
 
@@ -47,6 +48,9 @@ interface InitBridgeFormPayload {
   allowance: TokenAllowance[];
   destChainId: ChainEntity['id'];
   bridgeData: BridgeInfoEntity;
+  supportedChains: {
+    [chainId: ChainEntity['id']]: string;
+  };
   state: BeefyState;
 }
 
@@ -58,6 +62,7 @@ export const initiateBridgeForm = createAsyncThunk<
   const state = getState();
   const chainId = selectCurrentChainId(state);
   const chain = selectChainById(state, chainId ?? 'bsc');
+  const allChains = selectAllChains(state);
   const destChain = selectChainById(state, chain.id === 'bsc' ? 'fantom' : 'bsc');
   const balanceApi = await getBalanceApi(chain);
   const allowanceApi = await getAllowanceApi(chain);
@@ -87,6 +92,15 @@ export const initiateBridgeForm = createAsyncThunk<
         )
       : [];
 
+  let supportedChains = {
+    [chain.id]: chain.name,
+  };
+  for (const _chain of allChains) {
+    if (!isEmpty(bridgeDataRes?.destChains[_chain.networkChainId])) {
+      supportedChains[_chain.id] = _chain.name;
+    }
+  }
+
   return {
     chainId: chain.id,
     destChainId: destChain.id,
@@ -94,6 +108,7 @@ export const initiateBridgeForm = createAsyncThunk<
     allowance: allowanceRes,
     balance: balanceRes,
     bridgeData: bridgeDataRes,
+    supportedChains: supportedChains,
     state: state,
   };
 });
