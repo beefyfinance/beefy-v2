@@ -28,7 +28,7 @@ export const pools = [
   },
   {
     id: 'moo_voltage-wfuse-elon-elon',
-    poolId: 'voltage-wfuse-elon',
+    poolId: 'voltage-wfuse-elon-eol',
     name: 'Dogelon Mars x Fuse',
     assets: ['ELON', 'FUSE'],
     earnedToken: 'ELON-FUSE LP',
