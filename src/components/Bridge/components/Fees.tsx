@@ -35,41 +35,20 @@ function _FeesInfo() {
         <>
           <Box className={classes.feesContent}>
             {/*Crosschain */}
-            <Box className={classes.feesItem}>
-              <Typography className={classes.label} variant="body2">
-                {t('Bridge-Crosschain')}
-              </Typography>
-              <Typography className={classes.value} variant="h5">
-                {destChainData.SwapFeeRatePerMillion}%
-              </Typography>
-            </Box>
+
+            <Item title={t('Bridge-Crosschain')}>{destChainData.SwapFeeRatePerMillion}%</Item>
+
             {/*Gas fee */}
-            <Box className={classes.feesItem}>
-              <Typography className={classes.label} variant="body2">
-                {t('Bridge-Gas')}
-              </Typography>
-              <Typography className={classes.value} variant="h5">
-                {destChainData.MinimumSwapFee} BIFI
-              </Typography>
-            </Box>
+
+            <Item title={t('Bridge-Gas')}> {destChainData.MinimumSwapFee} BIFI</Item>
+
             {/* Min Amount */}
-            <Box className={classes.feesItem}>
-              <Typography className={classes.label} variant="body2">
-                {t('Bridge-MinAmount')}
-              </Typography>
-              <Typography className={classes.value} variant="h5">
-                {destChainData.MinimumSwap} BIFI
-              </Typography>
-            </Box>
+
+            <Item title={t('Bridge-MinAmount')}> {destChainData.MinimumSwap} BIFI</Item>
+
             {/* Max Amount */}
-            <Box className={classes.feesItem}>
-              <Typography className={classes.label} variant="body2">
-                {t('Bridge-MaxAmount')}
-              </Typography>
-              <Typography className={classes.value} variant="h5">
-                {destChainData.MaximumSwap} BIFI
-              </Typography>
-            </Box>
+
+            <Item title={t('Bridge-MaxAmount')}>{destChainData.MaximumSwap} BIFI</Item>
           </Box>
           <Typography variant="body2" className={classes.advice}>
             {t('Bridge-Advice-1')}
@@ -84,6 +63,20 @@ function _FeesInfo() {
     </Box>
   );
 }
+
+const Item = ({ title, children }) => {
+  const classes = useStyles();
+  return (
+    <Box className={classes.feesItem}>
+      <Typography className={classes.label} variant="body2">
+        {title}
+      </Typography>
+      <Typography className={classes.value} variant="h5">
+        {children}
+      </Typography>
+    </Box>
+  );
+};
 
 const Loader = props => (
   <ContentLoader
