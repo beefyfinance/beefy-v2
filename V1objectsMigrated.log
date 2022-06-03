@@ -1,38 +1,94 @@
 [
   {
-    "id": "fantom vault: tomb-treeb-usdc",
+    "id": "bsc vault: cakev2-qi-wbnb-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "polygon vault: ripae-pmatic-matic",
     "type": "Added"
   },
   {
-    "id": "fantom vault: tomb-fusd-usdc",
+    "id": "polygon vault: ripae-pae-matic",
     "type": "Added"
   },
   {
-    "id": "fantom vault: tomb-tomb-treeb",
+    "id": "polygon vault: sushi-jrt-eth-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "avax vault: joe-egg-wavax-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "harmony vault: sushi-one-bifi-wone-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "harmony vault: sushi-one-bscbusd-busd-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "arbitrum vault: sushi-arb-weth-link-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "celo vault: sushi-celo-celo-mobi-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "fuse vault: voltage-wfuse-elon-eol",
+    "type": "synced",
+    "EOLd": true
+  },
+  {
+    "id": "emerald vault: valley-usdt-vs",
     "type": "Added"
   },
   {
-    "id": "fantom vault: tomb-tomb-zoo",
+    "id": "emerald vault: valley-usdt-usdc",
     "type": "Added"
   },
   {
-    "id": "fantom vault: tomb-tomb-scream",
+    "id": "emerald vault: valley-btc-usdt",
     "type": "Added"
   },
   {
-    "id": "fantom vault: based-based-usdc",
-    "type": "Added"
-  },
-  {
-    "id": "fantom vault: tomb-tomb-mai",
-    "type": "synced"
-  },
-  {
-    "id": "moonbeam vault: stellaswap-dualETH",
+    "id": "emerald vault: valley-usdt-eth",
     "type": "Added"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
     "type": "synced"
+  },
+  {
+    "id": "polygon boost: moo_sushi-jrt-eth-jarvis",
+    "type": "synced"
+  },
+  {
+    "id": "fuse boost: moo_voltage-wfuse-elon-elon",
+    "type": "synced"
+  },
+  {
+    "id": "emerald boost: moo_valley-usdt-vs-valleyswap",
+    "type": "Added"
+  },
+  {
+    "id": "emerald boost: moo_valley-usdt-usdc-valleyswap",
+    "type": "Added"
+  },
+  {
+    "id": "emerald boost: moo_valley-btc-usdt-valleyswap",
+    "type": "Added"
+  },
+  {
+    "id": "emerald boost: moo_valley-usdt-eth-valleyswap",
+    "type": "Added"
   }
 ]
