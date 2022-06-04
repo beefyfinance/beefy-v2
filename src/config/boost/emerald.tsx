@@ -1,7 +1,7 @@
 export const pools = [
   {
     id: 'moo_valley-usdt-vs-valleyswap',
-    poolId: 'valley-usdt-vs',
+    poolId: 'valley-usdt-vs-pause',
     name: 'ValleySwap',
     assets: ['VS', 'USDT'],
     earnedToken: 'VS',
@@ -26,7 +26,7 @@ export const pools = [
   },
   {
     id: 'moo_valley-usdt-usdc-valleyswap',
-    poolId: 'valley-usdt-usdc',
+    poolId: 'valley-usdt-usdc-pause',
     name: 'ValleySwap',
     assets: ['USDC', 'USDT'],
     earnedToken: 'VS',
@@ -51,7 +51,7 @@ export const pools = [
   },
   {
     id: 'moo_valley-btc-usdt-valleyswap',
-    poolId: 'valley-btc-usdt',
+    poolId: 'valley-btc-usdt-pause',
     name: 'ValleySwap',
     assets: ['BTC', 'USDT'],
     earnedToken: 'VS',
@@ -76,7 +76,7 @@ export const pools = [
   },
   {
     id: 'moo_valley-usdt-eth-valleyswap',
-    poolId: 'valley-usdt-eth',
+    poolId: 'valley-usdt-eth-pause',
     name: 'ValleySwap',
     assets: ['ETH', 'USDT'],
     earnedToken: 'VS',
