@@ -1,54 +1,22 @@
 [
   {
     "id": "emerald vault: valley-usdt-vs-pause",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "emerald vault: valley-usdt-usdc-pause",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "emerald vault: valley-btc-usdt-pause",
-    "type": "Added"
+    "type": "synced"
   },
   {
     "id": "emerald vault: valley-usdt-eth-pause",
-    "type": "Added"
-  },
-  {
-    "id": "emerald vault: valley-usdt-vs",
-    "type": "REMOVED"
-  },
-  {
-    "id": "emerald vault: valley-usdt-usdc",
-    "type": "REMOVED"
-  },
-  {
-    "id": "emerald vault: valley-btc-usdt",
-    "type": "REMOVED"
-  },
-  {
-    "id": "emerald vault: valley-usdt-eth",
-    "type": "REMOVED"
+    "type": "synced"
   },
   {
     "id": "fantom boost: moo_curve-ftm-geist-ripae",
-    "type": "synced"
-  },
-  {
-    "id": "emerald boost: moo_valley-usdt-vs-valleyswap",
-    "type": "synced"
-  },
-  {
-    "id": "emerald boost: moo_valley-usdt-usdc-valleyswap",
-    "type": "synced"
-  },
-  {
-    "id": "emerald boost: moo_valley-btc-usdt-valleyswap",
-    "type": "synced"
-  },
-  {
-    "id": "emerald boost: moo_valley-usdt-eth-valleyswap",
     "type": "synced"
   }
 ]
