@@ -216,7 +216,7 @@ export const pools = [
     network: 'emerald',
   },
   {
-    id: 'valley-usdt-vs',
+    id: 'valley-usdt-vs-pause',
     name: 'VS-USDT LP',
     token: 'USDT-VS VSLP',
     tokenDescription: 'ValleySwap',
@@ -231,8 +231,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'valley-usdt-vs',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    status: 'paused',
     platform: 'ValleySwap',
     assets: ['VS', 'USDT'],
     risks: [
@@ -253,7 +252,7 @@ export const pools = [
     network: 'emerald',
   },
   {
-    id: 'valley-usdt-usdc',
+    id: 'valley-usdt-usdc-pause',
     name: 'USDC-USDT LP',
     token: 'USDT-USDC VSLP',
     tokenDescription: 'ValleySwap',
@@ -268,8 +267,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'valley-usdt-usdc',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    status: 'paused',
     platform: 'ValleySwap',
     assets: ['USDC', 'USDT'],
     risks: [
@@ -290,7 +288,7 @@ export const pools = [
     network: 'emerald',
   },
   {
-    id: 'valley-btc-usdt',
+    id: 'valley-btc-usdt-pause',
     name: 'BTC-USDT LP',
     token: 'BTC-USDT VSLP',
     tokenDescription: 'ValleySwap',
@@ -305,8 +303,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'valley-btc-usdt',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    status: 'paused',
     platform: 'ValleySwap',
     assets: ['BTC', 'USDT'],
     risks: [
@@ -327,7 +324,7 @@ export const pools = [
     network: 'emerald',
   },
   {
-    id: 'valley-usdt-eth',
+    id: 'valley-usdt-eth-pause',
     name: 'ETH-USDT LP',
     token: 'USDT-ETH VSLP',
     tokenDescription: 'ValleySwap',
@@ -342,8 +339,7 @@ export const pools = [
     oracle: 'lps',
     oracleId: 'valley-usdt-eth',
     oraclePrice: 0,
-    depositsPaused: false,
-    status: 'active',
+    status: 'paused',
     platform: 'ValleySwap',
     assets: ['ETH', 'USDT'],
     risks: [
