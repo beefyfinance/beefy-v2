@@ -19,7 +19,7 @@
     "@walletconnect/web3-provider": "^1.4.1",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.34.0",
+    "blockchain-addressbook": "^0.34.1",
     "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
     "deficonnect": "^1.1.5",
