@@ -21,7 +21,9 @@ export type VaultNameProps = {
 export const VaultName = memo<VaultNameProps>(function VaultName({ vaultId }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
-  const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
+  const isBoosted =
+    useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId)) &&
+    vault.platformId !== 'valleyswap';
 
   return (
     <div
