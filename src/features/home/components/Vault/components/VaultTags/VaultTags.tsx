@@ -76,7 +76,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   const { t } = useTranslation();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const boostIds = useAppSelector(state => selectPreStakeOrActiveBoostIds(state, vaultId));
-  const boostId = boostIds.length ? boostIds[0] : null;
+  const boostId = boostIds.length && vault.platformId !== 'valleyswap' ? boostIds[0] : null;
 
   // Tag 1: Platform
   // Tag 2: Retired -> Paused -> Boosted > Earnings

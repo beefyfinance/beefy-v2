@@ -262,7 +262,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     // TODO find all boosted and bring to top rather than sort whole array?
     // TODO explore having separate component to render boosted on top so list doesn't jump on load (downside: dups)
     sortedVaults = sortBy(sortedVaults, vault =>
-      selectIsVaultPreStakedOrBoosted(state, vault.id) ? -1 : 1
+      selectIsVaultPreStakedOrBoosted(state, vault.id) && vault.platformId !== 'valleyswap' ? -1 : 1
     );
   }
 
