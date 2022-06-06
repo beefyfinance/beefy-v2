@@ -1,5 +1,6 @@
 import { createTheme } from '@material-ui/core/styles';
 import { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
+import { featureFlag_fontWeight } from './features/data/utils/feature-flags';
 
 const fontStack = [
   '"DM Sans"',
@@ -46,7 +47,7 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
     fontSize: '16px',
     lineHeight: '24px',
     textTransform: 'none' as const,
-    fontWeight: 700,
+    fontWeight: featureFlag_fontWeight(700),
   },
   'body-sm': {
     fontFamily: fontStack,
@@ -60,13 +61,13 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
     fontSize: '12px',
     lineHeight: '20px',
     textTransform: 'none' as const,
-    fontWeight: 700,
+    fontWeight: featureFlag_fontWeight(700),
   },
   'subline-lg': {
     fontFamily: fontStack,
     fontSize: '15px',
     lineHeight: '24px',
-    fontWeight: 700,
+    fontWeight: featureFlag_fontWeight(700),
     textTransform: 'uppercase' as const,
     letterSpacing: '0.5px',
   },
@@ -74,7 +75,7 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
     fontFamily: fontStack,
     fontSize: '12px',
     lineHeight: '20px',
-    fontWeight: 700,
+    fontWeight: featureFlag_fontWeight(700),
     textTransform: 'uppercase' as const,
     letterSpacing: '0.5px',
   },

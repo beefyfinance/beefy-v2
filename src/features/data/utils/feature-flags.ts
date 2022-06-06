@@ -133,3 +133,13 @@ export function featureFlag_simulateBeefyApiError(key: 'apy' | 'prices' | 'lps' 
     return chainIds.includes(key);
   }
 }
+
+export function featureFlag_fontWeight(fontWeight: number): number {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('__font_weight')) {
+    const value = parseInt(params.get('__font_weight'));
+    return value === 500 || value === 700 ? value : fontWeight;
+  }
+
+  return fontWeight;
+}
