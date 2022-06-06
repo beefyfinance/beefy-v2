@@ -4,10 +4,9 @@ import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 
 import { isValidChecksumAddress, maybeChecksumAddress, isEmpty } from './utils.mjs';
-import { chainPools, chainRpcs } from './config.mjs';
-import { abis } from './config.mjs';
-const strategyABI = abis.strategyABI;
-const vaultABI = abis.vaultABI;
+import { chainPools, chainRpcs } from './config.js';
+import strategyABI from '../src/config/abi/strategy.json';
+import vaultABI from '../src/config/abi/vault.json';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },

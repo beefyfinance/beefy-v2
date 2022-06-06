@@ -1,21 +1,21 @@
-import bscPools from '../src/config/vault/bsc.json' assert {type: 'json'};
-import hecoPools from '../src/config/vault/heco.json' assert {type: 'json'};
-import avalanchePools from '../src/config/vault/avax.json' assert {type: 'json'};
-import polygonPools from '../src/config/vault/polygon.json' assert {type: 'json'};
-import fantomPools from '../src/config/vault/fantom.json' assert {type: 'json'};
-import harmonyPools from '../src/config/vault/harmony.json' assert {type: 'json'};
-import arbitrumPools from '../src/config/vault/arbitrum.json' assert {type: 'json'};
-import celoPools from '../src/config/vault/celo.json' assert {type: 'json'};
-import moonriverPools from '../src/config/vault/moonriver.json' assert {type: 'json'};
-import cronosPools from '../src/config/vault/cronos.json' assert {type: 'json'};
-import auroraPools from '../src/config/vault/aurora.json' assert {type: 'json'};
-import fusePools from '../src/config/vault/fuse.json' assert {type: 'json'};
-import metisPools from '../src/config/vault/metis.json' assert {type: 'json'};
-import moonbeamPools from '../src/config/vault/moonbeam.json' assert {type: 'json'};
-import emeraldPools from '../src/config/vault/emerald.json' assert {type: 'json'};
+import bscPools from '../src/config/vault/bsc.json';
+import hecoPools from '../src/config/vault/heco.json';
+import avalanchePools from '../src/config/vault/avax.json';
+import polygonPools from '../src/config/vault/polygon.json';
+import fantomPools from '../src/config/vault/fantom.json';
+import harmonyPools from '../src/config/vault/harmony.json';
+import arbitrumPools from '../src/config/vault/arbitrum.json';
+import celoPools from '../src/config/vault/celo.json';
+import moonriverPools from '../src/config/vault/moonriver.json';
+import cronosPools from '../src/config/vault/cronos.json';
+import auroraPools from '../src/config/vault/aurora.json';
+import fusePools from '../src/config/vault/fuse.json';
+import metisPools from '../src/config/vault/metis.json';
+import moonbeamPools from '../src/config/vault/moonbeam.json';
+import emeraldPools from '../src/config/vault/emerald.json';
 
-import vaultABI from '../src/config/abi/vault.json' assert {type: 'json'};
-import strategyABI from '../src/config/abi/strategy.json' assert {type: 'json'};
+import vaultABI from '../src/config/abi/vault.json';
+import strategyABI from '../src/config/abi/strategy.json';
 
 export const abis = {
   vaultABI,

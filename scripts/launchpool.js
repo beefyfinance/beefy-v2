@@ -4,8 +4,8 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 
 import { chainPools, chainRpcs } from './config.js';
-import launchPoolABI from '../src/config/abi/boost.json' assert {type: 'json'};
-import erc20ABI from '../src/config/abi/erc20.json' assert {type: 'json'};
+import launchPoolABI from '../src/config/abi/boost.json';
+import erc20ABI from '../src/config/abi/erc20.json';
 
 
 async function boostParams(chain, boostAddress) {
