@@ -1,5 +1,6 @@
 // todo: load these asynchronously
 import { Insurace, Moonpot, QiDao, Solace } from '../../../helpers/partners';
+import { featuredPools as featuredVaults } from '../../../config/vault/featured';
 import { config as chainConfigs } from '../../../config/config';
 import { ChainEntity } from '../entities/chain';
 import { infoCards } from '../../../config/info-cards';
@@ -13,14 +14,12 @@ import {
   VaultConfig,
   ZapConfig,
 } from './config-types';
-const featuredVaults = require('../../../config/vault/featured');
-const boostPartners = require('../../../config/boost/partners');
 
 const vaultsByChainId: {
   [chainId: ChainEntity['id']]: VaultConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  let pools = require(`../../../config/vault/${chainId}`);
+  let pools = require(`../../../config/vault/${chainId}`).pools;
   /**
    * venus-bnb and venus-wbnb are in fact the same vault
    * this is legacy config and we fix it here
@@ -40,12 +39,7 @@ const boostsByChainId: {
   [chainId: ChainEntity['id']]: BoostConfig[];
 } = {};
 for (const chainId in chainConfigs) {
-  boostsByChainId[chainId] = require(`../../../config/boost/${chainId}`);
-  boostsByChainId[chainId].forEach(boost => {
-    for (let i = 0; i < boost.partners.length; i++) {
-      boost.partners[i] = boostPartners[boost.partners[i] as unknown as string];
-    }
-  });
+  boostsByChainId[chainId] = require(`../../../config/boost/${chainId}`).pools;
 }
 
 const zapsByChainId: {
