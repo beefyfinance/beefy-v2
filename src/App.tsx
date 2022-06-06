@@ -14,7 +14,7 @@ import { REDIRECTS } from './config/redirects';
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
-const BrandAssets = React.lazy(() => import(`./features/brandAssets`));
+const BrandAssets = React.lazy(() => import(`./features/media-kit`));
 
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 

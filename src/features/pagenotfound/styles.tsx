@@ -1,31 +1,27 @@
-export const styles = theme => ({
-  pageContainer: {
-    backgroundColor: theme.palette.background.footer,
-    paddingBottom: '20px',
-  },
-  imageContainer: {
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
+  inner: {
     margin: '0 auto',
-    width: 'fit-content',
-    paddingTop: '40px',
+    paddingTop: '120px',
+    paddingBottom: '120px',
+    width: '612px',
+    maxWidth: '100%',
   },
   image: {
-    maxWidth: 'calc(100vw - 10%)',
-    height: '60vh',
-    [theme.breakpoints.down('md')]: {
-      height: 'auto',
-    },
+    maxWidth: '100%',
+    height: 'auto',
     margin: '0 auto',
     display: 'block',
   },
-  text: {
+  textContainer: {
+    margin: '36px 0 0 0',
     textAlign: 'center' as const,
   },
-  container: {
-    margin: '32px auto 0',
-    maxWidth: 'calc(100vw - 20%)',
-    width: 'fit-content',
+  text: {
+    ...theme.typography['body-lg-bold'],
   },
   button: {
-    margin: '32px auto 0',
+    margin: '24px auto 0 auto',
   },
 });

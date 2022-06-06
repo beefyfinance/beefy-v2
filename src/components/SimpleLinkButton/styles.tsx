@@ -12,4 +12,8 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px',
     color: theme.palette.text.secondary,
   },
+  icon: {
+    fontSize: 'inherit',
+    marginRight: '4px',
+  },
 });

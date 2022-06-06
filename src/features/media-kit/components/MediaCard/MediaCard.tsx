@@ -5,6 +5,7 @@ import { SimpleLinkButton } from '../../../../components/SimpleLinkButton';
 import { MediaCardProps } from './MediaCardProps';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import { GetApp } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -34,6 +35,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({ id, versions, background }
               key={`${version.fileName}.${version.type}`}
               text={t(`BrandAssets-Download-${version.type.toUpperCase()}`)}
               href={getImage(version.fileName, version.type)}
+              IconComponent={GetApp}
             />
           ))}
         </div>

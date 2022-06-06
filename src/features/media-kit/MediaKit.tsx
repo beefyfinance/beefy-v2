@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { styles } from './styles';
 import { Container, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { AssetSection } from './components/AssetSection';
 import BIFI from '../../images/brand-assets/SVG/BIFI.svg';
-import { BRAND_ASSETS } from '../../config/brand-assets';
+import { BRAND_ASSETS } from '../../config/media-kit';
 
 const useStyles = makeStyles(styles);
 
-export const BrandAssets = () => {
+export const MediaKit = memo(function MediaKit() {
   const { t } = useTranslation();
   const classes = useStyles();
   return (
@@ -22,7 +22,7 @@ export const BrandAssets = () => {
       ))}
     </Container>
   );
-};
+});
 
 // eslint-disable-next-line no-restricted-syntax
-export default BrandAssets;
+export default MediaKit;
