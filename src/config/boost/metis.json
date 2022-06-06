@@ -1,0 +1,18 @@
+[
+  {
+    "id": "moo_netswap-wbtc-metis-relay",
+    "poolId": "netswap-wbtc-metis",
+    "name": "Relay Chain - Metis",
+    "assets": ["WBTC", "METIS"],
+    "earnedToken": "Metis",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+    "earnContractAddress": "0xeD4ea30c755676C07d3e0e0f74Ff84C0193B4551",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "METIS",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["relay"]
+  }
+]
