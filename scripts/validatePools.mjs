@@ -3,9 +3,9 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 
-import { isValidChecksumAddress, maybeChecksumAddress, isEmpty } from './utils.js';
-import { chainPools, chainRpcs } from './config.js';
-import { abis } from './config.js';
+import { isValidChecksumAddress, maybeChecksumAddress, isEmpty } from './utils.mjs';
+import { chainPools, chainRpcs } from './config.mjs';
+import { abis } from './config.mjs';
 const strategyABI = abis.strategyABI;
 const vaultABI = abis.vaultABI;
 
