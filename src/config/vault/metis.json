@@ -743,7 +743,8 @@
       "IL_LOW",
       "MCAP_HIGH",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://tethys.finance/pool/add?inputCurrency=METIS&outputCurrency=0x4651B38e7ec14BB3db731369BFE5B08F2466Bd0A",

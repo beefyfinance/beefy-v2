@@ -411,7 +411,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0.01%",
@@ -446,7 +447,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0.01%",
@@ -517,7 +519,8 @@
       "IL_LOW",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",

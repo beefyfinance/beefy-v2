@@ -131,7 +131,8 @@
       "IL_LOW",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.sushi.com/add/0x122013fd7dF1C6F636a5bb8f03108E876548b455/0xE4fE50cdD716522A56204352f00AA110F731932d",
@@ -340,7 +341,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.sushi.com/add/0x765DE816845861e75A25fCA122bb6898B8B1282a/0xE4fE50cdD716522A56204352f00AA110F731932d",

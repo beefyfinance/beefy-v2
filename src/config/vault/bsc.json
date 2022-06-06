@@ -856,7 +856,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0.01%",
@@ -17712,7 +17713,8 @@
       "IL_NONE",
       "MCAP_HIGH",
       "ADMIN_WITH_TIMELOCK",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "Lending",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",

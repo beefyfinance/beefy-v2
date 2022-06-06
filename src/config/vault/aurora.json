@@ -467,7 +467,14 @@
     "status": "active",
     "platform": "Rose",
     "assets": ["MAI", "USDT", "USDC", "DAI"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_HIGH",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.rose.fi/#/farms/mai",
     "createdAt": 1650375700,

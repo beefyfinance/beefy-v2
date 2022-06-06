@@ -162,7 +162,15 @@
     "status": "active",
     "platform": "Beethoven X",
     "assets": ["FTM", "SPELL", "MIM", "ICE"],
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_HIGH", "MCAP_MIRO", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_HIGH",
+      "MCAP_MIRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.beets.fi/#/pool/0x2bea17ede5d83ad19ae112b8592aadaa2b015de7000100000000000000000069",
@@ -229,7 +237,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -332,7 +341,8 @@
       "IL_NONE",
       "MCAP_SMALL",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -523,7 +533,8 @@
       "IL_NONE",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -680,7 +691,8 @@
       "IL_NONE",
       "MCAP_MEDIUM",
       "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "Lending",
     "withdrawalFee": "0%",
@@ -714,7 +726,8 @@
       "IL_HIGH",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -749,7 +762,8 @@
       "IL_NONE",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0.01%",
@@ -1296,7 +1310,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "Lending",
     "withdrawalFee": "0%",
@@ -1434,7 +1449,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0.01%",
@@ -1501,7 +1517,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x82f0B8B456c1A451378467398982d4834b6829c1",
@@ -1738,7 +1755,8 @@
       "IL_LOW",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
@@ -2002,7 +2020,8 @@
       "IL_NONE",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -2482,7 +2501,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0.01%",
@@ -2796,7 +2816,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -2832,7 +2853,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "Lending",
     "withdrawalFee": "0.01%",
@@ -3076,7 +3098,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -3148,7 +3171,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -3252,7 +3276,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -3427,7 +3452,8 @@
       "IL_NONE",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -3673,7 +3699,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.sushi.com/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
@@ -3708,7 +3735,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.sushi.com/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x82f0B8B456c1A451378467398982d4834b6829c1",
@@ -3884,7 +3912,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "SingleStake",
     "withdrawalFee": "0%",
@@ -3920,7 +3949,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "SingleStake",
     "withdrawalFee": "0%",
@@ -4308,7 +4338,8 @@
       "IL_LOW",
       "MCAP_SMALL",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -5017,7 +5048,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "NO_AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "Lending",
     "withdrawalFee": "0.01%",
@@ -5343,7 +5375,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "addLiquidityUrl": "https://frozenyogurt.finance/pool",
@@ -5589,7 +5622,8 @@
       "IL_LOW",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -5729,7 +5763,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -6185,7 +6220,14 @@
     "status": "active",
     "platform": "Tomb",
     "assets": ["TOMB", "MAI"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0xfB98B335551a418cD0737375a2ea0ded62Ea213b&outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
@@ -6289,7 +6331,8 @@
       "ALGO_STABLE",
       "IL_HIGH",
       "MCAP_MICRO",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -6959,7 +7002,14 @@
     "status": "active",
     "platform": "Tomb",
     "assets": ["TSHARE", "MAI"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x4cdF39285D7Ca8eB3f090fDA0C069ba5F4145B37/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
@@ -7235,7 +7285,8 @@
       "IL_NONE",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -7306,7 +7357,8 @@
       "IL_HIGH",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -7447,7 +7499,8 @@
       "IL_HIGH",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -7729,7 +7782,8 @@
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
+      "ALGO_STABLE",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -7792,7 +7846,8 @@
       "IL_NONE",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -8002,7 +8057,8 @@
       "IL_LOW",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -8219,7 +8275,8 @@
       "IL_NONE",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0.01%",
@@ -8320,7 +8377,15 @@
     "status": "eol",
     "platform": "Beethoven X",
     "assets": ["FTM", "DAI"],
-    "risks": ["COMPLEXITY_LOW", "NEW_STRAT", "IL_LOW", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "NEW_STRAT",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.beets.fi/#/pool/0x63386ef152e1ddef96c065636d6cc0165ff332910002000000000000000000a1",
@@ -8417,6 +8482,7 @@
       "NEW_STRAT",
       "MCAP_MICRO",
       "AUDIT",
+      "IL_NONE",
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
@@ -8450,7 +8516,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "MCAP_SMALL",
+      "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
@@ -8774,7 +8840,14 @@
     "status": "active",
     "platform": "Tomb",
     "assets": ["MIM", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x82f0B8B456c1A451378467398982d4834b6829c1",
@@ -8802,7 +8875,14 @@
     "status": "active",
     "platform": "Tomb",
     "assets": ["MAI", "USDC"],
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
@@ -9182,6 +9262,174 @@
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0x8D7d3409881b51466B483B11Ea1B8A03cdEd89ae",
     "createdAt": 1653896828,
+    "network": "fantom"
+  },
+  {
+    "id": "tomb-ftm-dai",
+    "name": "DAI-FTM LP",
+    "token": "DAI-FTM TLP",
+    "tokenDescription": "TombSwap",
+    "tokenAddress": "0xB89486a030075B42d589008Da7877dd783Af968F",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooTombFTM-DAI",
+    "earnedTokenAddress": "0x51Ff746981ed53fc9e6B8651D0ccCA02DAC96F11",
+    "earnContractAddress": "0x51Ff746981ed53fc9e6B8651D0ccCA02DAC96F11",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "tomb-ftm-dai",
+    "oraclePrice": 0,
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "Tomb",
+    "assets": ["DAI", "FTM"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "stratType": "StratLP",
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://swap.tomb.com/#/add/ETH/0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=ETH&outputCurrency=0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E",
+    "createdAt": 1654074996,
+    "network": "fantom"
+  },
+  {
+    "id": "tomb-ftm-eth",
+    "name": "ETH-FTM LP",
+    "token": "ETH-FTM TLP",
+    "tokenDescription": "TombSwap",
+    "tokenAddress": "0x8E49C8fBF6128356019D8A7d34E9b92f03bc2803",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooTombFTM-ETH",
+    "earnedTokenAddress": "0xB41a14B5AA644BE3A78a54d7f12c405cF004C758",
+    "earnContractAddress": "0xB41a14B5AA644BE3A78a54d7f12c405cF004C758",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "tomb-ftm-eth",
+    "oraclePrice": 0,
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "Tomb",
+    "assets": ["ETH", "FTM"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "stratType": "StratLP",
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://swap.tomb.com/#/add/ETH/0x74b23882a30290451A17c44f4F05243b6b58C76d",
+    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=ETH&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
+    "createdAt": 1654075223,
+    "network": "fantom"
+  },
+  {
+    "id": "tomb-ftm-fusdt",
+    "name": "fUSDT-FTM LP",
+    "token": "fUSDT-FTM TLP",
+    "tokenDescription": "TombSwap",
+    "tokenAddress": "0x681d32C8b374c2Dd83064775dBB48EA97db2c506",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooTombFTM-fUSDT",
+    "earnedTokenAddress": "0x0d367827F705E893C0e1ab0DfC800104b186579e",
+    "earnContractAddress": "0x0d367827F705E893C0e1ab0DfC800104b186579e",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "tomb-ftm-fusdt",
+    "oraclePrice": 0,
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "Tomb",
+    "assets": ["fUSDT", "FTM"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "stratType": "StratLP",
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://swap.tomb.com/#/add/ETH/0x049d68029688eAbF473097a2fC38ef61633A3C7A",
+    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=ETH&outputCurrency=0x049d68029688eAbF473097a2fC38ef61633A3C7A",
+    "createdAt": 1654075348,
+    "network": "fantom"
+  },
+  {
+    "id": "tomb-ftm-btc",
+    "name": "BTC-FTM LP",
+    "token": "BTC-FTM TLP",
+    "tokenDescription": "TombSwap",
+    "tokenAddress": "0x5063C79e377332FB98CB6C8DB414d752DC7C478E",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooTombFTM-BTC",
+    "earnedTokenAddress": "0xAdB792870c3F761301Ff23BC9Fb7fEABd451c212",
+    "earnContractAddress": "0xAdB792870c3F761301Ff23BC9Fb7fEABd451c212",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "tomb-ftm-btc",
+    "oraclePrice": 0,
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "Tomb",
+    "assets": ["BTC", "FTM"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "stratType": "StratLP",
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://swap.tomb.com/#/add/ETH/0x321162Cd933E2Be498Cd2267a90534A804051b11",
+    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=ETH&outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
+    "createdAt": 1654075440,
+    "network": "fantom"
+  },
+  {
+    "id": "tomb-ftm-mim",
+    "name": "MIM-FTM LP",
+    "token": "FTM-MIM TLP",
+    "tokenDescription": "TombSwap",
+    "tokenAddress": "0xa7c86Fc1B87830b8aBFA623571405E03560a8326",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooTombFTM-MIM",
+    "earnedTokenAddress": "0x5Bd971AB8c4dC2bAC0Db6d5dDD9ab1BD8FaC1067",
+    "earnContractAddress": "0x5Bd971AB8c4dC2bAC0Db6d5dDD9ab1BD8FaC1067",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "tomb-ftm-mim",
+    "oraclePrice": 0,
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "Tomb",
+    "assets": ["FTM", "MIM"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "stratType": "StratLP",
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://swap.tomb.com/#/add/ETH/0x82f0B8B456c1A451378467398982d4834b6829c1",
+    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=ETH&outputCurrency=0x82f0B8B456c1A451378467398982d4834b6829c1",
+    "createdAt": 1654075665,
+    "network": "fantom"
+  },
+  {
+    "id": "tomb-btc-eth",
+    "name": "BTC-ETH LP",
+    "token": "BTC-ETH TLP",
+    "tokenDescription": "TombSwap",
+    "tokenAddress": "0x3f468804d133894a73b54cfc07D5886E5195255f",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooTombBTC-ETH",
+    "earnedTokenAddress": "0xd23486489e3fB6F461107B7422c625c2c3B77fEf",
+    "earnContractAddress": "0xd23486489e3fB6F461107B7422c625c2c3B77fEf",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "tomb-btc-eth",
+    "oraclePrice": 0,
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "Tomb",
+    "assets": ["BTC", "ETH"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "stratType": "StratLP",
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://swap.tomb.com/#/add/0x321162Cd933E2Be498Cd2267a90534A804051b11/0x74b23882a30290451A17c44f4F05243b6b58C76d",
+    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
+    "createdAt": 1654075781,
     "network": "fantom"
   }
 ]

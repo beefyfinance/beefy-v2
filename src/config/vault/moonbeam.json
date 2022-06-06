@@ -97,7 +97,8 @@
       "IL_NONE",
       "MCAP_HIGH",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61",
@@ -692,7 +693,8 @@
       "IL_NONE",
       "MCAP_HIGH",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",

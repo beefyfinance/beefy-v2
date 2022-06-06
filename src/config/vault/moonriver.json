@@ -753,7 +753,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.sushi.com/add/0x0caE51e1032e8461f4806e26332c030E34De3aDb/0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xf50225a84382c74CbdeA10b0c176f71fc3DE0C4d",
@@ -825,7 +826,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.sushi.com/add/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C/0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
@@ -1410,7 +1412,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -1446,7 +1449,8 @@
       "IL_LOW",
       "MCAP_LOW",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -1481,7 +1485,8 @@
       "IL_NONE",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -1586,7 +1591,8 @@
       "IL_NONE",
       "MCAP_HIGH",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",

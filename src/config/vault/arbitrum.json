@@ -62,7 +62,8 @@
       "IL_NONE",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0.01%",
@@ -128,7 +129,8 @@
       "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.sushi.com/add/0xFEa7a6a0B346362BF88A9e4A88416B77a57D6c2A/0x82af49447d8a07e3bd95bd0d56f35241523fbab1",

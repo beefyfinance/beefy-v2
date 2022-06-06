@@ -135,7 +135,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -308,7 +309,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -514,7 +516,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -547,7 +550,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -651,7 +655,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.apeswap.finance/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -719,7 +724,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "assets": ["IRON", "USDC", "USDT", "DAI"],
@@ -1206,7 +1212,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -1296,7 +1303,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "createdAt": 1624076992
   },
@@ -2239,7 +2247,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -2639,7 +2648,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0.01%",
@@ -2798,7 +2808,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
@@ -2999,7 +3010,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0.01%",
@@ -4509,7 +4521,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
@@ -4543,7 +4556,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0.01%",
@@ -4793,7 +4807,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratMultiLP",
     "withdrawalFee": "0%",
@@ -5183,7 +5198,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -5855,7 +5871,8 @@
       "MCAP_LOW",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -5891,7 +5908,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -6123,7 +6141,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "Lending",
     "withdrawalFee": "0.01%",
@@ -6656,7 +6675,8 @@
       "MCAP_MEDIUM",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -6791,7 +6811,8 @@
       "IL_HIGH",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0%",
@@ -6969,7 +6990,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "withdrawalFee": "0.01%",
@@ -7078,7 +7100,8 @@
       "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "stratType": "StratLP",
     "addLiquidityUrl": "https://app.sushi.com/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
