@@ -49,11 +49,7 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
             </Button>
           </a>
         )}
-        {vault.assetIds.includes('BIFI') && (
-          <>
-            <Bridge buttonClassname={classes.btnSecondary1} />
-          </>
-        )}
+        {vault.assetIds.includes('BIFI') && <Bridge buttonClassname={classes.btnSecondary1} />}
       </>
     </Box>
   );
