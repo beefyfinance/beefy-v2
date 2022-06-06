@@ -115,6 +115,14 @@ function _Preview({
         destChainId: destChainId,
       })
     );
+    dispatch(
+      bridgeModalActions.setInput({
+        amount: formState.formattedInput,
+        chainId: formState.fromChainId,
+        tokenAddress: fromChainData.address,
+        state: store.getState(),
+      })
+    );
   };
 
   const handleInput = (amountStr: string) => {

@@ -70,25 +70,20 @@ export const bridgeModalSlice = createSlice({
 
       const formattedOutput = (() => {
         if (balance && destChainData) {
-          const minFee = destChainData.BaseFeePercent
-            ? new BigNumber(
-                (destChainData.MinimumSwapFee / (100 + destChainData.BaseFeePercent)) * 100
-              )
-            : new BigNumber(destChainData.MinimumSwapFee);
-
-          const baseFee = destChainData.BaseFeePercent ? minFee : BIG_ZERO;
-          const fee = balance.times(destChainData.SwapFeeRatePerMillion);
-
-          let outputValue = balance.minus(fee);
-          if (fee.lt(minFee)) {
-            outputValue = balance.minus(minFee);
-          } else if (fee.gt(new BigNumber(destChainData.MaximumSwapFee))) {
-            outputValue = balance.minus(new BigNumber(destChainData.MaximumSwapFee));
-          } else {
-            outputValue = balance.minus(fee).minus(baseFee);
+          const fee = balance
+            .times(new BigNumber(destChainData.SwapFeeRatePerMillion))
+            .dividedBy(100);
+          let value = balance.minus(fee);
+          if (fee.isLessThan(new BigNumber(destChainData.MinimumSwapFee))) {
+            value = balance.minus(new BigNumber(destChainData.MinimumSwapFee));
+          } else if (fee.isGreaterThan(new BigNumber(destChainData.MaximumSwapFee))) {
+            value = balance.minus(new BigNumber(destChainData.MaximumSwapFee));
           }
-          if (outputValue.isGreaterThan(BIG_ZERO)) {
-            return outputValue.toFixed(4);
+          if (!destChainData?.swapfeeon) {
+            value = balance;
+          }
+          if (value?.isGreaterThan(BIG_ZERO)) {
+            return new BigNumber(value).toFixed(4);
           }
           return BIG_ZERO.toFixed(2);
         } else {
@@ -144,24 +139,20 @@ export const bridgeModalSlice = createSlice({
 
       const formattedOutput = (() => {
         if (value && destChainData) {
-          const minFee = destChainData.BaseFeePercent
-            ? new BigNumber(
-                (destChainData.MinimumSwapFee / (100 + destChainData.BaseFeePercent)) * 100
-              )
-            : new BigNumber(destChainData.MinimumSwapFee);
-
-          const baseFee = destChainData.BaseFeePercent ? minFee : BIG_ZERO;
-          const fee = value.times(new BigNumber(destChainData.SwapFeeRatePerMillion));
-          let outputValue = value.minus(fee);
-          if (fee.lt(minFee)) {
-            outputValue = value.minus(minFee);
-          } else if (fee.gt(new BigNumber(destChainData.MaximumSwapFee))) {
-            outputValue = value.minus(new BigNumber(destChainData.MaximumSwapFee));
-          } else {
-            outputValue = value.minus(fee).minus(baseFee);
+          const fee = value
+            .times(new BigNumber(destChainData.SwapFeeRatePerMillion))
+            .dividedBy(100);
+          let output = value.minus(fee);
+          if (fee.isLessThan(new BigNumber(destChainData.MinimumSwapFee))) {
+            output = value.minus(new BigNumber(destChainData.MinimumSwapFee));
+          } else if (fee.isGreaterThan(new BigNumber(destChainData.MaximumSwapFee))) {
+            output = value.minus(new BigNumber(destChainData.MaximumSwapFee));
           }
-          if (outputValue.isGreaterThan(BIG_ZERO)) {
-            return outputValue.toFixed(4);
+          if (!destChainData?.swapfeeon) {
+            output = value;
+          }
+          if (value?.isGreaterThan(BIG_ZERO)) {
+            return new BigNumber(output).toFixed(4);
           }
           return BIG_ZERO.toFixed(2);
         } else {
