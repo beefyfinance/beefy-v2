@@ -7,9 +7,8 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { styles } from './styles';
 import { Bridge } from '../../../../components/Bridge';
-import clsx from 'clsx';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -22,7 +21,6 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
       <>
         {vault.buyTokenUrl && (
           <a
-            style={{ marginRight: '8px' }}
             href={vault.buyTokenUrl}
             target="_blank"
             rel="noreferrer"
@@ -39,7 +37,6 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
         {vault.addLiquidityUrl && (
           <a
             href={vault.addLiquidityUrl}
-            style={{ marginRight: '8px' }}
             target="_blank"
             rel="noreferrer"
             className={classes.btnSecondary}
@@ -54,12 +51,7 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
         )}
         {vault.assetIds.includes('BIFI') && (
           <>
-            <Bridge
-              buttonClassname={clsx({
-                [classes.btnSecondary1]: true,
-                [classes.marginButton]: vault.addLiquidityUrl && vault.buyTokenUrl,
-              })}
-            />
+            <Bridge buttonClassname={classes.btnSecondary1} />
           </>
         )}
       </>
