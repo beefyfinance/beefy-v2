@@ -17,7 +17,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
-import { BIG_ZERO, formatBigNumberSignificant } from '../../../../helpers/format';
+import { formatBigNumberSignificant } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { initWithdrawForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -61,6 +61,7 @@ import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { AlertWarning } from '../../../../components/Alerts';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 

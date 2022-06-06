@@ -9,9 +9,10 @@ import {
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultTvl } from '../../features/data/selectors/tvl';
 import { selectVaultById } from '../../features/data/selectors/vaults';
-import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
+import { formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
+import { BIG_ZERO } from '../../helpers/big-number';
 
 const _VaultTvl = connect((state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
   const vault = selectVaultById(state, vaultId);

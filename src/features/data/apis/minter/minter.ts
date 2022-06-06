@@ -4,8 +4,8 @@ import { FetchMinterReservesResult, IMinterApi } from './minter-types';
 import { getContract } from '../../../../helpers/getContract';
 import MinterAbi from '../../../../config/abi/minter.json';
 import BigNumber from 'bignumber.js';
-import { BIG_ZERO } from '../../../../helpers/format';
 import { MinterEntity } from '../../entities/minter';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 export class MinterApi implements IMinterApi {
   constructor(protected web3: Web3, protected chain: ChainEntity) {}

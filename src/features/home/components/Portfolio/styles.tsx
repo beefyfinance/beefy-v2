@@ -18,6 +18,7 @@ export const styles = theme => ({
   btnHide: {
     color: '#484F7F',
     marginLeft: '10px',
+    padding: 0,
     '&:hover': {
       backgroundColor: 'transparent',
       color: '#6B7199',

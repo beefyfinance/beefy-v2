@@ -6,11 +6,7 @@ import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from '../styles';
 import { useDispatch, useSelector } from 'react-redux';
 import BigNumber from 'bignumber.js';
-import {
-  BIG_ZERO,
-  formatBigDecimals,
-  formatBigNumberSignificant,
-} from '../../../../../../helpers/format';
+import { formatBigDecimals, formatBigNumberSignificant } from '../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { BeefyState } from '../../../../../../redux-types';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
@@ -31,6 +27,7 @@ import { MinterCardParams } from '../../MinterCard';
 import { selectMinterById } from '../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../data/selectors/chains';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 

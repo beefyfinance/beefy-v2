@@ -1,11 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { isArray } from 'lodash';
-import {
-  BIG_ZERO,
-  formatBigDecimals,
-  formatBigNumberSignificant,
-} from '../../../../helpers/format';
+import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { initiateWithdrawForm } from '../../actions/withdraw';
 import { fetchEstimateZapWithdraw } from '../../actions/zap';
@@ -20,6 +16,7 @@ import {
 import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../selectors/vaults';
 import { mooAmountToOracleAmount } from '../../utils/ppfs';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 // TODO: this looks exactly like the deposit state
 export type WithdrawState = {

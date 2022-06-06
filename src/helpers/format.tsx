@@ -23,9 +23,6 @@ export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   return `${wholes}.${decimals.match(pattern)[0]}`;
 }
 
-export const BIG_ZERO = new BigNumber(0);
-export const BIG_ONE = new BigNumber(1);
-
 export const formatApy = (apy, dp = 2, placeholder: any = '?') => {
   if (!apy) return placeholder;
 

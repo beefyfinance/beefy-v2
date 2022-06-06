@@ -29,7 +29,7 @@ export const Portfolio = () => {
     <div className={classes.portfolio}>
       <Container maxWidth="lg">
         <Grid container>
-          <Grid className={classes.separator} item xs={12} md={6}>
+          <Grid className={classes.separator} item xs={12} md={7}>
             <div className={classes.title}>
               {t('Portfolio-Portfolio')}{' '}
               <Button size="small" className={classes.btnHide} onClick={updateHideBalance}>
@@ -42,7 +42,7 @@ export const Portfolio = () => {
             </div>
             <Stats stats={globalStats} blurred={hideBalance} />
           </Grid>
-          <Grid item xs={12} md={6} className={classes.vaults}>
+          <Grid item xs={12} md={5} className={classes.vaults}>
             <div className={classes.title}>{t('Vault-platform')}</div>
             <VaultsStats />
           </Grid>
