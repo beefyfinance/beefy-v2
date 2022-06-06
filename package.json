@@ -57,7 +57,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && react-scripts build",
+    "validate": "node --experimental-json-modules ./scripts/validatePools.js",
+    "creationdate": "node --experimental-json-modules ./scripts/getPoolCreationTimestamp.js",
+    "launchpool": "node --experimental-json-modules ./scripts/launchpool.js",
     "test": "TZ=UTC react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
