@@ -664,6 +664,7 @@ export const pools = [
       'MCAP_MEDIUM',
       'PLATFORM_ESTABLISHED',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
@@ -1686,6 +1687,7 @@ export const pools = [
       'MCAP_MEDIUM',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratMultiLP',
     withdrawalFee: '0%',
@@ -1971,6 +1973,7 @@ export const pools = [
       'MCAP_MEDIUM',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratMultiLP',
     withdrawalFee: '0%',
@@ -2690,6 +2693,7 @@ export const pools = [
       'MCAP_MICRO',
       'PLATFORM_ESTABLISHED',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
@@ -2726,6 +2730,7 @@ export const pools = [
       'MCAP_MICRO',
       'PLATFORM_ESTABLISHED',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
@@ -2871,6 +2876,7 @@ export const pools = [
       'MCAP_MEDIUM',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'Lending',
     withdrawalFee: '0.01%',
@@ -3371,6 +3377,7 @@ export const pools = [
       'MCAP_MEDIUM',
       'PLATFORM_ESTABLISHED',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
@@ -4530,6 +4537,7 @@ export const pools = [
       'MCAP_LARGE',
       'PLATFORM_ESTABLISHED',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:

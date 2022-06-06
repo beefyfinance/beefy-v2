@@ -890,6 +890,7 @@ export const pools = [
       'MCAP_LARGE',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratMultiLP',
     withdrawalFee: '0.01%',
@@ -18731,6 +18732,7 @@ export const pools = [
       'MCAP_HIGH',
       'ADMIN_WITH_TIMELOCK',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'Lending',
     buyTokenUrl:

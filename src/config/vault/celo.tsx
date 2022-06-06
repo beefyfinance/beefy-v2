@@ -136,6 +136,7 @@ export const pools = [
       'MCAP_LARGE',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
@@ -357,6 +358,7 @@ export const pools = [
       'MCAP_MEDIUM',
       'AUDIT',
       'CONTRACTS_VERIFIED',
+      'OVER_COLLAT_ALGO_STABLECOIN',
     ],
     stratType: 'StratLP',
     addLiquidityUrl:
