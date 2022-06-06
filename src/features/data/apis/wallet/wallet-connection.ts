@@ -318,11 +318,6 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
   const fuseChain = chains.find(chain => chain.id === 'fuse');
 
   const providerOptions: IProviderOptions = {
-    injected: {
-      display: {
-        name: 'MetaMask',
-      },
-    } as any /* Property 'package' is missing in this type but required in type IProviderOptions */,
     'custom-binance': {
       display: {
         name: 'Binance',
