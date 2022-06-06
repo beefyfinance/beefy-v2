@@ -663,7 +663,7 @@ export const pools = [
   },
   {
     id: 'moo_sushi-jrt-eth-jarvis',
-    poolId: 'sushi-jrt-eth',
+    poolId: 'sushi-jrt-eth-eol',
     name: 'Jarvis',
     assets: ['JRT', 'ETH'],
     earnedToken: 'JRT-ETH-KPI',
