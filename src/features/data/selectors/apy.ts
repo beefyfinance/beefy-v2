@@ -72,7 +72,7 @@ export const selectUserGlobalStats = (state: BeefyState) => {
     newGlobalStats.deposited = newGlobalStats.deposited.plus(vaultUsdBalance);
 
     // Skip non-active/empty vaults for yields
-    if (isVaultActive(vault) || vaultUsdBalance.lte(BIG_ZERO)) {
+    if (!isVaultActive(vault) || vaultUsdBalance.lte(BIG_ZERO)) {
       continue;
     }
 
