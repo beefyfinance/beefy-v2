@@ -81,7 +81,6 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
 };
 
 const theme = createTheme({
-  test: true,
   palette: {
     type: 'dark',
     primary: { main: '#59A662', light: '#CDF7D2', dark: '#004708' },

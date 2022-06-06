@@ -40,9 +40,7 @@ declare module '@material-ui/core/styles/createPalette' {
 }
 
 declare module '@material-ui/core/styles' {
-  export interface ThemeOptions {
-    test?: boolean;
-  }
+  export interface ThemeOptions {}
 }
 
 declare module '@material-ui/core/styles/createTypography' {
