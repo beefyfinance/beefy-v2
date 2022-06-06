@@ -1,4 +1,3 @@
-console.log('version is ' + process.version);
 import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
