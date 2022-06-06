@@ -64,6 +64,16 @@ export const styles = (theme: Theme) => ({
       borderColor: '#2C3154',
     },
   },
+  success: {
+    color: '#FFFFFF',
+    backgroundColor: '#59A662',
+    borderColor: '#59A662',
+    '&:hover': {
+      color: '#FFFFFF',
+      backgroundColor: '#68a871',
+      borderColor: '#68a871',
+    },
+  },
   filter: {
     color: '#8A8EA8',
     backgroundColor: '#262A40',
@@ -82,16 +92,7 @@ export const styles = (theme: Theme) => ({
       color: '#8A8EA8',
       backgroundColor: '#262A40',
       borderColor: '#303550',
-    },
-  },
-  success: {
-    color: '#FFFFFF',
-    backgroundColor: '#59A662',
-    borderColor: '#59A662',
-    '&:hover': {
-      color: '#FFFFFF',
-      backgroundColor: '#68a871',
-      borderColor: '#68a871',
+      opacity: 0.4,
     },
   },
 });
