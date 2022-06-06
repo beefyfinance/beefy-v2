@@ -14,6 +14,14 @@ import metisPools from '../src/config/vault/metis.json' assert {type: 'json'};
 import moonbeamPools from '../src/config/vault/moonbeam.json' assert {type: 'json'};
 import emeraldPools from '../src/config/vault/emerald.json' assert {type: 'json'};
 
+import vaultABI from '../src/config/abi/vault.json' assert {type: 'json'};
+import strategyABI from '../src/config/abi/strategy.json' assert {type: 'json'};
+
+export const abis = {
+  vaultABI,
+  strategyABI
+}
+
 export const chainPools = {
     bsc: bscPools,
     // heco: hecoPools,

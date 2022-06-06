@@ -5,8 +5,9 @@ import BigNumber from 'bignumber.js';
 
 import { isValidChecksumAddress, maybeChecksumAddress, isEmpty } from './utils.js';
 import { chainPools, chainRpcs } from './config.js';
-import vaultABI from '../src/config/abi/vault.json' assert {type: 'json'};
-import strategyABI from '../src/config/abi/strategy.json' assert {type: 'json'};
+import { abis } from './config.js';
+const strategyABI = abis.strategyABI;
+const vaultABI = abis.vaultABI;
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
