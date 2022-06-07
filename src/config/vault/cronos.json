@@ -1343,7 +1343,7 @@
     "retireReason": "tvl"
   },
   {
-    "id": "vvs-ali-cro",
+    "id": "vvs-ali-cro-eol",
     "name": "ALI-CRO",
     "token": "ALI-CRO LP",
     "tokenDescription": "VVS",
@@ -1358,8 +1358,9 @@
     "oracle": "lps",
     "oracleId": "vvs-ali-cro",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "withdrawalFee": "0.0%",
     "platform": "VVS",
     "assets": ["ALI", "CRO"],

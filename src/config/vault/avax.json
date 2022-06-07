@@ -621,7 +621,7 @@
     "depositsPaused": false
   },
   {
-    "id": "joe-mim-wavax",
+    "id": "joe-mim-wavax-eol",
     "name": "MIM-AVAX LP",
     "token": "MIM-AVAX JLP",
     "tokenDescription": "Trader Joe",
@@ -636,7 +636,9 @@
     "oracle": "lps",
     "oracleId": "joe-mim-wavax",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["MIM", "AVAX"],
     "risks": [
@@ -653,7 +655,7 @@
     "buyTokenUrl": "https://www.traderjoexyz.com/trade",
     "network": "avax",
     "createdAt": 1630670273,
-    "depositsPaused": false
+    "depositsPaused": true
   },
   {
     "id": "joe-wbtc.e-usdt.e-eol",
