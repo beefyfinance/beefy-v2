@@ -69,6 +69,7 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
       <div className={classes.title}>
         <span>
           <Trans
+            t={t}
             i18nKey="Boost-ExpiredBoost"
             components={{ white: <span className={classes.titleWhite} /> }}
           />
