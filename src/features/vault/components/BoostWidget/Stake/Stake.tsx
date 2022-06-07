@@ -108,7 +108,7 @@ const StakeForm = ({
   const store = useStore();
   const formState = useSelector((state: BeefyState) => state.ui.boostModal);
 
-  const [startStepper, isStepping, Stepper] = useStepper(vault.id);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const spenderAddress = boost.earnContractAddress;
 

@@ -3,6 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { FetchAllAllowanceResult } from '../apis/allowance/allowance-types';
 import { getAllowanceApi } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
+import { TokenErc20 } from '../entities/token';
 import { isGovVault, VaultGov, VaultStandard } from '../entities/vault';
 import { selectBoostById, selectBoostsByChainId } from '../selectors/boosts';
 import { selectChainById } from '../selectors/chains';
@@ -56,4 +57,28 @@ export const fetchAllAllowanceAction = createAsyncThunk<
     walletAddress
   );
   return { chainId, data };
+});
+
+interface FetchAllowanceActionParams {
+  chainId: ChainEntity['id'];
+  spenderAddress: string;
+  tokens: TokenErc20[];
+}
+
+export const fetchAllowanceAction = createAsyncThunk<
+  FetchAllAllowanceFulfilledPayload,
+  FetchAllowanceActionParams,
+  { state: BeefyState }
+>('allowance/fetchAllowanceAction', async ({ chainId, spenderAddress, tokens }, { getState }) => {
+  const state = getState();
+  const walletAddress = selectWalletAddress(state);
+  const chain = selectChainById(state, chainId);
+  const api = await getAllowanceApi(chain);
+
+  const allowanceRes =
+    walletAddress && spenderAddress
+      ? await api.fetchTokensAllowance(getState(), tokens, walletAddress, spenderAddress)
+      : [];
+
+  return { chainId, data: allowanceRes };
 });

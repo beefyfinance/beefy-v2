@@ -6,6 +6,7 @@ import erc20Abi from '../../../config/abi/erc20.json';
 import vaultAbi from '../../../config/abi/vault.json';
 import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
+import bridgeAbi from '../../../config/abi/BridgeAbi.json';
 import { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getWalletConnectionApiInstance } from '../apis/instances';
 import { ZapEstimate, ZapOptions } from '../apis/zap';
@@ -47,6 +48,7 @@ import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
 import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
+import { selectChainById } from '../selectors/chains';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -797,6 +799,78 @@ const burnWithdraw = (
   });
 };
 
+const bridge = (
+  chainId: ChainEntity['id'],
+  destChainId: ChainEntity['id'],
+  routerAddr: string,
+  amount: BigNumber,
+  isRouter: boolean
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const bridgeTokenData = state.ui.bridgeModal.bridgeDataByChainId[chainId];
+
+    const destChain = selectChainById(state, destChainId);
+    const destChainData: any = Object.values(
+      bridgeTokenData.destChains[destChain.networkChainId]
+    )[0];
+
+    const bridgeToken = selectTokenByAddress(state, chainId, bridgeTokenData.address);
+    const destToken = selectTokenByAddress(state, destChainId, destChainData.address);
+
+    const gasToken = selectChainNativeToken(state, chainId);
+    const walletApi = await getWalletConnectionApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const gasPrices = await getGasPriceOptions(web3);
+
+    const transaction = (() => {
+      const rawAmount = convertAmountToRawNumber(amount, bridgeTokenData.decimals);
+      if (isRouter) {
+        //ROUTER CONTRACT
+        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
+        return bridgeTokenData.underlying
+          ? contract?.methods
+              .anySwapOutUnderlying(
+                bridgeTokenData.address,
+                address,
+                rawAmount,
+                destChain.networkChainId
+              )
+              .send({ from: address, ...gasPrices })
+          : contract?.methods
+              .anySwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
+              .send({ from: address, ...gasPrices });
+      } else {
+        //BIFI TOKEN CONTRACT
+        const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], bridgeTokenData.address);
+        return destChainData.type === 'swapout'
+          ? contract.methods.Swapout(rawAmount, address).send({ from: address, ...gasPrices })
+          : contract.methods.transfer(routerAddr, rawAmount).send({ from: address, ...gasPrices });
+      }
+    })();
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      {
+        amount: amount,
+        token: bridgeToken,
+      },
+      {
+        chainId: chainId,
+        spenderAddress: routerAddr,
+        tokens: uniqBy([gasToken, bridgeToken, destToken], 'id'),
+      }
+    );
+  });
+};
+
 export const walletActions = {
   approval,
   deposit,
@@ -814,6 +888,7 @@ export const walletActions = {
   unstakeBoost,
   mintDeposit,
   burnWithdraw,
+  bridge,
 };
 
 function captureWalletErrors<ReturnType>(

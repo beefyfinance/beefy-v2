@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-export const ApyStatLoader = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
+export const StatLoader = ({ backgroundColor = '#313759', foregroundColor = '#8585A6' }) => {
   return (
     <ContentLoader
       width={64}

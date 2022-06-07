@@ -2,12 +2,12 @@ import { isEmpty } from 'lodash';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Steps } from '.';
-import { VaultEntity } from '../../features/data/entities/vault';
+import { ChainEntity } from '../../features/data/entities/chain';
 import { BeefyState } from '../../redux-types';
 import { StepperState } from './types';
 
 export function useStepper(
-  vaultId: VaultEntity['id'],
+  chainId: ChainEntity['id'],
   onClose?: () => unknown
 ): [(steps: StepperState['items']) => unknown, boolean, React.FC] {
   const [steps, setSteps] = React.useState<StepperState>({
@@ -28,8 +28,8 @@ export function useStepper(
   }, [onClose, setSteps]);
 
   const Stepper: React.FC = React.useMemo(
-    () => React.memo(() => <Steps vaultId={vaultId} steps={steps} handleClose={handleClose} />),
-    [vaultId, steps, handleClose]
+    () => React.memo(() => <Steps chainId={chainId} steps={steps} handleClose={handleClose} />),
+    [chainId, steps, handleClose]
   );
 
   // advance stepper
