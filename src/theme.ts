@@ -6,6 +6,7 @@ declare module '@material-ui/core/styles/createPalette' {
     footer: string;
     light: string;
     content: string;
+    contentLight: string;
     header: string;
     cta: string;
     appBG: string;
@@ -43,6 +44,7 @@ const theme = createTheme({
       paper: '#232743',
       light: '#313759',
       content: '#2D3153',
+      contentLight: '#F4F4F4',
       header: '#121212',
       footer: '#121212',
       cta: '#59A662',

@@ -16,7 +16,7 @@ import { selectVaultById, selectVaultStrategyAddress } from '../../../data/selec
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
-import { ApyStatLoader } from '../../../../components/ApyStatLoader';
+import { StatLoader } from '../../../../components/StatLoader';
 import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles as any);
@@ -27,7 +27,7 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
-  const formatted = formattedTotalApy(values, <ApyStatLoader />);
+  const formatted = formattedTotalApy(values, <StatLoader />);
   const stratAddr = useAppSelector(state => selectVaultStrategyAddress(state, vaultId));
   const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));

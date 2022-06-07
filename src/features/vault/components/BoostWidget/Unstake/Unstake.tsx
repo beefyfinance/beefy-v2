@@ -101,7 +101,7 @@ const UnstakeForm = ({
   const store = useAppStore();
   const formState = useAppSelector(state => state.ui.boostModal);
 
-  const [startStepper, isStepping, Stepper] = useStepper(vault.id);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const handleInput = (amountStr: string) => {
     dispatch(

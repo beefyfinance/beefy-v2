@@ -28,8 +28,6 @@ if (!featureFlag_replayReduxActions()) {
   middlewares = [...middlewares, walletActionsMiddleware, zapEstimateMiddleware];
 }
 
-console.debug('Middlewares', middlewares);
-
 export const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware =>

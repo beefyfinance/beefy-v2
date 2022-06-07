@@ -76,7 +76,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     });
   };
 
-  const [startStepper, isStepping, Stepper] = useStepper(vaultId, resetFormData);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id, resetFormData);
 
   const [formData, setFormData] = React.useState({
     withdraw: {
