@@ -23,6 +23,7 @@ import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
 import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
 import { InfoCardsState } from './features/data/reducers/info-cards';
+import { BridgeModalState } from './features/data/reducers/wallet/bridge-modal';
 
 export interface BeefyState {
   entities: {
@@ -54,16 +55,14 @@ export interface BeefyState {
     deposit: DepositState;
     withdraw: WithdrawState;
     boostModal: BoostModalState;
+    bridgeModal: BridgeModalState;
   };
 }
 
 export type BeefyStore = EnhancedStore<
   CombinedState<BeefyState>,
   AnyAction,
-  MiddlewareArray<
-    | ((store: any) => (next: any) => (action: any) => any)
-    | ThunkMiddleware<CombinedState<BeefyState>, any, null>
-  >
+  MiddlewareArray<[ThunkMiddleware<CombinedState<BeefyState>, AnyAction, undefined>, ...any[]]>
 >;
 
 export type BeefyThunk<ReturnType = void> = ThunkAction<

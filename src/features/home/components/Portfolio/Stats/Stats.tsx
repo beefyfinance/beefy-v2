@@ -7,7 +7,7 @@ import { styles } from './styles';
 const useStyles = makeStyles(styles as any);
 export const Stats = ({ stats, blurred }) => {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
 
   const [empty, setEmpty] = useState(false);
   useEffect(() => {

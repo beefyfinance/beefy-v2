@@ -16,9 +16,7 @@ export type VaultDepositStatProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const VaultDepositStat = memo<VaultDepositStatProps>(
-  connect(mapStateToProps)(VaultValueStat)
-);
+export const VaultDepositStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultDepositStatProps) {
   const label = 'VaultStat-DEPOSITED';

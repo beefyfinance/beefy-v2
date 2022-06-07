@@ -1,5 +1,4 @@
 import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Stats } from './Stats';
 import { VaultsStats } from './VaultsStats';
@@ -10,20 +9,21 @@ import { useTheme } from '@material-ui/core/styles';
 import { selectUserGlobalStats } from '../../../data/selectors/apy';
 import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
 import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles as any);
 export const Portfolio = () => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const updateHideBalance = () => {
     dispatch(setToggleHideBalance());
   };
-  const globalStats = useSelector(selectUserGlobalStats);
-  const hideBalance = useSelector(selectIsBalanceHidden);
+  const globalStats = useAppSelector(selectUserGlobalStats);
+  const hideBalance = useAppSelector(selectIsBalanceHidden);
 
-  const t = useTranslation().t;
+  const { t } = useTranslation();
 
   return (
     <Box className={classes.portfolio}>

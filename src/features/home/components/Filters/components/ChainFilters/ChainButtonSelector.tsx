@@ -1,11 +1,10 @@
 import React, { FC, memo, SVGProps, useCallback } from 'react';
 import { ChainEntity } from '../../../../../data/entities/chain';
-import { useSelector } from 'react-redux';
 import { selectAllChainIds, selectChainById } from '../../../../../data/selectors/chains';
-import { BeefyState } from '../../../../../../redux-types';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import { styles } from './styles';
 import clsx from 'clsx';
+import { useAppSelector } from '../../../../../../store';
 
 const useStyles = makeStyles(styles);
 const networkIcons = require.context(
@@ -21,7 +20,7 @@ type ChainButtonProps = {
 };
 const ChainButton = memo<ChainButtonProps>(function ({ id, selected, onChange }) {
   const classes = useStyles();
-  const chain = useSelector((state: BeefyState) => selectChainById(state, id));
+  const chain = useAppSelector(state => selectChainById(state, id));
   const handleChange = useCallback(() => {
     onChange(!selected, id);
   }, [id, selected, onChange]);
@@ -56,7 +55,7 @@ export const ChainButtonSelector = memo<ChainButtonSelectorProps>(function Chain
   className,
 }) {
   const classes = useStyles();
-  const chainIds = useSelector(selectAllChainIds);
+  const chainIds = useAppSelector(selectAllChainIds);
   const handleChange = useCallback(
     (isSelected, id) => {
       if (isSelected) {

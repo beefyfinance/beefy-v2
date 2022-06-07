@@ -183,7 +183,7 @@ export const styles = theme => ({
     backgroundColor: 'rgba(89, 166, 98, 0.15)',
   },
   closeBtn: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
     backgroundColor: theme.palette.background.snackbars.bgBtn,
     color: theme.palette.text.primary,
     width: '100%',
@@ -205,5 +205,40 @@ export const styles = theme => ({
     '& .MuiSvgIcon-root': {
       height: '15px',
     },
+  },
+  chainContainer: {
+    backgroundColor: theme.palette.background.contentLight,
+    borderRadius: theme.spacing(0.5),
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(2),
+  },
+  statusContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  chainStatusContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  chainName: {
+    color: theme.palette.background.vaults.defaultOutline,
+    fontWeight: 700,
+  },
+  statusText: {
+    color: theme.palette.background.vaults.defaultOutline,
+    fontWeight: 400,
+    marginLeft: theme.spacing(1),
+  },
+  succesContainer: {
+    borderRadius: theme.spacing(0.5),
+    backgroundColor: 'rgba(89, 166, 98, 0.15)',
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(1.5),
+  },
+  textSuccess: {
+    color: theme.palette.primary.main,
+  },
+  errorMessage: {
+    marginTop: theme.spacing(1.5),
   },
 });

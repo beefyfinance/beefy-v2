@@ -2,7 +2,6 @@ import { Box, Button, Container, Grid, Hidden, makeStyles, Typography } from '@m
 import * as React from 'react';
 import { memo, PropsWithChildren } from 'react';
 import { Redirect, useParams } from 'react-router';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
@@ -23,7 +22,6 @@ import {
   selectVaultExistsById,
   selectVaultIdIgnoreCase,
 } from '../data/selectors/vaults';
-import { BeefyState } from '../../redux-types';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
@@ -43,6 +41,7 @@ import { InsuraceCard } from './components/InsuraceCard';
 import { NexusCard } from './components/NexusCard';
 import { SolaceCard } from './components/SolaceCard';
 import { VaultMeta } from './components/VaultMeta';
+import { useAppSelector } from '../../store';
 
 const useStyles = makeStyles(styles as any);
 const PageNotFound = React.lazy(() => import(`../../features/pagenotfound`));
@@ -53,8 +52,8 @@ type VaultUrlParams = {
 };
 export const Vault = memo(function Vault() {
   let { id, network } = useParams<VaultUrlParams>();
-  const isLoaded = useSelector(selectIsConfigAvailable);
-  const vaultExists = useSelector((state: BeefyState) => selectVaultExistsById(state, id));
+  const isLoaded = useAppSelector(selectIsConfigAvailable);
+  const vaultExists = useAppSelector(state => selectVaultExistsById(state, id));
 
   if (!isLoaded) {
     return <CowLoader text="Loading..." />;
@@ -69,7 +68,7 @@ export const Vault = memo(function Vault() {
 
 type VaultNotFoundProps = PropsWithChildren<VaultUrlParams>;
 const VaultNotFound = memo<VaultNotFoundProps>(function VaultNotFound({ id, network }) {
-  const maybeVaultId = useSelector((state: BeefyState) => selectVaultIdIgnoreCase(state, id));
+  const maybeVaultId = useAppSelector(state => selectVaultIdIgnoreCase(state, id));
 
   if (maybeVaultId !== undefined) {
     return <Redirect to={`/${network}/vault/${maybeVaultId}`} />;
@@ -84,16 +83,16 @@ type VaultContentProps = PropsWithChildren<{
 const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const isBoostedOrPreStake = useSelector((state: BeefyState) =>
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const isBoostedOrPreStake = useAppSelector(state =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
   const [dw, setDw] = React.useState('deposit');
-  const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
-  const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
-  const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
-  const isSolace = useSelector((state: BeefyState) => selectIsVaultSolace(state, vaultId));
+  const isMoonpot = useAppSelector(state => selectIsVaultMoonpot(state, vaultId));
+  const isQidao = useAppSelector(state => selectIsVaultQidao(state, vaultId));
+  const isInsurace = useAppSelector(state => selectIsVaultInsurace(state, vaultId));
+  const isSolace = useAppSelector(state => selectIsVaultSolace(state, vaultId));
 
   return (
     <>

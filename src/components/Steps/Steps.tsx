@@ -1,34 +1,42 @@
 import React from 'react';
 import { Box, Button, IconButton, makeStyles, Snackbar, Typography } from '@material-ui/core';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
-import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import clsx from 'clsx';
-import { BeefyState } from '../../redux-types';
-import { selectChainById } from '../../features/data/selectors/chains';
-import { VaultEntity } from '../../features/data/entities/vault';
 import { StepperState } from './types';
-import { selectVaultById } from '../../features/data/selectors/vaults';
 import { formatBigDecimals } from '../../helpers/format';
 import { selectMintResult } from './selectors';
+import { useAppSelector } from '../../store';
+import { ChainEntity } from '../../features/data/entities/chain';
+import { BridgeInfo } from './components/BridgeInfo';
+import { TransactionLink } from './components/TransactionLink';
 
 const useStyles = makeStyles(styles as any);
 
 const _Steps = ({
-  vaultId,
+  chainId,
   steps,
   handleClose,
 }: {
-  vaultId: VaultEntity['id'];
+  chainId: ChainEntity['id'];
   steps: StepperState;
   handleClose: () => unknown;
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const bridgeModalStatus = useAppSelector(state => state.ui.bridgeModal.status);
+
+  const needShowBridgeInfo = bridgeModalStatus === 'loading' || bridgeModalStatus === 'confirming';
+
+  const isTxInProccess =
+    steps.items.length > 1 &&
+    !steps.finished &&
+    (steps.items[steps.currentStep].step === 'withdraw' ||
+      steps.items[steps.currentStep].step === 'claim-withdraw' ||
+      steps.items[steps.currentStep].step === 'deposit');
 
   return (
     <Snackbar
@@ -47,22 +55,17 @@ const _Steps = ({
                 steps.items.length > 1 &&
                 !steps.finished &&
                 steps.items[steps.currentStep].step === 'approve',
-              [classes.progressBar50]:
-                steps.items.length > 1 &&
-                !steps.finished &&
-                (steps.items[steps.currentStep].step === 'withdraw' ||
-                  steps.items[steps.currentStep].step === 'claim-withdraw' ||
-                  steps.items[steps.currentStep].step === 'deposit'),
+              [classes.progressBar50]: bridgeModalStatus === 'loading' || isTxInProccess,
               [classes.progressBar75]:
-                steps.items.length > 1 &&
-                !steps.finished &&
-                (steps.items[steps.currentStep].step === 'withdraw' ||
-                  steps.items[steps.currentStep].step === 'claim-withdraw' ||
-                  steps.items[steps.currentStep].step === 'deposit') &&
-                walletActionsState.result === 'success_pending',
+                bridgeModalStatus === 'confirming' ||
+                (isTxInProccess &&
+                  walletActionsState.result === 'success_pending' &&
+                  steps.items[steps.currentStep].step !== 'bridge'),
               [classes.errorBar]: walletActionsState.result === 'error',
               [classes.confirmationBar]: walletActionsState.result === 'success_pending',
-              [classes.successBar]: steps.finished,
+              [classes.successBar]:
+                bridgeModalStatus === 'success' ||
+                (steps.finished && steps.items[steps.currentStep].step !== 'bridge'),
             })}
           />
         </Box>
@@ -81,8 +84,8 @@ const _Steps = ({
                 </>
               )}
               {/* Waiting  */}
-              {!steps.finished &&
-                walletActionsState.result === 'success_pending' &&
+              {(needShowBridgeInfo ||
+                (!steps.finished && walletActionsState.result === 'success_pending')) &&
                 t('Transactn-ConfirmPending')}
               {/* Transactions  */}
               {!steps.finished &&
@@ -102,6 +105,9 @@ const _Steps = ({
                   {steps.items[steps.currentStep].step === 'claim' && t('Claim-Done')}
                   {steps.items[steps.currentStep].step === 'mint' && t('Mint-Done')}
                   {steps.items[steps.currentStep].step === 'burn' && t('Burn-Done')}
+                  {steps.items[steps.currentStep].step === 'bridge' &&
+                    bridgeModalStatus === 'success' &&
+                    t('Bridge-Done')}
                 </>
               )}
             </Typography>
@@ -119,7 +125,8 @@ const _Steps = ({
               </Typography>
             )}
           {/* Waiting Content */}
-          {!steps.finished && walletActionsState.result === 'success_pending' && (
+          {(needShowBridgeInfo ||
+            (!steps.finished && walletActionsState.result === 'success_pending')) && (
             <Typography variant={'body2'} className={classes.message}>
               {t('Transactn-Wait')}
             </Typography>
@@ -142,6 +149,11 @@ const _Steps = ({
               </Button>
             </>
           )}
+          {!isEmpty(steps.items[steps.currentStep]) &&
+            steps.items[steps.currentStep].step === 'bridge' &&
+            (walletActionsState.result === 'success_pending' ||
+              walletActionsState.result === 'success') && <BridgeInfo steps={steps} />}
+
           {/* Steps finished */}
           {steps.finished && (
             <>
@@ -156,7 +168,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                     <Box pt={2}>
                       <Typography variant="body1" className={classes.message}>
@@ -177,7 +189,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -192,7 +204,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                     <Box pt={2}>
                       <Typography variant="body1" className={classes.message}>
@@ -212,7 +224,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -226,7 +238,7 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -245,7 +257,7 @@ const _Steps = ({
                           }
                         )}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
@@ -259,13 +271,25 @@ const _Steps = ({
                           token: walletActionsState.data.token.symbol,
                         })}
                       </Typography>
-                      <TransactionLink vaultId={vaultId} />
+                      <TransactionLink chainId={chainId} />
                     </Box>
                   </>
                 )}
-              <Button className={classes.closeBtn} onClick={handleClose}>
-                {t('Transactn-Close')}
-              </Button>
+              {/*
+                -By Default we show the close button
+                -If current step is 'bridge', we don't show the button until all is done
+                */}
+              {steps.items[steps.currentStep].step === 'bridge' ? (
+                bridgeModalStatus === 'success' ? (
+                  <Button className={classes.closeBtn} onClick={handleClose}>
+                    {t('Transactn-Close')}
+                  </Button>
+                ) : null
+              ) : (
+                <Button className={classes.closeBtn} onClick={handleClose}>
+                  {t('Transactn-Close')}
+                </Button>
+              )}
             </>
           )}
         </Box>
@@ -275,29 +299,3 @@ const _Steps = ({
 };
 
 export const Steps = React.memo(_Steps);
-
-function TransactionLink({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const classes = useStyles();
-  const { t } = useTranslation();
-
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-
-  const hash =
-    walletActionsState.result === 'success'
-      ? walletActionsState.data.receipt.transactionHash
-      : walletActionsState.result === 'success_pending'
-      ? walletActionsState.data.hash
-      : '';
-
-  return (
-    <Button
-      className={classes.redirectBtnSuccess}
-      href={chain.explorerUrl + '/tx/' + hash}
-      target="_blank"
-    >
-      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
-    </Button>
-  );
-}

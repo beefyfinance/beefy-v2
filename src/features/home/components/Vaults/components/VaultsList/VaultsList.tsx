@@ -1,15 +1,15 @@
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useSelector } from 'react-redux';
 import { selectFilteredVaults } from '../../../../../data/selectors/filtered-vaults';
 import { NoResults } from '../NoResults';
 import { VirtualVaultsList } from '../VirtualVaultsList';
 import { styles } from './styles';
+import { useAppSelector } from '../../../../../../store';
 
 const useStyles = makeStyles(styles);
 
 export const VaultsList = memo(function VaultsList() {
-  const vaultIds = useSelector(selectFilteredVaults);
+  const vaultIds = useAppSelector(selectFilteredVaults);
   const classes = useStyles();
 
   return (

@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../Card';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from '../styles';
-import { useDispatch, useSelector } from 'react-redux';
 import BigNumber from 'bignumber.js';
 import {
   BIG_ZERO,
@@ -12,7 +11,6 @@ import {
   formatBigNumberSignificant,
 } from '../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
-import { BeefyState } from '../../../../../../redux-types';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import {
   selectCurrentChainId,
@@ -31,35 +29,36 @@ import { MinterCardParams } from '../../MinterCard';
 import { selectMinterById } from '../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
 import { selectChainById } from '../../../../../data/selectors/chains';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 
 const useStyles = makeStyles(styles as any);
 
 export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const isWalletConnected = useSelector((state: BeefyState) => selectIsWalletConnected(state));
-  const isWalletOnVaultChain = useSelector(
-    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  const dispatch = useAppDispatch();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const minter = useAppSelector(state => selectMinterById(state, minterId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const isWalletConnected = useAppSelector(state => selectIsWalletConnected(state));
+  const isWalletOnVaultChain = useAppSelector(
+    state => selectCurrentChainId(state) === vault.chainId
   );
-  const depositToken = useSelector((state: BeefyState) =>
+  const depositToken = useAppSelector(state =>
     minter.depositToken.type === 'native'
       ? selectTokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
       : selectErc20TokenByAddress(state, vault.chainId, minter.depositToken.contractAddress)
   );
-  const mintedToken = useSelector((state: BeefyState) =>
+  const mintedToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, minter.mintedToken.contractAddress)
   );
-  const depositTokenBalance = useSelector((state: BeefyState) =>
+  const depositTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, vault.chainId, depositToken.address)
   );
-  const mintedTokenBalance = useSelector((state: BeefyState) =>
+  const mintedTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, vault.chainId, mintedToken.address)
   );
-  const depositTokenAllowance = useSelector((state: BeefyState) =>
+  const depositTokenAllowance = useAppSelector(state =>
     selectAllowanceByTokenAddress(
       state,
       vault.chainId,
@@ -80,7 +79,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     });
   };
 
-  const [startStepper, isStepping, Stepper] = useStepper(vaultId, resetFormData);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id, resetFormData);
 
   const [formData, setFormData] = React.useState({
     deposit: {

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { fetchAllAllowanceAction } from '../../actions/allowance';
+import { fetchAllAllowanceAction, fetchAllowanceAction } from '../../actions/allowance';
 import { initiateDepositForm } from '../../actions/deposit';
 import { TokenAllowance } from '../../apis/allowance/allowance-types';
 import { WritableDraft } from 'immer/dist/internal';
@@ -13,6 +13,7 @@ import { initiateWithdrawForm } from '../../actions/withdraw';
 import { initiateBoostForm } from '../../actions/boosts';
 import { selectBoostById } from '../../selectors/boosts';
 import { initiateMinterForm } from '../../actions/minters';
+import { initiateBridgeForm } from '../../actions/bridge';
 import { selectMinterById } from '../../selectors/minters';
 
 /**
@@ -55,7 +56,9 @@ export const allowanceSlice = createSlice({
       const allowances = action.payload.data;
       addAllowancesToState(sliceState, chainId, allowances);
     });
-
+    builder.addCase(fetchAllowanceAction.fulfilled, (sliceState, action) => {
+      addAllowancesToState(sliceState, action.payload.chainId, action.payload.data);
+    });
     builder.addCase(initiateDepositForm.fulfilled, (sliceState, action) => {
       const vault = selectVaultById(action.payload.state, action.payload.vaultId);
       addAllowancesToState(sliceState, vault.chainId, action.payload.allowance);
@@ -72,6 +75,9 @@ export const allowanceSlice = createSlice({
     builder.addCase(initiateMinterForm.fulfilled, (sliceState, action) => {
       const minter = selectMinterById(action.payload.state, action.payload.minterId);
       addAllowancesToState(sliceState, minter.chainId, action.payload.allowance);
+    });
+    builder.addCase(initiateBridgeForm.fulfilled, (sliceState, action) => {
+      addAllowancesToState(sliceState, action.payload.chainId, action.payload.allowance);
     });
 
     builder.addCase(
