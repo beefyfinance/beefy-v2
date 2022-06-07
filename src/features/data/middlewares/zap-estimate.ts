@@ -9,8 +9,6 @@ import { VaultEntity } from '../entities/vault';
 import { depositActions } from '../reducers/wallet/deposit';
 import { withdrawActions } from '../reducers/wallet/withdraw';
 
-console.log(initiateDepositForm.pending.name);
-console.log(initiateDepositForm.pending.type);
 // fetch balance and allowance again
 export function zapEstimateMiddleware(store: BeefyStore) {
   return next =>
