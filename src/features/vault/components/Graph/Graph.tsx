@@ -1,7 +1,7 @@
-import { makeStyles, Box } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AreaChart, Area, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 
 import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
@@ -11,25 +11,24 @@ import { CustomTooltip } from './CustomTooltip';
 import { useChartData } from './useChartData';
 import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
-import { formatUsd, formatApy } from '../../../../helpers/format';
+import { formatApy, formatUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 import { VaultEntity } from '../../../data/entities/vault';
-import { BeefyState } from '../../../../redux-types';
-import { useSelector } from 'react-redux';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles as any);
 function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const classes = useStyles();
   const [stat, setStat] = useState(2);
   const [period, setPeriod] = useState(1);
-  const tokenOracleId = useSelector((state: BeefyState) =>
+  const tokenOracleId = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   ).oracleId;
   const chartData = useChartData(stat, period, tokenOracleId, vaultId, vault.chainId);
-  const t = useTranslation().t;
+  const { t } = useTranslation();
 
   return (
     <Card>

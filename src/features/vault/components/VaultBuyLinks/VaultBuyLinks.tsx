@@ -1,17 +1,16 @@
 import { Box, Button, makeStyles } from '@material-ui/core';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { BeefyState } from '../../../../redux-types';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { styles } from './styles';
+import { useAppSelector } from '../../../../store';
 import { Bridge } from '../../../../components/Bridge';
 
 const useStyles = makeStyles(styles);
 
 export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   const classes = useStyles();
   const { t } = useTranslation();

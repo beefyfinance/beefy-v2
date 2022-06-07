@@ -1,23 +1,23 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Box, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { StatLoader } from '../../../../../components/StatLoader';
 import { formatBigUsd } from '../../../../../helpers/format';
+import { StatLoader } from '../../../../../components/StatLoader';
 import { styles, backdropStyle } from './styles';
 import { selectTotalTvl } from '../../../../data/selectors/tvl';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
 import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
 import { ModalTvl } from '../ModalTvl';
+import { useAppSelector } from '../../../../../store';
 
 const useStyles = makeStyles(styles as any);
 export const VaultsStats = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const classes = useStyles();
-  const t = useTranslation().t;
-  const totalTvl = useSelector(selectTotalTvl);
-  const totalActiveVaults = useSelector(selectTotalActiveVaults);
-  const buyback = useSelector(selectTotalBuybackUsdAmount);
+  const { t } = useTranslation();
+  const totalTvl = useAppSelector(selectTotalTvl);
+  const totalActiveVaults = useAppSelector(selectTotalActiveVaults);
+  const buyback = useAppSelector(selectTotalBuybackUsdAmount);
   const ValueText = ({ value }) => <>{value ? <span>{value}</span> : <StatLoader />}</>;
 
   const handleOpen = useCallback(() => {

@@ -1,11 +1,9 @@
-import { Box, makeStyles, Typography, CircularProgress, Button } from '@material-ui/core';
+import { Box, Button, CircularProgress, makeStyles, Typography } from '@material-ui/core';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectCurrentChainId } from '../../../features/data/selectors/wallet';
 import { formatBigNumberSignificant } from '../../../helpers/format';
-import { BeefyState } from '../../../redux-types';
 import { styles } from '../styles';
 import { StepperState } from '../types';
 import { TransactionLink } from './TransactionLink';
@@ -13,6 +11,7 @@ import { getBridgeTxData } from '../../../features/data/actions/bridge';
 import { bridgeModalActions } from '../../../features/data/reducers/wallet/bridge-modal';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { AlertWarning } from '../../Alerts';
+import { useAppDispatch, useAppSelector } from '../../../store';
 
 const useStyles = makeStyles(styles as any);
 
@@ -32,15 +31,13 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
   });
   const classes = useStyles();
   const { t } = useTranslation();
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const currentChaindId = useSelector((state: BeefyState) => selectCurrentChainId(state));
-  const bridgeModalState = useSelector((state: BeefyState) => state.ui.bridgeModal);
-  const chain = useSelector((state: BeefyState) => selectChainById(state, currentChaindId));
-  const destChain = useSelector((state: BeefyState) =>
-    selectChainById(state, bridgeModalState.destChainId)
-  );
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const currentChaindId = useAppSelector(state => selectCurrentChainId(state));
+  const bridgeModalState = useAppSelector(state => state.ui.bridgeModal);
+  const chain = useAppSelector(state => selectChainById(state, currentChaindId));
+  const destChain = useAppSelector(state => selectChainById(state, bridgeModalState.destChainId));
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Use a ref to keep track of a stateful value that doesn't affect rendering,
   // the `setInterval` ID in this case.

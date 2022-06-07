@@ -98,6 +98,11 @@ export function featureFlag_recordReduxActions() {
   return params.has('__record_redux_actions');
 }
 
+export function featureFlag_logReduxActions() {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__log_redux_actions');
+}
+
 export function featureFlag_replayReduxActions() {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');

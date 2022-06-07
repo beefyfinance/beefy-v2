@@ -1,10 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import { Box, makeStyles, Divider, Grid } from '@material-ui/core';
+import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { styles } from './styles';
-import { BeefyState } from '../../../../redux-types';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { DailyApyStats, YearlyApyStats } from '../../../../components/ApyStats';
@@ -14,13 +12,15 @@ import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDepos
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 
 import { getBeefyApi } from '../../../data/apis/instances';
+import { useAppSelector } from '../../../../store';
+
 const useStyles = makeStyles(styles as any);
 
 function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const lastHarvestStr = useLastHarvestStr(vaultId);
   const classes = useStyles();
   const { t } = useTranslation();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
   return (
     <Box className={classes.container}>

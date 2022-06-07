@@ -11,7 +11,7 @@ export type VaultTvlStatProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const VaultTvlStat = memo<VaultTvlStatProps>(connect(mapStateToProps)(VaultValueStat));
+export const VaultTvlStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultTvlStatProps) {
   const label = 'VaultStat-TVL';

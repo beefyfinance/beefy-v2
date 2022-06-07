@@ -1,10 +1,9 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Steps } from '.';
 import { ChainEntity } from '../../features/data/entities/chain';
-import { BeefyState } from '../../redux-types';
 import { StepperState } from './types';
+import { useAppDispatch, useAppSelector } from '../../store';
 
 export function useStepper(
   chainId: ChainEntity['id'],
@@ -17,8 +16,8 @@ export function useStepper(
     finished: false,
   });
 
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const dispatch = useDispatch();
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const dispatch = useAppDispatch();
 
   const handleClose = React.useCallback(() => {
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
@@ -57,6 +56,7 @@ export function useStepper(
   function startStepper(steps: StepperState['items']) {
     setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
   }
+
   const isStepping = steps.modal && !steps.finished;
 
   return [startStepper, isStepping, Stepper];

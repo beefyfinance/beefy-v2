@@ -1,8 +1,6 @@
 import React, { memo, PropsWithChildren } from 'react';
 import { InfoCardEntity } from '../../../data/entities/info-card';
 import { selectInfoCardById } from '../../../data/selectors/info-cards';
-import { useSelector } from 'react-redux';
-import { BeefyState } from '../../../../redux-types';
 import {
   Card,
   CardAction,
@@ -15,6 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { makeStyles, Typography } from '@material-ui/core';
 import { styles } from './styles';
+import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles);
 
@@ -42,7 +41,7 @@ type InfoCardProps = PropsWithChildren<{
 }>;
 export const InfoCard = memo<InfoCardProps>(function InfoCard({ cardId }) {
   const { t } = useTranslation();
-  const card = useSelector((state: BeefyState) => selectInfoCardById(state, cardId));
+  const card = useAppSelector(state => selectInfoCardById(state, cardId));
 
   return (
     <Card>

@@ -1,16 +1,15 @@
 import React, { memo, PropsWithChildren, useEffect, useMemo } from 'react';
 import { VaultEntity } from '../../../data/entities/vault';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   selectInfoCardsByChainId,
   selectInfoCardsByVaultId,
   selectShouldInitInfoCards,
 } from '../../../data/selectors/info-cards';
-import { BeefyState } from '../../../../redux-types';
 import { fetchAllInfoCards } from '../../../data/actions/info-cards';
 import { ChainEntity } from '../../../data/entities/chain';
 import { uniq } from 'lodash';
 import { InfoCard } from './InfoCard';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 
 export type InfoCardProps = PropsWithChildren<{
   vaultId: VaultEntity['id'];
@@ -18,14 +17,10 @@ export type InfoCardProps = PropsWithChildren<{
 }>;
 
 export const InfoCards = memo<InfoCardProps>(function InfoCards({ vaultId, chainId }) {
-  const dispatch = useDispatch();
-  const shouldInitInfoCards = useSelector(selectShouldInitInfoCards);
-  const vaultInfoCardIds = useSelector((state: BeefyState) =>
-    selectInfoCardsByVaultId(state, vaultId)
-  );
-  const chainInfoCardIds = useSelector((state: BeefyState) =>
-    selectInfoCardsByChainId(state, chainId)
-  );
+  const dispatch = useAppDispatch();
+  const shouldInitInfoCards = useAppSelector(selectShouldInitInfoCards);
+  const vaultInfoCardIds = useAppSelector(state => selectInfoCardsByVaultId(state, vaultId));
+  const chainInfoCardIds = useAppSelector(state => selectInfoCardsByChainId(state, chainId));
   const cardIds = useMemo(() => {
     return uniq(vaultInfoCardIds.concat(chainInfoCardIds));
   }, [vaultInfoCardIds, chainInfoCardIds]);

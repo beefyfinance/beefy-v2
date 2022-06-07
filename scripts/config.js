@@ -27,7 +27,7 @@ export const chainPools = {
     // heco: hecoPools,
     avax: avalanchePools,
     polygon: polygonPools,
-    // fantom: fantomPools,
+    fantom: fantomPools,
     one: harmonyPools,
     arbitrum: arbitrumPools,
     celo: celoPools,

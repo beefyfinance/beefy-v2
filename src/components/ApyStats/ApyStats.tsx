@@ -5,8 +5,6 @@ import { LabeledStat } from '../LabeledStat';
 import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formattedTotalApy } from '../../helpers/format';
-import { useSelector } from 'react-redux';
-import { BeefyState } from '../../redux-types';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import {
   selectDidAPIReturnValuesForVault,
@@ -18,6 +16,7 @@ import { selectVaultApyAvailable } from '../../features/data/selectors/data-load
 import { TotalApy } from '../../features/data/reducers/apy';
 import { AllValuesAsString } from '../../features/data/utils/types-utils';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
+import { useAppSelector } from '../../store';
 
 const useStyles = makeStyles(styles as any);
 
@@ -159,17 +158,17 @@ function _YearlyApyStats({
 }) {
   const { t } = useTranslation();
 
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const isRetired = isVaultRetired(vault);
   const shouldShowApy = !isRetired;
 
-  const isLoading = useSelector(
-    (state: BeefyState) =>
+  const isLoading = useAppSelector(
+    state =>
       // sometimes, the api skips some vaults, for now, we consider the vault loading
       !selectVaultApyAvailable(state, vaultId) || !selectDidAPIReturnValuesForVault(state, vaultId)
   );
-  const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
+  const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
 
   const formatted = formattedTotalApy(values);
 
@@ -213,17 +212,17 @@ function _DailyApyStats({
 }) {
   const { t } = useTranslation();
 
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const isRetired = isVaultRetired(vault);
   const shouldShowApy = !isRetired;
 
-  const isLoading = useSelector(
-    (state: BeefyState) =>
+  const isLoading = useAppSelector(
+    state =>
       // sometimes, the api skips some vaults, for now, we consider the vault loading
       !selectVaultApyAvailable(state, vaultId) || !selectDidAPIReturnValuesForVault(state, vaultId)
   );
-  const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
+  const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
 
   const formatted = formattedTotalApy(values);
 

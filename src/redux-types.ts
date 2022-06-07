@@ -62,10 +62,7 @@ export interface BeefyState {
 export type BeefyStore = EnhancedStore<
   CombinedState<BeefyState>,
   AnyAction,
-  MiddlewareArray<
-    | ((store: any) => (next: any) => (action: any) => any)
-    | ThunkMiddleware<CombinedState<BeefyState>, any, null>
-  >
+  MiddlewareArray<[ThunkMiddleware<CombinedState<BeefyState>, AnyAction, undefined>, ...any[]]>
 >;
 
 export type BeefyThunk<ReturnType = void> = ThunkAction<

@@ -1,8 +1,6 @@
 # beefy-v2
 Beefy Finance, The Multichain Yield Optimizer v2 Multichain Application. One app for everything Beefy.
 
-# Beefy Finance (\$BIFI)
-
 ## Overview
 
 Official frontend repo of [beefy.finance](https://app.beefy.finance). Multichain yield farming optimizer.

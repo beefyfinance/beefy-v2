@@ -18,10 +18,10 @@ export const styles = theme => ({
     display: 'block',
   },
   text: {
-    fontWeight: '600',
+    fontWeight: 600,
     fontSize: '18px',
     lineHeight: '28px',
-    textAlign: 'center',
+    textAlign: 'center' as const,
   },
   container: {
     margin: '32px auto 0',
@@ -36,7 +36,7 @@ export const styles = theme => ({
     fontSize: '16px',
     fontWeight: 700,
     padding: '12px 24px',
-    textTransform: 'capitalize',
+    textTransform: 'capitalize' as const,
     display: 'block',
     margin: '32px auto 0',
     '&:hover': {

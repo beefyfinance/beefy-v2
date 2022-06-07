@@ -1,12 +1,12 @@
 import BigNumber from 'bignumber.js';
 import { isString } from 'lodash';
-import { store } from '../../../../store';
 import { fetchAllBoosts } from '../../actions/boosts';
 import { fetchChainConfigs } from '../../actions/chains';
 import { fetchAllVaults } from '../../actions/vaults';
 import { mapValuesDeep } from '../../utils/array-utils';
 import { sleep } from '../../utils/async-utils';
 import { featureFlag_replayReduxActions } from '../../utils/feature-flags';
+import { store } from '../../../../store';
 
 export async function replayReduxActions(actionsList: any[], delayMs: 200) {
   for (const action of actionsList) {

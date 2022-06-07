@@ -2,10 +2,8 @@ import { Box, makeStyles, Typography } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { isArray } from 'lodash';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { formatBigDecimals } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
 import { TokenEntity } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import {
@@ -22,6 +20,7 @@ import {
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
 import { styles } from './styles';
+import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles as any);
 
@@ -33,20 +32,20 @@ export function TokenWithDeposit({
   convertAmountTo?: TokenEntity['id'] | TokenEntity['id'][];
 }) {
   const classes = useStyles();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
 
-  const depositToken = useSelector((state: BeefyState) =>
+  const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
 
-  const oracleAmount = useSelector((state: BeefyState) => {
+  const oracleAmount = useAppSelector(state => {
     const mooTokenBalance = isGovVault(vault)
       ? selectGovVaultUserStackedBalanceInDepositToken(state, vault.id)
       : selectStandardVaultUserBalanceInDepositTokenExcludingBoosts(state, vault.id);
     return mooTokenBalance;
   });
 
-  const amountsAndSymbol = useSelector((state: BeefyState): [BigNumber, string][] => {
+  const amountsAndSymbol = useAppSelector((state): [BigNumber, string][] => {
     if (!convertAmountTo) {
       return [[oracleAmount, depositToken.symbol]];
     }
