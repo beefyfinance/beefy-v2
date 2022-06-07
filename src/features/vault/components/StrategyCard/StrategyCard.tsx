@@ -10,8 +10,6 @@ import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import shield from './shield.svg';
 import { stratText } from './stratText';
-import { BeefyState } from '../../../../redux-types';
-import { useSelector } from 'react-redux';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById, selectVaultStrategyAddress } from '../../../data/selectors/vaults';
@@ -19,19 +17,20 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { StatLoader } from '../../../../components/StatLoader';
+import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles as any);
 function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
 
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const values = useSelector((state: BeefyState) => selectVaultTotalApy(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
   const formatted = formattedTotalApy(values, <StatLoader />);
-  const stratAddr = useSelector((state: BeefyState) => selectVaultStrategyAddress(state, vaultId));
-  const platform = useSelector((state: BeefyState) => selectPlatformById(state, vault.platformId));
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const stratAddr = useAppSelector(state => selectVaultStrategyAddress(state, vaultId));
+  const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
+  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const isVaultAudited = vault.risks.includes('AUDIT');
   if (isGovVault(vault)) {
     return <></>;

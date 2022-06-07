@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
 import { VaultEntity } from '../../../data/entities/vault';
-import { BeefyState } from '../../../../redux-types';
 import {
   selectBoostById,
   selectIsVaultPreStakedOrBoosted,
@@ -8,13 +6,12 @@ import {
 } from '../../../data/selectors/boosts';
 import { BoostWidgetPastBoosts } from './BoostWidgetPastBoosts';
 import { BoostWidgetActiveBoost } from './BoostWidgetActiveBoost';
+import { useAppSelector } from '../../../../store';
 
 export const BoostWidget = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
-  const isBoosted = useSelector((state: BeefyState) =>
-    selectIsVaultPreStakedOrBoosted(state, vaultId)
-  );
+  const isBoosted = useAppSelector(state => selectIsVaultPreStakedOrBoosted(state, vaultId));
 
-  const activeBoost = useSelector((state: BeefyState) =>
+  const activeBoost = useAppSelector(state =>
     isBoosted ? selectBoostById(state, selectPreStakeOrActiveBoostIds(state, vaultId)[0]) : null
   );
 

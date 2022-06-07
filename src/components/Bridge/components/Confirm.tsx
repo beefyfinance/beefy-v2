@@ -1,8 +1,7 @@
-import { CardContent, Box, Typography, Button, makeStyles } from '@material-ui/core';
+import { Box, Button, CardContent, makeStyles, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllowanceAction } from '../../../features/data/actions/allowance';
 import { askForNetworkChange, askForWalletConnection } from '../../../features/data/actions/wallet';
 import { walletActions } from '../../../features/data/actions/wallet-actions';
@@ -17,10 +16,10 @@ import {
   selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../features/data/selectors/wallet';
-import { BeefyState } from '../../../redux-types';
 import { Divider } from '../../Divider';
 import { Step } from '../../Steps/types';
 import { styles } from '../styles';
+import { useAppDispatch, useAppSelector } from '../../../store';
 
 const useStyles = makeStyles(styles as any);
 
@@ -35,36 +34,32 @@ function _Confirm({
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
+  const formState = useAppSelector(state => state.ui.bridgeModal);
 
-  const walletAddress = useSelector((state: BeefyState) =>
+  const walletAddress = useAppSelector(state =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
-  const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
+  const currentChainId = useAppSelector(state => selectCurrentChainId(state));
 
   const isWalletOnFromChain = currentChainId === formState.fromChainId;
 
-  const isWalletConnected = useSelector(selectIsWalletConnected);
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
 
-  const fromChain = useSelector((state: BeefyState) =>
-    selectChainById(state, formState.fromChainId)
-  );
+  const fromChain = useAppSelector(state => selectChainById(state, formState.fromChainId));
 
-  const destChain = useSelector((state: BeefyState) =>
-    selectChainById(state, formState.destChainId)
-  );
+  const destChain = useAppSelector(state => selectChainById(state, formState.destChainId));
 
-  const destChainData = useSelector((state: BeefyState) =>
+  const destChainData = useAppSelector(state =>
     selectBridgeBifiDestChainData(state, fromChain.id, destChain.networkChainId)
   );
   const fromChainData = formState.bridgeDataByChainId[fromChain.id];
 
   const routerAddress = destChainData.DepositAddress ?? destChainData.routerToken;
 
-  const depositedToken = useSelector((state: BeefyState) =>
+  const depositedToken = useAppSelector(state =>
     selectTokenByAddress(state, formState.fromChainId, fromChainData.address)
   );
 
@@ -81,7 +76,7 @@ function _Confirm({
     }
   }, [depositedToken, dispatch, formState.fromChainId, routerAddress]);
 
-  const depositTokenAllowance = useSelector((state: BeefyState) =>
+  const depositTokenAllowance = useAppSelector(state =>
     selectAllowanceByTokenAddress(
       state,
       formState.fromChainId,

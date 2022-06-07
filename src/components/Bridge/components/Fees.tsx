@@ -1,13 +1,12 @@
 import React from 'react';
-import { makeStyles, Box, Typography } from '@material-ui/core';
+import { Box, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from '../styles';
-import { BeefyState } from '../../../redux-types';
-import { useSelector } from 'react-redux';
 import { isFulfilled } from '../../../features/data/reducers/data-loader';
 import ContentLoader from 'react-content-loader';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { selectBridgeBifiDestChainData } from '../../../features/data/selectors/bridge';
+import { useAppSelector } from '../../../store';
 
 const useStyles = makeStyles(styles);
 
@@ -15,17 +14,15 @@ function _FeesInfo() {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const isBridgeDataLoaded = useSelector((state: BeefyState) =>
+  const isBridgeDataLoaded = useAppSelector(state =>
     isFulfilled(state.ui.dataLoader.global.bridgeForm)
   );
 
-  const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
+  const formState = useAppSelector(state => state.ui.bridgeModal);
 
-  const destChain = useSelector((state: BeefyState) =>
-    selectChainById(state, formState.destChainId)
-  );
+  const destChain = useAppSelector(state => selectChainById(state, formState.destChainId));
 
-  const destChainData = useSelector((state: BeefyState) =>
+  const destChainData = useAppSelector(state =>
     selectBridgeBifiDestChainData(state, formState.fromChainId, destChain.networkChainId)
   );
 

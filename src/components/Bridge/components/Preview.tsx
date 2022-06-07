@@ -1,14 +1,12 @@
 import React, { useMemo } from 'react';
-import { makeStyles, Box, Typography, Button, InputBase, Paper } from '@material-ui/core';
+import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from '../styles';
-import { useSelector, useDispatch, useStore } from 'react-redux';
 import { selectChainById } from '../../../features/data/selectors/chains';
 import { CardContent } from '../../../features/vault/components/Card/CardContent';
 import { Fees } from './Fees';
 import { AssetsImage } from '../../AssetsImage';
 import { SimpleDropdown } from '../../SimpleDropdown';
-import { BeefyState } from '../../../redux-types';
 import { selectUserBalanceOfToken } from '../../../features/data/selectors/balance';
 import {
   selectCurrentChainId,
@@ -23,6 +21,7 @@ import { fetchBridgeChainData } from '../../../features/data/actions/bridge';
 import { selectBridgeBifiDestChainData } from '../../../features/data/selectors/bridge';
 import { Divider } from '../../Divider';
 import { isEmpty } from '../../../helpers/utils';
+import { useAppDispatch, useAppSelector, useAppStore } from '../../../store';
 
 const useStyles = makeStyles(styles);
 
@@ -35,33 +34,29 @@ function _Preview({
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const store = useStore();
-  const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
-  const formState = useSelector((state: BeefyState) => state.ui.bridgeModal);
-  const isWalletConnected = useSelector(selectIsWalletConnected);
+  const dispatch = useAppDispatch();
+  const store = useAppStore();
+  const currentChainId = useAppSelector(state => selectCurrentChainId(state));
+  const formState = useAppSelector(state => state.ui.bridgeModal);
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
 
   const isWalletOnFromChain = currentChainId === formState.fromChainId;
 
-  const fromChain = useSelector((state: BeefyState) =>
-    selectChainById(state, formState.fromChainId)
-  );
+  const fromChain = useAppSelector(state => selectChainById(state, formState.fromChainId));
 
-  const destChain = useSelector((state: BeefyState) =>
-    selectChainById(state, formState.destChainId)
-  );
+  const destChain = useAppSelector(state => selectChainById(state, formState.destChainId));
 
-  const formDataLoaded = useSelector((state: BeefyState) =>
+  const formDataLoaded = useAppSelector(state =>
     isFulfilled(state.ui.dataLoader.global.bridgeForm)
   );
 
   const fromChainData = formState.bridgeDataByChainId[fromChain.id];
 
-  const destChainData = useSelector((state: BeefyState) =>
+  const destChainData = useAppSelector(state =>
     selectBridgeBifiDestChainData(state, fromChain.id, destChain.networkChainId)
   );
 
-  const bifiBalance = useSelector((state: BeefyState) =>
+  const bifiBalance = useAppSelector(state =>
     isWalletConnected && formDataLoaded && fromChainData
       ? selectUserBalanceOfToken(state, formState.fromChainId, fromChainData.address)
       : new BigNumber(BIG_ZERO)

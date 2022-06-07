@@ -1,18 +1,17 @@
 import { Button } from '@material-ui/core';
 import React, { memo, Suspense, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useStore } from 'react-redux';
 import { initBridgeForm } from '../../features/data/actions/scenarios';
 import { isFulfilled } from '../../features/data/reducers/data-loader';
 import { bridgeModalActions } from '../../features/data/reducers/wallet/bridge-modal';
 import { selectIsWalletKnown, selectWalletAddress } from '../../features/data/selectors/wallet';
-import { BeefyState } from '../../redux-types';
 import { StatLoader } from '../StatLoader';
 import { BridgeModal } from './BridgeModal';
+import { useAppSelector, useAppStore } from '../../store';
 
 export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassname: string }) {
   const { t } = useTranslation();
-  const walletAddress = useSelector((state: BeefyState) =>
+  const walletAddress = useAppSelector(state =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
@@ -26,11 +25,11 @@ export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassna
     setOpenBridgeModal(true);
   }, []);
 
-  const isFormDataLoaded = useSelector((state: BeefyState) =>
+  const isFormDataLoaded = useAppSelector(state =>
     isFulfilled(state.ui.dataLoader.global.bridgeForm)
   );
 
-  const store = useStore();
+  const store = useAppStore();
   useEffect(() => {
     //Init from on mount
     initBridgeForm(store, walletAddress);

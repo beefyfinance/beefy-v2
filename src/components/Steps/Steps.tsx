@@ -1,15 +1,14 @@
 import React from 'react';
 import { Box, Button, IconButton, makeStyles, Snackbar, Typography } from '@material-ui/core';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import clsx from 'clsx';
-import { BeefyState } from '../../redux-types';
 import { StepperState } from './types';
 import { formatBigDecimals } from '../../helpers/format';
 import { selectMintResult } from './selectors';
+import { useAppSelector } from '../../store';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { BridgeInfo } from './components/BridgeInfo';
 import { TransactionLink } from './components/TransactionLink';
@@ -27,8 +26,8 @@ const _Steps = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const bridgeModalStatus = useSelector((state: BeefyState) => state.ui.bridgeModal.status);
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const bridgeModalStatus = useAppSelector(state => state.ui.bridgeModal.status);
 
   const needShowBridgeInfo = bridgeModalStatus === 'loading' || bridgeModalStatus === 'confirming';
 
@@ -276,9 +275,9 @@ const _Steps = ({
                     </Box>
                   </>
                 )}
-              {/* 
+              {/*
                 -By Default we show the close button
-                -If current step is 'bridge', we don't show the button until all is done 
+                -If current step is 'bridge', we don't show the button until all is done
                 */}
               {steps.items[steps.currentStep].step === 'bridge' ? (
                 bridgeModalStatus === 'success' ? (

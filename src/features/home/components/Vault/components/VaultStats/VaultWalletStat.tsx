@@ -13,7 +13,7 @@ export type VaultWalletStatProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const VaultWalletStat = memo<VaultWalletStatProps>(connect(mapStateToProps)(VaultValueStat));
+export const VaultWalletStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultWalletStatProps) {
   const label = 'VaultStat-WALLET';

@@ -60,7 +60,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // make sure the cached provider is available in options
     const cachedProvider = getWeb3ModalCachedProvider();
     const modalOptions = this.getModalOptions();
-    if (!(cachedProvider in modalOptions.providerOptions)) {
+    if (cachedProvider !== 'injected' && !(cachedProvider in modalOptions.providerOptions)) {
       console.warn(
         'tryToAutoReconnect: cached provider not available',
         cachedProvider,

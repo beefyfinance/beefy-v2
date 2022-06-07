@@ -1,11 +1,10 @@
 import { Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { ChainEntity } from '../../../features/data/entities/chain';
 import { selectChainById } from '../../../features/data/selectors/chains';
-import { BeefyState } from '../../../redux-types';
 import { styles } from '../styles';
+import { useAppSelector } from '../../../store';
 
 const useStyles = makeStyles(styles as any);
 
@@ -13,8 +12,8 @@ export function TransactionLink({ chainId }: { chainId: ChainEntity['id'] }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const chain = useSelector((state: BeefyState) => selectChainById(state, chainId));
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const chain = useAppSelector(state => selectChainById(state, chainId));
 
   const hash =
     walletActionsState.result === 'success'

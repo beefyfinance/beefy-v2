@@ -7,17 +7,16 @@ import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import { VaultGov } from '../../../data/entities/vault';
-import { useSelector } from 'react-redux';
-import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles as any);
 export const GovDetailsCard = ({ vaultId }: { vaultId: VaultGov['id'] }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const earnedToken = useSelector((state: BeefyState) =>
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const earnedToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
 

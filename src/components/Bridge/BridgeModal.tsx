@@ -1,17 +1,16 @@
-import { Modal, Box, Typography, Paper } from '@material-ui/core';
+import { Box, Modal, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import { CardHeader } from '../../features/vault/components/Card/CardHeader';
 import { CardTitle } from '../../features/vault/components/Card/CardTitle';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@material-ui/icons/Close';
-import { styles, backdropStyle } from './styles';
+import { backdropStyle, styles } from './styles';
 import { makeStyles } from '@material-ui/styles';
 import { Preview } from './components/Preview';
 import { Confirm } from './components/Confirm';
-import { useSelector } from 'react-redux';
 import { selectCurrentChainId } from '../../features/data/selectors/wallet';
-import { BeefyState } from '../../redux-types';
 import { useStepper } from '../Steps/hooks';
+import { useAppSelector } from '../../store';
 
 const useStyles = makeStyles(styles);
 
@@ -26,7 +25,7 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
     setPreviewConfirm('preview');
   };
 
-  const currentChainId = useSelector((state: BeefyState) => selectCurrentChainId(state));
+  const currentChainId = useAppSelector(state => selectCurrentChainId(state));
 
   const [startStepper, isStepping, Stepper] = useStepper(currentChainId);
 

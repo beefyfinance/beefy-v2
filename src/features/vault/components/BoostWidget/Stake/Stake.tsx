@@ -9,7 +9,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import CloseIcon from '@material-ui/icons/Close';
@@ -21,7 +20,6 @@ import { formatBigNumberSignificant } from '../../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
 import { BoostEntity } from '../../../../data/entities/boost';
 import { useStepper } from '../../../../../components/Steps/hooks';
-import { BeefyState } from '../../../../../redux-types';
 import { selectBoostById, selectIsBoostActiveOrPreStake } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
 import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal';
@@ -44,6 +42,7 @@ import { Loader } from '../../../../../components/Loader';
 import { initBoostForm } from '../../../../data/actions/scenarios';
 import { isFulfilled } from '../../../../data/reducers/data-loader';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
+import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
 
 const useStyles = makeStyles(styles as any);
 
@@ -54,19 +53,19 @@ export const Stake = ({
   boostId: BoostEntity['id'];
   closeModal: () => void;
 }) => {
-  const boost = useSelector((state: BeefyState) => selectBoostById(state, boostId));
+  const boost = useAppSelector(state => selectBoostById(state, boostId));
 
-  const formReady = useSelector(
-    (state: BeefyState) =>
+  const formReady = useAppSelector(
+    state =>
       selectIsAddressBookLoaded(state, boost.chainId) &&
       isFulfilled(state.ui.dataLoader.global.boostForm)
   );
-  const walletAddress = useSelector((state: BeefyState) =>
+  const walletAddress = useAppSelector(state =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
 
   // initialize our form
-  const store = useStore();
+  const store = useAppStore();
   React.useEffect(() => {
     initBoostForm(store, boostId, 'stake', walletAddress);
   }, [store, boostId, walletAddress]);
@@ -81,38 +80,34 @@ const StakeForm = ({
   boostId: BoostEntity['id'];
   closeModal: () => void;
 }) => {
-  const boost = useSelector((state: BeefyState) => selectBoostById(state, boostId));
-  const vault = useSelector((state: BeefyState) => selectStandardVaultById(state, boost.vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, boost.chainId));
-  const mooToken = useSelector((state: BeefyState) =>
+  const boost = useAppSelector(state => selectBoostById(state, boostId));
+  const vault = useAppSelector(state => selectStandardVaultById(state, boost.vaultId));
+  const chain = useAppSelector(state => selectChainById(state, boost.chainId));
+  const mooToken = useAppSelector(state =>
     selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
-  const isBoostDepositable = useSelector((state: BeefyState) =>
-    selectIsBoostActiveOrPreStake(state, boostId)
-  );
+  const isBoostDepositable = useAppSelector(state => selectIsBoostActiveOrPreStake(state, boostId));
 
-  const mooBalance = useSelector((state: BeefyState) =>
+  const mooBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, boost.chainId, mooToken.address)
   );
-  const boostBalance = useSelector((state: BeefyState) =>
-    selectBoostUserBalanceInToken(state, boost.id)
-  );
+  const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
 
-  const isWalletConnected = useSelector(selectIsWalletConnected);
-  const isWalletOnVaultChain = useSelector(
-    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const isWalletOnVaultChain = useAppSelector(
+    state => selectCurrentChainId(state) === vault.chainId
   );
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const store = useStore();
-  const formState = useSelector((state: BeefyState) => state.ui.boostModal);
+  const store = useAppStore();
+  const formState = useAppSelector(state => state.ui.boostModal);
 
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const spenderAddress = boost.earnContractAddress;
 
-  const needsApproval = useSelector((state: BeefyState) =>
+  const needsApproval = useAppSelector(state =>
     selectIsApprovalNeededForBoostStaking(state, spenderAddress)
   );
 

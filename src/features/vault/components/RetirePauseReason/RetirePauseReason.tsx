@@ -2,9 +2,8 @@ import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertWarning } from '../../../../components/Alerts';
 import { VaultEntity } from '../../../data/entities/vault';
-import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../../store';
 
 export type RetirePauseReasonProps = {
   vaultId: VaultEntity['id'];
@@ -16,7 +15,7 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
   className,
 }) {
   const { t, i18n } = useTranslation();
-  const { status, retireReason, pauseReason } = useSelector((state: BeefyState) =>
+  const { status, retireReason, pauseReason } = useAppSelector(state =>
     selectVaultById(state, vaultId)
   );
 

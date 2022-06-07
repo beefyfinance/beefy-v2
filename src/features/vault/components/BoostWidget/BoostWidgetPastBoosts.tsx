@@ -1,10 +1,8 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import AnimateHeight from 'react-animate-height';
 import { styles } from './styles';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
-import { BeefyState } from '../../../../redux-types';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import {
@@ -18,25 +16,26 @@ import { BoostEntity } from '../../../data/entities/boost';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import clsx from 'clsx';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles as any);
 
 export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] }) {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const pastBoostsWithUserBalance = useSelector((state: BeefyState) =>
+  const pastBoostsWithUserBalance = useAppSelector(state =>
     selectPastBoostIdsWithUserBalance(state, vaultId).map(boostId =>
       selectBoostById(state, boostId)
     )
   );
-  const isWalletConnected = useSelector(selectIsWalletConnected);
-  const isWalletOnVaultChain = useSelector(
-    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const isWalletOnVaultChain = useAppSelector(
+    state => selectCurrentChainId(state) === vault.chainId
   );
 
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
