@@ -1,4 +1,12 @@
 export const styles = theme => ({
+  modalCard: {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    boxShadow: 24,
+    minWidth: '400px',
+  },
   header: {
     display: 'flex',
     alignItems: 'center',

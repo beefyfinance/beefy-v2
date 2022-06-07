@@ -4,10 +4,12 @@ import { sample } from 'lodash';
 import { createFactoryWithCacheByChain } from '../utils/factory-utils';
 import { ChainEntity } from '../entities/chain';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
+import { BridgeApi } from './bridge/bridge';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
 const configApi = new ConfigAPI();
+const bridgeApi = new BridgeApi();
 
 /**
  * These are basically factories so user code don't have to worry
@@ -19,6 +21,10 @@ export function getBeefyApi(): BeefyAPI {
 }
 export function getConfigApi(): ConfigAPI {
   return configApi;
+}
+
+export function getBridgeApi(): BridgeApi {
+  return bridgeApi;
 }
 
 const Web3Promise = import('web3');

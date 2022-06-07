@@ -24,17 +24,8 @@ function _ModalTvl({ close }: { close: () => void }) {
 
   const chains = useSelector(selectAllChains);
 
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    boxShadow: 24,
-    minWidth: '400px',
-  };
-
   return (
-    <Box sx={style}>
+    <Box className={classes.modalCard}>
       <Card>
         <CardHeader className={classes.header}>
           <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />

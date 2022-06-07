@@ -2,9 +2,9 @@ import { useState, useCallback } from 'react';
 import { Box, Grid, makeStyles, Modal, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { ApyStatLoader } from '../../../../../components/ApyStatLoader';
+import { StatLoader } from '../../../../../components/StatLoader';
 import { formatBigUsd } from '../../../../../helpers/format';
-import { styles } from './styles';
+import { styles, backdropStyle } from './styles';
 import { selectTotalTvl } from '../../../../data/selectors/tvl';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
 import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
@@ -18,7 +18,7 @@ export const VaultsStats = () => {
   const totalTvl = useSelector(selectTotalTvl);
   const totalActiveVaults = useSelector(selectTotalActiveVaults);
   const buyback = useSelector(selectTotalBuybackUsdAmount);
-  const ValueText = ({ value }) => <>{value ? <span>{value}</span> : <ApyStatLoader />}</>;
+  const ValueText = ({ value }) => <>{value ? <span>{value}</span> : <StatLoader />}</>;
 
   const handleOpen = useCallback(() => {
     setIsOpen(true);
@@ -63,6 +63,7 @@ export const VaultsStats = () => {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={isOpen}
+        BackdropProps={{ style: { ...backdropStyle } }}
         onClose={() => setIsOpen(false)}
       >
         <ModalTvl close={() => setIsOpen(false)} />

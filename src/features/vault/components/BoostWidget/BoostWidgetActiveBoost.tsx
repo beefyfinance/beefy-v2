@@ -63,7 +63,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
     (state: BeefyState) => selectCurrentChainId(state) === boost.chainId
   );
 
-  const [startStepper, isStepping, Stepper] = useStepper(vault.id);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const [dw, setDw] = React.useState('deposit');
   const [inputModal, setInputModal] = React.useState(false);

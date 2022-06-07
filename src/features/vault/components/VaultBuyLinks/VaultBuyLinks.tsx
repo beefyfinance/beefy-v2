@@ -6,8 +6,9 @@ import { BeefyState } from '../../../../redux-types';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { styles } from './styles';
+import { Bridge } from '../../../../components/Bridge';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
@@ -20,7 +21,6 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
       <>
         {vault.buyTokenUrl && (
           <a
-            style={{ marginRight: '12px' }}
             href={vault.buyTokenUrl}
             target="_blank"
             rel="noreferrer"
@@ -49,6 +49,7 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
             </Button>
           </a>
         )}
+        {vault.assetIds.includes('BIFI') && <Bridge buttonClassname={classes.btnSecondary1} />}
       </>
     </Box>
   );
