@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
     width: '100%',
   },
   button: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: '#8A8EA8',
     backgroundColor: '#262A40',
     border: 'none',

@@ -1,6 +1,5 @@
 import { createTheme } from '@material-ui/core/styles';
 import { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
-import { featureFlag_fontWeight } from './features/data/utils/feature-flags';
 
 const fontStack = [
   '"DM Sans"',
@@ -42,12 +41,12 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
     textTransform: 'none' as const,
     fontWeight: 400,
   },
-  'body-lg-bold': {
+  'body-lg-med': {
     fontFamily: fontStack,
     fontSize: '16px',
     lineHeight: '24px',
     textTransform: 'none' as const,
-    fontWeight: featureFlag_fontWeight(700),
+    fontWeight: 500,
   },
   'body-sm': {
     fontFamily: fontStack,
@@ -61,13 +60,13 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
     fontSize: '12px',
     lineHeight: '20px',
     textTransform: 'none' as const,
-    fontWeight: featureFlag_fontWeight(700),
+    fontWeight: 500,
   },
   'subline-lg': {
     fontFamily: fontStack,
     fontSize: '15px',
     lineHeight: '24px',
-    fontWeight: featureFlag_fontWeight(700),
+    fontWeight: 500,
     textTransform: 'uppercase' as const,
     letterSpacing: '0.5px',
   },
@@ -75,7 +74,7 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
     fontFamily: fontStack,
     fontSize: '12px',
     lineHeight: '20px',
-    fontWeight: featureFlag_fontWeight(700),
+    fontWeight: 500,
     textTransform: 'uppercase' as const,
     letterSpacing: '0.5px',
   },
@@ -128,11 +127,11 @@ const theme = createTheme({
     h1: fontStyles['h1'],
     h2: fontStyles['h2'],
     h3: fontStyles['h3'],
-    button: fontStyles['body-lg-bold'],
+    button: fontStyles['body-lg-med'],
     body1: fontStyles['body-lg'],
     body2: fontStyles['body-lg'],
     'body-lg': fontStyles['body-lg'],
-    'body-lg-bold': fontStyles['body-lg-bold'],
+    'body-lg-med': fontStyles['body-lg-med'],
     'body-sm': fontStyles['body-sm'],
     'body-sm-bold': fontStyles['body-sm-bold'],
     'subline-lg': fontStyles['subline-lg'],
@@ -170,7 +169,7 @@ const theme = createTheme({
   },
   overrides: {
     MuiInputBase: {
-      input: fontStyles['body-lg-bold'],
+      input: fontStyles['body-lg-med'],
     },
   },
 });

@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => ({
     padding: '24px',
   },
   description: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
     marginTop: '0',
     marginBottom: '10px',

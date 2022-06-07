@@ -87,7 +87,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   basicTitle: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: '#272B4A',
   },
   basicContent: {

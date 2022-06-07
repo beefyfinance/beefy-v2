@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
     textAlign: 'center' as const,
   },
   text: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
   },
   button: {
     margin: '24px auto 0 auto',

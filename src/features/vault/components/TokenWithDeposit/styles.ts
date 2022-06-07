@@ -1,6 +1,6 @@
 export const styles = theme => ({
   balanceContainer: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.primary,
   },
   sm: {

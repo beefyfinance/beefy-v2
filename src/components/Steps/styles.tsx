@@ -27,8 +27,8 @@ export const styles = (theme: Theme) => ({
     },
   },
   snackbar: {
-    width: '350px',
-    maxWidth: 'calc(min(100%, 350px) - 16px)',
+    width: '408px',
+    maxWidth: 'calc(100% - 16px)',
     maxHeight: 'calc(100% - 16px)',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -128,20 +128,20 @@ export const styles = (theme: Theme) => ({
     overflow: 'auto',
   },
   title: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.background.snackbars.text,
     display: 'flex',
     alignItems: 'center',
   },
   friendlyMessage: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.background.snackbars.text,
     marginBottom: theme.spacing(2),
   },
   message: {
     color: theme.palette.background.snackbars.text,
     '& span': {
-      fontWeight: theme.typography['body-lg-bold'].fontWeight,
+      fontWeight: theme.typography['body-lg-med'].fontWeight,
     },
   },
   content: {
@@ -163,8 +163,12 @@ export const styles = (theme: Theme) => ({
     background: 'none',
     margin: 0,
     padding: 0,
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    marginTop: '16px',
     '& .MuiSvgIcon-root': {
-      height: '15px',
+      marginLeft: '4px',
     },
   },
 });

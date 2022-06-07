@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
     textDecoration: 'line-through',
   },
   value: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     margin: 0,
     padding: 0,
   },

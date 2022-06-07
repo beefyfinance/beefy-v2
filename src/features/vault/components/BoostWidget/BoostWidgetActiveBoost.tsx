@@ -119,7 +119,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   return (
     <div className={classes.containerBoost}>
       <div className={classes.title}>
-        <span className={classes.titleIcon}>🔥</span> <span>{t('Boost-Noun')}</span>
+        <span>{t('Boost-Title')}</span>
         <IconWithBasicTooltip
           title={t('Boost-WhatIs')}
           content={t('Boost-Explain')}

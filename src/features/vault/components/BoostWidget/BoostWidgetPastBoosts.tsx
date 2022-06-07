@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import AnimateHeight from 'react-animate-height';
 import { styles } from './styles';
@@ -67,9 +67,12 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
   return (
     <div className={classes.containerExpired}>
       <div className={classes.title}>
-        <span className={classes.titleIcon}>🔥</span>{' '}
-        <span className={classes.titleWhite}>{t('Boost-Expired')}</span>{' '}
-        <span>{t('Boost-Noun')}</span>
+        <span>
+          <Trans
+            i18nKey="Boost-ExpiredBoost"
+            components={{ white: <span className={classes.titleWhite} /> }}
+          />
+        </span>
       </div>
       <AnimateHeight duration={500} height="auto">
         {isWalletConnected ? (
@@ -88,7 +91,7 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
             pastBoostsWithUserBalance.map(boost => (
               <div className={classes.expiredBoostContainer} key={boost.id}>
                 <div className={classes.expiredBoostName}>
-                  {boost.name}&nbsp;{t('Filter-Boost')}
+                  {t('Boost-NameBoost', { name: boost.name })}
                 </div>
                 <Button
                   onClick={() => handleExit(boost)}

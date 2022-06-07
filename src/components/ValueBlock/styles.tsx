@@ -2,7 +2,7 @@ import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   value: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     margin: 0,
     padding: 0,
     whiteSpace: 'nowrap' as const,

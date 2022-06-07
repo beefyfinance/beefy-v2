@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
   h2: theme.typography['h2'],
   h3: theme.typography['h3'],
   'body-lg': theme.typography['body-lg'],
-  'body-lg-bold': theme.typography['body-lg-bold'],
+  'body-lg-med': theme.typography['body-lg-med'],
   'body-sm': theme.typography['body-sm'],
   'body-sm-bold': theme.typography['body-sm-bold'],
   'subline-lg': theme.typography['subline-lg'],

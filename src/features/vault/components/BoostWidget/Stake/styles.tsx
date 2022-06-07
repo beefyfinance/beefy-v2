@@ -24,7 +24,7 @@ export const styles = (theme: Theme) => ({
   },
   positionButton: {},
   input: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     background: theme.palette.background.vaults.inactive,
     borderRadius: '8px',
     maxHeight: '40px',
@@ -70,7 +70,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.disabled,
   },
   value: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
   },
   btnSubmit: {},

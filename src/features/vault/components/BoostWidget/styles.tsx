@@ -33,9 +33,6 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
     margin: '0 0 24px 0',
   },
-  titleIcon: {
-    marginRight: '8px',
-  },
   titleWhite: {
     color: '#fff',
   },
@@ -67,7 +64,7 @@ export const styles = (theme: Theme) => ({
     color: '#999CB3',
   },
   boostStatValue: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
   },
   button: {
@@ -76,6 +73,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   expiredBoostName: {
-    marginBottom: '8px',
+    ...theme.typography['h3'],
+    marginBottom: '16px',
   },
 });

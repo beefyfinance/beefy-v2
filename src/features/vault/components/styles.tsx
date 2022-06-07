@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => ({
     marginBottom: '4px',
   },
   stakedInValue: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     display: 'flex',
     alignItems: 'center',
   },

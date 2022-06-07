@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.filters.inactive,
   },
   tooltip: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     background: theme.palette.background.filters.outline,
     padding: '8px 12px',
     borderRadius: '4px',

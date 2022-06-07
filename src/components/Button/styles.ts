@@ -15,7 +15,7 @@ const paddings: Record<string, Record<'x' | 'y', number>> = {
 
 export const styles = (theme: Theme) => ({
   button: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     // colors set on variants
     color: 'red',
     backgroundColor: 'blue',

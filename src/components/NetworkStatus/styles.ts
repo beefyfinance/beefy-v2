@@ -97,7 +97,7 @@ export const styles: Styles<any, any, any> = theme => ({
     lineHeight: '24px', // make everything nicely spaced
   },
   popoverTitle: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: '#F5F5FF',
     paddingRight: '32px', // to leave some room for the close button
     marginBottom: '8px',

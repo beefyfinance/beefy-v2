@@ -15,7 +15,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   address: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     whiteSpace: 'nowrap' as const,
     textOverflow: 'ellipsis',
     overflow: 'hidden',

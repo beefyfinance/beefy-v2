@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
     margin: 'auto 0 2px 4px',
   },
   label: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: 'inherit',
     lineHeight: 1,
     textAlign: 'center' as const,

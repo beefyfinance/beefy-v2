@@ -33,7 +33,7 @@ export const styles = theme => ({
     },
   },
   title: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.type === 'dark' ? '#272B4A' : '#A69885',
     marginBottom: '8px',
   },

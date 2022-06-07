@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   navLink: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     textDecoration: 'none',
     color: theme.palette.text.disabled,
     margin: '12px',
@@ -66,7 +66,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.primary,
   },
   bifiPrice: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     display: 'flex',
     justifyContent: 'center' as const,
     alignItems: 'center' as const,
@@ -83,7 +83,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   chain: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.disabled,
     display: 'flex',
     justifyContent: 'center',

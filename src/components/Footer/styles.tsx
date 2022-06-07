@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => ({
     margin: `0 ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px ${theme.spacing(3) / 2}px`,
   },
   navLink: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     display: 'block',
     textDecoration: 'none',
     color: theme.palette.text.secondary,

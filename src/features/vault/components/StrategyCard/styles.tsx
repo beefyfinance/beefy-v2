@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.disabled,
   },
   apyValue: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
   },
   audits: {
@@ -51,7 +51,7 @@ export const styles = (theme: Theme) => ({
     marginRight: '8px',
   },
   auditLabel: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
   },
 });

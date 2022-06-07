@@ -49,7 +49,7 @@ declare module '@material-ui/core/styles/createTypography' {
     | 'h2'
     | 'h3'
     | 'body-lg'
-    | 'body-lg-bold'
+    | 'body-lg-med'
     | 'body-sm'
     | 'body-sm-bold'
     | 'subline-lg'

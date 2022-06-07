@@ -158,7 +158,7 @@ const _Steps = ({
                       </div>
                       <TransactionLink vaultId={vaultId} />
                     </Box>
-                    <Box pt={2}>
+                    <Box mt={2}>
                       <div className={classes.message}>
                         <span>{t('Remember')}</span> {t('Remember-Msg')}
                       </div>
@@ -303,7 +303,7 @@ function TransactionLink({ vaultId }: { vaultId: VaultEntity['id'] }) {
       target="_blank"
       rel="noreferrer"
     >
-      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+      {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
     </a>
   );
 }

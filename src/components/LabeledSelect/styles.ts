@@ -2,7 +2,7 @@ import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
   select: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     backgroundColor: '#262A40',
     border: 'solid 2px #303550',
     borderRadius: '8px',
@@ -56,7 +56,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   dropdown: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     zIndex: 1000,
     border: '2px solid #393F60',
     borderRadius: '8px',

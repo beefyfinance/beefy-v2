@@ -21,7 +21,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   value: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
     paddingTop: '0',
   },

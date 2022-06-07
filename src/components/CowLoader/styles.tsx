@@ -15,6 +15,6 @@ export const styles = (theme: Theme) => ({
     },
   },
   text: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
   },
 });

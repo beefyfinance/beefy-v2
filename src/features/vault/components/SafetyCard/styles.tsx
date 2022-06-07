@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   risk: {
-    ...theme.typography['body-lg-bold'],
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
     marginRight: 8,
   },

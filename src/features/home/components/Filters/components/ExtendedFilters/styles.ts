@@ -18,10 +18,11 @@ export const styles = (theme: Theme) => ({
     maxWidth: 'calc(100vw - 32px)',
     borderTopLeftRadius: '16px',
     borderBottomLeftRadius: '16px',
+    boxShadow: '0px 4px 24px 24px rgba(19, 17, 34, 0.16), 0px 2px 8px rgba(19, 17, 34, 0.2)',
   },
   sidebarHeader: {
-    ...theme.typography['h3'],
-    backgroundColor: '#262A40',
+    ...theme.typography['h2'],
+    backgroundColor: '#111321',
     color: '#F5F5FF',
     padding: '24px',
     flexGrow: 0,
@@ -38,7 +39,7 @@ export const styles = (theme: Theme) => ({
     border: 0,
     boxShadow: 'none',
     background: 'transparent',
-    color: 'inherit',
+    color: '#999CB3',
     cursor: 'pointer',
   },
   sidebarMain: {
