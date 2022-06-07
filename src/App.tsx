@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Header } from './components/Header';
 import { WrappedFooter } from './components/Footer';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
@@ -10,12 +10,14 @@ import { store } from './store';
 import { featureFlag_replayReduxActions } from './features/data/utils/feature-flags';
 import { replayReduxActions } from './features/data/middlewares/debug/debug-replay';
 import { CowLoader } from './components/CowLoader';
-import { REDIRECTS } from './config/redirects';
+import { Router } from './components/Router';
+import { DefaultMeta } from './components/Meta';
+import { HelmetProvider } from 'react-helmet-async';
+import { Redirects } from './components/Redirects';
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
-const BrandAssets = React.lazy(() => import(`./features/brandAssets`));
-
+const MediaKit = React.lazy(() => import(`./features/media-kit`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
@@ -33,33 +35,32 @@ export const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <ScrollToTop />
-        <WrappedFooter>
-          <Header />
-          <React.Suspense fallback={<CowLoader text="Loading" />}>
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
-                <Vault />
-              </Route>
-              <Route exact path="/media-kit">
-                <BrandAssets />
-              </Route>
-              {REDIRECTS.map(redirect => (
-                <Route key={redirect.from} path={redirect.from} exact={true}>
-                  <Redirect to={redirect.to} />
+      <HelmetProvider>
+        <Router>
+          <ScrollToTop />
+          <DefaultMeta />
+          <Redirects />
+          <WrappedFooter>
+            <Header />
+            <React.Suspense fallback={<CowLoader text="Loading" />}>
+              <Switch>
+                <Route exact path="/">
+                  <Home />
                 </Route>
-              ))}
-              <Route>
-                <PageNotFound />
-              </Route>
-            </Switch>
-          </React.Suspense>
-        </WrappedFooter>
-      </Router>
+                <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
+                  <Vault />
+                </Route>
+                <Route exact path="/media-kit">
+                  <MediaKit />
+                </Route>
+                <Route>
+                  <PageNotFound />
+                </Route>
+              </Switch>
+            </React.Suspense>
+          </WrappedFooter>
+        </Router>
+      </HelmetProvider>
     </ThemeProvider>
   );
 };

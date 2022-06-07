@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, makeStyles, CardMedia, Typography } from '@material-ui/core';
+import { Card, CardMedia, makeStyles, Typography } from '@material-ui/core';
 import { styles } from './styles';
 import { SimpleLinkButton } from '../../../../components/SimpleLinkButton';
 import { MediaCardProps } from './MediaCardProps';
