@@ -5,7 +5,7 @@
     "logo": "single-assets/BIFI.png",
     "token": "BIFI",
     "tokenDecimals": 18,
-    "tokenDescription": "Beefy.Finance",
+    "tokenDescription": "Beefy",
     "tokenAddress": "0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8",
     "tokenDescriptionUrl": "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
     "earnedToken": "WGLMR",
@@ -20,7 +20,7 @@
     "oracleId": "BIFI",
     "oraclePrice": 0,
     "status": "active",
-    "platform": "Beefy.Finance",
+    "platform": "Beefy",
     "assets": ["BIFI"],
     "risks": [
       "COMPLEXITY_LOW",

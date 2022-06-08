@@ -67,7 +67,7 @@
   {
     "id": "boo-bifi-ftm-bifi",
     "poolId": "boo-bifi-ftm",
-    "name": "Beefy.Finance",
+    "name": "Beefy",
     "logo": "fantom/BIFI-FTM.png",
     "earnedToken": "mooFantomBIFI",
     "earnedTokenDecimals": 18,
