@@ -37,7 +37,7 @@ export const platformsSlice = createSlice({
       for (const [chainId, boosts] of Object.entries(action.payload)) {
         // eslint-disable-next-line
         for (const boost of boosts) {
-          addPlatformToState(sliceState, chainId, 'Beefy.Finance');
+          addPlatformToState(sliceState, chainId, 'Beefy');
         }
       }
     });
