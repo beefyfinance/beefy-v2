@@ -58,11 +58,13 @@ export const walletSlice = createSlice({
       sliceState.connectedAddress = null;
       sliceState.profilePictureUrl = null;
       sliceState.error = null;
+      sliceState.ens = null;
     },
     accountHasChanged(sliceState, action: PayloadAction<{ address: string }>) {
       sliceState.address = action.payload.address;
       sliceState.connectedAddress = action.payload.address;
       sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
+      sliceState.ens = null;
     },
     chainHasChanged(
       sliceState,
