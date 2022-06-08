@@ -33,6 +33,8 @@ export const config = {
         name: 'Binance Coin',
         symbol: 'BNB',
         decimals: 18,
+        description:
+          'Binance Coin (BNB) is an exchange-based token created and issued by the cryptocurrency exchange Binance. Initially created on the Ethereum blockchain as an ERC-20 token in July 2017, BNB was migrated over to Binance Chain in February 2019 and became the native coin of the Binance Chain.',
       },
       rpcUrls: ['https://bsc-dataseed.binance.org'],
       blockExplorerUrls: ['https://bscscan.com/'],
@@ -78,6 +80,8 @@ export const config = {
         name: 'Huobi Token',
         symbol: 'HT',
         decimals: 18,
+        description:
+          'HT (Huobi Token) is a blockchain-powered loyalty point system. It is the only token that Huobi officially launched. HT supports Huobi Global business and all products, such as VIP discount, HT exclusive events, trading against popular coins and "let your voice be heard".',
       },
       rpcUrls: ['https://http-mainnet.hecochain.com'],
       blockExplorerUrls: ['https://scan.hecochain.com/'],
@@ -101,6 +105,8 @@ export const config = {
         name: 'AVAX',
         symbol: 'AVAX',
         decimals: 18,
+        description:
+          'Avalanche is the fastest smart contracts platform in the blockchain industry, as measured by time-to-finality, and has the most validators securing its activity of any proof-of-stake protocol.',
       },
       rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
       blockExplorerUrls: ['https://cchain.explorer.avax.network/'],
@@ -144,6 +150,8 @@ export const config = {
         name: 'MATIC',
         symbol: 'MATIC',
         decimals: 18,
+        description:
+          'Polygon is a protocol and a framework for building and connecting Ethereum-compatible blockchain networks. Aggregating scalable solutions on Ethereum supporting a multi-chain Ethereum ecosystem.',
       },
       rpcUrls: ['https://rpc-mainnet.matic.network'],
       blockExplorerUrls: ['https://polygonscan.com/'],
@@ -193,6 +201,8 @@ export const config = {
         name: 'FTM',
         symbol: 'FTM',
         decimals: 18,
+        description:
+          'Fantom is a fast, high-throughput open-source smart contract platform for digital assets and dApps.',
       },
       rpcUrls: ['https://rpc.ftm.tools'],
       blockExplorerUrls: ['https://ftmscan.com/'],
@@ -235,6 +245,7 @@ export const config = {
         name: 'HARMONY',
         symbol: 'ONE',
         decimals: 18,
+        description: '',
       },
       rpcUrls: ['https://api.s0.t.hmny.io/'],
       blockExplorerUrls: ['https://explorer.harmony.one/'],
@@ -258,6 +269,7 @@ export const config = {
         name: 'ETH',
         symbol: 'ETH',
         decimals: 18,
+        description: 'Ether or ETH is the native currency built on the Ethereum blockchain.',
       },
       rpcUrls: ['https://arb1.arbitrum.io/rpc'],
       blockExplorerUrls: ['https://arbiscan.io/'],
@@ -281,6 +293,8 @@ export const config = {
         name: 'CELO',
         symbol: 'CELO',
         decimals: 18,
+        description:
+          'Celo is a mobile-first platform that makes financial dApps and crypto payments accessible to anyone with a mobile phone',
       },
       rpcUrls: ['https://forno.celo.org'],
       blockExplorerUrls: ['https://explorer.celo.org/'],
@@ -304,6 +318,8 @@ export const config = {
         name: 'Moonriver',
         symbol: 'MOVR',
         decimals: 18,
+        description:
+          'Moonriver is a companion network to Moonbeam and provides a permanently incentivized canary network. New code ships to Moonriver first, where it can be tested and verified under real economic conditions. Once proven, the same code ships to Moonbeam on Polkadot.',
       },
       rpcUrls: ['https://rpc.api.moonriver.moonbeam.network/'],
       blockExplorerUrls: ['https://moonriver.moonscan.io/'],
@@ -327,6 +343,7 @@ export const config = {
         name: 'CRO',
         symbol: 'CRO',
         decimals: 18,
+        description: 'Crypto.com Coin',
       },
       rpcUrls: ['https://evm.cronos.org'],
       blockExplorerUrls: ['https://cronoscan.com/'],
@@ -350,6 +367,8 @@ export const config = {
         name: 'FUSE',
         symbol: 'FUSE',
         decimals: 18,
+        description:
+          'Launch community-centric payment systems and token economies on an Ethereum-compatible blockchain.',
       },
       rpcUrls: ['https://rpc.fuse.io'],
       blockExplorerUrls: ['https://explorer.fuse.io/'],
@@ -373,6 +392,8 @@ export const config = {
         name: 'METIS',
         symbol: 'METIS',
         decimals: 18,
+        description:
+          'METIS IS SOLVING ETHEREUMS SIX BIGGEST CHALLENGES. SIMPLICITY. SPEED. STORAGE. SCALABILITY. SECURITY. SAVINGS.',
       },
       rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
       blockExplorerUrls: ['https://andromeda-explorer.metis.io/'],
@@ -396,6 +417,7 @@ export const config = {
         name: 'ETH',
         symbol: 'ETH',
         decimals: 18,
+        description: 'Ether or ETH is the native currency built on the Ethereum blockchain.',
       },
       rpcUrls: ['https://mainnet.aurora.dev'],
       blockExplorerUrls: ['https://aurorascan.dev/'],
@@ -419,6 +441,8 @@ export const config = {
         name: 'GLMR',
         symbol: 'GLMR',
         decimals: 18,
+        description:
+          'A Polkadot Parachain Designed for Developers Moonbeam simplifies the developer experience by combining full Ethereum compatibility with the power of Polkadot, including scalability, cross-chain integrations, and on-chain governance.',
       },
       rpcUrls: ['https://rpc.api.moonbeam.network'],
       blockExplorerUrls: ['https://moonscan.io/'],
@@ -442,6 +466,8 @@ export const config = {
         name: 'Oasis Protocol',
         symbol: 'ROSE',
         decimals: 18,
+        description:
+          'Oasis Network is the leading privacy-enabled and scalable layer-1 blockchain network to propel Web3 forward',
       },
       rpcUrls: ['https://emerald.oasis.dev'],
       blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],

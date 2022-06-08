@@ -112,6 +112,7 @@ export interface ChainConfig {
       name: string;
       symbol: string;
       decimals: number;
+      description: string;
     };
     rpcUrls: string[];
     blockExplorerUrls: string[];
