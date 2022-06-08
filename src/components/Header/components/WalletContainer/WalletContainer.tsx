@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { StatLoader } from '../../../StatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
+  selectEns,
   selectIsBalanceHidden,
   selectIsWalletConnected,
   selectIsWalletKnown,
@@ -15,6 +16,7 @@ import { BeefyState } from '../../../../redux-types';
 import {
   askForWalletConnection,
   doDisconnectWallet,
+  getEns,
 } from '../../../../features/data/actions/wallet';
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
 import clsx from 'clsx';
@@ -32,7 +34,8 @@ export const WalletContainer = connect((state: BeefyState) => {
   const walletPending = selectIsWalletPending(state);
   const walletProfileUrl = state.user.wallet.profilePictureUrl;
   const blurred = selectIsBalanceHidden(state);
-  return { isWalletConnected, walletAddress, walletPending, walletProfileUrl, blurred };
+  const ens = selectEns(state);
+  return { isWalletConnected, walletAddress, walletPending, walletProfileUrl, blurred, ens };
 })(
   ({
     isWalletConnected,
@@ -40,12 +43,14 @@ export const WalletContainer = connect((state: BeefyState) => {
     walletPending,
     walletProfileUrl,
     blurred,
+    ens,
   }: {
     isWalletConnected: boolean;
     walletAddress: null | string;
     walletPending: boolean;
     walletProfileUrl: null | string;
     blurred: boolean;
+    ens: string | null;
   }) => {
     const theme = useTheme();
     const classes = useStyles();
@@ -65,6 +70,12 @@ export const WalletContainer = connect((state: BeefyState) => {
       autoComplete: 'off',
       onClick: handleWalletConnect,
     };
+
+    React.useEffect(() => {
+      if (walletAddress) {
+        dispatch(getEns({ address: walletAddress }));
+      }
+    }, [dispatch, walletAddress]);
 
     return (
       <Box
@@ -96,7 +107,7 @@ export const WalletContainer = connect((state: BeefyState) => {
                   variant="body1"
                   noWrap={true}
                 >
-                  {walletAddress ? formatAddress(walletAddress) : t('Network-ConnectWallet')}
+                  {walletAddress ? ens || formatAddress(walletAddress) : t('Network-ConnectWallet')}
                 </Typography>
               </React.Fragment>
             )}
