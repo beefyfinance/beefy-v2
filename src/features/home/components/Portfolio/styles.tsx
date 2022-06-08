@@ -1,11 +1,24 @@
 export const styles = theme => ({
   portfolio: {
     backgroundColor: theme.palette.background.header,
-    padding: '30px 0 30px 0',
+    padding: `${40 - 24}px 0 40px 0`,
   },
-  separator: {
-    [theme.breakpoints.down('lg')]: {
-      marginBottom: theme.spacing(4),
+  stats: {
+    display: 'grid',
+    gridTemplateColumns: '100%',
+    rowGap: '32px',
+    columnGap: '32px',
+    [theme.breakpoints.up('md')]: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+  },
+  userStats: {},
+  vaultStats: {
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'right' as const,
+      '& $title': {
+        justifyContent: 'flex-end',
+      },
     },
   },
   title: {
@@ -24,14 +37,6 @@ export const styles = theme => ({
     '&:hover': {
       backgroundColor: 'transparent',
       color: '#6B7199',
-    },
-  },
-  vaults: {
-    [theme.breakpoints.up('md')]: {
-      textAlign: 'right' as const,
-      '& $title': {
-        justifyContent: 'flex-end',
-      },
     },
   },
 });

@@ -215,6 +215,7 @@ function _Preview({
               disabled={isDisabled}
               variant="success"
               fullWidth={true}
+              borderless={true}
             >
               {t('Bridge-Button-1', { network: destChain.name })}
             </Button>
@@ -223,12 +224,18 @@ function _Preview({
               onClick={() => dispatch(askForNetworkChange({ chainId: formState.fromChainId }))}
               variant="success"
               fullWidth={true}
+              borderless={true}
             >
               {t('Network-Change', { network: fromChain.name })}
             </Button>
           )
         ) : (
-          <Button onClick={handleConnectWallet} variant="success" fullWidth={true}>
+          <Button
+            onClick={handleConnectWallet}
+            variant="success"
+            fullWidth={true}
+            borderless={true}
+          >
             {t('Network-ConnectWallet')}
           </Button>
         )}

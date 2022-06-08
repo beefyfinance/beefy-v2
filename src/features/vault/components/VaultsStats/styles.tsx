@@ -10,10 +10,10 @@ export const styles = theme => ({
       gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
     },
   },
-  userStats: {
+  interestStats: {
     width: '100%',
   },
-  userStatsBox: {
+  interestStatsBox: {
     height: 96,
     display: 'flex',
     justifyContent: 'flex-start',
@@ -21,10 +21,10 @@ export const styles = theme => ({
     borderRadius: '8px',
     padding: '16px 16px',
   },
-  beefyStats: {
+  depositStats: {
     width: '100%',
   },
-  beefyStatsBox: {
+  depositStatsBox: {
     height: 96,
     display: 'flex',
     flexWrap: 'nowrap' as const,

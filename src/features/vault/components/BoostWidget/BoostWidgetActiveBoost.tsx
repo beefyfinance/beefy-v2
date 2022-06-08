@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Modal } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { formatBigDecimals } from '../../../../helpers/format';
@@ -25,6 +25,7 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip';
 import { Button } from '../../../../components/Button';
+import { Modal } from '../../../../components/Modal';
 
 const useStyles = makeStyles(styles);
 

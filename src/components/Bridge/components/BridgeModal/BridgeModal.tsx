@@ -1,5 +1,4 @@
 import { memo, useCallback, useState } from 'react';
-import { Modal } from '@material-ui/core';
 import { CardHeader, CardTitle } from '../../../../features/vault/components/Card';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@material-ui/icons/Close';
@@ -10,6 +9,7 @@ import { selectCurrentChainId } from '../../../../features/data/selectors/wallet
 import { useStepper } from '../../../Steps/hooks';
 import { useAppSelector } from '../../../../store';
 import { styles } from './styles';
+import { Modal } from '../../../Modal';
 
 const useStyles = makeStyles(styles);
 

@@ -185,7 +185,13 @@ function _Confirm({
       <div className={classes.buttonsContainer}>
         {isWalletConnected ? (
           isWalletOnFromChain ? (
-            <Button onClick={handleBridge} disabled={isStepping} variant="success" fullWidth={true}>
+            <Button
+              onClick={handleBridge}
+              disabled={isStepping}
+              variant="success"
+              fullWidth={true}
+              borderless={true}
+            >
               {t('Confirm')}
             </Button>
           ) : (
@@ -193,16 +199,22 @@ function _Confirm({
               onClick={() => dispatch(askForNetworkChange({ chainId: formState.fromChainId }))}
               variant="success"
               fullWidth={true}
+              borderless={true}
             >
               {t('Network-Change', { network: fromChain.name })}
             </Button>
           )
         ) : (
-          <Button onClick={handleConnectWallet} variant="success" fullWidth={true}>
+          <Button
+            onClick={handleConnectWallet}
+            variant="success"
+            fullWidth={true}
+            borderless={true}
+          >
             {t('Network-ConnectWallet')}
           </Button>
         )}
-        <Button onClick={handleBack} variant="light" fullWidth={true}>
+        <Button onClick={handleBack} variant="light" fullWidth={true} borderless={true}>
           {t('Back')}
         </Button>
       </div>

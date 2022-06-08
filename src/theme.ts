@@ -172,12 +172,6 @@ const theme = createTheme({
     MuiInputBase: {
       input: fontStyles['body-lg-med'],
     },
-    MuiBackdrop: {
-      root: {
-        backgroundColor: 'rgba(255,255,255,0.2)',
-        backdropFilter: 'blur(8px)',
-      },
-    },
   },
 });
 

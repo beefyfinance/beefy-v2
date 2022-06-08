@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Box, Grid, makeStyles, Modal } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formatBigUsd } from '../../../../../helpers/format';
 import { StatLoader } from '../../../../../components/StatLoader';
@@ -9,6 +9,7 @@ import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
 import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
 import { ModalTvl } from '../ModalTvl';
 import { useAppSelector } from '../../../../../store';
+import { Modal } from '../../../../../components/Modal';
 
 const useStyles = makeStyles(styles);
 

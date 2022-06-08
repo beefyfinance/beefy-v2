@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => ({
   },
   feesContent: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(2, minmax(50%, 1fr))',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     rowGap: '16px',
     columnGap: '16px',
   },

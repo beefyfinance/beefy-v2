@@ -1,4 +1,4 @@
-import { Button, Container, Grid, makeStyles } from '@material-ui/core';
+import { Button, Container, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Stats } from './Stats';
 import { VaultsStats } from './VaultsStats';
@@ -28,8 +28,8 @@ export const Portfolio = () => {
   return (
     <div className={classes.portfolio}>
       <Container maxWidth="lg">
-        <Grid container>
-          <Grid className={classes.separator} item xs={12} md={6}>
+        <div className={classes.stats}>
+          <div className={classes.userStats}>
             <div className={classes.title}>
               {t('Portfolio-Portfolio')}{' '}
               <Button size="small" className={classes.btnHide} onClick={updateHideBalance}>
@@ -41,12 +41,12 @@ export const Portfolio = () => {
               </Button>
             </div>
             <Stats stats={globalStats} blurred={hideBalance} />
-          </Grid>
-          <Grid item xs={12} md={6} className={classes.vaults}>
+          </div>
+          <div className={classes.vaultStats}>
             <div className={classes.title}>{t('Vault-platform')}</div>
             <VaultsStats />
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </Container>
     </div>
   );

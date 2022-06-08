@@ -23,8 +23,8 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <div className={classes.container}>
-      <div className={classes.userStats}>
-        <Box className={classes.userStatsBox}>
+      <div className={classes.interestStats}>
+        <Box className={classes.interestStatsBox}>
           <Box width={'33%'} className={classes.stat3}>
             <VaultTvl vaultId={vaultId} />
           </Box>
@@ -42,8 +42,8 @@ function VaultsStatsComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
           </Box>
         </Box>
       </div>
-      <div className={classes.beefyStats}>
-        <Grid container className={classes.beefyStatsBox}>
+      <div className={classes.depositStats}>
+        <Grid container className={classes.depositStatsBox}>
           <Grid item xs={6} className={classes.stat1}>
             <Box className={classes.stat4}>
               <VaultDeposited vaultId={vaultId} />
