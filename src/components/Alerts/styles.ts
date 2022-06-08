@@ -24,6 +24,12 @@ export const styles = (theme: Theme) => ({
     flexGrow: 1,
     minWidth: 0,
     color: '#D0D0DA',
+    '& p:first-child': {
+      marginTop: 0,
+    },
+    '& p:last-child': {
+      marginBottom: 0,
+    },
   },
   warning: {
     backgroundColor: 'rgba(209, 152, 71, 0.15)',

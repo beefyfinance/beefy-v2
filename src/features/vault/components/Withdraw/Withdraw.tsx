@@ -59,7 +59,7 @@ import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
-import { AlertWarning } from '../../../../components/Alerts';
+import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
 
 const useStyles = makeStyles(styles);
 
@@ -458,15 +458,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             </Button>
           </Paper>
         </div>
-        {vault.id === 'scream-tusd' && (
-          <Box mt={3}>
-            <AlertWarning>
-              {t(
-                'There is no liquidity in the underlying protocol to withdraw, withdraws will be activated once more liquidity is available.'
-              )}
-            </AlertWarning>
-          </Box>
-        )}
         <FeeBreakdown
           vault={vault}
           slippageTolerance={formState.slippageTolerance}
@@ -477,6 +468,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+          <ScreamAvailableLiquidity vaultId={vaultId} />
           {isWalletConnected ? (
             !isWalletOnVaultChain ? (
               <>
@@ -504,11 +496,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                       onClick={handleWithdraw}
                       className={classes.btnSubmit}
                       fullWidth={true}
-                      disabled={
-                        vault.id === 'scream-tusd' ||
-                        formState.amount.isLessThanOrEqualTo(0) ||
-                        !formReady
-                      }
+                      disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
                     >
                       {formState.max ? t('Withdraw-All') : t('Withdraw-Verb')}
                     </Button>
@@ -526,11 +514,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     onClick={handleWithdraw}
                     className={classes.btnSubmit}
                     fullWidth={true}
-                    disabled={
-                      vault.id === 'scream-tusd' ||
-                      formState.amount.isLessThanOrEqualTo(0) ||
-                      !formReady
-                    }
+                    disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
                   >
                     {isZapEstimateLoading
                       ? t('Zap-Estimating')
