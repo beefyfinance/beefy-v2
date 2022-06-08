@@ -4,7 +4,7 @@
     "logo": "single-assets/BIFI.png",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",
-    "tokenDescription": "Beefy.Finance",
+    "tokenDescription": "Beefy",
     "tokenAddress": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
     "tokenDecimals": 18,
     "tokenDescriptionUrl": "https://docs.beefy.finance/moo/ecosystem/bifi-token/tokenomics-and-governance",
@@ -19,7 +19,7 @@
     "oracleId": "BIFI",
     "oraclePrice": 0,
     "status": "active",
-    "platform": "Beefy.Finance",
+    "platform": "Beefy",
     "excluded": "arbi-bifi-maxi",
     "assets": ["BIFI"],
     "risks": [
