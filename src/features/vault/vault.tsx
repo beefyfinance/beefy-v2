@@ -40,6 +40,7 @@ import { RetirePauseReason } from './components/RetirePauseReason';
 import { InsuraceCard } from './components/InsuraceCard';
 import { NexusCard } from './components/NexusCard';
 import { SolaceCard } from './components/SolaceCard';
+import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 
 const useStyles = makeStyles(styles as any);
@@ -95,6 +96,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
 
   return (
     <>
+      <VaultMeta vaultId={vaultId} />
       <Box className={classes.vaultContainer}>
         <Container maxWidth="lg">
           <>

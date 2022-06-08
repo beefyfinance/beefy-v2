@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
-import { fetchAllBoosts } from '../actions/boosts';
 import { fetchAllVaults } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
 import { PlatformEntity } from '../entities/platform';
@@ -28,16 +27,6 @@ export const platformsSlice = createSlice({
       for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
         for (const vault of vaults) {
           addPlatformToState(sliceState, chainId, vault.platform);
-        }
-      }
-    });
-
-    // when boost list is fetched, add all new tokens
-    builder.addCase(fetchAllBoosts.fulfilled, (sliceState, action) => {
-      for (const [chainId, boosts] of Object.entries(action.payload)) {
-        // eslint-disable-next-line
-        for (const boost of boosts) {
-          addPlatformToState(sliceState, chainId, 'Beefy.Finance');
         }
       }
     });
