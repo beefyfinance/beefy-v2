@@ -121,7 +121,7 @@ export const styles: Styles<any, any, any> = theme => ({
     ...theme.typography['body-sm'],
     marginTop: '8px',
   },
-  closeButton: {
+  closeIconButton: {
     color: '#8A8EA8',
     position: 'absolute',
     fontSize: '22px',

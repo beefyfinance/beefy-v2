@@ -68,7 +68,7 @@ export const styles = (theme: Theme) => ({
       marginTop: '12px',
     },
   },
-  btnContaniner: {
+  btnContainer: {
     marginTop: 16,
   },
   depositTokenContainer: {

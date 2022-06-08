@@ -26,7 +26,18 @@ export const styles = (theme: Theme) => ({
     backgroundColor: '#272B4A',
     borderRadius: '12px',
   },
+  contentColumns: {
+    display: 'grid',
+    gridTemplateColumns: '100%',
+    rowGap: '48px',
+    columnGap: '48px',
+    [theme.breakpoints.up('md')]: {
+      display: 'grid',
+      gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
+    },
+  },
   columnActions: {
+    width: '100%',
     '& > :first-child': {
       marginTop: 0,
     },
@@ -35,6 +46,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   columnInfo: {
+    width: '100%',
     marginTop: '-24px',
     '& > :first-child': {
       marginTop: 0,

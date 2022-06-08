@@ -1,14 +1,13 @@
 import { Box, makeStyles } from '@material-ui/core';
-import { useSelector } from 'react-redux';
 import { styles } from './styles';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { formatBigDecimals } from '../../../../helpers/format';
-import { BeefyState } from '../../../../redux-types';
 import { TokenEntity } from '../../../data/entities/token';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../store';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
@@ -23,11 +22,11 @@ export function TokenWithBalance({
   variant?: 'sm' | 'lg';
 }) {
   const classes = useStyles();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const depositToken = useSelector((state: BeefyState) =>
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
-  const balance = useSelector((state: BeefyState) =>
+  const balance = useAppSelector(state =>
     selectUserBalanceOfToken(state, vault.chainId, token.address)
   );
 

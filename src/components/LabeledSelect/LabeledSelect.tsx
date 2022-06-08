@@ -15,6 +15,7 @@ export type LabeledSelectCommonProps = {
   sortOptions?: 'default' | 'value' | 'label';
   fullWidth?: boolean;
   borderless?: boolean;
+  disabled?: boolean;
   selectClass?: string;
   selectCurrentClass?: string;
   selectLabelClass?: string;
@@ -36,6 +37,8 @@ export type LabeledSelectProps = LabeledSelectCommonProps & {
   defaultValue?: string;
   onChange: (value: string) => void;
   SelectedItemComponent?: FC<SelectedItemProps>;
+  DropdownItemComponent?: FC<DropdownItemProps>;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
 };
 
 type DropdownItemProps = {
@@ -43,6 +46,12 @@ type DropdownItemProps = {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
+};
+
+export type DropdownItemLabelProps = {
+  label: string;
+  value: string;
 };
 
 export type SelectedItemProps = {
@@ -72,6 +81,7 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
   value,
   onChange,
   className,
+  DropdownItemLabelComponent = DropdownItemLabel,
 }) {
   const handleChange = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
@@ -83,9 +93,13 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
 
   return (
     <div onClick={handleChange} className={className}>
-      {label}
+      <DropdownItemLabelComponent value={value} label={label} />
     </div>
   );
+});
+
+const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItem({ label }) {
+  return <>{label}</>;
 });
 
 const SelectedItem = memo<SelectedItemProps>(function ({ value, options }) {
@@ -101,7 +115,10 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   sortOptions = 'default',
   fullWidth = false,
   borderless = false,
+  disabled = false,
   SelectedItemComponent = SelectedItem,
+  DropdownItemComponent = DropdownItem,
+  DropdownItemLabelComponent = DropdownItemLabel,
   selectClass,
   selectCurrentClass,
   selectLabelClass,
@@ -175,12 +192,13 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   return (
     <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
       <button
-        onClick={handleToggle}
+        onClick={disabled ? undefined : handleToggle}
         ref={anchorEl}
         className={clsx(classes.select, {
           [classes.selectBorderless]: borderless,
           [classes.selectFullWidth]: fullWidth,
           [classes.selectOpen]: isOpen,
+          [classes.selectDisabled]: disabled,
         })}
       >
         <div className={classes.selectCurrent}>
@@ -200,11 +218,12 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
           autoHide={dropdownAutoHide}
         >
           {optionsList.map(({ value: optionValue, label }) => (
-            <DropdownItem
+            <DropdownItemComponent
               key={optionValue}
               onChange={handleChange}
               label={label}
               value={optionValue}
+              DropdownItemLabelComponent={DropdownItemLabelComponent}
               className={clsx(classes.dropdownItem, {
                 [classes.dropdownItemSelected]: optionValue === value,
               })}

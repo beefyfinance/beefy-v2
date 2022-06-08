@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BeefyState } from '../../../../../../redux-types';
 import { selectIsVaultGov, selectIsVaultRetired } from '../../../../../data/selectors/vaults';
 import { formattedTotalApy } from '../../../../../../helpers/format';
-import { VaultValueStat } from '../VaultValueStat';
+import { VaultValueStat, VaultValueStatProps } from '../VaultValueStat';
 import { selectVaultApyAvailable } from '../../../../../data/selectors/data-loader';
 import {
   selectDidAPIReturnValuesForVault,
@@ -20,9 +20,9 @@ export type VaultDailyStatProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const VaultDailyStat = memo<VaultDailyStatProps>(connect(mapStateToProps)(VaultValueStat));
+export const VaultDailyStat = memo(connect(mapStateToProps)(VaultValueStat));
 
-function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps) {
+function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): VaultValueStatProps {
   const label = 'VaultStat-DAILY';
 
   const isRetired = selectIsVaultRetired(state, vaultId);

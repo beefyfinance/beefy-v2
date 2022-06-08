@@ -1,9 +1,9 @@
 import React from 'react';
 import { Avatar, Box, FormControl, Grid, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { ApyStatLoader } from '../../../ApyStatLoader';
+import { StatLoader } from '../../../StatLoader';
 import { useTheme } from '@material-ui/core/styles';
 import {
   selectIsBalanceHidden,
@@ -18,12 +18,10 @@ import {
 } from '../../../../features/data/actions/wallet';
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
 import clsx from 'clsx';
+import { useAppDispatch } from '../../../../store';
+import { formatAddressShort } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
-
-const formatAddress = (addr: string) => {
-  return addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
-};
 
 export const WalletContainer = connect((state: BeefyState) => {
   const isWalletConnected = selectIsWalletConnected(state);
@@ -49,8 +47,8 @@ export const WalletContainer = connect((state: BeefyState) => {
   }) => {
     const theme = useTheme();
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const t = useTranslation().t;
+    const dispatch = useAppDispatch();
+    const { t } = useTranslation();
 
     const handleWalletConnect = () => {
       if (walletAddress) {
@@ -79,7 +77,7 @@ export const WalletContainer = connect((state: BeefyState) => {
           <Grid container direction="row" alignItems="center">
             {walletPending ? (
               <Box className={classes.loading}>
-                <ApyStatLoader
+                <StatLoader
                   foregroundColor={theme.palette.primary.light}
                   backgroundColor={theme.palette.primary.dark}
                 />
@@ -92,7 +90,7 @@ export const WalletContainer = connect((state: BeefyState) => {
                   ''
                 )}
                 <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
-                  {walletAddress ? formatAddress(walletAddress) : t('Network-ConnectWallet')}
+                  {walletAddress ? formatAddressShort(walletAddress) : t('Network-ConnectWallet')}
                 </div>
               </React.Fragment>
             )}

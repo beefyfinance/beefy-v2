@@ -1,13 +1,12 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Steps } from '.';
-import { VaultEntity } from '../../features/data/entities/vault';
-import { BeefyState } from '../../redux-types';
+import { ChainEntity } from '../../features/data/entities/chain';
 import { StepperState } from './types';
+import { useAppDispatch, useAppSelector } from '../../store';
 
 export function useStepper(
-  vaultId: VaultEntity['id'],
+  chainId: ChainEntity['id'],
   onClose?: () => unknown
 ): [(steps: StepperState['items']) => unknown, boolean, React.FC] {
   const [steps, setSteps] = React.useState<StepperState>({
@@ -17,8 +16,8 @@ export function useStepper(
     finished: false,
   });
 
-  const walletActionsState = useSelector((state: BeefyState) => state.user.walletActions);
-  const dispatch = useDispatch();
+  const walletActionsState = useAppSelector(state => state.user.walletActions);
+  const dispatch = useAppDispatch();
 
   const handleClose = React.useCallback(() => {
     setSteps({ modal: false, currentStep: -1, items: [], finished: false });
@@ -28,8 +27,8 @@ export function useStepper(
   }, [onClose, setSteps]);
 
   const Stepper: React.FC = React.useMemo(
-    () => React.memo(() => <Steps vaultId={vaultId} steps={steps} handleClose={handleClose} />),
-    [vaultId, steps, handleClose]
+    () => React.memo(() => <Steps chainId={chainId} steps={steps} handleClose={handleClose} />),
+    [chainId, steps, handleClose]
   );
 
   // advance stepper
@@ -57,6 +56,7 @@ export function useStepper(
   function startStepper(steps: StepperState['items']) {
     setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
   }
+
   const isStepping = steps.modal && !steps.finished;
 
   return [startStepper, isStepping, Stepper];

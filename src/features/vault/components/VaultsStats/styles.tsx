@@ -1,24 +1,30 @@
 export const styles = theme => ({
   container: {
-    display: 'flex',
-    [theme.breakpoints.down('md')]: {
-      display: 'block',
+    marginTop: '32px',
+    display: 'grid',
+    gridTemplateColumns: '100%',
+    rowGap: '48px',
+    columnGap: '48px',
+    [theme.breakpoints.up('lg')]: {
+      display: 'grid',
+      gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
     },
   },
-  stats: {
-    marginTop: theme.spacing(4),
+  userStats: {
+    width: '100%',
+  },
+  userStatsBox: {
     height: 96,
     display: 'flex',
     justifyContent: 'flex-start',
     backgroundColor: theme.palette.background.default,
     borderRadius: '8px',
     padding: '16px 16px',
-    [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(3),
-    },
   },
-  stats2: {
-    marginTop: theme.spacing(4),
+  beefyStats: {
+    width: '100%',
+  },
+  beefyStatsBox: {
     height: 96,
     display: 'flex',
     flexWrap: 'nowrap' as const,
@@ -30,7 +36,6 @@ export const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
       textAlign: 'start' as const,
-      marginTop: 0,
     },
   },
   stat: {

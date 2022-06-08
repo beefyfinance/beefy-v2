@@ -1,9 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { LinkButton } from '../../../../components/LinkButton';
-import { BeefyState } from '../../../../redux-types';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import { ChainEntity } from '../../../data/entities/chain';
 import { isTokenErc20, TokenEntity } from '../../../data/entities/token';
@@ -18,6 +16,7 @@ import { CardContent } from '../Card/CardContent';
 import { CardHeader } from '../Card/CardHeader';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles);
 
@@ -25,7 +24,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const chain = useSelector((state: BeefyState) => selectChainById(state, token.chainId));
+  const chain = useAppSelector(state => selectChainById(state, token.chainId));
 
   return (
     <Card>
@@ -66,19 +65,19 @@ function TokenCardComponent({
   chainId: ChainEntity['id'];
   tokenId: TokenEntity['id'];
 }) {
-  const tokenLoaded = useSelector(
-    (state: BeefyState) =>
+  const tokenLoaded = useAppSelector(
+    state =>
       (selectIsAddressBookLoaded(state, chainId) && selectIsTokenLoaded(state, chainId, tokenId)) ||
       false
   );
-  const token = useSelector((state: BeefyState) =>
+  const token = useAppSelector(state =>
     tokenLoaded ? selectTokenById(state, chainId, tokenId) : null
   );
-  const shouldInitAddressBook = useSelector((state: BeefyState) =>
+  const shouldInitAddressBook = useAppSelector(state =>
     selectShouldInitAddressBook(state, chainId)
   );
   // initialize addressbook
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   React.useEffect(() => {
     if (shouldInitAddressBook) {
       dispatch(fetchAddressBookAction({ chainId: chainId }));

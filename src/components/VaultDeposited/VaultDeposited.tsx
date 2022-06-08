@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { isGovVault, VaultEntity } from '../../features/data/entities/vault';
 import {
   selectGovVaultUserStackedBalanceInDepositToken,
@@ -14,6 +14,7 @@ import { selectIsBalanceHidden, selectIsWalletKnown } from '../../features/data/
 import { formatBigDecimals, formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
+import { useAppSelector } from '../../store';
 
 const _BoostedVaultDepositedLarge = connect(
   (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
@@ -120,8 +121,8 @@ const _NonBoostedVaultDeposited = connect(
 const NonBoostedVaultDeposited = React.memo(_NonBoostedVaultDeposited);
 
 const _VaultDeposited = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
-  const isBoosted = useSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
-  const userStaked = useSelector((state: BeefyState) =>
+  const isBoosted = useAppSelector((state: BeefyState) => selectIsVaultBoosted(state, vaultId));
+  const userStaked = useAppSelector((state: BeefyState) =>
     selectHasUserBalanceInActiveBoost(state, vaultId)
   );
 

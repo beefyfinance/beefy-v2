@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { isEqual, sortedUniq, uniq } from 'lodash';
 import React, { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { ChainEntity } from '../../features/data/entities/chain';
 import {
   dataLoaderActions,
@@ -17,6 +16,7 @@ import { selectVaultById } from '../../features/data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
 import { styles } from './styles';
 import { Floating } from '../Floating';
+import { useAppDispatch, useAppSelector } from '../../store';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(styles);
@@ -24,11 +24,11 @@ const useStyles = makeStyles(styles);
 export function NetworkStatus() {
   const classes = useStyles({});
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const anchorEl = useRef();
-  const open = useSelector((state: BeefyState) => state.ui.dataLoader.statusIndicator.open);
-  const chainsById = useSelector((state: BeefyState) => state.entities.chains.byId);
+  const open = useAppSelector(state => state.ui.dataLoader.statusIndicator.open);
+  const chainsById = useAppSelector(state => state.entities.chains.byId);
   const handleClose = useCallback(() => dispatch(dataLoaderActions.closeIndicator()), [dispatch]);
   const handleToggle = useCallback(
     () => dispatch(open ? dataLoaderActions.closeIndicator() : dataLoaderActions.openIndicator()),
@@ -79,7 +79,7 @@ export function NetworkStatus() {
       >
         <div className={classes.popoverSpacer} />
         <div className={classes.popover}>
-          <div className={classes.closeButton} onClick={handleClose}>
+          <div className={classes.closeIconButton} onClick={handleClose}>
             <CloseIcon fontSize="inherit" />
           </div>
           {hasAnyError ? (
@@ -121,8 +121,8 @@ function useNetStatus<
   S extends (state: BeefyState, matcher: (state: LoaderState) => boolean) => R,
   M extends (state: LoaderState) => boolean
 >(selector: S, matcher: M) {
-  return useSelector(
-    (state: BeefyState) => selector(state, matcher),
+  return useAppSelector(
+    state => selector(state, matcher),
     // since we are returning a new array each time we select
     // use a comparator to avoid useless re-renders
     stringArrCompare

@@ -10,11 +10,9 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
-import { BeefyState } from '../../../../redux-types';
 import { initDepositForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
@@ -39,21 +37,22 @@ import { styles } from '../styles';
 import { TokenWithBalance } from '../TokenWithBalance';
 import { VaultBuyLinks } from '../VaultBuyLinks';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
+import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 
 const useStyles = makeStyles(styles);
 
 export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const store = useStore();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const isWalletConnected = useSelector(selectIsWalletConnected);
-  const isWalletOnVaultChain = useSelector(
-    (state: BeefyState) => selectCurrentChainId(state) === vault.chainId
+  const store = useAppStore();
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const isWalletOnVaultChain = useAppSelector(
+    state => selectCurrentChainId(state) === vault.chainId
   );
 
-  const walletAddress = useSelector((state: BeefyState) =>
+  const walletAddress = useAppSelector(state =>
     isWalletConnected ? selectWalletAddress(state) : null
   );
 
@@ -67,13 +66,13 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     };
   }, [store, vaultId, walletAddress]);
 
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const depositToken = useSelector((state: BeefyState) =>
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
-  const formState = useSelector((state: BeefyState) => state.ui.deposit);
-  const native = useSelector((state: BeefyState) => selectChainNativeToken(state, vault.chainId));
-  const displayBoostWidget = useSelector((state: BeefyState) =>
+  const formState = useAppSelector(state => state.ui.deposit);
+  const native = useAppSelector(state => selectChainNativeToken(state, vault.chainId));
+  const displayBoostWidget = useAppSelector(state =>
     selectShouldDisplayBoostWidget(state, vaultId)
   );
 
@@ -84,20 +83,20 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       // which is also the earned token
       vault.earnContractAddress;
 
-  const needsApproval = useSelector((state: BeefyState) =>
+  const needsApproval = useAppSelector(state =>
     formState.selectedToken && formState.selectedToken.id !== native.id && spenderAddress
       ? selectIsApprovalNeededForDeposit(state, spenderAddress)
       : false
   );
 
-  const formDataLoaded = useSelector(
-    (state: BeefyState) =>
+  const formDataLoaded = useAppSelector(
+    state =>
       selectIsAddressBookLoaded(state, vault.chainId) &&
       isFulfilled(state.ui.dataLoader.global.depositForm)
   );
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
 
-  const [startStepper, isStepping, Stepper] = useStepper(vaultId);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 

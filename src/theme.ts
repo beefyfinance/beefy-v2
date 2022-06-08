@@ -55,7 +55,7 @@ const fontStyles: Record<string, TypographyStyleOptions> = {
     textTransform: 'none' as const,
     fontWeight: 400,
   },
-  'body-sm-bold': {
+  'body-sm-med': {
     fontFamily: fontStack,
     fontSize: '12px',
     lineHeight: '20px',
@@ -89,6 +89,7 @@ const theme = createTheme({
       paper: '#232743',
       light: '#313759',
       content: '#2D3153',
+      contentLight: '#F4F4F4',
       header: '#121212',
       footer: '#121212',
       cta: '#59A662',
@@ -133,7 +134,7 @@ const theme = createTheme({
     'body-lg': fontStyles['body-lg'],
     'body-lg-med': fontStyles['body-lg-med'],
     'body-sm': fontStyles['body-sm'],
-    'body-sm-bold': fontStyles['body-sm-bold'],
+    'body-sm-med': fontStyles['body-sm-med'],
     'subline-lg': fontStyles['subline-lg'],
     'subline-sm': fontStyles['subline-sm'],
     h4: {
@@ -170,6 +171,12 @@ const theme = createTheme({
   overrides: {
     MuiInputBase: {
       input: fontStyles['body-lg-med'],
+    },
+    MuiBackdrop: {
+      root: {
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        backdropFilter: 'blur(8px)',
+      },
     },
   },
 });

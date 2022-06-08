@@ -9,7 +9,7 @@ import { CustomTooltipProps } from './CustomTooltipProps';
 const useStyles = makeStyles(styles);
 export const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, stat }) => {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
   const LABELS = [t('TVL'), t('Graph-PriceTkn'), t('APY')];
 
   if (active && payload && payload.length) {

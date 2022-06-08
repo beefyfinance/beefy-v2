@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => ({
   'body-lg': theme.typography['body-lg'],
   'body-lg-med': theme.typography['body-lg-med'],
   'body-sm': theme.typography['body-sm'],
-  'body-sm-bold': theme.typography['body-sm-bold'],
+  'body-sm-med': theme.typography['body-sm-med'],
   'subline-lg': theme.typography['subline-lg'],
   'subline-sm': theme.typography['subline-sm'],
   noWrap: {

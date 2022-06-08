@@ -20,7 +20,7 @@ export type VaultYearlyStatProps = {
   vaultId: VaultEntity['id'];
 };
 
-export const VaultYearlyStat = memo<VaultYearlyStatProps>(connect(mapStateToProps)(VaultValueStat));
+export const VaultYearlyStat = memo(connect(mapStateToProps)(VaultValueStat));
 
 function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
   const isGovVault = selectIsVaultGov(state, vaultId);

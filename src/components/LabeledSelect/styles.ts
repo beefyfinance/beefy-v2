@@ -20,6 +20,7 @@ export const styles = (theme: Theme) => ({
   },
   selectCurrent: {
     display: 'flex',
+    alignItems: 'center',
     minWidth: 0,
   },
   selectLabel: {
@@ -54,6 +55,9 @@ export const styles = (theme: Theme) => ({
     '& $selectIcon': {
       transform: 'rotateX(180deg)',
     },
+  },
+  selectDisabled: {
+    pointerEvents: 'none' as const,
   },
   dropdown: {
     ...theme.typography['body-lg-med'],

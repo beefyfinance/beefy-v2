@@ -12,7 +12,7 @@ export type CommonButtonProps = {
   borderless?: boolean;
   fullWidth?: boolean;
   active?: boolean;
-  variant?: 'default' | 'filter' | 'success';
+  variant?: 'default' | 'filter' | 'success' | 'light';
   component?: 'button' | 'a';
   size?: 'sm' | 'lg';
 };

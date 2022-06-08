@@ -11,6 +11,7 @@ declare module '@material-ui/core/styles/createPalette' {
     footer: string;
     light: string;
     content: string;
+    contentLight: string;
     header: string;
     cta: string;
     appBG: string;
@@ -51,7 +52,7 @@ declare module '@material-ui/core/styles/createTypography' {
     | 'body-lg'
     | 'body-lg-med'
     | 'body-sm'
-    | 'body-sm-bold'
+    | 'body-sm-med'
     | 'subline-lg'
     | 'subline-sm';
   export type Variant = CustomVariant;

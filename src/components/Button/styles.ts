@@ -64,6 +64,16 @@ export const styles = (theme: Theme) => ({
       borderColor: '#2C3154',
     },
   },
+  light: {
+    color: '#F5F5FF',
+    backgroundColor: '#363B63',
+    borderColor: '#363B63',
+    '&:hover': {
+      color: '#F5F5FF',
+      backgroundColor: '#3F4574',
+      borderColor: '#3F4574',
+    },
+  },
   success: {
     color: '#FFFFFF',
     backgroundColor: '#59A662',

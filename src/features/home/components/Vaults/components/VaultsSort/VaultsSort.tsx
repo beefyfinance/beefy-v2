@@ -6,7 +6,6 @@ import {
   FilteredVaultsState,
 } from '../../../../../data/reducers/filtered-vaults';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectFilterSearchSortDirection,
@@ -81,7 +80,7 @@ const SORT_COLUMNS: {
 
 const SortColumns = memo(function SortColumns() {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const sortField = useAppSelector(selectFilterSearchSortField);
   const sortDirection = useAppSelector(selectFilterSearchSortDirection);
 

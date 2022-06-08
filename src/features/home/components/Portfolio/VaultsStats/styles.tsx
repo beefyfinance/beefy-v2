@@ -1,5 +1,5 @@
 export const styles = theme => ({
-  stats: {
+  userStats: {
     display: 'flex',
     '& div:last-child': {
       marginRight: '0',

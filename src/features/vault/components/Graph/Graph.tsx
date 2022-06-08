@@ -14,23 +14,22 @@ import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatApy, formatUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 import { VaultEntity } from '../../../data/entities/vault';
-import { BeefyState } from '../../../../redux-types';
-import { useSelector } from 'react-redux';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles);
 
 function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const classes = useStyles();
   const [stat, setStat] = useState(2);
   const [period, setPeriod] = useState(1);
-  const tokenOracleId = useSelector((state: BeefyState) =>
+  const tokenOracleId = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   ).oracleId;
   const chartData = useChartData(stat, period, tokenOracleId, vaultId, vault.chainId);
-  const t = useTranslation().t;
+  const { t } = useTranslation();
 
   return (
     <Card>
@@ -55,7 +54,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                 dataKey="v"
                 tick={{
                   fill: 'white',
-                  fontSize: 11,
+                  fontSize: 12,
                 }}
                 axisLine={false}
                 tickLine={false}

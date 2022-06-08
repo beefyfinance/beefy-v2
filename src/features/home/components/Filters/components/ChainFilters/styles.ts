@@ -45,7 +45,7 @@ export const styles = (theme: Theme) => ({
   },
   iconWithChain: {
     display: 'flex',
-    justContent: 'center',
+    alignItems: 'center',
   },
   iconWithChainIcon: {
     marginRight: '8px',

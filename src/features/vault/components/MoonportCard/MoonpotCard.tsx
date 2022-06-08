@@ -5,22 +5,21 @@ import { Card } from '../Card/Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { styles } from './styles';
-import { useSelector } from 'react-redux';
-import { BeefyState } from '../../../../redux-types';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectMoonpotData } from '../../../data/selectors/partners';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles);
 
 const MoonpotCard = ({ vaultId }: { vaultId: string }) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const depositToken = useSelector((state: BeefyState) =>
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
-  const moonpotData = useSelector((state: BeefyState) => selectMoonpotData(state, vaultId));
+  const moonpotData = useAppSelector(state => selectMoonpotData(state, vaultId));
 
   return (
     <Card>

@@ -2,9 +2,8 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { InputBase, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { selectFilterSearchText } from '../../../../../data/selectors/filtered-vaults';
-import { useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
-import { useDispatch } from 'react-redux';
 import { debounce } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { CloseRounded, Search } from '@material-ui/icons';
@@ -12,7 +11,7 @@ import { CloseRounded, Search } from '@material-ui/icons';
 const useStyles = makeStyles(styles);
 
 export const VaultsSearch = memo(function VaultsHeader() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const searchText = useAppSelector(selectFilterSearchText);
   const [value, setValue] = useState(searchText);

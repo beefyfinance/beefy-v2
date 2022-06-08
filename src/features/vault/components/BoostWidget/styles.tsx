@@ -36,7 +36,7 @@ export const styles = (theme: Theme) => ({
   titleWhite: {
     color: '#fff',
   },
-  titleTooltip: {
+  titleTooltipTrigger: {
     color: theme.palette.text.secondary,
     fontSize: '20px',
     width: '20px',

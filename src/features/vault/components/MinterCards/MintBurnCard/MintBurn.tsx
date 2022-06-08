@@ -6,17 +6,16 @@ import { styles } from './styles';
 import { Mint } from './components/Mint';
 import { Burn } from './components/Burn';
 import { MinterCardParams } from '../MinterCard';
-import { useSelector } from 'react-redux';
 import { selectMinterById } from '../../../../data/selectors/minters';
-import { BeefyState } from '../../../../../redux-types';
 import clsx from 'clsx';
+import { useAppSelector } from '../../../../../store';
 
 const useStyles = makeStyles(styles);
 
 export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const minter = useSelector((state: BeefyState) => selectMinterById(state, minterId));
+  const minter = useAppSelector(state => selectMinterById(state, minterId));
 
   const [mintBurn, setMintBurn] = React.useState('mint');
 

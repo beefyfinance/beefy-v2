@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
     height: '24px',
     marginRight: '8px',
     '&:before': {
-      ...theme.typography['body-sm-bold'],
+      ...theme.typography['body-sm-med'],
       content: 'attr(data-count)',
       display: 'flex',
       justifyContent: 'center',

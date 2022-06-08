@@ -8,7 +8,7 @@ const useStyles = makeStyles(styles);
 
 export const Stats = ({ stats, blurred }) => {
   const classes = useStyles();
-  const t = useTranslation().t;
+  const { t } = useTranslation();
 
   const [empty, setEmpty] = useState(false);
   useEffect(() => {
@@ -22,7 +22,7 @@ export const Stats = ({ stats, blurred }) => {
   const formatStat = value => (empty ? BIG_ZERO.toFixed(0) : formatUsd(value.toNumber()));
 
   return (
-    <Grid container className={classes.stats}>
+    <Grid container className={classes.userStats}>
       <Box className={classes.stat}>
         <div className={classes.label}>{t('Portfolio-Deposited')}</div>
         <div className={classes.value}>

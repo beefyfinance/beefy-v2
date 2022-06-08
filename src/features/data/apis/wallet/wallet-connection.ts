@@ -60,7 +60,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // make sure the cached provider is available in options
     const cachedProvider = getWeb3ModalCachedProvider();
     const modalOptions = this.getModalOptions();
-    if (!(cachedProvider in modalOptions.providerOptions)) {
+    if (cachedProvider !== 'injected' && !(cachedProvider in modalOptions.providerOptions)) {
       console.warn(
         'tryToAutoReconnect: cached provider not available',
         cachedProvider,
@@ -318,11 +318,6 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
   const fuseChain = chains.find(chain => chain.id === 'fuse');
 
   const providerOptions: IProviderOptions = {
-    injected: {
-      display: {
-        name: 'MetaMask',
-      },
-    } as any /* Property 'package' is missing in this type but required in type IProviderOptions */,
     'custom-binance': {
       display: {
         name: 'Binance',

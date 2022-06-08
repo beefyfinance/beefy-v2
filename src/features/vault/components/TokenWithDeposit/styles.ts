@@ -4,7 +4,7 @@ export const styles = theme => ({
     color: theme.palette.text.primary,
   },
   sm: {
-    ...theme.typography['body-sm-bold'],
+    ...theme.typography['body-sm-med'],
   },
   assetCount: {},
 });

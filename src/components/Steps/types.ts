@@ -11,7 +11,8 @@ export type Step = {
     | 'claim-withdraw'
     | 'claim'
     | 'mint'
-    | 'burn';
+    | 'burn'
+    | 'bridge';
   message: string;
   action: ThunkAction<any, any, any, any>;
   pending: boolean;

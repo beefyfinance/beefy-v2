@@ -1,12 +1,10 @@
 import React from 'react';
 import { makeStyles, Modal } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './styles';
 import { formatBigDecimals } from '../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { BeefyState } from '../../../../redux-types';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import { selectBoostById, selectBoostPeriodFinish } from '../../../data/selectors/boosts';
@@ -24,47 +22,44 @@ import { StakeCountdown } from './StakeCountdown';
 import { Stake } from './Stake';
 import { Unstake } from './Unstake';
 import { selectChainById } from '../../../data/selectors/chains';
+import { useAppDispatch, useAppSelector } from '../../../../store';
 import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip';
 import { Button } from '../../../../components/Button';
 
 const useStyles = makeStyles(styles);
 
 export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id'] }) {
-  const boost = useSelector((state: BeefyState) => selectBoostById(state, boostId));
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, boost.vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, boost.chainId));
+  const boost = useAppSelector(state => selectBoostById(state, boostId));
+  const vault = useAppSelector(state => selectVaultById(state, boost.vaultId));
+  const chain = useAppSelector(state => selectChainById(state, boost.chainId));
   const isBoosted = true;
 
-  const mooToken = useSelector((state: BeefyState) =>
+  const mooToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
   );
-  const rewardToken = useSelector((state: BeefyState) =>
-    selectBoostRewardsTokenEntity(state, boost.id)
-  );
+  const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
 
-  const mooTokenBalance = useSelector((state: BeefyState) =>
+  const mooTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenAddress)
   );
-  const boostBalance = useSelector((state: BeefyState) =>
-    selectBoostUserBalanceInToken(state, boost.id)
-  );
-  const boostPendingRewards = useSelector((state: BeefyState) =>
+  const boostBalance = useAppSelector(state => selectBoostUserBalanceInToken(state, boost.id));
+  const boostPendingRewards = useAppSelector(state =>
     selectBoostUserRewardsInToken(state, boost.id)
   );
 
-  const periodFinish = useSelector((state: BeefyState) => selectBoostPeriodFinish(state, boost.id));
+  const periodFinish = useAppSelector(state => selectBoostPeriodFinish(state, boost.id));
   const isPreStake = periodFinish === null;
 
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const isWalletConnected = useSelector(selectIsWalletConnected);
-  const isWalletOnVaultChain = useSelector(
-    (state: BeefyState) => selectCurrentChainId(state) === boost.chainId
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const isWalletOnVaultChain = useAppSelector(
+    state => selectCurrentChainId(state) === boost.chainId
   );
 
-  const [startStepper, isStepping, Stepper] = useStepper(vault.id);
+  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const [dw, setDw] = React.useState('deposit');
   const [inputModal, setInputModal] = React.useState(false);
@@ -123,7 +118,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
         <IconWithBasicTooltip
           title={t('Boost-WhatIs')}
           content={t('Boost-Explain')}
-          triggerClass={classes.titleTooltip}
+          triggerClass={classes.titleTooltipTrigger}
         />
       </div>
       <div className={classes.boostStats}>

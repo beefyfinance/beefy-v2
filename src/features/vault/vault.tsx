@@ -1,8 +1,6 @@
-import { Button, Container, Grid, Hidden, makeStyles } from '@material-ui/core';
-import * as React from 'react';
-import { memo, PropsWithChildren } from 'react';
+import { Button, Container, Hidden, makeStyles } from '@material-ui/core';
+import { lazy, memo, PropsWithChildren, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
@@ -23,7 +21,6 @@ import {
   selectVaultExistsById,
   selectVaultIdIgnoreCase,
 } from '../data/selectors/vaults';
-import { BeefyState } from '../../redux-types';
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
@@ -41,17 +38,19 @@ import { RetirePauseReason } from './components/RetirePauseReason';
 import { InsuraceCard } from './components/InsuraceCard';
 import { NexusCard } from './components/NexusCard';
 import { SolaceCard } from './components/SolaceCard';
+import { VaultMeta } from './components/VaultMeta';
+import { useAppSelector } from '../../store';
 
 const useStyles = makeStyles(styles);
-const PageNotFound = React.lazy(() => import(`../../features/pagenotfound`));
+const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
 
 type VaultUrlParams = {
   id: VaultEntity['id'];
 };
 export const Vault = memo(function Vault() {
   let { id } = useParams<VaultUrlParams>();
-  const isLoaded = useSelector(selectIsConfigAvailable);
-  const vaultExists = useSelector((state: BeefyState) => selectVaultExistsById(state, id));
+  const isLoaded = useAppSelector(selectIsConfigAvailable);
+  const vaultExists = useAppSelector(state => selectVaultExistsById(state, id));
 
   if (!isLoaded) {
     return <CowLoader text="Loading..." />;
@@ -66,7 +65,7 @@ export const Vault = memo(function Vault() {
 
 type VaultNotFoundProps = PropsWithChildren<VaultUrlParams>;
 const VaultNotFound = memo<VaultNotFoundProps>(function VaultNotFound({ id }) {
-  const maybeVaultId = useSelector((state: BeefyState) => selectVaultIdIgnoreCase(state, id));
+  const maybeVaultId = useAppSelector(state => selectVaultIdIgnoreCase(state, id));
 
   if (maybeVaultId !== undefined) {
     return <Redirect to={`/vault/${maybeVaultId}`} />;
@@ -81,19 +80,20 @@ type VaultContentProps = PropsWithChildren<{
 const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const vault = useSelector((state: BeefyState) => selectVaultById(state, vaultId));
-  const chain = useSelector((state: BeefyState) => selectChainById(state, vault.chainId));
-  const isBoostedOrPreStake = useSelector((state: BeefyState) =>
+  const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
+  const isBoostedOrPreStake = useAppSelector(state =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
-  const [dw, setDw] = React.useState('deposit');
-  const isMoonpot = useSelector((state: BeefyState) => selectIsVaultMoonpot(state, vaultId));
-  const isQidao = useSelector((state: BeefyState) => selectIsVaultQidao(state, vaultId));
-  const isInsurace = useSelector((state: BeefyState) => selectIsVaultInsurace(state, vaultId));
-  const isSolace = useSelector((state: BeefyState) => selectIsVaultSolace(state, vaultId));
+  const [dw, setDw] = useState('deposit');
+  const isMoonpot = useAppSelector(state => selectIsVaultMoonpot(state, vaultId));
+  const isQidao = useAppSelector(state => selectIsVaultQidao(state, vaultId));
+  const isInsurace = useAppSelector(state => selectIsVaultInsurace(state, vaultId));
+  const isSolace = useAppSelector(state => selectIsVaultSolace(state, vaultId));
 
   return (
     <>
+      <VaultMeta vaultId={vaultId} />
       <div className={classes.vaultContainer}>
         <Container maxWidth="lg">
           <div className={classes.header}>
@@ -122,8 +122,8 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
       </div>
       <div className={classes.contentContainer}>
         <Container maxWidth="lg">
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={4} className={classes.columnActions}>
+          <div className={classes.contentColumns}>
+            <div className={classes.columnActions}>
               <Hidden mdUp>
                 <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
               </Hidden>
@@ -168,8 +168,8 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
                   <SolaceCard />
                 </div>
               )}
-            </Grid>
-            <Grid item xs={12} md={8} className={classes.columnInfo}>
+            </div>
+            <div className={classes.columnInfo}>
               <Hidden smDown>
                 <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
               </Hidden>
@@ -182,8 +182,8 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               {vault.assetIds.map(tokenId => (
                 <TokenCard key={tokenId} chainId={vault.chainId} tokenId={tokenId} />
               ))}
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </Container>
       </div>
     </>

@@ -1,25 +1,25 @@
 import { useCallback, useState } from 'react';
 import { Box, Grid, makeStyles, Modal } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { ApyStatLoader } from '../../../../../components/ApyStatLoader';
 import { formatBigUsd } from '../../../../../helpers/format';
+import { StatLoader } from '../../../../../components/StatLoader';
 import { styles } from './styles';
 import { selectTotalTvl } from '../../../../data/selectors/tvl';
 import { selectTotalActiveVaults } from '../../../../data/selectors/vaults';
 import { selectTotalBuybackUsdAmount } from '../../../../data/selectors/buyback';
 import { ModalTvl } from '../ModalTvl';
+import { useAppSelector } from '../../../../../store';
 
 const useStyles = makeStyles(styles);
 
 export const VaultsStats = () => {
   const [isTvlModalOpen, setIsTvlModalOpen] = useState<boolean>(false);
   const classes = useStyles();
-  const t = useTranslation().t;
-  const totalTvl = useSelector(selectTotalTvl);
-  const totalActiveVaults = useSelector(selectTotalActiveVaults);
-  const buyback = useSelector(selectTotalBuybackUsdAmount);
-  const ValueText = ({ value }) => <>{value ? <span>{value}</span> : <ApyStatLoader />}</>;
+  const { t } = useTranslation();
+  const totalTvl = useAppSelector(selectTotalTvl);
+  const totalActiveVaults = useAppSelector(selectTotalActiveVaults);
+  const buyback = useAppSelector(selectTotalBuybackUsdAmount);
+  const ValueText = ({ value }) => <>{value ? <span>{value}</span> : <StatLoader />}</>;
 
   const handleTvlModalOpen = useCallback(() => {
     setIsTvlModalOpen(true);
@@ -30,7 +30,7 @@ export const VaultsStats = () => {
   }, [setIsTvlModalOpen]);
 
   return (
-    <Grid container className={classes.stats}>
+    <Grid container className={classes.userStats}>
       <Box className={classes.stat}>
         <Box className={classes.labelWithIcon}>
           <div className={classes.label}>{t('TVL')}</div>
