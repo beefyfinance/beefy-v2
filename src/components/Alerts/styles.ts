@@ -26,6 +26,12 @@ export const styles = (theme: Theme) => ({
     fontFamily: theme.typography.fontFamily,
     fontSize: '15px',
     lineHeight: '24px',
+    '& p:first-child': {
+      marginTop: 0,
+    },
+    '& p:last-child': {
+      marginBottom: 0,
+    },
   },
   warning: {
     backgroundColor: 'rgba(209, 152, 71, 0.15)',

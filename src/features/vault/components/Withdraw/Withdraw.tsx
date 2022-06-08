@@ -60,6 +60,7 @@ import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
+import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
 
 const useStyles = makeStyles(styles as any);
 
@@ -459,6 +460,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
+          <ScreamAvailableLiquidity vaultId={vaultId} />
           {isWalletConnected ? (
             !isWalletOnVaultChain ? (
               <>
