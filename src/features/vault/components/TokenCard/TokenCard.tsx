@@ -1,5 +1,5 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
@@ -26,6 +26,12 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
 
   const chain = useAppSelector(state => selectChainById(state, token.chainId));
 
+  const tokenDescription = useMemo(() => {
+    return token.description ?? isTokenNative(token)
+      ? chain.walletSettings.nativeCurrency.description
+      : t('Token-NoDescrip');
+  }, [chain.walletSettings.nativeCurrency.description, t, token]);
+
   return (
     <Card>
       <CardHeader>
@@ -51,9 +57,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
       </CardHeader>
       <CardContent>
         <Typography variant="body1" className={classes.text}>
-          {token.description ?? isTokenNative(token)
-            ? chain.walletSettings.nativeCurrency.description
-            : t('Token-NoDescrip')}
+          {tokenDescription}
         </Typography>
       </CardContent>
     </Card>
