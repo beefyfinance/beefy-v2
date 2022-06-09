@@ -21,7 +21,7 @@ import {
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
 import clsx from 'clsx';
 import { useAppDispatch } from '../../../../store';
-import { formatAddressShort } from '../../../../helpers/format';
+import { formatAddressShort, formatEns } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
@@ -102,7 +102,9 @@ export const WalletContainer = connect((state: BeefyState) => {
                 )}
                 <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
                   {walletAddress
-                    ? ens || formatAddressShort(walletAddress)
+                    ? ens
+                      ? formatEns(ens)
+                      : formatAddressShort(walletAddress)
                     : t('Network-ConnectWallet')}
                 </div>
               </React.Fragment>
