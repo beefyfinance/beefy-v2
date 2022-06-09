@@ -1,23 +1,24 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   cardActions: {
-    marginTop: theme.spacing(1),
     display: 'flex',
+    flexWrap: 'wrap' as const,
+    rowGap: '8px',
+    columnGap: '8px',
+    marginTop: theme.spacing(1),
   },
-  cardAction: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.down('md')]: {
-      marginRight: theme.spacing(1),
+  cardAction: {},
+  text: {
+    margin: '0 0 32px 0',
+    whiteSpace: 'pre-line' as const,
+    color: theme.palette.text.secondary,
+    '&:last-child': {
+      marginBottom: 0,
     },
   },
-  text: {
-    color: theme.palette.text.secondary,
-  },
   detailTitle: {
+    ...theme.typography['subline-lg'],
     color: theme.palette.text.disabled,
-    fontSize: '15px',
-    lineHeight: '24px',
-    letterSpacing: '0.5px',
-    fontWeight: 600,
-    textTransform: 'uppercase',
   },
 });

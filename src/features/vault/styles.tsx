@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   vaultContainer: {
     padding: '42px 0px 16px 0px',
   },
@@ -6,66 +8,36 @@ export const styles = theme => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(5),
   },
-  title: {
+  titleHolder: {
     display: 'flex',
     marginBottom: '8px',
     alignItems: 'center',
     flexGrow: 1,
-    '& .MuiTypography-h2': {
-      color: theme.palette.text.secondary,
-      paddingLeft: '12px',
+    [theme.breakpoints.up('lg')]: {
+      marginBottom: '0',
     },
   },
-  summaryContainer: {
-    padding: '10px 0',
-    '& .MuiTypography-h1': {
-      fontSize: '18px',
-      fontWeight: 600,
-      lineHeight: '30px',
-      color: '#ffffff',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '24px',
-      },
-    },
-    '& .MuiTypography-body2': {
-      fontSize: '12px',
-      fontWeight: 400,
-      color: '#8585A6',
-      letterSpacing: '0.2px',
-      [theme.breakpoints.up('md')]: {
-        fontSize: '15px',
-      },
-    },
-    '& .MuiDivider-root': {
-      width: '1px',
-      height: '21px',
-      borderColor: '#3F4465',
-      margin: '0 15px',
-      [theme.breakpoints.up('lg')]: {
-        margin: '0 30px',
-      },
-    },
-    '& .MuiBox-root': {
-      padding: '0 5px 0 5px',
-    },
-  },
-  network: {
-    textTransform: 'uppercase',
-    fontSize: '12px',
-    fontWeight: 600,
-    letterSpacing: '0.5px',
-  },
-  paper: {
-    backgroundColor: '#272B4A',
-    marginTop: '20px',
-    padding: '20px',
-    borderRadius: '12px',
+  title: {
+    ...theme.typography['h1'],
+    color: theme.palette.text.secondary,
+    margin: '0 0 0 12px',
   },
   dw: {
     backgroundColor: '#272B4A',
     borderRadius: '12px',
   },
+  contentColumns: {
+    display: 'grid',
+    gridTemplateColumns: '100%',
+    rowGap: '48px',
+    columnGap: '48px',
+    [theme.breakpoints.up('md')]: {
+      display: 'grid',
+      gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
+    },
+  },
   columnActions: {
+    width: '100%',
     '& > :first-child': {
       marginTop: 0,
     },
@@ -74,6 +46,7 @@ export const styles = theme => ({
     },
   },
   columnInfo: {
+    width: '100%',
     marginTop: '-24px',
     '& > :first-child': {
       marginTop: 0,
@@ -87,10 +60,6 @@ export const styles = theme => ({
     borderTopLeftRadius: '12px',
     borderTopRightRadius: '12px',
     '& .MuiButton-root': {
-      fontSize: '16px',
-      fontWeight: 600,
-      letterSpacing: '0.1px',
-      textTransform: 'capitalize',
       color: theme.palette.text.disabled,
       background: 'none',
       width: '50%',
@@ -114,6 +83,9 @@ export const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
+    flexWrap: 'wrap' as const,
+    rowGap: '4px',
+    columnGap: '4px',
     '& img': {
       height: '24px',
       marginRight: '4px',
@@ -125,21 +97,19 @@ export const styles = theme => ({
   platformContainer: {
     display: 'flex',
     marginTop: '8px',
-  },
-  platformValue: {
-    fontWeight: 600,
-    fontSize: '12px',
-    textTransform: 'uppercase',
+    rowGap: '24px',
+    columnGap: '24px',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'flex-start',
+    },
   },
   platformLabel: {
-    fontWeight: 600,
-    fontSize: '12px',
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
     '& span': {
-      fontWeight: 600,
-      fontSize: '12px',
       color: theme.palette.text.primary,
-      textTransform: 'uppercase',
+      textTransform: 'uppercase' as const,
     },
   },
   header: {
@@ -147,9 +117,6 @@ export const styles = theme => ({
     [theme.breakpoints.down('md')]: {
       display: 'block',
     },
-  },
-  chainContainer: {
-    marginRight: theme.spacing(4),
   },
   retirePauseReason: {
     marginBottom: '24px',

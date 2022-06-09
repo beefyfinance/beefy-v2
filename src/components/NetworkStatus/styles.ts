@@ -62,6 +62,18 @@ export const styles: Styles<any, any, any> = theme => ({
     '&.notLoading': {
       display: 'none',
     },
+    '&:nth-child(1)': {
+      animationDelay: '0s',
+    },
+    '&:nth-child(2)': {
+      animationDelay: '1s',
+    },
+    '&:nth-child(3)': {
+      animationDelay: '2s',
+    },
+    '&:nth-child(4)': {
+      animationDelay: '3s',
+    },
   },
   floating: {
     zIndex: 1000,
@@ -77,68 +89,46 @@ export const styles: Styles<any, any, any> = theme => ({
     border: '2px solid #30354F',
     backgroundColor: '#242737',
     borderRadius: '8px',
-    padding: '12px 16px',
+    padding: `${12 - 2}px ${16 - 2}px`,
     position: 'relative', // to position the close button
     width: '257px',
+    maxWidth: 'min(100%, 380px)',
     color: '#D0D0DA', // default text color
     lineHeight: '24px', // make everything nicely spaced
   },
   popoverTitle: {
-    fontWeight: 'bold',
-    fontSize: '15px',
-    lineHeight: '24px',
-    color: ' #F5F5FF',
-    marginRight: '30px', // to leave some room for the close button
-    marginBottom: '4px',
+    ...theme.typography['body-lg-med'],
+    color: '#F5F5FF',
+    paddingRight: '32px', // to leave some room for the close button
+    marginBottom: '8px',
+    '&:last-child': {
+      marginBottom: 0,
+    },
   },
   popoverLine: {
+    ...theme.typography['body-sm'],
     display: 'flex',
-    fontSize: '15px',
     alignItems: 'center',
     justifyContent: 'flex-start',
     '& .circle': {
       marginRight: '10px', // space between circle and text
     },
+    '& + $popoverLine': {
+      marginTop: '4px',
+    },
   },
   popoverHelpText: {
-    marginTop: '2px',
-    letterSpacing: '-0.1px',
+    ...theme.typography['body-sm'],
+    marginTop: '8px',
   },
-  closeButton: {
-    fontSize: '18px',
-    fontWeight: 'bold',
+  closeIconButton: {
     color: '#8A8EA8',
     position: 'absolute',
-    width: '20px',
-    height: '20px',
-    top: '10px',
-    right: '10px',
+    fontSize: '22px',
+    width: '22px',
+    height: '22px',
+    top: `${12 - 2}px`,
+    right: `${16 - 2}px`,
     cursor: 'pointer',
-  },
-
-  // https://codepen.io/ndeniche/pen/rNPjmg
-  X: {
-    position: 'relative',
-    height: '100%',
-    width: '100%',
-    '&::before, &::after': {
-      content: '""',
-      position: 'absolute',
-      width: '100%',
-      top: '50%',
-      left: '0',
-      background: '#8A8EA8',
-      height: '2px',
-      marginTop: '-1px',
-      '&::hover': {
-        background: 'red',
-      },
-    },
-    '&::before': {
-      transform: 'rotate(45deg)',
-    },
-    '&::after': {
-      transform: 'rotate(-45deg)',
-    },
   },
 });

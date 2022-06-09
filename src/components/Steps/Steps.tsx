@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, IconButton, makeStyles, Snackbar, Typography } from '@material-ui/core';
+import { Box, IconButton, makeStyles, Snackbar } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from '../../helpers/utils';
 import { styles } from './styles';
@@ -12,8 +12,9 @@ import { useAppSelector } from '../../store';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { BridgeInfo } from './components/BridgeInfo';
 import { TransactionLink } from './components/TransactionLink';
+import { Button } from '../Button';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 const _Steps = ({
   chainId,
@@ -71,7 +72,7 @@ const _Steps = ({
         </Box>
         <Box className={classes.contentContainer}>
           <Box className={classes.titleContainer}>
-            <Typography className={classes.title} variant={'body1'}>
+            <div className={classes.title}>
               {/* Error  */}
               {walletActionsState.result === 'error' && (
                 <>
@@ -110,7 +111,7 @@ const _Steps = ({
                     t('Bridge-Done')}
                 </>
               )}
-            </Typography>
+            </div>
             <IconButton className={classes.closeIcon} onClick={handleClose}>
               <CloseRoundedIcon fontSize="small" htmlColor="#8A8EA8" />
             </IconButton>
@@ -120,31 +121,30 @@ const _Steps = ({
             walletActionsState.result !== 'error' &&
             walletActionsState.result !== 'success_pending' &&
             !steps.finished && (
-              <Typography className={classes.message} variant={'body2'}>
-                {steps.items[steps.currentStep].message}
-              </Typography>
+              <div className={classes.message}>{steps.items[steps.currentStep].message}</div>
             )}
           {/* Waiting Content */}
           {(needShowBridgeInfo ||
             (!steps.finished && walletActionsState.result === 'success_pending')) && (
-            <Typography variant={'body2'} className={classes.message}>
-              {t('Transactn-Wait')}
-            </Typography>
+            <div className={classes.message}>{t('Transactn-Wait')}</div>
           )}
           {/* Error content */}
           {!steps.finished && walletActionsState.result === 'error' && (
             <>
               <Box className={clsx(classes.content, classes.errorContent)}>
                 {walletActionsState.data.error.friendlyMessage ? (
-                  <Typography variant="body1" className={classes.friendlyMessage}>
+                  <div className={classes.friendlyMessage}>
                     {walletActionsState.data.error.friendlyMessage}
-                  </Typography>
+                  </div>
                 ) : null}
-                <Typography variant="body1" className={classes.message}>
-                  {walletActionsState.data.error.message}
-                </Typography>
+                <div className={classes.message}>{walletActionsState.data.error.message}</div>
               </Box>
-              <Button className={classes.closeBtn} onClick={handleClose}>
+              <Button
+                borderless={true}
+                fullWidth={true}
+                className={classes.closeBtn}
+                onClick={handleClose}
+              >
                 {t('Transactn-Close')}
               </Button>
             </>
@@ -162,18 +162,18 @@ const _Steps = ({
                 walletActionsState.result === 'success' && (
                   <>
                     <Box className={clsx(classes.content, classes.successContent)}>
-                      <Typography variant="body1" className={classes.message}>
+                      <div className={classes.message}>
                         {t('Transactn-Success', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
                           token: walletActionsState.data.token.symbol,
                         })}
-                      </Typography>
+                      </div>
                       <TransactionLink chainId={chainId} />
                     </Box>
-                    <Box pt={2}>
-                      <Typography variant="body1" className={classes.message}>
+                    <Box mt={2}>
+                      <div className={classes.message}>
                         <span>{t('Remember')}</span> {t('Remember-Msg')}
-                      </Typography>
+                      </div>
                     </Box>
                   </>
                 )}
@@ -183,12 +183,12 @@ const _Steps = ({
                 walletActionsState.result === 'success' && (
                   <>
                     <Box className={clsx(classes.content, classes.successContent)}>
-                      <Typography variant="body1" className={classes.message}>
+                      <div className={classes.message}>
                         {t('Transactn-Withdrawal', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
                           token: walletActionsState.data.token.symbol,
                         })}
-                      </Typography>
+                      </div>
                       <TransactionLink chainId={chainId} />
                     </Box>
                   </>
@@ -198,18 +198,18 @@ const _Steps = ({
                 walletActionsState.result === 'success' && (
                   <>
                     <Box className={clsx(classes.content, classes.successContent)}>
-                      <Typography variant="body1" className={classes.message}>
+                      <div className={classes.message}>
                         {t('Transactn-Success-Bst', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
                           token: walletActionsState.data.token.symbol,
                         })}
-                      </Typography>
+                      </div>
                       <TransactionLink chainId={chainId} />
                     </Box>
                     <Box pt={2}>
-                      <Typography variant="body1" className={classes.message}>
+                      <div className={classes.message}>
                         <span>{t('Remember')}</span> {t('Remember-Msg-Bst')}
-                      </Typography>
+                      </div>
                     </Box>
                   </>
                 )}
@@ -218,12 +218,12 @@ const _Steps = ({
                 walletActionsState.result === 'success' && (
                   <>
                     <Box className={clsx(classes.content, classes.successContent)}>
-                      <Typography variant="body1" className={classes.message}>
+                      <div className={classes.message}>
                         {t('Transactn-Withdrawal-Boost', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
                           token: walletActionsState.data.token.symbol,
                         })}
-                      </Typography>
+                      </div>
                       <TransactionLink chainId={chainId} />
                     </Box>
                   </>
@@ -232,12 +232,12 @@ const _Steps = ({
                 walletActionsState.result === 'success' && (
                   <>
                     <Box className={clsx(classes.content, classes.successContent)}>
-                      <Typography variant="body1" className={classes.message}>
+                      <div className={classes.message}>
                         {t('Transactn-Claimed', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
                           token: walletActionsState.data.token.symbol,
                         })}
-                      </Typography>
+                      </div>
                       <TransactionLink chainId={chainId} />
                     </Box>
                   </>
@@ -246,7 +246,7 @@ const _Steps = ({
                 walletActionsState.result === 'success' && (
                   <>
                     <Box className={clsx(classes.content, classes.successContent)}>
-                      <Typography variant="body1" className={classes.message}>
+                      <div className={classes.message}>
                         {t(
                           selectMintResult(walletActionsState).type === 'buy'
                             ? 'Transactn-Bought'
@@ -256,7 +256,7 @@ const _Steps = ({
                             token: walletActionsState.data.token.symbol,
                           }
                         )}
-                      </Typography>
+                      </div>
                       <TransactionLink chainId={chainId} />
                     </Box>
                   </>
@@ -265,12 +265,12 @@ const _Steps = ({
                 walletActionsState.result === 'success' && (
                   <>
                     <Box className={clsx(classes.content, classes.successContent)}>
-                      <Typography variant="body1" className={classes.message}>
+                      <div className={classes.message}>
                         {t('Transactn-Burned', {
                           amount: formatBigDecimals(walletActionsState.data.amount, 2),
                           token: walletActionsState.data.token.symbol,
                         })}
-                      </Typography>
+                      </div>
                       <TransactionLink chainId={chainId} />
                     </Box>
                   </>
@@ -281,12 +281,22 @@ const _Steps = ({
                 */}
               {steps.items[steps.currentStep].step === 'bridge' ? (
                 bridgeModalStatus === 'success' ? (
-                  <Button className={classes.closeBtn} onClick={handleClose}>
+                  <Button
+                    borderless={true}
+                    fullWidth={true}
+                    className={classes.closeBtn}
+                    onClick={handleClose}
+                  >
                     {t('Transactn-Close')}
                   </Button>
                 ) : null
               ) : (
-                <Button className={classes.closeBtn} onClick={handleClose}>
+                <Button
+                  borderless={true}
+                  fullWidth={true}
+                  className={classes.closeBtn}
+                  onClick={handleClose}
+                >
                   {t('Transactn-Close')}
                 </Button>
               )}

@@ -1,5 +1,7 @@
-export const styles = theme => ({
-  stats: {
+import { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
+  userStats: {
     display: 'flex',
   },
   stat: {
@@ -7,17 +9,16 @@ export const styles = theme => ({
     paddingBottom: 0,
     marginRight: theme.spacing(4),
     [theme.breakpoints.down('sm')]: {
-      margin: '8px 32px 8px 0px',
+      margin: '8px 24px 8px 0px',
     },
   },
   value: {
+    ...theme.typography['h2'],
     color: theme.palette.text.primary,
   },
   label: {
-    textTransform: 'uppercase',
+    ...theme.typography['subline-lg'],
     display: 'inline-flex',
-    letterSpacing: '0.5px',
-    fontWeight: 600,
     color: theme.palette.text.disabled,
   },
   blurred: {

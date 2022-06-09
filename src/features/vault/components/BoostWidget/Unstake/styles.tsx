@@ -1,8 +1,12 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   container: {
-    display: 'flex',
-    background: '#272B4A',
-    borderRadius: '16px',
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    minWidth: '400px',
   },
   inputContainer: {
     marginTop: theme.spacing(4),
@@ -11,29 +15,21 @@ export const styles = theme => ({
     padding: '16px',
   },
   maxButton: {
+    ...theme.typography['subline-sm'],
     background: theme.palette.background.content,
     borderRadius: '4px',
     margin: 0,
-    padding: '7px 12px',
-    fontSize: '12px',
-    letterSpacing: '0.5px',
-    textTransform: 'uppercase',
+    padding: '2px 12px',
     color: theme.palette.text.primary,
-    fontWeight: 600,
   },
-  positionButton: {
-    '& .MuiIconButton-edgeEnd': {
-      marginRight: '-8px',
-    },
-  },
+  positionButton: {},
   input: {
+    ...theme.typography['body-lg-med'],
     background: theme.palette.background.vaults.inactive,
     borderRadius: '8px',
     maxHeight: '40px',
     width: '100%',
-    padding: '12px 16px',
-    fontSize: '21px',
-    fontWeight: 600,
+    padding: '8px 12px',
   },
   width: {
     width: '100%',
@@ -44,10 +40,10 @@ export const styles = theme => ({
     alignItems: 'center',
   },
   available: {
-    textAlign: 'left',
+    textAlign: 'left' as const,
   },
   staked: {
-    textAlign: 'right',
+    textAlign: 'right' as const,
   },
   content: {
     padding: '0px 24px',
@@ -66,40 +62,20 @@ export const styles = theme => ({
     borderBottom: '2px solid #373c68',
   },
   title: {
-    fontWeight: 600,
+    ...theme.typography['h2'],
     color: theme.palette.text.primary,
   },
   label: {
-    fontWeight: 600,
-    fontSize: '12px',
-    lineHeight: '20px',
-    letterSpacing: '0.5px',
-    textTransform: 'uppercase',
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
   },
   value: {
-    fontWeight: 600,
-    fontSize: '18px',
-    lineHeight: '24px',
-    letterSpacing: '0.2px',
-    textTransform: 'uppercase',
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
   },
-  btnSubmit: {
-    fontSize: '18px',
-    fontWeight: 700,
-    letterSpacing: '0.2px',
-    textTransform: 'none',
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: '8px',
-    padding: '6px 33px',
+  btnSubmit: {},
+  closeIcon: {
     '&:hover': {
-      backgroundColor: '#389D44',
-    },
-  },
-  removeHover: {
-    '&:Hover': {
       background: 'none',
     },
   },

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Card, CardHeader } from '../../Card';
 import { styles } from './styles';
@@ -10,7 +10,7 @@ import { selectMinterById } from '../../../../data/selectors/minters';
 import clsx from 'clsx';
 import { useAppSelector } from '../../../../../store';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
@@ -24,52 +24,28 @@ export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCard
   return (
     <>
       <Card>
-        <CardHeader
-          className={clsx({ [classes.mb]: canBurnReserves, [classes.header]: !canBurnReserves })}
-        >
-          <>
+        <CardHeader className={classes.header}>
+          <div className={classes.tabs}>
+            <Button
+              onClick={() => setMintBurn('mint')}
+              className={clsx(classes.tab, { [classes.selected]: mintBurn === 'mint' })}
+            >
+              {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
+            </Button>
             {canBurnReserves ? (
-              <Box className={classes.tabs}>
-                <Button
-                  onClick={() => setMintBurn('mint')}
-                  className={mintBurn === 'mint' ? classes.selected : ''}
-                >
-                  {t('action', { action: t('mint'), token: minter.mintedToken.symbol })}
-                </Button>
-                <Button
-                  onClick={() => setMintBurn('burn')}
-                  className={mintBurn === 'burn' ? classes.selected : ''}
-                >
-                  {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
-                </Button>
-              </Box>
-            ) : (
-              <>
-                <img
-                  className={classes.logo}
-                  src={
-                    require(`../../../../../images/single-assets/${minter.mintedToken.symbol}.svg`)
-                      .default
-                  }
-                  alt={minter.mintedToken.symbol}
-                />
-                <Typography className={classes.title} variant="h3">
-                  {t('Mint-Title', { token: minter.mintedToken.symbol })}
-                </Typography>{' '}
-              </>
-            )}
-          </>
+              <Button
+                onClick={() => setMintBurn('burn')}
+                className={clsx(classes.tab, { [classes.selected]: mintBurn === 'burn' })}
+              >
+                {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
+              </Button>
+            ) : null}
+          </div>
         </CardHeader>
-        {canBurnReserves ? (
-          <>
-            {mintBurn === 'mint' ? (
-              <Mint vaultId={vaultId} minterId={minterId} />
-            ) : (
-              <Burn vaultId={vaultId} minterId={minterId} />
-            )}
-          </>
-        ) : (
+        {mintBurn === 'mint' ? (
           <Mint vaultId={vaultId} minterId={minterId} />
+        ) : (
+          <Burn vaultId={vaultId} minterId={minterId} />
         )}
       </Card>
     </>

@@ -1,47 +1,27 @@
-export const styles = theme => ({
-  pageContainer: {
-    backgroundColor: theme.palette.background.footer,
-    paddingBottom: '20px',
-  },
-  imageContainer: {
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
+  inner: {
     margin: '0 auto',
-    width: 'fit-content',
-    paddingTop: '40px',
+    paddingTop: '120px',
+    paddingBottom: '120px',
+    width: '612px',
+    maxWidth: '100%',
   },
   image: {
-    maxWidth: 'calc(100vw - 10%)',
-    height: '60vh',
-    [theme.breakpoints.down('md')]: {
-      height: 'auto',
-    },
+    maxWidth: '100%',
+    height: 'auto',
     margin: '0 auto',
     display: 'block',
   },
-  text: {
-    fontWeight: 600,
-    fontSize: '18px',
-    lineHeight: '28px',
+  textContainer: {
+    margin: '36px 0 0 0',
     textAlign: 'center' as const,
   },
-  container: {
-    margin: '32px auto 0',
-    maxWidth: 'calc(100vw - 20%)',
-    width: 'fit-content',
+  text: {
+    ...theme.typography['body-lg-med'],
   },
   button: {
-    border: 'solid 2px #54995C',
-    backgroundColor: '#54995C',
-    borderRadius: '8px',
-    color: 'white',
-    fontSize: '16px',
-    fontWeight: 700,
-    padding: '12px 24px',
-    textTransform: 'capitalize' as const,
-    display: 'block',
-    margin: '32px auto 0',
-    '&:hover': {
-      cursor: 'pointer',
-      backgroundColor: theme.palette.type === 'dark' ? 'transparent' : '#54995C',
-    },
+    margin: '24px auto 0 auto',
   },
 });

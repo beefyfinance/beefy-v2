@@ -8,7 +8,7 @@ export const styles = theme => ({
     margin: '15px auto',
     maxWidth: '350px',
     minWidth: '250px',
-    textAlign: 'left',
+    textAlign: 'left' as const,
     color: theme.palette.type === 'dark' ? '#565B81' : '#A69885',
   },
   trigger: {
@@ -21,26 +21,19 @@ export const styles = theme => ({
     },
   },
   dot: {
-    borderRadius: '50%',
-    border: theme.palette.type === 'dark' ? '1px solid #8585A6' : '1.5px solid #A69885',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontWeight: 700,
-    background: 'transparent',
     color: '#8585A6',
+    '& .MuiSvgIcon-root': {
+      fontSize: 'inherit',
+    },
     '&:hover': {
       cursor: 'pointer',
     },
   },
   title: {
-    fontFamily: 'Proxima Nova',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '14px',
-    lineHeight: '18px',
-    letterSpacing: '1px',
-    textTransform: 'uppercase',
+    ...theme.typography['body-lg-med'],
     color: theme.palette.type === 'dark' ? '#272B4A' : '#A69885',
     marginBottom: '8px',
   },
@@ -57,9 +50,9 @@ export const styles = theme => ({
     height: '24px',
   },
   arrow: {
-    position: 'absolute',
+    position: 'absolute' as const,
     '&:before': {
-      position: 'absolute',
+      position: 'absolute' as const,
       content: '""',
       height: 0,
       width: 0,
@@ -67,7 +60,7 @@ export const styles = theme => ({
       borderStyle: 'solid',
     },
     '&:after': {
-      position: 'absolute',
+      position: 'absolute' as const,
       content: '""',
       height: 0,
       width: 0,

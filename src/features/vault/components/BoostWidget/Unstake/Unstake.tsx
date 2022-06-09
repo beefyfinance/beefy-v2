@@ -1,21 +1,16 @@
 import {
   Box,
-  Button,
   FormControl,
   IconButton,
   InputAdornment,
   InputBase,
   makeStyles,
-  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatBigNumberSignificant } from '../../../../../helpers/format';
 import CloseIcon from '@material-ui/icons/Close';
-import { Card } from '../../Card/Card';
-import { CardHeader } from '../../Card/CardHeader';
-import { CardContent } from '../../Card/CardContent';
-import { CardTitle } from '../../Card/CardTitle';
+import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { styles } from './styles';
 import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
 import { Loader } from '../../../../../components/Loader';
@@ -42,8 +37,9 @@ import { Step } from '../../../../../components/Steps/types';
 import { walletActions } from '../../../../data/actions/wallet-actions';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
+import { Button } from '../../../../../components/Button';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export const Unstake = ({
   boostId,
@@ -132,22 +128,13 @@ const UnstakeForm = ({
     startStepper(steps);
   };
 
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    boxShadow: 24,
-    minWidth: '400px',
-  };
-
   return (
     <>
-      <Box sx={style}>
+      <div className={classes.container}>
         <Card>
           <CardHeader className={classes.header}>
             <CardTitle titleClassName={classes.title} title={t('Unstake-Modal-Title')} />
-            <IconButton className={classes.removeHover} onClick={closeModal} aria-label="settings">
+            <IconButton className={classes.closeIcon} onClick={closeModal} aria-label="settings">
               <CloseIcon htmlColor="#8A8EA8" />
             </IconButton>
           </CardHeader>
@@ -155,16 +142,12 @@ const UnstakeForm = ({
             <Box className={classes.inputContainer}>
               <Box className={classes.balances}>
                 <Box className={classes.available}>
-                  <Typography className={classes.label}>{t('Stake-Label-Available')}</Typography>
-                  <Typography className={classes.value}>
-                    {formatBigNumberSignificant(mooBalance)}
-                  </Typography>
+                  <div className={classes.label}>{t('Stake-Label-Available')}</div>
+                  <div className={classes.value}>{formatBigNumberSignificant(mooBalance)}</div>
                 </Box>
                 <Box className={classes.staked}>
-                  <Typography className={classes.label}>{t('Stake-Label-Staked')}</Typography>
-                  <Typography className={classes.value}>
-                    {formatBigNumberSignificant(boostBalance)}
-                  </Typography>
+                  <div className={classes.label}>{t('Stake-Label-Staked')}</div>
+                  <div className={classes.value}>{formatBigNumberSignificant(boostBalance)}</div>
                 </Box>
               </Box>
               <Box pt={2}>
@@ -201,6 +184,8 @@ const UnstakeForm = ({
                     onClick={() => dispatch(askForNetworkChange({ chainId: boost.chainId }))}
                     className={classes.btnSubmit}
                     fullWidth={true}
+                    borderless={true}
+                    variant="success"
                     disabled={isStepping}
                   >
                     {t('Network-Change', { network: chain.name.toUpperCase() })}
@@ -210,6 +195,8 @@ const UnstakeForm = ({
                     onClick={handleUnstake}
                     className={classes.btnSubmit}
                     fullWidth={true}
+                    borderless={true}
+                    variant="success"
                     disabled={formState.amount.isLessThanOrEqualTo(0) || isStepping}
                   >
                     {t('Stake-Button-ConfirmUnstaking')}
@@ -219,6 +206,8 @@ const UnstakeForm = ({
                 <Button
                   className={classes.btnSubmit}
                   fullWidth={true}
+                  borderless={true}
+                  variant="success"
                   onClick={() => dispatch(askForWalletConnection())}
                   disabled={isStepping}
                 >
@@ -228,7 +217,7 @@ const UnstakeForm = ({
             </Box>
           </CardContent>
         </Card>
-      </Box>
+      </div>
       <Stepper />
     </>
   );

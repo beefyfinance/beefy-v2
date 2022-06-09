@@ -7,7 +7,6 @@ import {
   Paper,
   Radio,
   RadioGroup,
-  Typography,
 } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
@@ -62,7 +61,7 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
@@ -300,42 +299,41 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         {formState.zapOptions !== null && (
           <>
             {isBoostedOrHaveBalanceInPastBoost && boostBalance.isGreaterThan(0) && (
-              <Box className={classes.assetsDivider}>
-                <Box className={classes.width50}>
-                  <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
-                  <Box className={classes.stakedInValue}>
+              <div className={classes.assetsDivider}>
+                <div className={classes.width50}>
+                  <div className={classes.balanceText}>{t('Vault-Deposited')}</div>
+                  <div className={classes.stakedInValue}>
                     <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={24} />
-                    <Typography variant="body1">{`${formatBigNumberSignificant(
+                    <div className={classes.stakedInValueText}>{`${formatBigNumberSignificant(
                       mooBalance,
                       4
-                    )} LP`}</Typography>
-                  </Box>
-                </Box>
+                    )} LP`}</div>
+                  </div>
+                </div>
                 <Box mb={3}>
-                  <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
-                  <Box className={classes.stakedInValue}>
+                  <div className={classes.balanceText}>{t('Vault-StakedIn')}</div>
+                  <div className={classes.stakedInValue}>
                     <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={24} />
-                    <Typography
-                      className={classes.orange}
-                      variant="body1"
+                    <div
+                      className={clsx(classes.orange, classes.stakedInValueText)}
                     >{`${formatBigNumberSignificant(boostBalance, 4)} ${
                       vault.assetIds.length > 1 ? 'LP' : ''
-                    }`}</Typography>
-                  </Box>
+                    }`}</div>
+                  </div>
                 </Box>
-              </Box>
+              </div>
             )}
-            <Typography variant="body1" className={classes.zapPromotion}>
-              {t('Zap-Promotion', {
+            <div className={classes.zapPromotion}>
+              {t('Zap-OutPromotion', {
                 action: 'Withdraw',
                 token1: vault.assetIds[0],
                 token2: vault.assetIds[1],
               })}
-            </Typography>
+            </div>
           </>
         )}
         <Box display="flex">
-          <Box
+          <div
             className={clsx(
               isBoostedOrHaveBalanceInPastBoost &&
                 boostBalance.isGreaterThan(0) &&
@@ -344,14 +342,10 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 : classes.width100
             )}
           >
-            {showDepositedText && (
-              <Box mb={1}>
-                <Typography className={classes.balanceText}>{t('Vault-Deposited')}</Typography>
-              </Box>
-            )}
+            {showDepositedText && <div className={classes.balanceText}>{t('Vault-Deposited')}</div>}
 
             <RadioGroup
-              className={classes.removeLastItemMargin}
+              className={classes.radioGroup}
               value={
                 isArray(formState.selectedToken)
                   ? formState.selectedToken.map(t => t.id).join('+')
@@ -374,7 +368,12 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 className={classes.depositTokenContainer}
                 value={depositToken.id}
                 control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-                label={<TokenWithDeposit vaultId={vaultId} />}
+                label={
+                  <TokenWithDeposit
+                    vaultId={vaultId}
+                    variant={formState.zapOptions !== null ? 'sm' : 'lg'}
+                  />
+                }
                 onClick={formState.isZap ? undefined : handleMax}
                 disabled={!formReady}
               />
@@ -383,7 +382,13 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                   className={classes.depositTokenContainer}
                   value={vault.assetIds.join('+')}
                   control={<Radio />}
-                  label={<TokenWithDeposit convertAmountTo={vault.assetIds} vaultId={vaultId} />}
+                  label={
+                    <TokenWithDeposit
+                      convertAmountTo={vault.assetIds}
+                      vaultId={vaultId}
+                      variant="sm"
+                    />
+                  }
                   disabled={!formReady}
                 />
               )}
@@ -396,35 +401,38 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                       className={classes.depositTokenContainer}
                       value={zapToken.id}
                       control={<Radio />}
-                      label={<TokenWithDeposit convertAmountTo={zapToken.id} vaultId={vaultId} />}
+                      label={
+                        <TokenWithDeposit
+                          convertAmountTo={zapToken.id}
+                          vaultId={vaultId}
+                          variant="sm"
+                        />
+                      }
                       disabled={!formReady}
                     />
                   )
               )}
             </RadioGroup>
-          </Box>
+          </div>
           {isBoostedOrHaveBalanceInPastBoost &&
             boostBalance.isGreaterThan(0) &&
             formState.zapOptions === null && (
-              <Box>
-                <Box mb={1}>
-                  <Typography className={classes.balanceText}>{t('Vault-StakedIn')}</Typography>
-                </Box>
-                <Box className={classes.stakedInValue}>
-                  <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={16} />
-                  <Typography
-                    className={classes.orange}
-                    variant="body1"
+              <div>
+                <div className={classes.balanceText}>{t('Vault-StakedIn')}</div>
+                <div className={classes.stakedInValue}>
+                  <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={24} />
+                  <div
+                    className={clsx(classes.orange, classes.stakedInValueText)}
                   >{`${formatBigNumberSignificant(boostBalance, 4)} ${
                     vault.assetIds.length > 1 ? 'LP' : ''
-                  }`}</Typography>
-                </Box>
-              </Box>
+                  }`}</div>
+                </div>
+              </div>
             )}
         </Box>
-        <Box className={classes.inputContainer}>
-          <Paper component="form" className={classes.root}>
-            <Box className={classes.inputLogo}>
+        <div className={classes.inputContainer}>
+          <Paper component="form">
+            <div className={classes.inputLogo}>
               <AssetsImage
                 chainId={vault.chainId}
                 assetIds={
@@ -436,9 +444,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }
-                size={20}
+                size={24}
               />
-            </Box>
+            </div>
             <InputBase
               placeholder="0.00"
               value={formState.formattedInput}
@@ -449,7 +457,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               {t('Transact-Max')}
             </Button>
           </Paper>
-        </Box>
+        </div>
         <FeeBreakdown
           vault={vault}
           slippageTolerance={formState.slippageTolerance}

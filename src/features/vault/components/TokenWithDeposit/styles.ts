@@ -1,13 +1,10 @@
 export const styles = theme => ({
   balanceContainer: {
-    '& .MuiTypography-body1': {
-      fontWeight: '600',
-      textTransform: 'inherit',
-      color: theme.palette.text.primary,
-    },
-  },
-  assetCount: {
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.primary,
-    fontWeight: 700,
   },
+  sm: {
+    ...theme.typography['body-sm-med'],
+  },
+  assetCount: {},
 });

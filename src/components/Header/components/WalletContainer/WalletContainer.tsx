@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Box, FormControl, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Box, FormControl, Grid, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -19,11 +19,9 @@ import {
 import { selectIsWalletPending } from '../../../../features/data/selectors/data-loader';
 import clsx from 'clsx';
 import { useAppDispatch } from '../../../../store';
+import { formatAddressShort } from '../../../../helpers/format';
 
-const useStyles = makeStyles(styles as any);
-const formatAddress = addr => {
-  return addr.substr(0, 5) + '...' + addr.substr(addr.length - 5, 5);
-};
+const useStyles = makeStyles(styles);
 
 export const WalletContainer = connect((state: BeefyState) => {
   const isWalletConnected = selectIsWalletConnected(state);
@@ -91,13 +89,9 @@ export const WalletContainer = connect((state: BeefyState) => {
                 ) : (
                   ''
                 )}
-                <Typography
-                  className={clsx({ [classes.blurred]: blurred })}
-                  variant="body1"
-                  noWrap={true}
-                >
-                  {walletAddress ? formatAddress(walletAddress) : t('Network-ConnectWallet')}
-                </Typography>
+                <div className={clsx(classes.address, { [classes.blurred]: blurred })}>
+                  {walletAddress ? formatAddressShort(walletAddress) : t('Network-ConnectWallet')}
+                </div>
               </React.Fragment>
             )}
           </Grid>

@@ -1,39 +1,84 @@
 import { createTheme } from '@material-ui/core/styles';
+import { TypographyStyleOptions } from '@material-ui/core/styles/createTypography';
 
-// Module augmentation to allow custom theme entries
-declare module '@material-ui/core/styles/createPalette' {
-  interface TypeBackground {
-    footer: string;
-    light: string;
-    content: string;
-    contentLight: string;
-    header: string;
-    cta: string;
-    appBG: string;
-    filters: {
-      active: string;
-      inactive: string;
-      outline: string;
-      footer: string;
-    };
-    vaults: {
-      default: string;
-      defaultOutline: string;
-      boostOutline: string;
-      gov: string;
-      govOutline: string;
-      inactive: string;
-      inactiveOutline: string;
-    };
-    snackbars: {
-      bg: string;
-      bgLine: string;
-      bgBtn: string;
-      text: string;
-      error: string;
-    };
-  }
-}
+const fontStack = [
+  '"DM Sans"',
+  'system-ui',
+  '-apple-system',
+  '"Segoe UI"',
+  'Roboto',
+  '"Helvetica Neue"',
+  'Arial',
+  '"Noto Sans"',
+  '"Liberation Sans"',
+  'sans-serif',
+  '"Apple Color Emoji"',
+  '"Segoe UI Emoji"',
+  '"Segoe UI Symbol"',
+  '"Noto Color Emoji"',
+].join(',');
+
+const fontStyles: Record<string, TypographyStyleOptions> = {
+  h1: {
+    fontSize: '32px',
+    lineHeight: '40px',
+    fontWeight: 500,
+  },
+  h2: {
+    fontSize: '24px',
+    lineHeight: '32px',
+    fontWeight: 500,
+  },
+  h3: {
+    fontSize: '21px',
+    lineHeight: '24px',
+    fontWeight: 500,
+  },
+  'body-lg': {
+    fontFamily: fontStack,
+    fontSize: '16px',
+    lineHeight: '24px',
+    textTransform: 'none' as const,
+    fontWeight: 400,
+  },
+  'body-lg-med': {
+    fontFamily: fontStack,
+    fontSize: '16px',
+    lineHeight: '24px',
+    textTransform: 'none' as const,
+    fontWeight: 500,
+  },
+  'body-sm': {
+    fontFamily: fontStack,
+    fontSize: '12px',
+    lineHeight: '20px',
+    textTransform: 'none' as const,
+    fontWeight: 400,
+  },
+  'body-sm-med': {
+    fontFamily: fontStack,
+    fontSize: '12px',
+    lineHeight: '20px',
+    textTransform: 'none' as const,
+    fontWeight: 500,
+  },
+  'subline-lg': {
+    fontFamily: fontStack,
+    fontSize: '15px',
+    lineHeight: '24px',
+    fontWeight: 500,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.5px',
+  },
+  'subline-sm': {
+    fontFamily: fontStack,
+    fontSize: '12px',
+    lineHeight: '20px',
+    fontWeight: 500,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.5px',
+  },
+};
 
 const theme = createTheme({
   palette: {
@@ -79,39 +124,39 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['Proxima Nova', 'sans-serif'].join(','),
-    h1: {
-      fontSize: '45px',
-      lineHeight: '56px',
-      fontWeight: 600,
-    },
-    h2: {
-      fontSize: '32px',
-      lineHeight: '40px',
-      fontWeight: 600,
-    },
-    h3: {
-      fontSize: '24px',
-      lineHeight: '32px',
-      fontWeight: 600,
-    },
+    fontFamily: fontStack,
+    h1: fontStyles['h1'],
+    h2: fontStyles['h2'],
+    h3: fontStyles['h3'],
+    button: fontStyles['body-lg-med'],
+    body1: fontStyles['body-lg'],
+    body2: fontStyles['body-lg'],
+    'body-lg': fontStyles['body-lg'],
+    'body-lg-med': fontStyles['body-lg-med'],
+    'body-sm': fontStyles['body-sm'],
+    'body-sm-med': fontStyles['body-sm-med'],
+    'subline-lg': fontStyles['subline-lg'],
+    'subline-sm': fontStyles['subline-sm'],
     h4: {
-      fontSize: '21px',
-      lineHeight: '24px',
-      fontWeight: 600,
+      color: 'red', // DO NOT USE
     },
     h5: {
-      fontSize: '18px',
-      lineHeight: '28px',
-      fontWeight: 600,
+      color: 'red', // DO NOT USE
     },
-    body1: {
-      fontSize: '15px',
-      lineHeight: '24px',
+    h6: {
+      color: 'red', // DO NOT USE
     },
-    body2: {
-      fontSize: '12px',
-      lineHeight: '18px',
+    caption: {
+      color: 'red', // DO NOT USE
+    },
+    subtitle1: {
+      color: 'red', // DO NOT USE
+    },
+    subtitle2: {
+      color: 'red', // DO NOT USE
+    },
+    overline: {
+      color: 'red', // DO NOT USE
     },
   },
   breakpoints: {
@@ -121,6 +166,17 @@ const theme = createTheme({
       md: 960,
       lg: 1296,
       xl: 1920,
+    },
+  },
+  overrides: {
+    MuiInputBase: {
+      input: fontStyles['body-lg-med'],
+    },
+    MuiBackdrop: {
+      root: {
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        backdropFilter: 'blur(8px)',
+      },
     },
   },
 });

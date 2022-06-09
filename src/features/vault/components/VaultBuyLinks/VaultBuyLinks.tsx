@@ -1,4 +1,4 @@
-import { Box, Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { useTranslation } from 'react-i18next';
 import { VaultEntity } from '../../../data/entities/vault';
@@ -16,40 +16,30 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const { t } = useTranslation();
 
   return (
-    <Box className={classes.btnContaniner}>
-      <>
-        {vault.buyTokenUrl && (
-          <a
-            href={vault.buyTokenUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={classes.btnSecondary}
-          >
-            <Button
-              size="small"
-              endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-            >
-              {t('Transact-BuyTkn')}
-            </Button>
-          </a>
-        )}
-        {vault.addLiquidityUrl && (
-          <a
-            href={vault.addLiquidityUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={classes.btnSecondary}
-          >
-            <Button
-              size="small"
-              endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
-            >
-              {t('Transact-AddLiquidity')}
-            </Button>
-          </a>
-        )}
-        {vault.assetIds.includes('BIFI') && <Bridge buttonClassname={classes.btnSecondary1} />}
-      </>
-    </Box>
+    <div className={classes.btnContainer}>
+      {vault.buyTokenUrl && (
+        <Button
+          href={vault.buyTokenUrl}
+          target="_blank"
+          rel="noreferrer"
+          className={classes.btnSecondary}
+          endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+        >
+          {t('Transact-BuyTkn')}
+        </Button>
+      )}
+      {vault.addLiquidityUrl && (
+        <Button
+          href={vault.addLiquidityUrl}
+          target="_blank"
+          rel="noreferrer"
+          className={classes.btnSecondary}
+          endIcon={<OpenInNewRoundedIcon fontSize="small" htmlColor="#D0D0DA" />}
+        >
+          {t('Transact-AddLiquidity')}
+        </Button>
+      )}
+      {vault.assetIds.includes('BIFI') && <Bridge buttonClassname={classes.btnSecondary} />}
+    </div>
   );
 }

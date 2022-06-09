@@ -1,17 +1,12 @@
-import {
-  makeStyles,
-  Typography,
-  Popper,
-  Box,
-  BoxProps,
-  PopperPlacementType,
-} from '@material-ui/core';
+import { makeStyles, Popper, PopperPlacementType } from '@material-ui/core';
 import React, { memo, ReactNode, useState } from 'react';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import { styles } from './styles';
+import { HelpOutline } from '@material-ui/icons';
+import clsx from 'clsx';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 const _Popover = ({
   title,
   content,
@@ -40,17 +35,16 @@ const _Popover = ({
   const handlePopoverClose = () => {
     setIsOpen(false);
   };
-
-  const boxProps: BoxProps & { ref: any } = {
-    ref: setAnchorEl,
-    onClick: handlePopoverOpen,
-    className: [classes.dot, classes[`size_${size}`]].join(' '),
-  };
-
   return (
     <ClickAwayListener onClickAway={() => setIsOpen(false)}>
       <div onMouseEnter={handlePopoverOpen} onMouseLeave={handlePopoverClose}>
-        <Box {...boxProps}>?</Box>
+        <div
+          onClick={handlePopoverOpen}
+          ref={setAnchorEl}
+          className={clsx(classes.dot, classes[`size_${size}`])}
+        >
+          <HelpOutline />
+        </div>
         <Popper
           id={title}
           open={isOpen}
@@ -66,8 +60,8 @@ const _Popover = ({
         >
           <span className={classes.arrow} ref={setArrowRef} />
           <div className={[classes.popover, 'popover'].join(' ')}>
-            {title && <Typography className={classes.title}>{title}</Typography>}
-            {content ? <Typography>{content}</Typography> : <>{children}</>}
+            {title && <div className={classes.title}>{title}</div>}
+            {content ? <div>{content}</div> : <>{children}</>}
           </div>
         </Popper>
       </div>

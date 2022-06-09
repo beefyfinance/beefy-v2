@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { Card, CardContent, CardHeader } from '../Card';
 import { styles } from './styles';
 
@@ -27,19 +27,13 @@ export const InsuranceCard = memo<InsuranceCardProps>(function ({
     <Card>
       <CardHeader className={classes.header}>
         <img src={logo} alt={subtitle} />{' '}
-        <Box>
-          <Typography className={classes.subtitle} variant="body1">
-            {subtitle}
-          </Typography>
-          <Typography className={classes.title} variant="h3">
-            {title}
-          </Typography>
-        </Box>
+        <div>
+          <div className={classes.subtitle}>{subtitle}</div>
+          <div className={classes.title}>{title}</div>
+        </div>
       </CardHeader>
       <CardContent>
-        <Typography className={classes.content} variant="body1">
-          {content}
-        </Typography>
+        <div className={classes.content}>{content}</div>
         <a className={classes.link} target="_blank" rel="noreferrer" href={buttonUrl}>
           <Button className={classes.btn}>{buttonText}</Button>
         </a>

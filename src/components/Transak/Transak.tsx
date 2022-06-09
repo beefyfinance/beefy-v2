@@ -1,6 +1,5 @@
 import React from 'react';
 import transakSDK from '@transak/transak-sdk';
-import { Typography } from '@material-ui/core';
 
 const TransakNav = ({ className, children }) => {
   const { REACT_APP_TRANSAK_API_KEY, REACT_APP_ENVIRONMENT } = process.env;
@@ -27,9 +26,9 @@ const TransakNav = ({ className, children }) => {
   }
 
   return (
-    <Typography variant="body1" className={className} onClick={initTransak}>
+    <div className={className} onClick={initTransak}>
       {children}
-    </Typography>
+    </div>
   );
 };
 

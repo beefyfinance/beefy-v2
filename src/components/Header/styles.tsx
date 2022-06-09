@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   navHeader: {
     background: 'transparent',
     boxShadow: 'none',
@@ -23,24 +25,16 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.header,
   },
   beefy: {
-    '& a': {
-      marginLeft: '10px',
-      [theme.breakpoints.down('md')]: {
-        marginLeft: '5px',
-      },
-    },
+    display: 'block',
     '& img': {
-      height: '34px',
+      height: '40px',
+      display: 'block',
     },
   },
   navLink: {
+    ...theme.typography['body-lg-med'],
     textDecoration: 'none',
-    textTransform: 'capitalize',
     color: theme.palette.text.disabled,
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    letterSpacing: '0.1px',
     margin: '12px',
     '&:hover': {
       color: theme.palette.text.primary,
@@ -66,16 +60,20 @@ export const styles = theme => ({
   },
   navMobile: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
   },
   active: {
     color: theme.palette.text.primary,
   },
   bifiPrice: {
+    ...theme.typography['body-lg-med'],
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'center' as const,
+    alignItems: 'center' as const,
     marginRight: theme.spacing(3),
+    color: theme.palette.text.disabled,
+    whiteSpace: 'nowrap' as const,
+    textDecoration: 'none',
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
     },
@@ -83,16 +81,13 @@ export const styles = theme => ({
       height: '18px',
       marginRight: '5px',
     },
-    '& .MuiTypography-root': {
-      fontWeight: 700,
-      color: theme.palette.text.disabled,
-    },
   },
   chain: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.disabled,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
       marginRight: theme.spacing(2),
@@ -101,10 +96,18 @@ export const styles = theme => ({
       height: '18px',
       marginRight: '5px',
     },
-    '& .MuiTypography-root': {
-      fontWeight: 700,
-      color: theme.palette.text.disabled,
-    },
+  },
+  toggleDrawer: {
+    background: 'transparent',
+    margin: '0 0 0 16px',
+    padding: '3px',
+    border: 0,
+    boxShadow: 'none',
+    color: theme.palette.text.primary,
+    fontSize: '30px',
+  },
+  toggleDrawerIcon: {
+    display: 'block',
   },
   drawerBlack: {
     backgroundColor: '#0D0E14',

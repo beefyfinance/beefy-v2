@@ -1,36 +1,41 @@
 export const styles = theme => ({
   container: {
-    display: 'flex',
-    [theme.breakpoints.down('md')]: {
-      display: 'block',
+    marginTop: '32px',
+    display: 'grid',
+    gridTemplateColumns: '100%',
+    rowGap: '48px',
+    columnGap: '48px',
+    [theme.breakpoints.up('lg')]: {
+      display: 'grid',
+      gridTemplateColumns: 'minmax(0,666fr) minmax(0,333fr)',
     },
   },
-  stats: {
-    marginTop: theme.spacing(4),
+  interestStats: {
+    width: '100%',
+  },
+  interestStatsBox: {
     height: 96,
     display: 'flex',
     justifyContent: 'flex-start',
     backgroundColor: theme.palette.background.default,
     borderRadius: '8px',
     padding: '16px 16px',
-    [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(3),
-    },
   },
-  stats2: {
-    marginTop: theme.spacing(4),
+  depositStats: {
+    width: '100%',
+  },
+  depositStatsBox: {
     height: 96,
     display: 'flex',
-    flexWrap: 'nowrap',
+    flexWrap: 'nowrap' as const,
     justifyContent: 'flex-end',
-    textAlign: 'end',
+    textAlign: 'end' as const,
     backgroundColor: theme.palette.background.default,
     borderRadius: '8px',
     padding: '16px 24px',
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
-      textAlign: 'start',
-      marginTop: 0,
+      textAlign: 'start' as const,
     },
   },
   stat: {
@@ -56,46 +61,18 @@ export const styles = theme => ({
   },
   stat3: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
   stat4: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     [theme.breakpoints.down('md')]: {
       alignItems: 'flex-start',
     },
-  },
-  value: {
-    color: theme.palette.text.secondary,
-  },
-  price: {
-    color: theme.palette.text.disabled,
-    letterSpacing: '0.5px',
-    fontSize: '12px',
-    lineHeight: '20px',
-  },
-  tached: {
-    color: theme.palette.text.disabled,
-    textDecorationLine: 'line-through',
-    letterSpacing: '0.2px',
-    fontSize: '14px',
-    lineHeight: '18px',
-  },
-  label: {
-    textTransform: 'uppercase',
-    letterSpacing: '1px',
-    fontSize: '12px',
-    fontWeight: '600',
-    lineHeight: '20px',
-    display: 'inline-flex',
-    color: theme.palette.text.disabled,
-  },
-  obscured: {
-    color: '#424866',
   },
   divider: {
     marginRight: theme.spacing(3),

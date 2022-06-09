@@ -1,51 +1,47 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   balanceText: {
-    fontSize: '12px',
-    fontWeight: 600,
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
-    letterSpacing: '0.5px',
-    lineHeight: '20px',
-    textTransform: 'uppercase',
+    marginBottom: '4px',
   },
-  balanceContainer: {
-    '& .MuiTypography-body1': {
-      fontWeight: '600',
-      textTransform: 'inherit',
-      color: theme.palette.text.primary,
-    },
+  stakedInValue: {
+    ...theme.typography['body-lg-med'],
+    display: 'flex',
+    alignItems: 'center',
+  },
+  stakedInValueText: {
+    marginLeft: '8px',
+  },
+  orange: {
+    color: theme.palette.background.vaults.boostOutline,
   },
   inputContainer: {
     paddingTop: '24px',
     '& .MuiPaper-root': {
-      position: 'relative',
+      position: 'relative' as const,
       backgroundColor: theme.palette.background.vaults.inactive,
       borderRadius: '8px',
       padding: 0,
       margin: 0,
       boxShadow: 'none',
       '& .MuiInputBase-input': {
-        padding: '10px 5px 8px 40px',
-        fontSize: '21px',
-        fontWeight: 600,
+        ...theme.typography['h3'],
+        height: 'auto',
+        padding: `12px 8px 12px ${16 + 24 + 8}px`,
       },
     },
-    '& .MuiTextField-root': {
-      backgroundColor: theme.palette.background.vaults.inactive,
-      borderRadius: '8px',
-      padding: '3px 10px',
-    },
     '& .MuiButton-root': {
-      fontSize: '12px',
-      fontWeight: 600,
-      letterSpacing: '0.5px',
+      ...theme.typography['subline-sm'],
       color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
       borderRadius: '4px',
       margin: 0,
-      padding: '5px 12px',
-      position: 'absolute',
-      top: '6px',
-      right: '5px',
+      padding: '6px 12px',
+      position: 'absolute' as const,
+      top: '8px',
+      right: '8px',
       minWidth: 0,
     },
     '& .MuiInputBase-root': {
@@ -53,15 +49,11 @@ export const styles = theme => ({
     },
   },
   inputLogo: {
-    position: 'absolute',
+    position: 'absolute' as const,
     top: '12px',
     left: '12px',
   },
   btnSubmit: {
-    fontSize: '15px',
-    lineHeight: '24px',
-    fontWeight: 700,
-    textTransform: 'none', //'capitalize' no good due to localization
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.primary.main,
     padding: '12px 24px',
@@ -76,28 +68,8 @@ export const styles = theme => ({
       marginTop: '12px',
     },
   },
-  btnContaniner: {
+  btnContainer: {
     marginTop: 16,
-  },
-  btnSecondary: {
-    textDecoration: 'none',
-    '& .MuiButton-root': {
-      fontSize: '15px',
-      lineHeight: '24px',
-      fontWeight: 400,
-      color: theme.palette.text.secondary,
-      backgroundColor: theme.palette.background.vaults.defaultOutline,
-      borderRadius: '4px',
-      textTransform: 'capitalize',
-      letterSpacing: '0.1px',
-      transition: 'color 0.2s',
-      width: 'max-content',
-      '&:hover': {
-        color: theme.palette.text.primary,
-        backgroundColor: '#3F466D',
-        transition: 'color 0.1s',
-      },
-    },
   },
   depositTokenContainer: {
     width: 'calc(100% + 11px)',
@@ -120,14 +92,13 @@ export const styles = theme => ({
       marginBottom: 0,
     },
   },
-  removeLastItemMargin: {
+  radioGroup: {
     '& $depositTokenContainer:last-child': {
       marginBottom: 0,
     },
   },
   assetCount: {
     color: theme.palette.text.primary,
-    fontWeight: 700,
   },
   zapPromotion: {
     color: theme.palette.text.secondary,
@@ -138,21 +109,10 @@ export const styles = theme => ({
     columnGap: '16px',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
   },
-  stakedInValue: {
-    display: 'flex',
-    alignItems: 'center',
-    '& .MuiTypography-body1': {
-      fontWeight: 600,
-      paddingLeft: '8px',
-    },
-  },
   width50: {
     width: '50%',
   },
   width100: {
     width: '100%',
-  },
-  orange: {
-    color: theme.palette.background.vaults.boostOutline,
   },
 });
