@@ -32,4 +32,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.secondary,
   },
+  feesLoader: {
+    width: '100%',
+  },
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { isFulfilled } from '../../../../features/data/reducers/data-loader';
@@ -49,7 +49,7 @@ function _FeesInfo() {
           </div>
         </>
       ) : (
-        <Loader />
+        <FeesLoader />
       )}
     </div>
   );
@@ -65,28 +65,30 @@ const Item = ({ title, children }) => {
   );
 };
 
-const Loader = props => (
-  <ContentLoader
-    speed={2}
-    width={476}
-    height={180}
-    viewBox="0 0 476 180"
-    backgroundColor="#313759"
-    foregroundColor="#8585A"
-    {...props}
-  >
-    <rect x="11" y="21" rx="3" ry="3" width="88" height="6" />
-    <rect x="11" y="39" rx="3" ry="3" width="52" height="6" />
-    <rect x="2" y="140" rx="3" ry="3" width="289" height="5" />
-    <rect x="198" y="21" rx="3" ry="3" width="88" height="6" />
-    <rect x="198" y="39" rx="3" ry="3" width="52" height="6" />
-    <rect x="11" y="78" rx="3" ry="3" width="88" height="6" />
-    <rect x="11" y="96" rx="3" ry="3" width="52" height="6" />
-    <rect x="198" y="78" rx="3" ry="3" width="88" height="6" />
-    <rect x="198" y="96" rx="3" ry="3" width="52" height="6" />
-    <rect x="2" y="156" rx="3" ry="3" width="289" height="5" />
-    <rect x="2" y="172" rx="3" ry="3" width="289" height="5" />
-  </ContentLoader>
-);
+const FeesLoader = memo(function () {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.feesLoader}>
+      <ContentLoader
+        speed={2}
+        viewBox="0 0 328 208"
+        backgroundColor="#313759"
+        foregroundColor="#8585A"
+      >
+        <rect x="12" y="12" width="156" height="18" />
+        <rect x="12" y="32" width="156" height="22" />
+        <rect x="184" y="12" width="156" height="18" />
+        <rect x="184" y="32" width="156" height="22" />
+        <rect x="12" y="72" width="156" height="38" />
+        <rect x="12" y="112" width="156" height="22" />
+        <rect x="184" y="72" width="156" height="38" />
+        <rect x="184" y="112" width="156" height="22" />
+        <rect x="12" y="148" width="328" height="20" />
+        <rect x="12" y="180" width="328" height="40" />
+      </ContentLoader>
+    </div>
+  );
+});
 
 export const Fees = React.memo(_FeesInfo);
