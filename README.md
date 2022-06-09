@@ -1,4 +1,4 @@
-# beefy-v2
+# beefy-v2.
 Beefy Finance, The Multichain Yield Optimizer v2 Multichain Application. One app for everything Beefy.
 
 ## Overview
