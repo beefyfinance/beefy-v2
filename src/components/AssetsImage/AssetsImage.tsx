@@ -41,7 +41,7 @@ export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
       data-count={uris.length}
       style={size !== DEFAULT_SIZE ? { width: size, height: size } : undefined}
     >
-      {uris.map(uri =>
+      {uris.map((uri, i) =>
         uri ? (
           <img
             src={uri}
@@ -53,7 +53,7 @@ export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
             height={size}
           />
         ) : (
-          <div className={clsx(classes.iconImg, classes.iconImgPlaceholder)} />
+          <div key={i} className={clsx(classes.iconImg, classes.iconImgPlaceholder)} />
         )
       )}
     </div>
