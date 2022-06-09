@@ -420,7 +420,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               <div>
                 <div className={classes.balanceText}>{t('Vault-StakedIn')}</div>
                 <div className={classes.stakedInValue}>
-                  <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={16} />
+                  <AssetsImage chainId={vault.chainId} assetIds={vault.assetIds} size={24} />
                   <div
                     className={clsx(classes.orange, classes.stakedInValueText)}
                   >{`${formatBigNumberSignificant(boostBalance, 4)} ${
@@ -444,7 +444,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }
-                size={20}
+                size={24}
               />
             </div>
             <InputBase
