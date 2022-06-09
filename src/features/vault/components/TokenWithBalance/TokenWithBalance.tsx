@@ -40,7 +40,7 @@ export function TokenWithBalance({
         <AssetsImage
           chainId={vault.chainId}
           assetIds={token.address === depositToken.address ? vault.assetIds : [token.id]}
-          size={20}
+          size={variant === 'sm' ? 20 : 24}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>
