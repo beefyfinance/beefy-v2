@@ -39,6 +39,7 @@ import { TokenWithBalance } from '../TokenWithBalance';
 import { VaultBuyLinks } from '../VaultBuyLinks';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
+import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
 
 const useStyles = makeStyles(styles as any);
 
@@ -100,6 +101,11 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
+
+  const isDepositButtonDisabled =
+    formState.amount.isLessThanOrEqualTo(0) ||
+    !formReady ||
+    (formState.max && formState.selectedToken.type === 'native');
 
   const handleAsset = (tokenId: TokenEntity['id']) => {
     dispatch(depositActions.setAsset({ tokenId, state: store.getState() }));
@@ -242,6 +248,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           isZap={formState.isZap}
           type={'deposit'}
         />
+        <MaxNativeDepositAlert />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
           {vault.status !== 'active' ? (
@@ -262,7 +269,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 onClick={handleDeposit}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
+                disabled={isDepositButtonDisabled}
               >
                 {isZapEstimateLoading
                   ? t('Zap-Estimating')
