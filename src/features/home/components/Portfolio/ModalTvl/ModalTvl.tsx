@@ -1,13 +1,10 @@
 import { Box, Grid, IconButton, makeStyles } from '@material-ui/core';
-import React from 'react';
-import { CardContent } from '../../../../vault/components/Card/CardContent';
-import { CardHeader } from '../../../../vault/components/Card/CardHeader';
-import { CardTitle } from '../../../../vault/components/Card/CardTitle';
+import React, { forwardRef, memo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { selectAllChains } from '../../../../data/selectors/chains';
-import { Card } from '../../../../vault/components/Card';
 import { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
 import BigNumber from 'bignumber.js';
@@ -18,14 +15,18 @@ import { useAppSelector } from '../../../../../store';
 
 const useStyles = makeStyles(styles);
 
-function _ModalTvl({ close }: { close: () => void }) {
+export type ModalTvlProps = {
+  close: () => void;
+};
+
+const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close }, ref) {
   const classes = useStyles();
   const { t } = useTranslation();
   const tvls = useAppSelector(selectTvlByChain);
 
   const chains = useAppSelector(selectAllChains);
   return (
-    <div className={classes.holder}>
+    <div className={classes.holder} ref={ref} tabIndex={-1}>
       <Card>
         <CardHeader className={classes.header}>
           <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
@@ -50,9 +51,9 @@ function _ModalTvl({ close }: { close: () => void }) {
       </Card>
     </div>
   );
-}
+});
 
-export const ModalTvl = React.memo(_ModalTvl);
+export const ModalTvl = memo<ModalTvlProps>(_ModalTvl);
 
 function Chain({ chain, tvl }: { chain: ChainEntity; tvl: BigNumber }) {
   const classes = useStyles();

@@ -7,6 +7,7 @@ export const styles = (theme: Theme) => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     minWidth: '400px',
+    outline: 'none',
   },
   header: {
     display: 'flex',
