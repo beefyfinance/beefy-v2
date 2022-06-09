@@ -36,7 +36,7 @@
     "network": "harmony"
   },
   {
-    "id": "sushi-one-1eth-1aave",
+    "id": "sushi-one-1eth-1aave-eol",
     "name": "1AAVE-1ETH LP",
     "token": "1AAVE-1ETH LP",
     "tokenDescription": "Sushi",
@@ -51,7 +51,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1eth-1aave",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "SushiSwap",
     "assets": ["AAVE", "ETH"],
     "callFee": 0.25,
@@ -71,7 +73,7 @@
     "createdAt": 1631279357
   },
   {
-    "id": "sushi-one-1eth-1frax",
+    "id": "sushi-one-1eth-1frax-eol",
     "name": "1FRAX-1ETH LP",
     "token": "1FRAX-1ETH LP",
     "tokenDescription": "Sushi",
@@ -86,7 +88,9 @@
     "oracle": "lps",
     "oracleId": "sushi-one-1eth-1frax",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "SushiSwap",
     "assets": ["FRAX", "ETH"],
     "callFee": 0.25,
