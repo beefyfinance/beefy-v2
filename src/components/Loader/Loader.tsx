@@ -2,7 +2,7 @@ import { Box, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 export const Loader = ({ message, line }: { message?: string; line?: boolean }) => {
   const classes = useStyles();
   return (

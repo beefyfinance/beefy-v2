@@ -73,7 +73,10 @@ export const ToggleButtons = memo<ToggleButtonsProps>(function ({
 
   return (
     <div
-      className={clsx(baseClasses.buttons, buttonsClass, { [baseClasses.fullWidth]: fullWidth })}
+      className={clsx(baseClasses.buttons, buttonsClass, {
+        [baseClasses.fullWidth]: fullWidth,
+        [clsx(baseClasses.untogglable, untogglableClass)]: untoggleValue !== undefined,
+      })}
     >
       {optionsList.map(({ value: optionValue, label }) => (
         <ButtonComponent
@@ -83,7 +86,6 @@ export const ToggleButtons = memo<ToggleButtonsProps>(function ({
           onClick={handleClick}
           className={clsx(baseClasses.button, buttonClass, {
             [clsx(baseClasses.selected, selectedClass)]: value === optionValue,
-            [clsx(baseClasses.untogglable, untogglableClass)]: untoggleValue !== undefined,
           })}
         />
       ))}

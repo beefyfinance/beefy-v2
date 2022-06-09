@@ -11,7 +11,6 @@ import {
   IconButton,
   makeStyles,
   Toolbar,
-  Typography,
   useMediaQuery,
 } from '@material-ui/core';
 import { Close, Menu } from '@material-ui/icons';
@@ -29,10 +28,11 @@ import { ChainEntity } from '../../features/data/entities/chain';
 import { NetworkStatus } from '../NetworkStatus';
 import { Transak } from '../Transak';
 import { styles } from './styles';
+
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 const BifiPrice = connect((state: BeefyState) => {
   const beefyPrice = state.entities.tokens.prices.byTokenId['BIFI'] || BIG_ZERO;
@@ -42,15 +42,12 @@ const BifiPrice = connect((state: BeefyState) => {
   return (
     <a
       className={classes.bifiPrice}
-      style={{ textDecoration: 'none' }}
       href="https://app.1inch.io/#/56/swap/BNB/BIFI"
       target="_blank"
       rel="noreferrer"
     >
       <img alt="BIFI" src={require(`../../images/BIFI-TOKEN.svg`).default} />
-      <Typography variant="body1" noWrap={true}>
-        {formatBigUsd(beefyPrice)}
-      </Typography>
+      {formatBigUsd(beefyPrice)}
     </a>
   );
 });
@@ -76,11 +73,11 @@ const NavLinks = () => {
         {t('Header-Explore')}
       </NavLink>
       {navLinks.map(({ title, path }) => (
-        <Typography key={title} variant="body1" className={classes.navLink}>
+        <div key={title} className={classes.navLink}>
           <a target="_blank" rel="noreferrer" href={path} key={title}>
             {title}
           </a>
-        </Typography>
+        </div>
       ))}
       <Transak className={classes.navLink}>{t('Header-Buy')}</Transak>
     </>
@@ -96,9 +93,7 @@ const ActiveChain = ({ networkId }: { networkId: string | null }) => {
       {networkId === null ? null : (
         <img alt={networkId} src={require(`../../images/networks/${networkId}.svg`).default} />
       )}{' '}
-      <Typography variant="body1" noWrap={true}>
-        {networkId === null ? t('Network-Unsupported') : networkId.toLocaleUpperCase()}
-      </Typography>
+      {networkId === null ? t('Network-Unsupported') : networkId.toLocaleUpperCase()}
     </div>
   );
 };
@@ -165,11 +160,13 @@ export const Header = connect((state: BeefyState) => {
                 </div>
               </Box>
               <Hidden lgUp>
-                <Box ml={2}>
-                  <IconButton edge="start" aria-label="menu" onClick={handleDrawerToggle}>
-                    <Menu fontSize="large" />
-                  </IconButton>
-                </Box>
+                <button
+                  aria-label="menu"
+                  onClick={handleDrawerToggle}
+                  className={classes.toggleDrawer}
+                >
+                  <Menu fontSize="inherit" className={classes.toggleDrawerIcon} />
+                </button>
                 <Drawer anchor="right" open={mobileOpen} onClose={handleDrawerToggle}>
                   <Box className={classes.drawerBlack}>
                     <Box

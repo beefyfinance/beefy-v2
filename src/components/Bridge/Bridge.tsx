@@ -6,7 +6,7 @@ import { isFulfilled } from '../../features/data/reducers/data-loader';
 import { bridgeModalActions } from '../../features/data/reducers/wallet/bridge-modal';
 import { selectIsWalletKnown, selectWalletAddress } from '../../features/data/selectors/wallet';
 import { StatLoader } from '../StatLoader';
-import { BridgeModal } from './BridgeModal';
+import { BridgeModal } from './components/BridgeModal';
 import { useAppSelector, useAppStore } from '../../store';
 
 export const Bridge = memo(function _Bridge({ buttonClassname }: { buttonClassname: string }) {

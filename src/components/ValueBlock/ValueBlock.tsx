@@ -1,13 +1,12 @@
-import React from 'react';
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import React, { ReactNode } from 'react';
+import { Box, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import { ReactNode } from 'react';
 import { styles } from './styles';
 import { popoverInLinkHack__popoverContainerHandler } from '../../helpers/list-popover-in-link-hack';
 import { Popover } from '../Popover';
 import { ContentLoading } from '../ContentLoading';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function ValueBlock({
   label,
@@ -17,7 +16,6 @@ export function ValueBlock({
   usdValue,
   loading = false,
   blurred = false,
-  variant,
 }: {
   label: ReactNode;
   value: ReactNode;
@@ -26,7 +24,6 @@ export function ValueBlock({
   usdValue?: ReactNode;
   loading?: boolean;
   blurred?: boolean;
-  variant?: 'small' | 'large';
 }) {
   const classes = useStyles();
   return (
@@ -37,39 +34,24 @@ export function ValueBlock({
           onClick={popoverInLinkHack__popoverContainerHandler}
           onTouchStart={popoverInLinkHack__popoverContainerHandler}
         >
-          <Typography
-            className={clsx({
-              [classes.label]: true,
-              large: variant === 'large',
-            })}
-          >
-            {label}
-          </Typography>
+          <div className={classes.label}>{label}</div>
           <div className={classes.tooltipHolder}>
             <Popover title={tooltip.title}>{tooltip.content}</Popover>
           </div>
         </div>
       ) : (
-        <Typography
-          className={clsx({
-            [classes.label]: true,
-            large: variant === 'large',
-          })}
-        >
-          {label}
-        </Typography>
+        <div className={classes.label}>{label}</div>
       )}
 
       {textContent ? (
-        <Typography
+        <div
           className={clsx({
             [classes.value]: true,
-            large: variant === 'large',
             [classes.blurred]: blurred,
           })}
         >
           {!loading ? <>{blurred ? '....' : value}</> : <ContentLoading />}
-        </Typography>
+        </div>
       ) : !loading ? (
         <>{blurred ? '....' : value}</>
       ) : (
@@ -79,15 +61,14 @@ export function ValueBlock({
       )}
 
       {usdValue && (
-        <Typography
+        <div
           className={clsx({
             [classes.price]: true,
-            large: variant === 'large',
             [classes.blurred]: blurred,
           })}
         >
           {!loading ? <>{blurred ? '...' : usdValue}</> : <ContentLoading />}
-        </Typography>
+        </div>
       )}
     </>
   );

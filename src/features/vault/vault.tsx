@@ -1,6 +1,5 @@
-import { Box, Button, Container, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
-import * as React from 'react';
-import { memo, PropsWithChildren } from 'react';
+import { Button, Container, Hidden, makeStyles } from '@material-ui/core';
+import { lazy, memo, PropsWithChildren, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { DisplayTags } from '../../components/vaultTags';
@@ -34,7 +33,6 @@ import {
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
 import { MinterCards } from './components/MinterCards';
-import { ChainEntity } from '../data/entities/chain';
 import { InfoCards } from './components/InfoCards/InfoCards';
 import { RetirePauseReason } from './components/RetirePauseReason';
 import { InsuraceCard } from './components/InsuraceCard';
@@ -43,15 +41,14 @@ import { SolaceCard } from './components/SolaceCard';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 
-const useStyles = makeStyles(styles as any);
-const PageNotFound = React.lazy(() => import(`../../features/pagenotfound`));
+const useStyles = makeStyles(styles);
+const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
 
 type VaultUrlParams = {
   id: VaultEntity['id'];
-  network: ChainEntity['id'];
 };
 export const Vault = memo(function Vault() {
-  let { id, network } = useParams<VaultUrlParams>();
+  let { id } = useParams<VaultUrlParams>();
   const isLoaded = useAppSelector(selectIsConfigAvailable);
   const vaultExists = useAppSelector(state => selectVaultExistsById(state, id));
 
@@ -60,18 +57,18 @@ export const Vault = memo(function Vault() {
   }
 
   if (!vaultExists) {
-    return <VaultNotFound id={id} network={network} />;
+    return <VaultNotFound id={id} />;
   }
 
   return <VaultContent vaultId={id} />;
 });
 
 type VaultNotFoundProps = PropsWithChildren<VaultUrlParams>;
-const VaultNotFound = memo<VaultNotFoundProps>(function VaultNotFound({ id, network }) {
+const VaultNotFound = memo<VaultNotFoundProps>(function VaultNotFound({ id }) {
   const maybeVaultId = useAppSelector(state => selectVaultIdIgnoreCase(state, id));
 
   if (maybeVaultId !== undefined) {
-    return <Redirect to={`/${network}/vault/${maybeVaultId}`} />;
+    return <Redirect to={`/vault/${maybeVaultId}`} />;
   }
 
   return <PageNotFound />;
@@ -88,7 +85,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   const isBoostedOrPreStake = useAppSelector(state =>
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
-  const [dw, setDw] = React.useState('deposit');
+  const [dw, setDw] = useState('deposit');
   const isMoonpot = useAppSelector(state => selectIsVaultMoonpot(state, vaultId));
   const isQidao = useAppSelector(state => selectIsVaultQidao(state, vaultId));
   const isInsurace = useAppSelector(state => selectIsVaultInsurace(state, vaultId));
@@ -97,49 +94,41 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   return (
     <>
       <VaultMeta vaultId={vaultId} />
-      <Box className={classes.vaultContainer}>
+      <div className={classes.vaultContainer}>
         <Container maxWidth="lg">
-          <>
-            <Box className={classes.header}>
-              <Box className={classes.title}>
-                <AssetsImage assetIds={vault.assetIds} size={48} chainId={vault.chainId} />
-                <Typography variant="h2">
-                  {vault.name} {!isGovVault(vault) ? t('Vault-vault') : ''}
-                </Typography>
-              </Box>
-              <Box>
-                <Box className={classes.badges}>
-                  <DisplayTags vaultId={vaultId} />
-                </Box>
-                <Box>
-                  <span className={classes.platformContainer}>
-                    <Box className={classes.chainContainer}>
-                      <Typography className={classes.platformLabel}>
-                        {t('Chain')} <span>{chain.name}</span>
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography className={classes.platformLabel}>
-                        {t('Platform')} <span>{vault.tokenDescription}</span>
-                      </Typography>
-                    </Box>
-                  </span>
-                </Box>
-              </Box>
-            </Box>
-            <VaultsStats vaultId={vaultId} />
-          </>
+          <div className={classes.header}>
+            <div className={classes.titleHolder}>
+              <AssetsImage assetIds={vault.assetIds} size={48} chainId={vault.chainId} />
+              <h1 className={classes.title}>
+                {vault.name} {!isGovVault(vault) ? t('Vault-vault') : ''}
+              </h1>
+            </div>
+            <div>
+              <div className={classes.badges}>
+                <DisplayTags vaultId={vaultId} />
+              </div>
+              <div className={classes.platformContainer}>
+                <div className={classes.platformLabel}>
+                  {t('Chain')} <span>{chain.name}</span>
+                </div>
+                <div className={classes.platformLabel}>
+                  {t('Platform')} <span>{vault.tokenDescription}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <VaultsStats vaultId={vaultId} />
         </Container>
-      </Box>
-      <Box className={classes.contentContainer}>
-        <Container {...({ maxWidth: 'lg', my: 5 } as any)}>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={4} className={classes.columnActions}>
+      </div>
+      <div className={classes.contentContainer}>
+        <Container maxWidth="lg">
+          <div className={classes.contentColumns}>
+            <div className={classes.columnActions}>
               <Hidden mdUp>
                 <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
               </Hidden>
-              <Box className={classes.dw}>
-                <Box className={classes.tabs}>
+              <div className={classes.dw}>
+                <div className={classes.tabs}>
                   <Button
                     onClick={() => setDw('deposit')}
                     className={dw === 'deposit' ? classes.selected : ''}
@@ -152,35 +141,35 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
                   >
                     {t('Withdraw-Verb')}
                   </Button>
-                </Box>
+                </div>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
-              </Box>
+              </div>
               <MinterCards vaultId={vaultId} />
-              <Box>
+              <div>
                 <NexusCard />
-              </Box>
+              </div>
               {isQidao && (
-                <Box>
+                <div>
                   <QiDao vaultId={vaultId} />
-                </Box>
+                </div>
               )}
               {isMoonpot && (
-                <Box>
+                <div>
                   <Moonpot vaultId={vaultId} />
-                </Box>
+                </div>
               )}
               {isInsurace && (
-                <Box>
+                <div>
                   <InsuraceCard />
-                </Box>
+                </div>
               )}
               {isSolace && (
-                <Box>
+                <div>
                   <SolaceCard />
-                </Box>
+                </div>
               )}
-            </Grid>
-            <Grid item xs={12} md={8} className={classes.columnInfo}>
+            </div>
+            <div className={classes.columnInfo}>
               <Hidden smDown>
                 <RetirePauseReason vaultId={vaultId} className={classes.retirePauseReason} />
               </Hidden>
@@ -193,10 +182,10 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               {vault.assetIds.map(tokenId => (
                 <TokenCard key={tokenId} chainId={vault.chainId} tokenId={tokenId} />
               ))}
-            </Grid>
-          </Grid>
+            </div>
+          </div>
         </Container>
-      </Box>
+      </div>
     </>
   );
 });

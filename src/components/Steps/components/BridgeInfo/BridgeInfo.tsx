@@ -1,19 +1,19 @@
-import { Box, Button, CircularProgress, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { selectChainById } from '../../../features/data/selectors/chains';
-import { selectCurrentChainId } from '../../../features/data/selectors/wallet';
-import { formatBigNumberSignificant } from '../../../helpers/format';
-import { styles } from '../styles';
-import { StepperState } from '../types';
-import { TransactionLink } from './TransactionLink';
-import { getBridgeTxData } from '../../../features/data/actions/bridge';
-import { bridgeModalActions } from '../../../features/data/reducers/wallet/bridge-modal';
+import { selectChainById } from '../../../../features/data/selectors/chains';
+import { selectCurrentChainId } from '../../../../features/data/selectors/wallet';
+import { formatBigNumberSignificant } from '../../../../helpers/format';
+import { StepperState } from '../../types';
+import { TransactionLink } from '../TransactionLink';
+import { getBridgeTxData } from '../../../../features/data/actions/bridge';
+import { bridgeModalActions } from '../../../../features/data/reducers/wallet/bridge-modal';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
-import { AlertWarning } from '../../Alerts';
-import { useAppDispatch, useAppSelector } from '../../../store';
+import { AlertWarning } from '../../../Alerts';
+import { useAppDispatch, useAppSelector } from '../../../../store';
+import { styles } from './styles';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 interface TxStateInterface {
   msg: string;
@@ -110,13 +110,13 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
   return (
     <>
       {txData?.status === 10 && (
-        <Box className={classes.succesContainer}>
-          <Typography variant="body1" className={classes.textSuccess}>
+        <Box className={classes.successContainer}>
+          <div className={classes.textSuccess}>
             {t('Transactn-Bridge', {
               amount: formatBigNumberSignificant(bridgeModalState.amount, 4),
               chain: destChain.name,
             })}
-          </Typography>
+          </div>
         </Box>
       )}
       {txData?.status === 14 && (
@@ -128,11 +128,9 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
             <img
               className={classes.icon}
               alt={chain.id}
-              src={require(`../../../images/networks/${chain.id}.svg`).default}
+              src={require(`../../../../images/networks/${chain.id}.svg`).default}
             />
-            <Typography className={classes.chainName} variant="body1">
-              {chain.name}
-            </Typography>
+            <div className={classes.chainName}>{chain.name}</div>
           </Box>
           <Box className={classes.chainStatusContainer}>
             {walletActionsState.result === 'success_pending' && <CircularProgress size={16} />}
@@ -140,13 +138,13 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
               <img
                 style={{ height: '16px' }}
                 alt="check"
-                src={require(`../../../images/check.svg`).default}
+                src={require(`../../../../images/check.svg`).default}
               />
             )}
-            <Typography className={classes.statusText} variant="body1">
+            <div className={classes.statusText}>
               {walletActionsState.result === 'success_pending' && t('Pending')}
               {walletActionsState.result === 'success' && t('Success')}
-            </Typography>
+            </div>
           </Box>
         </Box>
         <TransactionLink chainId={currentChaindId} />
@@ -157,11 +155,9 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
             <img
               className={classes.icon}
               alt={chain.id}
-              src={require(`../../../images/networks/${destChain.id}.svg`).default}
+              src={require(`../../../../images/networks/${destChain.id}.svg`).default}
             />
-            <Typography className={classes.chainName} variant="body1">
-              {destChain.name}
-            </Typography>
+            <div className={classes.chainName}>{destChain.name}</div>
           </Box>
           {steps.finished && walletActionsState.result === 'success' && (
             <Box className={classes.chainStatusContainer}>
@@ -170,36 +166,35 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
                 <img
                   style={{ height: '16px' }}
                   alt="check"
-                  src={require(`../../../images/check.svg`).default}
+                  src={require(`../../../../images/check.svg`).default}
                 />
               )}
-              <Typography className={classes.statusText} variant="body1">
+              <div className={classes.statusText}>
                 {txData?.status !== 9 && txData?.status !== 10 && t('Pending')}
                 {txData.status === 9 && t('Confirming')}
                 {txData?.status === 10 && t('Success')}
-              </Typography>
+              </div>
             </Box>
           )}
         </Box>
         {txData.msg !== 'Error' && txData.swapTx && (
           <Button
-            style={{ marginTop: '8px' }}
-            className={classes.redirectBtnSuccess}
+            className={classes.redirectLinkSuccess}
             href={destChain.explorerUrl + '/tx/' + txData.swapTx}
             target="_blank"
           >
-            {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+            {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
           </Button>
         )}
       </Box>
       {hash && (
         <Button
-          style={{ marginTop: '16px', justifyContent: 'flex-start' }}
-          className={classes.redirectBtnSuccess}
+          className={classes.redirectLinkSuccess}
           href={`https://anyswap.net/explorer/tx?params=${hash}`}
           target="_blank"
         >
-          {t('Transactn-ViewMultichain')} {<OpenInNewRoundedIcon htmlColor="#59A662" />}
+          {t('Transactn-ViewMultichain')}{' '}
+          {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
         </Button>
       )}
     </>

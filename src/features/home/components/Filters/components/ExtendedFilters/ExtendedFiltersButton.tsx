@@ -28,6 +28,7 @@ export const ExtendedFiltersButton = memo<ExtendedFiltersButtonProps>(
         <Button
           className={clsx(className)}
           variant="filter"
+          size="sm"
           ref={anchorEl}
           onClick={handleOpen}
           active={isOpen}

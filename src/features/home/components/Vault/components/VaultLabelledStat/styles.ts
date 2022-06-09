@@ -6,12 +6,7 @@ export const styles = (theme: Theme) => ({
     alignItems: 'center',
   },
   labelText: {
-    fontFamily: theme.typography.fontFamily,
-    fontSize: '12px',
-    fontWeight: 600,
-    lineHeight: '20px',
-    letterSpacing: '0.5px',
-    textTransform: 'uppercase' as const,
+    ...theme.typography['subline-sm'],
     color: '#9595B2',
   },
   tooltipTrigger: {

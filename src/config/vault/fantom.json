@@ -351,7 +351,7 @@
     "createdAt": 1635363222
   },
   {
-    "id": "beets-fantom-conservatory",
+    "id": "beets-fantom-conservatory-eol",
     "logo": "fantom/Fantom Conservatory.png",
     "name": "Fantom Conservatory Of Music",
     "token": "Fantom Conservatory Of Music",
@@ -367,7 +367,9 @@
     "oracle": "lps",
     "oracleId": "beets-fantom-conservatory",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Beethoven X",
     "assets": ["FTM", "SPIRIT", "BOO", "TAROT", "ANY", "SCREAM", "BEETS"],
     "risks": [
@@ -7821,7 +7823,7 @@
     "retireReason": "rewards"
   },
   {
-    "id": "beets-daiabolical-balance",
+    "id": "beets-daiabolical-balance-eol",
     "name": "A Dai-abolical Balance",
     "token": "A Dai-abolical Balance",
     "tokenDescription": "Beethoven X",
@@ -7836,8 +7838,9 @@
     "oracle": "lps",
     "oracleId": "beets-daiabolical-balance",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Beethoven X",
     "assets": ["USDB", "DAI"],
     "risks": [

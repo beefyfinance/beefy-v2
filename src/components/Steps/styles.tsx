@@ -1,24 +1,12 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   modal: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     '& .MuiBackdrop-root': {
       backgroundColor: 'rgba(0,0,0,0.9)',
-    },
-    '& .MuiTypography-h2': {
-      fontSize: '30px',
-      fontWeight: 600,
-      lineHeight: '42px',
-      textAlign: 'center',
-    },
-    '& .MuiTypography-body2': {
-      fontSize: '14px',
-      fontWeight: 400,
-      lineHeight: '20px',
-      letterSpacing: '0.2px',
-      paddingTop: '20px',
-      textAlign: 'center',
     },
     '& .MuiAlert-root': {
       marginTop: '20px',
@@ -27,26 +15,10 @@ export const styles = theme => ({
   finishedCard: {
     backgroundColor: '#323857',
     borderRadius: '20px',
-    '& .MuiTypography-h2': {
-      fontSize: '36px',
-      lineHeight: '42px',
-      fontWeight: 600,
-    },
-    '& .MuiTypography-body1': {
-      fontSize: '14px',
-      lineHeight: '20px',
-      letterSpacing: '0.2px',
-      textAlign: 'center',
-      padding: '20px 0',
-    },
   },
   finishedBtn: {
-    fontSize: '16px',
-    fontWeight: 600,
     color: '#6B7199',
     backgroundColor: '#232841',
-    borderRadius: '20px',
-    textTransform: 'inherit',
     padding: '4px 15px',
     transition: 'color 0.2s',
     '&:hover': {
@@ -55,18 +27,18 @@ export const styles = theme => ({
     },
   },
   snackbar: {
-    width: '350px',
-    maxWidth: 'calc(min(100%, 350px) - 16px)',
+    width: '408px',
+    maxWidth: 'calc(100% - 16px)',
     maxHeight: 'calc(100% - 16px)',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
   },
   snackbarContainer: {
     height: '100%',
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
     minHeight: 0,
   },
   topBar: {
@@ -140,6 +112,7 @@ export const styles = theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexShrink: 0,
+    marginBottom: '4px',
   },
   closeIcon: {
     padding: 0,
@@ -151,24 +124,24 @@ export const styles = theme => ({
     minHeight: 0,
     flexShrink: 1,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
     overflow: 'auto',
   },
   title: {
+    ...theme.typography['body-lg-med'],
     color: theme.palette.background.snackbars.text,
-    fontWeight: 700,
     display: 'flex',
     alignItems: 'center',
   },
   friendlyMessage: {
-    fontWeight: 700,
+    ...theme.typography['body-lg-med'],
     color: theme.palette.background.snackbars.text,
     marginBottom: theme.spacing(2),
   },
   message: {
     color: theme.palette.background.snackbars.text,
     '& span': {
-      fontWeight: 700,
+      fontWeight: theme.typography['body-lg-med'].fontWeight,
     },
   },
   content: {
@@ -183,27 +156,19 @@ export const styles = theme => ({
     backgroundColor: 'rgba(89, 166, 98, 0.15)',
   },
   closeBtn: {
-    marginTop: theme.spacing(2),
-    backgroundColor: theme.palette.background.snackbars.bgBtn,
-    color: theme.palette.text.primary,
-    width: '100%',
-    fontSize: '15px',
-    lineHeight: '24px',
-    fontWeight: 700,
-    borderRadius: '8px',
-    textTransform: 'none',
-    '&:Hover': {
-      backgroundColor: theme.palette.background.snackbars.bgBtn,
-    },
+    marginTop: theme.spacing(3),
   },
-  redirectBtnSuccess: {
+  redirectLinkSuccess: {
     color: theme.palette.primary.main,
     background: 'none',
-    textTransform: 'none',
     margin: 0,
     padding: 0,
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    marginTop: '16px',
     '& .MuiSvgIcon-root': {
-      height: '15px',
+      marginLeft: '4px',
     },
   },
   chainContainer: {

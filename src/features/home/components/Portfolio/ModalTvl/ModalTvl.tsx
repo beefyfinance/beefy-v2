@@ -1,31 +1,32 @@
-import { Box, Button, Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
-import { CardContent } from '../../../../vault/components/Card/CardContent';
-import { CardHeader } from '../../../../vault/components/Card/CardHeader';
-import { CardTitle } from '../../../../vault/components/Card/CardTitle';
+import { Box, Grid, IconButton, makeStyles } from '@material-ui/core';
+import React, { forwardRef, memo } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/components/Card';
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
 import { selectAllChains } from '../../../../data/selectors/chains';
-import { Card } from '../../../../vault/components/Card';
 import { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
 import BigNumber from 'bignumber.js';
 import { formatBigUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
+import { Button } from '../../../../../components/Button';
 import { useAppSelector } from '../../../../../store';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
-function _ModalTvl({ close }: { close: () => void }) {
+export type ModalTvlProps = {
+  close: () => void;
+};
+
+const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close }, ref) {
   const classes = useStyles();
   const { t } = useTranslation();
   const tvls = useAppSelector(selectTvlByChain);
 
   const chains = useAppSelector(selectAllChains);
-
   return (
-    <Box className={classes.modalCard}>
+    <div className={classes.holder} ref={ref} tabIndex={-1}>
       <Card>
         <CardHeader className={classes.header}>
           <CardTitle titleClassName={classes.title} title={t('TVL-bychain')} />
@@ -43,16 +44,16 @@ function _ModalTvl({ close }: { close: () => void }) {
               );
             })}
           </Grid>
-          <Button onClick={close} className={classes.btn}>
+          <Button onClick={close} variant="success" fullWidth={true} className={classes.btn}>
             {t('Close')}
           </Button>
         </CardContent>
       </Card>
-    </Box>
+    </div>
   );
-}
+});
 
-export const ModalTvl = React.memo(_ModalTvl);
+export const ModalTvl = memo<ModalTvlProps>(_ModalTvl);
 
 function Chain({ chain, tvl }: { chain: ChainEntity; tvl: BigNumber }) {
   const classes = useStyles();
@@ -65,17 +66,9 @@ function Chain({ chain, tvl }: { chain: ChainEntity; tvl: BigNumber }) {
         src={require(`../../../../../images/networks/${chain.id}.svg`).default}
       />
       <Box>
-        <Typography variant="body2" className={classes.chainText}>
-          {chain.name}
-        </Typography>
+        <div className={classes.chainText}>{chain.name}</div>
         <>
-          {tvl ? (
-            <Typography variant="body1" className={classes.chainValue}>
-              {formatBigUsd(tvl)}
-            </Typography>
-          ) : (
-            <ContentLoading />
-          )}
+          {tvl ? <div className={classes.chainValue}>{formatBigUsd(tvl)}</div> : <ContentLoading />}
         </>
       </Box>
     </Box>

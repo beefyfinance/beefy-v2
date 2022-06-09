@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Box, Grid, Hidden, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, Hidden, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { BIG_ZERO, formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
+
 export const Stats = ({ stats, blurred }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -21,31 +22,25 @@ export const Stats = ({ stats, blurred }) => {
   const formatStat = value => (empty ? BIG_ZERO.toFixed(0) : formatUsd(value.toNumber()));
 
   return (
-    <Grid container className={classes.stats}>
+    <Grid container className={classes.userStats}>
       <Box className={classes.stat}>
-        <Typography variant="body1" className={classes.label}>
-          {t('Portfolio-Deposited')}
-        </Typography>
-        <Typography variant="h3" className={classes.value}>
+        <div className={classes.label}>{t('Portfolio-Deposited')}</div>
+        <div className={classes.value}>
           <BlurredText value={formatStat(stats.deposited)} />
-        </Typography>
+        </div>
       </Box>
       <Box className={classes.stat}>
-        <Typography variant="body1" className={classes.label}>
-          {t('Portfolio-YieldMnth')}
-        </Typography>
-        <Typography variant="h3" className={classes.value}>
+        <div className={classes.label}>{t('Portfolio-YieldMnth')}</div>
+        <div className={classes.value}>
           <BlurredText value={formatStat(stats.monthly)} />
-        </Typography>
+        </div>
       </Box>
       <Hidden xsDown>
         <Box className={classes.stat}>
-          <Typography variant="body1" className={classes.label}>
-            {t('Portfolio-YieldDay')}
-          </Typography>
-          <Typography variant="h3" className={classes.value}>
+          <div className={classes.label}>{t('Portfolio-YieldDay')}</div>
+          <div className={classes.value}>
             <BlurredText value={formatStat(stats.daily)} />
-          </Typography>
+          </div>
         </Box>
       </Hidden>
     </Grid>

@@ -14,6 +14,7 @@ export const styles = (theme: Theme) => ({
     height: '24px',
     marginRight: '8px',
     '&:before': {
+      ...theme.typography['body-sm-med'],
       content: 'attr(data-count)',
       display: 'flex',
       justifyContent: 'center',
@@ -25,8 +26,6 @@ export const styles = (theme: Theme) => ({
       height: '20px',
       borderRadius: '50%',
       color: '#fff',
-      fontWeight: 700,
-      fontSize: 12,
     },
   },
 });

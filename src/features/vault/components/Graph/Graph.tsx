@@ -1,4 +1,4 @@
-import { Box, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
@@ -18,7 +18,8 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
+
 function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const classes = useStyles();
@@ -36,18 +37,16 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.titleBox}>
           <CardTitle title={t('Graph-RateHist')} />
           <div className={classes.headerTabs}>
-            <div className={classes.headerTab}>
-              <Tabs
-                labels={[t('TVL'), t('Graph-Price'), t('APY')]}
-                value={stat}
-                onChange={newValue => setStat(newValue)}
-              />
-            </div>
+            <Tabs
+              labels={[t('TVL'), t('Graph-Price'), t('APY')]}
+              value={stat}
+              onChange={newValue => setStat(newValue)}
+            />
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <Box style={{ height: 250 }}>
+        <div className={classes.chartSizer}>
           <ResponsiveContainer>
             <AreaChart data={chartData} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
               <CartesianGrid vertical={false} stroke="#484D73" />
@@ -55,7 +54,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
                 dataKey="v"
                 tick={{
                   fill: 'white',
-                  fontSize: 11,
+                  fontSize: 12,
                 }}
                 axisLine={false}
                 tickLine={false}
@@ -75,8 +74,8 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               />
             </AreaChart>
           </ResponsiveContainer>
-        </Box>
-        <div className={classes.footerTab}>
+        </div>
+        <div className={classes.footerTabs}>
           <BasicTabs
             labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-1Year')]}
             value={period}

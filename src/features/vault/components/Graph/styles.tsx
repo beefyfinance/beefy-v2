@@ -1,19 +1,14 @@
 export const styles = theme => ({
-  headerTabs: {
+  titleBox: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    marginLeft: 'auto',
-    [theme.breakpoints.up('lg')]: {
-      flexDirection: 'row',
+    flexDirection: 'column' as const,
+    alignItems: 'flex-start',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row' as const,
       alignItems: 'center',
     },
-    [theme.breakpoints.down('sm')]: {
-      marginRight: 'auto',
-      marginLeft: 0,
-    },
   },
-  headerTab: {
+  headerTabs: {
     marginTop: 10,
     '& .MuiTabs-root': {
       minHeight: '38px',
@@ -21,15 +16,29 @@ export const styles = theme => ({
     '& .MuiTab-root': {
       minHeight: '34px',
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('sm')]: {
       marginTop: 0,
-      marginLeft: 20,
+      marginLeft: 'auto',
     },
   },
-  titleBox: {
+  chartSizer: {
+    height: '250px',
+  },
+  footerTabs: {
+    marginTop: '12px',
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
+    justifyContent: 'flex-end',
+    '& .MuiTabs-root': {
+      minHeight: 0,
+    },
+    '& .MuiTabs-flexContainer': {
+      columnGap: '24px',
+    },
+    '& .MuiTab-root': {
+      ...theme.typography['subline-lg'],
+      padding: 0,
+      height: 'auto',
+      minHeight: 0,
     },
   },
 });

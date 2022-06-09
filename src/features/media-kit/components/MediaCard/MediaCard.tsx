@@ -1,10 +1,11 @@
 import React from 'react';
-import { Card, CardMedia, makeStyles, Typography } from '@material-ui/core';
+import { Card, CardMedia, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { SimpleLinkButton } from '../../../../components/SimpleLinkButton';
 import { MediaCardProps } from './MediaCardProps';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import { GetApp } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
@@ -27,15 +28,14 @@ export const MediaCard: React.FC<MediaCardProps> = ({ id, versions, background }
         />
       </div>
       <div className={classes.actionContainer}>
-        <Typography variant="body1" className={classes.description}>
-          {t(`BrandAssets-Asset-${id}`)}
-        </Typography>
+        <div className={classes.description}>{t(`BrandAssets-Asset-${id}`)}</div>
         <div className={classes.actions}>
           {versions.map(version => (
             <SimpleLinkButton
               key={`${version.fileName}.${version.type}`}
               text={t(`BrandAssets-Download-${version.type.toUpperCase()}`)}
               href={getImage(version.fileName, version.type)}
+              IconComponent={GetApp}
             />
           ))}
         </div>

@@ -2,25 +2,26 @@ import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
   rows: {
+    ...theme.typography['body-lg'],
     display: 'grid',
     rowGap: '8px',
     columnGap: '48px',
     gridTemplateColumns: '1fr auto',
-    fontSize: '14px',
-    lineHeight: '18px',
   },
   label: {
+    color: '#272B4A',
     '&:nth-last-child(2)': {
-      fontWeight: 700,
+      fontWeight: theme.typography['body-lg-med'].fontWeight,
     },
   },
   value: {
+    color: '#272B4A',
     textAlign: 'right' as const,
     '&:last-child': {
-      fontWeight: 700,
+      fontWeight: theme.typography['body-lg-med'].fontWeight,
     },
   },
   last: {
-    fontWeight: 700,
+    fontWeight: theme.typography['body-lg-med'].fontWeight,
   },
 });

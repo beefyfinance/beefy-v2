@@ -1,27 +1,31 @@
 import React, { useMemo } from 'react';
-import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Button as MuiButton, InputBase, makeStyles, Paper } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { styles } from '../styles';
-import { selectChainById } from '../../../features/data/selectors/chains';
-import { CardContent } from '../../../features/vault/components/Card/CardContent';
-import { Fees } from './Fees';
-import { AssetsImage } from '../../AssetsImage';
-import { SimpleDropdown } from '../../SimpleDropdown';
-import { selectUserBalanceOfToken } from '../../../features/data/selectors/balance';
+import { selectChainById } from '../../../../features/data/selectors/chains';
+import { CardContent } from '../../../../features/vault/components/Card';
+import { Fees } from '../Fees';
+import { AssetsImage } from '../../../AssetsImage';
+import { selectUserBalanceOfToken } from '../../../../features/data/selectors/balance';
 import {
   selectCurrentChainId,
   selectIsWalletConnected,
-} from '../../../features/data/selectors/wallet';
-import { BIG_ZERO, formatBigDecimals } from '../../../helpers/format';
-import { askForNetworkChange, askForWalletConnection } from '../../../features/data/actions/wallet';
-import { bridgeModalActions } from '../../../features/data/reducers/wallet/bridge-modal';
-import { isFulfilled } from '../../../features/data/reducers/data-loader';
+} from '../../../../features/data/selectors/wallet';
+import { BIG_ZERO, formatBigDecimals } from '../../../../helpers/format';
+import {
+  askForNetworkChange,
+  askForWalletConnection,
+} from '../../../../features/data/actions/wallet';
+import { bridgeModalActions } from '../../../../features/data/reducers/wallet/bridge-modal';
+import { isFulfilled } from '../../../../features/data/reducers/data-loader';
 import BigNumber from 'bignumber.js';
-import { fetchBridgeChainData } from '../../../features/data/actions/bridge';
-import { selectBridgeBifiDestChainData } from '../../../features/data/selectors/bridge';
-import { Divider } from '../../Divider';
-import { isEmpty } from '../../../helpers/utils';
-import { useAppDispatch, useAppSelector, useAppStore } from '../../../store';
+import { fetchBridgeChainData } from '../../../../features/data/actions/bridge';
+import { selectBridgeBifiDestChainData } from '../../../../features/data/selectors/bridge';
+import { Divider } from '../../../Divider';
+import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
+import { first } from 'lodash';
+import { ChainSelector } from '../ChainSelector';
+import { Button } from '../../../Button';
+import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
@@ -82,17 +86,6 @@ function _Preview({
     return list;
   }, [formState.fromChainId, formState.supportedChains]);
 
-  const selectedRenderer = network => {
-    return (
-      <Box className={classes.networkPickerContainer}>
-        <img src={require(`../../../images/networks/${network}.svg`).default} alt={network} />{' '}
-        <Typography className={classes.networkValue}>
-          {formState.supportedChains[network]}
-        </Typography>
-      </Box>
-    );
-  };
-
   const handleNetwork = chainId => {
     if (!formState.bridgeDataByChainId[chainId]) {
       dispatch(fetchBridgeChainData({ chainId: chainId }));
@@ -149,97 +142,104 @@ function _Preview({
   return (
     <CardContent className={classes.content}>
       {/*From */}
-      <Box>
-        <Box mb={1} className={classes.flexContainer}>
-          <Typography variant="body2" className={classes.label}>
-            {t('FROM')}
-          </Typography>
-          <Box onClick={handleMax}>
-            <Typography className={classes.balance} variant="body2">
-              {t('Balance')}: <span>{formatBigDecimals(bifiBalance, 4)} BIFI</span>
-            </Typography>
-          </Box>
-        </Box>
-        <Box className={classes.flexContainer}>
-          <Box className={classes.networkPicker}>
-            <SimpleDropdown
-              list={formState.supportedChains}
-              selected={formState.fromChainId}
-              handler={handleNetwork}
-              renderValue={selectedRenderer}
-              noBorder={false}
-              className={classes.alignDropdown}
+      <div>
+        <div className={classes.rowDirectionBalance}>
+          <div className={classes.label}>{t('FROM')}</div>
+          <div onClick={handleMax} className={classes.balance}>
+            {t('Balance')}: <span>{formatBigDecimals(bifiBalance, 4)} BIFI</span>
+          </div>
+        </div>
+        <div className={classes.rowChainInput}>
+          <div className={classes.networkPicker}>
+            <ChainSelector
+              fullWidth={true}
+              options={formState.supportedChains}
+              value={formState.fromChainId}
+              onChange={handleNetwork}
               disabled={!formDataLoaded}
             />
-          </Box>
-          <Box className={classes.inputContainer}>
+          </div>
+          <div className={classes.inputContainer}>
             <Paper component="form">
-              <Box className={classes.inputLogo}>
+              <div className={classes.inputLogo}>
                 <AssetsImage chainId={'56'} assetIds={['BIFI']} size={20} />
-              </Box>
+              </div>
               <InputBase
                 placeholder="0.00"
                 value={formState.formattedInput}
                 onChange={e => handleInput(e.target.value)}
                 disabled={!formDataLoaded}
               />
-              <Button onClick={handleMax}>{t('Transact-Max')}</Button>
+              <MuiButton onClick={handleMax}>{t('Transact-Max')}</MuiButton>
             </Paper>
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
       <Divider onClick={() => handleNetwork(formState.destChainId)} />
       {/* To */}
-      <Box mb={3}>
-        <Box mb={1} className={classes.flexContainer}>
-          <Typography variant="body2" className={classes.label}>
-            {t('TO')}
-          </Typography>
-        </Box>
-        <Box className={classes.flexContainer}>
-          <Box className={classes.networkPicker}>
-            <SimpleDropdown
-              list={destChainsList}
-              selected={!isEmpty(destChainsList) ? formState.destChainId : ''}
-              handler={handleDestChain}
-              renderValue={selectedRenderer}
-              noBorder={false}
-              className={classes.alignDropdown}
+      <div className={classes.toContainer}>
+        <div className={classes.rowDirectionBalance}>
+          <div className={classes.label}>{t('TO')}</div>
+        </div>
+        <div className={classes.rowChainInput}>
+          <div className={classes.networkPicker}>
+            <ChainSelector
+              fullWidth={true}
+              options={destChainsList}
+              value={
+                formState.destChainId in destChainsList
+                  ? formState.destChainId
+                  : first(Object.keys(destChainsList))
+              }
+              onChange={handleDestChain}
               disabled={!formDataLoaded}
             />
-          </Box>
-          <Box className={classes.inputContainer}>
+          </div>
+          <div className={classes.inputContainer}>
             <Paper component="form">
-              <Box className={classes.inputLogo}>
+              <div className={classes.inputLogo}>
                 <AssetsImage chainId={'56'} assetIds={['BIFI']} size={20} />
-              </Box>
+              </div>
               <InputBase placeholder="0.00" value={formState.formattedOutput} disabled={true} />
             </Paper>
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
       {/* Fees */}
       <Fees />
-      <Box mt={4}>
+      <div className={classes.buttonContainer}>
         {isWalletConnected ? (
           isWalletOnFromChain ? (
-            <Button onClick={handlePreview} disabled={isDisabled} className={classes.btn}>
+            <Button
+              onClick={handlePreview}
+              disabled={isDisabled}
+              variant="success"
+              fullWidth={true}
+              borderless={true}
+            >
               {t('Bridge-Button-1', { network: destChain.name })}
             </Button>
           ) : (
             <Button
               onClick={() => dispatch(askForNetworkChange({ chainId: formState.fromChainId }))}
-              className={classes.btn}
+              variant="success"
+              fullWidth={true}
+              borderless={true}
             >
               {t('Network-Change', { network: fromChain.name })}
             </Button>
           )
         ) : (
-          <Button onClick={handleConnectWallet} className={classes.btn}>
+          <Button
+            onClick={handleConnectWallet}
+            variant="success"
+            fullWidth={true}
+            borderless={true}
+          >
             {t('Network-ConnectWallet')}
           </Button>
         )}
-      </Box>
+      </div>
     </CardContent>
   );
 }

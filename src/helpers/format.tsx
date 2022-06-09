@@ -179,3 +179,7 @@ export function maybeHexToNumber(input: any): number {
 
   throw new Error(`${typeof input} "${input}" is not valid hex or number.`);
 }
+
+export function formatAddressShort(addr: string): string {
+  return addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
+}

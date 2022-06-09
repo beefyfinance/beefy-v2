@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Box, Button, InputBase, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Button, InputBase, makeStyles, Paper } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { CardContent } from '../../../Card';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
@@ -29,7 +29,7 @@ import { selectChainById } from '../../../../../data/selectors/chains';
 import { AlertWarning } from '../../../../../../components/Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) {
   const classes = useStyles();
@@ -180,39 +180,37 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   return (
     <>
       <CardContent className={classes.cardContent}>
-        <Typography className={classes.content} variant="body1">
+        <div className={classes.content}>
           {t('burn-Content', {
             token1: minter.mintedToken.symbol,
             token2: minter.depositToken.symbol,
           })}
-        </Typography>
-        <Box className={classes.boxReminder}>
-          <Typography className={classes.reservesText} variant="body1">
+        </div>
+        <div className={classes.boxReserves}>
+          <div className={classes.reservesText}>
             {t('reserves', { token: minter.depositToken.symbol })}
-          </Typography>
-          <Box sx={{ display: 'flex' }}>
-            <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
-            <Typography className={classes.amountReserves}>
-              {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
-            </Typography>
-          </Box>
-        </Box>
-        <Box className={classes.inputContainer}>
-          <Box className={classes.balances}>
-            <Typography className={classes.label}>
+          </div>
+          <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
+          <div className={classes.amountReserves}>
+            {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
+          </div>
+        </div>
+        <div className={classes.inputContainer}>
+          <div className={classes.balances}>
+            <div className={classes.label}>
               {t('from')} <span className={classes.value}>{mintedToken.symbol}</span>
-            </Typography>
-            <Typography className={classes.label}>
+            </div>
+            <div className={classes.label}>
               {t('wallet')}{' '}
               <span className={classes.value}>
                 {formatBigDecimals(mintedTokenBalance, 8)} {mintedToken.symbol}
               </span>
-            </Typography>
-          </Box>
-          <Paper component="form" className={classes.root}>
-            <Box className={classes.inputLogo}>
+            </div>
+          </div>
+          <Paper component="form">
+            <div className={classes.inputLogo}>
               <AssetsImage assetIds={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
-            </Box>
+            </div>
             <InputBase
               placeholder="0.00"
               value={formData.withdraw.input}
@@ -221,31 +219,31 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
             />
             <Button onClick={handleMax}>{t('Transact-Max')}</Button>
           </Paper>
-        </Box>
-        <Box className={classes.customDivider}>
-          <Box className={classes.line} />
+        </div>
+        <div className={classes.customDivider}>
+          <div className={classes.line} />
           <img alt="arrowDown" src={require('../../../../../../images/arrowDown.svg').default} />
-          <Box className={classes.line} />
-        </Box>
-        <Box className={classes.inputContainer}>
-          <Box className={classes.balances}>
-            <Typography className={classes.label}>
+          <div className={classes.line} />
+        </div>
+        <div className={classes.inputContainer}>
+          <div className={classes.balances}>
+            <div className={classes.label}>
               {t('to')} <span className={classes.value}>{depositToken.symbol}</span>
-            </Typography>
-            <Typography className={classes.label}>
+            </div>
+            <div className={classes.label}>
               {t('wallet')}
               <span className={classes.value}>
                 {formatBigDecimals(depositedTokenBalance)} {depositToken.symbol}
               </span>
-            </Typography>
-          </Box>
-          <Paper component="form" className={classes.root}>
-            <Box className={classes.inputLogo}>
+            </div>
+          </div>
+          <Paper component="form">
+            <div className={classes.inputLogo}>
               <AssetsImage assetIds={[minter.depositToken.symbol]} size={20} chainId={chain.id} />
-            </Box>
+            </div>
             <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
           </Paper>
-        </Box>
+        </div>
         <>
           {isWalletConnected ? (
             !isWalletOnVaultChain ? (

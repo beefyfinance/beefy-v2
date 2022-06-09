@@ -8,7 +8,7 @@ interface CardContentProps {
   className?: any;
 }
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 export const CardContent: React.FC<CardContentProps> = ({ children, className }) => {
   const classes = useStyles();
 

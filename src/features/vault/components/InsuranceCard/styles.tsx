@@ -14,12 +14,12 @@ export const styles = (theme: Theme) => ({
     },
   },
   title: {
+    ...theme.typography['h2'],
     color: theme.palette.text.primary,
   },
   subtitle: {
+    ...theme.typography['subline-lg'],
     color: theme.palette.text.disabled,
-    textTransform: 'uppercase' as const,
-    fontWeight: 600,
   },
   content: {
     color: theme.palette.text.secondary,
@@ -27,13 +27,9 @@ export const styles = (theme: Theme) => ({
   },
   btn: {
     color: theme.palette.text.primary,
-    fontSize: '15px',
-    lineHeight: '24px',
-    fontWeight: 700,
     padding: '12px 24px',
     borderRadius: '8px',
     backgroundColor: theme.palette.background.default,
-    textTransform: 'none' as const,
     width: '100%',
   },
   link: {
