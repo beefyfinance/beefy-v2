@@ -12,6 +12,7 @@ import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles);
+
 export const Portfolio = () => {
   const classes = useStyles();
   const theme = useTheme();
