@@ -13,7 +13,7 @@ interface ApyGovVault {
 interface ApyMaxiVault {
   totalApy: number;
 }
-interface ApyStandard {
+export interface ApyStandard {
   beefyPerformanceFee: number;
   vaultApr: number;
   compoundingsPerYear: number;

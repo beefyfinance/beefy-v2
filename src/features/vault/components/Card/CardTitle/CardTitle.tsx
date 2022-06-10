@@ -1,11 +1,12 @@
-import React from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import { FC } from 'react';
+import { makeStyles } from '@material-ui/core';
 import { CardTitleProps } from './CardTitleProps';
-
+import clsx from 'clsx';
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles as any);
-export const CardTitle: React.FC<CardTitleProps> = ({ title, subtitle, titleClassName }) => {
+const useStyles = makeStyles(styles);
+
+export const CardTitle: FC<CardTitleProps> = ({ title, subtitle, titleClassName }) => {
   const classes = useStyles();
 
   return (
@@ -13,11 +14,9 @@ export const CardTitle: React.FC<CardTitleProps> = ({ title, subtitle, titleClas
       {typeof title === 'object' ? (
         <>{title}</>
       ) : (
-        <Typography variant="h3" className={titleClassName ?? classes.title}>
-          {title}
-        </Typography>
+        <h2 className={clsx(classes.title, titleClassName)}>{title}</h2>
       )}
-      {subtitle && <Typography className={classes.subtitle}>{subtitle}</Typography>}
+      {subtitle && <div className={classes.subtitle}>{subtitle}</div>}
     </>
   );
 };

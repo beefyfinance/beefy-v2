@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   cardStyle: {
     minWidth: '288px',
     minHeight: '230px',
@@ -26,6 +28,8 @@ export const styles = theme => ({
     padding: '24px',
   },
   description: {
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.secondary,
     marginTop: '0',
     marginBottom: '10px',
   },

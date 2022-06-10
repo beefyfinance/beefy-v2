@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import { BIG_ZERO } from '../../../helpers/format';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { WritableDraft } from 'immer/dist/internal';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -13,6 +12,7 @@ import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-
 import { BeefyState } from '../../../redux-types';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from '../actions/tokens';
 import { ChainEntity } from '../entities/chain';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 /**
  * State containing APY infos indexed by vault id

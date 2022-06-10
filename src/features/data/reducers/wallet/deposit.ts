@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import {
-  BIG_ZERO,
-  formatBigDecimals,
-  formatBigNumberSignificant,
-} from '../../../../helpers/format';
+import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { initiateDepositForm } from '../../actions/deposit';
 import { fetchEstimateZapDeposit } from '../../actions/zap';
@@ -14,6 +10,7 @@ import { VaultEntity } from '../../entities/vault';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 // TODO: this looks exactly like the withdraw state
 export type DepositState = {

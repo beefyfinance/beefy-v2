@@ -12,7 +12,7 @@ export const styles = (theme: Theme) => ({
       width: '1em',
       height: '1em',
       margin: '0 12px',
-      '&:Hover': {
+      '&:hover': {
         cursor: 'pointer',
         color: theme.palette.text.primary,
       },

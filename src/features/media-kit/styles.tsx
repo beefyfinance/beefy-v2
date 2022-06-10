@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   headerBox: {
     display: 'flex',
     alignItems: 'center',
@@ -8,5 +10,9 @@ export const styles = theme => ({
     height: '48px',
     width: 'auto',
     marginRight: '12px',
+  },
+  headerTitle: {
+    ...theme.typography['h1'],
+    margin: 0,
   },
 });

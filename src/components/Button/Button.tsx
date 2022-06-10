@@ -12,8 +12,9 @@ export type CommonButtonProps = {
   borderless?: boolean;
   fullWidth?: boolean;
   active?: boolean;
-  variant?: 'default' | 'filter' | 'success';
+  variant?: 'default' | 'filter' | 'success' | 'light';
   component?: 'button' | 'a';
+  size?: 'sm' | 'lg';
 };
 
 export type ButtonProps = CommonButtonProps &
@@ -30,6 +31,7 @@ export const Button = memo(
       fullWidth = false,
       active = false,
       variant = 'default',
+      size = 'lg',
       ...rest
     },
     ref
@@ -44,6 +46,7 @@ export const Button = memo(
           [classes.borderless]: borderless,
           [classes.fullWidth]: fullWidth,
           [classes.active]: active,
+          [classes.sm]: size === 'sm',
         })}
       >
         {children}

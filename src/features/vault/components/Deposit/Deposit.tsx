@@ -7,7 +7,6 @@ import {
   Paper,
   Radio,
   RadioGroup,
-  Typography,
 } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -39,8 +38,9 @@ import { TokenWithBalance } from '../TokenWithBalance';
 import { VaultBuyLinks } from '../VaultBuyLinks';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
+import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const classes = useStyles();
@@ -100,6 +100,11 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
+
+  const isDepositButtonDisabled =
+    formState.amount.isLessThanOrEqualTo(0) ||
+    !formReady ||
+    (formState.max && formState.selectedToken.type === 'native');
 
   const handleAsset = (tokenId: TokenEntity['id']) => {
     dispatch(depositActions.setAsset({ tokenId, state: store.getState() }));
@@ -169,20 +174,20 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     <>
       <Box p={3}>
         {formState.zapOptions !== null && (
-          <Typography variant="body1" className={classes.zapPromotion}>
-            {t('Zap-Promotion', {
+          <div className={classes.zapPromotion}>
+            {t('Zap-InPromotion', {
               action: 'Deposit',
               token1: vault.assetIds[0],
               token2: vault.assetIds[1],
             })}
-          </Typography>
+          </div>
         )}
 
-        <Box mb={1}>
-          <Typography className={classes.balanceText}>{t('Vault-Wallet')}</Typography>
+        <Box mb={1} className={classes.balanceText}>
+          {t('Vault-Wallet')}
         </Box>
         <RadioGroup
-          className={classes.removeLastItemMargin}
+          className={classes.radioGroup}
           value={formState.selectedToken ? formState.selectedToken.id : ''}
           aria-label="deposit-asset"
           name="deposit-asset"
@@ -192,7 +197,13 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             className={classes.depositTokenContainer}
             value={depositToken.id}
             control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-            label={<TokenWithBalance token={depositToken} vaultId={vaultId} />}
+            label={
+              <TokenWithBalance
+                token={depositToken}
+                vaultId={vaultId}
+                variant={formState.zapOptions !== null ? 'sm' : 'lg'}
+              />
+            }
             onClick={formState.isZap ? undefined : handleMax}
             disabled={!formReady}
           />
@@ -202,14 +213,14 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
               className={classes.depositTokenContainer}
               value={zapToken.id}
               control={<Radio />}
-              label={<TokenWithBalance token={zapToken} vaultId={vaultId} />}
+              label={<TokenWithBalance token={zapToken} vaultId={vaultId} variant="sm" />}
               disabled={!formReady}
             />
           ))}
         </RadioGroup>
         <VaultBuyLinks vaultId={vaultId} />
         <Box className={classes.inputContainer}>
-          <Paper component="form" className={classes.root}>
+          <Paper component="form">
             <Box className={classes.inputLogo}>
               <AssetsImage
                 chainId={vault.chainId}
@@ -220,7 +231,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     ? vault.assetIds
                     : [formState.selectedToken.id]
                 }
-                size={20}
+                size={24}
               />
             </Box>
             <InputBase
@@ -242,6 +253,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           isZap={formState.isZap}
           type={'deposit'}
         />
+        <MaxNativeDepositAlert />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
           {vault.status !== 'active' ? (
@@ -262,7 +274,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 onClick={handleDeposit}
                 className={classes.btnSubmit}
                 fullWidth={true}
-                disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
+                disabled={isDepositButtonDisabled}
               >
                 {isZapEstimateLoading
                   ? t('Zap-Estimating')

@@ -2,13 +2,10 @@ import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
   select: {
+    ...theme.typography['body-lg-med'],
     backgroundColor: '#262A40',
     border: 'solid 2px #303550',
     borderRadius: '8px',
-    fontSize: '15px',
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: 700,
-    lineHeight: '24px',
     minWidth: 0,
     width: 'fit-content',
     color: '#D0D0DA',
@@ -23,6 +20,7 @@ export const styles = (theme: Theme) => ({
   },
   selectCurrent: {
     display: 'flex',
+    alignItems: 'center',
     minWidth: 0,
   },
   selectLabel: {
@@ -44,7 +42,7 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
     flexGrow: 0,
     marginLeft: 'auto',
-    fill: '#D0D0DA',
+    fill: 'currentColor',
   },
   selectFullWidth: {
     width: '100%',
@@ -58,16 +56,17 @@ export const styles = (theme: Theme) => ({
       transform: 'rotateX(180deg)',
     },
   },
+  selectDisabled: {
+    pointerEvents: 'none' as const,
+  },
   dropdown: {
+    ...theme.typography['body-lg-med'],
     zIndex: 1000,
     border: '2px solid #393F60',
     borderRadius: '8px',
     backgroundColor: '#303550',
     padding: `${8 - 2}px 0`,
     color: '#D0D0DA',
-    fontSize: '15px',
-    fontWeight: 700,
-    lineHeight: '24px',
     maxWidth: '100%',
     maxHeight: '100%',
     overflowX: 'hidden' as const,

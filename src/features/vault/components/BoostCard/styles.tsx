@@ -1,29 +1,23 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   cardActions: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap' as const,
+    rowGap: '8px',
+    columnGap: '8px',
     marginTop: theme.spacing(1),
   },
-  cardAction: {
-    marginRight: '15px',
-  },
+  cardAction: {},
   text: {
-    fontFamily: 'Proxima Nova',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginBottom: '28px',
+    color: theme.palette.text.secondary,
+    margin: '0 0 32px 0',
+    '&:last-child': {
+      marginBottom: 0,
+    },
   },
   boostedBy: {
+    ...theme.typography['subline-lg'],
     color: '#DB8332',
-    fontWeight: 600,
-    fontSize: '14px',
-    lineHeight: '18px',
-    textTransform: 'uppercase',
-    marginBottom: 6,
-  },
-  divider: {
-    width: 8,
   },
 });

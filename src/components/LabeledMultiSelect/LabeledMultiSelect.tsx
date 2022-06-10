@@ -132,6 +132,9 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
   dropdownClass,
   dropdownItemClass,
   dropdownItemSelectedClass,
+  dropdownAutoWidth = true,
+  dropdownAutoHeight = true,
+  dropdownAutoHide = true,
 }) {
   const baseClasses = useStyles();
   const allKey = 'all';
@@ -227,6 +230,9 @@ export const LabeledMultiSelect = memo<LabeledMultiSelectProps>(function Labeled
           anchorEl={anchorEl}
           placement="bottom-start"
           className={classes.dropdown}
+          autoWidth={dropdownAutoWidth}
+          autoHeight={dropdownAutoHeight}
+          autoHide={dropdownAutoHide}
         >
           {allOptionEnabled ? (
             <DropdownItemComponent

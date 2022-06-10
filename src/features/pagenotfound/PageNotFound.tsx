@@ -1,15 +1,15 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
-import { Box, Button, Typography } from '@material-ui/core';
 import image from '../../images/404image.svg';
-import { Meta } from '../../components/Meta/Meta';
+import { Button } from '../../components/Button';
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
-export const PageNotFound = memo(function PageNotFound() {
+export const PageNotFound = () => {
   const classes = useStyles();
   const { t } = useTranslation();
   const history = useHistory();
@@ -19,23 +19,16 @@ export const PageNotFound = memo(function PageNotFound() {
   }, [history]);
 
   return (
-    <>
-      <Meta
-        title={t('Meta-NotFound-Title')}
-        description={t('Meta-NotFound-Description')}
-        noindex={true}
-      />
-      <Box className={classes.pageContainer}>
-        <Box className={classes.imageContainer}>
-          <img src={image} alt="404" className={classes.image} />
-        </Box>
-        <Box className={classes.container}>
-          <Typography className={classes.text}>{t('Page-Not-Found')}</Typography>
-          <Button className={classes.button} onClick={handleOpen}>
+    <Container maxWidth="lg">
+      <div className={classes.inner}>
+        <img src={image} alt="404" className={classes.image} />
+        <div className={classes.textContainer}>
+          <div className={classes.text}>{t('Page-Not-Found')}</div>
+          <Button variant="success" className={classes.button} onClick={handleOpen}>
             {t('View-All')}
           </Button>
-        </Box>
-      </Box>
-    </>
+        </div>
+      </div>
+    </Container>
   );
-});
+};

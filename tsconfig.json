@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
     "allowJs": true
   },
-  "include": ["src/**/*.ts*"]
+  "include": ["src/**/*.ts*", "src/**/*.d.ts"]
 }

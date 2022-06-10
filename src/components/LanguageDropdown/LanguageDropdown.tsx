@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useCallback, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { localeToLanguageMap } from '../../i18n';
-import { SimpleDropdown } from '../SimpleDropdown';
 import { styles } from './styles';
-const useStyles = makeStyles(styles as any);
+import { LabeledSelect, LabeledSelectProps } from '../LabeledSelect';
+const useStyles = makeStyles(styles);
 
 const getSelectedLanguage = i18n => {
   const cachedLanguage = i18n.language;
@@ -25,9 +25,9 @@ const getSelectedLanguage = i18n => {
   return 'en';
 };
 
-const selectedRenderer = locale => {
-  return locale.toUpperCase();
-};
+const SelectedLanguage = memo<LabeledSelectProps>(function SelectedLanguage({ value }) {
+  return <>{value.toUpperCase()}</>;
+});
 
 export const LanguageDropdown = () => {
   const { i18n } = useTranslation();
@@ -43,13 +43,14 @@ export const LanguageDropdown = () => {
   }, [setLanguage, i18nLanguage]);
 
   return (
-    <SimpleDropdown
-      className={classes.languageCustom}
-      noBorder={true}
-      list={localeToLanguageMap}
-      selected={language}
-      handler={handleSwitch}
-      renderValue={selectedRenderer}
+    <LabeledSelect
+      value={language}
+      borderless={true}
+      options={localeToLanguageMap}
+      onChange={handleSwitch}
+      SelectedItemComponent={SelectedLanguage}
+      dropdownAutoWidth={false}
+      selectClass={classes.select}
     />
   );
 };

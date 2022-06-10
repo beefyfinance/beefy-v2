@@ -12,6 +12,16 @@ import {
 import { selectAllChains } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
+import { getDefaultProvider } from '@ethersproject/providers';
+
+export const getEns = createAsyncThunk<{ ens: string }, { address: string | null }>(
+  'wallet/getEns',
+  async ({ address }) => {
+    const provider = await getDefaultProvider();
+    const name = await provider.lookupAddress(address);
+    return { ens: name ?? '' };
+  }
+);
 
 export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/initWallet',

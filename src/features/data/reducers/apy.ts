@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
-import { BIG_ONE } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { fetchApyAction } from '../actions/apy';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -23,6 +22,7 @@ import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaul
 import { createIdMap } from '../utils/array-utils';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { getBoostStatusFromPeriodFinish } from './boosts';
+import { BIG_ONE } from '../../../helpers/big-number';
 
 // boost is expressed as APR
 interface AprData {
