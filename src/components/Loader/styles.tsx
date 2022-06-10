@@ -1,4 +1,4 @@
-export const styles = theme => ({
+export const styles = () => ({
   circle: {
     width: '48px',
     height: '48px',

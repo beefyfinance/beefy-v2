@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme:Theme) => ({
   btnContainer: {
     marginTop: 16,
     display: 'flex',
