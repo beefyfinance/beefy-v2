@@ -368,6 +368,7 @@
   "BrandAssets-Download-PNG": "PNG",
   "Vote": "Vote",
   "Discuss": "Discuss",
+  "MaxNativeAlert": "You can't deposit 100% of your {{token}} into vault, make sure you leave enough gas for future transactions",
   "InfoCard-binSPIRIT-Title": "Vote on SPIRIT Emissions with binSPIRIT",
   "InfoCard-binSPIRIT-Work-Title": "How Does SpiritSwap Voting Work?",
   "InfoCard-binSPIRIT-Work-Text": "SpiritSwap’s inSPIRIT governance token uses a vote locking model. binSPIRIT is a wrapped version of 4-year-locked inSPIRIT. inSPIRIT & binSPIRIT holders receive voting power, participation rewards, and boosted farming rewards. binSPIRIT holders can vote weekly on the gauges to receive SPIRIT emission allocation.",

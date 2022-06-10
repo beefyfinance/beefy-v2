@@ -1,5 +1,5 @@
 export const styles = () => ({
   alert: {
-    marginBottom: '24px',
+    marginTop: '24px',
   },
 });
