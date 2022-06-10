@@ -1,11 +1,10 @@
 import { Theme } from '@material-ui/core/styles';
-import { Styles } from '@material-ui/core/styles/withStyles';
 
 const loadingColor = '#D6D05C';
 const warningColor = '#D19847';
 const successColor = '#59A662';
 
-export const styles: Styles<any, any, any> = (theme: Theme) => ({
+export const styles = (theme: Theme) => ({
   container: {
     width: '44px',
     height: '40px',
@@ -34,7 +33,7 @@ export const styles: Styles<any, any, any> = (theme: Theme) => ({
     '&.warning': {
       backgroundColor: warningColor,
     },
-    position: 'relative', // to position pulse circles
+    position: 'relative' as const, // to position pulse circles
   },
   // https://www.kirupa.com/animations/creating_pulsing_circle_animation.htm
   '@keyframes scaleIn': {
@@ -43,14 +42,12 @@ export const styles: Styles<any, any, any> = (theme: Theme) => ({
   },
   pulseCircle: {
     borderRadius: '50%',
-
     // w/h same as circle
     width: '12px',
     height: '12px',
-    position: 'absolute',
+    position: 'absolute' as const,
     opacity: 0,
     animation: '$scaleIn 4s infinite cubic-bezier(.36, .11, .89, .32)',
-
     '&.loading': {
       backgroundColor: loadingColor,
     },
@@ -91,7 +88,7 @@ export const styles: Styles<any, any, any> = (theme: Theme) => ({
     backgroundColor: '#242737',
     borderRadius: '8px',
     padding: `${12 - 2}px ${16 - 2}px`,
-    position: 'relative', // to position the close button
+    position: 'relative' as const, // to position the close button
     width: '257px',
     maxWidth: 'min(100%, 380px)',
     color: '#D0D0DA', // default text color
@@ -124,7 +121,7 @@ export const styles: Styles<any, any, any> = (theme: Theme) => ({
   },
   closeIconButton: {
     color: '#8A8EA8',
-    position: 'absolute',
+    position: 'absolute' as const,
     fontSize: '22px',
     width: '22px',
     height: '22px',
