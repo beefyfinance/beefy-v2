@@ -22,7 +22,7 @@ import CloseIcon from '@material-ui/icons/Close';
 const useStyles = makeStyles(styles);
 
 export function NetworkStatus() {
-  const classes = useStyles({});
+  const classes = useStyles();
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
