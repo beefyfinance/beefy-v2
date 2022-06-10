@@ -509,7 +509,7 @@
     "oracleId": "quick-mai-usdt",
     "status": "active",
     "platform": "QuickSwap",
-    "assets": ["MAI", "USDT"],
+    "assets": ["miMATIC", "USDT"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -543,7 +543,7 @@
     "oracleId": "quick-dai-mai",
     "status": "active",
     "platform": "QuickSwap",
-    "assets": ["MAI", "DAI"],
+    "assets": ["miMATIC", "DAI"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1290,7 +1290,7 @@
     "oraclePrice": 0,
     "status": "active",
     "platform": "Mai",
-    "assets": ["MAI", "USDC"],
+    "assets": ["miMATIC", "USDC"],
     "depositFee": "0.5%",
     "withdrawalFee": "0.0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
