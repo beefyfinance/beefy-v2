@@ -815,7 +815,7 @@
     "createdAt": 1629258699
   },
   {
-    "id": "quick-usdc-quick",
+    "id": "quick-usdc-quick-eol",
     "name": "QUICK-USDC LP",
     "token": "QUICK-USDC LP",
     "tokenDescription": "Quickswap",
@@ -830,7 +830,9 @@
     "oracle": "lps",
     "oracleId": "quick-usdc-quick",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["QUICK", "USDC"],
     "risks": [
@@ -3968,7 +3970,7 @@
     "createdAt": 1620048432
   },
   {
-    "id": "quick-quick-eth",
+    "id": "quick-quick-eth-eol",
     "logo": "polygon/QUICK-ETH.png",
     "name": "QUICK-ETH LP",
     "token": "QUICK-ETH QLP",
@@ -3984,7 +3986,9 @@
     "oracle": "lps",
     "oracleId": "quick-quick-eth",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["QUICK", "ETH"],
     "risks": [
@@ -4098,7 +4102,7 @@
     "createdAt": 1619717027
   },
   {
-    "id": "quick-quick-matic",
+    "id": "quick-quick-matic-eol",
     "logo": "polygon/QUICK-MATIC.png",
     "name": "QUICK-MATIC LP",
     "token": "QUICK-MATIC QLP",
@@ -4114,7 +4118,9 @@
     "oracle": "lps",
     "oracleId": "quick-quick-matic",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["QUICK", "MATIC"],
     "risks": [
@@ -5740,7 +5746,7 @@
     "createdAt": 1626613413
   },
   {
-    "id": "quick-kiro-matic",
+    "id": "quick-kiro-matic-eol",
     "name": "KIRO-MATIC LP",
     "token": "KIRO-MATIC LP",
     "tokenDescription": "QuickSwap",
@@ -5754,8 +5760,9 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-kiro-matic",
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["KIRO", "MATIC"],
     "risks": [
@@ -5775,7 +5782,7 @@
     "network": "polygon"
   },
   {
-    "id": "quick-bico-eth",
+    "id": "quick-bico-eth-eol",
     "name": "BICO-ETH LP",
     "token": "BICO-ETH LP",
     "tokenDescription": "QuickSwap",
@@ -5789,8 +5796,9 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-bico-eth",
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["BICO", "ETH"],
     "risks": [
@@ -6578,7 +6586,7 @@
     "withdrawalFee": "0%"
   },
   {
-    "id": "quick-cxada-cxeth",
+    "id": "quick-cxada-cxeth-eol",
     "name": "cxADA-cxETH LP",
     "token": "cxADA-cxETH QLP",
     "tokenDescription": "QuickSwap",
@@ -6593,8 +6601,9 @@
     "oracle": "lps",
     "oracleId": "quick-cxada-cxeth",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["cxADA", "cxETH"],
     "risks": [
@@ -6614,7 +6623,7 @@
     "withdrawalFee": "0%"
   },
   {
-    "id": "quick-cxdoge-cxeth",
+    "id": "quick-cxdoge-cxeth-eol",
     "name": "cxDOGE-cxETH LP",
     "token": "cxDOGE-cxETH QLP",
     "tokenDescription": "QuickSwap",
@@ -6629,8 +6638,9 @@
     "oracle": "lps",
     "oracleId": "quick-cxdoge-cxeth",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["cxDOGE", "cxETH"],
     "risks": [
@@ -6687,7 +6697,7 @@
     "retireReason": "rewards"
   },
   {
-    "id": "quick-usdc-orbs",
+    "id": "quick-usdc-orbs-eol",
     "name": "ORBS-USDC LP",
     "token": "ORBS-USDC LP",
     "tokenDescription": "QuickSwap",
@@ -6701,8 +6711,9 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-usdc-orbs",
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["ORBS", "USDC"],
     "risks": [
@@ -7395,7 +7406,7 @@
     "network": "polygon"
   },
   {
-    "id": "quick-stmatic-matic",
+    "id": "quick-stmatic-matic-eol",
     "name": "stMATIC-MATIC LP",
     "token": "stMATIC-MATIC LP",
     "tokenDescription": "QuickSwap",
@@ -7409,8 +7420,9 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-stmatic-matic",
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["stMATIC", "MATIC"],
     "risks": [
