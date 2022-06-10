@@ -9,7 +9,7 @@ export const styles = theme => ({
     rowGap: '32px',
     columnGap: '32px',
     [theme.breakpoints.up('md')]: {
-      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateColumns: '583fr 417fr',
     },
   },
   userStats: {},

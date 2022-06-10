@@ -21,13 +21,14 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../features/data/selectors/wallet';
-import { BIG_ZERO, formatBigUsd } from '../../helpers/format';
+import { formatBigUsd } from '../../helpers/format';
 import { BeefyState } from '../../redux-types';
 import { LanguageDropdown } from '../LanguageDropdown';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { NetworkStatus } from '../NetworkStatus';
 import { Transak } from '../Transak';
 import { styles } from './styles';
+import { BIG_ZERO } from '../../helpers/big-number';
 
 // lazy load web3 related stuff, as libs are quite heavy
 const WalletContainer = React.lazy(() => import(`./components/WalletContainer`));

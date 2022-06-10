@@ -1,5 +1,4 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BIG_ONE } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
@@ -13,6 +12,7 @@ import {
 } from '../entities/vault';
 import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 import { createCachedSelector } from 're-reselect';
+import { BIG_ONE } from '../../../helpers/big-number';
 
 export const selectVaultById = createCachedSelector(
   (state: BeefyState) => state.entities.vaults.byId,

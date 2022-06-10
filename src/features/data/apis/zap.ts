@@ -6,7 +6,6 @@ import { AbiItem } from 'web3-utils';
 import _uniswapV2PairABI from '../../../config/abi/uniswapV2Pair.json';
 import _uniswapV2RouterABI from '../../../config/abi/uniswapV2Router.json';
 import _zapAbi from '../../../config/abi/zap.json';
-import { BIG_ZERO } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
 import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { isStandardVault, VaultEntity } from '../entities/vault';
@@ -21,6 +20,7 @@ import {
 import { selectVaultById } from '../selectors/vaults';
 import { getZapAddress, getZapDecimals } from '../utils/zap-utils';
 import { getWeb3Instance } from './instances';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 // fix ts types
 const zapAbi = _zapAbi as AbiItem | AbiItem[];

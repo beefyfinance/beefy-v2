@@ -5,11 +5,7 @@ import { CardContent } from '../../../Card';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { styles } from '../styles';
 import BigNumber from 'bignumber.js';
-import {
-  BIG_ZERO,
-  formatBigDecimals,
-  formatBigNumberSignificant,
-} from '../../../../../../helpers/format';
+import { formatBigDecimals, formatBigNumberSignificant } from '../../../../../../helpers/format';
 import { selectVaultById } from '../../../../../data/selectors/vaults';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
 import {
@@ -28,6 +24,7 @@ import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/all
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { AlertWarning } from '../../../../../../components/Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
+import { BIG_ZERO } from '../../../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
