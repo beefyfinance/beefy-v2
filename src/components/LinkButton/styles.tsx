@@ -18,4 +18,5 @@ export const styles = (theme: Theme) => ({
       marginLeft: '4px',
     },
   },
+  icon: {},
 });
