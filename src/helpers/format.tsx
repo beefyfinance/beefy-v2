@@ -180,3 +180,10 @@ export function maybeHexToNumber(input: any): number {
 export function formatAddressShort(addr: string): string {
   return addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
 }
+
+export function formatEns(ens: string): string {
+  if (ens.length > 18) {
+    return ens.substring(0, 4) + '...' + ens.substring(ens.length - 3);
+  }
+  return ens;
+}
