@@ -10,7 +10,7 @@ import {
   selectCurrentChainId,
   selectIsWalletConnected,
 } from '../../../../features/data/selectors/wallet';
-import { BIG_ZERO, formatBigDecimals } from '../../../../helpers/format';
+import { formatBigDecimals } from '../../../../helpers/format';
 import {
   askForNetworkChange,
   askForWalletConnection,
@@ -26,6 +26,7 @@ import { first } from 'lodash';
 import { ChainSelector } from '../ChainSelector';
 import { Button } from '../../../Button';
 import { styles } from './styles';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 

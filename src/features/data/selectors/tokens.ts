@@ -1,9 +1,9 @@
-import { BIG_ONE } from '../../../helpers/format';
 import { bluechipTokens } from '../../../helpers/utils';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { selectChainById } from './chains';
+import { BIG_ONE } from '../../../helpers/big-number';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,

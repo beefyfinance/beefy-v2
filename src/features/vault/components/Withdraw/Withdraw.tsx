@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { Step } from '../../../../components/Steps/types';
-import { BIG_ZERO, formatBigNumberSignificant } from '../../../../helpers/format';
+import { formatBigNumberSignificant } from '../../../../helpers/format';
 import { initWithdrawForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
@@ -60,6 +60,7 @@ import { TokenWithDeposit } from '../TokenWithDeposit';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 const useStyles = makeStyles(styles);
 
