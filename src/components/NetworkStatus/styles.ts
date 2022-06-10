@@ -1,10 +1,11 @@
+import { Theme } from '@material-ui/core/styles';
 import { Styles } from '@material-ui/core/styles/withStyles';
 
 const loadingColor = '#D6D05C';
 const warningColor = '#D19847';
 const successColor = '#59A662';
 
-export const styles: Styles<any, any, any> = theme => ({
+export const styles: Styles<any, any, any> = (theme: Theme) => ({
   container: {
     width: '44px',
     height: '40px',

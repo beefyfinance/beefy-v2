@@ -1,6 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
-
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   actions: {
     display: 'flex',
     flexWrap: 'wrap' as const,

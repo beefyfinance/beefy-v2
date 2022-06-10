@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   titleBox: {
     display: 'flex',
     flexDirection: 'column' as const,

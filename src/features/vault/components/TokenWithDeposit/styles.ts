@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme:Theme) => ({
   balanceContainer: {
     ...theme.typography['body-lg-med'],
     color: theme.palette.text.primary,
