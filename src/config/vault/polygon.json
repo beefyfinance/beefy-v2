@@ -1202,7 +1202,7 @@
     "oraclePrice": 0,
     "status": "eol",
     "platform": "Other",
-    "assets": ["MAI", "USDC"],
+    "assets": ["miMATIC", "USDC"],
     "withdrawalFee": "0.01%",
     "retireReason": "rewards",
     "risks": [
@@ -1684,7 +1684,7 @@
     "oraclePrice": 0,
     "status": "eol",
     "platform": "Mai",
-    "assets": ["QI", "MAI"],
+    "assets": ["QI", "miMATIC"],
     "depositFee": "0.5%",
     "withdrawalFee": "0.0%",
     "retireReason": "rewards",
@@ -1738,7 +1738,7 @@
     "oraclePrice": 0,
     "status": "eol",
     "platform": "QuickSwap",
-    "assets": ["MAI", "USDC"],
+    "assets": ["miMATIC", "USDC"],
     "withdrawalFee": "0.01%",
     "retireReason": "rewards",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -5191,7 +5191,7 @@
     "oracleId": "quick-mai-matic",
     "status": "eol",
     "platform": "QuickSwap",
-    "assets": ["MAI", "MATIC"],
+    "assets": ["miMATIC", "MATIC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -5863,7 +5863,7 @@
     "depositsPaused": false,
     "status": "eol",
     "platform": "QuickSwap",
-    "assets": ["TOMB", "MAI"],
+    "assets": ["TOMB", "miMATIC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -5900,7 +5900,7 @@
     "depositsPaused": false,
     "status": "eol",
     "platform": "QuickSwap",
-    "assets": ["CLAM", "MAI"],
+    "assets": ["CLAM", "miMATIC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6667,7 +6667,7 @@
     "depositsPaused": false,
     "status": "eol",
     "platform": "QuickSwap",
-    "assets": ["HBAR", "MAI"],
+    "assets": ["HBAR", "miMATIC"],
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
