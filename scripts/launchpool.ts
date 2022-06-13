@@ -1,18 +1,18 @@
 // To run: yarn launchpool bsc <0x12312312> CafeSwap
-import { MultiCall } from 'eth-multicall';
+import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 
-import { chainPools, chainRpcs } from './config.js';
+import { chainPools, chainRpcs } from './config';
 import launchPoolABI from '../src/config/abi/boost.json';
 import erc20ABI from '../src/config/abi/erc20.json';
-
+import { AbiItem } from 'web3-utils';
 
 async function boostParams(chain, boostAddress) {
   const web3 = new Web3(chainRpcs[chain]);
-  const boostContract = new web3.eth.Contract(launchPoolABI, boostAddress);
+  const boostContract = new web3.eth.Contract(launchPoolABI as AbiItem[], boostAddress);
   const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-  let calls = [
+  let calls: ShapeWithLabel[] = [
     {
       staked: boostContract.methods.stakedToken(),
       reward: boostContract.methods.rewardToken(),
@@ -22,7 +22,7 @@ async function boostParams(chain, boostAddress) {
   let [results] = await multicall.all([calls]);
   const params = results[0];
 
-  const tokenContract = new web3.eth.Contract(erc20ABI, params.reward);
+  const tokenContract = new web3.eth.Contract(erc20ABI as AbiItem[], params.reward);
   calls = [
     {
       earnedToken: tokenContract.methods.symbol(),
@@ -59,9 +59,7 @@ async function generateLaunchpool() {
     partnership: true,
     status: 'active',
     isMooStaked: true,
-    partners: [
-        ""
-    ],
+    partners: [''],
   };
 
   const subpartner = {
@@ -83,9 +81,14 @@ async function generateLaunchpool() {
 
   console.log(str);
 
-  console.log('make sure to add the partners keys linking to a valid partner in partners.json file');
+  console.log(
+    'make sure to add the partners keys linking to a valid partner in partners.json file'
+  );
 
   console.log(JSON.stringify(subpartner, null, 2));
 }
 
-await generateLaunchpool();
+generateLaunchpool().catch(err => {
+  console.error(err);
+  process.exit(-1);
+});

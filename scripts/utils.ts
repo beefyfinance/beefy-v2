@@ -1,5 +1,6 @@
-import ethersAddress from '@ethersproject/address';
-const { getAddress } = ethersAddress;
+import { getAddress } from '@ethersproject/address';
+
+const trimReg = /(^\s*)|(\s*$)/g;
 
 export function isValidChecksumAddress(address) {
   try {

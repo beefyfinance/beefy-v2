@@ -1,5 +1,4 @@
 import bscPools from '../src/config/vault/bsc.json';
-import hecoPools from '../src/config/vault/heco.json';
 import avalanchePools from '../src/config/vault/avax.json';
 import polygonPools from '../src/config/vault/polygon.json';
 import fantomPools from '../src/config/vault/fantom.json';
@@ -19,26 +18,26 @@ import strategyABI from '../src/config/abi/strategy.json';
 
 export const abis = {
   vaultABI,
-  strategyABI
-}
+  strategyABI,
+};
 
 export const chainPools = {
-    bsc: bscPools,
-    // heco: hecoPools,
-    avax: avalanchePools,
-    polygon: polygonPools,
-    fantom: fantomPools,
-    one: harmonyPools,
-    arbitrum: arbitrumPools,
-    celo: celoPools,
-    moonriver: moonriverPools,
-    cronos: cronosPools,
-    aurora: auroraPools,
-    fuse: fusePools,
-    metis: metisPools,
-    moonbeam: moonbeamPools,
-    emerald: emeraldPools,
-  };
+  bsc: bscPools,
+  // heco: hecoPools,
+  avax: avalanchePools,
+  polygon: polygonPools,
+  fantom: fantomPools,
+  one: harmonyPools,
+  arbitrum: arbitrumPools,
+  celo: celoPools,
+  moonriver: moonriverPools,
+  cronos: cronosPools,
+  aurora: auroraPools,
+  fuse: fusePools,
+  metis: metisPools,
+  moonbeam: moonbeamPools,
+  emerald: emeraldPools,
+};
 
 export const chainRpcs = {
   bsc: process.env.BSC_RPC || 'https://bsc-dataseed.binance.org/',

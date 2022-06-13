@@ -3,8 +3,8 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 
-import { isValidChecksumAddress, maybeChecksumAddress, isEmpty } from './utils.mjs';
-import { chainPools, chainRpcs } from './config.js';
+import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './utils';
+import { chainPools, chainRpcs } from './config';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 
@@ -41,9 +41,8 @@ const allowedEarnSameToken = new Set(['venus-wbnb']);
 const outputPlatformSummary = process.argv.includes('--platform-summary');
 
 const validatePools = async () => {
-  
   let exitCode = 0;
-  
+
   let updates = {};
 
   const uniquePoolId = new Set();
@@ -54,7 +53,7 @@ const validatePools = async () => {
   }
   let results = await Promise.all(promises);
 
-  exitCode = results.reduce((acum, cur) => acum + cur.exitCode > 0 ? 1 : 0, 0);
+  exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), 0);
   results.forEach(res => {
     if (!isEmpty(res.updates)) {
       updates[res.chain] = updates;
@@ -69,7 +68,7 @@ const validatePools = async () => {
 const validateSingleChain = async (chain, pools, uniquePoolId) => {
   console.log(`Validating ${pools.length} pools in ${chain}...`);
 
-  let updates = {};
+  let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
   //Governance pools should be separately verified
   pools = pools.filter(pool => !pool.isGovVault);
@@ -139,9 +138,7 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
       );
       exitCode = 1;
     } else if (isNaN(pool.createdAt)) {
-      console.error(
-        `Error: ${pool.id} : Pool createdAt timestamp wrong type, should be a number`
-      );
+      console.error(`Error: ${pool.id} : Pool createdAt timestamp wrong type, should be a number`);
       exitCode = 1;
     }
 
@@ -201,10 +198,9 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
   }
 
   console.log(`${chain} active pools: ${activePools}/${pools.length}\n`);
-  
-  return { chain, exitCode, updates };
-}
 
+  return { chain, exitCode, updates };
+};
 
 // Validation helpers. These only log for now, could throw error if desired.
 const isKeeperCorrect = (pool, chain, chainKeeper, updates) => {
@@ -349,5 +345,9 @@ const override = pools => {
   return pools;
 };
 
-const exitCode = await validatePools();
-process.exit(exitCode);
+validatePools()
+  .then(exitCode => process.exit(exitCode))
+  .catch(err => {
+    console.error(err);
+    process.exit(-1);
+  });
