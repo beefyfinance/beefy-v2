@@ -318,18 +318,14 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
   const fuseChain = chains.find(chain => chain.id === 'fuse');
 
   const providerOptions: IProviderOptions = {
-    'custom-binance': {
+    'custom-twt': {
       display: {
-        name: 'Binance',
-        description: 'Binance Chain Wallet',
-        logo: require(`../../../../images/wallets/binance-wallet.png`).default,
+        name: 'Trust',
+        description: 'Trust Wallet',
+        logo: require(`../../../../images/wallets/trust-wallet.svg`).default,
       },
-      package: 'binance',
-      connector: async (ProviderPackage, options) => {
-        const provider = (window as any).BinanceChain;
-        await provider.enable();
-        return provider;
-      },
+      package: 'twt',
+      connector: connectors.injected,
     },
     'custom-clover': {
       display: {
@@ -417,14 +413,18 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
       package: 'math',
       connector: connectors.injected,
     },
-    'custom-twt': {
+    'custom-binance': {
       display: {
-        name: 'Trust',
-        description: 'Trust Wallet',
-        logo: require(`../../../../images/wallets/trust-wallet.svg`).default,
+        name: 'Binance',
+        description: 'Binance Chain Wallet',
+        logo: require(`../../../../images/wallets/binance-wallet.png`).default,
       },
-      package: 'twt',
-      connector: connectors.injected,
+      package: 'binance',
+      connector: async (ProviderPackage, options) => {
+        const provider = (window as any).BinanceChain;
+        await provider.enable();
+        return provider;
+      },
     },
     'custom-safepal': {
       display: {

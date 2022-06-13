@@ -23,9 +23,6 @@ export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   return `${wholes}.${decimals.match(pattern)[0]}`;
 }
 
-export const BIG_ZERO = new BigNumber(0);
-export const BIG_ONE = new BigNumber(1);
-
 export const formatApy = (apy, dp = 2, placeholder: any = '?') => {
   if (!apy) return placeholder;
 
@@ -178,4 +175,15 @@ export function maybeHexToNumber(input: any): number {
   }
 
   throw new Error(`${typeof input} "${input}" is not valid hex or number.`);
+}
+
+export function formatAddressShort(addr: string): string {
+  return addr.substring(0, 6) + '...' + addr.substring(addr.length - 4);
+}
+
+export function formatEns(ens: string): string {
+  if (ens.length > 18) {
+    return ens.substring(0, 4) + '...' + ens.substring(ens.length - 3);
+  }
+  return ens;
 }

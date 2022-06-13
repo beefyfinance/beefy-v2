@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+export const styles = (theme: Theme) => ({
   container: {
     width: '100%',
     height: 40,
@@ -6,20 +8,23 @@ export const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '8px',
-    '& .MuiTypography-root': {
-      fontWeight: 700,
-    },
     '& .MuiGrid-container': {
       flexWrap: 'inherit',
       padding: '8px 16px',
       cursor: 'pointer',
     },
   },
+  address: {
+    ...theme.typography['body-lg-med'],
+    whiteSpace: 'nowrap' as const,
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
   disconnected: {
     display: 'flex',
     justifyContent: 'center',
     background: theme.palette.background.cta,
-    '& .MuiTypography-root': {
+    '& $address': {
       color: theme.palette.text.primary,
       textOverflow: 'clip',
     },
@@ -31,14 +36,11 @@ export const styles = theme => ({
       width: '24px',
       marginRight: '8px',
     },
-    '& .MuiTypography-root': {
+    '& $address': {
       color: theme.palette.text.secondary,
     },
     '&:hover': {
       borderColor: '#3F466D',
-    },
-    '&:hover .MuiGrid-container': {
-      color: theme.palette.text.middle,
     },
   },
   connected: {

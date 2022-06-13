@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import {
-  BIG_ZERO,
-  formatBigDecimals,
-  formatBigNumberSignificant,
-} from '../../../../helpers/format';
+import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { initiateBoostForm } from '../../actions/boosts';
 import { BoostEntity } from '../../entities/boost';
@@ -12,6 +8,7 @@ import { selectBoostUserBalanceInToken, selectUserBalanceOfToken } from '../../s
 import { selectBoostById } from '../../selectors/boosts';
 import { selectTokenByAddress } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 // TODO: this looks exactly like the withdraw state
 export type BoostModalState = {

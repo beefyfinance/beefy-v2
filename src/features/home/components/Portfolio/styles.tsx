@@ -1,48 +1,42 @@
 export const styles = theme => ({
   portfolio: {
     backgroundColor: theme.palette.background.header,
-    padding: '30px 0 30px 0',
+    padding: `${40 - 24}px 0 40px 0`,
+  },
+  stats: {
+    display: 'grid',
+    gridTemplateColumns: '100%',
+    rowGap: '32px',
+    columnGap: '32px',
+    [theme.breakpoints.up('md')]: {
+      gridTemplateColumns: '583fr 417fr',
+    },
+  },
+  userStats: {},
+  vaultStats: {
+    [theme.breakpoints.up('md')]: {
+      textAlign: 'right' as const,
+      '& $title': {
+        justifyContent: 'flex-end',
+      },
+    },
   },
   title: {
+    ...theme.typography['h3'],
     color: theme.palette.text.secondary,
-  },
-  title2: {
-    color: theme.palette.text.secondary,
-    paddingBottom: theme.spacing(2),
-    [theme.breakpoints.down('md')]: {
-      paddingBottom: theme.spacing(1),
-    },
-  },
-  separator: {
-    [theme.breakpoints.down('md')]: {
-      marginBottom: theme.spacing(4),
-    },
-  },
-  titles: {
     display: 'flex',
     alignItems: 'center',
-    paddingBottom: theme.spacing(2),
-    [theme.breakpoints.down('md')]: {
-      paddingBottom: theme.spacing(1),
-    },
+    marginBottom: '12px',
   },
   btnHide: {
-    textTransform: 'capitalize',
     color: '#484F7F',
-    fontSize: '16px',
-    fontWeight: '600',
-    '& .MuiSvgIcon-root': {
-      marginRight: '5px',
-    },
+    marginLeft: '8px',
+    padding: 0,
+    minWidth: 0,
+    width: 'auto',
     '&:hover': {
       backgroundColor: 'transparent',
       color: '#6B7199',
-    },
-  },
-  vaults: {
-    textAlign: 'right',
-    [theme.breakpoints.down('md')]: {
-      textAlign: 'left',
     },
   },
 });

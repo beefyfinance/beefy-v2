@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { BIG_ZERO } from '../../../helpers/format';
 import { BeefyState } from '../../../redux-types';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 export const selectTotalBuybackUsdAmount = createSelector(
   (state: BeefyState) => state.biz.buyback.byChainId,

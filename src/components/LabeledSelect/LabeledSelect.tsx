@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, memo, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { ClickAwayListener, makeStyles } from '@material-ui/core';
 import { orderBy } from 'lodash';
 import { styles } from './styles';
@@ -10,11 +10,12 @@ import { Floating } from '../Floating';
 const useStyles = makeStyles(styles);
 
 export type LabeledSelectCommonProps = {
-  label: string;
+  label?: string;
   options: Record<string, string>;
   sortOptions?: 'default' | 'value' | 'label';
   fullWidth?: boolean;
   borderless?: boolean;
+  disabled?: boolean;
   selectClass?: string;
   selectCurrentClass?: string;
   selectLabelClass?: string;
@@ -26,12 +27,18 @@ export type LabeledSelectCommonProps = {
   dropdownClass?: string;
   dropdownItemClass?: string;
   dropdownItemSelectedClass?: string;
+  dropdownAutoWidth?: boolean;
+  dropdownAutoHeight?: boolean;
+  dropdownAutoHide?: boolean;
 };
 
 export type LabeledSelectProps = LabeledSelectCommonProps & {
   value: string;
   defaultValue?: string;
   onChange: (value: string) => void;
+  SelectedItemComponent?: FC<SelectedItemProps>;
+  DropdownItemComponent?: FC<DropdownItemProps>;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
 };
 
 type DropdownItemProps = {
@@ -39,6 +46,17 @@ type DropdownItemProps = {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+  DropdownItemLabelComponent?: FC<DropdownItemLabelProps>;
+};
+
+export type DropdownItemLabelProps = {
+  label: string;
+  value: string;
+};
+
+export type SelectedItemProps = {
+  value: LabeledSelectProps['value'];
+  options: LabeledSelectProps['options'];
 };
 
 function useSortedOptions(
@@ -63,6 +81,7 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
   value,
   onChange,
   className,
+  DropdownItemLabelComponent = DropdownItemLabel,
 }) {
   const handleChange = useCallback<MouseEventHandler<HTMLDivElement>>(
     e => {
@@ -74,9 +93,17 @@ const DropdownItem = memo<DropdownItemProps>(function DropdownItem({
 
   return (
     <div onClick={handleChange} className={className}>
-      {label}
+      <DropdownItemLabelComponent value={value} label={label} />
     </div>
   );
+});
+
+const DropdownItemLabel = memo<DropdownItemLabelProps>(function DropdownItem({ label }) {
+  return <>{label}</>;
+});
+
+const SelectedItem = memo<SelectedItemProps>(function ({ value, options }) {
+  return <>{options[value]}</>;
 });
 
 export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
@@ -88,6 +115,10 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   sortOptions = 'default',
   fullWidth = false,
   borderless = false,
+  disabled = false,
+  SelectedItemComponent = SelectedItem,
+  DropdownItemComponent = DropdownItem,
+  DropdownItemLabelComponent = DropdownItemLabel,
   selectClass,
   selectCurrentClass,
   selectLabelClass,
@@ -99,6 +130,9 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   dropdownClass,
   dropdownItemClass,
   dropdownItemSelectedClass,
+  dropdownAutoWidth = true,
+  dropdownAutoHeight = true,
+  dropdownAutoHide = true,
 }) {
   const baseClasses = useStyles();
   const [isOpen, setIsOpen] = useState(false);
@@ -158,17 +192,20 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
   return (
     <ClickAwayListener onClickAway={handleClose} mouseEvent="onMouseDown" touchEvent="onTouchStart">
       <button
-        onClick={handleToggle}
+        onClick={disabled ? undefined : handleToggle}
         ref={anchorEl}
         className={clsx(classes.select, {
           [classes.selectBorderless]: borderless,
           [classes.selectFullWidth]: fullWidth,
           [classes.selectOpen]: isOpen,
+          [classes.selectDisabled]: disabled,
         })}
       >
         <div className={classes.selectCurrent}>
-          <div className={classes.selectLabel}>{label}</div>
-          <div className={classes.selectValue}>{options[value]}</div>
+          {label ? <div className={classes.selectLabel}>{label}</div> : null}
+          <div className={classes.selectValue}>
+            <SelectedItemComponent options={options} value={value} />
+          </div>
           <ExpandMore className={classes.selectIcon} />
         </div>
         <Floating
@@ -176,13 +213,17 @@ export const LabeledSelect = memo<LabeledSelectProps>(function LabeledSelect({
           anchorEl={anchorEl}
           placement="bottom-start"
           className={classes.dropdown}
+          autoWidth={dropdownAutoWidth}
+          autoHeight={dropdownAutoHeight}
+          autoHide={dropdownAutoHide}
         >
           {optionsList.map(({ value: optionValue, label }) => (
-            <DropdownItem
+            <DropdownItemComponent
               key={optionValue}
               onChange={handleChange}
               label={label}
               value={optionValue}
+              DropdownItemLabelComponent={DropdownItemLabelComponent}
               className={clsx(classes.dropdownItem, {
                 [classes.dropdownItemSelected]: optionValue === value,
               })}

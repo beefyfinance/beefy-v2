@@ -19,13 +19,11 @@ export const styles = (theme: Theme) => ({
     flexGrow: 0,
   },
   content: {
+    ...theme.typography['body-lg'],
     flexShrink: 1,
     flexGrow: 1,
     minWidth: 0,
     color: '#D0D0DA',
-    fontFamily: theme.typography.fontFamily,
-    fontSize: '15px',
-    lineHeight: '24px',
     '& p:first-child': {
       marginTop: 0,
     },

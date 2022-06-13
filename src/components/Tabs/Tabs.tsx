@@ -3,7 +3,8 @@ import { makeStyles, Tabs as MuiTabs, Tab } from '@material-ui/core';
 
 import { styles } from './styles';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
+
 export const Tabs = ({ value, onChange, labels }) => {
   const classes = useStyles();
 

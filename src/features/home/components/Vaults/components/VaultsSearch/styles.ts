@@ -7,9 +7,6 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     '& .MuiInputBase-input': {
       padding: '8px 16px',
-      fontSize: '15px',
-      lineHeight: '24px',
-      fontWeight: 700,
       color: '#D0D0DA',
       height: 'auto',
       '&:focus': {

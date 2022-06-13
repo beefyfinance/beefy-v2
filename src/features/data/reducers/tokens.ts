@@ -180,7 +180,15 @@ function addAddressBookToState(
   }
 
   for (const [addressBookId, token] of Object.entries(addressBookPayload.addressBook)) {
-    if (isTokenNative(token)) continue; // native tokens are preloaded when chain configs load
+    if (isTokenNative(token)) {
+      // native tokens are preloaded when chain configs load
+      //Just load description missing data from local config
+      const existingToken = sliceState.byChainId[chainId].byAddress['native'];
+      existingToken.buyUrl = existingToken.buyUrl || token.buyUrl;
+      existingToken.description = existingToken.description || token.description;
+      existingToken.website = existingToken.website || token.website;
+      continue;
+    }
 
     if (sliceState.byChainId[chainId].byId[token.id] === undefined) {
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();

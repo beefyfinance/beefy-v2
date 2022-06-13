@@ -1,39 +1,36 @@
-import { Box, Button, Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Button, Container, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { Stats } from './Stats';
+import { UserStats } from './UserStats';
 import { VaultsStats } from './VaultsStats';
 import { styles } from './styles';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { useTheme } from '@material-ui/core/styles';
-import { selectUserGlobalStats } from '../../../data/selectors/apy';
 import { selectIsBalanceHidden } from '../../../data/selectors/wallet';
 import { setToggleHideBalance } from '../../../data/reducers/wallet/wallet';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
+
 export const Portfolio = () => {
   const classes = useStyles();
   const theme = useTheme();
-
   const dispatch = useAppDispatch();
+  const hideBalance = useAppSelector(selectIsBalanceHidden);
+
   const updateHideBalance = () => {
     dispatch(setToggleHideBalance());
   };
-  const globalStats = useAppSelector(selectUserGlobalStats);
-  const hideBalance = useAppSelector(selectIsBalanceHidden);
 
   const { t } = useTranslation();
 
   return (
-    <Box className={classes.portfolio}>
+    <div className={classes.portfolio}>
       <Container maxWidth="lg">
-        <Grid container>
-          <Grid className={classes.separator} item xs={12} lg={6}>
-            <Box className={classes.titles}>
-              <Typography variant="h3" className={classes.title}>
-                {t('Portfolio-Portfolio')}
-              </Typography>
+        <div className={classes.stats}>
+          <div className={classes.userStats}>
+            <div className={classes.title}>
+              {t('Portfolio-Portfolio')}{' '}
               <Button size="small" className={classes.btnHide} onClick={updateHideBalance}>
                 {hideBalance ? (
                   <VisibilityOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
@@ -41,21 +38,15 @@ export const Portfolio = () => {
                   <VisibilityOffOutlinedIcon htmlColor={`${theme.palette.primary.main}`} />
                 )}
               </Button>
-            </Box>
-            <Stats stats={globalStats} blurred={hideBalance} />
-          </Grid>
-          <Grid item xs={12} lg={6}>
-            <Box className={classes.vaults}>
-              <Typography variant="h3" className={classes.title2}>
-                {t('Vault-platform')}
-              </Typography>
-              <Box>
-                <VaultsStats {...({} as any)} />
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
+            </div>
+            <UserStats />
+          </div>
+          <div className={classes.vaultStats}>
+            <div className={classes.title}>{t('Vault-platform')}</div>
+            <VaultsStats />
+          </div>
+        </div>
       </Container>
-    </Box>
+    </div>
   );
 };

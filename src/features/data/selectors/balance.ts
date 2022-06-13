@@ -1,4 +1,3 @@
-import { BIG_ZERO } from '../../../helpers/format';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
 import { BeefyState } from '../../../redux-types';
 import { BoostEntity } from '../entities/boost';
@@ -9,6 +8,7 @@ import { selectActiveVaultBoostIds, selectAllVaultBoostIds, selectBoostById } fr
 import { selectTokenByAddress, selectTokenPriceByAddress } from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
 import { selectIsWalletKnown, selectWalletAddress } from './wallet';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 const _selectWalletBalance = (state: BeefyState, walletAddress?: string) => {
   if (selectIsWalletKnown(state)) {

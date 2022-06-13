@@ -6550,7 +6550,7 @@
     "retireReason": "tvl"
   },
   {
-    "id": "quick-eth-cxeth",
+    "id": "quick-eth-cxeth-pause",
     "name": "ETH-cxETH LP",
     "token": "ETH-cxETH QLP",
     "tokenDescription": "QuickSwap",
@@ -6565,8 +6565,8 @@
     "oracle": "lps",
     "oracleId": "quick-eth-cxeth",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "paused",
     "platform": "QuickSwap",
     "assets": ["ETH", "cxETH"],
     "risks": [
@@ -8423,7 +8423,7 @@
     "retireReason": "rewards"
   },
   {
-    "id": "quick-wbtc-cxbtc",
+    "id": "quick-wbtc-cxbtc-pause",
     "name": "WBTC-cxBTC LP",
     "token": "WBTC-cxBTC QLP",
     "tokenDescription": "QuickSwap",
@@ -8438,8 +8438,8 @@
     "oracle": "lps",
     "oracleId": "quick-wbtc-cxbtc",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "paused",
     "platform": "QuickSwap",
     "assets": ["WBTC", "cxBTC"],
     "risks": [

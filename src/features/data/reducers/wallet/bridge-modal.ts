@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
-import {
-  BIG_ZERO,
-  formatBigDecimals,
-  formatBigNumberSignificant,
-} from '../../../../helpers/format';
+import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { fetchBridgeChainData, initiateBridgeForm } from '../../actions/bridge';
 import { BridgeInfoEntity } from '../../apis/bridge/bridge-types';
@@ -13,6 +9,7 @@ import { selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectBridgeBifiDestChainData } from '../../selectors/bridge';
 import { selectChainById } from '../../selectors/chains';
 import { selectTokenByAddress } from '../../selectors/tokens';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 type statusType = 'idle' | 'loading' | 'confirming' | 'success';
 
