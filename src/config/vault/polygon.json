@@ -8773,5 +8773,40 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2e1AD108fF1D8C782fcBbB89AAd783aC49586756",
     "createdAt": 1654783257,
     "network": "polygon"
+  },
+  {
+    "id": "stargate-polygon-usdc",
+    "logo": "single-assets/USDC.svg",
+    "name": "USDC LP",
+    "token": "S*USDC",
+    "tokenDescription": "Stargate",
+    "tokenAddress": "0x1205f31718499dBf1fCa446663B532Ef87481fe1",
+    "tokenDecimals": 6,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooStargateUSDC",
+    "earnedTokenAddress": "0x255F928DB1295FE67f757597aA2c9263B2702c63",
+    "earnContractAddress": "0x255F928DB1295FE67f757597aA2c9263B2702c63",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "saUSDC",
+    "oraclePrice": 0,
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "Stargate",
+    "assets": ["saUSDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "stratType": "SingleStake",
+    "addLiquidityUrl": "https://stargate.finance/pool/USDC-MATIC/add",
+    "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    "createdAt": 1654514146,
+    "network": "polygon"
   }
 ]
