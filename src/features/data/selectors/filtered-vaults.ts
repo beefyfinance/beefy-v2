@@ -257,13 +257,27 @@ export const selectFilteredVaults = (state: BeefyState) => {
   // apply sort
   let sortedVaults = filteredVaults;
 
+  // Vaults are already presorted by date on the reducer
   if (filterOptions.sort === 'default') {
-    // Vaults are already presorted by date on the reducer
-    // TODO find all boosted and bring to top rather than sort whole array?
-    // TODO explore having separate component to render boosted on top so list doesn't jump on load (downside: dups)
-    sortedVaults = sortBy(sortedVaults, vault =>
-      selectIsVaultPreStakedOrBoosted(state, vault.id) && vault.platformId !== 'valleyswap' ? -1 : 1
+    const vaultIsBoosted = sortedVaults.map(
+      vault => selectIsVaultPreStakedOrBoosted(state, vault.id) && vault.platformId !== 'valleyswap'
     );
+
+    if (filterOptions.userCategory === 'deposited') {
+      // Surface retired, paused and boosted
+      sortedVaults = sortBy(sortedVaults, vault =>
+        vault.status === 'eol'
+          ? -3
+          : vault.status === 'paused'
+          ? -2
+          : vaultIsBoosted[vault.id]
+          ? -1
+          : 1
+      );
+    } else {
+      // Surface boosted
+      sortedVaults = sortBy(sortedVaults, vault => (vaultIsBoosted[vault.id] ? -1 : 1));
+    }
   }
 
   const sortDirMul = filterOptions.sortDirection === 'desc' ? -1 : 1;
