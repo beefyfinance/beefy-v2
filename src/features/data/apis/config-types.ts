@@ -8,21 +8,17 @@ export interface VaultConfig {
   logo?: string | null;
   name: string;
   token: string;
-  tokenDescription: string;
   tokenAddress?: string | null;
   tokenDecimals: number;
-  tokenDescriptionUrl?: string | null;
+  tokenProviderId?: PlatformEntity['id'];
   earnedToken: string;
   earnedTokenAddress: string;
   earnedTokenDecimals?: number | null;
   earnContractAddress: string;
-  pricePerFullShare: number;
-  tvl: number;
-  oraclePrice?: number | null; // pulled afterward
   oracle: string; // 'tokens' | 'lp';
   oracleId: TokenEntity['id'];
   status: string; // 'active' | 'eol' | 'paused';
-  platform: PlatformEntity['id'];
+  platformId: PlatformEntity['id'];
   assets?: TokenEntity['id'][];
   risks?: string[] | null;
   stratType: string; // 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';

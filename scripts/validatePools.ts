@@ -56,7 +56,7 @@ const validatePools = async () => {
   exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), 0);
   results.forEach(res => {
     if (!isEmpty(res.updates)) {
-      updates[res.chain] = updates;
+      updates[res.chain] = res.updates;
     }
   });
   // Helpful data structures to correct addresses.
@@ -114,22 +114,14 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
       exitCode = 1;
     }
 
-    if (!pool.tokenDescription) {
-      console.error(
-        `Error: ${pool.id} : Pool tokenDescription missing - required for UI: vault card`
-      );
+    if (!pool.platformId) {
+      console.error(`Error: ${pool.id} : Pool platformId missing vault platform`);
       exitCode = 1;
     }
 
-    if (!pool.platform) {
-      console.error(
-        `Error: ${pool.id} : Pool platform missing - required for UI: filter (Use 'Other' if necessary)`
-      );
+    if (pool.oracle === 'lps' && !pool.tokenProviderId) {
+      console.error(`Error: ${pool.id} : tokenProviderId missing LP provider platform`);
       exitCode = 1;
-    } else {
-      platformCounts[pool.platform] = platformCounts.hasOwnProperty(pool.platform)
-        ? platformCounts[pool.platform] + 1
-        : 1;
     }
 
     if (!pool.createdAt) {

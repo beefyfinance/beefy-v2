@@ -1,8 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { PlatformEntity } from '../entities/platform';
+import { createCachedSelector } from 're-reselect';
 
-export const selectPlatformById = createSelector(
+export const selectPlatformById = createCachedSelector(
   // get a tiny bit of the data
   (state: BeefyState) => state.entities.platforms.byId,
   // get the user passed ID
@@ -14,7 +15,7 @@ export const selectPlatformById = createSelector(
     }
     return byId[platformId];
   }
-);
+)((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
 
 export const selectAllPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.allIds,

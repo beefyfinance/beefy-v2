@@ -15,12 +15,14 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(function
   const dispatch = useAppDispatch();
   const allKey = null;
   const placeholderAllKey = '__null';
+  const otherKey = 'other';
   const platforms = useAppSelector(selectAllPlatforms);
   const options: Record<string, string> = useMemo(
     () =>
       Object.fromEntries([
         [placeholderAllKey, t('Filter-DropdwnDflt')],
         ...platforms.map(platform => [platform.id, platform.name]),
+        [otherKey, t('Filter-Other')],
       ]),
     [platforms, t]
   );

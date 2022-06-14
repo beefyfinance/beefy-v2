@@ -6,12 +6,11 @@ import { LinkButton } from '../../../../components/LinkButton';
 import { Card, CardContent, CardHeader, CardTitle } from '../Card';
 import { styles } from './styles';
 import shield from './shield.svg';
-import { stratText } from './stratText';
+import { StrategyDescription } from './StrategyDescription';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById, selectVaultStrategyAddress } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
-import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
 import { StatLoader } from '../../../../components/StatLoader';
 import { useAppSelector } from '../../../../store';
@@ -21,18 +20,18 @@ const useStyles = makeStyles(styles);
 function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const { t } = useTranslation();
-
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const values = useAppSelector(state => selectVaultTotalApy(state, vaultId));
   const formatted = formattedTotalApy(values, <StatLoader />);
   const stratAddr = useAppSelector(state => selectVaultStrategyAddress(state, vaultId));
-  const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const isVaultAudited = vault.risks.includes('AUDIT');
+
   if (isGovVault(vault)) {
     return <></>;
   }
+
   return (
     <Card>
       <CardHeader>
@@ -56,7 +55,7 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
       </CardHeader>
       <CardContent>
         <div className={classes.text}>
-          {stratText(vault.strategyType, platform.name, vault.assetIds, vault.name, vault.name, t)}
+          <StrategyDescription vaultId={vaultId} />
         </div>
         <div className={classes.apysContainer}>
           <div className={classes.apyTitle}>{t('Vault-ApyBreakdown')}</div>

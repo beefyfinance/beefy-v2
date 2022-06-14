@@ -25,7 +25,6 @@ export interface VaultStandard {
   id: string;
   name: string;
   logoUri: string;
-  tokenDescription: string;
   depositTokenAddress: string;
 
   /**
@@ -80,7 +79,6 @@ export interface VaultGov {
   id: string;
   name: string;
   logoUri: string;
-  tokenDescription: string;
   depositTokenAddress: string;
 
   /**

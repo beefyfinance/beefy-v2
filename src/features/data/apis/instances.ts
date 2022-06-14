@@ -5,6 +5,8 @@ import { createFactoryWithCacheByChain } from '../utils/factory-utils';
 import { ChainEntity } from '../entities/chain';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
 import { BridgeApi } from './bridge/bridge';
+import { IPlatformApi } from './platform/platform-types';
+import { PlatformApi } from './platform/platform';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -15,16 +17,25 @@ const bridgeApi = new BridgeApi();
  * These are basically factories so user code don't have to worry
  * about creating those API objects
  */
-
 export function getBeefyApi(): BeefyAPI {
   return beefyApi;
 }
+
 export function getConfigApi(): ConfigAPI {
   return configApi;
 }
 
 export function getBridgeApi(): BridgeApi {
   return bridgeApi;
+}
+
+let platformApi = null;
+export function getPlatformApi(): IPlatformApi {
+  if (platformApi === null) {
+    platformApi = new PlatformApi();
+  }
+
+  return platformApi;
 }
 
 const Web3Promise = import('web3');

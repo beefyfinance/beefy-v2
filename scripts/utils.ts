@@ -36,3 +36,23 @@ export function isEmpty(key) {
     return false;
   }
 }
+
+export function objectInsert<TValue>(
+  insertKey: string,
+  insertValue: TValue,
+  obj: Record<string, TValue>,
+  relativeKey: string,
+  relativePosition: 'before' | 'after' = 'after'
+): Record<string, TValue> {
+  return Object.fromEntries(
+    Object.entries(obj).reduce((newEntries, pair) => {
+      if (pair[0] === relativeKey && relativePosition === 'before')
+        newEntries.push([insertKey, insertValue]);
+      newEntries.push(pair);
+      if (pair[0] === relativeKey && relativePosition === 'after')
+        newEntries.push([insertKey, insertValue]);
+
+      return newEntries;
+    }, [])
+  );
+}

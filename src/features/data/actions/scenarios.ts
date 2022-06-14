@@ -30,6 +30,7 @@ import { initiateMinterForm } from './minters';
 import { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
 import { initiateBridgeForm } from './bridge';
+import { fetchPlatforms } from './platforms';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {
@@ -71,6 +72,8 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchFeaturedVaults());
 
     store.dispatch(fetchPartnersConfig());
+
+    store.dispatch(fetchPlatforms());
   });
 
   // create the wallet instance as soon as we get the chain list
