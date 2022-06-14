@@ -17,11 +17,9 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <div className={classes.btnContainer}>
-      {vault.buyTokenUrl && (
-        <LinkButton type="" href={vault.buyTokenUrl} text={t('Transact-BuyTkn')} />
-      )}
+      {vault.buyTokenUrl && <LinkButton href={vault.buyTokenUrl} text={t('Transact-BuyTkn')} />}
       {vault.addLiquidityUrl && (
-        <LinkButton type="" href={vault.addLiquidityUrl} text={t('Transact-AddLiquidity')} />
+        <LinkButton href={vault.addLiquidityUrl} text={t('Transact-AddLiquidity')} />
       )}
       {vault.assetIds.includes('BIFI') && <Bridge buttonClassname={classes.btnSecondary} />}
     </div>
