@@ -5,6 +5,11 @@
     "filter": true
   },
   {
+    "id": "babyswap",
+    "name": "BabySwap",
+    "filter": false
+  },
+  {
     "id": "apeswap",
     "name": "ApeSwap",
     "filter": true
@@ -33,11 +38,6 @@
     "id": "mdex",
     "name": "Mdex",
     "filter": true
-  },
-  {
-    "id": "babyswap",
-    "name": "BabySwap",
-    "filter": false
   },
   {
     "id": "pacoca",
@@ -555,11 +555,6 @@
     "filter": true
   },
   {
-    "id": "synapse",
-    "name": "Synapse",
-    "filter": true
-  },
-  {
     "id": "mim",
     "name": "MIM",
     "filter": true
@@ -860,6 +855,11 @@
     "filter": true
   },
   {
+    "id": "stellaswap",
+    "name": "Stellaswap",
+    "filter": true
+  },
+  {
     "id": "beamswap",
     "name": "Beamswap",
     "filter": true
@@ -867,11 +867,6 @@
   {
     "id": "solarflare",
     "name": "Solarflare",
-    "filter": true
-  },
-  {
-    "id": "stellaswap",
-    "name": "Stellaswap",
     "filter": true
   },
   {
