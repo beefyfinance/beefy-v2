@@ -2350,7 +2350,8 @@
     "oracle": "lps",
     "oracleId": "sushi-wbtc-ibbtc",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "SushiSwap",
     "assets": ["ibBTC", "WBTC"],
     "risks": [
