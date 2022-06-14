@@ -732,7 +732,8 @@
     "oracle": "lps",
     "oracleId": "vvs-cro-dai",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "VVS",
     "assets": ["CRO", "DAI"],
     "risks": [
