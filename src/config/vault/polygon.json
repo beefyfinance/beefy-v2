@@ -7406,7 +7406,7 @@
     "network": "polygon"
   },
   {
-    "id": "quick-stmatic-matic-eol",
+    "id": "quick-stmatic-matic",
     "name": "stMATIC-MATIC LP",
     "token": "stMATIC-MATIC LP",
     "tokenDescription": "QuickSwap",
