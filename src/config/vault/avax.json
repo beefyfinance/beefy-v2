@@ -2639,7 +2639,8 @@
     "oracleId": "png-ust-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Pangolin",
     "assets": ["UST", "AVAX"],
     "risks": [
@@ -2674,7 +2675,8 @@
     "oracleId": "png-ust-usdc",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Pangolin",
     "assets": ["UST", "USDC"],
     "risks": [
@@ -2778,7 +2780,8 @@
     "oracleId": "png-luna-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Pangolin",
     "assets": ["LUNA", "AVAX"],
     "risks": [
@@ -3086,7 +3089,8 @@
     "oracleId": "png-acre-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Pangolin",
     "assets": ["ACRE", "AVAX"],
     "risks": [
@@ -3120,7 +3124,8 @@
     "oracleId": "png-tus-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Pangolin",
     "assets": ["TUS", "AVAX"],
     "risks": [
@@ -3359,7 +3364,8 @@
     "oracleId": "png-wavax-spell",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Pangolin",
     "assets": ["SPELL", "AVAX"],
     "risks": [
@@ -3427,7 +3433,8 @@
     "oracleId": "png-wavax-ime",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Pangolin",
     "assets": ["IME", "AVAX"],
     "risks": [
@@ -4602,7 +4609,8 @@
     "oracleId": "png-axlatom-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Pangolin",
     "assets": ["axlATOM", "AVAX"],
     "risks": [
