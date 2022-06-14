@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import { Hidden, makeStyles } from '@material-ui/core';
+import { memo, PropsWithChildren } from 'react';
+import { Hidden, makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { formatApy, formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
@@ -27,6 +27,14 @@ const UserStat = memo<UserStatProps>(function UserStat({ label, value, blurred }
   );
 });
 
+type VisibleAboveProps = PropsWithChildren<{
+  width: number;
+}>;
+const VisibleAbove = memo<VisibleAboveProps>(function VisibleAbove({ width, children }) {
+  const aboveWidth = useMediaQuery(`(min-width: ${width}px)`);
+  return <>{aboveWidth ? children : null}</>;
+});
+
 export const UserStats = memo(function () {
   const stats = useAppSelector(selectUserGlobalStats);
   const hideBalance = useAppSelector(selectIsBalanceHidden);
@@ -51,12 +59,14 @@ export const UserStats = memo(function () {
           value={formatUsd(stats.daily.toNumber())}
           blurred={hideBalance}
         />
+      </Hidden>
+      <VisibleAbove width={430}>
         <UserStat
           label={t('Portfolio-AvgAPY')}
           value={formatApy(stats.apy.toNumber(), 2, '0%')}
           blurred={hideBalance}
         />
-      </Hidden>
+      </VisibleAbove>
     </div>
   );
 });

@@ -815,7 +815,7 @@
     "createdAt": 1629258699
   },
   {
-    "id": "quick-usdc-quick",
+    "id": "quick-usdc-quick-eol",
     "name": "QUICK-USDC LP",
     "token": "QUICK-USDC LP",
     "tokenDescription": "Quickswap",
@@ -830,7 +830,9 @@
     "oracle": "lps",
     "oracleId": "quick-usdc-quick",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["QUICK", "USDC"],
     "risks": [
@@ -2348,7 +2350,8 @@
     "oracle": "lps",
     "oracleId": "sushi-wbtc-ibbtc",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "SushiSwap",
     "assets": ["ibBTC", "WBTC"],
     "risks": [
@@ -3968,7 +3971,7 @@
     "createdAt": 1620048432
   },
   {
-    "id": "quick-quick-eth",
+    "id": "quick-quick-eth-eol",
     "logo": "polygon/QUICK-ETH.png",
     "name": "QUICK-ETH LP",
     "token": "QUICK-ETH QLP",
@@ -3984,7 +3987,9 @@
     "oracle": "lps",
     "oracleId": "quick-quick-eth",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["QUICK", "ETH"],
     "risks": [
@@ -4098,7 +4103,7 @@
     "createdAt": 1619717027
   },
   {
-    "id": "quick-quick-matic",
+    "id": "quick-quick-matic-eol",
     "logo": "polygon/QUICK-MATIC.png",
     "name": "QUICK-MATIC LP",
     "token": "QUICK-MATIC QLP",
@@ -4114,7 +4119,9 @@
     "oracle": "lps",
     "oracleId": "quick-quick-matic",
     "oraclePrice": 0,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["QUICK", "MATIC"],
     "risks": [
@@ -5740,7 +5747,7 @@
     "createdAt": 1626613413
   },
   {
-    "id": "quick-kiro-matic",
+    "id": "quick-kiro-matic-eol",
     "name": "KIRO-MATIC LP",
     "token": "KIRO-MATIC LP",
     "tokenDescription": "QuickSwap",
@@ -5754,8 +5761,9 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-kiro-matic",
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["KIRO", "MATIC"],
     "risks": [
@@ -5775,7 +5783,7 @@
     "network": "polygon"
   },
   {
-    "id": "quick-bico-eth",
+    "id": "quick-bico-eth-eol",
     "name": "BICO-ETH LP",
     "token": "BICO-ETH LP",
     "tokenDescription": "QuickSwap",
@@ -5789,8 +5797,9 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-bico-eth",
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["BICO", "ETH"],
     "risks": [
@@ -6542,7 +6551,7 @@
     "retireReason": "tvl"
   },
   {
-    "id": "quick-eth-cxeth",
+    "id": "quick-eth-cxeth-pause",
     "name": "ETH-cxETH LP",
     "token": "ETH-cxETH QLP",
     "tokenDescription": "QuickSwap",
@@ -6557,8 +6566,8 @@
     "oracle": "lps",
     "oracleId": "quick-eth-cxeth",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "paused",
     "platform": "QuickSwap",
     "assets": ["ETH", "cxETH"],
     "risks": [
@@ -6578,7 +6587,7 @@
     "withdrawalFee": "0%"
   },
   {
-    "id": "quick-cxada-cxeth",
+    "id": "quick-cxada-cxeth-eol",
     "name": "cxADA-cxETH LP",
     "token": "cxADA-cxETH QLP",
     "tokenDescription": "QuickSwap",
@@ -6593,8 +6602,9 @@
     "oracle": "lps",
     "oracleId": "quick-cxada-cxeth",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["cxADA", "cxETH"],
     "risks": [
@@ -6614,7 +6624,7 @@
     "withdrawalFee": "0%"
   },
   {
-    "id": "quick-cxdoge-cxeth",
+    "id": "quick-cxdoge-cxeth-eol",
     "name": "cxDOGE-cxETH LP",
     "token": "cxDOGE-cxETH QLP",
     "tokenDescription": "QuickSwap",
@@ -6629,8 +6639,9 @@
     "oracle": "lps",
     "oracleId": "quick-cxdoge-cxeth",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["cxDOGE", "cxETH"],
     "risks": [
@@ -6687,7 +6698,7 @@
     "retireReason": "rewards"
   },
   {
-    "id": "quick-usdc-orbs",
+    "id": "quick-usdc-orbs-eol",
     "name": "ORBS-USDC LP",
     "token": "ORBS-USDC LP",
     "tokenDescription": "QuickSwap",
@@ -6701,8 +6712,9 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-usdc-orbs",
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["ORBS", "USDC"],
     "risks": [
@@ -7409,8 +7421,9 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-stmatic-matic",
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "QuickSwap",
     "assets": ["stMATIC", "MATIC"],
     "risks": [
@@ -8411,7 +8424,7 @@
     "retireReason": "rewards"
   },
   {
-    "id": "quick-wbtc-cxbtc",
+    "id": "quick-wbtc-cxbtc-pause",
     "name": "WBTC-cxBTC LP",
     "token": "WBTC-cxBTC QLP",
     "tokenDescription": "QuickSwap",
@@ -8426,8 +8439,8 @@
     "oracle": "lps",
     "oracleId": "quick-wbtc-cxbtc",
     "oraclePrice": 0,
-    "depositsPaused": false,
-    "status": "active",
+    "depositsPaused": true,
+    "status": "paused",
     "platform": "QuickSwap",
     "assets": ["WBTC", "cxBTC"],
     "risks": [
@@ -8621,5 +8634,145 @@
     "network": "polygon",
     "createdAt": 1634625658,
     "retireReason": "rewards"
+  },
+  {
+    "id": "quick-matic-ldo",
+    "name": "LDO-MATIC LP",
+    "token": "LDO-MATIC LP",
+    "tokenDescription": "QuickSwap",
+    "tokenAddress": "0xa0f330F5Fc47eE7A3297DBD6Be6Fe60cd0346B26",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooQuickMATIC-LDO",
+    "earnedTokenAddress": "0x831AF875102d934894D1aE29BDf13deA3729cAeA",
+    "earnContractAddress": "0x831AF875102d934894D1aE29BDf13deA3729cAeA",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "quick-matic-ldo",
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "QuickSwap",
+    "assets": ["LDO", "MATIC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MEDIUM",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "stratType": "StratLP",
+    "withdrawalFee": "0%",
+    "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc3c7d422809852031b44ab29eec9f1eff2a58756",
+    "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xc3c7d422809852031b44ab29eec9f1eff2a58756",
+    "createdAt": 1653894281,
+    "network": "polygon"
+  },
+  {
+    "id": "quick-lcd-matic",
+    "name": "LCD-MATIC LP",
+    "token": "LCD-MATIC LP",
+    "tokenDescription": "QuickSwap",
+    "tokenAddress": "0xAab5254e17380511887aabA7e96a5339A519E26a",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooQuickLCD-MATIC",
+    "earnedTokenAddress": "0x8c9dE3b735a154d8fC1e94183eA9b021913AC88B",
+    "earnContractAddress": "0x8c9dE3b735a154d8fC1e94183eA9b021913AC88B",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "quick-lcd-matic",
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "QuickSwap",
+    "assets": ["LCD", "MATIC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MICRO",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "stratType": "StratMultiLP",
+    "withdrawalFee": "0%",
+    "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a",
+    "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a",
+    "createdAt": 1654005716,
+    "network": "polygon"
+  },
+  {
+    "id": "quick-newquick-matic",
+    "name": "newQUICK-MATIC LP",
+    "token": "newQUICK-MATIC LP",
+    "tokenDescription": "QuickSwap",
+    "tokenAddress": "0xF3eB2f17eAFBf35e92C965A954c6e7693187057D",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooQuicknewQUICK-MATIC",
+    "earnedTokenAddress": "0x44AA75F5c68Ed51B97C117C86A0274b5514860a9",
+    "earnContractAddress": "0x44AA75F5c68Ed51B97C117C86A0274b5514860a9",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "quick-newquick-matic",
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "QuickSwap",
+    "assets": ["newQUICK", "MATIC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MICRO",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "stratType": "StratMultiLP",
+    "withdrawalFee": "0%",
+    "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB5C064F955D8e7F38fE0460C556a72987494eE17",
+    "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xB5C064F955D8e7F38fE0460C556a72987494eE17",
+    "createdAt": 1654781881,
+    "network": "polygon"
+  },
+  {
+    "id": "quick-tusd-usdc",
+    "name": "TUSD-USDC LP",
+    "token": "TUSD-USDC LP",
+    "tokenDescription": "QuickSwap",
+    "tokenAddress": "0x17a7829cc1167ecdA8b9668414a5405050846F8A",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooQuickTUSD-USDC",
+    "earnedTokenAddress": "0x77DD1813f99059a65cF863f0C53E5C6Db7149499",
+    "earnContractAddress": "0x77DD1813f99059a65cF863f0C53E5C6Db7149499",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "quick-tusd-usdc",
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "QuickSwap",
+    "assets": ["TUSD", "USDC"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MEDIUM",
+      "IL_NONE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "stratType": "StratMultiLP",
+    "withdrawalFee": "0%",
+    "buyTokenUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2e1AD108fF1D8C782fcBbB89AAd783aC49586756",
+    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2e1AD108fF1D8C782fcBbB89AAd783aC49586756",
+    "createdAt": 1654783257,
+    "network": "polygon"
   }
 ]

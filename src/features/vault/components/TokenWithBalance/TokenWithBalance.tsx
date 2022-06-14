@@ -8,7 +8,6 @@ import { selectUserBalanceOfToken } from '../../../data/selectors/balance';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
-import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
@@ -31,11 +30,7 @@ export function TokenWithBalance({
   );
 
   return (
-    <Box
-      className={clsx(classes.balanceContainer, { [classes.sm]: variant === 'sm' })}
-      display="flex"
-      alignItems="center"
-    >
+    <Box className={classes.balanceContainer}>
       <Box lineHeight={0}>
         <AssetsImage
           chainId={vault.chainId}

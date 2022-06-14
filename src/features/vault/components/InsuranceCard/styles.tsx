@@ -32,8 +32,4 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.default,
     width: '100%',
   },
-  link: {
-    textDecoration: 'none',
-    width: '100%',
-  },
 });
