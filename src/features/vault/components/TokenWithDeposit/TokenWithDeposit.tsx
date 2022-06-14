@@ -20,7 +20,6 @@ import {
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
 import { styles } from './styles';
-import clsx from 'clsx';
 import { useAppSelector } from '../../../../store';
 
 const useStyles = makeStyles(styles);
@@ -82,11 +81,7 @@ export function TokenWithDeposit({
    **/
 
   return (
-    <Box
-      className={clsx(classes.balanceContainer, { [classes.sm]: variant === 'sm' })}
-      display="flex"
-      alignItems="center"
-    >
+    <Box className={classes.balanceContainer}>
       <Box lineHeight={0}>
         <AssetsImage
           chainId={vault.chainId}

@@ -197,13 +197,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             className={classes.depositTokenContainer}
             value={depositToken.id}
             control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-            label={
-              <TokenWithBalance
-                token={depositToken}
-                vaultId={vaultId}
-                variant={formState.zapOptions !== null ? 'sm' : 'lg'}
-              />
-            }
+            label={<TokenWithBalance token={depositToken} vaultId={vaultId} />}
             onClick={formState.isZap ? undefined : handleMax}
             disabled={!formReady}
           />
