@@ -28,10 +28,6 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     width: '100%',
   },
-  link: {
-    textDecoration: 'none',
-    width: '100%',
-  },
   subtitle: {
     ...theme.typography['subline-lg'],
     color: theme.palette.text.disabled,

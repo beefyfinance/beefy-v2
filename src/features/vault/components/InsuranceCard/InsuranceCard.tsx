@@ -34,9 +34,9 @@ export const InsuranceCard = memo<InsuranceCardProps>(function ({
       </CardHeader>
       <CardContent>
         <div className={classes.content}>{content}</div>
-        <a className={classes.link} target="_blank" rel="noreferrer" href={buttonUrl}>
-          <Button className={classes.btn}>{buttonText}</Button>
-        </a>
+        <Button target="_blank" rel="noreferrer" href={buttonUrl} className={classes.btn}>
+          {buttonText}
+        </Button>
       </CardContent>
     </Card>
   );

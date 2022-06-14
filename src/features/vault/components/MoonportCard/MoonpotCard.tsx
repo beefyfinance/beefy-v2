@@ -38,9 +38,9 @@ const MoonpotCard = ({ vaultId }: { vaultId: string }) => {
       </CardHeader>
       <CardContent>
         <div className={classes.content}>{t('Moonpot-Content')}</div>
-        <a className={classes.link} target="_blank" rel="noreferrer" href={moonpotData.link}>
-          <Button className={classes.btn}>{t('Moonpot-Btn')}</Button>
-        </a>
+        <Button href={moonpotData.link} target="_blank" rel="noreferrer" className={classes.btn}>
+          {t('Moonpot-Btn')}
+        </Button>
       </CardContent>
     </Card>
   );
