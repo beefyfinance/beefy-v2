@@ -369,12 +369,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 className={classes.depositTokenContainer}
                 value={depositToken.id}
                 control={formState.zapOptions !== null ? <Radio /> : <div style={{ width: 12 }} />}
-                label={
-                  <TokenWithDeposit
-                    vaultId={vaultId}
-                    variant={formState.zapOptions !== null ? 'sm' : 'lg'}
-                  />
-                }
+                label={<TokenWithDeposit vaultId={vaultId} />}
                 onClick={formState.isZap ? undefined : handleMax}
                 disabled={!formReady}
               />
@@ -383,13 +378,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                   className={classes.depositTokenContainer}
                   value={vault.assetIds.join('+')}
                   control={<Radio />}
-                  label={
-                    <TokenWithDeposit
-                      convertAmountTo={vault.assetIds}
-                      vaultId={vaultId}
-                      variant="sm"
-                    />
-                  }
+                  label={<TokenWithDeposit convertAmountTo={vault.assetIds} vaultId={vaultId} />}
                   disabled={!formReady}
                 />
               )}
