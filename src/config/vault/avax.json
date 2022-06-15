@@ -4133,7 +4133,8 @@
     "oracleId": "curve-avax-f-avaxl",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["AVAXL", "AVAX"],
     "risks": [
@@ -4482,7 +4483,8 @@
     "oracleId": "curve-avax-f-3pool",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["USTw", "USDT", "USDC"],
     "risks": [
