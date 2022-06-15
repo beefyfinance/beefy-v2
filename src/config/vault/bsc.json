@@ -18817,7 +18817,7 @@
     "assets": ["USDD", "BUSD", "USDT", "USDC"],
     "risks": [
       "COMPLEXITY_LOW",
-      "NEW_STRAT",
+      "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
@@ -18854,7 +18854,7 @@
     "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
-      "NEW_STRAT",
+      "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
