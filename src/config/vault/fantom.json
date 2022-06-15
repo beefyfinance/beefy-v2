@@ -228,8 +228,7 @@
     "oracle": "lps",
     "oracleId": "curve-ftm-geist",
     "oraclePrice": 0,
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platform": "Curve",
     "assets": ["fUSDT", "USDC", "DAI"],
     "risks": [
