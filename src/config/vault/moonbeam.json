@@ -647,7 +647,8 @@
     "oracleId": "stellaswap-stella-usdc",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["STELLA", "USDC"],
     "risks": [
@@ -682,7 +683,8 @@
     "oracleId": "stellaswap-usdc-wglmr",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["USDC", "GLMR"],
     "risks": [
@@ -858,7 +860,8 @@
     "oracleId": "stellaswap-usdc-eth",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["USDC", "ETH"],
     "risks": [
@@ -893,7 +896,8 @@
     "oracleId": "stellaswap-wglmr-eth",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["GLMR", "ETH"],
     "risks": [

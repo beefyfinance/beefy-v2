@@ -413,7 +413,8 @@
     "oracle": "lps",
     "oracleId": "cakev2-rusd-busd",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "PancakeSwap",
     "assets": ["rUSD", "BUSD"],
     "risks": [

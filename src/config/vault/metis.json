@@ -53,7 +53,8 @@
     "oracleId": "netswap-nett-m.usdt",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Netswap",
     "assets": ["mUSDT", "NETT"],
     "risks": [
@@ -121,7 +122,8 @@
     "oracleId": "netswap-nett-m.usdc",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Netswap",
     "assets": ["mUSDC", "NETT"],
     "risks": [
@@ -155,7 +157,8 @@
     "oracleId": "netswap-weth-nett",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Netswap",
     "assets": ["WETH", "NETT"],
     "risks": [
@@ -530,7 +533,8 @@
     "oracleId": "netswap-wbtc-metis",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Netswap",
     "assets": ["WBTC", "METIS"],
     "risks": [
@@ -564,7 +568,8 @@
     "oracleId": "netswap-wbtc-m.usdt",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Netswap",
     "assets": ["WBTC", "mUSDT"],
     "risks": [
