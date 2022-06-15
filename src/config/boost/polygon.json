@@ -1,5 +1,21 @@
 [
   {
+    "id": "moo_jarvis-2jpy2-jarvis",
+    "name": "Jarvis",
+    "logo": "single-assets/2JPY.svg",
+    "tokenAddress": "0x122E09FdD2FF73C8CEa51D432c45A474BAa1518a",
+    "earnedToken": "jJPY",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x8343091F2499FD4b6174A46D067A920a3b851FF9",
+    "earnContractAddress": "0x809FF72292009E68fa6463b966e6D86154B67fa1",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "jpyc",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["jarvis"]
+  },
+  {
     "id": "moo_kyber-usdc-jeur-jarvis",
     "poolId": "kyber-usdc-jeur-eol",
     "name": "Jarvis",
