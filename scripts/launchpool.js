@@ -46,6 +46,7 @@ async function generateLaunchpool() {
 
   const newBoost = {
     id: `moo_${pool.oracleId}-${partnerId}`,
+    poolId: pool.id,
     name: `${partner}`,
     logo: pool.logo,
     assets: pool.assets,

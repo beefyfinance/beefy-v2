@@ -1,6 +1,7 @@
 [
   {
     "id": "moo_jarvis-2jpy2-jarvis",
+    "poolId": "jarvis-2jpy2",
     "name": "Jarvis",
     "logo": "single-assets/2JPY.svg",
     "tokenAddress": "0x122E09FdD2FF73C8CEa51D432c45A474BAa1518a",
