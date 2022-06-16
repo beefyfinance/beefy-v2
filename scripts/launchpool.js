@@ -2,11 +2,15 @@
 import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
+import { promises as fs } from 'fs';
 
 import { chainPools, chainRpcs } from './config.js';
 import launchPoolABI from '../src/config/abi/boost.json';
 import erc20ABI from '../src/config/abi/erc20.json';
 import partners from '../src/config/boost/partners.json';
+
+const partnersFile = './src/config/boost/partners.json';
+let boostsFile = './src/config/boost/$chain.json';
 
 async function boostParams(chain, boostAddress) {
   const web3 = new Web3(chainRpcs[chain]);
@@ -40,6 +44,7 @@ async function generateLaunchpool() {
   const boostAddress = process.argv[3];
   const partner = process.argv[4];
   const partnerId = partner.toLowerCase();
+  boostsFile = boostsFile.replace('$chain', chain);
 
   const boost = await boostParams(chain, boostAddress);
   const pool = chainPools[chain].find(pool => pool.earnedTokenAddress === boost.staked);
@@ -69,8 +74,9 @@ async function generateLaunchpool() {
     delete newBoost.logo;
   }
 
-  let str = JSON.stringify(newBoost, null, 2) + ',';
-  console.log(str);
+  const boosts = JSON.parse(await fs.readFile(boostsFile, 'utf8'));
+  const newBoosts = [newBoost, ...boosts];
+  await fs.writeFile(boostsFile, JSON.stringify(newBoosts, null, 2));
 
   if (!(partnerId in partners)) {
     const subpartner = {
@@ -83,8 +89,9 @@ async function generateLaunchpool() {
         },
       },
     };
-    console.log('\nadd partner to partners.json file');
-    console.log(JSON.stringify(subpartner, null, 2));
+    const newPartners = { ...subpartner, ...partners };
+    await fs.writeFile(partnersFile, JSON.stringify(newPartners, null, 2));
+    console.log('\nTODO update text and links in partners.json');
   }
 }
 
