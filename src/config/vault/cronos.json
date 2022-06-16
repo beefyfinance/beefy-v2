@@ -1362,7 +1362,7 @@
     "depositsPaused": true,
     "status": "eol",
     "retireReason": "rewards",
-    "withdrawalFee": "0.0%",
+    "withdrawalFee": "0%",
     "platform": "VVS",
     "assets": ["ALI", "CRO"],
     "risks": [
@@ -1399,7 +1399,7 @@
     "status": "active",
     "platform": "VVS",
     "assets": ["VVS", "VERSA"],
-    "withdrawalFee": "0.0%",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1434,7 +1434,7 @@
     "status": "active",
     "platform": "VVS",
     "assets": ["VVS", "TONIC"],
-    "withdrawalFee": "0.0%",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
