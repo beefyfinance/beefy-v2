@@ -10,7 +10,6 @@ import {
 } from './balance';
 import {
   selectBoostById,
-  selectIsVaultBoosted,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
 } from './boosts';
@@ -219,7 +218,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
       return false;
     }
-    if (filterOptions.onlyBoosted && !selectIsVaultBoosted(state, vault.id)) {
+    if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
       return false;
     }
 
