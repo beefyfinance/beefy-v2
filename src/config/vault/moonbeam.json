@@ -719,7 +719,8 @@
     "oracleId": "stellaswap-usdc-usdt",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["USDC", "USDT"],
     "risks": [
@@ -824,7 +825,8 @@
     "oracleId": "stellaswap-dai-usdc",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["DAI", "USDC"],
     "risks": [
@@ -932,7 +934,8 @@
     "oracleId": "stellaswap-usdc-ftm",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["USDC", "FTM"],
     "risks": [
@@ -1107,7 +1110,8 @@
     "oracleId": "stellaswap-atom-usdc",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["ATOM", "USDC"],
     "risks": [
