@@ -10,7 +10,6 @@ import {
 } from './balance';
 import {
   selectBoostById,
-  selectIsVaultBoosted,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
 } from './boosts';
@@ -219,7 +218,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
       return false;
     }
-    if (filterOptions.onlyBoosted && !selectIsVaultBoosted(state, vault.id)) {
+    if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
       return false;
     }
 
@@ -259,8 +258,11 @@ export const selectFilteredVaults = (state: BeefyState) => {
 
   // Vaults are already presorted by date on the reducer
   if (filterOptions.sort === 'default') {
-    const vaultIsBoosted = sortedVaults.map(
-      vault => selectIsVaultPreStakedOrBoosted(state, vault.id) && vault.platformId !== 'valleyswap'
+    const vaultIsBoosted = Object.fromEntries(
+      sortedVaults.map(vault => [
+        vault.id,
+        selectIsVaultPreStakedOrBoosted(state, vault.id) && vault.platformId !== 'valleyswap',
+      ])
     );
 
     if (filterOptions.userCategory === 'deposited') {
