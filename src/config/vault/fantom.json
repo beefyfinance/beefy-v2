@@ -1442,7 +1442,8 @@
     "oracle": "lps",
     "oracleId": "curve-ftm-2pool",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["USDC", "DAI"],
     "risks": [
@@ -7283,7 +7284,8 @@
     "oracleId": "curve-ftm-f-usdl",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["USDL", "fUSDT", "DAI", "USDC"],
     "risks": [
