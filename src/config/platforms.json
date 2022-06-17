@@ -305,29 +305,9 @@
     "filter": false
   },
   {
-    "id": "pleasemigratetov2",
-    "name": "Please migrate to v2",
-    "filter": false
-  },
-  {
-    "id": "pleaseusesmartcake",
-    "name": "Please use Smart Cake",
-    "filter": true
-  },
-  {
     "id": "fortube",
     "name": "ForTube",
     "filter": false
-  },
-  {
-    "id": "retiredvault",
-    "name": "Retired Vault",
-    "filter": false
-  },
-  {
-    "id": "refundsavailable",
-    "name": "Refunds available",
-    "filter": true
   },
   {
     "id": "betu",
@@ -567,11 +547,6 @@
   {
     "id": "aave",
     "name": "Aave",
-    "filter": true
-  },
-  {
-    "id": "dragonlair",
-    "name": "DragonLair",
     "filter": true
   },
   {
@@ -878,5 +853,10 @@
     "id": "valleyswap",
     "name": "ValleySwap",
     "filter": true
+  },
+  {
+    "id": "fryworld",
+    "name": "FryWorld",
+    "filter": false
   }
 ]

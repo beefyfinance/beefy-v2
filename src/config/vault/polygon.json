@@ -139,7 +139,7 @@
     "oracle": "tokens",
     "oracleId": "QUICK",
     "status": "active",
-    "platformId": "dragonlair",
+    "platformId": "quickswap",
     "assets": ["QUICK"],
     "strategyTypeId": "single",
     "risks": [

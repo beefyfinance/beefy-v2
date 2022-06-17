@@ -346,7 +346,7 @@
     "oracle": "tokens",
     "oracleId": "JOE",
     "status": "active",
-    "platformId": "sjoe",
+    "platformId": "traderjoe",
     "assets": ["JOE"],
     "strategyTypeId": "single",
     "risks": [
