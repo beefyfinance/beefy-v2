@@ -182,3 +182,14 @@ export interface InfoCardChainConfig extends InfoCardBaseConfig {
 
 export type InfoCardConfig = InfoCardVaultConfig | InfoCardChainConfig;
 export type InfoCardsConfig = InfoCardConfig[];
+
+export type StrategyTypeConfig = {
+  id: string;
+  name: string;
+};
+
+export type PlatformConfig = {
+  id: string;
+  name: string;
+  filter: boolean;
+};

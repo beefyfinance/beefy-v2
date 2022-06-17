@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
 import { NormalizedEntity } from '../utils/normalized-entity';
-import { StrategyTypeConfig } from '../apis/strategy-type/strategy-type-types';
 import { fetchStrategyTypes } from '../actions/strategy-types';
 import { StrategyTypeEntity } from '../entities/strategy-type';
+import { StrategyTypeConfig } from '../apis/config-types';
 
 export type StrategyTypesState = NormalizedEntity<StrategyTypeEntity>;
 export const initialStrategyTypes: StrategyTypesState = { byId: {}, allIds: [] };

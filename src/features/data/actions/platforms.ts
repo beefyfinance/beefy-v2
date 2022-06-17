@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getPlatformApi } from '../apis/instances';
-import { PlatformConfig } from '../apis/platform/platform-types';
+import { getConfigApi } from '../apis/instances';
+import { PlatformConfig } from '../apis/config-types';
 
 export type FetchPlatformsPayload = PlatformConfig[];
 
 export const fetchPlatforms = createAsyncThunk<FetchPlatformsPayload>(
   'platforms/fetchPlatforms',
   async () => {
-    const api = getPlatformApi();
+    const api = getConfigApi();
     return await api.fetchPlatforms();
   }
 );

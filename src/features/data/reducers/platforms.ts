@@ -3,9 +3,8 @@ import { WritableDraft } from 'immer/dist/internal';
 import { PlatformEntity } from '../entities/platform';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { fetchPlatforms } from '../actions/platforms';
-import { PlatformConfig } from '../apis/platform/platform-types';
 import { fetchAllVaults } from '../actions/vaults';
-import { VaultConfig } from '../apis/config-types';
+import { PlatformConfig, VaultConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos

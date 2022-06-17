@@ -5,10 +5,6 @@ import { createFactoryWithCacheByChain } from '../utils/factory-utils';
 import { ChainEntity } from '../entities/chain';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
 import { BridgeApi } from './bridge/bridge';
-import { IPlatformApi } from './platform/platform-types';
-import { PlatformApi } from './platform/platform';
-import { IStrategyTypesApi } from './strategy-type/strategy-type-types';
-import { StrategyTypesApi } from './strategy-type';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -29,24 +25,6 @@ export function getConfigApi(): ConfigAPI {
 
 export function getBridgeApi(): BridgeApi {
   return bridgeApi;
-}
-
-let platformApi = null;
-export function getPlatformApi(): IPlatformApi {
-  if (platformApi === null) {
-    platformApi = new PlatformApi();
-  }
-
-  return platformApi;
-}
-
-let strategyTypesApi = null;
-export function getStrategyTypesApi(): IStrategyTypesApi {
-  if (strategyTypesApi === null) {
-    strategyTypesApi = new StrategyTypesApi();
-  }
-
-  return strategyTypesApi;
 }
 
 const Web3Promise = import('web3');
