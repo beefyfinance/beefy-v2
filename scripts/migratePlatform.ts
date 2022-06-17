@@ -71,6 +71,7 @@ const correctPlatforms = {
   fortube: 'ForTube',
   froyo: 'Froyo',
   fruit: 'Fruit',
+  fryworld: 'FryWorld',
   fuel: 'Fuel',
   fuse: 'Fuse',
   garuda: 'Garuda',
@@ -285,6 +286,30 @@ const vaultIdToProvider = {
   cafe: correctPlatforms['cafeswap'],
 };
 
+const manualFixes = {
+  'joe-joe': {
+    platformName: correctPlatforms['traderjoe'],
+  },
+  'street-drugs-bnb-v1': {
+    platformName: correctPlatforms['traphouse'],
+  },
+  'cake-cake-eol': {
+    platformName: correctPlatforms['pancakeswap'],
+  },
+  'fry-burger-v2': {
+    platformName: correctPlatforms['fryworld'],
+  },
+  'cake-syrup-twt': {
+    platformName: correctPlatforms['pancakeswap'],
+  },
+  'fry-burger-v1': {
+    platformName: correctPlatforms['fryworld'],
+  },
+  'quick-quick': {
+    platformName: correctPlatforms['quickswap'],
+  },
+};
+
 function getProviderFromAddLiquidityUrl(url: string) {
   const domain = getDomainFromUrl(url);
   if (domain in addLiquidityUrlToProvider) {
@@ -368,6 +393,16 @@ async function migrateNetwork(network: string) {
         } else {
           console.error(vault.id, 'no provider or addLiquidityUrl');
         }
+      }
+    }
+
+    // Manually fix some vaults
+    if (vault.id in manualFixes) {
+      if ('platformName' in manualFixes[vault.id]) {
+        platformName = manualFixes[vault.id].platformName;
+      }
+      if ('providerName' in manualFixes[vault.id]) {
+        providerName = manualFixes[vault.id].providerName;
       }
     }
 
