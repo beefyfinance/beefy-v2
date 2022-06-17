@@ -12,7 +12,7 @@ export const excludeChains: string[] = ['heco'];
 export const allChainIds: string[] = Object.keys(chainConfigs);
 export const chainIds: string[] = allChainIds.filter(chainId => !excludeChains.includes(chainId));
 export const chainRpcs: Record<string, string> = Object.fromEntries(
-  chainIds.map(chainId => [
+  allChainIds.map(chainId => [
     chainId,
     process.env[`${chainId.toUpperCase()}_RPC`] || lodash.sample(chainConfigs[chainId].rpc),
   ])
