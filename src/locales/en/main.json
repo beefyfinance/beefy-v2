@@ -384,7 +384,7 @@
   "Bridge-MinAmount": "Min crosschain amount",
   "Bridge-MaxAmount": "MAX crosschain amount",
   "Bridge-Advice-1": "Estimated Time of Crosschain Arrival is 10-30 min",
-  "Bridge-Advice-2": "Crosschain amount larger than 1,000 BIFI could take up to 12 hours",
+  "Bridge-Advice-2": "Crosschain amount larger than {{amount}} BIFI could take up to 12 hours",
   "Bridge-Button-1": "Bridge BIFI to {{network}}",
   "Multichain-Error": "Something was wrong, please check your transaction Multichain Explorer",
   "Meta-Title-Template": "{{title}} - Beefy Finance",
