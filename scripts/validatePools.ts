@@ -2,9 +2,8 @@ import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
-
 import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './utils';
-import { chainPools, chainRpcs } from './config';
+import { chainIds, chainRpcs, getVaultsForChain } from './config';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 
@@ -48,8 +47,8 @@ const validatePools = async () => {
   const uniquePoolId = new Set();
 
   let promises = [];
-  for (let [chain, pools] of Object.entries(chainPools)) {
-    promises.push(validateSingleChain(chain, pools, uniquePoolId));
+  for (const chainId of chainIds) {
+    promises.push(validateSingleChain(chainId, uniquePoolId));
   }
   let results = await Promise.all(promises);
 
@@ -65,8 +64,9 @@ const validatePools = async () => {
   return exitCode;
 };
 
-const validateSingleChain = async (chain, pools, uniquePoolId) => {
-  console.log(`Validating ${pools.length} pools in ${chain}...`);
+const validateSingleChain = async (chainId, uniquePoolId) => {
+  let pools = await getVaultsForChain(chainId);
+  console.log(`Validating ${pools.length} pools in ${chainId}...`);
 
   let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
@@ -80,9 +80,9 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
   let activePools = 0;
 
   // Populate some extra data.
-  const web3 = new Web3(chainRpcs[chain]);
-  pools = await populateVaultsData(chain, pools, web3);
-  pools = await populateStrategyData(chain, pools, web3);
+  const web3 = new Web3(chainRpcs[chainId]);
+  pools = await populateVaultsData(chainId, pools, web3);
+  pools = await populateStrategyData(chainId, pools, web3);
 
   pools = override(pools);
   pools.forEach(pool => {
@@ -167,12 +167,12 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
     uniqueOracleId.add(pool.oracleId);
 
     const { keeper, strategyOwner, vaultOwner, beefyFeeRecipient } =
-      addressBook[chain].platforms.beefyfinance;
+      addressBook[chainId].platforms.beefyfinance;
 
-    updates = isKeeperCorrect(pool, chain, keeper, updates);
-    updates = isStratOwnerCorrect(pool, chain, strategyOwner, updates);
-    updates = isVaultOwnerCorrect(pool, chain, vaultOwner, updates);
-    updates = isBeefyFeeRecipientCorrect(pool, chain, beefyFeeRecipient, updates);
+    updates = isKeeperCorrect(pool, chainId, keeper, updates);
+    updates = isStratOwnerCorrect(pool, chainId, strategyOwner, updates);
+    updates = isVaultOwnerCorrect(pool, chainId, vaultOwner, updates);
+    updates = isBeefyFeeRecipientCorrect(pool, chainId, beefyFeeRecipient, updates);
   });
   if (!isEmpty(updates)) {
     exitCode = 1;
@@ -189,9 +189,9 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
     );
   }
 
-  console.log(`${chain} active pools: ${activePools}/${pools.length}\n`);
+  console.log(`${chainId} active pools: ${activePools}/${pools.length}\n`);
 
-  return { chain, exitCode, updates };
+  return { chainId, exitCode, updates };
 };
 
 // Validation helpers. These only log for now, could throw error if desired.

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Web3 from 'web3';
-import { chainPools, chainRpcs } from './config';
+import { chainRpcs, getVaultsForChain } from './config';
 
 const explorerApiUrls = {
   cronos: 'https://api.cronoscan.com/api',
@@ -110,7 +110,8 @@ const getPoolDate = async () => {
 
   let pool;
   try {
-    pool = chainPools[chain].filter(p => p.id === poolId)[0];
+    const pools = await getVaultsForChain(chain);
+    pool = pools.filter(p => p.id === poolId)[0];
   } catch (err) {
     return console.log(`${poolId} not found in pools for chain ${chain}`);
   }

@@ -3,7 +3,7 @@ import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 
-import { chainPools, chainRpcs } from './config';
+import { chainRpcs, getVaultsForChain } from './config';
 import launchPoolABI from '../src/config/abi/boost.json';
 import erc20ABI from '../src/config/abi/erc20.json';
 import { AbiItem } from 'web3-utils';
@@ -42,7 +42,8 @@ async function generateLaunchpool() {
   const partnerId = partner.toLowerCase();
 
   const boost = await boostParams(chain, boostAddress);
-  const pool = chainPools[chain].find(pool => pool.earnedTokenAddress === boost.staked);
+  const pools = await getVaultsForChain(chain);
+  const pool = pools.find(pool => pool.earnedTokenAddress === boost.staked);
 
   const newBoost = {
     id: `moo_${pool.oracleId}-${partnerId}`,
