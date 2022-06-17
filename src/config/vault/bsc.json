@@ -19653,5 +19653,39 @@
     "buyTokenUrl": "https://exchange.biswap.org/#/swap?inputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c&outputCurrency=0x6c7fc3Fd4a9f1Cfa2a69B83F92b9DA7EC26240A2",
     "createdAt": 1655301832,
     "network": "bsc"
+  },
+  {
+    "id": "biswap-trx-wbnb",
+    "name": "TRX-BNB LP",
+    "token": "TRX-BNB BiLP",
+    "tokenDescription": "BiSwap",
+    "tokenAddress": "0x16da0c473214717383b7Ef5cdE71c723584f8ac4",
+    "tokenDecimals": 18,
+    "tokenDescriptionUrl": "#",
+    "earnedToken": "mooBiSwapTRX-BNB",
+    "earnedTokenAddress": "0x1D78Ea6e3702FBB5CE3F46B4AB10A79110fe29c7",
+    "earnContractAddress": "0x1D78Ea6e3702FBB5CE3F46B4AB10A79110fe29c7",
+    "pricePerFullShare": 1,
+    "tvl": 0,
+    "oracle": "lps",
+    "oracleId": "biswap-trx-wbnb",
+    "oraclePrice": 0,
+    "depositsPaused": false,
+    "status": "active",
+    "platform": "BiSwap",
+    "assets": ["TRX", "BNB"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "stratType": "StratLP",
+    "addLiquidityUrl": "https://exchange.biswap.org/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0x85EAC5Ac2F758618dFa09bDbe0cf174e7d574D5B",
+    "buyTokenUrl": "https://exchange.biswap.org/#/swap?inputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c&outputCurrency=0x85EAC5Ac2F758618dFa09bDbe0cf174e7d574D5B",
+    "createdAt": 1655470838,
+    "network": "bsc"
   }
 ]
