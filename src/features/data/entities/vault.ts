@@ -1,6 +1,7 @@
 import { ChainEntity } from './chain';
 import { PlatformEntity } from './platform';
 import { TokenEntity } from './token';
+import { StrategyTypeEntity } from './strategy-type';
 
 // maybe a RiskAnalysis type would be better
 
@@ -43,8 +44,7 @@ export interface VaultStandard {
    */
   earnContractAddress: string;
 
-  // for display purpose only
-  strategyType: 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
+  strategyTypeId: StrategyTypeEntity['id'];
 
   isGovVault: false;
 

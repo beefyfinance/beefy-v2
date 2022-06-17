@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../../store';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectPlatformById } from '../../../data/selectors/platforms';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { selectChainById } from '../../../data/selectors/chains';
 
 export type StrategyDescriptionProps = {
   vaultId: VaultEntity['id'];
@@ -13,70 +14,51 @@ export type StrategyDescriptionProps = {
 export const StrategyDescription = memo<StrategyDescriptionProps>(function StrategyDescription({
   vaultId,
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   // Only included when !isGovVault so we can type assert to VaultStandard
   const vault = useAppSelector(state => selectVaultById(state, vaultId)) as VaultStandard;
+  const chain = useAppSelector(state => selectChainById(state, vault.chainId));
   const vaultPlatform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
-  const strategyType = vault.strategyType;
+  const depositTokenProvider = useAppSelector(state =>
+    depositToken.providerId ? selectPlatformById(state, depositToken.providerId) : null
+  );
   const vaultPlatformName = vaultPlatform.name;
+  const depositTokenProviderName = depositTokenProvider ? depositTokenProvider.name : null;
   const assets = vault.assetIds;
   const depositTokenName = depositToken.symbol;
-  const vamp = vault.name; // TODO currently there are no vaults marked 'vamp'
+  const chainName = chain.name;
+  const chainNativeToken = chain.walletSettings.nativeCurrency.symbol;
 
-  const description = useMemo(() => {
-    switch (strategyType) {
-      case 'StratLP':
-      case 'StratMultiLP':
-      case 'Vamp':
-        const firstPart = t('Strat-LP-First', {
-          platform: vaultPlatformName,
-          LPtoken: depositTokenName,
-        });
-        let middlePart = '';
-        switch (strategyType) {
-          case 'StratLP':
-            middlePart = t('Strat-LP', {
-              asset1: assets[0],
-              asset2: assets[1],
-              LPtoken: depositTokenName,
-            });
-            break;
-          case 'StratMultiLP':
-            middlePart = t('Strat-LP-Multi', { LPtoken: depositTokenName });
-            break;
-          case 'Vamp':
-            middlePart = t('Strat-LP-Vamp', {
-              subPlatform: vaultPlatformName,
-              topPlatform: vamp,
-              LPtoken: depositTokenName,
-            });
-            break;
-        }
-        return firstPart + ' ' + middlePart + ' ' + t('Strat-LP-GasCost');
+  let i18nKey = `StrategyDescription-${vault.strategyTypeId}`;
+  if (!i18n.exists(i18nKey)) {
+    i18nKey = 'StrategyDescription-default';
+  }
 
-      case 'Lending':
-        return t('Strat-Lending', { asset: assets[0] });
+  const options = useMemo(() => {
+    const opts = {
+      vaultPlatform: vaultPlatformName,
+      depositToken: depositTokenName,
+      depositTokenProvider: depositTokenProviderName,
+      chain: chainName,
+      nativeToken: chainNativeToken,
+    };
 
-      case 'SingleStake':
-        return (
-          t('Strat-Single', {
-            platform: vaultPlatformName,
-            token: assets[0],
-          }) +
-          ' ' +
-          t('Strat-LP-GasCost')
-        );
-
-      case 'Maxi':
-        return t('Strat-Maxi');
-
-      default:
-        return t('Strat-Default');
+    for (const i of assets) {
+      opts[`token${i}`] = assets[i];
     }
-  }, [strategyType, vaultPlatformName, assets, depositTokenName, vamp, t]);
 
-  return <>{description}</>;
+    return opts;
+  }, [
+    vaultPlatformName,
+    assets,
+    depositTokenName,
+    depositTokenProviderName,
+    chainName,
+    chainNativeToken,
+  ]);
+
+  return <>{t(i18nKey, options)}</>;
 });

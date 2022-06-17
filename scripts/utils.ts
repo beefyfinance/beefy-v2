@@ -44,6 +44,10 @@ export function objectInsert<TValue>(
   relativeKey: string,
   relativePosition: 'before' | 'after' = 'after'
 ): Record<string, TValue> {
+  if (!(relativeKey in obj)) {
+    throw new Error(`${relativeKey} does not exist on object`);
+  }
+
   return Object.fromEntries(
     Object.entries(obj).reduce((newEntries, pair) => {
       if (pair[0] === relativeKey && relativePosition === 'before')

@@ -231,7 +231,7 @@ function addVaultToState(
       depositTokenAddress: apiVault.tokenAddress ?? 'native',
       earnContractAddress: apiVault.earnContractAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
-      strategyType: apiVault.stratType as VaultStandard['strategyType'],
+      strategyTypeId: apiVault.strategyTypeId,
       chainId: chainId,
       platformId: apiVault.platformId,
       status: apiVault.status as VaultStandard['status'],

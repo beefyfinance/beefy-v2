@@ -4,6 +4,16 @@ import { objectInsert } from './utils';
 
 const providerWithFarmRegex = /(.+) \(([^)]+)\)/;
 
+const mapStrategies = {
+  StratLP: 'lp',
+  StableLP: 'lp',
+  StratMultiLP: 'multi-lp',
+  Lending: 'lending',
+  SingleStake: 'single',
+  StratSingle: 'single',
+  Maxi: 'maxi',
+};
+
 const correctPlatforms = {
   '0xdao': '0xDAO',
   '1inch': '1Inch',
@@ -384,6 +394,21 @@ async function migrateNetwork(network: string) {
       platforms.push({ id: platformToId(providerName), name: providerName });
     }
 
+    // Strategy Type
+    let strategyId = null;
+    if (vault.stratType) {
+      if (vault.stratType in mapStrategies) {
+        strategyId = mapStrategies[vault.stratType];
+        if (strategyId === 'lp' || strategyId === 'multi-lp') {
+          strategyId = vault.assets.length > 2 ? 'multi-lp' : 'lp';
+        }
+      } else {
+        console.error(vault.id, 'invalid stratType', vault.stratType);
+      }
+    } else {
+      console.error(vault.id, 'no stratType');
+    }
+
     // Update vault
     delete vault.tokenDescription;
     delete vault.tokenDescriptionUrl;
@@ -391,6 +416,7 @@ async function migrateNetwork(network: string) {
     delete vault.tvl;
     delete vault.oraclePrice;
     delete vault.platform;
+    delete vault.stratType;
 
     vault = objectInsert('platformId', platformToId(platformName), vault, 'status', 'after');
 
@@ -402,6 +428,10 @@ async function migrateNetwork(network: string) {
         'earnedToken',
         'before'
       );
+    }
+
+    if (strategyId) {
+      vault = objectInsert('strategyTypeId', strategyId, vault, 'assets', 'after');
     }
 
     return vault;

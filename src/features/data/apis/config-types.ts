@@ -2,6 +2,7 @@ import { VaultEntity } from '../entities/vault';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { PlatformEntity } from '../entities/platform';
+import { StrategyTypeEntity } from '../entities/strategy-type';
 
 export interface VaultConfig {
   id: string;
@@ -21,7 +22,7 @@ export interface VaultConfig {
   platformId: PlatformEntity['id'];
   assets?: TokenEntity['id'][];
   risks?: string[] | null;
-  stratType: string; // 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
+  strategyTypeId: StrategyTypeEntity['id'];
   withdrawalFee?: string | null;
   network: string;
   excluded?: string | null;

@@ -7,6 +7,8 @@ import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-c
 import { BridgeApi } from './bridge/bridge';
 import { IPlatformApi } from './platform/platform-types';
 import { PlatformApi } from './platform/platform';
+import { IStrategyTypesApi } from './strategy-type/strategy-type-types';
+import { StrategyTypesApi } from './strategy-type';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -36,6 +38,15 @@ export function getPlatformApi(): IPlatformApi {
   }
 
   return platformApi;
+}
+
+let strategyTypesApi = null;
+export function getStrategyTypesApi(): IStrategyTypesApi {
+  if (strategyTypesApi === null) {
+    strategyTypesApi = new StrategyTypesApi();
+  }
+
+  return strategyTypesApi;
 }
 
 const Web3Promise = import('web3');
