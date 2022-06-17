@@ -413,7 +413,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "stratType": "SingleStake",
-    "withdrawalFee": "0.0%",
+    "withdrawalFee": "0%",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "network": "avax",
     "createdAt": 1631011023,
@@ -468,7 +468,8 @@
     "oracle": "lps",
     "oracleId": "joe-bnb-wavax",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["BNB", "AVAX"],
     "risks": [
@@ -501,7 +502,8 @@
     "oracle": "lps",
     "oracleId": "joe-link.e-wavax",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["LINKe", "AVAX"],
     "risks": [
@@ -1244,7 +1246,8 @@
     "oracle": "lps",
     "oracleId": "joe-cra-wavax",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["CRA", "AVAX"],
     "risks": [
@@ -1311,7 +1314,8 @@
     "oracle": "lps",
     "oracleId": "joe-gohm-wavax",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["gOHM", "AVAX"],
     "risks": [
@@ -2399,7 +2403,8 @@
     "oracleId": "joe-wavax-xava",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["XAVA", "AVAX"],
     "risks": [
@@ -2433,7 +2438,8 @@
     "oracleId": "joe-wavax-dcau",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["DCAU", "AVAX"],
     "risks": [
@@ -3571,7 +3577,8 @@
     "oracleId": "joe-deg-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["DEG", "AVAX"],
     "risks": [
@@ -3849,7 +3856,8 @@
     "oracleId": "joe-ape-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["APE", "AVAX"],
     "risks": [
@@ -4125,7 +4133,8 @@
     "oracleId": "curve-avax-f-avaxl",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["AVAXL", "AVAX"],
     "risks": [
@@ -4160,7 +4169,8 @@
     "oracleId": "joe-money-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["MONEY", "AVAX"],
     "risks": [
@@ -4438,7 +4448,8 @@
     "oracleId": "joe-lost-wavax",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Trader Joe",
     "assets": ["LOST", "AVAX"],
     "risks": [
@@ -4472,7 +4483,8 @@
     "oracleId": "curve-avax-f-3pool",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["USTw", "USDT", "USDC"],
     "risks": [

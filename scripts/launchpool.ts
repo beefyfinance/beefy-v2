@@ -6,6 +6,7 @@ import Web3 from 'web3';
 import { chainRpcs, getVaultsForChain } from './config';
 import launchPoolABI from '../src/config/abi/boost.json';
 import erc20ABI from '../src/config/abi/erc20.json';
+import partners from '../src/config/boost/partners.json';
 import { AbiItem } from 'web3-utils';
 
 async function boostParams(chain, boostAddress) {
@@ -61,16 +62,7 @@ async function generateLaunchpool() {
     partnership: true,
     status: 'active',
     isMooStaked: true,
-    partners: [''],
-  };
-
-  const subpartner = {
-    text: '',
-    website: '',
-    social: {
-      telegram: '',
-      twitter: '',
-    },
+    partners: [`${partnerId}`],
   };
 
   if (newBoost.logo) {
@@ -80,14 +72,22 @@ async function generateLaunchpool() {
   }
 
   let str = JSON.stringify(newBoost, null, 2) + ',';
-
   console.log(str);
 
-  console.log(
-    'make sure to add the partners keys linking to a valid partner in partners.json file'
-  );
-
-  console.log(JSON.stringify(subpartner, null, 2));
+  if (!(partnerId in partners)) {
+    const subpartner = {
+      [partnerId]: {
+        text: '',
+        website: '',
+        social: {
+          telegram: '',
+          twitter: '',
+        },
+      },
+    };
+    console.log('\nadd partner to partners.json file');
+    console.log(JSON.stringify(subpartner, null, 2));
+  }
 }
 
 generateLaunchpool().catch(err => {

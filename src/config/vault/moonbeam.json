@@ -647,7 +647,8 @@
     "oracleId": "stellaswap-stella-usdc",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["STELLA", "USDC"],
     "risks": [
@@ -682,7 +683,8 @@
     "oracleId": "stellaswap-usdc-wglmr",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["USDC", "GLMR"],
     "risks": [
@@ -717,7 +719,8 @@
     "oracleId": "stellaswap-usdc-usdt",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["USDC", "USDT"],
     "risks": [
@@ -822,7 +825,8 @@
     "oracleId": "stellaswap-dai-usdc",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["DAI", "USDC"],
     "risks": [
@@ -858,7 +862,8 @@
     "oracleId": "stellaswap-usdc-eth",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["USDC", "ETH"],
     "risks": [
@@ -893,7 +898,8 @@
     "oracleId": "stellaswap-wglmr-eth",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["GLMR", "ETH"],
     "risks": [
@@ -928,7 +934,8 @@
     "oracleId": "stellaswap-usdc-ftm",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["USDC", "FTM"],
     "risks": [
@@ -1103,7 +1110,8 @@
     "oracleId": "stellaswap-atom-usdc",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Stellaswap",
     "assets": ["ATOM", "USDC"],
     "risks": [

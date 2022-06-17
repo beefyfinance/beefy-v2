@@ -126,7 +126,7 @@ export const selectIsTokenStable = (
 };
 
 export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
-  return ['BIFI', 'POTS', 'beFTM'].includes(tokenId);
+  return ['BIFI', 'POTS', 'beFTM', 'beQI', 'beJOE', 'binSPIRIT'].includes(tokenId);
 };
 
 export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id']) => {

@@ -406,7 +406,8 @@
     "oracle": "lps",
     "oracleId": "curve-harmony-tricrypto",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
     "risks": [
@@ -442,7 +443,8 @@
     "oracle": "lps",
     "oracleId": "curve-harmony-3pool",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["DAI", "USDC", "USDT"],
     "risks": [

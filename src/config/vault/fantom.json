@@ -1442,7 +1442,8 @@
     "oracle": "lps",
     "oracleId": "curve-ftm-2pool",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["USDC", "DAI"],
     "risks": [
@@ -2048,7 +2049,8 @@
     "oracle": "lps",
     "oracleId": "boo-wftm-joe",
     "oraclePrice": 0,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "SpookySwap",
     "assets": ["JOE", "FTM"],
     "risks": [
@@ -2215,7 +2217,8 @@
     "oracleId": "boo-wftm-ooe",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "SpookySwap",
     "assets": ["OOE", "FTM"],
     "risks": [
@@ -6219,7 +6222,8 @@
     "oracleId": "tomb-tomb-mai",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Tomb",
     "assets": ["TOMB", "MAI"],
     "risks": [
@@ -6324,7 +6328,8 @@
     "oracleId": "based-based-mai",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Other",
     "assets": ["BASED", "MAI"],
     "risks": [
@@ -7001,7 +7006,8 @@
     "oracleId": "tomb-tshare-mai",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Tomb",
     "assets": ["TSHARE", "MAI"],
     "risks": [
@@ -7278,7 +7284,8 @@
     "oracleId": "curve-ftm-f-usdl",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Curve",
     "assets": ["USDL", "fUSDT", "DAI", "USDC"],
     "risks": [
@@ -8875,7 +8882,8 @@
     "oracleId": "tomb-usdc-mai",
     "oraclePrice": 0,
     "depositsPaused": false,
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platform": "Tomb",
     "assets": ["MAI", "USDC"],
     "risks": [
