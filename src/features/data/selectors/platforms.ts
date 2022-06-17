@@ -22,3 +22,12 @@ export const selectAllPlatforms = createSelector(
   (state: BeefyState) => state.entities.platforms.byId,
   (ids, byId) => ids.map(id => byId[id])
 );
+
+/** All active platforms (vault.status != eol) that are allowed to be in the filter */
+export const selectFilterPlatforms = createSelector(
+  (state: BeefyState) => state.entities.platforms.filterIds,
+  (state: BeefyState) => state.entities.platforms.activeIds,
+  (state: BeefyState) => state.entities.platforms.byId,
+  (allowedIds, activeIds, byId) =>
+    activeIds.filter(id => allowedIds.includes(id)).map(id => byId[id])
+);

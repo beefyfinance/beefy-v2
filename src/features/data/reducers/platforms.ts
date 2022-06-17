@@ -4,14 +4,22 @@ import { PlatformEntity } from '../entities/platform';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { fetchPlatforms } from '../actions/platforms';
 import { PlatformConfig } from '../apis/platform/platform-types';
+import { fetchAllVaults } from '../actions/vaults';
+import { VaultConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos
  */
 export type PlatformsState = NormalizedEntity<PlatformEntity> & {
   filterIds: PlatformEntity['id'][];
+  activeIds: PlatformEntity['id'][];
 };
-export const initialPlatformsState: PlatformsState = { byId: {}, allIds: [], filterIds: [] };
+export const initialPlatformsState: PlatformsState = {
+  byId: {},
+  allIds: [],
+  filterIds: [],
+  activeIds: [],
+};
 
 export const platformsSlice = createSlice({
   name: 'platforms',
@@ -21,6 +29,14 @@ export const platformsSlice = createSlice({
   },
   extraReducers: builder => {
     // when vault list is fetched, add all new tokens
+    builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
+      for (const vaults of Object.values(action.payload.byChainId)) {
+        for (const vault of vaults) {
+          addVaultPlatformToState(sliceState, vault.platformId, vault.status !== 'eol');
+        }
+      }
+    });
+
     builder.addCase(fetchPlatforms.fulfilled, (sliceState, action) => {
       for (const platform of action.payload) {
         addPlatformToState(sliceState, platform);
@@ -28,6 +44,16 @@ export const platformsSlice = createSlice({
     });
   },
 });
+
+function addVaultPlatformToState(
+  sliceState: WritableDraft<PlatformsState>,
+  platformId: VaultConfig['platformId'],
+  active: boolean
+) {
+  if (active && !sliceState.activeIds.includes(platformId)) {
+    sliceState.activeIds.push(platformId);
+  }
+}
 
 function addPlatformToState(
   sliceState: WritableDraft<PlatformsState>,

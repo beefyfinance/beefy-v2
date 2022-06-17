@@ -5,7 +5,7 @@ import { selectFilterPlatformId } from '../../../../../data/selectors/filtered-v
 import { ToggleButtonsProps } from '../../../../../../components/ToggleButtons';
 import { filteredVaultsActions } from '../../../../../data/reducers/filtered-vaults';
 import { LabeledSelect } from '../../../../../../components/LabeledSelect';
-import { selectAllPlatforms } from '../../../../../data/selectors/platforms';
+import { selectFilterPlatforms } from '../../../../../data/selectors/platforms';
 
 export type PlatformDropdownFilterProps = {
   className?: string;
@@ -16,7 +16,7 @@ export const PlatformDropdownFilter = memo<PlatformDropdownFilterProps>(function
   const allKey = null;
   const placeholderAllKey = '__null';
   const otherKey = 'other';
-  const platforms = useAppSelector(selectAllPlatforms);
+  const platforms = useAppSelector(selectFilterPlatforms);
   const options: Record<string, string> = useMemo(
     () =>
       Object.fromEntries([
