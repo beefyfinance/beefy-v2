@@ -22,7 +22,7 @@ const vaultsByChainId = {};
 export async function getVaultsForChain(chainId: string) {
   const id = addressBookToAppId(chainId);
 
-  if (id in vaultsByChainId) {
+  if (!(id in vaultsByChainId)) {
     vaultsByChainId[id] = (await import(`../src/config/vault/${id}.json`)).default;
   }
 
