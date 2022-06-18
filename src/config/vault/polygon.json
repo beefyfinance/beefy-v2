@@ -7421,9 +7421,8 @@
     "tvl": 0,
     "oracle": "lps",
     "oracleId": "quick-stmatic-matic",
-    "depositsPaused": true,
-    "status": "eol",
-    "retireReason": "rewards",
+    "depositsPaused": false,
+    "status": "active",
     "platform": "QuickSwap",
     "assets": ["stMATIC", "MATIC"],
     "risks": [
