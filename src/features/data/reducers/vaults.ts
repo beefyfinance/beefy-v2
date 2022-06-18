@@ -164,12 +164,8 @@ function addVaultToState(
   const { tags, score } = getVaultTagsAndSafetyScore(state, chainId, apiVault);
 
   if (apiVault.isGovVault) {
-    if (!apiVault.logo) {
-      throw new Error(`Missing logo uri for gov vault ${apiVault.id}`);
-    }
     const vault: VaultGov = {
       id: apiVault.id,
-      logoUri: apiVault.logo,
       name: apiVault.name,
       isGovVault: true,
       depositTokenAddress: apiVault.tokenAddress,
@@ -226,7 +222,6 @@ function addVaultToState(
     const vault: VaultStandard = {
       id: apiVault.id,
       name: apiVault.name,
-      logoUri: apiVault.logo,
       isGovVault: false,
       depositTokenAddress: apiVault.tokenAddress ?? 'native',
       earnContractAddress: apiVault.earnContractAddress,

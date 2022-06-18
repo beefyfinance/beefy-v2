@@ -452,6 +452,7 @@ async function migrateNetwork(network: string) {
     delete vault.oraclePrice;
     delete vault.platform;
     delete vault.stratType;
+    delete vault.logo;
 
     vault = objectInsert('platformId', platformToId(platformName), vault, 'status', 'after');
 

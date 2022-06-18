@@ -6,6 +6,7 @@ import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './utils';
 import { chainIds, chainRpcs, getVaultsForChain } from './config';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
+import platforms from '../src/config/platforms.json';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -36,8 +37,18 @@ const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddres
 
 const allowedEarnSameToken = new Set(['venus-wbnb']);
 
-// Outputs alphabetical list of platforms per chain (useful to make sure they are consistently named)
-const outputPlatformSummary = process.argv.includes('--platform-summary');
+const validPlatformIds = platforms.map(platform => platform.id);
+
+const oldFields = [
+  'tokenDescription',
+  'tokenDescriptionUrl',
+  'pricePerFullShare',
+  'tvl',
+  'oraclePrice',
+  'platform',
+  'stratType',
+  'logo',
+];
 
 const validatePools = async () => {
   let exitCode = 0;
@@ -76,7 +87,6 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
-  const platformCounts = {};
   let activePools = 0;
 
   // Populate some extra data.
@@ -115,13 +125,27 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     }
 
     if (!pool.platformId) {
-      console.error(`Error: ${pool.id} : Pool platformId missing vault platform`);
+      console.error(`Error: ${pool.id} : platformId missing vault platform; see platforms.json`);
+      exitCode = 1;
+    } else if (!validPlatformIds.includes(pool.platformId)) {
+      console.error(
+        `Error: ${pool.id} : platformId ${pool.platformId} not present in platforms.json`
+      );
       exitCode = 1;
     }
 
-    if (pool.oracle === 'lps' && !pool.tokenProviderId) {
-      console.error(`Error: ${pool.id} : tokenProviderId missing LP provider platform`);
-      exitCode = 1;
+    if (pool.oracle === 'lps') {
+      if (!pool.tokenProviderId) {
+        console.error(
+          `Error: ${pool.id} : tokenProviderId missing LP provider platform; see platforms.json`
+        );
+        exitCode = 1;
+      } else if (!validPlatformIds.includes(pool.platformId)) {
+        console.error(
+          `Error: ${pool.id} : tokenProviderId ${pool.tokenProviderId} not present in platforms.json`
+        );
+        exitCode = 1;
+      }
     }
 
     if (!pool.createdAt) {
@@ -131,6 +155,15 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
       exitCode = 1;
     } else if (isNaN(pool.createdAt)) {
       console.error(`Error: ${pool.id} : Pool createdAt timestamp wrong type, should be a number`);
+      exitCode = 1;
+    }
+
+    // Old fields we no longer need
+    const fieldsToDelete = oldFields.filter(field => field in pool);
+    if (fieldsToDelete.length) {
+      console.error(
+        `Error: ${pool.id} : These fields are no longer needed: ${fieldsToDelete.join(', ')}`
+      );
       exitCode = 1;
     }
 
@@ -176,17 +209,6 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   });
   if (!isEmpty(updates)) {
     exitCode = 1;
-  }
-
-  if (outputPlatformSummary) {
-    console.log(
-      `Platforms: \n${Object.entries(platformCounts)
-        .sort(([platformA], [platformB]) =>
-          platformA.localeCompare(platformB, 'en', { sensitivity: 'base' })
-        )
-        .map(([platform, count]) => `\t${platform} (${count})`)
-        .join('\n')}`
-    );
   }
 
   console.log(`${chainId} active pools: ${activePools}/${pools.length}\n`);

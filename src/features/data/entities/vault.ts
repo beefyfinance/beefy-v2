@@ -25,7 +25,6 @@ export type VaultTag =
 export interface VaultStandard {
   id: string;
   name: string;
-  logoUri: string;
   depositTokenAddress: string;
 
   /**
@@ -78,7 +77,6 @@ export interface VaultStandard {
 export interface VaultGov {
   id: string;
   name: string;
-  logoUri: string;
   depositTokenAddress: string;
 
   /**
