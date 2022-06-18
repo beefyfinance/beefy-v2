@@ -310,11 +310,6 @@
     "filter": false
   },
   {
-    "id": "fryworld",
-    "name": "FryWorld",
-    "filter": false
-  },
-  {
     "id": "betu",
     "name": "BETU",
     "filter": false
@@ -853,5 +848,10 @@
     "id": "valleyswap",
     "name": "ValleySwap",
     "filter": true
+  },
+  {
+    "id": "fryworld",
+    "name": "FryWorld",
+    "filter": false
   }
 ]
