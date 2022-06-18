@@ -140,7 +140,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
           `Error: ${pool.id} : tokenProviderId missing LP provider platform; see platforms.json`
         );
         exitCode = 1;
-      } else if (!validPlatformIds.includes(pool.platformId)) {
+      } else if (!validPlatformIds.includes(pool.tokenProviderId)) {
         console.error(
           `Error: ${pool.id} : tokenProviderId ${pool.tokenProviderId} not present in platforms.json`
         );
