@@ -6372,10 +6372,9 @@
     "earnContractAddress": "0x8829ADf1a9a7facE44c8FAb3Bc454f93F330E492",
     "oracle": "lps",
     "oracleId": "quick-stmatic-matic",
-    "depositsPaused": true,
-    "status": "eol",
+    "depositsPaused": false,
+    "status": "active",
     "platformId": "quickswap",
-    "retireReason": "rewards",
     "assets": ["stMATIC", "MATIC"],
     "strategyTypeId": "lp",
     "risks": [
