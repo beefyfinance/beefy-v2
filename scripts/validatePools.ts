@@ -66,7 +66,7 @@ const validatePools = async () => {
   exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), 0);
   results.forEach(res => {
     if (!isEmpty(res.updates)) {
-      updates[res.chain] = res.updates;
+      updates[res.chainId] = res.updates;
     }
   });
   // Helpful data structures to correct addresses.
