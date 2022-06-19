@@ -2,11 +2,11 @@ import { MultiCall } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
-
-import { isValidChecksumAddress, maybeChecksumAddress, isEmpty } from './utils.mjs';
-import { chainPools, chainRpcs } from './config.js';
+import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './utils';
+import { chainIds, chainRpcs, getVaultsForChain } from './config';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
+import platforms from '../src/config/platforms.json';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -37,27 +37,36 @@ const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddres
 
 const allowedEarnSameToken = new Set(['venus-wbnb']);
 
-// Outputs alphabetical list of platforms per chain (useful to make sure they are consistently named)
-const outputPlatformSummary = process.argv.includes('--platform-summary');
+const validPlatformIds = platforms.map(platform => platform.id);
+
+const oldFields = [
+  'tokenDescription',
+  'tokenDescriptionUrl',
+  'pricePerFullShare',
+  'tvl',
+  'oraclePrice',
+  'platform',
+  'stratType',
+  'logo',
+];
 
 const validatePools = async () => {
-  
   let exitCode = 0;
-  
+
   let updates = {};
 
   const uniquePoolId = new Set();
 
   let promises = [];
-  for (let [chain, pools] of Object.entries(chainPools)) {
-    promises.push(validateSingleChain(chain, pools, uniquePoolId));
+  for (const chainId of chainIds) {
+    promises.push(validateSingleChain(chainId, uniquePoolId));
   }
   let results = await Promise.all(promises);
 
-  exitCode = results.reduce((acum, cur) => acum + cur.exitCode > 0 ? 1 : 0, 0);
+  exitCode = results.reduce((acum, cur) => (acum + cur.exitCode > 0 ? 1 : 0), 0);
   results.forEach(res => {
     if (!isEmpty(res.updates)) {
-      updates[res.chain] = updates;
+      updates[res.chainId] = res.updates;
     }
   });
   // Helpful data structures to correct addresses.
@@ -66,10 +75,11 @@ const validatePools = async () => {
   return exitCode;
 };
 
-const validateSingleChain = async (chain, pools, uniquePoolId) => {
-  console.log(`Validating ${pools.length} pools in ${chain}...`);
+const validateSingleChain = async (chainId, uniquePoolId) => {
+  let pools = await getVaultsForChain(chainId);
+  console.log(`Validating ${pools.length} pools in ${chainId}...`);
 
-  let updates = {};
+  let updates: Record<string, Record<string, any>> = {};
   let exitCode = 0;
   //Governance pools should be separately verified
   pools = pools.filter(pool => !pool.isGovVault);
@@ -77,13 +87,12 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
-  const platformCounts = {};
   let activePools = 0;
 
   // Populate some extra data.
-  const web3 = new Web3(chainRpcs[chain]);
-  pools = await populateVaultsData(chain, pools, web3);
-  pools = await populateStrategyData(chain, pools, web3);
+  const web3 = new Web3(chainRpcs[chainId]);
+  pools = await populateVaultsData(chainId, pools, web3);
+  pools = await populateStrategyData(chainId, pools, web3);
 
   pools = override(pools);
   pools.forEach(pool => {
@@ -115,22 +124,28 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
       exitCode = 1;
     }
 
-    if (!pool.tokenDescription) {
+    if (!pool.platformId) {
+      console.error(`Error: ${pool.id} : platformId missing vault platform; see platforms.json`);
+      exitCode = 1;
+    } else if (!validPlatformIds.includes(pool.platformId)) {
       console.error(
-        `Error: ${pool.id} : Pool tokenDescription missing - required for UI: vault card`
+        `Error: ${pool.id} : platformId ${pool.platformId} not present in platforms.json`
       );
       exitCode = 1;
     }
 
-    if (!pool.platform) {
-      console.error(
-        `Error: ${pool.id} : Pool platform missing - required for UI: filter (Use 'Other' if necessary)`
-      );
-      exitCode = 1;
-    } else {
-      platformCounts[pool.platform] = platformCounts.hasOwnProperty(pool.platform)
-        ? platformCounts[pool.platform] + 1
-        : 1;
+    if (pool.oracle === 'lps') {
+      if (!pool.tokenProviderId) {
+        console.error(
+          `Error: ${pool.id} : tokenProviderId missing LP provider platform; see platforms.json`
+        );
+        exitCode = 1;
+      } else if (!validPlatformIds.includes(pool.tokenProviderId)) {
+        console.error(
+          `Error: ${pool.id} : tokenProviderId ${pool.tokenProviderId} not present in platforms.json`
+        );
+        exitCode = 1;
+      }
     }
 
     if (!pool.createdAt) {
@@ -139,8 +154,15 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
       );
       exitCode = 1;
     } else if (isNaN(pool.createdAt)) {
+      console.error(`Error: ${pool.id} : Pool createdAt timestamp wrong type, should be a number`);
+      exitCode = 1;
+    }
+
+    // Old fields we no longer need
+    const fieldsToDelete = oldFields.filter(field => field in pool);
+    if (fieldsToDelete.length) {
       console.error(
-        `Error: ${pool.id} : Pool createdAt timestamp wrong type, should be a number`
+        `Error: ${pool.id} : These fields are no longer needed: ${fieldsToDelete.join(', ')}`
       );
       exitCode = 1;
     }
@@ -178,33 +200,21 @@ const validateSingleChain = async (chain, pools, uniquePoolId) => {
     uniqueOracleId.add(pool.oracleId);
 
     const { keeper, strategyOwner, vaultOwner, beefyFeeRecipient } =
-      addressBook[chain].platforms.beefyfinance;
+      addressBook[chainId].platforms.beefyfinance;
 
-    updates = isKeeperCorrect(pool, chain, keeper, updates);
-    updates = isStratOwnerCorrect(pool, chain, strategyOwner, updates);
-    updates = isVaultOwnerCorrect(pool, chain, vaultOwner, updates);
-    updates = isBeefyFeeRecipientCorrect(pool, chain, beefyFeeRecipient, updates);
+    updates = isKeeperCorrect(pool, chainId, keeper, updates);
+    updates = isStratOwnerCorrect(pool, chainId, strategyOwner, updates);
+    updates = isVaultOwnerCorrect(pool, chainId, vaultOwner, updates);
+    updates = isBeefyFeeRecipientCorrect(pool, chainId, beefyFeeRecipient, updates);
   });
   if (!isEmpty(updates)) {
     exitCode = 1;
   }
 
-  if (outputPlatformSummary) {
-    console.log(
-      `Platforms: \n${Object.entries(platformCounts)
-        .sort(([platformA], [platformB]) =>
-          platformA.localeCompare(platformB, 'en', { sensitivity: 'base' })
-        )
-        .map(([platform, count]) => `\t${platform} (${count})`)
-        .join('\n')}`
-    );
-  }
+  console.log(`${chainId} active pools: ${activePools}/${pools.length}\n`);
 
-  console.log(`${chain} active pools: ${activePools}/${pools.length}\n`);
-  
-  return { chain, exitCode, updates };
-}
-
+  return { chainId, exitCode, updates };
+};
 
 // Validation helpers. These only log for now, could throw error if desired.
 const isKeeperCorrect = (pool, chain, chainKeeper, updates) => {
@@ -349,5 +359,9 @@ const override = pools => {
   return pools;
 };
 
-const exitCode = await validatePools();
-process.exit(exitCode);
+validatePools()
+  .then(exitCode => process.exit(exitCode))
+  .catch(err => {
+    console.error(err);
+    process.exit(-1);
+  });
