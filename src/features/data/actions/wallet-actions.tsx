@@ -835,16 +835,17 @@ const bridge = (
       if (isRouter) {
         //ROUTER CONTRACT
         const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
+
         return bridgeTokenData.underlying
-          ? contract?.methods
+          ? contract.methods
               .anySwapOutUnderlying(
-                bridgeTokenData.address,
+                bridgeTokenData.underlying.address,
                 address,
                 rawAmount,
                 destChain.networkChainId
               )
               .send({ from: address, ...gasPrices })
-          : contract?.methods
+          : contract.methods
               .anySwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
               .send({ from: address, ...gasPrices });
       } else {

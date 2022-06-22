@@ -1,0 +1,22 @@
+[
+  {
+    "id": "lp",
+    "name": "Standard LP"
+  },
+  {
+    "id": "multi-lp",
+    "name": "Multiple LP"
+  },
+  {
+    "id": "lending",
+    "name": "Lending"
+  },
+  {
+    "id": "single",
+    "name": "Single Staking"
+  },
+  {
+    "id": "maxi",
+    "name": "Beefy Maxi"
+  }
+]

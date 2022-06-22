@@ -1,4 +1,5 @@
 import { ChainEntity } from './chain';
+import { PlatformEntity } from './platform';
 
 /**
  * A token can be anything erc20-like
@@ -16,6 +17,7 @@ export type TokenEntity = TokenErc20 | TokenNative;
 export interface TokenErc20 {
   id: string;
   symbol: string;
+  providerId?: PlatformEntity['id'];
   chainId: ChainEntity['id'];
   oracleId: string;
   address: string;
@@ -33,6 +35,7 @@ export interface TokenErc20 {
 export interface TokenNative {
   id: string;
   symbol: string;
+  providerId?: PlatformEntity['id'];
   chainId: ChainEntity['id'];
   // some chains have addressable native tokens
   // maybe this should be a separate interface
