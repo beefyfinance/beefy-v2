@@ -36,7 +36,7 @@ const WalletContainer = React.lazy(() => import(`./components/WalletContainer`))
 const useStyles = makeStyles(styles);
 
 const BifiPrice = connect((state: BeefyState) => {
-  const beefyPrice = state.entities.tokens.prices.byTokenId['BIFI'] || BIG_ZERO;
+  const beefyPrice = state.entities.tokens.prices.byOracleId['BIFI'] || BIG_ZERO;
   return { beefyPrice };
 })(({ beefyPrice }: { beefyPrice: BigNumber }) => {
   const classes = useStyles();

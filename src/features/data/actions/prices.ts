@@ -1,20 +1,29 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BeefyAPIBuybackResponse, BeefyAPITokenPricesResponse } from '../apis/beefy';
+import {
+  BeefyAPIBuybackResponse,
+  BeefyAPILpBreakdownResponse,
+  BeefyAPITokenPricesResponse,
+} from '../apis/beefy';
 import { getBeefyApi } from '../apis/instances';
 
-export const fetchAllPricesAction = createAsyncThunk<BeefyAPITokenPricesResponse, {}>(
+export type fetchAllPricesPayload = {
+  prices: BeefyAPITokenPricesResponse;
+  breakdowns: BeefyAPILpBreakdownResponse;
+};
+export const fetchAllPricesAction = createAsyncThunk<fetchAllPricesPayload, void>(
   'prices/fetchAllPricesAction',
   async () => {
     const api = getBeefyApi();
-    const [prices, lpPrices] = await Promise.all([api.getPrices(), api.getLPs()]);
+    const [prices, breakdowns] = await Promise.all([api.getPrices(), api.getLpsBreakdown()]);
+
     return {
-      ...prices,
-      ...lpPrices,
+      prices,
+      breakdowns,
     };
   }
 );
 
-export const fetchBeefyBuybackAction = createAsyncThunk<BeefyAPIBuybackResponse, {}>(
+export const fetchBeefyBuybackAction = createAsyncThunk<BeefyAPIBuybackResponse, void>(
   'prices/fetchBeefyBuybackAction',
   async () => {
     const api = getBeefyApi();

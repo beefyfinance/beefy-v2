@@ -8,7 +8,7 @@ export type BasicTooltipContentProps = {
   title: string;
   content?: ReactNode;
 };
-export const BasicTooltipContent = memo<BasicTooltipContentProps>(function BasicTooltipInner({
+export const BasicTooltipContent = memo<BasicTooltipContentProps>(function BasicTooltipContent({
   title,
   content,
 }) {

@@ -12,7 +12,13 @@ import {
 } from '../actions/tokens';
 import { fetchAllVaults } from '../actions/vaults';
 import { ChainEntity } from '../entities/chain';
-import { isTokenNative, TokenEntity, TokenErc20, TokenNative } from '../entities/token';
+import {
+  isTokenNative,
+  TokenEntity,
+  TokenErc20,
+  TokenLpBreakdown,
+  TokenNative,
+} from '../entities/token';
 import { selectChainById } from '../selectors/chains';
 import {
   getBoostTokenAddressFromLegacyConfig,
@@ -20,6 +26,8 @@ import {
 } from '../utils/config-hacks';
 import { fetchAllMinters } from '../actions/minters';
 import { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
+import { LpData } from '../apis/beefy';
+import { isZeroAddress } from '../../../helpers/addresses';
 
 /**
  * State containing Vault infos
@@ -47,14 +55,20 @@ export type TokensState = {
     };
   };
   prices: {
-    byTokenId: {
-      [tokenId: TokenEntity['id']]: BigNumber;
+    byOracleId: {
+      [tokenId: TokenEntity['oracleId']]: BigNumber;
+    };
+  };
+  breakdown: {
+    byOracleId: {
+      [tokenId: TokenEntity['oracleId']]: TokenLpBreakdown;
     };
   };
 };
 export const initialTokensState: TokensState = {
   byChainId: {},
-  prices: { byTokenId: {} },
+  prices: { byOracleId: {} },
+  breakdown: { byOracleId: {} },
 };
 
 export const tokensSlice = createSlice({
@@ -131,23 +145,13 @@ export const tokensSlice = createSlice({
     // this could also just be a a super quick drop in replacement
     // if we are OK to not use BigNumber, which I don't think we are
     builder.addCase(fetchAllPricesAction.fulfilled, (sliceState, action) => {
-      for (const tokenId of Object.keys(action.payload)) {
-        let tokenPrice = action.payload[tokenId];
+      for (const [oracleId, price] of Object.entries(action.payload.prices)) {
+        addPriceToState(sliceState, oracleId, price);
+      }
 
-        // when the api fails to fetch the token price, we say 1 token = $1
-        if (tokenPrice === null || tokenPrice === undefined) {
-          console.warn(`API returned an empty price for token ${tokenId}`);
-          tokenPrice = 1.0;
-        }
-
-        // new price, add it
-        if (sliceState.prices.byTokenId[tokenId] === undefined) {
-          sliceState.prices.byTokenId[tokenId] = new BigNumber(tokenPrice);
-
-          // price exists, update it if it changed
-        } else if (sliceState.prices.byTokenId[tokenId].comparedTo(tokenPrice) === 0) {
-          sliceState.prices.byTokenId[tokenId] = new BigNumber(tokenPrice);
-        }
+      for (const [oracleId, breakdown] of Object.entries(action.payload.breakdowns)) {
+        addPriceToState(sliceState, oracleId, breakdown.price);
+        addBreakdownToState(sliceState, oracleId, breakdown);
       }
     });
 
@@ -162,6 +166,58 @@ export const tokensSlice = createSlice({
     });
   },
 });
+
+function addPriceToState(
+  sliceState: WritableDraft<TokensState>,
+  oracleId: string,
+  price: number | undefined | null
+) {
+  // when the api fails to fetch the token price, we say 1 token = $1
+  if (price === null || price === undefined) {
+    console.warn(`API returned an empty price for oracle ${oracleId}`);
+    price = 1.0;
+  }
+
+  if (sliceState.prices.byOracleId[oracleId] === undefined) {
+    // new price, add it
+    sliceState.prices.byOracleId[oracleId] = new BigNumber(price);
+  } else if (!sliceState.prices.byOracleId[oracleId].isEqualTo(price)) {
+    // price exists, update it if it changed
+    sliceState.prices.byOracleId[oracleId] = new BigNumber(price);
+  }
+}
+
+function addBreakdownToState(
+  sliceState: WritableDraft<TokensState>,
+  oracleId: string,
+  breakdown: LpData
+) {
+  // Must have breakdown
+  if (!('tokens' in breakdown) || !('balances' in breakdown)) {
+    console.warn(`[LP Breakdown] ${oracleId} missing breakdown`);
+    return;
+  }
+
+  // Number of tokens must match number of balances
+  if (breakdown.tokens.length !== breakdown.balances.length) {
+    console.warn(`[LP Breakdown] ${oracleId} number of tokens does not match number of balances`);
+    return;
+  }
+
+  // All addresses should be valid
+  if (breakdown.tokens.find(address => !address || isZeroAddress(address)) !== undefined) {
+    console.warn(`[LP Breakdown] ${oracleId} has invalid token address`);
+    return;
+  }
+
+  // All balances should be > 0
+  if (breakdown.balances.find(balance => balance === '0') !== undefined) {
+    console.warn(`[LP Breakdown] ${oracleId} has zero balance`);
+    return;
+  }
+
+  sliceState.breakdown.byOracleId[oracleId] = breakdown;
+}
 
 function addAddressBookToState(
   sliceState: WritableDraft<TokensState>,

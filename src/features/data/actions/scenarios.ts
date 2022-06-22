@@ -59,7 +59,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   const vaultListFulfill = captureFulfill(fetchAllVaults({}));
 
   // we can start fetching prices right now and await them later
-  const pricesPromise = store.dispatch(fetchAllPricesAction({}));
+  const pricesPromise = store.dispatch(fetchAllPricesAction());
 
   // create the wallet instance as soon as we get the chain list
   setTimeout(async () => {
@@ -67,7 +67,7 @@ export async function initHomeDataV4(store: BeefyStore) {
     store.dispatch(fetchApyAction({}));
 
     // we start fetching buyback
-    store.dispatch(fetchBeefyBuybackAction({}));
+    store.dispatch(fetchBeefyBuybackAction());
 
     store.dispatch(fetchFeaturedVaults());
 
@@ -85,7 +85,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   // we need config data (for contract addresses) to start querying the rest
   await chainListPromise;
   // pre-load the addressbook
-  const addressBookPromise = store.dispatch(fetchAllAddressBookAction({}));
+  const addressBookPromise = store.dispatch(fetchAllAddressBookAction());
   // we need the chain list to handle the vault list
   store.dispatch((await vaultListFulfill)());
   await boostListPromise;
@@ -150,7 +150,7 @@ export async function initHomeDataV4(store: BeefyStore) {
   // now set regular calls to update prices
   pollStop = poll(async () => {
     return Promise.all([
-      store.dispatch(fetchAllPricesAction({})),
+      store.dispatch(fetchAllPricesAction()),
       store.dispatch(fetchApyAction({})),
     ]);
   }, 45 * 1000 /* every 45s */);

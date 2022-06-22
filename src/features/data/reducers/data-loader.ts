@@ -46,36 +46,44 @@ interface LoaderStateInit {
   status: 'init';
   error: null;
 }
+
 interface LoaderStatePending {
   alreadyLoadedOnce: boolean;
   status: 'pending';
   error: null;
 }
+
 interface LoaderStateRejected {
   alreadyLoadedOnce: boolean;
   status: 'rejected';
   error: string;
 }
+
 interface LoaderStateFulfilled {
   alreadyLoadedOnce: boolean;
   status: 'fulfilled';
   error: null;
 }
+
 export type LoaderState =
   | LoaderStateInit
   | LoaderStatePending
   | LoaderStateRejected
   | LoaderStateFulfilled;
+
 // some example of a type guard
 export function isFulfilled(state: LoaderState): state is LoaderStateFulfilled {
   return state.status === 'fulfilled';
 }
+
 export function isPending(state: LoaderState): state is LoaderStatePending {
   return state.status === 'pending';
 }
+
 export function isInitialLoader(state: LoaderState): state is LoaderStateInit {
   return state.status === 'init';
 }
+
 export function isRejected(state: LoaderState): state is LoaderStateRejected {
   return state.status === 'rejected';
 }
@@ -113,6 +121,7 @@ export interface DataLoaderState {
     chainConfig: LoaderState;
     prices: LoaderState;
     apy: LoaderState;
+    lpsBreakdown: LoaderState;
     vaults: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
@@ -136,6 +145,7 @@ export interface DataLoaderState {
     };
   };
 }
+
 export const initialDataLoaderState: DataLoaderState = {
   instances: {
     wallet: false,
@@ -146,6 +156,7 @@ export const initialDataLoaderState: DataLoaderState = {
   global: {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
+    lpsBreakdown: dataLoaderStateInit,
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
