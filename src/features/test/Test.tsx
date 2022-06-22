@@ -79,7 +79,10 @@ const TestBreakdown = memo<TestBreakdownProps>(function ({ oracleId }) {
         <>
           <div>
             <div>lp address: {vault.depositTokenAddress}</div>
-            <div>lp price: {lpPrice ? lpPrice.toString() : 'null'}</div>
+            <div>
+              lp price:{' '}
+              {lpPrice ? lpPrice.toString() : <span className="test-error">no price found</span>}
+            </div>
           </div>
           <table width="100%">
             <thead>
@@ -98,7 +101,13 @@ const TestBreakdown = memo<TestBreakdownProps>(function ({ oracleId }) {
                     <>
                       <td>{tokens[i].symbol}</td>
                       <td>{tokens[i].oracleId}</td>
-                      <td>{prices[i] ? prices[i].toString() : 'null'}</td>
+                      <td>
+                        {prices[i] ? (
+                          prices[i].toString()
+                        ) : (
+                          <span className="test-error">no price found</span>
+                        )}
+                      </td>
                     </>
                   ) : (
                     <td colSpan={3} className="test-error">
@@ -154,7 +163,6 @@ export const Test = memo(function Test() {
       <style>
         {`
         .test-error {color: red;}
-        .test-warning {color: red;}
         .test { border-top: solid 2px #fff; padding-top: 1em; margin-top: 1em; }
         th { text-align: left; }
       `}
