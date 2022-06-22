@@ -16,7 +16,7 @@ If any error is noted during validation, fix before starting the server, which w
 
 ## Contribute
 
-Beefy.Finance exists thanks to its contributors. There are many ways you can participate and help build high quality software. Check out the [contribution guide](CONTRIBUTING.md)!
+Beefy.Finance exists thanks to its contributors. There are many ways you can participate and help build high quality software. Check out the [contribution guide](CONTRIBUTING.md).
 
 ## License
 
