@@ -321,33 +321,35 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
     'custom-twt': {
       display: {
         name: 'Trust',
-        description: 'Trust Wallet',
+        description: 'Connect to your Trust Wallet',
         logo: require(`../../../../images/wallets/trust-wallet.svg`).default,
       },
       package: 'twt',
       connector: connectors.injected,
     },
-    'custom-clover': {
+    'custom-wallet-connect': {
       display: {
-        logo: require(`../../../../images/wallets/clover.png`).default,
-        name: 'Clover Wallet',
-        description: 'Connect with your Clover wallet and earn CLV',
+        logo: require(`../../../../images/wallets/wallet-connect.svg`).default,
+        name: 'Wallet Connect',
+        description: 'Scan QR Code to Connect',
       },
       options: {
-        supportedChainIds: allSupportedChainIds,
+        rpc: allSupportedChainsIdRpcMap,
       },
-      package: CloverConnector,
+      package: WalletConnectProvider,
       connector: async (ProviderPackage, options) => {
         const provider = new ProviderPackage(options);
-        await provider.activate();
-        return provider.getProvider();
+
+        await provider.enable();
+
+        return provider;
       },
     },
     'custom-coinbase': {
       display: {
         logo: require(`../../../../images/wallets/coinbase.png`).default,
         name: 'Coinbase Wallet',
-        description: 'Connect your Coinbase Wallet',
+        description: 'Connect to your Coinbase Wallet',
       },
       options: {
         appName: 'Beefy Finance',
@@ -365,23 +367,14 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
         return provider;
       },
     },
-    'custom-wallet-connect': {
+    'custom-core': {
       display: {
-        logo: require(`../../../../images/wallets/wallet-connect.svg`).default,
-        name: 'Wallet Connect',
-        description: 'Scan your WalletConnect to Connect',
+        name: 'Core',
+        description: 'Connect to your Core Wallet',
+        logo: require(`../../../../images/wallets/core-wallet.svg`).default,
       },
-      options: {
-        rpc: allSupportedChainsIdRpcMap,
-      },
-      package: WalletConnectProvider,
-      connector: async (ProviderPackage, options) => {
-        const provider = new ProviderPackage(options);
-
-        await provider.enable();
-
-        return provider;
-      },
+      package: 'core',
+      connector: connectors.injected,
     },
     'custom-fuse-cash': {
       display: {
@@ -407,7 +400,7 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
     'custom-math': {
       display: {
         name: 'Math',
-        description: 'Math Wallet',
+        description: 'Connect to your Math Wallet',
         logo: require(`../../../../images/wallets/math-wallet.svg`).default,
       },
       package: 'math',
@@ -416,7 +409,7 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
     'custom-binance': {
       display: {
         name: 'Binance',
-        description: 'Binance Chain Wallet',
+        description: 'Connect to your Binance Chain Wallet',
         logo: require(`../../../../images/wallets/binance-wallet.png`).default,
       },
       package: 'binance',
@@ -429,7 +422,7 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
     'custom-safepal': {
       display: {
         name: 'SafePal',
-        description: 'SafePal App',
+        description: 'Connect to your SafePal App',
         logo: require(`../../../../images/wallets/safepal-wallet.svg`).default,
       },
       package: 'safepal',
@@ -459,6 +452,22 @@ function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> 
         });
         await connector.activate();
         return connector.getProvider();
+      },
+    },
+    'custom-clover': {
+      display: {
+        logo: require(`../../../../images/wallets/clover.png`).default,
+        name: 'Clover Wallet',
+        description: 'Connect with your Clover wallet and earn CLV',
+      },
+      options: {
+        supportedChainIds: allSupportedChainIds,
+      },
+      package: CloverConnector,
+      connector: async (ProviderPackage, options) => {
+        const provider = new ProviderPackage(options);
+        await provider.activate();
+        return provider.getProvider();
       },
     },
     'custom-bitkeep': {
