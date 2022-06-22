@@ -27,7 +27,7 @@ import {
 import { fetchAllMinters } from '../actions/minters';
 import { BoostConfig, MinterConfig, VaultConfig } from '../apis/config-types';
 import { LpData } from '../apis/beefy';
-import { isZeroAddress } from '../../../helpers/addresses';
+import { isNativeAlternativeAddress } from '../../../helpers/addresses';
 
 /**
  * State containing Vault infos
@@ -205,7 +205,7 @@ function addBreakdownToState(
   }
 
   // All addresses should be valid
-  if (breakdown.tokens.find(address => !address || isZeroAddress(address)) !== undefined) {
+  if (breakdown.tokens.find(address => !address) !== undefined) {
     console.warn(`[LP Breakdown] ${oracleId} has invalid token address`);
     return;
   }
@@ -216,6 +216,12 @@ function addBreakdownToState(
     return;
   }
 
+  // Replace native stand-ins
+  breakdown.tokens = breakdown.tokens.map(address =>
+    isNativeAlternativeAddress(address) ? 'native' : address
+  );
+
+  // Add to state
   sliceState.breakdown.byOracleId[oracleId] = breakdown;
 }
 

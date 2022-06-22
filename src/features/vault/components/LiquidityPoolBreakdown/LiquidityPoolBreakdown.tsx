@@ -98,6 +98,31 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
     const breakdown = useAppSelector(state =>
       selectLpBreakdownByAddress(state, chainId, vault.depositTokenAddress)
     );
+    const haveBreakdownData = useAppSelector(state => {
+      if (
+        !isPricesLoaded ||
+        !isAddressBookLoaded ||
+        !breakdown ||
+        !breakdown.tokens ||
+        !breakdown.tokens.length ||
+        !breakdown.balances ||
+        breakdown.balances.length !== breakdown.tokens.length
+      ) {
+        return false;
+      }
+
+      const tokens = breakdown.tokens.map(
+        address => state.entities.tokens.byChainId[vault.chainId].byAddress[address.toLowerCase()]
+      );
+      if (tokens.find(token => !token) === undefined) {
+        return false;
+      }
+
+      return (
+        tokens.find(token => !!state.entities.tokens.prices.byOracleId[token.oracleId]) ===
+        undefined
+      );
+    });
 
     // Load address book if needed
     useEffect(() => {
@@ -106,13 +131,7 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
       }
     }, [dispatch, isAddressBookLoaded, shouldInitAddressBook, chainId]);
 
-    if (
-      isPricesLoaded &&
-      isAddressBookLoaded &&
-      breakdown &&
-      'balances' in breakdown &&
-      'tokens' in breakdown
-    ) {
+    if (haveBreakdownData) {
       return <LiquidityPoolBreakdown vault={vault} breakdown={breakdown} />;
     }
 
