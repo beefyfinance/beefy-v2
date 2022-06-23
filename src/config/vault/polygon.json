@@ -60,7 +60,7 @@
     "network": "polygon"
   },
   {
-    "id": "mai-crv-mai-3pool",
+    "id": "mai-curve-mai-3pool",
     "name": "MAI/DAI/USDC/USDT",
     "token": "mai+am3CRV",
     "tokenAddress": "0x447646e84498552e62eCF097Cc305eaBFFF09308",
@@ -70,7 +70,7 @@
     "earnedTokenAddress": "0x3CB928f9B49D9bD6eF43B7310dcC17dB0528CCc6",
     "earnContractAddress": "0x3CB928f9B49D9bD6eF43B7310dcC17dB0528CCc6",
     "oracle": "lps",
-    "oracleId": "crv-mai-3pool",
+    "oracleId": "curve-mai-3pool",
     "status": "active",
     "platformId": "mai",
     "assets": ["MAI", "DAI", "USDC", "USDT"],
