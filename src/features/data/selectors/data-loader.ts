@@ -11,7 +11,8 @@ const selectIsPriceAvailable = (state: BeefyState) =>
 export const selectIsConfigAvailable = (state: BeefyState) =>
   state.ui.dataLoader.global.chainConfig.alreadyLoadedOnce &&
   state.ui.dataLoader.global.vaults.alreadyLoadedOnce &&
-  state.ui.dataLoader.global.boosts.alreadyLoadedOnce;
+  state.ui.dataLoader.global.boosts.alreadyLoadedOnce &&
+  state.ui.dataLoader.global.platforms.alreadyLoadedOnce;
 
 export const selectVaultApyAvailable = (state: BeefyState, vaultId: VaultEntity['id']) => {
   if (!selectIsConfigAvailable(state)) {

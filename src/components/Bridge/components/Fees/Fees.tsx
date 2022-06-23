@@ -45,7 +45,7 @@ function _FeesInfo() {
           </div>
           <div className={classes.advice}>
             <p>{t('Bridge-Advice-1')}</p>
-            <p>{t('Bridge-Advice-2')}</p>
+            <p>{t('Bridge-Advice-2', { amount: destChainData.BigValueThreshold })}</p>
           </div>
         </>
       ) : (

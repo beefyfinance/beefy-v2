@@ -321,6 +321,13 @@ function addVaultToState(
     sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(depositToken.address);
     sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()] = depositToken;
   }
+  if (
+    sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()].providerId ===
+    undefined
+  ) {
+    sliceState.byChainId[chainId].byAddress[depositToken.address.toLowerCase()].providerId =
+      depositToken.providerId;
+  }
 
   // add earned token data
   const addressKey = vault.earnedTokenAddress ? vault.earnedTokenAddress.toLowerCase() : 'native';

@@ -26,6 +26,7 @@ import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { KeysOfType } from '../utils/types-utils';
 import { FilteredVaultsState } from '../reducers/filtered-vaults';
+import { PlatformEntity } from '../entities/platform';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -174,6 +175,12 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
   });
 }
 
+const selectPlatformIdForFilter = createCachedSelector(
+  (state: BeefyState) => state.entities.platforms.filterIds,
+  (state: BeefyState, platformId: PlatformEntity['id']) => platformId,
+  (filterIds, platformId) => (filterIds.includes(platformId) ? platformId : 'other')
+)((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+
 // todo: use createSelector or put the result in the state to avoid re-computing these on every render
 // https://dev.to/nioufe/you-should-not-use-lodash-for-memoization-3441
 export const selectFilteredVaults = (state: BeefyState) => {
@@ -201,7 +208,10 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
       return false;
     }
-    if (filterOptions.platformId !== null && vault.platformId !== filterOptions.platformId) {
+    if (
+      filterOptions.platformId !== null &&
+      selectPlatformIdForFilter(state, vault.platformId) !== filterOptions.platformId
+    ) {
       return false;
     }
     // paused vaults are not considered retired

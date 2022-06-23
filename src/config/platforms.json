@@ -1,0 +1,857 @@
+[
+  {
+    "id": "beefy",
+    "name": "Beefy",
+    "filter": true
+  },
+  {
+    "id": "babyswap",
+    "name": "BabySwap",
+    "filter": false
+  },
+  {
+    "id": "apeswap",
+    "name": "ApeSwap",
+    "filter": true
+  },
+  {
+    "id": "nfty",
+    "name": "NFTY",
+    "filter": false
+  },
+  {
+    "id": "belt",
+    "name": "Belt",
+    "filter": true
+  },
+  {
+    "id": "pancakeswap",
+    "name": "PancakeSwap",
+    "filter": true
+  },
+  {
+    "id": "wsg",
+    "name": "WSG",
+    "filter": false
+  },
+  {
+    "id": "mdex",
+    "name": "Mdex",
+    "filter": true
+  },
+  {
+    "id": "pacoca",
+    "name": "Pacoca",
+    "filter": false
+  },
+  {
+    "id": "czodiac",
+    "name": "CZodiac",
+    "filter": false
+  },
+  {
+    "id": "honeyfarm",
+    "name": "HoneyFarm",
+    "filter": false
+  },
+  {
+    "id": "tosdis",
+    "name": "Tos Dis",
+    "filter": false
+  },
+  {
+    "id": "waultfinance",
+    "name": "WaultFinance",
+    "filter": false
+  },
+  {
+    "id": "yel",
+    "name": "YEL",
+    "filter": false
+  },
+  {
+    "id": "jetswap",
+    "name": "JetSwap",
+    "filter": true
+  },
+  {
+    "id": "rabbitfinance",
+    "name": "RabbitFinance",
+    "filter": false
+  },
+  {
+    "id": "kingdefi",
+    "name": "KingDefi",
+    "filter": false
+  },
+  {
+    "id": "openocean",
+    "name": "OpenOcean",
+    "filter": false
+  },
+  {
+    "id": "merlin",
+    "name": "Merlin",
+    "filter": false
+  },
+  {
+    "id": "iron",
+    "name": "Iron",
+    "filter": false
+  },
+  {
+    "id": "ironfinance",
+    "name": "IronFinance",
+    "filter": false
+  },
+  {
+    "id": "memefarm",
+    "name": "MemeFarm",
+    "filter": false
+  },
+  {
+    "id": "ten",
+    "name": "Ten",
+    "filter": false
+  },
+  {
+    "id": "dopple",
+    "name": "Dopple",
+    "filter": false
+  },
+  {
+    "id": "billionhappiness",
+    "name": "BillionHappiness",
+    "filter": false
+  },
+  {
+    "id": "garuda",
+    "name": "Garuda",
+    "filter": false
+  },
+  {
+    "id": "grand",
+    "name": "Grand",
+    "filter": false
+  },
+  {
+    "id": "dumpling",
+    "name": "Dumpling",
+    "filter": false
+  },
+  {
+    "id": "satis",
+    "name": "Satis",
+    "filter": false
+  },
+  {
+    "id": "pancakebunny",
+    "name": "Pancakebunny",
+    "filter": false
+  },
+  {
+    "id": "marshmallow",
+    "name": "Marshmallow",
+    "filter": false
+  },
+  {
+    "id": "icarus",
+    "name": "Icarus",
+    "filter": false
+  },
+  {
+    "id": "swamp",
+    "name": "Swamp",
+    "filter": false
+  },
+  {
+    "id": "autofarm",
+    "name": "Autofarm",
+    "filter": false
+  },
+  {
+    "id": "venus",
+    "name": "Venus",
+    "filter": true
+  },
+  {
+    "id": "yieldbay",
+    "name": "YieldBay",
+    "filter": false
+  },
+  {
+    "id": "blizzard",
+    "name": "Blizzard",
+    "filter": false
+  },
+  {
+    "id": "typhoon",
+    "name": "Typhoon",
+    "filter": false
+  },
+  {
+    "id": "biti",
+    "name": "Biti",
+    "filter": false
+  },
+  {
+    "id": "bingo",
+    "name": "Bingo",
+    "filter": false
+  },
+  {
+    "id": "thunderswap",
+    "name": "ThunderSwap",
+    "filter": false
+  },
+  {
+    "id": "swirl",
+    "name": "Swirl",
+    "filter": false
+  },
+  {
+    "id": "zcore",
+    "name": "ZCore",
+    "filter": false
+  },
+  {
+    "id": "julswap",
+    "name": "JulSwap",
+    "filter": false
+  },
+  {
+    "id": "alpaca",
+    "name": "Alpaca",
+    "filter": false
+  },
+  {
+    "id": "pumpy",
+    "name": "Pumpy",
+    "filter": false
+  },
+  {
+    "id": "squirrel",
+    "name": "Squirrel",
+    "filter": false
+  },
+  {
+    "id": "bakery",
+    "name": "Bakery",
+    "filter": false
+  },
+  {
+    "id": "slimefinance",
+    "name": "SlimeFinance",
+    "filter": false
+  },
+  {
+    "id": "soup",
+    "name": "Soup",
+    "filter": false
+  },
+  {
+    "id": "1inch",
+    "name": "1Inch",
+    "filter": false
+  },
+  {
+    "id": "sponge",
+    "name": "Sponge",
+    "filter": false
+  },
+  {
+    "id": "crow",
+    "name": "Crow",
+    "filter": false
+  },
+  {
+    "id": "cafeswap",
+    "name": "CafeSwap",
+    "filter": false
+  },
+  {
+    "id": "kebab",
+    "name": "Kebab",
+    "filter": true
+  },
+  {
+    "id": "monster",
+    "name": "Monster",
+    "filter": false
+  },
+  {
+    "id": "nyanswop",
+    "name": "Nyanswop",
+    "filter": false
+  },
+  {
+    "id": "traphouse",
+    "name": "Traphouse",
+    "filter": false
+  },
+  {
+    "id": "bdollar",
+    "name": "bDollar",
+    "filter": false
+  },
+  {
+    "id": "thugswap",
+    "name": "ThugSwap",
+    "filter": false
+  },
+  {
+    "id": "fuel",
+    "name": "Fuel",
+    "filter": false
+  },
+  {
+    "id": "fortube",
+    "name": "ForTube",
+    "filter": false
+  },
+  {
+    "id": "fryworld",
+    "name": "FryWorld",
+    "filter": false
+  },
+  {
+    "id": "betu",
+    "name": "BETU",
+    "filter": false
+  },
+  {
+    "id": "charge",
+    "name": "Charge",
+    "filter": false
+  },
+  {
+    "id": "pearzap",
+    "name": "PearZap",
+    "filter": false
+  },
+  {
+    "id": "fruit",
+    "name": "Fruit",
+    "filter": false
+  },
+  {
+    "id": "quant",
+    "name": "QUANT",
+    "filter": false
+  },
+  {
+    "id": "ellipsis",
+    "name": "Ellipsis",
+    "filter": true
+  },
+  {
+    "id": "complus",
+    "name": "Complus",
+    "filter": false
+  },
+  {
+    "id": "bolt",
+    "name": "Bolt",
+    "filter": false
+  },
+  {
+    "id": "elkfinance",
+    "name": "ElkFinance",
+    "filter": false
+  },
+  {
+    "id": "dibs",
+    "name": "Dibs",
+    "filter": false
+  },
+  {
+    "id": "omnifarm",
+    "name": "Omnifarm",
+    "filter": false
+  },
+  {
+    "id": "narwhal",
+    "name": "Narwhal",
+    "filter": false
+  },
+  {
+    "id": "bishares",
+    "name": "BiShares",
+    "filter": false
+  },
+  {
+    "id": "annex",
+    "name": "Annex",
+    "filter": false
+  },
+  {
+    "id": "blockmine",
+    "name": "BlockMine",
+    "filter": false
+  },
+  {
+    "id": "singular",
+    "name": "Singular",
+    "filter": false
+  },
+  {
+    "id": "longdrink",
+    "name": "Longdrink",
+    "filter": false
+  },
+  {
+    "id": "viralata",
+    "name": "Viralata",
+    "filter": false
+  },
+  {
+    "id": "farmhero",
+    "name": "FarmHero",
+    "filter": false
+  },
+  {
+    "id": "saltswap",
+    "name": "SaltSwap",
+    "filter": false
+  },
+  {
+    "id": "ramenswap",
+    "name": "RamenSwap",
+    "filter": false
+  },
+  {
+    "id": "omnitrade",
+    "name": "Omnitrade",
+    "filter": false
+  },
+  {
+    "id": "stargate",
+    "name": "Stargate",
+    "filter": true
+  },
+  {
+    "id": "emp",
+    "name": "EMP",
+    "filter": true
+  },
+  {
+    "id": "biswap",
+    "name": "BiSwap",
+    "filter": true
+  },
+  {
+    "id": "pantherswap",
+    "name": "PantherSwap",
+    "filter": false
+  },
+  {
+    "id": "valas",
+    "name": "Valas",
+    "filter": true
+  },
+  {
+    "id": "bomb",
+    "name": "Bomb",
+    "filter": true
+  },
+  {
+    "id": "ripae",
+    "name": "Ripae",
+    "filter": true
+  },
+  {
+    "id": "dotdot",
+    "name": "DotDot",
+    "filter": true
+  },
+  {
+    "id": "pera",
+    "name": "Pera",
+    "filter": false
+  },
+  {
+    "id": "lendhub",
+    "name": "Lendhub",
+    "filter": true
+  },
+  {
+    "id": "hfi",
+    "name": "HFI",
+    "filter": false
+  },
+  {
+    "id": "lavaswap",
+    "name": "Lavaswap",
+    "filter": false
+  },
+  {
+    "id": "bankerjoe",
+    "name": "Banker Joe",
+    "filter": true
+  },
+  {
+    "id": "blizz",
+    "name": "Blizz",
+    "filter": true
+  },
+  {
+    "id": "traderjoe",
+    "name": "Trader Joe",
+    "filter": true
+  },
+  {
+    "id": "curve",
+    "name": "Curve",
+    "filter": true
+  },
+  {
+    "id": "oliveswap",
+    "name": "OliveSwap",
+    "filter": true
+  },
+  {
+    "id": "gondola",
+    "name": "Gondola",
+    "filter": false
+  },
+  {
+    "id": "lydia",
+    "name": "Lydia",
+    "filter": true
+  },
+  {
+    "id": "snowball",
+    "name": "Snowball",
+    "filter": false
+  },
+  {
+    "id": "pangolin",
+    "name": "Pangolin",
+    "filter": true
+  },
+  {
+    "id": "mai",
+    "name": "Mai",
+    "filter": true
+  },
+  {
+    "id": "mim",
+    "name": "MIM",
+    "filter": true
+  },
+  {
+    "id": "grape",
+    "name": "Grape",
+    "filter": false
+  },
+  {
+    "id": "aave",
+    "name": "Aave",
+    "filter": true
+  },
+  {
+    "id": "quickswap",
+    "name": "QuickSwap",
+    "filter": true
+  },
+  {
+    "id": "sushiswap",
+    "name": "SushiSwap",
+    "filter": true
+  },
+  {
+    "id": "polywise",
+    "name": "Polywise",
+    "filter": false
+  },
+  {
+    "id": "polyalpha",
+    "name": "PolyAlpha",
+    "filter": false
+  },
+  {
+    "id": "sandman",
+    "name": "Sandman",
+    "filter": false
+  },
+  {
+    "id": "ironswap",
+    "name": "IronSwap",
+    "filter": true
+  },
+  {
+    "id": "polypup",
+    "name": "Polypup",
+    "filter": false
+  },
+  {
+    "id": "dfyn",
+    "name": "DFyn",
+    "filter": false
+  },
+  {
+    "id": "l2",
+    "name": "L2",
+    "filter": false
+  },
+  {
+    "id": "polyyeld",
+    "name": "Polyyeld",
+    "filter": false
+  },
+  {
+    "id": "polywantsacracker",
+    "name": "PolyWantsACracker",
+    "filter": false
+  },
+  {
+    "id": "dinoswap",
+    "name": "DinoSwap",
+    "filter": false
+  },
+  {
+    "id": "telxchange",
+    "name": "Telxchange",
+    "filter": false
+  },
+  {
+    "id": "boneswap",
+    "name": "BoneSwap",
+    "filter": false
+  },
+  {
+    "id": "polycat",
+    "name": "Polycat",
+    "filter": false
+  },
+  {
+    "id": "cometh",
+    "name": "Cometh",
+    "filter": true
+  },
+  {
+    "id": "polywhale",
+    "name": "Polywhale",
+    "filter": false
+  },
+  {
+    "id": "polysage",
+    "name": "PolySage",
+    "filter": false
+  },
+  {
+    "id": "jarvis",
+    "name": "Jarvis",
+    "filter": true
+  },
+  {
+    "id": "popsicle",
+    "name": "Popsicle",
+    "filter": false
+  },
+  {
+    "id": "polygonfarm",
+    "name": "PolygonFarm",
+    "filter": false
+  },
+  {
+    "id": "firebird",
+    "name": "Firebird",
+    "filter": true
+  },
+  {
+    "id": "polyzap",
+    "name": "Polyzap",
+    "filter": false
+  },
+  {
+    "id": "kyber",
+    "name": "Kyber",
+    "filter": false
+  },
+  {
+    "id": "beethovenx",
+    "name": "Beethoven X",
+    "filter": true
+  },
+  {
+    "id": "scream",
+    "name": "Scream",
+    "filter": true
+  },
+  {
+    "id": "spiritswap",
+    "name": "SpiritSwap",
+    "filter": true
+  },
+  {
+    "id": "geist",
+    "name": "Geist",
+    "filter": true
+  },
+  {
+    "id": "spookyswap",
+    "name": "SpookySwap",
+    "filter": true
+  },
+  {
+    "id": "tomb",
+    "name": "Tomb",
+    "filter": true
+  },
+  {
+    "id": "steakhouse",
+    "name": "SteakHouse",
+    "filter": false
+  },
+  {
+    "id": "stakesteak",
+    "name": "StakeSteak",
+    "filter": false
+  },
+  {
+    "id": "sushi",
+    "name": "Sushi",
+    "filter": true
+  },
+  {
+    "id": "0xdao",
+    "name": "0xDAO",
+    "filter": false
+  },
+  {
+    "id": "summitdefi",
+    "name": "SummitDefi",
+    "filter": false
+  },
+  {
+    "id": "ester",
+    "name": "Ester",
+    "filter": false
+  },
+  {
+    "id": "froyo",
+    "name": "Froyo",
+    "filter": false
+  },
+  {
+    "id": "wigoswap",
+    "name": "WigoSwap",
+    "filter": true
+  },
+  {
+    "id": "based",
+    "name": "Based",
+    "filter": false
+  },
+  {
+    "id": "tombswap",
+    "name": "TombSwap",
+    "filter": true
+  },
+  {
+    "id": "spartacadabra",
+    "name": "Spartacadabra",
+    "filter": true
+  },
+  {
+    "id": "2omb",
+    "name": "2omb",
+    "filter": false
+  },
+  {
+    "id": "hector",
+    "name": "Hector",
+    "filter": true
+  },
+  {
+    "id": "solarbeam",
+    "name": "SolarBeam",
+    "filter": true
+  },
+  {
+    "id": "huckleberry",
+    "name": "Huckleberry",
+    "filter": true
+  },
+  {
+    "id": "vvs",
+    "name": "VVS",
+    "filter": true
+  },
+  {
+    "id": "cronaswap",
+    "name": "CronaSwap",
+    "filter": true
+  },
+  {
+    "id": "liquidus",
+    "name": "Liquidus",
+    "filter": true
+  },
+  {
+    "id": "darkcrypto",
+    "name": "DarkCrypto",
+    "filter": false
+  },
+  {
+    "id": "mmf",
+    "name": "MMF",
+    "filter": false
+  },
+  {
+    "id": "voltage",
+    "name": "Voltage",
+    "filter": true
+  },
+  {
+    "id": "netswap",
+    "name": "Netswap",
+    "filter": true
+  },
+  {
+    "id": "tethys",
+    "name": "Tethys",
+    "filter": true
+  },
+  {
+    "id": "trisolaris",
+    "name": "Trisolaris",
+    "filter": true
+  },
+  {
+    "id": "solace",
+    "name": "Solace",
+    "filter": false
+  },
+  {
+    "id": "rose",
+    "name": "Rose",
+    "filter": true
+  },
+  {
+    "id": "stellaswap",
+    "name": "Stellaswap",
+    "filter": true
+  },
+  {
+    "id": "beamswap",
+    "name": "Beamswap",
+    "filter": true
+  },
+  {
+    "id": "solarflare",
+    "name": "Solarflare",
+    "filter": true
+  },
+  {
+    "id": "yuzuswap",
+    "name": "YuzuSwap",
+    "filter": true
+  },
+  {
+    "id": "valleyswap",
+    "name": "ValleySwap",
+    "filter": true
+  }
+]

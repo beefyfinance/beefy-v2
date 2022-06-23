@@ -1,6 +1,6 @@
 export const styles = () => ({
   button: {
-    paddingLeft: '14px',
-    paddingRight: '14px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
   },
 });

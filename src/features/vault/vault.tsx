@@ -1,5 +1,5 @@
 import { Button, Container, Hidden, makeStyles } from '@material-ui/core';
-import { lazy, memo, PropsWithChildren, useState } from 'react';
+import React, { lazy, memo, PropsWithChildren, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { DisplayTags } from '../../components/vaultTags';
@@ -40,6 +40,7 @@ import { NexusCard } from './components/NexusCard';
 import { SolaceCard } from './components/SolaceCard';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
+import { VaultPlatform } from '../../components/VaultPlatform';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -112,7 +113,10 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
                   {t('Chain')} <span>{chain.name}</span>
                 </div>
                 <div className={classes.platformLabel}>
-                  {t('Platform')} <span>{vault.tokenDescription}</span>
+                  {t('Platform')}{' '}
+                  <span>
+                    <VaultPlatform vaultId={vaultId} />
+                  </span>
                 </div>
               </div>
             </div>

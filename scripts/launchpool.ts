@@ -1,22 +1,23 @@
 // To run: yarn launchpool bsc <0x12312312> CafeSwap
-import { MultiCall } from 'eth-multicall';
+import { MultiCall, ShapeWithLabel } from 'eth-multicall';
 import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import { promises as fs } from 'fs';
 
-import { chainPools, chainRpcs } from './config.js';
+import { chainRpcs, getVaultsForChain } from './config';
 import launchPoolABI from '../src/config/abi/boost.json';
 import erc20ABI from '../src/config/abi/erc20.json';
 import partners from '../src/config/boost/partners.json';
+import { AbiItem } from 'web3-utils';
 
 const partnersFile = './src/config/boost/partners.json';
 let boostsFile = './src/config/boost/$chain.json';
 
 async function boostParams(chain, boostAddress) {
   const web3 = new Web3(chainRpcs[chain]);
-  const boostContract = new web3.eth.Contract(launchPoolABI, boostAddress);
+  const boostContract = new web3.eth.Contract(launchPoolABI as AbiItem[], boostAddress);
   const multicall = new MultiCall(web3, addressBook[chain].platforms.beefyfinance.multicall);
-  let calls = [
+  let calls: ShapeWithLabel[] = [
     {
       staked: boostContract.methods.stakedToken(),
       reward: boostContract.methods.rewardToken(),
@@ -26,7 +27,7 @@ async function boostParams(chain, boostAddress) {
   let [results] = await multicall.all([calls]);
   const params = results[0];
 
-  const tokenContract = new web3.eth.Contract(erc20ABI, params.reward);
+  const tokenContract = new web3.eth.Contract(erc20ABI as AbiItem[], params.reward);
   calls = [
     {
       earnedToken: tokenContract.methods.symbol(),
@@ -47,7 +48,8 @@ async function generateLaunchpool() {
   boostsFile = boostsFile.replace('$chain', chain);
 
   const boost = await boostParams(chain, boostAddress);
-  const pool = chainPools[chain].find(pool => pool.earnedTokenAddress === boost.staked);
+  const pools = await getVaultsForChain(chain);
+  const pool = pools.find(pool => pool.earnedTokenAddress === boost.staked);
 
   const newBoost = {
     id: `moo_${pool.oracleId}-${partnerId}`,
@@ -95,4 +97,7 @@ async function generateLaunchpool() {
   }
 }
 
-await generateLaunchpool();
+generateLaunchpool().catch(err => {
+  console.error(err);
+  process.exit(-1);
+});
