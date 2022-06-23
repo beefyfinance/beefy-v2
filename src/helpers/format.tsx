@@ -163,7 +163,7 @@ export function formatSignificantBigNumber(
   value: BigNumber,
   decimals: number,
   price: BigNumber,
-  extraPlaces: number = 1,
+  extraPlaces: number = 0,
   minPlaces: number = 2,
   roundMode: BigNumber.RoundingMode = BigNumber.ROUND_FLOOR
 ) {

@@ -49,6 +49,7 @@ export function useCalculatedBreakdown(
         totalValue,
         userValue: userShareOfPool.multipliedBy(totalValue),
         oneValue: oneLpShareOfPool.multipliedBy(totalValue),
+        price: valuePerDecimal,
         color: chartColors[i % chartColors.length],
       };
     })

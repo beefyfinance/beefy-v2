@@ -11,6 +11,7 @@ export type CalculatedAsset = TokenEntity & {
   totalValue: BigNumber;
   userValue: BigNumber;
   oneValue: BigNumber;
+  price: BigNumber;
   color: string;
   percent: number;
 };

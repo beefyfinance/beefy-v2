@@ -111,16 +111,17 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
         return false;
       }
 
+      // Must have tokens in state
       const tokens = breakdown.tokens.map(
         address => state.entities.tokens.byChainId[vault.chainId].byAddress[address.toLowerCase()]
       );
-      if (tokens.find(token => !token) === undefined) {
+      if (tokens.find(token => !token) !== undefined) {
         return false;
       }
 
+      // Must have prices of tokens in state
       return (
-        tokens.find(token => !!state.entities.tokens.prices.byOracleId[token.oracleId]) ===
-        undefined
+        tokens.find(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === undefined
       );
     });
 
