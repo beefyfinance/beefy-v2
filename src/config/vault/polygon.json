@@ -60,6 +60,38 @@
     "network": "polygon"
   },
   {
+    "id": "mai-crv-mai-3pool",
+    "name": "MAI/DAI/USDC/USDT",
+    "token": "mai+am3CRV",
+    "tokenAddress": "0x447646e84498552e62eCF097Cc305eaBFFF09308",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooQiMai3Pool",
+    "earnedTokenAddress": "0x3CB928f9B49D9bD6eF43B7310dcC17dB0528CCc6",
+    "earnContractAddress": "0x3CB928f9B49D9bD6eF43B7310dcC17dB0528CCc6",
+    "oracle": "lps",
+    "oracleId": "crv-mai-3pool",
+    "status": "active",
+    "platformId": "mai",
+    "assets": ["MAI", "DAI", "USDC", "USDT"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "IL_NONE"
+    ],
+    "withdrawalFee": "0%",
+    "depositFee": "0.5%",
+    "addLiquidityUrl": "https://polygon.curve.fi/factory/107/deposit",
+    "network": "polygon",
+    "createdAt": 1655948754
+  },
+  {
     "id": "beefy-beqi-earnings",
     "name": "beQI Earnings Pool",
     "token": "beQI",
