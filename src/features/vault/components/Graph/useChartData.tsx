@@ -10,6 +10,7 @@ const SNAPSHOT_INTERVAL = parseInt(process.env.SNAPSHOT_INTERVAL) || 15 * 60;
 
 export const useChartData = (stat, period, oracleId, vaultId, network) => {
   const [chartData, setChartData] = useState(null);
+  const [averageValue, setAverageValue] = useState(0);
 
   useEffect(() => {
     const names = [`${vaultId}-${config[network].chainId}`, oracleId, vaultId];
@@ -22,11 +23,22 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
 
     const fetchData = async () => {
       const request = await axios.get(url);
-      setChartData(request.data);
+      let totalValue = 0;
+
+      for (const item of request.data) {
+        totalValue += item.v;
+      }
+      const _averageValue = totalValue / LIMITS[period];
+      const _chartData = request.data.map((item: any) => {
+        return { ...item, averageValue: _averageValue };
+      });
+
+      setAverageValue(_averageValue);
+      setChartData(_chartData);
     };
 
     fetchData();
   }, [stat, period, network, oracleId, vaultId]);
 
-  return chartData;
+  return [chartData, averageValue];
 };

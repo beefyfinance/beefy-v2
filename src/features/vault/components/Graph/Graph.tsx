@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
-
 import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
@@ -28,7 +27,13 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const tokenOracleId = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   ).oracleId;
-  const chartData = useChartData(stat, period, tokenOracleId, vaultId, vault.chainId);
+  const [chartData, averageValue] = useChartData(
+    stat,
+    period,
+    tokenOracleId,
+    vaultId,
+    vault.chainId
+  );
   const { t } = useTranslation();
 
   return (
@@ -46,35 +51,33 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className={classes.chartSizer}>
-          <ResponsiveContainer>
-            <AreaChart data={chartData} margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
-              <CartesianGrid vertical={false} stroke="#484D73" />
-              <YAxis
-                dataKey="v"
-                tick={{
-                  fill: 'white',
-                  fontSize: 12,
-                }}
-                axisLine={false}
-                tickLine={false}
-                tickFormatter={label => {
-                  return (stat === 2 ? formatApy(label) : formatUsd(label)) as any;
-                }}
-                tickCount={4}
-                width={50}
-              />
-              <Tooltip content={<CustomTooltip stat={stat} />} />
-              <Area
-                dataKey="v"
-                stroke="#F5F5FF"
-                strokeWidth={4}
-                fill="rgba(245, 245, 255, 0.1)"
-                fillOpacity={100}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+        <ResponsiveContainer height={250}>
+          <AreaChart data={chartData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+            <CartesianGrid vertical={false} stroke="#484D73" />
+            <YAxis
+              dataKey="v"
+              tick={{
+                fill: 'white',
+                fontSize: 12,
+              }}
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={label => {
+                return (stat === 2 ? formatApy(label) : formatUsd(label)) as any;
+              }}
+              tickCount={4}
+            />
+            <Tooltip content={<CustomTooltip stat={stat} averageValue={averageValue} />} />
+            <Area
+              dataKey="v"
+              stroke="#F5F5FF"
+              strokeWidth={4}
+              fill="rgba(245, 245, 255, 0.1)"
+              fillOpacity={100}
+            />
+            <Area dataKey="averageValue" stroke="#59A662" strokeWidth={4} fill="none" />
+          </AreaChart>
+        </ResponsiveContainer>
         <div className={classes.footerTabs}>
           <BasicTabs
             labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-1Year')]}

@@ -23,9 +23,6 @@ export const styles = (theme: Theme) => ({
       marginLeft: 'auto',
     },
   },
-  chartSizer: {
-    height: '250px',
-  },
   footerTabs: {
     marginTop: '12px',
     display: 'flex',
