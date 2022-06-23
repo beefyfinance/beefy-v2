@@ -115,13 +115,13 @@ export const LiquidityPoolBreakdownLoader = memo<LiquidityPoolBreakdownLoaderPro
       const tokens = breakdown.tokens.map(
         address => state.entities.tokens.byChainId[vault.chainId].byAddress[address.toLowerCase()]
       );
-      if (tokens.find(token => !token) !== undefined) {
+      if (tokens.findIndex(token => !token) !== -1) {
         return false;
       }
 
       // Must have prices of tokens in state
       return (
-        tokens.find(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === undefined
+        tokens.findIndex(token => !state.entities.tokens.prices.byOracleId[token.oracleId]) === -1
       );
     });
 
