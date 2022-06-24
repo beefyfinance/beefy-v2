@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { getBeefyApi } from '../../../data/apis/instances';
 import { config } from '../../../../config/config';
 
 const STATS = ['tvl', 'price', 'apy'];
@@ -17,19 +17,27 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
     const to = Math.floor(Date.now() / (SNAPSHOT_INTERVAL * 1000)) * SNAPSHOT_INTERVAL;
     const from = to - DAYS_IN_PERIOD[period] * 3600 * 24;
 
-    const base = `https://data.beefy.finance/${STATS[stat]}`;
-    const queries = `?name=${names[stat]}&period=${PERIODS[period]}&from=${from}&to=${to}&limit=${LIMITS[period]}`;
-    const url = `${base}${queries}`;
-
     const fetchData = async () => {
-      const request = await axios.get(url);
+      const api = getBeefyApi();
+
+      const data = await api.getChartData(
+        STATS[stat],
+        names[stat],
+        PERIODS[period],
+        from,
+        to,
+        LIMITS[period]
+      );
+
       let totalValue = 0;
 
-      for (const item of request.data) {
+      for (const item of data) {
         totalValue += item.v;
       }
+
       const _averageValue = totalValue / LIMITS[period];
-      const _chartData = request.data.map((item: any) => {
+
+      const _chartData = data.map((item: any) => {
         return { ...item, averageValue: _averageValue };
       });
 
