@@ -35,7 +35,7 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
         totalValue += item.v;
       }
 
-      const _averageValue = totalValue / LIMITS[period];
+      const _averageValue = totalValue / data.length;
 
       const _chartData = data.map((item: any) => {
         return { ...item, averageValue: _averageValue };
