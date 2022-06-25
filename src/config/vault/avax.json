@@ -5021,6 +5021,7 @@
     "depositsPaused": false,
     "status": "active",
     "platform": "Aave",
+    "platformId": "aave",
     "assets": ["LINKe"],
     "withdrawalFee": "0.01%",
     "risks": [
@@ -5034,7 +5035,7 @@
     ],
     "stratType": "Lending",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
-    "createdAt": 1654522324,
+    "createdAt": 1655845403,
     "network": "avax"
   }
 ]
