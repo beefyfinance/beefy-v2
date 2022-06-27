@@ -31,6 +31,37 @@
     "network": "moonbeam"
   },
   {
+    "id": "stellaswap-mai4pool",
+    "name": "Mai4Pool Stable LP",
+    "token": "Mai4Pool Stable LP",
+    "tokenAddress": "0xA0AA99F71033378864Ed6E499eb03612264e319a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaswapMai4pool",
+    "earnedTokenAddress": "0x86D49190A41167804f41e5f4C8DB6fd937E43277",
+    "earnContractAddress": "0x86D49190A41167804f41e5f4C8DB6fd937E43277",
+    "oracle": "lps",
+    "oracleId": "stellaswap-mai4pool",
+    "depositsPaused": false,
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["USDTs", "USDCs", "DAIs", "FRAX", "MAI"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/add/0x7FbE3126C03444D43fC403626ec81E3e809E6b46",
+    "createdAt": 1655845404,
+    "network": "moonbeam"
+  },
+
+  {
     "id": "stellaswap-base4pool",
     "name": "base4Pool Stable LP",
     "token": "base4Pool Stable LP",
