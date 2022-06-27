@@ -469,7 +469,7 @@ export const config = {
       rpcUrls: ['https://mainnet.optimism.io'],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
-    stableCoins: [''],
+    stableCoins: ['USDC, sUSD'],
   },
 };
 
