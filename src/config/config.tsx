@@ -423,7 +423,7 @@ export const config = {
       rpcUrls: ['https://rpc.api.moonbeam.network'],
       blockExplorerUrls: ['https://moonscan.io/'],
     },
-    stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
+    stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'FRAX', 'USDTs', 'USDCs', 'DAIs'],
   },
   emerald: {
     name: 'Emerald',
