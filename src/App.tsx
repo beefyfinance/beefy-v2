@@ -19,7 +19,6 @@ const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const MediaKit = React.lazy(() => import(`./features/media-kit`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
-const Test = React.lazy(() => import(`./features/test`));
 
 export const App = () => {
   React.useEffect(() => {
@@ -53,9 +52,6 @@ export const App = () => {
                 </Route>
                 <Route exact path="/media-kit">
                   <MediaKit />
-                </Route>
-                <Route exact path="/test">
-                  <Test />
                 </Route>
                 <Route>
                   <PageNotFound />
