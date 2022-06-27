@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import transakSDK from '@transak/transak-sdk';
+import { useAppSelector } from '../../store';
+import {
+  selectCurrentChainId,
+  selectIsWalletConnected,
+} from '../../features/data/selectors/wallet';
+
+const DEFAULT_NETWORK = 'polygon';
+
+const CHAINS_SUPPORT_USDC = ['arbitrum', 'avax', 'bsc', 'optimism', 'polygon'];
 
 const TransakNav = ({ className, children }) => {
   const { REACT_APP_TRANSAK_API_KEY, REACT_APP_ENVIRONMENT } = process.env;
+  const isWalletConnected = useAppSelector(selectIsWalletConnected);
+  const currentChainId = useAppSelector(selectCurrentChainId);
+
+  const defaultNetwork = useMemo(() => {
+    return !isWalletConnected || !CHAINS_SUPPORT_USDC.includes(currentChainId)
+      ? DEFAULT_NETWORK
+      : currentChainId === 'avax'
+      ? 'avaxcchain'
+      : currentChainId;
+  }, [currentChainId, isWalletConnected]);
 
   const transak = new transakSDK({
     apiKey: REACT_APP_TRANSAK_API_KEY,
@@ -13,9 +32,9 @@ const TransakNav = ({ className, children }) => {
     hostURL: window.location.origin,
     widgetHeight: '550px',
     widgetWidth: '450px',
-    defaultNetwork: 'polygon',
+    defaultNetwork,
     defaultCryptoCurrency: 'usdc',
-    networks: 'arbitrum,avaxcchain,polygon,bsc,celo,fantom,moonriver', // NETWORK PREFFERENCES
+    networks: 'arbitrum,avaxcchain,polygon,bsc,celo,fantom,moonriver,optimism', // NETWORK PREFFERENCES
     cryptoCurrencyList:
       'eth,weth,usdt,usdc,matic,dai,qi,bnb,bifi,avax,ftm,cusd,ceur,movr,aave,sushi,busd,quick,celo,wbtc',
     defaultCryptoAmount: 150,
