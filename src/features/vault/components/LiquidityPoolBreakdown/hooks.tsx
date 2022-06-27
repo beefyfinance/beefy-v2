@@ -11,7 +11,15 @@ import {
 } from '../../../data/selectors/balance';
 import { BigNumber } from 'bignumber.js';
 
-export const chartColors = ['#D9E7F2', '#ABCBE3', '#7DAFD3', '#4F93C4', '#3674A0', '#265372'];
+export const chartColors = [
+  '#D9E7F2',
+  '#ABCBE3',
+  '#7DAFD3',
+  '#4F93C4',
+  '#3674A0',
+  '#1d4159',
+  '#152e3f',
+];
 
 export function useCalculatedBreakdown(
   vault: VaultEntity,

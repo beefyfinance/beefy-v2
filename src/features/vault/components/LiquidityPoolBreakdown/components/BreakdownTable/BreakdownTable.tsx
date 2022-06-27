@@ -12,6 +12,7 @@ import clsx from 'clsx';
 import { BigNumber } from 'bignumber.js';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(styles);
 
@@ -51,6 +52,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
   className,
 }) {
   const classes = useStyles();
+  const { t } = useTranslation();
   const { chainId, assets, token } = breakdown;
   const valueField = `${mode}Value`;
   const amountField = `${mode}Amount`;
@@ -58,9 +60,9 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
   return (
     <div className={clsx(classes.table, className)}>
       <div className={clsx(classes.row, classes.header)}>
-        <div className={classes.cell}>Asset</div>
-        <div className={classes.cell}>Token Amount</div>
-        <div className={classes.cell}>Value</div>
+        <div className={classes.cell}>{t('Vault-LpBreakdown-Asset')}</div>
+        <div className={classes.cell}>{t('Vault-LpBreakdown-TokenAmount')}t</div>
+        <div className={classes.cell}>{t('Vault-LpBreakdown-Value')}</div>
       </div>
       {assets.map(asset => (
         <div key={asset.address} className={classes.row}>

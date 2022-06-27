@@ -38,10 +38,10 @@ export const LiquidityPoolBreakdown = memo<LiquidityPoolBreakdownProps>(
     const tabs: Partial<Record<BreakdownMode, string>> = useMemo(() => {
       const map = {};
       if (userBalance.gt(BIG_ZERO)) {
-        map['user'] = t('Your Deposit'); // TODO translate
+        map['user'] = t('Vault-LpBreakdown-YourDeposit');
       }
-      map['one'] = t('1 LP'); // TODO translate
-      map['total'] = t('Total Pool'); // TODO translate
+      map['one'] = t('Vault-LpBreakdown-1LP');
+      map['total'] = t('Vault-LpBreakdown-TotalPool');
       return map;
     }, [userBalance, t]);
 
