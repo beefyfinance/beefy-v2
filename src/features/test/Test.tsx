@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { isInitialLoader } from '../data/reducers/data-loader';
@@ -7,6 +7,7 @@ import { fetchAllAddressBookAction } from '../data/actions/tokens';
 import { selectLpBreakdownByOracleId, selectTokenPriceByAddress } from '../data/selectors/tokens';
 import { CowLoader } from '../../components/CowLoader';
 import { BigNumber } from 'bignumber.js';
+import { getSingleAssetSrc } from '../../helpers/singleAssetSrc';
 
 type TestBreakdownProps = {
   oracleId: string;
@@ -36,31 +37,35 @@ const TestBreakdown = memo<TestBreakdownProps>(function ({ oracleId }) {
       const haveToken = tokens[i] && 'symbol' in tokens[i];
       const havePrice = BigNumber.isBigNumber(prices[i]);
       if (!haveToken || !havePrice) {
-        if (haveToken) {
-          // token but no price
-          console.log(
-            JSON.stringify({
-              vaultId: vault.id,
-              chainId: vault.chainId,
-              tokenAddress: address,
-              tokenMissing: false,
-              priceMissing: true,
-              oracleId: tokens[i].oracleId,
-            })
-          );
-        } else {
-          // no token
-          console.log(
-            JSON.stringify({
-              vaultId: vault.id,
-              chainId: vault.chainId,
-              tokenAddress: address,
-              tokenMissing: true,
-              priceMissing: 'unknown',
-              oracleId: 'unknown',
-            })
-          );
-        }
+        // if (haveToken) {
+        //   // token but no price
+        //   console.log(
+        //     JSON.stringify({
+        //       vaultId: vault.id,
+        //       status: vault.status,
+        //       chainId: vault.chainId,
+        //       tokenAddress: address,
+        //       tokenMissing: false,
+        //       priceMissing: true,
+        //       oracleId: tokens[i].oracleId,
+        //     })
+        //   );
+        // } else {
+        //   // no token
+        //   console.log(
+        //     JSON.stringify({
+        //       vaultId: vault.id,
+        //       status: vault.status,
+        //       chainId: vault.chainId,
+        //       tokenAddress: address,
+        //       tokenMissing: true,
+        //       priceMissing: 'unknown',
+        //       oracleId: 'unknown',
+        //     })
+        //   );
+        // }
+      } else {
+        console.log(vault.id);
       }
     });
   }
@@ -167,9 +172,82 @@ export const Test = memo(function Test() {
         th { text-align: left; }
       `}
       </style>
+      <TestCount />
       {breakdownIds.map(oracleId => (
         <TestBreakdown key={oracleId} oracleId={oracleId} />
       ))}
     </Container>
+  );
+});
+
+type TestCountImplProps = { count: number };
+const TestCountImpl = memo<TestCountImplProps>(function ({ count }) {
+  const results = useAppSelector(state => {
+    const lpVaults = state.entities.vaults.allIds
+      .map(id => state.entities.vaults.byId[id])
+      .filter(vault => vault.type === 'lps');
+    const activeVaults = lpVaults.filter(vault => vault.status === 'active');
+    const vaultsWithBreakdown = activeVaults.filter(
+      vault => state.entities.tokens.breakdown.byOracleId[vault.id]
+    );
+    const vaultsWithTokens = vaultsWithBreakdown.filter(vault => {
+      const breakdown = state.entities.tokens.breakdown.byOracleId[vault.id];
+      return (
+        breakdown.tokens.findIndex(
+          token =>
+            state.entities.tokens.byChainId[vault.chainId].byAddress[token.toLowerCase()] ===
+            undefined
+        ) === -1
+      );
+    });
+    const vaultsWithPrices = vaultsWithTokens.filter(vault => {
+      const breakdown = state.entities.tokens.breakdown.byOracleId[vault.id];
+      const tokens = breakdown.tokens.map(
+        token => state.entities.tokens.byChainId[vault.chainId].byAddress[token.toLowerCase()]
+      );
+
+      return (
+        tokens.findIndex(
+          token => !token.oracleId || !state.entities.tokens.prices.byOracleId[token.oracleId]
+        ) === -1
+      );
+    });
+    const vaultsWithImages = vaultsWithPrices.filter(vault => {
+      const breakdown = state.entities.tokens.breakdown.byOracleId[vault.id];
+      const tokens = breakdown.tokens.map(
+        token => state.entities.tokens.byChainId[vault.chainId].byAddress[token.toLowerCase()]
+      );
+
+      return (
+        tokens.findIndex(token => getSingleAssetSrc(token.symbol, token.chainId) === undefined) ===
+        -1
+      );
+    });
+
+    return {
+      all: lpVaults.length,
+      active: activeVaults.length,
+      withBreakdown: vaultsWithBreakdown.length,
+      withTokens: vaultsWithTokens.length,
+      withPrices: vaultsWithPrices.length,
+      withImages: vaultsWithImages.length,
+    };
+  });
+
+  console.log(JSON.stringify(results));
+  return <>{JSON.stringify(results)}</>;
+});
+
+const TestCount = memo(function () {
+  const [count, setCount] = useState(0);
+  const recalculate = useCallback(() => {
+    setCount(count => count + 1);
+  }, [setCount]);
+
+  return (
+    <>
+      <button onClick={recalculate}>recalc</button>
+      <TestCountImpl key={count} count={count} />
+    </>
   );
 });
