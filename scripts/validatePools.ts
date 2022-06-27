@@ -79,6 +79,15 @@ const validatePools = async () => {
 
 const validateSingleChain = async (chainId, uniquePoolId) => {
   let pools = await getVaultsForChain(chainId);
+  if (chainId === 'one') {
+    if (pools.length === 22) {
+      console.log('Skip Harmony validation');
+      return 0;
+    } else {
+      console.error(`Error: New Harmony pool added without validation`);
+      return { chainId, exitCode: 1, updates: 'New Harmony pool added without validation' };
+    }
+  }
   console.log(`Validating ${pools.length} pools in ${chainId}...`);
 
   let updates: Record<string, Record<string, any>> = {};
