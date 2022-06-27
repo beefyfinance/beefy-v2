@@ -5017,6 +5017,7 @@
     "status": "active",
     "platformId": "aave",
     "assets": ["LINKe"],
+    "strategyTypeId": "lending",
     "withdrawalFee": "0.01%",
     "risks": [
       "COMPLEXITY_MID",

@@ -7,6 +7,7 @@ import { chainIds, chainRpcs, getVaultsForChain } from './config';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 import platforms from '../src/config/platforms.json';
+import strategyTypes from '../src/config/strategy-types.json';
 
 const overrides = {
   'bunny-bunny-eol': { keeper: undefined, stratOwner: undefined },
@@ -38,6 +39,7 @@ const addressFields = ['tokenAddress', 'earnedTokenAddress', 'earnContractAddres
 const allowedEarnSameToken = new Set(['venus-wbnb']);
 
 const validPlatformIds = platforms.map(platform => platform.id);
+const validstrategyTypeIds = strategyTypes.map(strategyType => strategyType.id);
 
 const oldFields = [
   'tokenDescription',
@@ -120,6 +122,18 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     if (pool.earnedTokenAddress !== pool.earnContractAddress) {
       console.error(
         `Error: ${pool.id} : Pool earnedTokenAddress not same as earnContractAddress: ${pool.earnedTokenAddress} != ${pool.earnContractAddress}`
+      );
+      exitCode = 1;
+    }
+
+    if (!pool.strategyTypeId) {
+      console.error(
+        `Error: ${pool.id} : strategyTypeId missing vault strategy type; see strategy-types.json`
+      );
+      exitCode = 1;
+    } else if (!validstrategyTypeIds.includes(pool.strategyTypeId)) {
+      console.error(
+        `Error: ${pool.id} : strategyTypeId ${pool.strategyTypeId} not present in strategy-types.json`
       );
       exitCode = 1;
     }
