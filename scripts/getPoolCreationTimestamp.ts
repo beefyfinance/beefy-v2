@@ -18,6 +18,7 @@ const explorerApiUrls = {
   one: 'https://explorer.harmony.one/',
   fuse: 'https://explorer.fuse.io/',
   emerald: 'https://explorer.emerald.oasis.dev/',
+  optimism: 'https://api-optimistic.etherscan.io/api',
 };
 
 const blockScoutChainsTimeout = new Set(['fuse', 'metis', 'celo', 'emerald']);
