@@ -5,18 +5,12 @@ export type RedirectType = {
   to: string;
 };
 export const REDIRECTS: RedirectType[] = [
-  { from: { path: '/bsc', exact: true }, to: '/' },
-  { from: { path: '/heco', exact: true }, to: '/' },
-  { from: { path: '/avax', exact: true }, to: '/' },
-  { from: { path: '/polygon', exact: true }, to: '/' },
-  { from: { path: '/fantom', exact: true }, to: '/' },
-  { from: { path: '/harmony', exact: true }, to: '/' },
-  { from: { path: '/arbitrum', exact: true }, to: '/' },
-  { from: { path: '/celo', exact: true }, to: '/' },
-  { from: { path: '/moonriver', exact: true }, to: '/' },
-  { from: { path: '/cronos', exact: true }, to: '/' },
-  { from: { path: '/fuse', exact: true }, to: '/' },
-  { from: { path: '/metis', exact: true }, to: '/' },
-  { from: { path: '/aurora', exact: true }, to: '/' },
-  { from: { path: '/moonbeam', exact: true }, to: '/' },
+  { from: { path: '/:chain/vault/:vaultId', exact: true }, to: '/vault/:vaultId' },
+  {
+    from: {
+      path: '/:chain(bsc|heco|avax|polygon|fantom|harmony|arbitrum|celo|moonriver|cronos|fuse|metis|aurora|moonbeam)',
+      exact: true,
+    },
+    to: '/',
+  },
 ];
