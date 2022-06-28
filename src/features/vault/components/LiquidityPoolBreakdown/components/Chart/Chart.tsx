@@ -3,7 +3,7 @@ import { memo, useCallback, useState } from 'react';
 import { CalculatedAsset } from '../../types';
 import { Cell, Pie, PieChart, PieProps, Sector } from 'recharts';
 import { styles } from './styles';
-import { formatApy } from '../../../../../../helpers/format';
+import { formatPercent } from '../../../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
@@ -43,7 +43,7 @@ const ActiveShape = function ({
         {payload.symbol}
       </text>
       <text x={cx} y={cy} dy={8} textAnchor="middle" alignmentBaseline="middle" fill="#D0D0DA">
-        {formatApy(payload.percent)}
+        {formatPercent(payload.percent)}
       </text>
       <Sector
         cx={cx}
