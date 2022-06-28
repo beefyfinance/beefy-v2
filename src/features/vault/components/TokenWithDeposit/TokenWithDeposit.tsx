@@ -15,7 +15,7 @@ import {
   selectTokenByAddress,
   selectTokenById,
   selectTokenPriceByAddress,
-  selectTokenPriceByTokenId,
+  selectTokenPriceByTokenOracleId,
 } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
@@ -63,7 +63,7 @@ export function TokenWithDeposit({
       const outputTokenSymbol = selectIsTokenLoaded(state, vault.chainId, convertToId)
         ? selectTokenById(state, vault.chainId, convertToId).symbol
         : convertToId;
-      const outputTokenPrice = selectTokenPriceByTokenId(state, convertToId);
+      const outputTokenPrice = selectTokenPriceByTokenOracleId(state, convertToId);
       const totalValue = oracleAmount.times(inputTokenPrice);
       const outputValue = totalValue.dividedBy(outputTokenPrice);
       amountsAndSymbol.push([outputValue.dividedBy(convertToArr.length), outputTokenSymbol]);

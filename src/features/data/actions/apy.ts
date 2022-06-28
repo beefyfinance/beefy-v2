@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { BeefyAPIBreakdownResponse } from '../apis/beefy';
+import { BeefyAPIApyBreakdownResponse } from '../apis/beefy';
 import { getBeefyApi } from '../apis/instances';
 
 export interface FetchAllApyFulfilledPayload {
-  data: BeefyAPIBreakdownResponse;
+  data: BeefyAPIApyBreakdownResponse;
   // reducers need the state (balance)
   state: BeefyState;
 }
@@ -15,6 +15,6 @@ export const fetchApyAction = createAsyncThunk<
   { state: BeefyState }
 >('prices/fetchApy', async (_, { getState }) => {
   const api = getBeefyApi();
-  const prices = await api.getBreakdown();
+  const prices = await api.getApyBreakdown();
   return { data: prices, state: getState() };
 });

@@ -139,8 +139,25 @@ export const selectTokenPriceByAddress = (
   address: string
 ) => {
   const token = state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()];
-  return state.entities.tokens.prices.byTokenId[token.oracleId] || BIG_ONE;
+  return state.entities.tokens.prices.byOracleId[token.oracleId] || BIG_ONE;
 };
 
-export const selectTokenPriceByTokenId = (state: BeefyState, tokenId: TokenEntity['id']) =>
-  state.entities.tokens.prices.byTokenId[tokenId] || BIG_ONE;
+export const selectTokenPriceByTokenOracleId = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId']
+) => state.entities.tokens.prices.byOracleId[oracleId] || BIG_ONE;
+
+export const selectLpBreakdownByOracleId = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId']
+) => {
+  return state.entities.tokens.breakdown.byOracleId[oracleId];
+};
+export const selectLpBreakdownByAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: string
+) => {
+  const token = selectTokenByAddress(state, chainId, address);
+  return selectLpBreakdownByOracleId(state, token.oracleId);
+};
