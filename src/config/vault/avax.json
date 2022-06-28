@@ -91,6 +91,37 @@
     "network": "avax"
   },
   {
+    "id": "joe-btc.b-wavax",
+    "name": "BTC.b-AVAX LP",
+    "token": "BTC.b-AVAX JLP",
+    "tokenAddress": "0x2fD81391E30805Cc7F2Ec827013ce86dc591B806",
+    "tokenDecimals": 18,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeBTCb-AVAX",
+    "earnedTokenAddress": "0x10d52685E9f55884a67a88f2b5Ed2215D607d0a2",
+    "earnContractAddress": "0x10d52685E9f55884a67a88f2b5Ed2215D607d0a2",
+    "oracle": "lps",
+    "oracleId": "joe-btc.b-wavax",
+    "depositsPaused": false,
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["BTCb", "AVAX"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x152b9d0fdc40c096757f570a51e494bd4b943e50/AVAX",
+    "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x152b9d0fdc40c096757f570a51e494bd4b943e50#/",
+    "createdAt": 1656366049,
+    "network": "avax"
+  },
+  {
     "id": "bankerjoe-avax",
     "name": "AVAX",
     "token": "AVAX",
