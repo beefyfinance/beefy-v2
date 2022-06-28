@@ -121,7 +121,6 @@ export interface DataLoaderState {
     chainConfig: LoaderState;
     prices: LoaderState;
     apy: LoaderState;
-    lpsBreakdown: LoaderState;
     vaults: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
@@ -156,7 +155,6 @@ export const initialDataLoaderState: DataLoaderState = {
   global: {
     chainConfig: dataLoaderStateInit,
     prices: dataLoaderStateInit,
-    lpsBreakdown: dataLoaderStateInit,
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
