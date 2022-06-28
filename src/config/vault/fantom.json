@@ -119,6 +119,37 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
+    "id": "beets-battle-bands-remastered",
+    "name": "Battle Of The Bands Remastered",
+    "token": "Battle Of The Bands Remastered",
+    "tokenAddress": "0x65411827ef78F08f6559acF91DE3A4F5A26D785C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beethovenx",
+    "earnedToken": "mooBeetBattleRemastered",
+    "earnedTokenAddress": "0xD1f213318d1984b9AD128Fd396E90C38c55bfD2D",
+    "earnContractAddress": "0xD1f213318d1984b9AD128Fd396E90C38c55bfD2D",
+    "oracle": "lps",
+    "oracleId": "beets-battle-bands-remastered",
+    "depositsPaused": false,
+    "status": "active",
+    "platformId": "beethovenx",
+    "assets": ["FTM", "MATIC", "SOL", "AVAX", "BNB"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://beets.fi/#/pool/0x65411827ef78f08f6559acf91de3a4f5a26d785c0001000000000000000004c6/invest",
+    "network": "fantom",
+    "createdAt": 1656326942
+  },
+
+  {
     "id": "beets-song-ice-fire",
     "name": "Song Of Ice And Fire",
     "token": "Song Of Ice And Fire",
