@@ -24,6 +24,7 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ({ desktopVie
         filter="onlyRetired"
         label={t('Filter-Retired')}
       />
+      <CheckboxFilter className={classes.checkbox} filter="onlyPaused" label={t('Filter-Paused')} />
       <CheckboxFilter className={classes.checkbox} filter="onlyBoosted" label={t('Filter-Boost')} />
       <CheckboxFilter
         className={classes.checkbox}
