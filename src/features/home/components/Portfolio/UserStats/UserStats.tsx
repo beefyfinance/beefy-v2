@@ -1,7 +1,7 @@
 import { memo, PropsWithChildren } from 'react';
 import { Hidden, makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { formatApy, formatUsd } from '../../../../../helpers/format';
+import { formatPercent, formatUsd } from '../../../../../helpers/format';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../../store';
 import { selectUserGlobalStats } from '../../../../data/selectors/apy';
@@ -63,7 +63,7 @@ export const UserStats = memo(function () {
       <VisibleAbove width={430}>
         <UserStat
           label={t('Portfolio-AvgAPY')}
-          value={formatApy(stats.apy.toNumber(), 2, '0%')}
+          value={formatPercent(stats.apy.toNumber(), 2, '0%')}
           blurred={hideBalance}
         />
       </VisibleAbove>
