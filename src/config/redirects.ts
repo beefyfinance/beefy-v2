@@ -6,6 +6,7 @@ export type RedirectType = {
 };
 export const REDIRECTS: RedirectType[] = [
   { from: { path: '/:chain/vault/:vaultId', exact: true }, to: '/vault/:vaultId' },
+  { from: { path: '/%23/:chain/vault/:vaultId', exact: true }, to: '/vault/:vaultId' },
   {
     from: {
       path: '/:chain(bsc|heco|avax|polygon|fantom|harmony|arbitrum|celo|moonriver|cronos|fuse|metis|aurora|moonbeam)',
