@@ -27,13 +27,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const tokenOracleId = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   ).oracleId;
-  const [chartData, averageValue] = useChartData(
-    stat,
-    period,
-    tokenOracleId,
-    vaultId,
-    vault.chainId
-  );
+  const chartData = useChartData(stat, period, tokenOracleId, vaultId, vault.chainId);
   const { t } = useTranslation();
 
   return (
@@ -67,7 +61,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               }}
               tickCount={4}
             />
-            <Tooltip content={<CustomTooltip stat={stat} averageValue={averageValue} />} />
+            <Tooltip content={<CustomTooltip stat={stat} />} />
             <Area
               dataKey="v"
               stroke="#F5F5FF"

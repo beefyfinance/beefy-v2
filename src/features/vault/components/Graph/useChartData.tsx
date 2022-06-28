@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { config } from '../../../../config/config';
+import { max } from 'lodash';
 
 const STATS = ['tvl', 'price', 'apy'];
 const PERIODS = ['hour', 'hour', 'day', 'day'];
 const LIMITS = [24, 168, 30, 365];
 const DAYS_IN_PERIOD = [1, 7, 30, 365];
+const MOVING_AVERAGE_POINTS = [6, 10, 10, 30];
 const SNAPSHOT_INTERVAL = parseInt(process.env.SNAPSHOT_INTERVAL) || 15 * 60;
 
 export const useChartData = (stat, period, oracleId, vaultId, network) => {
   const [chartData, setChartData] = useState(null);
-  const [averageValue, setAverageValue] = useState(0);
 
   useEffect(() => {
     const names = [`${vaultId}-${config[network].chainId}`, oracleId, vaultId];
@@ -29,24 +30,43 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
         LIMITS[period]
       );
 
-      let totalValue = 0;
+      let values = [];
 
       for (const item of data) {
-        totalValue += item.v;
+        values.push(item.v);
       }
 
-      const _averageValue = totalValue / data.length;
+      const movingAverage = calculateMovingAverage(values, MOVING_AVERAGE_POINTS[stat]);
 
-      const _chartData = data.map((item: any) => {
-        return { ...item, averageValue: _averageValue };
-      });
+      const _chartData = [];
+      for (let i = 0; i < data.length; i++) {
+        _chartData.push({ ...data[i], averageValue: movingAverage[i] });
+      }
 
-      setAverageValue(_averageValue);
       setChartData(_chartData);
     };
 
     fetchData();
   }, [stat, period, network, oracleId, vaultId]);
 
-  return [chartData, averageValue];
+  return chartData;
+};
+
+const calculateItemsSum = (data, start, stop) => {
+  let sum = 0;
+  for (let j = start; j < stop; j++) {
+    sum += data[j];
+  }
+  return sum;
+};
+
+const calculateMovingAverage = (data, points) => {
+  const steps = data.length;
+  const result = [];
+  for (let i = 0; i < steps; i++) {
+    const maxNumber = max([i - points, 0]);
+    const sum = calculateItemsSum(data, maxNumber, i);
+    result.push(sum / (i - maxNumber));
+  }
+  return result;
 };
