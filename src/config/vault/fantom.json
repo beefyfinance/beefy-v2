@@ -7351,8 +7351,8 @@
       "ALGO_STABLE"
     ],
     "withdrawalFee": "0%",
-    "addLiquidityUrl": "https://app.hector.finance/#/farming",
-    "buyTokenUrl": "https://app.hector.finance/#/dex",
+    "addLiquidityUrl": "https://app.hector.finance/farm",
+    "buyTokenUrl": "https://app.hector.finance/exchange",
     "createdAt": 1650149559,
     "network": "fantom"
   },
