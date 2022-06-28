@@ -61,7 +61,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
     <div className={clsx(classes.table, className)}>
       <div className={clsx(classes.row, classes.header)}>
         <div className={classes.cell}>{t('Vault-LpBreakdown-Asset')}</div>
-        <div className={classes.cell}>{t('Vault-LpBreakdown-TokenAmount')}t</div>
+        <div className={classes.cell}>{t('Vault-LpBreakdown-TokenAmount')}</div>
         <div className={classes.cell}>{t('Vault-LpBreakdown-Value')}</div>
       </div>
       {assets.map(asset => (
