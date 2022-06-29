@@ -29,6 +29,7 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = ({
         ? formatPercent(averageValue)
         : formatUsd(averageValue)
       : null;
+
     const formattedMoveAverageValue = showMovingAverage
       ? stat === 2
         ? formatPercent(payload[1].value)

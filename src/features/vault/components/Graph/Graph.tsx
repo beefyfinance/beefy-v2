@@ -15,7 +15,7 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { CustomTooltip } from './CustomTooltip';
-import { useChartData, MOVING_AVERAGE_POINTS } from './useChartData';
+import { useChartData } from './useChartData';
 import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatPercent, formatUsd } from '../../../../helpers/format';
@@ -39,7 +39,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const tokenOracleId = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   ).oracleId;
-  const [chartData, averageValue] = useChartData(
+  const [chartData, averageValue, movingAverageDetail] = useChartData(
     stat,
     period,
     tokenOracleId,
@@ -59,12 +59,6 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
     const newState = { ...showAverages, [average]: e };
     setShowAverages(newState);
   };
-
-  const movingAverageDetail = useMemo(() => {
-    return period === 0 || period === 1
-      ? `(${MOVING_AVERAGE_POINTS[period]} ${t('Hours')})`
-      : `(${MOVING_AVERAGE_POINTS[period]} ${t('Days')})`;
-  }, [period, t]);
 
   return (
     <Card>
