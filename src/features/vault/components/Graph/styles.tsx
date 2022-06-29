@@ -26,7 +26,7 @@ export const styles = (theme: Theme) => ({
   footerTabs: {
     marginTop: '12px',
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     '& .MuiTabs-root': {
       minHeight: 0,
     },
@@ -39,5 +39,39 @@ export const styles = (theme: Theme) => ({
       height: 'auto',
       minHeight: 0,
     },
+    [theme.breakpoints.down('xs')]: {
+      flexWrap: 'wrap',
+      justifyContent: 'flex-end',
+      rowGap: theme.spacing(1),
+    },
+  },
+  checkboxContainer: {
+    display: 'flex',
+    columnGap: theme.spacing(2),
+    [theme.breakpoints.down('xs')]: {
+      order: 2,
+      width: '100%',
+      justifyContent: 'flex-end',
+    },
+  },
+  checkbox: {
+    color: '#848BAD',
+  },
+  label: {
+    ...theme.typography['subline-lg'],
+  },
+  averageLine: {
+    height: '15px',
+    width: '2px',
+    backgroundColor: '#59A662',
+    borderRadius: '2px',
+    marginRight: theme.spacing(0.5),
+  },
+  movingAverageLine: {
+    height: '15px',
+    width: '2px',
+    backgroundColor: '#4F93C4',
+    borderRadius: '2px',
+    marginRight: theme.spacing(0.5),
   },
 });

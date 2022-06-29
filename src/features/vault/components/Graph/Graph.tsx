@@ -1,13 +1,21 @@
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  YAxis,
+} from 'recharts';
 import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
 import { CardTitle } from '../Card/CardTitle';
 import { CustomTooltip } from './CustomTooltip';
-import { useChartData } from './useChartData';
+import { useChartData, MOVING_AVERAGE_POINTS } from './useChartData';
 import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatApy, formatUsd } from '../../../../helpers/format';
@@ -16,6 +24,8 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
+import { LabelledCheckbox } from '../../../../components/LabelledCheckbox';
+import { useMemo } from 'react';
 
 const useStyles = makeStyles(styles);
 
@@ -24,11 +34,29 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const classes = useStyles();
   const [stat, setStat] = useState(2);
   const [period, setPeriod] = useState(1);
+  const [showAverages, setShowAverages] = useState({ simpleAverage: true, movingAverage: true });
   const tokenOracleId = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   ).oracleId;
-  const chartData = useChartData(stat, period, tokenOracleId, vaultId, vault.chainId);
+  const [chartData, averageValue] = useChartData(
+    stat,
+    period,
+    tokenOracleId,
+    vaultId,
+    vault.chainId
+  );
   const { t } = useTranslation();
+
+  const handleShowAverages = (e, average) => {
+    const newState = { ...showAverages, [average]: e };
+    setShowAverages(newState);
+  };
+
+  const movingAverageDetail = useMemo(() => {
+    return period === 0 || period === 1
+      ? `(${MOVING_AVERAGE_POINTS[period]} Hours)`
+      : `(${MOVING_AVERAGE_POINTS[period]} Days)`;
+  }, [period]);
 
   return (
     <Card>
@@ -61,18 +89,59 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               }}
               tickCount={4}
             />
-            <Tooltip content={<CustomTooltip stat={stat} />} />
+            <Tooltip
+              content={
+                <CustomTooltip
+                  stat={stat}
+                  averageValue={averageValue}
+                  movingAverageDetail={movingAverageDetail}
+                  showSimpleAverage={showAverages.simpleAverage}
+                  showMovingAverage={showAverages.movingAverage}
+                />
+              }
+            />
             <Area
               dataKey="v"
               stroke="#F5F5FF"
-              strokeWidth={4}
+              strokeWidth={2}
               fill="rgba(245, 245, 255, 0.1)"
               fillOpacity={100}
             />
-            <Area dataKey="averageValue" stroke="#59A662" strokeWidth={4} fill="none" />
+            {showAverages.movingAverage && (
+              <Area dataKey="moveAverageValue" stroke="#4F93C4" strokeWidth={2} fill="none" />
+            )}
+            {showAverages.simpleAverage && (
+              <ReferenceLine y={averageValue} stroke="#59A662" strokeDasharray="3 3" />
+            )}
           </AreaChart>
         </ResponsiveContainer>
         <div className={classes.footerTabs}>
+          <Box className={classes.checkboxContainer}>
+            <LabelledCheckbox
+              labelClass={classes.label}
+              checkboxClass={classes.checkbox}
+              checked={showAverages.simpleAverage}
+              onChange={e => handleShowAverages(e, 'simpleAverage')}
+              label={
+                <>
+                  <Box className={classes.averageLine} />
+                  {t('Average')}
+                </>
+              }
+            />
+            <LabelledCheckbox
+              labelClass={classes.label}
+              checkboxClass={classes.checkbox}
+              checked={showAverages.movingAverage}
+              onChange={e => handleShowAverages(e, 'movingAverage')}
+              label={
+                <>
+                  <Box className={classes.movingAverageLine} />
+                  {t('Moving-Average')}
+                </>
+              }
+            />
+          </Box>
           <BasicTabs
             labels={[t('Graph-1Day'), t('Graph-1Week'), t('Graph-1Month'), t('Graph-1Year')]}
             value={period}

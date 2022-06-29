@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
@@ -7,7 +7,15 @@ import { formatApy, formatUsd } from '../../../../../helpers/format';
 import { CustomTooltipProps } from './CustomTooltipProps';
 
 const useStyles = makeStyles(styles);
-export const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, stat }) => {
+export const CustomTooltip: React.FC<CustomTooltipProps> = ({
+  active,
+  payload,
+  stat,
+  averageValue,
+  movingAverageDetail,
+  showMovingAverage,
+  showSimpleAverage,
+}) => {
   const classes = useStyles();
   const { t } = useTranslation();
   const LABELS = [t('TVL'), t('Graph-PriceTkn'), t('APY')];
@@ -15,15 +23,38 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, s
   if (active && payload && payload.length) {
     const formattedDate = moment(new Date(payload[0].payload.ts)).format('lll');
     const formattedValue = stat === 2 ? formatApy(payload[0].value) : formatUsd(payload[0].value);
-    const formattedAverageValue =
-      stat === 2 ? formatApy(payload[1].value) : formatUsd(payload[1].value);
+    const formattedAverageValue = showSimpleAverage
+      ? stat === 2
+        ? formatApy(averageValue)
+        : formatUsd(averageValue)
+      : null;
+    const formattedMoveAverageValue = showMovingAverage
+      ? stat === 2
+        ? formatApy(payload[1].value)
+        : formatUsd(payload[1].value)
+      : null;
 
     return (
       <div className={classes.container}>
         <p>{formattedDate}</p>
-        <p className="label">{`${LABELS[stat]} : ${formattedValue}`}</p>
-        {!isNaN(payload[1].value) && (
-          <p className="label">{`Average ${LABELS[stat]} : ${formattedAverageValue}`}</p>
+        <Box className={classes.itemContainer}>
+          <p className="label">{`${LABELS[stat]}:`}</p>
+          <p className={classes.value}>{formattedValue} </p>
+        </Box>
+        {showSimpleAverage && (
+          <Box className={classes.itemContainer}>
+            <p className="label">{`Average:`}</p>
+            <p className={classes.value}>{formattedAverageValue}</p>
+          </Box>
+        )}
+        {showMovingAverage && (
+          <Box className={classes.itemContainer}>
+            <Box>
+              <p className="label">{`Moving Average:`}</p>
+              <p className={classes.maDetail}>{movingAverageDetail}</p>
+            </Box>
+            <p className={classes.value}>{formattedMoveAverageValue}</p>
+          </Box>
         )}
       </div>
     );
