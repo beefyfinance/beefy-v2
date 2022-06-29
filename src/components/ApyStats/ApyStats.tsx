@@ -7,7 +7,11 @@ import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
 } from '../../features/data/selectors/apy';
-import { isGovVault, isVaultRetired, VaultEntity } from '../../features/data/entities/vault';
+import {
+  isGovVault,
+  shouldVaultShowInterest,
+  VaultEntity,
+} from '../../features/data/entities/vault';
 import { selectIsVaultBoosted } from '../../features/data/selectors/boosts';
 import { selectVaultApyAvailable } from '../../features/data/selectors/data-loader';
 import { TotalApy } from '../../features/data/reducers/apy';
@@ -135,8 +139,7 @@ function _YearlyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
-  const isRetired = isVaultRetired(vault);
-  const shouldShowApy = !isRetired;
+  const shouldShowApy = shouldVaultShowInterest(vault);
 
   const isLoading = useAppSelector(
     state =>
@@ -182,8 +185,7 @@ function _DailyApyStats({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
-  const isRetired = isVaultRetired(vault);
-  const shouldShowApy = !isRetired;
+  const shouldShowApy = shouldVaultShowInterest(vault);
 
   const isLoading = useAppSelector(
     state =>

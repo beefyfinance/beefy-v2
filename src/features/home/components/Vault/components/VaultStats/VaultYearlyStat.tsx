@@ -2,10 +2,13 @@ import { VaultEntity } from '../../../../../data/entities/vault';
 import React, { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { BeefyState } from '../../../../../../redux-types';
-import { selectIsVaultGov, selectIsVaultRetired } from '../../../../../data/selectors/vaults';
+import { selectIsVaultGov } from '../../../../../data/selectors/vaults';
 import { formattedTotalApy } from '../../../../../../helpers/format';
 import { VaultValueStat } from '../VaultValueStat';
-import { selectVaultApyAvailable } from '../../../../../data/selectors/data-loader';
+import {
+  selectVaultApyAvailable,
+  selectVaultShouldShowInterest,
+} from '../../../../../data/selectors/data-loader';
 import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
@@ -26,8 +29,8 @@ function mapStateToProps(state: BeefyState, { vaultId }: VaultYearlyStatProps) {
   const isGovVault = selectIsVaultGov(state, vaultId);
   const label = isGovVault ? 'VaultStat-APR' : 'VaultStat-APY';
 
-  const isRetired = selectIsVaultRetired(state, vaultId);
-  if (isRetired) {
+  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
+  if (!shouldShowInterest) {
     return {
       label,
       value: '-',

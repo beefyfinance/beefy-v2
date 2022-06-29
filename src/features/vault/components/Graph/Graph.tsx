@@ -20,7 +20,7 @@ import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatPercent, formatUsd } from '../../../../helpers/format';
 import { styles } from './styles';
-import { VaultEntity } from '../../../data/entities/vault';
+import { shouldVaultShowInterest, VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
@@ -31,8 +31,9 @@ const useStyles = makeStyles(styles);
 
 function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const showApy = shouldVaultShowInterest(vault);
   const classes = useStyles();
-  const [stat, setStat] = useState(2);
+  const [stat, setStat] = useState(showApy ? 2 : 0);
   const [period, setPeriod] = useState(1);
   const [showAverages, setShowAverages] = useState({ simpleAverage: true, movingAverage: true });
   const tokenOracleId = useAppSelector(state =>
@@ -46,6 +47,13 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
     vault.chainId
   );
   const { t } = useTranslation();
+  const tabs = useMemo(() => {
+    const labels = [t('TVL'), t('Graph-Price')];
+    if (showApy) {
+      labels.push(t('APY'));
+    }
+    return labels;
+  }, [t, showApy]);
 
   const handleShowAverages = (e, average) => {
     const newState = { ...showAverages, [average]: e };
@@ -64,11 +72,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.titleBox}>
           <CardTitle title={t('Graph-RateHist')} />
           <div className={classes.headerTabs}>
-            <Tabs
-              labels={[t('TVL'), t('Graph-Price'), t('APY')]}
-              value={stat}
-              onChange={newValue => setStat(newValue)}
-            />
+            <Tabs labels={tabs} value={stat} onChange={newValue => setStat(newValue)} />
           </div>
         </div>
       </CardHeader>
