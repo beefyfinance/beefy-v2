@@ -411,5 +411,7 @@
   "Meta-NotFound-Title": "Page Not Found",
   "Meta-NotFound-Description": "Unfortunately, it seems the Beefy Cow has mooooved the page you're looking for",
   "Average": "Average",
-  "Moving-Average": "Moving Average"
+  "Moving-Average": "Moving Average",
+  "Hours": "Hours",
+  "Days": "Days"
 }

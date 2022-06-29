@@ -62,9 +62,9 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   const movingAverageDetail = useMemo(() => {
     return period === 0 || period === 1
-      ? `(${MOVING_AVERAGE_POINTS[period]} Hours)`
-      : `(${MOVING_AVERAGE_POINTS[period]} Days)`;
-  }, [period]);
+      ? `(${MOVING_AVERAGE_POINTS[period]} ${t('Hours')})`
+      : `(${MOVING_AVERAGE_POINTS[period]} ${t('Days')})`;
+  }, [period, t]);
 
   return (
     <Card>
