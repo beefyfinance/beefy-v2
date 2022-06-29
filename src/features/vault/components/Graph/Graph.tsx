@@ -18,7 +18,7 @@ import { CustomTooltip } from './CustomTooltip';
 import { useChartData, MOVING_AVERAGE_POINTS } from './useChartData';
 import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
-import { formatApy, formatUsd } from '../../../../helpers/format';
+import { formatPercent, formatUsd } from '../../../../helpers/format';
 import { styles } from './styles';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
@@ -85,7 +85,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
               axisLine={false}
               tickLine={false}
               tickFormatter={label => {
-                return (stat === 2 ? formatApy(label) : formatUsd(label)) as any;
+                return (stat === 2 ? formatPercent(label) : formatUsd(label)) as any;
               }}
               tickCount={4}
             />

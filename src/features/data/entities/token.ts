@@ -1,5 +1,6 @@
 import { ChainEntity } from './chain';
 import { PlatformEntity } from './platform';
+import { LpData } from '../apis/beefy';
 
 /**
  * A token can be anything erc20-like
@@ -53,6 +54,9 @@ export interface TokenNative {
 export function isTokenErc20(token: TokenEntity): token is TokenErc20 {
   return token.type === 'erc20';
 }
+
 export function isTokenNative(token: TokenEntity): token is TokenNative {
   return token.type === 'native';
 }
+
+export type TokenLpBreakdown = LpData;

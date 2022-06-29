@@ -7,33 +7,30 @@ import clsx from 'clsx';
 import { ChainEntity } from '../../features/data/entities/chain';
 
 const useStyles = makeStyles(styles);
+const maxSupportedAssets = 8;
+
+function useAssetsImageUris(chainId: ChainEntity['id'], assetIds: string[]) {
+  return useMemo(() => {
+    return assetIds
+      .slice(0, maxSupportedAssets)
+      .map(assetId => getSingleAssetSrc(assetId, chainId));
+  }, [assetIds, chainId]);
+}
 
 export type AssetsImageType = {
   chainId: ChainEntity['id'];
   assetIds: string[];
-  /** @deprecated use asset ids */
-  imageUri?: string;
   size?: number;
   className?: string;
 };
 export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
   chainId,
   assetIds,
-  imageUri,
   className,
   size = DEFAULT_SIZE,
 }) {
   const classes = useStyles();
-  const maxSupportedAssets = 8;
-  const uris = useMemo(() => {
-    if (imageUri) {
-      return [require(`../../images/${imageUri}`).default];
-    }
-
-    return assetIds
-      .slice(0, maxSupportedAssets)
-      .map(assetId => getSingleAssetSrc(assetId, chainId));
-  }, [imageUri, assetIds, chainId]);
+  const uris = useAssetsImageUris(chainId, assetIds);
 
   return (
     <div

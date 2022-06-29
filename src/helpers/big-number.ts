@@ -23,3 +23,7 @@ export function toBigNumber(input: BigNumberish): BigNumber {
 
   return new BigNumber(input);
 }
+
+export function isBigNumber(value: any): value is BigNumber {
+  return BigNumber.isBigNumber(value);
+}

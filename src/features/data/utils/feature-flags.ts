@@ -126,7 +126,9 @@ export function featureFlag_simulateRpcError(chainId: ChainEntity['id']) {
   }
 }
 
-export function featureFlag_simulateBeefyApiError(key: 'apy' | 'prices' | 'lps' | 'buyback') {
+export function featureFlag_simulateBeefyApiError(
+  key: 'apy' | 'prices' | 'lps' | 'buyback' | 'lpsBreakdown'
+) {
   const isAuthorizedDomain =
     window.location.hostname.endsWith('fleek.co') || window.location.hostname.endsWith('localhost');
   if (!isAuthorizedDomain) {

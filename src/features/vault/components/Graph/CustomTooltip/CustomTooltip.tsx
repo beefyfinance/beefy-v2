@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { styles } from './styles';
-import { formatApy, formatUsd } from '../../../../../helpers/format';
+import { formatPercent, formatUsd } from '../../../../../helpers/format';
 import { CustomTooltipProps } from './CustomTooltipProps';
 
 const useStyles = makeStyles(styles);
@@ -22,15 +22,16 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = ({
 
   if (active && payload && payload.length) {
     const formattedDate = moment(new Date(payload[0].payload.ts)).format('lll');
-    const formattedValue = stat === 2 ? formatApy(payload[0].value) : formatUsd(payload[0].value);
+    const formattedValue =
+      stat === 2 ? formatPercent(payload[0].value) : formatUsd(payload[0].value);
     const formattedAverageValue = showSimpleAverage
       ? stat === 2
-        ? formatApy(averageValue)
+        ? formatPercent(averageValue)
         : formatUsd(averageValue)
       : null;
     const formattedMoveAverageValue = showMovingAverage
       ? stat === 2
-        ? formatApy(payload[1].value)
+        ? formatPercent(payload[1].value)
         : formatUsd(payload[1].value)
       : null;
 
