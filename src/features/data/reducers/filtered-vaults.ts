@@ -22,6 +22,7 @@ export type FilteredVaultsState = {
   chainIds: ChainEntity['id'][];
   platformId: PlatformEntity['id'] | null;
   onlyRetired: boolean;
+  onlyPaused: boolean;
   onlyMoonpot: boolean;
   onlyBoosted: boolean;
 };
@@ -38,6 +39,7 @@ const initialFilteredVaultsState: FilteredVaultsState = {
   chainIds: [],
   platformId: null,
   onlyRetired: false,
+  onlyPaused: false,
   onlyMoonpot: false,
   onlyBoosted: false,
 };
@@ -95,6 +97,10 @@ export const filteredVaultsSlice = createSlice({
     setOnlyRetired(sliceState, action: PayloadAction<FilteredVaultsState['onlyRetired']>) {
       sliceState.reseted = false;
       sliceState.onlyRetired = action.payload;
+    },
+    setOnlyPaused(sliceState, action: PayloadAction<FilteredVaultsState['onlyPaused']>) {
+      sliceState.reseted = false;
+      sliceState.onlyPaused = action.payload;
     },
     setOnlyMoonpot(sliceState, action: PayloadAction<FilteredVaultsState['onlyMoonpot']>) {
       sliceState.reseted = false;

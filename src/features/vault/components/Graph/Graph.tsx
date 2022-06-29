@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 
@@ -13,7 +13,7 @@ import { Tabs } from '../../../../components/Tabs';
 import { BasicTabs } from '../../../../components/Tabs/BasicTabs';
 import { formatPercent, formatUsd } from '../../../../helpers/format';
 import { styles } from './styles';
-import { VaultEntity } from '../../../data/entities/vault';
+import { shouldVaultShowInterest, VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
@@ -22,14 +22,22 @@ const useStyles = makeStyles(styles);
 
 function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
+  const showApy = shouldVaultShowInterest(vault);
   const classes = useStyles();
-  const [stat, setStat] = useState(2);
+  const [stat, setStat] = useState(showApy ? 2 : 0);
   const [period, setPeriod] = useState(1);
   const tokenOracleId = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   ).oracleId;
   const chartData = useChartData(stat, period, tokenOracleId, vaultId, vault.chainId);
   const { t } = useTranslation();
+  const tabs = useMemo(() => {
+    const labels = [t('TVL'), t('Graph-Price')];
+    if (showApy) {
+      labels.push(t('APY'));
+    }
+    return labels;
+  }, [t, showApy]);
 
   return (
     <Card>
@@ -37,11 +45,7 @@ function GraphComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.titleBox}>
           <CardTitle title={t('Graph-RateHist')} />
           <div className={classes.headerTabs}>
-            <Tabs
-              labels={[t('TVL'), t('Graph-Price'), t('APY')]}
-              value={stat}
-              onChange={newValue => setStat(newValue)}
-            />
+            <Tabs labels={tabs} value={stat} onChange={newValue => setStat(newValue)} />
           </div>
         </div>
       </CardHeader>
