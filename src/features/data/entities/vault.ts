@@ -144,14 +144,30 @@ export function isStandardVault(vault: VaultEntity): vault is VaultStandard {
 export function isVaultRetired(vault: VaultEntity) {
   return vault.status === 'eol';
 }
+
 export function isVaultActive(vault: VaultEntity) {
   return vault.status === 'active';
 }
+
 export function isVaultPaused(vault: VaultEntity) {
   return vault.status === 'paused';
 }
+
 export function isVaultPausedOrRetired(vault: VaultEntity) {
   return vault.status === 'paused' || vault.status === 'eol';
+}
+
+export function shouldVaultShowInterest(vault: VaultEntity) {
+  if (isVaultRetired(vault)) {
+    return false;
+  }
+
+  if (isVaultPaused(vault)) {
+    // Only 'viability' is still earning
+    return vault.pauseReason === 'viability';
+  }
+
+  return true;
 }
 
 export type VaultEntity = VaultStandard | VaultGov;

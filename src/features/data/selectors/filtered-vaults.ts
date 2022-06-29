@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
-import { isGovVault, isVaultRetired, VaultEntity } from '../entities/vault';
+import { isGovVault, isVaultPaused, isVaultRetired, VaultEntity } from '../entities/vault';
 import {
   selectHasUserDepositInVault,
   selectIsUserEligibleForVault,
@@ -51,6 +51,7 @@ export const selectFilterPopinFilterCount = createSelector(
   selectFilterOptions,
   filterOptions =>
     (filterOptions.onlyRetired ? 1 : 0) +
+    (filterOptions.onlyPaused ? 1 : 0) +
     (filterOptions.onlyMoonpot ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.platformId !== null ? 1 : 0) +
@@ -67,6 +68,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.userCategory !== 'all' ||
     filterOptions.vaultType !== 'all' ||
     filterOptions.onlyRetired !== false ||
+    filterOptions.onlyPaused !== false ||
     filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
@@ -81,6 +83,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.vaultCategory !== 'all' ||
     filterOptions.vaultType !== 'all' ||
     filterOptions.onlyRetired !== false ||
+    filterOptions.onlyPaused !== false ||
     filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
@@ -214,10 +217,15 @@ export const selectFilteredVaults = (state: BeefyState) => {
     ) {
       return false;
     }
-    // paused vaults are not considered retired
+
     if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
       return false;
     }
+
+    if (filterOptions.onlyPaused && !isVaultPaused(vault)) {
+      return false;
+    }
+
     if (
       !filterOptions.onlyRetired &&
       isVaultRetired(vault) &&

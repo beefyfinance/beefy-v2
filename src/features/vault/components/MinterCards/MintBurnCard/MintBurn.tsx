@@ -24,7 +24,7 @@ export const MintBurn = memo(function MintBurn({ vaultId, minterId }: MinterCard
   return (
     <>
       <Card>
-        <CardHeader className={classes.header}>
+        <CardHeader disableDefaultClass={true} className={classes.header}>
           <div className={classes.tabs}>
             <Button
               onClick={() => setMintBurn('mint')}

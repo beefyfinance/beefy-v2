@@ -308,6 +308,7 @@
     "oracle": "lps",
     "oracleId": "crona-cro-crona",
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["CRONA", "CRO"],
     "strategyTypeId": "lp",
@@ -322,8 +323,7 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "network": "cronos",
-    "createdAt": 1637138260,
-    "depositsPaused": true
+    "createdAt": 1637138260
   },
   {
     "id": "crona-cro-usdc",
@@ -338,6 +338,7 @@
     "oracle": "lps",
     "oracleId": "crona-cro-usdc",
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["USDC", "CRO"],
     "strategyTypeId": "lp",
@@ -352,8 +353,7 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637146470,
-    "depositsPaused": true
+    "createdAt": 1637146470
   },
   {
     "id": "crona-cro-usdt",
@@ -368,6 +368,7 @@
     "oracle": "lps",
     "oracleId": "crona-cro-usdt",
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["USDT", "CRO"],
     "strategyTypeId": "lp",
@@ -382,8 +383,7 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637147878,
-    "depositsPaused": true
+    "createdAt": 1637147878
   },
   {
     "id": "crona-usdt-busd",
@@ -398,6 +398,7 @@
     "oracle": "lps",
     "oracleId": "crona-usdt-busd",
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["BUSD", "USDT"],
     "strategyTypeId": "lp",
@@ -412,8 +413,7 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "network": "cronos",
-    "createdAt": 1637153704,
-    "depositsPaused": true
+    "createdAt": 1637153704
   },
   {
     "id": "crona-usdt-usdc",
@@ -428,6 +428,7 @@
     "oracle": "lps",
     "oracleId": "crona-usdt-usdc",
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
@@ -442,8 +443,7 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?inputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770&outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0x66e428c3f67a68878562e79A0234c1F83c208770/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1637164857,
-    "depositsPaused": true
+    "createdAt": 1637164857
   },
   {
     "id": "cronos-bifi-maxi",
@@ -546,6 +546,7 @@
     "oracle": "lps",
     "oracleId": "crona-crona-usdc",
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["CRONA", "USDC"],
     "strategyTypeId": "lp",
@@ -560,8 +561,7 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
-    "createdAt": 1638062854,
-    "depositsPaused": true
+    "createdAt": 1638062854
   },
   {
     "id": "crona-usdt-crona",
@@ -576,6 +576,7 @@
     "oracle": "lps",
     "oracleId": "crona-usdt-crona",
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["CRONA", "USDT"],
     "strategyTypeId": "lp",
@@ -590,8 +591,7 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xadbd1231fb360047525BEdF962581F3eee7b49fe/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
-    "createdAt": 1638063529,
-    "depositsPaused": true
+    "createdAt": 1638063529
   },
   {
     "id": "crona-usdc-dai",
@@ -606,6 +606,7 @@
     "oracle": "lps",
     "oracleId": "crona-usdc-dai",
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["USDC", "DAI"],
     "strategyTypeId": "lp",
@@ -621,8 +622,7 @@
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "addLiquidityUrl": "https://app.cronaswap.org/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "network": "cronos",
-    "createdAt": 1638064120,
-    "depositsPaused": true
+    "createdAt": 1638064120
   },
   {
     "id": "vvs-cro-dai",
@@ -668,7 +668,6 @@
     "earnContractAddress": "0x56E899E56F6B8635B4A01b724db23674a64A7231",
     "oracle": "lps",
     "oracleId": "vvs-cro-doge",
-    "depositsPaused": false,
     "status": "active",
     "platformId": "vvs",
     "assets": ["DOGE", "CRO"],
@@ -699,8 +698,8 @@
     "earnContractAddress": "0xE138F2c7D4262b3f4009a8c254872bB6d57A39d0",
     "oracle": "lps",
     "oracleId": "crona-wbtc-eth",
-    "depositsPaused": true,
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["WBTC", "ETH"],
     "strategyTypeId": "lp",
@@ -729,8 +728,8 @@
     "earnContractAddress": "0xB28785D75bcC71e84A1300B488F0DB0b4277C81b",
     "oracle": "lps",
     "oracleId": "crona-usdc-eth",
-    "depositsPaused": true,
     "status": "paused",
+    "pauseReason": "upgrade",
     "platformId": "cronaswap",
     "assets": ["ETH", "USDC"],
     "strategyTypeId": "lp",
@@ -789,7 +788,6 @@
     "earnContractAddress": "0x36ca23aa859dd66486619ae7150C842F035a5c51",
     "oracle": "lps",
     "oracleId": "vvs-cro-atom",
-    "depositsPaused": false,
     "status": "active",
     "platformId": "vvs",
     "assets": ["ATOM", "CRO"],
@@ -820,7 +818,6 @@
     "earnContractAddress": "0x9E75f8298e458B76382870982788988A0799195b",
     "oracle": "lps",
     "oracleId": "liq-liq-cro",
-    "depositsPaused": false,
     "status": "active",
     "platformId": "liquidus",
     "assets": ["LIQ", "CRO"],
@@ -882,7 +879,6 @@
     "earnContractAddress": "0xF498483a3603DcA611eb5142f06632037217cEF9",
     "oracle": "lps",
     "oracleId": "vvs-tonic-cro",
-    "depositsPaused": false,
     "status": "active",
     "platformId": "vvs",
     "assets": ["TONIC", "CRO"],
@@ -1004,7 +1000,6 @@
     "earnContractAddress": "0x393170e58e2cD0E65Ef4F2b995Fbce1D6B112DFf",
     "oracle": "lps",
     "oracleId": "dark-dark-cro",
-    "depositsPaused": false,
     "status": "active",
     "platformId": "darkcrypto",
     "assets": ["DARK", "CRO"],
@@ -1035,7 +1030,6 @@
     "earnContractAddress": "0xf79dDeC4E4f1c8578BA0DE006574db5cE71889bB",
     "oracle": "lps",
     "oracleId": "dark-sky-cro",
-    "depositsPaused": false,
     "status": "active",
     "platformId": "darkcrypto",
     "assets": ["SKY", "CRO"],
@@ -1066,7 +1060,6 @@
     "earnContractAddress": "0xc4903232e027b61C587D110cB2DBd0079F9f5eB8",
     "oracle": "lps",
     "oracleId": "crona-busd-bnb",
-    "depositsPaused": false,
     "status": "eol",
     "platformId": "cronaswap",
     "assets": ["BNB", "BUSD"],
@@ -1097,7 +1090,6 @@
     "earnContractAddress": "0xc7024B02a3C3893C482F5DD03193CFD1DBEC604f",
     "oracle": "lps",
     "oracleId": "crona-wbtc-cro",
-    "depositsPaused": false,
     "status": "eol",
     "platformId": "cronaswap",
     "assets": ["WBTC", "CRO"],
@@ -1128,7 +1120,6 @@
     "earnContractAddress": "0x15c0a37ee6fDA217f0f10dC88df02e7A52e377CA",
     "oracle": "lps",
     "oracleId": "vvs-tonic-usdc",
-    "depositsPaused": false,
     "status": "eol",
     "platformId": "vvs",
     "assets": ["TONIC", "USDC"],
@@ -1160,7 +1151,6 @@
     "earnContractAddress": "0xa0c108B0f66B8c9390F250e6519F53BDa468358F",
     "oracle": "lps",
     "oracleId": "crona-wbtc-usdc",
-    "depositsPaused": false,
     "status": "eol",
     "platformId": "cronaswap",
     "assets": ["WBTC", "USDC"],
@@ -1191,7 +1181,6 @@
     "earnContractAddress": "0xA314Eaab5cF91dc994965634fCa614797DE97986",
     "oracle": "lps",
     "oracleId": "vvs-ali-cro",
-    "depositsPaused": true,
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
@@ -1223,7 +1212,6 @@
     "earnContractAddress": "0x87C8feb9CCc28f2A35C6Db0C5E492fC13D604fF5",
     "oracle": "lps",
     "oracleId": "vvs-vvs-versa",
-    "depositsPaused": false,
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
@@ -1255,7 +1243,6 @@
     "earnContractAddress": "0xf3A68b859c361B9F516127674F648A37ad115942",
     "oracle": "lps",
     "oracleId": "vvs-vvs-tonic",
-    "depositsPaused": false,
     "status": "active",
     "platformId": "vvs",
     "assets": ["VVS", "TONIC"],
