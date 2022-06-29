@@ -37,7 +37,7 @@
     "tokenAddress": "0xb536c1F9A157B263B70A9a35705168ACC0271742",
     "tokenDecimals": 18,
     "tokenProviderId": "stellaswap",
-    "earnedToken": "mooStellaswapWBTCmad-GLMR",
+    "earnedToken": "mooStellaswapWELL-GLMR",
     "earnedTokenAddress": "0xE144C601a50029aeC9DC7Bd3b7534FfA293Eb4dA",
     "earnContractAddress": "0xE144C601a50029aeC9DC7Bd3b7534FfA293Eb4dA",
     "oracle": "lps",
