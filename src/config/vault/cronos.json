@@ -1263,7 +1263,7 @@
   },
   {
     "id": "vvs-ape-cro",
-    "name": "APE-CRO",
+    "name": "APE-CRO LP",
     "token": "APE-CRO LP",
     "tokenAddress": "0x2eA92065D2c2908bB3C7d6BB9318aF4F8d735dD5",
     "tokenDecimals": 18,
