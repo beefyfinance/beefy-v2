@@ -10,13 +10,9 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.filters.active,
     display: 'flex',
     alignItems: 'center',
-    '& img': {
-      height: '16px',
-      marginRight: 4,
-    },
   },
   tagImage: {
-    width: '20px',
     height: '16px',
+    marginRight: 4,
   },
 });

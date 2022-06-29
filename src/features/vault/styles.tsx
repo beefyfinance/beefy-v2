@@ -88,10 +88,6 @@ export const styles = (theme: Theme) => ({
     flexWrap: 'wrap' as const,
     rowGap: '4px',
     columnGap: '4px',
-    '& img': {
-      height: '24px',
-      marginRight: '4px',
-    },
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
     },
