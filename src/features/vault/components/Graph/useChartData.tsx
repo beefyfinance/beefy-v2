@@ -17,7 +17,14 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
   useEffect(() => {
     const names = [`${vaultId}-${config[network].chainId}`, oracleId, vaultId];
     const to = Math.floor(Date.now() / (SNAPSHOT_INTERVAL * 1000)) * SNAPSHOT_INTERVAL;
-    const from = to - (DAYS_IN_PERIOD[period] + MOVING_AVERAGE_POINTS[period]) * 3600 * 24;
+    const from =
+      to -
+      (DAYS_IN_PERIOD[period] +
+        (period === 0 || period === 1
+          ? MOVING_AVERAGE_POINTS[period] / 24
+          : MOVING_AVERAGE_POINTS[period])) *
+        3600 *
+        24;
 
     const fetchData = async () => {
       const api = getBeefyApi();
