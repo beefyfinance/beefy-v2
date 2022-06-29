@@ -6491,7 +6491,7 @@
     "earnContractAddress": "0x9E8d0a070Ae90dB67B369cE54d2e81D0A3D8F1f3",
     "oracle": "lps",
     "oracleId": "beets-two-gods-one-pool",
-    "status": "paused",
+    "status": "active",
     "platformId": "beethovenx",
     "assets": ["DEUS", "DEI"],
     "strategyTypeId": "lp",
