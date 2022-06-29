@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_quick-stmatic-matic-lido2",
+    "poolId": "quick-stmatic-matic",
+    "name": "Lido",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0x8829ADf1a9a7facE44c8FAb3Bc454f93F330E492",
+    "earnedToken": "LDO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+    "earnContractAddress": "0x9aCf64E273431c70134045875b332f6607245b62",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LDO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido"]
+  },
+  {
     "id": "moo_jarvis-2jpy2-jarvis",
     "poolId": "jarvis-2jpy2",
     "name": "Jarvis",
