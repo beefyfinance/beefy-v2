@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     '& img': {
-      height: '16px !important',
+      height: '16px',
       marginRight: 4,
     },
   },

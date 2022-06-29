@@ -76,8 +76,10 @@ export const styles = (theme: Theme) => ({
     },
   },
   selected: {
-    color: `${theme.palette.text.primary} !important`,
     borderBottom: `solid 2px ${theme.palette.text.disabled}`,
+    '& .MuiButton-label': {
+      color: `${theme.palette.text.primary}`,
+    },
   },
   badges: {
     display: 'flex',
