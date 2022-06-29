@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { config } from '../../../../config/config';
 import { max, sum } from 'lodash';
