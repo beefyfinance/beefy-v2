@@ -84,17 +84,13 @@ const calculateItemsSum = (data, start, stop) => {
 
 const calculateMovingAverage = (data, points, limit) => {
   const result = [];
-  if (data.length === limit) {
-    for (let i = points; i <= data.length; i++) {
-      const sum = calculateItemsSum(data, i - points, i);
-      result.push(sum / points);
-    }
-  } else {
-    for (let i = 0; i < data.length; i++) {
-      const maxNumber = max([i - points, 0]);
-      const sum = calculateItemsSum(data, maxNumber, i);
-      i === 0 ? result.push(data[i]) : result.push(sum / (i - maxNumber));
-    }
+  const start = data.length >= limit ? points : 0;
+  const startOnZero = start === 0;
+  for (let i = start; i <= data.length; i++) {
+    const number = startOnZero ? max([i - points, 0]) : i - points;
+    const sum = calculateItemsSum(data, number, i);
+    result.push(sum / points);
+    i === 0 ? result.push(data[i]) : result.push(sum / (startOnZero ? i - number : points));
   }
   return result;
 };
