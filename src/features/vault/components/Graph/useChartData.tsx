@@ -52,6 +52,7 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
       for (let i = 0; i < data.length; i++) {
         _chartData.push({ ...data[i], moveAverageValue: movingAverage[i] });
       }
+      console.log('hi');
       setAverageValue(_averageValue);
       setChartData(_chartData);
     };
