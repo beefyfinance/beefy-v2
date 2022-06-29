@@ -17,14 +17,12 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
   useEffect(() => {
     const names = [`${vaultId}-${config[network].chainId}`, oracleId, vaultId];
     const to = Math.floor(Date.now() / (SNAPSHOT_INTERVAL * 1000)) * SNAPSHOT_INTERVAL;
-    const from =
-      to -
-      (DAYS_IN_PERIOD[period] +
-        (period === 0 || period === 1
-          ? MOVING_AVERAGE_POINTS[period] / 24
-          : MOVING_AVERAGE_POINTS[period])) *
-        3600 *
-        24;
+
+    let extraMovingAverageDays = MOVING_AVERAGE_POINTS[period];
+
+    if (PERIODS[period] === 'hour') extraMovingAverageDays /= 24;
+
+    const from = to - Math.floor((DAYS_IN_PERIOD[period] + extraMovingAverageDays) * 3600 * 24);
 
     const fetchData = async () => {
       const api = getBeefyApi();
@@ -72,9 +70,8 @@ const calculateItemsSum = (data, start, stop) => {
 };
 
 const calculateMovingAverage = (data, points) => {
-  const steps = data.length;
   const result = [];
-  for (let i = 0; i < steps; i++) {
+  for (let i = 0; i < data.length; i++) {
     const maxNumber = max([i - points, 0]);
     const sum = calculateItemsSum(data, maxNumber, i);
     i === 0 ? result.push(data[i]) : result.push(sum / (i - maxNumber));
