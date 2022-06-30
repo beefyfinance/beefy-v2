@@ -205,7 +205,7 @@
   "Zap-Step-Deposit-4": "Return unused trace amounts of {{token0}} and {{token1}} to your wallet",
   "Zap-Step-Withdraw-1": "Redeem {{mooToken}} token for {{lpToken}}",
   "Zap-Step-Withdraw-2": "Remove liquidity from {{lpToken}} to receive {{token0}} and {{token1}}",
-  "Zap-Step-Withdraw-3": "Swap estimated {{valueFrom}} {{tokenFrom}} for {{valueTo}} {{tokenTo}} ({{priceImpact}}, ±{{slippageTolerancePercentage}}% slippage and withdrawal fee, if any)",
+  "Zap-Step-Withdraw-3": "Swap estimated {{valueFrom}} {{tokenFrom}} for {{valueTo}} {{tokenTo}} ({{priceImpact}} price impact, ±{{slippageTolerancePercentage}}% slippage and withdrawal fee, if any)",
   "Zap-Step-Withdraw-4": "Transfer estimated {{balance}} {{token}} to your wallet",
   "Fee-Tagline": "You earn what you stake",
   "Fee-DepositAmt": "{{amt}} deposit fee",

@@ -143,6 +143,7 @@ export const depositSlice = createSlice({
         sliceState.zapEstimate !== action.payload.zapEstimate
       ) {
         sliceState.zapEstimate = action.payload.zapEstimate;
+        sliceState.zapError = null;
       }
     });
 
@@ -163,7 +164,8 @@ export const depositSlice = createSlice({
         sliceState.vaultId === action.meta.arg.vaultId &&
         sliceState.selectedToken.id === action.meta.arg.inputTokenId
       ) {
-        sliceState.zapEstimate = null;
+        // TODO setting to null disables form
+        // sliceState.zapEstimate = null;
         sliceState.zapError = action.error.message;
       }
     });

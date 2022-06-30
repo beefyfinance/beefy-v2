@@ -185,6 +185,7 @@ export const withdrawSlice = createSlice({
         sliceState.zapEstimate !== action.payload.zapEstimate
       ) {
         sliceState.zapEstimate = action.payload.zapEstimate;
+        sliceState.zapError = null;
       }
     });
 
@@ -207,7 +208,8 @@ export const withdrawSlice = createSlice({
         !isArray(sliceState.selectedToken) &&
         sliceState.selectedToken.id === action.meta.arg.outputTokenId
       ) {
-        sliceState.zapEstimate = null;
+        // TODO setting to null disables form
+        // sliceState.zapEstimate = null;
         sliceState.zapError = action.error.message;
       }
     });

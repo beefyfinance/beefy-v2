@@ -29,5 +29,5 @@ export function calculatePriceImpact(
   providerFee: number
 ): number {
   const amountInAfterFee = amountIn.multipliedBy(BIG_ONE.minus(providerFee));
-  return amountInAfterFee.dividedBy(reserveIn.plus(amountInAfterFee)).toNumber();
+  return amountInAfterFee.dividedBy(reserveIn.plus(amountInAfterFee)).toNumber() * -1;
 }

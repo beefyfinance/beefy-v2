@@ -96,11 +96,10 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       isFulfilled(state.ui.dataLoader.global.depositForm)
   );
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
-  const isZapError = !!formState.zapError;
 
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
-  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading && !isZapError;
+  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
   const isDepositButtonDisabled =
     formState.amount.isLessThanOrEqualTo(0) ||

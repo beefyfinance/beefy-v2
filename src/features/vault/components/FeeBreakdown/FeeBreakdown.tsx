@@ -129,12 +129,10 @@ export const FeeBreakdown = memo(
             {type === 'deposit' && isZap && (
               <>
                 <div className={clsx(classes.title, classes.zapTitle)}>{t('Zap-Title')}</div>
-                {zapEstimate === null ? (
-                  zapError === null ? (
-                    <Loader message={'Loading swap estimate...'} line={true} />
-                  ) : (
-                    <AlertWarning>{zapError}</AlertWarning>
-                  )
+                {zapError !== null ? (
+                  <AlertWarning>{zapError}</AlertWarning>
+                ) : zapEstimate === null ? (
+                  <Loader message={'Loading swap estimate...'} line={true} />
                 ) : (
                   <ol className={classes.ol}>
                     <li className={classes.zapStep}>
@@ -166,12 +164,10 @@ export const FeeBreakdown = memo(
             {type === 'withdraw' && isZap && (
               <>
                 <div className={clsx(classes.title, classes.zapTitle)}>{t('Zap-Title')}</div>
-                {zapEstimate === null ? (
-                  zapError === null ? (
-                    <Loader message={'Loading swap estimate...'} line={true} />
-                  ) : (
-                    <AlertWarning>{zapError}</AlertWarning>
-                  )
+                {zapError !== null ? (
+                  <AlertWarning>{zapError}</AlertWarning>
+                ) : zapEstimate === null ? (
+                  <Loader message={'Loading swap estimate...'} line={true} />
                 ) : (
                   <ol className={classes.ol}>
                     <li className={classes.zapStep}>
@@ -195,7 +191,7 @@ export const FeeBreakdown = memo(
                           valueTo: zapEstimate.amountOut.decimalPlaces(6),
                           tokenTo: zapEstimate.tokenOut.symbol,
                           slippageTolerancePercentage: slippageTolerance * 100,
-                          priceImpact: zapEstimate.priceImpact,
+                          priceImpact: formatPercent(zapEstimate.priceImpact, 2, '0%'),
                         })}
                       </li>
                     )}

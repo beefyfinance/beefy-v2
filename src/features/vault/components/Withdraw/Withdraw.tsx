@@ -127,10 +127,9 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
-  const isZapError = !!formState.zapError;
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
-  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading && !isZapError;
+  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
   const hasGovVaultRewards = useAppSelector(state =>
     selectGovVaultPendingRewardsInToken(state, vaultId).isGreaterThan(0)
