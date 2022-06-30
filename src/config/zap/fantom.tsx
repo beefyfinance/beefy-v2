@@ -45,6 +45,6 @@ export const zaps = [
     ammRouter: '0x6D0176C5ea1e44b08D3dd001b0784cE42F47a3A7',
     ammFactory: '0xE236f6890F1824fa0a7ffc39b1597A5A6077Cfe9',
     ammPairInitHash: '0x2dfbcf1b907f911bc66d083d103a1d7de0b8b21a6cb2a66a78d1f1559018fba4',
-    lpProviderFee: 0,
+    lpProviderFee: 0.005,
   },
 ];

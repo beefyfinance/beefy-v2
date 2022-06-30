@@ -46,6 +46,6 @@ export const zaps = [
     ammFactory: '0x858E3312ed3A876947EA49d572A7C42DE08af7EE',
     ammPairInitHash: '0xfea293c909d87cd4153593f077b76bb7e94340200f4ee84211ae8e4f9bd7ffdf',
     withdrawEstimateMode: 'getAmountsOut',
-    lpProviderFee: 0.001 - 1 / 1000,
+    lpProviderFee: 0.001,
   },
 ];
