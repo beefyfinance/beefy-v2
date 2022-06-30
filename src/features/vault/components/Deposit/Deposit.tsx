@@ -8,7 +8,7 @@ import {
   Radio,
   RadioGroup,
 } from '@material-ui/core';
-import React from 'react';
+import React, { ChangeEventHandler, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
@@ -16,7 +16,7 @@ import { Step } from '../../../../components/Steps/types';
 import { initDepositForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
-import { isTokenNative, TokenEntity } from '../../../data/entities/token';
+import { isTokenNative } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { isFulfilled } from '../../../data/reducers/data-loader';
 import { depositActions } from '../../../data/reducers/wallet/deposit';
@@ -96,27 +96,34 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       isFulfilled(state.ui.dataLoader.global.depositForm)
   );
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
+  const isZapError = !!formState.zapError;
 
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
-  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
+  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading && !isZapError;
 
   const isDepositButtonDisabled =
     formState.amount.isLessThanOrEqualTo(0) ||
     !formReady ||
     (formState.max && formState.selectedToken.type === 'native');
 
-  const handleAsset = (tokenId: TokenEntity['id']) => {
-    dispatch(depositActions.setAsset({ tokenId, state: store.getState() }));
-  };
+  const handleAsset = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    e => {
+      dispatch(depositActions.setAsset({ tokenId: e.target.value, state: store.getState() }));
+    },
+    [dispatch, store]
+  );
 
-  const handleInput = (amountStr: string) => {
-    dispatch(depositActions.setInput({ amount: amountStr, state: store.getState() }));
-  };
+  const handleInput = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    e => {
+      dispatch(depositActions.setInput({ amount: e.target.value, state: store.getState() }));
+    },
+    [dispatch, store]
+  );
 
-  const handleMax = () => {
+  const handleMax = useCallback(() => {
     dispatch(depositActions.setMax({ state: store.getState() }));
-  };
+  }, [dispatch, store]);
 
   const handleDeposit = () => {
     const steps: Step[] = [];
@@ -170,6 +177,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     startStepper(steps);
   };
 
+  console.log('>>> render');
   return (
     <>
       <Box p={3}>
@@ -191,7 +199,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           value={formState.selectedToken ? formState.selectedToken.id : ''}
           aria-label="deposit-asset"
           name="deposit-asset"
-          onChange={e => handleAsset(e.target.value)}
+          onChange={handleAsset}
         >
           <FormControlLabel
             className={classes.depositTokenContainer}
@@ -231,7 +239,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             <InputBase
               placeholder="0.00"
               value={formState.formattedInput}
-              onChange={e => handleInput(e.target.value)}
+              onChange={handleInput}
               disabled={!formReady}
             />
             <Button onClick={handleMax} disabled={!formReady}>
@@ -243,6 +251,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           vault={vault}
           slippageTolerance={formState.slippageTolerance}
           zapEstimate={formState.zapEstimate}
+          zapError={formState.zapError}
           isZapSwap={false}
           isZap={formState.isZap}
           type={'deposit'}

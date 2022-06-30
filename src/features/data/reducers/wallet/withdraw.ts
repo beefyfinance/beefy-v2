@@ -33,6 +33,7 @@ export type WithdrawState = {
   slippageTolerance: number;
   zapOptions: ZapOptions | null;
   zapEstimate: ZapEstimate | null;
+  zapError: string | null;
 };
 const initialWithdrawState: WithdrawState = {
   initiated: false,
@@ -44,6 +45,7 @@ const initialWithdrawState: WithdrawState = {
   isZapSwap: false,
   zapOptions: null,
   zapEstimate: null,
+  zapError: null,
   max: false,
   selectedToken: null,
 };
@@ -83,6 +85,7 @@ export const withdrawSlice = createSlice({
           tokenOut: selectTokenById(state, vault.chainId, vault.assetIds[1]),
           amountIn: BIG_ZERO,
           amountOut: BIG_ZERO,
+          priceImpact: 0,
         };
       }
 
@@ -182,6 +185,30 @@ export const withdrawSlice = createSlice({
         sliceState.zapEstimate !== action.payload.zapEstimate
       ) {
         sliceState.zapEstimate = action.payload.zapEstimate;
+      }
+    });
+
+    builder.addCase(fetchEstimateZapWithdraw.pending, (sliceState, action) => {
+      if (
+        sliceState.vaultId === action.meta.arg.vaultId &&
+        !isArray(sliceState.selectedToken) &&
+        sliceState.selectedToken.id === action.meta.arg.outputTokenId
+      ) {
+        // TODO clear previous error/estimate so we can show loading indicator
+        // TODO component needs refactored to reduce re-renders before this can be introduced
+        // sliceState.zapEstimate = null;
+        // sliceState.zapError = null;
+      }
+    });
+
+    builder.addCase(fetchEstimateZapWithdraw.rejected, (sliceState, action) => {
+      if (
+        sliceState.vaultId === action.meta.arg.vaultId &&
+        !isArray(sliceState.selectedToken) &&
+        sliceState.selectedToken.id === action.meta.arg.outputTokenId
+      ) {
+        sliceState.zapEstimate = null;
+        sliceState.zapError = action.error.message;
       }
     });
   },

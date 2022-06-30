@@ -121,6 +121,7 @@ export interface ZapConfig {
   ammFactory: string;
   ammPairInitHash: string;
   withdrawEstimateMode?: 'getAmountOut' | 'getAmountsOut';
+  lpProviderFee: number;
 }
 
 export interface MinterConfigTokenErc20 {

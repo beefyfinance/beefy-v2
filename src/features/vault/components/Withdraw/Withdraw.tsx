@@ -127,9 +127,10 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
+  const isZapError = !!formState.zapError;
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
-  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
+  const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading && !isZapError;
 
   const hasGovVaultRewards = useAppSelector(state =>
     selectGovVaultPendingRewardsInToken(state, vaultId).isGreaterThan(0)
@@ -452,6 +453,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           vault={vault}
           slippageTolerance={formState.slippageTolerance}
           zapEstimate={formState.zapEstimate}
+          zapError={formState.zapError}
           isZapSwap={formState.isZapSwap}
           isZap={formState.isZap}
           type={'withdraw'}

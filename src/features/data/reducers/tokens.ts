@@ -194,25 +194,25 @@ function addBreakdownToState(
 ) {
   // Must have breakdown
   if (!('tokens' in breakdown) || !('balances' in breakdown)) {
-    console.warn(`[LP Breakdown] ${oracleId} missing breakdown`);
+    // console.warn(`[LP Breakdown] ${oracleId} missing breakdown`);
     return;
   }
 
   // Number of tokens must match number of balances
   if (breakdown.tokens.length !== breakdown.balances.length) {
-    console.warn(`[LP Breakdown] ${oracleId} number of tokens does not match number of balances`);
+    // console.warn(`[LP Breakdown] ${oracleId} number of tokens does not match number of balances`);
     return;
   }
 
   // All addresses should be valid
   if (breakdown.tokens.find(address => !address) !== undefined) {
-    console.warn(`[LP Breakdown] ${oracleId} has invalid token address`);
+    // console.warn(`[LP Breakdown] ${oracleId} has invalid token address`);
     return;
   }
 
   // All balances should be > 0
   if (breakdown.balances.find(balance => balance === '0') !== undefined) {
-    console.warn(`[LP Breakdown] ${oracleId} has zero balance`);
+    // console.warn(`[LP Breakdown] ${oracleId} has zero balance`);
     return;
   }
 
