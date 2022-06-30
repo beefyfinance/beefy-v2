@@ -1,165 +1,368 @@
-import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3Modal, {
-  CACHED_PROVIDER_KEY,
-  connectors,
-  getLocal as getWeb3ModalLocal,
-  ICoreOptions,
-  IProviderOptions,
-} from 'web3modal';
-import { CloverConnector } from '@clover-network/clover-connector';
-import { CoinbaseWalletSDK } from '@coinbase/wallet-sdk';
-import { DeFiConnector } from 'deficonnect';
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
-import { IWalletConnectionApi, Provider, WalletConnectionOptions } from './wallet-connection-types';
-import { sleep } from '../../utils/async-utils';
+import { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
 import { maybeHexToNumber } from '../../../../helpers/format';
+import { hexToNumber, numberToHex } from 'web3-utils';
+import Onboard, { OnboardAPI } from '@web3-onboard/core';
+import createInjectedWallets from '@web3-onboard/injected-wallets';
+import createCoinbaseWalletModule from '@web3-onboard/coinbase';
+import createWalletConnectModule from '@web3-onboard/walletconnect';
+import { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
+import { ConnectOptions } from '@web3-onboard/core/dist/types';
+import { WalletInit } from '@web3-onboard/common';
+import { EIP1193Provider } from '@web3-onboard/common/dist/types';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
-  protected web3ModalOptions: Partial<ICoreOptions> | null;
-  protected web3Modal: Web3Modal | null;
-  protected provider: Provider | null;
+  protected onboard: OnboardAPI | null;
 
   constructor(protected options: WalletConnectionOptions) {
-    this.web3Modal = null;
-    this.web3ModalOptions = null;
-    this.provider = null;
+    this.onboard = null;
   }
 
-  private getModalOptions() {
-    if (this.web3ModalOptions === null) {
-      this.web3ModalOptions = _generateProviderOptions(this.options.chains);
-    }
+  /**
+   * Create list of wallet modules for Onboard
+   * @private
+   */
+  private static createOnboardWallets() {
+    const injectedWallets = createInjectedWallets({
+      custom: [
+        {
+          label: 'Core',
+          injectedNamespace: InjectedNameSpace.Ethereum,
+          checkProviderIdentity: ({ provider }) => !!provider && !!provider['isAvalanche'],
+          getIcon: async () => (await import(`../../../../images/wallets/core-wallet.svg`)).default,
+          getInterface: async () => ({ provider: (window as any).ethereum }),
+          platforms: ['all'],
+        },
+        {
+          label: 'SafePal',
+          injectedNamespace: InjectedNameSpace.Ethereum,
+          checkProviderIdentity: ({ provider }) => !!provider && !!provider['isSafePal'],
+          getIcon: async () =>
+            (await import(`../../../../images/wallets/safepal-wallet.svg`)).default,
+          getInterface: async () => ({ provider: (window as any).ethereum }),
+          platforms: ['all'],
+        },
+        {
+          label: 'CDC Injected',
+          injectedNamespace: InjectedNameSpace.Ethereum,
+          checkProviderIdentity: ({ provider }) =>
+            !!provider && !!provider['isDeficonnectProvider'],
+          getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
+          getInterface: async () => ({ provider: (window as any).ethereum }),
+          platforms: ['all'],
+        },
+        {
+          label: 'Math',
+          injectedNamespace: InjectedNameSpace.Ethereum,
+          checkProviderIdentity: ({ provider }) => !!provider && !!provider['isMathWallet'],
+          getIcon: async () => (await import(`../../../../images/wallets/math-wallet.svg`)).default,
+          getInterface: async () => ({ provider: (window as any).ethereum }),
+          platforms: ['all'],
+        },
+        {
+          label: 'BitKeep',
+          injectedNamespace: InjectedNameSpace.Ethereum,
+          checkProviderIdentity: ({ provider }) => !!provider && !!provider['isBitKeep'],
+          getIcon: async () =>
+            (await import(`../../../../images/wallets/bitkeep-wallet.png`)).default,
+          getInterface: async () => ({ provider: (window as any).ethereum }),
+          platforms: ['all'],
+        },
+      ],
+    });
 
-    return this.web3ModalOptions;
+    return [
+      injectedWallets,
+      createWalletConnectModule(),
+      createCoinbaseWalletModule(),
+      WalletConnectionApi.createCDCWalletModule(),
+      WalletConnectionApi.createCloverWalletModule(),
+    ];
   }
 
-  private getModal() {
-    if (this.web3Modal === null) {
-      this.web3Modal = new Web3Modal(this.getModalOptions());
+  private static createCloverWalletModule(): WalletInit {
+    return () => ({
+      label: 'Clover',
+      getIcon: async () => (await import(`../../../../images/wallets/clover.png`)).default,
+      getInterface: async ({ chains }) => {
+        const { CloverConnector } = await import('@clover-network/clover-connector');
+
+        const connector = new CloverConnector({
+          supportedChainIds: chains.map(chain => hexToNumber(chain.id)),
+        });
+
+        const { provider } = await connector.activate();
+        return {
+          provider: provider,
+        };
+      },
+    });
+  }
+
+  private static createCDCWalletModule(): WalletInit {
+    return () => ({
+      label: 'CDC Connect',
+      getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
+      getInterface: async ({ chains }) => {
+        const { DeFiConnector } = await import('deficonnect');
+        const cronosChainId = 25;
+        const cronosChainIdHex = numberToHex(cronosChainId);
+        const cronosChain = chains.find(chain => chain.id === cronosChainIdHex);
+
+        const connector = new DeFiConnector({
+          name: 'Cronos',
+          supprtedChainTypes: ['eth'],
+          eth: {
+            supportedChainIds: [cronosChainId],
+            rpc: {
+              [cronosChainId]: cronosChain.rpcUrl,
+            },
+            pollingInterval: 15000,
+          },
+          cosmos: null,
+        });
+
+        const { provider } = await connector.activate();
+
+        // DeFiConnectorProvider type is missing EventEmitter type
+        return {
+          provider: provider as unknown as EIP1193Provider,
+        };
+      },
+    });
+  }
+
+  /**
+   * Create instance of Onboard
+   * @private
+   */
+  private createOnboard() {
+    const onboard = Onboard({
+      wallets: WalletConnectionApi.createOnboardWallets(),
+      appMetadata: {
+        name: 'Beefy Finance',
+        icon: require(`../../../../images/BIFI.svg`).default,
+        description:
+          'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
+        gettingStartedGuide: 'https://docs.beefy.finance/',
+      },
+      chains: this.options.chains.map(chain => ({
+        id: numberToHex(chain.networkChainId),
+        token: chain.walletSettings.nativeCurrency.symbol,
+        label: chain.name,
+        rpcUrl: sample(chain.rpc),
+        blockExplorerUrl: chain.explorerUrl,
+        icon: require(`../../../../images/networks/${chain.id}.svg`).default,
+      })),
+      accountCenter: {
+        desktop: {
+          enabled: false,
+        },
+        mobile: {
+          enabled: false,
+        },
+      },
+    });
+
+    this.subscribeToOnboardEvents(onboard);
+
+    return onboard;
+  }
+
+  /**
+   * Subscribe to events so we can notify app on chain/account change + disconnect
+   * @param onboard
+   * @private
+   */
+  private subscribeToOnboardEvents(onboard: OnboardAPI) {
+    const wallets = onboard.state.select('wallets');
+    return wallets.subscribe(wallets => {
+      if (wallets.length === 0) {
+        this.options.onWalletDisconnected();
+      } else {
+        const wallet = wallets[0];
+
+        if (wallet.accounts.length === 0 || wallet.chains.length === 0) {
+          this.options.onWalletDisconnected();
+        } else {
+          // Save last connected wallet
+          WalletConnectionApi.setLastConnectedWallet(wallet.label);
+
+          // Raise events
+          const account = wallet.accounts[0];
+          const networkChainId = maybeHexToNumber(wallet.chains[0].id);
+          const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
+
+          if (chain) {
+            this.options.onChainChanged(chain.id, account.address);
+          } else {
+            this.options.onUnsupportedChainSelected(networkChainId, account.address);
+          }
+        }
+      }
+    });
+  }
+
+  private static setLastConnectedWallet(wallet: string | null) {
+    try {
+      if (wallet) {
+        window?.localStorage?.setItem('lastConnectedWallet', wallet);
+      } else {
+        window?.localStorage?.removeItem('lastConnectedWallet');
+      }
+    } catch {
+      // silently ignore
+    }
+  }
+
+  private static getLastConnectedWallet(): string | null {
+    try {
+      return window?.localStorage?.getItem('lastConnectedWallet');
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Lazy-init onboard instance
+   * @private
+   */
+  private getOnboard() {
+    if (this.onboard === null) {
+      this.onboard = this.createOnboard();
     }
 
-    return this.web3Modal;
+    return this.onboard;
   }
 
   /**
    * Attempt to reconnect to cached provider
    */
   public async tryToAutoReconnect() {
-    // already connected?
-    if (this.provider) {
+    // Skip if already connected
+    if (this.isConnected()) {
+      console.log('tryToAutoReconnect: Already connected');
       return;
     }
 
-    // do we have a cached provider?
-    if (!hasWeb3ModalCachedProvider()) {
+    // Must have last selected wallet set
+    const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
+    if (!lastSelectedWallet) {
+      console.log('tryToAutoReconnect: No lastSelectedWallet');
       return;
     }
 
-    // make sure the cached provider is available in options
-    const cachedProvider = getWeb3ModalCachedProvider();
-    const modalOptions = this.getModalOptions();
-    if (cachedProvider !== 'injected' && !(cachedProvider in modalOptions.providerOptions)) {
-      console.warn(
-        'tryToAutoReconnect: cached provider not available',
-        cachedProvider,
-        Object.keys(modalOptions.providerOptions)
-      );
+    // Initialize onboard if needed
+    const onboard = this.getOnboard();
+
+    // Last selected wallet must be valid
+    const lastSelectedWalletExists =
+      onboard.state.get().walletModules.find(module => module.label === lastSelectedWallet) !==
+      undefined;
+    if (!lastSelectedWalletExists) {
+      console.log('tryToAutoReconnect: Invalid lastSelectedWallet', lastSelectedWallet);
       return;
     }
 
-    // init or get modal
-    const modal = this.getModal();
-    // try to reconnect
-    const provider = await modal.connectTo(cachedProvider);
+    // Attempt to connect
+    try {
+      await WalletConnectionApi.connect(onboard, {
+        autoSelect: { label: lastSelectedWallet, disableModals: true },
+      });
+    } catch (err) {
+      // We clear last connected wallet here so that attempting to reconnect opens the modal
+      // rather than trying to reconnect to previous wallet that just failed/was rejected.
+      WalletConnectionApi.setLastConnectedWallet(null);
+      // Rethrow so called knows connection failed
+      throw err;
+    }
+  }
 
-    // make sure we don't have provider from a manual connect while awaiting
-    if (this.provider) {
-      console.error('tryToAutoReconnect: provider already exists');
-      throw new Error('tryToAutoReconnect: provider already exists');
+  private static async connect(onboard: OnboardAPI, options?: ConnectOptions) {
+    const wallets = await onboard.connectWallet(options);
+
+    if (!wallets.length) {
+      console.error('connect: No wallet connected');
+      throw new Error('No wallet connected');
     }
 
-    // make sure we have provider from modal
-    if (!provider) {
-      console.error('tryToAutoReconnect: provider not returned from web3modal', provider);
-      throw new Error('tryToAutoReconnect: provider not returned from web3modal');
+    const wallet = wallets[0];
+    if (!wallet.accounts.length) {
+      console.error('connect: No account connected');
+      throw new Error('No account connected');
     }
 
-    // Save provider and fire events
-    this.provider = provider;
-    await this.bindProviderAndRaiseEvents();
+    if (!wallet.provider) {
+      console.error('connect: No provider for wallet');
+      throw new Error('No provider for wallet');
+    }
   }
 
   /**
    * Provider the web3 instance for signed TXs
    */
-  async getConnectedWeb3Instance(): Promise<Web3> {
-    if (!this.web3Modal) {
-      throw new Error('Wallet not connected: missing web3Modal');
+  public async getConnectedWeb3Instance(): Promise<Web3> {
+    if (!this.isConnected()) {
+      throw new Error(`Wallet not connected.`);
     }
 
-    if (!this.provider) {
-      throw new Error('Wallet not connected: missing provider');
-    }
-
-    return _getWeb3FromProvider(this.provider);
+    const wallet = this.onboard.state.get().wallets[0];
+    return _getWeb3FromProvider(wallet.provider);
   }
 
   /**
    * Ask the user to connect if he isn't already
    */
-  public async askUserToConnectIfNeeded() {
-    // initialize modal if needed
-    const modal = this.getModal();
-
-    // open modal if needed to connect
-    if (this.provider === null) {
-      let provider = null;
-
-      try {
-        // Will open modal, or attempt to connect to cached provider
-        console.log('await model.connect');
-        provider = await modal.connect();
-      } catch (err) {
-        // We clear cached provider here so that attempting to reconnect opens the modal
-        // rather than trying to reconnect to previous cached provider that just failed/was rejected.
-        modal.clearCachedProvider();
-        // Rethrow so called knows connection failed
-        throw err;
-      }
-
-      // make sure we don't have provider from an auto connect while awaiting
-      if (this.provider) {
-        console.error('askUserToConnectIfNeeded: provider already exists');
-        throw new Error('askUserToConnectIfNeeded: provider already exists');
-      }
-
-      this.provider = provider;
+  public async askUserToConnectIfNeeded(isAutoConnect: boolean = false) {
+    if (this.isConnected()) {
+      console.log('askUserToConnectIfNeeded: Already connected');
+      throw new Error('Already connected');
     }
 
-    // raise relevant event
-    await this.bindProviderAndRaiseEvents();
+    // initialize onboard if needed
+    const onboard = this.getOnboard();
+
+    // Get last wallet used and make sure it is still supported
+    const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
+    const lastSelectedWalletExists =
+      lastSelectedWallet !== null &&
+      onboard.state.get().walletModules.find(module => module.label === lastSelectedWallet) !==
+        undefined;
+
+    // Connect
+    try {
+      await WalletConnectionApi.connect(
+        onboard,
+        lastSelectedWalletExists
+          ? { autoSelect: { label: lastSelectedWallet, disableModals: false } }
+          : undefined
+      );
+    } catch (err) {
+      // We clear last connected wallet here so that attempting to reconnect opens the modal
+      // rather than trying to reconnect to previous wallet that just failed/was rejected.
+      WalletConnectionApi.setLastConnectedWallet(null);
+      // Rethrow so called knows connection failed
+      throw err;
+    }
   }
 
   /**
-   * Fires onConnect or onUnsupportedChainSelected
+   * Whether wallet is currently connected + address available
    */
-  private async bindProviderAndRaiseEvents() {
-    // Listen to provider events
-    this._bindProviderEvents(this.provider);
-
-    // Check chain + accounts and raise our own events
-    const web3 = _getWeb3FromProvider(this.provider);
-    const networkChainId = await _getNetworkChainId(web3);
-    const accounts = await web3.eth.getAccounts();
-    const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-
-    if (chain) {
-      this.options.onConnect(chain.id, accounts[0]);
-    } else {
-      this.options.onUnsupportedChainSelected(networkChainId, accounts[0]);
+  public isConnected(): boolean {
+    if (!this.onboard) {
+      return false;
     }
+
+    const { wallets } = this.onboard.state.get();
+    return (
+      wallets.length > 0 &&
+      wallets[0].accounts.length > 0 &&
+      wallets[0].chains.length > 0 &&
+      !!wallets[0].provider
+    );
   }
 
   /**
@@ -169,115 +372,38 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   public async askUserForChainChange(chainId: ChainEntity['id']) {
     const chain = find(this.options.chains, chain => chain.id === chainId);
     if (!chain) {
+      console.error(`askUserForChainChange: Couldn't find chain by id ${chainId}`);
       throw new Error(`Couldn't find chain by id ${chainId}`);
     }
 
-    // Wallet must be connected before we can ask to change chains
-    if (!this.web3Modal || !this.provider) {
+    // Onboard must already be connected
+    if (!this.isConnected()) {
+      console.error('askUserForChainChange: Not connected');
       throw new Error(`Wallet must be connected before switching chains`);
     }
 
-    // show add/switch chain dialog in wallets that support such
-    await this.provider.request({
-      method: 'wallet_addEthereumChain',
-      params: [chain.walletSettings],
-    });
+    // Change chain
+    const success = await this.onboard.setChain({ chainId: numberToHex(chain.networkChainId) });
+    if (!success) {
+      console.error('askUserForChainChange: Failed to switch chain');
+      throw new Error(`Failed to switch chain`);
+    }
   }
 
   public async disconnect() {
-    if (this.web3Modal) {
-      this.web3Modal.clearCachedProvider();
+    // Disconnect Wallet
+    if (this.onboard) {
+      const { wallets } = this.onboard.state.get();
+      if (wallets.length) {
+        await this.onboard.disconnectWallet({ label: wallets[0].label });
+      }
     }
 
-    if (this.provider && this.provider.removeAllListeners) {
-      this.provider.removeAllListeners();
-    }
+    // Clear last wallet
+    WalletConnectionApi.setLastConnectedWallet(null);
 
-    this.provider = null;
-    // this.web3Modal = null;
-
+    // Raise events
     this.options.onWalletDisconnected();
-  }
-
-  protected _bindProviderEvents(provider) {
-    if (!provider.on) {
-      console.error('Could not bind web3 events');
-      return;
-    }
-
-    /**
-     * sooooo, sometimes on chain change, we get a quick "disconnect"
-     * event before the chainChanged event. We want to be able to tell the difference
-     * between those 2 events because when we truely disconnect, we want to
-     * remove event listeners. If we don't, there is a bug where the user
-     * disconnects in the UI, then change chains, we will be triggered by the change chain
-     * event in this case while the user is disconnected. And if we remove the
-     * event listeners, right away, we never get the chainChanged event when user
-     * is switching to another chain and we get a disconnect.
-     *
-     * The solution here is to
-     *  - 1: warn the ui about the disconnection
-     *  - 2: wait a bit, to see if we get a chainChanged event right after
-     *  - 3: if no chainChanged, it's a true disconnect and we cleanup
-     *  - 3: if chainChanged, it's a fake disconnect and we don't cleanup
-     *
-     * TODO: find something more reliable than timings
-     */
-    let gotChainChangedEvent = false;
-    const onDisconnectEvent = async () => {
-      gotChainChangedEvent = false;
-
-      // first, warn the ui
-      this.options.onWalletDisconnected();
-
-      // wait a bit
-      await sleep(1000);
-
-      // cleanup if needed
-      if (!gotChainChangedEvent) {
-        if (this.web3Modal) {
-          this.web3Modal.clearCachedProvider();
-        }
-
-        if (this.provider && this.provider.removeAllListeners) {
-          this.provider.removeAllListeners();
-        }
-
-        this.provider = null;
-        // this.web3Modal = null;
-      }
-    };
-
-    provider.on('close', onDisconnectEvent);
-    provider.on('disconnect', onDisconnectEvent);
-    provider.on('accountsChanged', async (accounts: Array<string | undefined>) => {
-      const address = accounts[0];
-
-      console.debug(`WalletAPI: account changed: ${address}`);
-
-      // address undefined means user disconnected from his wallet
-      if (address === undefined) {
-        return this.disconnect();
-      } else {
-        return this.options.onAccountChanged(address);
-      }
-    });
-    provider.on('chainChanged', async (chainIdOrHexChainId: string) => {
-      console.debug(`WalletAPI: chain changed: ${chainIdOrHexChainId}`);
-      gotChainChangedEvent = true;
-      const web3 = _getWeb3FromProvider(this.provider);
-      const networkChainId = web3.utils.isHex(chainIdOrHexChainId)
-        ? web3.utils.hexToNumber(chainIdOrHexChainId)
-        : chainIdOrHexChainId;
-
-      const accounts = await web3.eth.getAccounts();
-      const chain = find(this.options.chains, chain => chain.networkChainId === networkChainId);
-      if (chain) {
-        return this.options.onChainChanged(chain.id, accounts[0]);
-      } else {
-        return this.options.onUnsupportedChainSelected(networkChainId, accounts[0]);
-      }
-    });
   }
 }
 
@@ -297,191 +423,4 @@ function _getWeb3FromProvider(provider) {
   });
 
   return web3;
-}
-
-async function _getNetworkChainId(web3: Web3) {
-  let networkChainId = await web3.eth.getChainId();
-  if (networkChainId === 86) {
-    // Trust provider returns an incorrect chainId for BSC.
-    networkChainId = 56;
-  }
-  return networkChainId;
-}
-
-function _generateProviderOptions(chains: ChainEntity[]): Partial<ICoreOptions> {
-  const allSupportedChainIds = chains.map(chain => chain.networkChainId);
-  const allSupportedChainsIdRpcMap = Object.fromEntries(
-    chains.map(chain => [chain.networkChainId, sample(chain.rpc)])
-  );
-  const bnbChain = chains.find(chain => chain.id === 'bsc');
-  const cronosChain = chains.find(chain => chain.id === 'cronos');
-  const fuseChain = chains.find(chain => chain.id === 'fuse');
-
-  const providerOptions: IProviderOptions = {
-    'custom-twt': {
-      display: {
-        name: 'Trust',
-        description: 'Trust Wallet',
-        logo: require(`../../../../images/wallets/trust-wallet.svg`).default,
-      },
-      package: 'twt',
-      connector: connectors.injected,
-    },
-    'custom-clover': {
-      display: {
-        logo: require(`../../../../images/wallets/clover.png`).default,
-        name: 'Clover Wallet',
-        description: 'Connect with your Clover wallet and earn CLV',
-      },
-      options: {
-        supportedChainIds: allSupportedChainIds,
-      },
-      package: CloverConnector,
-      connector: async (ProviderPackage, options) => {
-        const provider = new ProviderPackage(options);
-        await provider.activate();
-        return provider.getProvider();
-      },
-    },
-    'custom-coinbase': {
-      display: {
-        logo: require(`../../../../images/wallets/coinbase.png`).default,
-        name: 'Coinbase Wallet',
-        description: 'Connect your Coinbase Wallet',
-      },
-      options: {
-        appName: 'Beefy Finance',
-        appLogoUrl: 'https://app.beefy.finance/static/media/BIFI.e797b2e4.png',
-        darkMode: false,
-      },
-      package: CoinbaseWalletSDK,
-      connector: async (ProviderPackage, options) => {
-        const walletLink = new ProviderPackage(options);
-
-        const provider = walletLink.makeWeb3Provider(sample(bnbChain.rpc), bnbChain.networkChainId);
-
-        await provider.enable();
-
-        return provider;
-      },
-    },
-    'custom-wallet-connect': {
-      display: {
-        logo: require(`../../../../images/wallets/wallet-connect.svg`).default,
-        name: 'Wallet Connect',
-        description: 'Scan your WalletConnect to Connect',
-      },
-      options: {
-        rpc: allSupportedChainsIdRpcMap,
-      },
-      package: WalletConnectProvider,
-      connector: async (ProviderPackage, options) => {
-        const provider = new ProviderPackage(options);
-
-        await provider.enable();
-
-        return provider;
-      },
-    },
-    'custom-fuse-cash': {
-      display: {
-        logo: require(`../../../../images/wallets/fusecash.png`).default,
-        name: 'Fuse.Cash',
-        description: 'Connect to your Fuse.Cash Wallet',
-      },
-      package: WalletConnectProvider,
-      options: {
-        rpc: {
-          1: sample(fuseChain.rpc),
-          [fuseChain.networkChainId]: sample(fuseChain.rpc),
-        },
-      },
-      connector: async (ProviderPackage, options) => {
-        const provider = new ProviderPackage(options);
-
-        await provider.enable();
-
-        return provider;
-      },
-    },
-    'custom-math': {
-      display: {
-        name: 'Math',
-        description: 'Math Wallet',
-        logo: require(`../../../../images/wallets/math-wallet.svg`).default,
-      },
-      package: 'math',
-      connector: connectors.injected,
-    },
-    'custom-binance': {
-      display: {
-        name: 'Binance',
-        description: 'Binance Chain Wallet',
-        logo: require(`../../../../images/wallets/binance-wallet.png`).default,
-      },
-      package: 'binance',
-      connector: async (ProviderPackage, options) => {
-        const provider = (window as any).BinanceChain;
-        await provider.enable();
-        return provider;
-      },
-    },
-    'custom-safepal': {
-      display: {
-        name: 'SafePal',
-        description: 'SafePal App',
-        logo: require(`../../../../images/wallets/safepal-wallet.svg`).default,
-      },
-      package: 'safepal',
-      connector: connectors.injected,
-    },
-    'custom-cdc': {
-      display: {
-        logo: require(`../../../../images/wallets/crypto.png`).default,
-        name: 'Crypto.com',
-        description: 'Crypto.com | Wallet Extension',
-      },
-      options: {
-        supportedChainIds: [cronosChain.networkChainId],
-        rpc: {
-          [cronosChain.networkChainId]: sample(cronosChain.rpc), // cronos mainet
-        },
-        pollingInterval: 15000,
-      },
-      package: DeFiConnector,
-      connector: async (packageConnector, options) => {
-        const connector = new packageConnector({
-          name: 'Cronos',
-          supprtedChainTypes: ['eth'],
-          supportedChainTypes: ['eth'],
-          eth: options,
-          cosmos: null,
-        });
-        await connector.activate();
-        return connector.getProvider();
-      },
-    },
-    'custom-bitkeep': {
-      display: {
-        name: 'BitKeep Wallet',
-        description: 'Connect your BitKeep Wallet',
-        logo: require(`../../../../images/wallets/bitkeep-wallet.png`).default,
-      },
-      package: 'bitkeep',
-      connector: connectors.injected,
-    },
-  };
-
-  return {
-    cacheProvider: true,
-    providerOptions,
-  };
-}
-
-function getWeb3ModalCachedProvider() {
-  return getWeb3ModalLocal(CACHED_PROVIDER_KEY) || '';
-}
-
-function hasWeb3ModalCachedProvider() {
-  return getWeb3ModalCachedProvider() !== '';
 }

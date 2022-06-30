@@ -100,7 +100,6 @@ export interface ChainConfig {
   multicallAddress: string;
   fetchContractDataAddress?: string;
   fetchBalancesAddress?: string;
-  supportedWallets: string[];
   providerName: string;
   walletSettings: {
     chainId: string;
