@@ -27,7 +27,7 @@
     "earnedTokenAddress": "0x8343091F2499FD4b6174A46D067A920a3b851FF9",
     "earnContractAddress": "0x809FF72292009E68fa6463b966e6D86154B67fa1",
     "earnedOracle": "tokens",
-    "earnedOracleId": "jpyc",
+    "earnedOracleId": "JPYC",
     "partnership": true,
     "status": "active",
     "isMooStaked": true,
