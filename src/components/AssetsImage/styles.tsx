@@ -11,6 +11,7 @@ export const styles = () => ({
     alignItems: 'center' as const,
     flexShrink: 0,
     flexGrow: 0,
+    transform: 'translate(0, 0)', // new zIndex context
     '&[data-count="2"]': {
       '& $iconImg': {
         position: 'absolute' as const,

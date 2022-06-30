@@ -175,6 +175,7 @@ const theme = createTheme({
           '--onboard-font-family-normal': 'DM Sans',
           '--onboard-font-family-semibold': 'DM Sans',
           '--onboard-font-family-light': 'DM Sans',
+          '--onboard-modal-z-index': '1',
           '--onboard-modal-backdrop': 'rgba(255,255,255,0.2)',
           // '--onboard-connect-header-background': '#111321',
           // '--onboard-connect-header-color': '#F5F5FF',
