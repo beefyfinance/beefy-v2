@@ -64,7 +64,7 @@ export interface BeefyAPIBuybackResponse {
   [chainId: ChainEntity['id']]: { buybackTokenAmount: BigNumber; buybackUsdAmount: BigNumber };
 }
 
-type BeefyChartDataResponse = {
+export type BeefyChartDataResponse = {
   name: string;
   ts: string;
   v: number;
