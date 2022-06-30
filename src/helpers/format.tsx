@@ -3,6 +3,7 @@ import { TotalApy } from '../features/data/reducers/apy';
 import { hexToNumber, isHexStrict } from 'web3-utils';
 import { ReactNode } from 'react';
 import { AllValuesAsString } from '../features/data/utils/types-utils';
+import { BIG_ONE, BIG_ZERO, isBigNumber } from './big-number';
 
 export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   const number = num.toFormat({
@@ -23,25 +24,40 @@ export function formatBigNumberSignificant(num: BigNumber, digits = 6) {
   return `${wholes}.${decimals.match(pattern)[0]}`;
 }
 
-export const formatApy = (apy, dp = 2, placeholder: any = '?') => {
-  if (!apy) return placeholder;
+/**
+ * Formats a number to output as a percent% string
+ * @param percent as decimal e.g. 0.01 to represent 1%
+ * @param dp
+ * @param placeholder
+ */
+export const formatPercent = (
+  percent: number | BigNumber | null | undefined,
+  dp = 2,
+  placeholder: any = '?'
+) => {
+  if (!percent) return placeholder;
 
-  apy *= 100;
+  // Convert to number
+  const numberPercent: number = (isBigNumber(percent) ? percent.toNumber() : percent) * 100;
 
   const units = ['', 'k', 'M', 'B', 'T', 'Q', 'S'];
-  const order = Math.floor(Math.log10(apy) / 3);
-  const shouldShowUnits = order > 1;
-  let unitToDisplay = '';
+  const order = Math.floor(Math.log10(numberPercent) / 3);
+
+  // Show fire symbol if very large %
   if (order >= units.length - 1) return `🔥`;
-  let num: BigNumber | number = new BigNumber(apy);
-  if (shouldShowUnits) {
-    num = apy / 1000 ** order;
+
+  // Magnitude to display
+  let unitToDisplay = '';
+  let num: number = numberPercent;
+  if (order > 1) {
+    num = numberPercent / 1000 ** order;
     unitToDisplay = units[order];
   }
 
+  // Format output
   return num < 999
     ? `${num.toFixed(dp)}${unitToDisplay}%`
-    : apy.toLocaleString('en-US', {
+    : numberPercent.toLocaleString('en-US', {
         maximumFractionDigits: 0,
         minimumFractionDigits: 0,
       }) + '%';
@@ -54,8 +70,8 @@ export const formattedTotalApy = (
   return Object.fromEntries(
     Object.entries(totalApy).map(([key, value]) => {
       const formattedValue = key.toLowerCase().includes('daily')
-        ? formatApy(value, 4, placeholder)
-        : formatApy(value, 2, placeholder);
+        ? formatPercent(value, 4, placeholder)
+        : formatPercent(value, 2, placeholder);
       return [key, formattedValue];
     })
   );
@@ -128,6 +144,75 @@ export function formatBigDecimals(value: BigNumber, maxPlaces: number = 8, strip
 
   const fixed = value.toFixed(maxPlaces);
   return strip ? stripTrailingZeros(fixed) : fixed;
+}
+
+export function formatFullBigNumber(
+  value: BigNumber,
+  maxDp: number,
+  roundMode: BigNumber.RoundingMode = BigNumber.ROUND_FLOOR
+) {
+  return stripTrailingZeros(
+    value.toFormat(maxDp, roundMode, {
+      prefix: '',
+      decimalSeparator: '.',
+      groupSeparator: ',',
+      groupSize: 3,
+      secondaryGroupSize: 0,
+      fractionGroupSeparator: '.',
+      fractionGroupSize: 0,
+      suffix: '',
+    })
+  );
+}
+
+/**
+ * Formats only to enough decimals to show $0.01 worth
+ * @param value token amount to format
+ * @param decimals number of decimals the token has
+ * @param price price in USD per 1 token
+ * @param extraPlaces number of decimals more than needed to show $0.01
+ * @param minPlaces minimum number of decimals to show
+ * @param roundMode
+ */
+export function formatSignificantBigNumber(
+  value: BigNumber,
+  decimals: number,
+  price: BigNumber,
+  extraPlaces: number = 0,
+  minPlaces: number = 2,
+  roundMode: BigNumber.RoundingMode = BigNumber.ROUND_FLOOR
+) {
+  const tokensPerCent = BIG_ONE.dividedBy(price.multipliedBy(100));
+  const sigPlaces = getFirstNonZeroDecimal(tokensPerCent, decimals) + extraPlaces;
+  const places = Math.max(Math.min(sigPlaces, decimals), minPlaces);
+
+  return stripTrailingZeros(
+    value.toFormat(places, roundMode, {
+      prefix: '',
+      decimalSeparator: '.',
+      groupSeparator: ',',
+      groupSize: 3,
+      secondaryGroupSize: 0,
+      fractionGroupSeparator: '.',
+      fractionGroupSize: 0,
+      suffix: '',
+    })
+  );
+}
+
+function getFirstNonZeroDecimal(value: BigNumber, max: number): number {
+  let position = 0;
+
+  if (value.isEqualTo(BIG_ZERO) || value.gte(BIG_ONE)) {
+    return 0;
+  }
+
+  while (value.lt(BIG_ONE) && position < max) {
+    value = value.multipliedBy(10);
+    ++position;
+  }
+
+  return position;
 }
 
 const stripTrailingZeros = str => {

@@ -1,0 +1,16 @@
+/bsc / 301
+/heco / 301
+/avax / 301
+/polygon / 301
+/fantom / 301
+/harmony / 301
+/arbitrum / 301
+/celo / 301
+/moonriver / 301
+/cronos / 301
+/fuse / 301
+/metis / 301
+/aurora / 301
+/moonbeam / 301
+/:chain/vault/:vaultId /vault/:vaultId 301
+/%23/:chain/vault/:vaultId /vault/:vaultId 301

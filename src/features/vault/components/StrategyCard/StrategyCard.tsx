@@ -8,7 +8,7 @@ import { styles } from './styles';
 import shield from './shield.svg';
 import { StrategyDescription } from './StrategyDescription';
 import { selectVaultTotalApy } from '../../../data/selectors/apy';
-import { isGovVault, VaultEntity } from '../../../data/entities/vault';
+import { isGovVault, shouldVaultShowInterest, VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById, selectVaultStrategyAddress } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsVaultBoosted } from '../../../data/selectors/boosts';
@@ -27,6 +27,7 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
   const stratAddr = useAppSelector(state => selectVaultStrategyAddress(state, vaultId));
   const isBoosted = useAppSelector(state => selectIsVaultBoosted(state, vaultId));
   const isVaultAudited = vault.risks.includes('AUDIT');
+  const showApy = shouldVaultShowInterest(vault);
 
   if (isGovVault(vault)) {
     return <></>;
@@ -57,35 +58,37 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
         <div className={classes.text}>
           <StrategyDescription vaultId={vaultId} />
         </div>
-        <div className={classes.apysContainer}>
-          <div className={classes.apyTitle}>{t('Vault-ApyBreakdown')}</div>
-          <div className={classes.apys}>
-            <div className={classes.apy}>
-              <div className={classes.apyLabel}>{t('Vault-ApyTotal')}</div>
-              <div className={classes.apyValue}>
-                {isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
+        {showApy ? (
+          <div className={classes.apysContainer}>
+            <div className={classes.apyTitle}>{t('Vault-ApyBreakdown')}</div>
+            <div className={classes.apys}>
+              <div className={classes.apy}>
+                <div className={classes.apyLabel}>{t('Vault-ApyTotal')}</div>
+                <div className={classes.apyValue}>
+                  {isBoosted ? formatted.boostedTotalApy : formatted.totalApy}
+                </div>
               </div>
+              {values.vaultApr && (
+                <div className={classes.apy}>
+                  <div className={classes.apyLabel}>{t('Vault-VaultApr')}</div>
+                  <div className={classes.apyValue}>{formatted.vaultApr}</div>
+                </div>
+              )}
+              {values.tradingApr > 0 && (
+                <div className={classes.apy}>
+                  <div className={classes.apyLabel}>{t('Vault-AprTrading')}</div>
+                  <div className={classes.apyValue}>{formatted.tradingApr}</div>
+                </div>
+              )}
+              {isBoosted && (
+                <div className={classes.apy}>
+                  <div className={classes.apyLabel}>{t('Vault-AprBoost')}</div>
+                  <div className={classes.apyValue}>{formatted.boostApr}</div>
+                </div>
+              )}
             </div>
-            {values.vaultApr && (
-              <div className={classes.apy}>
-                <div className={classes.apyLabel}>{t('Vault-VaultApr')}</div>
-                <div className={classes.apyValue}>{formatted.vaultApr}</div>
-              </div>
-            )}
-            {values.tradingApr > 0 && (
-              <div className={classes.apy}>
-                <div className={classes.apyLabel}>{t('Vault-AprTrading')}</div>
-                <div className={classes.apyValue}>{formatted.tradingApr}</div>
-              </div>
-            )}
-            {isBoosted && (
-              <div className={classes.apy}>
-                <div className={classes.apyLabel}>{t('Vault-AprBoost')}</div>
-                <div className={classes.apyValue}>{formatted.boostApr}</div>
-              </div>
-            )}
           </div>
-        </div>
+        ) : null}
         <div className={classes.audits}>
           {isVaultAudited ? (
             <div className={classes.audit}>

@@ -2,10 +2,13 @@ import { VaultEntity } from '../../../../../data/entities/vault';
 import React, { memo, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { BeefyState } from '../../../../../../redux-types';
-import { selectIsVaultGov, selectIsVaultRetired } from '../../../../../data/selectors/vaults';
+import { selectIsVaultGov } from '../../../../../data/selectors/vaults';
 import { formattedTotalApy } from '../../../../../../helpers/format';
 import { VaultValueStat, VaultValueStatProps } from '../VaultValueStat';
-import { selectVaultApyAvailable } from '../../../../../data/selectors/data-loader';
+import {
+  selectVaultApyAvailable,
+  selectVaultShouldShowInterest,
+} from '../../../../../data/selectors/data-loader';
 import {
   selectDidAPIReturnValuesForVault,
   selectVaultTotalApy,
@@ -25,8 +28,8 @@ export const VaultDailyStat = memo(connect(mapStateToProps)(VaultValueStat));
 function mapStateToProps(state: BeefyState, { vaultId }: VaultDailyStatProps): VaultValueStatProps {
   const label = 'VaultStat-DAILY';
 
-  const isRetired = selectIsVaultRetired(state, vaultId);
-  if (isRetired) {
+  const shouldShowInterest = selectVaultShouldShowInterest(state, vaultId);
+  if (!shouldShowInterest) {
     return {
       label,
       value: '-',

@@ -35,7 +35,7 @@ export const fetchAddressBookAction = createAsyncThunk<
 
 export const fetchAllAddressBookAction = createAsyncThunk<
   FetchAddressBookPayload[],
-  {},
+  void,
   { state: BeefyState }
 >('tokens/fetchAllAddressBookAction', async (_, { getState }) => {
   const chains = selectAllChains(getState());

@@ -77,4 +77,7 @@ export const styles = (theme: Theme) => ({
   'vaultNetwork-emerald': {
     backgroundColor: '#0192f6',
   },
+  'vaultNetwork-optimism':{
+    backgroundColor:'#ff0420'
+  }
 });

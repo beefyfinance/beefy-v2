@@ -41,6 +41,7 @@ import { SolaceCard } from './components/SolaceCard';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { VaultPlatform } from '../../components/VaultPlatform';
+import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -180,6 +181,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               {isBoostedOrPreStake && <BoostCard vaultId={vaultId} />}
               {isGovVault(vault) && <GovDetailsCard vaultId={vaultId} />}
               {!isGovVault(vault) ? <Graph vaultId={vaultId} /> : null}
+              <LiquidityPoolBreakdownLoader vaultId={vaultId} />
               <SafetyCard vaultId={vaultId} />
               {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
               <InfoCards chainId={vault.chainId} vaultId={vault.id} />

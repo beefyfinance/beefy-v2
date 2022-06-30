@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => ({
   button: {
     ...theme.typography['body-lg-med'],
     color: '#8A8EA8',
-    backgroundColor: '#262A40',
+    backgroundColor: 'inherit',
     border: 'none',
     borderRadius: '6px',
     boxShadow: 'none',

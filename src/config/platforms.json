@@ -853,5 +853,10 @@
     "id": "valleyswap",
     "name": "ValleySwap",
     "filter": true
+  },
+  {
+    "id": "balancer",
+    "name": "Balancer",
+    "filter": true
   }
 ]

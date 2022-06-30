@@ -27,6 +27,7 @@ export const styles = (theme: Theme) => ({
     textAlign: 'left' as const,
   },
   tooltip: {
+    minWidth: `${arrowWidth * 3}px`,
     maxWidth: 'min(100%, 350px)',
     zIndex: 1000,
     '&[x-placement*="top"]': {
