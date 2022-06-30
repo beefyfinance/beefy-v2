@@ -64,6 +64,12 @@ export interface BeefyAPIBuybackResponse {
   [chainId: ChainEntity['id']]: { buybackTokenAmount: BigNumber; buybackUsdAmount: BigNumber };
 }
 
+export type BeefyChartDataResponse = {
+  name: string;
+  ts: string;
+  v: number;
+}[];
+
 // note that there is more infos but we don't need it
 type BeefyAPIVaultsResponse = {
   id: string;
@@ -198,6 +204,20 @@ export class BeefyAPI {
     }
 
     return new Date(lh * 1000);
+  }
+
+  public async getChartData(
+    stat: string,
+    name: string,
+    period: string,
+    from: number,
+    to: number,
+    limit: number
+  ) {
+    const res = await this.data.get<BeefyChartDataResponse>(`/${stat}`, {
+      params: { name, period, from, to, limit },
+    });
+    return res.data;
   }
 
   // maybe have a local cache instead of this cache busting
