@@ -34,7 +34,7 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
         : `(${MOVING_AVERAGE_POINTS[period]} ${t('Days')})`
     );
 
-    const limit = LIMITS[period] + MOVING_AVERAGE_POINTS[period];
+    const maxRequestedPoints = LIMITS[period] + MOVING_AVERAGE_POINTS[period];
 
     const fetchData = async () => {
       const api = getBeefyApi();
@@ -45,13 +45,13 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
         PERIODS[period],
         from,
         to,
-        limit
+        maxRequestedPoints
       );
 
       const { chartableData, average } = getChartableData(
         data,
         MOVING_AVERAGE_POINTS[period],
-        LIMITS[period]
+        LIMITS[period] // we need to get at most this amount of data charted
       );
 
       setAverageValue(average);
@@ -65,7 +65,7 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
   return [chartData, averageValue, movingAverageDetail];
 };
 
-const calculateItemsSum = (data, start, stop) => {
+const addItems = (data, start, stop) => {
   let sum = 0;
   for (let j = start; j <= stop; j++) {
     sum += data[j].v;
@@ -73,15 +73,19 @@ const calculateItemsSum = (data, start, stop) => {
   return sum;
 };
 
-const getChartableData = (data: BeefyChartDataResponse, window: number, limit: number) => {
-  const startIndex = data.length > limit ? data.length - limit : 0;
+const getChartableData = (
+  data: BeefyChartDataResponse,
+  movingAveragePoints: number,
+  chartDisplayPoints: number
+) => {
+  const startIndex = data.length > chartDisplayPoints ? data.length - chartDisplayPoints : 0;
   const chartableData = [];
   let acum = 0;
 
   for (let i = startIndex; i < data.length; i++) {
-    const safeStartingIndex = max([i - window, 0]);
+    const safeStartingIndex = max([i - movingAveragePoints, 0]);
     const movingAverageForPoint =
-      calculateItemsSum(data, safeStartingIndex, i) / (i - safeStartingIndex + 1);
+      addItems(data, safeStartingIndex, i) / (i - safeStartingIndex + 1);
     acum += data[i].v;
     chartableData.push({ ...data[i], moveAverageValue: movingAverageForPoint });
   }
