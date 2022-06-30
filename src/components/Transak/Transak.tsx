@@ -16,11 +16,11 @@ const TransakNav = ({ className, children }) => {
   const currentChainId = useAppSelector(selectCurrentChainId);
 
   const defaultNetwork = useMemo(() => {
+    // Transak can't receive avax as valid chain, so we need to transform to 'avaxcchain'
+    const currentChain = currentChainId === 'avax' ? 'avaxcchain' : currentChainId;
     return !isWalletConnected || !CHAINS_SUPPORT_USDC.includes(currentChainId)
       ? DEFAULT_NETWORK
-      : currentChainId === 'avax'
-      ? 'avaxcchain'
-      : currentChainId;
+      : currentChain;
   }, [currentChainId, isWalletConnected]);
 
   const transak = new transakSDK({
