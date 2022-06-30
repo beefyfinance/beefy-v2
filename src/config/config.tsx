@@ -428,7 +428,6 @@ export const config = {
     multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
     fetchContractDataAddress: '0xfcDD5a02C611ba6Fe2802f885281500EC95805d7',
     fetchBalancesAddress: '0xc5Be4084b3D945fe83e1Be4bd96522FA1D1c722D',
-    supportedWallets: connectors,
     providerName: 'Optimism',
     walletSettings: {
       chainId: `0x${parseInt('10', 10).toString(16)}`,
