@@ -858,5 +858,10 @@
     "id": "balancer",
     "name": "Balancer",
     "filter": true
+  },
+  {
+    "id": "velodrome",
+    "name": "Velodrome",
+    "filter": true
   }
 ]
