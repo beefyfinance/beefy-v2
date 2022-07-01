@@ -31,14 +31,14 @@ export function TokenWithBalance({
 
   return (
     <Box className={classes.balanceContainer}>
-      <Box lineHeight={0}>
+      <Box>
         <AssetsImage
           chainId={vault.chainId}
           assetIds={token.address === depositToken.address ? vault.assetIds : [token.id]}
           size={variant === 'sm' ? 20 : 24}
         />
       </Box>
-      <Box flexGrow={1} pl={1} lineHeight={0}>
+      <Box flexGrow={1} pl={1}>
         <div className={classes.assetCount}>
           {formatBigDecimals(balance, 8)} {token.symbol}
         </div>
