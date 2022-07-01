@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { config } from '../../../../config/config';
-import { max, sum } from 'lodash';
+import { max } from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { BeefyChartDataResponse } from '../../../data/apis/beefy';
 
 const STATS = ['tvl', 'price', 'apy'];
 const PERIODS = ['hour', 'hour', 'day', 'day'];
 const LIMITS = [24, 168, 30, 365];
 const DAYS_IN_PERIOD = [1, 7, 30, 365];
-const MOVING_AVERAGE_POINTS = [6, 10, 10, 30];
+const MOVING_AVERAGE_POINTS = [6, 48, 10, 30];
 const SNAPSHOT_INTERVAL = parseInt(process.env.SNAPSHOT_INTERVAL) || 15 * 60;
 
 export const useChartData = (stat, period, oracleId, vaultId, network) => {
@@ -33,7 +34,7 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
         : `(${MOVING_AVERAGE_POINTS[period]} ${t('Days')})`
     );
 
-    const limit = LIMITS[period] + MOVING_AVERAGE_POINTS[period];
+    const maxRequestedPoints = LIMITS[period] + MOVING_AVERAGE_POINTS[period];
 
     const fetchData = async () => {
       const api = getBeefyApi();
@@ -44,28 +45,18 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
         PERIODS[period],
         from,
         to,
-        limit
+        maxRequestedPoints
       );
 
-      let values = [];
+      const { chartableData, average } = getChartableData(
+        data,
+        MOVING_AVERAGE_POINTS[period],
+        LIMITS[period] // we need to get at most this amount of data charted
+      );
 
-      for (const item of data) {
-        values.push(item.v);
-      }
+      setAverageValue(average);
 
-      const _averageValue = sum(values) / data.length;
-
-      const movingAverage = calculateMovingAverage(values, MOVING_AVERAGE_POINTS[period], limit);
-
-      const _chartData = [];
-      const start = limit === values.length ? MOVING_AVERAGE_POINTS[period] : 0;
-      for (let i = start; i < data.length; i++) {
-        _chartData.push({ ...data[i], moveAverageValue: movingAverage[i - start] });
-      }
-
-      setAverageValue(_averageValue);
-
-      setChartData(_chartData);
+      setChartData(chartableData);
     };
 
     fetchData();
@@ -74,23 +65,32 @@ export const useChartData = (stat, period, oracleId, vaultId, network) => {
   return [chartData, averageValue, movingAverageDetail];
 };
 
-const calculateItemsSum = (data, start, stop) => {
+const addItems = (data, start, stop) => {
   let sum = 0;
-  for (let j = start; j < stop; j++) {
-    sum += data[j];
+  for (let j = start; j <= stop; j++) {
+    sum += data[j].v;
   }
   return sum;
 };
 
-const calculateMovingAverage = (data, points, limit) => {
-  const result = [];
-  const start = data.length >= limit ? points : 0;
-  const startOnZero = start === 0;
-  for (let i = start; i <= data.length; i++) {
-    const number = startOnZero ? max([i - points, 0]) : i - points;
-    const sum = calculateItemsSum(data, number, i);
-    result.push(sum / points);
-    i === 0 ? result.push(data[i]) : result.push(sum / (startOnZero ? i - number : points));
+const getChartableData = (
+  data: BeefyChartDataResponse,
+  movingAveragePoints: number,
+  chartDisplayPoints: number
+) => {
+  const startIndex = data.length > chartDisplayPoints ? data.length - chartDisplayPoints : 0;
+  const chartableData = [];
+  let acum = 0;
+
+  for (let i = startIndex; i < data.length; i++) {
+    const safeStartingIndex = max([i - movingAveragePoints, 0]);
+    const movingAverageForPoint =
+      addItems(data, safeStartingIndex, i) / (i - safeStartingIndex + 1);
+    acum += data[i].v;
+    chartableData.push({ ...data[i], moveAverageValue: movingAverageForPoint });
   }
-  return result;
+
+  const average = acum / (data.length - startIndex);
+
+  return { chartableData, average };
 };
