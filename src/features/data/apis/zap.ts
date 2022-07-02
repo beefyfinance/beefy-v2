@@ -107,11 +107,17 @@ export function getEligibleZapOptions(
 
 const computePairAddress = (factoryAddress, pairInitHash, tokenA, tokenB) => {
   const [token0, token1] = sortTokens(tokenA, tokenB);
-  return getCreate2Address(
-    factoryAddress,
-    keccak256(['bytes'], [pack(['address', 'address'], [token0, token1])]),
-    pairInitHash
-  );
+
+  try {
+    return getCreate2Address(
+      factoryAddress,
+      keccak256(['bytes'], [pack(['address', 'address'], [token0, token1])]),
+      pairInitHash
+    );
+  } catch (error) {
+    console.error('computePairAddress', { token0, token1, error });
+    return null;
+  }
 };
 
 const sortTokens = (tokenA, tokenB) => {
@@ -126,6 +132,7 @@ export interface ZapEstimate {
   amountIn: BigNumber;
   amountOut: BigNumber;
 }
+
 export async function estimateZapDeposit(
   state: BeefyState,
   vaultId: VaultEntity['id'],
