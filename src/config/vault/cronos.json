@@ -1293,7 +1293,7 @@
   },
   {
     "id": "vvs-tusd-usdc",
-    "name": "TUSD-USDC",
+    "name": "TUSD-USDC LP",
     "token": "TUSD-USDC LP",
     "tokenAddress": "0x94FD83482016BCC5FcA5972A3635aA6524C3F557",
     "tokenDecimals": 18,
