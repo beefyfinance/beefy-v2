@@ -1290,5 +1290,35 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x9C62F89a8C9907582f21205Ce90443730361EA05",
     "createdAt": 1656454474,
     "network": "cronos"
+  },
+  {
+    "id": "vvs-tusd-usdc",
+    "name": "TUSD-USDC",
+    "token": "TUSD-USDC LP",
+    "tokenAddress": "0x94FD83482016BCC5FcA5972A3635aA6524C3F557",
+    "tokenDecimals": 18,
+    "tokenProviderId": "vvs",
+    "earnedToken": "mooVVSTUSD-USDC",
+    "earnedTokenAddress": "0xA4D3044b9e790464A14c9801aBe39743d95498f2",
+    "earnContractAddress": "0xA4D3044b9e790464A14c9801aBe39743d95498f2",
+    "oracle": "lps",
+    "oracleId": "vvs-tusd-usdc",
+    "status": "active",
+    "platformId": "vvs",
+    "assets": ["TUSD", "USDC"],
+    "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://vvs.finance/swap?inputCurrency=0xc21223249ca28397b4b6541dffaecc539bff0c59&outputCurrency=0x87efb3ec1576dec8ed47e58b832bedcd86ee186e",
+    "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x87EFB3ec1576Dec8ED47e58B832bEdCd86eE186e",
+    "createdAt": 1656697320,
+    "network": "cronos"
   }
 ]
