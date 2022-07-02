@@ -115,7 +115,13 @@ const computePairAddress = (factoryAddress, pairInitHash, tokenA, tokenB) => {
       pairInitHash
     );
   } catch (error) {
-    console.error('computePairAddress', { token0, token1, error });
+    console.error('getCreate2Address failed', {
+      error,
+      factoryAddress,
+      pairInitHash,
+      token0,
+      token1,
+    });
     return null;
   }
 };
