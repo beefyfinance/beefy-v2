@@ -1,4 +1,6 @@
 import { ChainEntity } from './chain';
+import { PlatformEntity } from './platform';
+import { LpData } from '../apis/beefy';
 
 /**
  * A token can be anything erc20-like
@@ -16,6 +18,7 @@ export type TokenEntity = TokenErc20 | TokenNative;
 export interface TokenErc20 {
   id: string;
   symbol: string;
+  providerId?: PlatformEntity['id'];
   chainId: ChainEntity['id'];
   oracleId: string;
   address: string;
@@ -33,6 +36,7 @@ export interface TokenErc20 {
 export interface TokenNative {
   id: string;
   symbol: string;
+  providerId?: PlatformEntity['id'];
   chainId: ChainEntity['id'];
   // some chains have addressable native tokens
   // maybe this should be a separate interface
@@ -50,6 +54,9 @@ export interface TokenNative {
 export function isTokenErc20(token: TokenEntity): token is TokenErc20 {
   return token.type === 'erc20';
 }
+
 export function isTokenNative(token: TokenEntity): token is TokenNative {
   return token.type === 'native';
 }
+
+export type TokenLpBreakdown = LpData;

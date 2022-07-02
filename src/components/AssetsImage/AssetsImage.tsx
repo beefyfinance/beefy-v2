@@ -7,33 +7,30 @@ import clsx from 'clsx';
 import { ChainEntity } from '../../features/data/entities/chain';
 
 const useStyles = makeStyles(styles);
+const maxSupportedAssets = 8;
+
+function useAssetsImageUris(chainId: ChainEntity['id'], assetIds: string[]) {
+  return useMemo(() => {
+    return assetIds
+      .slice(0, maxSupportedAssets)
+      .map(assetId => getSingleAssetSrc(assetId, chainId));
+  }, [assetIds, chainId]);
+}
 
 export type AssetsImageType = {
   chainId: ChainEntity['id'];
   assetIds: string[];
-  /** @deprecated use asset ids */
-  imageUri?: string;
   size?: number;
   className?: string;
 };
 export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
   chainId,
   assetIds,
-  imageUri,
   className,
   size = DEFAULT_SIZE,
 }) {
   const classes = useStyles();
-  const maxSupportedAssets = 8;
-  const uris = useMemo(() => {
-    if (imageUri) {
-      return [require(`../../images/${imageUri}`).default];
-    }
-
-    return assetIds
-      .slice(0, maxSupportedAssets)
-      .map(assetId => getSingleAssetSrc(assetId, chainId));
-  }, [imageUri, assetIds, chainId]);
+  const uris = useAssetsImageUris(chainId, assetIds);
 
   return (
     <div
@@ -41,7 +38,7 @@ export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
       data-count={uris.length}
       style={size !== DEFAULT_SIZE ? { width: size, height: size } : undefined}
     >
-      {uris.map(uri =>
+      {uris.map((uri, i) =>
         uri ? (
           <img
             src={uri}
@@ -53,7 +50,7 @@ export const AssetsImage = memo<AssetsImageType>(function AssetsImage({
             height={size}
           />
         ) : (
-          <div className={clsx(classes.iconImg, classes.iconImgPlaceholder)} />
+          <div key={i} className={clsx(classes.iconImg, classes.iconImgPlaceholder)} />
         )
       )}
     </div>

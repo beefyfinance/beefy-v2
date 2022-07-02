@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
 import { uniq } from 'lodash';
-import { BIG_ZERO } from '../../../../helpers/format';
 import { BeefyState } from '../../../../redux-types';
 import { fetchAllBalanceAction } from '../../actions/balance';
 import { initiateBoostForm } from '../../actions/boosts';
@@ -25,6 +24,7 @@ import {
 import { initiateMinterForm } from '../../actions/minters';
 import { initiateBridgeForm } from '../../actions/bridge';
 import { selectMinterById } from '../../selectors/minters';
+import { BIG_ZERO } from '../../../../helpers/big-number';
 
 /**
  * State containing user balances state

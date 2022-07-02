@@ -19,10 +19,7 @@ export const styles = (theme: Theme) => ({
     },
   },
   content: {
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: 400,
-    fontSize: '15px',
-    lineHeight: '24px',
+    ...theme.typography['body-lg'],
     color: '#272B4A',
     padding: '12px 16px',
     background: '#fff',
@@ -30,6 +27,7 @@ export const styles = (theme: Theme) => ({
     textAlign: 'left' as const,
   },
   tooltip: {
+    minWidth: `${arrowWidth * 3}px`,
     maxWidth: 'min(100%, 350px)',
     zIndex: 1000,
     '&[x-placement*="top"]': {
@@ -90,17 +88,11 @@ export const styles = (theme: Theme) => ({
     },
   },
   basicTitle: {
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: 700,
-    fontSize: '15px',
-    lineHeight: '24px',
+    ...theme.typography['body-lg-med'],
     color: '#272B4A',
   },
   basicContent: {
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: 400,
-    fontSize: '15px',
-    lineHeight: '24px',
+    ...theme.typography['body-lg'],
     color: '#272B4A',
   },
 });

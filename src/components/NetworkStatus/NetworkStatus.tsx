@@ -1,6 +1,4 @@
-import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import { isEqual, sortedUniq, uniq } from 'lodash';
 import React, { useCallback, useRef } from 'react';
@@ -19,11 +17,12 @@ import { BeefyState } from '../../redux-types';
 import { styles } from './styles';
 import { Floating } from '../Floating';
 import { useAppDispatch, useAppSelector } from '../../store';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(styles);
 
 export function NetworkStatus() {
-  const classes = useStyles({});
+  const classes = useStyles();
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -62,12 +61,12 @@ export function NetworkStatus() {
         className={clsx({ [classes.container]: true, open: open })}
         onClick={handleToggle}
       >
-        <Box className={clsx(classes.circle, colorClasses)}>
-          <Box style={{ animationDelay: '0s' }} className={pulseClassName} />
-          <Box style={{ animationDelay: '1s' }} className={pulseClassName} />
-          <Box style={{ animationDelay: '2s' }} className={pulseClassName} />
-          <Box style={{ animationDelay: '3s' }} className={pulseClassName} />
-        </Box>
+        <div className={clsx(classes.circle, colorClasses)}>
+          <div className={pulseClassName} />
+          <div className={pulseClassName} />
+          <div className={pulseClassName} />
+          <div className={pulseClassName} />
+        </div>
       </button>
       <Floating
         open={open}
@@ -78,48 +77,40 @@ export function NetworkStatus() {
         autoHide={false}
         className={classes.floating}
       >
-        <Box className={classes.popoverSpacer} />
-        <Box className={classes.popover}>
-          <Box className={classes.closeButton} onClick={handleClose}>
-            <Box className={classes.X} />
-          </Box>
+        <div className={classes.popoverSpacer} />
+        <div className={classes.popover}>
+          <div className={classes.closeIconButton} onClick={handleClose}>
+            <CloseIcon fontSize="inherit" />
+          </div>
           {hasAnyError ? (
             <>
-              <Typography className={classes.popoverTitle}>
-                {t('NetworkStatus-Title-RpcError')}
-              </Typography>
+              <div className={classes.popoverTitle}>{t('NetworkStatus-Title-RpcError')}</div>
               {rpcErrors.map(chainId => (
-                <Box className={classes.popoverLine} key={chainId}>
-                  <Box className={clsx([classes.circle, 'warning', 'circle'])} />
-                  <Typography>
-                    {t('NetworkStatus-RpcError', { chain: chainsById[chainId].name })}
-                  </Typography>
-                </Box>
+                <div className={classes.popoverLine} key={chainId}>
+                  <div className={clsx([classes.circle, 'warning', 'circle'])} />
+                  <div>{t('NetworkStatus-RpcError', { chain: chainsById[chainId].name })}</div>
+                </div>
               ))}
               {(beefyErrors.length > 0 || configErrors.length > 0) && (
-                <Box className={classes.popoverLine}>
-                  <Box className={clsx([classes.circle, 'warning', 'circle'])} />
-                  <Typography>{t('NetworkStatus-BeefyError')}</Typography>
-                </Box>
+                <div className={classes.popoverLine}>
+                  <div className={clsx([classes.circle, 'warning', 'circle'])} />
+                  <div>{t('NetworkStatus-BeefyError')}</div>
+                </div>
               )}
-              <Typography className={clsx(classes.popoverLine, classes.popoverHelpText)}>
+              <div className={clsx(classes.popoverLine, classes.popoverHelpText)}>
                 {t('NetworkStatus-HelpText-Error')}
-              </Typography>
+              </div>
             </>
           ) : hasAnyLoading ? (
             <>
-              <Typography className={classes.popoverTitle}>
-                {t('NetworkStatus-Title-Loading')}
-              </Typography>
+              <div className={classes.popoverTitle}>{t('NetworkStatus-Title-Loading')}</div>
             </>
           ) : (
             <>
-              <Typography className={classes.popoverTitle}>
-                {t('NetworkStatus-Title-OK')}
-              </Typography>
+              <div className={classes.popoverTitle}>{t('NetworkStatus-Title-OK')}</div>
             </>
           )}
-        </Box>
+        </div>
       </Floating>
     </div>
   );

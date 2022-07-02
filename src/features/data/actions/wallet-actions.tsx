@@ -44,11 +44,12 @@ import { getZapAddress } from '../utils/zap-utils';
 import { reloadBalanceAndAllowanceAndGovRewardsAndBoostData } from './tokens';
 import { getGasPriceOptions } from '../utils/gas-utils';
 import { AbiItem } from 'web3-utils';
-import { BIG_ZERO, convertAmountToRawNumber } from '../../../helpers/format';
+import { convertAmountToRawNumber } from '../../../helpers/format';
 import { FriendlyError } from '../utils/error-utils';
 import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -834,16 +835,17 @@ const bridge = (
       if (isRouter) {
         //ROUTER CONTRACT
         const contract = new web3.eth.Contract(bridgeAbi as AbiItem[], routerAddr);
+
         return bridgeTokenData.underlying
-          ? contract?.methods
+          ? contract.methods
               .anySwapOutUnderlying(
-                bridgeTokenData.address,
+                bridgeTokenData.underlying.address,
                 address,
                 rawAmount,
                 destChain.networkChainId
               )
               .send({ from: address, ...gasPrices })
-          : contract?.methods
+          : contract.methods
               .anySwapOut(bridgeTokenData.address, address, rawAmount, destChain.networkChainId)
               .send({ from: address, ...gasPrices });
       } else {

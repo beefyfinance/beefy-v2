@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createCanvas } from 'canvas';
 import { ChainEntity } from '../../entities/chain';
 import { memoize } from 'lodash';
-import { initWallet } from '../../actions/wallet';
+import { getEns, initWallet } from '../../actions/wallet';
 
 /**
  * Only address, hideBalance and profilePictureUrl are persisted
@@ -11,6 +11,7 @@ import { initWallet } from '../../actions/wallet';
 export type WalletState = {
   initialized: boolean;
   address: string | null;
+  ens: string | null;
   connectedAddress: string | null;
   selectedChainId: ChainEntity['id'] | null;
   error: 'unsupported chain' | null;
@@ -21,6 +22,7 @@ export type WalletState = {
 const initialWalletState: WalletState = {
   initialized: false,
   address: null,
+  ens: null,
   connectedAddress: null,
   selectedChainId: null,
   error: null,
@@ -56,11 +58,13 @@ export const walletSlice = createSlice({
       sliceState.connectedAddress = null;
       sliceState.profilePictureUrl = null;
       sliceState.error = null;
+      sliceState.ens = null;
     },
     accountHasChanged(sliceState, action: PayloadAction<{ address: string }>) {
       sliceState.address = action.payload.address;
       sliceState.connectedAddress = action.payload.address;
       sliceState.profilePictureUrl = _generateProfilePictureUrl(action.payload.address);
+      sliceState.ens = null;
     },
     chainHasChanged(
       sliceState,
@@ -93,6 +97,9 @@ export const walletSlice = createSlice({
     builder.addCase(initWallet.fulfilled, (sliceState, action) => {
       // wallet connection api initialized
       sliceState.initialized = true;
+    });
+    builder.addCase(getEns.fulfilled, (sliceState, action) => {
+      sliceState.ens = action.payload.ens;
     });
   },
 });

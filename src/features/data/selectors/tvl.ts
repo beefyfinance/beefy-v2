@@ -1,6 +1,6 @@
 import { VaultEntity } from '../entities/vault';
 import { BeefyState } from '../../../redux-types';
-import { BIG_ZERO } from '../../../helpers/format';
+import { BIG_ZERO } from '../../../helpers/big-number';
 
 export const selectVaultTvl = (state: BeefyState, vaultId: VaultEntity['id']) =>
   state.biz.tvl.byVaultId[vaultId]?.tvl || BIG_ZERO;

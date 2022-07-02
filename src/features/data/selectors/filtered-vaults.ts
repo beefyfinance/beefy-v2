@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
-import { isGovVault, isVaultRetired, VaultEntity } from '../entities/vault';
+import { isGovVault, isVaultPaused, isVaultRetired, VaultEntity } from '../entities/vault';
 import {
   selectHasUserDepositInVault,
   selectIsUserEligibleForVault,
@@ -10,7 +10,6 @@ import {
 } from './balance';
 import {
   selectBoostById,
-  selectIsVaultBoosted,
   selectIsVaultPreStakedOrBoosted,
   selectPreStakeOrActiveBoostIds,
 } from './boosts';
@@ -27,6 +26,7 @@ import { selectTokenByAddress } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { KeysOfType } from '../utils/types-utils';
 import { FilteredVaultsState } from '../reducers/filtered-vaults';
+import { PlatformEntity } from '../entities/platform';
 
 export const selectFilterOptions = (state: BeefyState) => state.ui.filteredVaults;
 
@@ -51,6 +51,7 @@ export const selectFilterPopinFilterCount = createSelector(
   selectFilterOptions,
   filterOptions =>
     (filterOptions.onlyRetired ? 1 : 0) +
+    (filterOptions.onlyPaused ? 1 : 0) +
     (filterOptions.onlyMoonpot ? 1 : 0) +
     (filterOptions.onlyBoosted ? 1 : 0) +
     (filterOptions.platformId !== null ? 1 : 0) +
@@ -67,6 +68,7 @@ export const selectHasActiveFilter = createSelector(
     filterOptions.userCategory !== 'all' ||
     filterOptions.vaultType !== 'all' ||
     filterOptions.onlyRetired !== false ||
+    filterOptions.onlyPaused !== false ||
     filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
@@ -81,6 +83,7 @@ export const selectHasActiveFilterExcludingUserCategoryAndSort = createSelector(
     filterOptions.vaultCategory !== 'all' ||
     filterOptions.vaultType !== 'all' ||
     filterOptions.onlyRetired !== false ||
+    filterOptions.onlyPaused !== false ||
     filterOptions.onlyMoonpot !== false ||
     filterOptions.onlyBoosted !== false ||
     filterOptions.searchText !== '' ||
@@ -175,6 +178,12 @@ function selectVaultMatchesText(state: BeefyState, vault: VaultEntity, searchTex
   });
 }
 
+const selectPlatformIdForFilter = createCachedSelector(
+  (state: BeefyState) => state.entities.platforms.filterIds,
+  (state: BeefyState, platformId: PlatformEntity['id']) => platformId,
+  (filterIds, platformId) => (filterIds.includes(platformId) ? platformId : 'other')
+)((state: BeefyState, platformId: PlatformEntity['id']) => platformId);
+
 // todo: use createSelector or put the result in the state to avoid re-computing these on every render
 // https://dev.to/nioufe/you-should-not-use-lodash-for-memoization-3441
 export const selectFilteredVaults = (state: BeefyState) => {
@@ -202,13 +211,21 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.chainIds.length > 0 && !chainIdMap[vault.chainId]) {
       return false;
     }
-    if (filterOptions.platformId !== null && vault.platformId !== filterOptions.platformId) {
+    if (
+      filterOptions.platformId !== null &&
+      selectPlatformIdForFilter(state, vault.platformId) !== filterOptions.platformId
+    ) {
       return false;
     }
-    // paused vaults are not considered retired
+
     if (filterOptions.onlyRetired && !isVaultRetired(vault)) {
       return false;
     }
+
+    if (filterOptions.onlyPaused && !isVaultPaused(vault)) {
+      return false;
+    }
+
     if (
       !filterOptions.onlyRetired &&
       isVaultRetired(vault) &&
@@ -219,7 +236,7 @@ export const selectFilteredVaults = (state: BeefyState) => {
     if (filterOptions.onlyMoonpot && !selectIsVaultMoonpot(state, vault.id)) {
       return false;
     }
-    if (filterOptions.onlyBoosted && !selectIsVaultBoosted(state, vault.id)) {
+    if (filterOptions.onlyBoosted && !selectIsVaultPreStakedOrBoosted(state, vault.id)) {
       return false;
     }
 
@@ -257,13 +274,30 @@ export const selectFilteredVaults = (state: BeefyState) => {
   // apply sort
   let sortedVaults = filteredVaults;
 
+  // Vaults are already presorted by date on the reducer
   if (filterOptions.sort === 'default') {
-    // Vaults are already presorted by date on the reducer
-    // TODO find all boosted and bring to top rather than sort whole array?
-    // TODO explore having separate component to render boosted on top so list doesn't jump on load (downside: dups)
-    sortedVaults = sortBy(sortedVaults, vault =>
-      selectIsVaultPreStakedOrBoosted(state, vault.id) && vault.platformId !== 'valleyswap' ? -1 : 1
+    const vaultIsBoosted = Object.fromEntries(
+      sortedVaults.map(vault => [
+        vault.id,
+        selectIsVaultPreStakedOrBoosted(state, vault.id) && vault.platformId !== 'valleyswap',
+      ])
     );
+
+    if (filterOptions.userCategory === 'deposited') {
+      // Surface retired, paused and boosted
+      sortedVaults = sortBy(sortedVaults, vault =>
+        vault.status === 'eol'
+          ? -3
+          : vault.status === 'paused'
+          ? -2
+          : vaultIsBoosted[vault.id]
+          ? -1
+          : 1
+      );
+    } else {
+      // Surface boosted
+      sortedVaults = sortBy(sortedVaults, vault => (vaultIsBoosted[vault.id] ? -1 : 1));
+    }
   }
 
   const sortDirMul = filterOptions.sortDirection === 'desc' ? -1 : 1;

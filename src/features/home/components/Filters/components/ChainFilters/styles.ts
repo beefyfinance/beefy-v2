@@ -36,18 +36,16 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.filters.inactive,
   },
   tooltip: {
+    ...theme.typography['body-lg-med'],
     background: theme.palette.background.filters.outline,
     padding: '8px 12px',
     borderRadius: '4px',
     color: theme.palette.text.disabled,
-    fontSize: theme.typography.body1.fontSize,
-    lineHeight: theme.typography.body1.lineHeight,
-    fontWeight: 700,
     margin: '4px 0',
   },
   iconWithChain: {
     display: 'flex',
-    justContent: 'center',
+    alignItems: 'center',
   },
   iconWithChainIcon: {
     marginRight: '8px',

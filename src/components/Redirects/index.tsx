@@ -23,8 +23,17 @@ export const Redirects = memo(function () {
 
     // Standard redirects
     for (const { to, from } of REDIRECTS) {
-      if (matchPath(location.pathname, from)) {
-        history.push(to);
+      const match = matchPath(location.pathname, from);
+      if (match) {
+        const replacements: [string, string][] = Object.entries(match.params);
+        const redirectTo =
+          replacements.length === 0
+            ? to
+            : replacements.reduce(
+                (url, replacement) => url.replace(`:${replacement[0]}`, replacement[1]),
+                to
+              );
+        history.push(redirectTo);
         return;
       }
     }

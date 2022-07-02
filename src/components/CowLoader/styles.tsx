@@ -1,4 +1,6 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   rotateIcon: {
     animation: '$spin 4s linear infinite',
     height: '48px',
@@ -13,6 +15,6 @@ export const styles = theme => ({
     },
   },
   text: {
-    fontWeight: '600',
+    ...theme.typography['body-lg-med'],
   },
 });

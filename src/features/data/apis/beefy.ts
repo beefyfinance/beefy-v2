@@ -10,10 +10,12 @@ import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 interface ApyGovVault {
   vaultApr: number;
 }
+
 interface ApyMaxiVault {
   totalApy: number;
 }
-interface ApyStandard {
+
+export interface ApyStandard {
   beefyPerformanceFee: number;
   vaultApr: number;
   compoundingsPerYear: number;
@@ -23,13 +25,17 @@ interface ApyStandard {
   // todo: does it make sense to have fees and apy in the same entities?
   lpFee: number;
 }
+
 export type ApyData = ApyGovVault | ApyMaxiVault | ApyStandard;
+
 export function isStandardVaultApy(apy: ApyData): apy is ApyStandard {
   return 'compoundingsPerYear' in apy;
 }
+
 export function isGovVaultApy(apy: ApyData): apy is ApyGovVault {
   return 'vaultApr' in apy && !('compoundingsPerYear' in apy);
 }
+
 export function isMaxiVaultApy(apy: ApyData): apy is ApyMaxiVault {
   return 'totalApy' in apy && !('compoundingsPerYear' in apy);
 }
@@ -37,14 +43,32 @@ export function isMaxiVaultApy(apy: ApyData): apy is ApyMaxiVault {
 export interface BeefyAPITokenPricesResponse {
   [tokenId: TokenEntity['id']]: number;
 }
-export interface BeefyAPIBreakdownResponse {
+
+export interface BeefyAPIApyBreakdownResponse {
   [vaultId: VaultEntity['id']]: ApyData;
+}
+
+export interface LpData {
+  price: number;
+  tokens: string[];
+  balances: string[];
+  totalSupply: string;
+}
+
+export interface BeefyAPILpBreakdownResponse {
+  [vaultId: VaultEntity['id']]: LpData;
 }
 
 export interface BeefyAPIBuybackResponse {
   // those are of type string but they represent numbers
   [chainId: ChainEntity['id']]: { buybackTokenAmount: BigNumber; buybackUsdAmount: BigNumber };
 }
+
+export type BeefyChartDataResponse = {
+  name: string;
+  ts: string;
+  v: number;
+}[];
 
 // note that there is more infos but we don't need it
 type BeefyAPIVaultsResponse = {
@@ -59,11 +83,11 @@ export class BeefyAPI {
   constructor() {
     // this could be mocked by passing mock axios to the constructor
     this.api = axios.create({
-      baseURL: 'https://api.beefy.finance',
+      baseURL: process.env.REACT_APP_API_URL || 'https://api.beefy.finance',
       timeout: 30 * 1000,
     });
     this.data = axios.create({
-      baseURL: 'https://data.beefy.finance',
+      baseURL: process.env.REACT_APP_DATA_URL || 'https://data.beefy.finance',
       timeout: 30 * 1000,
     });
   }
@@ -89,7 +113,18 @@ export class BeefyAPI {
     return res.data;
   }
 
-  public async getBreakdown(): Promise<BeefyAPIBreakdownResponse> {
+  public async getLpsBreakdown(): Promise<BeefyAPILpBreakdownResponse> {
+    if (featureFlag_simulateBeefyApiError('lpsBreakdown')) {
+      throw new Error('Simulated beefy api error');
+    }
+
+    const res = await this.api.get('/lps/breakdown', {
+      params: { _: this.getCacheBuster('hour') },
+    });
+    return res.data;
+  }
+
+  public async getApyBreakdown(): Promise<BeefyAPIApyBreakdownResponse> {
     if (featureFlag_simulateBeefyApiError('apy')) {
       throw new Error('Simulated beefy api error');
     }
@@ -169,6 +204,20 @@ export class BeefyAPI {
     }
 
     return new Date(lh * 1000);
+  }
+
+  public async getChartData(
+    stat: string,
+    name: string,
+    period: string,
+    from: number,
+    to: number,
+    limit: number
+  ) {
+    const res = await this.data.get<BeefyChartDataResponse>(`/${stat}`, {
+      params: { name, period, from, to, limit },
+    });
+    return res.data;
   }
 
   // maybe have a local cache instead of this cache busting

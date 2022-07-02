@@ -11,10 +11,7 @@ import { BeefyState } from '../../redux-types';
 import { ValueBlock } from '../ValueBlock/ValueBlock';
 
 const _VaultWalletAmount = connect(
-  (
-    state: BeefyState,
-    { vaultId, variant }: { vaultId: VaultEntity['id']; variant: 'small' | 'large' }
-  ) => {
+  (state: BeefyState, { vaultId }: { vaultId: VaultEntity['id'] }) => {
     const vault = selectVaultById(state, vaultId);
     const userOracleInWallet = selectUserBalanceOfToken(
       state,
@@ -31,11 +28,10 @@ const _VaultWalletAmount = connect(
         : true;
     return {
       hasInWallet: userOracleInWallet.gt(0),
-      userOracleInWallet: formatBigDecimals(userOracleInWallet, 4, variant === 'small'),
+      userOracleInWallet: formatBigDecimals(userOracleInWallet, 4),
       userOracleInWalletUsd: formatBigUsd(userOracleInWalletUsd),
       blurred,
       loading: !isLoaded,
-      variant,
     };
   }
 )(
@@ -45,14 +41,12 @@ const _VaultWalletAmount = connect(
     userOracleInWalletUsd,
     blurred,
     loading,
-    variant,
   }: {
     hasInWallet: boolean;
     userOracleInWallet: string;
     userOracleInWalletUsd: string;
     blurred: boolean;
     loading: boolean;
-    variant: 'small' | 'large';
   }) => {
     const { t } = useTranslation();
 
@@ -63,7 +57,6 @@ const _VaultWalletAmount = connect(
         usdValue={hasInWallet ? userOracleInWalletUsd : null}
         blurred={blurred}
         loading={loading}
-        variant={variant}
       />
     );
   }

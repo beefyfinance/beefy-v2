@@ -1,19 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { WritableDraft } from 'immer/dist/internal';
-import { fetchAllVaults } from '../actions/vaults';
-import { ChainEntity } from '../entities/chain';
 import { PlatformEntity } from '../entities/platform';
 import { NormalizedEntity } from '../utils/normalized-entity';
+import { fetchPlatforms } from '../actions/platforms';
+import { fetchAllVaults } from '../actions/vaults';
+import { PlatformConfig, VaultConfig } from '../apis/config-types';
 
 /**
  * State containing Vault infos
  */
 export type PlatformsState = NormalizedEntity<PlatformEntity> & {
-  byChainId: {
-    [chainId: ChainEntity['id']]: PlatformEntity['id'][];
-  };
+  filterIds: PlatformEntity['id'][];
+  activeIds: PlatformEntity['id'][];
 };
-export const initialPlatformsState: PlatformsState = { byId: {}, allIds: [], byChainId: {} };
+export const initialPlatformsState: PlatformsState = {
+  byId: {},
+  allIds: [],
+  filterIds: [],
+  activeIds: [],
+};
 
 export const platformsSlice = createSlice({
   name: 'platforms',
@@ -24,34 +29,46 @@ export const platformsSlice = createSlice({
   extraReducers: builder => {
     // when vault list is fetched, add all new tokens
     builder.addCase(fetchAllVaults.fulfilled, (sliceState, action) => {
-      for (const [chainId, vaults] of Object.entries(action.payload.byChainId)) {
+      for (const vaults of Object.values(action.payload.byChainId)) {
         for (const vault of vaults) {
-          addPlatformToState(sliceState, chainId, vault.platform);
+          addVaultPlatformToState(sliceState, vault.platformId, vault.status !== 'eol');
         }
+      }
+    });
+
+    builder.addCase(fetchPlatforms.fulfilled, (sliceState, action) => {
+      for (const platform of action.payload) {
+        addPlatformToState(sliceState, platform);
       }
     });
   },
 });
 
+function addVaultPlatformToState(
+  sliceState: WritableDraft<PlatformsState>,
+  platformId: VaultConfig['platformId'],
+  active: boolean
+) {
+  if (active && !sliceState.activeIds.includes(platformId)) {
+    sliceState.activeIds.push(platformId);
+  }
+}
+
 function addPlatformToState(
   sliceState: WritableDraft<PlatformsState>,
-  chainId: ChainEntity['id'],
-  platformName: string
+  platformConfig: PlatformConfig
 ) {
-  // for now, platforms Id is their name
-  const platformId = platformName.toLowerCase();
-  if (sliceState.byId[platformId] === undefined) {
+  if (sliceState.byId[platformConfig.id] === undefined) {
     const platform: PlatformEntity = {
-      id: platformId,
-      name: platformName,
+      id: platformConfig.id,
+      name: platformConfig.name,
     };
-    sliceState.byId[platformId] = platform;
-    sliceState.allIds.push(platformId);
+    sliceState.byId[platform.id] = platform;
+    sliceState.allIds.push(platform.id);
 
-    // add to chain state
-    if (sliceState.byChainId[chainId] === undefined) {
-      sliceState.byChainId[chainId] = [];
+    // keep list of filter platforms
+    if (platformConfig.filter) {
+      sliceState.filterIds.push(platform.id);
     }
-    sliceState.byChainId[chainId].push(platformId);
   }
 }

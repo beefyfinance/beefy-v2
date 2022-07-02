@@ -164,22 +164,17 @@ function addVaultToState(
   const { tags, score } = getVaultTagsAndSafetyScore(state, chainId, apiVault);
 
   if (apiVault.isGovVault) {
-    if (!apiVault.logo) {
-      throw new Error(`Missing logo uri for gov vault ${apiVault.id}`);
-    }
     const vault: VaultGov = {
       id: apiVault.id,
-      logoUri: apiVault.logo,
       name: apiVault.name,
       isGovVault: true,
-      tokenDescription: apiVault.tokenDescription,
       depositTokenAddress: apiVault.tokenAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
       earnContractAddress: apiVault.earnContractAddress,
       excludedId: apiVault.excluded || null,
       chainId: chainId,
       status: apiVault.status as VaultGov['status'],
-      platformId: apiVault.platform.toLowerCase(),
+      platformId: apiVault.platformId,
       tags: tags,
       safetyScore: score,
       assetIds: apiVault.assets || [],
@@ -227,15 +222,13 @@ function addVaultToState(
     const vault: VaultStandard = {
       id: apiVault.id,
       name: apiVault.name,
-      logoUri: apiVault.logo,
       isGovVault: false,
-      tokenDescription: apiVault.tokenDescription,
       depositTokenAddress: apiVault.tokenAddress ?? 'native',
       earnContractAddress: apiVault.earnContractAddress,
       earnedTokenAddress: apiVault.earnedTokenAddress,
-      strategyType: apiVault.stratType as VaultStandard['strategyType'],
+      strategyTypeId: apiVault.strategyTypeId,
       chainId: chainId,
-      platformId: apiVault.platform.toLowerCase(),
+      platformId: apiVault.platformId,
       status: apiVault.status as VaultStandard['status'],
       type: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
       tags: tags,

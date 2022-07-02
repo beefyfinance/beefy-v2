@@ -3,7 +3,6 @@ import { memo, PropsWithChildren, useEffect } from 'react';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectMintersByVaultId, selectShouldInitMinters } from '../../../data/selectors/minters';
 import { fetchAllMinters } from '../../../data/actions/minters';
-import { Box } from '@material-ui/core';
 import { MinterCard } from './MinterCard';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 
@@ -25,9 +24,9 @@ export const MinterCards = memo<MinterCardsParams>(function MinterCards({ vaultI
   return (
     <>
       {minterCardIds.map(minterId => (
-        <Box key={minterId}>
+        <div key={minterId}>
           <MinterCard vaultId={vaultId} minterId={minterId} />
-        </Box>
+        </div>
       ))}
     </>
   );

@@ -1,23 +1,45 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   header: {
-    alignItems: 'center',
+    backgroundColor: '#272B4A',
+    borderRadius: '12px',
+  },
+  tabs: {
     backgroundColor: theme.palette.background.vaults.inactive,
-    borderRadius: '12px 12px 0 0',
-    padding: '24px',
-    display: 'flex',
-    '& img': {
-      marginRight: theme.spacing(2),
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(50%, 1fr))',
+  },
+  tab: {
+    borderBottom: 'solid 2px transparent',
+    color: theme.palette.text.disabled,
+    background: 'none',
+    padding: 0,
+    margin: 0,
+    height: '56px',
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    '&:first-child:last-child': {
+      pointerEvents: 'none',
     },
+    '&:hover': {
+      background: 'none',
+    },
+  },
+  selected: {
+    color: `${theme.palette.text.primary}`,
+    borderBottom: `solid 2px ${theme.palette.text.disabled}`,
   },
   cardContent: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column' as const,
     backgroundColor: theme.palette.background.default,
     borderRadius: '0 0 12px 12px',
     padding: '24px',
-  },
-  title: {
-    color: theme.palette.text.primary,
   },
   logo: {
     height: '50px',
@@ -26,10 +48,6 @@ export const styles = theme => ({
     color: theme.palette.text.secondary,
   },
   btn: {
-    fontSize: '15px',
-    lineHeight: '24px',
-    fontWeight: 700,
-    textTransform: 'none', //'capitalize' no good due to localization
     color: theme.palette.text.primary,
     backgroundColor: theme.palette.primary.main,
     padding: '12px 24px',
@@ -41,16 +59,6 @@ export const styles = theme => ({
       backgroundColor: 'rgba(255, 255, 255, 0.2)',
     },
   },
-  subtitle: {
-    color: theme.palette.text.disabled,
-    letterSpacing: '0.5px',
-    fontWeight: 600,
-  },
-  subtitle1: {
-    color: theme.palette.text.disabled,
-    letterSpacing: '0.5px',
-    fontWeight: 400,
-  },
   info: {
     display: 'flex',
     marginBottom: theme.spacing(2),
@@ -61,44 +69,31 @@ export const styles = theme => ({
   item: {
     marginRight: theme.spacing(4),
   },
-  itemInfo: {
-    color: theme.palette.text.secondary,
-    fontWeight: 600,
-    display: 'flex',
-    alingItems: 'center',
-  },
   inputContainer: {
-    padding: `${theme.spacing(4)}px 0`,
+    margin: '24px 0',
     '& .MuiPaper-root': {
-      position: 'relative',
+      position: 'relative' as const,
       backgroundColor: theme.palette.background.vaults.inactive,
       borderRadius: '8px',
       padding: 0,
       margin: 0,
       boxShadow: 'none',
       '& .MuiInputBase-input': {
-        padding: '10px 5px 8px 40px',
-        fontSize: '21px',
-        fontWeight: 600,
+        ...theme.typography['h3'],
+        height: 'auto',
+        padding: `12px 8px 12px ${16 + 24 + 8}px`,
       },
     },
-    '& .MuiTextField-root': {
-      backgroundColor: theme.palette.background.vaults.inactive,
-      borderRadius: '8px',
-      padding: '3px 10px',
-    },
     '& .MuiButton-root': {
-      fontSize: '12px',
-      fontWeight: 400,
-      letterSpacing: '0.5px',
+      ...theme.typography['subline-sm'],
       color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.vaults.defaultOutline,
       borderRadius: '4px',
       margin: 0,
-      padding: '5px 12px',
-      position: 'absolute',
-      top: '6px',
-      right: '5px',
+      padding: '6px 12px',
+      position: 'absolute' as const,
+      top: '8px',
+      right: '8px',
       minWidth: 0,
     },
     '& .MuiInputBase-root': {
@@ -106,7 +101,7 @@ export const styles = theme => ({
     },
   },
   inputLogo: {
-    position: 'absolute',
+    position: 'absolute' as const,
     top: '12px',
     left: '12px',
   },
@@ -116,16 +111,12 @@ export const styles = theme => ({
     marginBottom: theme.spacing(1),
   },
   label: {
+    ...theme.typography['subline-sm'],
     color: theme.palette.text.disabled,
-    fontSize: '12px',
-    lineHeight: '18px',
-    fontWeight: 600,
-    letterSpacing: '0.5px',
   },
   value: {
+    ...theme.typography['body-sm'],
     color: theme.palette.text.secondary,
-    fontSize: '12px',
-    lineHeight: '20px',
   },
   customDivider: {
     display: 'flex',
@@ -142,55 +133,28 @@ export const styles = theme => ({
   },
   boxReminder: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap' as const,
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     borderRadius: theme.spacing(0.5),
     backgroundColor: theme.palette.background.content,
   },
-  mb: {
-    backgroundColor: '#272B4A',
-    borderRadius: '12px',
-  },
-  tabs: {
-    backgroundColor: theme.palette.background.vaults.inactive,
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
-    '& .MuiButton-root': {
-      fontSize: '16px',
-      fontWeight: 600,
-      letterSpacing: '0.1px',
-      textTransform: 'none',
-      color: theme.palette.text.disabled,
-      background: 'none',
-      width: '50%',
-      padding: 0,
-      margin: 0,
-      height: '60px',
-      borderTopLeftRadius: '12px',
-      borderTopRightRadius: '12px',
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-      '&:hover': {
-        background: 'none',
-      },
-    },
-  },
-  selected: {
-    color: `${theme.palette.text.primary} !important`,
-    borderBottom: `solid 2px ${theme.palette.text.disabled}`,
+  boxReserves: {
+    ...theme.typography['subline-lg'],
+    display: 'flex',
+    flexWrap: 'wrap' as const,
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    borderRadius: theme.spacing(0.5),
+    backgroundColor: theme.palette.background.content,
   },
   reservesText: {
     color: theme.palette.text.disabled,
-    fontWeight: 600,
-    letterSpacing: '0.5px',
     marginRight: theme.spacing(0.5),
   },
   amountReserves: {
     marginLeft: theme.spacing(0.5),
     color: theme.palette.text.secondary,
-    fontWeight: 600,
-    letterSpacing: '0.5px',
   },
   noReserves: {
     marginTop: theme.spacing(2),

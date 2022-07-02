@@ -10,6 +10,7 @@
     "@coinbase/wallet-sdk": "^3.0.10",
     "@download/blockies": "^1.0.3",
     "@ethersproject/address": "^5.4.0",
+    "@ethersproject/providers": "^5.6.8",
     "@ethersproject/solidity": "^5.4.0",
     "@floating-ui/react-dom": "^0.7.0",
     "@material-ui/lab": "^4.0.0-alpha.57",
@@ -19,7 +20,7 @@
     "@walletconnect/web3-provider": "^1.4.1",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.34.1",
+    "blockchain-addressbook": "^0.34.14",
     "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
     "deficonnect": "^1.1.5",
@@ -52,14 +53,16 @@
     "web3modal": "^1.9.3"
   },
   "resolutions": {
-    "web3": "^1.7.0"
+    "web3": "^1.7.0",
+    "react-error-overlay": "6.0.9"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && react-scripts build",
-    "validate": "node --experimental-json-modules ./scripts/validatePools.js",
-    "creationdate": "node --experimental-json-modules ./scripts/getPoolCreationTimestamp.js",
-    "launchpool": "node --experimental-json-modules ./scripts/launchpool.js",
+    "validate": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/validatePools.ts",
+    "creationdate": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/getPoolCreationTimestamp.ts",
+    "launchpool": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/launchpool.ts",
+    "migratePlatform": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/migratePlatform.ts",
     "test": "TZ=UTC react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",

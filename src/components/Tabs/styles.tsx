@@ -1,11 +1,13 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   container: {},
   tabs: {
     backgroundColor: theme.palette.background.default,
     borderRadius: 8,
     border: `2px solid ${theme.palette.background.vaults.defaultOutline}`,
     '& .MuiTabs-indicator': {
-      display: 'none',
+      display: 'none' as const,
       color: 'transparent',
     },
     '& .MuiTab-root': {
@@ -20,12 +22,8 @@ export const styles = theme => ({
       color: theme.palette.text.primary,
       padding: '5px',
     },
-    '& .MuiTab-wrapper': {
-      fontWeight: 700,
-    },
   },
   basicTabs: {
-    float: 'right',
     '& .MuiTabs-indicator': {
       display: 'none',
       color: 'transparent',
@@ -35,8 +33,6 @@ export const styles = theme => ({
       padding: '0 12',
     },
     '& .MuiTab-textColorPrimary': {
-      fontWeight: 600,
-      letterSpacing: 0.2,
       color: theme.palette.text.disabled,
     },
     '& .Mui-selected': {

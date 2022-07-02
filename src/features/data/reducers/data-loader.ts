@@ -31,6 +31,7 @@ import { ChainEntity } from '../entities/chain';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchAllInfoCards } from '../actions/info-cards';
 import { initiateBridgeForm } from '../actions/bridge';
+import { fetchPlatforms } from '../actions/platforms';
 
 /**
  * because we want to be smart about data loading
@@ -45,36 +46,44 @@ interface LoaderStateInit {
   status: 'init';
   error: null;
 }
+
 interface LoaderStatePending {
   alreadyLoadedOnce: boolean;
   status: 'pending';
   error: null;
 }
+
 interface LoaderStateRejected {
   alreadyLoadedOnce: boolean;
   status: 'rejected';
   error: string;
 }
+
 interface LoaderStateFulfilled {
   alreadyLoadedOnce: boolean;
   status: 'fulfilled';
   error: null;
 }
+
 export type LoaderState =
   | LoaderStateInit
   | LoaderStatePending
   | LoaderStateRejected
   | LoaderStateFulfilled;
+
 // some example of a type guard
 export function isFulfilled(state: LoaderState): state is LoaderStateFulfilled {
   return state.status === 'fulfilled';
 }
+
 export function isPending(state: LoaderState): state is LoaderStatePending {
   return state.status === 'pending';
 }
+
 export function isInitialLoader(state: LoaderState): state is LoaderStateInit {
   return state.status === 'init';
 }
+
 export function isRejected(state: LoaderState): state is LoaderStateRejected {
   return state.status === 'rejected';
 }
@@ -124,6 +133,7 @@ export interface DataLoaderState {
     minterForm: LoaderState;
     infoCards: LoaderState;
     bridgeForm: LoaderState;
+    platforms: LoaderState;
   };
   byChainId: {
     [chainId: ChainEntity['id']]: {
@@ -134,6 +144,7 @@ export interface DataLoaderState {
     };
   };
 }
+
 export const initialDataLoaderState: DataLoaderState = {
   instances: {
     wallet: false,
@@ -157,6 +168,7 @@ export const initialDataLoaderState: DataLoaderState = {
     minterForm: dataLoaderStateInit,
     infoCards: dataLoaderStateInit,
     bridgeForm: dataLoaderStateInit,
+    platforms: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -273,6 +285,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, initiateBridgeForm, 'bridgeForm', true);
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
+    addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);

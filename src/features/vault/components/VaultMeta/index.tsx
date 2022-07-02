@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../../store';
 import { selectChainById } from '../../../data/selectors/chains';
 import { useTranslation } from 'react-i18next';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
+import { selectPlatformById } from '../../../data/selectors/platforms';
 
 export type VaultMetaProps = {
   vaultId: VaultEntity['id'];
@@ -18,6 +19,7 @@ export const VaultMeta = memo<VaultMetaProps>(function ({ vaultId }) {
   const depositToken = useAppSelector(state =>
     selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress)
   );
+  const platform = useAppSelector(state => selectPlatformById(state, vault.platformId));
   const titleKey = isGovVault(vault) ? 'Meta-Vault-Title-Gov' : 'Meta-Vault-Title';
 
   return (
@@ -26,7 +28,7 @@ export const VaultMeta = memo<VaultMetaProps>(function ({ vaultId }) {
       description={t('Meta-Vault-Description', {
         token: depositToken.symbol,
         chain: chain.name,
-        platform: vault.tokenDescription,
+        platform: platform.name,
       })}
     />
   );

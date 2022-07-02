@@ -1,4 +1,4 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import BigNumber from 'bignumber.js';
 import { isArray } from 'lodash';
 import React from 'react';
@@ -15,21 +15,23 @@ import {
   selectTokenByAddress,
   selectTokenById,
   selectTokenPriceByAddress,
-  selectTokenPriceByTokenId,
+  selectTokenPriceByTokenOracleId,
 } from '../../../data/selectors/tokens';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { intersperse } from '../../../data/utils/array-utils';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function TokenWithDeposit({
   vaultId,
   convertAmountTo,
+  variant = 'lg',
 }: {
   vaultId: VaultEntity['id'];
   convertAmountTo?: TokenEntity['id'] | TokenEntity['id'][];
+  variant?: 'sm' | 'lg';
 }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -61,7 +63,7 @@ export function TokenWithDeposit({
       const outputTokenSymbol = selectIsTokenLoaded(state, vault.chainId, convertToId)
         ? selectTokenById(state, vault.chainId, convertToId).symbol
         : convertToId;
-      const outputTokenPrice = selectTokenPriceByTokenId(state, convertToId);
+      const outputTokenPrice = selectTokenPriceByTokenOracleId(state, convertToId);
       const totalValue = oracleAmount.times(inputTokenPrice);
       const outputValue = totalValue.dividedBy(outputTokenPrice);
       amountsAndSymbol.push([outputValue.dividedBy(convertToArr.length), outputTokenSymbol]);
@@ -79,7 +81,7 @@ export function TokenWithDeposit({
    **/
 
   return (
-    <Box className={classes.balanceContainer} display="flex" alignItems="center">
+    <Box className={classes.balanceContainer}>
       <Box lineHeight={0}>
         <AssetsImage
           chainId={vault.chainId}
@@ -90,11 +92,11 @@ export function TokenWithDeposit({
                 : [convertAmountTo]
               : vault.assetIds
           }
-          size={16}
+          size={variant === 'sm' ? 20 : 24}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>
-        <Typography className={classes.assetCount} variant={'body1'}>
+        <div className={classes.assetCount}>
           {intersperse(
             amountsAndSymbol.map(([amount, symbol]) => (
               <>
@@ -111,7 +113,7 @@ export function TokenWithDeposit({
           ).map((elem, i) => (
             <React.Fragment key={i}>{elem}</React.Fragment>
           ))}
-        </Typography>
+        </div>
       </Box>
     </Box>
   );

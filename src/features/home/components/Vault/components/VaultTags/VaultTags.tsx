@@ -21,6 +21,7 @@ import { TokenEntity } from '../../../../../data/entities/token';
 import { selectTokenByAddress } from '../../../../../data/selectors/tokens';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useIsOverflowingHorizontally } from '../../../../../../helpers/overflow';
+import { VaultPlatform } from '../../../../../../components/VaultPlatform';
 
 const useStyles = makeStyles(styles);
 
@@ -68,6 +69,17 @@ const VaultEarnTag = memo<VaultEarnTagProps>(function VaultBoostTag({
   );
 });
 
+type VaultPlatformTagProps = {
+  vaultId: VaultEntity['id'];
+};
+const VaultPlatformTag = memo<VaultPlatformTagProps>(function VaultPlatformTag({ vaultId }) {
+  return (
+    <VaultTag>
+      <VaultPlatform vaultId={vaultId} />
+    </VaultTag>
+  );
+});
+
 export type VaultTagsProps = {
   vaultId: VaultEntity['id'];
 };
@@ -82,7 +94,7 @@ export const VaultTags = memo<VaultTagsProps>(function VaultTags({ vaultId }) {
   // Tag 2: Retired -> Paused -> Boosted > Earnings
   return (
     <div className={classes.vaultTags}>
-      <VaultTag>{vault.tokenDescription}</VaultTag>
+      <VaultPlatformTag vaultId={vaultId} />
       {isVaultRetired(vault) ? (
         <VaultTag className={classes.vaultTagRetired}>{t('VaultTag-Retired')}</VaultTag>
       ) : isVaultPaused(vault) ? (

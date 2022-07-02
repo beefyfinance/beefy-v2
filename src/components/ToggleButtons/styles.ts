@@ -12,18 +12,15 @@ export const styles = (theme: Theme) => ({
     width: '100%',
   },
   button: {
+    ...theme.typography['body-lg-med'],
     color: '#8A8EA8',
-    backgroundColor: '#262A40',
-    fontSize: '15px',
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: 700,
-    lineHeight: '24px',
+    backgroundColor: 'inherit',
     border: 'none',
     borderRadius: '6px',
     boxShadow: 'none',
     cursor: 'pointer',
     margin: 0,
-    padding: '6px 14px', // TEMPFIX: 16->14 iOS font
+    padding: `6px 16px`,
     flexGrow: 1,
     flexShrink: 0,
     '&:hover': {
@@ -46,21 +43,25 @@ export const styles = (theme: Theme) => ({
     },
   },
   untogglable: {
-    '&:hover': {
-      color: '#D0D0DA',
-      backgroundColor: 'transparent',
-    },
-    '&:active, &:hover:active': {
-      color: '#ffffff',
-      backgroundColor: 'transparent',
-    },
-    '&$selected': {
-      pointerEvents: 'all' as const,
-      color: '#ffffff',
-      backgroundColor: 'transparent',
+    padding: `${8 - 2}px ${16 - 12 - 2}px`,
+    '& $button': {
+      padding: '0 12px',
       '&:hover': {
+        color: '#D0D0DA',
+        backgroundColor: 'transparent',
+      },
+      '&:active, &:hover:active': {
         color: '#ffffff',
         backgroundColor: 'transparent',
+      },
+      '&$selected': {
+        pointerEvents: 'all' as const,
+        color: '#ffffff',
+        backgroundColor: 'transparent',
+        '&:hover': {
+          color: '#ffffff',
+          backgroundColor: 'transparent',
+        },
       },
     },
   },

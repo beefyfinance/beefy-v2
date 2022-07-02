@@ -65,7 +65,7 @@ const socialLinks = [
   },
 ];
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 // Memo: Static footer, no need to re-render when parent does
 export const Footer = memo(function () {

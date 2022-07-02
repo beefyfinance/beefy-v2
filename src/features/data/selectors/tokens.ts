@@ -1,9 +1,9 @@
-import { BIG_ONE } from '../../../helpers/format';
 import { bluechipTokens } from '../../../helpers/utils';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
 import { selectChainById } from './chains';
+import { BIG_ONE } from '../../../helpers/big-number';
 
 export const selectIsTokenLoaded = (
   state: BeefyState,
@@ -126,7 +126,7 @@ export const selectIsTokenStable = (
 };
 
 export const selectIsBeefyToken = (_: BeefyState, tokenId: TokenEntity['id']) => {
-  return ['BIFI', 'POTS', 'beFTM'].includes(tokenId);
+  return ['BIFI', 'POTS', 'beFTM', 'beQI', 'beJOE', 'binSPIRIT'].includes(tokenId);
 };
 
 export const selectIsTokenBluechip = (_: BeefyState, tokenId: TokenEntity['id']) => {
@@ -139,8 +139,25 @@ export const selectTokenPriceByAddress = (
   address: string
 ) => {
   const token = state.entities.tokens.byChainId[chainId].byAddress[address.toLowerCase()];
-  return state.entities.tokens.prices.byTokenId[token.oracleId] || BIG_ONE;
+  return state.entities.tokens.prices.byOracleId[token.oracleId] || BIG_ONE;
 };
 
-export const selectTokenPriceByTokenId = (state: BeefyState, tokenId: TokenEntity['id']) =>
-  state.entities.tokens.prices.byTokenId[tokenId] || BIG_ONE;
+export const selectTokenPriceByTokenOracleId = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId']
+) => state.entities.tokens.prices.byOracleId[oracleId] || BIG_ONE;
+
+export const selectLpBreakdownByOracleId = (
+  state: BeefyState,
+  oracleId: TokenEntity['oracleId']
+) => {
+  return state.entities.tokens.breakdown.byOracleId[oracleId];
+};
+export const selectLpBreakdownByAddress = (
+  state: BeefyState,
+  chainId: ChainEntity['id'],
+  address: string
+) => {
+  const token = selectTokenByAddress(state, chainId, address);
+  return selectLpBreakdownByOracleId(state, token.oracleId);
+};

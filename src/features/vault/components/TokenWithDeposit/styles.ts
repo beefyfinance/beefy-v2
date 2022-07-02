@@ -1,13 +1,11 @@
-export const styles = theme => ({
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
   balanceContainer: {
-    '& .MuiTypography-body1': {
-      fontWeight: '600',
-      textTransform: 'inherit',
-      color: theme.palette.text.primary,
-    },
-  },
-  assetCount: {
+    display: 'flex',
+    alignItems: 'center',
+    ...theme.typography['body-lg-med'],
     color: theme.palette.text.primary,
-    fontWeight: 700,
   },
+  assetCount: {},
 });

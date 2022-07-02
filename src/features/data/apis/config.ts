@@ -10,6 +10,8 @@ import {
   InfoCardsConfig,
   MinterConfig,
   PartnersConfig,
+  PlatformConfig,
+  StrategyTypeConfig,
   VaultConfig,
   ZapConfig,
 } from './config-types';
@@ -98,5 +100,13 @@ export class ConfigAPI {
 
   public async fetchAllInfoCards(): Promise<InfoCardsConfig> {
     return infoCards;
+  }
+
+  public async fetchStrategyTypes(): Promise<StrategyTypeConfig[]> {
+    return (await import('../../../config/strategy-types.json')).default;
+  }
+
+  public async fetchPlatforms(): Promise<PlatformConfig[]> {
+    return (await import('../../../config/platforms.json')).default;
   }
 }

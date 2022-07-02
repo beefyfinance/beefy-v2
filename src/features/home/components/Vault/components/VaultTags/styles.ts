@@ -10,12 +10,9 @@ export const styles = (theme: Theme) => ({
     rowGap: '8px',
   },
   vaultTag: {
+    ...theme.typography['subline-sm'],
     color: '#D0D0DA',
     backgroundColor: '#4C5480',
-    fontWeight: 600,
-    fontSize: '12px',
-    lineHeight: '20px',
-    letterSpacing: '0.5px',
     padding: '2px 8px',
     borderRadius: '4px',
     textTransform: 'uppercase' as const,

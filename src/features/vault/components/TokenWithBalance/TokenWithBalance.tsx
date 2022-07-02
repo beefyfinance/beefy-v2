@@ -1,4 +1,4 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { formatBigDecimals } from '../../../../helpers/format';
@@ -9,14 +9,16 @@ import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
 
-const useStyles = makeStyles(styles as any);
+const useStyles = makeStyles(styles);
 
 export function TokenWithBalance({
   token,
   vaultId,
+  variant = 'lg',
 }: {
   token: TokenEntity;
   vaultId: VaultEntity['id'];
+  variant?: 'sm' | 'lg';
 }) {
   const classes = useStyles();
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
@@ -28,18 +30,18 @@ export function TokenWithBalance({
   );
 
   return (
-    <Box className={classes.balanceContainer} display="flex" alignItems="center">
+    <Box className={classes.balanceContainer}>
       <Box lineHeight={0}>
         <AssetsImage
           chainId={vault.chainId}
           assetIds={token.address === depositToken.address ? vault.assetIds : [token.id]}
-          size={16}
+          size={variant === 'sm' ? 20 : 24}
         />
       </Box>
       <Box flexGrow={1} pl={1} lineHeight={0}>
-        <Typography className={classes.assetCount} variant={'body1'}>
+        <div className={classes.assetCount}>
           {formatBigDecimals(balance, 8)} {token.symbol}
-        </Typography>
+        </div>
       </Box>
     </Box>
   );

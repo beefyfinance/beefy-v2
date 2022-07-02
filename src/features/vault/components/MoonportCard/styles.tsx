@@ -1,15 +1,13 @@
 export const styles = theme => ({
   header: {
-    alignItems: 'center',
-    backgroundColor: theme.palette.background.default,
-    borderRadius: '12px 12px 0 0',
-    padding: '24px',
     display: 'flex',
+    alignItems: 'center',
     '& img': {
       marginRight: theme.spacing(2),
     },
   },
   title: {
+    ...theme.typography['h2'],
     color: theme.palette.text.primary,
   },
   logo: {
@@ -22,22 +20,13 @@ export const styles = theme => ({
   },
   btn: {
     color: theme.palette.text.primary,
-    fontSize: '15px',
-    lineHeight: '24px',
-    fontWeight: 700,
     padding: '12px 24px',
     borderRadius: '8px',
     backgroundColor: theme.palette.background.default,
-    textTransform: 'none',
-    width: '100%',
-  },
-  link: {
-    textDecoration: 'none',
     width: '100%',
   },
   subtitle: {
+    ...theme.typography['subline-lg'],
     color: theme.palette.text.disabled,
-    letterSpacing: '0.5px',
-    fontWeight: 600,
   },
 });

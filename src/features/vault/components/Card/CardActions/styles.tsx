@@ -1,11 +1,9 @@
-import { Theme } from '@material-ui/core/styles';
-
-export const styles = (theme: Theme) => ({
+export const styles = () => ({
   actions: {
     display: 'flex',
     flexWrap: 'wrap' as const,
-    marginTop: theme.spacing(1),
-    rowGap: theme.spacing(2),
-    columnGap: theme.spacing(2),
+    marginTop: '8px',
+    rowGap: '8px',
+    columnGap: '8px',
   },
 });

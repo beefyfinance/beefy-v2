@@ -13,9 +13,7 @@ export const styles = (theme: Theme) => ({
     minWidth: 0, // needed for overflowing tags
   },
   vaultName: {
-    fontWeight: 600,
-    fontSize: '21px',
-    lineHeight: '24px',
+    ...theme.typography['h3'],
     color: '#F5F5FF',
   },
   vaultNameBoosted: {
@@ -78,5 +76,8 @@ export const styles = (theme: Theme) => ({
   },
   'vaultNetwork-emerald': {
     backgroundColor: '#0192f6',
+  },
+  'vaultNetwork-optimism': {
+    backgroundColor: '#ff0420',
   },
 });

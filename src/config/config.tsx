@@ -130,7 +130,7 @@ export const config = {
   polygon: {
     name: 'Polygon',
     chainId: 137,
-    rpc: ['https://polygon-rpc.com'],
+    rpc: ['https://rpc.ankr.com/polygon'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     fetchContractDataAddress: '0x9e369f477F2009394D947ea7571b1E6582Bb0511',
@@ -145,7 +145,7 @@ export const config = {
         symbol: 'MATIC',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc-mainnet.matic.network'],
+      rpcUrls: ['https://rpc.ankr.com/polygon'],
       blockExplorerUrls: ['https://polygonscan.com/'],
     },
     stableCoins: [
@@ -179,7 +179,7 @@ export const config = {
   fantom: {
     name: 'Fantom',
     chainId: 250,
-    rpc: ['https://rpc.ftm.tools'],
+    rpc: ['https://rpc.ankr.com/fantom'],
     explorerUrl: 'https://ftmscan.com',
     multicallAddress: '0xC9F6b1B53E056fd04bE5a197ce4B2423d456B982',
     fetchContractDataAddress: '0x37FF9b4612b9e80E4082e3aC3f5149adDA2d2f21',
@@ -194,7 +194,7 @@ export const config = {
         symbol: 'FTM',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ftm.tools'],
+      rpcUrls: ['https://rpc.ankr.com/fantom'],
       blockExplorerUrls: ['https://ftmscan.com/'],
     },
     stableCoins: [
@@ -423,7 +423,7 @@ export const config = {
       rpcUrls: ['https://rpc.api.moonbeam.network'],
       blockExplorerUrls: ['https://moonscan.io/'],
     },
-    stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD'],
+    stableCoins: ['USDC', 'USDT', 'DAI', 'BUSD', 'MAI', 'FRAX', 'USDTs', 'USDCs', 'DAIs'],
   },
   emerald: {
     name: 'Emerald',
@@ -447,6 +447,29 @@ export const config = {
       blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],
     },
     stableCoins: ['ceUSDC, USDT'],
+  },
+  optimism: {
+    name: 'Optimism',
+    chainId: 10,
+    rpc: ['https://mainnet.optimism.io'],
+    explorerUrl: 'https://optimistic.etherscan.io',
+    multicallAddress: '0x820ae7bf39792d7ce7befc70b0172f4d267f1938',
+    fetchContractDataAddress: '0xfcDD5a02C611ba6Fe2802f885281500EC95805d7',
+    fetchBalancesAddress: '0xc5Be4084b3D945fe83e1Be4bd96522FA1D1c722D',
+    supportedWallets: connectors,
+    providerName: 'Optimism',
+    walletSettings: {
+      chainId: `0x${parseInt('10', 10).toString(16)}`,
+      chainName: 'Optimism',
+      nativeCurrency: {
+        name: 'ETH',
+        symbol: 'ETH',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet.optimism.io'],
+      blockExplorerUrls: ['https://optimistic.etherscan.io/'],
+    },
+    stableCoins: ['USDC, sUSD'],
   },
 };
 

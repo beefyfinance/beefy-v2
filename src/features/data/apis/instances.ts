@@ -15,10 +15,10 @@ const bridgeApi = new BridgeApi();
  * These are basically factories so user code don't have to worry
  * about creating those API objects
  */
-
 export function getBeefyApi(): BeefyAPI {
   return beefyApi;
 }
+
 export function getConfigApi(): ConfigAPI {
   return configApi;
 }

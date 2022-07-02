@@ -8,15 +8,12 @@ export const styles = (theme: Theme) => ({
     borderBottomRightRadius: '8px',
   },
   title: {
-    fontWeight: 600,
-    fontSize: '21px',
-    lineHeight: '24px',
+    ...theme.typography['h3'],
     color: '#D0D0DA',
     margin: '0 0 4px 0',
   },
   text: {
-    fontSize: '15px',
-    lineHeight: '24px',
+    ...theme.typography['body-lg'],
     color: '#D0D0DA',
   },
   extra: {

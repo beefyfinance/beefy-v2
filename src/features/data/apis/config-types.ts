@@ -2,30 +2,27 @@ import { VaultEntity } from '../entities/vault';
 import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { PlatformEntity } from '../entities/platform';
+import { StrategyTypeEntity } from '../entities/strategy-type';
 
 export interface VaultConfig {
   id: string;
   logo?: string | null;
   name: string;
   token: string;
-  tokenDescription: string;
   tokenAddress?: string | null;
   tokenDecimals: number;
-  tokenDescriptionUrl?: string | null;
+  tokenProviderId?: PlatformEntity['id'];
   earnedToken: string;
   earnedTokenAddress: string;
   earnedTokenDecimals?: number | null;
   earnContractAddress: string;
-  pricePerFullShare: number;
-  tvl: number;
-  oraclePrice?: number | null; // pulled afterward
   oracle: string; // 'tokens' | 'lp';
   oracleId: TokenEntity['id'];
   status: string; // 'active' | 'eol' | 'paused';
-  platform: PlatformEntity['id'];
+  platformId: PlatformEntity['id'];
   assets?: TokenEntity['id'][];
   risks?: string[] | null;
-  stratType: string; // 'StratLP' | 'StratMultiLP' | 'Vamp' | 'Lending' | 'SingleStake' | 'Maxi';
+  strategyTypeId: StrategyTypeEntity['id'];
   withdrawalFee?: string | null;
   network: string;
   excluded?: string | null;
@@ -40,7 +37,6 @@ export interface VaultConfig {
   depositFee?: string | null;
   refund?: boolean | null;
   refundContractAddress?: string | null;
-  depositsPaused?: boolean | null;
   showWarning?: boolean | null;
   warning?: string | null;
 }
@@ -185,3 +181,14 @@ export interface InfoCardChainConfig extends InfoCardBaseConfig {
 
 export type InfoCardConfig = InfoCardVaultConfig | InfoCardChainConfig;
 export type InfoCardsConfig = InfoCardConfig[];
+
+export type StrategyTypeConfig = {
+  id: string;
+  name: string;
+};
+
+export type PlatformConfig = {
+  id: string;
+  name: string;
+  filter: boolean;
+};

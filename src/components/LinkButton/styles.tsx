@@ -1,25 +1,22 @@
-export const styles = theme => ({
-  container: {
+import { Theme } from '@material-ui/core/styles';
+
+export const styles = (theme: Theme) => ({
+  link: {
     display: 'inline-flex',
-    flexDirection: 'row',
+    flexDirection: 'row' as const,
     justifyContent: 'center',
     alignItems: 'center',
     textDecoration: 'none',
+    color: theme.palette.text.secondary,
     backgroundColor: theme.palette.background.vaults.defaultOutline,
     padding: '2px 8px',
     borderRadius: '4px',
-    [theme.breakpoints.down('md')]: {
-      margin: '4px 0px',
+    '& $icon:first-child': {
+      marginRight: '4px',
+    },
+    '& $icon:last-child': {
+      marginLeft: '4px',
     },
   },
-  text: {
-    fontStyle: 'normal',
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    flex: 'none',
-    order: 0,
-    flexGrow: 0,
-    margin: '0px 4px',
-    textTransform: 'capitalize',
-  },
+  icon: {},
 });
