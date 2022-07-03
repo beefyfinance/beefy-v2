@@ -28,6 +28,35 @@
     "createdAt": 1621450869
   },
   {
+    "id": "balancer-matic-stmatic",
+    "name": "stMATIC-MATIC",
+    "token": "stMATIC-MATIC",
+    "tokenAddress": "0xaF5E0B5425dE1F5a630A8cB5AA9D97B8141C908D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerstMATIC-MATIC",
+    "earnedTokenAddress": "0x755e426A8B445eAE53b1c051c1E7acA7381fCDb7",
+    "earnContractAddress": "0x755e426A8B445eAE53b1c051c1E7acA7381fCDb7",
+    "oracle": "lps",
+    "oracleId": "balancer-matic-stmatic",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["stMATIC", "MATIC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_HIGH",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366",
+    "network": "polygon",
+    "createdAt": 1656705592
+  },
+  {
     "id": "polygon-bifi-gov",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",

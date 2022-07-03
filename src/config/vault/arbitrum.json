@@ -32,8 +32,8 @@
   },
   {
     "id": "balancer-wbtc-eth-usdc",
-    "name": "WBTC-WETH-USDC",
-    "token": "WBTC-WETH-USDC",
+    "name": "WBTC/WETH/USDC",
+    "token": "WBTC/WETH/USDC",
     "tokenAddress": "0x64541216bAFFFEec8ea535BB71Fbc927831d0595",
     "tokenDecimals": 18,
     "tokenProviderId": "balancer",
