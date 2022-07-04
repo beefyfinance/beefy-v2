@@ -60,6 +60,35 @@
     "network": "bsc"
   },
   {
+    "id": "biswap-sand-usdt",
+    "name": "SAND-USDT LP",
+    "token": "SAND-USDT BiLP",
+    "tokenAddress": "0x69f60c87AEcdb037A44cbaD67eD06464432521b6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "biswap",
+    "earnedToken": "mooBiswapSAND-USDT",
+    "earnedTokenAddress": "0x558F0e2B14D87120A3bbEd6414a17b997c0655Bc",
+    "earnContractAddress": "0x558F0e2B14D87120A3bbEd6414a17b997c0655Bc",
+    "oracle": "lps",
+    "oracleId": "biswap-sand-usdt",
+    "status": "active",
+    "platformId": "biswap",
+    "assets": ["SAND", "USDT"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://exchange.biswap.org/#/add/0x55d398326f99059ff775485246999027b3197955/0x67b725d7e342d7B611fa85e859Df9697D9378B2e",
+    "buyTokenUrl": "https://exchange.biswap.org/#/swap?outputCurrency=0x67b725d7e342d7B611fa85e859Df9697D9378B2e",
+    "createdAt": 1651677222,
+    "network": "bsc"
+  },
+  {
     "id": "baby-avax-wbnb",
     "name": "AVAX-BNB LP",
     "token": "AVAX-BNB LP",
