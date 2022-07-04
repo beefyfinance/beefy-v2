@@ -1292,6 +1292,36 @@
     "network": "cronos"
   },
   {
+    "id": "vvs-fer-vvs",
+    "name": "VVS-FER",
+    "token": "VVS-FER LP",
+    "tokenAddress": "0x72eFd454bBFEca458e909B99FAACBC116880b54D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "vvs",
+    "earnedToken": "mooVvsFER-VVS",
+    "earnedTokenAddress": "0xfF333D0A4C1CDC5E2d9f8a2B2c73d0BA9368224a",
+    "earnContractAddress": "0xfF333D0A4C1CDC5E2d9f8a2B2c73d0BA9368224a",
+    "oracle": "lps",
+    "oracleId": "vvs-fer-vvs",
+    "status": "active",
+    "platformId": "vvs",
+    "assets": ["VVS", "FER"],
+    "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x39bC1e38c842C60775Ce37566D03B41A7A66C782",
+    "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x39bC1e38c842C60775Ce37566D03B41A7A66C782",
+    "createdAt": 1656705593,
+    "network": "cronos"
+  },
+  {
     "id": "vvs-tusd-usdc",
     "name": "TUSD-USDC LP",
     "token": "TUSD-USDC LP",
