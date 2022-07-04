@@ -353,10 +353,18 @@ export const estimateZapWithdraw = async (
       ? [reserves0, reserves1]
       : [reserves1, reserves0];
 
-  const rawAmount = amount.shiftedBy(depositToken.decimals); // # of LP tokens to withdraw
-  const equity = rawAmount.dividedBy(pair.totalSupply); // % of total LP to withdraw
-  const amountIn = equity.multipliedBy(reserveIn).decimalPlaces(0, BigNumber.ROUND_DOWN); // if we break LP, how much is tokenIn
-  const priceImpact = calculatePriceImpact(amountIn, reserveIn, zapOptions.lpProviderFee);
+  // # of LP tokens to withdraw
+  const rawAmount = amount.shiftedBy(depositToken.decimals);
+  // % of total LP to withdraw
+  const equity = rawAmount.dividedBy(pair.totalSupply);
+  // if we break LP, how much is tokenIn
+  const amountIn = equity.multipliedBy(reserveIn).decimalPlaces(0, BigNumber.ROUND_DOWN);
+  // price impact: swap is AFTER withdraw so lower reserves by amount withdrawn
+  const priceImpact = calculatePriceImpact(
+    amountIn,
+    reserveIn.minus(amountIn),
+    zapOptions.lpProviderFee
+  );
 
   // getAmountsOut vs getAmountOut
   let amountOut;
