@@ -28,6 +28,35 @@
     "createdAt": 1621450869
   },
   {
+    "id": "balancer-matic-maticx",
+    "name": "MaticX-MATIC",
+    "token": "MaticX-MATIC",
+    "tokenAddress": "0xC17636e36398602dd37Bb5d1B3a9008c7629005f",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancersMaticX-MATIC",
+    "earnedTokenAddress": "0xB0D20b7d047e10a8Af2bE8C7c4C976653A0f2ECA",
+    "earnContractAddress": "0xB0D20b7d047e10a8Af2bE8C7c4C976653A0f2ECA",
+    "oracle": "lps",
+    "oracleId": "balancer-matic-maticx",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["MaticX", "MATIC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_HIGH",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4",
+    "network": "polygon",
+    "createdAt": 1656705594
+  },
+  {
     "id": "balancer-matic-stmatic",
     "name": "stMATIC-MATIC",
     "token": "stMATIC-MATIC",

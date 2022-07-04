@@ -1318,7 +1318,7 @@
     ],
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x39bC1e38c842C60775Ce37566D03B41A7A66C782",
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x39bC1e38c842C60775Ce37566D03B41A7A66C782",
-    "createdAt": 1656666730,
+    "createdAt": 1656705593,
     "network": "cronos"
   }
 ]
