@@ -253,6 +253,10 @@ export async function estimateZapDeposit(
     ],
   ])) as MulticallReturnType;
 
+  if (!zap.estimate) {
+    throw new Error(`Failed to estimate swap.`);
+  }
+
   const { token0 } = pair;
   const [reserves0, reserves1] = Object.values(pair.reserves)
     .slice(0, 2)
