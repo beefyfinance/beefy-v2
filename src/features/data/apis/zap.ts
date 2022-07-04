@@ -269,6 +269,12 @@ export async function estimateZapDeposit(
   const amountIn = new BigNumber(zap.estimate[0]);
   const priceImpact = calculatePriceImpact(amountIn, reserveIn, zapOptions.lpProviderFee);
 
+  // We expect 50% to get swapped
+  const amountInRatio = amountIn.dividedBy(depositAmount);
+  if (amountInRatio.lt(0.4)) {
+    throw new Error(`Not enough liquidity for swap.`);
+  }
+
   return {
     tokenIn,
     tokenOut,

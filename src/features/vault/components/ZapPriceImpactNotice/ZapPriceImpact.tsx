@@ -8,8 +8,8 @@ import { LabelledCheckbox } from '../../../../components/LabelledCheckbox';
 import { formatPercent } from '../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
-const WARN_PERCENT = 1 / 100;
-const CONFIRM_PERCENT = 5 / 100;
+const IMPACT_WARN_PERCENT = 1 / 100;
+const IMPACT_CONFIRM_PERCENT = 5 / 100;
 
 export type ZapPriceImpactProps = {
   mode: 'deposit' | 'withdraw';
@@ -24,16 +24,18 @@ export const ZapPriceImpact = memo<ZapPriceImpactProps>(function ZapPriceImpact(
   const [shouldWarn, setShouldWarn] = useState(false);
   const [shouldConfirm, setShouldConfirm] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
-  const isZap = useAppSelector(
-    state => state.ui[mode].isZap && state.ui[mode].zapEstimate && !state.ui[mode].zapError
-  );
+  const isZap = useAppSelector(state => state.ui[mode].isZap);
+  const isZapError = useAppSelector(state => state.ui[mode].zapError) ? isZap : false;
+  const isZapSuccess = useAppSelector(state => state.ui[mode].zapEstimate)
+    ? isZap && !isZapError
+    : false;
   const priceImpact = useAppSelector(state => state.ui[mode].zapEstimate?.priceImpact || 0);
   const AlertComponent = shouldConfirm ? AlertError : AlertWarning;
 
   useEffect(() => {
-    if (isZap && priceImpact >= WARN_PERCENT) {
+    if (isZapSuccess && priceImpact >= IMPACT_WARN_PERCENT) {
       setShouldWarn(true);
-      if (priceImpact >= CONFIRM_PERCENT) {
+      if (priceImpact >= IMPACT_CONFIRM_PERCENT) {
         setShouldConfirm(true);
       } else {
         setShouldConfirm(false);
@@ -44,13 +46,13 @@ export const ZapPriceImpact = memo<ZapPriceImpactProps>(function ZapPriceImpact(
       setShouldConfirm(false);
       setConfirmed(false);
     }
-  }, [isZap, priceImpact, setShouldWarn, setShouldConfirm, setConfirmed]);
+  }, [isZapSuccess, priceImpact, setShouldWarn, setShouldConfirm, setConfirmed]);
 
   useEffect(() => {
-    onChange(shouldConfirm && !confirmed);
-  }, [shouldConfirm, confirmed, onChange]);
+    onChange(isZapError || (shouldConfirm && !confirmed));
+  }, [shouldConfirm, confirmed, isZapError, onChange]);
 
-  if (!isZap || !shouldWarn) {
+  if (!isZapSuccess || !shouldWarn) {
     return null;
   }
 
