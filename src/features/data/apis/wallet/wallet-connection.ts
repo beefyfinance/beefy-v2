@@ -3,15 +3,14 @@ import { ChainEntity } from '../../entities/chain';
 import { find, sample } from 'lodash';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
 import { maybeHexToNumber } from '../../../../helpers/format';
-import { hexToNumber, numberToHex } from 'web3-utils';
+import { hexToNumber, isHexStrict, numberToHex } from 'web3-utils';
 import Onboard, { OnboardAPI } from '@web3-onboard/core';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
 import createWalletConnectModule from '@web3-onboard/walletconnect';
 import { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
 import { ConnectOptions } from '@web3-onboard/core/dist/types';
-import { WalletInit } from '@web3-onboard/common';
-import { EIP1193Provider } from '@web3-onboard/common/dist/types';
+import { createEIP1193Provider, WalletInit } from '@web3-onboard/common';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
@@ -45,7 +44,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           platforms: ['all'],
         },
         {
-          label: 'CDC Injected',
+          label: 'CDC Extension',
           injectedNamespace: InjectedNameSpace.Ethereum,
           checkProviderIdentity: ({ provider }) =>
             !!provider && !!provider['isDeficonnectProvider'],
@@ -126,9 +125,38 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
         const { provider } = await connector.activate();
 
+        // Patch missing/non-conforming methods
+        const patchedProvider = createEIP1193Provider(provider, {
+          eth_requestAccounts: async ({ baseRequest }) => {
+            return await baseRequest({ method: 'eth_accounts' });
+          },
+          eth_chainId: async ({ baseRequest }) => {
+            const value = await baseRequest({ method: 'eth_chainId' });
+            return isHexStrict(value) ? value : `0x${parseInt(value + '', 10).toString(16)}`;
+          },
+        });
+
+        // Patch non-conforming events
+        const originalOn = patchedProvider.on.bind(patchedProvider);
+        patchedProvider.on = (event, listener) => {
+          // call original handler with modified value
+          originalOn(event, value => {
+            // chainId: Dec->Hex
+            if (event === 'chainChanged') {
+              listener(isHexStrict(value) ? value : `0x${parseInt(value + '', 10).toString(16)}`);
+              return;
+            }
+            // rest
+            listener(value);
+          });
+
+          // return this
+          return patchedProvider;
+        };
+
         // DeFiConnectorProvider type is missing EventEmitter type
         return {
-          provider: provider as unknown as EIP1193Provider,
+          provider: patchedProvider,
         };
       },
     });
