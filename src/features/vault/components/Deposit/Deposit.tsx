@@ -8,7 +8,7 @@ import {
   Radio,
   RadioGroup,
 } from '@material-ui/core';
-import React, { ChangeEventHandler, useCallback } from 'react';
+import React, { ChangeEventHandler, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
@@ -39,6 +39,7 @@ import { VaultBuyLinks } from '../VaultBuyLinks';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
+import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -52,10 +53,10 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isWalletOnVaultChain = useAppSelector(
     state => selectCurrentChainId(state) === vault.chainId
   );
-
   const walletAddress = useAppSelector(state =>
     isWalletConnected ? selectWalletAddress(state) : null
   );
+  const [priceImpactDisableDeposit, setPriceImpactDisableDeposit] = useState(false);
 
   // initialize form data
   React.useEffect(() => {
@@ -104,7 +105,8 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isDepositButtonDisabled =
     formState.amount.isLessThanOrEqualTo(0) ||
     !formReady ||
-    (formState.max && formState.selectedToken.type === 'native');
+    (formState.max && formState.selectedToken.type === 'native') ||
+    priceImpactDisableDeposit;
 
   const handleAsset = useCallback<ChangeEventHandler<HTMLInputElement>>(
     e => {
@@ -123,6 +125,13 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const handleMax = useCallback(() => {
     dispatch(depositActions.setMax({ state: store.getState() }));
   }, [dispatch, store]);
+
+  const handlePriceImpactConfirm = useCallback<ZapPriceImpactProps['onChange']>(
+    shouldDisable => {
+      setPriceImpactDisableDeposit(shouldDisable);
+    },
+    [setPriceImpactDisableDeposit]
+  );
 
   const handleDeposit = () => {
     const steps: Step[] = [];
@@ -176,7 +185,6 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     startStepper(steps);
   };
 
-  console.log('>>> render');
   return (
     <>
       <Box p={3}>
@@ -255,6 +263,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           isZap={formState.isZap}
           type={'deposit'}
         />
+        <ZapPriceImpact mode={'deposit'} onChange={handlePriceImpactConfirm} />
         <MaxNativeDepositAlert />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}

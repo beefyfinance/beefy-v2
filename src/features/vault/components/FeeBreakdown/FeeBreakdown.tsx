@@ -142,7 +142,7 @@ export const FeeBreakdown = memo(
                         valueTo: zapEstimate.amountOut.decimalPlaces(6),
                         tokenTo: zapEstimate.tokenOut.symbol,
                         slippageTolerancePercentage: slippageTolerance * 100,
-                        priceImpact: formatPercent(zapEstimate.priceImpact, 2, '0%'),
+                        priceImpact: formatPercent(-zapEstimate.priceImpact, 2, '0%'),
                       })}
                     </li>
                     <li className={classes.zapStep}>
@@ -191,7 +191,7 @@ export const FeeBreakdown = memo(
                           valueTo: zapEstimate.amountOut.decimalPlaces(6),
                           tokenTo: zapEstimate.tokenOut.symbol,
                           slippageTolerancePercentage: slippageTolerance * 100,
-                          priceImpact: formatPercent(zapEstimate.priceImpact, 2, '0%'),
+                          priceImpact: formatPercent(-zapEstimate.priceImpact, 2, '0%'),
                         })}
                       </li>
                     )}

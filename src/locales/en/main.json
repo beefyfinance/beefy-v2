@@ -207,6 +207,8 @@
   "Zap-Step-Withdraw-2": "Remove liquidity from {{lpToken}} to receive {{token0}} and {{token1}}",
   "Zap-Step-Withdraw-3": "Swap estimated {{valueFrom}} {{tokenFrom}} for {{valueTo}} {{tokenTo}} ({{priceImpact}} price impact, ±{{slippageTolerancePercentage}}% slippage and withdrawal fee, if any)",
   "Zap-Step-Withdraw-4": "Transfer estimated {{balance}} {{token}} to your wallet",
+  "Zap-PriceImpact-Notice": "Price impact on this zap is high at {{priceImpact}}",
+  "Zap-PriceImpact-Confirm": "Confirm zap",
   "Fee-Tagline": "You earn what you stake",
   "Fee-DepositAmt": "{{amt}} deposit fee",
   "Fee-DepositTrgt": "Sent to the farmed platform, not Beefy",

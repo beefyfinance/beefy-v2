@@ -37,4 +37,10 @@ export const styles = (theme: Theme) => ({
       fill: '#D19847',
     },
   },
+  error: {
+    backgroundColor: 'rgba(209, 83, 71, 0.15)',
+    '& $icon': {
+      fill: '#D15347',
+    },
+  },
 });
