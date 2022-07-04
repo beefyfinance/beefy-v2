@@ -116,11 +116,23 @@ export function getEligibleZapOptions(
 
 const computePairAddress = (factoryAddress, pairInitHash, tokenA, tokenB) => {
   const [token0, token1] = sortTokens(tokenA, tokenB);
-  return getCreate2Address(
-    factoryAddress,
-    keccak256(['bytes'], [pack(['address', 'address'], [token0, token1])]),
-    pairInitHash
-  );
+
+  try {
+    return getCreate2Address(
+      factoryAddress,
+      keccak256(['bytes'], [pack(['address', 'address'], [token0, token1])]),
+      pairInitHash
+    );
+  } catch (error) {
+    console.error('getCreate2Address failed', {
+      error,
+      factoryAddress,
+      pairInitHash,
+      token0,
+      token1,
+    });
+    return null;
+  }
 };
 
 const sortTokens = (tokenA, tokenB) => {
