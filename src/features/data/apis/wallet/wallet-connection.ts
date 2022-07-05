@@ -47,7 +47,25 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           label: 'CDC Extension',
           injectedNamespace: InjectedNameSpace.Ethereum,
           checkProviderIdentity: ({ provider }) =>
+            // Injected from Browser Extension
             !!provider && !!provider['isDeficonnectProvider'],
+          getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
+          getInterface: async () => ({ provider: (window as any).ethereum }),
+          platforms: ['all'],
+        },
+        {
+          label: 'CDC DeFi App',
+          injectedNamespace: InjectedNameSpace.Ethereum,
+          checkProviderIdentity: ({ provider }) =>
+            // Injected from App: DeFi app is fork of trust wallet
+            !!provider &&
+            !!provider['isTrust'] &&
+            !('isMetaMask' in provider) &&
+            provider.chainId === 25 &&
+            !!provider.rpc &&
+            !!provider.rpc.rpcUrl &&
+            typeof provider.rpc.rpcUrl === 'string' &&
+            provider.rpc.rpcUrl.indexOf('.crypto.org') !== -1,
           getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
           getInterface: async () => ({ provider: (window as any).ethereum }),
           platforms: ['all'],
