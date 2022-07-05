@@ -28,6 +28,34 @@
     "createdAt": 1621450869
   },
   {
+    "id": "solace-polygon-solace",
+    "name": "SOLACE",
+    "token": "SOLACE",
+    "tokenAddress": "0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSolacePolygon",
+    "earnedTokenAddress": "0xefA25E8b9AC6E7f09EBf5b51816cDB2B3Abb53d5",
+    "earnContractAddress": "0xefA25E8b9AC6E7f09EBf5b51816cDB2B3Abb53d5",
+    "oracle": "tokens",
+    "oracleId": "SOLACE",
+    "status": "active",
+    "platformId": "solace",
+    "assets": ["SOLACE"],
+    "strategyTypeId": "single",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "buyTokenUrl": "https://polygon.balancer.fi/#/trade",
+    "network": "polygon",
+    "createdAt": 1657018678
+  },
+  {
     "id": "balancer-matic-maticx",
     "name": "MaticX-MATIC",
     "token": "MaticX-MATIC",

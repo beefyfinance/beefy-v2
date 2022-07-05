@@ -118,6 +118,34 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
+    "id": "solace-ftm-solace",
+    "name": "SOLACE",
+    "token": "SOLACE",
+    "tokenAddress": "0x501acE9c35E60f03A2af4d484f49F9B1EFde9f40",
+    "tokenDecimals": 18,
+    "earnedToken": "mooSolaceFantom",
+    "earnedTokenAddress": "0x3F19d52af24fc79745f82FEf1F0Cfe36589A2FEF",
+    "earnContractAddress": "0x3F19d52af24fc79745f82FEf1F0Cfe36589A2FEF",
+    "oracle": "tokens",
+    "oracleId": "SOLACE",
+    "status": "active",
+    "platformId": "solace",
+    "assets": ["SOLACE"],
+    "strategyTypeId": "single",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "buyTokenUrl": "https://beets.fi/#/pool/0x8d827c4f1c88141bc8f75ac1ffe1c201e09b07bb0002000000000000000004cc",
+    "network": "fantom",
+    "createdAt": 1657018677
+  },
+  {
     "id": "beets-battle-bands-remastered",
     "name": "Battle Of The Bands Remastered",
     "token": "Battle Of The Bands Remastered",
