@@ -1,5 +1,34 @@
 [
   {
+    "id": "curve-op-f-susd",
+    "name": "sUSD/DAI/USDC/USDT",
+    "token": "sUSD3CRV-f",
+    "tokenAddress": "0x061b87122Ed14b9526A813209C8a59a633257bAb",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveFsUSD",
+    "earnedTokenAddress": "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
+    "earnContractAddress": "0x107Dbf9c9C0EF2Df114159e5C7DC2baf7C444cFF",
+    "oracle": "lps",
+    "oracleId": "curve-op-f-susd",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["sUSD", "DAI", "USDC", "USDT"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0.01%",
+    "addLiquidityUrl": "https://optimism.curve.fi/factory/0/deposit",
+    "network": "optimism",
+    "createdAt": 1657018676
+  },
+  {
     "id": "velodrome-op-usdc",
     "name": "OP-USDC LP",
     "token": "OP-USDC LP",
