@@ -95,7 +95,7 @@ export function TokenWithDeposit({
           size={variant === 'sm' ? 20 : 24}
         />
       </Box>
-      <Box flexGrow={1} pl={1} lineHeight={0}>
+      <Box flexGrow={1} pl={1}>
         <div className={classes.assetCount}>
           {intersperse(
             amountsAndSymbol.map(([amount, symbol]) => (
