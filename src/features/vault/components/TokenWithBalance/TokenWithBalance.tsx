@@ -38,7 +38,7 @@ export function TokenWithBalance({
           size={variant === 'sm' ? 20 : 24}
         />
       </Box>
-      <Box flexGrow={1} pl={1} lineHeight={0}>
+      <Box flexGrow={1} pl={1}>
         <div className={classes.assetCount}>
           {formatBigDecimals(balance, 8)} {token.symbol}
         </div>
