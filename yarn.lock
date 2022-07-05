@@ -3840,12 +3840,22 @@
     joi "^17.4.2"
     rxjs "^7.5.2"
 
-"@web3-onboard/core@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.3.0.tgz#1c1dcea9a0b911164be9d78d8a3f8f25edc7396b"
-  integrity sha512-xQt9iZXalVKklOj1g2nb/+A2CTgxVmqiSW12eXciD4XODcbHybsGbLZObluO/E1ciMQpjZ/Kp1hzAj96Bk1m4Q==
+"@web3-onboard/common@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.4.tgz#b5143540e5690fc6f75386b538029a297d9f9aae"
+  integrity sha512-+EzgwbPY0OSgw5EBjb69lUnBqTVS7M1jPNfNRF3VxqkIgl+Lv2WPgXhracSLeUh77sVeBmSn+VqlztKtjG+Dxg==
   dependencies:
-    "@web3-onboard/common" "^2.1.2"
+    "@ethereumjs/common" "2.6.2"
+    ethers "5.5.4"
+    joi "^17.4.2"
+    rxjs "^7.5.2"
+
+"@web3-onboard/core@^2.4.0-alpha.2":
+  version "2.4.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.4.0-alpha.2.tgz#dc2ad85325830ef9272d79d15100480d803dda4e"
+  integrity sha512-VBBj2nxalDBxAOxvrMMeGOrQ/GKLR/9Lg817zaVsRWiapRiVj3hm7p7cftHccZK9nie0w58DWpjAgXXGP+7PmA==
+  dependencies:
+    "@web3-onboard/common" "^2.1.4"
     bignumber.js "^9.0.0"
     bnc-sdk "^4.4.1"
     bowser "^2.11.0"
