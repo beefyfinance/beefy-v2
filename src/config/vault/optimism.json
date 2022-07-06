@@ -134,34 +134,6 @@
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
-      "MCAP_SMALL",
-      "OVER_COLLAT_ALGO_STABLECOIN",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
-    "buyTokenUrl": "https://app.velodrome.finance/swap",
-    "network": "optimism",
-    "createdAt": 1657018684
-  },
-  {
-    "id": "velodrome-weth-seth",
-    "name": "sETH-ETH sLP",
-    "token": "sETH-ETH sLP",
-    "tokenAddress": "0xFd7FddFc0A729eCF45fB6B12fA3B71A575E1966F",
-    "tokenDecimals": 18,
-    "tokenProviderId": "velodrome",
-    "earnedToken": "mooVelodromesETH-ETH",
-    "earnedTokenAddress": "0xf92129fE0923d766C2540796d4eA31Ff9FF65522",
-    "earnContractAddress": "0xf92129fE0923d766C2540796d4eA31Ff9FF65522",
-    "oracle": "lps",
-    "oracleId": "velodrome-weth-seth",
-    "status": "active",
-    "platformId": "velodrome",
-    "assets": ["sETH", "WETH"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "IL_NONE",
       "MCAP_HIGH",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
