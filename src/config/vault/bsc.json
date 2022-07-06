@@ -13970,7 +13970,7 @@
     "status": "active",
     "platformId": "stargate",
     "assets": ["sbBUSD"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -13999,7 +13999,7 @@
     "status": "active",
     "platformId": "stargate",
     "assets": ["sbUSDT"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",

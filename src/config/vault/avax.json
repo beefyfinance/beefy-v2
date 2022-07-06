@@ -3635,7 +3635,7 @@
     "status": "active",
     "platformId": "stargate",
     "assets": ["saUSDC"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3663,7 +3663,7 @@
     "status": "active",
     "platformId": "stargate",
     "assets": ["saUSDT"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
