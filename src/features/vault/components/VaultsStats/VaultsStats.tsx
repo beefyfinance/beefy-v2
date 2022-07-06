@@ -1,5 +1,6 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -12,6 +13,8 @@ import { VaultDeposited } from '../../../../components/VaultDeposited/VaultDepos
 import { GovVaultRewards } from '../../../../components/GovVaultRewards/GovVaultRewards';
 import { getBeefyApi } from '../../../data/apis/instances';
 import { useAppSelector } from '../../../../store';
+
+dayjs.extend(relativeTime);
 
 const useStyles = makeStyles(styles);
 
@@ -88,7 +91,7 @@ const useLastHarvestStr = (vaultId: string) => {
       if (lastHarvest === null) {
         setState('never');
       } else {
-        const lhStr = moment(lastHarvest)
+        const lhStr = dayjs(lastHarvest)
           .fromNow()
           .replace(' hours', 'h')
           .replace(' minutes', 'm')

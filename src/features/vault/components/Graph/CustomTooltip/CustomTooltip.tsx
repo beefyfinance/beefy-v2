@@ -1,7 +1,7 @@
 import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { styles } from './styles';
 import { formatPercent, formatUsd } from '../../../../../helpers/format';
 import { CustomTooltipProps } from './CustomTooltipProps';
@@ -21,7 +21,7 @@ export const CustomTooltip: React.FC<CustomTooltipProps> = ({
   const LABELS = [t('TVL'), t('Graph-PriceTkn'), t('APY')];
 
   if (active && payload && payload.length) {
-    const formattedDate = moment(new Date(payload[0].payload.ts)).format('lll');
+    const formattedDate = dayjs(new Date(payload[0].payload.ts)).format('lll');
     const formattedValue =
       stat === 2 ? formatPercent(payload[0].value) : formatUsd(payload[0].value);
     const formattedAverageValue = showSimpleAverage
