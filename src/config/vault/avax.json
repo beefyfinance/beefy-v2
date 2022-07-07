@@ -4975,5 +4975,34 @@
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
     "createdAt": 1655845403,
     "network": "avax"
+  },
+  {
+    "id": "aavev3-savax",
+    "name": "sAVAX",
+    "token": "sAVAX",
+    "tokenAddress": "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
+    "tokenDecimals": 18,
+    "earnedToken": "mooAavesAvax",
+    "earnedTokenAddress": "0xd38D82962a6d027B69e2503b6672f291E089421b",
+    "earnContractAddress": "0xd38D82962a6d027B69e2503b6672f291E089421b",
+    "oracle": "tokens",
+    "oracleId": "sAVAX",
+    "status": "active",
+    "platformId": "aave",
+    "assets": ["sAVAX"],
+    "strategyTypeId": "lending",
+    "withdrawalFee": "0.01%",
+    "risks": [
+      "COMPLEXITY_MID",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
+    "createdAt": 1657121627,
+    "network": "avax"
   }
 ]
