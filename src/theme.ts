@@ -120,7 +120,7 @@ const theme = createTheme({
     text: {
       primary: '#F5F5FF',
       secondary: '#D0D0DA',
-      disabled: '#8A8EA8',
+      disabled: '#999CB3',
     },
   },
   typography: {
