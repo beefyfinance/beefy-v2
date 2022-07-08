@@ -2,9 +2,12 @@ import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { styles } from './styles';
 import { formatPercent, formatUsd } from '../../../../../helpers/format';
 import { CustomTooltipProps } from './CustomTooltipProps';
+
+dayjs.extend(localizedFormat);
 
 const useStyles = makeStyles(styles);
 export const CustomTooltip: React.FC<CustomTooltipProps> = ({
