@@ -8,7 +8,7 @@ import {
   Radio,
   RadioGroup,
 } from '@material-ui/core';
-import React from 'react';
+import React, { ChangeEventHandler, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
@@ -16,7 +16,7 @@ import { Step } from '../../../../components/Steps/types';
 import { initDepositForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
-import { isTokenNative, TokenEntity } from '../../../data/entities/token';
+import { isTokenNative } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { isFulfilled } from '../../../data/reducers/data-loader';
 import { depositActions } from '../../../data/reducers/wallet/deposit';
@@ -39,6 +39,7 @@ import { VaultBuyLinks } from '../VaultBuyLinks';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
+import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -52,10 +53,10 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isWalletOnVaultChain = useAppSelector(
     state => selectCurrentChainId(state) === vault.chainId
   );
-
   const walletAddress = useAppSelector(state =>
     isWalletConnected ? selectWalletAddress(state) : null
   );
+  const [priceImpactDisableDeposit, setPriceImpactDisableDeposit] = useState(false);
 
   // initialize form data
   React.useEffect(() => {
@@ -104,19 +105,33 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const isDepositButtonDisabled =
     formState.amount.isLessThanOrEqualTo(0) ||
     !formReady ||
-    (formState.max && formState.selectedToken.type === 'native');
+    (formState.max && formState.selectedToken.type === 'native') ||
+    priceImpactDisableDeposit;
 
-  const handleAsset = (tokenId: TokenEntity['id']) => {
-    dispatch(depositActions.setAsset({ tokenId, state: store.getState() }));
-  };
+  const handleAsset = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    e => {
+      dispatch(depositActions.setAsset({ tokenId: e.target.value, state: store.getState() }));
+    },
+    [dispatch, store]
+  );
 
-  const handleInput = (amountStr: string) => {
-    dispatch(depositActions.setInput({ amount: amountStr, state: store.getState() }));
-  };
+  const handleInput = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    e => {
+      dispatch(depositActions.setInput({ amount: e.target.value, state: store.getState() }));
+    },
+    [dispatch, store]
+  );
 
-  const handleMax = () => {
+  const handleMax = useCallback(() => {
     dispatch(depositActions.setMax({ state: store.getState() }));
-  };
+  }, [dispatch, store]);
+
+  const handlePriceImpactConfirm = useCallback<ZapPriceImpactProps['onChange']>(
+    shouldDisable => {
+      setPriceImpactDisableDeposit(shouldDisable);
+    },
+    [setPriceImpactDisableDeposit]
+  );
 
   const handleDeposit = () => {
     const steps: Step[] = [];
@@ -191,7 +206,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           value={formState.selectedToken ? formState.selectedToken.id : ''}
           aria-label="deposit-asset"
           name="deposit-asset"
-          onChange={e => handleAsset(e.target.value)}
+          onChange={handleAsset}
         >
           <FormControlLabel
             className={classes.depositTokenContainer}
@@ -231,7 +246,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             <InputBase
               placeholder="0.00"
               value={formState.formattedInput}
-              onChange={e => handleInput(e.target.value)}
+              onChange={handleInput}
               disabled={!formReady}
             />
             <Button onClick={handleMax} disabled={!formReady}>
@@ -243,10 +258,12 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           vault={vault}
           slippageTolerance={formState.slippageTolerance}
           zapEstimate={formState.zapEstimate}
+          zapError={formState.zapError}
           isZapSwap={false}
           isZap={formState.isZap}
           type={'deposit'}
         />
+        <ZapPriceImpact mode={'deposit'} onChange={handlePriceImpactConfirm} />
         <MaxNativeDepositAlert />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}

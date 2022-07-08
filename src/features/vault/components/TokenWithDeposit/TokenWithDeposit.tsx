@@ -82,7 +82,7 @@ export function TokenWithDeposit({
 
   return (
     <Box className={classes.balanceContainer}>
-      <Box lineHeight={0}>
+      <Box>
         <AssetsImage
           chainId={vault.chainId}
           assetIds={

@@ -24,6 +24,7 @@ export type DepositState = {
   slippageTolerance: number;
   zapOptions: ZapOptions | null;
   zapEstimate: ZapEstimate | null;
+  zapError: string | null;
 };
 const initialDepositState: DepositState = {
   initiated: false,
@@ -34,6 +35,7 @@ const initialDepositState: DepositState = {
   isZap: false,
   zapOptions: null,
   zapEstimate: null,
+  zapError: null,
   max: false,
   selectedToken: null,
 };
@@ -141,6 +143,30 @@ export const depositSlice = createSlice({
         sliceState.zapEstimate !== action.payload.zapEstimate
       ) {
         sliceState.zapEstimate = action.payload.zapEstimate;
+        sliceState.zapError = null;
+      }
+    });
+
+    builder.addCase(fetchEstimateZapDeposit.pending, (sliceState, action) => {
+      if (
+        sliceState.vaultId === action.meta.arg.vaultId &&
+        sliceState.selectedToken.id === action.meta.arg.inputTokenId
+      ) {
+        // TODO clear previous error/estimate so we can show loading indicator
+        // TODO component needs refactored to reduce re-renders before this can be introduced
+        // sliceState.zapEstimate = null;
+        // sliceState.zapError = null;
+      }
+    });
+
+    builder.addCase(fetchEstimateZapDeposit.rejected, (sliceState, action) => {
+      if (
+        sliceState.vaultId === action.meta.arg.vaultId &&
+        sliceState.selectedToken.id === action.meta.arg.inputTokenId
+      ) {
+        // TODO setting to null disables form
+        // sliceState.zapEstimate = null;
+        sliceState.zapError = action.error.message;
       }
     });
   },

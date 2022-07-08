@@ -7,7 +7,13 @@ import _uniswapV2PairABI from '../../../config/abi/uniswapV2Pair.json';
 import _uniswapV2RouterABI from '../../../config/abi/uniswapV2Router.json';
 import _zapAbi from '../../../config/abi/zap.json';
 import { BeefyState } from '../../../redux-types';
-import { isTokenErc20, isTokenNative, TokenEntity } from '../entities/token';
+import {
+  isTokenErc20,
+  isTokenNative,
+  TokenEntity,
+  TokenErc20,
+  TokenNative,
+} from '../entities/token';
 import { isStandardVault, VaultEntity } from '../entities/vault';
 import { selectChainById } from '../selectors/chains';
 import {
@@ -18,9 +24,10 @@ import {
   selectTokenById,
 } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
-import { getZapAddress, getZapDecimals } from '../utils/zap-utils';
+import { calculatePriceImpact, getZapAddress, getZapDecimals } from '../utils/zap-utils';
 import { getWeb3Instance } from './instances';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import { ZapConfig } from './config-types';
 
 // fix ts types
 const zapAbi = _zapAbi as AbiItem | AbiItem[];
@@ -31,7 +38,8 @@ export interface ZapOptions {
   address: string;
   router: string;
   tokens: TokenEntity[];
-  withdrawEstimateMode: 'getAmountOut' | 'getAmountsOut';
+  withdrawEstimateMode: ZapConfig['withdrawEstimateMode'];
+  lpProviderFee: ZapConfig['lpProviderFee'];
 }
 
 const zapOptionsCache: { [vaultId: VaultEntity['id']]: ZapOptions | null } = {};
@@ -100,6 +108,7 @@ export function getEligibleZapOptions(
     router: zap.ammRouter,
     tokens: zapTokens,
     withdrawEstimateMode: zap.withdrawEstimateMode || 'getAmountOut',
+    lpProviderFee: zap.lpProviderFee || 0,
   };
   zapOptionsCache[vaultId] = zapOptions;
   return zapOptions;
@@ -137,6 +146,39 @@ export interface ZapEstimate {
   tokenOut: TokenEntity;
   amountIn: BigNumber;
   amountOut: BigNumber;
+  priceImpact: number;
+}
+
+function getOppositeToken(
+  state: BeefyState,
+  token: TokenEntity,
+  vault: VaultEntity,
+  wnative: TokenErc20,
+  native: TokenNative
+) {
+  // Return token for assets[1] if input is assets[0]
+  if (
+    token.id === vault.assetIds[0] ||
+    (token.id === wnative.id && native.id === vault.assetIds[0])
+  ) {
+    return selectTokenById(state, vault.chainId, vault.assetIds[1]);
+  }
+
+  // Return token for assets[0] if input is assets[1]
+  if (
+    token.id === vault.assetIds[1] ||
+    (token.id === wnative.id && native.id === vault.assetIds[1])
+  ) {
+    return selectTokenById(state, vault.chainId, vault.assetIds[0]);
+  }
+
+  // Return native token if input is wrapped native???
+  if (token.id === wnative.id) {
+    return selectChainNativeToken(state, vault.chainId);
+  }
+
+  // Otherwise return wrapped native???
+  return selectChainWrappedNativeToken(state, vault.chainId);
 }
 
 export async function estimateZapDeposit(
@@ -145,6 +187,7 @@ export async function estimateZapDeposit(
   inputTokenId: TokenEntity['id']
 ): Promise<ZapEstimate> {
   const vault = selectVaultById(state, vaultId);
+  const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const chain = selectChainById(state, vault.chainId);
   const zapOptions = state.ui.deposit.zapOptions;
   const amount = state.ui.deposit.amount;
@@ -153,44 +196,91 @@ export async function estimateZapDeposit(
   const native = selectChainNativeToken(state, vault.chainId);
 
   const tokenIn = selectTokenById(state, vault.chainId, inputTokenId);
-  const tokenInContract = getZapAddress(tokenIn, wnative);
+  const tokenInAddress = getZapAddress(tokenIn, wnative);
   const tokenInDecimals = getZapDecimals(tokenIn, wnative);
+  const tokenOut = getOppositeToken(state, tokenIn, vault, wnative, native);
 
-  const tokenOut =
-    tokenIn.id === vault.assetIds[0] ||
-    (tokenIn.id === wnative.id && native.id === vault.assetIds[0])
-      ? selectTokenById(state, vault.chainId, vault.assetIds[1])
-      : tokenIn.id === vault.assetIds[1] ||
-        (tokenIn.id === wnative.id && native.id === vault.assetIds[1])
-      ? selectTokenById(state, vault.chainId, vault.assetIds[0])
-      : tokenIn.id === wnative.id
-      ? selectChainNativeToken(state, vault.chainId)
-      : selectChainWrappedNativeToken(state, vault.chainId);
-
+  // can not zap in 0
   if (amount.isZero()) {
     return {
       tokenIn,
       tokenOut,
       amountIn: BIG_ZERO,
       amountOut: BIG_ZERO,
+      priceImpact: 0,
     };
   }
 
   const vaultAddress = isStandardVault(vault) ? vault.earnContractAddress : null;
-  const chainTokenAmount = amount.shiftedBy(tokenIn.decimals).decimalPlaces(0);
+  const depositAmount = amount.shiftedBy(tokenIn.decimals).decimalPlaces(0);
 
   const web3 = await getWeb3Instance(chain);
-  const contract = new web3.eth.Contract(zapAbi, zapOptions.address);
+  const multicall = new MultiCall(web3, chain.multicallAddress);
+  const pairContract = new web3.eth.Contract(uniswapV2PairABI, depositToken.address);
+  const zapContract = new web3.eth.Contract(zapAbi, zapOptions.address);
 
-  const response = await contract.methods
-    .estimateSwap(vaultAddress, tokenInContract, chainTokenAmount.toString(10))
-    .call();
+  type MulticallReturnType = [
+    [
+      {
+        reserves: Record<number, string>;
+        token0: string;
+        token1: string;
+      }
+    ],
+    [
+      {
+        estimate: Record<number, string>;
+      }
+    ]
+  ];
+
+  const [[pair], [zap]]: MulticallReturnType = (await multicall.all([
+    [
+      {
+        token0: pairContract.methods.token0(),
+        token1: pairContract.methods.token1(),
+        reserves: pairContract.methods.getReserves(),
+      },
+    ],
+    [
+      {
+        estimate: zapContract.methods.estimateSwap(
+          vaultAddress,
+          tokenInAddress,
+          depositAmount.toString(10)
+        ),
+      },
+    ],
+  ])) as MulticallReturnType;
+
+  if (!zap.estimate) {
+    throw new Error(`Failed to estimate swap.`);
+  }
+
+  const { token0 } = pair;
+  const [reserves0, reserves1] = Object.values(pair.reserves)
+    .slice(0, 2)
+    .map(amount => new BigNumber(amount));
+  const reserveIn = tokenIn.address.toLowerCase() === token0.toLowerCase() ? reserves0 : reserves1;
+  const [swapAmountIn, swapAmountOut] = Object.values(zap.estimate)
+    .slice(0, 2)
+    .map(amount => new BigNumber(amount));
+
+  const amountIn = new BigNumber(zap.estimate[0]);
+  const priceImpact = calculatePriceImpact(amountIn, reserveIn, zapOptions.lpProviderFee);
+
+  // We expect 50% to get swapped
+  const amountInRatio = amountIn.dividedBy(depositAmount);
+  if (amountInRatio.lt(0.4)) {
+    throw new Error(`Not enough liquidity for swap.`);
+  }
 
   return {
     tokenIn,
     tokenOut,
-    amountIn: new BigNumber(response.swapAmountIn).shiftedBy(-tokenInDecimals),
-    amountOut: new BigNumber(response.swapAmountOut).shiftedBy(-tokenOut.decimals),
+    amountIn: swapAmountIn.shiftedBy(-tokenInDecimals),
+    amountOut: swapAmountOut.shiftedBy(-tokenOut.decimals),
+    priceImpact,
   };
 }
 
@@ -210,35 +300,39 @@ export const estimateZapWithdraw = async (
 
   const tokenOut = selectTokenById(state, vault.chainId, outputTokenId);
   const tokenOutAddress = getZapAddress(tokenOut, wnative);
-
   const tokenOutDecimals = getZapDecimals(tokenOut, wnative);
-  const _tokenIn =
-    tokenOut.id === vault.assetIds[0] ||
-    (tokenOut.id === wnative.id && native.id === vault.assetIds[0])
-      ? selectTokenById(state, vault.chainId, vault.assetIds[1])
-      : tokenOut.id === vault.assetIds[1] ||
-        (tokenOut.id === wnative.id && native.id === vault.assetIds[1])
-      ? selectTokenById(state, vault.chainId, vault.assetIds[0])
-      : tokenOut.id === wnative.id
-      ? selectChainNativeToken(state, vault.chainId)
-      : selectChainWrappedNativeToken(state, vault.chainId);
+  const _tokenIn = getOppositeToken(state, tokenOut, vault, wnative, native);
   const tokenIn = isTokenNative(_tokenIn) ? wnative : _tokenIn;
 
   // no zap for native tokens
   if (amount.isZero() || !isTokenErc20(depositToken)) {
     return {
-      tokenIn: tokenIn,
-      tokenOut: tokenOut,
+      tokenIn,
+      tokenOut,
       amountIn: BIG_ZERO,
       amountOut: BIG_ZERO,
+      priceImpact: 0,
     };
   }
 
   const web3 = await getWeb3Instance(chain);
   const multicall = new MultiCall(web3, chain.multicallAddress);
   const pairContract = new web3.eth.Contract(uniswapV2PairABI, depositToken.address);
+  const routerContract = new web3.eth.Contract(uniswapV2RouterABI, zapOptions.router);
 
-  const [[pair]] = await multicall.all([
+  type MulticallReturnType = [
+    [
+      {
+        totalSupply: string;
+        decimals: string;
+        token0: string;
+        token1: string;
+        reserves: Record<number, string>;
+      }
+    ]
+  ];
+
+  const [[pair]]: MulticallReturnType = (await multicall.all([
     [
       {
         totalSupply: pairContract.methods.totalSupply(),
@@ -248,25 +342,32 @@ export const estimateZapWithdraw = async (
         reserves: pairContract.methods.getReserves(),
       },
     ],
-  ]);
+  ])) as MulticallReturnType;
 
-  const reserveIn =
-    tokenIn.address.toLocaleLowerCase() === pair.token0.toLocaleLowerCase()
-      ? pair.reserves[0]
-      : pair.reserves[1];
-  const reserveOut =
-    tokenOutAddress.toLocaleLowerCase() === pair.token1.toLocaleLowerCase()
-      ? pair.reserves[1]
-      : pair.reserves[0];
+  const { token0 } = pair;
+  const [reserves0, reserves1] = Object.values(pair.reserves)
+    .slice(0, 2)
+    .map(amount => new BigNumber(amount));
+  const [reserveIn, reserveOut] =
+    tokenIn.address.toLowerCase() === token0.toLowerCase()
+      ? [reserves0, reserves1]
+      : [reserves1, reserves0];
 
+  // # of LP tokens to withdraw
   const rawAmount = amount.shiftedBy(depositToken.decimals);
+  // % of total LP to withdraw
   const equity = rawAmount.dividedBy(pair.totalSupply);
+  // if we break LP, how much is tokenIn
   const amountIn = equity.multipliedBy(reserveIn).decimalPlaces(0, BigNumber.ROUND_DOWN);
+  // price impact: swap is AFTER withdraw so lower reserves by amount withdrawn
+  const priceImpact = calculatePriceImpact(
+    amountIn,
+    reserveIn.minus(amountIn),
+    zapOptions.lpProviderFee
+  );
 
-  const routerContract = new web3.eth.Contract(uniswapV2RouterABI, zapOptions.router);
-
+  // getAmountsOut vs getAmountOut
   let amountOut;
-
   if (zapOptions.withdrawEstimateMode === 'getAmountsOut') {
     const amountsOut = await routerContract.methods
       .getAmountsOut(amountIn.toString(10), [tokenIn.address, tokenOutAddress])
@@ -283,5 +384,6 @@ export const estimateZapWithdraw = async (
     tokenOut,
     amountIn: amountIn.shiftedBy(-tokenIn.decimals),
     amountOut: amountOut.shiftedBy(-tokenOutDecimals),
+    priceImpact: priceImpact,
   };
 };
