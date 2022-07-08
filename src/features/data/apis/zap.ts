@@ -375,7 +375,9 @@ export const estimateZapWithdraw = async (
     amountOut = new BigNumber(amountsOut[1]);
   } else {
     amountOut = new BigNumber(
-      await routerContract.methods.getAmountOut(amountIn.toString(10), reserveIn, reserveOut).call()
+      await routerContract.methods
+        .getAmountOut(amountIn.toString(10), reserveIn.toString(10), reserveOut.toString(10))
+        .call()
     );
   }
 
