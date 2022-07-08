@@ -373,14 +373,18 @@ export const estimateZapWithdraw = async (
   // getAmountsOut vs getAmountOut
   let amountOut;
   if (zapOptions.withdrawEstimateMode === 'getAmountsOut') {
+    console.log('path1');
     const amountsOut = await routerContract.methods
       .getAmountsOut(amountIn.toString(10), [tokenIn.address, tokenOutAddress])
       .call();
+    console.log('called ok');
     amountOut = new BigNumber(amountsOut[1]);
   } else {
+    console.log('path2');
     amountOut = new BigNumber(
       await routerContract.methods.getAmountOut(amountIn.toString(10), reserveIn, reserveOut).call()
     );
+    console.log('called ok');
   }
   console.log('finished');
 
