@@ -2,7 +2,6 @@ import { Theme } from '@material-ui/core';
 
 export const styles = (theme: Theme) => ({
   holder: {
-    borderRight: 'solid 2px #363B63',
     padding: '24px',
     display: 'flex',
     columnGap: '24px',
@@ -12,6 +11,7 @@ export const styles = (theme: Theme) => ({
     },
     [theme.breakpoints.up('lg')]: {
       flexDirection: 'column' as const,
+      borderRight: 'solid 2px #363B63',
     },
   },
   legend: {
