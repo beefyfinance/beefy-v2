@@ -37,6 +37,7 @@ export const ZapPriceImpact = memo<ZapPriceImpactProps>(function ZapPriceImpact(
       setShouldWarn(true);
       if (priceImpact >= IMPACT_CONFIRM_PERCENT) {
         setShouldConfirm(true);
+        setConfirmed(false);
       } else {
         setShouldConfirm(false);
         setConfirmed(false);
