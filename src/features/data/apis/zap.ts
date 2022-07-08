@@ -355,40 +355,31 @@ export const estimateZapWithdraw = async (
 
   // # of LP tokens to withdraw
   const rawAmount = amount.shiftedBy(depositToken.decimals);
-  console.log('rawAmount' + rawAmount);
   // % of total LP to withdraw
   const equity = rawAmount.dividedBy(pair.totalSupply);
-  console.log('equity ' + equity);
   // if we break LP, how much is tokenIn
   const amountIn = equity.multipliedBy(reserveIn).decimalPlaces(0, BigNumber.ROUND_DOWN);
-  console.log('amountIn' + amountIn);
   // price impact: swap is AFTER withdraw so lower reserves by amount withdrawn
   const priceImpact = calculatePriceImpact(
     amountIn,
     reserveIn.minus(amountIn),
     zapOptions.lpProviderFee
   );
-  console.log('priceImpact ' + priceImpact);
 
   // getAmountsOut vs getAmountOut
   let amountOut;
   if (zapOptions.withdrawEstimateMode === 'getAmountsOut') {
-    console.log('path1');
     const amountsOut = await routerContract.methods
       .getAmountsOut(amountIn.toString(10), [tokenIn.address, tokenOutAddress])
       .call();
-    console.log('called ok');
     amountOut = new BigNumber(amountsOut[1]);
   } else {
-    console.log('path2');
     amountOut = new BigNumber(
       await routerContract.methods
         .getAmountOut(amountIn.toString(10), reserveIn.toString(10), reserveOut.toString(10))
         .call()
     );
-    console.log('called ok');
   }
-  console.log('finished');
 
   return {
     tokenIn,
