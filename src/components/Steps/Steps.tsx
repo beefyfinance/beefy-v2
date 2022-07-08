@@ -39,9 +39,6 @@ const _Steps = ({
       steps.items[steps.currentStep].step === 'claim-withdraw' ||
       steps.items[steps.currentStep].step === 'deposit');
 
-  const isClaimBoostAction =
-    steps.finished && steps.items[steps.currentStep].step === 'claim-boost';
-
   return (
     <Snackbar
       key={steps.currentStep}
@@ -239,7 +236,9 @@ const _Steps = ({
                     <Box className={clsx(classes.content, classes.successContent)}>
                       <div className={classes.message}>
                         {t(
-                          isClaimBoostAction ? 'Transactn-Claimed-Boost' : 'Transactn-Claimed-Gov',
+                          steps.items[steps.currentStep].step === 'claim-boost'
+                            ? 'Transactn-Claimed-Boost'
+                            : 'Transactn-Claimed-Gov',
                           {
                             amount: formatBigDecimals(walletActionsState.data.amount, 2),
                             token: walletActionsState.data.token.symbol,
