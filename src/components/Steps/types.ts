@@ -9,7 +9,8 @@ export type Step = {
     | 'withdraw'
     | 'claim-unstake'
     | 'claim-withdraw'
-    | 'claim'
+    | 'claim-boost'
+    | 'claim-gov'
     | 'mint'
     | 'burn'
     | 'bridge';

@@ -221,7 +221,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     }
 
     steps.push({
-      step: 'claim',
+      step: 'claim-gov',
       message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
       action: walletActions.claimGovVault(vault),
       pending: false,
