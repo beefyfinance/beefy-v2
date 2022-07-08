@@ -101,7 +101,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-spell-weth",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["SPELL", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -130,7 +130,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-mim",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["MIM", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -160,7 +160,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-eth-usdc",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["USDC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -276,7 +276,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-wbtc-weth",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["WBTC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -305,7 +305,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-sushi-eth",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["SUSHI", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -334,7 +334,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-usdt",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["USDT", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -391,7 +391,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-magic-weth",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["MAGIC", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -420,7 +420,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-gohm",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["gOHM", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -449,7 +449,7 @@
     "oracle": "lps",
     "oracleId": "sushi-arb-weth-link",
     "status": "eol",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["LINK", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
