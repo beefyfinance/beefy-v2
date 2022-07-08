@@ -6011,7 +6011,7 @@
     "status": "active",
     "platformId": "stargate",
     "assets": ["sfUSDC"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-lp",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",

@@ -103,7 +103,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
     }
 
     steps.push({
-      step: 'claim',
+      step: 'claim-boost',
       message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
       action: walletActions.claimBoost(boost),
       pending: false,

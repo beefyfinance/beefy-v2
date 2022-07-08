@@ -11,6 +11,8 @@ import { useAppSelector } from '../../../../store';
 import { InterestTooltipContent } from '../../../home/components/Vault/components/InterestTooltipContent';
 import { IconWithTooltip } from '../../../../components/Tooltip';
 import clsx from 'clsx';
+import { formatPercent } from '../../../../helpers/format';
+import { AlertWarning } from '../../../../components/Alerts';
 
 const useStyles = makeStyles(styles);
 
@@ -90,6 +92,7 @@ export const FeeBreakdown = memo(
     vault,
     slippageTolerance,
     zapEstimate,
+    zapError,
     isZapSwap,
     isZap,
     type,
@@ -97,6 +100,7 @@ export const FeeBreakdown = memo(
     vault: VaultEntity;
     slippageTolerance: number;
     zapEstimate: ZapEstimate | null;
+    zapError: string | null;
     isZapSwap: boolean;
     isZap: boolean;
     type: 'deposit' | 'withdraw';
@@ -125,7 +129,9 @@ export const FeeBreakdown = memo(
             {type === 'deposit' && isZap && (
               <>
                 <div className={clsx(classes.title, classes.zapTitle)}>{t('Zap-Title')}</div>
-                {zapEstimate === null ? (
+                {zapError !== null ? (
+                  <AlertWarning>{zapError}</AlertWarning>
+                ) : zapEstimate === null ? (
                   <Loader message={'Loading swap estimate...'} line={true} />
                 ) : (
                   <ol className={classes.ol}>
@@ -136,6 +142,7 @@ export const FeeBreakdown = memo(
                         valueTo: zapEstimate.amountOut.decimalPlaces(6),
                         tokenTo: zapEstimate.tokenOut.symbol,
                         slippageTolerancePercentage: slippageTolerance * 100,
+                        priceImpact: formatPercent(-zapEstimate.priceImpact, 2, '0%'),
                       })}
                     </li>
                     <li className={classes.zapStep}>
@@ -157,7 +164,9 @@ export const FeeBreakdown = memo(
             {type === 'withdraw' && isZap && (
               <>
                 <div className={clsx(classes.title, classes.zapTitle)}>{t('Zap-Title')}</div>
-                {zapEstimate === null ? (
+                {zapError !== null ? (
+                  <AlertWarning>{zapError}</AlertWarning>
+                ) : zapEstimate === null ? (
                   <Loader message={'Loading swap estimate...'} line={true} />
                 ) : (
                   <ol className={classes.ol}>
@@ -182,6 +191,7 @@ export const FeeBreakdown = memo(
                           valueTo: zapEstimate.amountOut.decimalPlaces(6),
                           tokenTo: zapEstimate.tokenOut.symbol,
                           slippageTolerancePercentage: slippageTolerance * 100,
+                          priceImpact: formatPercent(-zapEstimate.priceImpact, 2, '0%'),
                         })}
                       </li>
                     )}

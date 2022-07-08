@@ -120,7 +120,7 @@ const theme = createTheme({
     text: {
       primary: '#F5F5FF',
       secondary: '#D0D0DA',
-      disabled: '#8A8EA8',
+      disabled: '#999CB3',
     },
   },
   typography: {
@@ -169,6 +169,33 @@ const theme = createTheme({
     },
   },
   overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        ':root': {
+          '--onboard-font-family-normal': 'DM Sans',
+          '--onboard-font-family-semibold': 'DM Sans',
+          '--onboard-font-family-light': 'DM Sans',
+          '--onboard-modal-z-index': '1',
+          '--onboard-modal-backdrop': 'rgba(255,255,255,0.2)',
+          '--onboard-modal-border-radius': '20px',
+          '--onboard-wallet-button-border-radius': '8px',
+          '--onboard-connect-header-background': '#111321',
+          '--onboard-connect-header-color': '#F5F5FF',
+          '--onboard-modal-background': '#232743',
+          '--onboard-main-scroll-container-background': '#232743',
+          '--onboard-close-button-background': '#111321',
+          '--onboard-close-button-color': '#8A8EA8',
+          '--onboard-wallet-button-border-color': '#2D3153',
+          '--onboard-wallet-button-background': '#2D3153',
+          '--onboard-wallet-button-color': '#D0D0DA',
+          '--onboard-wallet-button-background-hover': 'rgba(245, 245, 255, 0.08)',
+          '--onboard-wallet-app-icon-border-color': '#fff',
+          '--onboard-wallet-app-icon-background-transparent': '#fff',
+          '--onboard-connect-sidebar-background': '#121212',
+          '--onboard-connect-sidebar-color': '#F5F5FF',
+        },
+      },
+    },
     MuiInputBase: {
       input: fontStyles['body-lg-med'],
     },

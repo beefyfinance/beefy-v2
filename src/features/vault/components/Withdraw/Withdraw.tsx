@@ -11,7 +11,7 @@ import {
 import BigNumber from 'bignumber.js';
 import clsx from 'clsx';
 import { isArray } from 'lodash';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
@@ -61,6 +61,7 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 
 const useStyles = makeStyles(styles);
 
@@ -78,6 +79,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const walletAddress = useAppSelector(state =>
     selectIsWalletKnown(state) ? selectWalletAddress(state) : null
   );
+  const [priceImpactDisableWithdraw, setPriceImpactDisableWithdraw] = useState(false);
 
   // initialize our form
   React.useEffect(() => {
@@ -143,6 +145,13 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   });
   const displayBoostWidget = useAppSelector(state =>
     selectShouldDisplayBoostWidget(state, vaultId)
+  );
+
+  const handlePriceImpactConfirm = useCallback<ZapPriceImpactProps['onChange']>(
+    shouldDisable => {
+      setPriceImpactDisableWithdraw(shouldDisable);
+    },
+    [setPriceImpactDisableWithdraw]
   );
 
   const handleWithdraw = () => {
@@ -212,7 +221,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     }
 
     steps.push({
-      step: 'claim',
+      step: 'claim-gov',
       message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
       action: walletActions.claimGovVault(vault),
       pending: false,
@@ -452,10 +461,12 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           vault={vault}
           slippageTolerance={formState.slippageTolerance}
           zapEstimate={formState.zapEstimate}
+          zapError={formState.zapError}
           isZapSwap={formState.isZapSwap}
           isZap={formState.isZap}
           type={'withdraw'}
         />
+        <ZapPriceImpact mode={'withdraw'} onChange={handlePriceImpactConfirm} />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
           <ScreamAvailableLiquidity vaultId={vaultId} />
@@ -504,7 +515,11 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                     onClick={handleWithdraw}
                     className={classes.btnSubmit}
                     fullWidth={true}
-                    disabled={formState.amount.isLessThanOrEqualTo(0) || !formReady}
+                    disabled={
+                      formState.amount.isLessThanOrEqualTo(0) ||
+                      !formReady ||
+                      priceImpactDisableWithdraw
+                    }
                   >
                     {isZapEstimateLoading
                       ? t('Zap-Estimating')

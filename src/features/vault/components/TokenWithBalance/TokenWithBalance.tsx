@@ -31,7 +31,7 @@ export function TokenWithBalance({
 
   return (
     <Box className={classes.balanceContainer}>
-      <Box lineHeight={0}>
+      <Box>
         <AssetsImage
           chainId={vault.chainId}
           assetIds={token.address === depositToken.address ? vault.assetIds : [token.id]}

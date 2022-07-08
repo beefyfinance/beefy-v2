@@ -18,9 +18,13 @@
     "@reduxjs/toolkit": "^1.8.1",
     "@transak/transak-sdk": "^1.0.31",
     "@walletconnect/web3-provider": "^1.4.1",
+    "@web3-onboard/coinbase": "^2.0.5",
+    "@web3-onboard/core": "^2.4.0-alpha.2",
+    "@web3-onboard/injected-wallets": "^2.0.10",
+    "@web3-onboard/walletconnect": "^2.0.3",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
-    "blockchain-addressbook": "^0.35.4",
+    "blockchain-addressbook": "^0.35.5",
     "chokidar": "^3.5.2",
     "clsx": "^1.1.1",
     "deficonnect": "^1.1.5",
@@ -49,8 +53,7 @@
     "redux-thunk": "^2.3.0",
     "siema": "^1.5.1",
     "web-vitals": "^0.2.4",
-    "web3": "^1.7.0",
-    "web3modal": "^1.9.3"
+    "web3": "^1.7.0"
   },
   "resolutions": {
     "web3": "^1.7.0",

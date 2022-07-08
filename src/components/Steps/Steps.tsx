@@ -103,7 +103,8 @@ const _Steps = ({
                     t('Claim-Unstake-Done')}
                   {steps.items[steps.currentStep].step === 'stake' && t('Stake-Done')}
                   {steps.items[steps.currentStep].step === 'unstake' && t('Unstake-Done')}
-                  {steps.items[steps.currentStep].step === 'claim' && t('Claim-Done')}
+                  {steps.items[steps.currentStep].step === 'claim-boost' && t('Claim-Done')}
+                  {steps.items[steps.currentStep].step === 'claim-gov' && t('Claim-Done')}
                   {steps.items[steps.currentStep].step === 'mint' && t('Mint-Done')}
                   {steps.items[steps.currentStep].step === 'burn' && t('Burn-Done')}
                   {steps.items[steps.currentStep].step === 'bridge' &&
@@ -228,15 +229,21 @@ const _Steps = ({
                     </Box>
                   </>
                 )}
-              {steps.items[steps.currentStep].step === 'claim' &&
+              {(steps.items[steps.currentStep].step === 'claim-boost' ||
+                steps.items[steps.currentStep].step === 'claim-gov') &&
                 walletActionsState.result === 'success' && (
                   <>
                     <Box className={clsx(classes.content, classes.successContent)}>
                       <div className={classes.message}>
-                        {t('Transactn-Claimed', {
-                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
-                          token: walletActionsState.data.token.symbol,
-                        })}
+                        {t(
+                          steps.items[steps.currentStep].step === 'claim-boost'
+                            ? 'Transactn-Claimed-Boost'
+                            : 'Transactn-Claimed-Gov',
+                          {
+                            amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                            token: walletActionsState.data.token.symbol,
+                          }
+                        )}
                       </div>
                       <TransactionLink chainId={chainId} />
                     </Box>
