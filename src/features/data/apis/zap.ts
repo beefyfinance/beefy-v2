@@ -39,6 +39,7 @@ export interface ZapOptions {
   router: string;
   tokens: TokenEntity[];
   withdrawEstimateMode: ZapConfig['withdrawEstimateMode'];
+  withdrawEstimateFee: ZapConfig['withdrawEstimateFee'];
   lpProviderFee: ZapConfig['lpProviderFee'];
 }
 
@@ -108,6 +109,7 @@ export function getEligibleZapOptions(
     router: zap.ammRouter,
     tokens: zapTokens,
     withdrawEstimateMode: zap.withdrawEstimateMode || 'getAmountOut',
+    withdrawEstimateFee: zap.withdrawEstimateFee || '0',
     lpProviderFee: zap.lpProviderFee || 0,
   };
   zapOptionsCache[vaultId] = zapOptions;
@@ -368,17 +370,38 @@ export const estimateZapWithdraw = async (
 
   // getAmountsOut vs getAmountOut
   let amountOut;
-  if (zapOptions.withdrawEstimateMode === 'getAmountsOut') {
-    const amountsOut = await routerContract.methods
-      .getAmountsOut(amountIn.toString(10), [tokenIn.address, tokenOutAddress])
-      .call();
-    amountOut = new BigNumber(amountsOut[1]);
-  } else {
-    amountOut = new BigNumber(
-      await routerContract.methods
-        .getAmountOut(amountIn.toString(10), reserveIn.toString(10), reserveOut.toString(10))
-        .call()
-    );
+  switch (zapOptions.withdrawEstimateMode) {
+    // getAmountOut with static fee param
+    case 'getAmountOutWithFee': {
+      amountOut = new BigNumber(
+        await routerContract.methods
+          .getAmountOut(
+            amountIn.toString(10),
+            reserveIn.toString(10),
+            reserveOut.toString(10),
+            zapOptions.withdrawEstimateFee
+          )
+          .call()
+      );
+      break;
+    }
+    // getAmountsOut: takes a path
+    case 'getAmountsOut': {
+      const amountsOut = await routerContract.methods
+        .getAmountsOut(amountIn.toString(10), [tokenIn.address, tokenOutAddress])
+        .call();
+      amountOut = new BigNumber(amountsOut[1]);
+      break;
+    }
+    // getAmountOut: no fee param needed
+    default: {
+      amountOut = new BigNumber(
+        await routerContract.methods
+          .getAmountOut(amountIn.toString(10), reserveIn.toString(10), reserveOut.toString(10))
+          .call()
+      );
+      break;
+    }
   }
 
   return {

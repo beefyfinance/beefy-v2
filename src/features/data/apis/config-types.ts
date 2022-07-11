@@ -119,7 +119,8 @@ export interface ZapConfig {
   ammRouter: string;
   ammFactory: string;
   ammPairInitHash: string;
-  withdrawEstimateMode?: 'getAmountOut' | 'getAmountsOut';
+  withdrawEstimateMode?: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
+  withdrawEstimateFee?: string;
   lpProviderFee: number;
 }
 
