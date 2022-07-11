@@ -28,7 +28,7 @@
     "tokenAddress": "0x9C8a59934fbA9aF82674EFf5D13a24e7c7E7A1f1",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "earnedToken": "mooVelodromeWBTC-USDC",
+    "earnedToken": "mooVelodromePERP-USDC",
     "earnedTokenAddress": "0x0Fb22A54A749C3bABeEd908e04A99d27725A2FAe",
     "earnContractAddress": "0x0Fb22A54A749C3bABeEd908e04A99d27725A2FAe",
     "oracle": "lps",
