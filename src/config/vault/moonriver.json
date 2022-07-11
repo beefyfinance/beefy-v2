@@ -463,7 +463,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-frax-usdc",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["FRAX", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
@@ -492,7 +492,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-eth-wmovr",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["ETH", "WMOVR_SUSHI"],
     "strategyTypeId": "lp",
     "risks": [
@@ -521,7 +521,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-usdt-usdc",
     "status": "active",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
@@ -640,7 +640,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-mim-wmovr",
     "status": "eol",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["MIM", "WMOVR_SUSHI"],
     "strategyTypeId": "lp",
     "risks": [
@@ -672,7 +672,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-eth-bnb",
     "status": "eol",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["ETH", "BNBbsc"],
     "strategyTypeId": "lp",
     "risks": [
@@ -703,7 +703,7 @@
     "oracle": "lps",
     "oracleId": "sushi-mr-eth-dai",
     "status": "eol",
-    "platformId": "sushi",
+    "platformId": "sushiswap",
     "assets": ["ETH", "DAI"],
     "strategyTypeId": "lp",
     "risks": [
