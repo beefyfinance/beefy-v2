@@ -16,6 +16,10 @@
     "name": "Single Staking"
   },
   {
+    "id":"single-lp",
+    "name":"Single LP"
+  },
+  {
     "id": "maxi",
     "name": "Beefy Maxi"
   }
