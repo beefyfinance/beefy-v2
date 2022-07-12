@@ -263,7 +263,7 @@ export async function estimateZapDeposit(
   const [reserves0, reserves1] = Object.values(pair.reserves)
     .slice(0, 2)
     .map(amount => new BigNumber(amount));
-  const reserveIn = tokenIn.address.toLowerCase() === token0.toLowerCase() ? reserves0 : reserves1;
+  const reserveIn = tokenInAddress.toLowerCase() === token0.toLowerCase() ? reserves0 : reserves1;
   const [swapAmountIn, swapAmountOut] = Object.values(zap.estimate)
     .slice(0, 2)
     .map(amount => new BigNumber(amount));
