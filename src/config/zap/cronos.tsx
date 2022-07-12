@@ -15,4 +15,12 @@ export const zaps = [
     ammPairInitHash: '0xc93158cffa5b575e32566e81e847754ce517f8fa988d3e25cf346d916216e06f',
     lpProviderFee: 0.0025,
   },
+  {
+    // MMF
+    zapAddress: '0x2Bfc16dAa716cdAF0510DCf4156B326aa5244CF6',
+    ammRouter: '0x145677FC4d9b8F19B5D56d1820c48e0443049a30',
+    ammFactory: '0xd590cC180601AEcD6eeADD9B7f2B7611519544f4',
+    ammPairInitHash: '0xc93158cffa5b575e32566e81e847754ce517f8fa988d3e25cf346d916216e06f',
+    lpProviderFee: 0.1,
+  },
 ];
