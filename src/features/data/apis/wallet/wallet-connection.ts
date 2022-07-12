@@ -57,7 +57,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
           label: 'CDC DeFi App',
           injectedNamespace: InjectedNameSpace.Ethereum,
           checkProviderIdentity: ({ provider }) =>
-            // Injected from App: DeFi app is fork of trust wallet (currently does not define window.trust where as TW does)
+            // Injected from App: DeFi app is fork of trust wallet
             !!provider && !!provider['isTrust'] && !('trust' in window),
           getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
           getInterface: async () => ({ provider: (window as any).ethereum }),
