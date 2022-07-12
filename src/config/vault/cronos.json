@@ -1377,7 +1377,7 @@
     ],
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
-    "createdAt": 1657534887,
+    "createdAt": 1657602778,
     "network": "cronos"
   },
   {
@@ -1406,7 +1406,7 @@
     ],
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
-    "createdAt": 1657538958,
+    "createdAt": 1657602778,
     "network": "cronos"
   }
 ]

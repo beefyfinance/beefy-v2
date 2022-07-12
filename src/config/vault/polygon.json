@@ -7618,7 +7618,7 @@
     "tokenAddress": "0x07D53b147eF96FAD1896D1156755A9Da7E06098E",
     "tokenDecimals": 18,
     "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickTUSD-USDC",
+    "earnedToken": "mooQuickSwapMATIC-PAE",
     "earnedTokenAddress": "0x6dB1f01b58485234e5433fBe01398120701a3D4F",
     "earnContractAddress": "0x6dB1f01b58485234e5433fBe01398120701a3D4F",
     "oracle": "lps",
@@ -7639,7 +7639,7 @@
     "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
-    "createdAt": 1657550815,
+    "createdAt": 1657602777,
     "network": "polygon"
   }
 ]
