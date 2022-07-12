@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_ripae-scro-cro-ripae",
+    "poolId": "ripae-scro-cro",
+    "name": "Ripae",
+    "assets": ["sCRO", "CRO"],
+    "tokenAddress": "0xEaa2Ce6351d803456235809D82357ED8D23E8502",
+    "earnedToken": "sCRO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
+    "earnContractAddress": "0x657cc938053126FA29d9dBCb347f37807005b4F1",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "sCRO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["ripae"]
+  },
+  {
     "id": "moo_vvs-cro-btc-liquidus",
     "poolId": "vvs-cro-btc",
     "name": "Liquidus",
