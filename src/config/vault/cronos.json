@@ -1350,5 +1350,63 @@
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x87EFB3ec1576Dec8ED47e58B832bEdCd86eE186e",
     "createdAt": 1657018675,
     "network": "cronos"
+  },
+  {
+    "id": "ripae-pcro-cro",
+    "name": "pCRO-CRO",
+    "token": "pCRO-CRO LP",
+    "tokenAddress": "0xB0dC8B777DD82a951D688f8E5Dc4EBcB42D57C75",
+    "tokenDecimals": 18,
+    "tokenProviderId": "mmf",
+    "earnedToken": "mooRipaepCRO-CRO",
+    "earnedTokenAddress": "0xa252f912646566df76Dfac6Efe5f69bd771Eb497",
+    "earnContractAddress": "0xa252f912646566df76Dfac6Efe5f69bd771Eb497",
+    "oracle": "lps",
+    "oracleId": "ripae-pcro-cro",
+    "status": "active",
+    "platformId": "ripae",
+    "assets": ["pCRO", "CRO"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
+    "addLiquidityUrl": "https://mm.finance/add/CRO/0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
+    "createdAt": 1657534887,
+    "network": "cronos"
+  },
+  {
+    "id": "ripae-scro-cro",
+    "name": "sCRO-CRO",
+    "token": "sCRO-CRO LP",
+    "tokenAddress": "0xBa11E930e37721c91ea55fAA7BC2EcEfA05D1436",
+    "tokenDecimals": 18,
+    "tokenProviderId": "mmf",
+    "earnedToken": "mooRipaesCRO-CRO",
+    "earnedTokenAddress": "0xEaa2Ce6351d803456235809D82357ED8D23E8502",
+    "earnContractAddress": "0xEaa2Ce6351d803456235809D82357ED8D23E8502",
+    "oracle": "lps",
+    "oracleId": "ripae-scro-cro",
+    "status": "active",
+    "platformId": "ripae",
+    "assets": ["sCRO", "CRO"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
+    "addLiquidityUrl": "https://mm.finance/add/CRO/0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
+    "createdAt": 1657538958,
+    "network": "cronos"
   }
 ]
