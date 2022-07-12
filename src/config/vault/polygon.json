@@ -7610,5 +7610,36 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2e1AD108fF1D8C782fcBbB89AAd783aC49586756",
     "createdAt": 1654783257,
     "network": "polygon"
+  },
+  {
+    "id": "quick-matic-pae",
+    "name": "PAE-MATIC LP",
+    "token": "PAE-MATIC LP",
+    "tokenAddress": "0x07D53b147eF96FAD1896D1156755A9Da7E06098E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "quickswap",
+    "earnedToken": "mooQuickSwapMATIC-PAE",
+    "earnedTokenAddress": "0x6dB1f01b58485234e5433fBe01398120701a3D4F",
+    "earnContractAddress": "0x6dB1f01b58485234e5433fBe01398120701a3D4F",
+    "oracle": "lps",
+    "oracleId": "quick-matic-pae",
+    "status": "active",
+    "platformId": "quickswap",
+    "assets": ["MATIC", "PAE"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MICRO",
+      "IL_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
+    "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
+    "createdAt": 1657602777,
+    "network": "polygon"
   }
 ]
