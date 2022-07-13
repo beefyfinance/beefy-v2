@@ -60,6 +60,35 @@
     "network": "bsc"
   },
   {
+    "id": "baby-wbnb-busd",
+    "name": "BUSD-BNB LP",
+    "token": "BUSD-BNB LP",
+    "tokenAddress": "0xDF84C66E5c1E01Dc9CBcbBB09F4cE2A1De6641D6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "babyswap",
+    "earnedToken": "mooBabyBUSD-BNB",
+    "earnedTokenAddress": "0xBe63A1958dB92D66aB63471e949d059E6A2e47D6",
+    "earnContractAddress": "0xBe63A1958dB92D66aB63471e949d059E6A2e47D6",
+    "oracle": "lps",
+    "oracleId": "baby-wbnb-busd",
+    "status": "active",
+    "platformId": "babyswap",
+    "assets": ["BUSD", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "network": "bsc",
+    "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/BNB/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "createdAt": 1622825225
+  },
+  {
     "id": "biswap-sand-usdt",
     "name": "SAND-USDT LP",
     "token": "SAND-USDT BiLP",
