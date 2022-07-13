@@ -60,6 +60,35 @@
     "network": "bsc"
   },
   {
+    "id": "baby-usdc-wbnb",
+    "name": "USDC-BNB LP",
+    "token": "USDC-BNB LP",
+    "tokenAddress": "0xBF83cA11aBC62447226F6b3566918d3594bA3803",
+    "tokenDecimals": 18,
+    "tokenProviderId": "babyswap",
+    "earnedToken": "mooBabyUSDC-BNB",
+    "earnedTokenAddress": "0xD5f6E840b963386Ddfa773CA7B60f779eF2F4e3f",
+    "earnContractAddress": "0xD5f6E840b963386Ddfa773CA7B60f779eF2F4e3f",
+    "oracle": "lps",
+    "oracleId": "baby-usdc-wbnb",
+    "status": "active",
+    "platformId": "babyswap",
+    "assets": ["USDC", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "network": "bsc",
+    "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d/BNB",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    "createdAt": 1657740455
+  },
+  {
     "id": "baby-wbnb-busd",
     "name": "BUSD-BNB LP",
     "token": "BUSD-BNB LP",
