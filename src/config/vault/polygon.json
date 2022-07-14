@@ -28,6 +28,36 @@
     "createdAt": 1621450869
   },
   {
+    "id": "curve-matic-stmatic",
+    "name": "stMATIC-MATIC",
+    "token": "stMATIC-f",
+    "tokenAddress": "0xe7CEA2F6d7b120174BF3A9Bc98efaF1fF72C997d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurvestMATIC-MATIC",
+    "earnedTokenAddress": "0xE0570ddFca69E5E90d83Ea04bb33824D3BbE6a85",
+    "earnContractAddress": "0xE0570ddFca69E5E90d83Ea04bb33824D3BbE6a85",
+    "oracle": "lps",
+    "oracleId": "curve-matic-stmatic",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["stMATIC", "MATIC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/deposit",
+    "network": "polygon",
+    "createdAt": 1657818272
+  },
+  {
     "id": "solace-polygon-solace",
     "name": "SOLACE",
     "token": "SOLACE",
