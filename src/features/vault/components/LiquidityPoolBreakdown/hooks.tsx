@@ -1,15 +1,20 @@
 import { useAppSelector } from '../../../../store';
-import { selectTokenByAddress, selectTokenPriceByAddress } from '../../../data/selectors/tokens';
+import {
+  selectTokenByAddress,
+  selectTokenPriceByAddress,
+  selectLpBreakdownByAddress,
+} from '../../../data/selectors/tokens';
 import { useMemo } from 'react';
 import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number';
 import { CalculatedBreakdownData } from './types';
-import { TokenLpBreakdown } from '../../../data/entities/token';
+import { TokenEntity, TokenLpBreakdown } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import {
   selectGovVaultUserStackedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
 } from '../../../data/selectors/balance';
 import { BigNumber } from 'bignumber.js';
+import { BeefyState } from '../../../../redux-types';
 
 export const chartColors = [
   '#D9E7F2',
@@ -20,6 +25,62 @@ export const chartColors = [
   '#1d4159',
   '#152e3f',
 ];
+
+type TokenAmounts = TokenEntity & {
+  totalAmount: BigNumber;
+  userAmount: BigNumber;
+  oneAmount: BigNumber;
+  totalValue: BigNumber;
+  userValue: BigNumber;
+  oneValue: BigNumber;
+  price: BigNumber;
+  color: string;
+};
+
+function getTokenAmounts(
+  state: BeefyState,
+  chainId: string,
+  breakdown: TokenLpBreakdown,
+  userShareOfPool: BigNumber,
+  oneLpShareOfPool: BigNumber
+): TokenAmounts[] {
+  return breakdown.tokens.flatMap((tokenAddress, i) => {
+    let reserves = new BigNumber(breakdown.balances[i]);
+    const assetToken = selectTokenByAddress(state, chainId, tokenAddress);
+    const valuePerDecimal = selectTokenPriceByAddress(state, chainId, tokenAddress);
+    const totalValue = reserves.multipliedBy(valuePerDecimal);
+
+    const subBreakdown = selectLpBreakdownByAddress(state, chainId, tokenAddress);
+    if (subBreakdown) {
+      const subPoolTotalSupply = new BigNumber(subBreakdown.totalSupply);
+      const adjustedSubBreakdown = {
+        ...subBreakdown,
+        balances: subBreakdown.balances.map(b =>
+          new BigNumber(b).multipliedBy(reserves).dividedBy(subPoolTotalSupply).toString()
+        ),
+      };
+      return getTokenAmounts(
+        state,
+        chainId,
+        adjustedSubBreakdown,
+        userShareOfPool,
+        oneLpShareOfPool
+      );
+    }
+
+    return {
+      ...assetToken,
+      totalAmount: reserves,
+      userAmount: userShareOfPool.multipliedBy(reserves),
+      oneAmount: oneLpShareOfPool.multipliedBy(reserves),
+      totalValue,
+      userValue: userShareOfPool.multipliedBy(totalValue),
+      oneValue: oneLpShareOfPool.multipliedBy(totalValue),
+      price: valuePerDecimal,
+      color: chartColors[i % chartColors.length],
+    };
+  });
+}
 
 export function useCalculatedBreakdown(
   vault: VaultEntity,
@@ -43,24 +104,7 @@ export function useCalculatedBreakdown(
     : BIG_ZERO;
 
   const assetsTemp = useAppSelector(state =>
-    breakdown.tokens.map((tokenAddress, i) => {
-      const reserves = new BigNumber(breakdown.balances[i]);
-      const assetToken = selectTokenByAddress(state, vault.chainId, tokenAddress);
-      const valuePerDecimal = selectTokenPriceByAddress(state, vault.chainId, tokenAddress);
-      const totalValue = reserves.multipliedBy(valuePerDecimal);
-
-      return {
-        ...assetToken,
-        totalAmount: reserves,
-        userAmount: userShareOfPool.multipliedBy(reserves),
-        oneAmount: oneLpShareOfPool.multipliedBy(reserves),
-        totalValue,
-        userValue: userShareOfPool.multipliedBy(totalValue),
-        oneValue: oneLpShareOfPool.multipliedBy(totalValue),
-        price: valuePerDecimal,
-        color: chartColors[i % chartColors.length],
-      };
-    })
+    getTokenAmounts(state, vault.chainId, breakdown, userShareOfPool, oneLpShareOfPool)
   );
 
   const totalValue = useMemo(() => {
