@@ -22,7 +22,6 @@ export const zaps = [
     ammFactory: '0xd590cC180601AEcD6eeADD9B7f2B7611519544f4',
     ammPairInitHash: '0x7ae6954210575e79ea2402d23bc6a59c4146a6e6296118aa8b99c747afec8acf',
     lpProviderFee: 0.0017,
-    withdrawEstimateMode: 'getAmountOutWithFee',
-    withdrawEstimateFee: '17',
+    withdrawEstimateMode: 'getAmountsOut',
   },
 ];

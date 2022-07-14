@@ -27,6 +27,36 @@
     "network": "polygon",
     "createdAt": 1621450869
   },
+  {    
+    "id": "curve-matic-stmatic",
+    "name": "stMATIC-MATIC",
+    "token": "stMATIC-f",
+    "tokenAddress": "0xe7CEA2F6d7b120174BF3A9Bc98efaF1fF72C997d",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurvestMATIC-MATIC",
+    "earnedTokenAddress": "0xE0570ddFca69E5E90d83Ea04bb33824D3BbE6a85",
+    "earnContractAddress": "0xE0570ddFca69E5E90d83Ea04bb33824D3BbE6a85",
+    "oracle": "lps",
+    "oracleId": "curve-matic-stmatic",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["stMATIC", "MATIC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+      ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/deposit",
+    "network": "polygon",
+    "createdAt": 1657818272
+  },
   {
     "id": "balancer-matic-usdc-eth-bal",
     "name": "MATIC/USDC/ETH/BAL",
@@ -624,6 +654,14 @@
     "strategyTypeId": "lp",
     "depositFee": "0.5%",
     "withdrawalFee": "0%",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x580A84C73811E1839F75d86d75d88cCa0c241fF4/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
     "network": "polygon",
