@@ -7955,5 +7955,35 @@
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11&outputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d",
     "createdAt": 1654075781,
     "network": "fantom"
+  },
+  {
+    "id": "boo-wftm-galcx",
+    "name": "gALCX-FTM LP",
+    "token": "gALCX-FTM LP",
+    "tokenAddress": "0xD5b545e788370aC454BfA765e7875A3a2253cC3b",
+    "tokenDecimals": 18,
+    "tokenProviderId": "spookyswap",
+    "earnedToken": "mooBooFTM-gALCX",
+    "earnedTokenAddress": "0xcdFD0c2b72fE722712C4002a09f748445c3D51ab",
+    "earnContractAddress": "0xcdFD0c2b72fE722712C4002a09f748445c3D51ab",
+    "oracle": "lps",
+    "oracleId": "boo-wftm-galcx",
+    "status": "active",
+    "platformId": "spookyswap",
+    "assets": ["gALCX", "FTM"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://spooky.fi/#/add/FTM/0x70F9fd19f857411b089977E7916c05A0fc477Ac9",
+    "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x70F9fd19f857411b089977E7916c05A0fc477Ac9",
+    "network": "fantom",
+    "createdAt": 1657655782
   }
 ]
