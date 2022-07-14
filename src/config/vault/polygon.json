@@ -27,7 +27,7 @@
     "network": "polygon",
     "createdAt": 1621450869
   },
-  {    
+  {
     "id": "curve-matic-stmatic",
     "name": "stMATIC-MATIC",
     "token": "stMATIC-f",
@@ -51,7 +51,7 @@
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
-      ],
+    ],
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/deposit",
     "network": "polygon",
@@ -71,7 +71,7 @@
     "oracleId": "balancer-matic-usdc-eth-bal",
     "status": "active",
     "platformId": "balancer",
-    "assets": ["MATIC", "USDC", "ETH", "BAL"],
+    "assets": ["WMATIC", "USDC", "ETH", "BAL"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -100,7 +100,7 @@
     "oracleId": "balancer-usdc-link-eth-bal-aave",
     "status": "active",
     "platformId": "balancer",
-    "assets": ["USDC","LINK", "ETH", "BAL", "AAVE"],
+    "assets": ["USDC", "LINK", "ETH", "BAL", "AAVE"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
