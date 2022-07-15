@@ -192,7 +192,6 @@ export const config = {
       'UST',
       'asUSDC',
       'LAMBDA',
-      'DEI',
       'sfUSDC',
       'USTw',
       'USTaxl',
