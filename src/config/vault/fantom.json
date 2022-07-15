@@ -6467,8 +6467,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_SMALL",
+      "ALGO_STABLE",
+      "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
