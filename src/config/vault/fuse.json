@@ -57,7 +57,7 @@
     "createdAt": 1641908745
   },
   {
-    "id": "sushi-wfuse-weth",
+    "id": "sushi-fuse-wfuse-weth",
     "name": "WETH-FUSE LP",
     "token": "WETH-FUSE SLP",
     "tokenAddress": "0x90c3bA00d2F7F15Cd9FDE087538be3A2865E7E2F",
@@ -67,7 +67,7 @@
     "earnedTokenAddress": "0xd4E241053314254e62050aDC84B271F9d2164a16",
     "earnContractAddress": "0xd4E241053314254e62050aDC84B271F9d2164a16",
     "oracle": "lps",
-    "oracleId": "sushi-wfuse-weth",
+    "oracleId": "sushi-fuse-wfuse-weth",
     "withdrawalFee": "0%",
     "status": "active",
     "platformId": "sushiswap",
@@ -87,7 +87,7 @@
     "createdAt": 1643414500
   },
   {
-    "id": "sushi-wfuse-usdc",
+    "id": "sushi-fuse-wfuse-usdc",
     "name": "FUSE-USDC LP",
     "token": "FUSE-USDC LP",
     "tokenAddress": "0xba9CA720e314F42E17E80991c1d0AFfE47387108",
@@ -97,7 +97,7 @@
     "earnedTokenAddress": "0x87FFA2E1D232d5B98fd4366C311b568c022aE650",
     "earnContractAddress": "0x87FFA2E1D232d5B98fd4366C311b568c022aE650",
     "oracle": "lps",
-    "oracleId": "sushi-wfuse-usdc",
+    "oracleId": "sushi-fuse-wfuse-usdc",
     "withdrawalFee": "0%",
     "status": "active",
     "platformId": "sushiswap",
