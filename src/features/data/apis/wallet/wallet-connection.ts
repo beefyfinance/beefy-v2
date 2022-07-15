@@ -198,9 +198,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       })),
       accountCenter: {
         desktop: {
+          containerElement: 'body',
           enabled: false,
         },
         mobile: {
+          containerElement: 'body',
           enabled: false,
         },
       },
