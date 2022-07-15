@@ -60,9 +60,9 @@
     "network": "bsc"
   },
   {
-    "id": "baby-busd-usdt",
-    "name": "BUSD-USDT LP",
-    "token": "BUSD-USDT LP",
+    "id": "baby-usdt-busd",
+    "name": "USDT-BUSD LP",
+    "token": "USDT-BUSD BLP",
     "tokenAddress": "0x249cd054697f41d73F1A81fa0F5279fcce3cF70c",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -70,10 +70,10 @@
     "earnedTokenAddress": "0xC1E5c015a603e890A0B175aaBd8A329006Cf0c91",
     "earnContractAddress": "0xC1E5c015a603e890A0B175aaBd8A329006Cf0c91",
     "oracle": "lps",
-    "oracleId": "baby-busd-usdt",
+    "oracleId": "baby-usdt-busd",
     "status": "active",
     "platformId": "babyswap",
-    "assets": ["BUSD", "USDT"],
+    "assets": ["USDT", "BUSD"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
