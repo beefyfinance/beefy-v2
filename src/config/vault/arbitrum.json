@@ -56,7 +56,7 @@
     ],
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x5a5884fc31948d59df2aeccca143de900d49e1a300000000000000000000006f",
     "network": "arbitrum",
-    "createdAt": 1657812639
+    "createdAt": 1657818273
   },
   {
     "id": "balancer-bal-eth",
@@ -84,7 +84,7 @@
     ],
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0xcc65a812ce382ab909a11e434dbf75b34f1cc59d000200000000000000000001",
     "network": "arbitrum",
-    "createdAt": 1657792354
+    "createdAt": 1657818274
   },
   {
     "id": "balancer-wbtc-eth-usdc",

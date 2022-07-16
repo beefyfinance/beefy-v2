@@ -115,7 +115,7 @@
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/BNB/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    "createdAt": 1657708001
+    "createdAt": 1657740454
   },
   {
     "id": "biswap-sand-usdt",
