@@ -99,7 +99,7 @@
   },
   {
     "id": "moo_bifi-usdc-cafe",
-    "poolId": "sushi-usdc-bifi",
+    "poolId": "sushi-poly-usdc-bifi",
     "name": "CafeSwap",
     "assets": ["BIFI", "USDC"],
     "earnedToken": "pBREW",
@@ -403,7 +403,7 @@
   },
   {
     "id": "moo_sushi-jrt-eth-jarvis",
-    "poolId": "sushi-jrt-eth-eol",
+    "poolId": "sushi-poly-jrt-eth-eol",
     "name": "Jarvis",
     "assets": ["JRT", "ETH"],
     "earnedToken": "JRT-ETH-KPI",
