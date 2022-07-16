@@ -3087,7 +3087,7 @@
     "createdAt": 1642672280
   },
   {
-    "id": "sushi-usdc-wftm",
+    "id": "sushi-ftm-usdc-wftm",
     "name": "USDC-FTM LP",
     "token": "USDC-FTM SuLP",
     "tokenAddress": "0xA48869049e36f8Bfe0Cc5cf655632626988c0140",
@@ -3097,7 +3097,7 @@
     "earnedTokenAddress": "0xb870e4755C737D2753D7298D0e70344077905Ed5",
     "earnContractAddress": "0xb870e4755C737D2753D7298D0e70344077905Ed5",
     "oracle": "lps",
-    "oracleId": "sushi-usdc-wftm",
+    "oracleId": "sushi-ftm-usdc-wftm",
     "status": "active",
     "platformId": "sushiswap",
     "withdrawalFee": "0%",
@@ -3117,7 +3117,7 @@
     "createdAt": 1642944703
   },
   {
-    "id": "sushi-wftm-eth",
+    "id": "sushi-ftm-wftm-eth",
     "name": "ETH-FTM LP",
     "token": "ETH-FTM SuLP",
     "tokenAddress": "0x3d0BD54c48C2C433ea6fed609Cc3d5Fb7A77622B",
@@ -3127,7 +3127,7 @@
     "earnedTokenAddress": "0xd6D138fb65c2a68E728D70EfbAA54c794B73B6A0",
     "earnContractAddress": "0xd6D138fb65c2a68E728D70EfbAA54c794B73B6A0",
     "oracle": "lps",
-    "oracleId": "sushi-wftm-eth",
+    "oracleId": "sushi-ftm-wftm-eth",
     "status": "active",
     "platformId": "sushiswap",
     "withdrawalFee": "0%",
@@ -3147,7 +3147,7 @@
     "createdAt": 1642945488
   },
   {
-    "id": "sushi-fusdt-wftm",
+    "id": "sushi-ftm-fusdt-wftm",
     "name": "fUSDT-FTM LP",
     "token": "fUSDT-FTM SuLP",
     "tokenAddress": "0xd019dd7C760c6431797d6ed170bFFb8FAee11F99",
@@ -3157,7 +3157,7 @@
     "earnedTokenAddress": "0xBfC2C7323739A616f555d4410e4a4bF4Dad89e93",
     "earnContractAddress": "0xBfC2C7323739A616f555d4410e4a4bF4Dad89e93",
     "oracle": "lps",
-    "oracleId": "sushi-fusdt-wftm",
+    "oracleId": "sushi-ftm-fusdt-wftm",
     "status": "active",
     "platformId": "sushiswap",
     "withdrawalFee": "0%",
@@ -3177,7 +3177,7 @@
     "createdAt": 1642946143
   },
   {
-    "id": "sushi-eth-dai",
+    "id": "sushi-ftm-eth-dai",
     "name": "ETH-DAI LP",
     "token": "ETH-DAI SuLP",
     "tokenAddress": "0x71C8BceEcE3dAf9E27741D2Cc1F03170f862555f",
@@ -3187,7 +3187,7 @@
     "earnedTokenAddress": "0x5Ed95BbE1743370f42657e7D8f8E02b4055145EF",
     "earnContractAddress": "0x5Ed95BbE1743370f42657e7D8f8E02b4055145EF",
     "oracle": "lps",
-    "oracleId": "sushi-eth-dai",
+    "oracleId": "sushi-ftm-eth-dai",
     "status": "active",
     "platformId": "sushiswap",
     "withdrawalFee": "0%",
@@ -3208,7 +3208,7 @@
     "createdAt": 1642946550
   },
   {
-    "id": "sushi-usdc-mim",
+    "id": "sushi-ftm-usdc-mim",
     "name": "MIM-USDC LP",
     "token": "MIM-USDC SuLP",
     "tokenAddress": "0xFFdc0531288dc91C1F49Db03A90Ed84725E9eDa7",
@@ -3218,7 +3218,7 @@
     "earnedTokenAddress": "0x8f4F3cF7ECbfbD68DEC61F5F022f5a6655F5E3e0",
     "earnContractAddress": "0x8f4F3cF7ECbfbD68DEC61F5F022f5a6655F5E3e0",
     "oracle": "lps",
-    "oracleId": "sushi-usdc-mim",
+    "oracleId": "sushi-ftm-usdc-mim",
     "status": "active",
     "platformId": "sushiswap",
     "withdrawalFee": "0%",
@@ -3239,7 +3239,7 @@
     "createdAt": 1642946810
   },
   {
-    "id": "sushi-btc-eth",
+    "id": "sushi-ftm-btc-eth",
     "name": "ETH-BTC LP",
     "token": "ETH-BTC SuLP",
     "tokenAddress": "0x33e29a9eBdD370a8D50656e822aBFD3A910dA1b6",
@@ -3249,7 +3249,7 @@
     "earnedTokenAddress": "0x4B541D2D395Cb943111A2a7CA6186f9C2901BAFA",
     "earnContractAddress": "0x4B541D2D395Cb943111A2a7CA6186f9C2901BAFA",
     "oracle": "lps",
-    "oracleId": "sushi-btc-eth",
+    "oracleId": "sushi-ftm-btc-eth",
     "status": "active",
     "platformId": "sushiswap",
     "withdrawalFee": "0.01%",
@@ -3269,7 +3269,7 @@
     "createdAt": 1642947064
   },
   {
-    "id": "sushi-wftm-sushi",
+    "id": "sushi-ftm-wftm-sushi",
     "name": "SUSHI-FTM LP",
     "token": "SUSHI-FTM SuLP",
     "tokenAddress": "0x49D2e0DC99C7358D7A9A8633Bf6df111D0EE7F65",
@@ -3279,7 +3279,7 @@
     "earnedTokenAddress": "0x5D060698F179E7D2233480A44d6D3979e4Ae9e7f",
     "earnContractAddress": "0x5D060698F179E7D2233480A44d6D3979e4Ae9e7f",
     "oracle": "lps",
-    "oracleId": "sushi-wftm-sushi",
+    "oracleId": "sushi-ftm-wftm-sushi",
     "status": "active",
     "platformId": "sushiswap",
     "withdrawalFee": "0%",
@@ -5878,7 +5878,7 @@
     "network": "fantom"
   },
   {
-    "id": "sushi-yfi-eth-eol",
+    "id": "sushi-ftm-yfi-eth-eol",
     "name": "YFI-ETH LP",
     "token": "YFI-ETH SuLP",
     "tokenAddress": "0xe3eD4237532E6095749a6C984bFCb449C2b86122",
@@ -5888,7 +5888,7 @@
     "earnedTokenAddress": "0x38d58bd9E6DCA0bA4B6512db7f98aB37C2b7cEbA",
     "earnContractAddress": "0x38d58bd9E6DCA0bA4B6512db7f98aB37C2b7cEbA",
     "oracle": "lps",
-    "oracleId": "sushi-yfi-eth",
+    "oracleId": "sushi-ftm-yfi-eth",
     "status": "eol",
     "platformId": "sushiswap",
     "withdrawalFee": "0%",
@@ -5908,7 +5908,7 @@
     "createdAt": 1644347692
   },
   {
-    "id": "sushi-wftm-link-eol",
+    "id": "sushi-ftm-wftm-link-eol",
     "name": "LINK-FTM LP",
     "token": "LINK-FTM SuLP",
     "tokenAddress": "0x1Ca86e57103564F47fFCea7259a6ce8Cc1301549",
@@ -5918,7 +5918,7 @@
     "earnedTokenAddress": "0x912d3e6c4d3CE89Ac85e3FbB22631D5E85D5158a",
     "earnContractAddress": "0x912d3e6c4d3CE89Ac85e3FbB22631D5E85D5158a",
     "oracle": "lps",
-    "oracleId": "sushi-wftm-link",
+    "oracleId": "sushi-ftm-wftm-link",
     "status": "eol",
     "platformId": "sushiswap",
     "withdrawalFee": "0%",
