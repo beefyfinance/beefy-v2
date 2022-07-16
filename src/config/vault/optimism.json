@@ -161,7 +161,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
       "MCAP_MICRO",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
@@ -191,7 +191,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
       "MCAP_LARGE",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
@@ -213,12 +213,12 @@
     "earnedTokenAddress": "0xFC7a31e1C5C3846D36E49223fae905E28315c1e0",
     "earnContractAddress": "0xFC7a31e1C5C3846D36E49223fae905E28315c1e0",
     "oracle": "lps",
-    "oracleId": "velodrome-whnd-usdc",
+    "oracleId": "velodrome-hnd-usdc",
     "status": "active",
     "platformId": "velodrome",
     "assets": ["HND", "USDC"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
