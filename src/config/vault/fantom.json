@@ -112,7 +112,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
+    "withdrawalFee": "0%",
     "buyTokenUrl": "https://spooky.fi/#/swap?outputCurrency=0x7381eD41F6dE418DdE5e84B55590422a57917886",
     "createdAt": 1646162527,
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
@@ -869,6 +869,7 @@
     "platformId": "jetswap",
     "assets": ["WBTC", "USDC"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3082,7 +3083,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
+    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://spooky.fi/#/add/0x74b23882a30290451A17c44f4F05243b6b58C76d/0x321162Cd933E2Be498Cd2267a90534A804051b11",
     "buyTokenUrl": "https://spooky.fi/#/swap?inputCurrency=0x74b23882a30290451A17c44f4F05243b6b58C76d&outputCurrency=0x321162Cd933E2Be498Cd2267a90534A804051b11",
     "network": "fantom",

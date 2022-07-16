@@ -312,6 +312,7 @@
     "platformId": "cronaswap",
     "assets": ["CRONA", "CRO"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -342,6 +343,7 @@
     "platformId": "cronaswap",
     "assets": ["USDC", "CRO"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -372,6 +374,7 @@
     "platformId": "cronaswap",
     "assets": ["USDT", "CRO"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -402,6 +405,7 @@
     "platformId": "cronaswap",
     "assets": ["BUSD", "USDT"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -432,6 +436,7 @@
     "platformId": "cronaswap",
     "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -550,6 +555,7 @@
     "platformId": "cronaswap",
     "assets": ["CRONA", "USDC"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -580,6 +586,7 @@
     "platformId": "cronaswap",
     "assets": ["CRONA", "USDT"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -610,6 +617,7 @@
     "platformId": "cronaswap",
     "assets": ["USDC", "DAI"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -703,6 +711,7 @@
     "platformId": "cronaswap",
     "assets": ["WBTC", "ETH"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -733,6 +742,7 @@
     "platformId": "cronaswap",
     "assets": ["ETH", "USDC"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -762,6 +772,7 @@
     "platformId": "cronaswap",
     "assets": ["MATIC", "USDT"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -852,6 +863,7 @@
     "platformId": "cronaswap",
     "assets": ["DAI", "CRO"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -913,6 +925,7 @@
     "platformId": "cronaswap",
     "assets": ["ETH", "CRO"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -943,6 +956,7 @@
     "platformId": "cronaswap",
     "assets": ["FTM", "USDT"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1064,6 +1078,7 @@
     "platformId": "cronaswap",
     "assets": ["BNB", "BUSD"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1094,6 +1109,7 @@
     "platformId": "cronaswap",
     "assets": ["WBTC", "CRO"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1155,6 +1171,7 @@
     "platformId": "cronaswap",
     "assets": ["WBTC", "USDC"],
     "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
