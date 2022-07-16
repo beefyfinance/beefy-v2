@@ -10447,7 +10447,7 @@
     "earnContractAddress": "0x9f3371AA6F7b48485Cb9eb3D6A79ea9298565410",
     "oracle": "lps",
     "oracleId": "cakev2-dar-wbnb",
-    "status": "eol",
+    "status": "active",
     "platformId": "pancakeswap",
     "retireReason": "tvl",
     "assets": ["DAR", "BNB"],
