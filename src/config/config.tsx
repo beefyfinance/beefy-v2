@@ -114,7 +114,7 @@ export const config = {
   polygon: {
     name: 'Polygon',
     chainId: 137,
-    rpc: ['https://rpc.ankr.com/polygon'],
+    rpc: ['https://polygon-rpc.com'],
     explorerUrl: 'https://polygonscan.com',
     multicallAddress: '0xC3821F0b56FA4F4794d5d760f94B812DE261361B',
     fetchContractDataAddress: '0x9e369f477F2009394D947ea7571b1E6582Bb0511',
@@ -128,7 +128,7 @@ export const config = {
         symbol: 'MATIC',
         decimals: 18,
       },
-      rpcUrls: ['https://rpc.ankr.com/polygon'],
+      rpcUrls: ['https://polygon-rpc.com'],
       blockExplorerUrls: ['https://polygonscan.com/'],
     },
     stableCoins: [
