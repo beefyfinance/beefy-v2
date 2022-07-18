@@ -181,6 +181,7 @@ const theme = createTheme({
           '--onboard-wallet-button-border-radius': '8px',
           '--onboard-connect-header-background': '#111321',
           '--onboard-connect-header-color': '#F5F5FF',
+          '--onboard-modal-color': '#F5F5FF',
           '--onboard-modal-background': '#232743',
           '--onboard-main-scroll-container-background': '#232743',
           '--onboard-close-button-background': '#111321',

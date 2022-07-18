@@ -7,7 +7,7 @@
   {
     "id": "babyswap",
     "name": "BabySwap",
-    "filter": false
+    "filter": true
   },
   {
     "id": "apeswap",
