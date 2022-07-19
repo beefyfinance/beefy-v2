@@ -85,7 +85,7 @@
     ],
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x1Fa4a73a3F0133f0025378af00236f3aBDEE5D63/0x55d398326f99059fF775485246999027B3197955",
-    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x1Fa4a73a3F0133f0025378af00236f3aBDEE5D63",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x1Fa4a73a3F0133f0025378af00236f3aBDEE5D63",
     "createdAt": 1657982138
   },
   {
@@ -114,7 +114,7 @@
     ],
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x570A5D26f7765Ecb712C0924E4De545B89fD43dF/0x55d398326f99059fF775485246999027B3197955",
-    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
     "createdAt": 1657981823
   },
   {
@@ -143,7 +143,7 @@
     ],
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x0Eb3a705fc54725037CC9e008bDede697f62F335/0x55d398326f99059fF775485246999027B3197955",
-    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x0Eb3a705fc54725037CC9e008bDede697f62F335",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x0Eb3a705fc54725037CC9e008bDede697f62F335",
     "createdAt": 1657896062
   },
   {
@@ -172,7 +172,7 @@
     ],
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
-    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955",
     "createdAt": 1657896062
   },
   {
@@ -201,7 +201,7 @@
     ],
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d/BNB",
-    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
     "createdAt": 1657740455
   },
   {
@@ -230,7 +230,7 @@
     ],
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/BNB/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "createdAt": 1657708001
   },
   {
