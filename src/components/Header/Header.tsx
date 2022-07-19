@@ -57,9 +57,9 @@ const NavLinks = () => {
   const { t } = useTranslation();
   const classes = useStyles();
   const navLinks = [
-    { title: t('Header-Vote'), path: 'https://vote.beefy.finance/' },
-    { title: t('Header-Stats'), path: 'https://dashboard.beefy.finance/' },
-    { title: t('Header-Blog'), path: 'https://blog.beefy.finance/articles/' },
+    { title: t('Header-Vote'), path: 'https://vote.beefy.finance' },
+    { title: t('Header-Stats'), path: 'https://dashboard.beefy.com' },
+    { title: t('Header-Blog'), path: 'https://beefy.com/articles' },
     { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
   ];
   return (
