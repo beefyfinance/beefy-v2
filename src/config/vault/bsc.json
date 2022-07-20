@@ -60,6 +60,35 @@
     "network": "bsc"
   },
   {
+    "id": "cakev2-ole-busd",
+    "name": "OLE-BUSD LP",
+    "token": "OLE-BUSD LP2",
+    "tokenAddress": "0xe9F369298565B60a0DC19A6fA93cEE934Fd1A58c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooCakeV2OLE-BUSD",
+    "earnedTokenAddress": "0xa2f5e0A3756FD510C9DADe97e7f5985560d98D78",
+    "earnContractAddress": "0xa2f5e0A3756FD510C9DADe97e7f5985560d98D78",
+    "oracle": "lps",
+    "oracleId": "cakev2-ole-busd",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["OLE", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xa865197A84E780957422237B5D152772654341F3",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xa865197A84E780957422237B5D152772654341F3",
+    "network": "bsc",
+    "createdAt": 1658319951
+  },
+  {
     "id": "baby-usdc-wbnb",
     "name": "USDC-BNB LP",
     "token": "USDC-BNB LP",
