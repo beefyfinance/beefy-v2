@@ -20,7 +20,7 @@ const navLinks = [
   },
   {
     title: ['Footer-Blog', 'Header-Blog'],
-    path: 'https://beefy.com/articles',
+    path: 'https://beefy.com/articles/',
   },
   {
     title: ['Footer-Docs', 'Header-Docs'],
@@ -32,7 +32,7 @@ const navLinks = [
   },
   {
     title: 'Footer-MediaKit',
-    path: 'https://beefy.com/media-kit',
+    path: 'https://beefy.com/media-kit/',
   },
 ];
 
