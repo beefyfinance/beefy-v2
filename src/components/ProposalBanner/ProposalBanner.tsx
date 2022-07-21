@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, Container, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { Clear } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
-export const ProposalBanner = () => {
+export const ProposalBanner = memo(function ProposalBanner() {
   const classes = useStyles();
 
   const [showProposalBanner, setShowProposalBanner] = React.useState(() => {
@@ -54,4 +54,4 @@ export const ProposalBanner = () => {
       ) : null}
     </>
   );
-};
+});
