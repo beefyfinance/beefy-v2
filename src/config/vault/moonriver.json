@@ -30,6 +30,36 @@
     "network": "moonriver"
   },
   {
+    "id": "solarbeam-xckbtc-wbtc",
+    "name": "xcKBTC-WBTC LP",
+    "token": "xcKBTC-WBTC LP",
+    "tokenAddress": "0x4F707d051b4b49B63e72Cc671e78E152ec66f2fA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solarbeam",
+    "earnedToken": "mooSolarxcKBTC-WBTC",
+    "earnedTokenAddress": "0xE3A1B5FF0FFf63ff59e0cc22De02638FA6BE2357",
+    "earnContractAddress": "0xE3A1B5FF0FFf63ff59e0cc22De02638FA6BE2357",
+    "oracle": "lps",
+    "oracleId": "solarbeam-xckbtc-wbtc",
+    "status": "active",
+    "platformId": "solarbeam",
+    "assets": ["xcKBTC", "WBTC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0.01%",
+    "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFFFfFfFfF6E528AD57184579beeE00c5d5e646F0",
+    "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/kbtc-btc",
+    "createdAt": 1658316244,
+    "network": "moonriver"
+  },
+  {
     "id": "solarbeam-solar-wmovr",
     "name": "SOLAR-MOVR",
     "token": "SOLAR-MOVR LP",

@@ -30,6 +30,36 @@
     "network": "fuse"
   },
   {
+    "id": "voltagev2-3pool",
+    "name": "USDC/BUSD/USDT",
+    "token": "fuse-3pool",
+    "tokenAddress": "0xa3c1046290B490e629E11AcE35863CB0CAe382aB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "voltage",
+    "earnedToken": "mooVoltage3pool",
+    "earnedTokenAddress": "0x8e4E18Fd60C584945Beb6BA08771520455DfcAE4",
+    "earnContractAddress": "0x8e4E18Fd60C584945Beb6BA08771520455DfcAE4",
+    "oracle": "lps",
+    "oracleId": "voltagev2-3pool",
+    "status": "active",
+    "platformId": "voltage",
+    "assets": ["USDC", "BUSD", "USDT"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "buyTokenUrl": "https://app.voltage.finance/#/swap?outputCurrency=0x620fd5fa44BE6af63715Ef4E65DDFA0387aD13F5",
+    "addLiquidityUrl": "https://app.voltage.finance/#/stablepool/add/0x2a68D7C6Ea986fA06B2665d08b4D08F5e7aF960c",
+    "createdAt": 1658395264,
+    "network": "fuse"
+  },
+  {
     "id": "fuse-fuse",
     "name": "FUSE",
     "token": "FUSE",
