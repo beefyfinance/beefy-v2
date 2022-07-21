@@ -9,24 +9,27 @@ export const ProposalBanner = memo(function ProposalBanner() {
   const classes = useStyles();
 
   const [showProposalBanner, setShowProposalBanner] = React.useState(() => {
-    const storageValue = localStorage.getItem('showProposalBanner');
-    if (storageValue === 'false') {
-      return false;
-    } else {
-      if (storageValue === null) localStorage.setItem('showProposalBanner', 'true');
+    try {
+      const storageValue = localStorage.getItem('hideProposalBanner');
+      return storageValue !== 'true';
+    } catch {
       return true;
     }
   });
 
   const closeBanner = React.useCallback(() => {
-    localStorage.setItem('showProposalBanner', 'false');
     setShowProposalBanner(false);
-  }, []);
+    try {
+      localStorage.setItem('hideProposalBanner', 'true');
+    } catch (error) {
+      // swallow error
+    }
+  }, [setShowProposalBanner]);
 
   return (
     <>
       {showProposalBanner ? (
-        <Box className={classes.container}>
+        <div className={classes.container}>
           <Container maxWidth="lg">
             <Box className={classes.box}>
               <Box className={classes.content}>
@@ -36,21 +39,30 @@ export const ProposalBanner = memo(function ProposalBanner() {
                   alt="snapshot"
                 />
                 <Box>
-                  New proposal is live: [BIP-45] Protocol Sustainability. Cast your
+                  New proposal is live: [BIP-45] Protocol Sustainability. Discuss on{' '}
+                  <a
+                    href="https://discord.gg/dfxjT3rHZB"
+                    target="_blank"
+                    rel="noreferrer"
+                    className={classes.link}
+                  >
+                    Discord
+                  </a>{' '}
+                  and vote on{' '}
                   <a
                     href="https://vote.beefy.finance/#/proposal/0xb070348f6c2cc229f2bcdc0c042077ee8eab4307a307b89537f8a78089b0c2eb"
                     target="_blank"
                     rel="noreferrer"
                     className={classes.link}
                   >
-                    vote!
+                    Snapshot.
                   </a>
                 </Box>
               </Box>
               <Clear onClick={closeBanner} className={classes.cross} />
             </Box>
           </Container>
-        </Box>
+        </div>
       ) : null}
     </>
   );

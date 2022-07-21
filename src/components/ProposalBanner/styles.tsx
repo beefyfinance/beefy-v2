@@ -23,11 +23,10 @@ export const styles = (theme: Theme) => ({
   link: {
     textDecoration: 'none',
     color: theme.palette.primary.main,
-    marginLeft: '3px',
   },
   cross: {
     fill: '#D0D0DA',
-    '&:Hover': {
+    '&:hover': {
       cursor: 'pointer',
     },
   },
