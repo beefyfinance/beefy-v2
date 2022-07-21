@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Box, Container, makeStyles } from '@material-ui/core';
+import { Container, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { Clear } from '@material-ui/icons';
 
@@ -31,14 +31,14 @@ export const ProposalBanner = memo(function ProposalBanner() {
       {showProposalBanner ? (
         <div className={classes.container}>
           <Container maxWidth="lg">
-            <Box className={classes.box}>
-              <Box className={classes.content}>
+            <div className={classes.box}>
+              <div className={classes.content}>
                 <img
                   className={classes.icon}
                   src={require('../../images/snapshot-logo.svg').default}
                   alt="snapshot"
                 />
-                <Box>
+                <div>
                   New proposal is live: [BIP-45] Protocol Sustainability. Discuss on{' '}
                   <a
                     href="https://discord.gg/dfxjT3rHZB"
@@ -57,10 +57,10 @@ export const ProposalBanner = memo(function ProposalBanner() {
                   >
                     Snapshot.
                   </a>
-                </Box>
-              </Box>
+                </div>
+              </div>
               <Clear onClick={closeBanner} className={classes.cross} />
-            </Box>
+            </div>
           </Container>
         </div>
       ) : null}
