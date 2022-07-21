@@ -31,6 +31,36 @@
     "network": "arbitrum"
   },
   {
+    "id": "ripae-peth-weth",
+    "name": "ETH-pETH",
+    "token": "ETH-pETH LP",
+    "tokenAddress": "0xB54B196E9FeCcF364c2281da1E11BC498cB5c1C1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushiswap",
+    "earnedToken": "mooPaeWETHpETH",
+    "earnedTokenAddress": "0x0B7EA1b9fBC9860f4A508E9d0Dde04f2552d2ADE",
+    "earnContractAddress": "0x0B7EA1b9fBC9860f4A508E9d0Dde04f2552d2ADE",
+    "oracle": "lps",
+    "oracleId": "ripae-peth-weth",
+    "status": "active",
+    "platformId": "ripae",
+    "assets": ["ETH", "pETH"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.sushi.com/add/ETH/0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715",
+    "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715&chainId=42161",
+    "network": "arbitrum",
+    "createdAt": 1658431125
+  },
+
+  {
     "id": "balancer-vst-dai-usdt-usdc",
     "name": "VST/DAI/USDT/USDC",
     "token": "VST/DAI/USDT/USDC BPT",
