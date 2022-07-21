@@ -5,7 +5,6 @@ import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpe
 import { BeefyState } from '../../../../redux-types';
 import { initiateWithdrawForm } from '../../actions/withdraw';
 import { fetchEstimateZapWithdraw } from '../../actions/zap';
-import { ZapEstimate, ZapOptions } from '../../apis/zap';
 import { TokenEntity } from '../../entities/token';
 import { isGovVault, VaultEntity } from '../../entities/vault';
 import {
@@ -17,6 +16,7 @@ import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../selectors/vaults';
 import { mooAmountToOracleAmount } from '../../utils/ppfs';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { ZapEstimate, ZapOptions } from '../../apis/zap/zap-types';
 
 // TODO: this looks exactly like the deposit state
 export type WithdrawState = {

@@ -4,13 +4,13 @@ import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpe
 import { BeefyState } from '../../../../redux-types';
 import { initiateDepositForm } from '../../actions/deposit';
 import { fetchEstimateZapDeposit } from '../../actions/zap';
-import { ZapEstimate, ZapOptions } from '../../apis/zap';
 import { TokenEntity } from '../../entities/token';
 import { VaultEntity } from '../../entities/vault';
 import { selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { ZapEstimate, ZapOptions } from '../../apis/zap/zap-types';
 
 // TODO: this looks exactly like the withdraw state
 export type DepositState = {
