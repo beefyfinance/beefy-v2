@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { Container, makeStyles } from '@material-ui/core';
 import { Filters } from './components/Filters';
 import { Portfolio } from './components/Portfolio';
