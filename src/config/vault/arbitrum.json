@@ -31,6 +31,36 @@
     "network": "arbitrum"
   },
   {
+    "id": "ripae-seth-weth",
+    "name": "ETH-sETH",
+    "token": "ETH-sETH LP",
+    "tokenAddress": "0x89A3A5b03f705A10443fB0A93f19F6cBB7ca191A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushiswap",
+    "earnedToken": "mooPaeWETHsETH",
+    "earnedTokenAddress": "0xB8ff233d024277b0E188A478C18e9263330A1B51",
+    "earnContractAddress": "0xB8ff233d024277b0E188A478C18e9263330A1B51",
+    "oracle": "lps",
+    "oracleId": "ripae-seth-weth",
+    "status": "active",
+    "platformId": "ripae",
+    "assets": ["ETH", "psETH"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.sushi.com/add/ETH/0x83EA9d8748A7AD9f2F12B2A2F7a45CE47A862ac9",
+    "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x83EA9d8748A7AD9f2F12B2A2F7a45CE47A862ac9&chainId=42161",
+    "network": "arbitrum",
+    "createdAt": 1658444532
+  },
+
+  {
     "id": "ripae-peth-weth",
     "name": "ETH-pETH",
     "token": "ETH-pETH LP",
