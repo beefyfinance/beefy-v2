@@ -4,6 +4,7 @@ export const styles = (theme: Theme) => ({
   container: {
     ...theme.typography['body-lg-med'],
     backgroundColor: theme.palette.background.footer,
+    paddingBottom: theme.spacing(3),
   },
   icon: { marginRight: theme.spacing(1) },
   box: {

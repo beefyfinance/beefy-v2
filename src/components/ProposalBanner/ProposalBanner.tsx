@@ -36,7 +36,7 @@ export const ProposalBanner = memo(function ProposalBanner() {
                   alt="snapshot"
                 />
                 <Box>
-                  [BIP-45] Protocol Sustainability is live, please cast your
+                  New proposal is live: [BIP-45] Protocol Sustainability. Cast your
                   <a
                     href="https://vote.beefy.finance/#/proposal/0xb070348f6c2cc229f2bcdc0c042077ee8eab4307a307b89537f8a78089b0c2eb"
                     target="_blank"
