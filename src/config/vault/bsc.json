@@ -60,6 +60,35 @@
     "network": "bsc"
   },
   {
+    "id": "cakev2-mix-busd",
+    "name": "MIX-BUSD LP",
+    "token": "MIX-BUSD LP2",
+    "tokenAddress": "0x7618fdAb208aE23690dadD3aa4a42a442313d24E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooCakeV2MIX-BUSD",
+    "earnedTokenAddress": "0xE53AE3414baC8aE74826e4eceFDDc8c0B1ecc6BB",
+    "earnContractAddress": "0xE53AE3414baC8aE74826e4eceFDDc8c0B1ecc6BB",
+    "oracle": "lps",
+    "oracleId": "cakev2-mix-busd",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["MIX", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0x398f7827DcCbeFe6990478876bBF3612D93baF05/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x398f7827DcCbeFe6990478876bBF3612D93baF05",
+    "network": "bsc",
+    "createdAt": 1658322510
+  },
+  {
     "id": "baby-usdc-wbnb",
     "name": "USDC-BNB LP",
     "token": "USDC-BNB LP",
