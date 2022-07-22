@@ -98,7 +98,7 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/prices', { params: { _: this.getCacheBuster('hour') } });
+    const res = await this.api.get('/prices', { params: { _: this.getCacheBuster('short') } });
     return res.data;
   }
 
@@ -109,7 +109,7 @@ export class BeefyAPI {
       throw new Error('Simulated beefy api error');
     }
 
-    const res = await this.api.get('/lps', { params: { _: this.getCacheBuster('hour') } });
+    const res = await this.api.get('/lps', { params: { _: this.getCacheBuster('short') } });
     return res.data;
   }
 
@@ -119,7 +119,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get('/lps/breakdown', {
-      params: { _: this.getCacheBuster('hour') },
+      params: { _: this.getCacheBuster('short') },
     });
     return res.data;
   }
@@ -130,7 +130,7 @@ export class BeefyAPI {
     }
 
     const res = await this.api.get('/apy/breakdown', {
-      params: { _: this.getCacheBuster('day') },
+      params: { _: this.getCacheBuster('short') },
     });
 
     // somehow, all vaultApr are currently strings, we need to fix that before sending
@@ -159,7 +159,7 @@ export class BeefyAPI {
       };
     };
     const strRes = await this.api.get<ResponseType>('/bifibuyback', {
-      params: { _: this.getCacheBuster('hour') },
+      params: { _: this.getCacheBuster('long') },
     });
     // format result with big number as we get strings from the api
     const res: BeefyAPIBuybackResponse = {};
@@ -178,7 +178,7 @@ export class BeefyAPI {
    */
   public async getVaultLastHarvest(vaultId: VaultEntity['id']): Promise<null | Date> {
     const res = await this.api.get<BeefyAPIVaultsResponse>('/vaults', {
-      params: { _: this.getCacheBuster('hour') },
+      params: { _: this.getCacheBuster('short') },
     });
 
     // const vault = data.filter(vault => vault.id.includes(vaultId));
@@ -220,15 +220,19 @@ export class BeefyAPI {
     return res.data;
   }
 
-  // maybe have a local cache instead of this cache busting
-  // have to check if this returns browser cache before doing so
-  protected getCacheBuster(mode: 'hour' | 'day' = 'day'): number {
-    if (mode === 'hour') {
-      return Math.trunc(Date.now() / (1000 * 60));
+  /**
+   * @param mode short: minutely / long: hourly
+   * @protected
+   */
+  protected getCacheBuster(mode: 'short' | 'long' = 'short'): number {
+    const d = new Date();
+
+    if (mode === 'long') {
+      d.setMinutes(0, 0, 0);
     } else {
-      const cache = new Date();
-      cache.setMinutes(0, 0, 0);
-      return cache.getTime();
+      d.setSeconds(0, 0);
     }
+
+    return d.getTime();
   }
 }
