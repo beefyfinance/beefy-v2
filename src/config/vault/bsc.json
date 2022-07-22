@@ -86,8 +86,8 @@
     "addLiquidityUrl": "https://pancakeswap.finance/add/0x398f7827DcCbeFe6990478876bBF3612D93baF05/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x398f7827DcCbeFe6990478876bBF3612D93baF05",
     "network": "bsc",
-    "createdAt": 1658322510
-     },
+    "createdAt": 1657897437
+  },
   {
     "id": "cakev2-ole-busd",
     "name": "OLE-BUSD LP",
@@ -115,8 +115,8 @@
     "addLiquidityUrl": "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0xa865197A84E780957422237B5D152772654341F3",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xa865197A84E780957422237B5D152772654341F3",
     "network": "bsc",
-    "createdAt": 1658319951
-   },
+    "createdAt": 1657897436
+  },
   {
     "id": "baby-usdt-busd",
     "name": "USDT-BUSD LP",
@@ -133,7 +133,7 @@
     "platformId": "babyswap",
     "assets": ["USDT", "BUSD"],
     "strategyTypeId": "lp",
-     "risks": [
+    "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
@@ -144,9 +144,9 @@
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0xe9e7cea3dedca5984780bafc599bd69add087d56",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x55d398326f99059ff775485246999027b3197955&outputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56",
-    "createdAt": 1657898512
-    },
-    {
+    "createdAt": 1657897435
+  },
+  {
     "id": "baby-near-usdt",
     "name": "NEAR-USDT LP",
     "token": "NEAR-USDT LP",
@@ -173,7 +173,7 @@
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x1Fa4a73a3F0133f0025378af00236f3aBDEE5D63/0x55d398326f99059fF775485246999027B3197955",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x1Fa4a73a3F0133f0025378af00236f3aBDEE5D63",
-    "createdAt": 1657982138
+    "createdAt": 1657897434
   },
   {
     "id": "baby-usdt-sol",
@@ -202,7 +202,7 @@
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x570A5D26f7765Ecb712C0924E4De545B89fD43dF/0x55d398326f99059fF775485246999027B3197955",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
-    "createdAt": 1657981823
+    "createdAt": 1657897433
   },
   {
     "id": "baby-atom-usdt",
@@ -231,7 +231,7 @@
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x0Eb3a705fc54725037CC9e008bDede697f62F335/0x55d398326f99059fF775485246999027B3197955",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x0Eb3a705fc54725037CC9e008bDede697f62F335",
-    "createdAt": 1657896062
+    "createdAt": 1657897432
   },
   {
     "id": "baby-usdt-usdc",
@@ -260,7 +260,7 @@
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955",
-    "createdAt": 1657896062
+    "createdAt": 1657897431
   },
   {
     "id": "baby-usdc-wbnb",
