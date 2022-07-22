@@ -1,7 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { sortBy } from 'lodash';
 import { BeefyState } from '../../../redux-types';
-import { isGovVault, isVaultPaused, isVaultRetired, VaultEntity } from '../entities/vault';
+import {
+  isGovVault,
+  isVaultPaused,
+  isVaultRetired,
+  shouldVaultShowInterest,
+  VaultEntity,
+} from '../entities/vault';
 import {
   selectHasUserDepositInVault,
   selectIsUserEligibleForVault,
@@ -303,9 +309,13 @@ export const selectFilteredVaults = (state: BeefyState) => {
   const sortDirMul = filterOptions.sortDirection === 'desc' ? -1 : 1;
   if (filterOptions.sort === 'apy') {
     sortedVaults = sortBy(sortedVaults, vault => {
+      if (!shouldVaultShowInterest(vault)) {
+        return 0;
+      }
+
       const apy = apyByVaultId[vault.id];
       if (!apy) {
-        return 0;
+        return -1;
       }
 
       if (apy.boostedTotalApy !== undefined) {
@@ -320,9 +330,13 @@ export const selectFilteredVaults = (state: BeefyState) => {
     });
   } else if (filterOptions.sort === 'daily') {
     sortedVaults = sortBy(sortedVaults, vault => {
+      if (!shouldVaultShowInterest(vault)) {
+        return 0;
+      }
+
       const apy = apyByVaultId[vault.id];
       if (!apy) {
-        return 0;
+        return -1;
       }
 
       if (apy.boostedTotalDaily !== undefined) {

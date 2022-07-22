@@ -70,8 +70,13 @@ export const tryToAutoReconnect = createAsyncThunk<void, void, { state: BeefySta
 export const askForWalletConnection = createAsyncThunk(
   'wallet/askForWalletConnection',
   async () => {
-    const walletConnection = await getWalletConnectionApiInstance();
-    await walletConnection.askUserToConnectIfNeeded();
+    try {
+      const walletConnection = await getWalletConnectionApiInstance();
+      await walletConnection.askUserToConnectIfNeeded();
+    } catch (err) {
+      console.error('askForWalletConnection', err);
+      throw err;
+    }
   }
 );
 

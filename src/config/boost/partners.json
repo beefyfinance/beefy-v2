@@ -1,4 +1,12 @@
 {
+  "swapsicle": {
+    "text": "Swapsicle is a decentralised exchange built on the avalanche blockchain offering swaps, farming and staking opportunities.\n\nSwapsicle DEX is built by the community and for the community meaning POPS holders are rewarded for using the platform.",
+    "website": "https://www.swapsicle.io/en/swap",
+    "social": {
+      "telegram": "https://discord.com/invite/swapsicle",
+      "twitter": "https://twitter.com/SwapsicleDEX"
+    }
+  },
   "singular": {
     "logo": "stake/singular/logo.png",
     "background": "stake/singular/bg.png",
