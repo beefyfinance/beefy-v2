@@ -17,7 +17,6 @@ import { Redirects } from './components/Redirects';
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
-const MediaKit = React.lazy(() => import(`./features/media-kit`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
@@ -49,9 +48,6 @@ export const App = () => {
                 </Route>
                 <Route strict sensitive exact path={['/:network/vault/:id', '/vault/:id']}>
                   <Vault />
-                </Route>
-                <Route exact path="/media-kit">
-                  <MediaKit />
                 </Route>
                 <Route>
                   <PageNotFound />
