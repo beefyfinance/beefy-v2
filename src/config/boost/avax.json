@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_grape-grape-mim-swapsicle",
+    "poolId": "grape-grape-mim",
+    "name": "Swapsicle",
+    "assets": ["GRAPE", "MIM"],
+    "tokenAddress": "0x9b03eF3896edea1cC1Ee19b8Fed35cA82843Aed4",
+    "earnedToken": "POPS",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x240248628B7B6850352764C5dFa50D1592A033A8",
+    "earnContractAddress": "0x8B80c7eb70aaDe035a538C72b00EF114fd306c93",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "POPS",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["swapsicle"]
+  },
+  {
     "id": "moo_bifi_avax-singular",
     "poolId": "joe-wavax-bifi-eol",
     "name": "Singular",

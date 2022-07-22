@@ -7,33 +7,32 @@ import { ReactComponent as IconTelegram } from '../../images/socials/telegram.sv
 import { ReactComponent as IconDiscord } from '../../images/socials/discord.svg';
 import { ReactComponent as IconTwitter } from '../../images/socials/twitter.svg';
 import { ReactComponent as IconReddit } from '../../images/socials/reddit.svg';
-import { Link } from 'react-router-dom';
 
 // Re-using header translations, allowing overwrite with footer specific ones
 const navLinks = [
   {
     title: ['Footer-Vote', 'Header-Vote'],
-    path: 'https://vote.beefy.finance/',
+    path: 'https://vote.beefy.finance',
   },
   {
     title: ['Footer-Stats', 'Header-Stats'],
-    path: 'https://dashboard.beefy.finance/',
+    path: 'https://dashboard.beefy.com',
   },
   {
     title: ['Footer-Blog', 'Header-Blog'],
-    path: 'https://blog.beefy.finance/articles/',
+    path: 'https://beefy.com/articles/',
   },
   {
     title: ['Footer-Docs', 'Header-Docs'],
     path: 'https://docs.beefy.finance',
   },
   {
-    title: 'Footer-Forum',
-    path: 'https://forum.beefy.finance/',
-  },
-  {
     title: 'Footer-Audit',
     path: 'https://github.com/beefyfinance/beefy-audits',
+  },
+  {
+    title: 'Footer-MediaKit',
+    path: 'https://beefy.com/media-kit/',
   },
 ];
 
@@ -82,11 +81,6 @@ export const Footer = memo(function () {
             </a>
           </li>
         ))}
-        <li key={'media-kit'} className={classes.navItem}>
-          <Link className={classes.navLink} to="/media-kit">
-            {t('Footer-MediaKit')}
-          </Link>
-        </li>
       </ul>
       <ul className={classes.nav}>
         {socialLinks.map(({ title, path, Icon }) => (
