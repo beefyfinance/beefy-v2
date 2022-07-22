@@ -60,6 +60,35 @@
     "network": "bsc"
   },
   {
+    "id": "baby-usdt-busd",
+    "name": "USDT-BUSD LP",
+    "token": "USDT-BUSD BLP",
+    "tokenAddress": "0x249cd054697f41d73F1A81fa0F5279fcce3cF70c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "babyswap",
+    "earnedToken": "mooBabyBUSD-USDT",
+    "earnedTokenAddress": "0xC1E5c015a603e890A0B175aaBd8A329006Cf0c91",
+    "earnContractAddress": "0xC1E5c015a603e890A0B175aaBd8A329006Cf0c91",
+    "oracle": "lps",
+    "oracleId": "baby-usdt-busd",
+    "status": "active",
+    "platformId": "babyswap",
+    "assets": ["USDT", "BUSD"],
+    "strategyTypeId": "lp",
+     "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "network": "bsc",
+    "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x55d398326f99059ff775485246999027b3197955&outputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    "createdAt": 1657898512
+    },
+    {
     "id": "baby-near-usdt",
     "name": "NEAR-USDT LP",
     "token": "NEAR-USDT LP",
