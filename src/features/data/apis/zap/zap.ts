@@ -23,7 +23,7 @@ import {
   estimateZapDepositUniswapV2,
   estimateZapWithdrawUniswapV2,
 } from './uniswap-v2';
-import { ZapEstimate, ZapOptions } from './zap-types';
+import { ZapDepositEstimate, ZapOptions, ZapWithdrawEstimate } from './zap-types';
 import { getOppositeToken } from './helpers';
 
 const zapOptionsCache: { [vaultId: VaultEntity['id']]: ZapOptions | null } = {};
@@ -132,7 +132,7 @@ export async function estimateZapDeposit(
   state: BeefyState,
   vaultId: VaultEntity['id'],
   inputTokenId: TokenEntity['id']
-): Promise<ZapEstimate> {
+): Promise<ZapDepositEstimate> {
   // Non-standard vaults do not have earnContractAddress
   const vault = selectVaultById(state, vaultId);
   if (!isStandardVault(vault)) {
@@ -180,11 +180,11 @@ export async function estimateZapDeposit(
   );
 }
 
-export const estimateZapWithdraw = async (
+export async function estimateZapWithdraw(
   state: BeefyState,
   vaultId: VaultEntity['id'],
   outputTokenId: TokenEntity['id']
-) => {
+): Promise<ZapWithdrawEstimate> {
   const vault = selectVaultById(state, vaultId);
   const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
   const chain = selectChainById(state, vault.chainId);
@@ -207,6 +207,7 @@ export const estimateZapWithdraw = async (
       tokenOut,
       amountIn: BIG_ZERO,
       amountOut: BIG_ZERO,
+      totalOut: BIG_ZERO,
       priceImpact: 0,
     };
   }
@@ -225,4 +226,4 @@ export const estimateZapWithdraw = async (
     tokenOutAddress,
     tokenOutDecimals
   );
-};
+}

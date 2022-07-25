@@ -12,10 +12,14 @@ export interface ZapOptions {
   lpProviderFee: ZapConfig['lpProviderFee'];
 }
 
-export interface ZapEstimate {
+export type ZapDepositEstimate = {
   tokenIn: TokenEntity;
   tokenOut: TokenEntity;
   amountIn: BigNumber;
   amountOut: BigNumber;
   priceImpact: number;
-}
+};
+
+export type ZapWithdrawEstimate = ZapDepositEstimate & {
+  totalOut: BigNumber;
+};

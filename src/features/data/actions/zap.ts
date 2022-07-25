@@ -6,7 +6,7 @@ import { ChainEntity } from '../entities/chain';
 import { TokenEntity } from '../entities/token';
 import { VaultEntity } from '../entities/vault';
 import { ZapConfig } from '../apis/config-types';
-import { ZapEstimate } from '../apis/zap/zap-types';
+import { ZapDepositEstimate, ZapWithdrawEstimate } from '../apis/zap/zap-types';
 
 interface FetchAllZapFulfilledPayload {
   byChainId: {
@@ -30,8 +30,9 @@ export const fetchAllZapsAction = createAsyncThunk<
 interface FetchEstimateZapDepositFulfilledPayload {
   vaultId: VaultEntity['id'];
   inputTokenId: TokenEntity['id'];
-  zapEstimate: ZapEstimate;
+  zapEstimate: ZapDepositEstimate;
 }
+
 interface FetchEstimateZapDepositParams {
   vaultId: VaultEntity['id'];
   inputTokenId: TokenEntity['id'];
@@ -49,8 +50,9 @@ export const fetchEstimateZapDeposit = createAsyncThunk<
 interface FetchEstimateZapWithdrawFulfilledPayload {
   vaultId: VaultEntity['id'];
   outputTokenId: TokenEntity['id'];
-  zapEstimate: ZapEstimate;
+  zapEstimate: ZapWithdrawEstimate;
 }
+
 interface FetchEstimateZapWithdrawParams {
   vaultId: VaultEntity['id'];
   outputTokenId: TokenEntity['id'];

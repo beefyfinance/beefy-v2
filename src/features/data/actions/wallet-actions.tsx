@@ -49,7 +49,7 @@ import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
-import { ZapEstimate, ZapOptions } from '../apis/zap/zap-types';
+import { ZapDepositEstimate, ZapOptions } from '../apis/zap/zap-types';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -149,7 +149,7 @@ const beefIn = (
   vault: VaultEntity,
   tokenAmount: BigNumber,
   zapOptions: ZapOptions,
-  zapEstimate: ZapEstimate,
+  zapEstimate: ZapDepositEstimate,
   slippageTolerance: number
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -268,7 +268,7 @@ const beefOutAndSwap = (
   vault: VaultEntity,
   depositTokenAmount: BigNumber,
   zapOptions: ZapOptions,
-  zapEstimate: ZapEstimate,
+  zapEstimate: ZapDepositEstimate,
   slippageTolerance: number
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {

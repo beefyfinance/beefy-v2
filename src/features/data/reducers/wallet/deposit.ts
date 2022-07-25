@@ -10,7 +10,7 @@ import { selectUserBalanceOfToken } from '../../selectors/balance';
 import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById } from '../../selectors/vaults';
 import { BIG_ZERO } from '../../../../helpers/big-number';
-import { ZapEstimate, ZapOptions } from '../../apis/zap/zap-types';
+import { ZapDepositEstimate, ZapOptions } from '../../apis/zap/zap-types';
 
 // TODO: this looks exactly like the withdraw state
 export type DepositState = {
@@ -23,7 +23,7 @@ export type DepositState = {
   formattedInput: string;
   slippageTolerance: number;
   zapOptions: ZapOptions | null;
-  zapEstimate: ZapEstimate | null;
+  zapEstimate: ZapDepositEstimate | null;
   zapError: string | null;
 };
 const initialDepositState: DepositState = {

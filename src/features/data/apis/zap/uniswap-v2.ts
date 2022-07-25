@@ -6,7 +6,7 @@ import { getWeb3Instance } from '../instances';
 import { MultiCall } from 'eth-multicall';
 import { calculatePriceImpact } from '../../utils/zap-utils';
 import { AbiItem } from 'web3-utils';
-import { ZapEstimate, ZapOptions } from './zap-types';
+import { ZapDepositEstimate, ZapOptions, ZapWithdrawEstimate } from './zap-types';
 import { sortTokens, zapAbi } from './helpers';
 import _uniswapV2PairABI from '../../../../config/abi/uniswapV2Pair.json';
 import _uniswapV2RouterABI from '../../../../config/abi/uniswapV2Router.json';
@@ -26,7 +26,7 @@ export async function estimateZapDepositUniswapV2(
   tokenInAddress: TokenEntity['address'],
   tokenInDecimals: TokenEntity['decimals'],
   tokenOut: TokenEntity
-): Promise<ZapEstimate> {
+): Promise<ZapDepositEstimate> {
   const vaultAddress = vault.earnContractAddress;
   const depositAmount = amount.shiftedBy(tokenIn.decimals).decimalPlaces(0);
 
@@ -111,7 +111,7 @@ export async function estimateZapWithdrawUniswapV2(
   tokenOut: TokenEntity,
   tokenOutAddress: TokenEntity['address'],
   tokenOutDecimals: TokenEntity['decimals']
-): Promise<ZapEstimate> {
+): Promise<ZapWithdrawEstimate> {
   const web3 = await getWeb3Instance(chain);
   const multicall = new MultiCall(web3, chain.multicallAddress);
   const pairContract = new web3.eth.Contract(uniswapV2PairABI, depositToken.address);
@@ -142,20 +142,24 @@ export async function estimateZapWithdrawUniswapV2(
   ])) as MulticallReturnType;
 
   const { token0 } = pair;
+  const inIsZero = tokenIn.address.toLowerCase() === token0.toLowerCase();
   const [reserves0, reserves1] = Object.values(pair.reserves)
     .slice(0, 2)
     .map(amount => new BigNumber(amount));
-  const [reserveIn, reserveOut] =
-    tokenIn.address.toLowerCase() === token0.toLowerCase()
-      ? [reserves0, reserves1]
-      : [reserves1, reserves0];
+  const [reserveIn, reserveOut] = inIsZero ? [reserves0, reserves1] : [reserves1, reserves0];
 
   // # of LP tokens to withdraw
   const rawAmount = amount.shiftedBy(depositToken.decimals);
   // % of total LP to withdraw
   const equity = rawAmount.dividedBy(pair.totalSupply);
-  // if we break LP, how much is tokenIn
-  const amountIn = equity.multipliedBy(reserveIn).decimalPlaces(0, BigNumber.ROUND_DOWN);
+  // if we break LP, how much is token0/1
+  const withdrawn0 = equity.multipliedBy(reserves0).decimalPlaces(0, BigNumber.ROUND_DOWN);
+  const withdrawn1 = equity.multipliedBy(reserves1).decimalPlaces(0, BigNumber.ROUND_DOWN);
+  const withdrawnIn = inIsZero ? withdrawn0 : withdrawn1;
+  const withdrawnOut = inIsZero ? withdrawn1 : withdrawn0;
+
+  // We are swapping tokenIn for tokenOut
+  const amountIn = withdrawnIn;
   // price impact: swap is AFTER withdraw so lower reserves by amount withdrawn
   const priceImpact = calculatePriceImpact(
     amountIn,
@@ -204,6 +208,7 @@ export async function estimateZapWithdrawUniswapV2(
     tokenOut,
     amountIn: amountIn.shiftedBy(-tokenIn.decimals),
     amountOut: amountOut.shiftedBy(-tokenOutDecimals),
+    totalOut: amountOut.plus(withdrawnOut).shiftedBy(-tokenOutDecimals),
     priceImpact: priceImpact,
   };
 }

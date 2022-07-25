@@ -2,7 +2,7 @@ import { VaultEntity, VaultStandard } from '../../entities/vault';
 import { ChainEntity } from '../../entities/chain';
 import BigNumber from 'bignumber.js';
 import { TokenEntity, TokenErc20 } from '../../entities/token';
-import { ZapEstimate, ZapOptions } from './zap-types';
+import { ZapDepositEstimate, ZapOptions, ZapWithdrawEstimate } from './zap-types';
 import { getWeb3Instance } from '../instances';
 import { MultiCall } from 'eth-multicall';
 import { sortTokens, zapAbi } from './helpers';
@@ -24,7 +24,7 @@ export async function estimateZapDepositSolidly(
   tokenInAddress: TokenEntity['address'],
   tokenInDecimals: TokenEntity['decimals'],
   tokenOut: TokenEntity
-): Promise<ZapEstimate> {
+): Promise<ZapDepositEstimate> {
   const vaultAddress = vault.earnContractAddress;
   const depositAmount = amount.shiftedBy(tokenIn.decimals).decimalPlaces(0);
 
@@ -82,8 +82,11 @@ export async function estimateZapDepositSolidly(
 
   // Calculate price impact
   const { '0': dec0, '1': dec1, '2': r0, '3': r1, '4': isStable, '5': token0 } = pair.metadata;
-  const priceImpact = calculatePriceImpact(
-    swapAmountIn,
+  const amountInAfterFee = swapAmountIn
+    .minus(swapAmountIn.multipliedBy(zapOptions.lpProviderFee))
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR);
+  const priceImpact = getPriceImpact(
+    amountInAfterFee,
     tokenIn.address,
     new BigNumber(dec0),
     new BigNumber(dec1),
@@ -102,18 +105,135 @@ export async function estimateZapDepositSolidly(
   };
 }
 
+export async function estimateZapWithdrawSolidly(
+  zapOptions: ZapOptions,
+  vault: VaultEntity,
+  chain: ChainEntity,
+  amount: BigNumber,
+  depositToken: TokenErc20,
+  tokenIn: TokenEntity,
+  tokenOut: TokenEntity,
+  tokenOutAddress: TokenEntity['address'],
+  tokenOutDecimals: TokenEntity['decimals']
+): Promise<ZapWithdrawEstimate> {
+  const web3 = await getWeb3Instance(chain);
+  const multicall = new MultiCall(web3, chain.multicallAddress);
+  const pairContract = new web3.eth.Contract(solidlyPairABI, depositToken.address);
+
+  type MulticallReturnType = [
+    [
+      {
+        metadata: {
+          0: string;
+          1: string;
+          2: string;
+          3: string;
+          4: boolean;
+          5: string;
+          6: string;
+        };
+        totalSupply: string;
+        decimals: string;
+      }
+    ],
+    [
+      {
+        estimate: Record<number, string>;
+      }
+    ]
+  ];
+
+  const [[pair]]: MulticallReturnType = (await multicall.all([
+    [
+      {
+        metadata: pairContract.methods.metadata(),
+        totalSupply: pairContract.methods.totalSupply(),
+        decimals: pairContract.methods.decimals(),
+      },
+    ],
+  ])) as MulticallReturnType;
+
+  if (!pair.metadata) {
+    throw new Error(`Failed to estimate swap.`);
+  }
+
+  // Meta
+  const { '0': dec0, '1': dec1, '2': r0, '3': r1, '4': isStable, '5': token0 } = pair.metadata;
+  const inIsZero = tokenIn.address.toLowerCase() === token0.toLowerCase();
+  const reserves0 = new BigNumber(r0);
+  const reserves1 = new BigNumber(r1);
+
+  // # of LP tokens to withdraw
+  const rawAmount = amount.shiftedBy(parseInt(pair.decimals, 10));
+  // % of total LP to withdraw
+  const equity = rawAmount.dividedBy(pair.totalSupply);
+  // if we break LP, how much is token0/1
+  const withdrawn0 = equity.multipliedBy(reserves0).decimalPlaces(0, BigNumber.ROUND_DOWN);
+  const withdrawn1 = equity.multipliedBy(reserves1).decimalPlaces(0, BigNumber.ROUND_DOWN);
+  const withdrawnIn = inIsZero ? withdrawn0 : withdrawn1;
+  const withdrawnOut = inIsZero ? withdrawn1 : withdrawn0;
+
+  // swap is AFTER withdraw so lower reserves by amount withdrawn
+  const reserves0after = reserves0.minus(withdrawn0);
+  const reserves1after = reserves1.minus(withdrawn1);
+
+  // We are swapping tokenIn for tokenOut
+  const amountIn = withdrawnIn;
+  // apply fee
+  const amountInAfterFee = amountIn
+    .minus(amountIn.multipliedBy(zapOptions.lpProviderFee))
+    .decimalPlaces(0, BigNumber.ROUND_FLOOR);
+
+  // price impact
+  const priceImpact = getPriceImpact(
+    amountInAfterFee,
+    tokenIn.address,
+    new BigNumber(dec0),
+    new BigNumber(dec1),
+    reserves0after,
+    reserves1after,
+    isStable,
+    token0
+  );
+
+  // calculate result of swap
+  let amountOut;
+  switch (zapOptions.withdrawEstimateMode) {
+    case 'getAmountOut': {
+      amountOut = getAmountOut(
+        amountInAfterFee,
+        tokenIn.address,
+        reserves0after,
+        reserves1after,
+        token0,
+        new BigNumber(dec0),
+        new BigNumber(dec1),
+        isStable
+      );
+      break;
+    }
+    // Not Implemented
+    default: {
+      throw new Error(
+        `Withdraw mode ${zapOptions.withdrawEstimateMode} not implemented for Solidly zap.`
+      );
+    }
+  }
+
+  return {
+    tokenIn,
+    tokenOut,
+    amountIn: amountIn.shiftedBy(-tokenIn.decimals),
+    amountOut: amountOut.shiftedBy(-tokenOutDecimals),
+    totalOut: amountOut.plus(withdrawnOut).shiftedBy(-tokenOutDecimals),
+    priceImpact: priceImpact,
+  };
+}
+
 /**
  * @see https://github.com/solidlyexchange/solidly.exchange/blob/b5faba84f64dd7367dc0a63b149c782bea0c3ac0/stores/stableSwapStore.js#L2966-L2976
- * @param amountIn
- * @param tokenIn
- * @param dec0
- * @param dec1
- * @param r0
- * @param r1
- * @param st
- * @param t0
  */
-function calculatePriceImpact(
+function getPriceImpact(
   amountIn: BigNumber,
   tokenIn: string,
   dec0: BigNumber,
@@ -123,6 +243,25 @@ function calculatePriceImpact(
   st: boolean,
   t0: string
 ): number {
+  const [a, b] = getTradeDiff(amountIn, tokenIn, dec0, dec1, r0, r1, st, t0);
+  const ratio = b.dividedBy(a);
+
+  return BIG_ONE.minus(ratio).toNumber();
+}
+
+/**
+ * @see https://ftmscan.com/address/0x0f68551237a7effe35600524c0dd4989bf8208e9#code
+ */
+function getTradeDiff(
+  amountIn: BigNumber,
+  tokenIn: string,
+  dec0: BigNumber,
+  dec1: BigNumber,
+  r0: BigNumber,
+  r1: BigNumber,
+  st: boolean,
+  t0: string
+): [BigNumber, BigNumber] {
   const sample =
     tokenIn.toLowerCase() === t0.toLowerCase()
       ? r0.multipliedBy(dec1).dividedToIntegerBy(r1)
@@ -134,9 +273,12 @@ function calculatePriceImpact(
     .shiftedBy(18)
     .dividedToIntegerBy(amountIn);
 
-  return BIG_ONE.minus(b.div(a)).times(100).toNumber();
+  return [a, b];
 }
 
+/**
+ * Implemented here as on-chain methods can not take custom reserves
+ */
 function getAmountOut(
   amountIn: BigNumber,
   tokenIn: string,
@@ -241,20 +383,6 @@ function getK(
     // xy >= k
     return x.multipliedBy(y);
   }
-}
-
-export async function estimateZapWithdrawSolidly(
-  zapOptions: ZapOptions,
-  vault: VaultEntity,
-  chain: ChainEntity,
-  amount: BigNumber,
-  depositToken: TokenErc20,
-  tokenIn: TokenEntity,
-  tokenOut: TokenEntity,
-  tokenOutAddress: TokenEntity['address'],
-  tokenOutDecimals: TokenEntity['decimals']
-): Promise<ZapEstimate> {
-  throw new Error(`Not implemented yet`);
 }
 
 export function computeSolidlyPairAddress(
