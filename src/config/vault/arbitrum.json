@@ -54,6 +54,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/ETH/0x83EA9d8748A7AD9f2F12B2A2F7a45CE47A862ac9",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x83EA9d8748A7AD9f2F12B2A2F7a45CE47A862ac9&chainId=42161",
     "network": "arbitrum",
@@ -84,6 +85,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/ETH/0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715&chainId=42161",
     "network": "arbitrum",
