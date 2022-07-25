@@ -244,7 +244,7 @@ function getPriceImpact(
   t0: string
 ): number {
   const [a, b] = getTradeDiff(amountIn, tokenIn, dec0, dec1, r0, r1, st, t0);
-  const ratio = b.dividedBy(a);
+  const ratio = BigNumber.min(b.dividedBy(a), BIG_ONE); // if trade is smaller than sample, clamp
 
   return BIG_ONE.minus(ratio).toNumber();
 }
