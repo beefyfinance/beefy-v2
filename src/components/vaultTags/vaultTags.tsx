@@ -32,7 +32,7 @@ const _DisplayTags = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         <div className={classes.tag}>
           <img
             className={classes.tagImage}
-            src={require('../../images/pots.svg').default}
+            src={require('../../images/partners/pots.svg').default}
             alt="pots"
           />
           {t('VaultTag-Moonpot')}

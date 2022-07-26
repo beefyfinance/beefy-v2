@@ -32,7 +32,7 @@ export const ExtendedFilters = memo<ExtendedFiltersProps>(function ({ desktopVie
         label={t('Filter-Moonpot')}
         icon={
           <img
-            src={require('../../../../../../images/pots.svg').default}
+            src={require('../../../../../../images/partners/pots.svg').default}
             alt=""
             width={20}
             height={20}
