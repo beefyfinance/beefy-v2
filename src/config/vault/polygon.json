@@ -7831,5 +7831,34 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
     "createdAt": 1657602777,
     "network": "polygon"
+  },
+  {
+    "id": "balancer-wbtc-usdc-eth",
+    "name": "WBTC/USDC/ETH",
+    "token": "WBTC/USDC/ETH BPT",
+    "tokenAddress": "0x03cD191F589d12b0582a99808cf19851E468E6B5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerWBTC-USDC-ETH",
+    "earnedTokenAddress": "0x992E34c1Ccf7b1C174C044DcA1d23BE8403c327b",
+    "earnContractAddress": "0x992E34c1Ccf7b1C174C044DcA1d23BE8403c327b",
+    "oracle": "lps",
+    "oracleId": "balancer-wbtc-usdc-eth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["WBTC", "USDC", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a",
+    "network": "polygon",
+    "createdAt": 1658949296
   }
 ]
