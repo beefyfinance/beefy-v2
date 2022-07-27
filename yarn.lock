@@ -3848,6 +3848,16 @@
     joi "^17.4.2"
     rxjs "^7.5.2"
 
+"@web3-onboard/common@^2.1.7-alpha.1":
+  version "2.1.7-alpha.3"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/common/-/common-2.1.7-alpha.3.tgz#e148e880d98dd317e3a788839ca2cc0f13bfe35f"
+  integrity sha512-6dP6jJn6A+ZRH8EymxdDFpGS8gYy84XerbfNMquAgHPxeO6A+WlEIZhzfqGJiw05JSQ4V9kVXilR+YFXUuCW+Q==
+  dependencies:
+    "@ethereumjs/common" "2.6.2"
+    ethers "5.5.4"
+    joi "^17.4.2"
+    rxjs "^7.5.2"
+
 "@web3-onboard/core@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@web3-onboard/core/-/core-2.4.0.tgz#37948f6826cc147a16e7ae56bae01c03a4675994"
@@ -3867,12 +3877,12 @@
     svelte "^3.46.4"
     svelte-i18n "^3.3.13"
 
-"@web3-onboard/injected-wallets@^2.0.10":
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.0.10.tgz#dc5aad6854f05de2a1e2237492aec4c335de8358"
-  integrity sha512-cWh4jcH9hXERxCaMhG7L543+UTDX+8qb6lpR7ef+D4l9PL63zipHMo2eV/x/7lUgtgpi5GgTddnpN3IAgwLYwA==
+"@web3-onboard/injected-wallets@^2.0.15-alpha.2":
+  version "2.0.15-alpha.2"
+  resolved "https://registry.yarnpkg.com/@web3-onboard/injected-wallets/-/injected-wallets-2.0.15-alpha.2.tgz#6f6cfaa6fe034a1614b832964c4664fee96884e1"
+  integrity sha512-LSs2U/V81MmrwfFAPY5Ik9l5l67fpl74RvCOJmFuZ6mbU5urHZHd3FWptWy88uzjSNJ+qKZcrBtjjPu94P4Wng==
   dependencies:
-    "@web3-onboard/common" "^2.1.2"
+    "@web3-onboard/common" "^2.1.7-alpha.1"
     joi "^17.4.2"
     lodash.uniqby "^4.7.0"
 
