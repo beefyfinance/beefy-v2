@@ -20,7 +20,7 @@
     "@walletconnect/web3-provider": "^1.4.1",
     "@web3-onboard/coinbase": "^2.0.5",
     "@web3-onboard/core": "^2.4.0",
-    "@web3-onboard/injected-wallets": "^2.0.10",
+    "@web3-onboard/injected-wallets": "^2.0.15-alpha.2",
     "@web3-onboard/walletconnect": "^2.0.3",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
@@ -57,7 +57,8 @@
   },
   "resolutions": {
     "web3": "^1.7.0",
-    "react-error-overlay": "6.0.9"
+    "react-error-overlay": "6.0.9",
+    "@web3-onboard/common": "^2.1.7-alpha.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -107,9 +108,9 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ]
   },
   "devDependencies": {

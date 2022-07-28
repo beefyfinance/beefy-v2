@@ -23,7 +23,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * Create list of wallet modules for Onboard
    * @private
    */
-  private static createOnboardWallets() {
+  private static createOnboardWallets(): WalletInit[] {
     const injectedWallets = createInjectedWallets({
       custom: [
         {
