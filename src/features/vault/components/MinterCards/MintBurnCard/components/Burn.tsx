@@ -219,7 +219,10 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
         </div>
         <div className={classes.customDivider}>
           <div className={classes.line} />
-          <img alt="arrowDown" src={require('../../../../../../images/arrowDown.svg').default} />
+          <img
+            alt="arrowDown"
+            src={require('../../../../../../images/icons/arrowDown.svg').default}
+          />
           <div className={classes.line} />
         </div>
         <div className={classes.inputContainer}>

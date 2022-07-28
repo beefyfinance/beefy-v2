@@ -138,7 +138,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
               <img
                 style={{ height: '16px' }}
                 alt="check"
-                src={require(`../../../../images/check.svg`).default}
+                src={require(`../../../../images/icons/check.svg`).default}
               />
             )}
             <div className={classes.statusText}>
@@ -166,7 +166,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
                 <img
                   style={{ height: '16px' }}
                   alt="check"
-                  src={require(`../../../../images/check.svg`).default}
+                  src={require(`../../../../images/icons/check.svg`).default}
                 />
               )}
               <div className={classes.statusText}>
