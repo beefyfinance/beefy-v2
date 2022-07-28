@@ -52,7 +52,7 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close },
             {sortedTvls.map((item: ItemListType) => {
               return (
                 <Grid key={item.chainId} item xs={6} lg={3}>
-                  <Chain chain={item.chainId} tvl={tvls[item.chainId]} />
+                  <Chain chainId={item.chainId} tvl={tvls[item.chainId]} />
                 </Grid>
               );
             })}
@@ -68,19 +68,19 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close },
 
 export const ModalTvl = memo<ModalTvlProps>(_ModalTvl);
 
-function Chain({ chain, tvl }: { chain: ChainEntity['id']; tvl: BigNumber }) {
+function Chain({ chainId, tvl }: { chainId: ChainEntity['id']; tvl: BigNumber }) {
   const classes = useStyles();
-  const _chain = useAppSelector(state => selectChainById(state, chain));
+  const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
     <Box className={classes.chain}>
       <img
         className={classes.chainLogo}
-        alt={_chain.id}
-        src={require(`../../../../../images/networks/${_chain.id}.svg`).default}
+        alt={chain.id}
+        src={require(`../../../../../images/networks/${chain.id}.svg`).default}
       />
       <Box>
-        <div className={classes.chainText}>{_chain.name}</div>
+        <div className={classes.chainText}>{chain.name}</div>
         <>
           {tvl ? <div className={classes.chainValue}>{formatBigUsd(tvl)}</div> : <ContentLoading />}
         </>
