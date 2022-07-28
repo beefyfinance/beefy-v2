@@ -20,12 +20,17 @@ export type ModalTvlProps = {
   close: () => void;
 };
 
+interface ItemListType {
+  chainId: ChainEntity['id'];
+  tvl: number;
+}
+
 const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close }, ref) {
   const classes = useStyles();
   const { t } = useTranslation();
   const tvls = useAppSelector(selectTvlByChain);
 
-  const sortedTvls = React.useMemo(() => {
+  const sortedTvls = React.useMemo<ItemListType[]>(() => {
     const list = [];
     for (const [chainId, tvl] of Object.entries(tvls)) {
       list.push({ tvl: tvl.toNumber(), chainId });
@@ -44,7 +49,7 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close },
         </CardHeader>
         <CardContent className={classes.container}>
           <Grid container spacing={2}>
-            {sortedTvls.map((item: any) => {
+            {sortedTvls.map((item: ItemListType) => {
               return (
                 <Grid key={item.chainId} item xs={6} lg={3}>
                   <Chain chain={item.chainId} tvl={tvls[item.chainId]} />
