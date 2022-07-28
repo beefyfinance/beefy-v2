@@ -722,5 +722,35 @@
     "network": "aurora",
     "createdAt": 1643740953,
     "retireReason": "rewards"
+  },
+  {
+    "id": "tri-3pool",
+    "name": "USN/USDC/USDT",
+    "token": "USN/USDC/USDT",
+    "tokenAddress": "0x87BCC091d0A7F9352728100268Ac8D25729113bB",
+    "tokenDecimals": 18,
+    "tokenProviderId": "trisolaris",
+    "earnedToken": "mooTri3pool",
+    "earnedTokenAddress": "0xf8e9774AE3cc7aE3eE11161cC1313252A0784E18",
+    "earnContractAddress": "0xf8e9774AE3cc7aE3eE11161cC1313252A0784E18",
+    "oracle": "lps",
+    "oracleId": "tri-3pool",
+    "status": "active",
+    "platformId": "trisolaris",
+    "assets": ["USN", "USDC", "USDT"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "ALGO_STABLE"
+    ],
+    "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0xB12BFcA5A55806AaF64E99521918A4bf0fC40802",
+    "addLiquidityUrl": "https://www.trisolaris.io/#/pool/stable/add/USDC_USDT_USN",
+    "network": "aurora",
+    "createdAt": 1658429801
   }
 ]

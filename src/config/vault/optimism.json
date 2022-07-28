@@ -1,5 +1,35 @@
 [
   {
+    "id": "optimism-bifi-gov",
+    "name": "BIFI Earnings Pool",
+    "token": "BIFI",
+    "tokenAddress": "0x4E720DD3Ac5CFe1e1fbDE4935f386Bb1C66F4642",
+    "tokenDecimals": 18,
+    "earnedToken": "WETH",
+    "earnedTokenAddress": "0x4200000000000000000000000000000000000006",
+    "earnedTokenDecimals": 18,
+    "earnContractAddress": "0x61645aE7BB524C2ea11cF90D673079EE2AbbB961",
+    "isGovVault": true,
+    "oracle": "tokens",
+    "oracleId": "BIFI",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["BIFI"],
+    "strategyTypeId": "single",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_SMALL",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "callFee": 0,
+    "withdrawalFee": "0%",
+    "createdAt": 1658491885,
+    "network": "optimism"
+  },
+  {
     "id": "velodrome-susd-dai",
     "name": "sUSD-DAI sLP",
     "token": "sUSD-DAI sLP",

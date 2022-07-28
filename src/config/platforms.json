@@ -868,5 +868,10 @@
     "id": "swapsicle",
     "name": "Swapsicle",
     "filter": true
+  },
+  {
+    "id": "radiant",
+    "name": "Radiant",
+    "filter": true
   }
 ]

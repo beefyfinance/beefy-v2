@@ -45,6 +45,9 @@ export const config = {
       'sbUSDT',
       'FRAX',
       'USDD',
+      'MAI',
+      'jBRL',
+      'BRZ',
     ],
   },
   heco: {
@@ -373,7 +376,7 @@ export const config = {
       rpcUrls: ['https://mainnet.aurora.dev'],
       blockExplorerUrls: ['https://aurorascan.dev/'],
     },
-    stableCoins: ['USDC', 'USDT', 'MAI', 'DAI', 'UST', 'aUSDO'],
+    stableCoins: ['USDC', 'USDT', 'MAI', 'DAI', 'UST', 'aUSDO', 'USN'],
   },
   moonbeam: {
     name: 'Moonbeam',
