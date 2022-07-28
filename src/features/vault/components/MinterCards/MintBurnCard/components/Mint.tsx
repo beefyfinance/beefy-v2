@@ -236,7 +236,10 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         </div>
         <div className={classes.customDivider}>
           <div className={classes.line} />
-          <img alt="arrowDown" src={require('../../../../../../images/arrowDown.svg').default} />
+          <img
+            alt="arrowDown"
+            src={require('../../../../../../images/icons/arrowDown.svg').default}
+          />
           <div className={classes.line} />
         </div>
         <div className={classes.inputContainer}>

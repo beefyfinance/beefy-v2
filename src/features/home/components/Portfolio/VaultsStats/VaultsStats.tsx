@@ -38,7 +38,7 @@ export const VaultsStats = () => {
           <div onClick={handleTvlModalOpen}>
             <img
               className={classes.icon}
-              src={require('../../../../../images/i.svg').default}
+              src={require('../../../../../images/icons/i.svg').default}
               alt="i"
             />
           </div>
