@@ -31,9 +31,39 @@
     "network": "arbitrum"
   },
   {
+    "id": "radiant-rdnt-weth",
+    "name": "RDNT-ETH",
+    "token": "RDNT-ETH LP",
+    "tokenAddress": "0x24704aFF49645D32655A76Df6d407E02d146dAfC",
+    "tokenDecimals": 18,
+    "tokenProviderId": "sushiswap",
+    "earnedToken": "mooRadiantRDNT-ETH",
+    "earnedTokenAddress": "0xC14844Ac5C0e7e96f678c75308d3Fde1Fa36e22f",
+    "earnContractAddress": "0xC14844Ac5C0e7e96f678c75308d3Fde1Fa36e22f",
+    "oracle": "lps",
+    "oracleId": "radiant-rdnt-weth",
+    "status": "active",
+    "platformId": "radiant",
+    "assets": ["RDNT", "ETH"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://app.sushi.com/legacy/add/0x82aF49447D8a07e3bd95BD0d56f35241523fBab1/0x0C4681e6C0235179ec3D4F4fc4DF3d14FDD96017?chainId=42161",
+    "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x0C4681e6C0235179ec3D4F4fc4DF3d14FDD96017&chainId=42161",
+    "network": "arbitrum",
+    "createdAt": 1658991540
+  },
+  {
     "id": "ripae-seth-weth",
-    "name": "ETH-sETH",
-    "token": "ETH-sETH LP",
+    "name": "sETH-ETH",
+    "token": "sETH-ETH LP",
     "tokenAddress": "0x89A3A5b03f705A10443fB0A93f19F6cBB7ca191A",
     "tokenDecimals": 18,
     "tokenProviderId": "sushiswap",
@@ -44,7 +74,7 @@
     "oracleId": "ripae-seth-weth",
     "status": "active",
     "platformId": "ripae",
-    "assets": ["ETH", "psETH"],
+    "assets": ["psETH", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -63,8 +93,8 @@
 
   {
     "id": "ripae-peth-weth",
-    "name": "ETH-pETH",
-    "token": "ETH-pETH LP",
+    "name": "pETH-ETH",
+    "token": "pETH-ETH LP",
     "tokenAddress": "0xB54B196E9FeCcF364c2281da1E11BC498cB5c1C1",
     "tokenDecimals": 18,
     "tokenProviderId": "sushiswap",
@@ -75,7 +105,7 @@
     "oracleId": "ripae-peth-weth",
     "status": "active",
     "platformId": "ripae",
-    "assets": ["ETH", "pETH"],
+    "assets": ["pETH", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",

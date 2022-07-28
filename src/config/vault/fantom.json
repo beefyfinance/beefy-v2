@@ -7811,37 +7811,6 @@
     "network": "fantom"
   },
   {
-    "id": "tomb-tomb-treeb",
-    "name": "TOMB-TREEB LP",
-    "token": "TOMB-TREEB TLP",
-    "tokenAddress": "0x801D17c21D0808Bc00D46E2f081214c9d82F4FbF",
-    "tokenDecimals": 18,
-    "tokenProviderId": "tombswap",
-    "earnedToken": "mooTombTOMB-TREEB",
-    "earnedTokenAddress": "0x6b9de11ACf846d961E0b7AF3B0B5066DDBED5eA1",
-    "earnContractAddress": "0x6b9de11ACf846d961E0b7AF3B0B5066DDBED5eA1",
-    "oracle": "lps",
-    "oracleId": "tomb-tomb-treeb",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "tombswap",
-    "assets": ["TOMB", "TREEB"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
-    ],
-    "withdrawalFee": "0%",
-    "addLiquidityUrl": "https://swap.tomb.com/#/add/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7/0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
-    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7&outputCurrency=0xc60D7067dfBc6f2caf30523a064f416A5Af52963",
-    "createdAt": 1653470692,
-    "network": "fantom"
-  },
-  {
     "id": "based-based-usdc",
     "name": "BASED-USDC LP",
     "token": "BASED-USDC TLP",
