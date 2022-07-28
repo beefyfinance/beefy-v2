@@ -5,18 +5,18 @@ import { formatBigDecimals, formatBigNumberSignificant } from '../../../../helpe
 import { BeefyState } from '../../../../redux-types';
 import { initiateWithdrawForm } from '../../actions/withdraw';
 import { fetchEstimateZapWithdraw } from '../../actions/zap';
-import { ZapEstimate, ZapOptions } from '../../apis/zap';
 import { TokenEntity } from '../../entities/token';
 import { isGovVault, VaultEntity } from '../../entities/vault';
 import {
-  selectStandardVaultUserBalanceInDepositTokenExcludingBoosts,
   selectGovVaultUserStackedBalanceInDepositToken,
+  selectStandardVaultUserBalanceInDepositTokenExcludingBoosts,
   selectUserBalanceOfToken,
 } from '../../selectors/balance';
 import { selectTokenByAddress, selectTokenById } from '../../selectors/tokens';
 import { selectVaultById, selectVaultPricePerFullShare } from '../../selectors/vaults';
 import { mooAmountToOracleAmount } from '../../utils/ppfs';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { ZapOptions, ZapWithdrawEstimate } from '../../apis/zap/zap-types';
 
 // TODO: this looks exactly like the deposit state
 export type WithdrawState = {
@@ -32,7 +32,7 @@ export type WithdrawState = {
   formattedInput: string;
   slippageTolerance: number;
   zapOptions: ZapOptions | null;
-  zapEstimate: ZapEstimate | null;
+  zapEstimate: ZapWithdrawEstimate | null;
   zapError: string | null;
 };
 const initialWithdrawState: WithdrawState = {
@@ -85,6 +85,7 @@ export const withdrawSlice = createSlice({
           tokenOut: selectTokenById(state, vault.chainId, vault.assetIds[1]),
           amountIn: BIG_ZERO,
           amountOut: BIG_ZERO,
+          totalOut: BIG_ZERO,
           priceImpact: 0,
         };
       }

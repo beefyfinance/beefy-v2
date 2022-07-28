@@ -5,7 +5,6 @@ import { styles } from './styles';
 import { Loader } from '../../../../components/Loader';
 import { BifiMaxis } from './BifiMaxis';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
-import { ZapEstimate } from '../../../data/apis/zap';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { useAppSelector } from '../../../../store';
 import { InterestTooltipContent } from '../../../home/components/Vault/components/InterestTooltipContent';
@@ -13,6 +12,7 @@ import { IconWithTooltip } from '../../../../components/Tooltip';
 import clsx from 'clsx';
 import { formatPercent } from '../../../../helpers/format';
 import { AlertWarning } from '../../../../components/Alerts';
+import { ZapDepositEstimate, ZapWithdrawEstimate } from '../../../data/apis/zap/zap-types';
 
 const useStyles = makeStyles(styles);
 
@@ -99,7 +99,7 @@ export const FeeBreakdown = memo(
   }: {
     vault: VaultEntity;
     slippageTolerance: number;
-    zapEstimate: ZapEstimate | null;
+    zapEstimate: ZapDepositEstimate | ZapWithdrawEstimate | null;
     zapError: string | null;
     isZapSwap: boolean;
     isZap: boolean;
@@ -198,7 +198,7 @@ export const FeeBreakdown = memo(
                     {isZapSwap && (
                       <li className={classes.zapStep}>
                         {t('Zap-Step-Withdraw-4', {
-                          balance: zapEstimate.amountOut.times(2).decimalPlaces(6),
+                          balance: (zapEstimate as ZapWithdrawEstimate).totalOut.decimalPlaces(6),
                           token: zapEstimate.tokenOut.symbol,
                         })}
                       </li>

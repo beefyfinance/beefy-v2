@@ -9,7 +9,6 @@ import zapAbi from '../../../config/abi/zap.json';
 import bridgeAbi from '../../../config/abi/BridgeAbi.json';
 import { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getWalletConnectionApiInstance } from '../apis/instances';
-import { ZapEstimate, ZapOptions } from '../apis/zap';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { isTokenNative, TokenEntity, TokenErc20 } from '../entities/token';
@@ -50,6 +49,7 @@ import { MinterEntity } from '../entities/minter';
 import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
+import { ZapDepositEstimate, ZapOptions } from '../apis/zap/zap-types';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -149,7 +149,7 @@ const beefIn = (
   vault: VaultEntity,
   tokenAmount: BigNumber,
   zapOptions: ZapOptions,
-  zapEstimate: ZapEstimate,
+  zapEstimate: ZapDepositEstimate,
   slippageTolerance: number
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
@@ -268,7 +268,7 @@ const beefOutAndSwap = (
   vault: VaultEntity,
   depositTokenAmount: BigNumber,
   zapOptions: ZapOptions,
-  zapEstimate: ZapEstimate,
+  zapEstimate: ZapDepositEstimate,
   slippageTolerance: number
 ) => {
   return captureWalletErrors(async (dispatch, getState) => {
