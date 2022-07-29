@@ -87,7 +87,7 @@ export async function estimateZapDepositSolidly(
     .decimalPlaces(0, BigNumber.ROUND_FLOOR);
   const priceImpact = getPriceImpact(
     amountInAfterFee,
-    tokenIn.address,
+    tokenInAddress,
     new BigNumber(dec0),
     new BigNumber(dec1),
     new BigNumber(r0),
