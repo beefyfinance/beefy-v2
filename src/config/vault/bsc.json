@@ -60,6 +60,35 @@
     "network": "bsc"
   },
   {
+    "id": "baby-sol-bnb",
+    "name": "USDT-BUSD LP",
+    "token": "USDT-BUSD BLP",
+    "tokenAddress": "0x8abd16bcc9077a6c5ed834ec5ba43ad03b9139dc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "babyswap",
+    "earnedToken": "mooBabySOL-BNB",
+    "earnedTokenAddress": "0xfbe82d8a791b242ec3ca6bc0b364c000d08fa68e",
+    "earnContractAddress": "0xfbe82d8a791b242ec3ca6bc0b364c000d08fa68e",
+    "oracle": "lps",
+    "oracleId": "baby-sol-bnb",
+    "status": "active",
+    "platformId": "babyswap",
+    "assets": ["SOL", "WBNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_low",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "network": "bsc",
+    "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x55d398326f99059ff775485246999027b3197955&outputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    "createdAt": 1657897435
+  },
+  {
     "id": "cakev2-mix-busd",
     "name": "MIX-BUSD LP",
     "token": "MIX-BUSD LP2",
@@ -16285,9 +16314,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://exchange.biswap.org/#/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
-    "buyTokenUrl": "https://exchange.biswap.org/#/swap?inputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c&outputCurrency=0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
-    "createdAt": 1655464992,
+    "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/BNB/0x570a5d26f7765ecb712c0924e4de545b89fd43df",
+    "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=BNB&outputCurrency=0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
+    "createdAt": 1658966787,
     "network": "bsc"
   },
   {
