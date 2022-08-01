@@ -61,8 +61,8 @@
   },
   {
     "id": "baby-sol-bnb",
-    "name": "USDT-BUSD LP",
-    "token": "USDT-BUSD BLP",
+    "name": "SOL-BNB LP",
+    "token": "SOL-BNB BLP",
     "tokenAddress": "0x8abd16bcc9077a6c5ed834ec5ba43ad03b9139dc",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -78,7 +78,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_low",
+      "IL_LOW",
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -86,7 +86,7 @@
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x55d398326f99059fF775485246999027B3197955/0xe9e7cea3dedca5984780bafc599bd69add087d56",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=0x55d398326f99059ff775485246999027b3197955&outputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56",
-    "createdAt": 1657897435
+    "createdAt": 1658966787
   },
   {
     "id": "cakev2-mix-busd",
