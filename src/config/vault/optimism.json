@@ -50,6 +50,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
+    "updatedFees": true,
     "createdAt": 1659469375
   },
   {

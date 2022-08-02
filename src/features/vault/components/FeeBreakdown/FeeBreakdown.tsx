@@ -53,7 +53,7 @@ const PerformanceFees = memo(({ rates, vaultID, performanceFee }: any) => {
       value: '0%',
       last: true,
     });
-  } else {
+  } else if (performanceFee === '4.5%') {
     rows.push({
       label: t('Fee-Holder'),
       value: isCakeVault ? '1%' : '3%',
@@ -74,6 +74,35 @@ const PerformanceFees = memo(({ rates, vaultID, performanceFee }: any) => {
     rows.push({
       label: t('Fee-HarvestFee'),
       value: isCakeVault ? '0%' : '0.5%',
+      last: false,
+    });
+
+    rows.push({
+      label: t('Fee-TotalFee'),
+      value: isCakeVault ? '1%' : '4.5%',
+      last: true,
+    });
+  } else {
+    rows.push({
+      label: t('Fee-Holder'),
+      value: '3.06%',
+      last: false,
+    });
+
+    rows.push({
+      label: t('Fee-Treasury'),
+      value: '5.44%',
+      last: false,
+    });
+
+    rows.push({
+      label: t('Fee-Developers'),
+      value: '0.5%',
+      last: false,
+    });
+    rows.push({
+      label: t('Fee-HarvestFee'),
+      value: '0.5%',
       last: false,
     });
 
@@ -120,6 +149,8 @@ export const FeeBreakdown = memo(
         ? '0%'
         : vault.id === 'cake-cakev2'
         ? '1%'
+        : vault.updatedFees
+        ? '9.5%'
         : '4.5%';
 
     return (
