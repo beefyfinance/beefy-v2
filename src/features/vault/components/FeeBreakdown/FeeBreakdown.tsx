@@ -108,7 +108,7 @@ const PerformanceFees = memo(({ rates, vaultID, performanceFee }: any) => {
 
     rows.push({
       label: t('Fee-TotalFee'),
-      value: isCakeVault ? '1%' : '4.5%',
+      value: '4.5%',
       last: true,
     });
   }
