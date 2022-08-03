@@ -67,6 +67,7 @@ export interface VaultStandard {
 
   withdrawalFee: string | null;
   depositFee: string | null;
+  updatedFees: boolean;
 
   createdAt: number;
 
@@ -126,6 +127,7 @@ export interface VaultGov {
 
   withdrawalFee: string;
   depositFee: string;
+  updatedFees: boolean;
 
   createdAt: number;
 
