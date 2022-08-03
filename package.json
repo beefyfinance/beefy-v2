@@ -61,8 +61,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "realbuild": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && react-scripts build",
+    "build": "echo 'DO NOT disable validation on build, fix underlying issue' && yarn validate && react-scripts build",
     "validate": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/validatePools.ts",
     "creationdate": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/getPoolCreationTimestamp.ts",
     "launchpool": "node --es-module-specifier-resolution=node --loader ts-node/esm ./scripts/launchpool.ts",
