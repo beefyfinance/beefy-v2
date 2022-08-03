@@ -95,13 +95,7 @@ export const FeeBreakdown = memo(
       selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
     );
     const performanceFee =
-      isGovVault(vault) || BifiMaxis.includes(vault.id)
-        ? 0
-        : vault.id === 'cake-cakev2'
-        ? 1
-        : vault.updatedFees
-        ? 9.5
-        : 4.5;
+      isGovVault(vault) || BifiMaxis.includes(vault.id) ? 0 : vault.updatedFees ? 9.5 : 4.5;
 
     return (
       <Box mt={3} p={2} className={classes.feeContainer}>
