@@ -16,102 +16,52 @@ import { ZapDepositEstimate, ZapWithdrawEstimate } from '../../../data/apis/zap/
 
 const useStyles = makeStyles(styles);
 
-const PerformanceFees = memo(({ rates, vaultID, performanceFee }: any) => {
+const UPDATED_FEE_BATCH_CHAINS = new Set(['polygon', 'arbitrum', 'optimism']);
+
+const PerformanceFees = memo(({ rates, vaultID, performanceFee, chainId }: any) => {
   const rows = [];
   const { t } = useTranslation();
 
-  //TODO REMOVE WHEN CAN GET DYNAMIC DATA FROM ABOUT FEES
-  const isCakeVault = vaultID === 'cake-cakev2';
+  const strategistFee = performanceFee === 0 ? 0 : 0.5;
+  const harvestFee = performanceFee === 0 ? 0 : 0.5;
 
-  if (performanceFee === '0%') {
-    rows.push({
-      label: t('Fee-Holder'),
-      value: '0%',
-      last: false,
-    });
+  const feebatchFee = performanceFee - strategistFee - harvestFee;
 
-    rows.push({
-      label: t('Fee-Treasury'),
-      value: '0%',
-      last: false,
-    });
+  const stakerFee = UPDATED_FEE_BATCH_CHAINS.has(chainId) ? feebatchFee * 0.36 : feebatchFee * 0.86;
 
-    rows.push({
-      label: t('Fee-Developers'),
-      value: '0%',
-      last: false,
-    });
+  const treasuryFee = UPDATED_FEE_BATCH_CHAINS.has(chainId)
+    ? feebatchFee * 0.64
+    : feebatchFee * 0.14;
 
-    rows.push({
-      label: t('Fee-HarvestFee'),
-      value: '0%',
-      last: false,
-    });
+  rows.push({
+    label: t('Fee-Holder'),
+    value: `${stakerFee.toFixed(2)}%`,
+    last: false,
+  });
 
-    rows.push({
-      label: t('Fee-TotalFee'),
-      value: '0%',
-      last: true,
-    });
-  } else if (performanceFee === '4.5%') {
-    rows.push({
-      label: t('Fee-Holder'),
-      value: isCakeVault ? '1%' : '3%',
-      last: false,
-    });
+  rows.push({
+    label: t('Fee-Treasury'),
+    value: `${treasuryFee.toFixed(2)}%`,
+    last: false,
+  });
 
-    rows.push({
-      label: t('Fee-Treasury'),
-      value: isCakeVault ? '0%' : '0.5%',
-      last: false,
-    });
+  rows.push({
+    label: t('Fee-Developers'),
+    value: `${strategistFee}%`,
+    last: false,
+  });
 
-    rows.push({
-      label: t('Fee-Developers'),
-      value: isCakeVault ? '0%' : '0.5%',
-      last: false,
-    });
-    rows.push({
-      label: t('Fee-HarvestFee'),
-      value: isCakeVault ? '0%' : '0.5%',
-      last: false,
-    });
+  rows.push({
+    label: t('Fee-HarvestFee'),
+    value: `${harvestFee}%`,
+    last: false,
+  });
 
-    rows.push({
-      label: t('Fee-TotalFee'),
-      value: isCakeVault ? '1%' : '4.5%',
-      last: true,
-    });
-  } else {
-    rows.push({
-      label: t('Fee-Holder'),
-      value: '3.06%',
-      last: false,
-    });
-
-    rows.push({
-      label: t('Fee-Treasury'),
-      value: '5.44%',
-      last: false,
-    });
-
-    rows.push({
-      label: t('Fee-Developers'),
-      value: '0.5%',
-      last: false,
-    });
-    rows.push({
-      label: t('Fee-HarvestFee'),
-      value: '0.5%',
-      last: false,
-    });
-
-    rows.push({
-      label: t('Fee-TotalFee'),
-      value: '4.5%',
-      last: true,
-    });
-  }
+  rows.push({
+    label: t('Fee-TotalFee'),
+    value: `${performanceFee}%`,
+    last: true,
+  });
 
   return <InterestTooltipContent rows={rows} />;
 });
@@ -146,12 +96,12 @@ export const FeeBreakdown = memo(
     );
     const performanceFee =
       isGovVault(vault) || BifiMaxis.includes(vault.id)
-        ? '0%'
+        ? 0
         : vault.id === 'cake-cakev2'
-        ? '1%'
+        ? 1
         : vault.updatedFees
-        ? '9.5%'
-        : '4.5%';
+        ? 9.5
+        : 4.5;
 
     return (
       <Box mt={3} p={2} className={classes.feeContainer}>
@@ -257,11 +207,17 @@ export const FeeBreakdown = memo(
               {t('Fee-Performance')}
               <IconWithTooltip
                 triggerClass={classes.tooltipTrigger}
-                content={<PerformanceFees performanceFee={performanceFee} vaultID={vault.id} />}
+                content={
+                  <PerformanceFees
+                    performanceFee={performanceFee}
+                    vaultID={vault.id}
+                    chainId={vault.chainId}
+                  />
+                }
               />
             </div>
             {/*TODO : add dynamic fee */}
-            <div className={classes.value}>{performanceFee}</div>
+            <div className={classes.value}>{`${performanceFee}%`}</div>
           </Grid>
           <Grid item xs={12}>
             <Box pt={1} className={classes.smallText}>
