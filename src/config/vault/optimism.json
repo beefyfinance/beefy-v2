@@ -84,7 +84,7 @@
     "tokenAddress": "0x7866C6072B09539fC0FDE82963846b80203d7beb",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
-    "earnedToken": "mooVelodromeAELIN-ETH",
+    "earnedToken": "mooVelodromeagEUR-USDC",
     "earnedTokenAddress": "0xe900d8b8F562CEB2B56b944Dabf64d285b1faFcA",
     "earnContractAddress": "0xe900d8b8F562CEB2B56b944Dabf64d285b1faFcA",
     "oracle": "lps",
