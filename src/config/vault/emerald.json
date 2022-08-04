@@ -271,36 +271,5 @@
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815",
     "createdAt": 1653071210,
     "network": "emerald"
-  },
-  {
-    "id": "valley-usdt-eth-pause",
-    "name": "evoETH-evoUSDT LP",
-    "token": "USDT-ETH VSLP",
-    "tokenAddress": "0x9de37Ccf7d908D91d29931417374cC76bAc72e73",
-    "tokenDecimals": 18,
-    "tokenProviderId": "valleyswap",
-    "earnedToken": "mooValleyUSDT-ETH",
-    "earnedTokenAddress": "0x3cf4fe3f469b0710E8a42e44B64c85DFc300f22A",
-    "earnContractAddress": "0x3cf4fe3f469b0710E8a42e44B64c85DFc300f22A",
-    "oracle": "lps",
-    "oracleId": "valley-usdt-eth",
-    "status": "eol",
-    "retireReason": "default",
-    "platformId": "valleyswap",
-    "assets": ["evoETH", "evoUSDT"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "withdrawalFee": "0%",
-    "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0xE9b38eD157429483EbF87Cf6C002cecA5fd66783",
-    "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0xE9b38eD157429483EbF87Cf6C002cecA5fd66783",
-    "createdAt": 1653007121,
-    "network": "emerald"
   }
 ]

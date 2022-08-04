@@ -1356,38 +1356,6 @@
     "retireReason": "tvl"
   },
   {
-    "id": "solarbeam-dai-usdc-eol",
-    "name": "DAI-USDC",
-    "token": "DAI-USDC LP",
-    "tokenAddress": "0xFE1b71BDAEE495dCA331D28F5779E87bd32FbE53",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solarbeam",
-    "earnedToken": "mooSolarDAI-USDC",
-    "earnedTokenAddress": "0x93583e1F4cdbA714FA4F8ddAD1d3b85C2CE1A213",
-    "earnContractAddress": "0x93583e1F4cdbA714FA4F8ddAD1d3b85C2CE1A213",
-    "oracle": "lps",
-    "oracleId": "solarbeam-dai-usdc",
-    "status": "eol",
-    "platformId": "solarbeam",
-    "assets": ["DAI", "USDC"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_HIGH",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "withdrawalFee": "0%",
-    "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844&outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
-    "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x80A16016cC4A2E6a2CACA8a4a498b1699fF0f844",
-    "network": "moonriver",
-    "createdAt": 1635792936,
-    "retireReason": "rewards"
-  },
-  {
     "id": "finn-finn-xcrmrk-eol",
     "name": "xcRMRK-FINN LP",
     "token": "xcRMRK-FINN LP",
