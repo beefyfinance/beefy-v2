@@ -98,8 +98,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "swapsicle",
     "earnedToken": "mooSicleGRPAE-AVAX",
-    "earnedTokenAddress": "0xA729488eEE3C28F1dd62E41729A92B9A8a04539C",
-    "earnContractAddress": "0xA729488eEE3C28F1dd62E41729A92B9A8a04539C",
+    "earnedTokenAddress": "0x5E55b1c38BC06d0d40434dC7fb6fa0E6D42E1380",
+    "earnContractAddress": "0x5E55b1c38BC06d0d40434dC7fb6fa0E6D42E1380",
     "oracle": "lps",
     "oracleId": "sicle-grape-mim",
     "status": "active",
@@ -117,7 +117,7 @@
     ],
     "addLiquidityUrl": "https://www.swapsicle.io/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0x5541D83EFaD1f281571B343977648B75d95cdAC2",
     "buyTokenUrl": "https://www.swapsicle.io/swap?inputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D&outputCurrency=0x5541D83EFaD1f281571B343977648B75d95cdAC2",
-    "createdAt": 1659178885,
+    "createdAt": 1659627890,
     "network": "avax"
   },
   {
