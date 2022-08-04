@@ -30,6 +30,36 @@
     "network": "optimism"
   },
   {
+    "id": "aavev3-op-wbtc",
+    "name": "WBTC",
+    "token": "WBTC",
+    "tokenAddress": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+    "tokenDecimals": 8,
+    "earnedToken": "mooAaveOpWBTC",
+    "earnedTokenAddress": "0x8e2cDf8c6477439B7C989e86B917D80871B92339",
+    "earnContractAddress": "0x8e2cDf8c6477439B7C989e86B917D80871B92339",
+    "oracle": "tokens",
+    "oracleId": "WBTC",
+    "status": "active",
+    "platformId": "aave",
+    "assets": ["WBTC"],
+    "strategyTypeId": "lending",
+    "withdrawalFee": "0.01%",
+    "updatedFees": true,
+    "risks": [
+      "COMPLEXITY_MID",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_HIGH",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://op.beets.fi/#/trade",
+    "createdAt": 1659634988,
+    "network": "optimism"
+  },
+  {
     "id": "aavev3-op-dai",
     "name": "DAI",
     "token": "DAI",
