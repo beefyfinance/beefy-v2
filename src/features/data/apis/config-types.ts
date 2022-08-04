@@ -36,6 +36,7 @@ export interface VaultConfig {
   removeLiquidityUrl?: string | null;
   depositFee?: string | null;
   refund?: boolean | null;
+  updatedFees?: boolean | null;
   refundContractAddress?: string | null;
   showWarning?: boolean | null;
   warning?: string | null;

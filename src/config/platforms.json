@@ -873,5 +873,10 @@
     "id": "radiant",
     "name": "Radiant",
     "filter": true
+  },
+  {
+    "id": "giddy",
+    "name": "Giddy",
+    "filter": true
   }
 ]
