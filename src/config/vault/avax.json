@@ -91,6 +91,36 @@
     "network": "avax"
   },
   {
+    "id": "sicle-grape-mim",
+    "name": "GRAPE-MIM LP",
+    "token": "GRAPE-MIM SLP",
+    "tokenAddress": "0x9076C15D7b2297723ecEAC17419D506AE320CbF1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "swapsicle",
+    "earnedToken": "mooSicleGRPAE-AVAX",
+    "earnedTokenAddress": "0x5E55b1c38BC06d0d40434dC7fb6fa0E6D42E1380",
+    "earnContractAddress": "0x5E55b1c38BC06d0d40434dC7fb6fa0E6D42E1380",
+    "oracle": "lps",
+    "oracleId": "sicle-grape-mim",
+    "status": "active",
+    "platformId": "grape",
+    "assets": ["GRAPE", "MIM"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://www.swapsicle.io/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0x5541D83EFaD1f281571B343977648B75d95cdAC2",
+    "buyTokenUrl": "https://www.swapsicle.io/swap?inputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D&outputCurrency=0x5541D83EFaD1f281571B343977648B75d95cdAC2",
+    "createdAt": 1659627890,
+    "network": "avax"
+  },
+  {
     "id": "sicle-btc.b-wavax",
     "name": "BTC.b-AVAX LP",
     "token": "BTC.b-AVAX SLP",
