@@ -13,6 +13,8 @@ import {
 import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
+import lodash from 'lodash';
+import { bluechipTokens } from '../../../helpers/utils';
 
 export const selectVaultById = createCachedSelector(
   (state: BeefyState) => state.entities.vaults.byId,
@@ -166,8 +168,12 @@ export const selectIsVaultBlueChip = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
     return (
-      vault.assetIds.every(assetId => selectIsTokenBluechip(state, assetId)) &&
-      vault.assetIds.some(assetId => !selectIsTokenStable(state, vault.chainId, assetId))
+      (vault.assetIds.length > 2 &&
+        vault.assetIds.some(assetId => selectIsTokenBluechip(state, assetId)) &&
+        lodash
+          .differenceWith(vault.assetIds, bluechipTokens, lodash.isEqual)
+          .every(assetId => selectIsTokenStable(state, vault.chainId, assetId))) ||
+      vault.assetIds.every(assetId => selectIsTokenBluechip(state, assetId))
     );
   },
   res => res
