@@ -86,7 +86,7 @@
     "network": "bsc",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/BNB/0x570a5d26f7765ecb712c0924e4de545b89fd43df",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?inputCurrency=BNB&outputCurrency=0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
-    "createdAt": 1658966787
+    "createdAt": 1659634989
   },
   {
     "id": "cakev2-mix-busd",
@@ -4920,7 +4920,7 @@
     "oracle": "lps",
     "oracleId": "cakev2-eps-bnb",
     "status": "eol",
-    "retireReason":"rewards",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["EPS", "BNB"],
     "strategyTypeId": "lp",
@@ -15373,7 +15373,7 @@
     "oracle": "lps",
     "oracleId": "cakev2-pex-wbnb",
     "status": "eol",
-    "retireReason":"rewards",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["PEX", "BNB"],
     "strategyTypeId": "lp",

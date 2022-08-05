@@ -106,6 +106,7 @@
     "platformId": "grape",
     "assets": ["GRAPE", "MIM"],
     "strategyTypeId": "lp",
+    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -117,7 +118,7 @@
     ],
     "addLiquidityUrl": "https://www.swapsicle.io/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0x5541D83EFaD1f281571B343977648B75d95cdAC2",
     "buyTokenUrl": "https://www.swapsicle.io/swap?inputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D&outputCurrency=0x5541D83EFaD1f281571B343977648B75d95cdAC2",
-    "createdAt": 1659627890,
+    "createdAt": 1659634990,
     "network": "avax"
   },
   {
