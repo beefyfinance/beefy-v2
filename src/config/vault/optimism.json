@@ -620,11 +620,12 @@
     "earnContractAddress": "0xe536F8141D8EB7B1f096934AF3329cB581bFe995",
     "oracle": "tokens",
     "oracleId": "soUSDC",
-    "status": "paused",
+    "status": "active",
     "pauseReason": "upgrade",
     "platformId": "stargate",
     "assets": ["soUSDC"],
     "strategyTypeId": "single-lp",
+    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -636,7 +637,7 @@
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://stargate.finance/pool/usdc-optimism",
     "buyTokenUrl": "https://app.uniswap.org/#/swap?chain=optimism&inputCurrency=ETH&outputCurrency=0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
-    "createdAt": 1657200120,
+    "createdAt": 1659634991,
     "network": "optimism"
   },
   {
@@ -651,9 +652,10 @@
     "earnContractAddress": "0x79149B500f0d796aA7f85e0170d16C7e79BAd3C5",
     "oracle": "tokens",
     "oracleId": "soETH",
-    "status": "paused",
+    "status": "active",
     "pauseReason": "upgrade",
     "platformId": "stargate",
+    "updatedFees": true,
     "assets": ["soETH"],
     "strategyTypeId": "single-lp",
     "risks": [
@@ -667,7 +669,7 @@
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://stargate.finance/pool/eth-optimism",
     "buyTokenUrl": "https://app.uniswap.org/#/swap?chain=optimism&inputCurrency=0x7F5c764cBc14f9669B88837ca1490cCa17c31607&outputCurrency=ETH",
-    "createdAt": 1657200119,
+    "createdAt": 1659634992,
     "network": "optimism"
   },
   {

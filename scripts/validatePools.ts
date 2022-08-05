@@ -24,6 +24,8 @@ const overrides = {
   'fuse-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
   'moonbeam-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
   'scream-frax': { vaultOwner: undefined }, // Rescue
+  'baby-sol-bnb': { beefyFeeRecipient: undefined }, // 0x0
+  'sicle-grape-mim': { beefyFeeRecipient: undefined },
 };
 
 const oldValidOwners = [
