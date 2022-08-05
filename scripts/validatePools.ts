@@ -3,7 +3,7 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './utils';
-import { chainIds, chainRpcs, getVaultsForChain } from './config';
+import { chainIds, chainRpcs, getBoostsForChain, getVaultsForChain } from './config';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 import platforms from '../src/config/platforms.json';
@@ -79,7 +79,8 @@ const validatePools = async () => {
 };
 
 const validateSingleChain = async (chainId, uniquePoolId) => {
-  let pools = await getVaultsForChain(chainId);
+  let [pools, boosts] = await Promise.all([getVaultsForChain(chainId), getBoostsForChain(chainId)]);
+
   if (chainId === 'one') {
     if (pools.length === 22) {
       console.log('Skip Harmony validation');
@@ -96,6 +97,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   //Governance pools should be separately verified
   pools = pools.filter(pool => !pool.isGovVault);
 
+  const poolIds = new Set(pools.map(pool => pool.id));
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
@@ -231,6 +233,15 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     updates = isVaultOwnerCorrect(pool, chainId, vaultOwner, updates);
     updates = isBeefyFeeRecipientCorrect(pool, chainId, beefyFeeRecipient, updates);
   });
+
+  // Boosts
+  boosts.forEach(boost => {
+    if (!poolIds.has(boost.poolId)) {
+      console.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
+      exitCode = 1;
+    }
+  });
+
   if (!isEmpty(updates)) {
     exitCode = 1;
   }
