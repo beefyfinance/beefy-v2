@@ -48,7 +48,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_HIGH",
+      "IL_LOW",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -1553,7 +1553,7 @@
     "oracle": "lps",
     "oracleId": "solarbeam-xcksm-stksm",
     "status": "eol",
-    "retireReason":"rewards",
+    "retireReason": "rewards",
     "platformId": "solarbeam",
     "assets": ["xcKSM", "stKSM"],
     "strategyTypeId": "lp",
