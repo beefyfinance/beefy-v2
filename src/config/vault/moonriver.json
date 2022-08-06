@@ -30,6 +30,37 @@
     "network": "moonriver"
   },
   {
+    "id": "solarbeam-wstksm-xcksm",
+    "name": "wstKSM-xcKSM",
+    "token": "wstKSM-xcKSM LP",
+    "tokenAddress": "0x5568872bc43Bae3757F697c0e1b241b62Eddcc17",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solarbeam",
+    "earnedToken": "mooSolarwstKM-xcKSM",
+    "earnedTokenAddress": "0x29554e14B823f8b7C2D84Ae0126bF56645Ad6ad1",
+    "earnContractAddress": "0x29554e14B823f8b7C2D84Ae0126bF56645Ad6ad1",
+    "oracle": "lps",
+    "oracleId": "solarbeam-wstksm-xcksm",
+    "status": "active",
+    "platformId": "solarbeam",
+    "assets": ["wstKSM", "xcKSM"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "updatedFees": true,
+    "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080&outputCurrency=0x3bfd113ad0329a7994a681236323fb16E16790e3",
+    "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080/0x3bfd113ad0329a7994a681236323fb16E16790e3",
+    "network": "moonriver",
+    "createdAt": 1659826225
+  },
+  {
     "id": "solarbeam-xckbtc-wbtc",
     "name": "xcKBTC-WBTC LP",
     "token": "xcKBTC-WBTC LP",
