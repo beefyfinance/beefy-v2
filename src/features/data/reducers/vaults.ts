@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
-import { isEmpty, sortBy } from 'lodash';
+import { isEmpty, sortBy, differenceWith, isEqual } from 'lodash';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -18,6 +18,7 @@ import {
 } from '../selectors/tokens';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
+import { selectChainById } from '../selectors/chains';
 
 /**
  * State containing Vault infos
@@ -286,6 +287,7 @@ function getVaultTagsAndSafetyScore(
   apiVault: VaultConfig
 ): { tags: VaultTag[]; score: number } {
   const tags: VaultTag[] = [];
+  const chain = selectChainById(state, chainId);
   if (
     apiVault.assets.every(tokenId => {
       return selectIsTokenStable(state, chainId, tokenId);
@@ -303,7 +305,7 @@ function getVaultTagsAndSafetyScore(
   }
 
   if (
-    apiVault.assets.every(tokenId => {
+    differenceWith(apiVault.assets, chain.stableCoins, isEqual).every(tokenId => {
       return selectIsTokenBluechip(state, tokenId);
     })
   ) {

@@ -168,8 +168,7 @@ export const selectIsVaultBlueChip = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
     return (
-      (vault.assetIds.length > 2 &&
-        vault.assetIds.some(assetId => selectIsTokenBluechip(state, assetId)) &&
+      (vault.assetIds.some(assetId => selectIsTokenBluechip(state, assetId)) &&
         lodash
           .differenceWith(vault.assetIds, bluechipTokens, lodash.isEqual)
           .every(assetId => selectIsTokenStable(state, vault.chainId, assetId))) ||
