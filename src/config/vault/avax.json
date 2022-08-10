@@ -2570,7 +2570,7 @@
     "oracleId": "curve-avax-ren",
     "status": "active",
     "platformId": "curve",
-    "assets": ["WBTC", "renBTC"],
+    "assets": ["WBTCe", "renBTC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
