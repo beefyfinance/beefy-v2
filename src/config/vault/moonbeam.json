@@ -53,7 +53,7 @@
       "MCAP_HIGH",
       "AUDIT",
       "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "withdrawalFee": "0%",
     "updatedFees": true,
@@ -85,7 +85,7 @@
       "MCAP_HIGH",
       "AUDIT",
       "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "withdrawalFee": "0%",
     "updatedFees": true,
