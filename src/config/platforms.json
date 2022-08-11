@@ -878,5 +878,10 @@
     "id": "giddy",
     "name": "Giddy",
     "filter": true
+  },
+  {
+    "id": "solidly",
+    "name": "Solidly",
+    "filter": true
   }
 ]
