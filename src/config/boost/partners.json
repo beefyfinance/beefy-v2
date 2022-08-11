@@ -1,4 +1,12 @@
 {
+  "stader": {
+    "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon and Solana.",
+    "website": "https://polygon.staderlabs.com/liquid-staking/maticx",
+    "social": {
+      "telegram": "https://discord.com/invite/ReasyJB4Rq",
+      "twitter": "https://twitter.com/stader_polygon"
+    }
+  },
   "swapsicle": {
     "text": "Swapsicle is a decentralised exchange built on the avalanche blockchain offering swaps, farming and staking opportunities.\n\nSwapsicle DEX is built by the community and for the community meaning POPS holders are rewarded for using the platform.",
     "website": "https://www.swapsicle.io/en/swap",
