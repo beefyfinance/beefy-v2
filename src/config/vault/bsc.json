@@ -8686,26 +8686,6 @@
     "createdAt": 1614452547
   },
   {
-    "id": "cake-bry-bnb",
-    "name": "BRY-BNB LP",
-    "token": "BRY-BNB LP",
-    "tokenAddress": "0x5E3CD27F36932Bc0314aC4e2510585798C34a2fC",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooPancakeBRYBNB",
-    "earnedTokenAddress": "0x578C066b5c7289f8Ba7c4DB43c110F19D7c51E03",
-    "earnContractAddress": "0x578C066b5c7289f8Ba7c4DB43c110F19D7c51E03",
-    "oracle": "lps",
-    "oracleId": "cake-bry-bnb",
-    "status": "eol",
-    "platformId": "pancakeswap",
-    "assets": ["BRY", "BNB"],
-    "strategyTypeId": "lp",
-    "removeLiquidityUrl": "https://v1exchange.pancakeswap.finance/#/remove/BNB/0xf859Bf77cBe8699013d6Dbc7C2b926Aaf307F830",
-    "network": "bsc",
-    "createdAt": 1613506147
-  },
-  {
     "id": "cake-zee-bnb",
     "name": "ZEE-BNB LP",
     "token": "ZEE-BNB LP",
