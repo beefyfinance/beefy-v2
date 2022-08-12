@@ -910,6 +910,35 @@
     "createdAt": 1657018680
   },
   {
+    "id": "curve-op-f-sbtc",
+    "name": "sBTC/WBTC",
+    "token": "sBTC-f",
+    "tokenAddress": "0x9F2fE3500B1a7E285FDc337acacE94c480e00130",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveFsBTC",
+    "earnedTokenAddress": "0x25DE69dA4469A96974FaE79d0C41366A63317FDC",
+    "earnContractAddress": "0x25DE69dA4469A96974FaE79d0C41366A63317FDC",
+    "oracle": "lps",
+    "oracleId": "curve-op-f-sbtc",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["sBTC", "WBTC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://optimism.curve.fi/factory/12/deposit",
+    "network": "optimism",
+    "createdAt": 1660288888
+  },
+  {
     "id": "curve-op-f-susd",
     "name": "sUSD/DAI/USDC/USDT",
     "token": "sUSD3CRV-f",
