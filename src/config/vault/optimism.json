@@ -910,6 +910,35 @@
     "createdAt": 1657018680
   },
   {
+    "id": "curve-op-f-seth",
+    "name": "sETH/ETH",
+    "token": "sETH-f",
+    "tokenAddress": "0x7Bc5728BC2b59B45a58d9A576E2Ffc5f0505B35E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveFsETH",
+    "earnedTokenAddress": "0x92651E1bBfE0f8423119AfC4B0610C747Fa125a1",
+    "earnContractAddress": "0x92651E1bBfE0f8423119AfC4B0610C747Fa125a1",
+    "oracle": "lps",
+    "oracleId": "curve-op-f-seth",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["sETH", "ETH"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://optimism.curve.fi/factory/10/deposit",
+    "network": "optimism",
+    "createdAt": 1660548010
+  },
+  {
     "id": "curve-op-f-sbtc",
     "name": "sBTC/WBTC",
     "token": "sBTC-f",
