@@ -922,7 +922,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-petho",
     "status": "active",
-    "platformId": "velodrome",
+    "platformId": "ripae",
     "assets": ["pETHo", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -942,8 +942,8 @@
   },
   {
     "id": "ripae-weth-setho",
-    "name": "sETHo-ETH sLP",
-    "token": "sETHo-ETH sLP",
+    "name": "sETHo-ETH vLP",
+    "token": "sETHo-ETH vLP",
     "tokenAddress": "0x9629a694C041f3b10cE974DC37eF4dD4596c4F54",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
@@ -953,7 +953,7 @@
     "oracle": "lps",
     "oracleId": "velodrome-weth-setho",
     "status": "active",
-    "platformId": "velodrome",
+    "platformId": "ripae",
     "assets": ["sETHo", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -995,6 +995,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "updatedFees": true,
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://optimism.curve.fi/factory/10/deposit",
     "network": "optimism",
@@ -1024,6 +1025,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
+    "updatedFees": true,
     "withdrawalFee": "0%",
     "addLiquidityUrl": "https://optimism.curve.fi/factory/12/deposit",
     "network": "optimism",
