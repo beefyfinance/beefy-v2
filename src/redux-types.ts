@@ -4,7 +4,6 @@ import { ApyState } from './features/data/reducers/apy';
 import { BoostsState } from './features/data/reducers/boosts';
 import { BuybackState } from './features/data/reducers/buyback';
 import { ChainsState } from './features/data/reducers/chains';
-import { DataLoaderState } from './features/data/reducers/data-loader';
 import { FilteredVaultsState } from './features/data/reducers/filtered-vaults';
 import { PartnersState } from './features/data/reducers/partners';
 import { PlatformsState } from './features/data/reducers/platforms';
@@ -24,6 +23,8 @@ import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
 import { InfoCardsState } from './features/data/reducers/info-cards';
 import { BridgeModalState } from './features/data/reducers/wallet/bridge-modal';
+import { OnRampTypes } from './features/data/reducers/on-ramp-types';
+import { DataLoaderState } from './features/data/reducers/data-loader-types';
 
 export interface BeefyState {
   entities: {
@@ -56,6 +57,7 @@ export interface BeefyState {
     withdraw: WithdrawState;
     boostModal: BoostModalState;
     bridgeModal: BridgeModalState;
+    onRamp: OnRampTypes;
   };
 }
 

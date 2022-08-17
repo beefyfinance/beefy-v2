@@ -26,7 +26,6 @@ import { BeefyState } from '../../redux-types';
 import { LanguageDropdown } from '../LanguageDropdown';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { NetworkStatus } from '../NetworkStatus';
-import { Transak } from '../Transak';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../helpers/big-number';
 
@@ -80,7 +79,15 @@ const NavLinks = () => {
           </a>
         </div>
       ))}
-      <Transak className={classes.navLink}>{t('Header-Buy')}</Transak>
+      <NavLink
+        activeClassName={classes.active}
+        exact={true}
+        className={classes.navLink}
+        key={'onramp'}
+        to="/onramp"
+      >
+        {t('Header-OnRamp')}
+      </NavLink>
     </>
   );
 };

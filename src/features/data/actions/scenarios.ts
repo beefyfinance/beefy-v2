@@ -18,7 +18,6 @@ import { recomputeBoostStatus } from '../reducers/boosts';
 import { fetchPartnersConfig } from './partners';
 import { fetchAddressBookAction, fetchAllAddressBookAction } from './tokens';
 import { fetchAllZapsAction } from './zap';
-import { isInitialLoader } from '../reducers/data-loader';
 import { VaultEntity } from '../entities/vault';
 import { selectVaultById } from '../selectors/vaults';
 import { initiateDepositForm } from './deposit';
@@ -31,6 +30,7 @@ import { MinterEntity } from '../entities/minter';
 import { selectMinterById } from '../selectors/minters';
 import { initiateBridgeForm } from './bridge';
 import { fetchPlatforms } from './platforms';
+import { isInitialLoader } from '../reducers/data-loader-types';
 
 type CapturedFulfilledActionGetter = Promise<() => Action>;
 export interface CapturedFulfilledActions {

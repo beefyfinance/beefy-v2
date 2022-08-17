@@ -5,6 +5,7 @@ import { createFactoryWithCacheByChain } from '../utils/factory-utils';
 import { ChainEntity } from '../entities/chain';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet/wallet-connection-types';
 import { BridgeApi } from './bridge/bridge';
+import { IOnRampApi } from './on-ramp/on-ramp-types';
 
 // todo: maybe don't instanciate here, idk yet
 const beefyApi = new BeefyAPI();
@@ -69,6 +70,7 @@ export const getAllowanceApi = createFactoryWithCacheByChain(async chain => {
 });
 
 let walletConnection: IWalletConnectionApi | null = null;
+
 export async function getWalletConnectionApiInstance(
   options?: WalletConnectionOptions
 ): Promise<IWalletConnectionApi> {
@@ -91,3 +93,15 @@ export const getMintersApi = createFactoryWithCacheByChain(async chain => {
   console.debug(`Instanciating MinterAPI for chain ${chain.id}`);
   return new MinterApi(web3, chain);
 });
+
+let onRampApiInstance: IOnRampApi | null = null;
+
+export async function getOnRampApi(): Promise<IOnRampApi> {
+  if (onRampApiInstance) {
+    return onRampApiInstance;
+  }
+
+  const { OnRampApi } = await import('./on-ramp/on-ramp');
+  onRampApiInstance = new OnRampApi();
+  return onRampApiInstance;
+}

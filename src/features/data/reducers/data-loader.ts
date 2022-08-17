@@ -27,66 +27,12 @@ import {
 } from '../actions/wallet';
 import { initiateWithdrawForm } from '../actions/withdraw';
 import { fetchAllZapsAction } from '../actions/zap';
-import { ChainEntity } from '../entities/chain';
 import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchAllInfoCards } from '../actions/info-cards';
 import { initiateBridgeForm } from '../actions/bridge';
 import { fetchPlatforms } from '../actions/platforms';
-
-/**
- * because we want to be smart about data loading
- * I think we need a dedicated "loading" slice
- * where we can ask which data is loading and which data is loaded
- * this will simplify other slices as they can focus on data
- * and this slice can focus on data fetching
- * maybe it's dumb though, but it can be refactored
- **/
-interface LoaderStateInit {
-  alreadyLoadedOnce: boolean;
-  status: 'init';
-  error: null;
-}
-
-interface LoaderStatePending {
-  alreadyLoadedOnce: boolean;
-  status: 'pending';
-  error: null;
-}
-
-interface LoaderStateRejected {
-  alreadyLoadedOnce: boolean;
-  status: 'rejected';
-  error: string;
-}
-
-interface LoaderStateFulfilled {
-  alreadyLoadedOnce: boolean;
-  status: 'fulfilled';
-  error: null;
-}
-
-export type LoaderState =
-  | LoaderStateInit
-  | LoaderStatePending
-  | LoaderStateRejected
-  | LoaderStateFulfilled;
-
-// some example of a type guard
-export function isFulfilled(state: LoaderState): state is LoaderStateFulfilled {
-  return state.status === 'fulfilled';
-}
-
-export function isPending(state: LoaderState): state is LoaderStatePending {
-  return state.status === 'pending';
-}
-
-export function isInitialLoader(state: LoaderState): state is LoaderStateInit {
-  return state.status === 'init';
-}
-
-export function isRejected(state: LoaderState): state is LoaderStateRejected {
-  return state.status === 'rejected';
-}
+import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
+import { DataLoaderState, LoaderState } from './data-loader-types';
 
 const dataLoaderStateInit: LoaderState = {
   alreadyLoadedOnce: false,
@@ -109,41 +55,6 @@ const dataLoaderStateInitByChainId: DataLoaderState['byChainId']['bsc'] = {
   allowance: dataLoaderStateInit,
   addressBook: dataLoaderStateInit,
 };
-
-export interface DataLoaderState {
-  instances: {
-    wallet: boolean;
-  };
-  statusIndicator: {
-    open: boolean;
-  };
-  global: {
-    chainConfig: LoaderState;
-    prices: LoaderState;
-    apy: LoaderState;
-    vaults: LoaderState;
-    boosts: LoaderState;
-    wallet: LoaderState;
-    zaps: LoaderState;
-    depositForm: LoaderState;
-    withdrawForm: LoaderState;
-    boostForm: LoaderState;
-    addressBook: LoaderState;
-    minters: LoaderState;
-    minterForm: LoaderState;
-    infoCards: LoaderState;
-    bridgeForm: LoaderState;
-    platforms: LoaderState;
-  };
-  byChainId: {
-    [chainId: ChainEntity['id']]: {
-      contractData: LoaderState;
-      balance: LoaderState;
-      allowance: LoaderState;
-      addressBook: LoaderState;
-    };
-  };
-}
 
 export const initialDataLoaderState: DataLoaderState = {
   instances: {
@@ -169,6 +80,7 @@ export const initialDataLoaderState: DataLoaderState = {
     infoCards: dataLoaderStateInit,
     bridgeForm: dataLoaderStateInit,
     platforms: dataLoaderStateInit,
+    onRamp: dataLoaderStateInit,
   },
   byChainId: {},
 };
@@ -286,6 +198,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);
+    addGlobalAsyncThunkActions(builder, fetchOnRampSupportedProviders, 'onRamp', true);
     addByChainAsyncThunkActions(builder, fetchAllContractDataByChainAction, ['contractData']);
     addByChainAsyncThunkActions(builder, fetchAllBalanceAction, ['balance']);
     addByChainAsyncThunkActions(builder, fetchAllAllowanceAction, ['allowance']);

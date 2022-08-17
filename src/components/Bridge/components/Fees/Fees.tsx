@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { isFulfilled } from '../../../../features/data/reducers/data-loader';
 import ContentLoader from 'react-content-loader';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { selectBridgeBifiDestChainData } from '../../../../features/data/selectors/bridge';
 import { useAppSelector } from '../../../../store';
 import { styles } from './styles';
+import { isFulfilled } from '../../../../features/data/reducers/data-loader-types';
 
 const useStyles = makeStyles(styles);
 
