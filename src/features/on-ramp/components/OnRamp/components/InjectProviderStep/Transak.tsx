@@ -34,7 +34,7 @@ export const Transak = memo(function () {
     const api = await getOnRampApi();
     return await api.getUrl(params);
   }, [fiatAmount, fiat, tokenAmount, token, amountType, network, walletAddress, paymentMethod]);
-  const { value: url, error: urlError } = useAsync(fetchUrl, null);
+  const { value: url, error: urlError, status: urlStatus } = useAsync(fetchUrl, null);
 
   return url ? (
     <iframe
@@ -49,7 +49,10 @@ export const Transak = memo(function () {
   ) : urlError ? (
     urlError
   ) : (
-    <LoadingIndicator />
+    <>
+      <LoadingIndicator />
+      {urlStatus}
+    </>
   );
 });
 
