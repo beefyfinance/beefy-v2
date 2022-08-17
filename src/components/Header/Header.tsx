@@ -46,7 +46,7 @@ const BifiPrice = connect((state: BeefyState) => {
       target="_blank"
       rel="noreferrer"
     >
-      <img alt="BIFI" src={require(`../../images/BIFI-TOKEN.svg`).default} />
+      <img alt="BIFI" src={require(`../../images/bifi-logos/BIFI-TOKEN.svg`).default} />
       {formatBigUsd(beefyPrice)}
     </a>
   );
@@ -137,8 +137,8 @@ export const Header = connect((state: BeefyState) => {
                     alt="BIFI"
                     src={
                       isMobile
-                        ? require(`../../images/header-logo-notext.svg`).default
-                        : require(`../../images/header-logo.svg`).default
+                        ? require(`../../images/bifi-logos/header-logo-notext.svg`).default
+                        : require(`../../images/bifi-logos/header-logo.svg`).default
                     }
                   />
                 </Link>

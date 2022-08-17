@@ -4,12 +4,13 @@ import { TokenAllowance } from '../apis/allowance/allowance-types';
 import { FetchAllBalancesResult } from '../apis/balance/balance-types';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { getAllowanceApi, getBalanceApi, getContractDataApi } from '../apis/instances';
-import { getEligibleZapOptions, ZapOptions } from '../apis/zap';
+import { getEligibleZapOptions } from '../apis/zap/zap';
 import { isTokenErc20, TokenEntity } from '../entities/token';
 import { isGovVault, isStandardVault, VaultEntity } from '../entities/vault';
 import { selectChainById } from '../selectors/chains';
 import { selectTokenByAddress } from '../selectors/tokens';
 import { selectVaultById } from '../selectors/vaults';
+import { ZapOptions } from '../apis/zap/zap-types';
 
 interface InitWithdrawFormParams {
   vaultId: VaultEntity['id'];

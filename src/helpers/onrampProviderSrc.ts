@@ -1,4 +1,4 @@
-const requireContext = require.context('../images/onramp-providers', false, /\.svg$/);
+const requireContext = require.context('../images/onramp-providers/icons', false, /\.svg$/);
 const providerToPath = Object.fromEntries(
   requireContext.keys().map(path => [path.substring(2, path.lastIndexOf('.')).toLowerCase(), path])
 );

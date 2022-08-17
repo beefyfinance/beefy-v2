@@ -78,7 +78,7 @@ const _Steps = ({
                 <>
                   <img
                     className={classes.icon}
-                    src={require('../../images/error.svg').default}
+                    src={require('../../images/icons/error.svg').default}
                     alt="error"
                   />
                   {t('Transactn-Error')}

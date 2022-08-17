@@ -36,6 +36,7 @@ export interface VaultConfig {
   removeLiquidityUrl?: string | null;
   depositFee?: string | null;
   refund?: boolean | null;
+  updatedFees?: boolean | null;
   refundContractAddress?: string | null;
   showWarning?: boolean | null;
   warning?: string | null;
@@ -119,6 +120,7 @@ export interface ZapConfig {
   ammRouter: string;
   ammFactory: string;
   ammPairInitHash: string;
+  type?: 'uniswapv2' | 'solidly';
   withdrawEstimateMode?: 'getAmountOut' | 'getAmountsOut' | 'getAmountOutWithFee';
   withdrawEstimateFee?: string;
   lpProviderFee: number;

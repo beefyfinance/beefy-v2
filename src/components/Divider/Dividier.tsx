@@ -1,4 +1,4 @@
-import { ReactComponent as ArrowDown } from '../../images/arrowDown.svg';
+import { ReactComponent as ArrowDown } from '../../images/icons/arrowDown.svg';
 import { Box, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { memo } from 'react';

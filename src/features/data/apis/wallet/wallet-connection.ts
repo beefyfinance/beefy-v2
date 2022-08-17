@@ -14,16 +14,25 @@ import { createEIP1193Provider, WalletInit } from '@web3-onboard/common';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
+  protected onboardWalletInitializers: WalletInit[] | null;
 
   constructor(protected options: WalletConnectionOptions) {
     this.onboard = null;
+    this.onboardWalletInitializers = null;
+  }
+
+  private getOnboardWalletInitializers(): WalletInit[] {
+    if (this.onboardWalletInitializers === null) {
+      this.onboardWalletInitializers = WalletConnectionApi.createOnboardWalletInitializers();
+    }
+    return this.onboardWalletInitializers;
   }
 
   /**
    * Create list of wallet modules for Onboard
    * @private
    */
-  private static createOnboardWallets() {
+  private static createOnboardWalletInitializers() {
     const injectedWallets = createInjectedWallets({
       custom: [
         {
@@ -179,11 +188,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    */
   private createOnboard() {
     const onboard = Onboard({
-      wallets: WalletConnectionApi.createOnboardWallets(),
+      wallets: this.getOnboardWalletInitializers(),
       appMetadata: {
         name: 'Beefy Finance',
-        icon: require(`../../../../images/header-logo-notext.svg`).default,
-        logo: require(`../../../../images/header-logo.svg`).default,
+        icon: require(`../../../../images/bifi-logos/header-logo-notext.svg`).default,
+        logo: require(`../../../../images/bifi-logos/header-logo.svg`).default,
         description:
           'Beefy is a Decentralized, Multichain Yield Optimizer that allows its users to earn compound interest on their crypto holdings. Beefy earns you the highest APYs with safety and efficiency in mind.',
         gettingStartedGuide: 'https://docs.beefy.finance/',
@@ -298,6 +307,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // Initialize onboard if needed
     const onboard = this.getOnboard();
+
+    // Init wallets now; rather than in onboard.connect()
+    const walletInits = this.getOnboardWalletInitializers();
+    onboard.state.actions.setWalletModules(walletInits);
 
     // Last selected wallet must be valid
     const lastSelectedWalletExists =

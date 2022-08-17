@@ -168,7 +168,11 @@ function addContractDataToState(
       vault.chainId,
       vault.depositTokenAddress
     );
-    const totalStakedInUsd = boostContractData.totalSupply.times(stakedTokenPrice);
+
+    const ppfs =
+      vaultDataByVaultId[boost.vaultId]?.pricePerFullShare ||
+      selectVaultPricePerFullShare(state, boost.vaultId);
+    const totalStakedInUsd = boostContractData.totalSupply.times(stakedTokenPrice).times(ppfs);
     const yearlyRewardsInUsd = boostContractData.rewardRate
       .times(3600 * 24 * 365)
       .times(earnedPrice);
