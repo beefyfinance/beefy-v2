@@ -34,7 +34,7 @@ export const Binance = memo(function () {
     const api = await getOnRampApi();
     return await api.getUrl(params);
   }, [fiatAmount, fiat, token, network, paymentMethod, walletAddress]);
-  const { value: url } = useAsync(fetchUrl, null);
+  const { value: url, error: urlError } = useAsync(fetchUrl, null);
 
   return url ? (
     <iframe
@@ -46,6 +46,8 @@ export const Binance = memo(function () {
       className={classes.iframe}
       allow="payment"
     />
+  ) : urlError ? (
+    urlError
   ) : (
     <LoadingIndicator />
   );
