@@ -7,6 +7,8 @@ export const styles = (theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center' as const,
+    width: '100%',
+    height: '100%',
   },
   circle: {
     width: '64px',

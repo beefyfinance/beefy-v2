@@ -4,9 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../../../../store';
 import { selectSelectedQuote } from '../../../../../data/selectors/on-ramp';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
-import { useAsync } from '../../../../../../helpers/useAsync';
 import { PROVIDERS } from '../../providers';
-import { LoadingIndicator } from '../LoadingIndicator';
+import { ProviderFrame } from './ProviderFrame';
 
 export const InjectProviderStep = memo(function () {
   const quote = useAppSelector(selectSelectedQuote);
@@ -29,12 +28,11 @@ const ProviderNotSupported = memo<{ provider: string }>(function ({ provider }) 
 });
 
 const Provider = memo<{ provider: string }>(function ({ provider }) {
-  const { title, loader } = PROVIDERS[provider];
-  const { value: ProviderComponent } = useAsync(loader);
+  const { title } = PROVIDERS[provider];
 
   return (
     <Step title={title} backStep={FormStep.InputAmount} noPadding={true}>
-      {ProviderComponent ? <ProviderComponent /> : <LoadingIndicator />}
+      <ProviderFrame />
     </Step>
   );
 });

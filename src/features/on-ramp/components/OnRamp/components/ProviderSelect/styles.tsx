@@ -41,9 +41,7 @@ export const styles = (theme: Theme) => ({
   iconLoading: {
     background: 'rgba(255, 255, 255, 0.12);',
   },
-  iconProvider: {
-    background: 'red',
-  },
+  iconProvider: {},
   provider: {
     marginRight: '8px',
   },

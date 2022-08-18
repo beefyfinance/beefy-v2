@@ -8,4 +8,7 @@ export const styles = (theme: Theme) => ({
     borderBottomLeftRadius: '12px',
     borderBottomRightRadius: '12px',
   },
+  error: {
+    padding: '24px',
+  },
 });

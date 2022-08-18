@@ -428,6 +428,7 @@
   "OnRamp-NetworkStep-Title": "What network?",
   "OnRamp-AmountStep-Title": "How much do you want to buy?",
   "OnRamp-FiatStep-Title": "Select a FIAT currency",
+  "OnRamp-InjectProviderStep-Error": "Failed to connect to {{provider}}. Please try again.",
   "OnRamp-SelectProviderStep-Title": "Select a Provider",
   "OnRamp-SearchInput-Placeholder": "Search...",
   "OnRamp-SearchableList-NoMatches": "No matches.",
