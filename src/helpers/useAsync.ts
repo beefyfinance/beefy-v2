@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { miniSerializeError, SerializedError } from '@reduxjs/toolkit';
 
 export function useAsync<T>(
   asyncFunction: () => Promise<T>,
@@ -7,7 +8,7 @@ export function useAsync<T>(
 ) {
   const [status, setStatus] = useState('idle');
   const [value, setValue] = useState<T>(initialValue);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<SerializedError | null>(null);
 
   const execute = useCallback(() => {
     setStatus('pending');
@@ -18,7 +19,7 @@ export function useAsync<T>(
         setStatus('success');
       })
       .catch(error => {
-        setError(error);
+        setError(miniSerializeError(error));
         setStatus('error');
       });
   }, [asyncFunction]);

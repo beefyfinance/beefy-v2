@@ -35,7 +35,7 @@ export const ProviderFrame = memo(function () {
     <ErrorIndicator
       className={classes.error}
       title={t('OnRamp-InjectProviderStep-Error', { provider: title })}
-      content={urlError}
+      content={urlError.message || 'Unknown error'}
     />
   ) : (
     <>
