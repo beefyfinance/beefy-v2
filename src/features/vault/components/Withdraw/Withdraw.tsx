@@ -15,7 +15,6 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
 import { useStepper } from '../../../../components/Steps/hooks';
-import { Step } from '../../../../components/Steps/types';
 import { formatBigNumberSignificant } from '../../../../helpers/format';
 import { initWithdrawForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -62,6 +61,7 @@ import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
+import { stepperActions } from '../../../data/reducers/wallet/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -129,7 +129,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
-  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
+  const [startStepper, isStepping] = useStepper();
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
@@ -155,7 +155,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const handleWithdraw = () => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -164,52 +163,66 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     }
 
     if (isGovVault(vault)) {
-      steps.push({
-        step: 'withdraw',
-        message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-        action: walletActions.unstakeGovVault(vault, formState.amount),
-        pending: false,
-      });
+      dispatch(
+        stepperActions.addStep({
+          step: {
+            step: 'withdraw',
+            message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+            action: walletActions.unstakeGovVault(vault, formState.amount),
+            pending: false,
+          },
+        })
+      );
     } else {
       if (formState.isZap) {
         if (needsApproval && formState.zapEstimate) {
-          steps.push({
-            step: 'approve',
-            message: t('Vault-ApproveMsg'),
-            action: walletActions.approval(earnedToken, spenderAddress),
-            pending: false,
-          });
+          dispatch(
+            stepperActions.addStep({
+              step: {
+                step: 'approve',
+                message: t('Vault-ApproveMsg'),
+                action: walletActions.approval(earnedToken, spenderAddress),
+                pending: false,
+              },
+            })
+          );
         }
-
-        steps.push({
-          step: 'withdraw',
-          message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-          action: formState.isZapSwap
-            ? walletActions.beefOutAndSwap(
-                vault,
-                formState.amount,
-                formState.zapOptions,
-                formState.zapEstimate,
-                formState.slippageTolerance
-              )
-            : walletActions.beefOut(vault, formState.amount, formState.zapOptions),
-          pending: false,
-        });
+        dispatch(
+          stepperActions.addStep({
+            step: {
+              step: 'withdraw',
+              message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+              action: formState.isZapSwap
+                ? walletActions.beefOutAndSwap(
+                    vault,
+                    formState.amount,
+                    formState.zapOptions,
+                    formState.zapEstimate,
+                    formState.slippageTolerance
+                  )
+                : walletActions.beefOut(vault, formState.amount, formState.zapOptions),
+              pending: false,
+            },
+          })
+        );
       } else {
-        steps.push({
-          step: 'withdraw',
-          message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
-          action: walletActions.withdraw(vault, formState.amount, formState.max),
-          pending: false,
-        });
+        dispatch(
+          stepperActions.addStep({
+            step: {
+              step: 'withdraw',
+              message: t('Vault-TxnConfirm', { type: t('Withdraw-noun') }),
+              action: walletActions.withdraw(vault, formState.amount, formState.max),
+              pending: false,
+            },
+          })
+        );
       }
     }
 
-    startStepper(steps);
+    startStepper(chain.id);
   };
 
   const handleClaim = () => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -220,18 +233,21 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       return;
     }
 
-    steps.push({
-      step: 'claim-gov',
-      message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
-      action: walletActions.claimGovVault(vault),
-      pending: false,
-    });
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'claim-gov',
+          message: t('Vault-TxnConfirm', { type: t('Claim-noun') }),
+          action: walletActions.claimGovVault(vault),
+          pending: false,
+        },
+      })
+    );
 
-    startStepper(steps);
+    startStepper(chain.id);
   };
 
   const handleExit = () => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -241,15 +257,18 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     if (!isGovVault(vault)) {
       return;
     }
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'claim-withdraw',
+          message: t('Vault-TxnConfirm', { type: t('Claim-Withdraw-noun') }),
+          action: walletActions.exitGovVault(vault),
+          pending: false,
+        },
+      })
+    );
 
-    steps.push({
-      step: 'claim-withdraw',
-      message: t('Vault-TxnConfirm', { type: t('Claim-Withdraw-noun') }),
-      action: walletActions.exitGovVault(vault),
-      pending: false,
-    });
-
-    startStepper(steps);
+    startStepper(chain.id);
   };
 
   const handleAsset = (selectedToken: TokenEntity['id'] | TokenEntity['id'][]) => {
@@ -541,9 +560,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           )}
         </Box>
       </Box>
-
       {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
-      <Stepper />
     </>
   );
 };

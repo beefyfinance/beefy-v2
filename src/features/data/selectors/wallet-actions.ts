@@ -61,3 +61,5 @@ export const selectIsApprovalNeededForBoostStaking = (
 
   return allowance.isLessThan(mooAmount);
 };
+
+export const selectWalletActions = (state: BeefyState) => state.user.walletActions;

@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { selectCurrentChainId } from '../../../../features/data/selectors/wallet';
 import { formatBigNumberSignificant } from '../../../../helpers/format';
-import { StepperState } from '../../types';
 import { TransactionLink } from '../TransactionLink';
 import { getBridgeTxData } from '../../../../features/data/actions/bridge';
 import { bridgeModalActions } from '../../../../features/data/reducers/wallet/bridge-modal';
@@ -12,6 +11,7 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { AlertWarning } from '../../../Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
+import { StepperState } from '../../../../features/data/reducers/wallet/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -147,7 +147,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
             </div>
           </Box>
         </Box>
-        <TransactionLink chainId={currentChaindId} />
+        <TransactionLink />
       </Box>
       <Box className={classes.chainContainer}>
         <Box className={classes.statusContainer}>

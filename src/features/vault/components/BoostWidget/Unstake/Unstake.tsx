@@ -33,11 +33,11 @@ import {
 } from '../../../../data/selectors/balance';
 import { useStepper } from '../../../../../components/Steps/hooks';
 import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal';
-import { Step } from '../../../../../components/Steps/types';
 import { walletActions } from '../../../../data/actions/wallet-actions';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
 import { Button } from '../../../../../components/Button';
+import { stepperActions } from '../../../../data/reducers/wallet/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -97,7 +97,7 @@ const UnstakeForm = ({
   const store = useAppStore();
   const formState = useAppSelector(state => state.ui.boostModal);
 
-  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
+  const [startStepper, isStepping] = useStepper();
 
   const handleInput = (amountStr: string) => {
     dispatch(
@@ -110,7 +110,6 @@ const UnstakeForm = ({
   };
 
   const handleUnstake = () => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -118,107 +117,108 @@ const UnstakeForm = ({
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    steps.push({
-      step: 'stake',
-      message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
-      action: walletActions.unstakeBoost(boost, formState.amount),
-      pending: false,
-    });
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'stake',
+          message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
+          action: walletActions.unstakeBoost(boost, formState.amount),
+          pending: false,
+        },
+      })
+    );
 
-    startStepper(steps);
+    startStepper(chain.id);
   };
 
   return (
-    <>
-      <div className={classes.container}>
-        <Card>
-          <CardHeader className={classes.header}>
-            <CardTitle titleClassName={classes.title} title={t('Unstake-Modal-Title')} />
-            <IconButton className={classes.closeIcon} onClick={closeModal} aria-label="settings">
-              <CloseIcon htmlColor="#8A8EA8" />
-            </IconButton>
-          </CardHeader>
-          <CardContent className={classes.content}>
-            <Box className={classes.inputContainer}>
-              <Box className={classes.balances}>
-                <Box className={classes.available}>
-                  <div className={classes.label}>{t('Stake-Label-Available')}</div>
-                  <div className={classes.value}>{formatBigNumberSignificant(mooBalance)}</div>
-                </Box>
-                <Box className={classes.staked}>
-                  <div className={classes.label}>{t('Stake-Label-Staked')}</div>
-                  <div className={classes.value}>{formatBigNumberSignificant(boostBalance)}</div>
-                </Box>
+    <div className={classes.container}>
+      <Card>
+        <CardHeader className={classes.header}>
+          <CardTitle titleClassName={classes.title} title={t('Unstake-Modal-Title')} />
+          <IconButton className={classes.closeIcon} onClick={closeModal} aria-label="settings">
+            <CloseIcon htmlColor="#8A8EA8" />
+          </IconButton>
+        </CardHeader>
+        <CardContent className={classes.content}>
+          <Box className={classes.inputContainer}>
+            <Box className={classes.balances}>
+              <Box className={classes.available}>
+                <div className={classes.label}>{t('Stake-Label-Available')}</div>
+                <div className={classes.value}>{formatBigNumberSignificant(mooBalance)}</div>
               </Box>
-              <Box pt={2}>
-                <FormControl className={classes.width} variant="filled">
-                  <InputBase
-                    placeholder="0.00"
-                    className={classes.input}
-                    value={formState.formattedInput}
-                    onChange={e => handleInput(e.target.value)}
-                    disabled={isStepping}
-                    endAdornment={
-                      <InputAdornment className={classes.positionButton} position="end">
-                        <IconButton
-                          size="small"
-                          className={classes.maxButton}
-                          aria-label="max button"
-                          onClick={handleMax}
-                          edge="end"
-                        >
-                          {' '}
-                          Max
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
+              <Box className={classes.staked}>
+                <div className={classes.label}>{t('Stake-Label-Staked')}</div>
+                <div className={classes.value}>{formatBigNumberSignificant(boostBalance)}</div>
               </Box>
             </Box>
-            {/*BUTTON */}
-            <Box className={classes.btnSection}>
-              {isWalletConnected ? (
-                !isWalletOnVaultChain ? (
-                  <Button
-                    onClick={() => dispatch(askForNetworkChange({ chainId: boost.chainId }))}
-                    className={classes.btnSubmit}
-                    fullWidth={true}
-                    borderless={true}
-                    variant="success"
-                    disabled={isStepping}
-                  >
-                    {t('Network-Change', { network: chain.name.toUpperCase() })}
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={handleUnstake}
-                    className={classes.btnSubmit}
-                    fullWidth={true}
-                    borderless={true}
-                    variant="success"
-                    disabled={formState.amount.isLessThanOrEqualTo(0) || isStepping}
-                  >
-                    {t('Stake-Button-ConfirmUnstaking')}
-                  </Button>
-                )
-              ) : (
+            <Box pt={2}>
+              <FormControl className={classes.width} variant="filled">
+                <InputBase
+                  placeholder="0.00"
+                  className={classes.input}
+                  value={formState.formattedInput}
+                  onChange={e => handleInput(e.target.value)}
+                  disabled={isStepping}
+                  endAdornment={
+                    <InputAdornment className={classes.positionButton} position="end">
+                      <IconButton
+                        size="small"
+                        className={classes.maxButton}
+                        aria-label="max button"
+                        onClick={handleMax}
+                        edge="end"
+                      >
+                        {' '}
+                        Max
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Box>
+          </Box>
+          {/*BUTTON */}
+          <Box className={classes.btnSection}>
+            {isWalletConnected ? (
+              !isWalletOnVaultChain ? (
                 <Button
+                  onClick={() => dispatch(askForNetworkChange({ chainId: boost.chainId }))}
                   className={classes.btnSubmit}
                   fullWidth={true}
                   borderless={true}
                   variant="success"
-                  onClick={() => dispatch(askForWalletConnection())}
                   disabled={isStepping}
                 >
-                  {t('Network-ConnectWallet')}
+                  {t('Network-Change', { network: chain.name.toUpperCase() })}
                 </Button>
-              )}
-            </Box>
-          </CardContent>
-        </Card>
-      </div>
-      <Stepper />
-    </>
+              ) : (
+                <Button
+                  onClick={handleUnstake}
+                  className={classes.btnSubmit}
+                  fullWidth={true}
+                  borderless={true}
+                  variant="success"
+                  disabled={formState.amount.isLessThanOrEqualTo(0) || isStepping}
+                >
+                  {t('Stake-Button-ConfirmUnstaking')}
+                </Button>
+              )
+            ) : (
+              <Button
+                className={classes.btnSubmit}
+                fullWidth={true}
+                borderless={true}
+                variant="success"
+                onClick={() => dispatch(askForWalletConnection())}
+                disabled={isStepping}
+              >
+                {t('Network-ConnectWallet')}
+              </Button>
+            )}
+          </Box>
+        </CardContent>
+      </Card>
+    </div>
   );
 };

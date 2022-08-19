@@ -1,63 +1,51 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
-import { Steps } from '.';
 import { ChainEntity } from '../../features/data/entities/chain';
-import { StepperState } from './types';
 import { useAppDispatch, useAppSelector } from '../../store';
+import { selectSteperState } from '../../features/data/selectors/stepper';
+import { stepperActions } from '../../features/data/reducers/wallet/stepper';
 
-export function useStepper(
-  chainId: ChainEntity['id'],
-  onClose?: () => unknown
-): [(steps: StepperState['items']) => unknown, boolean, React.FC] {
-  const [steps, setSteps] = React.useState<StepperState>({
-    modal: false,
-    currentStep: -1,
-    items: [],
-    finished: false,
-  });
+export function useStepper(): [(chainId: ChainEntity['id']) => unknown, boolean] {
+  const steps = useAppSelector(selectSteperState);
 
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const dispatch = useAppDispatch();
 
-  const handleClose = React.useCallback(() => {
-    setSteps({ modal: false, currentStep: -1, items: [], finished: false });
-    if (onClose) {
-      onClose();
-    }
-  }, [onClose, setSteps]);
-
-  const Stepper: React.FC = React.useMemo(
-    () => React.memo(() => <Steps chainId={chainId} steps={steps} handleClose={handleClose} />),
-    [chainId, steps, handleClose]
-  );
-
   // advance stepper
   React.useEffect(() => {
-    const index = steps.currentStep;
-    if (!isEmpty(steps.items[index]) && steps.modal) {
+    if (!isEmpty(steps.items[steps.currentStep]) && steps.modal) {
       const items = steps.items;
-      if (!items[index].pending) {
-        items[index].pending = true;
-        dispatch(items[index].action);
-        setSteps({ ...steps, items: items });
+      if (items[steps.currentStep].pending === false) {
+        dispatch(stepperActions.updateCurrentStep({ index: steps.currentStep, pending: true }));
+        dispatch(items[steps.currentStep].action);
+        dispatch(stepperActions.setSteps({ items }));
       } else {
         if (walletActionsState.result === 'success' && !steps.finished) {
-          const nextStep = index + 1;
+          const nextStep = steps.currentStep + 1;
           if (!isEmpty(items[nextStep])) {
-            setSteps({ ...steps, currentStep: nextStep });
+            dispatch(stepperActions.updateCurrentStepIndex({ stepIndex: nextStep }));
           } else {
-            setSteps({ ...steps, finished: true });
+            dispatch(stepperActions.setFinished({ finished: true }));
           }
         }
       }
     }
-  }, [dispatch, steps, walletActionsState]);
+  }, [
+    dispatch,
+    steps.currentStep,
+    steps.finished,
+    steps.items,
+    steps.modal,
+    walletActionsState.result,
+  ]);
 
-  function startStepper(steps: StepperState['items']) {
-    setSteps({ modal: true, currentStep: 0, items: steps, finished: false });
+  function startStepper(chainId: ChainEntity['id']) {
+    dispatch(stepperActions.setChainId({ chainId }));
+    dispatch(stepperActions.updateCurrentStepIndex({ stepIndex: 0 }));
+    dispatch(stepperActions.setModal({ modal: true }));
   }
 
   const isStepping = steps.modal && !steps.finished;
 
-  return [startStepper, isStepping, Stepper];
+  return [startStepper, isStepping];
 }

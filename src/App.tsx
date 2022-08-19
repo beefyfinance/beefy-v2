@@ -14,6 +14,7 @@ import { Router } from './components/Router';
 import { DefaultMeta } from './components/Meta';
 import { HelmetProvider } from 'react-helmet-async';
 import { Redirects } from './components/Redirects';
+import { Steps } from './components/Steps';
 
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
@@ -31,6 +32,7 @@ export const App = () => {
       initHomeDataV4(store);
     }
   }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -53,6 +55,7 @@ export const App = () => {
                   <PageNotFound />
                 </Route>
               </Switch>
+              <Steps />
             </React.Suspense>
           </WrappedFooter>
         </Router>

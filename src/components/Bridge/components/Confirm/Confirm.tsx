@@ -19,24 +19,21 @@ import {
   selectWalletAddress,
 } from '../../../../features/data/selectors/wallet';
 import { Divider } from '../../../Divider';
-import { Step } from '../../../Steps/types';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { Button } from '../../../Button';
 import { styles } from './styles';
 import { formatAddressShort } from '../../../../helpers/format';
+import { useStepper } from '../../../Steps/hooks';
+import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 
 const useStyles = makeStyles(styles);
 
 function _Confirm({
   handleModal,
   handleBack,
-  startStepper,
-  isStepping,
 }: {
   handleModal: () => void;
   handleBack: () => void;
-  startStepper: any;
-  isStepping: boolean;
 }) {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -49,6 +46,8 @@ function _Confirm({
   );
 
   const currentChainId = useAppSelector(state => selectCurrentChainId(state));
+
+  const [startStepper, isStepping] = useStepper();
 
   const isWalletOnFromChain = currentChainId === formState.fromChainId;
 
@@ -99,35 +98,42 @@ function _Confirm({
   }, [destChainData]);
 
   const handleBridge = () => {
-    const steps: Step[] = [];
     if (
       depositTokenAllowance.isLessThan(formState.amount) &&
       isRouter &&
       depositedToken.type !== 'native'
     ) {
-      steps.push({
-        step: 'approve',
-        message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(depositedToken, routerAddress),
-        pending: false,
-      });
+      dispatch(
+        stepperActions.addStep({
+          step: {
+            step: 'approve',
+            message: t('Vault-ApproveMsg'),
+            action: walletActions.approval(depositedToken, routerAddress),
+            pending: false,
+          },
+        })
+      );
     }
 
-    steps.push({
-      step: 'bridge',
-      message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
-      action: walletActions.bridge(
-        formState.fromChainId,
-        formState.destChainId,
-        routerAddress,
-        formState.amount,
-        isRouter
-      ),
-      pending: false,
-    });
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'bridge',
+          message: t('Vault-TxnConfirm', { type: t('Bridge-noun') }),
+          action: walletActions.bridge(
+            formState.fromChainId,
+            formState.destChainId,
+            routerAddress,
+            formState.amount,
+            isRouter
+          ),
+          pending: false,
+        },
+      })
+    );
 
     handleModal();
-    startStepper(steps);
+    startStepper(currentChainId);
   };
 
   const handleConnectWallet = () => {

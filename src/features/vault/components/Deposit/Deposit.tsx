@@ -11,8 +11,6 @@ import {
 import React, { ChangeEventHandler, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
-import { useStepper } from '../../../../components/Steps/hooks';
-import { Step } from '../../../../components/Steps/types';
 import { initDepositForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { walletActions } from '../../../data/actions/wallet-actions';
@@ -40,6 +38,9 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
+import { stepperActions } from '../../../data/reducers/wallet/stepper';
+import { startStepper } from '../../../data/actions/stepper';
+import { selectSteperState } from '../../../data/selectors/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -48,6 +49,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const store = useAppStore();
+  const steps = useAppSelector(selectSteperState);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useAppSelector(
@@ -98,7 +100,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
 
-  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
+  const isStepping = steps.modal && !steps.finished;
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
@@ -134,7 +136,6 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const handleDeposit = () => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -143,46 +144,62 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     }
 
     if (!isTokenNative(formState.selectedToken) && needsApproval) {
-      steps.push({
-        step: 'approve',
-        message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(formState.selectedToken, spenderAddress),
-        pending: false,
-      });
+      dispatch(
+        stepperActions.addStep({
+          step: {
+            step: 'approve',
+            message: t('Vault-ApproveMsg'),
+            action: walletActions.approval(formState.selectedToken, spenderAddress),
+            pending: false,
+          },
+        })
+      );
     }
 
     if (formState.isZap) {
-      steps.push({
-        step: 'deposit',
-        message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-        action: walletActions.beefIn(
-          vault,
-          formState.amount,
-          formState.zapOptions,
-          formState.zapEstimate,
-          formState.slippageTolerance
-        ),
-        pending: false,
-      });
+      dispatch(
+        stepperActions.addStep({
+          step: {
+            step: 'deposit',
+            message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+            action: walletActions.beefIn(
+              vault,
+              formState.amount,
+              formState.zapOptions,
+              formState.zapEstimate,
+              formState.slippageTolerance
+            ),
+            pending: false,
+          },
+        })
+      );
     } else {
       if (isGovVault(vault)) {
-        steps.push({
-          step: 'deposit',
-          message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
-          action: walletActions.stakeGovVault(vault, formState.amount),
-          pending: false,
-        });
+        dispatch(
+          stepperActions.addStep({
+            step: {
+              step: 'deposit',
+              message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
+              action: walletActions.stakeGovVault(vault, formState.amount),
+              pending: false,
+            },
+          })
+        );
       } else {
-        steps.push({
-          step: 'deposit',
-          message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
-          action: walletActions.deposit(vault, formState.amount, formState.max),
-          pending: false,
-        });
+        dispatch(
+          stepperActions.addStep({
+            step: {
+              step: 'deposit',
+              message: t('Vault-TxnConfirm', { type: t('Deposit-noun') }),
+              action: walletActions.deposit(vault, formState.amount, formState.max),
+              pending: false,
+            },
+          })
+        );
       }
     }
 
-    startStepper(steps);
+    startStepper(store, chain.id);
   };
 
   return (
@@ -307,7 +324,6 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       </Box>
 
       {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
-      <Stepper />
     </>
   );
 };

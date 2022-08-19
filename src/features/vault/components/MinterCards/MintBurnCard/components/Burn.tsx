@@ -14,7 +14,6 @@ import {
 } from '../../../../../data/selectors/wallet';
 import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens';
 import { isString } from 'lodash';
-import { Step } from '../../../../../../components/Steps/types';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
 import { useStepper } from '../../../../../../components/Steps/hooks';
@@ -25,6 +24,7 @@ import { selectChainById } from '../../../../../data/selectors/chains';
 import { AlertWarning } from '../../../../../../components/Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
+import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -61,6 +61,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   );
   const reserves = useAppSelector(state => selectMinterReserves(state, minter.id));
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const resetFormData = () => {
     setFormData({
       ...formData,
@@ -73,7 +74,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     });
   };
 
-  const [startStepper, isStepping, Stepper] = useStepper(chain.id, resetFormData);
+  const [startStepper, isStepping] = useStepper();
 
   const [formData, setFormData] = React.useState({
     withdraw: {
@@ -139,7 +140,6 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
   };
 
   const handleWithdraw = () => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -148,139 +148,141 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     }
 
     if (depositedTokenAllowance.isLessThan(formData.withdraw.amount)) {
-      steps.push({
-        step: 'approve',
-        message: t('Vault-ApproveMsg'),
-        action: walletActions.approval(mintedToken, minter.contractAddress),
-        pending: false,
-      });
+      dispatch(
+        stepperActions.addStep({
+          step: {
+            step: 'approve',
+            message: t('Vault-ApproveMsg'),
+            action: walletActions.approval(mintedToken, minter.contractAddress),
+            pending: false,
+          },
+        })
+      );
     }
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'burn',
+          message: t('Vault-TxnConfirm', { type: t('Burn') }),
+          action: walletActions.burnWithdraw(
+            vault.chainId,
+            minter.contractAddress,
+            depositToken,
+            mintedToken,
+            formData.withdraw.amount,
+            formData.withdraw.max,
+            minterId
+          ),
+          pending: false,
+        },
+      })
+    );
 
-    steps.push({
-      step: 'burn',
-      message: t('Vault-TxnConfirm', { type: t('Burn') }),
-      action: walletActions.burnWithdraw(
-        vault.chainId,
-        minter.contractAddress,
-        depositToken,
-        mintedToken,
-        formData.withdraw.amount,
-        formData.withdraw.max,
-        minterId
-      ),
-      pending: false,
-    });
-
-    startStepper(steps);
+    startStepper(chain.id);
   };
 
   return (
-    <>
-      <CardContent className={classes.cardContent}>
-        <div className={classes.content}>
-          {t('burn-Content', {
-            token1: minter.mintedToken.symbol,
-            token2: minter.depositToken.symbol,
-          })}
+    <CardContent className={classes.cardContent}>
+      <div className={classes.content}>
+        {t('burn-Content', {
+          token1: minter.mintedToken.symbol,
+          token2: minter.depositToken.symbol,
+        })}
+      </div>
+      <div className={classes.boxReserves}>
+        <div className={classes.reservesText}>
+          {t('reserves', { token: minter.depositToken.symbol })}
         </div>
-        <div className={classes.boxReserves}>
-          <div className={classes.reservesText}>
-            {t('reserves', { token: minter.depositToken.symbol })}
+        <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
+        <div className={classes.amountReserves}>
+          {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
+        </div>
+      </div>
+      <div className={classes.inputContainer}>
+        <div className={classes.balances}>
+          <div className={classes.label}>
+            {t('from')} <span className={classes.value}>{mintedToken.symbol}</span>
           </div>
-          <AssetsImage assetIds={[minter.depositToken.symbol]} size={24} chainId={chain.id} />
-          <div className={classes.amountReserves}>
-            {reserves.shiftedBy(-depositToken.decimals).toFixed(2)} {depositToken.symbol}
+          <div className={classes.label}>
+            {t('wallet')}{' '}
+            <span className={classes.value}>
+              {formatBigDecimals(mintedTokenBalance, 8)} {mintedToken.symbol}
+            </span>
           </div>
         </div>
-        <div className={classes.inputContainer}>
-          <div className={classes.balances}>
-            <div className={classes.label}>
-              {t('from')} <span className={classes.value}>{mintedToken.symbol}</span>
-            </div>
-            <div className={classes.label}>
-              {t('wallet')}{' '}
-              <span className={classes.value}>
-                {formatBigDecimals(mintedTokenBalance, 8)} {mintedToken.symbol}
-              </span>
-            </div>
+        <Paper component="form">
+          <div className={classes.inputLogo}>
+            <AssetsImage assetIds={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
           </div>
-          <Paper component="form">
-            <div className={classes.inputLogo}>
-              <AssetsImage assetIds={[minter.mintedToken.symbol]} size={20} chainId={chain.id} />
-            </div>
-            <InputBase
-              placeholder="0.00"
-              value={formData.withdraw.input}
-              onChange={e => handleInput(e.target.value)}
-              disabled={isStepping}
-            />
-            <Button onClick={handleMax}>{t('Transact-Max')}</Button>
-          </Paper>
-        </div>
-        <div className={classes.customDivider}>
-          <div className={classes.line} />
-          <img
-            alt="arrowDown"
-            src={require('../../../../../../images/icons/arrowDown.svg').default}
+          <InputBase
+            placeholder="0.00"
+            value={formData.withdraw.input}
+            onChange={e => handleInput(e.target.value)}
+            disabled={isStepping}
           />
-          <div className={classes.line} />
-        </div>
-        <div className={classes.inputContainer}>
-          <div className={classes.balances}>
-            <div className={classes.label}>
-              {t('to')} <span className={classes.value}>{depositToken.symbol}</span>
-            </div>
-            <div className={classes.label}>
-              {t('wallet')}
-              <span className={classes.value}>
-                {formatBigDecimals(depositedTokenBalance)} {depositToken.symbol}
-              </span>
-            </div>
+          <Button onClick={handleMax}>{t('Transact-Max')}</Button>
+        </Paper>
+      </div>
+      <div className={classes.customDivider}>
+        <div className={classes.line} />
+        <img
+          alt="arrowDown"
+          src={require('../../../../../../images/icons/arrowDown.svg').default}
+        />
+        <div className={classes.line} />
+      </div>
+      <div className={classes.inputContainer}>
+        <div className={classes.balances}>
+          <div className={classes.label}>
+            {t('to')} <span className={classes.value}>{depositToken.symbol}</span>
           </div>
-          <Paper component="form">
-            <div className={classes.inputLogo}>
-              <AssetsImage assetIds={[minter.depositToken.symbol]} size={20} chainId={chain.id} />
-            </div>
-            <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
-          </Paper>
+          <div className={classes.label}>
+            {t('wallet')}
+            <span className={classes.value}>
+              {formatBigDecimals(depositedTokenBalance)} {depositToken.symbol}
+            </span>
+          </div>
         </div>
-        <>
-          {isWalletConnected ? (
-            !isWalletOnVaultChain ? (
-              <Button
-                onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
-                className={classes.btn}
-              >
-                {t('Network-Change', { network: chain.name.toUpperCase() })}
-              </Button>
-            ) : (
-              <Button
-                disabled={
-                  formData.withdraw.amount.isGreaterThan(
-                    reserves.shiftedBy(-mintedToken.decimals)
-                  ) ||
-                  formData.withdraw.amount.isLessThanOrEqualTo(0) ||
-                  isStepping
-                }
-                onClick={handleWithdraw}
-                className={classes.btn}
-              >
-                {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
-              </Button>
-            )
-          ) : (
-            <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>
-              {t('Network-ConnectWallet')}
+        <Paper component="form">
+          <div className={classes.inputLogo}>
+            <AssetsImage assetIds={[minter.depositToken.symbol]} size={20} chainId={chain.id} />
+          </div>
+          <InputBase disabled={true} placeholder="0.00" value={formData.withdraw.input} />
+        </Paper>
+      </div>
+      <>
+        {isWalletConnected ? (
+          !isWalletOnVaultChain ? (
+            <Button
+              onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
+              className={classes.btn}
+            >
+              {t('Network-Change', { network: chain.name.toUpperCase() })}
             </Button>
-          )}
-        </>
-        {formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
-          <AlertWarning className={classes.noReserves}>
-            {t('noreserves', { token: minter.depositToken.symbol })}
-          </AlertWarning>
+          ) : (
+            <Button
+              disabled={
+                formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) ||
+                formData.withdraw.amount.isLessThanOrEqualTo(0) ||
+                isStepping
+              }
+              onClick={handleWithdraw}
+              className={classes.btn}
+            >
+              {t('action', { action: t('burn'), token: minter.mintedToken.symbol })}
+            </Button>
+          )
+        ) : (
+          <Button onClick={() => dispatch(askForWalletConnection())} className={classes.btn}>
+            {t('Network-ConnectWallet')}
+          </Button>
         )}
-      </CardContent>
-      <Stepper />
-    </>
+      </>
+      {formData.withdraw.amount.isGreaterThan(reserves.shiftedBy(-mintedToken.decimals)) && (
+        <AlertWarning className={classes.noReserves}>
+          {t('noreserves', { token: minter.depositToken.symbol })}
+        </AlertWarning>
+      )}
+    </CardContent>
   );
 });

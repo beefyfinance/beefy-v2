@@ -5,9 +5,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import { makeStyles } from '@material-ui/styles';
 import { Preview } from '../Preview';
 import { Confirm } from '../Confirm';
-import { selectCurrentChainId } from '../../../../features/data/selectors/wallet';
-import { useStepper } from '../../../Steps/hooks';
-import { useAppSelector } from '../../../../store';
 import { styles } from './styles';
 import { Modal } from '../../../Modal';
 
@@ -32,10 +29,6 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
     setPreviewConfirm('preview');
   }, [setPreviewConfirm]);
 
-  const currentChainId = useAppSelector(state => selectCurrentChainId(state));
-
-  const [startStepper, isStepping, Stepper] = useStepper(currentChainId);
-
   return (
     <>
       <Modal open={open} onClose={handleModal}>
@@ -55,17 +48,11 @@ function _Bridge({ open, handleClose }: { open: boolean; handleClose: () => void
             {previewConfirm === 'preview' ? (
               <Preview handleModal={handleModal} handlePreview={handleNext} />
             ) : (
-              <Confirm
-                handleModal={handleModal}
-                handleBack={handleBack}
-                startStepper={startStepper}
-                isStepping={isStepping}
-              />
+              <Confirm handleModal={handleModal} handleBack={handleBack} />
             )}
           </div>
         </div>
       </Modal>
-      <Stepper />
     </>
   );
 }

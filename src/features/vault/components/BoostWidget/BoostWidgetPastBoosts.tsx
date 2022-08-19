@@ -10,13 +10,13 @@ import {
   selectIsVaultBoosted,
   selectPastBoostIdsWithUserBalance,
 } from '../../../data/selectors/boosts';
-import { Step } from '../../../../components/Steps/types';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectChainById } from '../../../data/selectors/chains';
 import { Button } from '../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../store';
+import { stepperActions } from '../../../data/reducers/wallet/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -38,10 +38,9 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
     state => selectCurrentChainId(state) === vault.chainId
   );
 
-  const [startStepper, isStepping, Stepper] = useStepper(chain.id);
+  const [startStepper, isStepping] = useStepper();
 
   const handleExit = (boost: BoostEntity) => {
-    const steps: Step[] = [];
     if (!isWalletConnected) {
       return dispatch(askForWalletConnection());
     }
@@ -49,14 +48,18 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
       return dispatch(askForNetworkChange({ chainId: vault.chainId }));
     }
 
-    steps.push({
-      step: 'claim-unstake',
-      message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
-      action: walletActions.exitBoost(boost),
-      pending: false,
-    });
+    dispatch(
+      stepperActions.addStep({
+        step: {
+          step: 'claim-unstake',
+          message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
+          action: walletActions.exitBoost(boost),
+          pending: false,
+        },
+      })
+    );
 
-    startStepper(steps);
+    startStepper(chain.id);
   };
 
   if (pastBoostsWithUserBalance.length <= 0) {
@@ -118,7 +121,6 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
           </Button>
         )}
       </AnimateHeight>
-      <Stepper />
     </div>
   );
 }
