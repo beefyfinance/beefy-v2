@@ -149,36 +149,6 @@
     "createdAt": 1659634989
   },
   {
-    "id": "cakev2-mix-busd",
-    "name": "MIX-BUSD LP",
-    "token": "MIX-BUSD LP2",
-    "tokenAddress": "0x7618fdAb208aE23690dadD3aa4a42a442313d24E",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooCakeV2MIX-BUSD",
-    "earnedTokenAddress": "0xE53AE3414baC8aE74826e4eceFDDc8c0B1ecc6BB",
-    "earnContractAddress": "0xE53AE3414baC8aE74826e4eceFDDc8c0B1ecc6BB",
-    "oracle": "lps",
-    "oracleId": "cakev2-mix-busd",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "pancakeswap",
-    "assets": ["MIX", "BUSD"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://pancakeswap.finance/add/0x398f7827DcCbeFe6990478876bBF3612D93baF05/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x398f7827DcCbeFe6990478876bBF3612D93baF05",
-    "network": "bsc",
-    "createdAt": 1657897437
-  },
-  {
     "id": "cakev2-ole-busd",
     "name": "OLE-BUSD LP",
     "token": "OLE-BUSD LP2",
@@ -15811,6 +15781,36 @@
     "createdAt": 1652702923,
     "network": "bsc",
     "withdrawalFee": "0%"
+  },
+  {
+    "id": "ellipsis-bnb-bnbx",
+    "name": "BNBx/BNB",
+    "token": "BNBx/BNB",
+    "tokenAddress": "0x2E9a994C9a2F661AE685e8d08662dF00f862f4da",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ellipsis",
+    "earnedToken": "mooEllipsisBNBx",
+    "earnedTokenAddress": "0x5C9b83467Cb615b387F5Eb6E0c5AEf7AdD6d4195",
+    "earnContractAddress": "0x5C9b83467Cb615b387F5Eb6E0c5AEf7AdD6d4195",
+    "oracle": "lps",
+    "oracleId": "ellipsis-bnb-bnbx",
+    "status": "active",
+    "platformId": "dotdot",
+    "assets": ["BNBx", "BNB"],
+    "strategyTypeId": "lp",
+    "withdrawalFee": "0%",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0xA844B2fFEB34AB5878E3B520e87b50F125DA7919",
+    "buyTokenUrl": "https://ellipsis.finance/pool/0xA844B2fFEB34AB5878E3B520e87b50F125DA7919",
+    "createdAt": 1660904212,
+    "network": "bsc"
   },
   {
     "id": "ellipsis-usdd2pool",

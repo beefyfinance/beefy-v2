@@ -7875,37 +7875,6 @@
     "network": "fantom"
   },
   {
-    "id": "tomb-fusd-usdc",
-    "name": "FUSD-USDC LP",
-    "token": "FUSD-USDC TLP",
-    "tokenAddress": "0x38fF5377A42D0A45C829de45801481869087d22C",
-    "tokenDecimals": 18,
-    "tokenProviderId": "tombswap",
-    "earnedToken": "mooTombFUSD-USDC",
-    "earnedTokenAddress": "0xF9Ec7e648a50806Ec3Cd21415bebAB3c942Ee01b",
-    "earnContractAddress": "0xF9Ec7e648a50806Ec3Cd21415bebAB3c942Ee01b",
-    "oracle": "lps",
-    "oracleId": "tomb-fusd-usdc",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "tombswap",
-    "assets": ["FUSD", "USDC"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_MICRO",
-      "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
-    ],
-    "withdrawalFee": "0%",
-    "addLiquidityUrl": "https://swap.tomb.com/#/add/0x04068DA6C83AFCFA0e13ba15A6696662335D5B75/0xAd84341756Bf337f5a0164515b1f6F993D194E1f",
-    "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0x04068DA6C83AFCFA0e13ba15A6696662335D5B75&outputCurrency=0xAd84341756Bf337f5a0164515b1f6F993D194E1f",
-    "createdAt": 1653470845,
-    "network": "fantom"
-  },
-  {
     "id": "based-based-usdc",
     "name": "BASED-USDC LP",
     "token": "BASED-USDC TLP",
