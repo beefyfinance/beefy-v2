@@ -251,7 +251,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -6765,7 +6765,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "MCAP_MICRO",
+      "MCAP_MEDIUM",
       "IL_NONE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
