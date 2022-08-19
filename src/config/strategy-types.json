@@ -20,6 +20,10 @@
     "name":"Single LP"
   },
   {
+    "id": "single-syrup",
+    "name": "Single Staking Syrup"
+  },
+  {
     "id": "maxi",
     "name": "Beefy Maxi"
   }

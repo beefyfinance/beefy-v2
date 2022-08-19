@@ -1135,7 +1135,7 @@
     "status": "active",
     "platformId": "spookyswap",
     "assets": ["BOO"],
-    "strategyTypeId": "single",
+    "strategyTypeId": "single-syrup",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
