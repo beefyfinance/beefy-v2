@@ -46,7 +46,6 @@ export const AmountInput = memo<AmountInputProps>(function AmountInput({
   const classes = useStyles();
   // Initial value to string
   const [input, setInput] = useState(() => {
-    console.log(value, numberToString(value, maxDecimals));
     return numberToString(value, maxDecimals);
   });
 

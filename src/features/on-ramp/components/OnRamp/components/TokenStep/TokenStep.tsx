@@ -3,9 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Step } from '../Step';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectFiat,
   selectIsFiatSupported,
@@ -15,6 +13,7 @@ import { SearchableList } from '../SearchableList';
 import { ItemInnerProps } from '../SearchableList/ItemInner';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { FiatTitleAdornment } from '../FiatTitleAdornment';
+import { setOnRampToken } from '../../../../../data/actions/on-ramp';
 
 const useStyles = makeStyles(styles);
 
@@ -56,11 +55,11 @@ const ListItem = memo<ItemInnerProps>(function ({ value }) {
 const TokenSelector = memo<{ fiat: string }>(function ({ fiat }) {
   const tokens = useAppSelector(state => selectSupportedTokensForFiat(state, fiat));
   const sortedTokens = useMemo(() => [...tokens].sort(), [tokens]);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSelect = useCallback(
     (token: string) => {
-      dispatch(onRampFormActions.selectToken({ token }));
+      dispatch(setOnRampToken({ token }));
     },
     [dispatch]
   );

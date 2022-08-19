@@ -81,6 +81,7 @@ export type Quote = {
 };
 export type OnRampTypes = {
   step: FormStep;
+  lastStep: FormStep;
   country: {
     value: string | null;
     error: CountryError | null;

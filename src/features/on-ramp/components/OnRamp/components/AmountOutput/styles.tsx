@@ -23,6 +23,12 @@ export const styles = (theme: Theme) => ({
       },
     },
   },
+  pending: {
+    position: 'absolute' as const,
+    left: 0,
+    top: 0,
+    padding: '8px 16px',
+  },
   icon: {
     background: 'transparent',
     padding: 0,

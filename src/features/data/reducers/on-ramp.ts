@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   fetchOnRampQuote,
   fetchOnRampSupportedProviders,
+  setOnRampFiat,
+  setOnRampToken,
   validateOnRampForm,
 } from '../actions/on-ramp';
 import { WritableDraft } from 'immer/dist/internal';
@@ -11,6 +13,7 @@ import { CountryError, FormStep, InputMode, OnRampTypes, Quote } from './on-ramp
 
 const initialState: OnRampTypes = {
   step: FormStep.SelectToken,
+  lastStep: FormStep.SelectToken,
   country: { value: null, error: null },
   fiat: { value: null, error: null },
   token: { value: null, error: null },
@@ -62,6 +65,14 @@ function processApiQuote(request: ApiQuoteRequest, provider: string, input: ApiQ
   };
 }
 
+function setStep(sliceState: WritableDraft<OnRampTypes>, step: FormStep) {
+  if (sliceState.step !== step) {
+    const lastStep = sliceState.step;
+    sliceState.step = step;
+    sliceState.lastStep = lastStep;
+  }
+}
+
 export const onRamp = createSlice({
   name: 'on-ramp',
   initialState: initialState,
@@ -70,58 +81,42 @@ export const onRamp = createSlice({
       return initialState;
     },
     setStep(sliceState, action: PayloadAction<{ step: FormStep }>) {
-      sliceState.step = action.payload.step;
+      setStep(sliceState, action.payload.step);
     },
     setInputAmount(sliceState, action: PayloadAction<{ amount: number }>) {
       if (sliceState.input.value !== action.payload.amount) {
-        // Clear existing quote
         clearQuote(sliceState);
-
-        // Update input amount
         sliceState.input.value = action.payload.amount;
       }
     },
     toggleInputMode(sliceState) {
-      // Clear existing quote
       clearQuote(sliceState);
-
-      // Toggle mode
       sliceState.input.mode =
         sliceState.input.mode === InputMode.Fiat ? InputMode.Token : InputMode.Fiat;
     },
-    selectFiat(sliceState, action: PayloadAction<{ fiat: string }>) {
-      if (sliceState.fiat.value !== action.payload.fiat) {
-        // Clear existing quote
-        clearQuote(sliceState);
-        // Update state
-        sliceState.fiat.value = action.payload.fiat;
-      }
-      sliceState.step = FormStep.SelectToken;
-    },
     selectToken(sliceState, action: PayloadAction<{ token: string }>) {
       if (sliceState.token.value !== action.payload.token) {
-        // Clear existing quote
         clearQuote(sliceState);
-        // Update state
         sliceState.token.value = action.payload.token;
       }
-      sliceState.step = FormStep.SelectNetwork;
+
+      setStep(sliceState, FormStep.SelectNetwork);
     },
     selectNetwork(sliceState, action: PayloadAction<{ network: string }>) {
       if (sliceState.network.value !== action.payload.network) {
-        // Clear existing quote
         clearQuote(sliceState);
-        // Update state
         sliceState.network.value = action.payload.network;
       }
-      sliceState.step = FormStep.InputAmount;
+
+      setStep(sliceState, FormStep.InputAmount);
     },
     selectProvider(sliceState, action: PayloadAction<{ provider: string }>) {
       if (sliceState.quote.provider !== action.payload.provider) {
         // Update state
         sliceState.quote.provider = action.payload.provider;
       }
-      sliceState.step = FormStep.InputAmount;
+
+      setStep(sliceState, FormStep.InputAmount);
     },
   },
   extraReducers: builder => {
@@ -307,6 +302,22 @@ export const onRamp = createSlice({
         } else {
           console.log('>>> requestId mismatch', sliceState.quote.requestId, action.meta.requestId);
         }
+      })
+      .addCase(setOnRampFiat.fulfilled, (sliceState, action) => {
+        if (sliceState.fiat.value !== action.payload.fiat) {
+          clearQuote(sliceState);
+          sliceState.fiat.value = action.payload.fiat;
+        }
+
+        setStep(sliceState, action.payload.step);
+      })
+      .addCase(setOnRampToken.fulfilled, (sliceState, action) => {
+        if (sliceState.token.value !== action.payload.token) {
+          clearQuote(sliceState);
+          sliceState.token.value = action.payload.token;
+        }
+
+        setStep(sliceState, action.payload.step);
       });
   },
 });

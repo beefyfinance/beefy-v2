@@ -8,22 +8,23 @@ import {
 } from '../apis/on-ramp/on-ramp-types';
 import {
   FiatError,
+  FormStep,
   InputError,
   InputMode,
   NetworkError,
   TokenError,
 } from '../reducers/on-ramp-types';
 import {
+  selectFiat,
   selectFiatTokenMinMaxFiat,
   selectInputAmount,
   selectInputMode,
   selectIsFiatSupported,
   selectIsFiatTokenNetworkSupported,
   selectIsFiatTokenSupported,
-  selectFiat,
   selectNetwork,
-  selectToken,
   selectProvidersForFiatTokenNetwork,
+  selectToken,
 } from '../selectors/on-ramp';
 
 export type FulfilledSupportedPayload = ApiSupportedResponse;
@@ -46,6 +47,68 @@ export const fetchOnRampQuote = createAsyncThunk<
 >('on-ramp/fetchQuote', async (options, { getState }) => {
   const api = await getOnRampApi();
   return await api.getQuote(options);
+});
+
+export type FulfilledSetFiatPayload = {
+  fiat: string;
+  step: FormStep;
+};
+
+export const setOnRampFiat = createAsyncThunk<
+  FulfilledSetFiatPayload,
+  { fiat: string },
+  { state: BeefyState }
+>('on-ramp/setFiat', async (options, { getState }) => {
+  const state = getState();
+  const { fiat: newFiat } = options;
+  const token = selectToken(state);
+  const network = selectNetwork(state);
+
+  if (
+    state.ui.onRamp.lastStep === FormStep.InputAmount &&
+    selectIsFiatTokenNetworkSupported(state, newFiat, token, network)
+  ) {
+    return {
+      step: FormStep.InputAmount,
+      fiat: newFiat,
+    };
+  }
+
+  return {
+    step: FormStep.SelectToken,
+    fiat: newFiat,
+  };
+});
+
+export type FulfilledSetTokenPayload = {
+  token: string;
+  step: FormStep;
+};
+
+export const setOnRampToken = createAsyncThunk<
+  FulfilledSetTokenPayload,
+  { token: string },
+  { state: BeefyState }
+>('on-ramp/setToken', async (options, { getState }) => {
+  const state = getState();
+  const { token: newToken } = options;
+  const fiat = selectFiat(state);
+  const network = selectNetwork(state);
+
+  if (
+    state.ui.onRamp.lastStep === FormStep.InputAmount &&
+    selectIsFiatTokenNetworkSupported(state, fiat, newToken, network)
+  ) {
+    return {
+      step: FormStep.InputAmount,
+      token: newToken,
+    };
+  }
+
+  return {
+    step: FormStep.SelectNetwork,
+    token: newToken,
+  };
 });
 
 export type ValidateFulfilledPayload = {

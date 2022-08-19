@@ -3,14 +3,13 @@ import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Step } from '../Step';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectAllFiat } from '../../../../../data/selectors/on-ramp';
 import { SearchableList } from '../SearchableList';
 import { ItemInnerProps } from '../SearchableList/ItemInner';
 import { CurrencyFlag } from '../CurrencyFlag';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
+import { setOnRampFiat } from '../../../../../data/actions/on-ramp';
 
 const useStyles = makeStyles(styles);
 
@@ -39,11 +38,11 @@ const ListItem = memo<ItemInnerProps>(function ({ value }) {
 const FiatSelector = memo(function () {
   const currencies = useAppSelector(selectAllFiat);
   const sortedCurrencies = useMemo(() => [...currencies].sort(), [currencies]);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSelect = useCallback(
     (fiat: string) => {
-      dispatch(onRampFormActions.selectFiat({ fiat }));
+      dispatch(setOnRampFiat({ fiat }));
     },
     [dispatch]
   );

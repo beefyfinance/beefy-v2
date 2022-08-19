@@ -3,6 +3,7 @@ import { BeefyState } from '../../../redux-types';
 import { InputMode } from '../reducers/on-ramp-types';
 import { isInitialLoader } from '../reducers/data-loader-types';
 import { orderBy } from 'lodash';
+import { singleAssetExists } from '../../../helpers/singleAssetSrc';
 
 export const selectIsOnRampLoaded = (state: BeefyState) =>
   state.ui.dataLoader.global.onRamp.alreadyLoadedOnce;
@@ -36,7 +37,8 @@ export const selectSupportedTokensForFiat = createSelector(
     allTokens.filter(
       token =>
         byToken[token].allNetworks.find(network => appChainIds.includes(network)) !== undefined &&
-        appChainIds.find(chainId => token in appTokensByChainId[chainId].byId) !== undefined
+        appChainIds.find(chainId => token in appTokensByChainId[chainId].byId) !== undefined &&
+        singleAssetExists(token)
     )
 );
 
@@ -48,18 +50,17 @@ export const selectIsFiatTokenSupported = (state: BeefyState, fiat: string, toke
 export const selectNetworksForFiatToken = createSelector(
   (state: BeefyState, fiat: string, token: string) => state.entities.chains.allIds,
   (state: BeefyState, fiat: string, token: string) =>
-    state.ui.onRamp.byFiat[fiat].byToken[token].allNetworks,
+    selectIsFiatTokenSupported(state, fiat, token)
+      ? state.ui.onRamp.byFiat[fiat].byToken[token].allNetworks
+      : [],
   (fiatTokenNetworks, appChains) => fiatTokenNetworks.filter(network => appChains.includes(network))
 );
 
 export const selectIsFiatTokenNetworkSupported = createSelector(
   (state: BeefyState, fiat: string, token: string, network: string) =>
-    selectIsFiatTokenSupported(state, fiat, token),
-  (state: BeefyState, fiat: string, token: string, network: string) =>
     selectNetworksForFiatToken(state, fiat, token),
   (state: BeefyState, fiat: string, token: string, network: string) => network,
-  (isFiatTokenSupported, networksForFiatToken, network) =>
-    isFiatTokenSupported && networksForFiatToken.includes(network)
+  (networksForFiatToken, network) => networksForFiatToken.includes(network)
 );
 
 export const selectProvidersForFiatTokenNetwork = (
