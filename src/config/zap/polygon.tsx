@@ -55,4 +55,13 @@ export const zaps = [
     ammPairInitHash: '0x505c843b83f01afef714149e8b174427d552e1aca4834b4f9b4b525f426ff3c6',
     lpProviderFee: 0.001,
   },
+  {
+    // dystopia
+    type: 'solidly',
+    zapAddress: '0x1B03127EC0F4D12EFD84d84C70d5Aa7ef83Fe136',
+    ammRouter: '0xbE75Dd16D029c6B32B7aD57A0FD9C1c20Dd2862e',
+    ammFactory: '0x1d21Db6cde1b18c7E47B0F7F42f4b3F68b9beeC9',
+    ammPairInitHash: '0x009bce6d7eb00d3d075e5bd9851068137f44bba159f1cde806a268e20baaf2e8',
+    lpProviderFee: 0.0005,
+  },
 ];
