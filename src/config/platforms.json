@@ -888,5 +888,10 @@
     "id": "dystopia",
     "name": "Dystopia",
     "filter": true
+  },
+  {
+    "id": "cone",
+    "name": "Cone",
+    "filter": true
   }
 ]
