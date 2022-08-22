@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     background: '#232743',
     borderRadius: '12px',
     width: '100%',
-    height: '536px',
+    height: '648px',
     display: 'flex',
     flexDirection: 'column' as const,
   },

@@ -36,7 +36,6 @@ const initialState: OnRampTypes = {
 };
 
 function clearQuote(sliceState: WritableDraft<OnRampTypes>) {
-  console.log('>>> clear quote');
   sliceState.quote = initialState.quote;
 }
 
@@ -122,7 +121,6 @@ export const onRamp = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchOnRampSupportedProviders.fulfilled, (sliceState, action) => {
-        console.log('>>>', action.payload);
         sliceState.fiat.value = action.payload.currencyCode;
         sliceState.country.value = action.payload.countryCode;
 
@@ -248,7 +246,6 @@ export const onRamp = createSlice({
           !action.payload.input;
       })
       .addCase(fetchOnRampQuote.pending, (sliceState, action) => {
-        console.log('>>>', 'pending', action);
         sliceState.quote.requestId = action.meta.requestId;
         sliceState.quote.status = 'pending';
         sliceState.quote.request = action.meta.arg;
@@ -256,14 +253,12 @@ export const onRamp = createSlice({
         sliceState.quote.error = null;
       })
       .addCase(fetchOnRampQuote.rejected, (sliceState, action) => {
-        console.log('>>>', 'rejected', action);
         if (sliceState.quote.requestId === action.meta.requestId) {
           sliceState.quote.status = 'rejected';
           sliceState.quote.error = action.error;
         }
       })
       .addCase(fetchOnRampQuote.fulfilled, (sliceState, action) => {
-        console.log('>>>', 'fulfilled', action);
         const request = action.meta.arg;
         const response = action.payload;
 
@@ -299,8 +294,6 @@ export const onRamp = createSlice({
               message: 'No quotes available.',
             };
           }
-        } else {
-          console.log('>>> requestId mismatch', sliceState.quote.requestId, action.meta.requestId);
         }
       })
       .addCase(setOnRampFiat.fulfilled, (sliceState, action) => {
