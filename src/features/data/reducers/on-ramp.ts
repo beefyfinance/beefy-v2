@@ -72,6 +72,16 @@ function setStep(sliceState: WritableDraft<OnRampTypes>, step: FormStep) {
   }
 }
 
+function pickFallbackFiat(allFiat: string[]): string {
+  for (const fiat of ['USD', 'EUR', 'GBP', 'AUD', 'JPY', 'CAD']) {
+    if (allFiat.includes(fiat)) {
+      return fiat;
+    }
+  }
+
+  return allFiat[0];
+}
+
 export const onRamp = createSlice({
   name: 'on-ramp',
   initialState: initialState,
@@ -121,8 +131,8 @@ export const onRamp = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchOnRampSupportedProviders.fulfilled, (sliceState, action) => {
-        sliceState.fiat.value = action.payload.currencyCode;
         sliceState.country.value = action.payload.countryCode;
+        sliceState.fiat.value = action.payload.currencyCode;
 
         // Check if country is supported / has providers
         if (
@@ -225,6 +235,11 @@ export const onRamp = createSlice({
               }
             }
           }
+        }
+
+        // Select a difference currency if auto-detected one is not supported
+        if (!(sliceState.fiat.value in sliceState.byFiat)) {
+          sliceState.fiat.value = pickFallbackFiat(sliceState.allFiat);
         }
 
         // Move to select token step
