@@ -177,7 +177,7 @@ export const validateOnRampForm = createAsyncThunk<
       return errors;
     }
   } else {
-    // TODO: min token amount?
+    // no min/max token amount in API
   }
 
   const providers = selectProvidersForFiatTokenNetwork(state, fiat, token, network);

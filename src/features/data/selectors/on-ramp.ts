@@ -22,6 +22,8 @@ export const selectInputMode = (state: BeefyState) => state.ui.onRamp.input.mode
 export const selectInputError = (state: BeefyState) => state.ui.onRamp.input.error;
 export const selectCanQuote = (state: BeefyState) => state.ui.onRamp.canQuote;
 export const selectAllFiat = (state: BeefyState) => state.ui.onRamp.allFiat;
+export const selectStep = (state: BeefyState) => state.ui.onRamp.step;
+export const selectLastStep = (state: BeefyState) => state.ui.onRamp.lastStep;
 
 // {fiat} exists and has at least 1 supported {token}
 export const selectIsFiatSupported = (state: BeefyState, fiat: string) =>

@@ -11,7 +11,11 @@ import { FiatStep } from './components/FiatStep';
 import { FormValidator } from './components/FormValidator';
 import { UnsupportedCountryStep } from './components/UnsupportedCountryStep';
 import { FormStep } from '../../../data/reducers/on-ramp-types';
-import { selectIsOnRampLoaded, selectShouldInitOnRamp } from '../../../data/selectors/on-ramp';
+import {
+  selectIsOnRampLoaded,
+  selectShouldInitOnRamp,
+  selectStep,
+} from '../../../data/selectors/on-ramp';
 import { InjectProviderStep } from './components/InjectProviderStep';
 import { SelectProviderStep } from './components/SelectProviderStep';
 
@@ -29,7 +33,7 @@ const stepToComponent: Record<FormStep, FC> = {
 
 export const OnRamp = memo(function () {
   const classes = useStyles();
-  const step = useAppSelector(state => state.ui.onRamp.step);
+  const step = useAppSelector(selectStep);
   const StepComponent = stepToComponent[step];
   const dispatch = useAppDispatch();
   const shouldInit = useAppSelector(selectShouldInitOnRamp);

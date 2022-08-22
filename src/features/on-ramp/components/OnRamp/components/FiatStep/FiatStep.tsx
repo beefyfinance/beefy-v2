@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { Step } from '../Step';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
-import { selectAllFiat } from '../../../../../data/selectors/on-ramp';
+import { selectAllFiat, selectLastStep } from '../../../../../data/selectors/on-ramp';
 import { SearchableList } from '../SearchableList';
 import { ItemInnerProps } from '../SearchableList/ItemInner';
 import { CurrencyFlag } from '../CurrencyFlag';
@@ -13,13 +13,15 @@ import { setOnRampFiat } from '../../../../../data/actions/on-ramp';
 
 const useStyles = makeStyles(styles);
 
-// TODO: only enable back if opened from amount step
-// TODO: then we can make step title currency clickable in token step
 export const FiatStep = memo(function () {
   const { t } = useTranslation();
+  const lastStep = useAppSelector(selectLastStep);
 
   return (
-    <Step title={t('OnRamp-FiatStep-Title')} backStep={FormStep.InputAmount}>
+    <Step
+      title={t('OnRamp-FiatStep-Title')}
+      backStep={lastStep === FormStep.InputAmount ? FormStep.InputAmount : FormStep.SelectToken}
+    >
       <FiatSelector />
     </Step>
   );
