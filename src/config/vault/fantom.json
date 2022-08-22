@@ -5223,7 +5223,7 @@
     "earnContractAddress": "0x75de621246281c8b2B0E09459Af95D56b5fD7536",
     "oracle": "lps",
     "oracleId": "spirit-ftm-atlas",
-    "status": "active",
+    "status": "eol",
     "platformId": "spiritswap",
     "assets": ["ATLAS", "FTM"],
     "strategyTypeId": "lp",
