@@ -31,6 +31,37 @@
     "network": "moonbeam"
   },
   {
+    "id": "stellaswap-ldo-wglmr",
+    "name": "LDO-GLMR LP",
+    "token": "LDO-GLMR LP",
+    "tokenAddress": "0x00870B0e6994fFb142a91173a882d2F6a9a8Ac4a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaLDO-GLMR",
+    "earnedTokenAddress": "0x0f43573e83B3dB8cbe5B8B1A93c9bBe5621C931e",
+    "earnContractAddress": "0x0f43573e83B3dB8cbe5B8B1A93c9bBe5621C931e",
+    "oracle": "lps",
+    "oracleId": "stellaswap-ldo-wglmr",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["LDO", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MEDIUM",
+      "IL_HIGH",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "withdrawalFee": "0%",
+    "updatedFees": true,
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0/ETH",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1661191064
+  },
+  {
     "id": "beamswap-wglmr-xcausd",
     "name": "xcaUSD-GLMR LP",
     "token": "xcaUSD-GLMR TLP",
