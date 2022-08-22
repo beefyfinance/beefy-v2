@@ -150,37 +150,6 @@
     "createdAt": 1660813331
   },
   {
-    "id": "solidly-usdc-dei",
-    "name": "DEI-USDC sLP",
-    "token": "DEI-USDC sLP",
-    "tokenAddress": "0x5821573d8F04947952e76d94f3ABC6d7b43bF8d0",
-    "tokenDecimals": 18,
-    "tokenProviderId": "solidly",
-    "earnedToken": "MooSolidlyUSDC-DEI",
-    "earnedTokenAddress": "0xC5D89844A407970750758793C9684cE930A19953",
-    "earnContractAddress": "0xC5D89844A407970750758793C9684cE930A19953",
-    "oracle": "lps",
-    "oracleId": "solidly-usdc-dei",
-    "status": "active",
-    "platformId": "solidly",
-    "assets": ["DEI", "USDC"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "ALGO_STABLE",
-      "MCAP_MICRO",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "withdrawalFee": "0%",
-    "addLiquidityUrl": "https://solidly.exchange/liquidity/create",
-    "buyTokenUrl": "https://solidly.exchange/swap",
-    "network": "fantom",
-    "updatedFees": true,
-    "createdAt": 1660813331
-  },
-  {
     "id": "solidly-usdc-wftm",
     "name": "USDC-FTM LP",
     "token": "USDC-FTM SLP",
