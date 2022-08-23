@@ -31,6 +31,36 @@
     "network": "moonbeam"
   },
   {
+    "id": "curve-moonbeam-f-stdot",
+    "name": "stDOT/xcDOT",
+    "token": "DOTSTDOT-f",
+    "tokenAddress": "0xc6e37086D09ec2048F151D11CdB9F9BbbdB7d685",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveFstDOT",
+    "earnedTokenAddress": "0x4d5bBce91D9bf7434Bf358C1199C8a9c33303787",
+    "earnContractAddress": "0x4d5bBce91D9bf7434Bf358C1199C8a9c33303787",
+    "oracle": "lps",
+    "oracleId": "curve-moonbeam-f-stdot",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["stDOT", "xcDOT"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "updatedFees": true,
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://moonbeam.curve.fi/factory/14/deposit",
+    "network": "moonbeam",
+    "createdAt": 1661243846
+  },
+  {
     "id": "stellaswap-ldo-wglmr",
     "name": "LDO-GLMR LP",
     "token": "LDO-GLMR LP",
