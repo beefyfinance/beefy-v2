@@ -1098,5 +1098,13 @@
       "telegram": "https://discord.com/invite/vgdPfhZ",
       "twitter": "https://twitter.com/LidoOnPolygon"
     }
+  },
+  "lido-moonriver": {
+    "text": "Lido on Moonriver is a liquid staking solution for KSM backed by industry-leading staking providers. With Lido on Moonriver you can stake your KSM tokens in a decentralized and secure way and use your stKSM on the secondary market.\nLido on Moonriver is formed by a new generation of blockchain architects who are building a borderless, transparent, and democratic world.",
+    "website": "https://kusama.lido.fi/",
+    "social": {
+      "telegram": "https://discord.com/invite/FwG5QFWvfn",
+      "twitter": "https://twitter.com/lidofinance"
+    }
   }
 }
