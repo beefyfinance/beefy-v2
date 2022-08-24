@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_solarbeam-wstksm-xcksm-lido",
+    "poolId": "solarbeam-wstksm-xcksm",
+    "name": "Lido",
+    "assets": ["wstKSM", "xcKSM"],
+    "tokenAddress": "0x29554e14B823f8b7C2D84Ae0126bF56645Ad6ad1",
+    "earnedToken": "LDO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x6Ccf12B480A99C54b23647c995f4525D544A7E72",
+    "earnContractAddress": "0x3Ee361eA7Bf033b7Abb840A6853D417E85941965",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LDO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-moonriver"]
+  },
+  {
     "id": "moo_finn-wmovr-finn-huckleberry",
     "poolId": "finn-wmovr-finn",
     "name": "Huckleberry",
