@@ -118,6 +118,38 @@
     "mintTokenUrl": "https://beta.beefy.finance/#/fantom/vault/beefy-beFTM"
   },
   {
+    "id": "solidly-usdc-mim",
+    "name": "MIM-USDC sLP",
+    "token": "MIM-USDC sLP",
+    "tokenAddress": "0xbcab7d083Cf6a01e0DdA9ed7F8a02b47d125e682",
+    "tokenDecimals": 18,
+    "tokenProviderId": "solidly",
+    "earnedToken": "MooSolidlyUSDC-MIM",
+    "earnedTokenAddress": "0x64218E850965eA54Fc63c45F3980bcF98C9f3357",
+    "earnContractAddress": "0x64218E850965eA54Fc63c45F3980bcF98C9f3357",
+    "oracle": "lps",
+    "oracleId": "solidly-usdc-mim",
+    "status": "active",
+    "platformId": "solidly",
+    "assets": ["MIM", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "withdrawalFee": "0%",
+    "addLiquidityUrl": "https://solidly.exchange/liquidity/create",
+    "buyTokenUrl": "https://solidly.exchange/swap",
+    "network": "fantom",
+    "updatedFees": true,
+    "createdAt": 1660813331
+  },
+  {
     "id": "solidly-usdc-wftm",
     "name": "USDC-FTM LP",
     "token": "USDC-FTM SLP",
