@@ -1,10 +1,18 @@
 {
   "stader": {
-    "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon and Solana.",
+    "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon, Solana and BNB Chain.",
     "website": "https://polygon.staderlabs.com/liquid-staking/maticx",
     "social": {
       "telegram": "https://discord.com/invite/ReasyJB4Rq",
       "twitter": "https://twitter.com/stader_polygon"
+    }
+  },
+  "stader-bsc": {
+    "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon, Solana and BNB Chain.",
+    "website": "https://binance.staderlabs.com/liquid-staking/bnbx",
+    "social": {
+      "telegram": "https://t.me/staderlabs_bnb_official",
+      "twitter": "https://twitter.com/stader_bnb"
     }
   },
   "swapsicle": {

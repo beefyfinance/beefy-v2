@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_ellipsis-bnb-bnbx-stader",
+    "poolId": "ellipsis-bnb-bnbx",
+    "name": "Stader",
+    "assets": ["BNBx", "BNB"],
+    "tokenAddress": "0x5C9b83467Cb615b387F5Eb6E0c5AEf7AdD6d4195",
+    "earnedToken": "SD",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x3BC5AC0dFdC871B365d159f728dd1B9A0B5481E8",
+    "earnContractAddress": "0x443AAdB955857860F890C262c7663dfE1065Bf00",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "SD",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["stader-bsc"]
+  },
+  {
     "id": "moo_baby-usdt-milk-babyswap",
     "poolId": "baby-usdt-milk",
     "name": "BabySwap",
