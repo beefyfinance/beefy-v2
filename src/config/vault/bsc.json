@@ -91,6 +91,35 @@
     "createdAt": 1661140279
   },
   {
+    "id": "bolide-cakev2-blid-usdt",
+    "name": "BLID-USDT LP",
+    "token": "BLID-USDT ALP",
+    "tokenAddress": "0x12C35ed2405bc70721584594723351bf5Db6235C",
+    "tokenDecimals": 18,
+    "tokenProviderId": "bolide",
+    "earnedToken": "mooBolideBLID-USDT",
+    "earnedTokenAddress": "0x0bF3CEf168Ed6B2A43d18ee66DE3ae3a401C00CB",
+    "earnContractAddress": "0x0bF3CEf168Ed6B2A43d18ee66DE3ae3a401C00CB",
+    "oracle": "lps",
+    "oracleId": "bolide-cakev2-blid-usdt",
+    "status": "active",
+    "platformId": "bolide",
+    "assets": ["BLID", "USDT"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "network": "bsc",
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0x766AFcf83Fd5eaf884B3d529b432CA27A6d84617/0x55d398326f99059fF775485246999027B3197955",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x766afcf83fd5eaf884b3d529b432ca27a6d84617",
+    "createdAt": 1660037798
+  },
+  {
     "id": "cone-wbnb-busd",
     "name": "BUSD-BNB vLP",
     "token": "BUSD-BNB vLP",
