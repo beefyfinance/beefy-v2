@@ -13,23 +13,6 @@ export const styles = (theme: Theme) => ({
   zapTitle: {
     marginBottom: '12px',
   },
-  label: {
-    ...theme.typography['subline-sm'],
-    paddingTop: 5,
-    color: theme.palette.text.disabled,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  value: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.text.secondary,
-    paddingTop: '0',
-  },
-  smallText: {
-    ...theme.typography['body-sm'],
-    paddingTop: 5,
-    color: theme.palette.text.disabled,
-  },
   zapStep: {
     paddingLeft: '8px',
     marginBottom: '12px',
@@ -38,23 +21,8 @@ export const styles = (theme: Theme) => ({
       marginBottom: 0,
     },
   },
-  divider: {
-    height: '2px',
-    marginBottom: '20px',
-    marginTop: '8px',
-  },
   ol: {
     paddingLeft: 14,
     marginBottom: 0,
-  },
-  tooltipTrigger: {
-    width: '16px',
-    height: '16px',
-    flexShrink: 0,
-    marginLeft: '4px',
-    '& svg': {
-      width: '16px',
-      height: '16px',
-    },
   },
 });
