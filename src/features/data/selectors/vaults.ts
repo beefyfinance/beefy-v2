@@ -196,5 +196,5 @@ export const selectVaultName = createCachedSelector(
 
 export const selectVaultDepositFee = createCachedSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => state.entities.vaults.byId[vaultId].depositFee,
-  (fee: string) => fee || 0
+  (fee: string) => fee || '0%'
 )((state: BeefyState, vaultId: VaultEntity['id']) => vaultId);
