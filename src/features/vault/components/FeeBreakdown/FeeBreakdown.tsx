@@ -59,7 +59,7 @@ const PerformanceFees = memo<PerformanceFeesProps>(function ({ fees }) {
 
   rows.push({
     label: t('Fee-TotalFee'),
-    value: `${formatPercent(fees.total)}`,
+    value: `${formatPercent(fees.total, 2, '0%')}`,
     last: true,
   });
 
