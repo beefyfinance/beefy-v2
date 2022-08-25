@@ -53,6 +53,8 @@ const oldFields = [
   'stratType',
   'logo',
   'depositsPaused',
+  'withdrawalFee',
+  'updatedFees',
 ];
 
 const validatePools = async () => {

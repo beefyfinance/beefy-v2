@@ -54,7 +54,7 @@ import {
 } from '../../../data/selectors/wallet';
 import { selectIsApprovalNeededForWithdraw } from '../../../data/selectors/wallet-actions';
 import { BoostWidget } from '../BoostWidget';
-import { FeeBreakdown } from '../FeeBreakdown';
+import { ZapBreakdown } from '../ZapBreakdown';
 import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
 import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
@@ -62,6 +62,7 @@ import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
+import { FeeBreakdown } from '../FeeBreakdown';
 
 const useStyles = makeStyles(styles);
 
@@ -457,16 +458,21 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             </Button>
           </Paper>
         </div>
-        <FeeBreakdown
-          vault={vault}
-          slippageTolerance={formState.slippageTolerance}
-          zapEstimate={formState.zapEstimate}
-          zapError={formState.zapError}
-          isZapSwap={formState.isZapSwap}
-          isZap={formState.isZap}
-          type={'withdraw'}
-        />
-        <ZapPriceImpact mode={'withdraw'} onChange={handlePriceImpactConfirm} />
+        {formState.isZap ? (
+          <>
+            <ZapBreakdown
+              vault={vault}
+              slippageTolerance={formState.slippageTolerance}
+              zapEstimate={formState.zapEstimate}
+              zapError={formState.zapError}
+              isZapSwap={formState.isZapSwap}
+              isZap={formState.isZap}
+              type={'withdraw'}
+            />
+            <ZapPriceImpact mode={'withdraw'} onChange={handlePriceImpactConfirm} />
+          </>
+        ) : null}
+        <FeeBreakdown vaultId={vaultId} />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
           <ScreamAvailableLiquidity vaultId={vaultId} />

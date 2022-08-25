@@ -14,7 +14,6 @@
     "platformId": "beefy",
     "assets": ["BIFI"],
     "strategyTypeId": "maxi",
-    "withdrawalFee": "0.05%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -54,7 +53,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0xa71edc38d189767582c38a3145b5873052c3e47a&outputCurrency=0x765277eebeca2e31912c9946eae1021199b39c61",
     "createdAt": 1623706144,
     "network": "heco"
@@ -144,7 +142,6 @@
     "platformId": "hfi",
     "assets": ["HFI", "WHT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f&outputCurrency=0x98fc3b60ed4a504f588342a53746405e355f9347",
     "removeLiquidityUrl": "https://ht.mdex.com/#/remove/0x5545153ccfca01fbd7dd11c0b23ba694d9509a6f/0x98fc3b60ed4a504f588342a53746405e355f9347",
@@ -167,7 +164,6 @@
     "platformId": "hfi",
     "assets": ["HFI", "HUSD"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://ht.mdex.com/#/swap?inputCurrency=0x0298c2b32eae4da002a15f36fdf7615bea3da047&outputCurrency=0x98fc3b60ed4a504f588342a53746405e355f9347",
     "removeLiquidityUrl": "https://ht.mdex.com/#/remove/0x0298c2b32eae4da002a15f36fdf7615bea3da047/0x98fc3b60ed4a504f588342a53746405e355f9347",
     "network": "heco",
