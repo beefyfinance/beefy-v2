@@ -138,11 +138,9 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://solidly.exchange/liquidity/create",
     "buyTokenUrl": "https://solidly.exchange/swap",
     "network": "fantom",
-    "updatedFees": true,
     "createdAt": 1660813331
   },
   {
