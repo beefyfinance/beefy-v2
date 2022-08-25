@@ -88,7 +88,7 @@
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
     "updatedFees": true,
-    "createdAt": 1661404322
+    "createdAt": 1661450085
   },
   {
     "id": "cone-usdc-busd",
@@ -119,7 +119,7 @@
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
     "updatedFees": true,
-    "createdAt": 1661404322
+    "createdAt": 1661450084
   },
   {
     "id": "banana-bnbx-wbnb",
