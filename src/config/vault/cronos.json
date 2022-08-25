@@ -25,7 +25,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1623706144,
     "network": "cronos"
   },
@@ -54,7 +53,6 @@
     ],
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "network": "cronos",
-    "withdrawalFee": "0%",
     "createdAt": 1637054454
   },
   {
@@ -84,7 +82,6 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "network": "cronos",
-    "withdrawalFee": "0%",
     "createdAt": 1637045279
   },
   {
@@ -114,7 +111,6 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03",
     "network": "cronos",
-    "withdrawalFee": "0%",
     "createdAt": 1637045228
   },
   {
@@ -144,7 +140,6 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xe44Fd7fCb2b1581822D0c862B68222998a0c299a",
     "network": "cronos",
-    "withdrawalFee": "0%",
     "createdAt": 1637043985
   },
   {
@@ -174,7 +169,6 @@
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x062E66477Faf219F25D27dCED647BF57C3107d52",
     "network": "cronos",
-    "withdrawalFee": "0%",
     "createdAt": 1637045082
   },
   {
@@ -201,7 +195,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xbED48612BC69fA1CaB67052b42a95FB30C1bcFee",
     "network": "cronos",
@@ -231,7 +224,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
@@ -261,7 +253,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
@@ -290,7 +281,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xadbd1231fb360047525BEdF962581F3eee7b49fe",
     "network": "cronos",
     "createdAt": 1637166889
@@ -312,7 +302,6 @@
     "platformId": "cronaswap",
     "assets": ["CRONA", "CRO"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -343,7 +332,6 @@
     "platformId": "cronaswap",
     "assets": ["USDC", "CRO"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -374,7 +362,6 @@
     "platformId": "cronaswap",
     "assets": ["USDT", "CRO"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -405,7 +392,6 @@
     "platformId": "cronaswap",
     "assets": ["BUSD", "USDT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -436,7 +422,6 @@
     "platformId": "cronaswap",
     "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -473,7 +458,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?inputCurrency=0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23&outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
     "network": "cronos",
     "createdAt": 1637778656
@@ -502,7 +486,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x66e428c3f67a68878562e79A0234c1F83c208770",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x66e428c3f67a68878562e79A0234c1F83c208770",
     "network": "cronos",
@@ -532,7 +515,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59",
     "network": "cronos",
@@ -555,7 +537,6 @@
     "platformId": "cronaswap",
     "assets": ["CRONA", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -586,7 +567,6 @@
     "platformId": "cronaswap",
     "assets": ["CRONA", "USDT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -617,7 +597,6 @@
     "platformId": "cronaswap",
     "assets": ["USDC", "DAI"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -658,7 +637,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xF2001B145b43032AAF5Ee2884e456CCd805F677D",
     "network": "cronos",
@@ -688,7 +666,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x1a8E39ae59e5556B56b76fCBA98d22c9ae557396",
     "network": "cronos",
@@ -711,7 +688,6 @@
     "platformId": "cronaswap",
     "assets": ["WBTC", "ETH"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -742,7 +718,6 @@
     "platformId": "cronaswap",
     "assets": ["ETH", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -772,7 +747,6 @@
     "platformId": "cronaswap",
     "assets": ["MATIC", "USDT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -811,7 +785,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xB888d8Dd1733d72681b30c00ee76BDE93ae7aa93",
     "network": "cronos",
@@ -841,7 +814,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.cronaswap.org/swap?outputCurrency=0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     "addLiquidityUrl": "https://app.cronaswap.org/add/CRO/0xABd380327Fe66724FFDa91A87c772FB8D00bE488",
     "network": "cronos",
@@ -863,7 +835,6 @@
     "platformId": "cronaswap",
     "assets": ["DAI", "CRO"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -903,7 +874,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "network": "cronos",
@@ -925,7 +895,6 @@
     "platformId": "cronaswap",
     "assets": ["ETH", "CRO"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -956,7 +925,6 @@
     "platformId": "cronaswap",
     "assets": ["FTM", "USDT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -995,7 +963,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0xe6801928061CDbE32AC5AD0634427E140EFd05F9",
     "network": "cronos",
@@ -1026,7 +993,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://mm.finance/swap?outputCurrency=0x83b2AC8642aE46FC2823Bc959fFEB3c1742c48B5",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0x83b2AC8642aE46FC2823Bc959fFEB3c1742c48B5",
     "createdAt": 1644921724,
@@ -1056,7 +1022,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://mm.finance/swap?outputCurrency=0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0x9D3BBb0e988D9Fb2d55d07Fe471Be2266AD9c81c",
     "createdAt": 1644921724,
@@ -1078,7 +1043,6 @@
     "platformId": "cronaswap",
     "assets": ["BNB", "BUSD"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1109,7 +1073,6 @@
     "platformId": "cronaswap",
     "assets": ["WBTC", "CRO"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1148,7 +1111,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "addLiquidityUrl": "https://vvs.finance/add/0xc21223249CA28397B4B6541dfFaEcC539BfF0c59/0xDD73dEa10ABC2Bff99c60882EC5b2B81Bb1Dc5B2",
     "network": "cronos",
@@ -1171,7 +1133,6 @@
     "platformId": "cronaswap",
     "assets": ["WBTC", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1201,7 +1162,6 @@
     "status": "eol",
     "platformId": "vvs",
     "retireReason": "rewards",
-    "withdrawalFee": "0%",
     "assets": ["ALI", "CRO"],
     "strategyTypeId": "lp",
     "risks": [
@@ -1234,7 +1194,6 @@
     "retireReason": "rewards",
     "assets": ["VVS", "VERSA"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1265,7 +1224,6 @@
     "platformId": "vvs",
     "assets": ["VVS", "TONIC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1292,11 +1250,10 @@
     "oracle": "lps",
     "oracleId": "vvs-ape-cro",
     "status": "eol",
-    "retireReason":"rewards",
+    "retireReason": "rewards",
     "platformId": "vvs",
     "assets": ["APE", "CRO"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1323,11 +1280,10 @@
     "oracle": "lps",
     "oracleId": "vvs-fer-vvs",
     "status": "eol",
-    "retireReason":"rewards",
+    "retireReason": "rewards",
     "platformId": "vvs",
     "assets": ["VVS", "FER"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1358,7 +1314,6 @@
     "platformId": "vvs",
     "assets": ["TUSD", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -1396,7 +1351,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA5e6a847f79BA19AAF41b8e1B2e6C4741234C6b7",
     "createdAt": 1657602778,
@@ -1426,7 +1380,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "createdAt": 1657602778,

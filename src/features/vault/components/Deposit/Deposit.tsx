@@ -32,7 +32,7 @@ import {
 } from '../../../data/selectors/wallet';
 import { selectIsApprovalNeededForDeposit } from '../../../data/selectors/wallet-actions';
 import { BoostWidget } from '../BoostWidget';
-import { FeeBreakdown } from '../FeeBreakdown';
+import { ZapBreakdown } from '../ZapBreakdown';
 import { styles } from '../styles';
 import { TokenWithBalance } from '../TokenWithBalance';
 import { VaultBuyLinks } from '../VaultBuyLinks';
@@ -40,6 +40,7 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
+import { FeeBreakdown } from '../FeeBreakdown';
 
 const useStyles = makeStyles(styles);
 
@@ -254,16 +255,21 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
             </Button>
           </Paper>
         </Box>
-        <FeeBreakdown
-          vault={vault}
-          slippageTolerance={formState.slippageTolerance}
-          zapEstimate={formState.zapEstimate}
-          zapError={formState.zapError}
-          isZapSwap={false}
-          isZap={formState.isZap}
-          type={'deposit'}
-        />
-        <ZapPriceImpact mode={'deposit'} onChange={handlePriceImpactConfirm} />
+        {formState.isZap ? (
+          <>
+            <ZapBreakdown
+              vault={vault}
+              slippageTolerance={formState.slippageTolerance}
+              zapEstimate={formState.zapEstimate}
+              zapError={formState.zapError}
+              isZapSwap={false}
+              isZap={formState.isZap}
+              type={'deposit'}
+            />
+            <ZapPriceImpact mode={'deposit'} onChange={handlePriceImpactConfirm} />
+          </>
+        ) : null}
+        <FeeBreakdown vaultId={vaultId} />
         <MaxNativeDepositAlert />
         <Box mt={3}>
           {vault.chainId === 'emerald' ? <EmeraldGasNotice /> : null}
