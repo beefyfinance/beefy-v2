@@ -52,8 +52,6 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
-    "updatedFees": true,
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
@@ -83,8 +81,6 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
-    "updatedFees": true,
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",

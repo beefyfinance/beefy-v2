@@ -81,11 +81,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
-    "updatedFees": true,
     "createdAt": 1661450085
   },
   {
@@ -112,11 +110,9 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
-    "updatedFees": true,
     "createdAt": 1661450084
   },
   {
@@ -187,11 +183,9 @@
     "assets": ["TUSD", "BUSD"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
-    "updatedFees": true,
     "createdAt": 1661450078
   },
   {
@@ -211,11 +205,9 @@
     "assets": ["MAI", "BUSD"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
-    "updatedFees": true,
     "createdAt": 1661450079
   },
   {
@@ -235,11 +227,9 @@
     "assets": ["QI", "BNB"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
-    "updatedFees": true,
     "createdAt": 1661450080
   },
   {
@@ -259,11 +249,9 @@
     "assets": ["MAI", "BNB"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
-    "updatedFees": true,
     "createdAt": 1661450081
   },
   {
