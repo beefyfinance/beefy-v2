@@ -32,6 +32,7 @@ import { fetchAllMinters, initiateMinterForm } from '../actions/minters';
 import { fetchAllInfoCards } from '../actions/info-cards';
 import { initiateBridgeForm } from '../actions/bridge';
 import { fetchPlatforms } from '../actions/platforms';
+import { fetchFees } from '../actions/fees';
 
 /**
  * because we want to be smart about data loading
@@ -123,6 +124,7 @@ export interface DataLoaderState {
     apy: LoaderState;
     vaults: LoaderState;
     boosts: LoaderState;
+    fees: LoaderState;
     wallet: LoaderState;
     zaps: LoaderState;
     depositForm: LoaderState;
@@ -158,6 +160,7 @@ export const initialDataLoaderState: DataLoaderState = {
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
+    fees: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
     zaps: dataLoaderStateInit,
     depositForm: dataLoaderStateInit,
@@ -276,6 +279,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
+    addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
     addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
     addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm', true);

@@ -22,7 +22,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
     "network": "bsc",
     "createdAt": 1648477070
@@ -54,10 +53,67 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
     "createdAt": 1648475802,
     "network": "bsc"
+  },
+  {
+    "id": "cone-usdt-usdc",
+    "name": "USDT-USDC sLP",
+    "token": "USDT-USDC sLP",
+    "tokenAddress": "0x68ddA7c12f792E17C747A627d41153c103310D74",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeUSDT-USDC",
+    "earnedTokenAddress": "0x435d92064a7af6B91aC03F9F0cD4c5f9BB0BFaeB",
+    "earnContractAddress": "0x435d92064a7af6B91aC03F9F0cD4c5f9BB0BFaeB",
+    "oracle": "lps",
+    "oracleId": "cone-usdt-usdc",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["USDT", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1661450085
+  },
+  {
+    "id": "cone-usdc-busd",
+    "name": "USDC-BUSD sLP",
+    "token": "USDC-BUSD sLP",
+    "tokenAddress": "0xF9D8A57c4F0bE3BDc6857Ee568F6B23FF9c4d1c6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeUSDC-BUSD",
+    "earnedTokenAddress": "0x0EC0ACEd0Ec8e01FFE1696B332d58C17269446Ef",
+    "earnContractAddress": "0x0EC0ACEd0Ec8e01FFE1696B332d58C17269446Ef",
+    "oracle": "lps",
+    "oracleId": "cone-usdc-busd",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["USDC", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1661450084
   },
   {
     "id": "banana-bnbx-wbnb",
@@ -75,7 +131,6 @@
     "platformId": "apeswap",
     "assets": ["BNBx", "BNB"],
     "strategyTypeId": "lp",
-    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -84,11 +139,142 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dex.apeswap.finance/#/add/ETH/0x5774B2fc3e91aF89f89141EacF76545e74265982",
     "buyTokenUrl": "https://dex.apeswap.finance/#/swap?outputCurrency=0x5774B2fc3e91aF89f89141EacF76545e74265982",
     "network": "bsc",
     "createdAt": 1661140279
+  },
+  {
+    "id": "cone-wbnb-busd",
+    "name": "BUSD-BNB vLP",
+    "token": "BUSD-BNB vLP",
+    "tokenAddress": "0x881B608eC7e15CD5bB4Da9dB6ae9C477B4F67731",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeBUSD-BNB",
+    "earnedTokenAddress": "0x7cFdFfb6BE227D40E0F362d23948C54a988F8484",
+    "earnContractAddress": "0x7cFdFfb6BE227D40E0F362d23948C54a988F8484",
+    "oracle": "lps",
+    "oracleId": "cone-wbnb-busd",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["BUSD", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1661382604
+  },
+  {
+    "id": "cone-tusd-busd",
+    "name": "TUSD-BUSD sLP",
+    "token": "TUSD-BUSD sLP",
+    "tokenAddress": "0xbC16f0a31f2EAc3029C0F991bf4E05CD13bb9Ab7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeTUSD-BUSD",
+    "earnedTokenAddress": "0x431983FDDc0B04cFd3Af7E70646e89379606b473",
+    "earnContractAddress": "0x431983FDDc0B04cFd3Af7E70646e89379606b473",
+    "oracle": "lps",
+    "oracleId": "cone-tusd-busd",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["TUSD", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1661450078
+  },
+  {
+    "id": "cone-mai-busd",
+    "name": "MAI-BUSD sLP",
+    "token": "MAI-BUSD sLP",
+    "tokenAddress": "0xCa08a6E3e64B33424b5BA80669464D3cB465EE95",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeMAI-BUSD",
+    "earnedTokenAddress": "0x90772bAe4b1F1Ab18212e43D58E8B388429456af",
+    "earnContractAddress": "0x90772bAe4b1F1Ab18212e43D58E8B388429456af",
+    "oracle": "lps",
+    "oracleId": "cone-mai-busd",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["MAI", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1661450079
+  },
+  {
+    "id": "cone-wbnb-qi",
+    "name": "QI-BNB vLP",
+    "token": "QI-BNB vLP",
+    "tokenAddress": "0x581134092E6f4128fc65776467587676Bd86aA16",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeQI-BNB",
+    "earnedTokenAddress": "0x99dE43CB29c230de7B413476e9ff4D9840bBB9ea",
+    "earnContractAddress": "0x99dE43CB29c230de7B413476e9ff4D9840bBB9ea",
+    "oracle": "lps",
+    "oracleId": "cone-wbnb-qi",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["QI", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1661450080
+  },
+  {
+    "id": "cone-mai-wbnb",
+    "name": "MAI-BNB vLP",
+    "token": "MAI-BNB vLP",
+    "tokenAddress": "0xb4F4CEd038855AD91307445d2ad479Ec770E60c4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeMAI-BNB",
+    "earnedTokenAddress": "0x201cf2F914971Fbe91D7B175E095b57a9dd8361E",
+    "earnContractAddress": "0x201cf2F914971Fbe91D7B175E095b57a9dd8361E",
+    "oracle": "lps",
+    "oracleId": "cone-mai-wbnb",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["MAI", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1661450081
+  },
+  {
+    "id": "cone-wbnb-bifi",
+    "name": "BIFI-BNB vLP",
+    "token": "BIFI-BNB vLP",
+    "tokenAddress": "0xa848415E241957aeD0ed80864AAfEA5bc742c20E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "cone",
+    "earnedToken": "mooConeBIFI-BNB",
+    "earnedTokenAddress": "0x36411b80AB9495d16f353849aBBF0430F20A4fA3",
+    "earnContractAddress": "0x36411b80AB9495d16f353849aBBF0430F20A4fA3",
+    "oracle": "lps",
+    "oracleId": "cone-wbnb-bifi",
+    "status": "active",
+    "platformId": "cone",
+    "assets": ["BIFI", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.cone.exchange/liquidity",
+    "buyTokenUrl": "https://www.cone.exchange/swap",
+    "network": "bsc",
+    "createdAt": 1661382605
   },
   {
     "id": "banana-sd-busd",
@@ -106,7 +292,6 @@
     "platformId": "apeswap",
     "assets": ["SD", "BUSD"],
     "strategyTypeId": "lp",
-    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -115,7 +300,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dex.apeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x3BC5AC0dFdC871B365d159f728dd1B9A0B5481E8",
     "buyTokenUrl": "https://dex.apeswap.finance/#/swap?outputCurrency=0x3BC5AC0dFdC871B365d159f728dd1B9A0B5481E8",
     "network": "bsc",
@@ -137,7 +321,6 @@
     "platformId": "apeswap",
     "assets": ["BAPE", "BUSD"],
     "strategyTypeId": "lp",
-    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -146,7 +329,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dex.apeswap.finance/#/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x70e48Eb0881a8c56BAAD37EB4491eA85Eb47b4b2",
     "buyTokenUrl": "https://dex.apeswap.finance/#/swap?outputCurrency=0x70e48Eb0881a8c56BAAD37EB4491eA85Eb47b4b2",
     "network": "bsc",
@@ -169,11 +351,9 @@
     "assets": ["CONE", "BNB"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
-    "updatedFees": true,
     "createdAt": 1661039367
   },
   {
@@ -192,7 +372,6 @@
     "platformId": "pancakeswap",
     "assets": ["stkBNB", "BNB"],
     "strategyTypeId": "lp",
-    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -222,7 +401,6 @@
     "platformId": "pancakeswap",
     "assets": ["PSTAKE", "BUSD"],
     "strategyTypeId": "lp",
-    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -744,7 +922,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://belt.fi/",
     "network": "bsc",
     "createdAt": 1619606003
@@ -772,7 +949,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://dex.apeswap.finance/#/swap?inputCurrency=0x603c7f932ED1fc6575303D8Fb018fDCBb0f39a95&outputCurrency=0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
     "network": "bsc",
     "createdAt": 1628853807
@@ -861,7 +1037,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://belt.fi/",
     "network": "bsc",
     "createdAt": 1619542263
@@ -890,7 +1065,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://belt.fi/",
     "network": "bsc",
     "createdAt": 1619606249
@@ -947,7 +1121,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0xA58950F05FeA2277d2608748412bf9F802eA4901&outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     "network": "bsc",
     "createdAt": 1635156908
@@ -1093,7 +1266,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputCurrency=0x53E562b9B7E5E94b81f10e96Ee70Ad06df3D2657",
     "network": "bsc",
     "createdAt": 1634030320
@@ -1238,7 +1410,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://pacoca.io/exchange",
     "network": "bsc",
     "createdAt": 1632479930
@@ -1268,7 +1439,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://belt.fi/",
     "network": "bsc",
     "createdAt": 1619502882
@@ -1651,7 +1821,6 @@
     "platformId": "yel",
     "assets": ["YEL"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.apeswap.finance/swap?outputCurrency=0xD3b71117E6C1558c1553305b44988cd944e97300",
     "network": "bsc",
     "createdAt": 1629797899
@@ -1919,7 +2088,6 @@
     "platformId": "honeyfarm",
     "assets": ["HONEY", "BUSD"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://pancakeswap.finance/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0xFa363022816aBf82f18a9C2809dCd2BB393F6AC5",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xFa363022816aBf82f18a9C2809dCd2BB393F6AC5",
     "network": "bsc",
@@ -1941,7 +2109,6 @@
     "platformId": "honeyfarm",
     "assets": ["HONEY", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0xFa363022816aBf82f18a9C2809dCd2BB393F6AC5",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xFa363022816aBf82f18a9C2809dCd2BB393F6AC5",
     "network": "bsc",
@@ -2037,7 +2204,6 @@
     "platformId": "pancakeswap",
     "assets": ["REVV", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/0x833F307aC507D47309fD8CDD1F835BeF8D702a93/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0x833F307aC507D47309fD8CDD1F835BeF8D702a93&outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
@@ -2146,7 +2312,6 @@
     "platformId": "pancakeswap",
     "assets": ["IF", "BUSD"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/0xB0e1fc65C1a741b4662B813eB787d369b8614Af1/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0xB0e1fc65C1a741b4662B813eB787d369b8614Af1&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
@@ -2169,7 +2334,6 @@
     "platformId": "pancakeswap",
     "assets": ["SKILL", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/0x154A9F9cbd3449AD22FDaE23044319D6eF2a1Fab/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0x154A9F9cbd3449AD22FDaE23044319D6eF2a1Fab&outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
@@ -2212,7 +2376,6 @@
     "platformId": "mdex",
     "assets": ["MDX"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://bsc.mdex.com/#/swap?inputCurrency=WBNB&outputCurrency=0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
     "network": "bsc",
     "createdAt": 1621519770
@@ -2467,7 +2630,6 @@
     "platformId": "pancakeswap",
     "assets": ["TITAN", "BUSD"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/0xe898EDc43920F357A93083F1d4460437dE6dAeC2/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0xe898EDc43920F357A93083F1d4460437dE6dAeC2&outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
@@ -2511,7 +2673,6 @@
     "platformId": "waultfinance",
     "assets": ["WATCH", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://swap.wault.finance/bsc/#/remove/BNB/0x7A9f28EB62C791422Aa23CeAE1dA9C847cBeC9b0",
     "buyTokenUrl": "https://swap.wault.finance/bsc/#/swap?outputCurrency=0x7A9f28EB62C791422Aa23CeAE1dA9C847cBeC9b0",
@@ -2683,7 +2844,6 @@
     "platformId": "pancakeswap",
     "assets": ["RABBIT", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/BNB/0x95a1199EBA84ac5f19546519e287d43D2F0E1b41",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x95a1199EBA84ac5f19546519e287d43D2F0E1b41",
@@ -2728,7 +2888,6 @@
     "platformId": "pancakeswap",
     "assets": ["WEX", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/BNB/0xa9c41A46a6B3531d28d5c32F6633dd2fF05dFB90",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xa9c41A46a6B3531d28d5c32F6633dd2fF05dFB90",
@@ -2944,7 +3103,6 @@
     "platformId": "waultfinance",
     "assets": ["XRP", "BUSD"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://swap.wault.finance/bsc/#/remove/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
     "buyTokenUrl": "https://swap.wault.finance/bsc/#/swap?inputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56&outputCurrency=0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
@@ -3226,7 +3384,6 @@
     "platformId": "dopple",
     "assets": ["BUSD", "USDT", "USDC", "DAI"],
     "strategyTypeId": "multi-lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dopple.finance/Deposit/dop-lps",
     "network": "bsc",
     "createdAt": 1621853505
@@ -3290,7 +3447,6 @@
     "platformId": "pancakeswap",
     "assets": ["KALM", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/BNB/0x4ba0057f784858a48fe351445c672ff2a3d43515",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x4ba0057f784858a48fe351445c672ff2a3d43515",
@@ -3313,7 +3469,6 @@
     "platformId": "dopple",
     "assets": ["BUSD", "USDT", "UST"],
     "strategyTypeId": "multi-lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dopple.finance/Deposit/ust-pools-lps",
     "network": "bsc",
     "createdAt": 1622189304
@@ -3551,7 +3706,6 @@
     "platformId": "dopple",
     "assets": ["DOLLY", "USDT", "BUSD"],
     "strategyTypeId": "multi-lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dopple.finance/Deposit/dolly-lps",
     "network": "bsc",
     "createdAt": 1621851120
@@ -3927,7 +4081,6 @@
     "platformId": "pancakeswap",
     "assets": ["RFOX", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/BNB/0x0a3a21356793b49154fd3bbe91cbc2a16c0457f5",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x0a3a21356793b49154fd3bbe91cbc2a16c0457f5",
@@ -4081,7 +4234,6 @@
     "platformId": "pancakeswap",
     "assets": ["FINE", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://pancakeswap.finance/remove/BNB/0x4e6415a5727ea08aae4580057187923aec331227",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x4e6415a5727ea08aae4580057187923aec331227",
@@ -7604,7 +7756,6 @@
     "assets": ["CAKE"],
     "strategyTypeId": "single",
     "depositFee": "<0.1%",
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
     "network": "bsc",
     "createdAt": 1617806173
@@ -7626,7 +7777,6 @@
     "assets": ["CAKE"],
     "strategyTypeId": "single",
     "depositFee": "<0.1%",
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
     "network": "bsc",
     "createdAt": 1613144057
@@ -7889,7 +8039,6 @@
     "platformId": "billionhappiness",
     "assets": ["HPS", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "removeLiquidityUrl": "https://julswap.com/#/remove/BNB/0xeDa21B525Ac789EaB1a08ef2404dd8505FfB973D",
     "buyTokenUrl": "https://julswap.com/#/swap?inputCurrency=BNB&outputCurrency=0xeDa21B525Ac789EaB1a08ef2404dd8505FfB973D",
@@ -8151,7 +8300,6 @@
     "retireReason": "rewards",
     "assets": ["NUTS"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x8893D5fA71389673C5c4b9b3cb4EE1ba71207556",
     "network": "bsc",
     "createdAt": 1615985963
@@ -10119,7 +10267,6 @@
     "platformId": "venus",
     "assets": ["BNB"],
     "strategyTypeId": "lending",
-    "withdrawalFee": "0.05%",
     "network": "bsc",
     "risks": [
       "COMPLEXITY_LOW",
@@ -10146,7 +10293,6 @@
     "platformId": "venus",
     "assets": ["BNB"],
     "strategyTypeId": "lending",
-    "withdrawalFee": "0.05%",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     "network": "bsc",
     "risks": [
@@ -10803,7 +10949,6 @@
     "platformId": "belt",
     "assets": ["USDT", "BUSD", "USDC", "DAI", "4BELT"],
     "strategyTypeId": "multi-lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://belt.fi/",
     "network": "bsc",
     "createdAt": 1632312203
@@ -10980,7 +11125,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x0df1B3F30865C5b324797F8dB9d339514caC4e94",
     "network": "bsc",
     "createdAt": 1637068928
@@ -11057,7 +11201,6 @@
     "addLiquidityUrl": "https://pancakeswap.finance/add/0x1C6bc8e962427dEb4106aE06A7fA2d715687395c/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x1C6bc8e962427dEb4106aE06A7fA2d715687395c",
     "network": "bsc",
-    "withdrawalFee": "0%",
     "createdAt": 1638425869
   },
   {
@@ -11748,7 +11891,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0xFd81Ef21EA7CF1dC00e9c6Dd261B4F3BE0341d5c",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xFd81Ef21EA7CF1dC00e9c6Dd261B4F3BE0341d5c",
     "network": "bsc",
@@ -11778,7 +11920,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0x26d3163b165BE95137CEe97241E716b2791a7572",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x26d3163b165BE95137CEe97241E716b2791a7572",
     "network": "bsc",
@@ -11859,7 +12000,6 @@
     "platformId": "alpaca",
     "assets": ["ALPACA"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.alpacafinance.org/lend/ALPACA/deposit",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x8F0528cE5eF7B51152A59745bEfDD91D97091d2F",
     "network": "bsc",
@@ -12282,7 +12422,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://dex.apeswap.finance/#/swap?outputCurrency=0x19A6Da6e382b85F827088092a3DBe864d9cCba73",
     "network": "bsc",
     "retireReason": "rewards",
@@ -12628,7 +12767,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://exchange.babyswap.finance/#/add/0x1CE0c2827e2eF14D5C4f29a091d735A204794041/0x55d398326f99059fF775485246999027B3197955",
     "buyTokenUrl": "https://exchange.babyswap.finance/#/swap?outputcurrency=0x55d398326f99059fF775485246999027B3197955&inputCurrency=0x1CE0c2827e2eF14D5C4f29a091d735A204794041",
     "createdAt": 1644816966,
@@ -13821,7 +13959,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://pancakeswap.finance/add/0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x7dEb9906BD1d77B410a56E5C23c36340Bd60C983",
     "createdAt": 1638426684,
@@ -14362,7 +14499,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.05%",
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
     "createdAt": 1606511757,
     "network": "bsc",
@@ -14394,7 +14530,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.1inch.io/#/56/swap/BNB/BIFI",
     "createdAt": 1623706144,
     "network": "bsc"
@@ -14422,7 +14557,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://stargate.finance/pool/BUSD-BSC",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "createdAt": 1648672017,
@@ -14451,7 +14585,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://stargate.finance/pool/USDT-BSC",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955",
     "createdAt": 1648675805,
@@ -14619,7 +14752,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://exchange.biswap.org/#/swap?outputCurrency=0x965f527d9159dce6288a2219db51fc6eef120dd1",
     "createdAt": 1649884692,
     "network": "bsc"
@@ -14891,8 +15023,7 @@
     ],
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
     "createdAt": 1650126214,
-    "network": "bsc",
-    "withdrawalFee": "0.01%"
+    "network": "bsc"
   },
   {
     "id": "valas-eth",
@@ -14919,8 +15050,7 @@
     ],
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
     "createdAt": 1650127009,
-    "network": "bsc",
-    "withdrawalFee": "0.01%"
+    "network": "bsc"
   },
   {
     "id": "valas-busd",
@@ -14947,8 +15077,7 @@
     ],
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "createdAt": 1650127645,
-    "network": "bsc",
-    "withdrawalFee": "0.01%"
+    "network": "bsc"
   },
   {
     "id": "valas-usdt",
@@ -14976,8 +15105,7 @@
     ],
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x55d398326f99059fF775485246999027B3197955",
     "createdAt": 1650128131,
-    "network": "bsc",
-    "withdrawalFee": "0.01%"
+    "network": "bsc"
   },
   {
     "id": "valas-usdc",
@@ -15004,8 +15132,7 @@
     ],
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
     "createdAt": 1650308625,
-    "network": "bsc",
-    "withdrawalFee": "0.01%"
+    "network": "bsc"
   },
   {
     "id": "valas-dai",
@@ -15033,13 +15160,12 @@
     ],
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
     "createdAt": 1650308955,
-    "network": "bsc",
-    "withdrawalFee": "0.01%"
+    "network": "bsc"
   },
   {
     "id": "valas-tusd",
     "name": "TUSD",
-    "token": "TUSD Valas",
+    "token": "TUSD",
     "tokenAddress": "0x14016E85a25aeb13065688cAFB43044C2ef86784",
     "tokenDecimals": 18,
     "earnedToken": "mooValasTUSD",
@@ -15062,8 +15188,7 @@
     ],
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x14016E85a25aeb13065688cAFB43044C2ef86784",
     "createdAt": 1650309426,
-    "network": "bsc",
-    "withdrawalFee": "0.01%"
+    "network": "bsc"
   },
   {
     "id": "mdex-lac-busd-eol",
@@ -15460,8 +15585,7 @@
     "earnContractAddress": "0x4065e3b7623CA46c72960bD56F55eE89CaF5498c",
     "oracle": "lps",
     "oracleId": "cakev2-wbnb-abnbc",
-    "status": "eol",
-    "retireReason": "rewards",
+    "status": "active",
     "platformId": "pancakeswap",
     "assets": ["aBNBc", "BNB"],
     "strategyTypeId": "lp",
@@ -15475,7 +15599,7 @@
     ],
     "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0xE85aFCcDaFBE7F2B096f268e31ccE3da8dA2990A",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xE85aFCcDaFBE7F2B096f268e31ccE3da8dA2990A",
-    "createdAt": 1651001831,
+    "createdAt": 1661450086,
     "network": "bsc"
   },
   {
@@ -15612,7 +15736,6 @@
     "platformId": "pancakeswap",
     "assets": ["CAKE"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
     "network": "bsc",
     "risks": [
@@ -15918,8 +16041,7 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0xC2cF01F785C587645440ccD488B188945C9505e7",
     "buyTokenUrl": "https://ellipsis.finance/pool/0xC2cF01F785C587645440ccD488B188945C9505e7",
     "createdAt": 1652702923,
-    "network": "bsc",
-    "withdrawalFee": "0%"
+    "network": "bsc"
   },
   {
     "id": "ellipsis-bnb-bnbx",
@@ -15937,8 +16059,6 @@
     "platformId": "dotdot",
     "assets": ["BNBx", "BNB"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
-    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -15968,7 +16088,6 @@
     "platformId": "dotdot",
     "assets": ["USDD", "BUSD"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -16714,8 +16833,7 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0x68354c6E8Bbd020F9dE81EAf57ea5424ba9ef322",
     "buyTokenUrl": "https://ellipsis.finance/pool/0x68354c6E8Bbd020F9dE81EAf57ea5424ba9ef322",
     "createdAt": 1658425135,
-    "network": "bsc",
-    "withdrawalFee": "0%"
+    "network": "bsc"
   },
   {
     "id": "ellipsis-valdai3eps",
@@ -16744,8 +16862,7 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0x245e8bb5427822FB8fd6cE062d8dd853FbcfABF5",
     "buyTokenUrl": "https://ellipsis.finance/pool/0x245e8bb5427822FB8fd6cE062d8dd853FbcfABF5",
     "createdAt": 1658418503,
-    "network": "bsc",
-    "withdrawalFee": "0%"
+    "network": "bsc"
   },
   {
     "id": "ellipsis-val3eps",
@@ -16775,8 +16892,7 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0x19EC9e3F7B21dd27598E7ad5aAe7dC0Db00A806d",
     "buyTokenUrl": "https://ellipsis.finance/pool/0x19EC9e3F7B21dd27598E7ad5aAe7dC0Db00A806d",
     "createdAt": 1658414563,
-    "network": "bsc",
-    "withdrawalFee": "0%"
+    "network": "bsc"
   },
   {
     "id": "ellipsis-2brl",
@@ -16806,7 +16922,6 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0xad51e40D8f255dba1Ad08501D6B1a6ACb7C188f3",
     "buyTokenUrl": "https://v1-app.jarvis.exchange/",
     "createdAt": 1658410689,
-    "network": "bsc",
-    "withdrawalFee": "0%"
+    "network": "bsc"
   }
 ]
