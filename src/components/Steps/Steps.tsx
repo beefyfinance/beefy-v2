@@ -30,6 +30,18 @@ const _Steps = () => {
     dispatch(stepperActions.reset());
   }, [dispatch]);
 
+  React.useEffect(() => {
+    if (
+      !isEmpty(steps.items[steps.currentStep]) &&
+      steps.modal &&
+      steps.items[steps.currentStep].pending === false
+    ) {
+      dispatch(stepperActions.updateCurrentStep({ pending: true }));
+      dispatch(steps.items[steps.currentStep].action);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, steps.currentStep]);
+
   const isTxInProccess =
     steps.items.length > 1 &&
     !steps.finished &&

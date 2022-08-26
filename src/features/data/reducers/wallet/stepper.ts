@@ -46,9 +46,9 @@ export const stepperSlice = createSlice({
     addStep(sliceState, action: PayloadAction<{ step: Step }>) {
       sliceState.items.push(action.payload.step);
     },
-    updateCurrentStep(sliceState, action: PayloadAction<{ index: number; pending: boolean }>) {
-      const { index, pending } = action.payload;
-      sliceState.items[index].pending = pending;
+    updateCurrentStep(sliceState, action: PayloadAction<{ pending: boolean }>) {
+      const { pending } = action.payload;
+      sliceState.items[sliceState.currentStep].pending = pending;
     },
     updateCurrentStepIndex(sliceState, action: PayloadAction<{ stepIndex: number }>) {
       sliceState.currentStep = action.payload.stepIndex;
@@ -61,9 +61,6 @@ export const stepperSlice = createSlice({
     },
     setChainId(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
       sliceState.chainId = action.payload.chainId;
-    },
-    setSteps(sliceState, action: PayloadAction<{ items: Step[] }>) {
-      sliceState.items = action.payload.items;
     },
   },
 });

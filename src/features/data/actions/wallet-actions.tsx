@@ -50,6 +50,7 @@ import { reloadReserves } from './minters';
 import { selectChainById } from '../selectors/chains';
 import { BIG_ZERO } from '../../../helpers/big-number';
 import { ZapDepositEstimate, ZapOptions } from '../apis/zap/zap-types';
+import { updateSteps } from './stepper';
 
 export const WALLET_ACTION = 'WALLET_ACTION';
 export const WALLET_ACTION_RESET = 'WALLET_ACTION_RESET';
@@ -934,6 +935,7 @@ function bindTransactionEvents<T extends { amount: BigNumber; token: TokenEntity
     })
     .on('receipt', function (receipt: TrxReceipt) {
       dispatch(createWalletActionSuccessAction(receipt, additionalData));
+      dispatch(updateSteps());
 
       // fetch new balance and allowance of native token (gas spent) and allowance token
       if (refreshOnSuccess) {

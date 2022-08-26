@@ -16,9 +16,8 @@ export function useStepper(): [(chainId: ChainEntity['id']) => unknown, boolean]
     if (!isEmpty(steps.items[steps.currentStep]) && steps.modal) {
       const items = steps.items;
       if (items[steps.currentStep].pending === false) {
-        dispatch(stepperActions.updateCurrentStep({ index: steps.currentStep, pending: true }));
+        dispatch(stepperActions.updateCurrentStep({ pending: true }));
         dispatch(items[steps.currentStep].action);
-        dispatch(stepperActions.setSteps({ items }));
       } else {
         if (walletActionsState.result === 'success' && !steps.finished) {
           const nextStep = steps.currentStep + 1;
