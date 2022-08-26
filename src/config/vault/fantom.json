@@ -145,8 +145,8 @@
   },
   {
     "id": "solidly-usdc-wftm",
-    "name": "USDC-FTM LP",
-    "token": "USDC-FTM SLP",
+    "name": "USDC-FTM vLP",
+    "token": "USDC-FTM vLP",
     "tokenAddress": "0xBad7D3DF8E1614d985C3D9ba9f6ecd32ae7Dc20a",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
@@ -174,8 +174,8 @@
   },
   {
     "id": "solidly-wftm-solid",
-    "name": "SOLID-FTM LP",
-    "token": "SOLID-FTM SLP",
+    "name": "SOLID-FTM vLP",
+    "token": "SOLID-FTM vLP",
     "tokenAddress": "0xe4bc39fdD4618a76f6472079C329bdfa820afA75",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
@@ -203,8 +203,8 @@
   },
   {
     "id": "solidly-wftm-pots",
-    "name": "POTS-FTM LP",
-    "token": "POTS-FTM SLP",
+    "name": "POTS-FTM vLP",
+    "token": "POTS-FTM vLP",
     "tokenAddress": "0x474f0cbFeC301b68Cdb0D298C045D64465fB20BB",
     "tokenDecimals": 18,
     "tokenProviderId": "solidly",
