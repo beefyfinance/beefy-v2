@@ -304,8 +304,10 @@ function getVaultTagsAndSafetyScore(
     tags.push('beefy');
   }
 
+  const nonStables = differenceWith(apiVault.assets, chain.stableCoins, isEqual);
   if (
-    differenceWith(apiVault.assets, chain.stableCoins, isEqual).every(tokenId => {
+    nonStables.length > 0 &&
+    nonStables.every(tokenId => {
       return selectIsTokenBluechip(state, tokenId);
     })
   ) {
