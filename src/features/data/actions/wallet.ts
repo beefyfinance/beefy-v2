@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
-import { getWalletConnectionApiInstance, getWeb3Instance } from '../apis/instances';
+import { getWalletConnectionApiInstance } from '../apis/instances';
 import { ChainEntity } from '../entities/chain';
 import {
   accountHasChanged,
@@ -12,32 +12,18 @@ import {
 import { selectAllChains, selectChainById } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
-import { getDefaultProvider } from '@ethersproject/providers';
-import SID, { getSidAddress } from '@siddomains/sidjs';
+import { getEnsAddress, getSpaceIdAddress } from '../../../helpers/addresses';
 
 export const getEns = createAsyncThunk<
   { ens: string },
   { address: string | null },
   { state: BeefyState }
 >('wallet/getEns', async ({ address }, { getState }) => {
-  const ensProvider = await getDefaultProvider();
-  const ensName = await ensProvider.lookupAddress(address);
-  try {
-    if (ensName) {
-      return { ens: ensName };
-    } else {
-      const bscChain = selectChainById(getState(), 'bsc');
-      const web3 = await getWeb3Instance(bscChain);
-      const sidProvider = web3.currentProvider;
-      const id = new SID({
-        provider: sidProvider,
-        sidAddress: getSidAddress(`${bscChain.networkChainId}`),
-      });
-      const sidName = await id.getName(address);
-      if (sidName?.name) return { ens: sidName?.name };
-    }
-  } catch (error) {}
-  return { ens: '' };
+  const bscChain = selectChainById(getState(), 'bsc');
+  const ensName = await getEnsAddress(address);
+  if (ensName) return { ens: ensName };
+  const sidName = await getSpaceIdAddress(address, bscChain);
+  return { ens: sidName?.name ?? '' };
 });
 
 export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
