@@ -7,6 +7,8 @@ import { formatPercent } from '../../../../../../helpers/format';
 
 const useStyles = makeStyles(styles);
 
+const TRANSPARENT = '#00000000';
+
 type ActiveShapeProps = {
   cx: number;
   cy: number;
@@ -48,8 +50,8 @@ const ActiveShape = function ({
       <Sector
         cx={cx}
         cy={cy}
-        innerRadius={innerRadius - 2}
-        outerRadius={outerRadius + 2}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius + 4}
         startAngle={startAngle}
         endAngle={endAngle}
         fill={fill}
@@ -65,28 +67,68 @@ export type ChartProps = {
 };
 export const Chart = memo<ChartProps>(function Chart({ assets }) {
   const classes = useStyles();
-  const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
-  const onPieEnter = useCallback<PieProps['onMouseEnter']>(
-    (_, index) => {
-      setActiveIndex(index);
-    },
-    [setActiveIndex]
-  );
-  const onPieLeave = useCallback<PieProps['onMouseLeave']>(() => {
-    setActiveIndex(undefined);
-  }, [setActiveIndex]);
 
-  return (
-    <div className={classes.holder}>
-      <PieChart width={164} height={164}>
+  const ringSize = 20;
+  let outerRadius = 80;
+
+  const NestedPie = (assets: CalculatedAsset[]) => {
+    const [activeIndex, setActiveIndex] = useState<undefined | number>(undefined);
+    const onPieEnter = useCallback<PieProps['onMouseEnter']>(
+      (_, index) => {
+        setActiveIndex(index);
+      },
+      [setActiveIndex]
+    );
+    const onPieLeave = useCallback<PieProps['onMouseLeave']>(() => {
+      setActiveIndex(undefined);
+    }, [setActiveIndex]);
+
+    const cells = [];
+    const underlying = [];
+
+    let hasAnotherLevel = false;
+
+    for (const asset of assets) {
+      let style = asset.color === TRANSPARENT ? { display: 'none' } : {};
+      cells.push(
+        <Cell
+          style={style}
+          key={asset.address}
+          fill={asset.color}
+          stroke={asset.color === TRANSPARENT ? TRANSPARENT : '#2D3153'}
+          strokeWidth={2}
+        />
+      );
+      if (asset.underlying) {
+        underlying.push(...asset.underlying);
+        hasAnotherLevel = true;
+      } else {
+        underlying.push({
+          ...asset,
+          color: TRANSPARENT,
+        });
+      }
+    }
+
+    return (
+      <>
+        {(() => {
+          if (hasAnotherLevel) {
+            const fragment = NestedPie(underlying);
+            outerRadius -= ringSize;
+            return fragment;
+          } else {
+            return null;
+          }
+        })()}
         <Pie
           data={assets}
           dataKey="percent"
           valueKey="symbol"
           cx="50%"
           cy="50%"
-          innerRadius={50}
-          outerRadius={80}
+          innerRadius={outerRadius - ringSize}
+          outerRadius={outerRadius}
           paddingAngle={0}
           startAngle={90}
           endAngle={450}
@@ -95,11 +137,20 @@ export const Chart = memo<ChartProps>(function Chart({ assets }) {
           activeShape={ActiveShape}
           activeIndex={activeIndex}
         >
-          {assets.map((asset, i) => (
-            <Cell key={asset.address} fill={asset.color} stroke={'#2D3153'} strokeWidth={3} />
-          ))}
+          {cells}
         </Pie>
+      </>
+    );
+  };
+
+  return (
+    <div className={classes.holder}>
+      <PieChart width={168} height={168}>
+        {NestedPie(assets)}
       </PieChart>
     </div>
   );
 });
+function sx(arg0: string): import('react').CSSProperties {
+  throw new Error('Function not implemented.');
+}

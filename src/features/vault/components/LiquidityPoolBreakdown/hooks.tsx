@@ -6,8 +6,8 @@ import {
 } from '../../../data/selectors/tokens';
 import { useMemo } from 'react';
 import { BIG_ONE, BIG_ZERO } from '../../../../helpers/big-number';
-import { CalculatedBreakdownData } from './types';
-import { TokenEntity, TokenLpBreakdown } from '../../../data/entities/token';
+import { CalculatedAsset, CalculatedBreakdownData, TokenAmounts } from './types';
+import { TokenLpBreakdown } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import {
   selectGovVaultUserStackedBalanceInDepositToken,
@@ -26,31 +26,22 @@ export const chartColors = [
   '#152e3f',
 ];
 
-type TokenAmounts = TokenEntity & {
-  totalAmount: BigNumber;
-  userAmount: BigNumber;
-  oneAmount: BigNumber;
-  totalValue: BigNumber;
-  userValue: BigNumber;
-  oneValue: BigNumber;
-  price: BigNumber;
-  color: string;
-};
-
 function getTokenAmounts(
   state: BeefyState,
   chainId: string,
   breakdown: TokenLpBreakdown,
   userShareOfPool: BigNumber,
-  oneLpShareOfPool: BigNumber
+  oneLpShareOfPool: BigNumber,
+  nextColor: number = 0
 ): TokenAmounts[] {
-  return breakdown.tokens.flatMap((tokenAddress, i) => {
+  return breakdown.tokens.flatMap((tokenAddress, i): TokenAmounts => {
     let reserves = new BigNumber(breakdown.balances[i]);
     const assetToken = selectTokenByAddress(state, chainId, tokenAddress);
     const valuePerDecimal = selectTokenPriceByAddress(state, chainId, tokenAddress);
     const totalValue = reserves.multipliedBy(valuePerDecimal);
 
     const subBreakdown = selectLpBreakdownByAddress(state, chainId, tokenAddress);
+    let underlying: TokenAmounts[] | null = null;
     if (subBreakdown) {
       const subPoolTotalSupply = new BigNumber(subBreakdown.totalSupply);
       const adjustedSubBreakdown = {
@@ -59,17 +50,19 @@ function getTokenAmounts(
           new BigNumber(b).multipliedBy(reserves).dividedBy(subPoolTotalSupply).toString()
         ),
       };
-      return getTokenAmounts(
+      underlying = getTokenAmounts(
         state,
         chainId,
         adjustedSubBreakdown,
         userShareOfPool,
-        oneLpShareOfPool
+        oneLpShareOfPool,
+        breakdown.tokens.length
       );
     }
 
     return {
       ...assetToken,
+      underlying,
       totalAmount: reserves,
       userAmount: userShareOfPool.multipliedBy(reserves),
       oneAmount: oneLpShareOfPool.multipliedBy(reserves),
@@ -77,9 +70,17 @@ function getTokenAmounts(
       userValue: userShareOfPool.multipliedBy(totalValue),
       oneValue: oneLpShareOfPool.multipliedBy(totalValue),
       price: valuePerDecimal,
-      color: chartColors[i % chartColors.length],
+      color: chartColors[(i + nextColor) % chartColors.length],
     };
   });
+}
+
+function calculatePercents(assets: TokenAmounts[], totalValue: BigNumber): CalculatedAsset[] {
+  return assets.map(asset => ({
+    ...asset,
+    underlying: asset.underlying ? calculatePercents(asset.underlying, totalValue) : null,
+    percent: totalValue.gt(BIG_ZERO) ? asset.totalValue.dividedBy(totalValue).toNumber() : 0,
+  }));
 }
 
 export function useCalculatedBreakdown(
@@ -112,22 +113,24 @@ export function useCalculatedBreakdown(
   }, [assetsTemp]);
 
   const assetsWithTokens = useMemo(() => {
-    return assetsTemp.map(asset => ({
-      ...asset,
-      percent: totalValue.gt(BIG_ZERO) ? asset.totalValue.dividedBy(totalValue).toNumber() : 0,
-    }));
+    return calculatePercents(assetsTemp, totalValue);
   }, [assetsTemp, totalValue]);
 
   return {
-    chainId: vault.chainId,
-    assets: assetsWithTokens,
-    token: lpToken,
-    totalAmount: lpTotalSupplyDecimal,
-    oneAmount: BIG_ONE,
-    userAmount: userShareOfPool.multipliedBy(lpTotalSupplyDecimal),
-    totalValue,
-    oneValue: oneLpShareOfPool.multipliedBy(totalValue),
-    userValue: userShareOfPool.multipliedBy(totalValue),
+    vault: vault,
+    asset: {
+      ...lpToken,
+      price: oneLpShareOfPool.multipliedBy(totalValue),
+      percent: 100,
+      color: '',
+      underlying: assetsWithTokens,
+      totalAmount: lpTotalSupplyDecimal,
+      oneAmount: BIG_ONE,
+      userAmount: userShareOfPool.multipliedBy(lpTotalSupplyDecimal),
+      totalValue,
+      oneValue: oneLpShareOfPool.multipliedBy(totalValue),
+      userValue: userShareOfPool.multipliedBy(totalValue),
+    },
     userBalance: userBalanceDecimal,
   };
 }

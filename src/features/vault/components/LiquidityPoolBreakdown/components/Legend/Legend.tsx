@@ -17,15 +17,22 @@ export type LegendProps = {
 export const Legend = memo<LegendProps>(function Legend({ chainId, assets, className }) {
   const classes = useStyles();
 
-  return (
-    <div className={clsx(classes.holder, className)}>
-      {assets.map(asset => (
+  const LegendItem = (asset: CalculatedAsset) => {
+    return (
+      <>
         <div key={asset.address} className={classes.item}>
           <div className={classes.key} style={{ backgroundColor: asset.color }} />
-          <AssetsImage chainId={chainId} assetIds={[asset.symbol]} className={classes.icon} />
+          <AssetsImage
+            chainId={chainId}
+            assetIds={asset.underlying ? asset.underlying.map(a => a.symbol) : [asset.symbol]}
+            className={classes.icon}
+          />
           {formatPercent(asset.percent)}
         </div>
-      ))}
-    </div>
-  );
+        {asset.underlying?.map(LegendItem)}
+      </>
+    );
+  };
+
+  return <div className={clsx(classes.holder, className)}>{assets.map(LegendItem)}</div>;
 });

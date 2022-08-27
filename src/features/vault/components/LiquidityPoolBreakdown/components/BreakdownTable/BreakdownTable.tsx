@@ -7,12 +7,14 @@ import {
   formatFullBigNumber,
   formatSignificantBigNumber,
 } from '../../../../../../helpers/format';
-import { BreakdownMode, CalculatedBreakdownData } from '../../types';
+import { BreakdownMode, CalculatedAsset, CalculatedBreakdownData } from '../../types';
 import clsx from 'clsx';
 import { BigNumber } from 'bignumber.js';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../../../../../store';
+import { selectVaultById } from '../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -53,22 +55,31 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { chainId, assets, token } = breakdown;
+  const { vault, asset } = breakdown;
   const valueField = `${mode}Value`;
   const amountField = `${mode}Amount`;
 
-  return (
-    <div className={clsx(classes.table, className)}>
-      <div className={clsx(classes.row, classes.header)}>
-        <div className={classes.cell}>{t('Vault-LpBreakdown-Asset')}</div>
-        <div className={classes.cell}>{t('Vault-LpBreakdown-TokenAmount')}</div>
-        <div className={classes.cell}>{t('Vault-LpBreakdown-Value')}</div>
-      </div>
-      {assets.map(asset => (
-        <div key={asset.address} className={classes.row}>
+  function TableRow(asset: CalculatedAsset) {
+    return (
+      <div key={asset.address} className={classes.row}>
+        <div className={classes.data}>
           <div className={clsx(classes.cell, classes.asset)}>
-            <AssetsImage className={classes.icon} chainId={chainId} assetIds={[asset.symbol]} />{' '}
-            {asset.symbol}
+            <AssetsImage
+              className={classes.icon}
+              chainId={vault.chainId}
+              assetIds={asset.underlying ? asset.underlying.map(a => a.symbol) : [asset.symbol]}
+            />
+            {(() => {
+              if (asset.name !== null && asset.name !== undefined) {
+                if (asset.name != asset.symbol) {
+                  return `${asset.name} (${asset.symbol})`;
+                } else {
+                  return asset.name;
+                }
+              } else {
+                return asset.symbol;
+              }
+            })()}
           </div>
           <div className={classes.cell}>
             <TokenAmount
@@ -80,25 +91,41 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
           </div>
           <div className={classes.cell}>{formatBigUsd(asset[valueField])}</div>
         </div>
-      ))}
+        <div className={classes.underlying}>{asset.underlying?.map(TableRow)}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={clsx(classes.table, className)}>
+      <div className={clsx(classes.row, classes.header)}>
+        <div className={clsx(classes.data)}>
+          <div className={classes.cell}>{t('Vault-LpBreakdown-Asset')}</div>
+          <div className={classes.cell}>{t('Vault-LpBreakdown-TokenAmount')}</div>
+          <div className={classes.cell}>{t('Vault-LpBreakdown-Value')}</div>
+        </div>
+      </div>
+      {asset.underlying.map(TableRow)}
       <div className={clsx(classes.row, classes.footer)}>
-        <div className={clsx(classes.cell, classes.asset)}>
-          <AssetsImage
-            className={classes.icon}
-            chainId={chainId}
-            assetIds={assets.map(asset => asset.symbol)}
-          />{' '}
-          LP
+        <div className={clsx(classes.data)}>
+          <div className={clsx(classes.cell, classes.asset)}>
+            <AssetsImage
+              className={classes.icon}
+              chainId={vault.chainId}
+              assetIds={vault.assetIds}
+            />{' '}
+            LP
+          </div>
+          <div className={classes.cell}>
+            <TokenAmount
+              value={breakdown.asset[amountField]}
+              decimals={asset.decimals}
+              price={breakdown.asset.oneValue}
+              className={classes.tokenAmount}
+            />
+          </div>
+          <div className={classes.cell}>{formatBigUsd(breakdown.asset[valueField])}</div>
         </div>
-        <div className={classes.cell}>
-          <TokenAmount
-            value={breakdown[amountField]}
-            decimals={token.decimals}
-            price={breakdown.oneValue}
-            className={classes.tokenAmount}
-          />
-        </div>
-        <div className={classes.cell}>{formatBigUsd(breakdown[valueField])}</div>
       </div>
     </div>
   );

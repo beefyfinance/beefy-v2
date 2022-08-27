@@ -1,30 +1,34 @@
 import { ChainEntity } from '../../../data/entities/chain';
 import { TokenEntity } from '../../../data/entities/token';
 import { BigNumber } from 'bignumber.js';
+import { VaultEntity } from '../../../data/entities/vault';
 
 export type BreakdownMode = 'user' | 'one' | 'total';
 
-export type CalculatedAsset = TokenEntity & {
+type Amounts = {
   totalAmount: BigNumber;
   oneAmount: BigNumber;
   userAmount: BigNumber;
   totalValue: BigNumber;
   userValue: BigNumber;
   oneValue: BigNumber;
-  price: BigNumber;
-  color: string;
-  percent: number;
 };
 
+export type TokenAmounts = TokenEntity &
+  Amounts & {
+    price: BigNumber;
+    color: string;
+    underlying?: TokenAmounts[];
+  };
+
+export type CalculatedAsset = TokenEntity &
+  TokenAmounts & {
+    percent: number;
+    underlying?: CalculatedAsset[];
+  };
+
 export type CalculatedBreakdownData = {
-  chainId: ChainEntity['id'];
-  token: TokenEntity;
-  assets: CalculatedAsset[];
-  totalAmount: BigNumber;
-  oneAmount: BigNumber;
-  userAmount: BigNumber;
-  totalValue: BigNumber;
-  userValue: BigNumber;
-  oneValue: BigNumber;
+  vault: VaultEntity;
+  asset: CalculatedAsset;
   userBalance: BigNumber;
 };
