@@ -57,7 +57,7 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x322E86852e492a7Ee17f28a78c663da38FB33bfb/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1661366338
+    "createdAt": 1661531660
   },
   {
     "id": "stellaswap-wglmr-mai",
@@ -87,7 +87,7 @@
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "network": "moonbeam",
-    "createdAt": 1661366338
+    "createdAt": 1661531661
   },
   {
     "id": "curve-moonbeam-f-stdot",
