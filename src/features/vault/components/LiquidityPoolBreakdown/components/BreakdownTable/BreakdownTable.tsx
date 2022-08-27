@@ -13,8 +13,6 @@ import { BigNumber } from 'bignumber.js';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../../../../store';
-import { selectVaultById } from '../../../../../data/selectors/vaults';
 
 const useStyles = makeStyles(styles);
 
@@ -71,7 +69,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
             />
             {(() => {
               if (asset.name !== null && asset.name !== undefined) {
-                if (asset.name != asset.symbol) {
+                if (asset.name !== asset.symbol) {
                   return `${asset.name} (${asset.symbol})`;
                 } else {
                   return asset.name;

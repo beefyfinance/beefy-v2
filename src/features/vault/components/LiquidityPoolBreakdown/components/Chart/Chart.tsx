@@ -151,6 +151,3 @@ export const Chart = memo<ChartProps>(function Chart({ assets }) {
     </div>
   );
 });
-function sx(arg0: string): import('react').CSSProperties {
-  throw new Error('Function not implemented.');
-}
