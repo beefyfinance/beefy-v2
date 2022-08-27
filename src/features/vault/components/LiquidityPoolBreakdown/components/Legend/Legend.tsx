@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { CalculatedAsset } from '../../types';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { ChainEntity } from '../../../../../data/entities/chain';
@@ -19,8 +19,8 @@ export const Legend = memo<LegendProps>(function Legend({ chainId, assets, class
 
   const LegendItem = (asset: CalculatedAsset) => {
     return (
-      <>
-        <div key={asset.address} className={classes.item}>
+      <React.Fragment key={asset.address}>
+        <div className={classes.item}>
           <div className={classes.key} style={{ backgroundColor: asset.color }} />
           <AssetsImage
             chainId={chainId}
@@ -30,7 +30,7 @@ export const Legend = memo<LegendProps>(function Legend({ chainId, assets, class
           {formatPercent(asset.percent)}
         </div>
         {asset.underlying?.map(LegendItem)}
-      </>
+      </React.Fragment>
     );
   };
 
