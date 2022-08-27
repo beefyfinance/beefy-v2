@@ -23,7 +23,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xf02b3e437304892105992512539F769423a515Cb",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382925,
@@ -53,7 +52,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x3223f17957Ba502cbe71401D55A0DB26E5F7c68F/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382924,
@@ -83,7 +81,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0xdC19A122e268128B5eE20366299fc7b5b199C8e3/0xf02b3e437304892105992512539F769423a515Cb",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382923,
@@ -113,7 +110,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xf02b3e437304892105992512539F769423a515Cb",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382922,
@@ -143,7 +139,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x21C718C22D52d0F3a789b752D4c2fD5908a8A733/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1652382921,
@@ -173,7 +168,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.yuzu-swap.com/#/add/0x81ECac0D6Be0550A00FF064a4f9dd2400585FE9c/0xdC19A122e268128B5eE20366299fc7b5b199C8e3",
     "buyTokenUrl": "https://app.yuzu-swap.com/#/swap",
     "createdAt": 1653320563,
@@ -204,7 +198,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0xBC033203796CC2C8C543a5aAe93a9a643320433D",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0xBC033203796CC2C8C543a5aAe93a9a643320433D",
     "createdAt": 1653356245,
@@ -235,7 +228,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B/0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x94fbfFe5698DB6f54d6Ca524DbE673a7729014Be",
     "createdAt": 1653001065,
@@ -266,7 +258,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dex.valleyswap.com/#/add/0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815/0x6Cb9750a92643382e020eA9a170AbB83Df05F30B",
     "buyTokenUrl": "https://dex.valleyswap.com/#/swap?outputCurrency=0x010CDf0Db2737f9407F8CFcb4dCaECA4dE54c815",
     "createdAt": 1653071210,

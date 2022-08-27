@@ -65,9 +65,7 @@ export interface VaultStandard {
   buyTokenUrl: string | null;
   addLiquidityUrl: string | null;
 
-  withdrawalFee: string | null;
   depositFee: string | null;
-  updatedFees: boolean;
 
   createdAt: number;
 
@@ -125,9 +123,7 @@ export interface VaultGov {
   buyTokenUrl: string | null;
   addLiquidityUrl: null;
 
-  withdrawalFee: string;
   depositFee: string;
-  updatedFees: boolean;
 
   createdAt: number;
 

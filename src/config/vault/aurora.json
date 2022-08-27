@@ -25,7 +25,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1623706144,
     "network": "aurora"
   },
@@ -253,7 +252,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.05%",
     "buyTokenUrl": "https://www.trisolaris.io/#/swap?outputCurrency=0x218c3c3D49d0E7B37aff0D8bB079de36Ae61A4c0",
     "createdAt": 1644698869,
     "network": "aurora"
@@ -508,7 +506,7 @@
     "oracle": "lps",
     "oracleId": "tri-linear-near",
     "status": "eol",
-    "retireReason":"rewards",
+    "retireReason": "rewards",
     "platformId": "trisolaris",
     "assets": ["LINEAR", "NEAR"],
     "strategyTypeId": "lp",

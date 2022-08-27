@@ -56,4 +56,13 @@ export const zaps = [
     ammPairInitHash: '0x57ae84018c47ebdaf7ddb2d1216c8c36389d12481309af65428eb6d460f747a4',
     lpProviderFee: 0.0001,
   },
+  {
+    // spiritV2
+    type: 'solidly',
+    zapAddress: '0xcB0AFF1Bd4F6678c5de502B5f50e5dEff109cd29',
+    ammRouter: '0x09855B4ef0b9df961ED097EF50172be3e6F13665',
+    ammFactory: '0x9d3591719038752db0c8bEEe2040FfcC3B2c6B9c',
+    ammPairInitHash: '0x5442fb448d86f32a7d2a9dc1a457e64bf5a6c77415d98802aac4fb5a9dc5ecd9',
+    lpProviderFee: 0.0018,
+  },
 ];

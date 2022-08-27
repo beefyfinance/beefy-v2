@@ -9,19 +9,22 @@ import {
   userDidConnect,
   walletHasDisconnected,
 } from '../reducers/wallet/wallet';
-import { selectAllChains } from '../selectors/chains';
+import { selectAllChains, selectChainById } from '../selectors/chains';
 import { featureFlag_walletAddressOverride } from '../utils/feature-flags';
 import { selectIsWalletConnected } from '../selectors/wallet';
-import { getDefaultProvider } from '@ethersproject/providers';
+import { getEnsAddress, getSpaceIdAddress } from '../../../helpers/addresses';
 
-export const getEns = createAsyncThunk<{ ens: string }, { address: string | null }>(
-  'wallet/getEns',
-  async ({ address }) => {
-    const provider = await getDefaultProvider();
-    const name = await provider.lookupAddress(address);
-    return { ens: name ?? '' };
-  }
-);
+export const getEns = createAsyncThunk<
+  { ens: string },
+  { address: string | null },
+  { state: BeefyState }
+>('wallet/getEns', async ({ address }, { getState }) => {
+  const bscChain = selectChainById(getState(), 'bsc');
+  const ensName = await getEnsAddress(address);
+  if (ensName) return { ens: ensName };
+  const sidName = await getSpaceIdAddress(address, bscChain);
+  return { ens: sidName?.name ?? '' };
+});
 
 export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
   'wallet/initWallet',

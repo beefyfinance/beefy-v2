@@ -23,7 +23,6 @@ export interface VaultConfig {
   assets?: TokenEntity['id'][];
   risks?: string[] | null;
   strategyTypeId: StrategyTypeEntity['id'];
-  withdrawalFee?: string | null;
   network: string;
   excluded?: string | null;
   isGovVault?: boolean | null;
@@ -36,7 +35,6 @@ export interface VaultConfig {
   removeLiquidityUrl?: string | null;
   depositFee?: string | null;
   refund?: boolean | null;
-  updatedFees?: boolean | null;
   refundContractAddress?: string | null;
   showWarning?: boolean | null;
   warning?: string | null;
