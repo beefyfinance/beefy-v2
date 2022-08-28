@@ -1,3 +1,4 @@
+import { inline } from '@floating-ui/react-dom';
 import { Theme } from '@material-ui/core';
 
 const borderColor = '#363B63';
@@ -16,10 +17,11 @@ export const styles = (theme: Theme) => ({
     },
   },
   cell: {
+    display: 'flex',
     padding: '16px 24px',
-    whiteSpace: 'nowrap' as const,
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap' as const,
+    alignItems: 'center',
   },
   row: {
     backgroundColor: '#2D3153',
@@ -29,6 +31,9 @@ export const styles = (theme: Theme) => ({
     },
     '& $cell:nth-child(2), & $cell:nth-child(3)': {
       textAlign: 'right' as const,
+    },
+    '& $icon': {
+      display: 'inline-flex',
     },
   },
   data: {
@@ -67,8 +72,12 @@ export const styles = (theme: Theme) => ({
     },
   },
   asset: {
-    display: 'flex',
+    width: 0,
+    flex: 'auto',
+    whiteSpace: 'nowrap' as const,
+    textOverflow: 'ellipsis',
     alignItems: 'center',
+    overflow: 'hidden',
   },
   icon: {
     width: '32px',

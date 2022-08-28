@@ -61,23 +61,25 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
     return (
       <div key={asset.address} className={classes.row}>
         <div className={classes.data}>
-          <div className={clsx(classes.cell, classes.asset)}>
+          <div className={clsx(classes.cell)}>
             <AssetsImage
               className={classes.icon}
               chainId={vault.chainId}
               assetIds={asset.underlying ? asset.underlying.map(a => a.symbol) : [asset.symbol]}
             />
-            {(() => {
-              if (asset.name !== null && asset.name !== undefined) {
-                if (asset.name !== asset.symbol) {
-                  return `${asset.name} (${asset.symbol})`;
+            <span className={classes.asset}>
+              {(() => {
+                if (asset.name !== null && asset.name !== undefined) {
+                  if (asset.name !== asset.symbol) {
+                    return `${asset.name} (${asset.symbol})`;
+                  } else {
+                    return asset.name;
+                  }
                 } else {
-                  return asset.name;
+                  return asset.symbol;
                 }
-              } else {
-                return asset.symbol;
-              }
-            })()}
+              })()}
+            </span>
           </div>
           <div className={classes.cell}>
             <TokenAmount
@@ -106,13 +108,13 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
       {asset.underlying.map(TableRow)}
       <div className={clsx(classes.row, classes.footer)}>
         <div className={clsx(classes.data)}>
-          <div className={clsx(classes.cell, classes.asset)}>
+          <div className={clsx(classes.cell)}>
             <AssetsImage
               className={classes.icon}
               chainId={vault.chainId}
               assetIds={vault.assetIds}
-            />{' '}
-            LP
+            />
+            <span className={classes.asset}>LP</span>
           </div>
           <div className={classes.cell}>
             <TokenAmount
