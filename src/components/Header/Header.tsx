@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { memo, Suspense, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -52,45 +52,33 @@ const BifiPrice = connect((state: BeefyState) => {
   );
 });
 
-const NavLinks = () => {
+const NavLinks = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
   const navLinks = [
-    { title: t('Header-Vote'), path: 'https://vote.beefy.finance' },
-    { title: t('Header-Stats'), path: 'https://dashboard.beefy.com' },
-    { title: t('Header-Blog'), path: 'https://beefy.com/articles/' },
-    { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
+    { title: t('Header-Vaults'), url: '/' },
+    { title: t('Header-Proposals'), url: 'https://vote.beefy.finance' },
+    { title: t('Header-BuyCrypto'), url: '/onramp' },
+    { title: t('Header-News'), url: 'https://beefy.com/articles/' },
+    { title: t('Header-Docs'), url: 'https://docs.beefy.finance' },
   ];
   return (
     <>
-      <NavLink
-        activeClassName={classes.active}
-        exact={true}
-        className={classes.navLink}
-        key={'explore'}
-        to="/"
-      >
-        {t('Header-Explore')}
-      </NavLink>
-      {navLinks.map(({ title, path }) => (
-        <div key={title} className={classes.navLink}>
-          <a target="_blank" rel="noreferrer" href={path} key={title}>
-            {title}
-          </a>
-        </div>
+      {navLinks.map(({ title, url }) => (
+        <NavLink
+          activeClassName={classes.active}
+          exact={true}
+          className={classes.navLink}
+          key={url}
+          to={url[0] === '/' ? url : { pathname: url }}
+          target={url[0] === '/' ? undefined : '_blank'}
+        >
+          {t(title)}
+        </NavLink>
       ))}
-      <NavLink
-        activeClassName={classes.active}
-        exact={true}
-        className={classes.navLink}
-        key={'onramp'}
-        to="/onramp"
-      >
-        {t('Header-OnRamp')}
-      </NavLink>
     </>
   );
-};
+});
 
 const ActiveChain = ({ networkId }: { networkId: string | null }) => {
   const classes = useStyles();
