@@ -65,8 +65,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "apeswap",
     "earnedToken": "mooApeHEC-BNB",
-    "earnedTokenAddress": "0xf2e24273821835D177eB7A6C222c5AfE5de38e87",
-    "earnContractAddress": "0xf2e24273821835D177eB7A6C222c5AfE5de38e87",
+    "earnedTokenAddress": "0xfc1eb32856bB354c176C86B43b1f75843E12B555",
+    "earnContractAddress": "0xfc1eb32856bB354c176C86B43b1f75843E12B555",
     "oracle": "lps",
     "oracleId": "banana-hec-wbnb",
     "status": "active",
@@ -84,7 +84,7 @@
     "addLiquidityUrl": "https://apeswap.finance/add/0x638EEBe886B0e9e7C6929E69490064a6C94d204d/ETH",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x638EEBe886B0e9e7C6929E69490064a6C94d204d",
     "network": "bsc",
-    "createdAt": 1661547708
+    "createdAt": 1661666156
   },
   {
     "id": "banana-tor-busd",
@@ -94,8 +94,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "apeswap",
     "earnedToken": "mooApeTOR-BUSD",
-    "earnedTokenAddress": "0x75c6DdEb686519Fa323Af9F224465F8635077AB5",
-    "earnContractAddress": "0x75c6DdEb686519Fa323Af9F224465F8635077AB5",
+    "earnedTokenAddress": "0xD6cC67CA09E1d13444e318bDc997F53d6b7D24bC",
+    "earnContractAddress": "0xD6cC67CA09E1d13444e318bDc997F53d6b7D24bC",
     "oracle": "lps",
     "oracleId": "banana-tor-busd",
     "status": "active",
@@ -113,7 +113,7 @@
     "addLiquidityUrl": "https://apeswap.finance/add/0x1d6Cbdc6b29C6afBae65444a1f65bA9252b8CA83/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
     "buyTokenUrl": "https://apeswap.finance/swap?outputCurrency=0x1d6Cbdc6b29C6afBae65444a1f65bA9252b8CA83",
     "network": "bsc",
-    "createdAt": 1661547963
+    "createdAt": 1661663288
   },
   {
     "id": "cone-usdt-usdc",
