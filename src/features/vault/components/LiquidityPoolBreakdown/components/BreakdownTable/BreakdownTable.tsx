@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { HashLink } from 'react-router-hash-link';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
+import { getTokenDisplayName } from '../../../../../data/entities/token';
 
 const useStyles = makeStyles(styles);
 
@@ -71,19 +72,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
               chainId={vault.chainId}
               assetIds={asset.underlying ? asset.underlying.map(a => a.symbol) : [asset.symbol]}
             />
-            <span className={classes.asset}>
-              {(() => {
-                if (asset.name !== null && asset.name !== undefined) {
-                  if (asset.name !== asset.symbol) {
-                    return `${asset.name} (${asset.symbol})`;
-                  } else {
-                    return asset.name;
-                  }
-                } else {
-                  return asset.symbol;
-                }
-              })()}
-            </span>
+            <span className={classes.asset}>{getTokenDisplayName(asset)}</span>
             {(() => {
               const tokenDetailId = `${asset.id}-details`;
               if (document.getElementById(tokenDetailId)) {

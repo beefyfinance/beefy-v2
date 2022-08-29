@@ -57,4 +57,16 @@ export function isTokenNative(token: TokenEntity): token is TokenNative {
   return token.type === 'native';
 }
 
+export function getTokenDisplayName(token: TokenEntity): string {
+  if (token.name !== null && token.name !== undefined) {
+    if (token.name !== token.symbol) {
+      return `${token.name} (${token.symbol})`;
+    } else {
+      return token.name;
+    }
+  } else {
+    return token.symbol;
+  }
+}
+
 export type TokenLpBreakdown = LpData;
