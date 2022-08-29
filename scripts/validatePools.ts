@@ -229,13 +229,14 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     uniqueEarnedTokenAddress.add(pool.earnedTokenAddress);
     uniqueOracleId.add(pool.oracleId);
 
-    const { keeper, strategyOwner, vaultOwner, beefyFeeRecipient } =
+    const { keeper, strategyOwner, vaultOwner, beefyFeeRecipient, beefyFeeConfig } =
       addressBook[chainId].platforms.beefyfinance;
 
     updates = isKeeperCorrect(pool, chainId, keeper, updates);
     updates = isStratOwnerCorrect(pool, chainId, strategyOwner, updates);
     updates = isVaultOwnerCorrect(pool, chainId, vaultOwner, updates);
     updates = isBeefyFeeRecipientCorrect(pool, chainId, beefyFeeRecipient, updates);
+    updates = isBeefyFeeConfigCorrect(pool, chainId, beefyFeeConfig, updates);
   });
 
   // Boosts
@@ -334,6 +335,29 @@ const isBeefyFeeRecipientCorrect = (pool, chain, recipient, updates) => {
   return updates;
 };
 
+const isBeefyFeeConfigCorrect = (pool, chain, feeConfig, updates) => {
+  if (
+    pool.status === 'active' &&
+    pool.beefyFeeConfig !== undefined &&
+    pool.beefyFeeConfig !== feeConfig
+  ) {
+    console.log(
+      `Pool ${pool.id} should update beefy fee config. From: ${pool.beefyFeeConfig} To: ${feeConfig}`
+    );
+
+    if (!('beefyFeeConfig' in updates)) updates['beefyFeeConfig'] = {};
+    if (!(chain in updates.beefyFeeConfig)) updates.beefyFeeConfig[chain] = {};
+
+    if (pool.stratOwner in updates.beefyFeeConfig[chain]) {
+      updates.beefyFeeConfig[chain][pool.stratOwner].push(pool.strategy);
+    } else {
+      updates.beefyFeeConfig[chain][pool.stratOwner] = [pool.strategy];
+    }
+  }
+
+  return updates;
+};
+
 // Helpers to populate required addresses.
 
 const populateVaultsData = async (chain, pools, web3) => {
@@ -368,6 +392,7 @@ const populateStrategyData = async (chain, pools, web3) => {
     return {
       keeper: stratContract.methods.keeper(),
       beefyFeeRecipient: stratContract.methods.beefyFeeRecipient(),
+      beefyFeeConfig: stratContract.methods.beefyFeeConfig(),
       owner: stratContract.methods.owner(),
     };
   });
@@ -379,6 +404,7 @@ const populateStrategyData = async (chain, pools, web3) => {
       ...pool,
       keeper: results[i].keeper,
       beefyFeeRecipient: results[i].beefyFeeRecipient,
+      beefyFeeConfig: results[i].beefyFeeConfig,
       stratOwner: results[i].owner,
     };
   });
