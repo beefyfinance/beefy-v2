@@ -1,4 +1,3 @@
-import { inline } from '@floating-ui/react-dom';
 import { Theme } from '@material-ui/core';
 
 const borderColor = '#363B63';
@@ -92,5 +91,8 @@ export const styles = (theme: Theme) => ({
     width: 'min-content',
     maxWidth: '100%',
     marginLeft: 'auto',
+  },
+  infoAnchor: {
+    color: '#8585A6',
   },
 });

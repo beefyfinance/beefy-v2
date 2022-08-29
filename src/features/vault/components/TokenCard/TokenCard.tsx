@@ -91,7 +91,11 @@ function TokenCardComponent({
     return <></>;
   }
 
-  return <TokenCardDisplay token={token} />;
+  return (
+    <div id={`${tokenId}-details`}>
+      <TokenCardDisplay token={token} />
+    </div>
+  );
 }
 
 export const TokenCard = React.memo(TokenCardComponent);

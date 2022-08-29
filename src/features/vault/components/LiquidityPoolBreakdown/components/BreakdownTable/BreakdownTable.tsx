@@ -13,6 +13,9 @@ import { BigNumber } from 'bignumber.js';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
+import { HashLink } from 'react-router-hash-link';
+import InfoIcon from '@material-ui/icons/InfoOutlined';
 
 const useStyles = makeStyles(styles);
 
@@ -53,6 +56,7 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const location = useLocation();
   const { vault, asset } = breakdown;
   const valueField = `${mode}Value`;
   const amountField = `${mode}Amount`;
@@ -80,6 +84,16 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
                 }
               })()}
             </span>
+            {(() => {
+              const tokenDetailId = `${asset.id}-details`;
+              if (document.getElementById(tokenDetailId)) {
+                return (
+                  <HashLink smooth to={{ hash: tokenDetailId }} className={classes.infoAnchor}>
+                    <InfoIcon />
+                  </HashLink>
+                );
+              }
+            })()}
           </div>
           <div className={classes.cell}>
             <TokenAmount
