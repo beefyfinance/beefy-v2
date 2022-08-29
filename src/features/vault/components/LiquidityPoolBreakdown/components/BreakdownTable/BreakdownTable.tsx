@@ -13,7 +13,6 @@ import { BigNumber } from 'bignumber.js';
 import { Tooltip } from '../../../../../../components/Tooltip';
 import { BasicTooltipContent } from '../../../../../../components/Tooltip/BasicTooltipContent';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
 import { HashLink } from 'react-router-hash-link';
 import InfoIcon from '@material-ui/icons/InfoOutlined';
 import { getTokenDisplayName } from '../../../../../data/entities/token';
@@ -57,7 +56,6 @@ export const BreakdownTable = memo<BreakdownTableProps>(function BreakdownTable(
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
-  const location = useLocation();
   const { vault, asset } = breakdown;
   const valueField = `${mode}Value`;
   const amountField = `${mode}Amount`;

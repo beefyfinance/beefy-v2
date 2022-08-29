@@ -18,7 +18,6 @@ import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { AssetsImage } from '../../../../components/AssetsImage';
-import { CardSuperTitle } from '../Card';
 
 const useStyles = makeStyles(styles);
 
