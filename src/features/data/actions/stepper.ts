@@ -1,14 +1,28 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isEmpty } from '../../../helpers/utils';
-import { BeefyState, BeefyStore } from '../../../redux-types';
+import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { stepperActions } from '../reducers/wallet/stepper';
 
-export async function startStepper(store: BeefyStore, chainId: ChainEntity['id']) {
-  store.dispatch(stepperActions.setChainId({ chainId }));
-  store.dispatch(stepperActions.updateCurrentStepIndex({ stepIndex: 0 }));
-  store.dispatch(stepperActions.setModal({ modal: true }));
+type StartStepperParams = ChainEntity['id'];
+
+export interface StarStepperPayload {
+  chainId: ChainEntity['id'];
+  stepIndex: number;
+  modal: boolean;
 }
+
+export const startStepper = createAsyncThunk<
+  StarStepperPayload,
+  StartStepperParams,
+  { state: BeefyState }
+>('stepper/startStepper', chainId => {
+  return {
+    chainId,
+    stepIndex: 0,
+    modal: true,
+  };
+});
 
 export const updateSteps = createAsyncThunk<void, void, { state: BeefyState }>(
   'stepper/updateSteps',

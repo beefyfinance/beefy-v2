@@ -6,12 +6,11 @@ import { styles } from './styles';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import clsx from 'clsx';
 import { formatBigDecimals } from '../../helpers/format';
-import { selectMintResult } from './selectors';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { BridgeInfo } from './components/BridgeInfo';
 import { TransactionLink } from './components/TransactionLink';
 import { Button } from '../Button';
-import { selectSteperState } from '../../features/data/selectors/stepper';
+import { selectMintResult, selectSteperState } from '../../features/data/selectors/stepper';
 import { stepperActions } from '../../features/data/reducers/wallet/stepper';
 
 const useStyles = makeStyles(styles);
@@ -42,12 +41,7 @@ const _Steps = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, steps.currentStep]);
 
-  const isTxInProccess =
-    steps.items.length > 1 &&
-    !steps.finished &&
-    (steps.items[steps.currentStep].step === 'withdraw' ||
-      steps.items[steps.currentStep].step === 'claim-withdraw' ||
-      steps.items[steps.currentStep].step === 'deposit');
+  const isTxInProccess = steps.items.length > 1 && !steps.finished;
 
   return (
     <>
@@ -64,10 +58,7 @@ const _Steps = () => {
               <Box
                 className={clsx({
                   [classes.progressBar]: true,
-                  [classes.progressBar25]:
-                    steps.items.length > 1 &&
-                    !steps.finished &&
-                    steps.items[steps.currentStep].step === 'approve',
+                  [classes.progressBar25]: steps.items.length > 1 && !steps.finished,
                   [classes.progressBar50]: bridgeModalStatus === 'loading' || isTxInProccess,
                   [classes.progressBar75]:
                     bridgeModalStatus === 'confirming' ||

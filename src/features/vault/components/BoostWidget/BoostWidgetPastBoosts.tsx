@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import AnimateHeight from 'react-animate-height';
 import { styles } from './styles';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
-import { useStepper } from '../../../../components/Steps/hooks';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import {
   selectBoostById,
@@ -17,6 +16,8 @@ import { selectChainById } from '../../../data/selectors/chains';
 import { Button } from '../../../../components/Button';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { stepperActions } from '../../../data/reducers/wallet/stepper';
+import { selectIsStepperStepping } from '../../../data/selectors/stepper';
+import { startStepper } from '../../../data/actions/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -38,7 +39,7 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
     state => selectCurrentChainId(state) === vault.chainId
   );
 
-  const [startStepper, isStepping] = useStepper();
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const handleExit = (boost: BoostEntity) => {
     if (!isWalletConnected) {
@@ -59,7 +60,7 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   if (pastBoostsWithUserBalance.length <= 0) {

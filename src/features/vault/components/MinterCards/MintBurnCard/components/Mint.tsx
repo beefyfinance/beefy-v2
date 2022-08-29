@@ -19,7 +19,6 @@ import {
 import { isString } from 'lodash';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
-import { useStepper } from '../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../MinterCard';
 import { selectMinterById } from '../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
@@ -27,6 +26,8 @@ import { selectChainById } from '../../../../../data/selectors/chains';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
+import { startStepper } from '../../../../../data/actions/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -77,7 +78,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
     });
   };
 
-  const [startStepper, isStepping] = useStepper();
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const [formData, setFormData] = React.useState({
     deposit: {
@@ -185,7 +186,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   return (

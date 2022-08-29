@@ -5,7 +5,6 @@ import { styles } from './styles';
 import { formatBigDecimals } from '../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { selectVaultById } from '../../../data/selectors/vaults';
-import { useStepper } from '../../../../components/Steps/hooks';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
 import { selectBoostById, selectBoostPeriodFinish } from '../../../data/selectors/boosts';
 import { walletActions } from '../../../data/actions/wallet-actions';
@@ -26,6 +25,8 @@ import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBas
 import { Button } from '../../../../components/Button';
 import { Modal } from '../../../../components/Modal';
 import { stepperActions } from '../../../data/reducers/wallet/stepper';
+import { selectIsStepperStepping } from '../../../data/selectors/stepper';
+import { startStepper } from '../../../data/actions/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -60,7 +61,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
     state => selectCurrentChainId(state) === boost.chainId
   );
 
-  const [startStepper, isStepping] = useStepper();
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const [dw, setDw] = React.useState('deposit');
   const [inputModal, setInputModal] = React.useState(false);
@@ -93,7 +94,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   const handleClaim = () => {
@@ -115,7 +116,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   return (

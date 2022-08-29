@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
+import { startStepper } from '../../actions/stepper';
 import { ChainEntity } from '../../entities/chain';
 
 export type Step = {
@@ -62,6 +63,14 @@ export const stepperSlice = createSlice({
     setChainId(sliceState, action: PayloadAction<{ chainId: ChainEntity['id'] }>) {
       sliceState.chainId = action.payload.chainId;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(startStepper.fulfilled, (sliceState, action) => {
+      const { chainId, stepIndex, modal } = action.payload;
+      sliceState.chainId = chainId;
+      sliceState.currentStep = stepIndex;
+      sliceState.modal = modal;
+    });
   },
 });
 

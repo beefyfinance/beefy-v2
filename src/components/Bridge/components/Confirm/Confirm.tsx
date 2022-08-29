@@ -23,8 +23,9 @@ import { useAppDispatch, useAppSelector } from '../../../../store';
 import { Button } from '../../../Button';
 import { styles } from './styles';
 import { formatAddressShort } from '../../../../helpers/format';
-import { useStepper } from '../../../Steps/hooks';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
+import { selectIsStepperStepping } from '../../../../features/data/selectors/stepper';
+import { startStepper } from '../../../../features/data/actions/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -47,7 +48,7 @@ function _Confirm({
 
   const currentChainId = useAppSelector(state => selectCurrentChainId(state));
 
-  const [startStepper, isStepping] = useStepper();
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const isWalletOnFromChain = currentChainId === formState.fromChainId;
 
@@ -133,7 +134,7 @@ function _Confirm({
     );
 
     handleModal();
-    startStepper(currentChainId);
+    dispatch(startStepper(currentChainId));
   };
 
   const handleConnectWallet = () => {

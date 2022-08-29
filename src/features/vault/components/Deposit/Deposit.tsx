@@ -40,7 +40,7 @@ import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 import { stepperActions } from '../../../data/reducers/wallet/stepper';
 import { startStepper } from '../../../data/actions/stepper';
-import { selectSteperState } from '../../../data/selectors/stepper';
+import { selectIsStepperStepping } from '../../../data/selectors/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -49,7 +49,6 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const store = useAppStore();
-  const steps = useAppSelector(selectSteperState);
   const vault = useAppSelector(state => selectVaultById(state, vaultId));
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useAppSelector(
@@ -100,7 +99,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
 
-  const isStepping = steps.modal && !steps.finished;
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
@@ -199,7 +198,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       }
     }
 
-    startStepper(store, chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   return (

@@ -14,7 +14,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../Card';
 import { formatBigNumberSignificant } from '../../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../../data/actions/wallet';
 import { BoostEntity } from '../../../../data/entities/boost';
-import { useStepper } from '../../../../../components/Steps/hooks';
 import { selectBoostById, selectIsBoostActiveOrPreStake } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
 import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal';
@@ -39,6 +38,8 @@ import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loade
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
 import { Button } from '../../../../../components/Button';
 import { stepperActions } from '../../../../data/reducers/wallet/stepper';
+import { selectIsStepperStepping } from '../../../../data/selectors/stepper';
+import { startStepper } from '../../../../data/actions/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -99,7 +100,7 @@ const StakeForm = ({
   const store = useAppStore();
   const formState = useAppSelector(state => state.ui.boostModal);
 
-  const [startStepper, isStepping] = useStepper();
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const spenderAddress = boost.earnContractAddress;
 
@@ -149,7 +150,7 @@ const StakeForm = ({
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   return (

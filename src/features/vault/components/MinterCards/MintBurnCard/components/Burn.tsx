@@ -16,7 +16,6 @@ import { selectErc20TokenByAddress } from '../../../../../data/selectors/tokens'
 import { isString } from 'lodash';
 import { askForNetworkChange, askForWalletConnection } from '../../../../../data/actions/wallet';
 import { walletActions } from '../../../../../data/actions/wallet-actions';
-import { useStepper } from '../../../../../../components/Steps/hooks';
 import { MinterCardParams } from '../../MinterCard';
 import { selectMinterById, selectMinterReserves } from '../../../../../data/selectors/minters';
 import { selectAllowanceByTokenAddress } from '../../../../../data/selectors/allowances';
@@ -25,6 +24,8 @@ import { AlertWarning } from '../../../../../../components/Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { stepperActions } from '../../../../../data/reducers/wallet/stepper';
+import { startStepper } from '../../../../../data/actions/stepper';
+import { selectIsStepperStepping } from '../../../../../data/selectors/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -74,7 +75,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
     });
   };
 
-  const [startStepper, isStepping] = useStepper();
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const [formData, setFormData] = React.useState({
     withdraw: {
@@ -178,7 +179,7 @@ export const Burn = memo(function Burn({ vaultId, minterId }: MinterCardParams) 
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   return (

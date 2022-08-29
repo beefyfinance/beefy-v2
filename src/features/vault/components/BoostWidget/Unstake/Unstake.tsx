@@ -31,13 +31,14 @@ import {
   selectBoostUserBalanceInToken,
   selectUserBalanceOfToken,
 } from '../../../../data/selectors/balance';
-import { useStepper } from '../../../../../components/Steps/hooks';
 import { boostModalActions } from '../../../../data/reducers/wallet/boost-modal';
 import { walletActions } from '../../../../data/actions/wallet-actions';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
 import { Button } from '../../../../../components/Button';
 import { stepperActions } from '../../../../data/reducers/wallet/stepper';
+import { selectIsStepperStepping } from '../../../../data/selectors/stepper';
+import { startStepper } from '../../../../data/actions/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -97,7 +98,7 @@ const UnstakeForm = ({
   const store = useAppStore();
   const formState = useAppSelector(state => state.ui.boostModal);
 
-  const [startStepper, isStepping] = useStepper();
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const handleInput = (amountStr: string) => {
     dispatch(
@@ -128,7 +129,7 @@ const UnstakeForm = ({
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   return (

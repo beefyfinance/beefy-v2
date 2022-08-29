@@ -14,7 +14,6 @@ import { isArray } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssetsImage } from '../../../../components/AssetsImage';
-import { useStepper } from '../../../../components/Steps/hooks';
 import { formatBigNumberSignificant } from '../../../../helpers/format';
 import { initWithdrawForm } from '../../../data/actions/scenarios';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -62,6 +61,8 @@ import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
 import { stepperActions } from '../../../data/reducers/wallet/stepper';
+import { startStepper } from '../../../data/actions/stepper';
+import { selectIsStepperStepping } from '../../../data/selectors/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -129,7 +130,8 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
 
   const isZapEstimateLoading = formState.isZap && !formState.zapEstimate;
-  const [startStepper, isStepping] = useStepper();
+
+  const isStepping = useAppSelector(selectIsStepperStepping);
 
   const formReady = formDataLoaded && !isStepping && !isZapEstimateLoading;
 
@@ -219,7 +221,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       }
     }
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   const handleClaim = () => {
@@ -244,7 +246,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   const handleExit = () => {
@@ -268,7 +270,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       })
     );
 
-    startStepper(chain.id);
+    dispatch(startStepper(chain.id));
   };
 
   const handleAsset = (selectedToken: TokenEntity['id'] | TokenEntity['id'][]) => {
