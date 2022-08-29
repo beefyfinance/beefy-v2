@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../../components/LinkButton';
 import { fetchAddressBookAction } from '../../../data/actions/tokens';
 import { ChainEntity } from '../../../data/entities/chain';
-import { isTokenErc20, TokenEntity } from '../../../data/entities/token';
+import { getTokenDisplayName, isTokenErc20, TokenEntity } from '../../../data/entities/token';
 import { selectChainById } from '../../../data/selectors/chains';
 import {
   selectIsAddressBookLoaded,
@@ -17,6 +17,8 @@ import { CardHeader } from '../Card/CardHeader';
 import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import { useAppDispatch, useAppSelector } from '../../../../store';
+import { AssetsImage } from '../../../../components/AssetsImage';
+import { CardSuperTitle } from '../Card';
 
 const useStyles = makeStyles(styles);
 
@@ -30,7 +32,10 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
     <Card>
       <CardHeader>
         <div className={classes.detailTitle}>{t('Token-Detail')}</div>
-        <CardTitle title={token.symbol} />
+        <div className={classes.cardTitle}>
+          <AssetsImage className={classes.icon} chainId={token.chainId} assetIds={[token.symbol]} />
+          <CardTitle title={getTokenDisplayName(token)} />
+        </div>
         <div className={classes.cardActions}>
           {token.website && (
             <div className={classes.cardAction}>

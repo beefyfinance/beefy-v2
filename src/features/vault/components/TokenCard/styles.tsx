@@ -21,4 +21,13 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['subline-lg'],
     color: theme.palette.text.disabled,
   },
+  cardTitle: {
+    display: 'flex',
+  },
+  icon: {
+    display: 'inline-flex',
+    width: '32px',
+    height: '32px',
+    marginRight: '8px',
+  },
 });
