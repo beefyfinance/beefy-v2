@@ -16,8 +16,12 @@
     "name": "Single Staking"
   },
   {
-    "id":"single-lp",
-    "name":"Single LP"
+    "id": "single-lp",
+    "name": "Single LP"
+  },
+  {
+    "id": "single-syrup",
+    "name": "Single Staking Syrup"
   },
   {
     "id": "maxi",

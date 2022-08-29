@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../../../vault/comp
 import CloseIcon from '@material-ui/icons/Close';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
-import { selectAllChains } from '../../../../data/selectors/chains';
+import { selectChainById } from '../../../../data/selectors/chains';
 import { ChainEntity } from '../../../../data/entities/chain';
 import { selectTvlByChain } from '../../../../data/selectors/tvl';
 import BigNumber from 'bignumber.js';
@@ -12,6 +12,7 @@ import { formatBigUsd } from '../../../../../helpers/format';
 import { ContentLoading } from '../../../../../components/ContentLoading';
 import { Button } from '../../../../../components/Button';
 import { useAppSelector } from '../../../../../store';
+import { sortBy } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
@@ -19,12 +20,24 @@ export type ModalTvlProps = {
   close: () => void;
 };
 
+interface ItemListType {
+  chainId: ChainEntity['id'];
+  tvl: number;
+}
+
 const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close }, ref) {
   const classes = useStyles();
   const { t } = useTranslation();
   const tvls = useAppSelector(selectTvlByChain);
 
-  const chains = useAppSelector(selectAllChains);
+  const sortedTvls = React.useMemo<ItemListType[]>(() => {
+    const list = [];
+    for (const [chainId, tvl] of Object.entries(tvls)) {
+      list.push({ tvl: tvl.toNumber(), chainId });
+    }
+    return sortBy(list, ['tvl']).reverse();
+  }, [tvls]);
+
   return (
     <div className={classes.holder} ref={ref} tabIndex={-1}>
       <Card>
@@ -36,10 +49,10 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close },
         </CardHeader>
         <CardContent className={classes.container}>
           <Grid container spacing={2}>
-            {chains.map(chain => {
+            {sortedTvls.map((item: ItemListType) => {
               return (
-                <Grid key={chain.id} item xs={6} lg={3}>
-                  <Chain chain={chain} tvl={tvls[chain.id]} />
+                <Grid key={item.chainId} item xs={6} lg={3}>
+                  <Chain chainId={item.chainId} tvl={tvls[item.chainId]} />
                 </Grid>
               );
             })}
@@ -55,8 +68,9 @@ const _ModalTvl = forwardRef<HTMLDivElement, ModalTvlProps>(function ({ close },
 
 export const ModalTvl = memo<ModalTvlProps>(_ModalTvl);
 
-function Chain({ chain, tvl }: { chain: ChainEntity; tvl: BigNumber }) {
+function Chain({ chainId, tvl }: { chainId: ChainEntity['id']; tvl: BigNumber }) {
   const classes = useStyles();
+  const chain = useAppSelector(state => selectChainById(state, chainId));
 
   return (
     <Box className={classes.chain}>

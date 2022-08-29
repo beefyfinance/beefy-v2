@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_curve-moonbeam-f-stdot-lido",
+    "poolId": "curve-moonbeam-f-stdot",
+    "name": "Lido",
+    "assets": ["stDOT", "xcDOT"],
+    "tokenAddress": "0x4d5bBce91D9bf7434Bf358C1199C8a9c33303787",
+    "earnedToken": "LDO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0",
+    "earnContractAddress": "0x65c6FC773729c30aC4d570C8B8040C454fFA5960",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LDO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido-moonbeam"]
+  },
+  {
     "id": "moo_stellaswap-stella-wglmr-stellaswap",
     "poolId": "stellaswap-stella-wglmr",
     "name": "StellaSwap",

@@ -25,6 +25,7 @@ import { boostModalSlice } from './wallet/boost-modal';
 import { mintersSlice } from './minters';
 import { infoCardsSlice } from './info-cards';
 import { bridgeModalSlice } from './wallet/bridge-modal';
+import { feesSlice } from './fees';
 import { stepperSlice } from './wallet/stepper';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
@@ -32,6 +33,7 @@ const entitiesReducer = combineReducers<BeefyState['entities']>({
   vaults: vaultsSlice.reducer,
   tokens: tokensSlice.reducer,
   boosts: boostsSlice.reducer,
+  fees: feesSlice.reducer,
   platforms: platformsSlice.reducer,
   zaps: zapsSlice.reducer,
   minters: mintersSlice.reducer,

@@ -10,9 +10,6 @@ export const styles = (theme: Theme) => ({
     color: '#8585A6',
     marginBottom: '8px',
   },
-  zapTitle: {
-    marginBottom: '12px',
-  },
   label: {
     ...theme.typography['subline-sm'],
     paddingTop: 5,
@@ -29,19 +26,6 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-sm'],
     paddingTop: 5,
     color: theme.palette.text.disabled,
-  },
-  zapStep: {
-    paddingLeft: '8px',
-    marginBottom: '12px',
-    color: theme.palette.text.secondary,
-  },
-  divider: {
-    height: '2px',
-    marginBottom: '20px',
-    marginTop: '8px',
-  },
-  ol: {
-    paddingLeft: 14,
   },
   tooltipTrigger: {
     width: '16px',

@@ -7,6 +7,22 @@ import { VaultEntity } from '../entities/vault';
 import { mapValuesDeep } from '../utils/array-utils';
 import { featureFlag_simulateBeefyApiError } from '../utils/feature-flags';
 
+export type ApyPerformanceFeeData = {
+  total: number;
+  call: number;
+  strategist: number;
+  treasury: number;
+  stakers: number;
+};
+
+export type ApyVaultFeeData = {
+  performance: ApyPerformanceFeeData;
+  withdraw: number;
+  lastUpdated: number;
+};
+
+export type ApyFeeData = Record<VaultEntity['id'], ApyVaultFeeData>;
+
 interface ApyGovVault {
   vaultApr: number;
 }
@@ -204,6 +220,17 @@ export class BeefyAPI {
     }
 
     return new Date(lh * 1000);
+  }
+
+  public async getFees(): Promise<ApyFeeData> {
+    if (featureFlag_simulateBeefyApiError('fees')) {
+      throw new Error('Simulated beefy api error');
+    }
+
+    const res = await this.api.get<ApyFeeData>('/fees', {
+      params: { _: this.getCacheBuster('long') },
+    });
+    return res.data;
   }
 
   public async getChartData(

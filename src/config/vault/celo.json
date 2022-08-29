@@ -25,7 +25,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1623706144,
     "network": "celo"
   },
@@ -52,7 +51,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.05%",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "network": "celo",
     "createdAt": 1636753207
@@ -72,7 +70,6 @@
     "status": "eol",
     "platformId": "sushiswap",
     "retireReason": "rewards",
-    "withdrawalFee": "0%",
     "assets": ["USDT", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -102,7 +99,6 @@
     "oracleId": "sushi-celo-weth-daiv2",
     "status": "active",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["DAI", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -133,7 +129,6 @@
     "oracleId": "sushi-celo-cusd-usdc",
     "status": "active",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["cUSD", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
@@ -163,7 +158,6 @@
     "oracleId": "sushi-celo-wethv2-celo",
     "status": "active",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["CELO", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -193,7 +187,6 @@
     "oracleId": "sushi-celo-wethv2-cusd",
     "status": "active",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["cUSD", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -223,7 +216,6 @@
     "oracleId": "sushi-celo-cusd-ceurv2",
     "status": "active",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["cUSD", "cEUR"],
     "strategyTypeId": "lp",
     "risks": [
@@ -253,7 +245,6 @@
     "oracleId": "sushi-celo-celo-weth",
     "status": "eol",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["CELO", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -284,7 +275,6 @@
     "oracleId": "sushi-celo-cusd-dai",
     "status": "eol",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["cUSD", "DAI"],
     "strategyTypeId": "lp",
     "risks": [
@@ -316,7 +306,6 @@
     "oracleId": "sushi-celo-ceur-weth",
     "status": "eol",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["cEUR", "WETH"],
     "strategyTypeId": "lp",
     "risks": [
@@ -347,7 +336,6 @@
     "oracleId": "sushi-celo-cusd-ceur",
     "status": "eol",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["cUSD", "cEUR"],
     "strategyTypeId": "lp",
     "risks": [
@@ -378,7 +366,6 @@
     "oracleId": "sushi-celo-celo-mobi",
     "status": "eol",
     "platformId": "sushiswap",
-    "withdrawalFee": "0%",
     "assets": ["CELO", "MOBI"],
     "strategyTypeId": "lp",
     "risks": [
