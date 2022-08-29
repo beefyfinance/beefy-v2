@@ -1114,5 +1114,13 @@
       "telegram": "https://discord.com/invite/FwG5QFWvfn",
       "twitter": "https://twitter.com/lidofinance"
     }
+  },
+  "lido-moonbeam": {
+    "text": "Lido on Moonbeam is a liquid staking solution for DOT backed by industry-leading staking providers. With Lido on Moonbeam you can stake your DOT tokens in a decentralized and secure way and use your stDOT on the secondary market.\nLido on Moonbeam is formed by a new generation of blockchain architects who are building a borderless, transparent, and democratic world.",
+    "website": "https://polkadot.lido.fi/",
+    "social": {
+      "telegram": "https://discord.com/invite/vgdPfhZ",
+      "twitter": "https://twitter.com/lidofinance"
+    }
   }
 }
