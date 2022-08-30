@@ -30,6 +30,17 @@ export async function getVaultsForChain(chainId: string) {
   return vaultsByChainId[id];
 }
 
+const boostsByChainId = {};
+export async function getBoostsForChain(chainId: string) {
+  const id = addressBookToAppId(chainId);
+
+  if (!(id in boostsByChainId)) {
+    boostsByChainId[id] = (await import(`../src/config/boost/${id}.json`)).default;
+  }
+
+  return boostsByChainId[id];
+}
+
 function appToAddressBookId(chainId: string) {
   return chainId === 'harmony' ? 'one' : chainId;
 }

@@ -48,4 +48,13 @@ export const zaps = [
     withdrawEstimateMode: 'getAmountsOut',
     lpProviderFee: 0.001,
   },
+  {
+    // cone
+    type: 'solidly',
+    zapAddress: '0xd0A01e04EC25E98baFc6eA22eC655B51c5b8eF86',
+    ammRouter: '0xbf1fc29668e5f5Eaa819948599c9Ac1B1E03E75F',
+    ammFactory: '0x0EFc2D2D054383462F2cD72eA2526Ef7687E1016',
+    ammPairInitHash: '0x2ce84ffd93a6f7c4c5a44224783ccdded4a321b6d3fc965308f25c466ce132dd',
+    lpProviderFee: 0.0002,
+  },
 ];

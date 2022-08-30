@@ -1,4 +1,20 @@
 {
+  "stader": {
+    "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon, Solana and BNB Chain.",
+    "website": "https://polygon.staderlabs.com/liquid-staking/maticx",
+    "social": {
+      "telegram": "https://discord.com/invite/ReasyJB4Rq",
+      "twitter": "https://twitter.com/stader_polygon"
+    }
+  },
+  "stader-bsc": {
+    "text": "Stader aims to be the distribution layer of staking while building protocols and products which enhance the security, decentralization, liquidity, governance of some of the major DPoS blockchain networks like Ethereum, Terra, Polygon, Solana and BNB Chain.",
+    "website": "https://binance.staderlabs.com/liquid-staking/bnbx",
+    "social": {
+      "telegram": "https://t.me/staderlabs_bnb_official",
+      "twitter": "https://twitter.com/stader_bnb"
+    }
+  },
   "swapsicle": {
     "text": "Swapsicle is a decentralised exchange built on the avalanche blockchain offering swaps, farming and staking opportunities.\n\nSwapsicle DEX is built by the community and for the community meaning POPS holders are rewarded for using the platform.",
     "website": "https://www.swapsicle.io/en/swap",
@@ -1089,6 +1105,22 @@
     "social": {
       "telegram": "https://discord.com/invite/vgdPfhZ",
       "twitter": "https://twitter.com/LidoOnPolygon"
+    }
+  },
+  "lido-moonriver": {
+    "text": "Lido on Moonriver is a liquid staking solution for KSM backed by industry-leading staking providers. With Lido on Moonriver you can stake your KSM tokens in a decentralized and secure way and use your stKSM on the secondary market.\nLido on Moonriver is formed by a new generation of blockchain architects who are building a borderless, transparent, and democratic world.",
+    "website": "https://kusama.lido.fi/",
+    "social": {
+      "telegram": "https://discord.com/invite/FwG5QFWvfn",
+      "twitter": "https://twitter.com/lidofinance"
+    }
+  },
+  "lido-moonbeam": {
+    "text": "Lido on Moonbeam is a liquid staking solution for DOT backed by industry-leading staking providers. With Lido on Moonbeam you can stake your DOT tokens in a decentralized and secure way and use your stDOT on the secondary market.\nLido on Moonbeam is formed by a new generation of blockchain architects who are building a borderless, transparent, and democratic world.",
+    "website": "https://polkadot.lido.fi/",
+    "social": {
+      "telegram": "https://discord.com/invite/vgdPfhZ",
+      "twitter": "https://twitter.com/lidofinance"
     }
   }
 }

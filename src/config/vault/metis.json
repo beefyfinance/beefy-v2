@@ -26,7 +26,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1623706144,
     "network": "metis"
   },
@@ -288,7 +287,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.05%",
     "buyTokenUrl": "https://netswap.io/#/swap?outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
     "network": "metis",
     "createdAt": 1642600646
@@ -422,7 +420,8 @@
     "earnContractAddress": "0xc674cf138415244041d512Edf1c7943D99dD229F",
     "oracle": "lps",
     "oracleId": "tethys-m.usdc-m.usdt",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "tethys",
     "assets": ["mUSDC", "mUSDT"],
     "strategyTypeId": "lp",

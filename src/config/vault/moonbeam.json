@@ -26,9 +26,156 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1623706144,
     "network": "moonbeam"
+  },
+  {
+    "id": "stellaswap-frax-wglmr",
+    "name": "FRAX-GLMR LP",
+    "token": "FRAX-GLMR LP",
+    "tokenAddress": "0x015c6B2d98969e3bF066110769E53D734e48Ebf6",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaGLMR-FRAX",
+    "earnedTokenAddress": "0xE0258668BbD7380ac31483B35460d0175ec88A5f",
+    "earnContractAddress": "0xE0258668BbD7380ac31483B35460d0175ec88A5f",
+    "oracle": "lps",
+    "oracleId": "stellaswap-frax-wglmr",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["FRAX", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x322E86852e492a7Ee17f28a78c663da38FB33bfb/ETH",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1661531660
+  },
+  {
+    "id": "stellaswap-wglmr-mai",
+    "name": "MAI-GLMR LP",
+    "token": "MAI-GLMR LP",
+    "tokenAddress": "0x91b11E7649614EaBe97D96d75bE11d1068059FF1",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaMAI-GLMR",
+    "earnedTokenAddress": "0x07E6d8BC664d75d7019296A76982d53E93Db594b",
+    "earnContractAddress": "0x07E6d8BC664d75d7019296A76982d53E93Db594b",
+    "oracle": "lps",
+    "oracleId": "stellaswap-wglmr-mai",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["MAI", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xdFA46478F9e5EA86d57387849598dbFB2e964b02/ETH",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1661531661
+  },
+  {
+    "id": "curve-moonbeam-f-stdot",
+    "name": "stDOT/xcDOT",
+    "token": "DOTSTDOT-f",
+    "tokenAddress": "0xc6e37086D09ec2048F151D11CdB9F9BbbdB7d685",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooCurveFstDOT",
+    "earnedTokenAddress": "0x4d5bBce91D9bf7434Bf358C1199C8a9c33303787",
+    "earnContractAddress": "0x4d5bBce91D9bf7434Bf358C1199C8a9c33303787",
+    "oracle": "lps",
+    "oracleId": "curve-moonbeam-f-stdot",
+    "status": "active",
+    "platformId": "curve",
+    "assets": ["stDOT", "xcDOT"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://moonbeam.curve.fi/factory/14/deposit",
+    "network": "moonbeam",
+    "createdAt": 1661243846
+  },
+  {
+    "id": "stellaswap-ldo-wglmr",
+    "name": "LDO-GLMR LP",
+    "token": "LDO-GLMR LP",
+    "tokenAddress": "0x00870B0e6994fFb142a91173a882d2F6a9a8Ac4a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaLDO-GLMR",
+    "earnedTokenAddress": "0xAAbFF5Bc0B3Dd6D8819CdBc76bBdb65F161A2B54",
+    "earnContractAddress": "0xAAbFF5Bc0B3Dd6D8819CdBc76bBdb65F161A2B54",
+    "oracle": "lps",
+    "oracleId": "stellaswap-ldo-wglmr",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["LDO", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MEDIUM",
+      "IL_HIGH",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0/ETH",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1661191064
+  },
+  {
+    "id": "beamswap-wglmr-xcausd",
+    "name": "xcaUSD-GLMR LP",
+    "token": "xcaUSD-GLMR TLP",
+    "tokenAddress": "0x91ed237532E2fFFa3F114e9A1B9AF3e65a8495ec",
+    "tokenDecimals": 18,
+    "tokenProviderId": "beamswap",
+    "earnedToken": "mooBeamGLMR-xcaUSD",
+    "earnedTokenAddress": "0x40802d092739d6817173464b398D1eD77CCA7382",
+    "earnContractAddress": "0x40802d092739d6817173464b398D1eD77CCA7382",
+    "oracle": "lps",
+    "oracleId": "beamswap-wglmr-xcausd",
+    "status": "eol",
+    "retireReason": "rewards",
+    "platformId": "beamswap",
+    "assets": ["xcaUSD", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_HIGH",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda/0xAcc15dC74880C9944775448304B263D191c6077F",
+    "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda",
+    "network": "moonbeam",
+    "createdAt": 1659949276
   },
   {
     "id": "beamswap-4pool",
@@ -54,7 +201,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/multi/multichain3pool",
     "createdAt": 1658327431,
@@ -72,7 +218,8 @@
     "earnContractAddress": "0x3B28EdEa7493353b8E6149A970b6AC598697D94e",
     "oracle": "lps",
     "oracleId": "beamswap-3pool",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beamswap",
     "assets": ["USDCs", "USDTs", "DAIs"],
     "strategyTypeId": "multi-lp",
@@ -84,7 +231,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?outputCurrency=0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/multi/nomad3pool",
     "createdAt": 1658326369,
@@ -114,12 +260,10 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "network": "moonbeam",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x511aB53F793683763E5a8829738301368a2411E3",
     "createdAt": 1656516660
   },
-
   {
     "id": "stellaswap-mai4pool",
     "name": "Mai4Pool Stable LP",
@@ -132,7 +276,8 @@
     "earnContractAddress": "0x86D49190A41167804f41e5f4C8DB6fd937E43277",
     "oracle": "lps",
     "oracleId": "stellaswap-mai4pool",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["USDTs", "USDCs", "DAIs", "FRAX", "MAI"],
     "strategyTypeId": "multi-lp",
@@ -144,7 +289,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/add/0x7FbE3126C03444D43fC403626ec81E3e809E6b46",
     "createdAt": 1655845404,
     "network": "moonbeam"
@@ -161,7 +305,8 @@
     "earnContractAddress": "0xFd322A316c5968fE04ec54ab33a41571d36Dc524",
     "oracle": "lps",
     "oracleId": "stellaswap-base4pool",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["USDTs", "USDCs", "DAIs", "FRAX"],
     "strategyTypeId": "multi-lp",
@@ -173,7 +318,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/add/0x422b5b7A15FB12c518AA29f9def640b4773427f8",
     "createdAt": 1654860006,
     "network": "moonbeam"
@@ -190,7 +334,8 @@
     "earnContractAddress": "0x6A12CC9224426B15C43Bfa5e539BB452c1A17A11",
     "oracle": "lps",
     "oracleId": "stellaswap-wbtc-wglmr",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["GLMR", "WBTC"],
     "strategyTypeId": "lp",
@@ -202,7 +347,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "network": "moonbeam",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x1DC78Acda13a8BC4408B207c9E48CDBc096D95e0",
     "createdAt": 1654276206
@@ -231,7 +375,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "network": "moonbeam",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
@@ -249,7 +392,8 @@
     "earnContractAddress": "0x971cd07c0f00beE3aec46B520eCA8916187C4baB",
     "oracle": "lps",
     "oracleId": "beamswap-usdcmad-wglmr",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "beamswap",
     "assets": ["USDCs", "GLMR"],
     "strategyTypeId": "lp",
@@ -261,7 +405,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "network": "moonbeam",
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9",
@@ -294,8 +437,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0xacc15dc74880c9944775448304b263d191c6077f3",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0xacc15dc74880c9944775448304b263d191c6077f",
     "network": "moonbeam",
-    "createdAt": 1644598122,
-    "withdrawalFee": "0%"
+    "createdAt": 1644598122
   },
   {
     "id": "beamswap-dai-usdc",
@@ -326,8 +468,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "network": "moonbeam",
-    "createdAt": 1644598824,
-    "withdrawalFee": "0%"
+    "createdAt": 1644598824
   },
   {
     "id": "beamswap-wglmr-glint",
@@ -356,8 +497,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0x765277EebeCA2e31912C9946eAe1021199B39C61",
     "network": "moonbeam",
-    "createdAt": 1644599100,
-    "withdrawalFee": "0%"
+    "createdAt": 1644599100
   },
   {
     "id": "beamswap-busd-bnb",
@@ -386,8 +526,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055&outputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F",
     "network": "moonbeam",
-    "createdAt": 1644599646,
-    "withdrawalFee": "0%"
+    "createdAt": 1644599646
   },
   {
     "id": "beamswap-usdc-busd",
@@ -417,8 +556,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "network": "moonbeam",
-    "createdAt": 1644599298,
-    "withdrawalFee": "0%"
+    "createdAt": 1644599298
   },
   {
     "id": "beamswap-usdc-eth",
@@ -447,8 +585,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xfA9343C3897324496A05fC75abeD6bAC29f8A40f&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "network": "moonbeam",
-    "createdAt": 1644599832,
-    "withdrawalFee": "0%"
+    "createdAt": 1644599832
   },
   {
     "id": "beamswap-usdc-usdt",
@@ -478,8 +615,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73&outputCurrency=0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "network": "moonbeam",
-    "createdAt": 1644600000,
-    "withdrawalFee": "0%"
+    "createdAt": 1644600000
   },
   {
     "id": "moonbeam-bifi-maxi",
@@ -504,7 +640,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xacc15dc74880c9944775448304b263d191c6077f&outputCurrency=0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8",
     "createdAt": 1644700692,
     "network": "moonbeam"
@@ -537,8 +672,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8/0xacc15dc74880c9944775448304b263d191c6077f3",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8&outputCurrency=0xacc15dc74880c9944775448304b263d191c6077f",
     "createdAt": 1644704004,
-    "network": "moonbeam",
-    "withdrawalFee": "0%"
+    "network": "moonbeam"
   },
   {
     "id": "beamswap-usdc-ftm",
@@ -568,8 +702,7 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0x818ec0a7fe18ff94269904fced6ae3dae6d6dc0b&outputCurrency=0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
     "createdAt": 1644703824,
-    "network": "moonbeam",
-    "withdrawalFee": "0%"
+    "network": "moonbeam"
   },
   {
     "id": "solarflare-wglmr-flare",
@@ -598,8 +731,7 @@
     "addLiquidityUrl": "https://app.solarflare.io/exchange/add/0xE3e43888fa7803cDC7BEA478aB327cF1A0dc11a7/0xAcc15dC74880C9944775448304B263D191c6077F",
     "buyTokenUrl": "https://app.solarflare.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0xE3e43888fa7803cDC7BEA478aB327cF1A0dc11a7",
     "createdAt": 1646421834,
-    "network": "moonbeam",
-    "withdrawalFee": "0%"
+    "network": "moonbeam"
   },
   {
     "id": "solarflare-usdc-wglmr",
@@ -613,7 +745,8 @@
     "earnContractAddress": "0xf26607237355D7c6183ea66EC908729E9c6eEB6b",
     "oracle": "lps",
     "oracleId": "solarflare-usdc-wglmr",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "solarflare",
     "assets": ["USDCs", "GLMR"],
     "strategyTypeId": "lp",
@@ -628,8 +761,7 @@
     "addLiquidityUrl": "https://app.solarflare.io/exchange/add/0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8/0xAcc15dC74880C9944775448304B263D191c6077F",
     "buyTokenUrl": "https://app.solarflare.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8",
     "createdAt": 1646424684,
-    "network": "moonbeam",
-    "withdrawalFee": "0%"
+    "network": "moonbeam"
   },
   {
     "id": "stellaswap-stella-wglmr",
@@ -655,7 +787,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647351540,
@@ -686,7 +817,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647359160,
@@ -717,7 +847,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647355452,
@@ -748,7 +877,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xeFAeeE334F0Fd1712f9a8cc375f427D9Cdd40d73",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647522606,
@@ -778,7 +906,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647524406,
@@ -808,7 +935,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xA649325Aa7C5093d12D6F98EB4378deAe68CE23F/0xAcc15dC74880C9944775448304B263D191c6077F",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647525054,
@@ -840,7 +966,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x765277EebeCA2e31912C9946eAe1021199B39C61/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647958428,
@@ -871,7 +996,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647958674,
@@ -902,7 +1026,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xfA9343C3897324496A05fC75abeD6bAC29f8A40f",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647958770,
@@ -933,7 +1056,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648745802,
@@ -963,7 +1085,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xC19281F22A075E0F10351cd5D6Ea9f0AC63d4327/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648745970,
@@ -993,7 +1114,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x4792C1EcB969B036eb51330c63bD27899A13D84e/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648746066,
@@ -1023,7 +1143,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x3405A1bd46B85c5C029483FbECf2F3E611026e45/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648746150,
@@ -1053,7 +1172,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0x27292cf0016E5dF1d8b37306B2A98588aCbD6fCA",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1649857662,
@@ -1084,7 +1202,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x818ec0A7Fe18Ff94269904fCED6AE3DaE6d6dC0b/0x27292cf0016E5dF1d8b37306B2A98588aCbD6fCA",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1649857842,
@@ -1114,7 +1231,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x3D632d9e1a60a0880Dd45E61f279D919b5748377/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648601028,
@@ -1144,7 +1260,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xacc15dc74880c9944775448304b263d191c6077f&outputCurrency=0x0E358838ce72d5e61E0018a2ffaC4bEC5F4c88d2",
     "createdAt": 1651693314,
     "network": "moonbeam"
@@ -1173,7 +1288,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1651689624,
@@ -1203,7 +1317,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x31DAB3430f3081dfF3Ccd80F17AD98583437B213/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1648746234,
@@ -1235,7 +1348,6 @@
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x085416975fe14C2A731a97eC38B9bF8135231F62/ETH",
     "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
     "createdAt": 1647958278,
@@ -1271,7 +1383,6 @@
     "buyTokenUrl": "https://app.solarflare.io/exchange/swap?inputCurrency=0x085416975fe14C2A731a97eC38B9bF8135231F62&outputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F",
     "createdAt": 1647958278,
     "network": "moonbeam",
-    "withdrawalFee": "0%",
     "retireReason": "rewards"
   },
   {
@@ -1302,7 +1413,6 @@
     "buyTokenUrl": "https://app.solarflare.io/exchange/swap?inputCurrency=0x31DAB3430f3081dfF3Ccd80F17AD98583437B213&outputCurrency=0xE3e43888fa7803cDC7BEA478aB327cF1A0dc11a7",
     "createdAt": 1646426436,
     "network": "moonbeam",
-    "withdrawalFee": "0%",
     "retireReason": "rewards"
   },
   {
@@ -1317,7 +1427,8 @@
     "earnContractAddress": "0xA2809e408875B892803d62Ed07c9fa79364be555",
     "oracle": "lps",
     "oracleId": "stellaswap-weth-wglmr",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["GLMR", "ETHs"],
     "strategyTypeId": "lp",
@@ -1329,7 +1440,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x30D2a9F5FDf90ACe8c17952cbb4eE48a55D916A7",
     "createdAt": 1653485280,
     "network": "moonbeam"
@@ -1346,7 +1456,8 @@
     "earnContractAddress": "0xD03855Caad39992Eb04D730eafb7b0D8b789C4cB",
     "oracle": "lps",
     "oracleId": "stellaswap-usdcmad-wglmr",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["GLMR", "USDCs"],
     "strategyTypeId": "lp",
@@ -1358,7 +1469,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x8f552a71EFE5eeFc207Bf75485b356A0b3f01eC9",
     "createdAt": 1653477432,
     "network": "moonbeam"
@@ -1375,7 +1485,8 @@
     "earnContractAddress": "0xdd856F58E8B01579ef5DbE78f597615D66c320EE",
     "oracle": "lps",
     "oracleId": "stellaswap-dualETH",
-    "status": "paused",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "stellaswap",
     "assets": ["ETHs", "ETH"],
     "strategyTypeId": "lp",
@@ -1387,7 +1498,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/pool/stable/add/0xb86271571c90ad4E0C9776228437340b42623402",
     "createdAt": 1653747480,
     "network": "moonbeam"

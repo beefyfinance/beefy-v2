@@ -3,7 +3,7 @@ import { addressBook } from 'blockchain-addressbook';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 import { isEmpty, isValidChecksumAddress, maybeChecksumAddress } from './utils';
-import { chainIds, chainRpcs, getVaultsForChain } from './config';
+import { chainIds, chainRpcs, getBoostsForChain, getVaultsForChain } from './config';
 import strategyABI from '../src/config/abi/strategy.json';
 import vaultABI from '../src/config/abi/vault.json';
 import platforms from '../src/config/platforms.json';
@@ -24,6 +24,8 @@ const overrides = {
   'fuse-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
   'moonbeam-bifi-maxi': { beefyFeeRecipient: undefined }, // 0x0
   'scream-frax': { vaultOwner: undefined }, // Rescue
+  'baby-sol-bnb': { beefyFeeRecipient: undefined }, // 0x0
+  'sicle-grape-mim': { beefyFeeRecipient: undefined },
 };
 
 const oldValidOwners = [
@@ -51,6 +53,8 @@ const oldFields = [
   'stratType',
   'logo',
   'depositsPaused',
+  'withdrawalFee',
+  'updatedFees',
 ];
 
 const validatePools = async () => {
@@ -79,11 +83,12 @@ const validatePools = async () => {
 };
 
 const validateSingleChain = async (chainId, uniquePoolId) => {
-  let pools = await getVaultsForChain(chainId);
+  let [pools, boosts] = await Promise.all([getVaultsForChain(chainId), getBoostsForChain(chainId)]);
+
   if (chainId === 'one') {
     if (pools.length === 22) {
       console.log('Skip Harmony validation');
-      return 0;
+      return { chainId, exitCode: 0, updates: {} };
     } else {
       console.error(`Error: New Harmony pool added without validation`);
       return { chainId, exitCode: 1, updates: 'New Harmony pool added without validation' };
@@ -96,6 +101,7 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
   //Governance pools should be separately verified
   pools = pools.filter(pool => !pool.isGovVault);
 
+  const poolIds = new Set(pools.map(pool => pool.id));
   const uniqueEarnedToken = new Set();
   const uniqueEarnedTokenAddress = new Set();
   const uniqueOracleId = new Set();
@@ -223,14 +229,24 @@ const validateSingleChain = async (chainId, uniquePoolId) => {
     uniqueEarnedTokenAddress.add(pool.earnedTokenAddress);
     uniqueOracleId.add(pool.oracleId);
 
-    const { keeper, strategyOwner, vaultOwner, beefyFeeRecipient } =
+    const { keeper, strategyOwner, vaultOwner, beefyFeeRecipient, beefyFeeConfig } =
       addressBook[chainId].platforms.beefyfinance;
 
     updates = isKeeperCorrect(pool, chainId, keeper, updates);
     updates = isStratOwnerCorrect(pool, chainId, strategyOwner, updates);
     updates = isVaultOwnerCorrect(pool, chainId, vaultOwner, updates);
     updates = isBeefyFeeRecipientCorrect(pool, chainId, beefyFeeRecipient, updates);
+    updates = isBeefyFeeConfigCorrect(pool, chainId, beefyFeeConfig, updates);
   });
+
+  // Boosts
+  boosts.forEach(boost => {
+    if (!poolIds.has(boost.poolId)) {
+      console.error(`Error: Boost ${boost.id}: Boost has non-existent pool id ${boost.poolId}.`);
+      exitCode = 1;
+    }
+  });
+
   if (!isEmpty(updates)) {
     exitCode = 1;
   }
@@ -319,6 +335,29 @@ const isBeefyFeeRecipientCorrect = (pool, chain, recipient, updates) => {
   return updates;
 };
 
+const isBeefyFeeConfigCorrect = (pool, chain, feeConfig, updates) => {
+  if (
+    pool.status === 'active' &&
+    pool.beefyFeeConfig !== undefined &&
+    pool.beefyFeeConfig !== feeConfig
+  ) {
+    console.log(
+      `Pool ${pool.id} should update beefy fee config. From: ${pool.beefyFeeConfig} To: ${feeConfig}`
+    );
+
+    if (!('beefyFeeConfig' in updates)) updates['beefyFeeConfig'] = {};
+    if (!(chain in updates.beefyFeeConfig)) updates.beefyFeeConfig[chain] = {};
+
+    if (pool.stratOwner in updates.beefyFeeConfig[chain]) {
+      updates.beefyFeeConfig[chain][pool.stratOwner].push(pool.strategy);
+    } else {
+      updates.beefyFeeConfig[chain][pool.stratOwner] = [pool.strategy];
+    }
+  }
+
+  return updates;
+};
+
 // Helpers to populate required addresses.
 
 const populateVaultsData = async (chain, pools, web3) => {
@@ -353,6 +392,7 @@ const populateStrategyData = async (chain, pools, web3) => {
     return {
       keeper: stratContract.methods.keeper(),
       beefyFeeRecipient: stratContract.methods.beefyFeeRecipient(),
+      beefyFeeConfig: stratContract.methods.beefyFeeConfig(),
       owner: stratContract.methods.owner(),
     };
   });
@@ -364,6 +404,7 @@ const populateStrategyData = async (chain, pools, web3) => {
       ...pool,
       keeper: results[i].keeper,
       beefyFeeRecipient: results[i].beefyFeeRecipient,
+      beefyFeeConfig: results[i].beefyFeeConfig,
       stratOwner: results[i].owner,
     };
   });
