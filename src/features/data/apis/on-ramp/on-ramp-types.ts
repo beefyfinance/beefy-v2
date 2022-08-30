@@ -42,12 +42,6 @@ export type ApiQuote = {
 
 export type ApiQuoteResponse = Record<ApiProviderName, ApiQuote[]>;
 
-export type ApiBinanceSignRequest = {
-  stringToSign: string;
-};
-
-export type ApiBinanceSignResponse = string;
-
 export type ApiUrlRequest = {
   cryptoCurrency: string;
   fiatCurrency: string;

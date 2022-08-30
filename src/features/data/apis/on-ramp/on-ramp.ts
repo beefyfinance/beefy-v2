@@ -4,8 +4,6 @@ import {
   ApiQuoteRequest,
   ApiQuoteResponse,
   ApiSupportedResponse,
-  ApiBinanceSignRequest,
-  ApiBinanceSignResponse,
   ApiUrlRequest,
   ApiUrlResponse,
 } from './on-ramp-types';
