@@ -392,7 +392,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MEDIUM",
+      "MCAP_MICRO",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
@@ -805,7 +805,13 @@
     "platformId": "velodrome",
     "assets": ["FRAX", "USDC"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "IL_NONE", "MCAP_MEDIUM", "ALGO_STABLE", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
