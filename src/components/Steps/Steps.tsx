@@ -44,14 +44,16 @@ const _Steps = () => {
   const showProgressbar25 = React.useMemo(() => {
     return (
       (steps.items[0]?.step === 'approve' && walletActionsState.result === null) ||
-      (steps.items[steps.currentStep]?.step === 'bridge' && bridgeModalStatus === 'idle')
+      (steps.items[0]?.step === 'bridge' && bridgeModalStatus === 'idle')
     );
-  }, [bridgeModalStatus, steps.currentStep, steps.items, walletActionsState.result]);
+  }, [bridgeModalStatus, steps.items, walletActionsState.result]);
 
   const showProgressbar50 = React.useMemo(() => {
     return (
       bridgeModalStatus === 'loading' ||
-      (steps.items[steps.currentStep]?.step !== 'approve' && walletActionsState.result === null) ||
+      (steps.items[steps.currentStep]?.step !== 'approve' &&
+        steps.items[steps.currentStep]?.step !== 'bridge' &&
+        walletActionsState.result === null) ||
       (steps.items[0]?.step === 'approve' && walletActionsState.result === 'success_pending')
     );
   }, [bridgeModalStatus, steps.currentStep, steps.items, walletActionsState.result]);
@@ -71,6 +73,13 @@ const _Steps = () => {
       (steps.finished && steps.items[steps.currentStep].step !== 'bridge')
     );
   }, [bridgeModalStatus, steps.currentStep, steps.finished, steps.items]);
+
+  console.log('25', showProgressbar25);
+  console.log('50', showProgressbar50);
+  console.log('75', showProgressbar75);
+  console.log('steps', steps);
+  console.log('Wallet Actions', walletActionsState);
+  console.log('Bridge Status', bridgeModalStatus);
 
   return (
     <Snackbar
@@ -107,7 +116,7 @@ const _Steps = () => {
                 </>
               )}
               {/* Waiting  */}
-              {(needShowBridgeInfo ||
+              {((needShowBridgeInfo && walletActionsState.result !== null) ||
                 (!steps.finished && walletActionsState.result === 'success_pending')) &&
                 t('Transactn-ConfirmPending')}
               {/* Transactions  */}
@@ -138,7 +147,7 @@ const _Steps = () => {
               <div className={classes.message}>{steps.items[steps.currentStep].message}</div>
             )}
           {/* Waiting Content */}
-          {(needShowBridgeInfo ||
+          {((needShowBridgeInfo && walletActionsState.result !== null) ||
             (!steps.finished && walletActionsState.result === 'success_pending')) && (
             <div className={classes.message}>{t('Transactn-Wait')}</div>
           )}

@@ -54,6 +54,8 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.primary.main,
     height: '100%',
     borderRadius: '4px 0 0 0',
+    transitionTimingFunction: 'ease-in',
+    transition: '0.3s',
   },
   progressBar50: {
     width: '50%',
@@ -61,6 +63,8 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.primary.main,
     height: '100%',
     borderRadius: '4px 0 0 0',
+    transitionTimingFunction: 'ease-in',
+    transition: '0.3s',
   },
   progressBar75: {
     width: '75%',
@@ -68,6 +72,8 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.primary.main,
     height: '100%',
     borderRadius: '4px 0 0 0',
+    transitionTimingFunction: 'ease-in',
+    transition: '0.3s',
   },
   progressBar1: {
     width: '75%',
@@ -82,6 +88,8 @@ export const styles = (theme: Theme) => ({
     height: '100%',
     backgroundColor: theme.palette.primary.main,
     borderRadius: '4px 4px 0 0',
+    transitionTimingFunction: 'ease-in',
+    transition: '0.3s',
   },
   errorBar: {
     width: '100%',
@@ -89,6 +97,8 @@ export const styles = (theme: Theme) => ({
     height: '100%',
     backgroundColor: theme.palette.background.snackbars.error,
     borderRadius: '4px 4px 0 0',
+    transitionTimingFunction: 'ease-in',
+    transition: '0.3s',
   },
   icon: {
     height: '20px',

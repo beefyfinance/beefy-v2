@@ -105,6 +105,7 @@ const _BridgeInfo = () => {
     // running when this component is gone.
     return () => {
       clearInterval(intervalRef.current);
+      dispatch(bridgeModalActions.setStatus({ status: 'idle' }));
     };
   }, [dispatch, hash]);
 
