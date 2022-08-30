@@ -11,7 +11,7 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { AlertWarning } from '../../../Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
-import { StepperState } from '../../../../features/data/reducers/wallet/stepper';
+import { selectSteperState } from '../../../../features/data/selectors/stepper';
 
 const useStyles = makeStyles(styles);
 
@@ -22,7 +22,7 @@ interface TxStateInterface {
   status: 0 | 3 | 10 | 8 | 9 | 12 | 14;
 }
 
-const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
+const _BridgeInfo = () => {
   const [txData, setTxData] = React.useState<TxStateInterface>({
     msg: '',
     error: null,
@@ -31,6 +31,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
   });
   const classes = useStyles();
   const { t } = useTranslation();
+  const steps = useAppSelector(selectSteperState);
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const currentChaindId = useAppSelector(state => selectCurrentChainId(state));
   const bridgeModalState = useAppSelector(state => state.ui.bridgeModal);

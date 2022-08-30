@@ -48,13 +48,6 @@ export const styles = (theme: Theme) => ({
     flexShrink: 0,
     flexGrow: 0,
   },
-  progressBar: {
-    width: '50%',
-    margin: 0,
-    backgroundColor: theme.palette.primary.main,
-    height: '100%',
-    borderRadius: '4px 0 0 0',
-  },
   progressBar25: {
     width: '25%',
     margin: 0,
@@ -77,13 +70,6 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px 0 0 0',
   },
   progressBar1: {
-    width: '75%',
-    margin: 0,
-    backgroundColor: theme.palette.primary.main,
-    height: '100%',
-    borderRadius: '4px 0 0 0',
-  },
-  confirmationBar: {
     width: '75%',
     margin: 0,
     backgroundColor: theme.palette.primary.main,
