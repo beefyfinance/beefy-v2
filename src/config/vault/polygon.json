@@ -27,6 +27,35 @@
     "createdAt": 1621450869
   },
   {
+    "id": "dystopia-usdc-frax",
+    "name": "USDC-FRAX sLP",
+    "token": "USDC-FRAX sLP",
+    "tokenAddress": "0x53227c83a98Ba1035FEd912Da6cE26a0c11C7C66",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "Moo Dystopia USDC-FRAX",
+    "earnedTokenAddress": "0x6aD5a528D82951c3093992b72e57034d24cDE633",
+    "earnContractAddress": "0x6aD5a528D82951c3093992b72e57034d24cDE633",
+    "oracle": "lps",
+    "oracleId": "dystopia-usdc-frax",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["USDC", "FRAX"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_LARGE",
+      "IL_LOW",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1661254321
+  },
+  {
     "id": "stargate-polygon-usdc",
     "name": "USDC LP",
     "token": "S*USDC",
