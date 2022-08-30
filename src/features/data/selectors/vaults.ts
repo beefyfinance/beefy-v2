@@ -13,8 +13,8 @@ import {
 import { selectIsBeefyToken, selectIsTokenBluechip, selectIsTokenStable } from './tokens';
 import { createCachedSelector } from 're-reselect';
 import { BIG_ONE } from '../../../helpers/big-number';
-import lodash from 'lodash';
-import { bluechipTokens } from '../../../helpers/utils';
+import { differenceWith, isEqual } from 'lodash';
+import { selectChainById } from './chains';
 
 export const selectVaultById = createCachedSelector(
   (state: BeefyState) => state.entities.vaults.byId,
@@ -167,12 +167,13 @@ export const selectIsVaultFeatured = createSelector(
 export const selectIsVaultBlueChip = createSelector(
   (state: BeefyState, vaultId: VaultEntity['id']) => {
     const vault = selectVaultById(state, vaultId);
+    const chain = selectChainById(state, vault.chainId);
+    const nonStables = differenceWith(vault.assetIds, chain.stableCoins, isEqual);
     return (
-      (vault.assetIds.some(assetId => selectIsTokenBluechip(state, assetId)) &&
-        lodash
-          .differenceWith(vault.assetIds, bluechipTokens, lodash.isEqual)
-          .every(assetId => selectIsTokenStable(state, vault.chainId, assetId))) ||
-      vault.assetIds.every(assetId => selectIsTokenBluechip(state, assetId))
+      nonStables.length > 0 &&
+      nonStables.every(tokenId => {
+        return selectIsTokenBluechip(state, tokenId);
+      })
     );
   },
   res => res
