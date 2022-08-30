@@ -64,6 +64,5 @@ export type ApiUrlResponse = string;
 export interface IOnRampApi {
   getSupported(): Promise<ApiSupportedResponse>;
   getQuote(options: ApiQuoteRequest): Promise<ApiQuoteResponse>;
-  getBinanceSignature(options: ApiBinanceSignRequest): Promise<ApiBinanceSignResponse>;
   getUrl(options: ApiUrlRequest): Promise<ApiUrlResponse>;
 }

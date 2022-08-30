@@ -15,29 +15,22 @@ export class OnRampApi implements IOnRampApi {
 
   constructor() {
     this.api = axios.create({
-      baseURL: 'https://beefy-binance-connect-api.herokuapp.com',
+      baseURL: process.env.REACT_APP_ONRAMP_URL || 'https://onramp.beefy.finance',
     });
   }
 
   public async getSupported(): Promise<ApiSupportedResponse> {
-    const res = await this.api.get<ApiSupportedResponse>('/binance/onboard');
+    const res = await this.api.get<ApiSupportedResponse>('/onboard');
     return res.data;
   }
 
   public async getQuote(options: ApiQuoteRequest): Promise<ApiQuoteResponse> {
-    const res = await this.api.post<ApiQuoteResponse>('/binance/quote', options);
-    return res.data;
-  }
-
-  public async getBinanceSignature(
-    options: ApiBinanceSignRequest
-  ): Promise<ApiBinanceSignResponse> {
-    const res = await this.api.post<ApiBinanceSignResponse>('/binance/sign', options);
+    const res = await this.api.post<ApiQuoteResponse>('/onboard/quote', options);
     return res.data;
   }
 
   public async getUrl(options: ApiUrlRequest): Promise<ApiUrlResponse> {
-    const res = await this.api.post<ApiUrlResponse>('/binance/init', options);
+    const res = await this.api.post<ApiUrlResponse>('/onboard/init', options);
     return res.data;
   }
 }

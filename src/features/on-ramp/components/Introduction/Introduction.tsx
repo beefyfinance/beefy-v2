@@ -4,6 +4,7 @@ import { styles } from './styles';
 import { Debug } from './Debug';
 import { useTranslation } from 'react-i18next';
 import { PROVIDERS } from '../OnRamp/providers';
+import { featureFlag_debugOnRamp } from '../../../data/utils/feature-flags';
 
 const useStyles = makeStyles(styles);
 
@@ -34,7 +35,7 @@ export const Introduction = memo(function () {
           ))}
         </div>
       </div>
-      <Debug />
+      {featureFlag_debugOnRamp() ? <Debug /> : null}
     </div>
   );
 });

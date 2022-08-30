@@ -79,6 +79,11 @@ export function featureFlag_noDataPolling() {
   return params.has('__no_polling');
 }
 
+export function featureFlag_debugOnRamp() {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('__debug_onramp');
+}
+
 export function featureFlag_walletAddressOverride(walletAddress: string | null | undefined) {
   const params = new URLSearchParams(window.location.search);
   if (walletAddress && params.has('__view_as')) {
