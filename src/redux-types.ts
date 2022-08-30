@@ -25,6 +25,7 @@ import { InfoCardsState } from './features/data/reducers/info-cards';
 import { BridgeModalState } from './features/data/reducers/wallet/bridge-modal';
 import { OnRampTypes } from './features/data/reducers/on-ramp-types';
 import { DataLoaderState } from './features/data/reducers/data-loader-types';
+import { FeesState } from './features/data/reducers/fees';
 
 export interface BeefyState {
   entities: {
@@ -32,6 +33,7 @@ export interface BeefyState {
     tokens: TokensState;
     vaults: VaultsState;
     boosts: BoostsState;
+    fees: FeesState;
     platforms: PlatformsState;
     zaps: ZapsState;
     minters: MintersState;

@@ -67,6 +67,7 @@ export interface DataLoaderState {
     prices: LoaderState;
     apy: LoaderState;
     vaults: LoaderState;
+    fees: LoaderState;
     boosts: LoaderState;
     wallet: LoaderState;
     zaps: LoaderState;

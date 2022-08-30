@@ -32,6 +32,7 @@ import { fetchAllInfoCards } from '../actions/info-cards';
 import { initiateBridgeForm } from '../actions/bridge';
 import { fetchPlatforms } from '../actions/platforms';
 import { fetchOnRampSupportedProviders } from '../actions/on-ramp';
+import { fetchFees } from '../actions/fees';
 import { DataLoaderState, LoaderState } from './data-loader-types';
 
 const dataLoaderStateInit: LoaderState = {
@@ -69,6 +70,7 @@ export const initialDataLoaderState: DataLoaderState = {
     apy: dataLoaderStateInit,
     boosts: dataLoaderStateInit,
     vaults: dataLoaderStateInit,
+    fees: dataLoaderStateInit,
     wallet: dataLoaderStateInit,
     zaps: dataLoaderStateInit,
     depositForm: dataLoaderStateInit,
@@ -188,6 +190,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, fetchApyAction, 'apy', true);
     addGlobalAsyncThunkActions(builder, fetchAllVaults, 'vaults', true);
     addGlobalAsyncThunkActions(builder, fetchAllBoosts, 'boosts', true);
+    addGlobalAsyncThunkActions(builder, fetchFees, 'fees', true);
     addGlobalAsyncThunkActions(builder, fetchAllMinters, 'minters', false);
     addGlobalAsyncThunkActions(builder, fetchAllInfoCards, 'infoCards', false);
     addGlobalAsyncThunkActions(builder, initiateDepositForm, 'depositForm', true);

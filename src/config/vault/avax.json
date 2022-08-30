@@ -22,7 +22,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.05%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "network": "avax",
     "createdAt": 1629307105
@@ -54,7 +53,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.traderjoexyz.com/#/trade?outputCurrency=0xd6070ae98b8069de6b494332d1a1a81b6179d960",
     "createdAt": 1623706144,
     "network": "avax"
@@ -86,7 +84,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1649422900,
     "network": "avax"
   },
@@ -106,7 +103,6 @@
     "platformId": "grape",
     "assets": ["GRAPE", "MIM"],
     "strategyTypeId": "lp",
-    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -290,7 +286,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "network": "avax",
     "createdAt": 1636471887
@@ -319,7 +314,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "network": "avax",
     "createdAt": 1636468072
@@ -348,7 +342,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "network": "avax",
     "createdAt": 1636462707
@@ -377,7 +370,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
     "createdAt": 1636468925
@@ -406,7 +398,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
     "createdAt": 1636470449
@@ -436,7 +427,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://www.traderjoexyz.com/pool/AVAX/0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x0f34919404a290e71fc6A510cB4a6aCb8D764b24",
     "network": "avax",
@@ -466,7 +456,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://avax.curve.fi/aave/deposit",
     "network": "avax",
     "createdAt": 1652662923
@@ -495,7 +484,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://avax.curve.fi/atricrypto/deposit",
     "network": "avax",
     "createdAt": 1652662923
@@ -524,7 +512,6 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
     "network": "avax",
     "createdAt": 1631011023,
@@ -840,7 +827,8 @@
     "earnContractAddress": "0xabd4a1aDaC20ff42d9946EF5ec5FbF822Ccd5B74",
     "oracle": "lps",
     "oracleId": "olive-dai.e-usdt.e",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "oliveswap",
     "assets": ["DAIe", "USDTe"],
     "strategyTypeId": "lp",
@@ -1206,7 +1194,6 @@
     "status": "active",
     "platformId": "mai",
     "depositFee": "0.5%",
-    "withdrawalFee": "0%",
     "assets": ["QI", "AVAX"],
     "strategyTypeId": "lp",
     "risks": [
@@ -1537,7 +1524,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://avax.curve.fi/factory/7/deposit",
     "network": "avax",
     "depositFee": "0.5%",
@@ -1774,7 +1760,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://avax.curve.fi/factory/4/deposit",
     "network": "avax",
     "retireReason": "rewards",
@@ -1803,7 +1788,6 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.pangolin.exchange/#/swap?inputCurrency=0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7&outputCurrency=0x60781C2586D68229fde47564546784ab3fACA982",
     "network": "avax",
     "retireReason": "rewards",
@@ -2270,7 +2254,8 @@
     "earnContractAddress": "0x84Cb5FF7f5068AC02a7B0fd4772577c670A5aFC6",
     "oracle": "lps",
     "oracleId": "png-jewel-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "pangolin",
     "assets": ["JEWEL", "AVAX"],
     "strategyTypeId": "lp",
@@ -2461,7 +2446,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D",
     "network": "avax",
     "retireReason": "rewards",
@@ -2580,7 +2564,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://avax.curve.fi/ren/deposit",
     "createdAt": 1652662923,
     "network": "avax"
@@ -2661,7 +2644,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
     "network": "avax",
     "createdAt": 1633529509,
@@ -2721,7 +2703,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://traderjoexyz.com/pool/AVAX/0x6ca558bd3eaB53DA1B25aB97916dd14bf6CFEe4E",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x6ca558bd3eaB53DA1B25aB97916dd14bf6CFEe4E",
     "createdAt": 1646045101,
@@ -2751,7 +2732,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://traderjoexyz.com/pool/AVAX/0x9466Ab927611725B9AF76b9F31B2F879Ff14233d",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9466Ab927611725B9AF76b9F31B2F879Ff14233d",
     "createdAt": 1646045101,
@@ -2829,7 +2809,8 @@
     "earnContractAddress": "0x909C9EF8E634C2bc6719d960146Bb38F20f6a547",
     "oracle": "lps",
     "oracleId": "joe-joe-usdc",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "traderjoe",
     "assets": ["JOE", "USDC"],
     "strategyTypeId": "lp",
@@ -3156,7 +3137,8 @@
     "earnContractAddress": "0x4C7cF6eE7AFa810028099C2D1d97c6AB33540412",
     "oracle": "lps",
     "oracleId": "joe-wavax-ecd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "traderjoe",
     "assets": ["ECD", "AVAX"],
     "strategyTypeId": "lp",
@@ -3226,7 +3208,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x5947BB275c521040051D82396192181b413227A3",
     "network": "avax",
     "createdAt": 1636458630,
@@ -3454,7 +3435,8 @@
     "earnContractAddress": "0xba8284Dc76fbEDd311f14937340E3bc174b4864c",
     "oracle": "lps",
     "oracleId": "joe-fly-wavax",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "tvl",
     "platformId": "traderjoe",
     "assets": ["FLY", "AVAX"],
     "strategyTypeId": "lp",
@@ -3676,7 +3658,6 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://avax.curve.fi/factory/33/deposit",
     "buyTokenUrl": "https://app.topshelf.finance/#/mint",
     "createdAt": 1649341331,
@@ -3783,7 +3764,6 @@
     "platformId": "beefy",
     "assets": ["beJOE"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0.1%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -3973,7 +3953,6 @@
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://avax.curve.fi/factory/55/deposit",
     "createdAt": 1649925210,
     "network": "avax"
@@ -4372,7 +4351,6 @@
     "platformId": "aave",
     "assets": ["AVAX"],
     "strategyTypeId": "lending",
-    "withdrawalFee": "0.01%",
     "risks": [
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
@@ -4410,7 +4388,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xd586E7F844cEa2F87f50152665BCbc2C279D8d70",
     "createdAt": 1651836386,
     "network": "avax"
@@ -4439,7 +4416,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
     "createdAt": 1651836385,
     "network": "avax"
@@ -4468,7 +4444,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
     "createdAt": 1651836384,
     "network": "avax"
@@ -4497,7 +4472,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "createdAt": 1651836383,
     "network": "avax"
@@ -4526,7 +4500,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "createdAt": 1651836382,
     "network": "avax"
@@ -4555,7 +4528,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664",
     "network": "avax",
     "createdAt": 1633512435,
@@ -4585,7 +4557,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x63a72806098Bd3D9520cC43356dD78afe5D386D9",
     "network": "avax",
     "createdAt": 1633524150,
@@ -4643,7 +4614,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     "createdAt": 1637579519,
     "network": "avax"
@@ -4672,7 +4642,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
     "createdAt": 1637587754,
     "network": "avax"
@@ -4701,7 +4670,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x50b7545627a5162F82A992c33b87aDc75187B218",
     "createdAt": 1637589664,
     "network": "avax"
@@ -5031,7 +4999,6 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://traderjoexyz.com/pool/0x7761E2338B35bCEB6BdA6ce477EF012bde7aE611/AVAX#/",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x7761e2338b35bceb6bda6ce477ef012bde7ae611",
     "createdAt": 1646787205,
@@ -5054,7 +5021,6 @@
     "platformId": "aave",
     "assets": ["LINKe"],
     "strategyTypeId": "lending",
-    "withdrawalFee": "0.01%",
     "risks": [
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
@@ -5083,7 +5049,6 @@
     "platformId": "aave",
     "assets": ["sAVAX"],
     "strategyTypeId": "lending",
-    "withdrawalFee": "0.01%",
     "risks": [
       "COMPLEXITY_MID",
       "BATTLE_TESTED",

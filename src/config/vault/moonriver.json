@@ -25,7 +25,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1623706144,
     "network": "moonriver"
   },
@@ -53,8 +52,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
-    "updatedFees": true,
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080&outputCurrency=0x3bfd113ad0329a7994a681236323fb16E16790e3",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080/0x3bfd113ad0329a7994a681236323fb16E16790e3",
     "network": "moonriver",
@@ -84,7 +81,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFFFfFfFfF6E528AD57184579beeE00c5d5e646F0",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/kbtc-btc",
     "createdAt": 1658316244,
@@ -114,7 +110,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "network": "moonriver",
@@ -144,7 +139,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "network": "moonriver",
@@ -173,7 +167,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=ETH&outputCurrency=0x173fd7434B8B50dF08e3298f173487ebDB35FD14",
     "network": "moonriver",
     "createdAt": 1636638042
@@ -202,7 +195,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8",
     "network": "moonriver",
@@ -232,7 +224,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "network": "moonriver",
@@ -262,7 +253,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
@@ -293,7 +283,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7",
     "network": "moonriver",
@@ -324,7 +313,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111",
     "network": "moonriver",
@@ -354,7 +342,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x748134b5F553F2bcBD78c6826De99a70274bDEb3/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7",
     "network": "moonriver",
@@ -384,7 +371,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B&outputCurrency=0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "network": "moonriver",
@@ -414,7 +400,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "network": "moonriver",
     "retireReason": "noReason",
@@ -444,7 +429,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x576fDe3f61B7c97e381c94e7A03DBc2e08Af1111/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
@@ -475,7 +459,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x78F811A431D248c1EDcF6d95ec8551879B2897C3/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
@@ -506,7 +489,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x41562ae242d194247389152aCAa7a9397136b09F/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
@@ -624,7 +606,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xb668Cd490a4421F993f93be2819A922DBbB32804/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
@@ -654,7 +635,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "network": "moonriver",
     "retireReason": "rewards",
@@ -684,7 +664,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x748134b5F553F2bcBD78c6826De99a70274bDEb3",
     "createdAt": 1645031166,
@@ -777,7 +756,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x1A93B23281CC1CDE4C4741353F3064709A16197d&outputCurrency=0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0x4a436073552044D5f2f49B176853ad3Ad473d9d6",
     "createdAt": 1639145934,
@@ -809,7 +787,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x78F811A431D248c1EDcF6d95ec8551879B2897C3",
     "createdAt": 1638046680,
@@ -841,7 +818,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x41562ae242d194247389152aCAa7a9397136b09F",
     "createdAt": 1637920962,
@@ -873,7 +849,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xE936CAA7f6d9F5C9e907111FCAf7c351c184CDA7/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638049728,
@@ -905,7 +880,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xc005A7A1502c9DE16CCDaBA7CDA0cee4Ac304993/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638048906,
@@ -937,7 +911,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xd924f195C6012C301f42290cf0fdE385A66039DE/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638053964,
@@ -969,7 +942,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0xf47002E6151E06554b8f16E9Cc704edD3fC078b8/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638055338,
@@ -1001,7 +973,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x9D5bc9B873AeD984e2B6A64d4792249D68BbA2Fe/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "createdAt": 1638048018,
@@ -1033,7 +1004,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x682F81e57EAa716504090C3ECBa8595fB54561D8",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x682F81e57EAa716504090C3ECBa8595fB54561D8",
     "createdAt": 1635802614,
@@ -1065,7 +1035,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xbD90A6125a84E5C512129D622a75CDDE176aDE5E",
     "createdAt": 1635789006,
@@ -1097,7 +1066,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xAd7F1844696652ddA7959a49063BfFccafafEfe7",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xAd7F1844696652ddA7959a49063BfFccafafEfe7",
     "createdAt": 1635803946,
@@ -1129,7 +1097,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x1e0F2A75Be02c025Bd84177765F89200c04337Da",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x1e0F2A75Be02c025Bd84177765F89200c04337Da",
     "createdAt": 1635808950,
@@ -1161,7 +1128,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D&outputCurrency=0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "network": "moonriver",
@@ -1192,7 +1158,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x15B9CA9659F5dfF2b7d35a98dd0790a3CBb3D445/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
@@ -1224,7 +1189,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x98878B06940aE243284CA214f92Bb71a2b032B8A&outputCurrency=0x0caE51e1032e8461f4806e26332c030E34De3aDb",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
     "network": "moonriver",
@@ -1256,7 +1220,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x98878B06940aE243284CA214f92Bb71a2b032B8A&outputCurrency=0xFb2019DfD635a03cfFF624D210AEe6AF2B00fC2C",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xFb2019DfD635a03cfFF624D210AEe6AF2B00fC2C",
     "network": "moonriver",
@@ -1288,7 +1251,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D&outputCurrency=0x0caE51e1032e8461f4806e26332c030E34De3aDb",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x0caE51e1032e8461f4806e26332c030E34De3aDb",
     "network": "moonriver",
@@ -1319,7 +1281,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c&outputCurrency=0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c/0x5D9ab5522c64E1F6ef5e3627ECCc093f56167818",
     "network": "moonriver",
@@ -1350,7 +1311,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x14a0243C333A5b238143068dC3A7323Ba4C30ECB",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x14a0243C333A5b238143068dC3A7323Ba4C30ECB",
     "network": "moonriver",
@@ -1381,7 +1341,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756/0xffffffFF893264794d9d57E1E0E21E0042aF5A0A",
     "network": "moonriver",
@@ -1412,7 +1371,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "network": "moonriver",
@@ -1443,7 +1401,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/MOVR/0x748134b5F553F2bcBD78c6826De99a70274bDEb3",
     "network": "moonriver",
@@ -1474,7 +1431,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://www.huckleberry.finance/#/swap",
     "addLiquidityUrl": "https://www.huckleberry.finance/#/add/0x748134b5F553F2bcBD78c6826De99a70274bDEb3/0x9A92B5EBf1F6F6f7d93696FCD44e5Cf75035A756",
     "network": "moonriver",
@@ -1505,7 +1461,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/frax-3pool",
     "createdAt": 1651221200,
@@ -1536,7 +1491,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/stksm",
     "createdAt": 1651221199,
@@ -1566,7 +1520,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?outputCurrency=0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xFfFFfFff1FcaCBd218EDc0EbA20Fc2308C778080",
     "createdAt": 1651221198,
@@ -1596,7 +1549,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/stable-pool/add/3pool",
     "createdAt": 1651221197,
@@ -1626,7 +1578,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x1A93B23281CC1CDE4C4741353F3064709A16197d",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x1A93B23281CC1CDE4C4741353F3064709A16197d",
     "network": "moonriver",
@@ -1657,7 +1608,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0x2bF9b864cdc97b08B6D79ad4663e71B8aB65c45c",
     "network": "moonriver",
@@ -1688,7 +1638,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D&outputCurrency=0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x6bD193Ee6D2104F14F94E2cA6efefae561A4334B",
     "network": "moonriver",
@@ -1719,7 +1668,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D&outputCurrency=0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D/0x639A647fbe20b6c8ac19E48E2de44ea792c62c5C",
     "network": "moonriver",
@@ -1750,7 +1698,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8&outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/0x6aB6d61428fde76768D7b45D8BFeec19c6eF91A8/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "network": "moonriver",
@@ -1781,7 +1728,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.solarbeam.io/exchange/swap?inputCurrency=ETH&outputCurrency=0xaD12daB5959f30b9fF3c2d6709f53C335dC39908",
     "addLiquidityUrl": "https://app.solarbeam.io/exchange/add/ETH/0xaD12daB5959f30b9fF3c2d6709f53C335dC39908",
     "network": "moonriver",

@@ -883,5 +883,15 @@
     "id": "solidly",
     "name": "Solidly",
     "filter": true
+  },
+  {
+    "id": "dystopia",
+    "name": "Dystopia",
+    "filter": true
+  },
+  {
+    "id": "cone",
+    "name": "Cone",
+    "filter": true
   }
 ]

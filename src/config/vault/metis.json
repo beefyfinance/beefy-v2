@@ -26,7 +26,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1623706144,
     "network": "metis"
   },
@@ -288,7 +287,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.05%",
     "buyTokenUrl": "https://netswap.io/#/swap?outputCurrency=0xe6801928061cdbe32ac5ad0634427e140efd05f9",
     "network": "metis",
     "createdAt": 1642600646

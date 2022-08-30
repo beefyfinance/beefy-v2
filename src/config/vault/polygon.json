@@ -14,7 +14,6 @@
     "platformId": "beefy",
     "assets": ["BIFI"],
     "strategyTypeId": "maxi",
-    "withdrawalFee": "0.05%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -50,7 +49,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://stargate.finance/pool/USDC-MATIC",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "network": "polygon",
@@ -79,11 +77,112 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://stargate.finance/pool/USDT-MATIC",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "network": "polygon",
     "createdAt": 1658491800
+  },
+  {
+    "id": "dystopia-wmatic-stmatic",
+    "name": "stMATIC-MATIC sLP",
+    "token": "stMATIC-MATIC sLP",
+    "tokenAddress": "0x1237feA0b26F68191d50900BfFD85E142697C423",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-stMATIC",
+    "earnedTokenAddress": "0xfA2AE38776b792f6629996B07FAa009a8cDEc5F9",
+    "earnContractAddress": "0xfA2AE38776b792f6629996B07FAa009a8cDEc5F9",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-stmatic",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["stMATIC", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_LARGE",
+      "IL_NONE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1661140278
+  },
+  {
+    "id": "dystopia-wmatic-maticx",
+    "name": "MaticX-MATIC sLP",
+    "token": "MaticX-MATIC sLP",
+    "tokenAddress": "0xADB2395FEC4D096b5086d3Daf8B33f9F7568BA25",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-MaticX",
+    "earnedTokenAddress": "0xb6D01251A085D9a58e8586cB04AC28d68b91f6c9",
+    "earnContractAddress": "0xb6D01251A085D9a58e8586cB04AC28d68b91f6c9",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-maticx",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["MaticX", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_MEDIUM",
+      "IL_NONE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1661140278
+  },
+  {
+    "id": "dystopia-wmatic-dyst",
+    "name": "DYST-MATIC vLP",
+    "token": "DYST-MATIC vLP",
+    "tokenAddress": "0x1e08A5B6A1694bC1A65395db6f4c506498DAA349",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaDYST-MATIC",
+    "earnedTokenAddress": "0xa5529E47C3086D93bB59aB99ca2B20d0Ee2EFcAe",
+    "earnContractAddress": "0xa5529E47C3086D93bB59aB99ca2B20d0Ee2EFcAe",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-dyst",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["DYST", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1661039365
+  },
+  {
+    "id": "dystopia-frax-mimatic",
+    "name": "MAI-FRAX sLP",
+    "token": "MAI-FRAX sLP",
+    "tokenAddress": "0x3f54C58092e9735AD23cf296ee3aF81F5a44a5bc",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMAI-FRAX",
+    "earnedTokenAddress": "0xbC94bDb5393CBABF9B319E892abC95B93B5949A8",
+    "earnContractAddress": "0xbC94bDb5393CBABF9B319E892abC95B93B5949A8",
+    "oracle": "lps",
+    "oracleId": "dystopia-frax-mimatic",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["MAI", "FRAX"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1661039366
   },
   {
     "id": "curve-matic-stmatic",
@@ -110,7 +209,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory-crypto/13/deposit",
     "network": "polygon",
     "createdAt": 1657818272
@@ -139,7 +237,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x0297e37f1873d2dab4487aa67cd56b58e2f27875000100000000000000000002",
     "network": "polygon",
     "createdAt": 1657732482
@@ -168,7 +265,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x36128d5436d2d70cab39c9af9cce146c38554ff0000100000000000000000008",
     "network": "polygon",
     "createdAt": 1657731764
@@ -197,7 +293,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xce66904b68f1f070332cbc631de7ee98b650b499000100000000000000000009",
     "network": "polygon",
     "createdAt": 1657712890
@@ -225,7 +320,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://polygon.balancer.fi/#/trade",
     "network": "polygon",
     "createdAt": 1657018678
@@ -246,16 +340,14 @@
     "platformId": "balancer",
     "assets": ["MaticX", "MATIC"],
     "strategyTypeId": "multi-lp",
-    "updatedFees": true,
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4",
     "network": "polygon",
     "createdAt": 1656705594
@@ -284,7 +376,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366",
     "network": "polygon",
     "createdAt": 1656705592
@@ -316,7 +407,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfbdd194376de19a88118e84e279b977f165d01b8",
     "createdAt": 1623706144,
     "network": "polygon"
@@ -347,7 +437,6 @@
       "OVER_COLLAT_ALGO_STABLECOIN",
       "IL_NONE"
     ],
-    "withdrawalFee": "0%",
     "depositFee": "0.5%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/107/deposit",
     "network": "polygon",
@@ -380,7 +469,6 @@
       "CONTRACTS_VERIFIED"
     ],
     "callFee": 0.5,
-    "withdrawalFee": "0%",
     "createdAt": 1650557675,
     "network": "polygon"
   },
@@ -399,13 +487,11 @@
     "status": "active",
     "platformId": "giddy",
     "assets": ["GIDDY"],
-    "updatedFees": true,
     "strategyTypeId": "single",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
     "buyTokenUrl": "https://app.sushi.com/swap?tokens=MATIC&tokens=0x67eB41A14C0fe5CD701FC9d5A3D6597A72F641a6&chainId=137",
     "network": "polygon",
-    "createdAt": 1659469379,
-    "withdrawalFee": "0%"
+    "createdAt": 1659469379
   },
   {
     "id": "giddy-giddy-usdc",
@@ -421,11 +507,9 @@
     "oracleId": "giddy-giddy-usdc",
     "status": "active",
     "platformId": "giddy",
-    "updatedFees": true,
     "assets": ["GIDDY", "USDC"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x67eB41A14C0fe5CD701FC9d5A3D6597A72F641a6",
     "buyTokenUrl": "https://app.sushi.com/swap?tokens=MATIC&tokens=0x67eB41A14C0fe5CD701FC9d5A3D6597A72F641a6&chainId=137",
     "network": "polygon",
@@ -457,7 +541,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/aave/deposit",
     "network": "polygon",
     "createdAt": 1652662923
@@ -474,7 +557,8 @@
     "earnContractAddress": "0x659418cc3cf755F5367a51aDb586a7F770Da6d29",
     "oracle": "tokens",
     "oracleId": "QUICK",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "quickswap",
     "assets": ["QUICK"],
     "strategyTypeId": "single",
@@ -489,8 +573,7 @@
     ],
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13",
     "network": "polygon",
-    "createdAt": 1630505284,
-    "withdrawalFee": "0%"
+    "createdAt": 1630505284
   },
   {
     "id": "sushi-poly-usdc-bifi",
@@ -547,7 +630,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/ren/deposit",
     "network": "polygon",
     "createdAt": 1652662923
@@ -608,7 +690,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/atricrypto3/deposit",
     "network": "polygon",
     "createdAt": 1652662923
@@ -651,7 +732,6 @@
     "platformId": "polywise",
     "assets": ["polyWISE", "MATIC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x4c19DdeebAF84cA3A255730295AD9d824D4Ff51f/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x4c19DdeebAF84cA3A255730295AD9d824D4Ff51f&outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -759,7 +839,6 @@
     "assets": ["QI", "MATIC"],
     "strategyTypeId": "lp",
     "depositFee": "0.5%",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -798,7 +877,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xc2132D05D31c914a87C6611C10748AEb04B58e8F/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "network": "polygon",
@@ -829,7 +907,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "network": "polygon",
@@ -860,7 +937,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "network": "polygon",
@@ -878,7 +954,8 @@
     "earnContractAddress": "0xb2A56dFdbC890c102Dcd5e30afcfB43cD3343762",
     "oracle": "lps",
     "oracleId": "ape-watch-matic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "apeswap",
     "assets": ["WATCH", "MATIC"],
     "strategyTypeId": "lp",
@@ -912,7 +989,6 @@
     "platformId": "apeswap",
     "assets": ["USDC", "DAI"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -985,7 +1061,6 @@
     ],
     "assets": ["IRON", "USDC", "USDT", "DAI"],
     "strategyTypeId": "multi-lp",
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://app.iron.finance/swap/pools/isiron/deposit",
     "network": "polygon",
     "createdAt": 1629902239
@@ -1005,7 +1080,6 @@
     "platformId": "polypup",
     "assets": ["BALL"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
     "network": "polygon",
@@ -1049,7 +1123,6 @@
     "platformId": "polypup",
     "assets": ["BALL", "MATIC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x883aBe4168705d2e5dA925d28538B7a6AA9d8419",
@@ -1082,7 +1155,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x831753dd7087cac61ab5644b308642cc1c33dc13",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x831753dd7087cac61ab5644b308642cc1c33dc13",
     "network": "polygon",
@@ -1385,7 +1457,6 @@
     "platformId": "dinoswap",
     "assets": ["MAI", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0.01%",
     "retireReason": "rewards",
     "risks": [
       "COMPLEXITY_LOW",
@@ -1418,7 +1489,6 @@
     "platformId": "dinoswap",
     "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0.01%",
     "retireReason": "rewards",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "network": "polygon",
@@ -1440,7 +1510,6 @@
     "platformId": "jetswap",
     "assets": ["USDC", "USDT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://polygon-exchange.jetswap.finance/#/add/0xc2132D05D31c914a87C6611C10748AEb04B58e8F/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "network": "polygon",
     "createdAt": 1625847401
@@ -1462,7 +1531,6 @@
     "assets": ["MAI", "USDC"],
     "strategyTypeId": "lp",
     "depositFee": "0.5%",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "network": "polygon",
@@ -1577,7 +1645,6 @@
     "assets": ["TEL", "QUICK"],
     "strategyTypeId": "lp",
     "retireReason": "rewards",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x831753DD7087CaC61aB5644b308642cc1c33Dc13/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13&outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "network": "polygon",
@@ -1621,7 +1688,6 @@
     "assets": ["TEL", "ETH"],
     "strategyTypeId": "lp",
     "retireReason": "rewards",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "network": "polygon",
@@ -1685,7 +1751,6 @@
     "platformId": "curve",
     "assets": ["DAI", "USDC", "USDT", "WBTC", "ETH"],
     "strategyTypeId": "multi-lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/atricrypto/deposit",
     "network": "polygon",
     "createdAt": 1625140527
@@ -1729,7 +1794,6 @@
     "platformId": "ironswap",
     "assets": ["USDC", "USDT", "DAI"],
     "strategyTypeId": "multi-lp",
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://app.iron.finance/swap/pools/is3usd/deposit",
     "network": "polygon",
     "createdAt": 1626100387
@@ -1793,7 +1857,6 @@
     "assets": ["QI", "MAI"],
     "strategyTypeId": "lp",
     "depositFee": "0.5%",
-    "withdrawalFee": "0%",
     "retireReason": "rewards",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x580A84C73811E1839F75d86d75d88cCa0c241fF4/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xa3fa99a148fa48d14ed51d610c367c61876997f1&outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
@@ -1838,7 +1901,6 @@
     "platformId": "quickswap",
     "assets": ["MAI", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0.01%",
     "retireReason": "rewards",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
@@ -2614,7 +2676,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "network": "polygon",
@@ -2687,7 +2748,6 @@
     "platformId": "polycat",
     "assets": ["FISH"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x3a3Df212b7AA91Aa0402B9035b098891d276572B",
     "network": "polygon",
     "createdAt": 1623280369
@@ -2915,7 +2975,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
     "network": "polygon",
@@ -3264,7 +3323,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://app.sushi.com/#/add/0x172370d5cd63279efa6d502dab29171933a610af/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x172370d5cd63279efa6d502dab29171933a610af&outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "network": "polygon",
@@ -3295,7 +3353,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://app.sushi.com/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "network": "polygon",
@@ -4225,7 +4282,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://swap.wault.finance/polygon/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "network": "polygon",
     "retireReason": "rewards",
@@ -4277,7 +4333,6 @@
     "platformId": "waultfinance",
     "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0.01%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -4440,7 +4495,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/eurtusd/deposit",
     "network": "polygon",
     "createdAt": 1652662923
@@ -4471,7 +4525,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/37/deposit",
     "network": "polygon",
     "createdAt": 1653328330
@@ -4501,7 +4554,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0x85955046DF4668e1DD369D2DE9f3AEB98DD2A369",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&inputCurrency=0x85955046DF4668e1DD369D2DE9f3AEB98DD2A369",
     "network": "polygon",
@@ -4595,7 +4647,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x104592a158490a9228070E0A8e5343B499e125D0/0x3e121107F6F22DA4911079845a470757aF4e1A1b",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x104592a158490a9228070E0A8e5343B499e125D0&outputCurrency=0x3e121107F6F22DA4911079845a470757aF4e1A1b",
     "network": "polygon",
@@ -4658,7 +4709,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x1a3acf6D19267E2d3e7f898f42803e90C9219062/0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89&outputCurrency=0x1a3acf6D19267E2d3e7f898f42803e90C9219062",
     "network": "polygon",
@@ -4689,7 +4739,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x3Ad707dA309f3845cd602059901E39C4dcd66473/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x3Ad707dA309f3845cd602059901E39C4dcd66473",
     "network": "polygon",
@@ -4721,7 +4770,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x1a3acf6D19267E2d3e7f898f42803e90C9219062/0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89&outputCurrency=0x1a3acf6D19267E2d3e7f898f42803e90C9219062",
     "network": "polygon",
@@ -4752,7 +4800,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2F800Db0fdb5223b3C3f354886d907A671414A7F",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x2F800Db0fdb5223b3C3f354886d907A671414A7F",
     "network": "polygon",
@@ -4783,7 +4830,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1",
     "network": "polygon",
@@ -4815,7 +4861,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xcE829A89d4A55a63418bcC43F00145adef0eDB8E",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xcE829A89d4A55a63418bcC43F00145adef0eDB8E",
     "network": "polygon",
@@ -4838,7 +4883,6 @@
     "platformId": "dinoswap",
     "assets": ["UST", "USDT"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0.01%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -4923,7 +4967,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xfC40a4F89b410a1b855b5e205064a38fC29F5eb5/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0xfC40a4F89b410a1b855b5e205064a38fC29F5eb5",
     "network": "polygon",
@@ -5048,7 +5091,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x580A84C73811E1839F75d86d75d88cCa0c241fF4/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x580A84C73811E1839F75d86d75d88cCa0c241fF4",
     "network": "polygon",
@@ -5080,7 +5122,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/23/deposit",
     "network": "polygon",
     "createdAt": 1653323113
@@ -5110,7 +5151,6 @@
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
     "addLiquidityUrl": "https://app.sushi.com/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x4e1581f01046eFDd7a1a2CDB0F82cdd7F71F2E59",
     "network": "polygon",
@@ -5141,7 +5181,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&inputCurrency=0xa1c57f48f0deb89f569dfbe6e2b7f46d33606fd4",
     "addLiquidityUrl": "https://app.sushi.com/add/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0xa1c57f48f0deb89f569dfbe6e2b7f46d33606fd4",
     "network": "polygon",
@@ -5203,7 +5242,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x6f8a06447Ff6FcF75d803135a7de15CE88C1d4ec",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x6f8a06447Ff6FcF75d803135a7de15CE88C1d4ec&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
     "network": "polygon",
@@ -5280,7 +5318,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xB382C1cfA622795a534e5bd56Fac93d59BAc8B0D/ETH",
     "createdAt": 1642000487,
@@ -5312,7 +5349,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x91c89A94567980f0e9723b487b0beD586eE96aa7",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0x91c89A94567980f0e9723b487b0beD586eE96aa7",
     "createdAt": 1645091761,
@@ -5343,7 +5379,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683&inputCurrency=ETH",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683/ETH",
     "network": "polygon",
@@ -5376,7 +5411,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1/0x0e98C977B943f06075b2D795794238fBfB9b9a34",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&inputCurrency=0x0e98C977B943f06075b2D795794238fBfB9b9a34",
     "network": "polygon",
@@ -5409,7 +5443,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1/0xC250e9987A032ACAC293d838726C511E6E1C029d",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&inputCurrency=0xC250e9987A032ACAC293d838726C511E6E1C029d",
     "network": "polygon",
@@ -5484,7 +5517,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
     "network": "polygon",
     "createdAt": 1620900077,
@@ -5514,7 +5546,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "network": "polygon",
     "createdAt": 1620569907,
@@ -5543,7 +5574,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     "network": "polygon",
     "createdAt": 1621100435,
@@ -5573,7 +5603,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xD6DF932A45C0f255f85145f286eA0b292B21C90B",
     "network": "polygon",
     "createdAt": 1621097202,
@@ -5604,7 +5633,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
     "network": "polygon",
     "createdAt": 1620900737,
@@ -5634,7 +5662,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0.01%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
     "network": "polygon",
     "createdAt": 1620539520,
@@ -5656,7 +5683,6 @@
     "platformId": "apeswap",
     "assets": ["CRYSTL", "MATIC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.apeswap.finance/add/ETH/0x76bF0C28e604CC3fE9967c83b3C3F31c213cfE64",
     "buyTokenUrl": "https://app.apeswap.finance/swap",
     "network": "polygon",
@@ -5967,8 +5993,7 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xfe4546feFe124F30788c4Cc1BB9AA6907A7987F9",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
     "createdAt": 1645899124,
-    "network": "polygon",
-    "withdrawalFee": "0%"
+    "network": "polygon"
   },
   {
     "id": "quick-cxada-cxeth-eol",
@@ -5999,8 +6024,7 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x64875Aaa68d1d5521666C67d692Ee0B926b08b2F/0xfe4546feFe124F30788c4Cc1BB9AA6907A7987F9",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x64875aaa68d1d5521666c67d692ee0b926b08b2f&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
     "createdAt": 1645967761,
-    "network": "polygon",
-    "withdrawalFee": "0%"
+    "network": "polygon"
   },
   {
     "id": "quick-cxdoge-cxeth-eol",
@@ -6031,8 +6055,7 @@
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x9Bd9aD490dD3a52f096D229af4483b94D63BE618/0xfe4546feFe124F30788c4Cc1BB9AA6907A7987F9",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x9bd9ad490dd3a52f096d229af4483b94d63be618&outputCurrency=0xfe4546fefe124f30788c4cc1bb9aa6907a7987f9",
     "createdAt": 1645982670,
-    "network": "polygon",
-    "withdrawalFee": "0%"
+    "network": "polygon"
   },
   {
     "id": "quick-hbar[0x]-mimatic-eol",
@@ -6060,7 +6083,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xa3Fa99A148fA48D14Ed51d610c367C61876997F1/0x1646C835d70F76D9030DF6BaAeec8f65c250353d",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xa3Fa99A148fA48D14Ed51d610c367C61876997F1&inputCurrency=0x1646C835d70F76D9030DF6BaAeec8f65c250353d",
     "createdAt": 1640281632,
@@ -6093,7 +6115,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x614389EaAE0A6821DC49062D56BDA3d9d45Fa2ff",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x614389EaAE0A6821DC49062D56BDA3d9d45Fa2ff",
     "createdAt": 1647302895,
@@ -6124,7 +6145,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=ETH&outputCurrency=0x5314bA045a459f63906Aa7C76d9F337DcB7d6995",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0x5314bA045a459f63906Aa7C76d9F337DcB7d6995",
     "network": "polygon",
@@ -6148,7 +6168,6 @@
     "assets": ["jSGD", "XSGD"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO"],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/22/deposit",
     "createdAt": 1653327757,
     "network": "polygon"
@@ -6179,7 +6198,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x8f3cf7ad23cd3cadbd9735aff958023239c6a063&outputCurrency=0xE5417Af564e4bFDA1c483642db72007871397896",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xE5417Af564e4bFDA1c483642db72007871397896/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     "network": "polygon",
@@ -6211,7 +6229,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x4e78011Ce80ee02d2c3e649Fb657E45898257815/0x2F800Db0fdb5223b3C3f354886d907A671414A7F",
     "buyTokenUrl": "https://app.sushi.com/#/swap?inputCurrency=0x4e78011Ce80ee02d2c3e649Fb657E45898257815&outputCurrency=0x2F800Db0fdb5223b3C3f354886d907A671414A7F",
     "network": "polygon",
@@ -6304,7 +6321,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0xA1c57f48F0Deb89f569dFbE6E2B7f46D33606fD4",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xA1c57f48F0Deb89f569dFbE6E2B7f46D33606fD4&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
     "network": "polygon",
@@ -6337,7 +6353,6 @@
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
-    "withdrawalFee": "0.01%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063&outputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "network": "polygon",
@@ -6491,7 +6506,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/72/deposit",
     "network": "polygon",
     "createdAt": 1640691348,
@@ -6553,7 +6567,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13&outputCurrency=0x51869836681BcE74a514625c856aFb697a013797",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x831753DD7087CaC61aB5644b308642cc1c33Dc13/0x51869836681BcE74a514625c856aFb697a013797",
     "createdAt": 1645091761,
@@ -6585,7 +6598,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&outputCurrency=0x42d61D766B85431666B39B89C43011f24451bFf6",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x42d61D766B85431666B39B89C43011f24451bFf6/ETH",
     "network": "polygon",
@@ -6618,7 +6630,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0xc2132D05D31c914a87C6611C10748AEb04B58e8F&outputCurrency=0xE06Bd4F5aAc8D0aA337D13eC88dB6defC6eAEefE",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xE06Bd4F5aAc8D0aA337D13eC88dB6defC6eAEefE/0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
     "createdAt": 1649257590,
@@ -6681,7 +6692,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xD85d1e945766Fea5Eda9103F918Bd915FbCa63E6",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0xD85d1e945766Fea5Eda9103F918Bd915FbCa63E6",
     "createdAt": 1649961634,
@@ -6712,7 +6722,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4/ETH",
     "createdAt": 1650004194,
@@ -6733,7 +6742,6 @@
     "platformId": "beefy",
     "assets": ["beQI"],
     "strategyTypeId": "single",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6765,13 +6773,12 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "MCAP_MICRO",
+      "MCAP_MEDIUM",
       "IL_NONE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6/ETH",
     "createdAt": 1651088631,
@@ -6802,7 +6809,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x80c0CBDB8d0B190238795d376f0bD57fd40525F2",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x80c0CBDB8d0B190238795d376f0bD57fd40525F2/ETH",
     "createdAt": 1650028184,
@@ -6834,7 +6840,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x5c4b7CCBF908E64F32e12c6650ec0C96d717f03F",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x5c4b7CCBF908E64F32e12c6650ec0C96d717f03F",
     "network": "polygon",
@@ -6857,7 +6862,6 @@
     "platformId": "jarvis",
     "assets": ["jEUR", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
@@ -6898,7 +6902,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0xB85517b87BF64942adf3A0B9E4c71E4Bc5Caa4e5",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270&inputCurrency=0xB85517b87BF64942adf3A0B9E4c71E4Bc5Caa4e5",
     "network": "polygon",
@@ -6921,7 +6924,6 @@
     "platformId": "jarvis",
     "assets": ["jGBP", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dmm.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x767058f11800fba6a682e73a6e79ec5eb74fac8c/0xbb2d00675b775e0f8acd590e08da081b2a36d3a6",
     "buyTokenUrl": "https://dmm.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x767058f11800fba6a682e73a6e79ec5eb74fac8c",
     "network": "polygon",
@@ -6952,7 +6954,6 @@
     "platformId": "jarvis",
     "assets": ["jCHF", "USDC"],
     "strategyTypeId": "lp",
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://dmm.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0xbd1463f02f61676d53fd183c2b19282bff93d099/0x439e6a13a5ce7fdca2cc03bf31fb631b3f5ef157",
     "buyTokenUrl": "https://dmm.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0xbd1463f02f61676d53fd183c2b19282bff93d099",
     "network": "polygon",
@@ -6992,7 +6993,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0xF915fDDa4c882731C0456a4214548Cd13A822886",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xF915fDDa4c882731C0456a4214548Cd13A822886",
     "createdAt": 1647440992,
@@ -7024,7 +7024,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270/0x2c89bbc92bd86f8075d1decc58c7f4e0107f286b",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&outputCurrency=0x2c89bbc92bd86f8075d1decc58c7f4e0107f286b",
     "network": "polygon",
@@ -7166,7 +7165,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB5C064F955D8e7F38fE0460C556a72987494eE17",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xB5C064F955D8e7F38fE0460C556a72987494eE17/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
     "createdAt": 1652347933,
@@ -7197,7 +7195,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB5C064F955D8e7F38fE0460C556a72987494eE17",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xB5C064F955D8e7F38fE0460C556a72987494eE17/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
     "createdAt": 1652347932,
@@ -7227,7 +7224,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://beta.quickswap.exchange/#/convert",
     "createdAt": 1652179476,
     "network": "polygon"
@@ -7257,7 +7253,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/85/deposit",
     "createdAt": 1641144218,
     "network": "polygon",
@@ -7288,7 +7283,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/228/deposit",
     "createdAt": 1653327832,
     "network": "polygon"
@@ -7318,7 +7312,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/255/deposit",
     "createdAt": 1653321475,
     "network": "polygon"
@@ -7348,7 +7341,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/209/deposit",
     "createdAt": 1653230127,
     "network": "polygon"
@@ -7378,7 +7370,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x72bd80445b0db58ebe3E8dB056529D4C5FAF6F2f",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x72bd80445b0db58ebe3E8dB056529D4C5FAF6F2f/ETH",
     "createdAt": 1650024276,
@@ -7410,7 +7401,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xA863246658DEA34111C3C1DceDb2cfd5d6067334",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xA863246658DEA34111C3C1DceDb2cfd5d6067334/ETH",
     "createdAt": 1650029492,
@@ -7442,7 +7432,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=ETH&outputCurrency=0x8192759Bf7f247cC92F74E39B3A4225516624fC1",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0x8192759Bf7f247cC92F74E39B3A4225516624fC1",
     "network": "polygon",
@@ -7475,7 +7464,6 @@
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xE6469Ba6D2fD6130788E0eA9C0a0515900563b59&inputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     "network": "polygon",
@@ -7507,7 +7495,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0xf2D8124b8F9267DaD61351c7aD252362880C6638",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xf2D8124b8F9267DaD61351c7aD252362880C6638&inputCurrency=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
     "network": "polygon",
@@ -7562,7 +7549,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6/0xD30DC92b8ec0fa8de625768d208f51A93C10aFF2",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xD30DC92b8ec0fa8de625768d208f51A93C10aFF2",
     "createdAt": 1653558101,
@@ -7593,7 +7579,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "createdAt": 1653558100,
@@ -7624,7 +7609,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0xdF7837DE1F2Fa4631D716CF2502f8b230F1dcc32",
     "createdAt": 1653558999,
@@ -7654,7 +7638,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xA0dF47432d9d88bcc040E9ee66dDC7E17A882715",
     "createdAt": 1654063152,
@@ -7684,7 +7667,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
     "createdAt": 1654061880,
@@ -7715,7 +7697,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://app.sushi.com/add/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619/0x596ebe76e2db4470966ea395b0d063ac6197a8c5",
     "buyTokenUrl": "https://app.sushi.com/swap?inputCurrency=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&outputCurrency=0x596ebe76e2db4470966ea395b0d063ac6197a8c5",
     "network": "polygon",
@@ -7747,7 +7728,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc3c7d422809852031b44ab29eec9f1eff2a58756",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xc3c7d422809852031b44ab29eec9f1eff2a58756",
     "createdAt": 1653894281,
@@ -7778,7 +7758,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xc2A45FE7d40bCAc8369371B08419DDAFd3131b4a",
     "createdAt": 1654005716,
@@ -7809,7 +7788,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0xB5C064F955D8e7F38fE0460C556a72987494eE17",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0xB5C064F955D8e7F38fE0460C556a72987494eE17",
     "createdAt": 1654781881,
@@ -7841,7 +7819,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2e1AD108fF1D8C782fcBbB89AAd783aC49586756",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x2e1AD108fF1D8C782fcBbB89AAd783aC49586756",
     "createdAt": 1654783257,
@@ -7872,7 +7849,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "buyTokenUrl": "https://quickswap.exchange/#/swap?outputCurrency=0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
     "addLiquidityUrl": "https://quickswap.exchange/#/add/ETH/0x8063037ea50E4a066bF1430EA1E3e609CD5cEf6B",
     "createdAt": 1657602777,
@@ -7903,7 +7879,6 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/286/deposit",
     "createdAt": 1658909850,
     "network": "polygon"
@@ -7933,9 +7908,36 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "withdrawalFee": "0%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/285/deposit",
     "createdAt": 1658916346,
     "network": "polygon"
+  },
+  {
+    "id": "balancer-wbtc-usdc-eth",
+    "name": "WBTC/USDC/ETH",
+    "token": "WBTC/USDC/ETH BPT",
+    "tokenAddress": "0x03cD191F589d12b0582a99808cf19851E468E6B5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerWBTC-USDC-ETH",
+    "earnedTokenAddress": "0x866c72B76fca4785aEE3656C2064476f98Fe9Cc9",
+    "earnContractAddress": "0x866c72B76fca4785aEE3656C2064476f98Fe9Cc9",
+    "oracle": "lps",
+    "oracleId": "balancer-wbtc-usdc-eth",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["WBTC", "USDC", "ETH"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a",
+    "network": "polygon",
+    "createdAt": 1661772010
   }
 ]
