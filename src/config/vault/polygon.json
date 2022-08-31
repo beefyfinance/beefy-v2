@@ -5,7 +5,7 @@
     "token": "BIFI",
     "tokenAddress": "0xFbdd194376de19a88118e84E279b977f165d01b8",
     "tokenDecimals": 18,
-    "earnedToken":"mooPolygonBIFI",
+    "earnedToken": "mooPolygonBIFI",
     "earnedTokenAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
     "earnContractAddress": "0xfEcf784F48125ccb7d8855cdda7C5ED6b5024Cb3",
     "oracle": "tokens",
@@ -45,15 +45,15 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
+      "IL_NONE",
       "MCAP_MEDIUM",
-      "IL_LOW",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
-    "createdAt": 1661254321
+    "createdAt": 1661967482
   },
   {
     "id": "stargate-polygon-usdc",
