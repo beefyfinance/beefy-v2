@@ -33,7 +33,7 @@
     "tokenAddress": "0x53227c83a98Ba1035FEd912Da6cE26a0c11C7C66",
     "tokenDecimals": 18,
     "tokenProviderId": "dystopia",
-    "earnedToken": "Moo Dystopia USDC-FRAX",
+    "earnedToken": "mooDystopiaUSDC-FRAX",
     "earnedTokenAddress": "0x6aD5a528D82951c3093992b72e57034d24cDE633",
     "earnContractAddress": "0x6aD5a528D82951c3093992b72e57034d24cDE633",
     "oracle": "lps",
@@ -45,7 +45,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "MCAP_LARGE",
+      "MCAP_MEDIUM",
       "IL_LOW",
       "AUDIT",
       "CONTRACTS_VERIFIED"
