@@ -1,8 +1,8 @@
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
-import { isInitialLoader } from '../reducers/data-loader';
 import { InfoCardEntity } from '../entities/info-card';
+import { isInitialLoader } from '../reducers/data-loader-types';
 
 export const selectInfoCardById = (state: BeefyState, infoCardId: InfoCardEntity['id']) => {
   const infoCardsById = state.entities.infoCards.byId;

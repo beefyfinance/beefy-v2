@@ -25,6 +25,7 @@ import { boostModalSlice } from './wallet/boost-modal';
 import { mintersSlice } from './minters';
 import { infoCardsSlice } from './info-cards';
 import { bridgeModalSlice } from './wallet/bridge-modal';
+import { onRamp } from './on-ramp';
 import { feesSlice } from './fees';
 
 const entitiesReducer = combineReducers<BeefyState['entities']>({
@@ -54,13 +55,14 @@ const userReducer = combineReducers<BeefyState['user']>({
   walletActions: walletActionsReducer,
 });
 const uiReducer = combineReducers<BeefyState['ui']>({
-  dataLoader: dataLoaderSlice.reducer,
   filteredVaults: persistReducer({ key: 'filters', storage }, filteredVaultsSlice.reducer),
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
   deposit: depositSlice.reducer,
   withdraw: withdrawSlice.reducer,
   boostModal: boostModalSlice.reducer,
   bridgeModal: bridgeModalSlice.reducer,
+  onRamp: onRamp.reducer,
+  dataLoader: dataLoaderSlice.reducer,
 });
 
 export const rootReducer = combineReducers<BeefyState>({
