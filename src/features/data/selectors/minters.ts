@@ -2,7 +2,7 @@ import { BeefyState } from '../../../redux-types';
 import { MinterEntity } from '../entities/minter';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
-import { isInitialLoader } from '../reducers/data-loader';
+import { isInitialLoader } from '../reducers/data-loader-types';
 
 export const selectMinterById = (state: BeefyState, minterId: MinterEntity['id']) => {
   const mintersById = state.entities.minters.byId;

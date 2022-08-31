@@ -20,7 +20,6 @@ import { askForNetworkChange, askForWalletConnection } from '../../../data/actio
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { TokenEntity } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
-import { isFulfilled } from '../../../data/reducers/data-loader';
 import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import {
   selectBoostUserBalanceInToken,
@@ -60,6 +59,7 @@ import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { ScreamAvailableLiquidity } from '../ScreamAvailableLiquidity';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
+import { isFulfilled } from '../../../data/reducers/data-loader-types';
 import { stepperActions } from '../../../data/reducers/wallet/stepper';
 import { startStepper } from '../../../data/actions/stepper';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper';

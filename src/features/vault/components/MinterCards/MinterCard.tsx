@@ -3,12 +3,12 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { MinterEntity } from '../../../data/entities/minter';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import { Loader } from '../../../../components/Loader';
-import { isFulfilled } from '../../../data/reducers/data-loader';
 import { selectIsWalletKnown, selectWalletAddress } from '../../../data/selectors/wallet';
 import { initMinterForm } from '../../../data/actions/scenarios';
 import { selectMinterById } from '../../../data/selectors/minters';
 import MintBurnCard from './MintBurnCard';
 import { useAppSelector, useAppStore } from '../../../../store';
+import { isFulfilled } from '../../../data/reducers/data-loader-types';
 
 export interface MinterCardParams {
   vaultId: VaultEntity['id'];

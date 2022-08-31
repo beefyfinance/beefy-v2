@@ -27,3 +27,11 @@ export function toBigNumber(input: BigNumberish): BigNumber {
 export function isBigNumber(value: any): value is BigNumber {
   return BigNumber.isBigNumber(value);
 }
+
+export function truncateBigNumber(value: BigNumber, places: number): BigNumber {
+  if (value.isNaN() || !value.isFinite()) {
+    return value;
+  }
+
+  return value.decimalPlaces(places);
+}

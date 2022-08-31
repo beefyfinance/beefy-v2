@@ -2,7 +2,7 @@ import { createCachedSelector } from 're-reselect';
 import { BeefyState } from '../../../redux-types';
 import { VaultEntity } from '../entities/vault';
 import { VaultFee } from '../reducers/fees';
-import { isInitialLoader } from '../reducers/data-loader';
+import { isInitialLoader } from '../reducers/data-loader-types';
 import { selectIsVaultGov } from './vaults';
 
 const GOV_FEES: Readonly<VaultFee> = {

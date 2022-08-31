@@ -16,7 +16,6 @@ import { askForNetworkChange, askForWalletConnection } from '../../../data/actio
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { isTokenNative } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
-import { isFulfilled } from '../../../data/reducers/data-loader';
 import { depositActions } from '../../../data/reducers/wallet/deposit';
 import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
@@ -38,6 +37,7 @@ import { EmeraldGasNotice } from '../EmeraldGasNotice/EmeraldGasNotice';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../store';
 import { MaxNativeDepositAlert } from '../MaxNativeDepositAlert';
 import { ZapPriceImpact, ZapPriceImpactProps } from '../ZapPriceImpactNotice';
+import { isFulfilled } from '../../../data/reducers/data-loader-types';
 import { stepperActions } from '../../../data/reducers/wallet/stepper';
 import { startStepper } from '../../../data/actions/stepper';
 import { selectIsStepperStepping } from '../../../data/selectors/stepper';

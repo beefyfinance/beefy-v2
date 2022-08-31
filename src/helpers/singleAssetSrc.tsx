@@ -21,3 +21,15 @@ export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEnti
     }
   }
 }
+
+export function singleAssetExists(symbol: TokenEntity['id'], chainId?: ChainEntity['id']): boolean {
+  const ids = chainId ? [`${chainId}/${symbol}`, symbol] : [symbol];
+
+  for (const id of ids) {
+    if (id in singleAssets) {
+      return true;
+    }
+  }
+
+  return false;
+}
