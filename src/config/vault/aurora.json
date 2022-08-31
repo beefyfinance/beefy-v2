@@ -626,7 +626,14 @@
     "platformId": "rose",
     "assets": ["atUST", "USDT", "USDC", "DAI"],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_HIGH", "CONTRACTS_VERIFIED", "ALGO_STABLE"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "MCAP_HIGH",
+      "CONTRACTS_VERIFIED",
+      "ALGO_STABLE",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "addLiquidityUrl": "https://app.rose.fi/#/farms/ust",
     "createdAt": 1649955343,
     "network": "aurora",

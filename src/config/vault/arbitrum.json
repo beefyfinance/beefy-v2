@@ -139,7 +139,8 @@
       "IL_HIGH",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://arbitrum.balancer.fi/#/pool/0x5a5884fc31948d59df2aeccca143de900d49e1a300000000000000000000006f",
     "network": "arbitrum",

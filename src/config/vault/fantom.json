@@ -245,7 +245,14 @@
     "platformId": "spiritswap",
     "assets": ["USDC", "DAI"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_HIGH",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
