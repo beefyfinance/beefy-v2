@@ -1,13 +1,16 @@
-import React, { memo } from 'react';
+import React, { memo, useRef } from 'react';
 import { Container, makeStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { Clear } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import { sample } from 'lodash';
 
 const useStyles = makeStyles(styles);
 
 export const ProposalBanner = memo(function ProposalBanner() {
   const classes = useStyles();
+
+  const [bifiCardIndex, setBifiCardIndex] = React.useState(1);
 
   const [showProposalBanner, setShowProposalBanner] = React.useState(() => {
     try {
@@ -17,6 +20,20 @@ export const ProposalBanner = memo(function ProposalBanner() {
       return true;
     }
   });
+
+  const intervalRef: any = useRef();
+
+  React.useEffect(() => {
+    const setRandomCardIndex = () => {
+      setBifiCardIndex(sample([1, 2, 3]));
+    };
+
+    intervalRef.current = setInterval(setRandomCardIndex, 3000);
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  }, []);
 
   const closeBanner = React.useCallback(() => {
     setShowProposalBanner(false);
@@ -36,7 +53,7 @@ export const ProposalBanner = memo(function ProposalBanner() {
               <div className={classes.content}>
                 <img
                   className={classes.icon}
-                  src={require('../../images/icons/beefy-card.png').default}
+                  src={require(`../../images/icons/beefy-card-${bifiCardIndex}.png`).default}
                   alt="snapshot"
                 />
                 <div>

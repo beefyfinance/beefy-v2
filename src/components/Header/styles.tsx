@@ -37,7 +37,7 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.disabled,
     margin: '12px',
     '& .MuiBadge-root': {
-      padding: '4px',
+      padding: '4px 4px 0px 0px',
     },
     '&:hover': {
       color: theme.palette.text.primary,
