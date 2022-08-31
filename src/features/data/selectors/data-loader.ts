@@ -2,9 +2,9 @@ import { createSelector } from '@reduxjs/toolkit';
 import { BeefyState } from '../../../redux-types';
 import { ChainEntity } from '../entities/chain';
 import { shouldVaultShowInterest, VaultEntity } from '../entities/vault';
-import { isInitialLoader, isPending } from '../reducers/data-loader';
 import { selectVaultById } from './vaults';
 import { createCachedSelector } from 're-reselect';
+import { isInitialLoader, isPending } from '../reducers/data-loader-types';
 
 const selectIsPriceAvailable = (state: BeefyState) =>
   state.ui.dataLoader.global.prices.alreadyLoadedOnce;

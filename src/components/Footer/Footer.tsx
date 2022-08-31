@@ -11,7 +11,7 @@ import { ReactComponent as IconReddit } from '../../images/socials/reddit.svg';
 // Re-using header translations, allowing overwrite with footer specific ones
 const navLinks = [
   {
-    title: ['Footer-Vote', 'Header-Vote'],
+    title: ['Footer-Proposals', 'Header-Proposals'],
     path: 'https://vote.beefy.finance',
   },
   {
@@ -19,7 +19,7 @@ const navLinks = [
     path: 'https://dashboard.beefy.com',
   },
   {
-    title: ['Footer-Blog', 'Header-Blog'],
+    title: ['Footer-News', 'Header-News'],
     path: 'https://beefy.com/articles/',
   },
   {

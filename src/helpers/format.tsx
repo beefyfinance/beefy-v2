@@ -215,7 +215,7 @@ function getFirstNonZeroDecimal(value: BigNumber, max: number): number {
   return position;
 }
 
-const stripTrailingZeros = str => {
+export const stripTrailingZeros = str => {
   return str.replace(/(\.[0-9]*?)(0+$)/, '$1').replace(/\.$/, '');
 };
 
