@@ -16103,6 +16103,35 @@
     "network": "bsc"
   },
   {
+    "id": "ellipsis-ankrBNB",
+    "name": "aBNBb/BNB",
+    "token": "aBNBb/BNB",
+    "tokenAddress": "0xf71A0bCC3Ef8a8c5a28fc1BC245e394A8ce124ec",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ellipsis",
+    "earnedToken": "mooEllipsisAnkrBNB",
+    "earnedTokenAddress": "0x9F7450317aa632B9be59C3530f579FE3e793D171",
+    "earnContractAddress": "0x9F7450317aa632B9be59C3530f579FE3e793D171",
+    "oracle": "lps",
+    "oracleId": "ellipsis-ankrBNB",
+    "status": "active",
+    "platformId": "dotdot",
+    "assets": ["aBNBb", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0xf0d17f404343D7Ba66076C818c9DC726650E2435",
+    "buyTokenUrl": "https://ellipsis.finance/pool/0xf0d17f404343D7Ba66076C818c9DC726650E2435",
+    "createdAt": 1662035071,
+    "network": "bsc"
+  },
+  {
     "id": "ellipsis-bnb-bnbx",
     "name": "BNBx/BNB",
     "token": "BNBx/BNB",
