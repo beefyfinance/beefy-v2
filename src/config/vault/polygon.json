@@ -437,12 +437,11 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
+      "IL_NONE",
       "MCAP_MICRO",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN",
-      "IL_NONE"
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
     ],
     "depositFee": "0.5%",
     "addLiquidityUrl": "https://polygon.curve.fi/factory/107/deposit",

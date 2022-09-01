@@ -16885,7 +16885,8 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_SMALL",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
