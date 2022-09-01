@@ -825,7 +825,7 @@
     "oracleId": "velodrome-weth-seth",
     "status": "active",
     "platformId": "velodrome",
-    "assets": ["sETH", "WETH"],
+    "assets": ["sETH", "ETH"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
