@@ -48,7 +48,7 @@
       "IL_NONE",
       "MCAP_MEDIUM",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLE"
+      "ALGO_STABLE"
      ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
