@@ -13,9 +13,9 @@ import { MultiCall } from 'eth-multicall';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import { TokenEntity } from '../../../data/entities/token';
 import { BigNumber } from 'bignumber.js';
-import { useAsync } from './hooks';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import { useAsync } from '../../../../helpers/useAsync';
 
 const useStyles = makeStyles(styles);
 
@@ -72,7 +72,11 @@ const ScreamAvailableLiquidityImpl = memo<ScreamAvailableLiquidityProps>(
     const fetchLiquidity = useCallback(() => {
       return getLiquidity(vault, chain, depositToken);
     }, [vault, chain, depositToken]);
-    const [updateLiquidity, updateStatus, liquidity] = useAsync(fetchLiquidity, 0);
+    const {
+      execute: updateLiquidity,
+      status: updateStatus,
+      value: liquidity,
+    } = useAsync(fetchLiquidity, 0);
     const [haveUpdatedOnce, setHaveUpdatedOnce] = useState(false);
 
     useEffect(() => {

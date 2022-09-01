@@ -4,13 +4,7 @@ import { isEqual, sortedUniq, uniq } from 'lodash';
 import React, { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChainEntity } from '../../features/data/entities/chain';
-import {
-  dataLoaderActions,
-  DataLoaderState,
-  isPending,
-  isRejected,
-  LoaderState,
-} from '../../features/data/reducers/data-loader';
+import { dataLoaderActions } from '../../features/data/reducers/data-loader';
 import { selectBoostById } from '../../features/data/selectors/boosts';
 import { selectVaultById } from '../../features/data/selectors/vaults';
 import { BeefyState } from '../../redux-types';
@@ -18,6 +12,12 @@ import { styles } from './styles';
 import { Floating } from '../Floating';
 import { useAppDispatch, useAppSelector } from '../../store';
 import CloseIcon from '@material-ui/icons/Close';
+import {
+  DataLoaderState,
+  isPending,
+  isRejected,
+  LoaderState,
+} from '../../features/data/reducers/data-loader-types';
 
 const useStyles = makeStyles(styles);
 

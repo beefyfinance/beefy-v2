@@ -35,10 +35,10 @@ import {
 import { selectChainById } from '../../../../data/selectors/chains';
 import { Loader } from '../../../../../components/Loader';
 import { initBoostForm } from '../../../../data/actions/scenarios';
-import { isFulfilled } from '../../../../data/reducers/data-loader';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
 import { Button } from '../../../../../components/Button';
+import { isFulfilled } from '../../../../data/reducers/data-loader-types';
 
 const useStyles = makeStyles(styles);
 

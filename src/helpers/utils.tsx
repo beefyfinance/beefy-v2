@@ -24,6 +24,7 @@ export const bluechipTokens = [
   'WETHe',
   'BTC',
   'WBTC',
+  'WETH',
   'ETH',
   'BNB',
   'DOT',

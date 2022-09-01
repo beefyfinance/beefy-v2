@@ -21,7 +21,6 @@ import {
   selectIsWalletKnown,
   selectWalletAddress,
 } from '../../../../data/selectors/wallet';
-import { isFulfilled } from '../../../../data/reducers/data-loader';
 import { BoostEntity } from '../../../../data/entities/boost';
 import { selectBoostById } from '../../../../data/selectors/boosts';
 import { selectStandardVaultById } from '../../../../data/selectors/vaults';
@@ -38,6 +37,7 @@ import { walletActions } from '../../../../data/actions/wallet-actions';
 import { selectIsAddressBookLoaded } from '../../../../data/selectors/data-loader';
 import { useAppDispatch, useAppSelector, useAppStore } from '../../../../../store';
 import { Button } from '../../../../../components/Button';
+import { isFulfilled } from '../../../../data/reducers/data-loader-types';
 
 const useStyles = makeStyles(styles);
 

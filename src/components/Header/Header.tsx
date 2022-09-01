@@ -1,8 +1,9 @@
-import React, { Suspense, useState } from 'react';
+import React, { memo, Suspense, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppBar,
+  Badge,
   Box,
   Container,
   Divider,
@@ -26,7 +27,6 @@ import { BeefyState } from '../../redux-types';
 import { LanguageDropdown } from '../LanguageDropdown';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { NetworkStatus } from '../NetworkStatus';
-import { Transak } from '../Transak';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../helpers/big-number';
 
@@ -53,37 +53,39 @@ const BifiPrice = connect((state: BeefyState) => {
   );
 });
 
-const NavLinks = () => {
+const NavLinks = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
   const navLinks = [
-    { title: t('Header-Vote'), path: 'https://vote.beefy.finance' },
-    { title: t('Header-Stats'), path: 'https://dashboard.beefy.com' },
-    { title: t('Header-Blog'), path: 'https://beefy.com/articles/' },
-    { title: t('Header-Docs'), path: 'https://docs.beefy.finance' },
+    { title: t('Header-Vaults'), url: '/' },
+    { title: t('Header-Proposals'), url: 'https://vote.beefy.finance' },
+    { title: t('Header-BuyCrypto'), url: '/onramp', badge: true },
+    { title: t('Header-News'), url: 'https://beefy.com/articles/' },
+    { title: t('Header-Docs'), url: 'https://docs.beefy.finance' },
   ];
   return (
     <>
-      <NavLink
-        activeClassName={classes.active}
-        exact={true}
-        className={classes.navLink}
-        key={'explore'}
-        to="/"
-      >
-        {t('Header-Explore')}
-      </NavLink>
-      {navLinks.map(({ title, path }) => (
-        <div key={title} className={classes.navLink}>
-          <a target="_blank" rel="noreferrer" href={path} key={title}>
-            {title}
-          </a>
-        </div>
+      {navLinks.map(({ title, url, badge }) => (
+        <NavLink
+          activeClassName={classes.active}
+          exact={true}
+          className={classes.navLink}
+          key={url}
+          to={url[0] === '/' ? url : { pathname: url }}
+          target={url[0] === '/' ? undefined : '_blank'}
+        >
+          {badge ? (
+            <Badge badgeContent="New" color="primary">
+              {t(title)}
+            </Badge>
+          ) : (
+            t(title)
+          )}
+        </NavLink>
       ))}
-      <Transak className={classes.navLink}>{t('Header-Buy')}</Transak>
     </>
   );
-};
+});
 
 const ActiveChain = ({ networkId }: { networkId: string | null }) => {
   const classes = useStyles();

@@ -16,7 +16,6 @@ import {
   askForWalletConnection,
 } from '../../../../features/data/actions/wallet';
 import { bridgeModalActions } from '../../../../features/data/reducers/wallet/bridge-modal';
-import { isFulfilled } from '../../../../features/data/reducers/data-loader';
 import BigNumber from 'bignumber.js';
 import { fetchBridgeChainData } from '../../../../features/data/actions/bridge';
 import { selectBridgeBifiDestChainData } from '../../../../features/data/selectors/bridge';
@@ -27,6 +26,7 @@ import { ChainSelector } from '../ChainSelector';
 import { Button } from '../../../Button';
 import { styles } from './styles';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { isFulfilled } from '../../../../features/data/reducers/data-loader-types';
 
 const useStyles = makeStyles(styles);
 
