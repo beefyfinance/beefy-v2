@@ -38,6 +38,7 @@ export const styles = (theme: Theme) => ({
     margin: '12px',
     '& .MuiBadge-root': {
       padding: '0px 12px 0px 0px',
+      verticalAlign: 'initial',
     },
     '&:hover': {
       color: theme.palette.text.primary,
