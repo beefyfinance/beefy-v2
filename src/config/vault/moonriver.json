@@ -514,8 +514,9 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_NONE",
       "MCAP_MEDIUM",
+      "ALGO_STABLE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1458,6 +1459,7 @@
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
+      "ALGO_STABLE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],

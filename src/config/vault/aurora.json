@@ -395,9 +395,9 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.rose.fi/#/farms/mai",
     "createdAt": 1650375700,

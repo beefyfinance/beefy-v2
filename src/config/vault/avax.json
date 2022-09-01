@@ -1519,10 +1519,10 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MEDIUM",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://avax.curve.fi/factory/7/deposit",
     "network": "avax",
