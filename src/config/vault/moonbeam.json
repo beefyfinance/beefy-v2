@@ -51,6 +51,7 @@
       "IL_HIGH",
       "MCAP_MEDIUM",
       "ALGO_STABLE",
+      "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0x322E86852e492a7Ee17f28a78c663da38FB33bfb/ETH",

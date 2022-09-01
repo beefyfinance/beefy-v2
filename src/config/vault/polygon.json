@@ -440,6 +440,7 @@
       "IL_NONE",
       "MCAP_MICRO",
       "OVER_COLLAT_ALGO_STABLECOIN",
+      "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -4681,6 +4682,8 @@
       "IL_NONE",
       "MCAP_MEDIUM",
       "ALGO_STABLE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.sushi.com/add/0x104592a158490a9228070E0A8e5343B499e125D0/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
