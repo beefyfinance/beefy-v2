@@ -516,9 +516,8 @@
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_MEDIUM",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "ALGO_STABLE",
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.sushi.com/add/0x1A93B23281CC1CDE4C4741353F3064709A16197d/0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
     "buyTokenUrl": "https://app.sushi.com/swap?outputCurrency=0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
@@ -1459,6 +1458,7 @@
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_LARGE",
+      "ALGO_STABLE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],

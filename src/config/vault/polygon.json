@@ -178,7 +178,14 @@
     "platformId": "dystopia",
     "assets": ["MAI", "FRAX"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "ALGO_STABLE"
+    ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
@@ -4672,10 +4679,9 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
       "ALGO_STABLE",
-      "MCAP_SMALL",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.sushi.com/add/0x104592a158490a9228070E0A8e5343B499e125D0/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",

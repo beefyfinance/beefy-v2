@@ -629,7 +629,14 @@
     "platformId": "velodrome",
     "assets": ["FXS", "FRAX"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "CONTRACTS_VERIFIED",
+      "ALGO_STABLE"
+    ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
@@ -807,9 +814,10 @@
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_MEDIUM",
-      "OVER_COLLAT_ALGO_STABLECOIN",
+      "ALGO_STABLE",
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
