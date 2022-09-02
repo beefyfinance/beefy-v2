@@ -445,6 +445,35 @@
     "createdAt": 1660741033
   },
   {
+    "id": "cakev2-wom-busd",
+    "name": "WOM-BUSD LP",
+    "token": "WOM-BUSD LP2",
+    "tokenAddress": "0xe68D05418A8d7969D9CA6761ad46F449629d928c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooCakeV2WOM-BUSD",
+    "earnedTokenAddress": "0xBF170DF928AE5c90C9E1b2D10e17c84e53Aa5cAD",
+    "earnContractAddress": "0xBF170DF928AE5c90C9E1b2D10e17c84e53Aa5cAD",
+    "oracle": "lps",
+    "oracleId": "cakev2-wom-busd",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["WOM", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0xAD6742A35fB341A9Cc6ad674738Dd8da98b94Fb1/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xAD6742A35fB341A9Cc6ad674738Dd8da98b94Fb1",
+    "network": "bsc",
+    "createdAt": 1662062687
+  },
+  {
     "id": "cakev2-pstake-busd",
     "name": "PSTAKE-BUSD LP",
     "token": "PSTAKE-BUSD LP2",
