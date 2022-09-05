@@ -22,9 +22,7 @@ import { selectTokenByAddress } from '../../selectors/tokens';
 // fix ts types
 const BeefyV2AppMulticallAbi = _BeefyV2AppMulticallAbi as AbiItem | AbiItem[];
 
-export class ContractDataAPI<T extends ChainEntity & { fetchContractDataAddress: string }>
-  implements IContractDataApi
-{
+export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi {
   constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllContractData(
@@ -35,7 +33,7 @@ export class ContractDataAPI<T extends ChainEntity & { fetchContractDataAddress:
   ): Promise<FetchAllContractDataResult> {
     const mc = new this.web3.eth.Contract(
       BeefyV2AppMulticallAbi,
-      this.chain.fetchContractDataAddress
+      this.chain.appMulticallContractAddress
     );
 
     // if we send too much in a single call, we get "execution reversed"
