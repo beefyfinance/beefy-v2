@@ -1,5 +1,27 @@
 [
   {
+    "id": "velodrome-snx-usdc",
+    "name": "SNX-USDC vLP",
+    "token": "SNX-USDC vLP",
+    "tokenAddress": "0x9056EB7Ca982a5Dd65A584189994e6a27318067D",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeSNX-USDC",
+    "earnedTokenAddress": "0x48B3EdF0D7412B11c232BD9A5114B590B7F28134",
+    "earnContractAddress": "0x48B3EdF0D7412B11c232BD9A5114B590B7F28134",
+    "oracle": "lps",
+    "oracleId": "velodrome-snx-usdc",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["SNX", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MEDIUM", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1662145826
+  },
+  {
     "id": "optimism-bifi-gov",
     "name": "BIFI Earnings Pool",
     "token": "BIFI",
