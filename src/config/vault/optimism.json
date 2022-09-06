@@ -148,7 +148,7 @@
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -176,7 +176,7 @@
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -204,7 +204,7 @@
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -231,7 +231,7 @@
       "COMPLEXITY_MID",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -584,7 +584,7 @@
     "platformId": "velodrome",
     "assets": ["WBTC", "USDC"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
@@ -805,7 +805,7 @@
     "platformId": "velodrome",
     "assets": ["ETH", "USDC"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_HIGH", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
@@ -887,7 +887,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
@@ -915,7 +915,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "CONTRACTS_VERIFIED"
     ],
@@ -1182,7 +1182,7 @@
     "platformId": "beethovenx",
     "assets": ["WETH", "OP", "USDC"],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x39965c9dab5448482cf7e002f583c812ceb53046000100000000000000000003/invest",
     "network": "optimism",
     "createdAt": 1656341985
@@ -1203,7 +1203,7 @@
     "platformId": "beethovenx",
     "assets": ["WETH", "WBTC", "USDC"],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_HIGH", "AUDIT", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "IL_HIGH", "MCAP_LARGE", "AUDIT", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x5028497af0c9a54ea8c6d42a054c0341b9fc6168000100000000000000000004/invest",
     "network": "optimism",
     "createdAt": 1656341986

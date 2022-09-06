@@ -132,14 +132,7 @@
     "platformId": "cone",
     "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
@@ -161,14 +154,7 @@
     "platformId": "cone",
     "assets": ["USDC", "BUSD"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
@@ -592,7 +578,7 @@
   {
     "id": "baby-near-usdt",
     "name": "NEAR-USDT LP",
-    "token": "NEAR-USDT LP",
+    "token": "NEAR-USDT BLP",
     "tokenAddress": "0x1E0F11671362E4163eb5530ffFA2f01d4028cdf9",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -621,7 +607,7 @@
   {
     "id": "baby-usdt-sol",
     "name": "SOL-USDT LP",
-    "token": "SOL-USDT LP",
+    "token": "SOL-USDT BLP",
     "tokenAddress": "0xAe08C9D357731FD8d25681dE753551BE14C00405",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -650,7 +636,7 @@
   {
     "id": "baby-atom-usdt",
     "name": "ATOM-USDT LP",
-    "token": "ATOM-USDT LP",
+    "token": "ATOM-USDT BLP",
     "tokenAddress": "0x42932A3c73DF05586aa5cfD4f3a9a61655c98b45",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -679,7 +665,7 @@
   {
     "id": "baby-usdt-usdc",
     "name": "USDT-USDC LP",
-    "token": "USDT-USDC LP",
+    "token": "USDT-USDC BLP",
     "tokenAddress": "0xcc21b0A9A01fcD2103ff75614480Bd6a07869053",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -708,7 +694,7 @@
   {
     "id": "baby-usdc-wbnb",
     "name": "USDC-BNB LP",
-    "token": "USDC-BNB LP",
+    "token": "USDC-BNB BLP",
     "tokenAddress": "0xBF83cA11aBC62447226F6b3566918d3594bA3803",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -737,7 +723,7 @@
   {
     "id": "baby-wbnb-busd",
     "name": "BUSD-BNB LP",
-    "token": "BUSD-BNB LP",
+    "token": "BUSD-BNB BLP",
     "tokenAddress": "0xDF84C66E5c1E01Dc9CBcbBB09F4cE2A1De6641D6",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -15106,7 +15092,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15133,7 +15119,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15160,7 +15146,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15188,7 +15174,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15215,7 +15201,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15242,7 +15228,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
@@ -15271,7 +15257,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
