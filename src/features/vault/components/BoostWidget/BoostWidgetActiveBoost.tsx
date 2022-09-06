@@ -7,7 +7,7 @@ import { askForNetworkChange, askForWalletConnection } from '../../../data/actio
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useStepper } from '../../../../components/Steps/hooks';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
-import { selectBoostById, selectBoostStatus } from '../../../data/selectors/boosts';
+import { selectBoostById, selectBoostContractState } from '../../../data/selectors/boosts';
 import { Step } from '../../../../components/Steps/types';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
@@ -48,7 +48,9 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
     selectBoostUserRewardsInToken(state, boost.id)
   );
 
-  const { periodFinish, isPreStake } = useAppSelector(state => selectBoostStatus(state, boost.id));
+  const { periodFinish, isPreStake } = useAppSelector(state =>
+    selectBoostContractState(state, boost.id)
+  );
 
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();
