@@ -9,6 +9,7 @@ import { BoostEntity } from '../../entities/boost';
 import { chunk } from 'lodash';
 import {
   BoostContractData,
+  BoostContractDataResponse,
   FetchAllContractDataResult,
   GovVaultContractData,
   IContractDataApi,
@@ -124,7 +125,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
   protected boostFormatter(
     state: BeefyState,
 
-    result: AllValuesAsString<BoostContractData>,
+    result: BoostContractDataResponse,
     boost: BoostEntity
   ) {
     const earnedToken = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
@@ -137,6 +138,7 @@ export class ContractDataAPI<T extends ChainEntity> implements IContractDataApi 
       /* assuming period finish is a UTC timestamp in seconds */
       periodFinish:
         result.periodFinish === '0' ? null : new Date(parseInt(result.periodFinish) * 1000),
+      isPreStake: result.isPreStake,
     } as BoostContractData;
   }
 }

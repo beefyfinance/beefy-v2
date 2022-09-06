@@ -37,6 +37,14 @@ export interface StandardVaultContractData {
   paused: boolean;
 }
 
+export interface BoostContractDataResponse {
+  id: string;
+  totalSupply: string;
+  rewardRate: string;
+  periodFinish: string | null; // null means boost is in prestake
+  isPreStake: boolean;
+}
+
 export interface BoostContractData {
   id: string;
   totalSupply: BigNumber;
