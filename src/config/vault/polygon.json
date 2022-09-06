@@ -40,7 +40,7 @@
     "oracleId": "dystopia-usdc-frax",
     "status": "active",
     "platformId": "dystopia",
-    "assets": ["FRAX","USDC"],
+    "assets": ["FRAX", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
@@ -49,7 +49,7 @@
       "MCAP_MEDIUM",
       "CONTRACTS_VERIFIED",
       "ALGO_STABLE"
-     ],
+    ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
@@ -127,14 +127,7 @@
     "platformId": "dystopia",
     "assets": ["stMATIC", "MATIC"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_LARGE",
-      "IL_NONE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_NONE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
@@ -156,14 +149,7 @@
     "platformId": "dystopia",
     "assets": ["MaticX", "MATIC"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MEDIUM",
-      "IL_NONE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MEDIUM", "IL_NONE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
@@ -269,7 +255,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -297,7 +283,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -325,7 +311,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -408,7 +394,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],

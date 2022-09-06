@@ -1125,7 +1125,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1278,7 +1278,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1666,7 +1666,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -1696,7 +1696,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
