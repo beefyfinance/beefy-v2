@@ -1,4 +1,4 @@
-import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppUserMulticall.json';
+import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
 import { AbiItem } from 'web3-utils';
 import Web3 from 'web3';
 import { VaultGov } from '../../entities/vault';
@@ -33,9 +33,7 @@ import {
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
 
-export class BalanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }>
-  implements IBalanceApi
-{
+export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllBalances(
@@ -47,7 +45,7 @@ export class BalanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }
   ): Promise<FetchAllBalancesResult> {
     const mc = new this.web3.eth.Contract(
       BeefyV2AppMulticallUserAbi,
-      this.chain.fetchBalancesAddress
+      this.chain.appMulticallContractAddress
     );
 
     // if we send too much in a single call, we get "execution reversed"

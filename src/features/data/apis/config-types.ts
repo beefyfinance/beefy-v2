@@ -96,8 +96,7 @@ export interface ChainConfig {
   rpc: string[];
   explorerUrl: string;
   multicallAddress: string;
-  fetchContractDataAddress?: string;
-  fetchBalancesAddress?: string;
+  appMulticallContractAddress: string;
   providerName: string;
   walletSettings: {
     chainId: string;
