@@ -187,7 +187,7 @@ const _Steps = () => {
                     <Box className={clsx(classes.content, classes.successContent)}>
                       <div className={classes.message}>
                         {t('Transactn-Success', {
-                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          amount: formatBigDecimals(walletActionsState.data.amount, 4),
                           token: walletActionsState.data.token.symbol,
                         })}
                       </div>
@@ -208,7 +208,7 @@ const _Steps = () => {
                     <Box className={clsx(classes.content, classes.successContent)}>
                       <div className={classes.message}>
                         {t('Transactn-Withdrawal', {
-                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          amount: formatBigDecimals(walletActionsState.data.amount, 4),
                           token: walletActionsState.data.token.symbol,
                         })}
                       </div>
@@ -223,7 +223,7 @@ const _Steps = () => {
                     <Box className={clsx(classes.content, classes.successContent)}>
                       <div className={classes.message}>
                         {t('Transactn-Success-Bst', {
-                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          amount: formatBigDecimals(walletActionsState.data.amount, 4),
                           token: walletActionsState.data.token.symbol,
                         })}
                       </div>
@@ -243,7 +243,7 @@ const _Steps = () => {
                     <Box className={clsx(classes.content, classes.successContent)}>
                       <div className={classes.message}>
                         {t('Transactn-Withdrawal-Boost', {
-                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          amount: formatBigDecimals(walletActionsState.data.amount, 4),
                           token: walletActionsState.data.token.symbol,
                         })}
                       </div>
@@ -262,7 +262,7 @@ const _Steps = () => {
                             ? 'Transactn-Claimed-Boost'
                             : 'Transactn-Claimed-Gov',
                           {
-                            amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                            amount: formatBigDecimals(walletActionsState.data.amount, 4),
                             token: walletActionsState.data.token.symbol,
                           }
                         )}
@@ -296,7 +296,7 @@ const _Steps = () => {
                     <Box className={clsx(classes.content, classes.successContent)}>
                       <div className={classes.message}>
                         {t('Transactn-Burned', {
-                          amount: formatBigDecimals(walletActionsState.data.amount, 2),
+                          amount: formatBigDecimals(walletActionsState.data.amount, 4),
                           token: walletActionsState.data.token.symbol,
                         })}
                       </div>
