@@ -1,9 +1,16 @@
 {
-  "cake-cakev2": true,
   "curve-poly-atricrypto3": true,
   "arbi-bifi-gov": true,
   "fantom-bifi-maxi": true,
   "curve-ftm-geist": true,
   "beefy-beFTM": true,
-  "ripae-pae-matic": true
+  "ripae-pae-matic": true,
+  "curve-matic-stmatic": true,
+  "curve-op-f-susd": true,
+  "cakev2-cake-bnb": true,
+  "ripae-weth-setho": true,
+  "curve-arb-ren ": true,
+  "cone-wbnb-busd": true,
+  "stargate-op-eth": true,
+  "curve-avax-atricrypto": true
 }
