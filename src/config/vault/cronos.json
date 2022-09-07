@@ -1384,5 +1384,34 @@
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "createdAt": 1657602778,
     "network": "cronos"
+  },
+  {
+    "id": "vvs-cro-fira",
+    "name": "FIRA-CRO LP",
+    "token": "FIRA-CRO LP",
+    "tokenAddress": "0x689E7BA5170001aC887965a5Db1C9Ce932c93462",
+    "tokenDecimals": 18,
+    "tokenProviderId": "vvs",
+    "earnedToken": "mooVvsCRO-FIRA",
+    "earnedTokenAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
+    "earnContractAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
+    "oracle": "lps",
+    "oracleId": "vvs-cro-fira",
+    "status": "active",
+    "platformId": "vvs",
+    "assets": ["FIRA", "CRO"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
+    "addLiquidityUrl": "https://vvs.finance/add/CRO/0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
+    "createdAt": 1662489253,
+    "network": "cronos"
   }
 ]
