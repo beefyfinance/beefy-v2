@@ -1,5 +1,27 @@
 [
   {
+    "id": "velodrome-ageur-mai",
+    "name": "agEUR-MAI vLP",
+    "token": "agEUR-MAI vLP",
+    "tokenAddress": "0x389d9aeA762fd5F9FBD4434D8E11295F15097B67",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromeagEUR-MAI",
+    "earnedTokenAddress": "0x4609a582cB1e36B328A9479CCd3FB152cEF76b22",
+    "earnContractAddress": "0x4609a582cB1e36B328A9479CCd3FB152cEF76b22",
+    "oracle": "lps",
+    "oracleId": "velodrome-ageur-mai",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["agEUR", "MAI"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1662659522
+  },
+  {
     "id": "velodrome-snx-usdc",
     "name": "SNX-USDC vLP",
     "token": "SNX-USDC vLP",
