@@ -1413,5 +1413,34 @@
     "addLiquidityUrl": "https://vvs.finance/add/CRO/0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
     "createdAt": 1662489253,
     "network": "cronos"
+  },
+  {
+    "id": "vvs-mtd-vvs",
+    "name": "MTD-VVS LP",
+    "token": "MTD-VVS LP",
+    "tokenAddress": "0xf10af2E06908A8f234678974712B60DE3063609B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "vvs",
+    "earnedToken": "mooVvsMTD-VVS",
+    "earnedTokenAddress": "0x7DC7164C56463F4d8C1EE5cCD1909bf2d62eeD10",
+    "earnContractAddress": "0x7DC7164C56463F4d8C1EE5cCD1909bf2d62eeD10",
+    "oracle": "lps",
+    "oracleId": "vvs-mtd-vvs",
+    "status": "active",
+    "platformId": "vvs",
+    "assets": ["MTD", "VVS"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://vvs.finance/swap?inputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03&outputCurrency=0x0224010BA2d567ffa014222eD960D1fa43B8C8E1",
+    "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x0224010BA2d567ffa014222eD960D1fa43B8C8E1",
+    "createdAt": 1662707496,
+    "network": "cronos"
   }
 ]
