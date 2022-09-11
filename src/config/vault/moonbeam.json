@@ -1,5 +1,34 @@
 [
   {
+    "id": "stellaswap-poop-wglmr",
+    "name": "POOP-GLMR LP",
+    "token": "POOP-GLMR LP",
+    "tokenAddress": "0x4EfB208eeEb5A8C85af70e8FBC43D6806b422bec",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaswapPOOP-GLMR",
+    "earnedTokenAddress": "0xe184De2A8495184a9cCe8843e1Db192564cF1b9c",
+    "earnContractAddress": "0xe184De2A8495184a9cCe8843e1Db192564cF1b9c",
+    "oracle": "lps",
+    "oracleId": "stellaswap-poop-wglmr",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["POOP", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/ETH/0xFFfffFFecB45aFD30a637967995394Cc88C0c194",
+    "buyTokenUrl": "https://app.stellaswap.com/exchange/swap",
+    "network": "moonbeam",
+    "createdAt": 1662910200
+  },
+  {
     "id": "stellaswap-wglmr-xcintr",
     "name": "xcINTR-GLMR LP",
     "token": "xcINTR-GLMR LP",
@@ -324,6 +353,34 @@
     "addLiquidityUrl": "https://app.beamswap.io/exchange/add/multi/nomad3pool",
     "createdAt": 1658326369,
     "network": "moonbeam"
+  },
+  {
+    "id": "stellaswap-well-wglmr",
+    "name": "WELL-GLMR LP",
+    "token": "WELL-GLMR LP",
+    "tokenAddress": "0xb536c1F9A157B263B70A9a35705168ACC0271742",
+    "tokenDecimals": 18,
+    "tokenProviderId": "stellaswap",
+    "earnedToken": "mooStellaswapWELL-GLMR",
+    "earnedTokenAddress": "0xE144C601a50029aeC9DC7Bd3b7534FfA293Eb4dA",
+    "earnContractAddress": "0xE144C601a50029aeC9DC7Bd3b7534FfA293Eb4dA",
+    "oracle": "lps",
+    "oracleId": "stellaswap-well-wglmr",
+    "status": "active",
+    "platformId": "stellaswap",
+    "assets": ["WELL", "GLMR"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "network": "moonbeam",
+    "addLiquidityUrl": "https://app.stellaswap.com/exchange/add/0xAcc15dC74880C9944775448304B263D191c6077F/0x511aB53F793683763E5a8829738301368a2411E3",
+    "createdAt": 1656516660
   },
   {
     "id": "stellaswap-well-wglmr",
