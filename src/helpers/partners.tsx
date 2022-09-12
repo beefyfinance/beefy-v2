@@ -6,6 +6,9 @@ const QiDao = [
   'scream-link',
   'scream-dai',
   'aave-wavax',
+  'aavev3-op-wbtc',
+  'aavev3-op-dai',
+  'aavev3-op-eth',
 ];
 
 const Insurace = ['bsc', 'avax', 'celo', 'cronos', 'fantom', 'harmony', 'moonriver', 'polygon'];
