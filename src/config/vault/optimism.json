@@ -1,5 +1,32 @@
 [
   {
+    "id": "optimism-bifi-maxi",
+    "name": "BIFI Maxi",
+    "token": "BIFI",
+    "tokenAddress": "0x4E720DD3Ac5CFe1e1fbDE4935f386Bb1C66F4642",
+    "tokenDecimals": 18,
+    "earnedToken": "mooOptimismBIFI",
+    "earnedTokenAddress": "0xe200cD5ef01B52Bb968402F63E3933897CfF367b",
+    "earnContractAddress": "0xe200cD5ef01B52Bb968402F63E3933897CfF367b",
+    "oracle": "tokens",
+    "oracleId": "BIFI",
+    "status": "active",
+    "platformId": "beefy",
+    "assets": ["BIFI"],
+    "strategyTypeId": "maxi",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1663091478
+  },
+  {
     "id": "velodrome-ageur-mai",
     "name": "agEUR-MAI vLP",
     "token": "agEUR-MAI vLP",
