@@ -1367,7 +1367,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -4287,7 +4288,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -4431,6 +4433,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
+      "ALGO_STABLE",
       "MCAP_LARGE",
       "NO_AUDIT",
       "CONTRACTS_VERIFIED"
@@ -5415,8 +5418,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "ALGO-STABLE",
-      "IL_LOW",
+      "ALGO_STABLE",
+      "IL_HIGH",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -5594,7 +5597,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -5716,9 +5720,9 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_SMALL",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7/0xfB98B335551a418cD0737375a2ea0ded62Ea213b",
     "buyTokenUrl": "https://swap.tomb.com/#/swap?inputCurrency=0xfB98B335551a418cD0737375a2ea0ded62Ea213b&outputCurrency=0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7",
@@ -6106,7 +6110,8 @@
       "COMPLEXITY_LOW",
       "ALGO_STABLE",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED"
     ],
@@ -6194,7 +6199,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "ALGO-STABLE",
+      "ALGO_STABLE",
       "IL_HIGH",
       "MCAP_MICRO",
       "AUDIT",
@@ -6400,9 +6405,9 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
       "MCAP_MEDIUM",
-      "ALGO-STABLE",
+      "ALGO_STABLE",
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://swap.tomb.com/#/add/0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7/ETH",
@@ -6481,6 +6486,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -6510,7 +6516,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
