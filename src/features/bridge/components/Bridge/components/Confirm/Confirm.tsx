@@ -174,33 +174,39 @@ function _Confirm() {
         <ItemInfo title={t('Bridge-Gas')}> {destChainData.MinimumSwapFee} BIFI</ItemInfo>
         <ItemInfo title={t('Bridge-EstimatedTime')}>3 - 30 min</ItemInfo>
       </div>
-
-      {isWalletConnected ? (
-        isWalletOnFromChain ? (
-          <Button
-            onClick={handleBridge}
-            disabled={isStepping}
-            variant="success"
-            fullWidth={true}
-            borderless={true}
-          >
-            {t('Confirm')}
-          </Button>
+      <div>
+        {isWalletConnected ? (
+          isWalletOnFromChain ? (
+            <Button
+              onClick={handleBridge}
+              disabled={isStepping}
+              variant="success"
+              fullWidth={true}
+              borderless={true}
+            >
+              {t('Confirm')}
+            </Button>
+          ) : (
+            <Button
+              onClick={() => dispatch(askForNetworkChange({ chainId: formState.fromChainId }))}
+              variant="success"
+              fullWidth={true}
+              borderless={true}
+            >
+              {t('Network-Change', { network: fromChain.name })}
+            </Button>
+          )
         ) : (
           <Button
-            onClick={() => dispatch(askForNetworkChange({ chainId: formState.fromChainId }))}
+            onClick={handleConnectWallet}
             variant="success"
             fullWidth={true}
             borderless={true}
           >
-            {t('Network-Change', { network: fromChain.name })}
+            {t('Network-ConnectWallet')}
           </Button>
-        )
-      ) : (
-        <Button onClick={handleConnectWallet} variant="success" fullWidth={true} borderless={true}>
-          {t('Network-ConnectWallet')}
-        </Button>
-      )}
+        )}
+      </div>
       <Stepper />
     </>
   );

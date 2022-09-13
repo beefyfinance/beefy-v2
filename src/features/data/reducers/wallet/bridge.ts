@@ -10,6 +10,7 @@ import { selectBridgeBifiDestChainData } from '../../selectors/bridge';
 import { selectChainById } from '../../selectors/chains';
 import { selectTokenByAddress } from '../../selectors/tokens';
 import { BIG_ZERO } from '../../../../helpers/big-number';
+import { isEmpty } from '../../../../helpers/utils';
 
 export enum FormStep {
   Preview = 1,
@@ -52,10 +53,15 @@ export const bridgeSlice = createSlice({
   name: 'bridge',
   initialState: initialBridgeState,
   reducers: {
-    resetForm() {
-      return initialBridgeState;
+    resetForm(sliceState) {
+      const bridgeData = sliceState.bridgeDataByChainId;
+      const supportedChains = sliceState.supportedChains;
+      if (isEmpty(bridgeData)) {
+        return initialBridgeState;
+      } else {
+        return { ...initialBridgeState, bridgeDataByChainId: bridgeData, supportedChains };
+      }
     },
-
     setMax(
       sliceState,
       action: PayloadAction<{
