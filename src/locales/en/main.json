@@ -392,7 +392,7 @@
   "Bridge-Title": "BIFI Cross Chain Bridge",
   "Bridge-PowerBy": "Powered by multichain.org router",
   "Bridge-Crosschain": "Crosschain fee",
-  "Bridge-Gas": "Min Fee",
+  "Bridge-Gas": "Gas Fee",
   "Bridge-Title-Confirm": "Confirm Transaction",
   "Bridge-Confirm-Content": "Please review and confirm all details",
   "Bridge-EstimatedTime": "Estimated time of arrival:",

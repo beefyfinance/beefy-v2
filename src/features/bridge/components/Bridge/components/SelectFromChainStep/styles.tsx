@@ -2,6 +2,6 @@ import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
   customHeight: {
-    height: '462px',
+    height: '584px',
   },
 });

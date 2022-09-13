@@ -1,11 +1,6 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
-  content: {
-    padding: '24px',
-    borderRadius: '4px',
-    backgroundColor: '#232743',
-  },
   rowDirectionBalance: {
     display: 'flex',
     justifyContent: 'space-between',

@@ -14,7 +14,6 @@ export const styles = (theme: Theme) => ({
     padding: '12px',
     backgroundColor: theme.palette.background.content,
     borderRadius: '8px',
-    margin: `24px 0`,
   },
   label: {
     ...theme.typography['subline-sm'],
