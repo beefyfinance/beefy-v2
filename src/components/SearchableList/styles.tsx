@@ -47,8 +47,14 @@ export const itemStyles = (theme: Theme) => ({
     },
   },
   arrow: {
-    marginLeft: 'auto',
     color: '#D0D0DA',
     height: '24px',
+  },
+  marginWithEndAdornement: {
+    marginRight: '8px',
+  },
+  endAdornement: {
+    marginLeft: 'auto',
+    display: 'flex',
   },
 });

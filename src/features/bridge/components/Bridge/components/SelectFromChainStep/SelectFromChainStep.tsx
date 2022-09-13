@@ -12,6 +12,7 @@ import { ListItem } from '../ListItem';
 import { fetchBridgeChainData } from '../../../../../data/actions/bridge';
 import { makeStyles } from '@material-ui/core';
 import { styles } from './styles';
+import { BalanceEndAdornement } from '../BalanceEndAdornement';
 
 const useStyles = makeStyles(styles);
 
@@ -50,5 +51,12 @@ const ChainSelector = memo(function () {
     [bridgeState.bridgeDataByChainId, dispatch]
   );
 
-  return <SearchableList options={options} onSelect={handleSelect} ItemInnerComponent={ListItem} />;
+  return (
+    <SearchableList
+      options={options}
+      onSelect={handleSelect}
+      ItemInnerComponent={ListItem}
+      EndComponent={BalanceEndAdornement}
+    />
+  );
 });
