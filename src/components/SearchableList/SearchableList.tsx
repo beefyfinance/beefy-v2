@@ -13,12 +13,14 @@ export type SearchableListProps = {
   options: string[];
   onSelect: (value: string) => void;
   ItemInnerComponent?: FC<ItemInnerProps>;
+  EndComponent?: FC<ItemInnerProps>;
 };
 
 export const SearchableList = memo<SearchableListProps>(function ({
   options,
   onSelect,
   ItemInnerComponent = ItemInner,
+  EndComponent,
 }) {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -53,6 +55,7 @@ export const SearchableList = memo<SearchableListProps>(function ({
                 value={value}
                 onSelect={handleSelect}
                 ItemInnerComponent={ItemInnerComponent}
+                EndAdornementComponent={EndComponent}
               />
             ))
           ) : (
