@@ -22,7 +22,7 @@ import { BoostModalState } from './features/data/reducers/wallet/boost-modal';
 import { MintersState } from './features/data/reducers/minters';
 import { Action } from 'redux';
 import { InfoCardsState } from './features/data/reducers/info-cards';
-import { BridgeModalState } from './features/data/reducers/wallet/bridge-modal';
+import { BridgeState } from './features/data/reducers/wallet/bridge';
 import { OnRampTypes } from './features/data/reducers/on-ramp-types';
 import { DataLoaderState } from './features/data/reducers/data-loader-types';
 import { FeesState } from './features/data/reducers/fees';
@@ -58,7 +58,7 @@ export interface BeefyState {
     deposit: DepositState;
     withdraw: WithdrawState;
     boostModal: BoostModalState;
-    bridgeModal: BridgeModalState;
+    bridge: BridgeState;
     onRamp: OnRampTypes;
   };
 }

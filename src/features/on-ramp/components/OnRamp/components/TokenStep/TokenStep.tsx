@@ -9,8 +9,8 @@ import {
   selectIsFiatSupported,
   selectSupportedTokensForFiat,
 } from '../../../../../data/selectors/on-ramp';
-import { SearchableList } from '../SearchableList';
-import { ItemInnerProps } from '../SearchableList/ItemInner';
+import { SearchableList } from '../../../../../../components/SearchableList';
+import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { FiatTitleAdornment } from '../FiatTitleAdornment';
 import { setOnRampToken } from '../../../../../data/actions/on-ramp';

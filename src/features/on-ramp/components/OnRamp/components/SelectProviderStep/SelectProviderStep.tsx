@@ -10,8 +10,8 @@ import {
   selectSortedQuoteProviders,
 } from '../../../../../data/selectors/on-ramp';
 import { useDispatch } from 'react-redux';
-import { SearchableList } from '../SearchableList';
-import { ItemInnerProps } from '../SearchableList/ItemInner';
+import { SearchableList } from '../../../../../../components/SearchableList';
+import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { ProviderIcon } from '../ProviderIcon';
 import { PROVIDERS } from '../../providers';

@@ -10,7 +10,9 @@ const _Divider = ({ onClick }: { onClick?: () => void }) => {
   return (
     <Box className={classes.customDivider}>
       <Box className={classes.line} />
-      <ArrowDown onClick={onClick} />
+      <Box className={classes.arrowContainer}>
+        <ArrowDown onClick={onClick} />
+      </Box>
       <Box className={classes.line} />
     </Box>
   );

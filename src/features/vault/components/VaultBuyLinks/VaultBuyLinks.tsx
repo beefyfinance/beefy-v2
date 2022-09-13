@@ -4,7 +4,6 @@ import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { styles } from './styles';
 import { useAppSelector } from '../../../../store';
-import { Bridge } from '../../../../components/Bridge';
 import { LinkButton } from '../../../../components/LinkButton';
 
 const useStyles = makeStyles(styles);
@@ -21,7 +20,6 @@ export function VaultBuyLinks({ vaultId }: { vaultId: VaultEntity['id'] }) {
       {vault.addLiquidityUrl && (
         <LinkButton href={vault.addLiquidityUrl} text={t('Transact-AddLiquidity')} />
       )}
-      {vault.assetIds.includes('BIFI') && <Bridge buttonClassname={classes.btnSecondary} />}
     </div>
   );
 }

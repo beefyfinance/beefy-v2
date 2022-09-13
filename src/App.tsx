@@ -18,6 +18,7 @@ import { Redirects } from './components/Redirects';
 const Home = React.lazy(() => import(`./features/home`));
 const Vault = React.lazy(() => import(`./features/vault`));
 const OnRamp = React.lazy(() => import(`./features/on-ramp`));
+const Bridge = React.lazy(() => import(`./features/bridge`));
 const PageNotFound = React.lazy(() => import(`./features/pagenotfound`));
 
 export const App = () => {
@@ -52,6 +53,9 @@ export const App = () => {
                 </Route>
                 <Route exact path="/onramp">
                   <OnRamp />
+                </Route>
+                <Route exact path="/bridge">
+                  <Bridge />
                 </Route>
                 <Route>
                   <PageNotFound />
