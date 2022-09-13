@@ -4,7 +4,7 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { formatBigDecimals } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { selectBifiAddres, selectBridgeState } from '../../../../../data/selectors/bridge';
+import { selectBifiAddres } from '../../../../../data/selectors/bridge';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
 import { styles } from './styles';
