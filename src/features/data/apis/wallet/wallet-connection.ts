@@ -313,7 +313,6 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // Initialize onboard if needed
     const onboard = this.getOnboard();
-    console.log('where chimp said');
 
     // Init wallets now; rather than in onboard.connect()
     const walletInits = this.getOnboardWalletInitializers();
