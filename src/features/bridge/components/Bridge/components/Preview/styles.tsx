@@ -52,4 +52,5 @@ export const styles = (theme: Theme) => ({
     width: '50%',
     marginRight: theme.spacing(1),
   },
+  infoContainer: { flexGrow: 1 },
 });

@@ -394,7 +394,6 @@
   "Bridge-Crosschain": "Crosschain fee",
   "Bridge-Gas": "Gas Fee",
   "Bridge-Title-Confirm": "Confirm Transaction",
-  "Bridge-Confirm-Content": "Please review and confirm all details",
   "Bridge-EstimatedTime": "Estimated time of arrival:",
   "Bridge-MinAmount": "Min crosschain amount",
   "Bridge-MaxAmount": "MAX crosschain amount",
@@ -443,5 +442,5 @@
   "Bridge-PreviewStep-Title": "Which chain do you want to bridge BIFI to?",
   "Bridge-FromChainStep-Title": "Select origin chain",
   "Bridge-ToChainStep-Title": "Select destination chain",
-  "Bridge-ConfirmStep-Title": "Confirm Details"
+  "Bridge-ConfirmStep-Title": "Please review and confirm all details"
 }

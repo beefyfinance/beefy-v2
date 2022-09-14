@@ -10,20 +10,12 @@ import {
 } from '../../../../../data/selectors/bridge';
 import { ListItem } from '../ListItem';
 import { ChainEntity } from '../../../../../data/entities/chain';
-import { makeStyles } from '@material-ui/core';
-import { styles } from './styles';
-
-const useStyles = makeStyles(styles);
 
 export const _SelectToChainStep = () => {
   const { t } = useTranslation();
-  const classes = useStyles();
+
   return (
-    <Step
-      contentClass={classes.customHeight}
-      backStep={FormStep.Preview}
-      title={t('Bridge-FromChainStep-Title')}
-    >
+    <Step backStep={FormStep.Preview} title={t('Bridge-FromChainStep-Title')}>
       <ChainSelector />
     </Step>
   );
