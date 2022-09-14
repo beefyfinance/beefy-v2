@@ -136,6 +136,28 @@
     "createdAt": 1661861505
   },
   {
+    "id": "spiritV2-usdc-busd",
+    "name": "USDC-BUSD sLP",
+    "token": "gALCX-FTM sLP",
+    "tokenAddress": "0xAfEcf681a8f3FB8D78581874339Bfca6252d62C4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "spiritswap",
+    "earnedToken": "mooSpiritV2BUSD-USDC",
+    "earnedTokenAddress": "0xE61eC95c4485CBB996DA30A1908e44D9205762DA",
+    "earnContractAddress": "0xE61eC95c4485CBB996DA30A1908e44D9205762DA",
+    "oracle": "lps",
+    "oracleId": "spiritV2-usdc-busd",
+    "status": "active",
+    "platformId": "spiritswap",
+    "assets": ["USDC", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
+    "buyTokenUrl": "https://beta.spiritswap.finance/swap",
+    "network": "fantom",
+    "createdAt": 1663195422
+  },
+  {
     "id": "spiritV2-wftm-galcx",
     "name": "gALCX-FTM vLP",
     "token": "gALCX-FTM vLP",
