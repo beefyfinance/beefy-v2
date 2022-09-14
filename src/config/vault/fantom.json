@@ -138,7 +138,7 @@
   {
     "id": "spiritV2-usdc-busd",
     "name": "USDC-BUSD sLP",
-    "token": "gALCX-FTM sLP",
+    "token": "USDC-BUSD sLP",
     "tokenAddress": "0xAfEcf681a8f3FB8D78581874339Bfca6252d62C4",
     "tokenDecimals": 18,
     "tokenProviderId": "spiritswap",
@@ -151,7 +151,7 @@
     "platformId": "spiritswap",
     "assets": ["USDC", "BUSD"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_LOW", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
