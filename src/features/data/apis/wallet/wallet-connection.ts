@@ -16,6 +16,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
   protected onboardWalletInitializers: WalletInit[] | null;
 
+  protected ignoreSetWalletModulesDisconnectEvent = false;
+
   constructor(protected options: WalletConnectionOptions) {
     this.onboard = null;
     this.onboardWalletInitializers = null;
@@ -231,6 +233,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const wallets = onboard.state.select('wallets');
     return wallets.subscribe(wallets => {
       if (wallets.length === 0) {
+        if (this.ignoreSetWalletModulesDisconnectEvent) {
+          console.log('Ignoring SetWalletModules disconnect event');
+          return (this.ignoreSetWalletModulesDisconnectEvent = false);
+        }
         this.options.onWalletDisconnected();
       } else {
         const wallet = wallets[0];
@@ -307,9 +313,11 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // Initialize onboard if needed
     const onboard = this.getOnboard();
+    console.log('where chimp said');
 
     // Init wallets now; rather than in onboard.connect()
     const walletInits = this.getOnboardWalletInitializers();
+    this.ignoreSetWalletModulesDisconnectEvent = true;
     onboard.state.actions.setWalletModules(walletInits);
 
     // Last selected wallet must be valid
