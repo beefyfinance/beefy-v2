@@ -56,11 +56,17 @@ export const styles = (theme: Theme) => ({
     gridTemplateColumns: 'repeat(2, 1fr)',
     rowGap: '8px',
     columnGap: '8px',
-    margin: '24px 0',
+    marginTop: '24px',
+    padding: '12px',
+    border: '2px solid #2D3153',
+    borderRadius: '8px',
   },
   detailLabel: {
     ...theme.typography['body-sm'],
+    fontWeight: 700,
+    letterSpacing: '0.5px',
     color: '#999CB3',
+    textTransform: 'UPPERCASE',
   },
   detailValue: {
     ...theme.typography['body-sm-med'],
@@ -68,8 +74,9 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.secondary,
   },
   buttonsContainer: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    rowGap: '16px',
+    marginTop: '48px',
+  },
+  infoContainer: {
+    flexGrow: 1,
   },
 });

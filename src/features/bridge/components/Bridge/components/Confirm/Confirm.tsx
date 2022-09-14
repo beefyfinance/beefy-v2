@@ -129,52 +129,48 @@ function _Confirm() {
 
   return (
     <>
-      <div className={classes.confirmIntro}> {t('Bridge-Confirm-Content')} </div>
-      <div className={classes.transferInfo}>
-        <div className={classes.label}>{t('FROM')}</div>
-        <div className={classes.networkAmount}>
-          <div className={classes.network}>
-            <img
-              className={classes.networkIcon}
-              width={20}
-              height={20}
-              alt=""
-              src={getNetworkSrc(formState.fromChainId)}
-            />
-            <div className={classes.networkName}>{fromChain.name}</div>
+      <div className={classes.infoContainer}>
+        <div className={classes.transferInfo}>
+          <div className={classes.label}>{t('FROM')}</div>
+          <div className={classes.networkAmount}>
+            <div className={classes.network}>
+              <img
+                className={classes.networkIcon}
+                width={20}
+                height={20}
+                alt=""
+                src={getNetworkSrc(formState.fromChainId)}
+              />
+              <div className={classes.networkName}>{fromChain.name}</div>
+            </div>
+            <div className={classes.amount}>- {formState.formattedInput} BIFI</div>
           </div>
-          <div className={classes.amount}>- {formState.formattedInput} BIFI</div>
-        </div>
-        <div className={classes.address}>
-          {t('Address')}: <span>{formatAddressShort(walletAddress)}</span>
-        </div>
-      </div>
-      <Divider />
-      <div className={classes.transferInfo}>
-        <div className={classes.label}>{t('TO')}</div>
-        <div className={classes.networkAmount}>
-          <div className={classes.network}>
-            <img
-              className={classes.networkIcon}
-              width={20}
-              height={20}
-              alt=""
-              src={getNetworkSrc(formState.destChainId)}
-            />
-            <div className={classes.networkName}>{destChain.name}</div>
+          <div className={classes.address}>
+            {t('Address')}: <span>{formatAddressShort(walletAddress)}</span>
           </div>
-          <div className={classes.amount}>+ {formState.formattedOutput} BIFI</div>
         </div>
-        <div className={classes.address}>
-          {t('Address')}: <span>{formatAddressShort(walletAddress)}</span>
+        <Divider />
+        <div className={classes.transferInfo}>
+          <div className={classes.label}>{t('TO')}</div>
+          <div className={classes.networkAmount}>
+            <div className={classes.network}>
+              <img
+                className={classes.networkIcon}
+                width={20}
+                height={20}
+                alt=""
+                src={getNetworkSrc(formState.destChainId)}
+              />
+              <div className={classes.networkName}>{destChain.name}</div>
+            </div>
+            <div className={classes.amount}>+ {formState.formattedOutput} BIFI</div>
+          </div>
+          <div className={classes.address}>
+            {t('Address')}: <span>{formatAddressShort(walletAddress)}</span>
+          </div>
         </div>
       </div>
-      <div className={classes.transferDetails}>
-        <ItemInfo title={t('Bridge-Crosschain')}>{destChainData.SwapFeeRatePerMillion}%</ItemInfo>
-        <ItemInfo title={t('Bridge-Gas')}> {destChainData.MinimumSwapFee} BIFI</ItemInfo>
-        <ItemInfo title={t('Bridge-EstimatedTime')}>3 - 30 min</ItemInfo>
-      </div>
-      <div>
+      <div className={classes.buttonsContainer}>
         {isWalletConnected ? (
           isWalletOnFromChain ? (
             <Button
@@ -206,6 +202,11 @@ function _Confirm() {
             {t('Network-ConnectWallet')}
           </Button>
         )}
+      </div>
+      <div className={classes.transferDetails}>
+        <ItemInfo title={t('Bridge-Crosschain')}>{destChainData.SwapFeeRatePerMillion}%</ItemInfo>
+        <ItemInfo title={t('Bridge-Gas')}> {destChainData.MinimumSwapFee} BIFI</ItemInfo>
+        <ItemInfo title={t('Bridge-EstimatedTime')}>3 - 30 min</ItemInfo>
       </div>
       <Stepper />
     </>

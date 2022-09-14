@@ -103,57 +103,59 @@ function _Preview() {
 
   return (
     <>
-      {/*From */}
-      <div>
-        <div className={classes.rowDirectionBalance}>
-          <div className={classes.label}>{t('FROM')}</div>
-          <div onClick={handleMax} className={classes.balance}>
-            {t('Balance')}: <span>{formatBigDecimals(bifiBalance, 4)} BIFI</span>
+      <div className={classes.infoContainer}>
+        {/*From */}
+        <div>
+          <div className={classes.rowDirectionBalance}>
+            <div className={classes.label}>{t('FROM')}</div>
+            <div onClick={handleMax} className={classes.balance}>
+              {t('Balance')}: <span>{formatBigDecimals(bifiBalance, 4)} BIFI</span>
+            </div>
+          </div>
+          <div className={classes.inputContainer}>
+            <Paper component="form">
+              <div className={classes.inputLogo}>
+                <AssetsImage chainId={'56'} assetIds={['BIFI']} size={24} />
+              </div>
+              <InputBase
+                placeholder="0.00"
+                value={formState.formattedInput}
+                onChange={e => handleInput(e.target.value)}
+                endAdornment={
+                  <InputChainAdornment chain={fromChain} nextStep={FormStep.SelectFromNetwork} />
+                }
+              />
+            </Paper>
           </div>
         </div>
-        <div className={classes.inputContainer}>
-          <Paper component="form">
-            <div className={classes.inputLogo}>
-              <AssetsImage chainId={'56'} assetIds={['BIFI']} size={24} />
-            </div>
-            <InputBase
-              placeholder="0.00"
-              value={formState.formattedInput}
-              onChange={e => handleInput(e.target.value)}
-              endAdornment={
-                <InputChainAdornment chain={fromChain} nextStep={FormStep.SelectFromNetwork} />
-              }
-            />
-          </Paper>
+
+        <Divider onClick={() => handleNetwork(formState.destChainId)} />
+        {/* To */}
+        <div className={classes.toContainer}>
+          <div className={classes.rowDirectionBalance}>
+            <div className={classes.label}>{t('TO')}</div>
+          </div>
+
+          <div className={classes.inputContainer}>
+            <Paper component="form">
+              <div className={classes.inputLogo}>
+                <AssetsImage chainId={'56'} assetIds={['BIFI']} size={24} />
+              </div>
+              <InputBase
+                placeholder="0.00"
+                value={formState.formattedOutput}
+                disabled={true}
+                endAdornment={
+                  <InputChainAdornment chain={destChain} nextStep={FormStep.SelectToNetwork} />
+                }
+              />
+            </Paper>
+          </div>
         </div>
+
+        {/* Fees */}
+        <Fees />
       </div>
-
-      <Divider onClick={() => handleNetwork(formState.destChainId)} />
-      {/* To */}
-      <div className={classes.toContainer}>
-        <div className={classes.rowDirectionBalance}>
-          <div className={classes.label}>{t('TO')}</div>
-        </div>
-
-        <div className={classes.inputContainer}>
-          <Paper component="form">
-            <div className={classes.inputLogo}>
-              <AssetsImage chainId={'56'} assetIds={['BIFI']} size={24} />
-            </div>
-            <InputBase
-              placeholder="0.00"
-              value={formState.formattedOutput}
-              disabled={true}
-              endAdornment={
-                <InputChainAdornment chain={destChain} nextStep={FormStep.SelectToNetwork} />
-              }
-            />
-          </Paper>
-        </div>
-      </div>
-
-      {/* Fees */}
-      <Fees />
       <div className={classes.buttonContainer}>
         {isWalletConnected ? (
           isWalletOnFromChain ? (
