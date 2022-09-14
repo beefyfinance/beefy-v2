@@ -66,7 +66,7 @@ export const styles = (theme: Theme) => ({
     fontWeight: 700,
     letterSpacing: '0.5px',
     color: '#999CB3',
-    textTransform: 'UPPERCASE',
+    textTransform: 'uppercase' as const,
   },
   detailValue: {
     ...theme.typography['body-sm-med'],
