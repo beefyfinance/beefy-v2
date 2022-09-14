@@ -7069,7 +7069,7 @@
     "status": "eol",
     "retireReason": "rewards",
     "platformId": "curve",
-    "assets": ["UST", "FRAX", "fUSDT", "USDC"],
+    "assets": ["USTw", "FRAX", "fUSDT", "USDC"],
     "strategyTypeId": "multi-lp",
     "risks": [
       "COMPLEXITY_LOW",
