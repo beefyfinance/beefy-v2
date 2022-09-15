@@ -85,8 +85,6 @@ export class BalanceAPI<T extends ChainEntity> implements IBalanceApi {
 
     const results = await Promise.all([
       ...boostAndGovVaultPromises,
-      // ...boostPromises,
-      // ...govVaultPromises,
       ...erc20TokensPromises,
       ...nativeTokenPromises,
     ]);
