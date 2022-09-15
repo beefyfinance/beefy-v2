@@ -125,22 +125,15 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       label: 'CDC Connect',
       getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
       getInterface: async ({ chains }) => {
-        const { DeFiConnector } = await import('deficonnect');
+        const { DeFiWeb3Connector } = await import('@deficonnect/web3-connector');
         const cronosChainId = 25;
-        const cronosChainIdHex = numberToHex(cronosChainId);
-        const cronosChain = chains.find(chain => chain.id === cronosChainIdHex);
 
-        const connector = new DeFiConnector({
-          name: 'Cronos',
-          supprtedChainTypes: ['eth'],
-          eth: {
-            supportedChainIds: [cronosChainId],
-            rpc: {
-              [cronosChainId]: cronosChain.rpcUrl,
-            },
-            pollingInterval: 15000,
-          },
-          cosmos: null,
+        const connector = new DeFiWeb3Connector({
+          appName: 'Beefy',
+          chainType: 'eth',
+          chainId: cronosChainId.toString(),
+          supportedChainIds: chains.map(chain => maybeHexToNumber(chain.id)),
+          rpcUrls: Object.fromEntries(chains.map(chain => [chain.id.toString(), chain.rpcUrl])),
         });
 
         const { provider } = await connector.activate();
