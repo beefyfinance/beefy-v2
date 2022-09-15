@@ -4,6 +4,10 @@ export const styles = (theme: Theme) => ({
   pageContainer: {
     paddingTop: 120,
     paddingBottom: 120,
+    [theme.breakpoints.down('md')]: {
+      paddingTop: 18,
+      paddingBottom: 48,
+    },
   },
   inner: {
     margin: '0 auto',
