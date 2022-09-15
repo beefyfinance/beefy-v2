@@ -1,17 +1,17 @@
-import React, { memo, ReactNode, useCallback } from 'react';
+import React, { memo, ReactNode } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
-import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
-import { ReactComponent as BackArrow } from '../../../../../../images/back-arrow.svg';
-import { FormStep } from '../../../../../data/reducers/on-ramp-types';
+import { ReactComponent as BackArrow } from '../../images/back-arrow.svg';
 
 const useStyles = makeStyles(styles);
 
+export type StepType = 'bridge' | 'onRamp';
+
 export type StepProps = {
+  stepType: StepType;
   title?: string;
-  backStep?: FormStep;
+  onBack?: () => void;
   children: ReactNode;
   titleAdornment?: ReactNode;
   contentClass?: string;
@@ -19,26 +19,24 @@ export type StepProps = {
 };
 
 export const Step = memo<StepProps>(function ({
+  stepType,
   title,
   titleAdornment,
-  backStep,
+  onBack,
   children,
   contentClass,
   noPadding = false,
 }) {
-  const classes = useStyles();
-  const dispatch = useDispatch();
+  const cardHeight = stepType === 'bridge' ? '658px' : '648px';
 
-  const handleBack = useCallback(() => {
-    dispatch(onRampFormActions.setStep({ step: backStep }));
-  }, [dispatch, backStep]);
+  const classes = useStyles({ cardHeight });
 
   return (
     <div className={classes.container}>
       {title ? (
         <div className={classes.titleBar}>
-          {backStep !== undefined ? (
-            <button onClick={handleBack} className={classes.backButton}>
+          {onBack !== undefined ? (
+            <button onClick={onBack} className={classes.backButton}>
               <BackArrow className={classes.backIcon} />
             </button>
           ) : null}

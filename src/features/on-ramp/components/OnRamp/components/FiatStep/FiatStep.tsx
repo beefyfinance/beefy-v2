@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
-import { Step } from '../Step';
+import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import { selectAllFiat, selectLastStep } from '../../../../../data/selectors/on-ramp';
@@ -10,6 +10,7 @@ import { ItemInnerProps } from '../../../../../../components/SearchableList/Item
 import { CurrencyFlag } from '../CurrencyFlag';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { setOnRampFiat } from '../../../../../data/actions/on-ramp';
+import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
 
 const useStyles = makeStyles(styles);
 
@@ -17,11 +18,15 @@ export const FiatStep = memo(function () {
   const { t } = useTranslation();
   const lastStep = useAppSelector(selectLastStep);
 
+  const dispatch = useAppDispatch();
+
+  const handleBack = useCallback(() => {
+    const step = lastStep === FormStep.InputAmount ? FormStep.InputAmount : FormStep.SelectToken;
+    dispatch(onRampFormActions.setStep({ step }));
+  }, [dispatch, lastStep]);
+
   return (
-    <Step
-      title={t('OnRamp-FiatStep-Title')}
-      backStep={lastStep === FormStep.InputAmount ? FormStep.InputAmount : FormStep.SelectToken}
-    >
+    <Step stepType="onRamp" title={t('OnRamp-FiatStep-Title')} onBack={handleBack}>
       <FiatSelector />
     </Step>
   );

@@ -2,7 +2,7 @@ import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { bridgeActions, FormStep } from '../../../../../data/reducers/wallet/bridge';
 import { SearchableList } from '../../../../../../components/SearchableList';
-import { Step } from '../Step';
+import { Step } from '../../../../../../components/Step';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectBridgeState,
@@ -15,8 +15,14 @@ import { BalanceEndAdornement } from '../BalanceEndAdornement';
 export const _SelectFromChainStep = () => {
   const { t } = useTranslation();
 
+  const dispatch = useAppDispatch();
+
+  const handleBack = useCallback(() => {
+    dispatch(bridgeActions.setStep({ step: FormStep.Confirm }));
+  }, [dispatch]);
+
   return (
-    <Step backStep={FormStep.Preview} title={t('Bridge-FromChainStep-Title')}>
+    <Step stepType="bridge" onBack={handleBack} title={t('Bridge-FromChainStep-Title')}>
       <ChainSelector />
     </Step>
   );
