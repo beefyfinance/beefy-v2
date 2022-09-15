@@ -7,7 +7,7 @@ import {
   selectIsBridgeLoaded,
   selectShouldInitBridge,
 } from '../../../data/selectors/bridge';
-import { LoadingStep } from './components/LoadingStep';
+import { LoadingStep } from '../../../../components/LoadingStep';
 import { initBridgeForm } from '../../../data/actions/scenarios';
 import { selectIsWalletConnected, selectWalletAddress } from '../../../data/selectors/wallet';
 import { FormStep } from '../../../data/reducers/wallet/bridge';
@@ -43,5 +43,9 @@ export const Bridge = memo(function () {
     }
   }, [shouldInit, store, walletAddress]);
 
-  return <div className={classes.container}>{isLoaded ? <StepComponent /> : <LoadingStep />}</div>;
+  return (
+    <div className={classes.container}>
+      {isLoaded ? <StepComponent /> : <LoadingStep stepType={'bridge'} />}
+    </div>
+  );
 });

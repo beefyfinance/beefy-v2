@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
-import { Step } from '../Step';
+import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -24,6 +24,7 @@ export const TokenStep = memo(function () {
 
   return (
     <Step
+      stepType="onRamp"
       title={t('OnRamp-TokenStep-Title')}
       titleAdornment={supported ? <FiatTitleAdornment currencyCode={fiat} /> : undefined}
     >

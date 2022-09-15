@@ -34,9 +34,9 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const currentChaindId = useAppSelector(state => selectCurrentChainId(state));
-  const bridgeModalState = useAppSelector(selectBridgeState);
+  const bridgeState = useAppSelector(selectBridgeState);
   const chain = useAppSelector(state => selectChainById(state, currentChaindId));
-  const destChain = useAppSelector(state => selectChainById(state, bridgeModalState.destChainId));
+  const destChain = useAppSelector(state => selectChainById(state, bridgeState.destChainId));
 
   const dispatch = useAppDispatch();
 
@@ -114,7 +114,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
         <Box className={classes.successContainer}>
           <div className={classes.textSuccess}>
             {t('Transactn-Bridge', {
-              amount: formatBigNumberSignificant(bridgeModalState.amount, 4),
+              amount: formatBigNumberSignificant(bridgeState.amount, 4),
               chain: destChain.name,
             })}
           </div>

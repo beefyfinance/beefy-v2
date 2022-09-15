@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     background: '#232743',
     borderRadius: '12px',
     width: '100%',
-    height: '658px',
+    height: props => props.cardHeight,
     display: 'flex',
     flexDirection: 'column' as const,
   },

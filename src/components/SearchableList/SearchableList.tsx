@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { Item } from './Item';
 import { ItemInner, ItemInnerProps } from './ItemInner';
-import { SearchInput } from '../../features/on-ramp/components/OnRamp/components/SearchInput';
+import { SearchInput } from '../SearchInput';
 import { useTranslation } from 'react-i18next';
 import { Scrollable } from '../Scrollable';
 

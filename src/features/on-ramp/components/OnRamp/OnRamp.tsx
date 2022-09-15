@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { NetworkStep } from './components/NetworkStep';
 import { TokenStep } from './components/TokenStep';
 import { useAppDispatch, useAppSelector } from '../../../../store';
-import { LoadingStep } from './components/LoadingStep';
+import { LoadingStep } from '../../../../components/LoadingStep';
 import { fetchOnRampSupportedProviders } from '../../../data/actions/on-ramp';
 import { AmountStep } from './components/AmountStep';
 import { FiatStep } from './components/FiatStep';
@@ -53,7 +53,7 @@ export const OnRamp = memo(function () {
           <StepComponent />
         </>
       ) : (
-        <LoadingStep />
+        <LoadingStep stepType="onRamp" />
       )}
     </div>
   );
