@@ -47,6 +47,7 @@ export const config = {
       'MAI',
       'jBRL',
       'BRZ',
+      'BRZw',
     ],
   },
   heco: {

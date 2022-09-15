@@ -17093,5 +17093,35 @@
     "buyTokenUrl": "https://v1-app.jarvis.exchange/",
     "createdAt": 1658410689,
     "network": "bsc"
+  },
+  {
+    "id": "ellipsis-3brl",
+    "name": "jBRL/BRZ/BRZw",
+    "token": "jBRL/BRZ/BRZw",
+    "tokenAddress": "0x27b5Fc5333246F63280dA8e3e533512EfA747c13",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ellipsis",
+    "earnedToken": "mooEllipsis3BRL",
+    "earnedTokenAddress": "0xF46E3e2eb855baE2A32eD941f0c03b1D9b7b96a0",
+    "earnContractAddress": "0xF46E3e2eb855baE2A32eD941f0c03b1D9b7b96a0",
+    "oracle": "lps",
+    "oracleId": "ellipsis-3brl",
+    "status": "active",
+    "platformId": "dotdot",
+    "assets": ["jBRL", "BRZ", "BRZw"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MIRCO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "ALGO_STABLE"
+    ],
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0x43719DfFf12B04C71F7A589cdc7F54a01da07D7a",
+    "buyTokenUrl": "https://v1-app.jarvis.exchange/",
+    "createdAt": 1663262536,
+    "network": "bsc"
   }
 ]
