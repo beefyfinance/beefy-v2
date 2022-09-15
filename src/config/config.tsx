@@ -405,7 +405,7 @@ export const config = {
       rpcUrls: ['https://emerald.oasis.dev'],
       blockExplorerUrls: ['https://explorer.emerald.oasis.dev/'],
     },
-    stableCoins: ['ceUSDC, USDT'],
+    stableCoins: ['ceUSDC', 'USDT'],
   },
   optimism: {
     name: 'Optimism',
