@@ -129,7 +129,7 @@ function _Preview() {
           </div>
         </div>
 
-        <Divider onClick={() => handleNetwork(formState.destChainId)} />
+        <Divider onClick={() => handleNetwork(formState.destChainId)} clickleable={true} />
         {/* To */}
         <div className={classes.toContainer}>
           <div className={classes.rowDirectionBalance}>

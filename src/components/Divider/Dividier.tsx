@@ -5,8 +5,8 @@ import { memo } from 'react';
 
 const useStyles = makeStyles(styles);
 
-const _Divider = ({ onClick }: { onClick?: () => void }) => {
-  const classes = useStyles();
+const _Divider = ({ onClick, clickleable }: { onClick?: () => void; clickleable?: boolean }) => {
+  const classes = useStyles({ clickleable });
   return (
     <Box className={classes.customDivider}>
       <Box className={classes.line} />

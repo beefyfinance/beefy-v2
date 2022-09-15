@@ -29,7 +29,7 @@ export const styles = (theme: Theme) => ({
       width: '1em',
       height: '1em',
       '&:hover': {
-        cursor: 'pointer',
+        cursor: props => (props.clickleable ? 'pointer' : 'auto'),
         color: theme.palette.text.primary,
       },
     },
