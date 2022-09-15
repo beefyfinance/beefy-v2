@@ -2,7 +2,7 @@ import { BeefyState } from '../../../redux-types';
 import { BoostEntity } from '../entities/boost';
 import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
-import { getBoostStatusFromPeriodFinish } from '../reducers/boosts';
+import { getBoostStatusFromContractState } from '../reducers/boosts';
 import { selectBoostUserBalanceInToken, selectBoostUserRewardsInToken } from './balance';
 import { createCachedSelector } from 're-reselect';
 
@@ -18,12 +18,12 @@ export const selectBoostById = createCachedSelector(
 )((state: BeefyState, boostId: BoostEntity['id']) => boostId);
 
 export const selectIsBoostActive = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const status = getBoostStatusFromPeriodFinish(selectBoostPeriodFinish(state, boostId));
+  const status = getBoostStatusFromContractState(selectBoostContractState(state, boostId));
   return status === 'active';
 };
 
 export const selectIsBoostActiveOrPreStake = (state: BeefyState, boostId: BoostEntity['id']) => {
-  const status = getBoostStatusFromPeriodFinish(selectBoostPeriodFinish(state, boostId));
+  const status = getBoostStatusFromContractState(selectBoostContractState(state, boostId));
   return status === 'active' || status === 'prestake';
 };
 
@@ -117,5 +117,9 @@ export const selectShouldDisplayBoostWidget = (state: BeefyState, vaultId: Vault
 };
 
 export const selectBoostPeriodFinish = (state: BeefyState, boostId: BoostEntity['id']) => {
-  return state.entities.boosts.periodFinish[boostId] || null;
+  return state.entities.boosts.contractState[boostId]?.periodFinish || null;
+};
+
+export const selectBoostContractState = (state: BeefyState, boostId: BoostEntity['id']) => {
+  return state.entities.boosts.contractState[boostId] || { periodFinish: null, isPreStake: true };
 };

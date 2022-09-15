@@ -58,6 +58,64 @@
     "network": "bsc"
   },
   {
+    "id": "cakev2-trivia-bnb",
+    "name": "TRIVIA-BNB LP",
+    "token": "TRIVIA-BNB LP2",
+    "tokenAddress": "0xEF642c40EebBc964881dD7Bd1A0b50e90441E73A",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooCakeV2TRIVIA-BNB",
+    "earnedTokenAddress": "0xE82a2e1cE7C15Ec0e9C7aD46f9BeA355bEF63193",
+    "earnContractAddress": "0xE82a2e1cE7C15Ec0e9C7aD46f9BeA355bEF63193",
+    "oracle": "lps",
+    "oracleId": "cakev2-trivia-bnb",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["TRIVIA", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c/0xb465f3cb6Aba6eE375E12918387DE1eaC2301B05",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xb465f3cb6Aba6eE375E12918387DE1eaC2301B05",
+    "network": "bsc",
+    "createdAt": 1662482205
+  },
+  {
+    "id": "cakev2-peel-busd",
+    "name": "PEEL-BUSD LP",
+    "token": "PEEL-BUSD LP2",
+    "tokenAddress": "0x25bfD3162360BbD8FF97b86169288b311c2A68D7",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooCakeV2PEEL-BUSD",
+    "earnedTokenAddress": "0x7f4616970ce00bc84ddF450Dc7f87ACF7BD28776",
+    "earnContractAddress": "0x7f4616970ce00bc84ddF450Dc7f87ACF7BD28776",
+    "oracle": "lps",
+    "oracleId": "cakev2-peel-busd",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["PEEL", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56/0x734548a9e43d2D564600b1B2ed5bE9C2b911c6aB",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?inputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56&outputCurrency=0x734548a9e43d2D564600b1B2ed5bE9C2b911c6aB",
+    "network": "bsc",
+    "createdAt": 1662571705
+  },
+  {
     "id": "banana-hec-wbnb",
     "name": "HEC-BNB LP",
     "token": "HEC-BNB ALP",
@@ -132,14 +190,7 @@
     "platformId": "cone",
     "assets": ["USDT", "USDC"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
@@ -161,14 +212,7 @@
     "platformId": "cone",
     "assets": ["USDC", "BUSD"],
     "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_NONE",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
@@ -459,6 +503,35 @@
     "createdAt": 1660741033
   },
   {
+    "id": "cakev2-wom-busd",
+    "name": "WOM-BUSD LP",
+    "token": "WOM-BUSD LP2",
+    "tokenAddress": "0xe68D05418A8d7969D9CA6761ad46F449629d928c",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooCakeV2WOM-BUSD",
+    "earnedTokenAddress": "0xBF170DF928AE5c90C9E1b2D10e17c84e53Aa5cAD",
+    "earnContractAddress": "0xBF170DF928AE5c90C9E1b2D10e17c84e53Aa5cAD",
+    "oracle": "lps",
+    "oracleId": "cakev2-wom-busd",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["WOM", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0xAD6742A35fB341A9Cc6ad674738Dd8da98b94Fb1/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0xAD6742A35fB341A9Cc6ad674738Dd8da98b94Fb1",
+    "network": "bsc",
+    "createdAt": 1662062687
+  },
+  {
     "id": "cakev2-pstake-busd",
     "name": "PSTAKE-BUSD LP",
     "token": "PSTAKE-BUSD LP2",
@@ -577,7 +650,7 @@
   {
     "id": "baby-near-usdt",
     "name": "NEAR-USDT LP",
-    "token": "NEAR-USDT LP",
+    "token": "NEAR-USDT BLP",
     "tokenAddress": "0x1E0F11671362E4163eb5530ffFA2f01d4028cdf9",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -606,7 +679,7 @@
   {
     "id": "baby-usdt-sol",
     "name": "SOL-USDT LP",
-    "token": "SOL-USDT LP",
+    "token": "SOL-USDT BLP",
     "tokenAddress": "0xAe08C9D357731FD8d25681dE753551BE14C00405",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -635,7 +708,7 @@
   {
     "id": "baby-atom-usdt",
     "name": "ATOM-USDT LP",
-    "token": "ATOM-USDT LP",
+    "token": "ATOM-USDT BLP",
     "tokenAddress": "0x42932A3c73DF05586aa5cfD4f3a9a61655c98b45",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -664,7 +737,7 @@
   {
     "id": "baby-usdt-usdc",
     "name": "USDT-USDC LP",
-    "token": "USDT-USDC LP",
+    "token": "USDT-USDC BLP",
     "tokenAddress": "0xcc21b0A9A01fcD2103ff75614480Bd6a07869053",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -693,7 +766,7 @@
   {
     "id": "baby-usdc-wbnb",
     "name": "USDC-BNB LP",
-    "token": "USDC-BNB LP",
+    "token": "USDC-BNB BLP",
     "tokenAddress": "0xBF83cA11aBC62447226F6b3566918d3594bA3803",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -722,7 +795,7 @@
   {
     "id": "baby-wbnb-busd",
     "name": "BUSD-BNB LP",
-    "token": "BUSD-BNB LP",
+    "token": "BUSD-BNB BLP",
     "tokenAddress": "0xDF84C66E5c1E01Dc9CBcbBB09F4cE2A1De6641D6",
     "tokenDecimals": 18,
     "tokenProviderId": "babyswap",
@@ -4739,7 +4812,8 @@
     "earnContractAddress": "0xc795E63738d6207dFE4450D280013aCFdb1Cc526",
     "oracle": "lps",
     "oracleId": "banana-watch-bnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "apeswap",
     "assets": ["WATCH", "BNB"],
     "strategyTypeId": "lp",
@@ -11136,7 +11210,8 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_MEDIUM",
+      "ALGO_STABLE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -11959,7 +12034,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -12040,7 +12116,8 @@
     "earnContractAddress": "0xaDcED4C0c7fBd616946dCED244DB4Cb01F1Fa750",
     "oracle": "lps",
     "oracleId": "cakev2-thg-wbnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "pancakeswap",
     "assets": ["THG", "BNB"],
     "strategyTypeId": "lp",
@@ -14027,7 +14104,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -14682,7 +14760,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -15090,7 +15169,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15117,7 +15196,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15144,7 +15223,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15172,7 +15251,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15199,7 +15278,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15226,7 +15305,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
@@ -15255,7 +15334,7 @@
       "COMPLEXITY_MEDIUM",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "ADMIN_WITH_TIMELOCK",
       "CONTRACTS_VERIFIED"
     ],
@@ -15606,7 +15685,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -16017,7 +16097,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -16114,6 +16195,35 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0xC2cF01F785C587645440ccD488B188945C9505e7",
     "buyTokenUrl": "https://ellipsis.finance/pool/0xC2cF01F785C587645440ccD488B188945C9505e7",
     "createdAt": 1652702923,
+    "network": "bsc"
+  },
+  {
+    "id": "ellipsis-ankrBNB",
+    "name": "aBNBb/BNB",
+    "token": "aBNBb/BNB",
+    "tokenAddress": "0xf71A0bCC3Ef8a8c5a28fc1BC245e394A8ce124ec",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ellipsis",
+    "earnedToken": "mooEllipsisAnkrBNB",
+    "earnedTokenAddress": "0x9F7450317aa632B9be59C3530f579FE3e793D171",
+    "earnContractAddress": "0x9F7450317aa632B9be59C3530f579FE3e793D171",
+    "oracle": "lps",
+    "oracleId": "ellipsis-ankrBNB",
+    "status": "active",
+    "platformId": "dotdot",
+    "assets": ["aBNBb", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0xf0d17f404343D7Ba66076C818c9DC726650E2435",
+    "buyTokenUrl": "https://ellipsis.finance/pool/0xf0d17f404343D7Ba66076C818c9DC726650E2435",
+    "createdAt": 1662035071,
     "network": "bsc"
   },
   {
@@ -16900,7 +17010,8 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_SMALL",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"

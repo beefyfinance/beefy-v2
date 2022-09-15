@@ -882,7 +882,7 @@
   {
     "id": "solidly",
     "name": "Solidly",
-    "filter": true
+    "filter": false
   },
   {
     "id": "dystopia",

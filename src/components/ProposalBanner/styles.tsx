@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.footer,
     paddingBottom: theme.spacing(3),
   },
-  icon: { marginRight: theme.spacing(1) },
+  icon: { marginRight: theme.spacing(1), height: '24px' },
   box: {
     backgroundColor: 'rgba(140, 147, 191, 0.1)',
     borderRadius: '8px',

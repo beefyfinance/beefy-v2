@@ -33,6 +33,16 @@ export interface StandardVaultContractData {
    * The strategy address
    */
   strategy: string;
+
+  paused: boolean;
+}
+
+export interface BoostContractDataResponse {
+  id: string;
+  totalSupply: string;
+  rewardRate: string;
+  periodFinish: string | null; // null means boost is in prestake
+  isPreStake: boolean;
 }
 
 export interface BoostContractData {
@@ -40,6 +50,7 @@ export interface BoostContractData {
   totalSupply: BigNumber;
   rewardRate: BigNumber;
   periodFinish: Date | null; // null means boost is in prestake
+  isPreStake: boolean;
 }
 
 export interface FetchAllContractDataResult {

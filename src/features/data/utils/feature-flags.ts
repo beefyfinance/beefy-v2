@@ -48,7 +48,7 @@ export function featureFlag_getBalanceApiChunkSize(): number {
   if (params.has('__balance_api_chunk_size')) {
     return parseInt(params.get('__balance_api_chunk_size'));
   }
-  return 500;
+  return 1024;
 }
 
 export function featureFlag_getAllowanceApiImplem(): 'eth-multicall' | 'new-multicall' {

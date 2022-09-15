@@ -1,4 +1,4 @@
-import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppUserMulticall.json';
+import _BeefyV2AppMulticallUserAbi from '../../../../config/abi/BeefyV2AppMulticall.json';
 import { AbiItem } from 'web3-utils';
 import Web3 from 'web3';
 import { VaultGov, VaultStandard } from '../../entities/vault';
@@ -17,9 +17,7 @@ import { selectVaultById } from '../../selectors/vaults';
 // fix ts types
 const BeefyV2AppMulticallUserAbi = _BeefyV2AppMulticallUserAbi as AbiItem | AbiItem[];
 
-export class AllowanceAPI<T extends ChainEntity & { fetchBalancesAddress: string }>
-  implements IAllowanceApi
-{
+export class AllowanceAPI<T extends ChainEntity> implements IAllowanceApi {
   constructor(protected web3: Web3, protected chain: T) {}
 
   public async fetchAllAllowances(
@@ -31,7 +29,7 @@ export class AllowanceAPI<T extends ChainEntity & { fetchBalancesAddress: string
   ): Promise<FetchAllAllowanceResult> {
     const mc = new this.web3.eth.Contract(
       BeefyV2AppMulticallUserAbi,
-      this.chain.fetchBalancesAddress
+      this.chain.appMulticallContractAddress
     );
 
     // first, build a list of tokens and spenders we want info on
@@ -128,7 +126,7 @@ export class AllowanceAPI<T extends ChainEntity & { fetchBalancesAddress: string
   ) {
     const mc = new this.web3.eth.Contract(
       BeefyV2AppMulticallUserAbi,
-      this.chain.fetchBalancesAddress
+      this.chain.appMulticallContractAddress
     );
 
     // first, build a list of tokens and spenders we want info on

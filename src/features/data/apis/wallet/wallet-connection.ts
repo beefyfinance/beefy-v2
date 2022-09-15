@@ -16,6 +16,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
   protected onboardWalletInitializers: WalletInit[] | null;
 
+  protected ignoreSetWalletModulesDisconnectEvent = false;
+
   constructor(protected options: WalletConnectionOptions) {
     this.onboard = null;
     this.onboardWalletInitializers = null;
@@ -125,22 +127,15 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       label: 'CDC Connect',
       getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
       getInterface: async ({ chains }) => {
-        const { DeFiConnector } = await import('deficonnect');
+        const { DeFiWeb3Connector } = await import('@deficonnect/web3-connector');
         const cronosChainId = 25;
-        const cronosChainIdHex = numberToHex(cronosChainId);
-        const cronosChain = chains.find(chain => chain.id === cronosChainIdHex);
 
-        const connector = new DeFiConnector({
-          name: 'Cronos',
-          supprtedChainTypes: ['eth'],
-          eth: {
-            supportedChainIds: [cronosChainId],
-            rpc: {
-              [cronosChainId]: cronosChain.rpcUrl,
-            },
-            pollingInterval: 15000,
-          },
-          cosmos: null,
+        const connector = new DeFiWeb3Connector({
+          appName: 'Beefy',
+          chainType: 'eth',
+          chainId: cronosChainId.toString(),
+          supportedChainIds: chains.map(chain => maybeHexToNumber(chain.id)),
+          rpcUrls: Object.fromEntries(chains.map(chain => [chain.id.toString(), chain.rpcUrl])),
         });
 
         const { provider } = await connector.activate();
@@ -231,6 +226,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const wallets = onboard.state.select('wallets');
     return wallets.subscribe(wallets => {
       if (wallets.length === 0) {
+        if (this.ignoreSetWalletModulesDisconnectEvent) {
+          console.log('Ignoring SetWalletModules disconnect event');
+          return (this.ignoreSetWalletModulesDisconnectEvent = false);
+        }
         this.options.onWalletDisconnected();
       } else {
         const wallet = wallets[0];
@@ -310,6 +309,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // Init wallets now; rather than in onboard.connect()
     const walletInits = this.getOnboardWalletInitializers();
+    this.ignoreSetWalletModulesDisconnectEvent = true;
     onboard.state.actions.setWalletModules(walletInits);
 
     // Last selected wallet must be valid
