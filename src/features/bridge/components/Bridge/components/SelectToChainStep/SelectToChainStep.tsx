@@ -15,7 +15,7 @@ export const _SelectToChainStep = () => {
   const { t } = useTranslation();
 
   return (
-    <Step backStep={FormStep.Preview} title={t('Bridge-FromChainStep-Title')}>
+    <Step backStep={FormStep.Preview} title={t('Bridge-ToChainStep-Title')}>
       <ChainSelector />
     </Step>
   );
