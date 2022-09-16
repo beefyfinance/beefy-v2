@@ -23,15 +23,16 @@ export const selectBridgeBifiDestChainData = (
     : null;
 };
 
-export const selectBifiAddres = (state: BeefyState, chain: ChainEntity) => {
+export const selectBifiAddress = (state: BeefyState, chain: ChainEntity) => {
   const bridgeState = state.ui.bridge;
   const address =
-    chain.id === bridgeState.fromChainId
-      ? bridgeState.bridgeDataByChainId[chain.id].address
-      : Object.keys(
-          bridgeState?.bridgeDataByChainId[bridgeState.fromChainId]?.destChains[
-            chain.networkChainId
-          ]
-        )[0];
-  return address;
+    bridgeState?.bridgeDataByChainId[bridgeState.fromChainId]?.destChains[chain.networkChainId];
+
+  const bifiAddress =
+    chain?.id === bridgeState.fromChainId
+      ? bridgeState?.bridgeDataByChainId[chain.id]?.address
+      : address !== undefined
+      ? Object.keys(address)[0]
+      : '';
+  return bifiAddress;
 };
