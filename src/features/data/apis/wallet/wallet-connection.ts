@@ -11,6 +11,7 @@ import createWalletConnectModule from '@web3-onboard/walletconnect';
 import { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
 import { ConnectOptions } from '@web3-onboard/core/dist/types';
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common';
+import { sleep } from '../../utils/async-utils';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
@@ -308,9 +309,8 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const onboard = this.getOnboard();
 
     // Init wallets now; rather than in onboard.connect()
-    const walletInits = this.getOnboardWalletInitializers();
     this.ignoreSetWalletModulesDisconnectEvent = true;
-    onboard.state.actions.setWalletModules(walletInits);
+    await this.initWalletModules(onboard);
 
     // Last selected wallet must be valid
     const lastSelectedWalletExists =
@@ -333,6 +333,12 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       // Rethrow so called knows connection failed
       throw err;
     }
+  }
+
+  private async initWalletModules(onboard: OnboardAPI) {
+    const walletInits = this.getOnboardWalletInitializers();
+    onboard.state.actions.setWalletModules(walletInits);
+    await sleep(50);
   }
 
   private static async connect(onboard: OnboardAPI, options?: ConnectOptions) {
@@ -378,6 +384,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
     // initialize onboard if needed
     const onboard = this.getOnboard();
+
+    // Init wallet modules - or reinit in case available wallets have changed
+    await this.initWalletModules(onboard);
 
     // Get last wallet used and make sure it is still supported
     const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
