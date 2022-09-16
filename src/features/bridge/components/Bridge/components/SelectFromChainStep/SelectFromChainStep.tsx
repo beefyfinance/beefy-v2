@@ -18,7 +18,7 @@ export const _SelectFromChainStep = () => {
   const dispatch = useAppDispatch();
 
   const handleBack = useCallback(() => {
-    dispatch(bridgeActions.setStep({ step: FormStep.Confirm }));
+    dispatch(bridgeActions.setStep({ step: FormStep.Preview }));
   }, [dispatch]);
 
   return (
