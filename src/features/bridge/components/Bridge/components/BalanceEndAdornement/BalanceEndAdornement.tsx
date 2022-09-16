@@ -4,7 +4,7 @@ import { BIG_ZERO } from '../../../../../../helpers/big-number';
 import { formatBigDecimals } from '../../../../../../helpers/format';
 import { useAppSelector } from '../../../../../../store';
 import { selectUserBalanceOfToken } from '../../../../../data/selectors/balance';
-import { selectBifiAddres } from '../../../../../data/selectors/bridge';
+import { selectBifiAddress } from '../../../../../data/selectors/bridge';
 import { selectChainById } from '../../../../../data/selectors/chains';
 import { selectIsWalletConnected } from '../../../../../data/selectors/wallet';
 import { styles } from './styles';
@@ -21,10 +21,10 @@ export const BalanceEndAdornement = memo<BalanceEndAdornementProps>(function ({ 
 
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
 
-  const BifiAddress = useAppSelector(state => selectBifiAddres(state, chain));
+  const BifiAddress = useAppSelector(state => selectBifiAddress(state, chain));
 
   const bifiBalance = useAppSelector(state =>
-    selectUserBalanceOfToken(state, chain.id, BifiAddress)
+    BifiAddress ? selectUserBalanceOfToken(state, chain.id, BifiAddress) : BIG_ZERO
   );
 
   const showComponent = isWalletConnected && bifiBalance.isGreaterThan(BIG_ZERO);
