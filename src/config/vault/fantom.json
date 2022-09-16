@@ -133,7 +133,7 @@
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
-    "createdAt": 1663327604
+    "createdAt": 1663344351
   },
   {
     "id": "spiritV2-wftm-sftmx",
@@ -155,7 +155,7 @@
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
     "buyTokenUrl": "https://beta.spiritswap.finance/swap",
     "network": "fantom",
-    "createdAt": 1663327604
+    "createdAt": 1663344351
   },
   {
     "id": "spiritV2-wftm-eth",
