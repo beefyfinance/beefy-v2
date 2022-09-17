@@ -79,8 +79,8 @@
   },
   {
     "id": "velodrome-usdp-usdc",
-    "name": "USDP-USDC vLP",
-    "token": "USDP-USDC vLP",
+    "name": "USD+-USDC vLP",
+    "token": "USD+-USDC vLP",
     "tokenAddress": "0x67124355cCE2Ad7A8eA283E990612eBe12730175",
     "tokenDecimals": 18,
     "tokenProviderId": "velodrome",
