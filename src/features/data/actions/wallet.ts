@@ -53,7 +53,7 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
 
     setTimeout(async () => {
       dispatch(tryToAutoReconnect());
-    }, 1);
+    }, 500);
   }
 );
 
