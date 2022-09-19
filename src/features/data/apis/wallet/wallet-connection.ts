@@ -15,7 +15,6 @@ import { customInjectedWallets } from './custom-injected-wallets';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
-  protected onboardInjectedWalletInitializer: WalletInit | null;
   protected onboardWalletInitializers: WalletInit[] | null;
   protected ignoreDisconnectFromAutoConnect = false;
 
@@ -26,7 +25,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
   private getOnboardWalletInitializers(): WalletInit[] {
     if (this.onboardWalletInitializers === null) {
-      this.onboardWalletInitializers = this.createOnboardWalletInitializers();
+      this.onboardWalletInitializers = WalletConnectionApi.createOnboardWalletInitializers();
     }
     return this.onboardWalletInitializers;
   }
@@ -35,11 +34,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * Create list of wallet modules for Onboard
    * @private
    */
-  private createOnboardWalletInitializers() {
-    const injectedWalletModule = this.getInjectedWalletInitializer();
-
+  private static createOnboardWalletInitializers() {
     return [
-      injectedWalletModule,
+      WalletConnectionApi.createInjectedWalletsModule(),
       createWalletConnectModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
@@ -47,14 +44,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     ];
   }
 
-  private getInjectedWalletInitializer() {
-    if (!this.onboardInjectedWalletInitializer) {
-      this.onboardInjectedWalletInitializer = createInjectedWallets({
-        custom: customInjectedWallets,
-      });
-    }
-
-    return this.onboardInjectedWalletInitializer;
+  private static createInjectedWalletsModule() {
+    return createInjectedWallets({
+      custom: customInjectedWallets,
+    });
   }
 
   private static createCloverWalletModule(): WalletInit {
