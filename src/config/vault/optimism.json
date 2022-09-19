@@ -75,7 +75,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1663010422
+    "createdAt": 1663344353
   },
   {
     "id": "velodrome-usdp-usdc",
@@ -104,7 +104,7 @@
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
-    "createdAt": 1663010795
+    "createdAt": 1663344352
   },
   {
     "id": "velodrome-ageur-mai",
