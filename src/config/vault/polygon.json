@@ -27,6 +27,28 @@
     "createdAt": 1621450869
   },
   {
+    "id": "dystopia-wmatic-bifi",
+    "name": "BIFI-MATIC vLP",
+    "token": "BIFI-MATIC vLP",
+    "tokenAddress": "0xC9e4a017ae5c2F89C085c534A38a3e6d3A183A43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-BIFI",
+    "earnedTokenAddress": "0xa83171B123a18303c5aed8F5D20AeA6CfdF76Bc6",
+    "earnContractAddress": "0xa83171B123a18303c5aed8F5D20AeA6CfdF76Bc6",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-bifi",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["BIFI", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MEDIUM", "IL_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1662740322
+  },
+  {
     "id": "dystopia-usd+-stmatic",
     "name": "USD+-stMATIC vLP",
     "token": "USD+-stMATIC vLP",
