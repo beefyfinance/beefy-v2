@@ -91,7 +91,7 @@
     "oracleId": "velodrome-usdp-usdc",
     "status": "active",
     "platformId": "velodrome",
-    "assets": ["USDP", "USDC"],
+    "assets": ["USD+", "USDC"],
     "strategyTypeId": "lp",
     "risks": [
       "COMPLEXITY_LOW",
