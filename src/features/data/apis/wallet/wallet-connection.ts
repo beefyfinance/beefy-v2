@@ -1,23 +1,23 @@
 import Web3 from 'web3';
 import { ChainEntity } from '../../entities/chain';
-import { find, sample } from 'lodash';
+import { find, sample, uniq } from 'lodash';
 import { IWalletConnectionApi, WalletConnectionOptions } from './wallet-connection-types';
 import { maybeHexToNumber } from '../../../../helpers/format';
 import { hexToNumber, isHexStrict, numberToHex } from 'web3-utils';
 import Onboard, { OnboardAPI } from '@web3-onboard/core';
 import createInjectedWallets from '@web3-onboard/injected-wallets';
+import standardInjectedWallets from '@web3-onboard/injected-wallets/dist/wallets';
 import createCoinbaseWalletModule from '@web3-onboard/coinbase';
 import createWalletConnectModule from '@web3-onboard/walletconnect';
-import { InjectedNameSpace } from '@web3-onboard/injected-wallets/dist/types';
 import { ConnectOptions } from '@web3-onboard/core/dist/types';
 import { createEIP1193Provider, WalletInit } from '@web3-onboard/common';
-import { sleep } from '../../utils/async-utils';
+import { customInjectedWallets } from './custom-injected-wallets';
 
 export class WalletConnectionApi implements IWalletConnectionApi {
   protected onboard: OnboardAPI | null;
+  protected onboardInjectedWalletInitializer: WalletInit | null;
   protected onboardWalletInitializers: WalletInit[] | null;
-
-  protected ignoreSetWalletModulesDisconnectEvent = false;
+  protected ignoreDisconnectFromAutoConnect = false;
 
   constructor(protected options: WalletConnectionOptions) {
     this.onboard = null;
@@ -26,7 +26,7 @@ export class WalletConnectionApi implements IWalletConnectionApi {
 
   private getOnboardWalletInitializers(): WalletInit[] {
     if (this.onboardWalletInitializers === null) {
-      this.onboardWalletInitializers = WalletConnectionApi.createOnboardWalletInitializers();
+      this.onboardWalletInitializers = this.createOnboardWalletInitializers();
     }
     return this.onboardWalletInitializers;
   }
@@ -35,73 +35,26 @@ export class WalletConnectionApi implements IWalletConnectionApi {
    * Create list of wallet modules for Onboard
    * @private
    */
-  private static createOnboardWalletInitializers() {
-    const injectedWallets = createInjectedWallets({
-      custom: [
-        {
-          label: 'Core',
-          injectedNamespace: InjectedNameSpace.Ethereum,
-          checkProviderIdentity: ({ provider }) => !!provider && !!provider['isAvalanche'],
-          getIcon: async () => (await import(`../../../../images/wallets/core-wallet.svg`)).default,
-          getInterface: async () => ({ provider: (window as any).ethereum }),
-          platforms: ['all'],
-        },
-        {
-          label: 'SafePal',
-          injectedNamespace: InjectedNameSpace.Ethereum,
-          checkProviderIdentity: ({ provider }) => !!provider && !!provider['isSafePal'],
-          getIcon: async () =>
-            (await import(`../../../../images/wallets/safepal-wallet.svg`)).default,
-          getInterface: async () => ({ provider: (window as any).ethereum }),
-          platforms: ['all'],
-        },
-        {
-          label: 'CDC Extension',
-          injectedNamespace: InjectedNameSpace.Ethereum,
-          checkProviderIdentity: ({ provider }) =>
-            // Injected from Browser Extension
-            !!provider && !!provider['isDeficonnectProvider'],
-          getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
-          getInterface: async () => ({ provider: (window as any).ethereum }),
-          platforms: ['all'],
-        },
-        {
-          label: 'CDC DeFi App',
-          injectedNamespace: InjectedNameSpace.Ethereum,
-          checkProviderIdentity: ({ provider }) =>
-            // Injected from App: DeFi app is fork of trust wallet
-            !!provider && !!provider['isTrust'] && !('trust' in window),
-          getIcon: async () => (await import(`../../../../images/wallets/crypto.png`)).default,
-          getInterface: async () => ({ provider: (window as any).ethereum }),
-          platforms: ['all'],
-        },
-        {
-          label: 'Math',
-          injectedNamespace: InjectedNameSpace.Ethereum,
-          checkProviderIdentity: ({ provider }) => !!provider && !!provider['isMathWallet'],
-          getIcon: async () => (await import(`../../../../images/wallets/math-wallet.svg`)).default,
-          getInterface: async () => ({ provider: (window as any).ethereum }),
-          platforms: ['all'],
-        },
-        {
-          label: 'BitKeep',
-          injectedNamespace: InjectedNameSpace.Ethereum,
-          checkProviderIdentity: ({ provider }) => !!provider && !!provider['isBitKeep'],
-          getIcon: async () =>
-            (await import(`../../../../images/wallets/bitkeep-wallet.png`)).default,
-          getInterface: async () => ({ provider: (window as any).ethereum }),
-          platforms: ['all'],
-        },
-      ],
-    });
+  private createOnboardWalletInitializers() {
+    const injectedWalletModule = this.getInjectedWalletInitializer();
 
     return [
-      injectedWallets,
+      injectedWalletModule,
       createWalletConnectModule(),
       createCoinbaseWalletModule(),
       WalletConnectionApi.createCDCWalletModule(),
       WalletConnectionApi.createCloverWalletModule(),
     ];
+  }
+
+  private getInjectedWalletInitializer() {
+    if (!this.onboardInjectedWalletInitializer) {
+      this.onboardInjectedWalletInitializer = createInjectedWallets({
+        custom: customInjectedWallets,
+      });
+    }
+
+    return this.onboardInjectedWalletInitializer;
   }
 
   private static createCloverWalletModule(): WalletInit {
@@ -227,9 +180,9 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     const wallets = onboard.state.select('wallets');
     return wallets.subscribe(wallets => {
       if (wallets.length === 0) {
-        if (this.ignoreSetWalletModulesDisconnectEvent) {
-          console.log('Ignoring SetWalletModules disconnect event');
-          return (this.ignoreSetWalletModulesDisconnectEvent = false);
+        if (this.ignoreDisconnectFromAutoConnect) {
+          console.log('Ignoring disconnect event from auto reconnect wallet attempt');
+          return (this.ignoreDisconnectFromAutoConnect = false);
         }
         this.options.onWalletDisconnected();
       } else {
@@ -308,21 +261,10 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // Initialize onboard if needed
     const onboard = this.getOnboard();
 
-    // Init wallets now; rather than in onboard.connect()
-    this.ignoreSetWalletModulesDisconnectEvent = true;
-    await this.initWalletModules(onboard);
-
-    // Last selected wallet must be valid
-    const lastSelectedWalletExists =
-      onboard.state.get().walletModules.find(module => module.label === lastSelectedWallet) !==
-      undefined;
-    if (!lastSelectedWalletExists) {
-      console.log('tryToAutoReconnect: Invalid lastSelectedWallet', lastSelectedWallet);
-      return;
-    }
-
     // Attempt to connect
     try {
+      await this.waitForInjectedWallet();
+      this.ignoreDisconnectFromAutoConnect = true;
       await WalletConnectionApi.connect(onboard, {
         autoSelect: { label: lastSelectedWallet, disableModals: true },
       });
@@ -332,13 +274,50 @@ export class WalletConnectionApi implements IWalletConnectionApi {
       WalletConnectionApi.setLastConnectedWallet(null);
       // Rethrow so called knows connection failed
       throw err;
+    } finally {
+      this.ignoreDisconnectFromAutoConnect = false;
     }
   }
 
-  private async initWalletModules(onboard: OnboardAPI) {
-    const walletInits = this.getOnboardWalletInitializers();
-    onboard.state.actions.setWalletModules(walletInits);
-    await sleep(50);
+  private async waitForInjectedWallet(): Promise<boolean> {
+    const checkInterval = 200;
+    const maxWait = 5000;
+    const injectedNamespaces = uniq(
+      [...customInjectedWallets, ...standardInjectedWallets].map(wallet => wallet.injectedNamespace)
+    );
+    const anyNamespaceExists = () => {
+      if (window) {
+        for (const namespace of injectedNamespaces) {
+          if (window[namespace]) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    };
+
+    if (anyNamespaceExists()) {
+      console.log('wallet: exists at start');
+      return true;
+    }
+
+    return new Promise<boolean>(resolve => {
+      const startTime = Date.now();
+      const handle = setInterval(() => {
+        if (Date.now() - startTime > maxWait) {
+          console.log('wallet: max wait');
+          clearInterval(handle);
+          return resolve(false);
+        }
+
+        if (anyNamespaceExists()) {
+          console.log('wallet: exists now');
+          clearInterval(handle);
+          return resolve(true);
+        }
+      }, checkInterval);
+    });
   }
 
   private static async connect(onboard: OnboardAPI, options?: ConnectOptions) {
@@ -385,21 +364,14 @@ export class WalletConnectionApi implements IWalletConnectionApi {
     // initialize onboard if needed
     const onboard = this.getOnboard();
 
-    // Init wallet modules - or reinit in case available wallets have changed
-    await this.initWalletModules(onboard);
-
     // Get last wallet used and make sure it is still supported
     const lastSelectedWallet = WalletConnectionApi.getLastConnectedWallet();
-    const lastSelectedWalletExists =
-      lastSelectedWallet !== null &&
-      onboard.state.get().walletModules.find(module => module.label === lastSelectedWallet) !==
-        undefined;
 
     // Connect
     try {
       await WalletConnectionApi.connect(
         onboard,
-        lastSelectedWalletExists
+        lastSelectedWallet
           ? { autoSelect: { label: lastSelectedWallet, disableModals: false } }
           : undefined
       );
