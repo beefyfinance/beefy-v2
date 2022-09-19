@@ -17,6 +17,11 @@ export const styles = (theme: Theme) => ({
     '& $icon:last-child': {
       marginLeft: '4px',
     },
+    '&:hover': {
+      color: theme.palette.text.primary,
+      backgroundColor: '#3F466D',
+      transition: 'color 0.1s',
+    },
   },
   icon: {},
 });

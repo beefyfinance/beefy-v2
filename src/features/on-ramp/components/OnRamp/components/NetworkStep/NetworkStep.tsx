@@ -1,10 +1,10 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
-import { Step } from '../Step';
+import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectFiat,
   selectIsFiatTokenSupported,
@@ -12,8 +12,8 @@ import {
   selectToken,
 } from '../../../../../data/selectors/on-ramp';
 import { useDispatch } from 'react-redux';
-import { SearchableList } from '../SearchableList';
-import { ItemInnerProps } from '../SearchableList/ItemInner';
+import { SearchableList } from '../../../../../../components/SearchableList';
+import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { getNetworkSrc } from '../../../../../../helpers/networkSrc';
 import clsx from 'clsx';
 import { selectChainById } from '../../../../../data/selectors/chains';
@@ -28,10 +28,17 @@ export const NetworkStep = memo(function () {
   const token = useAppSelector(selectToken);
   const supported = useAppSelector(state => selectIsFiatTokenSupported(state, fiat, token));
 
+  const dispatch = useAppDispatch();
+
+  const handleBack = useCallback(() => {
+    dispatch(onRampFormActions.setStep({ step: FormStep.SelectToken }));
+  }, [dispatch]);
+
   return (
     <Step
+      stepType="onRamp"
       title={t('OnRamp-NetworkStep-Title')}
-      backStep={FormStep.SelectToken}
+      onBack={handleBack}
       titleAdornment={supported ? <TokenIconAdornment token={token} /> : undefined}
     >
       {supported ? (

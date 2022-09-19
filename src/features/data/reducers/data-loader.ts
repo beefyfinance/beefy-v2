@@ -80,7 +80,7 @@ export const initialDataLoaderState: DataLoaderState = {
     minters: dataLoaderStateInit,
     minterForm: dataLoaderStateInit,
     infoCards: dataLoaderStateInit,
-    bridgeForm: dataLoaderStateInit,
+    bridge: dataLoaderStateInit,
     platforms: dataLoaderStateInit,
     onRamp: dataLoaderStateInit,
   },
@@ -197,7 +197,7 @@ export const dataLoaderSlice = createSlice({
     addGlobalAsyncThunkActions(builder, initiateWithdrawForm, 'withdrawForm', true);
     addGlobalAsyncThunkActions(builder, initiateBoostForm, 'boostForm', true);
     addGlobalAsyncThunkActions(builder, initiateMinterForm, 'minterForm', true);
-    addGlobalAsyncThunkActions(builder, initiateBridgeForm, 'bridgeForm', true);
+    addGlobalAsyncThunkActions(builder, initiateBridgeForm, 'bridge', true);
     addGlobalAsyncThunkActions(builder, fetchAllZapsAction, 'zaps', true);
     addGlobalAsyncThunkActions(builder, fetchAllAddressBookAction, 'addressBook', true);
     addGlobalAsyncThunkActions(builder, fetchPlatforms, 'platforms', true);

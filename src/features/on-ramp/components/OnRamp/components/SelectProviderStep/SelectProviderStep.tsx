@@ -1,17 +1,17 @@
 import React, { memo, useCallback } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
-import { Step } from '../Step';
+import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
 import { onRampFormActions } from '../../../../../data/reducers/on-ramp';
-import { useAppSelector } from '../../../../../../store';
+import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
   selectQuoteByProvider,
   selectSortedQuoteProviders,
 } from '../../../../../data/selectors/on-ramp';
 import { useDispatch } from 'react-redux';
-import { SearchableList } from '../SearchableList';
-import { ItemInnerProps } from '../SearchableList/ItemInner';
+import { SearchableList } from '../../../../../../components/SearchableList';
+import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { FormStep } from '../../../../../data/reducers/on-ramp-types';
 import { ProviderIcon } from '../ProviderIcon';
 import { PROVIDERS } from '../../providers';
@@ -21,8 +21,14 @@ const useStyles = makeStyles(styles);
 export const SelectProviderStep = memo(function () {
   const { t } = useTranslation();
 
+  const dispatch = useAppDispatch();
+
+  const handleBack = useCallback(() => {
+    dispatch(onRampFormActions.setStep({ step: FormStep.InputAmount }));
+  }, [dispatch]);
+
   return (
-    <Step title={t('OnRamp-SelectProviderStep-Title')} backStep={FormStep.InputAmount}>
+    <Step stepType="onRamp" title={t('OnRamp-SelectProviderStep-Title')} onBack={handleBack}>
       <ProviderSelector />
     </Step>
   );

@@ -28,7 +28,7 @@ const _Steps = ({
   const classes = useStyles();
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
-  const bridgeModalStatus = useAppSelector(state => state.ui.bridgeModal.status);
+  const bridgeModalStatus = useAppSelector(state => state.ui.bridge.status);
 
   const needShowBridgeInfo = bridgeModalStatus === 'loading' || bridgeModalStatus === 'confirming';
 

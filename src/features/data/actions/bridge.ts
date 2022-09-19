@@ -48,9 +48,7 @@ interface InitBridgeFormPayload {
   allowance: TokenAllowance[];
   destChainId: ChainEntity['id'];
   bridgeData: BridgeInfoEntity;
-  supportedChains: {
-    [chainId: ChainEntity['id']]: string;
-  };
+  supportedChains: ChainEntity['id'][];
   state: BeefyState;
 }
 
@@ -92,12 +90,11 @@ export const initiateBridgeForm = createAsyncThunk<
         )
       : [];
 
-  let supportedChains = {
-    [chain.id]: chain.name,
-  };
+  let supportedChains = [chain.id];
+
   for (const _chain of allChains) {
     if (!isEmpty(bridgeDataRes?.destChains[_chain.networkChainId])) {
-      supportedChains[_chain.id] = _chain.name;
+      supportedChains.push(_chain.id);
     }
   }
 
