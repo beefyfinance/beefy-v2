@@ -1,27 +1,5 @@
 [
   {
-    "id": "dystopia-clam-usd+",
-    "name": "CLAM-USD+ vLP",
-    "token": "CLAM-USD+ vLP",
-    "tokenAddress": "0x291E289C39cBAf5Ee158028d086d76Ffa141CFdA",
-    "tokenDecimals": 18,
-    "tokenProviderId": "dystopia",
-    "earnedToken": "mooDystopiaCLAM-USD+",
-    "earnedTokenAddress": "0x67723414F492625aF32be4f4290B589274B6385f",
-    "earnContractAddress": "0x67723414F492625aF32be4f4290B589274B6385f",
-    "oracle": "lps",
-    "oracleId": "dystopia-clam-usd+",
-    "status": "active",
-    "platformId": "dystopia",
-    "assets": ["CLAM", "USD+"],
-    "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
-    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
-    "buyTokenUrl": "https://www.dystopia.exchange/swap",
-    "network": "polygon",
-    "createdAt": 1662740322
-  },
-  {
     "id": "polygon-bifi-maxi",
     "name": "BIFI Maxi",
     "token": "BIFI",
@@ -49,6 +27,28 @@
     "createdAt": 1621450869
   },
   {
+    "id": "dystopia-clam-usd+",
+    "name": "CLAM-USD+ vLP",
+    "token": "CLAM-USD+ vLP",
+    "tokenAddress": "0x291E289C39cBAf5Ee158028d086d76Ffa141CFdA",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaCLAM-USD+",
+    "earnedTokenAddress": "0x67723414F492625aF32be4f4290B589274B6385f",
+    "earnContractAddress": "0x67723414F492625aF32be4f4290B589274B6385f",
+    "oracle": "lps",
+    "oracleId": "dystopia-clam-usd+",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["CLAM", "USD+"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MICRO", "IL_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1663604451
+  },
+  {
     "id": "dystopia-wmatic-usdc",
     "name": "USDC-MATIC vLP",
     "token": "USDC-MATIC vLP",
@@ -64,11 +64,11 @@
     "platformId": "dystopia",
     "assets": ["USDC", "MATIC"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MICRO", "IL_HIGH", "CONTRACTS_VERIFIED"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "IL_HIGH", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
-    "createdAt": 1663604209
+    "createdAt": 1662740322
   },
   {
     "id": "dystopia-wmatic-weth",
