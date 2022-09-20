@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
 import { selectWalletAddressIfKnown } from '../../../../../data/selectors/wallet';
 import { useAsync } from '../../../../../../helpers/useAsync';
-import { LoadingIndicator } from '../LoadingIndicator';
+import { LoadingIndicator } from '../../../../../../components/LoadingIndicator';
 import { PROVIDERS } from '../../providers';
 import { ErrorIndicator } from '../ErrorIndicator';
 import { useTranslation } from 'react-i18next';

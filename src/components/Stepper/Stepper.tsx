@@ -20,6 +20,7 @@ import {
   SuccessContent,
   WaitingContent,
 } from './components/Content';
+import { selectBridgeStatus } from '../../features/data/selectors/bridge';
 
 const useStyles = makeStyles(styles);
 
@@ -27,7 +28,7 @@ const _Stepper = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
-  const bridgeModalStatus = useAppSelector(state => state.ui.bridgeModal.status);
+  const bridgeStatus = useAppSelector(selectBridgeStatus);
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
   const stepperItems = useAppSelector(selectStepperItems);
   const stepperFinished = useAppSelector(selectStepperFinished);
@@ -48,34 +49,32 @@ const _Stepper = () => {
   const showProgressbar25 = React.useMemo(() => {
     return (
       (stepperItems[0]?.step === 'approve' && walletActionsStateResult === null) ||
-      (stepperItems[0]?.step === 'bridge' && bridgeModalStatus === 'idle')
+      (stepperItems[0]?.step === 'bridge' && bridgeStatus === 'idle')
     );
-  }, [bridgeModalStatus, stepperItems, walletActionsStateResult]);
+  }, [bridgeStatus, stepperItems, walletActionsStateResult]);
 
   const showProgressbar50 = React.useMemo(() => {
     return (
-      bridgeModalStatus === 'loading' ||
+      bridgeStatus === 'loading' ||
       (currentStepData?.step !== 'approve' &&
         currentStepData?.step !== 'bridge' &&
         walletActionsStateResult === null) ||
       (stepperItems[0]?.step === 'approve' && walletActionsStateResult === 'success_pending')
     );
-  }, [bridgeModalStatus, currentStepData?.step, stepperItems, walletActionsStateResult]);
+  }, [bridgeStatus, currentStepData?.step, stepperItems, walletActionsStateResult]);
 
   const showProgressbar75 = React.useMemo(() => {
     return (
-      bridgeModalStatus === 'confirming' ||
+      bridgeStatus === 'confirming' ||
       (walletActionsStateResult === 'success_pending' &&
         currentStepData?.step !== 'bridge' &&
         currentStepData?.step !== 'approve')
     );
-  }, [bridgeModalStatus, currentStepData?.step, walletActionsStateResult]);
+  }, [bridgeStatus, currentStepData?.step, walletActionsStateResult]);
 
   const showSuccesBar = React.useMemo(() => {
-    return (
-      bridgeModalStatus === 'success' || (stepperFinished && currentStepData?.step !== 'bridge')
-    );
-  }, [bridgeModalStatus, currentStepData?.step, stepperFinished]);
+    return bridgeStatus === 'success' || (stepperFinished && currentStepData?.step !== 'bridge');
+  }, [bridgeStatus, currentStepData?.step, stepperFinished]);
 
   return (
     <Snackbar

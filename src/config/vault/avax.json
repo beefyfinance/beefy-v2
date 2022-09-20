@@ -88,6 +88,35 @@
     "network": "avax"
   },
   {
+    "id": "joe-cai-wavax",
+    "name": "CAI-AVAX LP",
+    "token": "CAI-AVAX LP",
+    "tokenAddress": "0xE5e9d67e93aD363a50cABCB9E931279251bBEFd0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeCAI-AVAX",
+    "earnedTokenAddress": "0x6827e2196E46400767B20C52fE105a28D1547AAD",
+    "earnContractAddress": "0x6827e2196E46400767B20C52fE105a28D1547AAD",
+    "oracle": "lps",
+    "oracleId": "joe-cai-wavax",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["CAI", "AVAX"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_SMALL",
+      "PLATFORM_ESTABLISHED",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x48f88A3fE843ccb0b5003e70B4192c1d7448bEf0/AVAX#/",
+    "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x48f88A3fE843ccb0b5003e70B4192c1d7448bEf0#/",
+    "createdAt": 1663195421,
+    "network": "avax"
+  },
+  {
     "id": "sicle-grape-mim",
     "name": "GRAPE-MIM LP",
     "token": "GRAPE-MIM SLP",
@@ -106,11 +135,11 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://www.swapsicle.io/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0x5541D83EFaD1f281571B343977648B75d95cdAC2",
     "buyTokenUrl": "https://www.swapsicle.io/swap?inputCurrency=0x130966628846BFd36ff31a822705796e8cb8C18D&outputCurrency=0x5541D83EFaD1f281571B343977648B75d95cdAC2",
@@ -1519,10 +1548,10 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_MEDIUM",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://avax.curve.fi/factory/7/deposit",
     "network": "avax",
@@ -2291,11 +2320,11 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "ALGO_STABLE"
     ],
     "addLiquidityUrl": "https://traderjoexyz.com/pool/0x130966628846bfd36ff31a822705796e8cb8c18d/0x5541d83efad1f281571b343977648b75d95cdac2",
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x5541D83EFaD1f281571B343977648B75d95cdAC2",
@@ -2698,7 +2727,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"

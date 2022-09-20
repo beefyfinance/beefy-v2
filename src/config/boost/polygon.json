@@ -1,5 +1,22 @@
 [
   {
+    "id": "moo_dystopia-wmatic-stmatic-lido",
+    "poolId": "dystopia-wmatic-stmatic",
+    "name": "Lido",
+    "assets": ["stMATIC", "MATIC"],
+    "tokenAddress": "0xfA2AE38776b792f6629996B07FAa009a8cDEc5F9",
+    "earnedToken": "LDO",
+    "earnedTokenDecimals": 18,
+    "earnedTokenAddress": "0xC3C7d422809852031b44ab29EEC9F1EfF2A58756",
+    "earnContractAddress": "0x50a11621886c0d2f6D34b17B02513bC1E38Bb0A2",
+    "earnedOracle": "tokens",
+    "earnedOracleId": "LDO",
+    "partnership": true,
+    "status": "active",
+    "isMooStaked": true,
+    "partners": ["lido"]
+  },
+  {
     "id": "moo_quick-stmatic-matic-lido-refill",
     "poolId": "quick-stmatic-matic",
     "name": "Lido",

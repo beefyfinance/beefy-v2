@@ -190,6 +190,7 @@ const theme = createTheme({
           '--onboard-wallet-button-background': '#2D3153',
           '--onboard-wallet-button-color': '#D0D0DA',
           '--onboard-wallet-button-background-hover': 'rgba(245, 245, 255, 0.08)',
+          '--onboard-wallet-button-color-hover': '#fff',
           '--onboard-wallet-app-icon-border-color': '#fff',
           '--onboard-wallet-app-icon-background-transparent': '#fff',
           '--onboard-connect-sidebar-background': '#121212',

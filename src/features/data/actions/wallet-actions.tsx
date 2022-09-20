@@ -812,7 +812,7 @@ const bridge = (
       return;
     }
 
-    const bridgeTokenData = state.ui.bridgeModal.bridgeDataByChainId[chainId];
+    const bridgeTokenData = state.ui.bridge.bridgeDataByChainId[chainId];
 
     const destChain = selectChainById(state, destChainId);
     const destChainData: any = Object.values(

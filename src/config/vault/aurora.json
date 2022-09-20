@@ -77,7 +77,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -106,7 +106,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -135,7 +135,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -365,7 +365,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -395,9 +395,9 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://app.rose.fi/#/farms/mai",
     "createdAt": 1650375700,
@@ -626,7 +626,7 @@
     "platformId": "rose",
     "assets": ["atUST", "USDT", "USDC", "DAI"],
     "strategyTypeId": "multi-lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_HIGH", "CONTRACTS_VERIFIED", "ALGO_STABLE"],
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_LARGE", "CONTRACTS_VERIFIED", "ALGO_STABLE"],
     "addLiquidityUrl": "https://app.rose.fi/#/farms/ust",
     "createdAt": 1649955343,
     "network": "aurora",
@@ -682,7 +682,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
@@ -712,7 +712,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_LOW",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],

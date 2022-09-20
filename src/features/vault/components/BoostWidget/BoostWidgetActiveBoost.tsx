@@ -6,7 +6,7 @@ import { formatBigDecimals } from '../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
-import { selectBoostById, selectBoostPeriodFinish } from '../../../data/selectors/boosts';
+import { selectBoostById, selectBoostContractState } from '../../../data/selectors/boosts';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
 import { selectTokenByAddress } from '../../../data/selectors/tokens';
@@ -49,8 +49,9 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
     selectBoostUserRewardsInToken(state, boost.id)
   );
 
-  const periodFinish = useAppSelector(state => selectBoostPeriodFinish(state, boost.id));
-  const isPreStake = periodFinish === null;
+  const { periodFinish, isPreStake } = useAppSelector(state =>
+    selectBoostContractState(state, boost.id)
+  );
 
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();

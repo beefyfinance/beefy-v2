@@ -51,8 +51,6 @@ export const initWallet = createAsyncThunk<void, void, { state: BeefyState }>(
       onWalletDisconnected: () => dispatch(walletHasDisconnected()),
     });
 
-    // MM is not loaded on browser restart and fails until page refresh
-    // So we wait a small amount of time
     setTimeout(async () => {
       dispatch(tryToAutoReconnect());
     }, 500);

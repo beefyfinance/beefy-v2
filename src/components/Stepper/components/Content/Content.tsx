@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
+import { selectBridgeStatus } from '../../../../features/data/selectors/bridge';
 import {
   selectStepperCurrentStepData,
   selectStepperFinished,
@@ -39,8 +40,8 @@ export const StepsCountContent = memo(function () {
 export const WaitingContent = memo(function () {
   const { t } = useTranslation();
   const classes = useStyles();
-  const bridgeModalStatus = useAppSelector(state => state.ui.bridgeModal.status);
-  const needShowBridgeInfo = bridgeModalStatus === 'loading' || bridgeModalStatus === 'confirming';
+  const bridgeStatus = useAppSelector(selectBridgeStatus);
+  const needShowBridgeInfo = bridgeStatus === 'loading' || bridgeStatus === 'confirming';
   const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
   const stepsFinished = useAppSelector(selectStepperFinished);
 
@@ -96,7 +97,7 @@ export const ButtonsContent = memo(function () {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
-  const bridgeModalStatus = useAppSelector(state => state.ui.bridgeModal.status);
+  const bridgeStatus = useAppSelector(selectBridgeStatus);
 
   const handleClose = React.useCallback(() => {
     dispatch(stepperActions.reset());
@@ -105,7 +106,7 @@ export const ButtonsContent = memo(function () {
   return (
     <>
       {currentStepData.step === 'bridge' ? (
-        bridgeModalStatus === 'success' ? (
+        bridgeStatus === 'success' ? (
           <Button
             borderless={true}
             fullWidth={true}

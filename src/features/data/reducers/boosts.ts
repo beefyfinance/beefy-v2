@@ -11,6 +11,10 @@ import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { BoostConfig } from '../apis/config-types';
 
+export type BoostContractState = {
+  periodFinish: Date | null;
+  isPreStake: boolean;
+};
 /**
  * State containing Vault infos
  */
@@ -34,16 +38,17 @@ export type BoostsState = NormalizedEntity<BoostEntity> & {
   // put the period finish in another part of the state
   // to avoid re-rendering of non-updateable boost data
   // null means prestake
-  periodFinish: {
-    [boostId: BoostEntity['id']]: Date | null;
+  contractState: {
+    [boostId: BoostEntity['id']]: BoostContractState;
   };
 };
+
 export const initialBoostsState: BoostsState = {
   byId: {},
   allIds: [],
   byVaultId: {},
   byChainId: {},
-  periodFinish: {},
+  contractState: {},
 };
 
 export const boostsSlice = createSlice({
@@ -84,12 +89,16 @@ function addContractDataToState(
 ) {
   for (const boostContractData of contractData.boosts) {
     if (
-      sliceState.periodFinish[boostContractData.id] === undefined ||
-      sliceState.periodFinish[boostContractData.id] === null ||
-      sliceState.periodFinish[boostContractData.id].getTime() !==
-        boostContractData.periodFinish.getTime()
+      sliceState.contractState[boostContractData.id] === undefined ||
+      sliceState.contractState[boostContractData.id] === null ||
+      sliceState.contractState[boostContractData.id].periodFinish.getTime() !==
+        boostContractData.periodFinish.getTime() ||
+      sliceState.contractState[boostContractData.id].isPreStake !== boostContractData.isPreStake
     ) {
-      sliceState.periodFinish[boostContractData.id] = boostContractData.periodFinish;
+      sliceState.contractState[boostContractData.id] = {
+        periodFinish: boostContractData.periodFinish,
+        isPreStake: boostContractData.isPreStake,
+      };
     }
   }
 
@@ -97,12 +106,15 @@ function addContractDataToState(
   updateBoostStatus(sliceState);
 }
 
-export function getBoostStatusFromPeriodFinish(periodFinish: Date | null, now = new Date()) {
-  if (periodFinish === null) {
+export function getBoostStatusFromContractState(
+  contractState: BoostContractState,
+  now = new Date()
+) {
+  if (contractState === null || contractState.isPreStake) {
     return 'prestake';
   }
   const nowUTCTime = now.getTime();
-  const pfUTCTime = periodFinish.getTime();
+  const pfUTCTime = contractState.periodFinish.getTime();
   if (nowUTCTime < pfUTCTime) {
     return 'active';
   } else {
@@ -120,11 +132,11 @@ function updateBoostStatus(sliceState: WritableDraft<BoostsState>) {
       const prestakeBoostsIds = [];
 
       for (const boostId of entityData.allBoostsIds) {
-        const periodFinish = sliceState.periodFinish[boostId];
-        if (periodFinish === undefined) {
+        const contractState = sliceState.contractState[boostId];
+        if (contractState === undefined) {
           continue;
         }
-        const status = getBoostStatusFromPeriodFinish(periodFinish, now);
+        const status = getBoostStatusFromContractState(contractState, now);
         if (status === 'expired') {
           expiredBoostsIds.push(boostId);
         } else if (status === 'prestake') {

@@ -988,7 +988,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -1346,7 +1347,8 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
+      "ALGO_STABLE",
       "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -1383,6 +1385,64 @@
     "buyTokenUrl": " https://mm.finance/swap?outputCurrency=0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "addLiquidityUrl": "https://mm.finance/add/CRO/0xA01fAe0612a4786ec296Be7f87b292F05c68186B",
     "createdAt": 1657602778,
+    "network": "cronos"
+  },
+  {
+    "id": "vvs-cro-fira",
+    "name": "FIRA-CRO LP",
+    "token": "FIRA-CRO LP",
+    "tokenAddress": "0x689E7BA5170001aC887965a5Db1C9Ce932c93462",
+    "tokenDecimals": 18,
+    "tokenProviderId": "vvs",
+    "earnedToken": "mooVvsCRO-FIRA",
+    "earnedTokenAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
+    "earnContractAddress": "0x8d49e7F962D6815c71a5F7Aa60599EdF393Bad44",
+    "oracle": "lps",
+    "oracleId": "vvs-cro-fira",
+    "status": "active",
+    "platformId": "vvs",
+    "assets": ["FIRA", "CRO"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://vvs.finance/swap?outputCurrency=0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
+    "addLiquidityUrl": "https://vvs.finance/add/CRO/0x7ABa852082b6F763E13010CA33B5D9Ea4EeE2983",
+    "createdAt": 1662489253,
+    "network": "cronos"
+  },
+  {
+    "id": "vvs-mtd-vvs",
+    "name": "MTD-VVS LP",
+    "token": "MTD-VVS LP",
+    "tokenAddress": "0xf10af2E06908A8f234678974712B60DE3063609B",
+    "tokenDecimals": 18,
+    "tokenProviderId": "vvs",
+    "earnedToken": "mooVvsMTD-VVS",
+    "earnedTokenAddress": "0x7DC7164C56463F4d8C1EE5cCD1909bf2d62eeD10",
+    "earnContractAddress": "0x7DC7164C56463F4d8C1EE5cCD1909bf2d62eeD10",
+    "oracle": "lps",
+    "oracleId": "vvs-mtd-vvs",
+    "status": "active",
+    "platformId": "vvs",
+    "assets": ["MTD", "VVS"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://vvs.finance/swap?inputCurrency=0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03&outputCurrency=0x0224010BA2d567ffa014222eD960D1fa43B8C8E1",
+    "addLiquidityUrl": "https://vvs.finance/add/0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03/0x0224010BA2d567ffa014222eD960D1fa43B8C8E1",
+    "createdAt": 1662707496,
     "network": "cronos"
   }
 ]

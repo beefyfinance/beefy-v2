@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { selectBridgeStatus } from '../../../../features/data/selectors/bridge';
 import {
   selectStepperCurrentStep,
   selectStepperCurrentStepData,
@@ -18,9 +19,9 @@ const _Title = () => {
 
   const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
 
-  const bridgeModalStatus = useAppSelector(state => state.ui.bridgeModal.status);
+  const bridgeStatus = useAppSelector(selectBridgeStatus);
 
-  const needShowBridgeInfo = bridgeModalStatus === 'loading' || bridgeModalStatus === 'confirming';
+  const needShowBridgeInfo = bridgeStatus === 'loading' || bridgeStatus === 'confirming';
 
   const stepperItems = useAppSelector(selectStepperItems);
 
@@ -57,7 +58,7 @@ const _Title = () => {
         <>
           {currentStepData.step !== 'bridge' && t(`${currentStepData.step}-Success-Title`)}
           {currentStepData.step === 'bridge' &&
-            bridgeModalStatus === 'success' &&
+            bridgeStatus === 'success' &&
             t(`bridge-Success-Title`)}
         </>
       )}

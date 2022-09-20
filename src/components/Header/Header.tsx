@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppBar,
+  Badge,
   Box,
   Container,
   Divider,
@@ -58,13 +59,14 @@ const NavLinks = memo(function () {
   const navLinks = [
     { title: t('Header-Vaults'), url: '/' },
     { title: t('Header-Proposals'), url: 'https://vote.beefy.finance' },
-    // { title: t('Header-BuyCrypto'), url: '/onramp' },
+    { title: t('Header-BuyCrypto'), url: '/onramp' },
+    { title: t('Header-BridgeBifi'), url: '/bridge', badge: true },
     { title: t('Header-News'), url: 'https://beefy.com/articles/' },
     { title: t('Header-Docs'), url: 'https://docs.beefy.finance' },
   ];
   return (
     <>
-      {navLinks.map(({ title, url }) => (
+      {navLinks.map(({ title, url, badge }) => (
         <NavLink
           activeClassName={classes.active}
           exact={true}
@@ -73,7 +75,13 @@ const NavLinks = memo(function () {
           to={url[0] === '/' ? url : { pathname: url }}
           target={url[0] === '/' ? undefined : '_blank'}
         >
-          {t(title)}
+          {badge ? (
+            <Badge badgeContent="New" color="primary">
+              {t(title)}
+            </Badge>
+          ) : (
+            t(title)
+          )}
         </NavLink>
       ))}
     </>

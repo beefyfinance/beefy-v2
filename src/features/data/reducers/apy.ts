@@ -14,6 +14,7 @@ import { isGovVault, VaultEntity } from '../entities/vault';
 import {
   selectActiveVaultBoostIds,
   selectBoostById,
+  selectIsBoostActiveOrPreStake,
   selectIsVaultBoosted,
 } from '../selectors/boosts';
 import { selectIsConfigAvailable } from '../selectors/data-loader';
@@ -21,7 +22,6 @@ import { selectTokenByAddress, selectTokenPriceByAddress } from '../selectors/to
 import { selectVaultById, selectVaultPricePerFullShare } from '../selectors/vaults';
 import { createIdMap } from '../utils/array-utils';
 import { mooAmountToOracleAmount } from '../utils/ppfs';
-import { getBoostStatusFromPeriodFinish } from './boosts';
 import { BIG_ONE } from '../../../helpers/big-number';
 
 // boost is expressed as APR
@@ -106,7 +106,6 @@ function addContractDataToState(
   sliceState: WritableDraft<ApyState>,
   contractData: FetchAllContractDataResult
 ) {
-  const now = new Date();
   const activeBoostsByVaultIds: { [vaultId: VaultEntity['id']]: BoostContractData[] } = {};
 
   // create a quick access map
@@ -115,9 +114,9 @@ function addContractDataToState(
   for (const boostContractData of contractData.boosts) {
     const boost = selectBoostById(state, boostContractData.id);
     const vault = selectVaultById(state, boost.vaultId);
-    const boostStatus = getBoostStatusFromPeriodFinish(boostContractData.periodFinish, now);
+    const isBoostActiveOrPrestake = selectIsBoostActiveOrPreStake(state, boostContractData.id);
     // boost is expired, don't count apy
-    if (boostStatus === 'expired') {
+    if (!isBoostActiveOrPrestake) {
       continue;
     }
     if (activeBoostsByVaultIds[vault.id] === undefined) {

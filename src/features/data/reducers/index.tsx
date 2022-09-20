@@ -24,7 +24,7 @@ import { withdrawSlice } from './wallet/withdraw';
 import { boostModalSlice } from './wallet/boost-modal';
 import { mintersSlice } from './minters';
 import { infoCardsSlice } from './info-cards';
-import { bridgeModalSlice } from './wallet/bridge-modal';
+import { bridgeSlice } from './wallet/bridge';
 import { onRamp } from './on-ramp';
 import { feesSlice } from './fees';
 import { stepperSlice } from './wallet/stepper';
@@ -61,7 +61,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   deposit: depositSlice.reducer,
   withdraw: withdrawSlice.reducer,
   boostModal: boostModalSlice.reducer,
-  bridgeModal: bridgeModalSlice.reducer,
+  bridge: bridgeSlice.reducer,
   onRamp: onRamp.reducer,
   dataLoader: dataLoaderSlice.reducer,
   stepperState: stepperSlice.reducer,
