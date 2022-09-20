@@ -159,6 +159,7 @@ export const config = {
       'CADC',
       'jSGD',
       'XSGD',
+      'EURe',
       'USD+',
     ],
   },

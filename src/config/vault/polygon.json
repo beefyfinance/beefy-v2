@@ -5198,8 +5198,7 @@
     "earnContractAddress": "0xcf9Dd1de1D02158B3d422779bd5184032674A6D1",
     "oracle": "lps",
     "oracleId": "jarvis-2cad",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "jarvis",
     "assets": ["jCAD", "CADC"],
     "strategyTypeId": "lp",
@@ -5214,7 +5213,7 @@
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/23/deposit",
     "network": "polygon",
-    "createdAt": 1653323113
+    "createdAt": 1663633677
   },
   {
     "id": "popsicle-ice-eth",
@@ -6254,14 +6253,13 @@
     "earnContractAddress": "0x18DAdac6d0AAF37BaAAC811F6338427B46815a81",
     "oracle": "lps",
     "oracleId": "jarvis-2sgd",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "jarvis",
     "assets": ["jSGD", "XSGD"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO"],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/22/deposit",
-    "createdAt": 1653327757,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7392,8 +7390,7 @@
     "earnContractAddress": "0x122E09FdD2FF73C8CEa51D432c45A474BAa1518a",
     "oracle": "lps",
     "oracleId": "jarvis-2jpy2",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "jarvis",
     "assets": ["jJPY", "JPYC"],
     "strategyTypeId": "lp",
@@ -7407,7 +7404,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/255/deposit",
-    "createdAt": 1653321475,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7422,8 +7419,7 @@
     "earnContractAddress": "0x5F1b5714f30bAaC4Cb1ee95E1d0cF6d5694c2204",
     "oracle": "lps",
     "oracleId": "jarvis-2eur",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "jarvis",
     "assets": ["agEUR", "jEUR"],
     "strategyTypeId": "lp",
@@ -7437,7 +7433,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/209/deposit",
-    "createdAt": 1653230127,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7962,8 +7958,7 @@
     "earnContractAddress": "0x26B7d2fe697e932907175A3920B5dC2C2e2440A4",
     "oracle": "lps",
     "oracleId": "jarvis-2eurt",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "jarvis",
     "assets": ["jEUR", "EURt"],
     "strategyTypeId": "lp",
@@ -7977,7 +7972,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/286/deposit",
-    "createdAt": 1658909850,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7992,8 +7987,7 @@
     "earnContractAddress": "0xfE1779834EaDD60660a7F3f576448D6010f5e3Fc",
     "oracle": "lps",
     "oracleId": "jarvis-2eurp",
-    "status": "paused",
-    "pauseReason": "upgrade",
+    "status": "active",
     "platformId": "jarvis",
     "assets": ["jEUR", "PAR"],
     "strategyTypeId": "lp",
@@ -8007,7 +8001,7 @@
       "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/285/deposit",
-    "createdAt": 1658916346,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -8037,5 +8031,34 @@
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a",
     "network": "polygon",
     "createdAt": 1661772010
+  },
+  {
+    "id": "jarvis-2eure",
+    "name": "jEUR-EURe LP",
+    "token": "jEUR-EURe LP",
+    "tokenAddress": "0x2F3E9CA3bFf85B91D9fe6a9f3e8F9B1A6a4c3cF4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooJarvis2EURe",
+    "earnedTokenAddress": "0x58a3e6d5501180fb9fcE7cFC2368F9Dc5e186A6f",
+    "earnContractAddress": "0x58a3e6d5501180fb9fcE7cFC2368F9Dc5e186A6f",
+    "oracle": "lps",
+    "oracleId": "jarvis-2eure",
+    "status": "active",
+    "platformId": "jarvis",
+    "assets": ["jEUR", "EURe"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://polygon.curve.fi/factory/304/deposit",
+    "createdAt": 1663633678,
+    "network": "polygon"
   }
 ]
