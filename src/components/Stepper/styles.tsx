@@ -1,31 +1,6 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    '& .MuiBackdrop-root': {
-      backgroundColor: 'rgba(0,0,0,0.9)',
-    },
-    '& .MuiAlert-root': {
-      marginTop: '20px',
-    },
-  },
-  finishedCard: {
-    backgroundColor: '#323857',
-    borderRadius: '20px',
-  },
-  finishedBtn: {
-    color: '#6B7199',
-    backgroundColor: '#232841',
-    padding: '4px 15px',
-    transition: 'color 0.2s',
-    '&:hover': {
-      color: '#ffffff',
-      transition: 'color 0.2s',
-    },
-  },
   snackbar: {
     width: '408px',
     maxWidth: 'calc(100% - 16px)',
@@ -75,13 +50,6 @@ export const styles = (theme: Theme) => ({
     transitionTimingFunction: 'ease-in',
     transition: '0.3s',
   },
-  progressBar1: {
-    width: '75%',
-    margin: 0,
-    backgroundColor: theme.palette.primary.main,
-    height: '100%',
-    borderRadius: '4px 0 0 0',
-  },
   successBar: {
     width: '100%',
     margin: 0,
@@ -99,10 +67,6 @@ export const styles = (theme: Theme) => ({
     borderRadius: '4px 4px 0 0',
     transitionTimingFunction: 'ease-in',
     transition: '0.3s',
-  },
-  icon: {
-    height: '20px',
-    marginRight: theme.spacing(1),
   },
   titleContainer: {
     display: 'flex',
@@ -123,34 +87,6 @@ export const styles = (theme: Theme) => ({
     flexDirection: 'column' as const,
     overflow: 'auto',
   },
-  title: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.background.snackbars.text,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  friendlyMessage: {
-    ...theme.typography['body-lg-med'],
-    color: theme.palette.background.snackbars.text,
-    marginBottom: theme.spacing(2),
-  },
-  message: {
-    color: theme.palette.background.snackbars.text,
-    '& span': {
-      fontWeight: theme.typography['body-lg-med'].fontWeight,
-    },
-  },
-  content: {
-    marginTop: theme.spacing(1.5),
-    padding: '16px',
-    borderRadius: '4px',
-  },
-  errorContent: {
-    backgroundColor: 'rgba(219, 50, 50, 0.1)',
-  },
-  successContent: {
-    backgroundColor: 'rgba(89, 166, 98, 0.15)',
-  },
   closeBtn: {
     marginTop: theme.spacing(3),
   },
@@ -167,39 +103,8 @@ export const styles = (theme: Theme) => ({
       marginLeft: '4px',
     },
   },
-  chainContainer: {
-    backgroundColor: theme.palette.background.contentLight,
-    borderRadius: theme.spacing(0.5),
-    padding: theme.spacing(2),
-    marginTop: theme.spacing(2),
-  },
   statusContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-  },
-  chainStatusContainer: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  chainName: {
-    color: theme.palette.background.vaults.defaultOutline,
-    fontWeight: 700,
-  },
-  statusText: {
-    color: theme.palette.background.vaults.defaultOutline,
-    fontWeight: 400,
-    marginLeft: theme.spacing(1),
-  },
-  succesContainer: {
-    borderRadius: theme.spacing(0.5),
-    backgroundColor: 'rgba(89, 166, 98, 0.15)',
-    padding: theme.spacing(2),
-    marginTop: theme.spacing(1.5),
-  },
-  textSuccess: {
-    color: theme.palette.primary.main,
-  },
-  errorMessage: {
-    marginTop: theme.spacing(1.5),
   },
 });

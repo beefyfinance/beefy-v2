@@ -228,9 +228,6 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
     const web3 = await walletApi.getConnectedWeb3Instance();
 
     const contract = new web3.eth.Contract(zapAbi as any, zapOptions.address);
-    const vaultAssets = vault.assetIds.map(tokenId =>
-      selectTokenById(state, vault.chainId, tokenId)
-    );
 
     const mooToken = selectErc20TokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
     const depositToken = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
@@ -254,7 +251,7 @@ const beefOut = (vault: VaultEntity, oracleAmount: BigNumber, zapOptions: ZapOpt
         spender: zapOptions.address,
         // TODO: this should contain 2 assets and 2 amounts
         amount: oracleAmount,
-        token: vaultAssets[0],
+        token: depositToken,
       },
       {
         chainId: vault.chainId,
@@ -516,8 +513,7 @@ const exitGovVault = (vault: VaultGov) => {
     }
 
     const balanceAmount = selectGovVaultUserStackedBalanceInDepositToken(state, vault.id);
-    const rewardAmount = selectGovVaultPendingRewardsInToken(state, vault.id);
-    const token = selectGovVaultRewardsTokenEntity(state, vault.id);
+    const token = selectTokenByAddress(state, vault.chainId, vault.depositTokenAddress);
 
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -537,7 +533,7 @@ const exitGovVault = (vault: VaultGov) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount: rewardAmount, token },
+      { spender: contractAddr, amount: balanceAmount, token },
       {
         chainId: vault.chainId,
         spenderAddress: contractAddr,

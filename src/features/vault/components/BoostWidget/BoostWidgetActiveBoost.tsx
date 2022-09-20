@@ -90,6 +90,12 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
           message: t('Vault-TxnConfirm', { type: t('Claim-Unstake-noun') }),
           action: walletActions.exitBoost(boost),
           pending: false,
+          extraInfo: {
+            rewards: {
+              token: rewardToken,
+              amount: boostPendingRewards,
+            },
+          },
         },
       })
     );

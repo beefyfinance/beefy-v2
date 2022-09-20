@@ -16,6 +16,23 @@ export const selectIsStepperStepping = (state: BeefyState) => {
   return state.ui.stepperState.modal && !state.ui.stepperState.finished;
 };
 
+export const selectStepperFinished = (state: BeefyState) => {
+  return state.ui.stepperState.finished;
+};
+
+export const selectStepperCurrentStep = (state: BeefyState) => {
+  return state.ui.stepperState.currentStep;
+};
+
+export const selectStepperCurrentStepData = (state: BeefyState) => {
+  const currentStep = state.ui.stepperState.currentStep;
+  return state.ui.stepperState.items[currentStep];
+};
+
+export const selectStepperItems = (state: BeefyState) => {
+  return state.ui.stepperState.items;
+};
+
 export function selectMintResult(walletActionsState: WalletActionsState) {
   const result = {
     type: 'mint',

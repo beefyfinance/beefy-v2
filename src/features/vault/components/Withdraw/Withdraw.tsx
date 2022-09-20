@@ -24,6 +24,7 @@ import { withdrawActions } from '../../../data/reducers/wallet/withdraw';
 import {
   selectBoostUserBalanceInToken,
   selectGovVaultPendingRewardsInToken,
+  selectGovVaultRewardsTokenEntity,
   selectGovVaultUserStackedBalanceInDepositToken,
   selectStandardVaultUserBalanceInDepositTokenIncludingBoosts,
   selectUserBalanceOfToken,
@@ -105,6 +106,11 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       ? selectChainWrappedNativeToken(state, vault.chainId)
       : null
   );
+
+  const govRewardsAmount = useAppSelector(state =>
+    selectGovVaultPendingRewardsInToken(state, vault.id)
+  );
+  const govClaimToken = useAppSelector(state => selectGovVaultRewardsTokenEntity(state, vault.id));
 
   const spenderAddress = formState.isZap
     ? formState.zapOptions?.address || null
@@ -205,6 +211,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                   )
                 : walletActions.beefOut(vault, formState.amount, formState.zapOptions),
               pending: false,
+              extraInfo: { zap: true },
             },
           })
         );
@@ -260,6 +267,7 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
     if (!isGovVault(vault)) {
       return;
     }
+
     dispatch(
       stepperActions.addStep({
         step: {
@@ -267,6 +275,12 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           message: t('Vault-TxnConfirm', { type: t('Claim-Withdraw-noun') }),
           action: walletActions.exitGovVault(vault),
           pending: false,
+          extraInfo: {
+            rewards: {
+              token: govClaimToken,
+              amount: govRewardsAmount,
+            },
+          },
         },
       })
     );

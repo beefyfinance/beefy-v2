@@ -1,24 +1,31 @@
 import { createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
+import BigNumber from 'bignumber.js';
 import { startStepper } from '../../actions/stepper';
 import { ChainEntity } from '../../entities/chain';
+import { TokenEntity } from '../../entities/token';
 
 export type Step = {
   step:
     | 'approve'
+    | 'deposit'
+    | 'deposit-gov'
+    | 'withdraw'
+    | 'claim-withdraw'
+    | 'claim-unstake'
+    | 'claim-gov'
+    | 'claim-boost'
     | 'stake'
     | 'unstake'
-    | 'deposit'
-    | 'withdraw'
-    | 'claim-unstake'
-    | 'claim-withdraw'
-    | 'claim-boost'
-    | 'claim-gov'
     | 'mint'
     | 'burn'
     | 'bridge';
   message: string;
   action: ThunkAction<any, any, any, any>;
   pending: boolean;
+  extraInfo?: {
+    zap?: boolean;
+    rewards?: { token: TokenEntity; amount: BigNumber };
+  };
 };
 
 export interface StepperState {

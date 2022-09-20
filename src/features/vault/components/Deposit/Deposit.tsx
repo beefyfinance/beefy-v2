@@ -178,7 +178,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         dispatch(
           stepperActions.addStep({
             step: {
-              step: 'deposit',
+              step: 'deposit-gov',
               message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
               action: walletActions.stakeGovVault(vault, formState.amount),
               pending: false,

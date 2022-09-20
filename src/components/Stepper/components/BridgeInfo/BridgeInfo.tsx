@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core';
-import React, { useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { selectChainById } from '../../../../features/data/selectors/chains';
 import { selectCurrentChainId } from '../../../../features/data/selectors/wallet';
@@ -11,7 +11,11 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { AlertWarning } from '../../../Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
-import { selectSteperState } from '../../../../features/data/selectors/stepper';
+import {
+  selectSteperState,
+  selectStepperCurrentStepData,
+} from '../../../../features/data/selectors/stepper';
+import { isEmpty } from '../../../../helpers/utils';
 
 const useStyles = makeStyles(styles);
 
@@ -22,7 +26,7 @@ interface TxStateInterface {
   status: 0 | 3 | 10 | 8 | 9 | 12 | 14;
 }
 
-const _BridgeInfo = () => {
+const BridgeTxProgress = memo(function () {
   const [txData, setTxData] = React.useState<TxStateInterface>({
     msg: '',
     error: null,
@@ -201,6 +205,18 @@ const _BridgeInfo = () => {
       )}
     </>
   );
-};
+});
 
-export const BridgeInfo = React.memo(_BridgeInfo);
+export const BridgeInfo = memo(function () {
+  const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
+  const currentStepData = useAppSelector(selectStepperCurrentStepData);
+
+  return (
+    <>
+      {!isEmpty(currentStepData) &&
+        currentStepData.step === 'bridge' &&
+        (walletActionsStateResult === 'success_pending' ||
+          walletActionsStateResult === 'success') && <BridgeTxProgress />}
+    </>
+  );
+});

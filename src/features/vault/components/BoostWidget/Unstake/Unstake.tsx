@@ -121,7 +121,7 @@ const UnstakeForm = ({
     dispatch(
       stepperActions.addStep({
         step: {
-          step: 'stake',
+          step: 'unstake',
           message: t('Vault-TxnConfirm', { type: t('Stake-noun') }),
           action: walletActions.unstakeBoost(boost, formState.amount),
           pending: false,
