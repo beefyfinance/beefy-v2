@@ -4,9 +4,9 @@ export const config = {
     chainId: 56,
     rpc: [
       'https://rpc.ankr.com/bsc',
-      //'https://bsc-dataseed.binance.org',
-      //'https://bsc-dataseed1.defibit.io',
-      //'https://bsc-dataseed1.ninicoin.io',
+      'https://bsc-dataseed.binance.org',
+      'https://bsc-dataseed1.defibit.io',
+      'https://bsc-dataseed1.ninicoin.io',
     ],
     explorerUrl: 'https://bscscan.com',
     multicallAddress: '0xB94858b0bB5437498F5453A16039337e5Fdc269C',
@@ -49,6 +49,7 @@ export const config = {
       'jBRL',
       'BRZ',
       'BRZw',
+      'USD+',
     ],
   },
   heco: {
@@ -159,6 +160,7 @@ export const config = {
       'jSGD',
       'XSGD',
       'EURe',
+      'USD+',
     ],
   },
   fantom: {
@@ -429,7 +431,19 @@ export const config = {
       rpcUrls: ['https://mainnet.optimism.io'],
       blockExplorerUrls: ['https://optimistic.etherscan.io/'],
     },
-    stableCoins: ['USDC', 'sUSD', 'DAI', 'USDT', 'MAI', 'FRAX', 'LUSD', 'alUSD', 'DOLA', 'soUSDC'],
+    stableCoins: [
+      'USDC',
+      'sUSD',
+      'DAI',
+      'USDT',
+      'MAI',
+      'FRAX',
+      'LUSD',
+      'alUSD',
+      'DOLA',
+      'soUSDC',
+      'USD+',
+    ],
   },
 };
 
