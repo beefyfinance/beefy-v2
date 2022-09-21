@@ -588,9 +588,8 @@ const exitBoost = (boost: BoostEntity) => {
     }
 
     const boostAmount = selectBoostUserBalanceInToken(state, boost.id);
-    const rewardAmount = selectBoostUserRewardsInToken(state, boost.id);
-    const token = selectTokenByAddress(state, boost.chainId, boost.earnedTokenAddress);
     const vault = selectVaultById(state, boost.vaultId);
+    const token = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
 
     const walletApi = await getWalletConnectionApiInstance();
     const web3 = await walletApi.getConnectedWeb3Instance();
@@ -610,7 +609,7 @@ const exitBoost = (boost: BoostEntity) => {
     bindTransactionEvents(
       dispatch,
       transaction,
-      { spender: contractAddr, amount: rewardAmount, token },
+      { spender: contractAddr, amount: boostAmount, token },
       {
         chainId: boost.chainId,
         spenderAddress: contractAddr,

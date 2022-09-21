@@ -152,7 +152,7 @@ export const SuccessContent = memo(function () {
         amount: formatBigDecimals(walletActionsState?.data.amount, 4),
         token: walletActionsState?.data.token.symbol,
         rewards: formatBigDecimals(currentStepData.extraInfo.rewards.amount),
-        rewardsToken: currentStepData.extraInfo.rewards.token.symbol,
+        rewardToken: currentStepData.extraInfo.rewards.token.symbol,
       })
     : isZapOutMessage
     ? t('withdraw-zapout-Success-Content', {
