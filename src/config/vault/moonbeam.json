@@ -265,37 +265,6 @@
     "createdAt": 1661191064
   },
   {
-    "id": "beamswap-wglmr-xcausd",
-    "name": "xcaUSD-GLMR LP",
-    "token": "xcaUSD-GLMR TLP",
-    "tokenAddress": "0x91ed237532E2fFFa3F114e9A1B9AF3e65a8495ec",
-    "tokenDecimals": 18,
-    "tokenProviderId": "beamswap",
-    "earnedToken": "mooBeamGLMR-xcaUSD",
-    "earnedTokenAddress": "0x40802d092739d6817173464b398D1eD77CCA7382",
-    "earnContractAddress": "0x40802d092739d6817173464b398D1eD77CCA7382",
-    "oracle": "lps",
-    "oracleId": "beamswap-wglmr-xcausd",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "beamswap",
-    "assets": ["xcaUSD", "GLMR"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "IL_HIGH",
-      "MCAP_LARGE",
-      "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
-    ],
-    "addLiquidityUrl": "https://app.beamswap.io/exchange/add/0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda/0xAcc15dC74880C9944775448304B263D191c6077F",
-    "buyTokenUrl": "https://app.beamswap.io/exchange/swap?inputCurrency=0xAcc15dC74880C9944775448304B263D191c6077F&outputCurrency=0xfFfFFFFF52C56A9257bB97f4B2b6F7B2D624ecda",
-    "network": "moonbeam",
-    "createdAt": 1659949276
-  },
-  {
     "id": "beamswap-4pool",
     "name": "BUSD/USDC/USDT/DAI",
     "token": "multi-4pool",

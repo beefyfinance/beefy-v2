@@ -5301,10 +5301,10 @@ blakejs@^1.1.0:
   resolved "https://registry.yarnpkg.com/blakejs/-/blakejs-1.2.1.tgz#5057e4206eadb4a97f7c0b6e197a505042fc3814"
   integrity sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==
 
-blockchain-addressbook@^0.37.59:
-  version "0.37.59"
-  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.37.59.tgz#800eeaa843574980998882894596bed33795a8ac"
-  integrity sha512-o5XtZmsTlOuYMdn0c8WSxNmYNioD1fPZrFwpkp8/saAIwJnDxbG8Cc+ECJqi7nfrG5a11wQPGRDvs3RJwDJ6Kw==
+blockchain-addressbook@^0.37.66:
+  version "0.37.66"
+  resolved "https://registry.yarnpkg.com/blockchain-addressbook/-/blockchain-addressbook-0.37.66.tgz#f6dedc99edbc09dc59008df55c682ec54d6c7cc7"
+  integrity sha512-SDL2hBTbtrrVEfrOBIUV32pxQKtyCrvBIgfjlNFsGhiAI9cQVtG3m/zsTmgKQQZ+Y3O6lUl3Rr+JRQrf3h6S6A==
 
 bluebird@^3.5.0, bluebird@^3.5.2, bluebird@^3.5.5:
   version "3.7.2"

@@ -7,11 +7,12 @@ import { formatBigNumberSignificant } from '../../../../helpers/format';
 import { StepperState } from '../../types';
 import { TransactionLink } from '../TransactionLink';
 import { getBridgeTxData } from '../../../../features/data/actions/bridge';
-import { bridgeModalActions } from '../../../../features/data/reducers/wallet/bridge-modal';
+import { bridgeActions } from '../../../../features/data/reducers/wallet/bridge';
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import { AlertWarning } from '../../../Alerts';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { styles } from './styles';
+import { selectBridgeState } from '../../../../features/data/selectors/bridge';
 
 const useStyles = makeStyles(styles);
 
@@ -33,9 +34,9 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
   const { t } = useTranslation();
   const walletActionsState = useAppSelector(state => state.user.walletActions);
   const currentChaindId = useAppSelector(state => selectCurrentChainId(state));
-  const bridgeModalState = useAppSelector(state => state.ui.bridgeModal);
+  const bridgeState = useAppSelector(selectBridgeState);
   const chain = useAppSelector(state => selectChainById(state, currentChaindId));
-  const destChain = useAppSelector(state => selectChainById(state, bridgeModalState.destChainId));
+  const destChain = useAppSelector(state => selectChainById(state, bridgeState.destChainId));
 
   const dispatch = useAppDispatch();
 
@@ -53,7 +54,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
   //TX DATA IS REFRESH EVERY 5 SECONDS
   React.useEffect(() => {
     const getTxData = () => {
-      dispatch(bridgeModalActions.setStatus({ status: 'loading' }));
+      dispatch(bridgeActions.setStatus({ status: 'loading' }));
       getBridgeTxData(hash)
         .then(res => {
           if (res.msg === 'Error') {
@@ -73,17 +74,17 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
             });
             // STATUS 8 = Confirming \ STATUS 9 = Swapping
             if (res.info.status === 8 || res.info.status === 9) {
-              dispatch(bridgeModalActions.setStatus({ status: 'confirming' }));
+              dispatch(bridgeActions.setStatus({ status: 'confirming' }));
             }
             //STATUS 10 = Success
             //FOR MORE INFO WATCH https://github.com/anyswap/CrossChain-Router/wiki/How-to-integrate-AnySwap-Router POINTN 4
             if (res.info.status === 10) {
-              dispatch(bridgeModalActions.setStatus({ status: 'success' }));
+              dispatch(bridgeActions.setStatus({ status: 'success' }));
               clearInterval(intervalRef.current);
             }
             //STATUS 14= Failure
             if (res.info.status === 14) {
-              dispatch(bridgeModalActions.setStatus({ status: 'idle' }));
+              dispatch(bridgeActions.setStatus({ status: 'idle' }));
               clearInterval(intervalRef.current);
             }
           }
@@ -113,7 +114,7 @@ const _BridgeInfo = ({ steps }: { steps: StepperState }) => {
         <Box className={classes.successContainer}>
           <div className={classes.textSuccess}>
             {t('Transactn-Bridge', {
-              amount: formatBigNumberSignificant(bridgeModalState.amount, 4),
+              amount: formatBigNumberSignificant(bridgeState.amount, 4),
               chain: destChain.name,
             })}
           </div>

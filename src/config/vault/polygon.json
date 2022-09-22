@@ -27,6 +27,86 @@
     "createdAt": 1621450869
   },
   {
+    "id": "dystopia-wmatic-bifi",
+    "name": "BIFI-MATIC vLP",
+    "token": "BIFI-MATIC vLP",
+    "tokenAddress": "0xC9e4a017ae5c2F89C085c534A38a3e6d3A183A43",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-BIFI",
+    "earnedTokenAddress": "0xa83171B123a18303c5aed8F5D20AeA6CfdF76Bc6",
+    "earnContractAddress": "0xa83171B123a18303c5aed8F5D20AeA6CfdF76Bc6",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-bifi",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["BIFI", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MEDIUM", "IL_HIGH", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1663633681
+  },
+  {
+    "id": "dystopia-usd+-stmatic",
+    "name": "USD+-stMATIC vLP",
+    "token": "USD+-stMATIC vLP",
+    "tokenAddress": "0x6f2Fed287E47590b7702f9d331344c7dACbAcfe5",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaUSD+-stMATIC",
+    "earnedTokenAddress": "0x727555858111Bf77027710c19bc4a4B35b38727E",
+    "earnContractAddress": "0x727555858111Bf77027710c19bc4a4B35b38727E",
+    "oracle": "lps",
+    "oracleId": "dystopia-usd+-stmatic",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["USD+", "stMATIC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVERCOLLAT_ALGO_STABLE"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1663633680
+  },
+  {
+    "id": "dystopia-wmatic-usd+",
+    "name": "USD+-MATIC vLP",
+    "token": "USD+-MATIC vLP",
+    "tokenAddress": "0x1A5FEBA5D5846B3b840312Bd04D76ddaa6220170",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaMATIC-USD+",
+    "earnedTokenAddress": "0x3af3563Ba5C68EB7DCbAdd2dF0FcE4CC9818e75c",
+    "earnContractAddress": "0x3af3563Ba5C68EB7DCbAdd2dF0FcE4CC9818e75c",
+    "oracle": "lps",
+    "oracleId": "dystopia-wmatic-usd+",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["USD+", "MATIC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVERCOLLAT_ALGO_STABLE"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1663633679
+  },
+  {
     "id": "dystopia-wmatic-usdc",
     "name": "USDC-MATIC vLP",
     "token": "USDC-MATIC vLP",
@@ -683,7 +763,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_HIGH",
-      "MCAP_MICRO",
+      "MCAP_MEDIUM",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -5215,7 +5295,7 @@
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/23/deposit",
     "network": "polygon",
-    "createdAt": 1653323113
+    "createdAt": 1663633677
   },
   {
     "id": "popsicle-ice-eth",
@@ -6182,37 +6262,6 @@
     "retireReason": "rewards"
   },
   {
-    "id": "quick-usdc-orbs-eol",
-    "name": "ORBS-USDC LP",
-    "token": "ORBS-USDC LP",
-    "tokenAddress": "0xB2b6D423e535b57aaD06E9866803B95fB66152EA",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickSwapORBS-USDC",
-    "earnedTokenAddress": "0x333F81C94e388002aAc75ccF23Ab4865B52D7a10",
-    "earnContractAddress": "0x333F81C94e388002aAc75ccF23Ab4865B52D7a10",
-    "oracle": "lps",
-    "oracleId": "quick-usdc-orbs",
-    "status": "eol",
-    "platformId": "quickswap",
-    "retireReason": "rewards",
-    "assets": ["ORBS", "USDC"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MICRO",
-      "IL_HIGH",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x614389EaAE0A6821DC49062D56BDA3d9d45Fa2ff",
-    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x614389EaAE0A6821DC49062D56BDA3d9d45Fa2ff",
-    "createdAt": 1647302895,
-    "network": "polygon"
-  },
-  {
     "id": "quick-fodl-matic-eol",
     "name": "FODL-MATIC LP",
     "token": "FODL-MATIC LP",
@@ -6267,7 +6316,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/22/deposit",
-    "createdAt": 1653327757,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7372,7 +7421,8 @@
     "earnContractAddress": "0x6720C2b7fd7dE1CAD3242dd3E8a86d033D4ed3f9",
     "oracle": "lps",
     "oracleId": "jarvis-2nzd",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "jarvis",
     "assets": ["jNZD", "NZDS"],
     "strategyTypeId": "lp",
@@ -7417,7 +7467,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/255/deposit",
-    "createdAt": 1653321475,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7447,7 +7497,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/209/deposit",
-    "createdAt": 1653230127,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -7987,7 +8037,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/286/deposit",
-    "createdAt": 1658909850,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -8017,7 +8067,7 @@
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/285/deposit",
-    "createdAt": 1658916346,
+    "createdAt": 1663633677,
     "network": "polygon"
   },
   {
@@ -8047,5 +8097,34 @@
     "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x03cd191f589d12b0582a99808cf19851e468e6b500010000000000000000000a",
     "network": "polygon",
     "createdAt": 1661772010
+  },
+  {
+    "id": "jarvis-2eure",
+    "name": "jEUR-EURe LP",
+    "token": "jEUR-EURe LP",
+    "tokenAddress": "0x2F3E9CA3bFf85B91D9fe6a9f3e8F9B1A6a4c3cF4",
+    "tokenDecimals": 18,
+    "tokenProviderId": "curve",
+    "earnedToken": "mooJarvis2EURe",
+    "earnedTokenAddress": "0x58a3e6d5501180fb9fcE7cFC2368F9Dc5e186A6f",
+    "earnContractAddress": "0x58a3e6d5501180fb9fcE7cFC2368F9Dc5e186A6f",
+    "oracle": "lps",
+    "oracleId": "jarvis-2eure",
+    "status": "active",
+    "platformId": "jarvis",
+    "assets": ["jEUR", "EURe"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://polygon.curve.fi/factory/304/deposit",
+    "createdAt": 1663633678,
+    "network": "polygon"
   }
 ]

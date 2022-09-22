@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { styles } from './styles';
-import { Step } from '../Step';
+import { Step } from '../../../../../../components/Step';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../../../../store';
 import {
@@ -9,8 +9,8 @@ import {
   selectIsFiatSupported,
   selectSupportedTokensForFiat,
 } from '../../../../../data/selectors/on-ramp';
-import { SearchableList } from '../SearchableList';
-import { ItemInnerProps } from '../SearchableList/ItemInner';
+import { SearchableList } from '../../../../../../components/SearchableList';
+import { ItemInnerProps } from '../../../../../../components/SearchableList/ItemInner';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { FiatTitleAdornment } from '../FiatTitleAdornment';
 import { setOnRampToken } from '../../../../../data/actions/on-ramp';
@@ -24,6 +24,7 @@ export const TokenStep = memo(function () {
 
   return (
     <Step
+      stepType="onRamp"
       title={t('OnRamp-TokenStep-Title')}
       titleAdornment={supported ? <FiatTitleAdornment currencyCode={fiat} /> : undefined}
     >

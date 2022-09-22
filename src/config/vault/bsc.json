@@ -1234,7 +1234,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -2433,7 +2433,8 @@
     "earnContractAddress": "0x69DDD966e3FAaB30c09D7A2C40609Ea859F4107E",
     "oracle": "lps",
     "oracleId": "banana-axs-bnb",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "apeswap",
     "assets": ["AXS", "BNB"],
     "strategyTypeId": "lp",
@@ -3641,7 +3642,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -15043,7 +15044,7 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
+      "IL_HIGH",
       "MCAP_MEDIUM",
       "AUDIT",
       "CONTRACTS_VERIFIED"
@@ -15785,36 +15786,6 @@
     "network": "bsc"
   },
   {
-    "id": "cakev2-pex-wbnb",
-    "name": "PEX-BNB LP",
-    "token": "PEX-BNB LP",
-    "tokenAddress": "0x5ca96E8bDe0Bc587DaC9e02422Fd205b1102DAa4",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooCakeV2PEX-BNB",
-    "earnedTokenAddress": "0xe744dF11a036abC219e28Dd11ba4923784515125",
-    "earnContractAddress": "0xe744dF11a036abC219e28Dd11ba4923784515125",
-    "oracle": "lps",
-    "oracleId": "cakev2-pex-wbnb",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "pancakeswap",
-    "assets": ["PEX", "BNB"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MICRO",
-      "IL_HIGH",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0x6a0b66710567b6beb81A71F7e9466450a91a384b",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x6a0b66710567b6beb81A71F7e9466450a91a384b",
-    "createdAt": 1651001420,
-    "network": "bsc"
-  },
-  {
     "id": "cakev2-wbnb-froyo",
     "name": "FROYO-BNB LP",
     "token": "FROYO-BNB LP",
@@ -16224,6 +16195,35 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0xf0d17f404343D7Ba66076C818c9DC726650E2435",
     "buyTokenUrl": "https://ellipsis.finance/pool/0xf0d17f404343D7Ba66076C818c9DC726650E2435",
     "createdAt": 1662035071,
+    "network": "bsc"
+  },
+  {
+    "id": "ellipsis-bnb-bnbx-crypto",
+    "name": "BNBx/BNB",
+    "token": "epsBNBx-BNB",
+    "tokenAddress": "0x5c73804FeDd39f3388E03F4aa1fE06a1C0e60c8e",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ellipsis",
+    "earnedToken": "mooEllipsisBNBxCrypto",
+    "earnedTokenAddress": "0x56ec6031dC969CfA035F6D65e65D8595d5660fB4",
+    "earnContractAddress": "0x56ec6031dC969CfA035F6D65e65D8595d5660fB4",
+    "oracle": "lps",
+    "oracleId": "ellipsis-bnb-bnbx-crypto",
+    "status": "active",
+    "platformId": "dotdot",
+    "assets": ["BNBx", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0xFD4afeAc39DA03a05f61844095A75c4fB7D766DA",
+    "buyTokenUrl": "https://ellipsis.finance/pool/0xFD4afeAc39DA03a05f61844095A75c4fB7D766DA",
+    "createdAt": 1663829572,
     "network": "bsc"
   },
   {
@@ -17109,6 +17109,36 @@
     "addLiquidityUrl": "https://ellipsis.finance/pool/0xad51e40D8f255dba1Ad08501D6B1a6ACb7C188f3",
     "buyTokenUrl": "https://v1-app.jarvis.exchange/",
     "createdAt": 1658410689,
+    "network": "bsc"
+  },
+  {
+    "id": "ellipsis-3brl",
+    "name": "jBRL/BRZ/BRZw",
+    "token": "jBRL/BRZ/BRZw",
+    "tokenAddress": "0x27b5Fc5333246F63280dA8e3e533512EfA747c13",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ellipsis",
+    "earnedToken": "mooEllipsis3BRL",
+    "earnedTokenAddress": "0xF46E3e2eb855baE2A32eD941f0c03b1D9b7b96a0",
+    "earnContractAddress": "0xF46E3e2eb855baE2A32eD941f0c03b1D9b7b96a0",
+    "oracle": "lps",
+    "oracleId": "ellipsis-3brl",
+    "status": "active",
+    "platformId": "dotdot",
+    "assets": ["jBRL", "BRZ", "BRZw"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MIRCO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED",
+      "ALGO_STABLE"
+    ],
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0x43719DfFf12B04C71F7A589cdc7F54a01da07D7a",
+    "buyTokenUrl": "https://v1-app.jarvis.exchange/",
+    "createdAt": 1663262536,
     "network": "bsc"
   }
 ]
