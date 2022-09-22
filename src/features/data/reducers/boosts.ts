@@ -10,6 +10,7 @@ import { ChainEntity } from '../entities/chain';
 import { VaultEntity } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { BoostConfig } from '../apis/config-types';
+import { datesAreEqual } from '../../../helpers/date';
 
 export type BoostContractState = {
   periodFinish: Date | null;
@@ -91,8 +92,10 @@ function addContractDataToState(
     if (
       sliceState.contractState[boostContractData.id] === undefined ||
       sliceState.contractState[boostContractData.id] === null ||
-      sliceState.contractState[boostContractData.id].periodFinish.getTime() !==
-        boostContractData.periodFinish.getTime() ||
+      !datesAreEqual(
+        boostContractData.periodFinish,
+        sliceState.contractState[boostContractData.id].periodFinish
+      ) ||
       sliceState.contractState[boostContractData.id].isPreStake !== boostContractData.isPreStake
     ) {
       sliceState.contractState[boostContractData.id] = {
