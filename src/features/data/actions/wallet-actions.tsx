@@ -869,6 +869,12 @@ const bridge = (
   });
 };
 
+const resetWallet = () => {
+  return captureWalletErrors(async dispatch => {
+    dispatch({ type: WALLET_ACTION_RESET });
+  });
+};
+
 export const walletActions = {
   approval,
   deposit,
@@ -887,6 +893,7 @@ export const walletActions = {
   mintDeposit,
   burnWithdraw,
   bridge,
+  resetWallet,
 };
 
 function captureWalletErrors<ReturnType>(

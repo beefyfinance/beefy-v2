@@ -13,6 +13,7 @@ import { isEmpty } from '../../../../helpers/utils';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { Button } from '../../../Button';
 import { TransactionLink } from '../TransactionLink';
+import { walletActions } from '../../../../features/data/actions/wallet-actions';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -60,6 +61,7 @@ export const ErrorContent = memo(function () {
 
   const handleClose = React.useCallback(() => {
     dispatch(stepperActions.reset());
+    dispatch(walletActions.resetWallet());
   }, [dispatch]);
 
   return (
@@ -97,6 +99,7 @@ export const ButtonsContent = memo(function () {
 
   const handleClose = React.useCallback(() => {
     dispatch(stepperActions.reset());
+    dispatch(walletActions.resetWallet());
   }, [dispatch]);
 
   return (
