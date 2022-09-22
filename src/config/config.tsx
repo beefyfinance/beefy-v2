@@ -242,7 +242,7 @@ export const config = {
       rpcUrls: ['https://arb1.arbitrum.io/rpc'],
       blockExplorerUrls: ['https://arbiscan.io/'],
     },
-    stableCoins: ['USDC', 'USDT', 'MIM', 'VST', 'DAI'],
+    stableCoins: ['USDC', 'USDT', 'MIM', 'VST', 'DAI', 'sarUSDC', 'sarUSDT'],
   },
   celo: {
     name: 'Celo',
