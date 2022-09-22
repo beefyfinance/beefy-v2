@@ -7,6 +7,7 @@ import vaultAbi from '../../../config/abi/vault.json';
 import minterAbi from '../../../config/abi/minter.json';
 import zapAbi from '../../../config/abi/zap.json';
 import bridgeAbi from '../../../config/abi/BridgeAbi.json';
+import balancerVaultMigratorAbi from '../../../config/abi/BalancerVaultMigrator.json';
 import { BeefyState, BeefyThunk } from '../../../redux-types';
 import { getWalletConnectionApiInstance } from '../apis/instances';
 import { BoostEntity } from '../entities/boost';
@@ -27,6 +28,7 @@ import {
   selectGovVaultPendingRewardsInToken,
   selectGovVaultRewardsTokenEntity,
   selectGovVaultUserStackedBalanceInDepositToken,
+  selectUserVaultDepositInDepositTokenExcludingBoosts,
 } from '../selectors/balance';
 import {
   selectChainNativeToken,
@@ -873,6 +875,48 @@ const bridge = (
   });
 };
 
+const migrate = (
+  fromVaultId: VaultEntity['id'],
+  toVaultId: VaultEntity['id'],
+  migrateContract: string
+) => {
+  return captureWalletErrors(async (dispatch, getState) => {
+    dispatch({ type: WALLET_ACTION_RESET });
+    const state = getState();
+    const address = selectWalletAddress(state);
+    if (!address) {
+      return;
+    }
+
+    const fromVault = selectVaultById(state, fromVaultId);
+    const toVault = selectVaultById(state, fromVaultId);
+    const walletApi = await getWalletConnectionApiInstance();
+    const web3 = await walletApi.getConnectedWeb3Instance();
+    const contract = new web3.eth.Contract(balancerVaultMigratorAbi as AbiItem[], migrateContract);
+    const gasPrices = await getGasPriceOptions(web3);
+    const amount = selectUserVaultDepositInDepositTokenExcludingBoosts(state, fromVaultId, address);
+    const depositToken = selectTokenByAddress(
+      state,
+      fromVault.chainId,
+      fromVault.depositTokenAddress
+    );
+    const transaction = contract.methods
+      .migrate(fromVault.earnContractAddress, toVault.earnContractAddress)
+      .send({ from: address, ...gasPrices });
+
+    bindTransactionEvents(
+      dispatch,
+      transaction,
+      { spender: migrateContract, amount, token: depositToken },
+      {
+        chainId: fromVault.chainId,
+        spenderAddress: migrateContract,
+        tokens: getVaultTokensToRefresh(state, fromVault),
+      }
+    );
+  });
+};
+
 export const walletActions = {
   approval,
   deposit,
@@ -891,6 +935,7 @@ export const walletActions = {
   mintDeposit,
   burnWithdraw,
   bridge,
+  migrate,
 };
 
 function captureWalletErrors<ReturnType>(

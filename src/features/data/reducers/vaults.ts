@@ -187,6 +187,7 @@ function addVaultToState(
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
+      migrator: apiVault.migrator,
     };
 
     sliceState.byId[vault.id] = vault;
@@ -241,6 +242,7 @@ function addVaultToState(
       createdAt: apiVault.createdAt ?? 0,
       retireReason: apiVault.retireReason,
       pauseReason: apiVault.pauseReason,
+      migrator: apiVault.migrator,
     };
     // redux toolkit uses immer by default so we can
     // directly modify the state as usual

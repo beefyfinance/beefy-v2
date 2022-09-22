@@ -32,6 +32,10 @@ export interface VaultConfig {
   buyTokenUrl?: string | null;
   retireReason?: string | null;
   pauseReason?: string | null;
+  migrator?: {
+    vaultId: VaultEntity['id'];
+    contractAddress?: string;
+  } | null;
   removeLiquidityUrl?: string | null;
   depositFee?: string | null;
   refund?: boolean | null;

@@ -163,7 +163,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
             variant="success"
             disabled={isStepping}
           >
-            {t('Network-Change', { network: chain.name.toUpperCase() })}
+            {t('Network-Change', { network: chain.name })}
           </Button>
         ) : (
           <>

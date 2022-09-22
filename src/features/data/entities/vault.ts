@@ -14,6 +14,11 @@ export type VaultTag =
   | 'eol'
   | 'paused';
 
+export type VaultMigrator = {
+  vaultId: VaultEntity['id'];
+  contractAddress?: string;
+};
+
 /**
  * A vault is anything you can stake stuff into
  * - could be a single token vault
@@ -71,6 +76,7 @@ export interface VaultStandard {
 
   retireReason?: string;
   pauseReason?: string;
+  migrator?: VaultMigrator;
 }
 
 export interface VaultGov {
@@ -129,6 +135,7 @@ export interface VaultGov {
 
   retireReason?: string;
   pauseReason?: string;
+  migrator?: VaultMigrator;
 }
 
 export function isGovVault(vault: VaultEntity): vault is VaultGov {

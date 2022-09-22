@@ -13,7 +13,8 @@ export type Step = {
     | 'claim-gov'
     | 'mint'
     | 'burn'
-    | 'bridge';
+    | 'bridge'
+    | 'migrate';
   message: string;
   action: ThunkAction<any, any, any, any>;
   pending: boolean;

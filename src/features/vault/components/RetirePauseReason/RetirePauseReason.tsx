@@ -4,6 +4,7 @@ import { AlertWarning } from '../../../../components/Alerts';
 import { VaultEntity } from '../../../data/entities/vault';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { useAppSelector } from '../../../../store';
+import { Migrate } from './Migrate';
 
 export type RetirePauseReasonProps = {
   vaultId: VaultEntity['id'];
@@ -15,7 +16,7 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
   className,
 }) {
   const { t, i18n } = useTranslation();
-  const { status, retireReason, pauseReason } = useAppSelector(state =>
+  const { status, retireReason, pauseReason, migrator } = useAppSelector(state =>
     selectVaultById(state, vaultId)
   );
 
@@ -47,5 +48,21 @@ export const RetirePauseReason = memo<RetirePauseReasonProps>(function RetirePau
     return null;
   }, [t, i18n, status, retireReason, pauseReason]);
 
-  return message ? <AlertWarning className={className}>{message}</AlertWarning> : null;
+  if (message) {
+    if (migrator) {
+      return (
+        <Migrate
+          className={className}
+          fromVaultId={vaultId}
+          toVaultId={migrator.vaultId}
+          contractAddress={migrator.contractAddress}
+          message={message}
+        />
+      );
+    }
+
+    return <AlertWarning className={className}>{message}</AlertWarning>;
+  }
+
+  return null;
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box, IconButton, makeStyles, Snackbar } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from '../../helpers/utils';
@@ -7,7 +7,7 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import clsx from 'clsx';
 import { StepperState } from './types';
 import { formatBigDecimals } from '../../helpers/format';
-import { selectMintResult } from './selectors';
+import { selectMigrationResult, selectMintResult } from './selectors';
 import { useAppSelector } from '../../store';
 import { ChainEntity } from '../../features/data/entities/chain';
 import { BridgeInfo } from './components/BridgeInfo';
@@ -37,6 +37,7 @@ const _Steps = ({
     !steps.finished &&
     (steps.items[steps.currentStep].step === 'withdraw' ||
       steps.items[steps.currentStep].step === 'claim-withdraw' ||
+      steps.items[steps.currentStep].step === 'migrate' ||
       steps.items[steps.currentStep].step === 'deposit');
 
   return (
@@ -98,6 +99,7 @@ const _Steps = ({
                 <>
                   {steps.items[steps.currentStep].step === 'deposit' && t('Deposit-Done')}
                   {steps.items[steps.currentStep].step === 'withdraw' && t('Withdraw-Done')}
+                  {steps.items[steps.currentStep].step === 'migrate' && t('Migrate-Done')}
                   {steps.items[steps.currentStep].step === 'claim-withdraw' && t('Withdraw-Done')}
                   {steps.items[steps.currentStep].step === 'claim-unstake' &&
                     t('Claim-Unstake-Done')}
@@ -214,6 +216,18 @@ const _Steps = ({
                     </Box>
                   </>
                 )}
+              {/* Migrate Success */}
+              {steps.items[steps.currentStep].step === 'migrate' &&
+                walletActionsState.result === 'success' && (
+                  <>
+                    <Box className={clsx(classes.content, classes.successContent)}>
+                      <div className={classes.message}>
+                        <MigrationSuccessMessage />
+                      </div>
+                      <TransactionLink chainId={chainId} />
+                    </Box>
+                  </>
+                )}
               {(steps.items[steps.currentStep].step === 'unstake' ||
                 steps.items[steps.currentStep].step === 'claim-unstake') &&
                 walletActionsState.result === 'success' && (
@@ -314,5 +328,16 @@ const _Steps = ({
     </Snackbar>
   );
 };
+
+const MigrationSuccessMessage = memo(function () {
+  const { t } = useTranslation();
+  const result = useAppSelector(selectMigrationResult);
+
+  if (!result) {
+    return <>No migration result data found.</>;
+  }
+
+  return <>{t(`Transactn-Migrated-${result.mode}`, result)}</>;
+});
 
 export const Steps = React.memo(_Steps);

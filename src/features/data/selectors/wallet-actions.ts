@@ -4,6 +4,8 @@ import { selectAllowanceByTokenAddress } from './allowances';
 import { selectBoostById } from './boosts';
 import { selectTokenByAddress } from './tokens';
 import { selectStandardVaultById, selectVaultById, selectVaultPricePerFullShare } from './vaults';
+import { VaultEntity } from '../entities/vault';
+import { selectUserBalanceOfToken } from './balance';
 
 export const selectIsApprovalNeededForDeposit = (state: BeefyState, spenderAddress: string) => {
   const tokenAddress = state.ui.deposit.selectedToken.address;
@@ -61,3 +63,22 @@ export const selectIsApprovalNeededForBoostStaking = (
 
   return allowance.isLessThan(mooAmount);
 };
+
+export function selectIsApprovalNeededForMigrate(
+  state: BeefyState,
+  vaultId: VaultEntity['id'],
+  migrateContract: string,
+  walletAddress?: string
+): boolean {
+  const vault = selectVaultById(state, vaultId);
+  const mooToken = selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress);
+  const allowance = selectAllowanceByTokenAddress(
+    state,
+    vault.chainId,
+    vault.earnedTokenAddress,
+    migrateContract
+  );
+  const balance = selectUserBalanceOfToken(state, vault.chainId, mooToken.address, walletAddress);
+
+  return allowance.lt(balance);
+}
