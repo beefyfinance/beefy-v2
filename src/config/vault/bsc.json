@@ -15772,36 +15772,6 @@
     "network": "bsc"
   },
   {
-    "id": "cakev2-pex-wbnb",
-    "name": "PEX-BNB LP",
-    "token": "PEX-BNB LP",
-    "tokenAddress": "0x5ca96E8bDe0Bc587DaC9e02422Fd205b1102DAa4",
-    "tokenDecimals": 18,
-    "tokenProviderId": "pancakeswap",
-    "earnedToken": "mooCakeV2PEX-BNB",
-    "earnedTokenAddress": "0xe744dF11a036abC219e28Dd11ba4923784515125",
-    "earnContractAddress": "0xe744dF11a036abC219e28Dd11ba4923784515125",
-    "oracle": "lps",
-    "oracleId": "cakev2-pex-wbnb",
-    "status": "eol",
-    "retireReason": "rewards",
-    "platformId": "pancakeswap",
-    "assets": ["PEX", "BNB"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MICRO",
-      "IL_HIGH",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "addLiquidityUrl": "https://pancakeswap.finance/add/BNB/0x6a0b66710567b6beb81A71F7e9466450a91a384b",
-    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x6a0b66710567b6beb81A71F7e9466450a91a384b",
-    "createdAt": 1651001420,
-    "network": "bsc"
-  },
-  {
     "id": "cakev2-wbnb-froyo",
     "name": "FROYO-BNB LP",
     "token": "FROYO-BNB LP",
