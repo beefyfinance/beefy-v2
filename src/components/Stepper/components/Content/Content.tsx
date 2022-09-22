@@ -17,10 +17,6 @@ import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
 
-export const Content = () => {
-  return <div>SuccessContent</div>;
-};
-
 export const StepsCountContent = memo(function () {
   const classes = useStyles();
   const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
