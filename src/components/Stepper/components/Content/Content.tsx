@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
 import { selectBridgeStatus } from '../../../../features/data/selectors/bridge';
 import {
+  selectMintResult,
   selectStepperCurrentStepData,
   selectStepperFinished,
 } from '../../../../features/data/selectors/stepper';
@@ -152,6 +153,11 @@ export const SuccessContent = memo(function () {
         token: walletActionsState?.data.token.symbol,
         rewards: formatBigDecimals(currentStepData.extraInfo.rewards.amount),
         rewardToken: currentStepData.extraInfo.rewards.token.symbol,
+      })
+    : currentStepData.step === 'mint'
+    ? t(`${selectMintResult(walletActionsState).type}-Success-Content`, {
+        amount: selectMintResult(walletActionsState).amount,
+        token: walletActionsState.data.token.symbol,
       })
     : isZapOutMessage
     ? t('withdraw-zapout-Success-Content', {

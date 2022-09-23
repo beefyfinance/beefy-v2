@@ -468,6 +468,7 @@
   "stake-Success-Content": "You have successfully deposited {{amount}} {{token}} in the Boost",
   "unstake-Success-Content": "You have successfully withdrawn {{amount}} {{token}} from the Boost",
   "mint-Success-Content": "You successfully minted {{amount}} {{token}}",
+  "buy-Success-Content": "You successfully bought {{amount}} {{token}}",
   "burn-Success-Content": "You have successfully withdrawn {{amount}} {{token}}",
   "bridge-Success-Content": "You have successfully bridged {{amount}} BIFI to {{chain}}"
 }
