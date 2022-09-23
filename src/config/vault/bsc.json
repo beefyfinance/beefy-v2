@@ -58,6 +58,36 @@
     "network": "bsc"
   },
   {
+    "id": "cakev2-hay-busd",
+    "name": "HAY-BUSD LP",
+    "token": "HAY-BUSD LP2",
+    "tokenAddress": "0xB6040A9F294477dDAdf5543a24E5463B8F2423Ae",
+    "tokenDecimals": 18,
+    "tokenProviderId": "pancakeswap",
+    "earnedToken": "mooCakeV2HAY-BUSD",
+    "earnedTokenAddress": "0x213526BEF0fA40c7FEAB26304c4260c5CF7e841d",
+    "earnContractAddress": "0x213526BEF0fA40c7FEAB26304c4260c5CF7e841d",
+    "oracle": "lps",
+    "oracleId": "cakev2-hay-busd",
+    "status": "active",
+    "platformId": "pancakeswap",
+    "assets": ["HAY", "BUSD"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://pancakeswap.finance/add/0x0782b6d8c4551B9760e74c0545a9bCD90bdc41E5/0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    "buyTokenUrl": "https://pancakeswap.finance/swap?outputCurrency=0x0782b6d8c4551B9760e74c0545a9bCD90bdc41E5",
+    "network": "bsc",
+    "createdAt": 1663954507
+  },
+  {
     "id": "cakev2-busd-hoop",
     "name": "HOOP-BUSD LP",
     "token": "HOOP-BUSD LP2",
