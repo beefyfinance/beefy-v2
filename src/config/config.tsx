@@ -50,6 +50,7 @@ export const config = {
       'BRZ',
       'BRZw',
       'USD+',
+      'jCHF',
     ],
   },
   heco: {

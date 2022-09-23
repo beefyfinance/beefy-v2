@@ -17123,5 +17123,35 @@
     "buyTokenUrl": "https://v1-app.jarvis.exchange/",
     "createdAt": 1663262536,
     "network": "bsc"
+  },
+  {
+    "id": "ellipsis-busd-jchf",
+    "name": "jCHF/BUSD",
+    "token": "epsBUSD-jCHF",
+    "tokenAddress": "0x5887cEa5e2bb7dD36F0C06Da47A8Df918c289A29",
+    "tokenDecimals": 18,
+    "tokenProviderId": "ellipsis",
+    "earnedToken": "mooEllipsisBUSD-jCHF",
+    "earnedTokenAddress": "0x80ACf5C89A284C4b6Fdbc851Ba9844D29d4c6BEd",
+    "earnContractAddress": "0x80ACf5C89A284C4b6Fdbc851Ba9844D29d4c6BEd",
+    "oracle": "lps",
+    "oracleId": "ellipsis-busd-jchf",
+    "status": "active",
+    "platformId": "dotdot",
+    "assets": ["jCHF", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://ellipsis.finance/pool/0xBcA6E25937B0F7E0FD8130076b6B218F595E32e2",
+    "buyTokenUrl": "https://v1-app.jarvis.exchange/",
+    "createdAt": 1663864129,
+    "network": "bsc"
   }
 ]
