@@ -42,7 +42,14 @@
     "platformId": "dystopia",
     "assets": ["USD+","USDC"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "MCAP_MICRO", "IL_NONE","OVERCOLLAT_ALGO_STABLE, "CONTRACTS_VERIFIED"],
+    "risks":[
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVERCOLLAT_ALGO_STABLE"
+    ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
     "network": "polygon",
