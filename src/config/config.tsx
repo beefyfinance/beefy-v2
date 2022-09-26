@@ -349,7 +349,7 @@ export const config = {
       rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
       blockExplorerUrls: ['https://andromeda-explorer.metis.io/'],
     },
-    stableCoins: ['mUSDT', 'mUSDC'],
+    stableCoins: ['mUSDT', 'mUSDC', 'mDAI'],
   },
   aurora: {
     name: 'Aurora',
