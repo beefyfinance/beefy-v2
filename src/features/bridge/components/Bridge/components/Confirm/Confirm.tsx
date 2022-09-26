@@ -128,7 +128,7 @@ function _Confirm() {
       })
     );
 
-    dispatch(startStepper(fromChainData.chainId));
+    dispatch(startStepper(fromChain.id));
   };
 
   const handleConnectWallet = () => {

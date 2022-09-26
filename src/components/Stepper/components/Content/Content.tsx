@@ -171,17 +171,21 @@ export const SuccessContent = memo(function () {
 
   return (
     <>
-      <div className={clsx(classes.content, classes.successContent)}>
-        <div className={classes.message}>{successMessage}</div>
-        <TransactionLink />
-      </div>
-      <ButtonsContent />
-      {hasRememberMsg && (
-        <div className={classes.rememberContainer}>
-          <div className={classes.message}>
-            <span>{t('Remember')}</span> {t(rememberMsg)}
+      {currentStepData.step !== 'bridge' && (
+        <>
+          <div className={clsx(classes.content, classes.successContent)}>
+            <div className={classes.message}>{successMessage}</div>
+            <TransactionLink />
           </div>
-        </div>
+          <ButtonsContent />
+          {hasRememberMsg && (
+            <div className={classes.rememberContainer}>
+              <div className={classes.message}>
+                <span>{t('Remember')}</span> {t(rememberMsg)}
+              </div>
+            </div>
+          )}
+        </>
       )}
     </>
   );

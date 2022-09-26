@@ -119,7 +119,7 @@ const BridgeTxProgress = memo(function () {
       {txData?.status === 10 && (
         <Box className={classes.successContainer}>
           <div className={classes.textSuccess}>
-            {t('Transactn-Bridge', {
+            {t('bridge-Success-Content', {
               amount: formatBigNumberSignificant(bridgeState.amount, 4),
               chain: destChain.name,
             })}
