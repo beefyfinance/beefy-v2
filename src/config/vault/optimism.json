@@ -27,6 +27,28 @@
     "createdAt": 1663091478
   },
   {
+    "id": "velodrome-jeur-ageur",
+    "name": "jEUR-agEUR sLP",
+    "token": "jEUR-agEUR sLP",
+    "tokenAddress": "0x050D6Dbc73F6993A29e1327846117C4F5Fc7D68E",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVelodromejEUR-agEUR",
+    "earnedTokenAddress": "0x9f7eD443F5C89b6F2D4FA361d55594e0387DbF57",
+    "earnContractAddress": "0x9f7eD443F5C89b6F2D4FA361d55594e0387DbF57",
+    "oracle": "lps",
+    "oracleId": "velodrome-jeur-ageur",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["jEUR", "agEUR"],
+    "strategyTypeId": "lp",
+    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1663910717
+  },
+  {
     "id": "velodrome-op-bifi",
     "name": "BIFI-OP vLP",
     "token": "BIFI-OP vLP",
