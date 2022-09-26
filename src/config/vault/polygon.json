@@ -6260,37 +6260,6 @@
     "retireReason": "rewards"
   },
   {
-    "id": "quick-usdc-orbs-eol",
-    "name": "ORBS-USDC LP",
-    "token": "ORBS-USDC LP",
-    "tokenAddress": "0xB2b6D423e535b57aaD06E9866803B95fB66152EA",
-    "tokenDecimals": 18,
-    "tokenProviderId": "quickswap",
-    "earnedToken": "mooQuickSwapORBS-USDC",
-    "earnedTokenAddress": "0x333F81C94e388002aAc75ccF23Ab4865B52D7a10",
-    "earnContractAddress": "0x333F81C94e388002aAc75ccF23Ab4865B52D7a10",
-    "oracle": "lps",
-    "oracleId": "quick-usdc-orbs",
-    "status": "eol",
-    "platformId": "quickswap",
-    "retireReason": "rewards",
-    "assets": ["ORBS", "USDC"],
-    "strategyTypeId": "lp",
-    "risks": [
-      "COMPLEXITY_LOW",
-      "BATTLE_TESTED",
-      "MCAP_MICRO",
-      "IL_HIGH",
-      "PLATFORM_ESTABLISHED",
-      "AUDIT",
-      "CONTRACTS_VERIFIED"
-    ],
-    "buyTokenUrl": "https://quickswap.exchange/#/swap?inputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174&outputCurrency=0x614389EaAE0A6821DC49062D56BDA3d9d45Fa2ff",
-    "addLiquidityUrl": "https://quickswap.exchange/#/add/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174/0x614389EaAE0A6821DC49062D56BDA3d9d45Fa2ff",
-    "createdAt": 1647302895,
-    "network": "polygon"
-  },
-  {
     "id": "quick-fodl-matic-eol",
     "name": "FODL-MATIC LP",
     "token": "FODL-MATIC LP",

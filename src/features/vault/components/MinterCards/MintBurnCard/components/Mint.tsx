@@ -202,14 +202,17 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
         <>
           {' '}
           <div className={classes.content}>
-            {t('Mint-Content-Short', {
-              token1: minter.mintedToken.symbol,
-              token2: minter.depositToken.symbol,
-            })}
+            {t(
+              minter.hasEarningsPool ? 'Mint-Content-Burnable-Earnings' : 'Mint-Content-Burnable',
+              {
+                token1: minter.mintedToken.symbol,
+                token2: minter.depositToken.symbol,
+              }
+            )}
           </div>
           <div className={classes.boxReminder}>
             <div className={classes.content}>
-              {t('Mint-Reminder', {
+              {t('Mint-Content', {
                 token1: minter.mintedToken.symbol,
                 token2: minter.depositToken.symbol,
               })}
