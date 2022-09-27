@@ -7,7 +7,11 @@ const singleAssets = Object.fromEntries(
 );
 const singleAssetCache = {};
 
+//Regex expression to get a token that does exist but contains a dot (.) in the name; eg WETH.e
+const Regex = new RegExp('[.]');
+
 export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEntity['id']) {
+  symbol = symbol.replace(Regex, '');
   const ids = chainId ? [`${chainId}/${symbol}`, symbol] : [symbol];
 
   for (const id of ids) {
