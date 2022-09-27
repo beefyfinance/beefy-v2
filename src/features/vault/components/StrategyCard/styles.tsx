@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column' as const,
-      rowGap: '8px',
+      rowGap: '16px',
     },
   },
   cardActions: {

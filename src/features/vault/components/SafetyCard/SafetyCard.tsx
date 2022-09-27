@@ -7,13 +7,13 @@ import { SafetyScore } from '../../../../components/SafetyScore';
 import { Card } from '../Card';
 import { CardHeader } from '../Card/CardHeader';
 import { CardContent } from '../Card/CardContent';
-import { CardTitle } from '../Card/CardTitle';
 import { styles } from './styles';
 import up from './up.svg';
 import down from './down.svg';
 import { selectVaultById } from '../../../data/selectors/vaults';
 import { VaultEntity } from '../../../data/entities/vault';
 import { useAppSelector } from '../../../../store';
+import { Collapsable } from '../../../../components/Collapsable';
 
 const useStyles = makeStyles(styles);
 
@@ -24,16 +24,9 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle
-          title={(<SafetyScore score={vault.safetyScore} colorLabel={true} size="md" />) as any}
-        />
-        <div className={classes.tooltipLabel}>
-          <div className={classes.safetyLabel}>{t('Safety-Score1')}</div>
-          <div className={classes.tooltipHolder}>
-            <Popover title={t('Safety-ScoreWhat')} content={t('Safety-ScoreExpl')} />
-          </div>
-        </div>
+      <CardHeader className={classes.header}>
+        <div className={classes.safetyLabel}>{t('Safety-Score1')}</div>
+        <SafetyScore score={vault.safetyScore} colorLabel={true} size="md" />
       </CardHeader>
       <CardContent>
         <div className={classes.riskList}>
@@ -63,10 +56,16 @@ function SafetyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
             </Fragment>
           ))}
         </div>
-        <div className={classes.notes}>
-          <p>{t('Safety-HigherSafer')}</p>
-          <p>{t('Safety-BeefySecure')}</p>
-        </div>
+        <Collapsable
+          titleClassName={classes.titleClassName}
+          containerClassName={classes.howItWorksContainer}
+          title={t('How-It-Works')}
+        >
+          <div className={classes.notes}>
+            <p>{t('Safety-HigherSafer')}</p>
+            <p>{t('Safety-BeefySecure')}</p>
+          </div>
+        </Collapsable>
       </CardContent>
     </Card>
   );

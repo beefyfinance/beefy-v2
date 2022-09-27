@@ -7,14 +7,12 @@ import { AssetsImage } from '../../components/AssetsImage';
 import { styles } from './styles';
 import { Deposit } from './components/Deposit';
 import { Withdraw } from './components/Withdraw';
-import { TokenCard } from './components/TokenCard';
 import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
 import { Graph } from './components/Graph';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
-import { QiDao } from './components/QiDaoCard';
 import { Moonpot } from './components/MoonportCard';
 import {
   selectVaultById,
@@ -24,24 +22,19 @@ import {
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
-import {
-  selectIsVaultInsurace,
-  selectIsVaultMoonpot,
-  selectIsVaultQidao,
-  selectIsVaultSolace,
-} from '../data/selectors/partners';
+import { selectIsVaultMoonpot } from '../data/selectors/partners';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
 import { MinterCards } from './components/MinterCards';
 import { InfoCards } from './components/InfoCards/InfoCards';
 import { RetirePauseReason } from './components/RetirePauseReason';
-import { InsuraceCard } from './components/InsuraceCard';
-import { NexusCard } from './components/NexusCard';
-import { SolaceCard } from './components/SolaceCard';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { VaultPlatform } from '../../components/VaultPlatform';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
+import { AssetsCard } from './components/AssetsCard';
+import { InsuranceCards } from './components/InsuranceCards';
+import { LeverageCards } from './components/LeverageCards';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -89,9 +82,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
   );
   const [dw, setDw] = useState('deposit');
   const isMoonpot = useAppSelector(state => selectIsVaultMoonpot(state, vaultId));
-  const isQidao = useAppSelector(state => selectIsVaultQidao(state, vaultId));
-  const isInsurace = useAppSelector(state => selectIsVaultInsurace(state, vaultId));
-  const isSolace = useAppSelector(state => selectIsVaultSolace(state, vaultId));
 
   return (
     <>
@@ -150,27 +140,11 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </div>
               <MinterCards vaultId={vaultId} />
-              <div>
-                <NexusCard />
-              </div>
-              {isQidao && (
-                <div>
-                  <QiDao vaultId={vaultId} />
-                </div>
-              )}
+              <InsuranceCards vaultId={vaultId} />
+              <LeverageCards vaultId={vaultId} />
               {isMoonpot && (
                 <div>
                   <Moonpot vaultId={vaultId} />
-                </div>
-              )}
-              {isInsurace && (
-                <div>
-                  <InsuraceCard />
-                </div>
-              )}
-              {isSolace && (
-                <div>
-                  <SolaceCard />
                 </div>
               )}
             </div>
@@ -185,9 +159,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               <SafetyCard vaultId={vaultId} />
               {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
               <InfoCards chainId={vault.chainId} vaultId={vault.id} />
-              {vault.assetIds.map(tokenId => (
-                <TokenCard key={tokenId} chainId={vault.chainId} tokenId={tokenId} />
-              ))}
+              <AssetsCard vaultId={vault.id} />
             </div>
           </div>
         </Container>
