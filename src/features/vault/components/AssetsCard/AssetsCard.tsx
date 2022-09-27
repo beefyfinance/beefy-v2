@@ -21,7 +21,7 @@ export const AssetsCard = memo<AssetsCardProps>(function ({ vaultId }) {
 
   return (
     <div className={classes.container}>
-      <Collapsable titleClassName={classes.title} title={t('Asset-Detail')}>
+      <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Asset-Detail')}>
         {vault.assetIds.map(tokenId => (
           <TokenCard key={tokenId} chainId={vault.chainId} tokenId={tokenId} />
         ))}
