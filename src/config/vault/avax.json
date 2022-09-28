@@ -5091,5 +5091,33 @@
     "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
     "createdAt": 1657121627,
     "network": "avax"
+  },
+  {
+    "id": "aavev3-btc.b",
+    "name": "BTC.b",
+    "token": "BTCb",
+    "tokenAddress": "0x152b9d0FdC40C096757F570A51E494bd4b943E50",
+    "tokenDecimals": 6,
+    "earnedToken": "mooAaveBTCb",
+    "earnedTokenAddress": "0xf3CF8812468609C0624aEE2475859BEcD3541C13",
+    "earnContractAddress": "0xf3CF8812468609C0624aEE2475859BEcD3541C13",
+    "oracle": "tokens",
+    "oracleId": "BTCb",
+    "status": "active",
+    "platformId": "aave",
+    "assets": ["BTCb"],
+    "strategyTypeId": "lending",
+    "risks": [
+      "COMPLEXITY_MID",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://www.traderjoexyz.com/trade?outputCurrency=0x152b9d0FdC40C096757F570A51E494bd4b943E50",
+    "createdAt": 1664381669,
+    "network": "avax"
   }
 ]
