@@ -9,6 +9,7 @@ import { ChainEntity } from '../../../data/entities/chain';
 import { TokenEntity } from '../../../data/entities/token';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectCurrentChainId, selectIsWalletConnected } from '../../../data/selectors/wallet';
+import { ReactComponent as PlusIcon } from '../../../../images/icons/plus.svg';
 import { styles } from './styles';
 
 const useStyles = makeStyles(styles);
@@ -55,12 +56,8 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function ({ token, c
       <div className={classes.buttons}>
         {shouldShowAddButton && (
           <Button className={classes.button} onClick={addTokenToWallet}>
-            {t('Add-To-Wallet')}{' '}
-            <img
-              className={classes.icon}
-              src={require('../../../../images/icons/plus.svg').default}
-              alt="plus"
-            />
+            {t('Add-To-Wallet')}
+            <PlusIcon className={classes.icon} />
           </Button>
         )}
         <LinkButton className={classes.linkButtonBg} href={explorerUrl} text={t('Explorer')} />

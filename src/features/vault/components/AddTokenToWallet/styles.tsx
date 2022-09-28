@@ -32,6 +32,12 @@ export const styles = (theme: Theme) => ({
     backgroundColor: theme.palette.background.content,
     borderColor: 'transparent' as const,
     color: theme.palette.text.secondary,
+    '&:hover': {
+      color: theme.palette.text.primary,
+      backgroundColor: '#3F466D',
+      borderColor: 'transparent' as const,
+      transition: 'color 0.1s',
+    },
   },
   icon: {
     marginLeft: '4px',
