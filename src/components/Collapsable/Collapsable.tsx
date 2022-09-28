@@ -2,6 +2,7 @@ import { Collapse, IconButton, makeStyles } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import clsx from 'clsx';
 import React, { memo, ReactNode, useCallback, useState } from 'react';
+import { Button } from '../Button';
 import { styles } from './styles';
 
 interface CollapsableProps {
@@ -32,12 +33,12 @@ export const Collapsable = memo<CollapsableProps>(function ({
   return (
     <>
       <div className={clsx(containerClassName, classes.container)}>
-        <div className={classes.title}>
+        <Button fullWidth={true} onClick={handleCollapse} className={classes.title}>
           <div className={titleClassName}>{title}</div>
-          <IconButton className={classes.iconButton} onClick={handleCollapse}>
+          <IconButton className={classes.iconButton}>
             {open ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
-        </div>
+        </Button>
         <Collapse in={open} timeout="auto">
           {children}
         </Collapse>

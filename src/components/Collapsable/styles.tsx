@@ -11,7 +11,14 @@ export const styles = (theme: Theme) => ({
   },
   title: {
     display: 'flex',
+    padding: 0,
     justifyContent: 'space-between',
+    backgroundColor: 'transparent' as const,
+    borderColor: 'transparent' as const,
+    '&:Hover': {
+      backgroundColor: 'transparent' as const,
+      borderColor: 'transparent' as const,
+    },
   },
   iconButton: {
     padding: 0,
