@@ -1425,5 +1425,33 @@
     "addLiquidityUrl": "https://op.beets.fi/#/pool/0x7ef99013e446ddce2486b8e04735b7019a115e6f000100000000000000000005/invest",
     "network": "optimism",
     "createdAt": 1656341988
+  },
+  {
+    "id": "aavev3-op-susd",
+    "name": "sUSD",
+    "token": "sUSD",
+    "tokenAddress": "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",
+    "tokenDecimals": 18,
+    "earnedToken": "mooAaveOpSUSD",
+    "earnedTokenAddress": "0x45797137aC0936F460E6a71144D21721d05E3eaa",
+    "earnContractAddress": "0x45797137aC0936F460E6a71144D21721d05E3eaa",
+    "oracle": "tokens",
+    "oracleId": "sUSD",
+    "status": "active",
+    "platformId": "aave",
+    "assets": ["sUSD"],
+    "strategyTypeId": "lending",
+    "risks": [
+      "COMPLEXITY_MID",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "buyTokenUrl": "https://op.beets.fi/#/trade",
+    "createdAt": 1664382770,
+    "network": "optimism"
   }
 ]
