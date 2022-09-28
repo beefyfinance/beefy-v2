@@ -5,13 +5,19 @@ import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded';
 import CodeRoundedIcon from '@material-ui/icons/CodeRounded';
 import InsertIcon from '@material-ui/icons/InsertLink';
 import { LinkButtonProps } from './LinkButtonProps';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(styles);
 
-export const LinkButton: React.FC<LinkButtonProps> = ({ href, text, type }) => {
+export const LinkButton: React.FC<LinkButtonProps> = ({ href, text, type, className }) => {
   const classes = useStyles();
   return (
-    <a className={classes.link} href={href} target="_blank" rel="noopener noreferrer">
+    <a
+      className={clsx(className, classes.link)}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {type === 'code' && <CodeRoundedIcon fontSize="inherit" className={classes.icon} />}
       {type === 'link' && <InsertIcon fontSize="inherit" className={classes.icon} />}
       <span>{text}</span>

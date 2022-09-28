@@ -49,6 +49,7 @@ export const getChainAddressBook = memoize(
           buyUrl: null,
           website: bookToken.website || null,
           description: bookToken.description || null,
+          logoURI: bookToken.logoURI || null,
           type: 'erc20',
         };
       } else if (tokenId === nativeSymbol) {
@@ -64,6 +65,7 @@ export const getChainAddressBook = memoize(
             buyUrl: null,
             website: bookToken.website || null,
             description: bookToken.description || null,
+            logoURI: bookToken.logoURI || null,
             type: 'native',
           };
         } else {
@@ -77,6 +79,7 @@ export const getChainAddressBook = memoize(
             buyUrl: null,
             website: bookToken.website || null,
             description: bookToken.description || null,
+            logoURI: bookToken.logoURI || null,
             type: 'native',
           };
         }
@@ -92,6 +95,7 @@ export const getChainAddressBook = memoize(
           website: bookToken.website || null,
           description: bookToken.description || null,
           type: 'erc20',
+          logoURI: bookToken.logoURI || null,
         };
       }
 
