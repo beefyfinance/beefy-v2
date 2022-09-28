@@ -64,7 +64,7 @@
     "tokenAddress": "0x1Cba970a6E06d4BcC0c4717BE677d1A8AA0211DA",
     "tokenDecimals": 18,
     "tokenProviderId": "biswap",
-    "earnedToken": "mooCakeV2HAY-BUSD",
+    "earnedToken": "mooBiswapETC-BNB",
     "earnedTokenAddress": "0xF1237FbbD307d515DE8839dB93b1a91287C600F6",
     "earnContractAddress": "0xF1237FbbD307d515DE8839dB93b1a91287C600F6",
     "oracle": "lps",
