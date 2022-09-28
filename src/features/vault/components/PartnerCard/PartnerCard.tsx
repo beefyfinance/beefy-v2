@@ -14,11 +14,13 @@ export const PartnerCard = memo<PartnerCardProps>(function ({ logo, title, conte
   const classes = useStyles();
 
   return (
-    <div className={classes.container}>
-      <a href={url} target="__blank" className={classes.title}>
-        <img src={logo} alt={title} className={classes.icon} /> {title}
-      </a>
-      <div className={classes.content}>{content}</div>
-    </div>
+    <a href={url} target="__blank" className={classes.link}>
+      <div className={classes.container}>
+        <div className={classes.title}>
+          <img src={logo} alt={title} className={classes.icon} /> {title}
+        </div>
+        <div className={classes.content}>{content}</div>
+      </div>
+    </a>
   );
 });
