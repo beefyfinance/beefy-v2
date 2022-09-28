@@ -24,7 +24,7 @@ export const InsuranceCards = memo<InsuraceCardProps>(function ({ vaultId }) {
 
   return (
     <div className={classes.container}>
-      <Collapsable titleClassName={classes.title} title={t('Insurance')}>
+      <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Insurance')}>
         <NexusCard />
         {isInsurace && <InsuraceCard />}
         {isSolace && <SolaceCard />}

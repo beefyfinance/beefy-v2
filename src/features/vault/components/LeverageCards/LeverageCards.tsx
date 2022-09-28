@@ -22,7 +22,7 @@ export const LeverageCards = memo<LeverageCardsProps>(function ({ vaultId }) {
 
   return isQidao ? (
     <div className={classes.container}>
-      <Collapsable titleClassName={classes.title} title={t('Leverage')}>
+      <Collapsable openByDefault={true} titleClassName={classes.title} title={t('Leverage')}>
         <QiDao />
       </Collapsable>
     </div>
