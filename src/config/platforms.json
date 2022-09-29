@@ -893,5 +893,10 @@
     "id": "cone",
     "name": "Cone",
     "filter": true
+  },
+  {
+    "id": "hermes",
+    "name": "Hermes",
+    "filter": true
   }
 ]
