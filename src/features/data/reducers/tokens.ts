@@ -101,6 +101,7 @@ export const tokensSlice = createSlice({
           decimals: chainConf.walletSettings.nativeCurrency.decimals, // TODO: not sure about that
           address: 'native',
           symbol: chainConf.walletSettings.nativeCurrency.symbol,
+          name: chainConf.walletSettings.nativeCurrency.name,
           type: 'native',
           buyUrl: sliceState.byChainId[chainId].byAddress['native']?.buyUrl ?? null,
           website: sliceState.byChainId[chainId].byAddress['native']?.website ?? null,

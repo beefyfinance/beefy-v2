@@ -15,8 +15,12 @@ export const ChartWithLegend = memo<ChartWithLegendProps>(function ChartWithLege
 
   return (
     <div className={classes.holder}>
-      <Chart assets={breakdown.assets} />
-      <Legend assets={breakdown.assets} chainId={breakdown.chainId} className={classes.legend} />
+      <Chart assets={breakdown.asset.underlying} />
+      <Legend
+        assets={breakdown.asset.underlying}
+        chainId={breakdown.vault.chainId}
+        className={classes.legend}
+      />
     </div>
   );
 });

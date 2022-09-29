@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { CalculatedAsset } from '../../types';
 import { AssetsImage } from '../../../../../../components/AssetsImage';
 import { ChainEntity } from '../../../../../data/entities/chain';
@@ -17,15 +17,22 @@ export type LegendProps = {
 export const Legend = memo<LegendProps>(function Legend({ chainId, assets, className }) {
   const classes = useStyles();
 
-  return (
-    <div className={clsx(classes.holder, className)}>
-      {assets.map(asset => (
-        <div key={asset.address} className={classes.item}>
+  const LegendItem = (asset: CalculatedAsset) => {
+    return (
+      <React.Fragment key={asset.address}>
+        <div className={classes.item}>
           <div className={classes.key} style={{ backgroundColor: asset.color }} />
-          <AssetsImage chainId={chainId} assetIds={[asset.symbol]} className={classes.icon} />
+          <AssetsImage
+            chainId={chainId}
+            assetIds={asset.underlying ? asset.underlying.map(a => a.symbol) : [asset.symbol]}
+            className={classes.icon}
+          />
           {formatPercent(asset.percent)}
         </div>
-      ))}
-    </div>
-  );
+        {asset.underlying?.map(LegendItem)}
+      </React.Fragment>
+    );
+  };
+
+  return <div className={clsx(classes.holder, className)}>{assets.map(LegendItem)}</div>;
 });

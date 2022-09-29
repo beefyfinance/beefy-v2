@@ -3,12 +3,9 @@ import { Theme } from '@material-ui/core/styles';
 export const styles = (theme: Theme) => ({
   header: {
     backgroundColor: '#272B4A',
-    borderRadius: '12px',
   },
   tabs: {
     backgroundColor: theme.palette.background.vaults.inactive,
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(50%, 1fr))',
   },
@@ -19,8 +16,6 @@ export const styles = (theme: Theme) => ({
     padding: 0,
     margin: 0,
     height: '56px',
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     '&:first-child:last-child': {

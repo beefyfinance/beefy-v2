@@ -1,6 +1,7 @@
 export const styles = {
   container: {
-    borderRadius: '20px',
+    borderRadius: '12px',
+    overflow: 'hidden',
     marginTop: '24px',
     '&.MuiPaper-elevation1': {
       boxShadow: '0px 0px 32px 0px #0000001A',
