@@ -43,7 +43,7 @@ export const selectIsApprovalNeededForBoostStaking = (
   spenderAddress: string
 ) => {
   // to withdraw, the spender must have access to the moo token
-  const boostId = state.ui.boostModal.boostId;
+  const boostId = state.ui.boost.boostId;
   if (!boostId) {
     return false;
   }
@@ -57,7 +57,7 @@ export const selectIsApprovalNeededForBoostStaking = (
     mooToken.address,
     spenderAddress
   );
-  const mooAmount = state.ui.boostModal.amount;
+  const mooAmount = state.ui.boost.amount;
 
   return allowance.isLessThan(mooAmount);
 };

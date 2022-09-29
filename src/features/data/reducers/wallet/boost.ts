@@ -11,14 +11,14 @@ import { selectVaultById } from '../../selectors/vaults';
 import { BIG_ZERO } from '../../../../helpers/big-number';
 
 // TODO: this looks exactly like the withdraw state
-export type BoostModalState = {
+export type BoostState = {
   boostId: BoostEntity['id'];
   mode: 'stake' | 'unstake';
   max: boolean; // this is so we know when to disable the max button
   amount: BigNumber;
   formattedInput: string;
 };
-const initialBoostModalState: BoostModalState = {
+const initialBoostState: BoostState = {
   boostId: null,
   mode: 'stake',
   amount: BIG_ZERO,
@@ -26,10 +26,13 @@ const initialBoostModalState: BoostModalState = {
   max: false,
 };
 
-export const boostModalSlice = createSlice({
-  name: 'boost-modal',
-  initialState: initialBoostModalState,
+export const boostSlice = createSlice({
+  name: 'boost',
+  initialState: initialBoostState,
   reducers: {
+    reset() {
+      return initialBoostState;
+    },
     setMax(
       sliceState,
       action: PayloadAction<{
@@ -49,7 +52,6 @@ export const boostModalSlice = createSlice({
       sliceState.formattedInput = formatBigDecimals(balance, balanceToken.decimals);
       sliceState.max = true;
     },
-
     setInput(
       sliceState,
       action: PayloadAction<{ amount: string; withdraw: boolean; state: BeefyState }>
@@ -102,4 +104,4 @@ export const boostModalSlice = createSlice({
   },
 });
 
-export const boostModalActions = boostModalSlice.actions;
+export const boostActions = boostSlice.actions;

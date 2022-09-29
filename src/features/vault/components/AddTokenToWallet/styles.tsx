@@ -41,6 +41,9 @@ export const styles = (theme: Theme) => ({
   },
   icon: {
     marginLeft: '4px',
+    '&:hover': {
+      fill: theme.palette.text.primary,
+    },
   },
   linkButtonBg: {
     backgroundColor: theme.palette.background.content,

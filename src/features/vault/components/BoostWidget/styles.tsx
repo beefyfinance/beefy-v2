@@ -8,8 +8,11 @@ export const styles = (theme: Theme) => ({
   },
   containerBoost: {
     padding: theme.spacing(3),
-    backgroundColor: theme.palette.background.vaults.defaultOutline,
     borderRadius: '12px',
+    backgroundColor: theme.palette.background.default,
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '16px',
   },
   containerExpired: {
     padding: '24px',
@@ -31,7 +34,6 @@ export const styles = (theme: Theme) => ({
     color: '#E88225',
     display: 'flex',
     alignItems: 'center',
-    margin: '0 0 24px 0',
   },
   titleWhite: {
     color: '#fff',
@@ -50,9 +52,10 @@ export const styles = (theme: Theme) => ({
   boostStats: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-    rowGap: '16px',
     columnGap: '16px',
-    margin: '0 0 24px 0',
+    backgroundColor: '#2D3153',
+    padding: '12px',
+    borderRadius: '8px',
   },
   boostStat: {
     '& :last-child': {
@@ -68,9 +71,8 @@ export const styles = (theme: Theme) => ({
     color: theme.palette.text.secondary,
   },
   button: {
-    '& + $button': {
-      marginTop: '12px',
-    },
+    backgroundColor: theme.palette.background.vaults.defaultOutline,
+    borderRadius: '8px',
   },
   expiredBoostName: {
     ...theme.typography['h3'],

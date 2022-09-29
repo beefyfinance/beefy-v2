@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
@@ -11,7 +11,6 @@ import { selectBoostById, selectBoostContractState } from '../../../data/selecto
 import { Step } from '../../../../components/Steps/types';
 import { walletActions } from '../../../data/actions/wallet-actions';
 import { BoostEntity } from '../../../data/entities/boost';
-import { selectTokenByAddress } from '../../../data/selectors/tokens';
 import {
   selectBoostRewardsTokenEntity,
   selectBoostUserBalanceInToken,
@@ -19,13 +18,13 @@ import {
   selectUserBalanceOfToken,
 } from '../../../data/selectors/balance';
 import { StakeCountdown } from './StakeCountdown';
-import { Stake } from './Stake';
-import { Unstake } from './Unstake';
+
 import { selectChainById } from '../../../data/selectors/chains';
 import { useAppDispatch, useAppSelector } from '../../../../store';
 import { IconWithBasicTooltip } from '../../../../components/Tooltip/IconWithBasicTooltip';
 import { Button } from '../../../../components/Button';
-import { Modal } from '../../../../components/Modal';
+import { BoostActionButton } from './BoostActionButton';
+import { boostActions } from '../../../data/reducers/wallet/boost';
 
 const useStyles = makeStyles(styles);
 
@@ -34,12 +33,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   const vault = useAppSelector(state => selectVaultById(state, boost.vaultId));
   const chain = useAppSelector(state => selectChainById(state, boost.chainId));
   const isBoosted = true;
-
-  const mooToken = useAppSelector(state =>
-    selectTokenByAddress(state, vault.chainId, vault.earnedTokenAddress)
-  );
   const rewardToken = useAppSelector(state => selectBoostRewardsTokenEntity(state, boost.id));
-
   const mooTokenBalance = useAppSelector(state =>
     selectUserBalanceOfToken(state, boost.chainId, vault.earnedTokenAddress)
   );
@@ -47,33 +41,30 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   const boostPendingRewards = useAppSelector(state =>
     selectBoostUserRewardsInToken(state, boost.id)
   );
-
   const { periodFinish, isPreStake } = useAppSelector(state =>
     selectBoostContractState(state, boost.id)
   );
-
   const classes = useStyles({ isBoosted });
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-
   const isWalletConnected = useAppSelector(selectIsWalletConnected);
   const isWalletOnVaultChain = useAppSelector(
     state => selectCurrentChainId(state) === boost.chainId
   );
-
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
-  const [dw, setDw] = React.useState('deposit');
-  const [inputModal, setInputModal] = React.useState(false);
+  const [stakeOpen, setStakeOpen] = useState<boolean>(false);
+  const [unstakeOpen, setUnstakeOpen] = useState<boolean>(false);
 
-  function depositWithdraw(deposit: string) {
-    setDw(deposit);
-    setInputModal(true);
-  }
+  const handleStakeCollapse = useCallback(() => {
+    dispatch(boostActions.reset());
+    setStakeOpen(prevStatus => !prevStatus);
+  }, [dispatch]);
 
-  const closeInputModal = () => {
-    setInputModal(false);
-  };
+  const handleUnstakeCollapse = useCallback(() => {
+    dispatch(boostActions.reset());
+    setUnstakeOpen(prevStatus => !prevStatus);
+  }, [dispatch]);
 
   const handleExit = (boost: BoostEntity) => {
     const steps: Step[] = [];
@@ -125,18 +116,6 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
       </div>
       <div className={classes.boostStats}>
         <div className={classes.boostStat}>
-          <div className={classes.boostStatLabel}>
-            {t('Boost-Balance', { mooToken: mooToken.symbol })}
-          </div>
-          <div className={classes.boostStatValue}>{formatBigDecimals(mooTokenBalance, 8)}</div>
-        </div>
-        <div className={classes.boostStat}>
-          <div className={classes.boostStatLabel}>
-            {t('Boost-Balance-Staked', { mooToken: mooToken.symbol })}
-          </div>
-          <div className={classes.boostStatValue}>{formatBigDecimals(boostBalance, 8)}</div>
-        </div>
-        <div className={classes.boostStat}>
           <div className={classes.boostStatLabel}>{t('Boost-Rewards')}</div>
           <div className={classes.boostStatValue}>
             {formatBigDecimals(boostPendingRewards, 8)} {rewardToken.symbol}
@@ -167,15 +146,22 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
           </Button>
         ) : (
           <>
-            <Button
-              disabled={isStepping || mooTokenBalance.isZero()}
-              className={classes.button}
-              onClick={() => depositWithdraw('deposit')}
-              fullWidth={true}
-              borderless={true}
-            >
-              {t('Boost-Button-Vault')}
-            </Button>
+            <BoostActionButton
+              boostId={boostId}
+              type="stake"
+              open={stakeOpen}
+              handleCollapse={handleStakeCollapse}
+              disabled={unstakeOpen}
+              balance={mooTokenBalance}
+            />
+            <BoostActionButton
+              boostId={boostId}
+              type="unstake"
+              open={unstakeOpen}
+              handleCollapse={handleUnstakeCollapse}
+              disabled={stakeOpen}
+              balance={boostBalance}
+            />
             <Button
               disabled={isStepping || boostPendingRewards.isZero()}
               className={classes.button}
@@ -194,15 +180,6 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
             >
               {t('Boost-Button-Claim-Unstake')}
             </Button>
-            <Button
-              disabled={isStepping || boostBalance.isZero()}
-              onClick={() => depositWithdraw('unstake')}
-              className={classes.button}
-              fullWidth={true}
-              borderless={true}
-            >
-              {t('Boost-Button-Unestake')}
-            </Button>
           </>
         )
       ) : (
@@ -217,20 +194,6 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
           {t('Network-ConnectWallet')}
         </Button>
       )}
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={inputModal}
-        onClose={() => setInputModal(false)}
-      >
-        <>
-          {dw === 'deposit' ? (
-            <Stake closeModal={closeInputModal} boostId={boostId} />
-          ) : (
-            <Unstake closeModal={closeInputModal} boostId={boostId} />
-          )}
-        </>
-      </Modal>
       <Stepper />
     </div>
   );
