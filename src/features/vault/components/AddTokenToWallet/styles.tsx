@@ -29,7 +29,7 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['body-lg'],
     padding: '2px 8px',
     borderRadius: '4px',
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: '#484F84',
     borderColor: 'transparent' as const,
     color: theme.palette.text.secondary,
     '&:hover': {
@@ -46,6 +46,6 @@ export const styles = (theme: Theme) => ({
     },
   },
   linkButtonBg: {
-    backgroundColor: theme.palette.background.content,
+    backgroundColor: '#484F84',
   },
 });

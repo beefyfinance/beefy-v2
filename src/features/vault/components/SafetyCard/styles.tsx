@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'row' as const,
     justifyContent: 'space-between',
-    marginBottom: '24px',
+    marginBottom: '16px',
     '&:last-child': {
       marginBottom: 0,
     },

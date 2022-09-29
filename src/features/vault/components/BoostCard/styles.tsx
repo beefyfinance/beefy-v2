@@ -9,6 +9,9 @@ export const styles = (theme: Theme) => ({
     ...theme.typography['h2'],
     color: '#DB8332',
     flexGrow: 1,
+    '& span': {
+      color: theme.palette.text.primary,
+    },
   },
   header: {
     display: 'flex',

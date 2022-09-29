@@ -2,7 +2,6 @@ import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
   container: {
-    marginTop: '24px',
     backgroundColor: theme.palette.background.content,
     padding: '16px',
     borderRadius: '12px',
@@ -17,8 +16,8 @@ export const styles = (theme: Theme) => ({
   title: {
     ...theme.typography['body-lg-med'],
     display: 'flex',
-    '& img': {
-      marginRight: '8px',
+    '& span': {
+      marginLeft: '8px',
     },
   },
   buttonsContainer: {

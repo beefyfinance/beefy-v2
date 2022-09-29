@@ -28,7 +28,7 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
       <div className={classes.titleContainer}>
         <div className={classes.title}>
           <AssetsImage assetIds={[token.id]} chainId={chain.id} size={24} />
-          {token.symbol}
+          <span>{token.symbol}</span>
         </div>
         <div className={classes.buttonsContainer}>
           {token.website && <LinkButton type="link" href={token.website} text={t('Token-Site')} />}

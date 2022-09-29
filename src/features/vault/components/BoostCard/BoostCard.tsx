@@ -29,7 +29,10 @@ export const BoostCard = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   return (
     <div>
       <div className={classes.header}>
-        <div className={classes.boostedBy}>{t('Vault-BoostedBy', { partner: boost.name })}</div>
+        <div className={classes.boostedBy}>
+          {t('Vault-BoostedBy')}
+          <span>{boost.name}</span>
+        </div>
         <div className={classes.socials}>
           {website && <LinkButton href={website} text={t('Boost-PartnerLink-website')} />}
           {social.twitter && <LinkIcon id="twitter" logo={Twitter} href={social.twitter} />}
