@@ -279,7 +279,7 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
                 className={classes.btnSubmit}
                 fullWidth={true}
               >
-                {t('Network-Change', { network: chain.name.toUpperCase() })}
+                {t('Network-Change', { network: chain.name })}
               </Button>
             ) : (
               <Button

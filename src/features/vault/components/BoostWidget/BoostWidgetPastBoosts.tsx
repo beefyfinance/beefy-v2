@@ -60,7 +60,7 @@ export function BoostWidgetPastBoosts({ vaultId }: { vaultId: BoostEntity['id'] 
               fullWidth={true}
               borderless={true}
             >
-              {t('Network-Change', { network: chain.name.toUpperCase() })}
+              {t('Network-Change', { network: chain.name })}
             </Button>
           ) : (
             pastBoostsWithUserBalance.map(boost => <BoostPastActionCard boost={boost} />)

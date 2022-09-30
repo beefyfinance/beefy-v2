@@ -155,7 +155,7 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
             borderless={true}
             disabled={isStepping}
           >
-            {t('Network-Change', { network: chain.name.toUpperCase() })}
+            {t('Network-Change', { network: chain.name })}
           </Button>
         ) : (
           <>

@@ -165,7 +165,7 @@
   "Boost-PartnerLink-discord": "Discord",
   "Pool-Apr": "Pool APR",
   "Pool-AprDaily": "Pool Daily APR",
-  "Network-Change": "Switch to {{network}} network",
+  "Network-Change": "Switch to {{network}}",
   "Network-ConnectWallet": "Connect Wallet",
   "Network-Unsupported": "Unsupported Chain",
   "Deposit-Disabled": "Deposits disabled",
