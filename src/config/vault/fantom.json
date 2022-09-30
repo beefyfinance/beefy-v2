@@ -181,8 +181,8 @@
   },
   {
     "id": "spiritV2-usdc-busd",
-    "name": "USDC-BUSD sLP",
-    "token": "USDC-BUSD sLP",
+    "name": "BUSD-USDC sLP",
+    "token": "BUSD-USDC sLP",
     "tokenAddress": "0xAfEcf681a8f3FB8D78581874339Bfca6252d62C4",
     "tokenDecimals": 18,
     "tokenProviderId": "spiritswap",
@@ -193,7 +193,7 @@
     "oracleId": "spiritV2-usdc-busd",
     "status": "active",
     "platformId": "spiritswap",
-    "assets": ["USDC", "BUSD"],
+    "assets": ["BUSD", "USDC"],
     "strategyTypeId": "lp",
     "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_LARGE", "CONTRACTS_VERIFIED"],
     "addLiquidityUrl": "https://beta.spiritswap.finance/liquidity",
@@ -447,7 +447,7 @@
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
-      "MCAP_HIGH",
+      "MCAP_LARGE",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"
     ],
@@ -889,7 +889,7 @@
       "COMPLEXITY_LOW",
       "NEW_STRAT",
       "IL_NONE",
-      "MCAP_SMALL",
+      "MCAP_MICRO",
       "AUDIT",
       "CONTRACTS_VERIFIED",
       "OVER_COLLAT_ALGO_STABLECOIN"

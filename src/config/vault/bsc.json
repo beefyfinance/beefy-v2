@@ -17072,8 +17072,7 @@
       "MCAP_MICRO",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
-      "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "CONTRACTS_VERIFIED"
     ],
     "addLiquidityUrl": "https://ellipsis.finance/pool/0x68354c6E8Bbd020F9dE81EAf57ea5424ba9ef322",
     "buyTokenUrl": "https://ellipsis.finance/pool/0x68354c6E8Bbd020F9dE81EAf57ea5424ba9ef322",
@@ -17223,7 +17222,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://ellipsis.finance/pool/0xBcA6E25937B0F7E0FD8130076b6B218F595E32e2",
     "buyTokenUrl": "https://v1-app.jarvis.exchange/",

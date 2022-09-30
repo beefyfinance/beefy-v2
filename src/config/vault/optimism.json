@@ -27,6 +27,35 @@
     "createdAt": 1663091478
   },
   {
+    "id": "velodrome-usd+-lusd",
+    "name": "USD+-LUSD sLP",
+    "token": "USD+-LUSD sLP",
+    "tokenAddress": "0x8a9Cd3dce710e90177B4332C108E159a15736A0F",
+    "tokenDecimals": 18,
+    "tokenProviderId": "velodrome",
+    "earnedToken": "mooVeloUSD+-LUSD",
+    "earnedTokenAddress": "0x3b6eD6A53a9a357a397fbc7A04C96BA8B4AEBed2",
+    "earnContractAddress": "0x3b6eD6A53a9a357a397fbc7A04C96BA8B4AEBed2",
+    "oracle": "lps",
+    "oracleId": "velodrome-usd+-lusd",
+    "status": "active",
+    "platformId": "velodrome",
+    "assets": ["USD+", "LUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
+    "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
+    "buyTokenUrl": "https://app.velodrome.finance/swap",
+    "network": "optimism",
+    "createdAt": 1664540189
+  },
+  {
     "id": "velodrome-jeur-ageur",
     "name": "jEUR-agEUR sLP",
     "token": "jEUR-agEUR sLP",
@@ -42,7 +71,14 @@
     "platformId": "velodrome",
     "assets": ["jEUR", "agEUR"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",
@@ -89,10 +125,10 @@
     "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
-      "IL_LOW",
-      "MCAP_LARGE",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "ALGO_STABLE"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
@@ -143,7 +179,7 @@
       "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVERCOLLAT_ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
@@ -166,7 +202,14 @@
     "platformId": "velodrome",
     "assets": ["agEUR", "MAI"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_SMALL", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN",
+      "CONTRACTS_VERIFIED"
+    ],
     "addLiquidityUrl": "https://app.velodrome.finance/liquidity/create",
     "buyTokenUrl": "https://app.velodrome.finance/swap",
     "network": "optimism",

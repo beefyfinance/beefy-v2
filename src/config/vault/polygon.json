@@ -40,15 +40,15 @@
     "oracleId": "dystopia-usd+-usdc",
     "status": "active",
     "platformId": "dystopia",
-    "assets": ["USD+","USDC"],
+    "assets": ["USD+", "USDC"],
     "strategyTypeId": "lp",
-    "risks":[
+    "risks": [
       "COMPLEXITY_LOW",
       "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVERCOLLAT_ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -99,7 +99,7 @@
       "IL_HIGH",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVERCOLLAT_ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -128,7 +128,7 @@
       "IL_HIGH",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVERCOLLAT_ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -374,7 +374,7 @@
       "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "ALGO_STABLE"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -8150,7 +8150,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/304/deposit",
     "createdAt": 1663633678,
