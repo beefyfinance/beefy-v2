@@ -7,6 +7,7 @@ export const styles = (theme: Theme) => ({
     borderRadius: '12px',
   },
   containerBoost: {
+    marginTop: theme.spacing(3),
     padding: theme.spacing(3),
     borderRadius: '12px',
     backgroundColor: theme.palette.background.default,
@@ -15,14 +16,13 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
   },
   containerExpired: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    rowGap: '16px',
     padding: '24px',
     backgroundColor: theme.palette.background.default,
     borderRadius: '12px',
-  },
-  expiredBoostContainer: {
-    background: theme.palette.background.vaults.defaultOutline,
-    borderRadius: theme.spacing(1),
-    padding: theme.spacing(2),
+    marginTop: theme.spacing(3),
   },
   boostImg: {
     width: 30,
@@ -73,9 +73,5 @@ export const styles = (theme: Theme) => ({
   button: {
     backgroundColor: theme.palette.background.vaults.defaultOutline,
     borderRadius: '8px',
-  },
-  expiredBoostName: {
-    ...theme.typography['h3'],
-    marginBottom: '16px',
   },
 });

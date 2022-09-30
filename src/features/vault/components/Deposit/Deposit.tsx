@@ -19,7 +19,6 @@ import { walletActions } from '../../../data/actions/wallet-actions';
 import { isTokenNative } from '../../../data/entities/token';
 import { isGovVault, VaultEntity } from '../../../data/entities/vault';
 import { depositActions } from '../../../data/reducers/wallet/deposit';
-import { selectShouldDisplayBoostWidget } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
 import { selectChainNativeToken, selectTokenByAddress } from '../../../data/selectors/tokens';
@@ -30,7 +29,6 @@ import {
   selectWalletAddress,
 } from '../../../data/selectors/wallet';
 import { selectIsApprovalNeededForDeposit } from '../../../data/selectors/wallet-actions';
-import { BoostWidget } from '../BoostWidget';
 import { ZapBreakdown } from '../ZapBreakdown';
 import { styles } from '../styles';
 import { TokenWithBalance } from '../TokenWithBalance';
@@ -75,9 +73,6 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
   );
   const formState = useAppSelector(state => state.ui.deposit);
   const native = useAppSelector(state => selectChainNativeToken(state, vault.chainId));
-  const displayBoostWidget = useAppSelector(state =>
-    selectShouldDisplayBoostWidget(state, vaultId)
-  );
 
   // if it's a zap, we spend with the zap contract
   const spenderAddress = formState.isZap
@@ -312,7 +307,6 @@ export const Deposit = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
         </Box>
       </Box>
 
-      {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
       <Stepper />
     </>
   );

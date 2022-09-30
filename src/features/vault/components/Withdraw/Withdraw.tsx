@@ -35,7 +35,6 @@ import {
   selectIsVaultPreStakedOrBoosted,
   selectPastBoostIdsWithUserBalance,
   selectPreStakeOrActiveBoostIds,
-  selectShouldDisplayBoostWidget,
 } from '../../../data/selectors/boosts';
 import { selectChainById } from '../../../data/selectors/chains';
 import { selectIsAddressBookLoaded } from '../../../data/selectors/data-loader';
@@ -52,7 +51,6 @@ import {
   selectWalletAddress,
 } from '../../../data/selectors/wallet';
 import { selectIsApprovalNeededForWithdraw } from '../../../data/selectors/wallet-actions';
-import { BoostWidget } from '../BoostWidget';
 import { ZapBreakdown } from '../ZapBreakdown';
 import { styles } from '../styles';
 import { TokenWithDeposit } from '../TokenWithDeposit';
@@ -144,9 +142,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
       : selectStandardVaultUserBalanceInDepositTokenIncludingBoosts(state, vault.id);
     return deposit.isGreaterThan(0);
   });
-  const displayBoostWidget = useAppSelector(state =>
-    selectShouldDisplayBoostWidget(state, vaultId)
-  );
 
   const handlePriceImpactConfirm = useCallback<ZapPriceImpactProps['onChange']>(
     shouldDisable => {
@@ -547,8 +542,6 @@ export const Withdraw = ({ vaultId }: { vaultId: VaultEntity['id'] }) => {
           )}
         </Box>
       </Box>
-
-      {displayBoostWidget && <BoostWidget vaultId={vaultId} />}
       <Stepper />
     </>
   );

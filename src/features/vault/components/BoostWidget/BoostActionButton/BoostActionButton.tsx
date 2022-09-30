@@ -29,7 +29,7 @@ interface BoostActionButtonProps {
   boostId: BoostEntity['id'];
   open: boolean;
   handleCollapse: () => void;
-  disabled: boolean;
+
   balance: BigNumber;
 }
 
@@ -38,7 +38,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function ({
   boostId,
   open,
   handleCollapse,
-  disabled,
+
   balance,
 }) {
   const { t } = useTranslation();
@@ -79,7 +79,11 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function ({
 
   const handleInput = (amountStr: string) => {
     dispatch(
-      boostActions.setInput({ amount: amountStr, withdraw: false, state: store.getState() })
+      boostActions.setInput({
+        amount: amountStr,
+        withdraw: isStake ? false : true,
+        state: store.getState(),
+      })
     );
   };
 
@@ -119,10 +123,7 @@ export const BoostActionButton = memo<BoostActionButtonProps>(function ({
 
   return (
     <>
-      <div
-        aria-disabled={disabled}
-        className={clsx(classes.container, { [classes.disabled]: disabled })}
-      >
+      <div className={clsx(classes.container)}>
         <div className={classes.title} onClick={handleCollapse}>
           <IconButton className={classes.iconButton}>
             {open ? <ExpandLess /> : <ExpandMore />}

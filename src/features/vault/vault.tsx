@@ -35,6 +35,7 @@ import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdow
 import { AssetsCard } from './components/AssetsCard';
 import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
+import { BoostWidget } from './components/BoostWidget';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -139,6 +140,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
                 </div>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </div>
+              <BoostWidget vaultId={vaultId} />
               <MinterCards vaultId={vaultId} />
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />

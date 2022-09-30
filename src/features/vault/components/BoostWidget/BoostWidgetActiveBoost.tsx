@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { formatBigDecimals } from '../../../../helpers/format';
 import { askForNetworkChange, askForWalletConnection } from '../../../data/actions/wallet';
@@ -53,18 +53,26 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   );
   const [startStepper, isStepping, Stepper] = useStepper(chain.id);
 
-  const [stakeOpen, setStakeOpen] = useState<boolean>(false);
-  const [unstakeOpen, setUnstakeOpen] = useState<boolean>(false);
+  const [collapseOpen, setCollapseOpen] = useState({
+    stake: false,
+    unstake: false,
+  });
 
-  const handleStakeCollapse = useCallback(() => {
-    dispatch(boostActions.reset());
-    setStakeOpen(prevStatus => !prevStatus);
-  }, [dispatch]);
+  const handleCollapse = useCallback(
+    ({ stakeUnstake }: { stakeUnstake: 'stake' | 'unstake' }) => {
+      const diff = stakeUnstake === 'stake' ? 'unstake' : 'stake';
+      if (collapseOpen[stakeUnstake]) dispatch(boostActions.reset());
+      if (collapseOpen[diff] && collapseOpen[stakeUnstake] === false)
+        setCollapseOpen(prevStatus => {
+          return { ...prevStatus, [diff]: !prevStatus[diff] };
+        });
 
-  const handleUnstakeCollapse = useCallback(() => {
-    dispatch(boostActions.reset());
-    setUnstakeOpen(prevStatus => !prevStatus);
-  }, [dispatch]);
+      setCollapseOpen(prevStatus => {
+        return { ...prevStatus, [stakeUnstake]: !prevStatus[stakeUnstake] };
+      });
+    },
+    [collapseOpen, dispatch]
+  );
 
   const handleExit = (boost: BoostEntity) => {
     const steps: Step[] = [];
@@ -107,7 +115,13 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
   return (
     <div className={classes.containerBoost}>
       <div className={classes.title}>
-        <span>{t('Boost-Title')}</span>
+        <span>
+          <Trans
+            t={t}
+            i18nKey="Boost-Title"
+            components={{ white: <span className={classes.titleWhite} /> }}
+          />
+        </span>
         <IconWithBasicTooltip
           title={t('Boost-WhatIs')}
           content={t('Boost-Explain')}
@@ -139,7 +153,6 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
             className={classes.button}
             fullWidth={true}
             borderless={true}
-            variant="success"
             disabled={isStepping}
           >
             {t('Network-Change', { network: chain.name.toUpperCase() })}
@@ -149,37 +162,39 @@ export function BoostWidgetActiveBoost({ boostId }: { boostId: BoostEntity['id']
             <BoostActionButton
               boostId={boostId}
               type="stake"
-              open={stakeOpen}
-              handleCollapse={handleStakeCollapse}
-              disabled={unstakeOpen}
+              open={collapseOpen.stake}
+              handleCollapse={() => handleCollapse({ stakeUnstake: 'stake' })}
               balance={mooTokenBalance}
             />
-            <BoostActionButton
-              boostId={boostId}
-              type="unstake"
-              open={unstakeOpen}
-              handleCollapse={handleUnstakeCollapse}
-              disabled={stakeOpen}
-              balance={boostBalance}
-            />
-            <Button
-              disabled={isStepping || boostPendingRewards.isZero()}
-              className={classes.button}
-              onClick={handleClaim}
-              fullWidth={true}
-              borderless={true}
-            >
-              {t('Boost-Button-Withdraw')}
-            </Button>
-            <Button
-              disabled={isStepping || (boostBalance.isZero() && boostPendingRewards.isZero())}
-              className={classes.button}
-              onClick={() => handleExit(boost)}
-              fullWidth={true}
-              borderless={true}
-            >
-              {t('Boost-Button-Claim-Unstake')}
-            </Button>
+            {boostBalance.gt(0) && (
+              <>
+                <BoostActionButton
+                  boostId={boostId}
+                  type="unstake"
+                  open={collapseOpen.unstake}
+                  handleCollapse={() => handleCollapse({ stakeUnstake: 'unstake' })}
+                  balance={boostBalance}
+                />
+                <Button
+                  disabled={isStepping || boostPendingRewards.isZero()}
+                  className={classes.button}
+                  onClick={handleClaim}
+                  fullWidth={true}
+                  borderless={true}
+                >
+                  {t('Boost-Button-Withdraw')}
+                </Button>
+                <Button
+                  disabled={isStepping || (boostBalance.isZero() && boostPendingRewards.isZero())}
+                  className={classes.button}
+                  onClick={() => handleExit(boost)}
+                  fullWidth={true}
+                  borderless={true}
+                >
+                  {t('Boost-Button-Claim-Unstake')}
+                </Button>
+              </>
+            )}
           </>
         )
       ) : (

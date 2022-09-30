@@ -6,16 +6,14 @@ export const styles = (theme: Theme) => ({
     borderRadius: '8px',
     backgroundColor: '#2D3153',
   },
-  disabled: {
-    pointerEvents: 'none' as const,
-    backgroundColor: theme.palette.background.content,
-    transition: 'color 0.3s',
-  },
   title: {
     display: 'flex',
     ...theme.typography['body-lg'],
     color: theme.palette.text.secondary,
     alignItems: 'center',
+    '&:Hover': {
+      cursor: 'pointer ' as const,
+    },
   },
   iconButton: {
     padding: 0,
@@ -45,9 +43,9 @@ export const styles = (theme: Theme) => ({
     rowGap: '16px',
   },
   button: {
-    backgroundColor: '#363B63',
+    backgroundColor: theme.palette.background.vaults.defaultOutline,
     '&:Hover': {
-      backgroundColor: theme.palette.background.vaults.defaultOutline,
+      backgroundColor: '#272B4A',
     },
     '&:disabled': {
       borderColor: 'transparent' as const,
