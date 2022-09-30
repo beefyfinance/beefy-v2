@@ -81,6 +81,14 @@ export const RISKS = {
     condition: 'IL-AlgoStable-Cond',
   },
 
+  OVER_COLLAT_ALGO_STABLECOIN: {
+    category: 'Categry-Asset',
+    score: 0.15,
+    title: 'OverCollatAlgoStable-Titl',
+    explanation: 'OverCollatAlgoStable-Expl',
+    condition: 'OverCollatAlgoStable-Cond',
+  },
+
   LIQ_HIGH: {
     category: 'Categry-Asset',
     score: 0,
