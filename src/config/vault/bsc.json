@@ -58,7 +58,7 @@
     "network": "bsc"
   },
   {
-   "id": "cone-wbnb-usd+",
+    "id": "cone-wbnb-usd+",
     "name": "USD+-BNB vLP",
     "token": "USD+-BNB vLP",
     "tokenAddress": "0xeC30Da6361905B8f3e4a93513D937dB992301276",
@@ -101,6 +101,10 @@
     "status": "active",
     "platformId": "cone",
     "assets": ["USD+", "BUSD"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
       "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
