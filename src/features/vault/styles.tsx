@@ -94,9 +94,9 @@ export const styles = (theme: Theme) => ({
   },
   platformContainer: {
     display: 'flex',
-    marginTop: '8px',
     rowGap: '24px',
     columnGap: '24px',
+    alignItems: 'center',
     justifyContent: 'flex-end',
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',

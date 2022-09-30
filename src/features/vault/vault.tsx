@@ -96,20 +96,15 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
                 {vault.name} {!isGovVault(vault) ? t('Vault-vault') : ''}
               </h1>
             </div>
-            <div>
-              <div className={classes.badges}>
-                <DisplayTags vaultId={vaultId} />
+            <div className={classes.platformContainer}>
+              <div className={classes.platformLabel}>
+                {t('Chain')} <span>{chain.name}</span>
               </div>
-              <div className={classes.platformContainer}>
-                <div className={classes.platformLabel}>
-                  {t('Chain')} <span>{chain.name}</span>
-                </div>
-                <div className={classes.platformLabel}>
-                  {t('Platform')}{' '}
-                  <span>
-                    <VaultPlatform vaultId={vaultId} />
-                  </span>
-                </div>
+              <div className={classes.platformLabel}>
+                {t('Platform')}{' '}
+                <span>
+                  <VaultPlatform vaultId={vaultId} />
+                </span>
               </div>
             </div>
           </div>
