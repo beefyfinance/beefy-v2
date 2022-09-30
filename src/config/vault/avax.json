@@ -65,8 +65,8 @@
     "tokenDecimals": 18,
     "tokenProviderId": "traderjoe",
     "earnedToken": "mooJoeBUSD-AVAX",
-    "earnedTokenAddress": "0x6513022d67aCF076108F7fcdba14B9430Bcc47dd",
-    "earnContractAddress": "0x6513022d67aCF076108F7fcdba14B9430Bcc47dd",
+    "earnedTokenAddress": "0x78527f8155c74d8BFb71f1363d476433e39B4f14",
+    "earnContractAddress": "0x78527f8155c74d8BFb71f1363d476433e39B4f14",
     "oracle": "lps",
     "oracleId": "joe-busd-wavax",
     "status": "active",
@@ -84,7 +84,7 @@
     ],
     "addLiquidityUrl": "https://traderjoexyz.com/pool/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/AVAX",
     "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39#/",
-    "createdAt": 1664470242,
+    "createdAt": 1664561347,
     "network": "avax"
   },
   {
