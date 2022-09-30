@@ -366,7 +366,14 @@
     "platformId": "cone",
     "assets": ["MAI", "BUSD"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
@@ -410,7 +417,14 @@
     "platformId": "cone",
     "assets": ["MAI", "BNB"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_HIGH", "MCAP_MICRO", "CONTRACTS_VERIFIED"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "addLiquidityUrl": "https://www.cone.exchange/liquidity",
     "buyTokenUrl": "https://www.cone.exchange/swap",
     "network": "bsc",
@@ -16700,7 +16714,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://exchange.biswap.org/#/add/0x55d398326f99059fF775485246999027B3197955/0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
     "buyTokenUrl": "https://exchange.biswap.org/#/swap?inputCurrency=0x55d398326f99059fF775485246999027B3197955&outputCurrency=0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3",
@@ -17057,7 +17072,8 @@
       "MCAP_MICRO",
       "OVER_COLLAT_ALGO_STABLECOIN",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://ellipsis.finance/pool/0x68354c6E8Bbd020F9dE81EAf57ea5424ba9ef322",
     "buyTokenUrl": "https://ellipsis.finance/pool/0x68354c6E8Bbd020F9dE81EAf57ea5424ba9ef322",
@@ -17086,7 +17102,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://ellipsis.finance/pool/0x245e8bb5427822FB8fd6cE062d8dd853FbcfABF5",
     "buyTokenUrl": "https://ellipsis.finance/pool/0x245e8bb5427822FB8fd6cE062d8dd853FbcfABF5",

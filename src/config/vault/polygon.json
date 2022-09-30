@@ -27,6 +27,35 @@
     "createdAt": 1621450869
   },
   {
+    "id": "dystopia-usd+-usdc",
+    "name": "USD+-USDC sLP",
+    "token": "USD+-USDC sLP",
+    "tokenAddress": "0x421a018cC5839c4C0300AfB21C725776dc389B1a",
+    "tokenDecimals": 18,
+    "tokenProviderId": "dystopia",
+    "earnedToken": "mooDystopiaUSD+-USDC",
+    "earnedTokenAddress": "0xe3BfD4259778596747C9BA75f259Eab0BbD9Cb08",
+    "earnContractAddress": "0xe3BfD4259778596747C9BA75f259Eab0BbD9Cb08",
+    "oracle": "lps",
+    "oracleId": "dystopia-usd+-usdc",
+    "status": "active",
+    "platformId": "dystopia",
+    "assets": ["USD+", "USDC"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "CONTRACTS_VERIFIED",
+      "OVERCOLLAT_ALGO_STABLE"
+    ],
+    "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
+    "buyTokenUrl": "https://www.dystopia.exchange/swap",
+    "network": "polygon",
+    "createdAt": 1664033343
+  },
+  {
     "id": "dystopia-wmatic-bifi",
     "name": "BIFI-MATIC vLP",
     "token": "BIFI-MATIC vLP",
@@ -345,7 +374,7 @@
       "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -4691,7 +4720,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/37/deposit",
     "network": "polygon",
@@ -5289,7 +5319,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/23/deposit",
     "network": "polygon",
@@ -6306,7 +6337,13 @@
     "platformId": "jarvis",
     "assets": ["jSGD", "XSGD"],
     "strategyTypeId": "lp",
-    "risks": ["COMPLEXITY_LOW", "BATTLE_TESTED", "IL_NONE", "MCAP_MICRO"],
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MICRO",
+      "OVER_COLLAT_ALGO_STABLECOIN"
+    ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/22/deposit",
     "createdAt": 1663633677,
     "network": "polygon"
@@ -7008,7 +7045,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://dmm.exchange/#/add/0x2791bca1f2de4661ed88a30c99a7a9449aa84174/0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c/0xa1219dbe76eecbf7571fed6b020dd9154396b70e",
     "buyTokenUrl": "https://dmm.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
@@ -7072,7 +7110,8 @@
       "IL_LOW",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "createdAt": 1634040443,
     "retireReason": "rewards"
@@ -7102,7 +7141,8 @@
       "IL_LOW",
       "MCAP_MICRO",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "createdAt": 1634042173,
     "retireReason": "rewards"
@@ -7390,7 +7430,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/85/deposit",
     "createdAt": 1641144218,
@@ -7421,7 +7462,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/228/deposit",
     "createdAt": 1653327832,
@@ -7450,7 +7492,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/255/deposit",
     "createdAt": 1663633677,
@@ -7479,7 +7522,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/209/deposit",
     "createdAt": 1663633677,
@@ -8018,7 +8062,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/286/deposit",
     "createdAt": 1663633677,
@@ -8047,7 +8092,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/285/deposit",
     "createdAt": 1663633677,
