@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core';
+import { Box, Button as MuiButton, CircularProgress, makeStyles } from '@material-ui/core';
 import React, { memo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { selectChainById } from '../../../../features/data/selectors/chains';
@@ -17,6 +17,9 @@ import {
 } from '../../../../features/data/selectors/stepper';
 import { isEmpty } from '../../../../helpers/utils';
 import { selectBridgeState } from '../../../../features/data/selectors/bridge';
+import { Button } from '../../../Button';
+import { stepperActions } from '../../../../features/data/reducers/wallet/stepper';
+import { walletActions } from '../../../../features/data/actions/wallet-actions';
 
 const useStyles = makeStyles(styles);
 
@@ -42,8 +45,12 @@ const BridgeTxProgress = memo(function () {
   const bridgeState = useAppSelector(selectBridgeState);
   const chain = useAppSelector(state => selectChainById(state, currentChaindId));
   const destChain = useAppSelector(state => selectChainById(state, bridgeState.destChainId));
-
   const dispatch = useAppDispatch();
+
+  const handleClose = React.useCallback(() => {
+    dispatch(stepperActions.reset());
+    dispatch(walletActions.resetWallet());
+  }, [dispatch]);
 
   // Use a ref to keep track of a stateful value that doesn't affect rendering,
   // the `setInterval` ID in this case.
@@ -185,23 +192,33 @@ const BridgeTxProgress = memo(function () {
           )}
         </Box>
         {txData.msg !== 'Error' && txData.swapTx && (
-          <Button
+          <MuiButton
             className={classes.redirectLinkSuccess}
             href={destChain.explorerUrl + '/tx/' + txData.swapTx}
             target="_blank"
           >
             {t('Transactn-View')} {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
-          </Button>
+          </MuiButton>
         )}
       </Box>
       {hash && (
-        <Button
+        <MuiButton
           className={classes.redirectLinkSuccess}
           href={`https://anyswap.net/explorer/tx?params=${hash}`}
           target="_blank"
         >
           {t('Transactn-ViewMultichain')}{' '}
           {<OpenInNewRoundedIcon htmlColor="#59A662" fontSize="inherit" />}
+        </MuiButton>
+      )}
+      {txData?.status === 10 && (
+        <Button
+          borderless={true}
+          fullWidth={true}
+          className={classes.closeBtn}
+          onClick={handleClose}
+        >
+          {t('Transactn-Close')}
         </Button>
       )}
     </>

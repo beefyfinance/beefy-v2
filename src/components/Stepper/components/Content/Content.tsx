@@ -96,7 +96,6 @@ export const ButtonsContent = memo(function () {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
-  const bridgeStatus = useAppSelector(selectBridgeStatus);
 
   const handleClose = React.useCallback(() => {
     dispatch(stepperActions.reset());
@@ -105,18 +104,7 @@ export const ButtonsContent = memo(function () {
 
   return (
     <>
-      {currentStepData.step === 'bridge' ? (
-        bridgeStatus === 'success' ? (
-          <Button
-            borderless={true}
-            fullWidth={true}
-            className={classes.closeBtn}
-            onClick={handleClose}
-          >
-            {t('Transactn-Close')}
-          </Button>
-        ) : null
-      ) : (
+      {currentStepData.step !== 'bridge' && (
         <Button
           borderless={true}
           fullWidth={true}

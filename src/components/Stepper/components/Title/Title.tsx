@@ -16,19 +16,12 @@ const useStyles = makeStyles(styles);
 const _Title = () => {
   const classes = useStyles();
   const { t } = useTranslation();
-
   const walletActionsStateResult = useAppSelector(state => state.user.walletActions.result);
-
   const bridgeStatus = useAppSelector(selectBridgeStatus);
-
   const needShowBridgeInfo = bridgeStatus === 'loading' || bridgeStatus === 'confirming';
-
   const stepperItems = useAppSelector(selectStepperItems);
-
   const currentStep = useAppSelector(selectStepperCurrentStep);
-
   const currentStepData = useAppSelector(selectStepperCurrentStepData);
-
   const stepsFinished = useAppSelector(selectStepperFinished);
 
   return (
