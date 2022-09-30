@@ -2,7 +2,6 @@ import { Button, Container, Hidden, makeStyles } from '@material-ui/core';
 import React, { lazy, memo, PropsWithChildren, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
 import { styles } from './styles';
 import { Deposit } from './components/Deposit';
