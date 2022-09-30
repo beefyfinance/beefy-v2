@@ -324,7 +324,7 @@
   "Your-Pool-%": "Your pool %",
   "Receipt-Balance": "Receipt balance",
   "View-All": "View all Vaults",
-  "QiDao-Title": "Lend & Borrow",
+  "QiDao-Title": "QiDao",
   "QiDao-Content": "Use your mooTokens as collateral with Mai.finance and mint MAI with just a 0.5% repayment fee. Note that all loans are subject to liquidation risk.",
   "QiDao-Btn": "Lend {{mooToken}}",
   "Insurace-Title": "Insurace.io",
