@@ -165,7 +165,6 @@ export const SuccessContent = memo(function () {
             <div className={classes.message}>{successMessage}</div>
             <TransactionLink />
           </div>
-          <ButtonsContent />
           {hasRememberMsg && (
             <div className={classes.rememberContainer}>
               <div className={classes.message}>
@@ -173,6 +172,7 @@ export const SuccessContent = memo(function () {
               </div>
             </div>
           )}
+          <ButtonsContent />
         </>
       )}
     </>

@@ -11,4 +11,13 @@ export const styles = (theme: Theme) => ({
     height: '20px',
     marginRight: theme.spacing(1),
   },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexShrink: 0,
+    marginBottom: '4px',
+  },
+  closeIcon: {
+    padding: 0,
+  },
 });
