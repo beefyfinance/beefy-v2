@@ -574,7 +574,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xc17636e36398602dd37bb5d1b3a9008c7629005f0002000000000000000004c4",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c",
     "network": "polygon",
     "createdAt": 1664553072
   },
@@ -602,7 +602,7 @@
       "AUDIT",
       "CONTRACTS_VERIFIED"
     ],
-    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xaf5e0b5425de1f5a630a8cb5aa9d97b8141c908d000200000000000000000366",
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d",
     "network": "polygon",
     "createdAt": 1664553071
   },

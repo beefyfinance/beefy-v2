@@ -51,7 +51,8 @@
       "IL_NONE",
       "MCAP_LARGE",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://hermes.maiadao.io/#/add/0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0/0xEA32A96608495e54156Ae48931A7c20f0dcc1a21/false",
     "buyTokenUrl": "https://hermes.maiadao.io/#/swap?inputCurrency=0x4c078361FC9BbB78DF910800A991C7c3DD2F6ce0&outputCurrency=0xEA32A96608495e54156Ae48931A7c20f0dcc1a21",
