@@ -48,7 +48,7 @@
       "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVERCOLLAT_ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -99,7 +99,7 @@
       "IL_HIGH",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVERCOLLAT_ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -128,7 +128,7 @@
       "IL_HIGH",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVERCOLLAT_ALGO_STABLE"
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -374,7 +374,7 @@
       "IL_NONE",
       "MCAP_MICRO",
       "CONTRACTS_VERIFIED",
-      "OVER_COLLAT_ALGO_STABLECOIN"
+      "ALGO_STABLE"
     ],
     "addLiquidityUrl": "https://www.dystopia.exchange/liquidity",
     "buyTokenUrl": "https://www.dystopia.exchange/swap",
@@ -533,7 +533,8 @@
     "earnContractAddress": "0xB0D20b7d047e10a8Af2bE8C7c4C976653A0f2ECA",
     "oracle": "lps",
     "oracleId": "balancer-matic-maticx",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["MaticX", "MATIC"],
     "strategyTypeId": "multi-lp",
@@ -550,6 +551,62 @@
     "createdAt": 1656705594
   },
   {
+    "id": "balancer-matic-maticx-v2",
+    "name": "MaticX-MATIC V2",
+    "token": "MaticX-MATIC V2",
+    "tokenAddress": "0xb20fC01D21A50d2C734C4a1262B4404d41fA7BF0",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancersMatic-MaticXV2",
+    "earnedTokenAddress": "0x42Cbb13EC7b35AA76D5fE7B0A446fA7B64F7086A",
+    "earnContractAddress": "0x42Cbb13EC7b35AA76D5fE7B0A446fA7B64F7086A",
+    "oracle": "lps",
+    "oracleId": "balancer-matic-maticx-v2",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["MATIC", "MaticX"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0xb20fc01d21a50d2c734c4a1262b4404d41fa7bf000000000000000000000075c",
+    "network": "polygon",
+    "createdAt": 1664553072
+  },
+  {
+    "id": "balancer-matic-stmatic-v2",
+    "name": "stMATIC-MATIC V2",
+    "token": "stMATIC-MATIC V2",
+    "tokenAddress": "0x8159462d255C1D24915CB51ec361F700174cD994",
+    "tokenDecimals": 18,
+    "tokenProviderId": "balancer",
+    "earnedToken": "mooBalancerstMATIC-MATICV2",
+    "earnedTokenAddress": "0xF79BF908d0e6d8E7054375CD80dD33424B1980bf",
+    "earnContractAddress": "0xF79BF908d0e6d8E7054375CD80dD33424B1980bf",
+    "oracle": "lps",
+    "oracleId": "balancer-matic-stmatic-v2",
+    "status": "active",
+    "platformId": "balancer",
+    "assets": ["stMATIC", "MATIC"],
+    "strategyTypeId": "multi-lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_NONE",
+      "MCAP_LARGE",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://polygon.balancer.fi/#/pool/0x8159462d255c1d24915cb51ec361f700174cd99400000000000000000000075d",
+    "network": "polygon",
+    "createdAt": 1664553071
+  },
+  {
     "id": "balancer-matic-stmatic",
     "name": "stMATIC-MATIC",
     "token": "stMATIC-MATIC",
@@ -561,7 +618,8 @@
     "earnContractAddress": "0x755e426A8B445eAE53b1c051c1E7acA7381fCDb7",
     "oracle": "lps",
     "oracleId": "balancer-matic-stmatic",
-    "status": "active",
+    "status": "eol",
+    "retireReason": "rewards",
     "platformId": "balancer",
     "assets": ["stMATIC", "MATIC"],
     "strategyTypeId": "multi-lp",
@@ -8150,7 +8208,8 @@
       "MCAP_MICRO",
       "PLATFORM_ESTABLISHED",
       "AUDIT",
-      "CONTRACTS_VERIFIED"
+      "CONTRACTS_VERIFIED",
+      "OVER_COLLAT_ALGO_STABLECOIN"
     ],
     "addLiquidityUrl": "https://polygon.curve.fi/factory/304/deposit",
     "createdAt": 1663633678,
