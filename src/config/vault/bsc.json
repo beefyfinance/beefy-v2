@@ -58,6 +58,35 @@
     "network": "bsc"
   },
   {
+    "id": "biswap-bat-bnb",
+    "name": "BAT-BNB BLP",
+    "token": "BAT-BNB BLP",
+    "tokenAddress": "0xa099F0D90Eb17283Ae7d302d0a6ebb0CaCab39DF",
+    "tokenDecimals": 18,
+    "tokenProviderId": "biswap",
+    "earnedToken": "mooBiswapBAT-BNB",
+    "earnedTokenAddress": "0x69D29D5EE43aBf236140E8e529f217C14E5dB2Ff",
+    "earnContractAddress": "0x69D29D5EE43aBf236140E8e529f217C14E5dB2Ff",
+    "oracle": "lps",
+    "oracleId": "biswap-bat-bnb",
+    "status": "active",
+    "platformId": "biswap",
+    "assets": ["BAT", "BNB"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_HIGH",
+      "MCAP_MEDIUM",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://exchange.biswap.org/#/add/ETH/0x101d82428437127bf1608f699cd651e6abf9766e",
+    "buyTokenUrl": "https://exchange.biswap.org/#/swap?outputCurrency=0x101d82428437127bF1608F699CD651e6Abf9766E",
+    "network": "bsc",
+    "createdAt": 1664302348
+  },
+  {
     "id": "cone-wbnb-usd+",
     "name": "USD+-BNB vLP",
     "token": "USD+-BNB vLP",
