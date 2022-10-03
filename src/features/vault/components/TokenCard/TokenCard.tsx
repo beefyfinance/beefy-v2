@@ -41,7 +41,9 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
               text={t('Token-Contract')}
             />
           )}
-          {/* {token.docs && <LinkButton href={token.docs} text={t('Token-Docs')} />} */}
+          {token.docs && (
+            <LinkButton hideIconMobile={true} href={token.docs} text={t('Token-Docs')} />
+          )}
         </div>
       </div>
       <div className={classes.description}>

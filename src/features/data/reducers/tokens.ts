@@ -105,6 +105,7 @@ export const tokensSlice = createSlice({
           buyUrl: sliceState.byChainId[chainId].byAddress['native']?.buyUrl ?? null,
           website: sliceState.byChainId[chainId].byAddress['native']?.website ?? null,
           description: sliceState.byChainId[chainId].byAddress['native']?.description ?? null,
+          docs: sliceState.byChainId[chainId].byAddress['native']?.docs ?? null,
         };
         sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
         sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
@@ -299,6 +300,7 @@ function addBoostToState(
       description: null,
       website: null,
       type: 'erc20',
+      docs: null,
     };
     sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
     sliceState.byChainId[chainId].byAddress[token.address.toLowerCase()] = token;
@@ -339,6 +341,7 @@ function addMinterToState(
               type: 'erc20',
               description: null,
               website: null,
+              docs: null,
             }
           : {
               id: sourceToken.symbol,
@@ -351,6 +354,7 @@ function addMinterToState(
               type: 'native',
               website: null,
               description: null,
+              docs: null,
             };
 
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
@@ -413,6 +417,7 @@ function addVaultToState(
               buyUrl: sliceState.byChainId[chainId].byAddress[addressKey]?.buyUrl ?? null,
               website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
               description: sliceState.byChainId[chainId].byAddress[addressKey]?.description ?? null,
+              docs: sliceState.byChainId[chainId].byAddress[addressKey]?.docs ?? null,
             }
           : {
               id: vault.earnedToken,
@@ -425,6 +430,7 @@ function addVaultToState(
               buyUrl: sliceState.byChainId[chainId].byAddress[addressKey]?.buyUrl ?? null,
               website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
               description: sliceState.byChainId[chainId].byAddress[addressKey]?.description ?? null,
+              docs: sliceState.byChainId[chainId].byAddress[addressKey]?.docs ?? null,
             };
       sliceState.byChainId[chainId].byId[token.id] = token.address.toLowerCase();
       sliceState.byChainId[chainId].interestingBalanceTokenAddresses.push(token.address);
@@ -441,6 +447,7 @@ function addVaultToState(
         buyUrl: sliceState.byChainId[chainId].byAddress[addressKey]?.buyUrl ?? null,
         website: sliceState.byChainId[chainId].byAddress[addressKey]?.website ?? null,
         description: sliceState.byChainId[chainId].byAddress[addressKey]?.description ?? null,
+        docs: sliceState.byChainId[chainId].byAddress[addressKey]?.docs ?? null,
         type: 'erc20',
       };
       // temporaryWrappedtokenFix(token);

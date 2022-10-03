@@ -14,14 +14,14 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
   href,
   text,
   type,
-  hideIconMobile,
+  hideIconOnMobile,
   className,
 }) => {
   const classes = useStyles();
 
   const mobileView = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
-  const shouldHideIcon = hideIconMobile && mobileView;
+  const shouldHideIcon = hideIconOnMobile && mobileView;
   return (
     <a
       className={clsx(className, classes.link)}
@@ -32,7 +32,9 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
       {type === 'code' && <CodeRoundedIcon fontSize="inherit" className={classes.icon} />}
       {type === 'link' && <InsertIcon fontSize="inherit" className={classes.icon} />}
       <span>{text}</span>
-      {!shouldHideIcon && <OpenInNewRoundedIcon fontSize="inherit" className={classes.icon} />}
+      {shouldHideIcon !== true && (
+        <OpenInNewRoundedIcon fontSize="inherit" className={classes.icon} />
+      )}
     </a>
   );
 };
