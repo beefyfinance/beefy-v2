@@ -131,31 +131,26 @@ export const SuccessContent = memo(function () {
       ? 'Remember-Msg-Bst'
       : '';
 
-  const hasRewards = currentStepData.extraInfo?.rewards;
-
-  const isZapOutMessage = currentStepData.extraInfo?.zap && currentStepData.step === 'withdraw';
-
-  const successMessage = hasRewards
-    ? t(`${currentStepData.step}-Success-Content`, {
+  const textParams = currentStepData.extraInfo?.rewards
+    ? {
         amount: formatBigDecimals(walletActionsState?.data.amount, 4),
         token: walletActionsState?.data.token.symbol,
         rewards: formatBigDecimals(currentStepData.extraInfo.rewards.amount),
         rewardToken: currentStepData.extraInfo.rewards.token.symbol,
-      })
-    : currentStepData.step === 'mint'
-    ? t(`${selectMintResult(walletActionsState).type}-Success-Content`, {
+      }
+    : {
         amount: selectMintResult(walletActionsState).amount,
         token: walletActionsState.data.token.symbol,
-      })
-    : isZapOutMessage
-    ? t('withdraw-zapout-Success-Content', {
-        amount: formatBigDecimals(walletActionsState?.data.amount, 4),
-        token: walletActionsState?.data.token.symbol,
-      })
-    : t(`${currentStepData.step}-Success-Content`, {
-        amount: formatBigDecimals(walletActionsState?.data.amount, 4),
-        token: walletActionsState?.data.token.symbol,
-      });
+      };
+
+  const isZapOutMessage = currentStepData.extraInfo?.zap && currentStepData.step === 'withdraw';
+
+  const successMessage =
+    currentStepData.step === 'mint'
+      ? t(`${selectMintResult(walletActionsState).type}-Success-Content`, { ...textParams })
+      : isZapOutMessage
+      ? t('withdraw-zapout-Success-Content', { ...textParams })
+      : t(`${currentStepData.step}-Success-Content`, { ...textParams });
 
   return (
     <>
