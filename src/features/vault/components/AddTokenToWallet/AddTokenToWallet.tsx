@@ -36,12 +36,11 @@ export const AddTokenToWallet = memo<AddTokenToWalletProps>(function ({ token, c
             address: token.address,
             symbol: token.symbol,
             decimals: token.decimals,
-            image: token.logoURI ?? '',
           },
         },
       });
     } catch (error) {}
-  }, [token.address, token.decimals, token.logoURI, token.symbol]);
+  }, [token.address, token.decimals, token.symbol]);
 
   const explorerUrl = chain.explorerUrl + '/address/' + token.address;
 

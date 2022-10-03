@@ -129,7 +129,6 @@ export interface MinterConfigTokenErc20 {
   contractAddress: string;
   decimals: number;
   type: 'erc20';
-  logoURI?: string;
 }
 
 export interface MinterConfigTokenNative {
@@ -138,7 +137,6 @@ export interface MinterConfigTokenNative {
   contractAddress: string;
   decimals: number;
   type: 'native';
-  logoURI?: string;
 }
 
 export type MinterConfigToken = MinterConfigTokenErc20 | MinterConfigTokenNative;
