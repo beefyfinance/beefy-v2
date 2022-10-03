@@ -134,9 +134,11 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               </div>
               <BoostWidget vaultId={vaultId} />
               <MinterCards vaultId={vaultId} />
-              <InsuranceCards vaultId={vaultId} />
-              <LeverageCards vaultId={vaultId} />
-              <GamesCards vaultId={vaultId} />
+              <Hidden smDown>
+                <InsuranceCards vaultId={vaultId} />
+                <LeverageCards vaultId={vaultId} />
+                <GamesCards vaultId={vaultId} />
+              </Hidden>
             </div>
             <div className={classes.columnInfo}>
               <Hidden smDown>
@@ -150,6 +152,11 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
               <InfoCards chainId={vault.chainId} vaultId={vault.id} />
               <AssetsCard vaultId={vault.id} />
+              <Hidden mdUp>
+                <InsuranceCards vaultId={vaultId} />
+                <LeverageCards vaultId={vaultId} />
+                <GamesCards vaultId={vaultId} />
+              </Hidden>
             </div>
           </div>
         </Container>
