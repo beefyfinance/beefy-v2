@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AssetsImage } from '../../../../../components/AssetsImage';
 import { Button } from '../../../../../components/Button';
 import { useStepper } from '../../../../../components/Steps/hooks';
 import { Step } from '../../../../../components/Steps/types';
@@ -49,7 +50,12 @@ export const BoostPastActionCard = memo<BoostPastCardActionCardProps>(function (
   return (
     <>
       <div className={classes.expiredBoostContainer} key={boost.id}>
-        <div className={classes.expiredBoostName}>{t('Boost-NameBoost', { name: boost.name })}</div>
+        <div className={classes.title}>
+          <AssetsImage size={24} chainId={boost.chainId} assetIds={[rewardToken.id]} />
+          <div className={classes.expiredBoostName}>
+            {t('Boost-NameBoost', { name: boost.name })}
+          </div>
+        </div>
         <div className={classes.balances}>
           <div className={classes.balance}>
             {t('Staked')} <span>{formatBigDecimals(boostBalance, 4)}</span>

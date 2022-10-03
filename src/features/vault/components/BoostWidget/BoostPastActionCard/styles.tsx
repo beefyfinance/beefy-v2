@@ -1,10 +1,14 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
+  title: {
+    marginBottom: '12px',
+    display: 'flex',
+  },
   expiredBoostName: {
-    ...theme.typography['body-lg'],
-    color: theme.palette.text.secondary,
-    marginBottom: '4px',
+    ...theme.typography['body-lg-med'],
+    color: theme.palette.text.primary,
+    marginLeft: '8px',
   },
   expiredBoostContainer: {
     background: theme.palette.background.content,

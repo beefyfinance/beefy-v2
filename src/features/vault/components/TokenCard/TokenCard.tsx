@@ -31,14 +31,17 @@ function TokenCardDisplay({ token }: { token: TokenEntity }) {
           <span>{token.symbol}</span>
         </div>
         <div className={classes.buttonsContainer}>
-          {token.website && <LinkButton type="link" href={token.website} text={t('Token-Site')} />}
+          {token.website && (
+            <LinkButton hideIconMobile={true} href={token.website} text={t('Token-Site')} />
+          )}
           {isTokenErc20(token) && (
             <LinkButton
+              hideIconMobile={true}
               href={`${chain.explorerUrl}/token/${token.address}`}
               text={t('Token-Contract')}
-              type="code"
             />
           )}
+          {/* {token.docs && <LinkButton href={token.docs} text={t('Token-Docs')} />} */}
         </div>
       </div>
       <div className={classes.description}>
