@@ -58,6 +58,36 @@
     "network": "avax"
   },
   {
+    "id": "joe-busd-wavax",
+    "name": "BUSD-AVAX LP",
+    "token": "BUSD-AVAX JLP",
+    "tokenAddress": "0xf57971383560715CcCF94E0C639125Ae0e955e60",
+    "tokenDecimals": 18,
+    "tokenProviderId": "traderjoe",
+    "earnedToken": "mooJoeBUSD-AVAX",
+    "earnedTokenAddress": "0x78527f8155c74d8BFb71f1363d476433e39B4f14",
+    "earnContractAddress": "0x78527f8155c74d8BFb71f1363d476433e39B4f14",
+    "oracle": "lps",
+    "oracleId": "joe-busd-wavax",
+    "status": "active",
+    "platformId": "traderjoe",
+    "assets": ["BUSD", "AVAX"],
+    "strategyTypeId": "lp",
+    "risks": [
+      "COMPLEXITY_LOW",
+      "BATTLE_TESTED",
+      "IL_LOW",
+      "MCAP_LARGE",
+      "PLATFORM_ESTABLISHED",
+      "AUDIT",
+      "CONTRACTS_VERIFIED"
+    ],
+    "addLiquidityUrl": "https://traderjoexyz.com/pool/0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39/AVAX",
+    "buyTokenUrl": "https://traderjoexyz.com/trade?outputCurrency=0x9C9e5fD8bbc25984B178FdCE6117Defa39d2db39#/",
+    "createdAt": 1664561347,
+    "network": "avax"
+  },
+  {
     "id": "beefy-beJoe-earnings",
     "name": "beJOE Earnings Pool",
     "token": "beJOE",
