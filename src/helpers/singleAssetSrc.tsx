@@ -8,6 +8,7 @@ const singleAssets = Object.fromEntries(
 const singleAssetCache = {};
 
 export function getSingleAssetSrc(symbol: TokenEntity['id'], chainId?: ChainEntity['id']) {
+  symbol.replace('.', '');
   const ids = chainId ? [`${chainId}/${symbol}`, symbol] : [symbol];
 
   for (const id of ids) {
