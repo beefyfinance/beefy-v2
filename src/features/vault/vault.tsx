@@ -12,7 +12,6 @@ import { Graph } from './components/Graph';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
-import { Moonpot } from './components/MoonportCard';
 import {
   selectVaultById,
   selectVaultExistsById,
@@ -21,7 +20,6 @@ import {
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
-import { selectIsVaultMoonpot } from '../data/selectors/partners';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
 import { MinterCards } from './components/MinterCards';
@@ -35,6 +33,7 @@ import { AssetsCard } from './components/AssetsCard';
 import { InsuranceCards } from './components/InsuranceCards';
 import { LeverageCards } from './components/LeverageCards';
 import { BoostWidget } from './components/BoostWidget';
+import { GamesCards } from './components/GamesCards';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -81,7 +80,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
   const [dw, setDw] = useState('deposit');
-  const isMoonpot = useAppSelector(state => selectIsVaultMoonpot(state, vaultId));
 
   return (
     <>
@@ -138,11 +136,7 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               <MinterCards vaultId={vaultId} />
               <InsuranceCards vaultId={vaultId} />
               <LeverageCards vaultId={vaultId} />
-              {isMoonpot && (
-                <div>
-                  <Moonpot vaultId={vaultId} />
-                </div>
-              )}
+              <GamesCards vaultId={vaultId} />
             </div>
             <div className={classes.columnInfo}>
               <Hidden smDown>

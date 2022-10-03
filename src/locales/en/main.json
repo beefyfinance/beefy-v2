@@ -330,10 +330,8 @@
   "QiDao-Btn": "Lend {{mooToken}}",
   "Insurace-Title": "Insurace.io",
   "Insurace-Content": "InsurAce.io is a decentralized, multi-chain insurance protocol that protects users against smart contracts risk. Guarantee your deposits in return for a fee.",
-  "Moonpot-Title": "Win {{name}} & earn interest",
-  "Moonpot-Stake": "Stake {{name}}",
-  "Moonpot-Content": "Moonpot is our win-win savings game. Deposit your crypto into a Moonpot, earn interest & enter a prize draw at the same time.",
-  "Moonpot-Btn": "Play with Moonpot",
+  "Moonpot-Title": "Moonpot",
+  "Moonpot-Content": "Moonpot is a win-win savings game on BNB Chain & Fantom. Deposit your crypto into a Moonpot, earn interest & enter a prize draw at the same time.",
   "NetworkStatus-Title-OK": "All data successfully loaded",
   "NetworkStatus-Title-Loading": "Fetching data...",
   "NetworkStatus-Title-RpcError": "RPC Errors",
@@ -443,5 +441,8 @@
   "How-It-Works": "How It Works",
   "Earn": "Earn {{symbol}}",
   "Explorer": "Explorer",
-  "Add-To-Wallet": "Add to Wallet"
+  "Add-To-Wallet": "Add to Wallet",
+  "Insurance": "Insurance",
+  "Leverage": "Leverage",
+  "Saving-Games": "Savings Games"
 }

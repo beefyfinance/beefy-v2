@@ -44,16 +44,10 @@ export interface FeaturedVaultConfig {
   [vaultId: VaultEntity['id']]: boolean;
 }
 
-export interface MoonpotConfig {
-  id: VaultEntity['id'];
-  img: string;
-  link: string;
-}
-
 export interface PartnersConfig {
   QiDao: VaultEntity['id'][];
   Insurace: ChainEntity['id'][];
-  Moonpot: MoonpotConfig[];
+  Moonpot: VaultEntity['id'][];
   Solace: ChainEntity['id'][];
 }
 
