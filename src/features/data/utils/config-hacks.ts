@@ -54,7 +54,7 @@ export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVaul
       description: null,
       website: null,
       type: 'erc20',
-      docs: null,
+      documentation: null,
     };
   } else {
     token = {
@@ -69,7 +69,7 @@ export function getDepositTokenFromLegacyVaultConfig(chain: ChainEntity, apiVaul
       description: null,
       website: null,
       type: 'native',
-      docs: null,
+      documentation: null,
     };
   }
   return token;
