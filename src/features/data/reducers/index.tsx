@@ -21,7 +21,7 @@ import { zapsSlice } from './zaps';
 import { depositSlice } from './wallet/deposit';
 import { walletActionsReducer } from './wallet/wallet-action';
 import { withdrawSlice } from './wallet/withdraw';
-import { boostModalSlice } from './wallet/boost-modal';
+import { boostSlice } from './wallet/boost';
 import { mintersSlice } from './minters';
 import { infoCardsSlice } from './info-cards';
 import { bridgeSlice } from './wallet/bridge';
@@ -60,7 +60,7 @@ const uiReducer = combineReducers<BeefyState['ui']>({
   theme: persistReducer({ key: 'theme', storage }, uiThemeSlice.reducer),
   deposit: depositSlice.reducer,
   withdraw: withdrawSlice.reducer,
-  boostModal: boostModalSlice.reducer,
+  boost: boostSlice.reducer,
   bridge: bridgeSlice.reducer,
   onRamp: onRamp.reducer,
   dataLoader: dataLoaderSlice.reducer,

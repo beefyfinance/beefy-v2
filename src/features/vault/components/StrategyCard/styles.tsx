@@ -1,12 +1,23 @@
 import { Theme } from '@material-ui/core/styles';
 
 export const styles = (theme: Theme) => ({
+  header: {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column' as const,
+      rowGap: '16px',
+    },
+  },
   cardActions: {
     display: 'flex',
+    alignItems: 'center',
     flexWrap: 'wrap' as const,
     rowGap: '8px',
     columnGap: '8px',
-    marginTop: theme.spacing(1),
+    marginLeft: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '0',
+    },
   },
   cardAction: {},
   text: {

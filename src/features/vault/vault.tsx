@@ -2,20 +2,16 @@ import { Button, Container, Hidden, makeStyles } from '@material-ui/core';
 import React, { lazy, memo, PropsWithChildren, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { DisplayTags } from '../../components/vaultTags';
 import { AssetsImage } from '../../components/AssetsImage';
 import { styles } from './styles';
 import { Deposit } from './components/Deposit';
 import { Withdraw } from './components/Withdraw';
-import { TokenCard } from './components/TokenCard';
 import { StrategyCard } from './components/StrategyCard';
 import { SafetyCard } from './components/SafetyCard';
 import { Graph } from './components/Graph';
 import { VaultsStats } from './components/VaultsStats';
 import { BoostCard } from './components/BoostCard';
 import { GovDetailsCard } from './components/GovDetailsCard';
-import { QiDao } from './components/QiDaoCard';
-import { Moonpot } from './components/MoonportCard';
 import {
   selectVaultById,
   selectVaultExistsById,
@@ -24,24 +20,20 @@ import {
 import { selectIsVaultPreStakedOrBoosted } from '../data/selectors/boosts';
 import { isGovVault, VaultEntity } from '../data/entities/vault';
 import { selectChainById } from '../data/selectors/chains';
-import {
-  selectIsVaultInsurace,
-  selectIsVaultMoonpot,
-  selectIsVaultQidao,
-  selectIsVaultSolace,
-} from '../data/selectors/partners';
 import { selectIsConfigAvailable } from '../data/selectors/data-loader';
 import { CowLoader } from '../../components/CowLoader';
 import { MinterCards } from './components/MinterCards';
 import { InfoCards } from './components/InfoCards/InfoCards';
 import { RetirePauseReason } from './components/RetirePauseReason';
-import { InsuraceCard } from './components/InsuraceCard';
-import { NexusCard } from './components/NexusCard';
-import { SolaceCard } from './components/SolaceCard';
 import { VaultMeta } from './components/VaultMeta';
 import { useAppSelector } from '../../store';
 import { VaultPlatform } from '../../components/VaultPlatform';
 import { LiquidityPoolBreakdownLoader } from './components/LiquidityPoolBreakdown';
+import { AssetsCard } from './components/AssetsCard';
+import { InsuranceCards } from './components/InsuranceCards';
+import { LeverageCards } from './components/LeverageCards';
+import { BoostWidget } from './components/BoostWidget';
+import { GamesCards } from './components/GamesCards';
 
 const useStyles = makeStyles(styles);
 const PageNotFound = lazy(() => import(`../../features/pagenotfound`));
@@ -88,10 +80,6 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
     selectIsVaultPreStakedOrBoosted(state, vaultId)
   );
   const [dw, setDw] = useState('deposit');
-  const isMoonpot = useAppSelector(state => selectIsVaultMoonpot(state, vaultId));
-  const isQidao = useAppSelector(state => selectIsVaultQidao(state, vaultId));
-  const isInsurace = useAppSelector(state => selectIsVaultInsurace(state, vaultId));
-  const isSolace = useAppSelector(state => selectIsVaultSolace(state, vaultId));
 
   return (
     <>
@@ -105,20 +93,15 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
                 {vault.name} {!isGovVault(vault) ? t('Vault-vault') : ''}
               </h1>
             </div>
-            <div>
-              <div className={classes.badges}>
-                <DisplayTags vaultId={vaultId} />
+            <div className={classes.platformContainer}>
+              <div className={classes.platformLabel}>
+                {t('Chain')} <span>{chain.name}</span>
               </div>
-              <div className={classes.platformContainer}>
-                <div className={classes.platformLabel}>
-                  {t('Chain')} <span>{chain.name}</span>
-                </div>
-                <div className={classes.platformLabel}>
-                  {t('Platform')}{' '}
-                  <span>
-                    <VaultPlatform vaultId={vaultId} />
-                  </span>
-                </div>
+              <div className={classes.platformLabel}>
+                {t('Platform')}{' '}
+                <span>
+                  <VaultPlatform vaultId={vaultId} />
+                </span>
               </div>
             </div>
           </div>
@@ -149,30 +132,13 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
                 </div>
                 {dw === 'deposit' ? <Deposit vaultId={vaultId} /> : <Withdraw vaultId={vaultId} />}
               </div>
+              <BoostWidget vaultId={vaultId} />
               <MinterCards vaultId={vaultId} />
-              <div>
-                <NexusCard />
-              </div>
-              {isQidao && (
-                <div>
-                  <QiDao vaultId={vaultId} />
-                </div>
-              )}
-              {isMoonpot && (
-                <div>
-                  <Moonpot vaultId={vaultId} />
-                </div>
-              )}
-              {isInsurace && (
-                <div>
-                  <InsuraceCard />
-                </div>
-              )}
-              {isSolace && (
-                <div>
-                  <SolaceCard />
-                </div>
-              )}
+              <Hidden smDown>
+                <InsuranceCards vaultId={vaultId} />
+                <LeverageCards vaultId={vaultId} />
+                <GamesCards vaultId={vaultId} />
+              </Hidden>
             </div>
             <div className={classes.columnInfo}>
               <Hidden smDown>
@@ -185,9 +151,12 @@ const VaultContent = memo<VaultContentProps>(function VaultContent({ vaultId }) 
               <SafetyCard vaultId={vaultId} />
               {!isGovVault(vault) ? <StrategyCard vaultId={vaultId} /> : null}
               <InfoCards chainId={vault.chainId} vaultId={vault.id} />
-              {vault.assetIds.map(tokenId => (
-                <TokenCard key={tokenId} chainId={vault.chainId} tokenId={tokenId} />
-              ))}
+              <AssetsCard vaultId={vault.id} />
+              <Hidden mdUp>
+                <InsuranceCards vaultId={vaultId} />
+                <LeverageCards vaultId={vaultId} />
+                <GamesCards vaultId={vaultId} />
+              </Hidden>
             </div>
           </div>
         </Container>
