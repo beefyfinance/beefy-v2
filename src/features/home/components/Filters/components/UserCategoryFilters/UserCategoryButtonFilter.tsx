@@ -42,6 +42,7 @@ export const UserCategoryButtonFilter = memo<UserCategoryButtonFilterProps>(func
       onChange={handleChange}
       buttonsClass={className}
       buttonClass={classes.button}
+      selectedClass={classes.selected}
     />
   );
 });

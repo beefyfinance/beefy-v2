@@ -56,8 +56,6 @@ export interface VaultStandard {
 
   type: 'lps' | 'single';
 
-  tags: VaultTag[];
-
   safetyScore: number;
 
   risks: string[];
@@ -111,8 +109,6 @@ export interface VaultGov {
   platformId: PlatformEntity['id'];
 
   status: 'active' | 'eol' | 'paused';
-
-  tags: VaultTag[];
 
   type: 'single';
 
