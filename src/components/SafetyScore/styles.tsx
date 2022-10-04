@@ -20,7 +20,7 @@ export const styles = (theme: Theme) => ({
   bar: {
     backgroundColor: theme.palette.text.disabled,
     width: '5px',
-    borderRadius: '2px',
+    borderRadius: '1px',
     '& + $bar': {
       marginLeft: '4px',
     },
@@ -35,20 +35,12 @@ export const styles = (theme: Theme) => ({
     height: '19px',
   },
   withSizeMedium: {
+    alignItems: 'center',
     '& $barsContainer': {
-      marginBottom: '4px',
+      margin: '0 0 0 8px',
     },
     '& $label': {
-      fontSize: theme.typography['h2'].fontSize,
-    },
-    '& $sm': {
-      height: '13px',
-    },
-    '& $md': {
-      height: '21px',
-    },
-    '& $lg': {
-      height: '29px',
+      ...theme.typography['h2'],
     },
   },
   withScoreLow: {
@@ -81,17 +73,17 @@ export const styles = (theme: Theme) => ({
     },
   },
   withColorLabel: {
-    '&.$withScoreLow': {
+    '&$withScoreLow': {
       '& $label': {
         color: '#E84525',
       },
     },
-    '&.$withScoreMed': {
+    '&$withScoreMed': {
       '& $label': {
         color: '#E88225',
       },
     },
-    '&.$withScoreHigh': {
+    '&$withScoreHigh': {
       '& $label': {
         color: theme.palette.primary.main,
       },

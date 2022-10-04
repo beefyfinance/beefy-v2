@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import BigNumber from 'bignumber.js';
 import { WritableDraft } from 'immer/dist/internal';
-import { isEmpty, sortBy, differenceWith, isEqual } from 'lodash';
+import { isEmpty, sortBy } from 'lodash';
 import { safetyScoreNum } from '../../../helpers/safetyScore';
 import { BeefyState } from '../../../redux-types';
 import { fetchAllContractDataByChainAction } from '../actions/contract-data';
@@ -10,15 +10,9 @@ import { fetchAllVaults, fetchFeaturedVaults } from '../actions/vaults';
 import { initiateWithdrawForm } from '../actions/withdraw';
 import { FetchAllContractDataResult } from '../apis/contract-data/contract-data-types';
 import { ChainEntity } from '../entities/chain';
-import { VaultEntity, VaultGov, VaultStandard, VaultTag } from '../entities/vault';
-import {
-  selectIsBeefyToken,
-  selectIsTokenBluechip,
-  selectIsTokenStable,
-} from '../selectors/tokens';
+import { VaultEntity, VaultGov, VaultStandard } from '../entities/vault';
 import { NormalizedEntity } from '../utils/normalized-entity';
 import { FeaturedVaultConfig, VaultConfig } from '../apis/config-types';
-import { selectChainById } from '../selectors/chains';
 
 /**
  * State containing Vault infos
@@ -162,7 +156,7 @@ function addVaultToState(
   if (apiVault.id in sliceState.byId) {
     return;
   }
-  const { tags, score } = getVaultTagsAndSafetyScore(state, chainId, apiVault);
+  const score = getVaultSafetyScore(state, chainId, apiVault);
 
   if (apiVault.isGovVault) {
     const vault: VaultGov = {
@@ -176,7 +170,6 @@ function addVaultToState(
       chainId: chainId,
       status: apiVault.status as VaultGov['status'],
       platformId: apiVault.platformId,
-      tags: tags,
       safetyScore: score,
       assetIds: apiVault.assets || [],
       type: 'single',
@@ -231,7 +224,6 @@ function addVaultToState(
       platformId: apiVault.platformId,
       status: apiVault.status as VaultStandard['status'],
       type: !apiVault.assets ? 'single' : apiVault.assets.length > 1 ? 'lps' : 'single',
-      tags: tags,
       safetyScore: score,
       assetIds: apiVault.assets || [],
       risks: apiVault.risks || [],
@@ -277,53 +269,15 @@ function addVaultToState(
   }
 }
 
-function getVaultTagsAndSafetyScore(
+function getVaultSafetyScore(
   state: BeefyState,
   chainId: ChainEntity['id'],
   apiVault: VaultConfig
-): { tags: VaultTag[]; score: number } {
-  const tags: VaultTag[] = [];
-  const chain = selectChainById(state, chainId);
-  if (
-    apiVault.assets.every(tokenId => {
-      return selectIsTokenStable(state, chainId, tokenId);
-    })
-  ) {
-    tags.push('stable');
-  }
-
-  if (
-    apiVault.assets.every(tokenId => {
-      return selectIsBeefyToken(state, tokenId);
-    })
-  ) {
-    tags.push('beefy');
-  }
-
-  const nonStables = differenceWith(apiVault.assets, chain.stableCoins, isEqual);
-  if (
-    nonStables.length > 0 &&
-    nonStables.every(tokenId => {
-      return selectIsTokenBluechip(state, tokenId);
-    })
-  ) {
-    tags.push('bluechip');
-  }
-
+): number {
   let score = 0;
   if (!isEmpty(apiVault.risks)) {
     score = safetyScoreNum(apiVault.risks);
-
-    if (score >= 7.5) {
-      tags.push('low');
-    }
   }
 
-  if (apiVault.status === 'eol') {
-    tags.push('eol');
-  } else if (apiVault.status === 'paused') {
-    tags.push('paused');
-  }
-
-  return { tags, score };
+  return score;
 }

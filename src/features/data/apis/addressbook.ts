@@ -13,6 +13,7 @@ interface AddressBookTokenConfig {
   logoURI?: string;
   website?: string;
   description?: string;
+  docs?: string;
 }
 
 export interface ChainAddressBook {
@@ -49,6 +50,7 @@ export const getChainAddressBook = memoize(
           buyUrl: null,
           website: bookToken.website || null,
           description: bookToken.description || null,
+          docs: bookToken.docs || null,
           type: 'erc20',
         };
       } else if (tokenId === nativeSymbol) {
@@ -64,6 +66,7 @@ export const getChainAddressBook = memoize(
             buyUrl: null,
             website: bookToken.website || null,
             description: bookToken.description || null,
+            docs: bookToken.docs || null,
             type: 'native',
           };
         } else {
@@ -77,6 +80,7 @@ export const getChainAddressBook = memoize(
             buyUrl: null,
             website: bookToken.website || null,
             description: bookToken.description || null,
+            docs: bookToken.docs || null,
             type: 'native',
           };
         }
@@ -91,6 +95,7 @@ export const getChainAddressBook = memoize(
           buyUrl: null,
           website: bookToken.website || null,
           description: bookToken.description || null,
+          docs: bookToken.docs || null,
           type: 'erc20',
         };
       }

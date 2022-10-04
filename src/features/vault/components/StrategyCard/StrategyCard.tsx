@@ -35,19 +35,19 @@ function StrategyCardComponent({ vaultId }: { vaultId: VaultEntity['id'] }) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle title={t('Vault-Strategy')} />
+      <CardHeader className={classes.header}>
+        <div>
+          <CardTitle title={t('Vault-Strategy')} />
+        </div>
         <div className={classes.cardActions}>
           <div className={classes.cardAction}>
             <LinkButton
-              type="code"
               href={`${chain.explorerUrl}/address/${stratAddr}`}
               text={t('Strat-Address')}
             />
           </div>
           <div className={classes.cardAction}>
             <LinkButton
-              type="code"
               href={`${chain.explorerUrl}/address/${vault.earnContractAddress}`}
               text={t('Strat-AddressVault')}
             />

@@ -1,18 +1,16 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { InsuranceCard } from '../InsuranceCard';
+import { PartnerCard } from '../PartnerCard';
 import SolaceLogo from '../../../../images/partners/solace.svg';
 
 export const SolaceCard = memo(function () {
   const { t } = useTranslation();
   return (
-    <InsuranceCard
+    <PartnerCard
       logo={SolaceLogo}
       title={t('Solace-Title')}
-      subtitle={t('Solace-SubTitle')}
       content={t('Solace-Content')}
-      buttonUrl="https://app.solace.fi/cover"
-      buttonText={t('Solace-Btn')}
+      url="https://app.solace.fi/cover"
     />
   );
 });

@@ -3,4 +3,5 @@ export interface LinkButtonProps {
   text?: string;
   type?: string;
   className?: string;
+  hideIconOnMobile?: boolean;
 }

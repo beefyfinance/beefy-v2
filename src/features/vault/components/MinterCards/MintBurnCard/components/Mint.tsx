@@ -271,7 +271,7 @@ export const Mint = memo(function Mint({ vaultId, minterId }: MinterCardParams) 
                 onClick={() => dispatch(askForNetworkChange({ chainId: vault.chainId }))}
                 className={classes.btn}
               >
-                {t('Network-Change', { network: chain.name.toUpperCase() })}
+                {t('Network-Change', { network: chain.name })}
               </Button>
             ) : (
               <Button
