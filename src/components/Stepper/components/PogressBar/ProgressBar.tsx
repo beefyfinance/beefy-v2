@@ -15,7 +15,8 @@ export const ProgressBar = memo(function () {
   return (
     <div className={classes.topBar}>
       <div
-        className={clsx(classes.progressBar, {
+        className={clsx({
+          [classes.progressBar]: !showErrorBar,
           [classes.errorBar]: showErrorBar,
         })}
       />
