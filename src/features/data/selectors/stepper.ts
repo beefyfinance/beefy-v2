@@ -79,39 +79,53 @@ export function selectMintResult(walletActionsState: WalletActionsState) {
 export const selectStepperProgress = (state: BeefyState) => {
   const currentStep = state.ui.stepperState.currentStep;
   const step = state.ui.stepperState.items[currentStep].step;
-  const percentPerStep = 100 / state.ui.stepperState.items.length;
-  const subProccessSum =
-    step === 'bridge'
-      ? selectBridgeTxProgress(state, percentPerStep)
-      : selectStandardTxPercentage(state, percentPerStep);
+  const percentagePerStep = 100 / state.ui.stepperState.items.length;
+  const currentTxProgress =
+    step === 'bridge' ? selectBridgeTxProgress(state) : selectStandardTxPercentage(state);
 
-  return currentStep * percentPerStep + subProccessSum;
+  return currentStep * percentagePerStep + percentagePerStep * currentTxProgress;
 };
 
-const selectStandardTxPercentage = (state: BeefyState, percentPerStep: number) => {
+/*
+Each Standar Tx have 3 possible scenarios
+1- need user interaction
+2- tx mining
+3- tx mined
+*/
+const selectStandardTxPercentage = (state: BeefyState) => {
   const walletActionsStateResult = state.user.walletActions.result;
-  const subStep =
-    walletActionsStateResult === null ? 0 : walletActionsStateResult === 'success_pending' ? 1 : 2;
-  const percentPerSubstep = percentPerStep / (3 - 1);
-
-  return subStep * percentPerSubstep;
+  if (walletActionsStateResult === null) {
+    return 0;
+  } else if (walletActionsStateResult === 'success_pending') {
+    return 0.5;
+  } else {
+    return 1;
+  }
 };
 
-export const selectBridgeTxProgress = (state: BeefyState, percentPerStep: number) => {
+/*
+Each Bridge Tx have 5 possible scenarios
+1- need user interaction
+2- tx mining
+3- tx mined - dest tx need to start
+4- bridge tx mining
+5- bridge tx mined
+*/
+export const selectBridgeTxProgress = (state: BeefyState) => {
   const bridgeStatus = state.ui.bridge.status;
   const walletActionsStateResult = state.user.walletActions.result;
-  const subStep =
-    walletActionsStateResult === null
-      ? 0
-      : walletActionsStateResult === 'success_pending'
-      ? 1
-      : bridgeStatus === 'loading'
-      ? 2
-      : bridgeStatus === 'confirming'
-      ? 3
-      : 4;
-  const percentPerSubstep = percentPerStep / (5 - 1);
-  return subStep * percentPerSubstep;
+
+  if (walletActionsStateResult === null) {
+    return 0;
+  } else if (walletActionsStateResult === 'success_pending') {
+    return 0.25;
+  } else if (bridgeStatus === 'loading') {
+    return 0.5;
+  } else if (bridgeStatus === 'confirming') {
+    return 0.75;
+  } else {
+    return 1;
+  }
 };
 
 export const selectErrorBar = (state: BeefyState) => {
